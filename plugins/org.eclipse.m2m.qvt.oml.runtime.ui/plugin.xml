@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            label="%applyTransformation.actionSet"
+            visible="false"
+            id="org.eclipse.m2m.qvt.oml.runtime.actions">
+         <menu
+               label="%menu.model"
+               id="org.eclipse.m2m.qvt.oml.ui.modelMenu">
+            <separator
+                  name="new">
+            </separator>
+            <separator
+                  name="open">
+            </separator>
+            <separator
+                  name="clipboard">
+            </separator>
+            <separator
+                  name="patterns">
+            </separator>
+            <separator
+                  name="audits">
+            </separator>
+            <separator
+                  name="diff">
+            </separator>
+            <separator
+                  name="integration">
+            </separator>
+            <separator
+                  name="default">
+            </separator>
+         </menu>
+         <menu
+               label="%applyTransformation"
+               path="org.eclipse.m2m.qvt.oml.ui.modelMenu/default"
+               id="org.eclipse.m2m.qvt.oml.applytransformation.menu">
+            <groupMarker name="group1"/>
+            <groupMarker name="group2"/>
+         </menu>
+         <menu
+               label="%qvtMenu"
+               path="org.eclipse.m2m.qvt.oml.ui.modelMenu/org.eclipse.m2m.qvt.oml.applytransformation.menu/group2"
+               id="org.eclipse.m2m.qvt.oml.applytransformation.menu">
+            <groupMarker name="group1"/>
+            <groupMarker name="group2"/>
+         </menu>
+
+         <action
+               class="org.eclipse.m2m.internal.qvt.oml.runtime.ui.actions.RunCompiledAction"
+               enablesFor="1"
+               icon="icons/qvt-compiled-transformation.gif"
+               id="org.eclipse.m2m.qvt.oml.internal.actions.ApplyCompiledAction"
+               label="%compiled"
+               menubarPath="org.eclipse.m2m.qvt.oml.ui.modelMenu/org.eclipse.m2m.qvt.oml.applytransformation.menu/org.eclipse.m2m.qvt.oml.applytransformation.menu/group2">               
+         </action>
+         <action
+               class="org.eclipse.m2m.internal.qvt.oml.runtime.ui.actions.RunFromWorkspaceAction"
+               enablesFor="1"
+               icon="icons/pr-Model_to_model.gif"
+               id="org.eclipse.m2m.qvt.oml.internal.generator.newAction"
+               label="%fromWorkspace"
+               menubarPath="org.eclipse.m2m.qvt.oml.ui.modelMenu/org.eclipse.m2m.qvt.oml.applytransformation.menu/org.eclipse.m2m.qvt.oml.applytransformation.menu/group1">               
+         </action>         
+      </actionSet>
+   </extension>
+   
+   <extension point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
+         <actionSet id="org.eclipse.m2m.qvt.oml.runtime.actions"/>
+      </perspectiveExtension>
+      <perspectiveExtension targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <actionSet id="org.eclipse.m2m.qvt.oml.runtime.actions"/>
+      </perspectiveExtension>
+   </extension>   
+
+    <extension point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+        <launchConfigurationTabGroup
+            type="org.eclipse.m2m.qvt.oml.QvtTransformation"
+            class="org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch.QvtLaunchConfigurationTabGroup"
+            id="org.eclipse.m2m.qvt.oml.internal.runtime.ui.launch.QvtLaunchConfigurationTabGroup">
+        </launchConfigurationTabGroup>
+                
+        <launchConfigurationTabGroup
+            type="org.eclipse.m2m.qvt.oml.NonInterpretedQvtTransformation"
+            class="org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch.NonInterpretedQvtLaunchConfigurationTabGroup"
+            id="org.eclipse.m2m.qvt.oml.internal.runtime.ui.launch.NonInterpretedQvtLaunchConfigurationTabGroup">
+        </launchConfigurationTabGroup>
+        
+        <launchConfigurationTabGroup
+              class="org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch.QvtCompiledLaunchConfigurationTabGroup"
+              id="org.eclipse.m2m.qvt.oml.internal.launch.QvtCompiledLaunchConfigurationTabGroup"
+              type="org.eclipse.m2m.qvt.oml.QvtCompiledTransfomation">
+		</launchConfigurationTabGroup>
+    </extension>    
+
+   <extension point="org.eclipse.ui.editors">
+      <editor
+            class="org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.editor.TraceEditorPart"
+            contributorClass="org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.editor.TraceEditorActionBarContributor"
+            default="true"
+            extensions="oqvttrace"
+            icon="icons/trace-editor.gif"
+            id="org.eclipse.m2m.qvt.oml.trace.editor"
+            name="%traceEditor"/>
+   </extension>
+
+	<extension point="org.eclipse.debug.core.statusHandlers">
+	   <statusHandler 
+	      id="org.eclipse.m2m.qvt.oml.internal.runtime.ui.launch.TransformationJobDoneHandler"
+	      class="org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch.TransformationJobDoneHandler"
+	      plugin="org.eclipse.m2m.qvt.oml.runtime"
+	      code="200">
+	   </statusHandler>
+	 </extension>
+
+    <extension point="org.eclipse.debug.ui.launchConfigurationTypeImages">        
+        <launchConfigurationTypeImage
+            icon="icons/pr-Model_to_model.gif"
+            configTypeID="org.eclipse.m2m.qvt.oml.QvtCompiledTransfomation"
+            id="org.eclipse.m2m.qvt.oml.QvtCompiledTransformationImage">
+        </launchConfigurationTypeImage>
+        
+        <launchConfigurationTypeImage
+            icon="icons/pr-Model_to_model.gif"
+            configTypeID="org.eclipse.m2m.qvt.oml.InMemoryQvtTransfomation"            
+            id="org.eclipse.m2m.qvt.oml.QvtCompiledTransformationImage">
+        </launchConfigurationTypeImage>        
+
+        <launchConfigurationTypeImage
+            icon="icons/launch_config.gif"
+            configTypeID="org.eclipse.m2m.qvt.oml.QvtTransformation"
+            id="org.eclipse.m2m.qvt.oml.QvtTransformationImage">
+        </launchConfigurationTypeImage>
+
+        <launchConfigurationTypeImage
+            icon="icons/pr-Model_to_model.gif"
+            configTypeID="org.eclipse.m2m.qvt.oml.NonInterpretedQvtTransformation"
+            id="org.eclipse.m2m.qvt.oml.NonInterpretedQvtTransformationImage">
+        </launchConfigurationTypeImage>        
+    </extension>    
+
+</plugin>
