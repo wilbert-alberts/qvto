@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="org.eclipse.m2m.qvt.oml.ocl.emf.libraries">
+      <library
+            class="org.eclipse.m2m.qvt.oml.ocl.emf.libraries.StringLibrary"
+            id="Strings"/>
+      <library
+            class="org.eclipse.m2m.qvt.oml.ocl.emf.libraries.EmfToolsLibrary"
+            id="emf.tools">
+         <inMetamodel uri="http://www.eclipse.org/emf/2002/Ecore"/>
+         <outMetamodel uri="http://www.eclipse.org/emf/2002/Ecore"/>
+      </library>
+   </extension>
+
+</plugin>

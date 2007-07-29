@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %name
+Bundle-SymbolicName: org.eclipse.m2m.qvt.oml.ocl.emf.libraries;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.ecore,
+ org.eclipse.ocl,
+ org.eclipse.ocl.ecore
+Export-Package: org.eclipse.m2m.qvt.oml.ocl.emf.libraries
+Bundle-Activator: org.eclipse.m2m.qvt.oml.ocl.emf.libraries.LibrariesPlugin
