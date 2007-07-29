@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+
+   
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://www.eclipse.org/m2m/qvt/oml/testqvt" 
+       class = "testqvt.TestqvtPackage"
+       genModel = "" /> 
+  </extension>
+  
+   <extension point="org.eclipse.m2m.qvt.oml.emf.util.metamodelProvider">
+      <provider class="org.eclipse.m2m.tests.qvt.oml.transform.javaless.JavalessMetamodelProvider"/>
+   </extension>
+</plugin>

@@ -1,0 +1,13 @@
+transformation outininitvar;
+
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping base(): ecore::EClass {
+    init {
+        var attr_ := object ecore::EAttribute { name := 'attr'; };
+    }
+    object ecore::EClass {
+        name := 'Base::base';
+        eStructuralFeatures := OrderedSet {attr_};
+    }
+}

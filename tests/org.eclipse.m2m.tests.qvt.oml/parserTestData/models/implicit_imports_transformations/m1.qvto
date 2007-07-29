@@ -1,0 +1,9 @@
+library models.implicit_imports_transformations.m1;
+
+import models.implicit_imports_transformations.m3;
+
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+query qq1(in e : ecore::ENamedElement) : String {
+	'name = ' + e.name
+}

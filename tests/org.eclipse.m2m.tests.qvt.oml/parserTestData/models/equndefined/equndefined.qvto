@@ -1,0 +1,58 @@
+transformation models.equndefined.equndefined;
+
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(in model: ecore::EPackage): ecore::EPackage {
+	end {
+		var int : Integer := 1; 
+		var real : Real := 2.0; 
+		var str : String := ''; 
+		var bool : Boolean := true; 
+		var bag : Bag(Integer) := Bag{1};
+		var set : Set(Integer) := Set{1};
+		var oset : OrderedSet(Integer) := OrderedSet{1};
+		var seq : Sequence(Integer) := Sequence{1};
+
+		result.eClassifiers += test(OclInvalid = model, '=model'); 
+		result.eClassifiers += test(model = OclInvalid, 'model=');
+		result.eClassifiers += test(OclInvalid = int, '=int');
+		result.eClassifiers += test(int = OclInvalid, 'int=');
+		result.eClassifiers += test(OclInvalid = real, '=real');
+		result.eClassifiers += test(real = OclInvalid, 'real=');
+		result.eClassifiers += test(OclInvalid = str, '=str');
+		result.eClassifiers += test(str = OclInvalid, 'str=');
+		result.eClassifiers += test(OclInvalid = bool, '=bool');
+		result.eClassifiers += test(bool = OclInvalid, 'bool=');
+		--result.eClassifiers += test(Invalid = bag, '=bag');
+		result.eClassifiers += test(bag = OclInvalid, 'bag=');
+		--result.eClassifiers += test(OclInvalid = set, '=set');
+		result.eClassifiers += test(set = OclInvalid, 'set=');
+		--result.eClassifiers += test(OclInvalid = oset, '=oset');
+		result.eClassifiers += test(oset = OclInvalid, 'oset=');
+		--result.eClassifiers += test(OclInvalid = seq, '=seq');
+		result.eClassifiers += test(seq = OclInvalid, 'seq=');
+		
+		result.eClassifiers += test(OclInvalid <> model, '<>model'); 
+		result.eClassifiers += test(model <> OclInvalid, 'model<>');
+		result.eClassifiers += test(OclInvalid <> int, '<>int');
+		result.eClassifiers += test(int <> OclInvalid, 'int<>');
+		result.eClassifiers += test(OclInvalid <> real, '<>real');
+		result.eClassifiers += test(real <> OclInvalid, 'real<>');
+		result.eClassifiers += test(OclInvalid <> str, '<>str');
+		result.eClassifiers += test(str <> OclInvalid, 'str<>');
+		result.eClassifiers += test(OclInvalid <> bool, '<>bool');
+		result.eClassifiers += test(bool <> OclInvalid, 'bool<>');
+		--result.eClassifiers += test(OclInvalid <> bag, '<>bag');
+		result.eClassifiers += test(bag <> OclInvalid, 'bag<>');
+		--result.eClassifiers += test(OclInvalid <> set, '<>set');
+		result.eClassifiers += test(set <> OclInvalid, 'set<>');
+		--result.eClassifiers += test(OclInvalid <> oset, '<>oset');
+		result.eClassifiers += test(oset <> OclInvalid, 'oset<>');
+		--result.eClassifiers += test(OclInvalid <> seq, '<>seq');
+		result.eClassifiers += test(seq <> OclInvalid, 'seq<>');		
+	}
+}
+
+mapping test(in b : Boolean, in s : String) : ecore::EClass {
+	name := s + ': ' + if b.oclIsUndefined() then 'undef' else if b then 'true' else 'false' endif endif;
+}

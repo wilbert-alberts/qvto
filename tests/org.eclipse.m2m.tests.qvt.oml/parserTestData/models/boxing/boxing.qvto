@@ -1,0 +1,35 @@
+transformation models.boxing.boxing;
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+property counter: Integer = 1;
+property ratio: Real = 1;
+
+mapping main(in model: ecore::EPackage): ecore::EPackage {
+	init {
+		var i1 := 1;
+		var i2 := i1 + counter + 1;
+		
+		var f1 := 1.0;
+		var f2 := f1 + ratio + bar() + 1;
+	}
+    object {
+    	name := model.name;
+    	eClassifiers += object ecore::EClass {
+    		name := 'Model';
+    		eStructuralFeatures += object ecore::EAttribute {
+    			name := 'attr';
+    			lowerBound := getLowerBound();
+    			upperBound := i2;
+    		}
+    	}
+    }
+}
+
+query getLowerBound() : Integer {	
+    1;
+    0
+}
+
+query bar(): Real {
+	1
+}

@@ -1,0 +1,13 @@
+transformation models.full.util;
+
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping impl(pack: ecore::EPackage): ecore::EPackage {
+    init {
+        var cls := object ecore::EClass { name := 'tag'; };
+    }
+    object {
+        name := 'foo';
+        eClassifiers := OrderedSet { cls };
+    }
+}

@@ -1,0 +1,4 @@
+transformation missinglibmmimport;
+
+import library together.uml;
+--metamodel 'http://www.borland.com/together/uml';

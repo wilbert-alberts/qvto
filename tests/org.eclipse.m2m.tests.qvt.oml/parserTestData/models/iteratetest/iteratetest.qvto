@@ -1,0 +1,27 @@
+transformation models.iteratetest.iteratetest;
+
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(in root: ecore::EPackage): ecore::EPackage {
+	name := 'iteratetest';
+	eSubpackages += object ecore::EPackage {
+		name := 'explicit';
+		eClassifiers := root.eClassifiers->iterate(c; set1 : OrderedSet(ecore::EClassifier) = OrderedSet {} | 
+			set1->including(object ecore::EClass { name := c.name })->asOrderedSet())
+	};
+	eSubpackages += object ecore::EPackage {
+		name := 'implicit';
+		eClassifiers := root.eClassifiers->iterate(set2 : OrderedSet(ecore::EClassifier) = OrderedSet {} | 
+			set2->including(object ecore::EClass { name := name })->asOrderedSet())
+	};
+	/*eSubpackages += object ecore::EPackage {
+		name := 'set_explicit';
+		eClassifiers := root.eClassifiers->iterate(c; set3 : Set(ecore::EClassifier) = Set {} | 
+			set3->including(object ecore::EClass { name := c.name }))->asOrderedSet()
+	};
+	eSubpackages += object ecore::EPackage {
+		name := 'set_implicit';
+		eClassifiers := root.eClassifiers->iterate(set4 : Set(ecore::EClassifier) = Set {} | 
+			set4->including(object ecore::EClass { name := name }))->asOrderedSet()
+	}*/
+}

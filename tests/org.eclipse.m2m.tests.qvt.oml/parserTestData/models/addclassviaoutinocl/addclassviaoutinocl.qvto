@@ -1,0 +1,9 @@
+transformation models.addclassviaoutinocl.addclassviaoutinocl;
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(in pack: ecore::EPackage): ecore::EPackage {
+	object ecore::EPackage {
+        name := 'foo';
+        eClassifiers := OrderedSet { object ecore::EClass {name := 'tag'; } };
+    }
+}

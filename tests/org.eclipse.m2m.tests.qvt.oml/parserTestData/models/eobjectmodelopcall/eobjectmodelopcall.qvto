@@ -1,0 +1,14 @@
+transformation models.eobjectmodelopcall.eobjectmodelopcall;
+import library emf.tools;
+
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+metamodel 'http://www.borland.com/together/uml';
+metamodel 'http://www.borland.com/together/uml20';
+
+mapping main(in model: uml::together::Model): uml::together::Model {
+    object {
+    	ownedMembers += object uml20::classes::Class {
+    		name := model.asEObject().eClass().name;
+    	}
+    }
+}

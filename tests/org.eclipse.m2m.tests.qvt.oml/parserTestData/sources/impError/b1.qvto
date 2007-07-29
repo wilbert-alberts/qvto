@@ -1,0 +1,5 @@
+library b1;
+
+query foo_b1(): String {
+	100 -- produce one error in dependency library
+}

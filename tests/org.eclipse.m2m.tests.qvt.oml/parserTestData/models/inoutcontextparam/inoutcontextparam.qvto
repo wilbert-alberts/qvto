@@ -1,0 +1,18 @@
+transformation models.inoutcontextparam.inoutcontextparam;
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(in model: ecore::EPackage): ecore::EPackage {
+    object {
+    	name := 'wrong';
+    }
+    end {
+	    result.foo();
+    }
+}
+
+mapping inout ecore::EPackage::foo() : ecore::EPackage {
+	init {
+		self.name := 'right';
+		result := self;
+	}
+}

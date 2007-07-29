@@ -1,0 +1,45 @@
+transformation models.addundefined.addundefined;
+
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(in model: ecore::EPackage): ecore::EPackage {
+    object {
+    	name := 'arithmetic with undefined';
+    	eClassifiers += test(1.0 + OclInvalid, 0);
+    	eClassifiers += test(1.0 - OclInvalid, 1);
+    	eClassifiers += test(1.0 * OclInvalid, 2);
+    	eClassifiers += test(1.0 / OclInvalid, 3);
+    	eClassifiers += test(1.0.max(OclInvalid), 4);
+    	eClassifiers += test(1.0.min(OclInvalid), 5);
+    	eClassifiers += test(1.0 < OclInvalid, 6);
+    	eClassifiers += test(1.0 > OclInvalid, 7);
+    	eClassifiers += test(1.0 = OclInvalid, 8);
+    	eClassifiers += test(1.0 <= OclInvalid, 9);
+    	eClassifiers += test(1.0 >= OclInvalid, 10);
+    	eClassifiers += test(1.0 <> OclInvalid, 11);
+
+    	eClassifiers += test(1 + OclInvalid, 12);
+    	eClassifiers += test(1 - OclInvalid, 13);
+    	eClassifiers += test(1 * OclInvalid, 14);
+    	eClassifiers += test(1 / OclInvalid, 15);
+    	eClassifiers += test(1.mod(OclInvalid), 16);
+    	eClassifiers += test(1.div(OclInvalid), 17);
+    	eClassifiers += test(1.max(OclInvalid), 18);
+    	eClassifiers += test(1.min(OclInvalid), 19);
+    	eClassifiers += test(1 < OclInvalid, 20);
+    	eClassifiers += test(1 > OclInvalid, 21);
+    	eClassifiers += test(1 = OclInvalid, 22);
+    	eClassifiers += test(1 <= OclInvalid, 23);
+    	eClassifiers += test(1 >= OclInvalid, 24);
+    	eClassifiers += test(1 <> OclInvalid, 25);
+    }
+} 
+
+mapping test(in value : OclAny, inout fakeIndex : Integer) : ecore::EClass {
+	name := 
+		if value.oclIsUndefined() then
+			'ok'
+		else
+			'fail'
+		endif;
+}

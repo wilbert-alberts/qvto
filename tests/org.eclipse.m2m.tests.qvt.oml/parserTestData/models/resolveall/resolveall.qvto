@@ -1,0 +1,67 @@
+transformation models.resolveall.resolveall;
+
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(in model: ecore::EPackage): ecore::EPackage {
+	init {
+		var cl := model.allInstances(ecore::EPackage)->including(model).toEClass();
+	}
+    object {
+    	name := 'all';
+    	eAnnotations += object ecore::EAnnotation {
+    	          
+    		references += selectionSort(resolveIn(main, ecore::ENamedElement)->union(resolveIn(ecore::EPackage::toEClass, ecore::ENamedElement))->union(resolveIn(ecore::EPackage::toAttribute, ecore::ENamedElement))->asOrderedSet());
+    		source := 'resolveAll(ecore::EObject)';
+    	};
+    	eAnnotations += object ecore::EAnnotation {
+    		references += selectionSort(resolveIn(ecore::EPackage::toAttribute, ecore::EAttribute)->asOrderedSet());
+    		source := 'resolveAllByRule(''toAttribute'', ecore::EAttribute)';
+    	};
+    	eClassifiers += cl;
+    }
+}
+
+mapping ecore::EPackage::toEClass() : ecore::EClass {
+	name := name;
+	eStructuralFeatures += eSubpackages.toAttribute();
+}
+
+mapping ecore::EPackage::toAttribute() : ecore::EAttribute {
+	name := name;
+}
+
+query ecore::ENamedElement::hash() : Integer {
+	if self.oclIsKindOf(ecore::EClass) then
+	  name.substring(2, 2).toInt() + 100
+	 else 
+	 	name.substring(2, 2).toInt()
+	 endif;
+}
+
+query String::toInt() : Integer {
+	if self = '1' then
+	  1
+	else if self = '2' then
+	  2
+	else if self = '3' then
+	  3
+	else 0
+	endif endif endif 	
+}
+
+query min(in ar: OrderedSet(ecore::ENamedElement)): ecore::ENamedElement {
+	ar->iterate(a; min : ecore::ENamedElement = ar->at(1) | 
+		if a.hash() < min.hash() then a else min endif); 	
+}
+	
+query selectionSort(in ar: OrderedSet(ecore::ENamedElement)): OrderedSet(ecore::ENamedElement) {
+	if ar->size() = 0 then OrderedSet{} 
+	else
+		let 
+			min = min(ar), 
+			rest = ar->excluding(min)->asOrderedSet(),
+			result = min->asSequence()->union(selectionSort(rest)->asSequence())->asOrderedSet() 
+		in 
+			result
+	endif
+}

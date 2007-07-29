@@ -1,0 +1,7 @@
+transformation models.propinit.Utils;
+
+property UTIL_NAME = 'util';
+
+query getUtilName(): String {
+    UTIL_NAME;
+}

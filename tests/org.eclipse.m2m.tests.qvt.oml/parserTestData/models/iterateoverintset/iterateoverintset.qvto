@@ -1,0 +1,12 @@
+transformation models.iterateoverintset.iterateoverintset;
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(in model: ecore::EPackage): ecore::EPackage {
+    object {
+    	name := 'foo' + foo().toString();
+    }
+}
+
+query foo(): Integer {
+    Set{1,2,3}->iterate( i: Integer; sum: Integer = 0 | sum + i);  
+}

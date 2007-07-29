@@ -1,0 +1,9 @@
+transformation wrongout;
+
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping base(): ecore::EClass {
+    object ecore::EClass2 {
+        name := 'Base::base'
+    }
+}

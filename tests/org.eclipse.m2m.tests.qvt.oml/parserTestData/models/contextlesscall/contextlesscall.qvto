@@ -1,0 +1,19 @@
+transformation models.contextlesscall.contextlesscall;
+
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(in model: ecore::EPackage): ecore::EPackage {
+    init {
+    	result := model.copyPackage();
+    }
+}
+
+mapping createPackage() : ecore::EPackage {
+	name := 'OK';
+}
+
+mapping ecore::EPackage::copyPackage() : ecore::EPackage {
+	init {
+		result := createPackage();
+	}
+}

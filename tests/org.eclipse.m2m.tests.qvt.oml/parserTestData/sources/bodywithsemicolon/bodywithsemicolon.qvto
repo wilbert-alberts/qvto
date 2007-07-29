@@ -1,0 +1,20 @@
+transformation bodywithsemicolon;
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(pack: ecore::EPackage): ecore::EPackage {
+    init {
+        var newPack := object ecore::EPackage { name := pack.name; };
+    }
+    object {
+        name := 'foo';
+    }
+}
+
+query main2(pack: ecore::EPackage): ecore::EPackage {
+    patch(pack);
+    pack
+}
+
+query patch(pack: ecore::EPackage): ecore::EPackage {
+   pack
+}

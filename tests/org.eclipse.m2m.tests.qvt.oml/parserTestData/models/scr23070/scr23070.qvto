@@ -1,0 +1,10 @@
+transformation models.scr23070.scr23070;
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(in model: ecore::EPackage): ecore::EPackage {
+	name := foo(1);
+}
+
+query foo(i:Integer): String {
+   if i>1 then null else null endif
+}

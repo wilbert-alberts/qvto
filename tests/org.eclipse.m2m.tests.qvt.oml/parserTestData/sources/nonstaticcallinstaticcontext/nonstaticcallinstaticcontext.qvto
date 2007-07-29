@@ -1,0 +1,11 @@
+transformation nonstaticcallinstaticcontext;
+
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(in model: ecore::EPackage): ecore::EPackage {
+    object {
+    eClassifiers+=object ecore::EClass {name:='AAA';
+    eStructuralFeatures+= object ecore::EAttribute {
+    name:='prop1';
+    type:=ecore::EObject::eContainer() 
+    }}}}

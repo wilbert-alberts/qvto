@@ -1,0 +1,13 @@
+transformation models.scr20471.scr20471;
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(in model: ecore::EPackage): ecore::EPackage {
+    object {
+        name := model.name;
+    	eClassifiers := model.eClassifiers->collect(c|c.toClass())->asOrderedSet();
+    }
+}
+
+mapping ecore::EClassifier::toClass(): ecore::EClass {
+	name := self.name;
+}

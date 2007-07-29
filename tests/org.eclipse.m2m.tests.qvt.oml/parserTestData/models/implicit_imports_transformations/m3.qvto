@@ -1,0 +1,5 @@
+library models.implicit_imports_transformations.m3;
+
+query q3(inout ee : ecore::ENamedElement) : String{
+	'value:'
+}

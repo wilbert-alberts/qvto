@@ -1,0 +1,24 @@
+transformation models.invresolvebyrule.invresolvebyrule;
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(pack: ecore::EPackage): ecore::EPackage {
+   init {
+       var newPack := makePack(pack);
+       var newOtherPack := pack.makeOtherPack();
+       var trace := newOtherPack.invresolveoneIn(ecore::EPackage::makeOtherPack, ecore::EPackage);   }
+   object {
+       name := trace.name;
+   }
+}
+
+mapping makePack(pack: ecore::EPackage): ecore::EPackage {
+	object {
+		name := 'foo';
+	}
+}
+
+mapping ecore::EPackage::makeOtherPack(): ecore::EPackage {
+	object {
+		name := 'bar';
+	}
+}

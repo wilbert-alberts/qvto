@@ -1,0 +1,19 @@
+transformation models.libop.libop;
+
+import library together.uml;
+
+metamodel 'http://www.borland.com/together/uml';
+metamodel 'http://www.borland.com/together/uml20';
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(in model: uml::together::Model): ecore::EPackage {
+    init {
+    	var firstClass := model.ownedMembers.oclAsType(uml20::classes::Class)->any(true);
+    	var links := 
+    		firstClass.getIncomingLinks()->size() + 
+    		firstClass.associations->size();
+    }
+    object {
+    	name := '' + links;
+    }
+}

@@ -1,0 +1,177 @@
+transformation models.Uml_To_Xhtml.Uml_To_Xhtml;
+
+metamodel 'http://www.borland.com/together/uml';
+metamodel 'http://www.borland.com/together/uml20';
+metamodel 'http://www.w3.org/1999/xhtml';
+
+rename xhtml::HtmlType._body = 'body';
+rename xhtml::BodyType._div = 'div';
+rename xhtml::DivType._div = 'div';
+
+mapping main(in model: uml::together::Model): xhtml::DocumentRoot {
+	init {
+		var allPackages : Sequence(uml::kernel::packages::Package) := allPackages(model)->excluding(model);
+	}
+	object {
+		html := object xhtml::HtmlType {
+			head := object xhtml::HeadType {
+				title := object xhtml::TitleType {
+					text := model.name;
+				};
+				style += object xhtml::StyleType {
+					text := '.content { padding-left: 20px; } h1, h2, h3, h4 { color: #333; }'
+				}
+			};
+			_body := object xhtml::BodyType {
+				h2 += object xhtml::H2Type {
+					text := 'Packages in ' + model.name;
+				};
+				_div += object xhtml::DivType {
+					class := 'content';
+					table += object xhtml::TableType {
+						tr += allPackages->collect(p | package2row(p));
+					}
+				};
+				_div += allPackages->collect(p | package2div(p));
+			}
+		}
+	}
+}
+
+mapping package2row(in pack: uml::kernel::packages::Package) : xhtml::TrType {
+	td += object xhtml::TdType {
+		a += object xhtml::AType {
+			href := '#'.concat(pack.fullName());
+			text := pack.fullName();
+		}
+	};
+	
+	td += object xhtml::TdType {
+		text := if not pack.description.oclIsUndefined() then pack.description else '' endif;
+	};
+}
+
+query allPackages(root: uml::kernel::packages::Package) : Sequence(uml::kernel::packages::Package) {
+	root.nestedPackages->asSequence()->union(root.nestedPackages->collect(p | allPackages(p))->flatten()->asSequence())
+
+}
+
+query uml::kernel::PackageableElement::fullName() : String {
+	if self.owner.oclIsUndefined() then
+		self.name
+	else 
+		self.owner.oclAsType(uml::kernel::packages::Package).fullName().concat('.').concat(self.name)
+	endif
+}
+
+mapping package2div(in pack: uml::kernel::packages::Package) : xhtml::DivType {
+	init {
+		var allClasses : Sequence(uml20::classes::Class) := allClasses(pack);
+	}
+	object {
+		id := pack.fullName();
+		h3 += object xhtml::H3Type {
+			text := 'Package '.concat(pack.fullName());
+		};
+		_div += object xhtml::DivType {
+			class := 'content';
+			_div += makeClassesList(allClasses);
+		}
+	}
+}
+
+mapping makeClassesList(in allClasses: Sequence(uml20::classes::Class)): xhtml::DivType 
+when { allClasses->size() > 0 }
+{
+	_div += object xhtml::DivType {
+		class := 'content';
+		table += object xhtml::TableType {
+			tr += allClasses->collect(c | class2row(c));
+		}
+	};
+	
+	_div += allClasses->collect(c | class2div(c));
+}
+
+mapping class2row(in cls: uml20::classes::Class) : xhtml::TrType {
+	td += object xhtml::TdType {
+		a += object xhtml::AType {
+			href := '#'.concat(cls.fullName());
+			text := cls.name;
+		};
+	};
+	td += object xhtml::TdType {
+		text := if not cls.description.oclIsUndefined() then cls.description else '' endif;
+	};
+}
+
+query allClasses(in pack: uml::kernel::packages::Package) : Sequence(uml20::classes::Class) {
+	pack.ownedMembers->select(c | c.oclIsKindOf(uml20::classes::Class))->asSequence()->oclAsType(Sequence(uml20::classes::Class))
+} 
+
+mapping class2div(in cls: uml20::classes::Class) : xhtml::DivType {
+	id := cls.fullName();
+	h3 += object xhtml::H3Type {
+		text := 'Class '.concat(cls.name);
+	};
+	_div += object xhtml::DivType {
+		class := 'content';
+		h3 += object xhtml::H3Type {
+			text := 'Generalizations';
+		};
+		table += classGeneralizations2table(cls);
+
+		h3 += object xhtml::H3Type {
+			text := 'Attributes';
+		};
+		table += classOwnedAttributes2table(cls);
+
+		h3 += object xhtml::H3Type {
+			text := 'Operations';
+		};
+		table += classOwnedOperations2table(cls);
+	}
+}
+
+mapping classGeneralizations2table(in cls: uml20::classes::Class) : xhtml::TableType 
+	when { not cls.generalizations->isEmpty() }
+{
+	tr += cls.generalizations->collect(gen | gen2row(gen));
+}
+
+mapping classOwnedAttributes2table(in cls: uml20::classes::Class) : xhtml::TableType 
+	when { not cls.ownedAttributes->isEmpty() }
+{
+	tr += cls.ownedAttributes->collect(attr | attr2row(attr));
+}
+
+mapping classOwnedOperations2table(in cls: uml20::classes::Class) : xhtml::TableType 
+	when { not cls.ownedOperations->isEmpty() }
+{
+	tr += cls.ownedOperations->collect(op | op2row(op));
+}
+
+mapping gen2row(in gen: uml20::kernel::Generalization) : xhtml::TrType {
+	td += object xhtml::TdType {
+		a += object xhtml::AType {
+			href := '#'.concat(gen.general.fullName());
+			text := gen.general.name;
+		};
+	}
+}
+
+mapping attr2row(in attr: uml20::kernel::Property) : xhtml::TrType {
+	td += object xhtml::TdType {
+		text := attr.name;
+	};
+	td += object xhtml::TdType {
+	}
+}
+
+mapping op2row(in op: uml20::kernel::features::Operation) : xhtml::TrType {
+	td += object xhtml::TdType {
+		text := op.name;
+	};
+	td += object xhtml::TdType {
+	};
+}

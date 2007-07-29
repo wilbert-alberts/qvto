@@ -1,0 +1,11 @@
+transformation wrongparamnameinout;
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping foo(pack: ecore::EPackage): ecore::EPackage {
+   init {
+	   pack1.name := 'foo';
+   } 
+   object {
+	   name1 := 'foo';
+   } 
+}

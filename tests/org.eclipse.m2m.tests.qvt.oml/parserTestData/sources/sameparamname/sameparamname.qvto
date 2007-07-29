@@ -1,0 +1,5 @@
+transformation sameparamname;
+
+mapping foo(in s: String, in s: String): OclVoid {
+   null
+}

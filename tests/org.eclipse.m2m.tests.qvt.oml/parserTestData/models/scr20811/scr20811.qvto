@@ -1,0 +1,12 @@
+transformation models.scr20811.scr20811;
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(model: ecore::EPackage): ecore::EPackage {
+    object {		
+         name:=	if model.name='ss' then    	     
+                 'bug'	       
+             else    	   
+                 'good'	       
+             endif    
+    }
+}

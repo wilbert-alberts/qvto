@@ -1,0 +1,35 @@
+transformation models.scr20041.scr20041;
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(pack: ecore::EPackage): ecore::EPackage {
+	init {
+		var classes := OrderedSet{ object ecore::EClass { name := 'tag'; } };
+		var s := 'abc';		
+		var i := 1;		
+		var t := s.substring(i, 1);
+	}
+    object {
+        name := 'foo';
+        eClassifiers += foo(classes, 1);
+    }
+}
+
+query foo(o: OrderedSet(ecore::EClass), i: Integer): ecore::EClass {
+	o->at(i);
+}
+
+query fooSet(o: OrderedSet(ecore::EClass), i: Integer): ecore::EClass {
+	o->insertAt(i, object ecore::EClass{});
+	o->insertAt(1, object ecore::EClass{});
+	o->subOrderedSet(i, i+1);
+	o->subOrderedSet(1, 2);
+	o->at(i);
+}
+
+query fooSeq(o: Sequence(ecore::EClass), i: Integer): ecore::EClass {
+	o->insertAt(i, object ecore::EClass{});
+	o->insertAt(1, object ecore::EClass{});
+	o->subSequence(i, i+1);
+	o->subSequence(1, 2);
+	o->at(i);
+}

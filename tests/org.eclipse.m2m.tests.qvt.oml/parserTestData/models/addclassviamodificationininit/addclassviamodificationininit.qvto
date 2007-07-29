@@ -1,0 +1,22 @@
+transformation models.addclassviamodificationininit.addclassviamodificationininit;
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(pack: ecore::EPackage): ecore::EPackage {
+    init {
+        var newPack := object ecore::EPackage { name := pack.name; };
+        result := patch(newPack);
+    }
+    object {
+        name := newPack.name;
+    }
+}
+
+mapping patch(inout pack: ecore::EPackage): ecore::EPackage {
+   init {
+	   pack.eClassifiers += object ecore::EClass { name := 'tag'; };
+       result := pack;
+   } 
+   object {
+       name := 'patched';
+   }
+}

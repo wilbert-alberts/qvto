@@ -1,0 +1,10 @@
+transformation nestedouterror;
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping patch(): ecore::EPackage {
+    object {
+	    name := object {
+    		fff := 'a';	    	
+	    }
+	}
+}

@@ -1,0 +1,8 @@
+transformation models.scr17812.scr17812;
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(in model: ecore::EPackage): ecore::EPackage {    
+    object {    	
+        eClassifiers += OrderedSet {object ecore::EClass {name:='1'}}->union(
+            		OrderedSet {object ecore::EClass {name:='2'}})    }
+}

@@ -1,0 +1,26 @@
+transformation models.implicit_imports_transformations.implicit_imports_transformations;
+
+import models.implicit_imports_transformations.m2;  
+import models.implicit_imports_transformations.m1;  
+
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+ 
+mapping main(in model: ecore::EPackage): ecore::EPackage { 
+	init{  
+		var classes:= model.allInstances(ecore::EClass);
+	}
+    object {
+    	eClassifiers += classes->collect(c|c2c(c));
+	}
+}   
+    
+mapping c2c(in clz : ecore::EClass) : ecore::EClass {
+	init {
+		var t := qq1(clz); 
+		dump(q3(clz));
+	}          
+	name:=clz.name;
+	eAnnotations += object ecore::EAnnotation {
+		source := q2(clz);
+	};
+}

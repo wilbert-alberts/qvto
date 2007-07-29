@@ -1,0 +1,14 @@
+transformation models.exists.exists;
+
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(in model: ecore::EPackage): ecore::EPackage {
+   	init {
+   		var f := model.eClassifiers->exists(c | c = object ecore::EClass{});
+   		var t := model.eClassifiers->exists(c | c = model.eClassifiers->first());
+   		var foo := not f and t;
+   	}
+    object {
+		name := if foo then 'OK' else 'FAILURE' endif;    
+    }
+}

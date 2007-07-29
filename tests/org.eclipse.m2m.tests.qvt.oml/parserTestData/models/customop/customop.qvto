@@ -1,0 +1,10 @@
+transformation models.customop.customop;
+
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+metamodel 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';
+
+mapping main(model: simpleuml::Model): ecore::EPackage {
+    object {
+        name := model.getCustomProperty('bar');
+    }
+}

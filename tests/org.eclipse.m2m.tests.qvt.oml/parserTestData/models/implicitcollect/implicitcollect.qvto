@@ -1,0 +1,15 @@
+transformation models.implicitcollect.implicitcollect;
+
+metamodel 'http://www.borland.com/together/uml';
+metamodel 'http://www.borland.com/together/uml20';
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(in model: uml::together::Model): ecore::EPackage {
+	object {
+    	eSubpackages := model.nestedPackages.makepacks()->asOrderedSet();
+    }
+}
+
+mapping uml::kernel::packages::Package::makepacks(): ecore::EPackage {
+	name := self.name;  
+}

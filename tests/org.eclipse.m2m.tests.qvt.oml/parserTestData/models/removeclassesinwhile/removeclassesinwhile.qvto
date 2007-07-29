@@ -1,0 +1,30 @@
+transformation models.removeclassesinwhile.removeclassesinwhile;
+
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+query main(model: ecore::EPackage): ecore::EPackage {
+    while_expr(model);
+    model
+}
+
+query while_expr(model: ecore::EPackage): OclVoid {
+
+    while (model.eClassifiers->size() > 0; 'anything') {
+        dump(model.eClassifiers);
+        patch(model, model.eClassifiers->size());
+    };
+
+    null
+}
+
+mapping patch(inout pac:ecore::EPackage, in sz : Integer): ecore::EPackage {
+    init {
+        var firstElem := pac.eClassifiers->first();
+        var classifiers := pac.eClassifiers;
+        pac.eClassifiers := classifiers->excluding(firstElem)->asOrderedSet();
+    }
+    
+    object {
+        name := pac.name;
+    }
+}

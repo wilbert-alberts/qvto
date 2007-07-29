@@ -1,0 +1,22 @@
+transformation models.scr15971.scr15971;
+
+metamodel 'http://www.borland.com/together/uml';
+metamodel 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';
+
+mapping main(in model: uml::together::Model) : ecore::EPackage {
+	object {
+		name := 'foo';
+		eSubpackages := packs(model);
+	}
+}
+
+query packs(in pack: uml::kernel::packages::Package) : OrderedSet(ecore::EPackage) {
+	pack.ownedMembers->select(p | p.oclIsTypeOf(uml::kernel::packages::Package))->
+       collect(p | pack(p.oclAsType(uml::kernel::packages::Package)))->asOrderedSet();
+}
+
+mapping pack(pack: uml::kernel::packages::Package) : ecore::EPackage {
+    object {
+	    name := pack.name;
+    }
+}

@@ -1,0 +1,12 @@
+transformation models.scr20038.scr20038;
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(pack: ecore::EPackage): ecore::EPackage {
+    object {
+        name := if _true() then 'foo' else 'bar' endif;
+    }
+}
+
+query _true(): Boolean {	
+    true
+}

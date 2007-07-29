@@ -1,0 +1,22 @@
+transformation models.scr21329.scr21329;
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(pack: ecore::EPackage): ecore::EPackage {
+   init {
+       var res := pack.makePack();
+       var nam := getTargetName(pack);
+   }
+   object {
+       name := res.name.concat(nam);
+   }
+}
+
+mapping ecore::EPackage::makePack(): ecore::EPackage {
+	object {
+		name := 'foo';
+	}
+}
+
+query getTargetName(pack: ecore::EPackage): String {
+    pack.resolve(ecore::EPackage)->asSequence()->first().oclAsType(ecore::EPackage).name
+}

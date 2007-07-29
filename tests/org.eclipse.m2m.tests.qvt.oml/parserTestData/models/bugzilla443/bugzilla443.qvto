@@ -1,0 +1,16 @@
+transformation models.bugzilla443.bugzilla443;
+
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(in model: ecore::EPackage): ecore::EPackage {
+	name := model.name.toInt().toZero() + model.name.toInt().toString();
+}
+
+query String::toInt() : Integer {
+	1
+}
+
+query Integer::toZero() : String {
+	'Zero'
+}
+	
