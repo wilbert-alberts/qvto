@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension point="org.eclipse.ui.newWizards">
+    <category
+      id = "org.eclipse.mt.wizardCategory"
+      name="%mtWizardsCategoryName">
+    </category>
+    <category
+          id="org.eclipse.m2m.wizardCategory"
+          name="%m2mWizardsCategoryName"
+          parentCategory="org.eclipse.mt.wizardCategory"/>
+      <wizard
+            category="org.eclipse.mt.wizardCategory/org.eclipse.m2m.wizardCategory"
+            class="org.eclipse.m2m.qvt.oml.ui.wizards.NewQVTTransformationWizard"
+            icon="icons/pr-Model_to_model.gif"
+            id="org.eclipse.m2m.qvt.oml.ui.wizards.NewQVTTransformationWizard"
+            name="%newQVTTransformation">
+         <description>
+         %qvtTransform.wizard.description
+         </description>
+      </wizard>
+      <wizard
+            category="org.eclipse.mt.wizardCategory/org.eclipse.m2m.wizardCategory"
+            class="org.eclipse.m2m.qvt.oml.ui.wizards.NewQvtLibraryWizard"
+            icon="icons/pr-Model_to_model.gif"
+            id="org.eclipse.m2m.qvt.oml.ui.wizards.NewQvtLibraryWizard"
+            name="%newQvtLibrary">
+         <description>
+         %qvtLib.wizard.description
+         </description>
+      </wizard>
+   </extension>
+   
+   <extension point="org.eclipse.ui.perspectiveExtensions">
+     <perspectiveExtension targetID="org.eclipse.jdt.ui.JavaPerspective">
+        <newWizardShortcut id="org.eclipse.m2m.qvt.oml.ui.wizards.NewQVTTransformationWizard"/>
+        <newWizardShortcut id="org.eclipse.m2m.qvt.oml.ui.wizards.NewQvtLibraryWizard"/>
+     </perspectiveExtension>
+  </extension>
+
+  <extension point="org.eclipse.ui.propertyPages">
+    <page
+        id="QvtSettingsPropertyPage"
+        name= "%qvtSettings"
+        class="org.eclipse.m2m.qvt.oml.ui.QvtSettingsPropertyPage">
+	    <filter name="nature" value="org.eclipse.m2m.qvt.oml.project.TransformationNature"/>
+     <enabledWhen>
+        <adapt type="org.eclipse.core.resources.IProject"/>
+     </enabledWhen>      
+    </page>
+  </extension>
+
+  <extension point="org.eclipse.ui.propertyPages">
+    <page
+        id="QvtMetamodelMappingPage"
+        category="QvtSettingsPropertyPage"
+        name= "Metamodel Mappings"
+        class="org.eclipse.m2m.qvt.oml.ui.QvtMetamodelMappingPage">
+	    <filter name="nature" value="org.eclipse.m2m.qvt.oml.project.TransformationNature"/>        
+     <enabledWhen>
+        <adapt type="org.eclipse.core.resources.IProject"/>
+     </enabledWhen>        
+    </page>
+  </extension>
+  
+</plugin>
