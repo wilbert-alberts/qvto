@@ -1,0 +1,176 @@
+/*
+ * The SimpleUML to RDB Sample demonstrates how to use QVT transformations for 
+ * transforming platform independent model to platform specific model. 
+ * 
+ * It also demonstrates the following basic features of QVT language: 
+ * helper queries, mapping guards, and resolution operations.
+ * 
+ * Sample model pim.simpleuml is included to be used as an input for the transformation.
+ */
+
+transformation Simpleuml_To_Rdb;
+
+modeltype UML uses 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';
+modeltype RDB uses 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/rdb';
+
+mapping main(in model: simpleuml::Model) : rdb::Model {
+	name := model.name;
+	schemas := package2schemas(model); 
+}
+
+query package2schemas(in root: simpleuml::Package) : OrderedSet(rdb::Schema) {
+	package2schema(root)->asSequence()->
+		union(root.getSubpackages()->collect(p | package2schemas(p)))->asOrderedSet()
+}
+
+mapping package2schema(in pack: simpleuml::Package) : rdb::Schema 
+	when { pack.hasPersistentClasses() }
+{
+	name := pack.name;
+	elements := pack.ownedElements->select(oclIsKindOf(simpleuml::Class))->
+		collect(c | persistentClass2table(c.oclAsType(simpleuml::Class)))->asOrderedSet()
+}
+
+mapping persistentClass2table(in cls: simpleuml::Class) : rdb::Table 
+	when { cls.isPersistent() }
+{
+	name := cls.name;
+	columns := class2columns(cls);
+	primaryKey := class2primaryKey(cls);
+	foreignKeys := class2foreignKeys(cls);
+}
+
+mapping class2primaryKey(in cls: simpleuml::Class) : rdb::constraints::PrimaryKey {
+	name := 'PK'.concat(cls.name);
+	includedColumns := cls.resolveoneIn(persistentClass2table, rdb::Table).getPrimaryKeyColumns()
+}
+
+query class2foreignKeys(in cls: simpleuml::Class) : OrderedSet(rdb::constraints::ForeignKey) {
+	cls.attributes->collect(resolveIn(relationshipAttribute2foreignKey, rdb::constraints::ForeignKey))->
+		asOrderedSet()
+}
+
+query class2columns(in cls: simpleuml::Class) : OrderedSet(rdb::TableColumn) {
+	dataType2columns(cls)->
+		union(generalizations2columns(cls))->asOrderedSet()
+}
+
+query dataType2columns(in dt: simpleuml::DataType) : OrderedSet(rdb::TableColumn) {
+	primitiveAttributes2columns(dt)->
+		union(enumerationAttributes2columns(dt))->
+		union(relationshipAttributes2columns(dt))->
+		union(assosiationAttributes2columns(dt))->asOrderedSet()
+}
+
+query dataType2primaryKeyColumns(in dt: simpleuml::DataType, in prefix : String, in leaveIsPrimaryKey : Boolean) : OrderedSet(rdb::TableColumn) {           
+	dataType2columns(dt)->select(isPrimaryKey)->
+		collect(c | object rdb::TableColumn {
+			name := prefix.concat('_').concat(c.name);
+			domain := c.domain;
+			type := c.type;
+			isPrimaryKey := leaveIsPrimaryKey
+		})->asOrderedSet()
+}
+
+query primitiveAttributes2columns(in dt: simpleuml::DataType) : OrderedSet(rdb::TableColumn) {
+	dt.attributes->collect(a | primitiveAttribute2column(a))->asOrderedSet()
+}
+
+query umlPrimitive2rdbPrimitive(in name : String) : String {
+	if name = 'String' then 'varchar' else
+		if name = 'Boolean' then 'int' else
+			if name = 'Integer' then 'int' else
+				name
+			endif
+		endif
+	endif
+}
+
+mapping primitiveAttribute2column(in prop: simpleuml::Property) : rdb::TableColumn 
+	when { prop.isPrimitive() }
+{
+	isPrimaryKey := prop.isPrimaryKey();
+	name := prop.name;
+	type := object rdb::datatypes::PrimitiveDataType { name := umlPrimitive2rdbPrimitive(prop.type.name); };
+}
+
+query enumerationAttributes2columns(in dt: simpleuml::DataType) : OrderedSet(rdb::TableColumn) {
+	dt.attributes->collect(a | enumerationAttribute2column(a))->asOrderedSet()
+}
+
+mapping enumerationAttribute2column(in prop: simpleuml::Property) : rdb::TableColumn 
+	when { prop.isEnumeration() }
+{
+	isPrimaryKey := prop.isPrimaryKey();	
+	name := prop.name;
+	type := object rdb::datatypes::PrimitiveDataType { name := 'int'; };
+}
+
+query relationshipAttributes2columns(in dt: simpleuml::DataType) : OrderedSet(rdb::TableColumn) {
+	dt.attributes->collect(a | relationshipAttribute2foreignKey(a))->
+		collect(includedColumns)->asOrderedSet();
+}
+
+mapping relationshipAttribute2foreignKey(in prop: simpleuml::Property) : rdb::constraints::ForeignKey 
+	when { prop.isRelationship() }
+{
+	name := 'FK'.concat(prop.name);
+	includedColumns := dataType2primaryKeyColumns(prop.type.asDataType(), prop.name, prop.isIdentifying());
+	referredUC := prop.type.late resolveoneIn(class2primaryKey, rdb::constraints::PrimaryKey);
+}
+
+query assosiationAttributes2columns(in dt: simpleuml::DataType) : OrderedSet(rdb::TableColumn) {
+	dt.attributes->select(isAssosiation())->
+		collect(p | dataType2columns(p.type.asDataType()))->asOrderedSet()
+}
+
+query generalizations2columns(in cls: simpleuml::Class) : OrderedSet(rdb::TableColumn) {
+	cls.generalizations->collect(g | class2columns(g.general))->asOrderedSet()
+}
+
+query simpleuml::Package::getSubpackages() : OrderedSet(simpleuml::Package) {
+	ownedElements->select(oclIsTypeOf(simpleuml::Package))->collect(oclAsType(simpleuml::Package))->asOrderedSet()
+}
+
+query simpleuml::Type::asDataType() : simpleuml::DataType {
+	self.oclAsType(simpleuml::DataType)
+}
+
+query simpleuml::Property::isPrimaryKey() : Boolean {
+	stereotype->includes('primaryKey')
+}
+
+query simpleuml::Property::isIdentifying() : Boolean {
+	stereotype->includes('identifying')
+}
+
+query simpleuml::Property::isPrimitive() : Boolean {
+	type.oclIsKindOf(simpleuml::PrimitiveType)
+}
+
+query simpleuml::Property::isEnumeration() : Boolean {
+	type.oclIsKindOf(simpleuml::Enumeration)
+}
+
+query simpleuml::Property::isRelationship() : Boolean {
+	type.oclIsKindOf(simpleuml::DataType) and type.isPersistent()
+}
+
+query simpleuml::Property::isAssosiation() : Boolean {
+	type.oclIsKindOf(simpleuml::DataType) and not type.isPersistent()
+}
+
+query rdb::Table::getPrimaryKeyColumns() : OrderedSet(rdb::TableColumn) {
+	columns->select(isPrimaryKey)
+}
+
+query simpleuml::ModelElement::isPersistent() : Boolean {
+	stereotype->includes('persistent')
+}
+
+query simpleuml::Package::hasPersistentClasses() : Boolean {
+--	ownedElements->exists(e | e.oclIsKindOf(simpleuml::Class) 
+--		and e.oclAsType(simpleuml::Class).isPersistent())
+	ownedElements->select(oclIsKindOf(simpleuml::Class))->
+		select(c | c.oclAsType(simpleuml::Class).isPersistent())->size() > 0
+}
