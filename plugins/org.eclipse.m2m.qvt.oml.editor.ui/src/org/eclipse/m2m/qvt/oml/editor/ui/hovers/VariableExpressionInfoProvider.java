@@ -1,0 +1,59 @@
+/*******************************************************************************
+ * Copyright (c) 2007 Borland Software Corporation
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     Borland Software Corporation - initial API and implementation
+ *******************************************************************************/
+package org.eclipse.m2m.qvt.oml.editor.ui.hovers;
+
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextViewer;
+import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
+import org.eclipse.m2m.qvt.oml.editor.ui.CSTHelper;
+import org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks.VariableHyperlinkDetector;
+import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
+import org.eclipse.ocl.ecore.EcoreEnvironment;
+import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.internal.cst.CSTNode;
+import org.eclipse.ocl.internal.cst.SimpleNameCS;
+import org.eclipse.ocl.utilities.ASTNode;
+
+
+
+/**
+ * @author vrepeshko
+ */
+public class VariableExpressionInfoProvider implements IElementInfoProvider {
+	
+	public VariableExpressionInfoProvider() {
+		super();
+	}
+
+	public String getElementInfo(final Object element, ITextViewer textViewer) {
+		if (element instanceof SimpleNameCS) {
+			SimpleNameCS nameCS = (SimpleNameCS) element;
+			CSTNode nodeCS = VariableHyperlinkDetector.resolveVariableDeclaration(nameCS);
+			if (nodeCS != null) { 
+				EcoreEnvironment env = CSTHelper.getEnvironment(nameCS);
+				ASTNode varNode = ASTBindingHelper.resolveASTNode(nodeCS);
+				if(varNode instanceof Variable) {
+					Variable<EClassifier, EParameter> var = (Variable<EClassifier, EParameter>)varNode;
+					return SignatureUtil.getVariableSignature(env, var);
+				} else if(varNode instanceof VarParameter) {
+					VarParameter varParameter = (VarParameter) varNode;
+					return SignatureUtil.getTypedElementSignature(env, varParameter);
+				}
+			}
+		}
+		
+		return null;
+	}
+}

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates>
+    <template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.main"
+          name="%code_template_main"
+          description="%code_template_main_desc">mapping main(in model : ${InputType}) : ${OutputType} {
+	${cursor}
+}</template>
+	<template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.mapping"
+          name="%code_template_mapping"
+          description="%code_template_mapping_desc">mapping ${ContextType}::${name}() : ${OutputType} {
+	${cursor}
+}</template>
+    <template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.guarded_mapping"
+          name="%code_template_guarded_mapping"
+          description="%code_template_guarded_mapping_desc">mapping ${ContextType}::${name}() : ${OutputType} 
+	when {
+		${condition}
+	}
+{
+	${cursor}
+}</template>
+    <template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.query"
+          name="%code_template_query"
+          description="%code_template_query_desc">query ${ContextType}::${name}() : ${OutputType} {
+	${cursor}
+}</template>
+    <template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.object"
+          name="%code_template_object"
+          description="%code_template_object_desc">object ${Type} {
+	${cursor}
+}</template>
+    <template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.rename"
+          name="%code_template_rename"
+          description="%code_template_rename_desc">rename ${Type}.${newName} = '${oldName}';</template>
+          
+    <template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.var"
+          name="%code_template_var"
+          description="%code_template_var_desc">var ${name} : ${Type} := ${InitExpr};
+	</template>
+	          
+    <template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.modeltype"
+          name="%code_template_modeltype"
+          description="%code_template_modeltype_desc">modeltype ${name} uses ${uri};
+	</template>
+	
+    <template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.config_property"
+          name="%code_template_config_property"
+          description="%code_template_config_property_desc">configuration property ${name} : ${Type};
+	</template>
+	
+    <template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.property"
+          name="%code_template_property"
+          description="%code_template_property_desc">property ${name} : ${Type} = ${InitExpr};
+	</template>
+
+</templates>
