@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension-point id="nativeExtension" name="%nativeExtension" schema="schema/nativeExtension.exsd"/>
+   <extension-point id="sourceGenAdapter" name="%sourceGenAdapter" schema="schema/sourceGenAdapter.exsd"/>
+   <extension-point id="importResolverFactory" name="mportResolverFactory" schema="schema/importResolverFactory.exsd"/>
+    
+   <extension
+         id="QvtBuilder"
+         name="%qvtBuilder"
+         point="org.eclipse.core.resources.builders">
+      <builder hasNature="true">
+         <run class="org.eclipse.m2m.qvt.oml.builder.QvtBuilder">
+         </run>
+      </builder>
+   </extension>
+                                                          
+   <extension point="org.eclipse.core.resources.markers"
+           id="qvtProblem" name="%qvtProblemName">
+                <super type="org.eclipse.core.resources.problemmarker"/>
+                <super type="org.eclipse.core.resources.textmarker"/>
+                <persistent value="true"/>
+  </extension>
+   
+ <extension point="org.eclipse.m2m.qvt.oml.sourceGenAdapter">
+    <adapter 
+       uri = "http://www.eclipse.org/uml2/2.0.0/UML" 
+       class = "org.eclipse.m2m.qvt.oml.generator.Uml2GenAdapter" />
+ </extension>
+ 
+ <extension point="org.eclipse.m2m.qvt.oml.common.transformNatureConfigParticipants">
+    <configParticipant class="org.eclipse.m2m.qvt.oml.builder.QvtNatureConfigParticipant"/>
+ </extension> 
+ 
+ <extension point="org.eclipse.emf.ecore.generated_package">
+   <package 
+      uri = "http:///www.eclipse.org/m2m/qvt/operational/trace.ecore" 
+      class = "org.eclipse.m2m.qvt.oml.trace.TracePackage"
+      genModel = "model/trace.genmodel" /> 
+ </extension>
+ 
+ <extension point="org.eclipse.emf.ecore.generated_package">
+   <package 
+      uri = "http://www.eclipse.org/qvt/1.0.0/Operational/Expressions" 
+      class = "org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage"
+      genModel = "model/QVTOperational.genmodel" /> 
+ </extension>
+ 
+ <extension
+       point="org.eclipse.emf.ecore.extension_parser">
+    <parser
+          class="org.eclipse.m2m.qvt.oml.internal.resource.QvtOperationalResourceFactoryImpl"
+          type="%qvtFileExtension">
+    </parser>
+ </extension>
+
+</plugin>

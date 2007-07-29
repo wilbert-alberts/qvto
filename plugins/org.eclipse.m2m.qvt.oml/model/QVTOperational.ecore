@@ -1,0 +1,818 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="qvtoperational"
+    nsURI="http://www.eclipse.org/qvt/1.0.0/Operational" nsPrefix="qvtoperational">
+  <eSubpackages name="expressions" nsURI="http://www.eclipse.org/qvt/1.0.0/Operational/Expressions"
+      nsPrefix="qvtoperational.expr">
+    <eClassifiers xsi:type="ecore:EClass" name="Module" eSuperTypes="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage #//expressions/VisitableASTNode">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitModule(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/Module/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/Module/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/Module/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="moduleImport" upperBound="-1"
+          eType="#//expressions/ModuleImport" containment="true" eOpposite="#//expressions/ModuleImport/module"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="usedModelType" upperBound="-1"
+          eType="#//expressions/ModelType" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="configProperty" upperBound="-1"
+          eType="#//expressions/Property" containment="true" eOpposite="#//expressions/Property/module"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="ownedRenaming" upperBound="-1"
+          eType="#//expressions/Rename" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="entry" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EOperation"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="modelParameter" upperBound="-1"
+          eType="#//expressions/ModelParameter" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Library" eSuperTypes="#//expressions/Module">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitLibrary(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/Library/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/Library/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/Library/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="library" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Rename" eSuperTypes="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//ETypedElement #//expressions/VisitableASTNode">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitRename(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/Rename/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/Rename/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/Rename/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="newName" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ModuleImport" eSuperTypes="#//expressions/VisitableASTNode">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitModuleImport(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/ModuleImport/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/ModuleImport/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/ModuleImport/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="module" eType="#//expressions/Module"
+          transient="true" eOpposite="#//expressions/Module/moduleImport"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="importedModule" lowerBound="1"
+          eType="#//expressions/Module"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Property" eSuperTypes="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EParameter #//expressions/VisitableASTNode">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitProperty(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/Property/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/Property/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/Property/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="module" eType="#//expressions/Module"
+          transient="true" eOpposite="#//expressions/Module/configProperty"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="LocalProperty" eSuperTypes="#//expressions/Property">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitLocalProperty(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/LocalProperty/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/LocalProperty/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/LocalProperty/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="expression">
+        <eGenericType eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+        </eGenericType>
+      </eStructuralFeatures>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ConfigProperty" eSuperTypes="#//expressions/Property">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitConfigProperty(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/ConfigProperty/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/ConfigProperty/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/ConfigProperty/accept/U"/>
+        </eParameters>
+      </eOperations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ImperativeOperation" eSuperTypes="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EOperation #//expressions/VisitableASTNode">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitImperativeOperation(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/ImperativeOperation/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/ImperativeOperation/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/ImperativeOperation/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="context" eType="#//expressions/VarParameter"
+          containment="true" eOpposite="#//expressions/VarParameter/ctxOwner"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="result" upperBound="-1"
+          eType="#//expressions/VarParameter" containment="true" eOpposite="#//expressions/VarParameter/resOwner"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//expressions/OperationBody"
+          containment="true" eOpposite="#//expressions/OperationBody/operation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="isBlackbox" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ModelParameter" eSuperTypes="#//expressions/VarParameter"/>
+    <eClassifiers xsi:type="ecore:EClass" name="VarParameter" eSuperTypes="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EParameter #//expressions/VisitableASTNode">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitVarParameter(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/VarParameter/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/VarParameter/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/VarParameter/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="ctxOwner" eType="#//expressions/ImperativeOperation"
+          transient="true" eOpposite="#//expressions/ImperativeOperation/context"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="resOwner" eType="#//expressions/ImperativeOperation"
+          transient="true" eOpposite="#//expressions/ImperativeOperation/result"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="#//expressions/DirectionKind"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="DirectionKind">
+      <eLiterals name="in"/>
+      <eLiterals name="inout" value="1"/>
+      <eLiterals name="out" value="2"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="OperationBody" eSuperTypes="#//expressions/VisitableASTNode">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitOperationBody(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/OperationBody/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/OperationBody/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/OperationBody/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="operation" eType="#//expressions/ImperativeOperation"
+          transient="true" eOpposite="#//expressions/ImperativeOperation/body"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="content" upperBound="-1"
+          containment="true">
+        <eGenericType eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+        </eGenericType>
+      </eStructuralFeatures>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MappingOperation" eSuperTypes="#//expressions/ImperativeOperation">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitMappingOperation(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/MappingOperation/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/MappingOperation/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/MappingOperation/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="when" upperBound="-1"
+          containment="true">
+        <eGenericType eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+        </eGenericType>
+      </eStructuralFeatures>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Helper" eSuperTypes="#//expressions/ImperativeOperation">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitHelper(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/Helper/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/Helper/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/Helper/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="isQuery" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MappingBody" eSuperTypes="#//expressions/OperationBody">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitMappingBody(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/MappingBody/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/MappingBody/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/MappingBody/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="initSection" upperBound="-1"
+          containment="true">
+        <eGenericType eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="endSection" upperBound="-1"
+          containment="true">
+        <eGenericType eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+        </eGenericType>
+      </eStructuralFeatures>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ImperativeExpression" abstract="true">
+      <eGenericSuperTypes eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
+        <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+      </eGenericSuperTypes>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="AssignExp" eSuperTypes="#//expressions/ImperativeExpression">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitAssignExp(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/AssignExp/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/AssignExp/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/AssignExp/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="value" upperBound="-1"
+          containment="true">
+        <eGenericType eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="left" lowerBound="1"
+          containment="true">
+        <eGenericType eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="isReset" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="VariableInitExp" eSuperTypes="#//expressions/ImperativeExpression">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitVariableInitExp(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/VariableInitExp/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/VariableInitExp/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/VariableInitExp/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="value" containment="true">
+        <eGenericType eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+        </eGenericType>
+      </eStructuralFeatures>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MappingCallExp">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitMappingCallExp(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/MappingCallExp/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/MappingCallExp/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/MappingCallExp/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="isStrict" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+      <eGenericSuperTypes eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//expressions/OperationCallExp">
+        <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+        <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EOperation"/>
+      </eGenericSuperTypes>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ObjectExp" eSuperTypes="#//expressions/ImperativeExpression">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitObjectExp(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/ObjectExp/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/ObjectExp/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/ObjectExp/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="content" upperBound="-1"
+          containment="true">
+        <eGenericType eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="referredObject" lowerBound="1"
+          eType="#//expressions/ModelParameter"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="WhileExp" eSuperTypes="#//expressions/ImperativeExpression">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitWhileExp(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/WhileExp/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/WhileExp/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/WhileExp/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="condition" lowerBound="1"
+          containment="true">
+        <eGenericType eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="body" upperBound="-1"
+          containment="true">
+        <eGenericType eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="result" containment="true">
+        <eGenericType eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+        </eGenericType>
+      </eStructuralFeatures>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ExtendedVisitor" abstract="true" interface="true">
+      <eTypeParameters name="T"/>
+      <eTypeParameters name="S"/>
+      <eTypeParameters name="COA"/>
+      <eTypeParameters name="SSA"/>
+      <eTypeParameters name="CT"/>
+      <eOperations name="visitModule">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="module" lowerBound="1" eType="#//expressions/Module"/>
+      </eOperations>
+      <eOperations name="visitLibrary">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="library" lowerBound="1" eType="#//expressions/Library"/>
+      </eOperations>
+      <eOperations name="visitRename">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="rename" lowerBound="1" eType="#//expressions/Rename"/>
+      </eOperations>
+      <eOperations name="visitModuleImport">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="moduleImport" lowerBound="1" eType="#//expressions/ModuleImport"/>
+      </eOperations>
+      <eOperations name="visitProperty">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="property" lowerBound="1" eType="#//expressions/Property"/>
+      </eOperations>
+      <eOperations name="visitLocalProperty">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="localProperty" lowerBound="1" eType="#//expressions/LocalProperty"/>
+      </eOperations>
+      <eOperations name="visitConfigProperty">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="configProperty" lowerBound="1" eType="#//expressions/ConfigProperty"/>
+      </eOperations>
+      <eOperations name="visitImperativeOperation">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="imperativeOperation" lowerBound="1" eType="#//expressions/ImperativeOperation"/>
+      </eOperations>
+      <eOperations name="visitVarParameter">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="varParameter" lowerBound="1" eType="#//expressions/VarParameter"/>
+      </eOperations>
+      <eOperations name="visitOperationBody">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="operationBody" lowerBound="1" eType="#//expressions/OperationBody"/>
+      </eOperations>
+      <eOperations name="visitMappingOperation">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="mappingOperation" lowerBound="1" eType="#//expressions/MappingOperation"/>
+      </eOperations>
+      <eOperations name="visitHelper">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="helper" lowerBound="1" eType="#//expressions/Helper"/>
+      </eOperations>
+      <eOperations name="visitMappingBody">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="mappingBody" lowerBound="1" eType="#//expressions/MappingBody"/>
+      </eOperations>
+      <eOperations name="visitAssignExp">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="assignExp" lowerBound="1" eType="#//expressions/AssignExp"/>
+      </eOperations>
+      <eOperations name="visitVariableInitExp">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="variableInitExp" lowerBound="1" eType="#//expressions/VariableInitExp"/>
+      </eOperations>
+      <eOperations name="visitMappingCallExp">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="mappingCallExp" lowerBound="1" eType="#//expressions/MappingCallExp"/>
+      </eOperations>
+      <eOperations name="visitResolveExp">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="resolveExp" lowerBound="1" eType="#//expressions/ResolveExp"/>
+      </eOperations>
+      <eOperations name="visitResolveInExp">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="resolveInExp" lowerBound="1" eType="#//expressions/ResolveInExp"/>
+      </eOperations>
+      <eOperations name="visitObjectExp">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="objectExp" lowerBound="1" eType="#//expressions/ObjectExp"/>
+      </eOperations>
+      <eOperations name="visitWhileExp">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="whileExp" lowerBound="1" eType="#//expressions/WhileExp"/>
+      </eOperations>
+      <eOperations name="visitModelType">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="modelType" lowerBound="1" eType="#//expressions/ModelType"/>
+      </eOperations>
+      <eGenericSuperTypes eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+        <eTypeArguments eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+        <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EOperation"/>
+        <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
+        <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EEnumLiteral"/>
+        <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EParameter"/>
+        <eTypeArguments eTypeParameter="#//expressions/ExtendedVisitor/S"/>
+        <eTypeArguments eTypeParameter="#//expressions/ExtendedVisitor/COA"/>
+        <eTypeArguments eTypeParameter="#//expressions/ExtendedVisitor/SSA"/>
+        <eTypeArguments eTypeParameter="#//expressions/ExtendedVisitor/CT"/>
+      </eGenericSuperTypes>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="VisitableASTNode" abstract="true"
+        interface="true" eSuperTypes="../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitable ../../org.eclipse.ocl/model/OCL.ecore#//utilities/ASTNode"/>
+    <eClassifiers xsi:type="ecore:EClass" name="ResolveExp">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitResolveExp(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/ResolveExp/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/ResolveExp/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/ResolveExp/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="one" lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInverse" lowerBound="1"
+          eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="isDeferred" lowerBound="1"
+          eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="target" containment="true">
+        <eGenericType eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//expressions/Variable">
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EParameter"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="condition" containment="true">
+        <eGenericType eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eGenericSuperTypes eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//expressions/CallExp">
+        <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+      </eGenericSuperTypes>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ResolveInExp" eSuperTypes="#//expressions/ResolveExp">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitResolveInExp(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/ResolveInExp/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/ResolveInExp/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/ResolveInExp/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="inMapping" eType="#//expressions/MappingOperation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ModelType" eSuperTypes="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass #//expressions/VisitableASTNode">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitModelType(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/ModelType/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/ModelType/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/ModelType/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="metamodel" lowerBound="1"
+          upperBound="-1" eType="#//expressions/PackageRef" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="additionalCondition"
+          upperBound="-1" containment="true">
+        <eGenericType eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="conformanceKind" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="PackageRef" eSuperTypes="../../org.eclipse.ocl/model/OCL.ecore#//utilities/ASTNode">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="uri" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MappingParameter" eSuperTypes="#//expressions/VarParameter">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="extent" eType="#//expressions/ModelParameter"/>
+    </eClassifiers>
+  </eSubpackages>
+</ecore:EPackage>
