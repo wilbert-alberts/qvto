@@ -1,0 +1,50 @@
+/*******************************************************************************
+ * Copyright (c) 2007 Borland Software Corporation
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     Borland Software Corporation - initial API and implementation
+ *******************************************************************************/
+package org.eclipse.m2m.internal.qvt.oml.common.launch;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.debug.core.ILaunchConfiguration;
+import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
+
+public class InMemoryLaunchUtils {
+    private InMemoryLaunchUtils() {}
+    
+    public static Object getAttribute(ILaunchConfiguration config, String name) throws CoreException {
+        List value = config.getAttribute(name, Collections.EMPTY_LIST);
+        if(value.isEmpty()) {
+            return null;
+        }
+        
+        if(value.size() != 1) {
+            throw new IllegalArgumentException("Invalid value for " + name + ": " + value); //$NON-NLS-1$ //$NON-NLS-2$
+        }
+        
+        return value.get(0);
+    }
+    
+    public static void setAttribute(ILaunchConfigurationWorkingCopy config, String name, Object value) {
+        List<Object> list;
+        if(value == null) {
+            list = Collections.<Object>emptyList(); 
+        }
+        else {
+            list = new ArrayList<Object>();
+            list.add(value);
+        }
+        
+        config.setAttribute(name, list);
+    }
+}
