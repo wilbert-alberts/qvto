@@ -1,0 +1,25 @@
+<root>
+	<nameMapping pattern=" " replaceBy="_"/>
+	<nameMapping wholeWords="true" pattern="and"/>
+	<nameMapping wholeWords="true" pattern="context"/>
+	<nameMapping wholeWords="true" pattern="def"/>
+	<nameMapping wholeWords="true" pattern="else"/>
+	<nameMapping wholeWords="true" pattern="endif"/>
+	<nameMapping wholeWords="true" pattern="endpackage"/>
+	<nameMapping wholeWords="true" pattern="if"/>
+	<nameMapping wholeWords="true" pattern="implies"/>
+	<nameMapping wholeWords="true" pattern="in"/>
+	<nameMapping wholeWords="true" pattern="inv"/>
+	<nameMapping wholeWords="true" pattern="let"/>
+	<nameMapping wholeWords="true" pattern="not"/>
+	<nameMapping wholeWords="true" pattern="or"/>
+	<nameMapping wholeWords="true" pattern="package"/>
+	<nameMapping wholeWords="true" pattern="post"/>
+	<nameMapping wholeWords="true" pattern="pre"/>
+	<nameMapping wholeWords="true" pattern="then"/>
+	<nameMapping wholeWords="true" pattern="xor"/>
+	
+	<nameMapping wholeWords="true" pattern="init"/>
+	<nameMapping wholeWords="true" pattern="derive"/>
+	<nameMapping wholeWords="true" pattern="body"/>
+</root>
