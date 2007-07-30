@@ -109,7 +109,6 @@ public class MetamodelBrowser  implements IAdaptable {
 	
     private static final String FIND_CLASSIFIER_COMMAND_ID = "org.eclipse.m2m.qvt.oml.findClassifier"; //$NON-NLS-1$
     private static final String CONTEXT_ID = "org.eclipse.m2m.qvt.oml.metamodelBrowser"; //$NON-NLS-1$
-    private static final String PATH_SEPARATOR = "::"; //$NON-NLS-1$
     private static final String EXTENDED_CLASSES = " -> "; //$NON-NLS-1$
     private static final String EXTENDED_CLASSES_SEPARATOR = ", "; //$NON-NLS-1$
     private static final String INSTANCE_CLASS_NAME_START = " <"; //$NON-NLS-1$
@@ -397,7 +396,7 @@ public class MetamodelBrowser  implements IAdaptable {
 							text.append(EXTENDED_CLASSES);
 							for (Iterator<EClass> iter = eClass.getESuperTypes().iterator(); iter.hasNext();) {
 								EClass eSuperType = (EClass) iter.next();
-								text.append(EmfUtil.getFullName(eSuperType, PATH_SEPARATOR));
+								text.append(EmfUtil.getFullName(eSuperType));
 								if (iter.hasNext()) {
 									text.append(EXTENDED_CLASSES_SEPARATOR);
 								}
@@ -420,7 +419,7 @@ public class MetamodelBrowser  implements IAdaptable {
 						text.append(PARAMETERS_START);
 						for (Iterator<EParameter> iter = eOperation.getEParameters().iterator(); iter.hasNext();) {
 							EParameter eParameter = (EParameter) iter.next();
-							text.append(EmfUtil.getFullName(eParameter.getEType(), PATH_SEPARATOR));
+							text.append(EmfUtil.getFullName(eParameter.getEType()));
 							if (iter.hasNext()) {
 								text.append(PARAMETERS_SEPARATOR);
 							}
@@ -429,7 +428,7 @@ public class MetamodelBrowser  implements IAdaptable {
 					}
 					if (eTypedElement.getEType() != null) {
 						text.append(NAME_AND_TYPE_SEPARATOR);
-						text.append(EmfUtil.getFullName(eTypedElement.getEType(), PATH_SEPARATOR));
+						text.append(EmfUtil.getFullName(eTypedElement.getEType()));
 					}
 					return text.toString();
 				}

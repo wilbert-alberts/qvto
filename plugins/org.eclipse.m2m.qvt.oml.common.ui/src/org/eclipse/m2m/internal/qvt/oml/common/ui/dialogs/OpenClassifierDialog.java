@@ -143,7 +143,7 @@ public class OpenClassifierDialog extends Dialog implements ISelectionProvider {
 			public String getText(final Object element) {
 				if (element instanceof EClassifier) {
 					EClassifier classifier = (EClassifier) element;
-					return classifier.getName() + PACKAGE_SEPARATOR + EmfUtil.getFullName(classifier, PATH_SEPARATOR);
+					return classifier.getName() + PACKAGE_SEPARATOR + EmfUtil.getFullName(classifier);
 				}
 				return null;
 			}
@@ -223,6 +223,5 @@ public class OpenClassifierDialog extends Dialog implements ISelectionProvider {
 	private TableViewer myResultsViewer;
 	private ISelection mySelection = StructuredSelection.EMPTY;
 	
-	private static final String PATH_SEPARATOR = "::"; //$NON-NLS-1$
 	private static final String PACKAGE_SEPARATOR = " - ";  //$NON-NLS-1$
 }

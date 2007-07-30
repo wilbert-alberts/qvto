@@ -12,7 +12,6 @@
 package org.eclipse.m2m.internal.qvt.oml.common.ui.launch;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
@@ -76,6 +75,7 @@ public class ReferenceSelectionDialog extends Dialog {
         
         myViewer.setInput(myRoot);
         
+    	myViewer.expandAll();
         if(myInitialSelection != null) {
         	myViewer.setSelection(new StructuredSelection(myInitialSelection), true);
         }
@@ -99,11 +99,10 @@ public class ReferenceSelectionDialog extends Dialog {
 			if(parentElement instanceof EClass) {
 				EClass cls = (EClass)parentElement;
 				List<EReference> validRefs = new ArrayList<EReference>();
-				for(Iterator it = cls.getEAllContainments().iterator(); it.hasNext(); ) {
-					EReference ref = (EReference)it.next();
+				for(EReference ref : cls.getEAllContainments()) {
 					if(myRefFilter == null || myRefFilter.accept(ref)) {
-					validRefs.add(ref);
-				}
+						validRefs.add(ref);
+					}
 				}
 				
 				return validRefs.toArray();

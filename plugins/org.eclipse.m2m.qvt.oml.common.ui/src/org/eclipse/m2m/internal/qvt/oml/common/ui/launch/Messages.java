@@ -42,6 +42,13 @@ public class Messages extends NLS {
 	public static String QvtValidator_EmptyInputTransfParam;
 	public static String QvtValidator_InvalidSourceUri;
 	public static String QvtValidator_IncompatibleInputTypes;
+	public static String QvtValidator_UnsupportedDestination;
+	public static String QvtValidator_InvalidTargetUri;
+	public static String QvtValidator_DestinationExists;
+	public static String QvtValidator_DestinationExistsNonEObject;
+	public static String QvtValidator_NewDestinationHasFragment;
+	public static String QvtValidator_NoFeature;
+	public static String QvtValidator_InvalidFeature;
 	
     static {
         // initialize resource bundle

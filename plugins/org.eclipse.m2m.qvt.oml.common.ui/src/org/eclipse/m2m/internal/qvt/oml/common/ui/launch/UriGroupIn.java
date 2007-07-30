@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.qvt.oml.common.ui.IModelParameterInfo;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.StatusUtil;
@@ -67,15 +68,19 @@ public class UriGroupIn extends BaseUriGroup {
         });
     }
     
-    public void initializeFrom(String uri) {
-        myUriText.setText(uri);
+    public void initializeFrom(TargetUriData uriData) {
+        myUriText.setText(uriData.getUriString());
     }
 
+	public TargetUriData getUriData() {
+		return new TargetUriData(getText());
+	}
+    
     public String getText() {
         return myUriText.getText();
     }
     
-    public void update(String uri, String baseName, String extension, Shell shell) {
+    public void update(String uri, Shell shell) {
         if(uri == null) {
             myUriText.setEnabled(false);
             myBrowseButton.setEnabled(false);
@@ -127,16 +132,20 @@ public class UriGroupIn extends BaseUriGroup {
 			
 	    	if (!EmfUtil.isAssignableFrom(classifier, in.eClass()) || !classifier.isInstance(in)) {
 	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputTypes, 
-	            		EmfUtil.getFullName(in.eClass(), "::"), //$NON-NLS-1$
-	            		EmfUtil.getFullName(classifier, "::") //$NON-NLS-1$                		
+	            		EmfUtil.getFullName(in.eClass()),
+	            		EmfUtil.getFullName(classifier)                		
 	            		));
 	    	}
 	        
 			return StatusUtil.makeOkStatus();
 		}
 
-		public void update(IModelParameterInfo paramInfo, Shell shell) {
-			UriGroupIn.this.update("/", "", "", shell);
+		public void update(String moduleName, IModelParameterInfo paramInfo, Shell shell) {
+			EClassifier classifier = paramInfo.getEntryParamType();
+			if (classifier == null) {
+				classifier = paramInfo.getMetamodel().eClass();
+			}
+			UriGroupIn.this.update(EmfUtil.getRootPackageUri(classifier), shell);
 		}
 
 	}

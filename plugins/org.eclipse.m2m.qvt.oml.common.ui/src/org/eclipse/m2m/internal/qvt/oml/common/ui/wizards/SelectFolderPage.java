@@ -17,6 +17,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.TransformationControls;
+import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -122,7 +123,7 @@ public class SelectFolderPage extends WizardPage {
                null, 
                getShell(),
                Messages.SelectFolderPage_BrowseFolder,
-               "org.eclipse.m2m.qvt.oml._transformation"); //$NON-NLS-1$
+               MDAConstants.QVTO_TRANSFORMATION_CONTEXTID);
        
        if(cont != null){
            myContainer = cont;
