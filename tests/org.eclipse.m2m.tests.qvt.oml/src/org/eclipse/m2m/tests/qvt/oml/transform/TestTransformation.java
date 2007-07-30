@@ -27,6 +27,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TraceSerializer;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
+import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.common.emf.ExtendedEmfUtil;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
@@ -154,7 +155,7 @@ public abstract class TestTransformation extends TestCase {
     }
     
     public static CFile getTraceFile(CFile qvtFile) throws MdaException {
-        String fileName = qvtFile.getUnitName() + ".oqvttrace"; //$NON-NLS-1$
+        String fileName = qvtFile.getUnitName() + MDAConstants.QVTO_TRACEFILE_EXTENSION_WITH_DOT;
         CFile traceFile = qvtFile.getParent().getFile(fileName);
         return traceFile;
     }
