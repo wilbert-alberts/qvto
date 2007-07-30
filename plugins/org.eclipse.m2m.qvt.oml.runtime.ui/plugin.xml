@@ -104,7 +104,7 @@
             class="org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.editor.TraceEditorPart"
             contributorClass="org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.editor.TraceEditorActionBarContributor"
             default="true"
-            extensions="oqvttrace"
+            extensions="qvtotrace"
             icon="icons/trace-editor.gif"
             id="org.eclipse.m2m.qvt.oml.trace.editor"
             name="%traceEditor"/>

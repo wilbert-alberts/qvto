@@ -23,6 +23,7 @@ public class Messages extends NLS {
 	public static String QvtLauncherTab_SourceModelURILabel;
 	public static String QvtLauncherTab_SelectTransformation;
 	public static String QvtLauncherTab_TraceFile;
+	public static String QvtLauncherTab_ParametersLabel;
 	
 	public static String QvtCompiledLaunchTab_SourceModelURI;
 	public static String QvtCompiledLaunchTab_BrowseTitle;

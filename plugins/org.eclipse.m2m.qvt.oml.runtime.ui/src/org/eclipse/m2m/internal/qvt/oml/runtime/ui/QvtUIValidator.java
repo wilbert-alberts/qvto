@@ -54,7 +54,7 @@ public class QvtUIValidator {
         catch(MdaException e) {
         	baseName = ""; //$NON-NLS-1$
         }
-        String extension = NameUtil.getExtensionForResult(outCls);
+        String extension = EmfUtil.getExtensionForResult(outCls);
         targetModelUri.update(EmfUtil.getRootPackageUri(outCls), baseName, extension, shell);
         
         traceFile.update(baseName, "trace"); //$NON-NLS-1$

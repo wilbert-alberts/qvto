@@ -21,6 +21,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.ui.wizards.SelectCompiledTransfor
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtCompiledTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformationRegistry;
+import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.common.project.CompiledTransformation;
 import org.eclipse.m2m.qvt.oml.common.project.TransformationRegistry;
@@ -38,8 +39,7 @@ public class SelectQvtCompiledTransformationPage extends SelectCompiledTransform
     @Override
 	public void createControl(Composite parent) {
     	super.createControl(parent);
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, 
-			"org.eclipse.m2m.qvt.oml._transformation");  //$NON-NLS-1$
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, MDAConstants.QVTO_TRANSFORMATION_CONTEXTID);
     }
     
     @Override

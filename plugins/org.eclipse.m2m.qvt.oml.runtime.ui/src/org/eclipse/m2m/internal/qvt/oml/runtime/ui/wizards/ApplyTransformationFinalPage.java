@@ -16,10 +16,20 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessage;
+import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.ISourceUriGroup;
+import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.OptionalFileGroup;
+import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.TargetUriGroup;
+import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.TransformationControls;
+import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.OptionalFileGroup.IModifyListener;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
-import org.eclipse.m2m.internal.qvt.oml.runtime.ui.NameUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.QvtUIValidator;
+import org.eclipse.m2m.qvt.oml.common.Logger;
+import org.eclipse.m2m.qvt.oml.common.MdaException;
+import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
+import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -28,17 +38,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-
-import org.eclipse.m2m.qvt.oml.common.Logger;
-import org.eclipse.m2m.qvt.oml.common.MdaException;
-import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
-import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
-import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessage;
-import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.ISourceUriGroup;
-import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.OptionalFileGroup;
-import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.TargetUriGroup;
-import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.TransformationControls;
-import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.OptionalFileGroup.IModifyListener;
 
 /**
  * @author vrepeshko
@@ -134,7 +133,7 @@ public class ApplyTransformationFinalPage extends WizardPage {
         }
         
         try {
-            String fileName = myData.getTransformation().getModuleName() + "." + NameUtil.getExtensionForResult(myData.getTransformation().getOut()); //$NON-NLS-1$
+            String fileName = myData.getTransformation().getModuleName() + "." + EmfUtil.getExtensionForResult(myData.getTransformation().getOut()); //$NON-NLS-1$
             IPath targetPath = new Path(file.getParent().getFullPath() + "/" + fileName);  //$NON-NLS-1$
             URI targetUri = URI.createPlatformResourceURI(targetPath.toString(), false);
             myTargetModelUriGroup.getUriText().setText(targetUri == null ? "" : targetUri.toString()); //$NON-NLS-1$

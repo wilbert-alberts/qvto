@@ -50,8 +50,7 @@ public class SelectQvtProjectTransformationPage extends SelectTransformationPage
 	public void createControl(Composite parent) {
     	super.createControl(parent);
 
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, 
-			"org.eclipse.m2m.qvt.oml._transformation");  //$NON-NLS-1$
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, MDAConstants.QVTO_TRANSFORMATION_CONTEXTID);
     }
     
     @Override

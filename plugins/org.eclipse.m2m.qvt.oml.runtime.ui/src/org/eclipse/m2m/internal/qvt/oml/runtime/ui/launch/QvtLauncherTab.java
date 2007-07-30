@@ -17,7 +17,9 @@ import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.emf.common.util.URI;
@@ -27,19 +29,16 @@ import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessage;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.IUriGroup;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.MdaLaunchTab;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.OptionalFileGroup;
-import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.SourceUriGroup;
-import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.TargetUriGroup;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.TransformationControls;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
+import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtValidator;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.ITransformationMaker;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
-import org.eclipse.m2m.internal.qvt.oml.runtime.ui.QvtUIValidator;
 import org.eclipse.m2m.qvt.oml.QvtEngine;
 import org.eclipse.m2m.qvt.oml.common.Logger;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
-import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.osgi.util.NLS;
@@ -57,6 +56,14 @@ import org.eclipse.ui.PlatformUI;
 public class QvtLauncherTab extends MdaLaunchTab {
 	public QvtLauncherTab(ITransformationMaker transformationMaker) {
 		myTransformationMaker = transformationMaker;
+
+        myUriListeners = new ArrayList<IUriGroup.IModifyListener>(1);
+        myUriListeners.add(new IUriGroup.IModifyListener() {
+			public void modified() {
+				initTraceFileText();
+				updateLaunchConfigurationDialog();
+			}
+		});
 	}
 	
 	@Override
@@ -71,8 +78,7 @@ public class QvtLauncherTab extends MdaLaunchTab {
         }
 */      
         super.createControl(parent);
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, 
-			"org.eclipse.m2m.qvt.oml._transformation");  //$NON-NLS-1$
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, MDAConstants.QVTO_TRANSFORMATION_CONTEXTID);
     }
     
 	@Override
@@ -106,8 +112,8 @@ public class QvtLauncherTab extends MdaLaunchTab {
                         },
                         new TransformationControls.FileValidator(),
                         getShell(),
-                        Messages.QvtLauncherTab_SelectTransformation, //$NON-NLS-1$
-                        "org.eclipse.m2m.qvt.oml._transformation"); //$NON-NLS-1$
+                        Messages.QvtLauncherTab_SelectTransformation,
+                        MDAConstants.QVTO_TRANSFORMATION_CONTEXTID);
                 
                 if(file != null){
                     myQvtFile.setText(file.getFullPath().toString());
@@ -115,38 +121,34 @@ public class QvtLauncherTab extends MdaLaunchTab {
             } 
         });
 
-        //myTransfSignatureControl = new TransformationSignatureLaunchControl(parent, SWT.NONE|SWT.BORDER);
-
-        mySourceModelUri = TransformationControls.createUriGroup(parent, Messages.QvtLauncherTab_SourceModelURILabel); //$NON-NLS-1$
-        mySourceModelUri.addModifyListener(SOURCE_URI_LISTENER);
-        
-		myTargetModelUri = TransformationControls.createTargetUriGroup(parent, mySourceModelUri);
-        myTargetModelUri.addModifyListener(new TargetUriGroup.IModifyListener() {
-            public void modified() {
-                if((myTraceFile.getText().length() == 0) || (myTraceFile.getText().equals(QvtLaunchUtil.getTraceFileName(URI.createURI(oldURI))))) {
-                    initTraceFileText();
-                }
-                oldURI = myTargetModelUri.getUriText().getText();
-            }
-        });
-        myTargetModelUri.addModifyListener(new TargetUriGroup.IModifyListener(){
-			public void modified() {
-				updateLaunchConfigurationDialog();			
-			}
-        });
-        
         myTraceFile = new OptionalFileGroup(parent, Messages.QvtLauncherTab_TraceFile);
         myTraceFile.addModifyListener(new OptionalFileGroup.IModifyListener() {
             public void modified() {
+            	myTraceNameNonChanged = myTraceFile.getText().equals(getTraceFileName());
                 updateLaunchConfigurationDialog();
             }});
+
+        TransformationControls.createLabel(parent, Messages.QvtLauncherTab_ParametersLabel, TransformationControls.GRID);
+        myTransfSignatureControl = new TransformationSignatureLaunchControl(parent, SWT.NONE|SWT.BORDER);
+
 	}
 
     private void initTraceFileText() {
-        URI targetUri = URI.createURI(myTargetModelUri.getText());
-        String traceFileName = QvtLaunchUtil.getTraceFileName(targetUri);
-        myTraceFile.setUseFileFlag(traceFileName != null);
-        myTraceFile.setText(traceFileName);
+    	if (myTraceNameNonChanged || myTraceFile.getText().length() == 0) {
+	        String traceFileName = getTraceFileName();
+	        myTraceFile.setText(traceFileName);
+	        myTraceFile.setUseFileFlag(traceFileName != null);
+	        if (traceFileName != null) {
+	            IPath path = Path.fromOSString(traceFileName);
+	        	myTraceFile.update(path.lastSegment().replaceAll(MDAConstants.QVTO_TRACEFILE_EXTENSION_WITH_DOT, ""), //$NON-NLS-1$
+	        			MDAConstants.QVTO_TRACEFILE_EXTENSION);
+	        }
+    	}
+    }
+    
+    private String getTraceFileName() {
+        URI targetUri = URI.createURI(myTransfSignatureControl.getTraceName());
+        return QvtLaunchUtil.getTraceFileName(targetUri);
     }
 	
     @Override
@@ -192,17 +194,10 @@ public class QvtLauncherTab extends MdaLaunchTab {
 		}
 		
 		try {
-			mySourceModelUri.initializeFrom(configuration.getAttribute(IQvtLaunchConstants.SOURCE_MODEL, "")); //$NON-NLS-1$
-		} catch (CoreException e) {
-			mySourceModelUri.initializeFrom(""); //$NON-NLS-1$
-		}
-		
-		try {
-			TargetUriData targetData = QvtLaunchUtil.getTargetUriData(configuration);
-			myTargetModelUri.initializeFrom(targetData);
+			myTransfSignatureControl.initializeFrom(configuration);
 		} catch (CoreException e) {
 		}
-        
+
         try {
             myTraceFile.setText(configuration.getAttribute(IQvtLaunchConstants.TRACE_FILE, "")); //$NON-NLS-1$
         } catch (CoreException e) {
@@ -221,8 +216,7 @@ public class QvtLauncherTab extends MdaLaunchTab {
         }
 */        
 		configuration.setAttribute(IQvtLaunchConstants.MODULE, myQvtFile.getText());
-		configuration.setAttribute(IQvtLaunchConstants.SOURCE_MODEL, mySourceModelUri.getText());
-		QvtLaunchUtil.saveTargetUriData(configuration, myTargetModelUri.getData());
+		myTransfSignatureControl.performApply(configuration);
         configuration.setAttribute(IQvtLaunchConstants.TRACE_FILE, myTraceFile.getText());
         configuration.setAttribute(IQvtLaunchConstants.USE_TRACE_FILE, myTraceFile.getUseFileFlag());
 	}
@@ -240,9 +234,22 @@ public class QvtLauncherTab extends MdaLaunchTab {
         else{
             setMessage(null);
             setErrorMessage(null);
-            //IStatus status = myTransfSignatureControl.validate(getShell());
-            //boolean isValid = TransformationControls.statusToTab(status, SET_MESSAGE);
-            return QvtUIValidator.validateTransformation(SET_MESSAGE, myTransformation, mySourceModelUri, myTargetModelUri, myTraceFile, getShell());
+            String moduleName;
+            try {
+            	moduleName = myTransformation.getModuleName();
+            }
+            catch (MdaException e) {
+            	moduleName = ""; //$NON-NLS-1$
+            }
+            if (myTraceFile.getText().length() == 0) {
+            	myTraceFile.update(moduleName, MDAConstants.QVTO_TRACEFILE_EXTENSION);
+            }
+            IStatus status = myTransfSignatureControl.validate(moduleName, getShell());
+        	IStatus traceStatus = QvtValidator.validateTrace(myTraceFile.getText(), myTraceFile.getUseFileFlag()); 
+            if (traceStatus.getSeverity() > status.getSeverity()) {
+        		status = traceStatus;
+        	}
+            return TransformationControls.statusToTab(status, SET_MESSAGE);
         }
     }
     
@@ -268,13 +275,8 @@ public class QvtLauncherTab extends MdaLaunchTab {
     private final ModifyListener QVT_FILE_MODIFY_LISTENER = new ModifyListener() {
         public void modifyText(ModifyEvent e) {
             validateQvtFile();
-            List<IUriGroup.IModifyListener> listeners = new ArrayList<IUriGroup.IModifyListener>(1);
-            listeners.add(new IUriGroup.IModifyListener() {
-				public void modified() {
-					updateLaunchConfigurationDialog();			
-				}
-			});
-            //myTransfSignatureControl.setTransformation(myTransformation, listeners);
+            myTransfSignatureControl.setTransformation(myTransformation, myUriListeners);
+            myTraceNameNonChanged = myTraceFile.getText().equals(getTraceFileName());
             updateLaunchConfigurationDialog();            
         }
     };
@@ -292,9 +294,8 @@ public class QvtLauncherTab extends MdaLaunchTab {
     private final ITransformationMaker myTransformationMaker; 
     private Text myQvtFile;
     private QvtTransformation myTransformation;
-	private SourceUriGroup mySourceModelUri;
-	private TargetUriGroup myTargetModelUri;
     private OptionalFileGroup myTraceFile;
-    private String oldURI = ""; //$NON-NLS-1$
-    //private TransformationSignatureLaunchControl myTransfSignatureControl;
+    private boolean myTraceNameNonChanged;
+    private TransformationSignatureLaunchControl myTransfSignatureControl;
+    private final List<IUriGroup.IModifyListener> myUriListeners;
 }

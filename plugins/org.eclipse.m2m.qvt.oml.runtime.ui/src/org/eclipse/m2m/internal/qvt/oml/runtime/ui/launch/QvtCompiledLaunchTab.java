@@ -30,6 +30,7 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformationRegistry;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.QvtUIValidator;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.QvtCompiledTransformationLabelProvider;
+import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.qvt.oml.common.project.TransformationRegistry;
 import org.eclipse.osgi.util.NLS;
@@ -51,8 +52,7 @@ public class QvtCompiledLaunchTab extends MdaCompiledLaunchTab {
         }
 */        
         super.createControl(parent);
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, 
-			"org.eclipse.m2m.qvt.oml._transformation");  //$NON-NLS-1$
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, MDAConstants.QVTO_TRANSFORMATION_CONTEXTID);
     }
     
     @Override
