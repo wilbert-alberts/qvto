@@ -23,8 +23,10 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.EMFType;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.QvtConfigurationProperty;
@@ -36,10 +38,13 @@ import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.qvt.oml.expressions.MappingParameter;
 import org.eclipse.m2m.qvt.oml.expressions.ModelParameter;
+import org.eclipse.m2m.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.qvt.oml.expressions.Property;
+import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.internal.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.osgi.util.NLS;
 
@@ -93,7 +98,129 @@ public abstract class QvtModule {
 	}
 
 	public List<TransformationParameter> getParameters() throws MdaException {
-		return Collections.emptyList();
+		Module module = getModule().getModule();
+		ImperativeOperation mainMethod = (ImperativeOperation) module.getEntry();
+
+		List<TransformationParameter> transfParams = new ArrayList<TransformationParameter>(module.getModelParameter().size());
+	    for (ModelParameter modelParam : module.getModelParameter()) {
+	    	MappingParameter refinedParam = findMainParameter(mainMethod, modelParam);
+	    	transfParams.add(createTransfParam(modelParam, refinedParam));
+	    }
+	    
+	    if (transfParams.isEmpty() && mainMethod != null) {
+	    	if (mainMethod.getContext().getEType() != QvtOperationalUtil.getOclVoid()) {
+	    		transfParams.add(createTransfParam((MappingParameter) mainMethod.getContext()));
+	    	}
+	    	for (EParameter mainParam : mainMethod.getEParameters()) {
+	    		transfParams.add(createTransfParam((MappingParameter) mainParam));
+	    	}
+	    	for (VarParameter mainParam : mainMethod.getResult()) {
+    			transfParams.add(createTransfParam((MappingParameter) mainParam));
+	    	}
+	    }
+
+		return transfParams;
+	}
+	
+	private TransformationParameter createTransfParam(final MappingParameter mainParam) {
+		return new TransformationParameter() {
+
+			public DirectionKind getDirectionKind() {
+				if (mainParam.getKind() == org.eclipse.m2m.qvt.oml.expressions.DirectionKind.IN) {
+					return DirectionKind.IN;
+				}
+				if (mainParam.getKind() == org.eclipse.m2m.qvt.oml.expressions.DirectionKind.OUT) {
+					return DirectionKind.OUT;
+				}
+				return DirectionKind.INOUT;
+			}
+			
+			public String getEntryName() {
+				return mainParam.getName() != null ? mainParam.getName() : ""; //$NON-NLS-1$
+			}
+
+			public EClassifier getEntryType() {
+				return mainParam.getEType();
+			}
+
+			public List<EPackage> getMetamodels() {
+				EObject rootContainer = EcoreUtil.getRootContainer(mainParam.getEType());
+				if (rootContainer instanceof EPackage) {
+					return Collections.singletonList((EPackage) rootContainer);
+				}
+				return Collections.emptyList();
+			}
+
+			public List<String> getModelTypeNames() {
+				if (getMetamodels().isEmpty()) {
+					return Collections.emptyList();
+				}
+				return Collections.singletonList(getMetamodels().get(0).getName());
+			}
+			
+			public String getName() {
+				return getEntryName();
+			}
+			
+		};
+	}
+
+	private TransformationParameter createTransfParam(final ModelParameter modelParam, final MappingParameter refinedParam) {
+		return new TransformationParameter() {
+
+			public DirectionKind getDirectionKind() {
+				if (modelParam.getKind() == org.eclipse.m2m.qvt.oml.expressions.DirectionKind.IN) {
+					return DirectionKind.IN;
+				}
+				if (modelParam.getKind() == org.eclipse.m2m.qvt.oml.expressions.DirectionKind.OUT) {
+					return DirectionKind.OUT;
+				}
+				return DirectionKind.INOUT;
+			}
+			
+			public String getEntryName() {
+				return refinedParam != null ? refinedParam.getName() : ""; //$NON-NLS-1$
+			}
+
+			public EClassifier getEntryType() {
+				return refinedParam != null ? refinedParam.getEType() : null;
+			}
+
+			public List<EPackage> getMetamodels() {
+				return ModelTypeMetamodelsAdapter.getMetamodels(modelParam.getEType());
+			}
+
+			public List<String> getModelTypeNames() {
+				if (modelParam.getEType() instanceof ModelType) {
+					return Collections.singletonList(((ModelType) modelParam.getEType()).getName());
+				}
+				return Collections.emptyList();
+			}
+			
+			public String getName() {
+				return modelParam.getName();
+			}
+			
+		};
+	}
+
+	private MappingParameter findMainParameter(ImperativeOperation mainMethod, ModelParameter modelParam) {
+	    if (mainMethod != null) {
+	    	for (EParameter mainParam : mainMethod.getEParameters()) {
+	    		if (((MappingParameter) mainParam).getExtent() == modelParam) {
+	    			return (MappingParameter) mainParam;
+	    		}
+	    	}
+	    	for (VarParameter mainParam : mainMethod.getResult()) {
+	    		if (((MappingParameter) mainParam).getExtent() == modelParam) {
+	    			return (MappingParameter) mainParam;
+	    		}
+	    	}
+	    	if (((MappingParameter) mainMethod.getContext()).getExtent() == modelParam) {
+	    		return (MappingParameter) mainMethod.getContext();
+	    	}
+	    }
+	    return null;
 	}
 	
 	/**

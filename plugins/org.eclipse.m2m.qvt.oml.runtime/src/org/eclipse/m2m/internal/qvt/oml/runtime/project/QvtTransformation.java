@@ -19,11 +19,11 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.QvtConfigurationProperty;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.common.project.Transformation;
-import org.eclipse.m2m.qvt.oml.expressions.ModelType;
 
 public interface QvtTransformation extends Transformation {
 
@@ -34,6 +34,8 @@ public interface QvtTransformation extends Transformation {
 			OUT;
 		}
 
+		DirectionKind getDirectionKind();
+		
 		/**
 		 * 
 		 * @return name of transformation parameter, may be empty
@@ -42,9 +44,15 @@ public interface QvtTransformation extends Transformation {
 
 		/**
 		 * 
-		 * @return model type of transformation parameter (restricted to exist)
+		 * @return list of model type's metamodels
 		 */
-		ModelType getModelType();
+		List<EPackage> getMetamodels();
+		
+		/**
+		 * 
+		 * @return list of model type's names
+		 */
+		List<String> getModelTypeNames();
 		
 		/**
 		 * 

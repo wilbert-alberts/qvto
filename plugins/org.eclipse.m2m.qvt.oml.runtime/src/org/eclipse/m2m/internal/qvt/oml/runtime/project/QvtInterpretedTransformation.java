@@ -67,8 +67,8 @@ public class QvtInterpretedTransformation implements QvtTransformation {
         } 
 		return new Status(IStatus.ERROR, QvtRuntimePlugin.ID, 0, 
 				NLS.bind(org.eclipse.m2m.internal.qvt.oml.runtime.launch.Messages.QvtValidator_IncompatibleInputTypes,
-                        EmfUtil.getFullName(in.eClass(), "::"), //$NON-NLS-1$
-                        EmfUtil.getFullName(inClass, "::")  //$NON-NLS-1$                        
+                        EmfUtil.getFullName(in.eClass()),
+                        EmfUtil.getFullName(inClass)                        
                         ), 
                 null);
     }

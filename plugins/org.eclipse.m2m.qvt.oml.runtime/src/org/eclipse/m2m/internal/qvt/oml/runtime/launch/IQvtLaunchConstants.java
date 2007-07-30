@@ -25,6 +25,8 @@ public interface IQvtLaunchConstants {
     String TARGET_TYPE    = PREFIX + "targetType"; //$NON-NLS-1$
     String FEATURE_NAME   = PREFIX + "featureName"; //$NON-NLS-1$
     String CLEAR_CONTENTS = PREFIX + "clearContents"; //$NON-NLS-1$
+
+    String ELEM_COUNT = PREFIX + "elemCount"; //$NON-NLS-1$
     
     String DONE_ACTION = PREFIX + "doneAction"; //$NON-NLS-1$
 

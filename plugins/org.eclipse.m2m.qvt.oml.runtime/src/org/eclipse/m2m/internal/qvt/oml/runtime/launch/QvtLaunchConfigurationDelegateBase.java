@@ -13,6 +13,8 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.launch;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -31,6 +33,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TraceSerializer;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalStdLibrary;
 import org.eclipse.m2m.qvt.oml.common.Logger;
@@ -124,32 +128,61 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
     }
     
     public static URI doLaunch(QvtTransformation transformation, ILaunchConfiguration configuration, PrintWriter printWriter) throws Exception {
-        URI inUri = getUri(configuration, IQvtLaunchConstants.SOURCE_MODEL);
-        EObject inObj = transformation.loadInput(inUri);
-        
-        TargetUriData targetData = QvtLaunchUtil.getTargetUriData(configuration);
+    	List<EObject> inObjects;
+    	List<TargetUriData> targetData;
+    	
+    	if (configuration.getAttributes().containsKey(IQvtLaunchConstants.SOURCE_MODEL)) {
+    		// TODO old type configuration, should not be used at all
+	        URI inUri = getUri(configuration, IQvtLaunchConstants.SOURCE_MODEL);
+	        EObject inObj = transformation.loadInput(inUri);
+	        inObjects = Collections.singletonList(inObj);
+	        
+	        targetData = Collections.singletonList(QvtLaunchUtil.getTargetUriData(configuration));
+    	}
+    	else {
+    		targetData = new ArrayList<TargetUriData>();
+    		inObjects = new ArrayList<EObject>();
+    		List<TargetUriData> targetUris = QvtLaunchUtil.getTargetUris(configuration);
+    		
+    		int i = 0;
+    		for (TransformationParameter transfParam : transformation.getParameters()) {
+    			if (i >= targetUris.size()) {
+    	            throw new MdaException("Invalid launch configuration"); //$NON-NLS-1$
+    			}
+    			if (transfParam.getDirectionKind() == DirectionKind.IN || transfParam.getDirectionKind() == DirectionKind.INOUT) {
+    		        URI inUri = toUri(targetUris.get(i).getUriString());
+    		        EObject inObj = transformation.loadInput(inUri);
+    		        inObjects.add(inObj);
+    			}
+    			if (transfParam.getDirectionKind() == DirectionKind.OUT || transfParam.getDirectionKind() == DirectionKind.INOUT) {
+    				targetData.add(targetUris.get(i));
+    			}
+    			i++;
+    		}
+    	}
+
         IConfiguration qvtConfiguration = QvtLaunchUtil.getConfiguration(configuration);
         boolean saveTrace = configuration.getAttribute(IQvtLaunchConstants.USE_TRACE_FILE, false);
         String traceFileName = saveTrace ? configuration.getAttribute(IQvtLaunchConstants.TRACE_FILE, "") : null; //$NON-NLS-1$
         
-        return doLaunch(transformation, inObj, targetData, qvtConfiguration, traceFileName, printWriter);
+        return doLaunch(transformation, inObjects, targetData, qvtConfiguration, traceFileName, printWriter);
     }
     
     public static URI doLaunch(final QvtTransformation transformation, final EObject inObj, TargetUriData targetData, IConfiguration configuration, final String traceFileName) throws Exception {
-    	return doLaunch(transformation, inObj, targetData, configuration, traceFileName, null);
+    	return doLaunch(transformation, Collections.singletonList(inObj), Collections.singletonList(targetData), configuration, traceFileName, null);
     }
     
-    public static URI doLaunch(final QvtTransformation transformation, final EObject inObj, TargetUriData targetData, IConfiguration configuration, final String traceFileName, PrintWriter printWriter) throws Exception {
+    public static URI doLaunch(final QvtTransformation transformation, final List<EObject> inObjs, List<TargetUriData> targetData, IConfiguration configuration, final String traceFileName, PrintWriter printWriter) throws Exception {
 
     	IContext context = new Context(configuration);
         context.put(QvtOperationalStdLibrary.OUT_PRINT_WRITER, printWriter);
         
         context.launch();
     	
-        TransformationRunner.In in = new TransformationRunner.In(inObj, context);
+        TransformationRunner.In in = new TransformationRunner.In(inObjs.toArray(new EObject[inObjs.size()]), context);
         TransformationRunner.Out out = transformation.run(in);
         
-        URI result = saveTransformationResult(inObj, out.getExtents(), targetData);
+        URI result = saveTransformationResult(inObjs.get(0), out.getExtents(), targetData.get(0));
         
         if(traceFileName != null && out.getTrace() != null) {
             IFile traceFile = WorkspaceUtils.getWorkspaceFile(traceFileName);

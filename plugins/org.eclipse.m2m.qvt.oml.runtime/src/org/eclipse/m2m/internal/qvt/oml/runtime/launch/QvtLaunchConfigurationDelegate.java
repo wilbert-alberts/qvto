@@ -46,10 +46,10 @@ public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelega
             ShallowProcess.IRunnable r = new ShallowProcess.IRunnable() {
                 @SuppressWarnings("unchecked")
                 public void run() throws Exception { 
-                    IStatus status = QvtLaunchConfigurationDelegateBase.validate(qvtTransformation, configuration);                    
-                    if(status.getSeverity() > IStatus.WARNING) {
-                    	throw new CoreException(status);
-                    }                	
+//                    IStatus status = QvtLaunchConfigurationDelegateBase.validate(qvtTransformation, configuration);                    
+//                    if(status.getSeverity() > IStatus.WARNING) {
+//                    	throw new CoreException(status);
+//                    }                	
                 	QvtLaunchConfigurationDelegateBase.doLaunch(qvtTransformation, configuration, printWriter);
                 }
             };

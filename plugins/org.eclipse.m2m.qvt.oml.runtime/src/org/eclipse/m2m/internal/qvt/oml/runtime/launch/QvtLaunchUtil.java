@@ -11,7 +11,9 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.launch;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
@@ -23,6 +25,7 @@ import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
+import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData.TargetType;
 import org.eclipse.m2m.qvt.oml.library.IConfiguration;
@@ -31,50 +34,46 @@ import org.eclipse.m2m.qvt.oml.library.QvtConfiguration;
 
 public class QvtLaunchUtil {
 	private QvtLaunchUtil() {}
+
+	public static List<TargetUriData> getTargetUris(ILaunchConfiguration configuration) throws CoreException {
+    	int elemCount = configuration.getAttribute(IQvtLaunchConstants.ELEM_COUNT, 0);
+		List<TargetUriData> targetUris = new ArrayList<TargetUriData>(elemCount);
+    	for (int i = 0; i < elemCount; ++i) {
+    		TargetUriData targetData = QvtLaunchUtil.getTargetUriData(configuration, i+1);
+    		targetUris.add(targetData);
+    	}
+    	return targetUris;
+	}
 	
     public static TargetUriData getTargetUriData(ILaunchConfiguration configuration) throws CoreException {
-    	TargetUriData.TargetType targetType = null;        
+    	return getTargetUriData(configuration, 0);
+    }
+    
+    public static TargetUriData getTargetUriData(ILaunchConfiguration configuration, int index) throws CoreException {
+    	TargetUriData.TargetType targetType = TargetUriData.TargetType.NEW_MODEL;
     	try {
-    	    if (configuration.getAttributes().containsKey(IQvtLaunchConstants.TARGET_TYPE)) {
-    	        targetType = TargetType.valueOf(configuration.getAttribute(IQvtLaunchConstants.TARGET_TYPE, "NEW_MODEL")); //$NON-NLS-1$
-            }
+   	        targetType = TargetType.valueOf(configuration.getAttribute(getIndexedName(IQvtLaunchConstants.TARGET_TYPE, index), "NEW_MODEL")); //$NON-NLS-1$
     	}
-    	catch(Exception e) {
-    		targetType = null;
+    	catch (Exception e) {
+    		targetType = TargetUriData.TargetType.NEW_MODEL;
     	}
     	
-        String uri = configuration.getAttribute(IQvtLaunchConstants.TARGET_MODEL, ""); //$NON-NLS-1$
-    	String feature = configuration.getAttribute(IQvtLaunchConstants.FEATURE_NAME, ""); //$NON-NLS-1$
-    	boolean clearContents = configuration.getAttribute(IQvtLaunchConstants.CLEAR_CONTENTS, true); 
+        String uri = configuration.getAttribute(getIndexedName(IQvtLaunchConstants.TARGET_MODEL, index), ""); //$NON-NLS-1$
+    	String feature = configuration.getAttribute(getIndexedName(IQvtLaunchConstants.FEATURE_NAME, index), ""); //$NON-NLS-1$
+    	boolean clearContents = configuration.getAttribute(getIndexedName(IQvtLaunchConstants.CLEAR_CONTENTS, index), true); 
     	
-        // Support for old LCs
-        if(targetType == null) {
-            String source = configuration.getAttribute(IQvtLaunchConstants.SOURCE_MODEL, ""); //$NON-NLS-1$
-            URI sourceUri = URI.createURI(source);
-            URI targetUri = URI.createURI(uri);
-            if (sourceUri.equals(targetUri)) {
-                if (sourceUri.segmentCount() == 0) {
-                    targetType = TargetType.NEW_MODEL;
-                } else {
-                    targetType = TargetType.INPLACE;
-                }
-            } else {
-                if (targetUri.hasFragment()) {
-                    targetType = TargetType.EXISTING_CONTAINER;
-                } else {
-                    targetType = TargetType.NEW_MODEL;
-                }
-            }
-        }            
-            
     	return new TargetUriData(targetType, uri, feature, clearContents);
     }
     
-    public static void saveTargetUriData(ILaunchConfigurationWorkingCopy configuration, TargetUriData targetData) {
-    	configuration.setAttribute(IQvtLaunchConstants.TARGET_TYPE, targetData.getTargetType().toString()); 
-		configuration.setAttribute(IQvtLaunchConstants.TARGET_MODEL, targetData.getUriString()); 
-    	configuration.setAttribute(IQvtLaunchConstants.FEATURE_NAME, targetData.getFeature()); 
-    	configuration.setAttribute(IQvtLaunchConstants.CLEAR_CONTENTS, targetData.isClearContents()); 
+	public static void saveTargetUriData(ILaunchConfigurationWorkingCopy configuration, TargetUriData targetData) {
+		saveTargetUriData(configuration, targetData, 0);
+	}
+    
+    public static void saveTargetUriData(ILaunchConfigurationWorkingCopy configuration, TargetUriData targetData, int index) {
+    	configuration.setAttribute(getIndexedName(IQvtLaunchConstants.TARGET_TYPE, index), targetData.getTargetType().toString()); 
+		configuration.setAttribute(getIndexedName(IQvtLaunchConstants.TARGET_MODEL, index), targetData.getUriString()); 
+    	configuration.setAttribute(getIndexedName(IQvtLaunchConstants.FEATURE_NAME, index), targetData.getFeature()); 
+    	configuration.setAttribute(getIndexedName(IQvtLaunchConstants.CLEAR_CONTENTS, index), targetData.isClearContents()); 
     }
     
     public static String getTraceFileName(URI uri) {
@@ -83,7 +82,7 @@ public class QvtLaunchUtil {
             return null;
         }
         
-        IPath traceFilePath = new Path(file.getParent().getFullPath() + "/" + file.getName() + ".oqvttrace");  //$NON-NLS-1$//$NON-NLS-2$
+        IPath traceFilePath = new Path(file.getParent().getFullPath() + "/" + file.getName() + MDAConstants.QVTO_TRACEFILE_EXTENSION_WITH_DOT);  //$NON-NLS-1$
         return traceFilePath.toString();
     }
     
@@ -102,6 +101,14 @@ public class QvtLaunchUtil {
            QvtRuntimePlugin.getDefault().getLog().log(MiscUtil.makeErrorStatus(e)); 
         }
         return map;
-    }	
+    }
+    
+    private static String getIndexedName(String name, int index){
+    	if (index == 0) {
+    		return name;
+    	}
+    	return name + index;
+    }
+    
 }
 

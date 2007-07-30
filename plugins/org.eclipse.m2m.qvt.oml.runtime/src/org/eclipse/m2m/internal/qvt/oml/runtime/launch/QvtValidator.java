@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 import org.eclipse.osgi.util.NLS;
 
+import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.StatusUtil;
@@ -56,8 +57,8 @@ public class QvtValidator {
 	        
 	    	if(!EmfUtil.isAssignableFrom(inCls, in.eClass())) {
 	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputTypes, 
-	            		EmfUtil.getFullName(in.eClass(), "::"), //$NON-NLS-1$
-	            		EmfUtil.getFullName(inCls, "::") //$NON-NLS-1$                		
+	            		EmfUtil.getFullName(in.eClass()),
+	            		EmfUtil.getFullName(inCls)                		
 	            		));
 	    	}
 	        
@@ -88,7 +89,7 @@ public class QvtValidator {
 	                }
 	            }
 	            
-	        	IStatus canSave = handler.getSaver().canSave(in, transformation.getOut(), destUri); 
+	        	IStatus canSave = handler.getSaver().canSave(transformation.getOut(), destUri); 
 	            if(StatusUtil.isError(canSave)) {
 	            	return canSave;
 	            }
@@ -133,7 +134,8 @@ public class QvtValidator {
 	        	EClass transformationType = transformation.getOut();
 	        	EClassifier refType = ref.getEType();
 	        	if(!EmfUtil.isAssignableFrom(refType, transformationType)) {
-	                return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputTypes, EmfUtil.getFullName(transformationType, "::"), EmfUtil.getFullName(refType, "::"))); //$NON-NLS-1$ //$NON-NLS-2$
+	                return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputTypes,
+	                		EmfUtil.getFullName(transformationType), EmfUtil.getFullName(refType)));
 	        	}
 	        	 
 	            break;
@@ -142,13 +144,32 @@ public class QvtValidator {
 	        case INPLACE: {
 	        	EClass transformationType = transformation.getOut();
 	        	if(!EmfUtil.isAssignableFrom(inCls, transformationType)) {
-	                return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputTypes, EmfUtil.getFullName(transformationType, "::"), EmfUtil.getFullName(inCls, "::"))); //$NON-NLS-1$ //$NON-NLS-2$ 
+	                return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputTypes,
+	                		EmfUtil.getFullName(transformationType), EmfUtil.getFullName(inCls))); 
 	        	}
 	        		            	        	
 	        	break;
 	        }
 	        }
-	
+
+        	IStatus traceStatus = validateTrace(traceFilePath, useTrace); 
+            if (StatusUtil.isError(traceStatus)) {
+            	return traceStatus;
+            }
+            if (traceStatus.getSeverity() > result.getSeverity()) {
+        		result = traceStatus;
+        	}
+	        
+	        return result;
+	    }
+	    catch(Exception e) {
+	        return StatusUtil.makeErrorStatus(e.getMessage(), e);
+	    }
+	}
+
+	public static IStatus validateTrace(String traceFilePath, boolean useTrace) {
+	    try {
+	        IStatus result = StatusUtil.makeOkStatus();
 	        if (useTrace) {
 	            if (traceFilePath == null || traceFilePath.length() == 0) {
 	                return StatusUtil.makeErrorStatus(Messages.QvtValidator_NoTraceFile);
@@ -156,21 +177,20 @@ public class QvtValidator {
 	            else {
 	                IWorkspace workspace = ResourcesPlugin.getWorkspace();
 	                IStatus status = workspace.validatePath(traceFilePath, IResource.FILE);
-	                if(StatusUtil.isError(status)) {
+	                if (StatusUtil.isError(status)) {
 	                    return status;
 	                }
 	                
-	                if (!traceFilePath.endsWith(".oqvttrace")) { //$NON-NLS-1$
-	                    if(result.getSeverity() < IStatus.WARNING) {
-	                        result = StatusUtil.makeWarningStatus(Messages.QvtValidator_NoTraceFileExtension);
+	                if (!traceFilePath.endsWith(MDAConstants.QVTO_TRACEFILE_EXTENSION_WITH_DOT)) {
+	                    if (result.getSeverity() < IStatus.WARNING) {
+	                        result = StatusUtil.makeWarningStatus(NLS.bind(Messages.QvtValidator_NoTraceFileExtension, MDAConstants.QVTO_TRACEFILE_EXTENSION_WITH_DOT));
 	                    }
 	                }
 	            }
 	        }
-	        
 	        return result;
 	    }
-	    catch(Exception e) {
+	    catch (Exception e) {
 	        return StatusUtil.makeErrorStatus(e.getMessage(), e);
 	    }
 	}

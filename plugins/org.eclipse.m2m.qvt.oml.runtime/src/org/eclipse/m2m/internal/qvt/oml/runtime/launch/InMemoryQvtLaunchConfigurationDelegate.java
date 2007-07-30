@@ -12,6 +12,7 @@
 package org.eclipse.m2m.internal.qvt.oml.runtime.launch;
 
 import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.Map;
 
 import org.eclipse.core.resources.IProject;
@@ -93,7 +94,7 @@ public class InMemoryQvtLaunchConfigurationDelegate extends QvtLaunchConfigurati
 
                 String traceFileName = configuration.getAttribute(IQvtLaunchConstants.TRACE_FILE, ""); //$NON-NLS-1$
                 
-                doLaunch(transformation, in, targetData, qvtConfiguration, traceFileName, printWriter);
+                doLaunch(transformation, Collections.singletonList(in), Collections.singletonList(targetData), qvtConfiguration, traceFileName, printWriter);
             }
         };
         
