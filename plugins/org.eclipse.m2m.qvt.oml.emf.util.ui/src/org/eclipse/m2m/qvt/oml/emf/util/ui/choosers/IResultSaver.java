@@ -13,12 +13,12 @@ package org.eclipse.m2m.qvt.oml.emf.util.ui.choosers;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ui.IWorkbenchPage;
 
 public interface IResultSaver {
-    IStatus canSave(EObject in, EClass obj, URI destUri);
+    IStatus canSave(EClassifier obj, URI destUri);
     void clean(URI destUri) throws Exception;
 
     boolean select(EObject result, IWorkbenchPage page) throws Exception;

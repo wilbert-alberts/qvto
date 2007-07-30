@@ -18,11 +18,10 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.m2m.qvt.oml.emf.util.ui.EmfUtilUiPlugin;
-
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.Logger;
+import org.eclipse.m2m.qvt.oml.emf.util.ui.EmfUtilUiPlugin;
 
 public class MetamodelHandlerManager {
     private MetamodelHandlerManager() {
@@ -45,7 +44,7 @@ public class MetamodelHandlerManager {
         return handlers.toArray(new IMetamodelHandler[handlers.size()]);
     }
     
-    public IMetamodelHandler getHandler(EClass cls) {
+    public IMetamodelHandler getHandler(EClassifier cls) {
         String uri = EmfUtil.getRootPackage(cls.getEPackage()).getNsURI();
         return getHandler(uri);
     }

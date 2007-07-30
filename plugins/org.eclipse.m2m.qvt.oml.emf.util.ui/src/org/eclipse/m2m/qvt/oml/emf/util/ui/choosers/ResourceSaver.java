@@ -19,7 +19,7 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -37,7 +37,7 @@ import org.eclipse.ui.ide.IGotoMarker;
 
 
 public class ResourceSaver implements IResultSaver{
-    public IStatus canSave(EObject in, EClass cls, URI destUri) {
+    public IStatus canSave(EClassifier cls, URI destUri) {
         String protocol = destUri.scheme();
         if(!"file".equals(protocol) && !"platform".equals(protocol)) { //$NON-NLS-1$ //$NON-NLS-2$
             return new Status(IStatus.ERROR, EmfUtilUiPlugin.ID, IStatus.ERROR, NLS.bind(Messages.ResourceSaver_UriNotFile, destUri, protocol), null);

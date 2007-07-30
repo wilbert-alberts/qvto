@@ -42,6 +42,9 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.m2m.qvt.oml.emf.util.Logger;
+import org.eclipse.m2m.qvt.oml.emf.util.StatusUtil;
+import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -57,10 +60,6 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.WorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
-
-import org.eclipse.m2m.qvt.oml.emf.util.Logger;
-import org.eclipse.m2m.qvt.oml.emf.util.StatusUtil;
-import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
 
 public class SelectFileControl extends Composite {
     public static interface IFilter {
@@ -342,6 +341,14 @@ public class SelectFileControl extends Composite {
                         }
                         else {
                             myFileNameText.setEnabled(true);
+                            IPath computePath = computePath(myResource, myFileNameText.getText());
+                            if (computePath != null && myDefaultFileName != null) {
+                	            IFile file = WorkspaceUtils.getWorkspaceFile(computePath.toString());
+                	            if (file != null && file.exists()) {
+                            		myFileNameText.setText(myDefaultFileName);
+                            	}
+                            }
+                            
                         }
                     }
                 }
