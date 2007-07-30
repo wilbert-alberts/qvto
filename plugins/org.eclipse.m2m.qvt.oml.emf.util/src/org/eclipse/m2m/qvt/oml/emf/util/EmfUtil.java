@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
@@ -202,6 +203,10 @@ public class EmfUtil {
         }
     }
     
+    public static String getFullName(EClassifier cls) {
+        return getFullName(cls, "::"); //$NON-NLS-1$
+    }
+
     public static String getFullName(EClassifier cls, String delim) {
     	if(cls.getEPackage() == null) {
     		return cls.getName();
@@ -267,19 +272,38 @@ public class EmfUtil {
         return uri;
     }
     
-    public static String getRootPackageUri(EClass cls) {
+    public static String getRootPackageUri(EClassifier cls) {
         String uri = cls == null ? null : getRootPackage(cls.getEPackage()).getNsURI();
         return uri;
     }
     
-    public static boolean isAssignableFrom(EClassifier type, EClass from) {
-    	return (type == from) || (from.getEAllSuperTypes().contains(type));
+    public static boolean isAssignableFrom(EClassifier type, EClassifier from) {
+    	if (type == from) {
+    		return true;
+    	}
+    	if (false == from instanceof EClass) {
+    		return false;
+    	}
+    	return ((EClass) from).getEAllSuperTypes().contains(type);
     }
 
     public static Map getDefaultLoadOptions() {
     	Map options = new HashMap();
     	// create new session to avoid problems with parallel filling of containments lists (#31662, etc.) 
     	return options;
+    }
+    
+    public static String getFileNameForResult(String moduleName, EClass cls) {
+        return moduleName + "." + getExtensionForResult(cls); //$NON-NLS-1$
+    }
+    
+    public static String getExtensionForResult(final EClassifier cls) {
+        if(cls == null) {
+            return XMIResource.XMI_NS;
+        }
+        
+        EPackage root = EmfUtil.getRootPackage(cls.getEPackage());
+        return root.getName();
     }
     
     public static final Map DEFAULT_SAVE_OPTIONS = new HashMap();
