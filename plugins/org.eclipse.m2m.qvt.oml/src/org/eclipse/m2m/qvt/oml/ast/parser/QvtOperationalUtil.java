@@ -132,6 +132,10 @@ public class QvtOperationalUtil {
 		return ourOclInvalid;
 	}
 	
+	public static EClassifier getOclVoid() {
+		return ourOclVoid;
+	}
+	
 	public static boolean isPrimitiveType(Object type) {
 		return type instanceof PrimitiveType;
 	}
@@ -173,5 +177,6 @@ public class QvtOperationalUtil {
 	
 	private static final String UNKNOWN_TYPE_NAME = "unknown"; //$NON-NLS-1$
 	private static final Object ourOclInvalid = new QvtOperationalEnvFactory().createEnvironment(null, null).getOCLStandardLibrary().getOclInvalid();
+	private static final EClassifier ourOclVoid = new QvtOperationalEnvFactory().createEnvironment(null, null).getOCLStandardLibrary().getOclVoid();
 
 }

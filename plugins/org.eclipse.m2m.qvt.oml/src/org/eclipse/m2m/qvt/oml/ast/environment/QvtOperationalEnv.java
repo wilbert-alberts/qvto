@@ -288,9 +288,6 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 	public void registerModelParameters(Module module) {
 		List<Variable<EClassifier, EParameter>> modelParameters = new ArrayList<Variable<EClassifier,EParameter>>(module.getModelParameter().size());
 		for (ModelParameter modelParam : module.getModelParameter()) {
-			if (modelParam.getName().length() == 0) {
-				continue;
-			}
 	        if (lookupLocal(modelParam.getName()) != null) {
 	            reportError(NLS.bind(ValidationMessages.SemanticUtil_15,
 	                    new Object[] { modelParam.getName() }),
@@ -326,6 +323,9 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 				if (modelParam.getKind() == DirectionKind.IN) {
 					continue;
 				}
+			}
+			if (modelParam.getName().length() == 0) {
+				continue;
 			}
 			if (modelParam.getName().equals(nameCS.getValue())) {
 				return modelParam;
