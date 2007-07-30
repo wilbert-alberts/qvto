@@ -26,6 +26,7 @@ import org.eclipse.m2m.tests.qvt.oml.transform.TransformTests;
 
 /**
  * @author vrepeshko
+ * 
  */
 public class AllTests {
 
