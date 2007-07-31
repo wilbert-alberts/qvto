@@ -28,6 +28,7 @@ import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.OCL;
 import org.eclipse.ocl.ecore.internal.OCLStandardLibraryImpl;
 import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.helper.ConstraintKind;
 import org.eclipse.ocl.types.AnyType;
 import org.eclipse.ocl.utilities.ExpressionInOCL;
 import org.eclipse.ocl.utilities.PredefinedType;
@@ -53,7 +54,7 @@ public class QvtLibraryOperation {
 		}
 		
         String fakeOperation = getFakeOperation(libOp);
-        ExpressionInOCL<EClassifier, EParameter> exprInOcl = parseConstraintUnvalidated(fakeOperation, parseEnv);
+        ExpressionInOCL<EClassifier, EParameter> exprInOcl = parseConstraintUnvalidated(fakeOperation, parseEnv, libOp);
         
         if (exprInOcl.getParameterVariable() == null) {
             throw new LibraryCreationException(MessageFormat.format(
@@ -100,13 +101,26 @@ public class QvtLibraryOperation {
 	 * @return the OCL constraint expression, unvalidated
 	 */
 	protected ExpressionInOCL<EClassifier, EParameter> parseConstraintUnvalidated(String text,
-			QvtOperationalEnv env) throws LibraryCreationException {
+			QvtOperationalEnv env, LibraryOperation libOp) throws LibraryCreationException {
 		OCL ocl = OCL.newInstance(env);
 		Constraint constraint = null;
 		
-		try {
-			List<Constraint> constraints = ocl.parse(new OCLInput(text));
-			constraint = constraints.get(0);
+		try {	 
+			EClassifier oclAny = OCLStandardLibraryImpl.INSTANCE.getOclAny();
+			if(oclAny.getName().equals(libOp.getContext())) {
+				// Note: a workaround for OclAny context which is not 
+				// supported by the constraint parser, so OclAny instance is passed 
+				// and trimmed from the def: constraint specification
+				int startPos = text.indexOf(" " + OCL_DEF) + OCL_DEF.length() + 1; //$NON-NLS-1$
+				String trimmedText = startPos < text.length() ? text.substring(startPos) : text;
+				
+				OCL.Helper helper = ocl.createOCLHelper();
+				helper.setContext(OCLStandardLibraryImpl.INSTANCE.getOclAny());
+				constraint = helper.createConstraint(ConstraintKind.DEFINITION, trimmedText);				
+			} else {
+				List<Constraint> constraints = ocl.parse(new OCLInput(text));
+				constraint = constraints.get(0);
+			}
 		} catch (ParserException e) {
             throw new LibraryCreationException(MessageFormat.format(
                     ValidationMessages.LibOperationAnalyser_ParametersOsReturnTypeNotFound,
@@ -155,7 +169,7 @@ public class QvtLibraryOperation {
         result.append(Common_BRACKET_OPEN);
         int counter = 0;
         for (String nextType : libOp.getParameterTypes()) {
-            String nextParameterType = getType(nextType);
+            String nextParameterType = getFakeTypeText(nextType);
             if (counter > 0) {
                 result.append(Common_COMMA);
             }
@@ -167,21 +181,17 @@ public class QvtLibraryOperation {
         }
         result.append(Common_BRACKET_CLOSE);
         result.append(Common_COLON);
-        result.append(getType(libOp.getReturnType()));
+        result.append(getFakeTypeText(libOp.getReturnType()));
 
+        result.append(Common_EQ).append("let r:"); //$NON-NLS-1$
+        result.append(getFakeTypeText(libOp.getReturnType()));
         result.append(Common_EQ);
-        result.append(Common_QUOTATION_MARK);
-        result.append(Common_QUOTATION_MARK);
-        result.append(Common_DOT);
-        result.append(PredefinedType.OCL_AS_TYPE_NAME);
-        result.append(Common_BRACKET_OPEN);
-        result.append(getType(libOp.getReturnType()));
-        result.append(Common_BRACKET_CLOSE);
+        result.append("null in r"); //$NON-NLS-1$
 
         return result.toString();
 	}
 
-	private String getType(String type) {
+	private String getFakeTypeText(String type) {
         return type != null ? type : AnyType.SINGLETON_NAME;
 	}
 
