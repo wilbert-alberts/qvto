@@ -1,4 +1,4 @@
-transformation models.lateresolvebyrule.lateresolvebyrule;
+transformation lateresolvebyrule;
 
 metamodel 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';
 

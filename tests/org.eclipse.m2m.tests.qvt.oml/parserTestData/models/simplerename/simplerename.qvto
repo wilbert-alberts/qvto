@@ -1,4 +1,4 @@
-transformation models.simplerename.simplerename;
+transformation simplerename;
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 
 rename ecore::EPackage.newName = 'name';

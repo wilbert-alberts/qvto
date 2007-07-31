@@ -1,4 +1,4 @@
-transformation models.assigntoprimfeature.assigntoprimfeature;
+transformation assigntoprimfeature;
 
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 

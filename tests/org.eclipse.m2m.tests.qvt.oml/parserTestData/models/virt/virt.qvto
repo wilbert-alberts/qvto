@@ -1,4 +1,4 @@
-transformation models.virt.virt;
+transformation virt;
 import models.virt.vutil;
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 

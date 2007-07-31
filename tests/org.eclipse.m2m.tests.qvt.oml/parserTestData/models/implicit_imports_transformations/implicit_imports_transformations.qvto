@@ -1,4 +1,4 @@
-transformation models.implicit_imports_transformations.implicit_imports_transformations;
+transformation implicit_imports_transformations;
 
 import models.implicit_imports_transformations.m2;  
 import models.implicit_imports_transformations.m1;  

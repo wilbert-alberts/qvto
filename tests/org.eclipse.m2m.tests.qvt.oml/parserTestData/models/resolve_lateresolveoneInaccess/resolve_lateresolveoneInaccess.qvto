@@ -1,4 +1,4 @@
-transformation models.resolve_lateresolveoneInaccess.resolve_lateresolveoneInaccess;
+transformation resolve_lateresolveoneInaccess;
 
 modeltype A uses ecore('http://www.eclipse.org/emf/2002/Ecore');
 

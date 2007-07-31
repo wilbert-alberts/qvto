@@ -1,4 +1,4 @@
-transformation models.scr18783.scr18783;
+transformation scr18783;
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 
 mapping main(in model: ecore::EPackage): ecore::EPackage {

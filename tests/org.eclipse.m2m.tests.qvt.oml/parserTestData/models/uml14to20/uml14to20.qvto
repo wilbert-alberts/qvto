@@ -1,4 +1,4 @@
-transformation models.uml14to20.uml14to20;
+transformation uml14to20;
 
 metamodel 'http://www.borland.com/together/uml';
 metamodel 'http://www.borland.com/together/uml14';

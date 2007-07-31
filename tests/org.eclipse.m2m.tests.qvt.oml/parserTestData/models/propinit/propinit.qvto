@@ -1,4 +1,4 @@
-transformation models.propinit.propinit;
+transformation propinit;
 
 import models.propinit.Utils;
 

@@ -51,7 +51,7 @@ public class JavalessUtil {
     	//TODO: more accurate
     	return content.replaceFirst(
     			"\\s*transformation\\s+(.*?)\\s*;",  //$NON-NLS-1$
-    			"\ntransformation models." + oldName + "." + newName + ";\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    			"\ntransformation " + newName + ";\n"); //$NON-NLS-1$ //$NON-NLS-2$ 
     }
     
     private static boolean isEcoreFile(String fname) {

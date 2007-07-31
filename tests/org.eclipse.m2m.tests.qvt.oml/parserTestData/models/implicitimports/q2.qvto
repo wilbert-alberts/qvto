@@ -1,4 +1,4 @@
-library models.implicitimports.q2;
+library q2;
 
 import models.implicitimports.q1;
 

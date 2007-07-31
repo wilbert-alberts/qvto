@@ -1,4 +1,4 @@
-transformation models.primtypesecore.primtypesecore;
+transformation primtypesecore;
 
 import library emf.tools;
 

@@ -1,4 +1,4 @@
-transformation models.resolve_type.resolve_type;
+transformation resolve_type;
 
 modeltype A uses ecore('http://www.eclipse.org/emf/2002/Ecore');
 

@@ -1,4 +1,4 @@
-transformation models.invresolve_.invresolve_;
+transformation invresolve_;
 
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 

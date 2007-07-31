@@ -1,4 +1,4 @@
-transformation models.resolve_vardeclcond.resolve_vardeclcond;
+transformation resolve_vardeclcond;
 
 modeltype A uses ecore('http://www.eclipse.org/emf/2002/Ecore');
 

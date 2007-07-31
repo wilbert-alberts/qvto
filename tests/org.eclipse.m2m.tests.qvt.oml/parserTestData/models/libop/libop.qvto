@@ -1,4 +1,4 @@
-transformation models.libop.libop;
+transformation libop.libop;
 
 import library together.uml;
 

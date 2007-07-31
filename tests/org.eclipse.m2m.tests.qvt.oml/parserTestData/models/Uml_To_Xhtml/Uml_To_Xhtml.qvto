@@ -1,4 +1,4 @@
-transformation models.Uml_To_Xhtml.Uml_To_Xhtml;
+transformation Uml_To_Xhtml;
 
 metamodel 'http://www.borland.com/together/uml';
 metamodel 'http://www.borland.com/together/uml20';

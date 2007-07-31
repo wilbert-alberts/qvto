@@ -1,4 +1,4 @@
-transformation models.bugzilla443.bugzilla443;
+transformation bugzilla443;
 
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 

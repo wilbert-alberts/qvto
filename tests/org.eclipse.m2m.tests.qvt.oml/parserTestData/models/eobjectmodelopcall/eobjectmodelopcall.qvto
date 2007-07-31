@@ -1,4 +1,4 @@
-transformation models.eobjectmodelopcall.eobjectmodelopcall;
+transformation eobjectmodelopcall;
 import library emf.tools;
 
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';

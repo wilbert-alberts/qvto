@@ -1,4 +1,4 @@
-library models.implicitimports.q1;
+library q1;
 
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 

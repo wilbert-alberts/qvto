@@ -1,4 +1,4 @@
-transformation models.propinit.Utils;
+transformation Utils;
 
 property UTIL_NAME = 'util';
 

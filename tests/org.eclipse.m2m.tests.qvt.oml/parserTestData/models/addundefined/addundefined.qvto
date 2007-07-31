@@ -1,4 +1,4 @@
-transformation models.addundefined.addundefined;
+transformation addundefined;
 
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 

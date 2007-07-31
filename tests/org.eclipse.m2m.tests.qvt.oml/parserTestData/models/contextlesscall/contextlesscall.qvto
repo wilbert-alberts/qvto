@@ -1,4 +1,4 @@
-transformation models.contextlesscall.contextlesscall;
+transformation contextlesscall;
 
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 

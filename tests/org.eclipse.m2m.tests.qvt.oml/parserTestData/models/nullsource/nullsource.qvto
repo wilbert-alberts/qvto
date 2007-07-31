@@ -1,4 +1,4 @@
-transformation models.nullsource.nullsource;
+transformation nullsource;
 
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 

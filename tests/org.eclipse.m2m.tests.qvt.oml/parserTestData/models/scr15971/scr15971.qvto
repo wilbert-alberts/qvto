@@ -1,4 +1,4 @@
-transformation models.scr15971.scr15971;
+transformation scr15971;
 
 metamodel 'http://www.borland.com/together/uml';
 metamodel 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';

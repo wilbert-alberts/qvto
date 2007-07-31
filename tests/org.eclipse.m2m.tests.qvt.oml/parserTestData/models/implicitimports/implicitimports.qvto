@@ -1,4 +1,4 @@
-transformation models.implicitimports.implicitimports;
+transformation implicitimports;
 import models.implicitimports.q2;  
 import models.implicitimports.q1;  
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';

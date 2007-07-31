@@ -1,4 +1,4 @@
-library models.implicit_imports_transformations.m1;
+library m1;
 
 import models.implicit_imports_transformations.m3;
 

@@ -1,4 +1,4 @@
-transformation models.skippopulation.skippopulation;
+transformation skippopulation;
 
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 

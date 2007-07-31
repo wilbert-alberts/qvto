@@ -1,4 +1,4 @@
-transformation models.primtypes.primtypes;
+transformation primtypes;
 
 metamodel 'http://www.borland.com/together/uml';
 metamodel 'http://www.borland.com/together/uml20';
