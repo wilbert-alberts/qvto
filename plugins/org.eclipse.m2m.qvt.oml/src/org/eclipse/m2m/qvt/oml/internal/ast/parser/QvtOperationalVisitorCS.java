@@ -491,7 +491,7 @@ public class QvtOperationalVisitorCS
 			            
 			if (lib == null) {
 				env.reportError(NLS.bind(ValidationMessages.NoLibrary, new Object[] {libId}),
-						impPath.getStartOffset(), impPath.getEndOffset());
+						impPath);
 				continue;
 			}
 
@@ -623,33 +623,20 @@ public class QvtOperationalVisitorCS
 					headerCS.getQualifiers().get(headerCS.getQualifiers().size()-1).getEndOffset());
 		}
 		
-		String unitName = QvtOperationalParserUtil.getMappingModuleName((MappingModuleCS) headerCS.eContainer());
-		String packName = ""; //$NON-NLS-1$
-		EList<String> moduleName = headerCS.getPathNameCS().getSequenceOfNames();
-		if (moduleName.size() > 1) {
-			for (int i = 0, sz = moduleName.size(); i < sz - 1; i++) {
-				if (packName.length() > 0) {
-					packName += "."; //$NON-NLS-1$
-				}
-				packName += moduleName.get(i);
-			}
-		}
-
-		if (!unitName.equals(env.getUnitName())) {
+		String unitSimpleName = QvtOperationalParserUtil.getMappingModuleSimpleName(headerCS);
+		String unitNamespace = env.getExpectedPackageName();
+		
+		if (!unitSimpleName.equals(env.getUnitName())) {
 			env.reportError(NLS.bind(ValidationMessages.moduleNameMustMatchFileNameError, new Object[] { env
 					.getUnitName() }), headerCS.getPathNameCS());
 		}
-/* TODO - commenting out as only simple identifier should be used for the module name, in order to make
- * 	wizards creating a modules within a non-default name-space produce a compileable QVT.
- *  	
- * String expectedPackName = env.getExpectedPackageName();
-		if (!packName.equals(expectedPackName)) {
-			env.reportError(NLS.bind(ValidationMessages.wrongPackageError, new Object[] { packName,
-					expectedPackName }), headerCS.getPathNameCS());
-		}
-*/
-		module.setName(unitName);
-		module.setNsPrefix(packName);
+		if(!QvtOperationalParserUtil.hasSimpleName(headerCS)) {
+			env.reportError(NLS.bind(ValidationMessages.moduleNameMustBeSimpleIdentifierError, new Object[] { 
+					QvtOperationalParserUtil.getMappingModuleQualifiedName(headerCS) }), headerCS.getPathNameCS());
+		}		
+		
+		module.setName(unitSimpleName);
+		module.setNsPrefix(unitNamespace);
 		
 		Set<String> paramNames = new LinkedHashSet<String>();
 		for (ParameterDeclarationCS paramCS : headerCS.getParameters()) {

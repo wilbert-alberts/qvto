@@ -44,7 +44,7 @@ import org.eclipse.m2m.qvt.oml.expressions.VariableInitExp;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.GraphWalker;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.GraphWalker.NodeProvider;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.GraphWalker.VertexProcessor;
-import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.TransformationHeaderCS;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.ecore.CollectionType;
 import org.eclipse.ocl.expressions.OCLExpression;
@@ -69,6 +69,8 @@ import org.eclipse.osgi.util.NLS;
 
 public class QvtOperationalParserUtil {
 	
+	private static final String NAMESPACE_SEPARATOR = "."; //$NON-NLS-1$
+
 	private QvtOperationalParserUtil() {
 	}
 
@@ -266,12 +268,47 @@ public class QvtOperationalParserUtil {
 		return false;
 	}
 
-	public static String getMappingModuleName(MappingModuleCS moduleCS) {
-		EList<String> moduleName = moduleCS.getHeaderCS().getPathNameCS().getSequenceOfNames();
+	/**
+	 * Get the module simple name as the last element of possible qualified
+	 * name.
+	 * 
+	 * @return the name string or empty string, of the module name sequence is
+	 *         empty
+	 */
+	public static String getMappingModuleSimpleName(TransformationHeaderCS headerCS) {
+		EList<String> moduleName = headerCS.getPathNameCS().getSequenceOfNames();
 		if (moduleName.isEmpty()) {
 			return ""; //$NON-NLS-1$
 		}
 		return moduleName.get(moduleName.size() - 1);
+	}
+	
+	public static boolean hasSimpleName(TransformationHeaderCS headerCS) {
+		if(headerCS.getPathNameCS() != null) {
+			return headerCS.getPathNameCS().getSequenceOfNames().size() <= 1;
+		}
+		return false;
+	}	
+	
+	public static String getMappingModuleQualifiedName(TransformationHeaderCS headerCS) {
+		return getMappingModuleNamespace(headerCS) + NAMESPACE_SEPARATOR + getMappingModuleSimpleName(headerCS);
+	}
+	
+	/**
+	 * @return dot separated namespace or empty string.
+	 */
+	public static String getMappingModuleNamespace(TransformationHeaderCS headerCS) {
+		StringBuilder unitNamespace = new StringBuilder();
+		EList<String> moduleName = headerCS.getPathNameCS().getSequenceOfNames();
+		if (moduleName.size() > 1) {
+			for (int i = 0, sz = moduleName.size(); i < sz - 1; i++) {
+				if (i > 0) {
+					unitNamespace.append(NAMESPACE_SEPARATOR);
+				}
+				unitNamespace.append(moduleName.get(i));
+			}
+		}
+		return unitNamespace.toString();
 	}
 
 	public static boolean isTypeCast(final EOperation operation) {
@@ -398,26 +435,6 @@ public class QvtOperationalParserUtil {
 		final Set<PackageRef> ids = new LinkedHashSet<PackageRef>();
 		new Traverser().getMetamodelIds(module, ids);
 		return ids.toArray(new PackageRef[ids.size()]);
-	}
-
-	public static String getQualifiedModuleName(Module module) {
-		String packageName = getPackageName(module);
-		return getQualifiedName(packageName, module.getName());
-	}
-
-	private static String getQualifiedName(String packageName, String name) {
-		String qName;
-		if (packageName == null || packageName.length() == 0) {
-			qName = name;
-		} else {
-			qName = packageName + "." + name; //$NON-NLS-1$
-		}
-
-		return qName;
-	}
-
-	private static String getPackageName(Module module) {
-		return module.getNsPrefix();
 	}
 
 	public static boolean isOverloadableMapping(final EOperation op, final QvtOperationalEnv env) {
