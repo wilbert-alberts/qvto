@@ -2,7 +2,6 @@
 <?eclipse version="3.0"?>
 <plugin>
 
-	<extension-point id="antTaskCreators" name="%antTaskCreators" schema="schema/antTaskCreators.exsd"/>
 	<extension-point id="transformNatureConfigParticipants" name="%transformNatureConfigParticipants" schema="schema/transformNatureConfigParticipants.exsd"/>
    
 	<extension point="org.eclipse.core.resources.markers"
