@@ -24,10 +24,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtCompiledTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformationRegistry;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
-import org.eclipse.osgi.util.NLS;
-import org.eclipse.ui.externaltools.internal.model.ExternalToolBuilder;
-import org.eclipse.ui.externaltools.internal.model.IExternalToolConstants;
-
+import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalStdLibrary;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.common.launch.BaseProcess;
 import org.eclipse.m2m.qvt.oml.common.launch.ShallowProcess;
@@ -37,6 +34,11 @@ import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData.TargetType;
 import org.eclipse.m2m.qvt.oml.common.util.ProjectUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.IMetamodelHandler;
 import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.MetamodelHandlerManager;
+import org.eclipse.m2m.qvt.oml.library.Context;
+import org.eclipse.m2m.qvt.oml.library.IContext;
+import org.eclipse.osgi.util.NLS;
+import org.eclipse.ui.externaltools.internal.model.ExternalToolBuilder;
+import org.eclipse.ui.externaltools.internal.model.IExternalToolConstants;
 
 public class QvtCompiledLaunchConfigurationDelegate extends LaunchConfigurationDelegate {
     public void launch(final ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {
@@ -86,7 +88,10 @@ public class QvtCompiledLaunchConfigurationDelegate extends LaunchConfigurationD
                     return;
                 }
 
-                QvtLaunchConfigurationDelegateBase.doLaunch(transformation, configuration, printWriter);
+            	IContext context = new Context(QvtLaunchUtil.getConfiguration(configuration));
+                context.put(QvtOperationalStdLibrary.OUT_PRINT_WRITER, printWriter);
+
+                QvtLaunchConfigurationDelegateBase.doLaunch(transformation, configuration, context);
             }
         };
         

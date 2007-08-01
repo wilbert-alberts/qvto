@@ -34,13 +34,16 @@ import org.eclipse.m2m.internal.qvt.oml.common.launch.InMemoryLaunchUtils;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
+import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalStdLibrary;
 import org.eclipse.m2m.qvt.oml.common.Logger;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.common.launch.EmptyDebugTarget;
 import org.eclipse.m2m.qvt.oml.common.launch.ShallowProcess;
 import org.eclipse.m2m.qvt.oml.common.launch.StreamsProxy;
 import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
+import org.eclipse.m2m.qvt.oml.library.Context;
 import org.eclipse.m2m.qvt.oml.library.IConfiguration;
+import org.eclipse.m2m.qvt.oml.library.IContext;
 import org.eclipse.m2m.qvt.oml.library.QvtConfiguration;
 
 
@@ -94,7 +97,10 @@ public class InMemoryQvtLaunchConfigurationDelegate extends QvtLaunchConfigurati
 
                 String traceFileName = configuration.getAttribute(IQvtLaunchConstants.TRACE_FILE, ""); //$NON-NLS-1$
                 
-                doLaunch(transformation, Collections.singletonList(in), Collections.singletonList(targetData), qvtConfiguration, traceFileName, printWriter);
+            	IContext context = new Context(QvtLaunchUtil.getConfiguration(configuration));
+                context.put(QvtOperationalStdLibrary.OUT_PRINT_WRITER, printWriter);
+                
+                doLaunch(transformation, configuration, context);
             }
         };
         

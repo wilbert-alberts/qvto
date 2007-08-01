@@ -127,7 +127,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         }
     }
     
-    public static URI doLaunch(QvtTransformation transformation, ILaunchConfiguration configuration, PrintWriter printWriter) throws Exception {
+    public static void doLaunch(QvtTransformation transformation, ILaunchConfiguration configuration, IContext context) throws Exception {
     	List<EObject> inObjects;
     	List<TargetUriData> targetData;
     	
@@ -165,18 +165,14 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         boolean saveTrace = configuration.getAttribute(IQvtLaunchConstants.USE_TRACE_FILE, false);
         String traceFileName = saveTrace ? configuration.getAttribute(IQvtLaunchConstants.TRACE_FILE, "") : null; //$NON-NLS-1$
         
-        return doLaunch(transformation, inObjects, targetData, qvtConfiguration, traceFileName, printWriter);
+        doLaunch(transformation, inObjects, targetData, qvtConfiguration, traceFileName, context);
     }
     
     public static URI doLaunch(final QvtTransformation transformation, final EObject inObj, TargetUriData targetData, IConfiguration configuration, final String traceFileName) throws Exception {
     	return doLaunch(transformation, Collections.singletonList(inObj), Collections.singletonList(targetData), configuration, traceFileName, null);
     }
     
-    public static URI doLaunch(final QvtTransformation transformation, final List<EObject> inObjs, List<TargetUriData> targetData, IConfiguration configuration, final String traceFileName, PrintWriter printWriter) throws Exception {
-
-    	IContext context = new Context(configuration);
-        context.put(QvtOperationalStdLibrary.OUT_PRINT_WRITER, printWriter);
-        
+    public static URI doLaunch(final QvtTransformation transformation, final List<EObject> inObjs, List<TargetUriData> targetData, IConfiguration configuration, final String traceFileName, IContext context) throws Exception {
         context.launch();
     	
         TransformationRunner.In in = new TransformationRunner.In(inObjs.toArray(new EObject[inObjs.size()]), context);

@@ -24,10 +24,13 @@ import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
+import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalStdLibrary;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
 
 import org.eclipse.m2m.qvt.oml.common.launch.ShallowProcess;
 import org.eclipse.m2m.qvt.oml.common.launch.StreamsProxy;
+import org.eclipse.m2m.qvt.oml.library.Context;
+import org.eclipse.m2m.qvt.oml.library.IContext;
 
 public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelegateBase {
 	
@@ -50,7 +53,11 @@ public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelega
 //                    if(status.getSeverity() > IStatus.WARNING) {
 //                    	throw new CoreException(status);
 //                    }                	
-                	QvtLaunchConfigurationDelegateBase.doLaunch(qvtTransformation, configuration, printWriter);
+                	
+                	IContext context = new Context(QvtLaunchUtil.getConfiguration(configuration));
+                    context.put(QvtOperationalStdLibrary.OUT_PRINT_WRITER, printWriter);
+
+                	QvtLaunchConfigurationDelegateBase.doLaunch(qvtTransformation, configuration, context);
                 }
             };
             

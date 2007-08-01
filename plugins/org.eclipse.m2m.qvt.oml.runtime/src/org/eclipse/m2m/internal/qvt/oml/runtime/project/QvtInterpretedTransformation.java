@@ -22,17 +22,31 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner.In;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner.Out;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.QvtConfigurationProperty;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtEvaluationResult;
-import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalParser;
+import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnvFactory;
+import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalFileEnv;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.common.launch.SafeRunner;
 import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.qvt.oml.library.IContext;
+import org.eclipse.ocl.EvaluationVisitor;
+import org.eclipse.ocl.ecore.CallOperationAction;
+import org.eclipse.ocl.ecore.Constraint;
+import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.osgi.util.NLS;
 
 public class QvtInterpretedTransformation implements QvtTransformation {
@@ -47,6 +61,14 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 		}
     	myModule = qvtModule;
     }
+	
+	public boolean isOK() {
+		try {
+			return myModule.getModule().getErrors().length == 0;
+		} catch (MdaException e) {
+			return false;
+		}		
+	}
 	    
     public IStatus canRun (EObject input) throws MdaException {
 		EClass inClass = myModule.getIn();
@@ -78,14 +100,7 @@ public class QvtInterpretedTransformation implements QvtTransformation {
     }
     
 	public Out run(In in) throws MdaException {
-        SafeRunner.IRunner runner;
         CompiledModule module = myModule.getModule();
-        try {
-            runner = getSafeRunner(module);
-        }
-        catch (CoreException e) {
-            throw new MdaException(e.getMessage(), e);
-        }
         
         List<Object> inputs = new ArrayList<Object>(1);
         for (EObject inObject : in.getSources()) {
@@ -97,8 +112,8 @@ public class QvtInterpretedTransformation implements QvtTransformation {
             	throw new MdaException(e.getCause());
             }
         }
-        Object outObj = new QvtOperationalParser().evaluate(myModule.getCompiler(), module,
-        		inputs, in.getContext(), runner);
+        Object outObj = evaluate(myModule.getCompiler(), module, inputs, in.getContext());
+        
         if (false == outObj instanceof QvtEvaluationResult) {
             throw new MdaException(Messages.QvtInterpreter_Transformation_failed); 
         }
@@ -133,7 +148,26 @@ public class QvtInterpretedTransformation implements QvtTransformation {
         };
         
         return SafeRunner.getSafeRunner(classes);
-    }    
+    }
+    
+    protected QvtOperationalEnvFactory getEnvironmentFactory() {
+    	return new QvtOperationalEnvFactory();
+    }
+    
+	private Object evaluate(QvtCompiler compiler, CompiledModule module, List<Object> args, IContext context) {
+		QvtOperationalEnvFactory factory = getEnvironmentFactory();
+
+		QvtOperationalEvaluationEnv evaluationEnv = factory.createEvaluationEnvironment(context, null);
+		evaluationEnv.getOperationArgs().addAll(args);
+		
+		QvtOperationalFileEnv rootEnv = factory.createEnvironment(null, module.getSource(), compiler);
+
+		EvaluationVisitor<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject>		
+			evaluator = factory.createEvaluationVisitor(rootEnv, evaluationEnv, null);
+		
+		return module.getModule().accept(evaluator);
+	}
+
     
     private final QvtModule myModule;
 }
