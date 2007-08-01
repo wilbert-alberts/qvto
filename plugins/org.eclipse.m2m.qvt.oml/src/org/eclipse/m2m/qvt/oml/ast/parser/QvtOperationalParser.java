@@ -116,19 +116,7 @@ public class QvtOperationalParser {
 		
 		return module;
 	}
-	
-	public Object evaluate(QvtCompiler compiler, CompiledModule module, List<Object> args,
-			IContext context, SafeRunner.IRunner runner) {
-		QvtOperationalEnvFactory factory = new QvtOperationalEnvFactory();
-
-		QvtOperationalEvaluationEnv evaluationEnv = factory.createEvaluationEnvironment(context, null);
-		evaluationEnv.getOperationArgs().addAll(args);
 		
-		myEnv = factory.createEnvironment(null, module.getSource(), compiler);
-		QvtOperationalEvaluationVisitorImpl evaluator = new QvtOperationalEvaluationVisitorImpl(myEnv, evaluationEnv);
-		return evaluator.visitModule(module.getModule());
-	}
-	
 	public List<QvtMessage> getErrorsList() {
 		if (myEnv != null) {
 			return myEnv.getErrorsList();

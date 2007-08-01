@@ -66,9 +66,16 @@ public class ModelParameterExtent {
 			}
 		}
 		for (EObject eObj : myEObjects) {
-			extent.getContents().add(eObj);
+			if(eObj.eContainer() == null) {
+				extent.getContents().add(eObj);
+			}
 		}
 		return extent;
+	}
+	
+	@Override
+	public String toString() {
+		return myMetamodel != null ? myMetamodel.toString() : super.toString();
 	}
 	
 	private final EPackage myMetamodel;
