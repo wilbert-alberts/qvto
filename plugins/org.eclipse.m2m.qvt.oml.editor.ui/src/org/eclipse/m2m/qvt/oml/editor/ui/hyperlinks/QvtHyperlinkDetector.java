@@ -63,31 +63,6 @@ public class QvtHyperlinkDetector implements IHyperlinkDetector {
 
 		List<CSTNode> elements = CSTHelper.selectTargetedElements(compiledModule.getSyntaxElement().getModuleCS(), region);
 		
-		//
-		if(!elements.isEmpty()) {
-			CSTNode node = elements.get(0);
-			try {
-				CSTNode parent = node;
-				while(parent instanceof OCLExpressionCS && parent instanceof CSTNode) {
-					if(parent.eClass().getEPackage() == CSTPackage.eINSTANCE) {
-						//System.err.println("NO OCL");						
-						break;
-					} else {
-						node = parent; 
-					}
-					
-					parent = (CSTNode)parent.eContainer();
-				}
-				String text = textViewer.getDocument().get(node.getStartOffset(), node.getEndOffset() - node.getStartOffset() + 1);
-				System.err.println(text); 
-				
-				//return null;
-			} catch (BadLocationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
 		Context context = new Context(documentProvider.getCompiledModule(), completionData, region);		
 		
 		for (CSTNode element : elements) {
