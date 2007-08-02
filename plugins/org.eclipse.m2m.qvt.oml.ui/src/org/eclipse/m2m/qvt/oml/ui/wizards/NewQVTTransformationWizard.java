@@ -22,7 +22,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
-import org.eclipse.m2m.qvt.oml.common.QvtNamesChecker;
+import org.eclipse.m2m.qvt.oml.QvtNamesChecker;
 import org.eclipse.m2m.qvt.oml.project.AbstractNewTransformationWizard;
 import org.eclipse.m2m.qvt.oml.project.wizards.MDAProjectFieldData;
 import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
