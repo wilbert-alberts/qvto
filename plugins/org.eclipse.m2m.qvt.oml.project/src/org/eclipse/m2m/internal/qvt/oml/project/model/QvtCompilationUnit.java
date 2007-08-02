@@ -14,7 +14,7 @@ package org.eclipse.m2m.internal.qvt.oml.project.model;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.m2m.qvt.oml.common.QvtNamesChecker;
+import org.eclipse.m2m.qvt.oml.QvtNamesChecker;
 import org.eclipse.m2m.qvt.oml.project.model.IQvtCompilationUnit;
 import org.eclipse.m2m.qvt.oml.project.model.IQvtElement;
 import org.eclipse.m2m.qvt.oml.project.model.IQvtNamespace;

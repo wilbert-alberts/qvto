@@ -19,7 +19,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceProxy;
 import org.eclipse.core.resources.IResourceProxyVisitor;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.m2m.qvt.oml.common.QvtNamesChecker;
+import org.eclipse.m2m.qvt.oml.QvtNamesChecker;
 
 public class QvtElementMemberColllector {
 	
