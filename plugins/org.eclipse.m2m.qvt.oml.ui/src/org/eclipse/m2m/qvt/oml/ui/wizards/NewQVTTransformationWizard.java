@@ -155,22 +155,6 @@ public class NewQVTTransformationWizard extends AbstractNewTransformationWizard 
         myNewQvtModulePage.setTitle(Messages.NewQVTTransformationWizard_NewModuleFilePageTitle);//$NON-NLS-1$
         myNewQvtModulePage.setDescription(Messages.NewQVTTransformationWizard_NewModulePageDescription);//$NON-NLS-1$
         addPage(myNewQvtModulePage);
-/*		
-        myMetamodelsPage = new MetamodelsPage("MetamodelChooser", Messages.NewQVTTransformationWizard_MetamodelsPageDesc, QVT_TRANSFORMATION_HELP_ID, metamodelRegistry); //$NON-NLS-1$ //$NON-NLS-2$ 
-        myMetamodelsPage.setTitle(Messages.NewQVTTransformationWizard_MetamodelsPageTitle);//$NON-NLS-1$
-        myMetamodelsPage.setDescription(Messages.NewQVTTransformationWizard_AdditionalMetamodelsPageDesc);//$NON-NLS-1$
-        addPage(myMetamodelsPage);
-        
-        myLibrariesPage = new LibrariesPage("LibrariesPage"); //$NON-NLS-1$ 
-        myLibrariesPage.setTitle(Messages.NewQVTTransformationWizard_LibrariesPageTitle); //$NON-NLS-1$
-        myLibrariesPage.setDescription(Messages.NewQVTTransformationWizard_LibrariesPageDesc); //$NON-NLS-1$
-        addPage(myLibrariesPage);
-                
-        myMappingsPage = new InitialMappingsPage(myData);
-        // connect for model parameters changes events
-        myNewQvtModulePage.setModelParametersListener(myMappingsPage.getModelParametersChangeListener());        
-        addPage(myMappingsPage);
-*/        
     }
     
     public boolean isJavaRequired() {
