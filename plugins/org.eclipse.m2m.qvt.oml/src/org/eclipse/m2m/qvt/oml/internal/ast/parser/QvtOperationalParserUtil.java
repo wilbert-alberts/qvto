@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalFileEnv;
-import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.expressions.LocalProperty;
@@ -93,7 +93,7 @@ public class QvtOperationalParserUtil {
 			return ((PrimitiveTypeCS) typeCS).getValue();
 		}
 		else if (typeCS instanceof PathNameCS) {
-			return getStringRepresentation((PathNameCS) typeCS, QvtOperationalUtil.TYPE_NAME_SEPARATOR);
+			return getStringRepresentation((PathNameCS) typeCS, QvtOperationalTypesUtil.TYPE_NAME_SEPARATOR);
 		}
 		else if (typeCS instanceof CollectionTypeCS) {
 			return ((CollectionTypeCS) typeCS).getCollectionTypeIdentifier().getName() 
@@ -171,7 +171,7 @@ public class QvtOperationalParserUtil {
 		if (contextType != null) {
 			if (env.lookupProperty(contextType, name) != null) {
 				env.reportError(NLS.bind(ValidationMessages.SemanticUtil_13,
-						new Object[] { name, QvtOperationalUtil.getTypeFullName(contextType) }),
+						new Object[] { name, QvtOperationalTypesUtil.getTypeFullName(contextType) }),
 						cstNode);
 				return false;
 			}
@@ -202,7 +202,7 @@ public class QvtOperationalParserUtil {
 		EClassifier declaredType = prop.getEType();
 		if (!isAssignableToFrom(env, declaredType, realType)) {
 			env.reportError(NLS.bind(ValidationMessages.SemanticUtil_17,
-					new Object[] { QvtOperationalUtil.getTypeFullName(declaredType), QvtOperationalUtil.getTypeFullName(realType) }),
+					new Object[] { QvtOperationalTypesUtil.getTypeFullName(declaredType), QvtOperationalTypesUtil.getTypeFullName(realType) }),
 					prop.getStartPosition(), prop.getEndPosition());
 		}
 
@@ -231,7 +231,7 @@ public class QvtOperationalParserUtil {
 		EClassifier declaredType = varInit.getType();
 		if (!isAssignableToFrom(env, declaredType, realType)) {
 			env.reportError(NLS.bind(ValidationMessages.SemanticUtil_17,
-					new Object[] { QvtOperationalUtil.getTypeFullName(declaredType), QvtOperationalUtil.getTypeFullName(realType) }),
+					new Object[] { QvtOperationalTypesUtil.getTypeFullName(declaredType), QvtOperationalTypesUtil.getTypeFullName(realType) }),
 					varInit.getStartPosition(), varInit.getEndPosition());
 		}
 
@@ -366,8 +366,8 @@ public class QvtOperationalParserUtil {
 			EClassifier actualType = right.getType();
 			if (!QvtOperationalParserUtil.isAssignableToFrom(env, leftType, actualType)) {
 				env.reportError(NLS.bind(ValidationMessages.SemanticUtil_8, new Object[] { leftName,
-						QvtOperationalUtil.getTypeFullName(leftType),
-						QvtOperationalUtil.getTypeFullName(actualType) }), cstNode);
+				        QvtOperationalTypesUtil.getTypeFullName(leftType),
+				        QvtOperationalTypesUtil.getTypeFullName(actualType) }), cstNode);
 				return false;
 			}
 		}

@@ -35,74 +35,10 @@ import org.eclipse.ocl.types.VoidType;
 
 public class QvtOperationalUtil {
 
-	public static final String TYPE_NAME_SEPARATOR = "::"; //$NON-NLS-1$
 	
 	private QvtOperationalUtil() {
 	}
 
-	public static String getTypeFullName(EClassifier type) {
-		if (type == null) {
-			return UNKNOWN_TYPE_NAME;
-		}
-		String fullName = getTypeName(type);
-		EObject parent = type.eContainer();
-		while (parent != null) {
-			if (parent instanceof ENamedElement) {
-				fullName = ((ENamedElement) parent).getName() + TYPE_NAME_SEPARATOR + fullName;
-			}
-			parent = parent.eContainer();
-		}
-		return fullName;
-	}
-	
-	// Workaround for CollectionType.getName
-    public static final String getTypeName(EClassifier type) {
-        if (type instanceof CollectionType) {
-            return getCollectionTypeName((CollectionType) type);
-        }
-        return type.getName();
-    }
-    
-    // Workaround for CollectionType.getName
-    public static final String getCollectionTypeName(CollectionType collectionType) {
-        StringBuffer sbName = new StringBuffer();
-
-        switch (collectionType.getKind()) {
-        case SET_LITERAL:
-            sbName.append(SetType.SINGLETON_NAME);
-            break;
-        case ORDERED_SET_LITERAL:
-            sbName.append(OrderedSetType.SINGLETON_NAME);
-            break;
-        case BAG_LITERAL:
-            sbName.append(BagType.SINGLETON_NAME);
-            break;
-        case SEQUENCE_LITERAL:
-            sbName.append(SequenceType.SINGLETON_NAME);
-            break;
-        default:
-            sbName.append(org.eclipse.ocl.types.CollectionType.SINGLETON_NAME);
-        break;
-        }
-
-        sbName.append('(');
-
-        EClassifier elementType = collectionType.getElementType();
-        String elementTypeName;
-        if (elementType == null) { // Here is the workaround
-            elementTypeName = UNKNOWN_TYPE_NAME;
-        } else if (elementType instanceof VoidType) {
-                elementTypeName = "T"; //$NON-NLS-1$
-        } else {
-            elementTypeName = getTypeName(elementType);
-        }
-
-        sbName.append(elementTypeName);
-        sbName.append(')');
-
-        return sbName.toString();
-    }
-    
 	public static String getStringRepresentation(PathNameCS pathName, String pathSeparator) {
 		return QvtOperationalParserUtil.getStringRepresentation(pathName, pathSeparator);
 	}
@@ -175,7 +111,6 @@ public class QvtOperationalUtil {
         return false;
     }
 	
-	private static final String UNKNOWN_TYPE_NAME = "unknown"; //$NON-NLS-1$
 	private static final Object ourOclInvalid = new QvtOperationalEnvFactory().createEnvironment(null, null).getOCLStandardLibrary().getOclInvalid();
 	private static final EClassifier ourOclVoid = new QvtOperationalEnvFactory().createEnvironment(null, null).getOCLStandardLibrary().getOclVoid();
 

@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalFileEnv;
+import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.compiler.ParsedModuleCS;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.EmfMmUtil;
@@ -195,7 +196,7 @@ public class QvtOperationalVisitorCS
                 if (type == null) {
                 	((QvtOperationalEnv) env).reportError(OCLMessages.bind(
                             OCLMessages.UnrecognizedType_ERROR_,
-                            QvtOperationalUtil.getTypeFullName(type)), oclExpressionCS);
+                            QvtOperationalTypesUtil.getTypeFullName(type)), oclExpressionCS);
                 }
                 else {
 					TypeExp<EClassifier> typeExp = env.getOCLFactory().createTypeExp();
@@ -424,7 +425,7 @@ public class QvtOperationalVisitorCS
 		String name = variableName.getValue();
 		EStructuralFeature property = env.lookupProperty(outType, name);
 		if (property == null) {
-			env.reportError(NLS.bind(ValidationMessages.noPropertyInTypeError, name, QvtOperationalUtil
+			env.reportError(NLS.bind(ValidationMessages.noPropertyInTypeError, name, QvtOperationalTypesUtil
 					.getTypeFullName(outType)), variableName);
 		} else if (!property.isChangeable()) {
 			env.reportError(NLS.bind(ValidationMessages.ReadOnlyProperty, name), variableName);
@@ -716,7 +717,7 @@ public class QvtOperationalVisitorCS
 			PathNameCS pathNameCS = packageRefCS.getPathNameCS();
 			if (pathNameCS != null && !pathNameCS.getSequenceOfNames().isEmpty()) {
 				String metamodelName = QvtOperationalParserUtil.getStringRepresentation(
-						pathNameCS, QvtOperationalUtil.TYPE_NAME_SEPARATOR); 
+						pathNameCS, QvtOperationalTypesUtil.TYPE_NAME_SEPARATOR); 
 				packageRef.setName(metamodelName);
 
 				if (resolvedMetamodel == null) {
@@ -860,7 +861,7 @@ public class QvtOperationalVisitorCS
 
 		EStructuralFeature originalProperty = env.lookupProperty(type, originalName);
 		if (originalProperty == null) {
-			env.reportError(NLS.bind(ValidationMessages.noPropertyInTypeError, originalName, QvtOperationalUtil
+			env.reportError(NLS.bind(ValidationMessages.noPropertyInTypeError, originalName, QvtOperationalTypesUtil
 					.getTypeFullName(type)), renameCS);
 			return null;
 		}
@@ -868,7 +869,7 @@ public class QvtOperationalVisitorCS
 		EStructuralFeature newProperty = env.lookupProperty(type, newName);
 		if (newProperty != null) {
 			env.reportError(NLS.bind(ValidationMessages.propertyAlreadyExistsInTypeError, newName,
-					QvtOperationalUtil.getTypeFullName(type)), renameCS);
+			        QvtOperationalTypesUtil.getTypeFullName(type)), renameCS);
 			return null;
 		}
 
@@ -949,7 +950,7 @@ public class QvtOperationalVisitorCS
 				EClassifier guardType = guard.getType();
 				if (guardType != newEnv.getOCLStandardLibrary().getBoolean()) {
 					newEnv.reportError(NLS.bind(ValidationMessages.mappingGuardNotBooleanError,
-							new Object[] { QvtOperationalUtil.getTypeFullName(guardType) }), methodCS.getGuard());
+							new Object[] { QvtOperationalTypesUtil.getTypeFullName(guardType) }), methodCS.getGuard());
 					guard = null;
 				}
 			}
@@ -983,7 +984,7 @@ public class QvtOperationalVisitorCS
                 // TODO : Rewrite this when reimplementing ObjectExp
 				if (bodyType != null && methodCS.getMappingInitCS() == null && !QvtOperationalParserUtil.isAssignableToFrom(env, bodyType, returnType)) {
 					newEnv.reportError(NLS.bind(ValidationMessages.bodyTypeNotCompatibleWithReturnTypeError,
-							new Object[] { QvtOperationalUtil.getTypeFullName(bodyType), QvtOperationalUtil.getTypeFullName(returnType) }),
+							new Object[] { QvtOperationalTypesUtil.getTypeFullName(bodyType), QvtOperationalTypesUtil.getTypeFullName(returnType) }),
 							methodCS.getMappingDeclarationCS());
 				}
 			}
@@ -1048,7 +1049,7 @@ public class QvtOperationalVisitorCS
 		EClassifier helperType = (body.getContent().size() == 1 ? body.getContent().get(0).getType() : null);
 		if (helperType != null && !QvtOperationalParserUtil.isAssignableToFrom(env, returnType, helperType)) {
 			env.reportError(NLS.bind(ValidationMessages.bodyTypeNotCompatibleWithReturnTypeError, new Object[] {
-					QvtOperationalUtil.getTypeFullName(helperType), QvtOperationalUtil.getTypeFullName(returnType) }),
+			        QvtOperationalTypesUtil.getTypeFullName(helperType), QvtOperationalTypesUtil.getTypeFullName(returnType) }),
 					methodCS.getMappingDeclarationCS());
 		}
 
@@ -1412,7 +1413,7 @@ public class QvtOperationalVisitorCS
         if (mappingOperations.size() == 1) {
             env.registerResolveInExp(resolveInExp, eClassifier, resolveInExpCS.getInMappingName());
         } else {
-            String mappingFQName = (eClassifier == null) ? "" : eClassifier.getName() + QvtOperationalUtil.TYPE_NAME_SEPARATOR; //$NON-NLS-1$
+            String mappingFQName = (eClassifier == null) ? "" : eClassifier.getName() + QvtOperationalTypesUtil.TYPE_NAME_SEPARATOR; //$NON-NLS-1$
             mappingFQName += resolveInExpCS.getInMappingName();
             if (mappingOperations.size() == 0) {
                 env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ResolveInMappingNotFound, new Object[] {
@@ -1565,7 +1566,7 @@ public class QvtOperationalVisitorCS
                 		baseMethod.getResult().get(0).getEType(); 
                 if (!QvtOperationalParserUtil.isTypeEquals(env, expectedReturnType, returnType)) {
                     env.reportError(NLS.bind(ValidationMessages.ReturnTypeMismatch,  
-                                        op.getName(), QvtOperationalUtil.getTypeFullName(expectedReturnType)), 
+                                        op.getName(), QvtOperationalTypesUtil.getTypeFullName(expectedReturnType)), 
                                         cstNode);
                     return true;
                 }

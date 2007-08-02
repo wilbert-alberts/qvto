@@ -44,6 +44,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtEvaluationResult;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.common.Logger;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfException;
@@ -521,7 +522,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
             }
             else {
             	ArrayList<String> packageName = new ArrayList<String>();
-            	Collections.addAll(packageName, packageRef.getName().split(QvtOperationalUtil.TYPE_NAME_SEPARATOR));
+            	Collections.addAll(packageName, packageRef.getName().split(QvtOperationalTypesUtil.TYPE_NAME_SEPARATOR));
             	pack = myEnv.lookupPackage(packageName);
             }
 

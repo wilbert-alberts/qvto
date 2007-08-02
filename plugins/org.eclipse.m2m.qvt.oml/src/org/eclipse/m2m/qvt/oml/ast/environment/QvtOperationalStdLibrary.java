@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.qvt.oml.library.IContext;
@@ -94,7 +95,11 @@ public class QvtOperationalStdLibrary {
 	public EOperation defineOperation(QvtOperationalEnv env, LibraryOperation libraryOp, EClassifier contextType,
 			EClassifier returnType, String opName, EClassifier... paramTypes) {
 		EOperation operation = buildOperation(env, contextType, returnType, opName, paramTypes);
-		myDefinedOperations.put(operation, libraryOp);
+        synchronized (myDefinedOperations) {
+            if ((operation != null) && (resolveOperation(operation) == null)) {
+                myDefinedOperations.put(operation, libraryOp);
+            }
+        }
 		return operation;
 	}
 	
@@ -145,7 +150,7 @@ public class QvtOperationalStdLibrary {
 	}
 	
 	public boolean overrides(EOperation operation, int opcode) {
-		return myDefinedOperations.containsKey(operation);
+		return resolveOperation(operation) != null;
 	}
 
 	public Object callOperation(QvtOperationalEvaluationEnv evalEnv, IContext context, EOperation operation,
@@ -222,28 +227,28 @@ public class QvtOperationalStdLibrary {
 	        return instances;
 		}
 		
-		if (myDefinedOperations.containsKey(operation)) {
-			LibraryOperation libOp = myDefinedOperations.get(operation);
-			if (libOp == null) {
-				return null;
-			}
-			
-			Class returnClass = operation.getEType() != null ? operation.getEType().getInstanceClass() : null;
-	        if (returnClass == null) {
-	            Logger.getLogger().log(Logger.SEVERE,
-	                    "Return type class was not resolved"); //$NON-NLS-1$
-	            return null;
-	        }
-			
-			Object result = libOp.run(source, args, new Object[0], returnClass);
-			if (result == null) {
-				return QvtOperationalUtil.getOclInvalid();
-			}
-			else {
-				return result;
-			}
-		}
-		
+		LibraryOperation libOp = null;
+        synchronized (myDefinedOperations) {
+            EOperation resolvedOperation = resolveOperation(operation);
+            if (resolvedOperation != null) {
+               libOp = myDefinedOperations.get(resolvedOperation);
+            }
+        }
+        if (libOp != null) {
+            Class returnClass = operation.getEType() != null ? operation.getEType().getInstanceClass() : null;
+            if (returnClass == null) {
+                Logger.getLogger().log(Logger.SEVERE,
+                "Return type class was not resolved"); //$NON-NLS-1$
+                return null;
+            }
+
+            Object result = libOp.run(source, args, new Object[0], returnClass);
+            if (result == null) {
+                return QvtOperationalUtil.getOclInvalid();
+            }
+            return result;
+        }
+
 		return null;
 	}
 	
@@ -264,6 +269,44 @@ public class QvtOperationalStdLibrary {
 		return null;
 	}
 
+    private EOperation resolveOperation(EOperation operation) {
+        synchronized (myDefinedOperations) {
+            for (EOperation definedOperation : myDefinedOperations.keySet()) {
+                if (areEqual(definedOperation, operation)) {
+                    return definedOperation;
+                }
+            }
+            return null;
+        }
+    }
+    
+    private static boolean areEqual(EOperation op1, EOperation op2) {
+        if (!op1.getName().equals(op2.getName())) {
+            return false;
+        }
+        List<EParameter> parameters1 = op1.getEParameters();
+        List<EParameter> parameters2 = op2.getEParameters();
+        if (parameters1.size() != parameters2.size()) {
+            return false;
+        }
+        
+        for (int i = 0; i < parameters1.size(); i++) {
+            EClassifier type = parameters1.get(i).getEType();
+            EClassifier otherType = parameters2.get(i).getEType();
+            if (!areEqualTypes(type, otherType)) {
+                return false;
+            }
+        }
+        
+        return areEqualTypes(op1.getEContainingClass(), op2.getEContainingClass());
+    }
+    
+    private static boolean areEqualTypes(EClassifier cl1, EClassifier cl2) {
+        String op1CtxtType = QvtOperationalTypesUtil.getTypeFullName(cl1);
+        String op2CtxtType = QvtOperationalTypesUtil.getTypeFullName(cl2);
+        return op1CtxtType.equals(op2CtxtType);
+    }
+    
 	
     private static interface IFilter {
     	boolean matches(Object obj, Object type);
@@ -283,5 +326,4 @@ public class QvtOperationalStdLibrary {
 	
 	
 	private final Map<EOperation, LibraryOperation> myDefinedOperations;
-	
 }
