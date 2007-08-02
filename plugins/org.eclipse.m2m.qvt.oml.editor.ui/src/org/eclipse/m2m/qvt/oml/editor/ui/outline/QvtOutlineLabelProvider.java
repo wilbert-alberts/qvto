@@ -20,6 +20,7 @@ import org.eclipse.jdt.ui.ISharedImages;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
+import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingDeclarationCS;
@@ -186,7 +187,7 @@ public class QvtOutlineLabelProvider implements ILabelProvider {
     private static String getTypeAsString(TypeCS type) {
     	String typeName;
         if (type instanceof EClassifier) {
-            typeName = QvtOperationalUtil.getTypeFullName((EClassifier) type);
+            typeName = QvtOperationalTypesUtil.getTypeFullName((EClassifier) type);
         }
         else if (type != null) {
             typeName = QvtOperationalUtil.getStringRepresentation(type);
