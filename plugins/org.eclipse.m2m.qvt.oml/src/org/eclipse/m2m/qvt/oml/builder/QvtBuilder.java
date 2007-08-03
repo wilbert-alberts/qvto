@@ -43,6 +43,7 @@ import org.eclipse.m2m.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.qvt.oml.emf.util.urimap.MetamodelURIMappingHelper;
 import org.eclipse.ui.texteditor.MarkerUtilities;
 
 
@@ -158,17 +159,32 @@ public class QvtBuilder extends IncrementalProjectBuilder {
                 		}   		
                 	}
                 	
-                    IPath path = delta.getResource().getProjectRelativePath();
-                    if(".project".equals(path.toString()) || //$NON-NLS-1$
-                    	"plugin.xml".equals(path.toString()) || //$NON-NLS-1$
-                    	"META-INF/MANIFEST.MF".equals(path.toString())) { //$NON-NLS-1$
-                        rebuild[0] = true;
-                        return false;                    	
-                    }
-                    if (MDAConstants.QVTO_FILE_EXTENSION.equals(path.getFileExtension())) {
-                        rebuild[0] = true;
-                        return false;
-                    }
+                	if(delta.getResource().getType() == IResource.FILE) {
+	                    IPath projectRelativePath = delta.getResource().getProjectRelativePath();
+	                    if(".project".equals(projectRelativePath.toString()) || //$NON-NLS-1$
+	                    	"plugin.xml".equals(projectRelativePath.toString()) || //$NON-NLS-1$
+	                    	"META-INF/MANIFEST.MF".equals(projectRelativePath.toString())) { //$NON-NLS-1$
+	                        rebuild[0] = true;
+	                        return false;                    	
+	                    }
+	                    if (MDAConstants.QVTO_FILE_EXTENSION.equals(projectRelativePath.getFileExtension())) {
+	                        rebuild[0] = true;
+	                        return false;
+	                    }
+	                    
+	                    IFile mappingsFile = MetamodelURIMappingHelper.getMappingFileHandle(project);
+	                    if(mappingsFile != null && mappingsFile.exists() && projectRelativePath.equals(mappingsFile.getProjectRelativePath())) {
+	                        rebuild[0] = true;
+	                        return false;                    	
+	                    }
+	                    
+	                    String fileNameExt = delta.getResource().getProjectRelativePath().getFileExtension();
+	                    if("ecore".equals(fileNameExt)) { //$NON-NLS-1$
+	                        rebuild[0] = true;
+	                        return false;
+	                    }
+                	}
+                    
                     return true;
                 }
             });
