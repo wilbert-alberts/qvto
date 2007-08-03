@@ -20,7 +20,7 @@ import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.common.io.CFolder;
 import org.eclipse.m2m.qvt.oml.common.project.IResourceProvider;
-import org.eclipse.m2m.qvt.oml.project.MDAProjectPlugin;
+import org.eclipse.m2m.qvt.oml.project.QVTProjectPlugin;
 
 
 public class ProjectResourceProvider implements IResourceProvider {
@@ -39,11 +39,11 @@ public class ProjectResourceProvider implements IResourceProvider {
         ResourceSet resourceSet = new ResourceSetImpl();
         Resource resource = resourceSet.getResource(uri, true);
         if(resource == null) {
-            throw new MdaException(MDAProjectPlugin.getResourceString("ProjectResourceProvider.0", new Object[] {uri})); //$NON-NLS-1$
+            throw new MdaException(QVTProjectPlugin.getResourceString("ProjectResourceProvider.0", new Object[] {uri})); //$NON-NLS-1$
         }
         
         if(resource.getContents().isEmpty()) {
-            throw new MdaException(MDAProjectPlugin.getResourceString("ProjectResourceProvider.1", new Object[] {uri})); //$NON-NLS-1$
+            throw new MdaException(QVTProjectPlugin.getResourceString("ProjectResourceProvider.1", new Object[] {uri})); //$NON-NLS-1$
         }
         
         EObject obj = (EObject) resource.getContents().get(0);        

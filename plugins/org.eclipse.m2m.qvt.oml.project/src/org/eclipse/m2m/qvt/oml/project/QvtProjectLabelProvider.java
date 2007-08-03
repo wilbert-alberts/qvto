@@ -20,7 +20,7 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.m2m.qvt.oml.builder.QvtBuilderConfig;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
-import org.eclipse.m2m.qvt.oml.project.MDAProjectPluginImages;
+import org.eclipse.m2m.qvt.oml.project.QVTProjectPluginImages;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
@@ -57,17 +57,17 @@ public class QvtProjectLabelProvider extends LabelProvider {
 
 			IContainer sourceContainer = config.getSourceContainer();
 			if(sourceContainer.equals(folder)) {
-				return MDAProjectPluginImages.getInstance().getImage(MDAProjectPluginImages.SRC_CONTAINER);
+				return QVTProjectPluginImages.getInstance().getImage(QVTProjectPluginImages.SRC_CONTAINER);
 			} 
 			else if((sourceContainer.getType() & IResource.PROJECT) == 0 && config.isInSourceContainer(folder)) {
-				return MDAProjectPluginImages.getInstance().getImage(MDAProjectPluginImages.CU_NAMESPACE);
+				return QVTProjectPluginImages.getInstance().getImage(QVTProjectPluginImages.CU_NAMESPACE);
 			}
 		} 
 		else if(element instanceof IFile) {
 			IFile file = (IFile)element;
 			if(MDAConstants.QVTO_FILE_EXTENSION.equals(file.getFileExtension())) {
 				if(!config.isInSourceContainer(file)) {
-					return MDAProjectPluginImages.getInstance().getImage(MDAProjectPluginImages.UNB0UND_QVT_CU);
+					return QVTProjectPluginImages.getInstance().getImage(QVTProjectPluginImages.UNB0UND_QVT_CU);
 				}
 			}
 		}

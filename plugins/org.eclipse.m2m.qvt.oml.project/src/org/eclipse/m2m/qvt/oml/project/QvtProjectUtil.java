@@ -51,7 +51,7 @@ public class QvtProjectUtil {
 				QvtBuilderConfig builderConfig = QvtBuilderConfig.getConfig(folder.getProject());
 	    		return builderConfig.isInSourceContainer(folder);				
 			} catch (CoreException e) {
-				MDAProjectPlugin.log(e.getStatus());
+				QVTProjectPlugin.log(e.getStatus());
 			}
     	}
     	
@@ -78,7 +78,7 @@ public class QvtProjectUtil {
     		IContainer container = QvtBuilderConfig.getConfig(project).getSourceContainer();
     		return container.exists() ? container : null;
 		} catch (CoreException e) {
-			MDAProjectPlugin.log(e.getStatus());
+			QVTProjectPlugin.log(e.getStatus());
 		}
 		
 		return null;

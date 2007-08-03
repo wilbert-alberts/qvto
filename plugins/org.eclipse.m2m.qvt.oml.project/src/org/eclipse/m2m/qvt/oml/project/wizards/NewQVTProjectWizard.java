@@ -35,9 +35,8 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardSelectionPage;
 import org.eclipse.m2m.internal.qvt.oml.common.nature.TransformationNature;
 import org.eclipse.m2m.qvt.oml.common.project.NatureUtils;
-import org.eclipse.m2m.qvt.oml.project.INewTransformationWizard;
-import org.eclipse.m2m.qvt.oml.project.MDAProjectPlugin;
-import org.eclipse.m2m.qvt.oml.project.MDAProjectPluginImages;
+import org.eclipse.m2m.qvt.oml.project.QVTProjectPlugin;
+import org.eclipse.m2m.qvt.oml.project.QVTProjectPluginImages;
 import org.eclipse.pde.internal.ui.wizards.IProjectProvider;
 import org.eclipse.pde.internal.ui.wizards.plugin.NewProjectCreationOperation;
 import org.eclipse.ui.INewWizard;
@@ -46,21 +45,22 @@ import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard;
 
 
-public class NewMDAProjectWizard extends Wizard implements INewWizard, IExecutableExtension {
+
+public class NewQVTProjectWizard extends Wizard implements INewWizard, IExecutableExtension {
 	
-	private MDAProjectFieldData myMDAProjectFieldData;
-	private NewMDAProjectCreationPage myMainPage;
-	private NewMDAProjectContentPage myContentPage;
+	private QVTProjectFieldData myMDAProjectFieldData;
+	private NewQVTProjectCreationPage myMainPage;
+	private NewQVTProjectContentPage myContentPage;
 	private IConfigurationElement myConfig;
 	private WizardSelectionPage myWizardSelectionPage;
 	private IProjectProvider myProjectProvider;	
 	protected IWorkbench myWorkbench;	
 
-	public NewMDAProjectWizard() {
-	    setDefaultPageImageDescriptor(MDAProjectPluginImages.getInstance().getImageDescriptor(MDAProjectPluginImages.NEW_WIZARD));
-		setWindowTitle(MDAProjectPlugin.getResourceString("NewTransformationProjectWizard.Title")); //$NON-NLS-1$
+	public NewQVTProjectWizard() {
+	    setDefaultPageImageDescriptor(QVTProjectPluginImages.getInstance().getImageDescriptor(QVTProjectPluginImages.NEW_WIZARD));
+		setWindowTitle(QVTProjectPlugin.getResourceString("NewTransformationProjectWizard.Title")); //$NON-NLS-1$
 	    setNeedsProgressMonitor(true);
-		myMDAProjectFieldData = MDAProjectFieldData.Factory.INSTANCE.create();
+		myMDAProjectFieldData = QVTProjectFieldData.Factory.INSTANCE.create();
 	}
 	
     public void init(IWorkbench workbench, IStructuredSelection selection) {
@@ -72,9 +72,9 @@ public class NewMDAProjectWizard extends Wizard implements INewWizard, IExecutab
         
         super.addPages();
         
-		myMainPage = new NewMDAProjectCreationPage("main", myMDAProjectFieldData); //$NON-NLS-1$
-		myMainPage.setTitle(MDAProjectPlugin.getResourceString("NewTransformationProject.Title"));//$NON-NLS-1$
-		myMainPage.setDescription(MDAProjectPlugin.getResourceString("NewTransformationProject.Description"));//$NON-NLS-1$
+		myMainPage = new NewQVTProjectCreationPage("main", myMDAProjectFieldData); //$NON-NLS-1$
+		myMainPage.setTitle(QVTProjectPlugin.getResourceString("NewTransformationProject.Title"));//$NON-NLS-1$
+		myMainPage.setDescription(QVTProjectPlugin.getResourceString("NewTransformationProject.Description"));//$NON-NLS-1$
 		addPage(myMainPage);
 
 		myProjectProvider = new IProjectProvider() {
@@ -89,8 +89,8 @@ public class NewMDAProjectWizard extends Wizard implements INewWizard, IExecutab
 			}
 		};
 		
-		myContentPage = new NewMDAProjectContentPage("page2", myMainPage, myMDAProjectFieldData); //$NON-NLS-1$
-		myWizardSelectionPage = new MDAWizardListSelectionPage(myMDAProjectFieldData);
+		myContentPage = new NewQVTProjectContentPage("page2", myMainPage, myMDAProjectFieldData); //$NON-NLS-1$
+		myWizardSelectionPage = new QVTWizardListSelectionPage(myMDAProjectFieldData);
 		addPage(myContentPage);
 		addPage(myWizardSelectionPage);
 	}
@@ -199,13 +199,13 @@ public class NewMDAProjectWizard extends Wizard implements INewWizard, IExecutab
 			getContainer().run(false, true, operation);
 		} 
         catch (InterruptedException e) {
-            MDAProjectPlugin.log(e);
+            QVTProjectPlugin.log(e);
         }
         catch(Exception e) {
-            MDAProjectPlugin.log(e);
-            String title = MDAProjectPlugin.getResourceString("NewMDAProjectWizard.Error"); //$NON-NLS-1$
-            String message = MDAProjectPlugin.getResourceString("NewMDAProjectWizard.ErrorSeeLog"); //$NON-NLS-1$
-            Status status = new Status(IStatus.ERROR, MDAProjectPlugin.ID, IStatus.ERROR, message, e);
+            QVTProjectPlugin.log(e);
+            String title = QVTProjectPlugin.getResourceString("NewQVTProjectWizard.Error"); //$NON-NLS-1$
+            String message = QVTProjectPlugin.getResourceString("NewQVTProjectWizard.ErrorSeeLog"); //$NON-NLS-1$
+            Status status = new Status(IStatus.ERROR, QVTProjectPlugin.ID, IStatus.ERROR, message, e);
             ErrorDialog.openError(getShell(), title, e.getMessage(), status);
         }
 		

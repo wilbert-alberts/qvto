@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
 <plugin>
+   <extension-point id="projectElementsWizards" name="QVT Project Elements Wizard" schema="schema/projectElementsWizards.exsd"/>
 
    <extension
          point="org.eclipse.ui.newWizards">
+             
       <wizard
-            category="org.eclipse.mt.wizardCategory"
-            class="org.eclipse.m2m.qvt.oml.project.wizards.NewMDAProjectWizard"
+            category="org.eclipse.m2m.qvt.oml.wizardCategory"
+            class="org.eclipse.m2m.qvt.oml.project.wizards.NewQVTProjectWizard"
             icon="icons/pr-MDA.gif"
             id="org.eclipse.m2m.qvt.oml.project.newTransformationProject"
             name="%newTransformationProject"
@@ -107,4 +109,10 @@
 		</navigatorContent>
           
    </extension>
+   
+   <extension point="org.eclipse.m2m.qvt.oml.project.projectElementsWizards">
+		<wizard refId="org.eclipse.m2m.qvt.oml.ui.wizards.NewQVTTransformationWizard"/>
+		<wizard refId="org.eclipse.m2m.qvt.oml.ui.wizards.NewQvtLibraryWizard"/>
+   </extension>
+   
 </plugin>

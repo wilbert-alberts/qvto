@@ -16,12 +16,12 @@ import java.net.URL;
 import org.eclipse.m2m.qvt.oml.common.ui.PluginImages;
 
 
-public class MDAProjectPluginImages extends PluginImages {
-    private MDAProjectPluginImages() {
+public class QVTProjectPluginImages extends PluginImages {
+    private QVTProjectPluginImages() {
         super(BASE_URL);
     }
     
-    public static MDAProjectPluginImages getInstance() {
+    public static QVTProjectPluginImages getInstance() {
         return ourInstance;
     }
     
@@ -41,6 +41,6 @@ public class MDAProjectPluginImages extends PluginImages {
         declareRegistryImage(SRC_CONTAINER, "icons/src_container.gif"); //$NON-NLS-1$        
     }
 
-    private final static URL BASE_URL = MDAProjectPlugin.getDefault().getBundle().getEntry("/"); //$NON-NLS-1$
-    private final static MDAProjectPluginImages ourInstance = new MDAProjectPluginImages(); 
+    private final static URL BASE_URL = QVTProjectPlugin.getDefault().getBundle().getEntry("/"); //$NON-NLS-1$
+    private final static QVTProjectPluginImages ourInstance = new QVTProjectPluginImages(); 
 }

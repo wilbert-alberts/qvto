@@ -18,7 +18,7 @@ import org.eclipse.jdt.core.JavaConventions;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
-import org.eclipse.m2m.qvt.oml.project.MDAProjectPlugin;
+import org.eclipse.m2m.qvt.oml.project.QVTProjectPlugin;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -35,14 +35,14 @@ import org.eclipse.ui.PlatformUI;
 import org.osgi.framework.Version;
 
 
-public class NewMDAProjectContentPage extends WizardPage {
+public class NewQVTProjectContentPage extends WizardPage {
 
 	protected final static int PROPERTIES_GROUP = 1;
 	protected final static int CLASS_GROUP = 2;
 	protected int myChangedGroups = 0;
 	
-	private NewMDAProjectCreationPage myMainPage;
-	private MDAProjectFieldData myData;
+	private NewQVTProjectCreationPage myMainPage;
+	private QVTProjectFieldData myData;
 	private Text myIdText;
 	private Text myVersionText;
 	private Text myNameText;
@@ -54,12 +54,12 @@ public class NewMDAProjectContentPage extends WizardPage {
 	private Text myClassText;
 	private boolean myInitialized;
 
-	public NewMDAProjectContentPage(String pageName, NewMDAProjectCreationPage page, MDAProjectFieldData data) {
+	public NewQVTProjectContentPage(String pageName, NewQVTProjectCreationPage page, QVTProjectFieldData data) {
 		super(pageName);
 		myMainPage = page;
 		myData = data;
-		setTitle(MDAProjectPlugin.getResourceString("ContentPage.title")); //$NON-NLS-1$
-		setDescription(MDAProjectPlugin.getResourceString("ContentPage.desc")); //$NON-NLS-1$
+		setTitle(QVTProjectPlugin.getResourceString("ContentPage.title")); //$NON-NLS-1$
+		setDescription(QVTProjectPlugin.getResourceString("ContentPage.desc")); //$NON-NLS-1$
 	}
 
 	public void createControl(Composite parent) {
@@ -95,26 +95,26 @@ public class NewMDAProjectContentPage extends WizardPage {
 		Group propertiesGroup = new Group(container, SWT.NONE);
 		propertiesGroup.setLayout(new GridLayout(2, false));
 		propertiesGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		propertiesGroup.setText(MDAProjectPlugin.getResourceString("ContentPage.pGroup")); //$NON-NLS-1$
+		propertiesGroup.setText(QVTProjectPlugin.getResourceString("ContentPage.pGroup")); //$NON-NLS-1$
 
 		Label label = new Label(propertiesGroup, SWT.NONE);
-		label.setText(MDAProjectPlugin.getResourceString("ContentPage.pid")); //$NON-NLS-1$
+		label.setText(QVTProjectPlugin.getResourceString("ContentPage.pid")); //$NON-NLS-1$
 		myIdText = createText(propertiesGroup, propertiesListener);
 		
 		label = new Label(propertiesGroup, SWT.NONE);
-		label.setText(MDAProjectPlugin.getResourceString("ContentPage.pversion")); //$NON-NLS-1$
+		label.setText(QVTProjectPlugin.getResourceString("ContentPage.pversion")); //$NON-NLS-1$
 		myVersionText = createText(propertiesGroup, propertiesListener);
 
 		label = new Label(propertiesGroup, SWT.NONE);
-		label.setText(MDAProjectPlugin.getResourceString("ContentPage.pname")); //$NON-NLS-1$
+		label.setText(QVTProjectPlugin.getResourceString("ContentPage.pname")); //$NON-NLS-1$
 		myNameText = createText(propertiesGroup, propertiesListener);
 
 		label = new Label(propertiesGroup, SWT.NONE);
-		label.setText(MDAProjectPlugin.getResourceString("ContentPage.pprovider")); //$NON-NLS-1$
+		label.setText(QVTProjectPlugin.getResourceString("ContentPage.pprovider")); //$NON-NLS-1$
 		myProviderText = createText(propertiesGroup, propertiesListener);
 
 		myLibraryLabel = new Label(propertiesGroup, SWT.NONE);
-		myLibraryLabel.setText(MDAProjectPlugin.getResourceString("ProjectStructurePage.library")); //$NON-NLS-1$
+		myLibraryLabel.setText(QVTProjectPlugin.getResourceString("ProjectStructurePage.library")); //$NON-NLS-1$
 		myLibraryText = createText(propertiesGroup, propertiesListener);
 	}
 
@@ -132,10 +132,10 @@ public class NewMDAProjectContentPage extends WizardPage {
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
 		classGroup.setLayoutData(gd);
-		classGroup.setText(MDAProjectPlugin.getResourceString("ContentPage.pClassGroup")); //$NON-NLS-1$
+		classGroup.setText(QVTProjectPlugin.getResourceString("ContentPage.pClassGroup")); //$NON-NLS-1$
 
 		myGenerateClass = new Button(classGroup, SWT.CHECK);
-		myGenerateClass.setText(MDAProjectPlugin.getResourceString("ContentPage.generate")); //$NON-NLS-1$
+		myGenerateClass.setText(QVTProjectPlugin.getResourceString("ContentPage.generate")); //$NON-NLS-1$
 		myGenerateClass.setSelection(myData.doGenerateClass());
 		gd = new GridData();
 		gd.horizontalSpan = 2;
@@ -151,7 +151,7 @@ public class NewMDAProjectContentPage extends WizardPage {
 		});
 
 		myClassLabel = new Label(classGroup, SWT.NONE);
-		myClassLabel.setText(MDAProjectPlugin.getResourceString("ContentPage.classname")); //$NON-NLS-1$
+		myClassLabel.setText(QVTProjectPlugin.getResourceString("ContentPage.classname")); //$NON-NLS-1$
         myClassLabel.setEnabled(myGenerateClass.getSelection());
 		gd = new GridData();
 		gd.horizontalIndent = 20;
@@ -231,7 +231,7 @@ public class NewMDAProjectContentPage extends WizardPage {
 	}
 	
 	private String getNameFieldQualifier() {
-		return MDAProjectPlugin.getResourceString("ContentPage.plugin"); //$NON-NLS-1$
+		return QVTProjectPlugin.getResourceString("ContentPage.plugin"); //$NON-NLS-1$
 	}
 	
 	@Override
@@ -262,7 +262,7 @@ public class NewMDAProjectContentPage extends WizardPage {
 		String errorMessage = validateProperties();
 		if (errorMessage == null) {
 			if (myLibraryText.getText().trim().length() == 0) {
-				errorMessage = MDAProjectPlugin.getResourceString("ContentPage.noLibrary"); //$NON-NLS-1$
+				errorMessage = QVTProjectPlugin.getResourceString("ContentPage.noLibrary"); //$NON-NLS-1$
 			}	
 		}
 		if (errorMessage == null && myGenerateClass.isEnabled() && myGenerateClass.getSelection()) {
@@ -283,11 +283,11 @@ public class NewMDAProjectContentPage extends WizardPage {
 			return errorMessage;
 		
 		if (myVersionText.getText().trim().length() == 0) {
-			errorMessage = MDAProjectPlugin.getResourceString("ContentPage.noversion"); //$NON-NLS-1$
+			errorMessage = QVTProjectPlugin.getResourceString("ContentPage.noversion"); //$NON-NLS-1$
 		} else if (!isVersionValid(myVersionText.getText().trim())) {
-			errorMessage = MDAProjectPlugin.getResourceString("ContentPage.badversion"); //$NON-NLS-1$
+			errorMessage = QVTProjectPlugin.getResourceString("ContentPage.badversion"); //$NON-NLS-1$
 		} else if (myNameText.getText().trim().length() == 0) {
-			errorMessage = MDAProjectPlugin.getResourceString("ContentPage.noname"); //$NON-NLS-1$
+			errorMessage = QVTProjectPlugin.getResourceString("ContentPage.noname"); //$NON-NLS-1$
 		}
 		
 		if (errorMessage != null)
@@ -299,10 +299,10 @@ public class NewMDAProjectContentPage extends WizardPage {
 	private String validateId() {
 		String id = myIdText.getText().trim();
 		if (id.length() == 0)
-			return MDAProjectPlugin.getResourceString("ContentPage.noid"); //$NON-NLS-1$
+			return QVTProjectPlugin.getResourceString("ContentPage.noid"); //$NON-NLS-1$
 
 		if (!isValidPluginId(id)) {
-			return MDAProjectPlugin.getResourceString("ContentPage.invalidId"); //$NON-NLS-1$
+			return QVTProjectPlugin.getResourceString("ContentPage.invalidId"); //$NON-NLS-1$
 		}
 		return null;
 	}

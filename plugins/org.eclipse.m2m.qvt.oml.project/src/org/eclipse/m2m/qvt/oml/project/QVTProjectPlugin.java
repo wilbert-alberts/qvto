@@ -23,15 +23,15 @@ import org.osgi.framework.BundleContext;
 /**
  * The main plugin class to be used in the desktop.
  */
-public class MDAProjectPlugin extends AbstractUIPlugin {
+public class QVTProjectPlugin extends AbstractUIPlugin {
 	//The shared instance.
-	private static MDAProjectPlugin plugin;
+	private static QVTProjectPlugin plugin;
 	//Resource bundle.
 	private ResourceBundle resourceBundle;
 	/**
 	 * The constructor.
 	 */
-	public MDAProjectPlugin() {
+	public QVTProjectPlugin() {
 		super();
 		plugin = this;
 		try {
@@ -60,7 +60,7 @@ public class MDAProjectPlugin extends AbstractUIPlugin {
 	/**
 	 * Returns the shared instance.
 	 */
-	public static MDAProjectPlugin getDefault() {
+	public static QVTProjectPlugin getDefault() {
 		return plugin;
 	}
 
@@ -73,7 +73,7 @@ public class MDAProjectPlugin extends AbstractUIPlugin {
 	 * or 'key' if not found.
 	 */
 	public static String getResourceString(String key) {
-		ResourceBundle bundle = MDAProjectPlugin.getDefault().getResourceBundle();
+		ResourceBundle bundle = QVTProjectPlugin.getDefault().getResourceBundle();
 		try {
 			return (bundle != null) ? bundle.getString(key) : key;
 		} catch (MissingResourceException e) {
@@ -93,7 +93,7 @@ public class MDAProjectPlugin extends AbstractUIPlugin {
     }
 	
 	public static void log(Throwable t){
-	    log(new Status(IStatus.ERROR, ID, 100001, getResourceString("MDAProjectPlugin.StatusMessage"), t));//$NON-NLS-1$ 
+	    log(new Status(IStatus.ERROR, ID, 100001, getResourceString("QVTProjectPlugin.StatusMessage"), t));//$NON-NLS-1$ 
 	}
 
     public static final String ID = "org.eclipse.m2m.qvt.oml.project"; //$NON-NLS-1$

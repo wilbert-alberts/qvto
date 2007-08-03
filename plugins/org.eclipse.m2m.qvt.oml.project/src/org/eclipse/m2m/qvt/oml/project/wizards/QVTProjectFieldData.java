@@ -13,15 +13,15 @@ package org.eclipse.m2m.qvt.oml.project.wizards;
 
 import org.eclipse.pde.ui.IPluginFieldData;
 
-public interface MDAProjectFieldData extends IPluginFieldData {
+public interface QVTProjectFieldData extends IPluginFieldData {
 	interface Factory {
 		Factory INSTANCE = new Factory() {
-			public MDAProjectFieldData create() {
+			public QVTProjectFieldData create() {
 				return new MDAProjectFieldDataImpl();
 			}
 		};
 		
-		MDAProjectFieldData create();
+		QVTProjectFieldData create();
 	}
 	
 	boolean isPlugin();
@@ -42,13 +42,13 @@ public interface MDAProjectFieldData extends IPluginFieldData {
 }
 
 
-class MDAProjectFieldDataImpl extends org.eclipse.pde.internal.ui.wizards.plugin.PluginFieldData implements MDAProjectFieldData {
+class MDAProjectFieldDataImpl extends org.eclipse.pde.internal.ui.wizards.plugin.PluginFieldData implements QVTProjectFieldData {
 	private String myProjectName;
     private boolean myPlugin = true;
 
 
 	public MDAProjectFieldDataImpl() {
-		((MDAProjectFieldData)this).setDoGenerateClass(false);
+		((QVTProjectFieldData)this).setDoGenerateClass(false);
 	}
 
 	@Override

@@ -32,7 +32,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardPage;
-import org.eclipse.m2m.qvt.oml.project.MDAProjectPlugin;
+import org.eclipse.m2m.qvt.oml.project.QVTProjectPlugin;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -65,7 +65,7 @@ public class ConvertProjectWizard extends Wizard implements INewWizard {
     
     public ConvertProjectWizard(Converter converter) {
         myConverter = converter;
-        setWindowTitle(MDAProjectPlugin.getResourceString("ConvertToMDAProjectWizard.Title"));//$NON-NLS-1$
+        setWindowTitle(QVTProjectPlugin.getResourceString("ConvertToMDAProjectWizard.Title"));//$NON-NLS-1$
         setNeedsProgressMonitor(true);
     }
 
@@ -100,7 +100,7 @@ public class ConvertProjectWizard extends Wizard implements INewWizard {
                         myConverter.addNature(project);
                     }
                 } catch (CoreException e) {
-                    MDAProjectPlugin.log(e);
+                    QVTProjectPlugin.log(e);
                 }
             }
         };
@@ -108,9 +108,9 @@ public class ConvertProjectWizard extends Wizard implements INewWizard {
         try {
             getContainer().run(false, true, operation);
         } catch (InterruptedException exception) {
-            MDAProjectPlugin.log(exception);
+            QVTProjectPlugin.log(exception);
         } catch (InvocationTargetException exception) {
-            MDAProjectPlugin.log(exception);
+            QVTProjectPlugin.log(exception);
         }
         return true;
     }
@@ -121,9 +121,9 @@ public class ConvertProjectWizard extends Wizard implements INewWizard {
         public ConvertionPage() {
             super("ConvertionPage");//$NON-NLS-1$
 
-            setTitle(MDAProjectPlugin.getResourceString("ConvertionPage.Title"));//$NON-NLS-1$
+            setTitle(QVTProjectPlugin.getResourceString("ConvertionPage.Title"));//$NON-NLS-1$
             //setDefaultPageImageDescriptor(CodeGenUIPlugin.getPlugin().getImage("full/wizban/ConvertToJETProjectWizard"));
-            setDescription(MDAProjectPlugin.getResourceString("ConvertionPage.Description"));//$NON-NLS-1$
+            setDescription(QVTProjectPlugin.getResourceString("ConvertionPage.Description"));//$NON-NLS-1$
         }
 
         @Override
@@ -147,7 +147,7 @@ public class ConvertProjectWizard extends Wizard implements INewWizard {
             }
 
             Label projectsLabel = new Label(composite, SWT.LEFT);
-            projectsLabel.setText(MDAProjectPlugin.getResourceString("ConvertionPage.ProjectsListTitle"));//$NON-NLS-1$
+            projectsLabel.setText(QVTProjectPlugin.getResourceString("ConvertionPage.ProjectsListTitle"));//$NON-NLS-1$
             {
                 GridData data = new GridData();
                 data.horizontalAlignment = GridData.FILL;
@@ -168,10 +168,10 @@ public class ConvertProjectWizard extends Wizard implements INewWizard {
             }
 
             Button selectAllButton = new Button(selectionComposite, SWT.PUSH);
-            selectAllButton.setText(MDAProjectPlugin.getResourceString("ConvertionPage.SelectAll"));//$NON-NLS-1$
+            selectAllButton.setText(QVTProjectPlugin.getResourceString("ConvertionPage.SelectAll"));//$NON-NLS-1$
 
             Button deselectAllButton = new Button(selectionComposite, SWT.PUSH);
-            deselectAllButton.setText(MDAProjectPlugin.getResourceString("ConvertionPage.DeselectAll"));//$NON-NLS-1$
+            deselectAllButton.setText(QVTProjectPlugin.getResourceString("ConvertionPage.DeselectAll"));//$NON-NLS-1$
 
             Table projectsTable = new Table(composite, SWT.CHECK | SWT.BORDER);
             final CheckboxTableViewer projectsCheckboxTableViewer = new CheckboxTableViewer(projectsTable);
@@ -253,7 +253,7 @@ public class ConvertProjectWizard extends Wizard implements INewWizard {
         try{
             return myConverter.hasNature(project);
         }catch(CoreException e){
-            MDAProjectPlugin.log(e);
+            QVTProjectPlugin.log(e);
         }
         return false;
     }

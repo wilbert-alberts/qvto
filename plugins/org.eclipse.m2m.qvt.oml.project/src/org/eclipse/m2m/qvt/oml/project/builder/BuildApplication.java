@@ -24,7 +24,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IPlatformRunnable;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.m2m.qvt.oml.project.MDAProjectPlugin;
+import org.eclipse.m2m.qvt.oml.project.QVTProjectPlugin;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.testing.ITestHarness;
 import org.eclipse.ui.testing.TestableObject;
@@ -109,7 +109,7 @@ public class BuildApplication implements IPlatformRunnable, ITestHarness {
                 }
             }
             else {
-                System.err.println(MDAProjectPlugin.getResourceString("BuildApplication.UnknownCommand", new Object[] {cmd})); //$NON-NLS-1$
+                System.err.println(QVTProjectPlugin.getResourceString("BuildApplication.UnknownCommand", new Object[] {cmd})); //$NON-NLS-1$
                 help();
                 return ERROR;
             }
@@ -154,7 +154,7 @@ public class BuildApplication implements IPlatformRunnable, ITestHarness {
     }
 
     private void help() {
-        System.out.println(MDAProjectPlugin.getResourceString("BuildApplication.Usage")); //$NON-NLS-1$
+        System.out.println(QVTProjectPlugin.getResourceString("BuildApplication.Usage")); //$NON-NLS-1$
     }
 
     private TestableObject myTestableObject;

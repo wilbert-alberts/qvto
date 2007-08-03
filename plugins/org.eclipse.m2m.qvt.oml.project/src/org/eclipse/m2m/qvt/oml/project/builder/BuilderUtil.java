@@ -25,7 +25,7 @@ import org.eclipse.m2m.qvt.oml.common.io.IOFile;
 import org.eclipse.m2m.qvt.oml.common.io.IOFolder;
 import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseContainer;
 import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
-import org.eclipse.m2m.qvt.oml.project.MDAProjectPlugin;
+import org.eclipse.m2m.qvt.oml.project.QVTProjectPlugin;
 
 import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
 
@@ -70,7 +70,7 @@ public class BuilderUtil {
             }
         }
 
-        throw new MdaException(MDAProjectPlugin.getResourceString("BuilderUtil.0", new Object[] {name, project})); //$NON-NLS-1$
+        throw new MdaException(QVTProjectPlugin.getResourceString("BuilderUtil.0", new Object[] {name, project})); //$NON-NLS-1$
     }
 
     private static CResource getWorkspaceResource(String name, boolean checkExistance, IResourceHelper helper) throws MdaException {
@@ -85,7 +85,7 @@ public class BuilderUtil {
             return helper.makeIOResource(file);
         }
 
-        throw new MdaException(MDAProjectPlugin.getResourceString("BuilderUtil.2", new Object[] {name})); //$NON-NLS-1$
+        throw new MdaException(QVTProjectPlugin.getResourceString("BuilderUtil.2", new Object[] {name})); //$NON-NLS-1$
     }
     
     private static final IResourceHelper FILE_HELPER = new IResourceHelper() {

@@ -24,7 +24,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.m2m.qvt.oml.QvtNamesChecker;
 import org.eclipse.m2m.qvt.oml.builder.QvtBuilderConfig;
-import org.eclipse.m2m.qvt.oml.project.MDAProjectPlugin;
+import org.eclipse.m2m.qvt.oml.project.QVTProjectPlugin;
 import org.eclipse.m2m.qvt.oml.project.model.IQvtCompilationUnit;
 import org.eclipse.m2m.qvt.oml.project.model.IQvtElement;
 import org.eclipse.m2m.qvt.oml.project.model.IQvtNamespace;
@@ -193,7 +193,7 @@ public class QvtProject extends QvtBaseElement implements IQvtProject {
 				return resourcePath.removeFirstSegments(containerPath.segmentCount());
 			}
 		} catch (QvtModelException e) {
-			MDAProjectPlugin.log(e);
+			QVTProjectPlugin.log(e);
 		}
 		
 		return null;
