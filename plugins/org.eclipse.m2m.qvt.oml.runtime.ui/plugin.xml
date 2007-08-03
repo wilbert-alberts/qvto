@@ -39,13 +39,13 @@
          <menu
                label="%applyTransformation"
                path="org.eclipse.m2m.qvt.oml.ui.modelMenu/default"
-               id="org.eclipse.m2m.qvt.oml.applytransformation.menu">
+               id="org.eclipse.m2m.qvt.oml.common.applytransformation.menu">
             <groupMarker name="group1"/>
             <groupMarker name="group2"/>
          </menu>
          <menu
                label="%qvtMenu"
-               path="org.eclipse.m2m.qvt.oml.ui.modelMenu/org.eclipse.m2m.qvt.oml.applytransformation.menu/group2"
+               path="org.eclipse.m2m.qvt.oml.ui.modelMenu/org.eclipse.m2m.qvt.oml.common.applytransformation.menu/group2"
                id="org.eclipse.m2m.qvt.oml.applytransformation.menu">
             <groupMarker name="group1"/>
             <groupMarker name="group2"/>
@@ -57,7 +57,7 @@
                icon="icons/qvt-compiled-transformation.gif"
                id="org.eclipse.m2m.qvt.oml.internal.actions.ApplyCompiledAction"
                label="%compiled"
-               menubarPath="org.eclipse.m2m.qvt.oml.ui.modelMenu/org.eclipse.m2m.qvt.oml.applytransformation.menu/org.eclipse.m2m.qvt.oml.applytransformation.menu/group2">               
+               menubarPath="org.eclipse.m2m.qvt.oml.ui.modelMenu/org.eclipse.m2m.qvt.oml.common.applytransformation.menu/group2">               
          </action>
          <action
                class="org.eclipse.m2m.internal.qvt.oml.runtime.ui.actions.RunFromWorkspaceAction"
@@ -65,7 +65,7 @@
                icon="icons/pr-Model_to_model.gif"
                id="org.eclipse.m2m.qvt.oml.internal.generator.newAction"
                label="%fromWorkspace"
-               menubarPath="org.eclipse.m2m.qvt.oml.ui.modelMenu/org.eclipse.m2m.qvt.oml.applytransformation.menu/org.eclipse.m2m.qvt.oml.applytransformation.menu/group1">               
+               menubarPath="org.eclipse.m2m.qvt.oml.ui.modelMenu/org.eclipse.m2m.qvt.oml.common.applytransformation.menu/group1">               
          </action>         
       </actionSet>
    </extension>
