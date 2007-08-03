@@ -2,16 +2,12 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension point="org.eclipse.ui.newWizards">
+   
     <category
-      id = "org.eclipse.mt.wizardCategory"
-      name="%mtWizardsCategoryName">
-    </category>
-    <category
-          id="org.eclipse.m2m.wizardCategory"
-          name="%m2mWizardsCategoryName"
-          parentCategory="org.eclipse.mt.wizardCategory"/>
+          id="org.eclipse.m2m.qvt.oml.wizardCategory"
+          name="%m2mWizardsCategoryName"/>
       <wizard
-            category="org.eclipse.mt.wizardCategory/org.eclipse.m2m.wizardCategory"
+            category="org.eclipse.m2m.qvt.oml.wizardCategory"
             class="org.eclipse.m2m.qvt.oml.ui.wizards.NewQVTTransformationWizard"
             icon="icons/pr-Model_to_model.gif"
             id="org.eclipse.m2m.qvt.oml.ui.wizards.NewQVTTransformationWizard"
@@ -21,7 +17,7 @@
          </description>
       </wizard>
       <wizard
-            category="org.eclipse.mt.wizardCategory/org.eclipse.m2m.wizardCategory"
+            category="org.eclipse.m2m.qvt.oml.wizardCategory"
             class="org.eclipse.m2m.qvt.oml.ui.wizards.NewQvtLibraryWizard"
             icon="icons/pr-Model_to_model.gif"
             id="org.eclipse.m2m.qvt.oml.ui.wizards.NewQvtLibraryWizard"
@@ -55,7 +51,7 @@
     <page
         id="QvtMetamodelMappingPage"
         category="QvtSettingsPropertyPage"
-        name= "Metamodel Mappings"
+        name= "%metamodelMappingsPageName"
         class="org.eclipse.m2m.qvt.oml.ui.QvtMetamodelMappingPage">
 	    <filter name="nature" value="org.eclipse.m2m.qvt.oml.project.TransformationNature"/>        
      <enabledWhen>

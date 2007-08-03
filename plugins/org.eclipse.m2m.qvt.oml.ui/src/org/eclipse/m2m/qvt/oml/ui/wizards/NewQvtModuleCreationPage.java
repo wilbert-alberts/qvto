@@ -30,8 +30,10 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IMessageProvider;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.m2m.qvt.oml.QvtNamesChecker;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
@@ -55,13 +57,19 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.ide.undo.CreateFolderOperation;
+import org.eclipse.ui.part.ISetSelectionTarget;
 
 /**
  * @author dvorak
@@ -623,4 +631,29 @@ public class NewQvtModuleCreationPage extends WizardPage implements Listener {
 
 		return ResourcesPlugin.getWorkspace().validatePath(path, IResource.PROJECT | IResource.FOLDER);
 	}
+	
+    static void openInEditor(Shell shell, IFile file) {    	
+        // Select the new file resource in the current view.
+        //
+        IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+        IWorkbenchPage page = workbenchWindow.getActivePage();
+        final IWorkbenchPart activePart = page.getActivePart();
+        if (activePart instanceof ISetSelectionTarget) {
+            final ISelection targetSelection = new StructuredSelection(file);
+            shell.getDisplay().asyncExec(new Runnable() {
+                public void run() {
+                    ((ISetSelectionTarget) activePart).selectReveal(targetSelection);
+                }
+            });
+        }
+
+        // Open an editor on the new file.
+        //
+        try {
+            IDE.openEditor(page, file);
+        } catch (PartInitException exception) {
+            MessageDialog.openError(workbenchWindow.getShell(), Messages.NewQVTTransformationWizard_OpenEditorError, exception.getMessage());//$NON-NLS-1$
+        }
+    }
+	
 }

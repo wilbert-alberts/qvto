@@ -15,30 +15,55 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
-import org.eclipse.m2m.qvt.oml.project.AbstractNewTransformationWizard;
-import org.eclipse.m2m.qvt.oml.project.wizards.MDAProjectFieldData;
+import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.m2m.qvt.oml.project.wizards.INewTransformationWizard;
+import org.eclipse.m2m.qvt.oml.project.wizards.QVTProjectFieldData;
 import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
 import org.eclipse.m2m.qvt.oml.ui.QvtPluginImages;
 import org.eclipse.ui.IWorkbench;
 
 
-public class NewQvtLibraryWizard extends AbstractNewTransformationWizard {
-    
-    private MDAProjectFieldData fProjectFieldData;
+public class NewQvtLibraryWizard extends Wizard implements INewTransformationWizard {
+
+	private boolean fContentsCreated;
+	private QVTProjectFieldData fProjectFieldData;
     private NewQvtModuleCreationPage fNewQvtModuleCreationPage;
     private IProject fDestProject;    
+    private IWorkbench fWorkbench;
+    private IStructuredSelection fSelection;
 
     
     public NewQvtLibraryWizard() {
+    	setWindowTitle(Messages.NewQVTLibraryWizard_Title);    	
         ImageDescriptor desc = QvtPluginImages.getInstance().getImageDescriptor(QvtPluginImages.NEW_WIZARD);
         setDefaultPageImageDescriptor(desc);        
     }
+    
+	public boolean isContentCreated() {
+		return fContentsCreated;
+	}
 
-    public NewQvtModuleCreationPage createNewQvtLibraryCreationPage() {
+	public void setHostProject(IProject project) {
+		fDestProject = project;
+	}
+
+	public void init(IWorkbench workbench, IStructuredSelection selection) {
+		fWorkbench = workbench;
+		fSelection = selection;
+	}
+	
+    protected IStructuredSelection getSelection() {
+		return fSelection;
+	}
+    
+    protected IWorkbench getWorkbench() {
+		return fWorkbench;
+	}	
+    
+    protected NewQvtModuleCreationPage createNewQvtLibraryCreationPage() {
     	return new NewQvtModuleCreationPage(fDestProject != null ? fDestProject.getFullPath() : null) {
             @Override
             protected String getNewModuleNameProposal() {    
@@ -55,14 +80,7 @@ public class NewQvtLibraryWizard extends AbstractNewTransformationWizard {
 		return fNewQvtModuleCreationPage;
 	}
     
-    @Override
-	public void init(IWorkbench workbench, IStructuredSelection selection) {
-    	super.init(workbench, selection);
-    	
-    	setWindowTitle(Messages.NewQVTLibraryWizard_Title);
-    }
-
-	public void setProjectFieldData(MDAProjectFieldData projectData) {
+	public void setProjectFieldData(QVTProjectFieldData projectData) {
 		if(projectData == null) {
 			return;
 		}
@@ -81,13 +99,12 @@ public class NewQvtLibraryWizard extends AbstractNewTransformationWizard {
 
         try {
             IFile transformationFile = fNewQvtModuleCreationPage.createNewFile(createModuleContents());            
-            NewQVTTransformationWizard.openEditor(getWorkbench(), getShell(), transformationFile);
+            NewQvtModuleCreationPage.openInEditor(getShell(), transformationFile);
             return true;
         } 
         catch (Exception exception) {
             QVTUIPlugin.log(exception);
-            MessageDialog.openError(getWorkbench().getActiveWorkbenchWindow().getShell(), Messages.NewQVTTransformationWizard_WizardError, exception.getMessage());//$NON-NLS-1$
-            return true;
+            return false;
         }
 	}
 	
@@ -110,6 +127,11 @@ public class NewQvtLibraryWizard extends AbstractNewTransformationWizard {
 		return performSoftFinish(null);
     }
 
+    @Override
+    public void addPages() {    
+    	doAddPages();
+    }
+    
     protected String createModuleContents() {
         String moduleName = fNewQvtModuleCreationPage.getModuleName(); 
         String contents = "library " + moduleName + ";\n";  //$NON-NLS-1$//$NON-NLS-2$        
@@ -117,18 +139,13 @@ public class NewQvtLibraryWizard extends AbstractNewTransformationWizard {
         return contents.toString();
     }
     
-    @Override
 	protected void doAddPages() {
         fNewQvtModuleCreationPage = createNewQvtLibraryCreationPage();
         
         fNewQvtModuleCreationPage.setTitle(Messages.NewQvtLibraryWizard_NewModulePageTitle);
         fNewQvtModuleCreationPage.setDescription(Messages.NewQvtLibraryWizard_NewModulePageDescription);
         addPage(fNewQvtModuleCreationPage);
-    }
-    
-    
-    
-    public boolean isJavaRequired() {
-        return false;
+        
+        fContentsCreated = true;
     }
 }

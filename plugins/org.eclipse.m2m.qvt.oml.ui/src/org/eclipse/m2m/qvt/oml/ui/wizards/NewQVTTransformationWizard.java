@@ -13,41 +13,42 @@ package org.eclipse.m2m.qvt.oml.ui.wizards;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
+import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.m2m.qvt.oml.QvtNamesChecker;
-import org.eclipse.m2m.qvt.oml.project.AbstractNewTransformationWizard;
-import org.eclipse.m2m.qvt.oml.project.wizards.MDAProjectFieldData;
+import org.eclipse.m2m.qvt.oml.project.wizards.INewTransformationWizard;
 import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
 import org.eclipse.m2m.qvt.oml.ui.QvtPluginImages;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.ide.IDE;
-import org.eclipse.ui.part.ISetSelectionTarget;
 
 
-public class NewQVTTransformationWizard extends AbstractNewTransformationWizard {
-	
+public class NewQVTTransformationWizard extends Wizard implements INewTransformationWizard {
+ 
 	private NewQvtTransformationCreationPage myNewQvtModulePage;
     private IProject fDestProject;
+    private boolean fContentsCreated;
+    private IWorkbench fWorkbench;
+    private IStructuredSelection fSelection;
         
     public NewQVTTransformationWizard() {
+    	setWindowTitle(Messages.NewQVTTransformationWizard_Title);//$NON-NLS-1$
+    	
         ImageDescriptor desc = QvtPluginImages.getInstance().getImageDescriptor(QvtPluginImages.NEW_WIZARD);
-        setDefaultPageImageDescriptor(desc);
-        
+        setDefaultPageImageDescriptor(desc);        
         setHelpAvailable(false);
     }
+    
+    protected IStructuredSelection getSelection() {
+		return fSelection;
+	}
+    
+    protected IWorkbench getWorkbench() {
+		return fWorkbench;
+	}
 
     protected NewQvtTransformationCreationPage createQvtTransformationCreationPage() {
     	return new NewQvtTransformationCreationPage(fDestProject != null ? fDestProject.getFullPath() : null);
@@ -60,22 +61,14 @@ public class NewQVTTransformationWizard extends AbstractNewTransformationWizard 
     protected IProject getDestinationProject() {
 		return fDestProject;
 	}
-    	
-    @Override
+    
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
-    	super.init(workbench, selection);
-    	setWindowTitle(Messages.NewQVTTransformationWizard_Title);//$NON-NLS-1$
-    }
+		fWorkbench = workbench;
+		fSelection = selection;
+	}    
 
-	public void setProjectFieldData(MDAProjectFieldData projectData) {
-		if(projectData == null) {
-			return;
-		}
-		
-		String projectName = projectData.getProjectName(); 
-		if(projectName != null) {
-			fDestProject = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);			
-		}
+	public void setHostProject(IProject project) {		
+		fDestProject = project;			
 	}
 	
     @Override
@@ -101,12 +94,11 @@ public class NewQVTTransformationWizard extends AbstractNewTransformationWizard 
         	String contents = createTransformationContents(moduleName);
         	IFile transformationFile = myNewQvtModulePage.createNewFile(contents);            		
             
-            openEditor(getWorkbench(), getShell(), transformationFile);
+        	NewQvtModuleCreationPage.openInEditor(getShell(), transformationFile);
             return true;
         } catch (Exception exception) {
             QVTUIPlugin.log(exception);
-            MessageDialog.openError(getWorkbench().getActiveWorkbenchWindow().getShell(), Messages.NewQVTTransformationWizard_WizardError, exception.getMessage());//$NON-NLS-1$
-            return true;
+            return false;
         }
 	}
 	
@@ -119,45 +111,28 @@ public class NewQVTTransformationWizard extends AbstractNewTransformationWizard 
     	return contents.toString();
     }
 
-        
-    public static void openEditor(IWorkbench workbench, Shell shell, IFile file) {
-        // Select the new file resource in the current view.
-        //
-        IWorkbenchWindow workbenchWindow = workbench.getActiveWorkbenchWindow();
-        IWorkbenchPage page = workbenchWindow.getActivePage();
-        final IWorkbenchPart activePart = page.getActivePart();
-        if (activePart instanceof ISetSelectionTarget) {
-            final ISelection targetSelection = new StructuredSelection(file);
-            shell.getDisplay().asyncExec(new Runnable() {
-                public void run() {
-                    ((ISetSelectionTarget) activePart).selectReveal(targetSelection);
-                }
-            });
-        }
 
-        // Open an editor on the new file.
-        //
-        try {
-            IDE.openEditor(page, file);
-        } catch (PartInitException exception) {
-            MessageDialog.openError(workbenchWindow.getShell(), Messages.NewQVTTransformationWizard_OpenEditorError, exception.getMessage());//$NON-NLS-1$
-        }
-    }
-	
-    @Override
+	@Override
 	public boolean performFinish() {
 		return performSoftFinish(new NullProgressMonitor());
     }
+	
+	@Override
+	public void addPages() {
+		doAddPages();
+	}
 
-    @Override
 	protected void doAddPages() {
         myNewQvtModulePage = createQvtTransformationCreationPage();        
         myNewQvtModulePage.setTitle(Messages.NewQVTTransformationWizard_NewModuleFilePageTitle);//$NON-NLS-1$
         myNewQvtModulePage.setDescription(Messages.NewQVTTransformationWizard_NewModulePageDescription);//$NON-NLS-1$
         addPage(myNewQvtModulePage);
+
+        fContentsCreated = true;        
     }
     
-    public boolean isJavaRequired() {
-        return false;
-    }
+	
+	public boolean isContentCreated() {
+		return fContentsCreated;
+	}
 }

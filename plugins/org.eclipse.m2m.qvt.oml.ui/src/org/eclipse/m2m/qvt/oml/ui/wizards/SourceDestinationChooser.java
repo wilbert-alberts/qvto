@@ -32,7 +32,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.window.Window;
 import org.eclipse.m2m.qvt.oml.builder.QvtBuilderConfig;
-import org.eclipse.m2m.qvt.oml.project.MDAProjectPluginImages;
+import org.eclipse.m2m.qvt.oml.project.QVTProjectPluginImages;
 import org.eclipse.m2m.qvt.oml.project.QvtProjectLabelProvider;
 import org.eclipse.m2m.qvt.oml.project.QvtProjectUtil;
 import org.eclipse.m2m.qvt.oml.project.model.IQvtElement;
@@ -271,7 +271,7 @@ public class SourceDestinationChooser extends ElementTreeSelectionDialog {
 		}
 
 		public ImageDescriptor getImageDescriptor(Object object) {
-			return MDAProjectPluginImages.getInstance().getImageDescriptor(MDAProjectPluginImages.SRC_CONTAINER);
+			return QVTProjectPluginImages.getInstance().getImageDescriptor(QVTProjectPluginImages.SRC_CONTAINER);
 		}
 
 		public String getLabel(Object o) {
