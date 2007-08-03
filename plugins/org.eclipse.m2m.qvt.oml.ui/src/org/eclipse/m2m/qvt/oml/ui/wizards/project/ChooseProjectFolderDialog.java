@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.ui;
+package org.eclipse.m2m.qvt.oml.ui.wizards.project;
 
 import java.util.ArrayList;
 
@@ -24,6 +24,7 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.m2m.qvt.oml.common.ui.FolderSelectionDialog;
 import org.eclipse.m2m.qvt.oml.common.ui.TypedElementSelectionValidator;
 import org.eclipse.m2m.qvt.oml.common.ui.TypedViewerFilter;
+import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 import org.eclipse.ui.model.WorkbenchContentProvider;
@@ -35,7 +36,7 @@ public class ChooseProjectFolderDialog extends FolderSelectionDialog {
         super(shell, new WorkbenchLabelProvider(), new WorkbenchContentProvider());
         
         IWorkspaceRoot root = project.getWorkspace().getRoot();
-        final Class[] acceptedClasses = new Class[] { IProject.class, IFolder.class };
+        final Class<?>[] acceptedClasses = new Class[] { IProject.class, IFolder.class };
         IProject[] allProjects = root.getProjects();
         ArrayList<IProject> rejectedElements = new ArrayList<IProject>(allProjects.length);
         for (int i = 0; i < allProjects.length; i++) {

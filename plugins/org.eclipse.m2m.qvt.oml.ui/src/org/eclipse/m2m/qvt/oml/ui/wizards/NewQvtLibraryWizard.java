@@ -13,23 +13,20 @@ package org.eclipse.m2m.qvt.oml.ui.wizards;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.m2m.qvt.oml.project.wizards.INewTransformationWizard;
-import org.eclipse.m2m.qvt.oml.project.wizards.QVTProjectFieldData;
 import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
 import org.eclipse.m2m.qvt.oml.ui.QvtPluginImages;
+import org.eclipse.m2m.qvt.oml.ui.wizards.project.INewTransformationWizard;
 import org.eclipse.ui.IWorkbench;
 
 
 public class NewQvtLibraryWizard extends Wizard implements INewTransformationWizard {
 
 	private boolean fContentsCreated;
-	private QVTProjectFieldData fProjectFieldData;
     private NewQvtModuleCreationPage fNewQvtModuleCreationPage;
     private IProject fDestProject;    
     private IWorkbench fWorkbench;
@@ -79,18 +76,7 @@ public class NewQvtLibraryWizard extends Wizard implements INewTransformationWiz
     protected final NewQvtModuleCreationPage getNewQvtLibraryCreationPage() {    	
 		return fNewQvtModuleCreationPage;
 	}
-    
-	public void setProjectFieldData(QVTProjectFieldData projectData) {
-		if(projectData == null) {
-			return;
-		}
-		
-		String projectName = projectData.getProjectName(); 
-		if(projectName != null) {
-			fDestProject = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);			
-		}
-	}
-	
+    	
 	public boolean performSoftFinish(IProgressMonitor monitor) {
         if (fDestProject != null && !fDestProject.exists()) {
         	// project not yet created from the parent wizard
@@ -121,7 +107,7 @@ public class NewQvtLibraryWizard extends Wizard implements INewTransformationWiz
 
     @Override
 	public boolean performFinish() {
-		if (fProjectFieldData != null) {
+		if (fDestProject != null) {
 			return true;
 		}
 		return performSoftFinish(null);

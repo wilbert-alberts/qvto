@@ -9,12 +9,12 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.ui;
+package org.eclipse.m2m.qvt.oml.ui.wizards.project;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "org.eclipse.m2m.qvt.oml.ui.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.eclipse.m2m.qvt.oml.ui.wizards.project.messages"; //$NON-NLS-1$
 	
 	public static String QvtMetamodelMappingPage_addBtnLabel;
 
@@ -65,6 +65,51 @@ public class Messages extends NLS {
 	public static String SourceContainerConfigBlock_MoveExistingSources;
 
 	public static String SourceContainerConfigBlock_saveBuilderConfigError;
+	
+	
+	public static String ConvertToMDAProjectWizard_Title;
+	public static String ConvertionPage_Title;
+	public static String ConvertionPage_Description;
+	public static String ConvertionPage_ProjectsListTitle;
+	public static String ConvertionPage_SelectAll;
+	public static String ConvertionPage_DeselectAll;
+	
+	public static String ContentPage_pGroup;
+	public static String ContentPage_pid;
+	public static String ContentPage_pversion;
+	public static String ContentPage_pname;
+	public static String ContentPage_pprovider;
+	public static String ProjectStructurePage_library;
+	public static String ContentPage_pClassGroup;
+	public static String ContentPage_generate;
+	public static String ContentPage_classname;
+	public static String ContentPage_plugin;
+	public static String ContentPage_noLibrary;
+	public static String ContentPage_noversion;
+	public static String ContentPage_badversion;
+	public static String ContentPage_noname;
+	public static String ContentPage_noid;
+	public static String ContentPage_invalidId;
+	public static String ContentPage_title;
+	public static String ContentPage_desc;
+	
+	public static String ProjectStructurePage_createProjectType;
+	public static String ProjectStructurePage_createSimpleProject;
+	public static String ProjectStructurePage_createSimplePluginProject;
+	public static String ProjectStructurePage_createJavaPluginProject;
+	public static String ProjectStructurePage_settings;
+	public static String ProjectStructurePage_source;
+	public static String ProjectStructurePage_output;
+	public static String NewTransformationProjectWizard_Title;
+	public static String NewTransformationProject_Title;
+	public static String NewTransformationProject_Description;
+	public static String NewQVTProjectWizard_Error;
+	public static String NewQVTProjectWizard_ErrorSeeLog;
+	
+	public static String WizardListSelectionPage_title;
+	public static String WizardListSelectionPage_message;
+	public static String WizardListSelectionPage_desc;
+	public static String WizardListSelectionPage_label;
 	
 	static {
 		// initialize resource bundle

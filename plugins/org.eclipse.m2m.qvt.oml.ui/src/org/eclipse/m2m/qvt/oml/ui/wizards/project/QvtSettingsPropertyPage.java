@@ -9,15 +9,15 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.ui;
+package org.eclipse.m2m.qvt.oml.ui.wizards.project;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.m2m.qvt.oml.builder.QvtBuilder;
 import org.eclipse.m2m.qvt.oml.common.Logger;
 import org.eclipse.m2m.qvt.oml.common.project.NatureUtils;
+import org.eclipse.m2m.qvt.oml.ui.IStatusChangeListener;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -93,10 +93,7 @@ public class QvtSettingsPropertyPage extends PropertyPage {
         Object element = getElement();
         if(element instanceof IProject) {
             IProject project = (IProject)element;            
-            return isQvtProject(project) ? project : null;
-        } else if(element instanceof IJavaProject) {
-            IJavaProject javaProject = (IJavaProject)element;
-            return isQvtProject(javaProject.getProject()) ? javaProject.getProject() : null;
+            return isQvtProject(project) ? project : null; 
         } else {
             return null;
         }

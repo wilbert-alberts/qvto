@@ -32,14 +32,14 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.window.Window;
 import org.eclipse.m2m.qvt.oml.builder.QvtBuilderConfig;
-import org.eclipse.m2m.qvt.oml.project.QVTProjectPluginImages;
-import org.eclipse.m2m.qvt.oml.project.QvtProjectLabelProvider;
 import org.eclipse.m2m.qvt.oml.project.QvtProjectUtil;
 import org.eclipse.m2m.qvt.oml.project.model.IQvtElement;
 import org.eclipse.m2m.qvt.oml.project.model.IQvtNamespace;
 import org.eclipse.m2m.qvt.oml.project.model.IQvtProject;
 import org.eclipse.m2m.qvt.oml.project.model.QvtModelException;
 import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
+import org.eclipse.m2m.qvt.oml.ui.QvtPluginImages;
+import org.eclipse.m2m.qvt.oml.ui.wizards.project.QvtProjectLabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
@@ -271,7 +271,7 @@ public class SourceDestinationChooser extends ElementTreeSelectionDialog {
 		}
 
 		public ImageDescriptor getImageDescriptor(Object object) {
-			return QVTProjectPluginImages.getInstance().getImageDescriptor(QVTProjectPluginImages.SRC_CONTAINER);
+			return QvtPluginImages.getInstance().getImageDescriptor(QvtPluginImages.SRC_CONTAINER);
 		}
 
 		public String getLabel(Object o) {

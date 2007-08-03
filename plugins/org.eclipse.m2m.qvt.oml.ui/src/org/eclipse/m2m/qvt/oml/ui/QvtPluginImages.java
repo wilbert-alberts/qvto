@@ -32,13 +32,19 @@ public class QvtPluginImages extends PluginImages {
     public static final String TEMPLATE = "cat-template"; //$NON-NLS-1$
     public static final String MAPPING = "qvt-mapping"; //$NON-NLS-1$
     public static final String QUERY = "qvt-query"; //$NON-NLS-1$
+    
+    public static final String NEW_PROJECT_WIZARD = "new_project_wizard";     //$NON-NLS-1$
+    public static final String CU_NAMESPACE = "cu_namespace";     //$NON-NLS-1$    
+    public static final String SRC_CONTAINER = "src_container";     //$NON-NLS-1$    
+    public static final String UNB0UND_QVT_CU = "unbound_qvt_cu";     //$NON-NLS-1$    
+    
 
     public static QvtPluginImages getInstance() {
         return ourInstance;
     }
     
     @Override
-	protected void declareImages() {
+	protected void declareImages() {    	
         declareRegistryImage(NEW_WIZARD, "icons/pr-Model_to_model_wizard.gif"); //$NON-NLS-1$
         declareRegistryImage(SIMPLE_VARIABLE, "icons/cat-variable.gif"); //$NON-NLS-1$
         declareRegistryImage(ATTRIBUTE_VARIABLE, "icons/EAttribute.gif"); //$NON-NLS-1$
@@ -50,6 +56,11 @@ public class QvtPluginImages extends PluginImages {
         declareRegistryImage(TEMPLATE, "icons/template_obj.gif"); //$NON-NLS-1$
         declareRegistryImage(MAPPING, "icons/qvt-mapping.gif"); //$NON-NLS-1$
         declareRegistryImage(QUERY, "icons/qvt-query.gif"); //$NON-NLS-1$
+        
+        declareRegistryImage(NEW_PROJECT_WIZARD, "icons/pr-MDA_wizard.gif"); //$NON-NLS-1$        
+        declareRegistryImage(CU_NAMESPACE, "icons/cu_namespace.gif"); //$NON-NLS-1$        
+        declareRegistryImage(UNB0UND_QVT_CU, "icons/unbound_qvt_cu.gif"); //$NON-NLS-1$        
+        declareRegistryImage(SRC_CONTAINER, "icons/src_container.gif"); //$NON-NLS-1$                
     }
     
     private final static URL BASE_URL = QVTUIPlugin.getDefault().getBundle().getEntry("/"); //$NON-NLS-1$

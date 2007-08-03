@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.ui;
+package org.eclipse.m2m.qvt.oml.ui.wizards.project;
 
 import java.io.IOException;
 import java.util.IdentityHashMap;
@@ -46,6 +46,7 @@ import org.eclipse.m2m.qvt.oml.emf.util.urimap.MModelURIMapPackage;
 import org.eclipse.m2m.qvt.oml.emf.util.urimap.MappingContainer;
 import org.eclipse.m2m.qvt.oml.emf.util.urimap.MetamodelURIMappingHelper;
 import org.eclipse.m2m.qvt.oml.emf.util.urimap.URIMapping;
+import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;

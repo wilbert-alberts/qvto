@@ -20,9 +20,9 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.m2m.qvt.oml.QvtNamesChecker;
-import org.eclipse.m2m.qvt.oml.project.wizards.INewTransformationWizard;
 import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
 import org.eclipse.m2m.qvt.oml.ui.QvtPluginImages;
+import org.eclipse.m2m.qvt.oml.ui.wizards.project.INewTransformationWizard;
 import org.eclipse.ui.IWorkbench;
 
 
