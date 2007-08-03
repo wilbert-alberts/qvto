@@ -50,10 +50,8 @@ public class Messages extends NLS {
 	
 	public static String QvtMetamodelMappingPage_loadResourceMetamodelError;	
 
-	public static String QvtSettingsPropertyPage_Error;
 	public static String QvtSettingsPropertyPage_NoBuilder;	
 	public static String QvtSettingsPropertyPage_SourceContainerLabel;
-	public static String QvtSettingsPropertyPage_EmptySourceContainer;
 	public static String QvtSettingsPropertyPage_InvalidContainer;
 	public static String QvtSettingsPropertyPage_BrowseLabel;
 	public static String QvtSettingsPropertyPage_FolderSelection;
