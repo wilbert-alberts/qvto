@@ -11,10 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.project;
 
-import java.text.MessageFormat;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -26,19 +22,13 @@ import org.osgi.framework.BundleContext;
 public class QVTProjectPlugin extends AbstractUIPlugin {
 	//The shared instance.
 	private static QVTProjectPlugin plugin;
-	//Resource bundle.
-	private ResourceBundle resourceBundle;
+
 	/**
 	 * The constructor.
 	 */
 	public QVTProjectPlugin() {
 		super();
 		plugin = this;
-		try {
-			resourceBundle = ResourceBundle.getBundle("org.eclipse.m2m.qvt.oml.project.project");//$NON-NLS-1$
-		} catch (MissingResourceException x) {
-			resourceBundle = null;
-		}
 	}
 
 	/**
@@ -63,37 +53,13 @@ public class QVTProjectPlugin extends AbstractUIPlugin {
 	public static QVTProjectPlugin getDefault() {
 		return plugin;
 	}
-
-	public static String getResourceString(String key,Object[] parameters) {
-	    return MessageFormat.format(getResourceString(key),parameters);
-	}
-	
-	/**
-	 * Returns the string from the plugin's resource bundle,
-	 * or 'key' if not found.
-	 */
-	public static String getResourceString(String key) {
-		ResourceBundle bundle = QVTProjectPlugin.getDefault().getResourceBundle();
-		try {
-			return (bundle != null) ? bundle.getString(key) : key;
-		} catch (MissingResourceException e) {
-			return key;
-		}
-	}
-
-	/**
-	 * Returns the plugin's resource bundle,
-	 */
-	public ResourceBundle getResourceBundle() {
-		return resourceBundle;
-	}
 	
 	public static void log(IStatus status) {
         getDefault().getLog().log(status);
     }
 	
-	public static void log(Throwable t){
-	    log(new Status(IStatus.ERROR, ID, 100001, getResourceString("QVTProjectPlugin.StatusMessage"), t));//$NON-NLS-1$ 
+	public static void log(Throwable t) {
+	    log(new Status(IStatus.ERROR, ID, 100001, "Unexpected error", t));//$NON-NLS-1$ 
 	}
 
     public static final String ID = "org.eclipse.m2m.qvt.oml.project"; //$NON-NLS-1$
