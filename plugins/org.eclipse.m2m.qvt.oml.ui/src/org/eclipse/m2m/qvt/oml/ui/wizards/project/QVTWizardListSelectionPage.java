@@ -299,7 +299,10 @@ public class QVTWizardListSelectionPage extends WizardSelectionPage implements I
 
 			this.name = descriptor.getLabel();
 			this.description = descriptor.getDescription();
-			this.image = descriptor.getImageDescriptor().createImage();
+			if(descriptor.getImageDescriptor() != null) {
+				this.image = descriptor.getImageDescriptor().createImage();				
+			}
+			
 			this.descriptor = descriptor;
 		}
 						
