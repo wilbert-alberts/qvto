@@ -54,13 +54,5 @@
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+M3+F"/>
 	</extension>   
-
-   <extension
-         point="org.eclipse.ui.newWizards">
-      <category
-            id="org.eclipse.m2m.qvt.oml"
-            name="%mda"
-            parentCategory="org.eclipse.mt.wizardCategory"/>
-	</extension>
  
 </plugin>
