@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="org.eclipse.m2m.qvt.oml.project">
+<schema targetNamespace="org.eclipse.m2m.qvt.oml.ui">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.eclipse.m2m.qvt.oml.project" id="projectElementsWizards" name="QVT Project Elements Wizard"/>
+         <meta.schema plugin="org.eclipse.m2m.qvt.oml.ui" id="projectElementsWizards" name="QVT Project Elements Wizard"/>
       </appInfo>
       <documentation>
          [Enter description of this extension point.]
