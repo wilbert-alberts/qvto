@@ -11,7 +11,10 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.ui.wizards.project;
 
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -31,90 +34,183 @@ import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 
 public class NewQVTProjectCreationPage extends WizardNewProjectCreationPage {
 
-    private QVTProjectFieldData myCreationData;
-    private Text mySourceText;
-    private Text myOutputText;
-    private Button mySimpleProject;
-    private Button mySimplePlugin;
-    private Button myJavaPlugin = null;    
-    private Group myJavaProjectSettings;
-    private Label mySourceLabel;
-    private Label myOutputLabel;	
+    private QVTProjectFieldData fCreationData;
+    private Text fSourceText;
+    private Text fOutputText;
+    private Button fSimpleProject;
+    private Button fSimplePlugin;
+    private Button fJavaPlugin = null;    
+    private Group fJavaSettingsGroup;
+    private Label fSourceLabel;
+    private Label fOutputLabel;	
+    
+    private Label fQvtSourceContainerLabel;
+    private Text fQvtSourceContainerText;    
 	
 	public NewQVTProjectCreationPage(String pageName, QVTProjectFieldData data){
 		super(pageName);
-		myCreationData = data;
+		fCreationData = data;
 	}
-	
+		
+    @Override
+	protected boolean validatePage() {
+    	boolean result = super.validatePage();
+    	
+    	if(result) {
+    		if(!validateQvtSourceContainer()) {
+	    		return false;
+    		}
+    		
+        	setErrorMessage(null);
+        	setMessage(null);    		
+    	}
+    	
+    	return result;
+    }
+    
+    protected boolean validateQvtSourceContainer() {    	
+    	IStatus status = SourceContainerUpdater.validate(getQVTSourceContainerValue());    	    	
+    	
+    	if(!status.isOK()) {
+        	int type = IMessageProvider.NONE;    		
+    		switch (status.getSeverity()) {
+			case IStatus.INFO:
+				type = IMessageProvider.INFORMATION;
+				break;
+			case IStatus.WARNING:
+				type = IMessageProvider.WARNING;
+				break;
+			case IStatus.ERROR:
+				type = IMessageProvider.ERROR;				
+				break;
+			}
+    		
+    		setMessage(status.getMessage(), type);
+    		return status.getSeverity() <= IStatus.INFO;
+    	}
+    	
+    	return true;
+    }
+    
+    protected String getQVTSourceContainerValue() {
+		return fQvtSourceContainerText != null ? fQvtSourceContainerText.getText() : null;
+	}
+
+    /**
+	 * Get the container for QVT sources
+	 * 
+	 * @return project container or folder under the project hierarchy.
+	 */
+    public IContainer getQVTSourceContainerHandle() {
+    	String value = getQVTSourceContainerValue();
+    	if(value == null || value.length() == 0) {
+    		return getProjectHandle();
+    	}
+    	return getProjectHandle().getFolder(value);
+    }
+    
 	@Override
 	public void createControl(Composite parent) {
 		super.createControl(parent);
 		Composite control = (Composite)getControl();
-		GridLayout layout = new GridLayout();
-		layout.verticalSpacing = 10;
+		GridLayout layout = new GridLayout();		
 		control.setLayout(layout);
 
+		createQVTSourceContainer(control);		
 		createProjectTypeGroup(control);
-		mySimpleProject.setSelection(true);
-		myCreationData.setSimple(true);
-
-		//new SourceContainer
 		
 		Dialog.applyDialogFont(control);
+		
 		setControl(control);
         PlatformUI.getWorkbench().getHelpSystem().setHelp(control, 
 			"org.eclipse.m2m.qvt.oml.transformation_project"); //$NON-NLS-1$
 	}	
 	
-	private void createProjectTypeGroup(Composite container) {
+	private void createQVTSourceContainer(Composite parent) {
+		Composite composite = new Composite(parent, SWT.NONE);
+		GridLayout layout = new GridLayout();
+		layout.numColumns = 2;
+		composite.setLayout(layout);
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.verticalIndent = 15;
+		composite.setLayoutData(gd);
+		
+		//source container
+		String tooltipText = "Enter a path of folder to contain QVT sources";
+		fQvtSourceContainerLabel = new Label(composite, SWT.NONE);
+		fQvtSourceContainerLabel.setText("QVT source container:");
+		fQvtSourceContainerLabel.setToolTipText(tooltipText);
+
+		fQvtSourceContainerText = createText(composite, "transforms");
+		fQvtSourceContainerText.setToolTipText(tooltipText);
+	}
+	
+	private void createProjectTypeGroup(Composite parent) {
+		Composite container = new Composite(parent, SWT.Move);
+		container.setLayout(new GridLayout());
+		container.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.FILL_VERTICAL));
+		
 		Group projectTypeGroup = new Group(container, SWT.RADIO);
 		projectTypeGroup.setText(Messages.ProjectStructurePage_createProjectType);
-		GridLayout layout2 = new GridLayout();
-		layout2.numColumns = 1;
-		projectTypeGroup.setLayout(layout2);
-		projectTypeGroup.setLayoutData(new GridData(GridData.FILL_VERTICAL));
+		
+		GridLayout projectTypeLayout = new GridLayout();
+		projectTypeLayout.numColumns = 1;
 
-		mySimpleProject = new Button(projectTypeGroup, SWT.RADIO);
-		mySimpleProject.setText(Messages.ProjectStructurePage_createSimpleProject);
+		projectTypeGroup.setLayout(projectTypeLayout);
+		projectTypeGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.FILL_VERTICAL));
+
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.verticalIndent = 5;
 		
-		mySimplePlugin = new Button(projectTypeGroup, SWT.RADIO);
-		mySimplePlugin.setText(Messages.ProjectStructurePage_createSimplePluginProject);
+		fSimpleProject = new Button(projectTypeGroup, SWT.RADIO);
+		fSimpleProject.setText(Messages.ProjectStructurePage_createSimpleProject);
+		fSimpleProject.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		// select simple project type by default
+		fSimpleProject.setSelection(true);		
 		
-		myJavaPlugin = new Button(projectTypeGroup, SWT.RADIO);		
-        myJavaPlugin.setText(Messages.ProjectStructurePage_createJavaPluginProject);
-        myJavaPlugin.addSelectionListener(new SelectionAdapter() {
+		fSimplePlugin = new Button(projectTypeGroup, SWT.RADIO);
+		fSimplePlugin.setText(Messages.ProjectStructurePage_createSimplePluginProject);
+		fSimplePlugin.setLayoutData(gd);
+		
+		fJavaPlugin = new Button(projectTypeGroup, SWT.RADIO);		
+        fJavaPlugin.setText(Messages.ProjectStructurePage_createJavaPluginProject);
+        fJavaPlugin.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                toggleCreatePlugin();
+                updateControls();
             }
         });
         
-        myJavaProjectSettings = new Group(projectTypeGroup, SWT.NONE);
-        myJavaProjectSettings.setText(Messages.ProjectStructurePage_settings); 
-		GridLayout layout = new GridLayout();
+        fJavaPlugin.setLayoutData(gd);
+        
+        fJavaSettingsGroup = new Group(projectTypeGroup, SWT.NONE);
+        fJavaSettingsGroup.setText(Messages.ProjectStructurePage_JavaProjectSettings); 
+		GridLayout layout = new GridLayout();		
 		layout.numColumns = 2;
-		myJavaProjectSettings.setLayout(layout);
-		myJavaProjectSettings.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		fJavaSettingsGroup.setLayout(layout);
+		fJavaSettingsGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-        mySourceLabel = createLabel(myJavaProjectSettings, Messages.ProjectStructurePage_source);
-        mySourceText = createText(myJavaProjectSettings);
-		mySourceText.setText("src_generated"); //$NON-NLS-1$
+        fSourceLabel = createLabel(fJavaSettingsGroup, Messages.ProjectStructurePage_source);
+        fSourceText = createText(fJavaSettingsGroup, "src"); //$NON-NLS-1$	  
+		fSourceText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
-		myOutputLabel = createLabel(myJavaProjectSettings, Messages.ProjectStructurePage_output);
-        myOutputText = createText(myJavaProjectSettings);		
-		myOutputText.setText("bin"); //$NON-NLS-1$
-        toggleCreatePlugin();        
+		fOutputLabel = createLabel(fJavaSettingsGroup, Messages.ProjectStructurePage_output);
+        fOutputText = createText(fJavaSettingsGroup, "bin"); //$NON-NLS-1$		        
+		fOutputLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		
+        updateControls();
+		
 	}
 	
-    private void toggleCreatePlugin() {
-        myCreationData.setPlugin(myJavaPlugin.getSelection());
-        myCreationData.setSimple(!myJavaPlugin.getSelection());
+    private void updateControls() {
+        fCreationData.setPlugin(fJavaPlugin.getSelection());
+        fCreationData.setSimple(!fJavaPlugin.getSelection());
         
-        myJavaProjectSettings.setEnabled(myJavaPlugin.getSelection());
-        mySourceLabel.setEnabled(myJavaPlugin.getSelection());
-        mySourceText.setEnabled(myJavaPlugin.getSelection());
-        myOutputLabel.setEnabled(myJavaPlugin.getSelection());
-        myOutputText.setEnabled(myJavaPlugin.getSelection());        
+        fJavaSettingsGroup.setEnabled(fJavaPlugin.getSelection());
+        fSourceLabel.setEnabled(fJavaPlugin.getSelection());
+        fSourceText.setEnabled(fJavaPlugin.getSelection());
+        fOutputLabel.setEnabled(fJavaPlugin.getSelection());
+        fOutputText.setEnabled(fJavaPlugin.getSelection());        
     }
 
     private Label createLabel(Composite container, String text) {
@@ -125,11 +221,15 @@ public class NewQVTProjectCreationPage extends WizardNewProjectCreationPage {
 		return label;
 	}
 	
-	private Text createText(Composite container) {
+	private Text createText(Composite container, String txtValue) {
 		Text text = new Text(container, SWT.BORDER | SWT.SINGLE);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.widthHint = 300;
 		text.setLayoutData(gd);
+		if(txtValue != null) {
+			text.setText(txtValue);			
+		}
+		
 		text.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				validatePage();
@@ -145,21 +245,21 @@ public class NewQVTProjectCreationPage extends WizardNewProjectCreationPage {
 	}
 	
 	public void updateData() {
-		myCreationData.setPlugin(!mySimpleProject.getSelection());		
-		myCreationData.setProjectName(getProjectName());
-		if(myJavaPlugin.getSelection()) {
-			myCreationData.setSourceFolderName(mySourceText.getText().trim());
-			myCreationData.setOutputFolderName(myOutputText.getText().trim());
+		fCreationData.setPlugin(!fSimpleProject.getSelection());		
+		fCreationData.setProjectName(getProjectName());
+		if(fJavaPlugin.getSelection()) {
+			fCreationData.setSourceFolderName(fSourceText.getText().trim());
+			fCreationData.setOutputFolderName(fOutputText.getText().trim());
 		} else {
-			myCreationData.setSourceFolderName(null);
-			myCreationData.setOutputFolderName(null);			
+			fCreationData.setSourceFolderName(null);
+			fCreationData.setOutputFolderName(null);			
 		}
 	}
     
 	/**
 	 * Indicates whether the project to be created is a plugin project.
 	 */
-    public boolean getCreatePlugin() {
-        return !mySimpleProject.getSelection();
+    public boolean isCreatePlugin() {
+        return !fSimpleProject.getSelection();
     }
 }

@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -52,7 +50,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.IWorkbenchWizard;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.wizards.IWizardCategory;
 import org.eclipse.ui.wizards.IWizardDescriptor;
@@ -64,7 +61,7 @@ import org.eclipse.ui.wizards.IWizardRegistry;
  * QVT Project element wizards applicable within QVT project which is used for further
  * navigation in the containing wizard. 
  */
-public class QVTWizardListSelectionPage extends WizardSelectionPage implements ISelectionChangedListener {	
+class QVTWizardListSelectionPage extends WizardSelectionPage implements ISelectionChangedListener {	
 	
 	private static final String POINT_ID = "projectElementsWizards"; //$NON-NLS-1$
 	private static final String REF_ID_ATTR = "refId"; //$NON-NLS-1$
@@ -73,14 +70,20 @@ public class QVTWizardListSelectionPage extends WizardSelectionPage implements I
 	private Button myUseTransformation;
 	private WizardElement myOldSelectedWizardElement;
 	private Text myDescriptionText;
-	private QVTProjectFieldData myProjectData;
+	private INewQVTElementDestinationWizardDelegate fDestinationProvider;
 
 	
-	public QVTWizardListSelectionPage(QVTProjectFieldData projectData) {
+	QVTWizardListSelectionPage(INewQVTElementDestinationWizardDelegate destinationProvider) {
 		super(QVTWizardListSelectionPage.class.getSimpleName());
+
+		if(destinationProvider == null) {
+			throw new IllegalArgumentException();
+		}
+		
 		setTitle(Messages.WizardListSelectionPage_title);
 		setDescription(getWizardListPageDescription()); 
-		this.myProjectData = projectData;
+		
+		this.fDestinationProvider = destinationProvider;
 	}
 
     @Override
@@ -310,14 +313,14 @@ public class QVTWizardListSelectionPage extends WizardSelectionPage implements I
 			if(image != null) image.dispose();
 		}
 		
-		IWorkbenchWizard createWizard() throws CoreException {
+		IWizard createWizard() throws CoreException {
 			return descriptor.createWizard();
 		}
 	}
 	
 	private class WizardNode implements IWizardNode {
 		WizardElement myWizardElement;
-		INewTransformationWizard myWizard;
+		INewQVTProjectElementWizard myWizard;
 
 		public WizardNode(WizardElement element) {
 			assert element != null;
@@ -341,31 +344,28 @@ public class QVTWizardListSelectionPage extends WizardSelectionPage implements I
 
 			if (myWizard == null && getSelectedNode() != null) {
 				try {
-					IWorkbenchWizard wizard = myWizardElement.createWizard();
-					if(wizard instanceof INewTransformationWizard) {
-						myWizard = (INewTransformationWizard)wizard;
+					IWizard wizard = myWizardElement.createWizard();
+					if(wizard instanceof INewQVTProjectElementWizard) {
+						myWizard = (INewQVTProjectElementWizard)wizard;
 					}					
 				} catch (CoreException e) {
-					QVTUIPlugin.log(e.getStatus());
+					QVTUIPlugin.log(e);
 				}
 				
 				if(myWizard == null) {
 					return null;
 				}
-				
-				IProject projectHandle = ResourcesPlugin.getWorkspace().getRoot().getProject(myProjectData.getProjectName());
-				myWizard.init(PlatformUI.getWorkbench(), new StructuredSelection(projectHandle));
-								
-				myWizard.setHostProject(projectHandle);
+
+				myWizard.init(fDestinationProvider);
 				myWizard.addPages();
-				return myWizard;
 			}
+			
 			return myWizard;
 		}
 
 		public boolean isContentCreated() {
 			IWizard wizard = getWizard();
-			return (wizard != null) ? ((INewTransformationWizard) getWizard()).isContentCreated() : false;
+			return (wizard != null) ? ((INewQVTProjectElementWizard) getWizard()).isContentCreated() : false;
 		}
 	}
 	

@@ -60,8 +60,8 @@
   
   <extension point="org.eclipse.ui.propertyPages">
     <page
-        id="QvtMetamodelMappingPage"
-        category="QvtSettingsPropertyPage"
+        id="QvtMetamodelMappingPagess"
+        category="org.eclipse.m2m.qvt.oml.ui.QvtSettingsPropertyPage"
         name= "%metamodelMappingsPageName"
         class="org.eclipse.m2m.qvt.oml.ui.wizards.project.QvtMetamodelMappingPage">
 	    <filter name="nature" value="org.eclipse.m2m.qvt.oml.project.TransformationNature"/>        
@@ -73,7 +73,7 @@
 
   <extension point="org.eclipse.ui.propertyPages">
     <page
-        id="QvtSettingsPropertyPage"
+        id="org.eclipse.m2m.qvt.oml.ui.QvtSettingsPropertyPage"
         name= "%qvtSettings"
         class="org.eclipse.m2m.qvt.oml.ui.wizards.project.QvtSettingsPropertyPage">
 	    <filter name="nature" value="org.eclipse.m2m.qvt.oml.project.TransformationNature"/>

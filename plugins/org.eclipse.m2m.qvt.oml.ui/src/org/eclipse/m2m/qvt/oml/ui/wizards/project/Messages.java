@@ -54,8 +54,8 @@ public class Messages extends NLS {
 	public static String QvtSettingsPropertyPage_SourceContainerLabel;
 	public static String QvtSettingsPropertyPage_InvalidContainer;
 	public static String QvtSettingsPropertyPage_BrowseLabel;
-	public static String QvtSettingsPropertyPage_FolderSelection;
-	public static String QvtSettingsPropertyPage_SelectJavaSourceFolder;
+	public static String QvtSettingsPropertyPage_SourceContainerSelection;
+	public static String QvtSettingsPropertyPage_SelectSourceContainerFolder;
 	public static String QvtSettingsPropertyPage_ContainerIsNotFolder;
 
 	public static String SourceContainerConfigBlock_loadBuilderConfigError;
@@ -95,7 +95,7 @@ public class Messages extends NLS {
 	public static String ProjectStructurePage_createSimpleProject;
 	public static String ProjectStructurePage_createSimplePluginProject;
 	public static String ProjectStructurePage_createJavaPluginProject;
-	public static String ProjectStructurePage_settings;
+	public static String ProjectStructurePage_JavaProjectSettings;
 	public static String ProjectStructurePage_source;
 	public static String ProjectStructurePage_output;
 	public static String NewTransformationProjectWizard_Title;

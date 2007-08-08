@@ -53,6 +53,7 @@ public class NewQVTProjectContentPage extends WizardPage {
 	private Text myClassText;
 	private boolean myInitialized;
 
+	
 	public NewQVTProjectContentPage(String pageName, NewQVTProjectCreationPage page, QVTProjectFieldData data) {
 		super(pageName);
 		myMainPage = page;

@@ -35,6 +35,8 @@ class Messages extends NLS {
 	public static String NewQvtModuleCreationPage_sourceContainerFieldLabel;
 
 	public static String NewQvtModuleCreationPage_sourceContainerPathMustBeSpecified;
+
+	public static String NewQvtTransformationCreationPage_newModuleNameProposal;
 	
 	public static String NewQVTTransformationWizard_Title;	
 	public static String NewQVTTransformationWizard_OpenEditorError;

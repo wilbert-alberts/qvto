@@ -25,7 +25,9 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
@@ -44,6 +46,7 @@ import org.eclipse.m2m.qvt.oml.project.model.IQvtNamespace;
 import org.eclipse.m2m.qvt.oml.project.model.IQvtProject;
 import org.eclipse.m2m.qvt.oml.project.model.QvtModelException;
 import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
+import org.eclipse.m2m.qvt.oml.ui.wizards.project.INewQVTElementDestinationWizardDelegate;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -77,8 +80,8 @@ import org.eclipse.ui.part.ISetSelectionTarget;
 public class NewQvtModuleCreationPage extends WizardPage implements Listener {
 		
     private IStatus fStatus;
-	private IPath fContainerPath;	
-    private boolean fIsLockedToInitialContainer;
+	private IPath fInitialContainerPath;
+	private INewQVTElementDestinationWizardDelegate fDestinationProvider;
     private boolean fWasEverShown = false;    
     
 	private Text fModuleNameField;
@@ -86,23 +89,28 @@ public class NewQvtModuleCreationPage extends WizardPage implements Listener {
 	private Text fNameSpaceField;
 
 
-    public NewQvtModuleCreationPage(IPath lockedContainerPath) {
+    public NewQvtModuleCreationPage() {
         super("QVT module creation"); //$NON-NLS-1$
         
-        fContainerPath = lockedContainerPath;
-        fStatus = Status.OK_STATUS;
-        fIsLockedToInitialContainer = fContainerPath != null;
+        fStatus = Status.OK_STATUS;        
     }
     
-    public NewQvtModuleCreationPage() {
-    	this(null);
-    }
-    
+    public NewQvtModuleCreationPage(INewQVTElementDestinationWizardDelegate destinationProvider) {
+        this();
         
+        if(destinationProvider == null) {
+        	throw new IllegalArgumentException();
+        }
+        
+        fDestinationProvider = destinationProvider;
+        // set initial container path 
+        fInitialContainerPath = destinationProvider.getSourceContainer().getFullPath();
+    }
+            
     public void createControl(Composite parent) {
         Composite composite = new Composite(parent, SWT.NONE);
 
-        int nColumns = fIsLockedToInitialContainer ? 3 : 4;
+        int nColumns = hasExternalDestinationProvider() ? 3 : 4;
         GridLayout layout = new GridLayout();
 		layout.numColumns = nColumns;
 
@@ -119,7 +127,7 @@ public class NewQvtModuleCreationPage extends WizardPage implements Listener {
         containerData.horizontalSpan = 2;
         fContainerField.setLayoutData(containerData);
 
-        if(!fIsLockedToInitialContainer) {        	
+        if(!hasExternalDestinationProvider()) {        	
 	        Button browseSrcContainerBtn = new Button(composite, SWT.NONE);
 	        browseSrcContainerBtn.setText(Messages.NewQvtModuleCreationPage_browseButtonLabel);
 	        browseSrcContainerBtn.addSelectionListener(new SelectionAdapter() {
@@ -159,7 +167,7 @@ public class NewQvtModuleCreationPage extends WizardPage implements Listener {
         	}
         });        
         
-        if(!fIsLockedToInitialContainer) {
+        if(!hasExternalDestinationProvider()) {
 	        Button browseNamespaceBtn = new Button(composite, SWT.NONE);
 	        browseNamespaceBtn.setText(Messages.NewQvtModuleCreationPage_browseButtonLabel);
 	        browseNamespaceBtn.addSelectionListener(new SelectionAdapter() {
@@ -201,9 +209,9 @@ public class NewQvtModuleCreationPage extends WizardPage implements Listener {
     }
     
     protected void performInitialSettings() {
-    	if(fIsLockedToInitialContainer) {
-    		if(fContainerPath != null) {
-    			fContainerField.setText(fContainerPath.toString());
+    	if(hasExternalDestinationProvider()) {
+    		if(fInitialContainerPath != null) {
+    			fContainerField.setText(fInitialContainerPath.toString());
     		}
     	}
     	
@@ -232,13 +240,6 @@ public class NewQvtModuleCreationPage extends WizardPage implements Listener {
     public void handleEvent(Event event) {
     	if(event.type == SWT.Modify) {
     		validatePage();
-    		
-    		if(isValid()) {
-    			IContainer container = getNamespaceContainer(); 
-    			fContainerPath = ((container != null) ? container.getFullPath() : null);    			
-    		} else {
-    			fContainerPath = null;    			
-    		}
     	}
     }
     
@@ -372,14 +373,26 @@ public class NewQvtModuleCreationPage extends WizardPage implements Listener {
     @Override
     public void setVisible(boolean visible) {
         super.setVisible(visible);
+        
         if (visible) {
-            fWasEverShown = true;
+        	if(!fWasEverShown) {
+            	fModuleNameField.forceFocus();
+            	fModuleNameField.selectAll();
+        		
+        		fWasEverShown = true;
+        	}
         }
         
-        fModuleNameField.forceFocus();
-        fModuleNameField.selectAll();
+        if(fDestinationProvider != null) {        	
+        	updateDestinationFromProvider();
+        }
+        
         validatePage();
-    }
+    }   
+        
+    protected boolean hasExternalDestinationProvider() {
+    	return fDestinationProvider != null;
+    }	    
     
     protected String computeInitialNamespace(IQvtElement context) {
     	IQvtNamespace namespace = null;
@@ -403,12 +416,12 @@ public class NewQvtModuleCreationPage extends WizardPage implements Listener {
     	return (namespace != null) ? namespace.getQualifiedName() : null;
     }
     
-    protected String computeInitialSourceContainer(IQvtElement context) {
-    	if(fIsLockedToInitialContainer) {
-    		if(fContainerPath == null) {
+    protected final String computeInitialSourceContainer(IQvtElement context) {
+    	if(hasExternalDestinationProvider()) {
+    		if(fInitialContainerPath == null) {
     			return null;
     		}
-    		return fContainerPath.toString();
+    		return fInitialContainerPath.toString();
     	}
     	
     	try {
@@ -505,7 +518,7 @@ public class NewQvtModuleCreationPage extends WizardPage implements Listener {
     	if(status.isOK()) {
     		IContainer container = getSourceContainer();
     		if(container != null) {
-    			if(!fIsLockedToInitialContainer && !container.exists()) {
+    			if(!hasExternalDestinationProvider() && !container.exists()) {
     				String message = NLS.bind(Messages.NewQvtModuleCreationPage_sourceContainerDoesNotExist, container.getFullPath().toString());
     				status = QVTUIPlugin.createStatus(IStatus.ERROR, message, null);
     			}
@@ -515,28 +528,30 @@ public class NewQvtModuleCreationPage extends WizardPage implements Listener {
     }
     
     public IFile getNewModuleFileHandle() {
-    	IContainer container = getNamespaceContainer();
+    	IContainer container = getRootNamespaceContainer();
     	IPath path = container.getFullPath().append(getModuleNameValue() + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT);
     	return ResourcesPlugin.getWorkspace().getRoot().getFile(path);
     }
     
-    public IFile createNewFile(String contents) {
+    public IFile createNewFile(String contents, IProgressMonitor monitor) {
     	IFile file = getNewModuleFileHandle();
     	// ensure path exists
     	IContainer container = file.getParent(); 
     	if(!container.exists() && container.getType() == IResource.FOLDER) {
-    		CreateFolderOperation folder = new CreateFolderOperation((IFolder) container, null, "Create container"); //$NON-NLS-1$
+    		CreateFolderOperation folder = new CreateFolderOperation((IFolder) container, /*no-link*/null, "Create container"); //$NON-NLS-1$
     		try {
-				folder.execute(null, null);
+    			IProgressMonitor progressMonitor = monitor != null ? monitor : new NullProgressMonitor();
+				folder.execute(progressMonitor, null);
 			} catch (ExecutionException e) {
 				QVTUIPlugin.log(e);
 			}
     	}
     	
     	try {
+    		// set the contents
 			file.create(new ByteArrayInputStream(contents.getBytes()), true, null);
 		} catch (CoreException e) {
-			QVTUIPlugin.log(e.getStatus());
+			QVTUIPlugin.log(e);
 		}
     	
     	return file;
@@ -568,6 +583,14 @@ public class NewQvtModuleCreationPage extends WizardPage implements Listener {
     	return null;
     }
     
+    private void updateDestinationFromProvider() {
+    	if(fDestinationProvider != null) {
+    		String containerPathValue = fDestinationProvider.getSourceContainer().getFullPath().toString();
+    		fContainerField.setText(containerPathValue);
+    	}
+    }
+    
+    
 	private String performProposedNameCorrections(final String proposedName) {		
 		return new NamesInScopeChecker() {
         	@Override
@@ -598,8 +621,7 @@ public class NewQvtModuleCreationPage extends WizardPage implements Listener {
         }.checkedDefineName(proposedName);
 	}
     
-
-	private IContainer getNamespaceContainer() {
+	private IContainer getRootNamespaceContainer() {
 		if(!doValidateSourceContainer().isOK()) {
 			return null;
 		}
@@ -623,7 +645,7 @@ public class NewQvtModuleCreationPage extends WizardPage implements Listener {
 		IPath nsPath = new Path(namespace.replace('.', '/'));
 		return srcContainer.getFolder(nsPath);
     }
-	
+		
 	static IStatus validateSourceContainerPath(String path) {
 		if(path == null || path.trim().length() == 0) {
 			return QVTUIPlugin.createStatus(IStatus.ERROR, Messages.NewQvtModuleCreationPage_sourceContainerPathMustBeSpecified, null);

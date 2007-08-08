@@ -24,7 +24,6 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.m2m.qvt.oml.builder.QvtBuilderConfig;
 import org.eclipse.m2m.qvt.oml.ui.IStatusChangeListener;
 import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
-import org.eclipse.m2m.qvt.oml.ui.SourceContainer;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -40,7 +39,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-public class SourceContainerConfigBlock {
+class SourceContainerConfigBlock {
 	
     private QvtBuilderConfig fBuilderConfig;
 
@@ -161,8 +160,8 @@ public class SourceContainerConfigBlock {
 		}
 
 		boolean shouldMoveSources = fMoveExistingButton != null && fMoveExistingButton.getSelection();
-		SourceContainer containerHelper = new SourceContainer(oldSourceContainer, fShell);
-		IStatus updateStatus = containerHelper.setContainer(newSourceContainer, shouldMoveSources, null);
+		SourceContainerUpdater containerHelper = new SourceContainerUpdater(oldSourceContainer);
+		IStatus updateStatus = containerHelper.setContainer(newSourceContainer, shouldMoveSources, null, fShell);
 		if(updateStatus.isOK()) {
 				
 		}
@@ -229,8 +228,8 @@ public class SourceContainerConfigBlock {
 	}
     
     private IContainer chooseOutputLocation() {
-        String title = Messages.QvtSettingsPropertyPage_FolderSelection;
-        String message = Messages.QvtSettingsPropertyPage_SelectJavaSourceFolder;
+        String title = Messages.QvtSettingsPropertyPage_SourceContainerSelection;
+        String message = Messages.QvtSettingsPropertyPage_SelectSourceContainerFolder;
         ChooseProjectFolderDialog dialog = new ChooseProjectFolderDialog(fProject, fSourceContainer, fShell, title, message);
         if (dialog.open() == Window.OK) {
             return (IContainer) dialog.getFirstResult();
@@ -263,7 +262,7 @@ public class SourceContainerConfigBlock {
         	fStatusListener.statusChanged(fStatus);
         }
     }
-         
+
     private static String getContainerPathString(IResource resource) {
         return resource.getProjectRelativePath().toString();
     }
@@ -271,7 +270,6 @@ public class SourceContainerConfigBlock {
     private IContainer getNewContainer() {
     	return fSourceContainer;
     }
-    
     private IContainer getConfiguredContainer() {
     	return fBuilderConfig != null ? fBuilderConfig.getSourceContainer() : fProject;
     }

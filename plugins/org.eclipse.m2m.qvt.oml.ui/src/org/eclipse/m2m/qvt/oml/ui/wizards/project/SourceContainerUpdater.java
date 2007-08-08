@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.ui;
+package org.eclipse.m2m.qvt.oml.ui.wizards.project;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,29 +24,59 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
+import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.ide.undo.CreateFolderOperation;
 import org.eclipse.ui.ide.undo.MoveResourcesOperation;
 import org.eclipse.ui.ide.undo.WorkspaceUndoUtil;
 
 
-public class SourceContainer {
+class SourceContainerUpdater {
 	
-	private IContainer fContainer;
-	private Shell fShell;
+	private IContainer fCurrentContainer;
 	
-	public SourceContainer(IContainer srcContainer, Shell shell) {
-		if(srcContainer == null || shell == null) {
+	
+	public SourceContainerUpdater(IContainer existingContainer) {
+		if(existingContainer == null) {
 			throw new IllegalArgumentException();
 		}
 		
-		this.fShell = shell;
-		this.fContainer = srcContainer;
+		this.fCurrentContainer = existingContainer;
 	}
-	
-	public IStatus setContainer(IContainer newContainer, boolean moveExistingSources, IProgressMonitor monitor) {
+
+	/**
+	 * Performs validation on the given source container path.
+	 * 
+	 * @param srcContainerPath
+	 *            source container path relative to its project container.
+	 *            <p>
+	 *            Remark: <code>null</code> value is accepted and identifies
+	 *            the project container.
+	 *            
+	 * @return status object representing the validation result
+	 */
+	public static IStatus validate(String srcContainerPath) {
+		IStatus result = Status.OK_STATUS;
+		
+    	if(srcContainerPath == null || srcContainerPath.trim().length() == 0) {
+    		return QVTUIPlugin.createStatus(IStatus.INFO, "Project folder is not recommended as QVT source container");
+    	} else {
+			IPath path = new Path(srcContainerPath);
+			if(!path.isValidPath(srcContainerPath)) {
+				return QVTUIPlugin.createStatus(IStatus.ERROR, "InvalidPath");
+			} else if(path.isAbsolute() || path.isUNC() || path.getDevice() != null ) {
+				return QVTUIPlugin.createStatus(IStatus.ERROR, "relative expected");				
+			}
+    	}
+    	
+    	return result;
+	}
+		
+	public IStatus setContainer(IContainer newContainer, boolean moveExistingSources, IProgressMonitor monitor, Shell shell) {
 		IStatus result = Status.OK_STATUS;
 		
 		if(newContainer.getType() == IResource.FOLDER) {
@@ -56,10 +86,10 @@ public class SourceContainer {
 			}
 		}
 		
-		List<IResource> rootItems = collectRootMoveCandidates(fContainer);
+		List<IResource> rootItems = collectRootMoveCandidates(fCurrentContainer);
 		IResource[] sources = rootItems.toArray(new IResource[rootItems.size()]);		
 
-		IPath destPath = newContainer.getFullPath();		
+		IPath destPath = newContainer.getFullPath();
 		result = validateMoveSource(sources, destPath);
 		
 		//MoveFilesAndFoldersOperation moveOperation = new MoveFilesAndFoldersOperation(fShell);
@@ -67,10 +97,10 @@ public class SourceContainer {
 		//moveOperation.copyResources(sources, newSourceContainer);
 
 		if(result.isOK()) {
-			MoveResourcesOperation moveOperation = new MoveResourcesOperation(sources, destPath, "Moving");			
+			MoveResourcesOperation moveOperation = new MoveResourcesOperation(sources, destPath, "Moving");	//$NON-NLS-1$		
 			try {
 				moveOperation.setQuietCompute(false);	
-				result = moveOperation.execute(monitor, WorkspaceUndoUtil.getUIInfoAdapter(fShell));
+				result = moveOperation.execute(monitor, WorkspaceUndoUtil.getUIInfoAdapter(shell));
 			} catch (ExecutionException e) {
 				QVTUIPlugin.log(e);
 				try {
@@ -86,10 +116,12 @@ public class SourceContainer {
 		return result;
 	}
 	
-	private IStatus ensureDestinationExists(IFolder container, IProgressMonitor monitor) {
-		CreateFolderOperation operation = new CreateFolderOperation(container, null, "Creating source container");
+	static IStatus ensureDestinationExists(IFolder container, IProgressMonitor monitor) {
+		IProgressMonitor safeMonitor = monitor != null ? monitor : new NullProgressMonitor();
+		
 		try {
-			return operation.execute(monitor, null);
+			CreateFolderOperation operation = new CreateFolderOperation(container, null, "Creating source container");			
+			return operation.execute(safeMonitor, null);
 		} catch (ExecutionException e) {
 			return QVTUIPlugin.createStatus(IStatus.ERROR, e.getLocalizedMessage(), e);
 		}

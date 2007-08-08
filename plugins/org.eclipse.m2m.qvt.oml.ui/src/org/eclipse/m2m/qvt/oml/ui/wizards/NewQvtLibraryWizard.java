@@ -12,79 +12,56 @@
 package org.eclipse.m2m.qvt.oml.ui.wizards;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
-import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
 import org.eclipse.m2m.qvt.oml.ui.QvtPluginImages;
-import org.eclipse.m2m.qvt.oml.ui.wizards.project.INewTransformationWizard;
-import org.eclipse.ui.IWorkbench;
+import org.eclipse.m2m.qvt.oml.ui.wizards.project.INewQVTElementDestinationWizardDelegate;
 
 
-public class NewQvtLibraryWizard extends Wizard implements INewTransformationWizard {
+public class NewQvtLibraryWizard extends AbstractNewQVTElementWizard {
 
-	private boolean fContentsCreated;
-    private NewQvtModuleCreationPage fNewQvtModuleCreationPage;
-    private IProject fDestProject;    
-    private IWorkbench fWorkbench;
-    private IStructuredSelection fSelection;
-
+	private NewQvtModuleCreationPage fNewQvtModuleCreationPage;
     
-    public NewQvtLibraryWizard() {
+	public NewQvtLibraryWizard() {
     	setWindowTitle(Messages.NewQVTLibraryWizard_Title);    	
         ImageDescriptor desc = QvtPluginImages.getInstance().getImageDescriptor(QvtPluginImages.NEW_WIZARD);
         setDefaultPageImageDescriptor(desc);        
     }
     
-	public boolean isContentCreated() {
-		return fContentsCreated;
-	}
-
-	public void setHostProject(IProject project) {
-		fDestProject = project;
-	}
-
-	public void init(IWorkbench workbench, IStructuredSelection selection) {
-		fWorkbench = workbench;
-		fSelection = selection;
-	}
-	
-    protected IStructuredSelection getSelection() {
-		return fSelection;
-	}
-    
-    protected IWorkbench getWorkbench() {
-		return fWorkbench;
-	}	
-    
-    protected NewQvtModuleCreationPage createNewQvtLibraryCreationPage() {
-    	return new NewQvtModuleCreationPage(fDestProject != null ? fDestProject.getFullPath() : null) {
-            @Override
-            protected String getNewModuleNameProposal() {    
-            	return Messages.NewQvtLibraryWizard_newLibraryNameProposal;
-            }
-        };
+	protected NewQvtModuleCreationPage createNewQvtLibraryCreationPage() {
+    	if(getDestinationProvider() != null) {
+    		return new NewQvtLibraryPage(getDestinationProvider());
+    	}
+    	return new NewQvtLibraryPage();
     }
-    
-    protected IProject getDestinationProject() {
-		return fDestProject;
-	}    
-    
+        
     protected final NewQvtModuleCreationPage getNewQvtLibraryCreationPage() {    	
 		return fNewQvtModuleCreationPage;
 	}
-    	
-	public boolean performSoftFinish(IProgressMonitor monitor) {
-        if (fDestProject != null && !fDestProject.exists()) {
-        	// project not yet created from the parent wizard
-            return true;
-        }
+    
+    protected String createModuleContents() {
+        String moduleName = fNewQvtModuleCreationPage.getModuleName(); 
+        String contents = "library " + moduleName + ";\n";  //$NON-NLS-1$//$NON-NLS-2$        
 
+        return contents.toString();
+    }
+    
+	protected void doAddPages() {
+        fNewQvtModuleCreationPage = createNewQvtLibraryCreationPage();
+        
+        fNewQvtModuleCreationPage.setTitle(Messages.NewQvtLibraryWizard_NewModulePageTitle);
+        fNewQvtModuleCreationPage.setDescription(Messages.NewQvtLibraryWizard_NewModulePageDescription);
+        addPage(fNewQvtModuleCreationPage);
+        
+        setContentsCreated(true);
+    }    
+    	
+	@Override
+	public boolean doPerformFinish(IProgressMonitor monitor) {
         try {
-            IFile transformationFile = fNewQvtModuleCreationPage.createNewFile(createModuleContents());            
+            IFile transformationFile = fNewQvtModuleCreationPage.createNewFile(createModuleContents(), monitor);            
             NewQvtModuleCreationPage.openInEditor(getShell(), transformationFile);
             return true;
         } 
@@ -106,32 +83,23 @@ public class NewQvtLibraryWizard extends Wizard implements INewTransformationWiz
     }
 
     @Override
-	public boolean performFinish() {
-		if (fDestProject != null) {
-			return true;
-		}
-		return performSoftFinish(null);
-    }
-
-    @Override
     public void addPages() {    
     	doAddPages();
     }
     
-    protected String createModuleContents() {
-        String moduleName = fNewQvtModuleCreationPage.getModuleName(); 
-        String contents = "library " + moduleName + ";\n";  //$NON-NLS-1$//$NON-NLS-2$        
 
-        return contents.toString();
-    }
-    
-	protected void doAddPages() {
-        fNewQvtModuleCreationPage = createNewQvtLibraryCreationPage();
-        
-        fNewQvtModuleCreationPage.setTitle(Messages.NewQvtLibraryWizard_NewModulePageTitle);
-        fNewQvtModuleCreationPage.setDescription(Messages.NewQvtLibraryWizard_NewModulePageDescription);
-        addPage(fNewQvtModuleCreationPage);
-        
-        fContentsCreated = true;
-    }
+    private static final class NewQvtLibraryPage extends NewQvtModuleCreationPage {
+		NewQvtLibraryPage() {
+			super();
+		}
+
+		NewQvtLibraryPage(INewQVTElementDestinationWizardDelegate destinationProvider) {
+			super(destinationProvider);
+		}
+
+		@Override
+		protected String getNewModuleNameProposal() {    
+			return Messages.NewQvtLibraryWizard_newLibraryNameProposal;
+		}
+	}	
 }

@@ -11,26 +11,24 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.ui.wizards;
 
-import org.eclipse.core.runtime.IPath;
+import org.eclipse.m2m.qvt.oml.ui.wizards.project.INewQVTElementDestinationWizardDelegate;
 
 /**
  * @author dvorak
  */
 public class NewQvtTransformationCreationPage extends NewQvtModuleCreationPage {
 	
+
 	protected NewQvtTransformationCreationPage() {
 		super();
+	}	
+	
+	protected NewQvtTransformationCreationPage(INewQVTElementDestinationWizardDelegate destinationProvider) {
+		super(destinationProvider);
 	}
 
-	/**
-	 * @param containerPath the path to be the destination where the new transformation is to be placed.
-	 */
-	protected NewQvtTransformationCreationPage(IPath containerPath) {
-		super(containerPath);
-	}
-    
     @Override
     protected String getNewModuleNameProposal() {    
-    	return "NewTransformation";
+    	return Messages.NewQvtTransformationCreationPage_newModuleNameProposal;
     }
 }
