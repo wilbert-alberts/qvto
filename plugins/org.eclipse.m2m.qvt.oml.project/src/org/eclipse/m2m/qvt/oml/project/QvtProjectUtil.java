@@ -37,9 +37,9 @@ public class QvtProjectUtil {
 	
     public static boolean isQvtProject(IProject project) {
     	try {
-			return project.hasNature(TransformationNature.ID);
+			return project.isAccessible() && project.hasNature(TransformationNature.ID);
 		} catch (CoreException e) {
-			QvtPlugin.log(e.getStatus());
+			QvtPlugin.log(e);
 		}
 		
 		return false;
