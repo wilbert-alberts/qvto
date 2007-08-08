@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.qvt.oml.common.ui.IModelParameterInfo;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
@@ -113,30 +114,51 @@ public class UriGroupIn extends BaseUriGroup {
 	            		paramInfo.getName()));
 			}
 
-			EClassifier classifier = paramInfo.getEntryParamType();
-			if (classifier == null) {
-				classifier = paramInfo.getMetamodel().eClass();
+			if (paramInfo.getEntryParamType() != null) {
+				EClassifier classifier = paramInfo.getEntryParamType();
+
+				URI sourceUri = EmfUtil.makeUri(getText());
+		        EObject in = EmfUtil.loadModel(sourceUri, classifier.eResource() != null ? classifier.eResource().getResourceSet() : null);
+		        if (in == null) {
+		            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, getText()));
+		        }
+		        try {
+		        	in = EmfUtil.resolveSource(in, classifier);
+		        }
+		        catch (WrappedException e) {
+		            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, getText()));
+		        }
+				
+		    	if (!EmfUtil.isAssignableFrom(classifier, in.eClass()) || !classifier.isInstance(in)) {
+		            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputTypes, 
+		            		EmfUtil.getFullName(in.eClass()),
+		            		EmfUtil.getFullName(classifier)
+		            		));
+		    	}
+			}
+			else {
+				EPackage metamodel = paramInfo.getMetamodel();
+
+				URI sourceUri = EmfUtil.makeUri(getText());
+		        EObject in = EmfUtil.loadModel(sourceUri, metamodel.eResource() != null ? metamodel.eResource().getResourceSet() : null);
+		        if (in == null) {
+		            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, getText()));
+		        }
+		        try {
+		        	in = EmfUtil.resolveSource(in, metamodel);
+		        }
+		        catch (WrappedException e) {
+		            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, getText()));
+		        }
+		        
+		        if (in.eClass().eContainer() != metamodel) {
+		            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputMetamodels, 
+		            		EmfUtil.getFullName(in.eClass()),
+		            		EmfUtil.getMetamodelName(metamodel)
+		            		));
+		        }
 			}
 			
-			URI sourceUri = EmfUtil.makeUri(getText());
-	        EObject in = EmfUtil.loadModel(sourceUri, classifier.eResource() != null ? classifier.eResource().getResourceSet() : null);
-	        if (in == null) {
-	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, getText()));
-	        }
-	        try {
-	        	in = EmfUtil.resolveSource(in, classifier);
-	        }
-	        catch (WrappedException e) {
-	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, getText()));
-	        }
-			
-	    	if (!EmfUtil.isAssignableFrom(classifier, in.eClass()) || !classifier.isInstance(in)) {
-	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputTypes, 
-	            		EmfUtil.getFullName(in.eClass()),
-	            		EmfUtil.getFullName(classifier)                		
-	            		));
-	    	}
-	        
 			return StatusUtil.makeOkStatus();
 		}
 
