@@ -114,7 +114,7 @@ public class NatureUtils {
         return findCommand(project.getDescription().getBuildSpec(), builderId);
     }
     
-    private static ICommand findCommand(ICommand[] commands,String builderId){
+    public static ICommand findCommand(ICommand[] commands,String builderId){
         for (int i = 0; i < commands.length; ++i) {
             if (builderId.equals(commands[i].getBuilderName())) {
                 return commands[i]; // already set
