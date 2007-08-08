@@ -19,10 +19,12 @@ import java.util.Map;
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.m2m.internal.qvt.oml.common.nature.TransformationNature;
+import org.eclipse.m2m.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.qvt.oml.common.Logger;
 import org.eclipse.m2m.qvt.oml.common.project.NatureUtils;
 import org.eclipse.m2m.qvt.oml.common.project.ProjectDependencyHelper;
@@ -30,7 +32,16 @@ import org.eclipse.osgi.util.NLS;
 
 
 public class QvtBuilderConfig {
-    private QvtBuilderConfig(IProject project) throws CoreException {
+
+    private static final String SRC_CONTAINER = "src_container"; //$NON-NLS-1$
+    private static final String PROJECT_ROOT = "/"; //$NON-NLS-1$	
+	
+    private final IProject myProject;    
+    private ICommand myCommand;
+    private static final Map<IProject, QvtBuilderConfig> ourCache = new HashMap<IProject, QvtBuilderConfig>();
+    	
+    
+	private QvtBuilderConfig(IProject project) throws CoreException {
         myProject = project;
         myCommand = NatureUtils.findCommand(myProject, QvtBuilder.ID);
     }
@@ -88,8 +99,20 @@ public class QvtBuilderConfig {
         if(container.getProject() != myProject) {
             throw new IllegalArgumentException(NLS.bind(Messages.QvtBuilderConfig_InvalidContainer, container.getFullPath()));
         }
+
+        if(myCommand == null) {
+        	try { 
+        		IProjectDescription pd = myProject.getProject().getDescription();
+				NatureUtils.addBuilders(pd, new String[] { QvtBuilder.ID }, new String[0]);
+				myCommand = NatureUtils.findCommand(pd.getBuildSpec(), QvtBuilder.ID); 
+			} catch (CoreException e) {
+				QvtPlugin.log(e.getStatus());
+			}
+        }
         
-        setArgument(SRC_CONTAINER, getPathString(container));
+        if(myCommand != null) {
+        	setBuildCommandArgument(SRC_CONTAINER, getPathString(container));
+        }
     }
     
     public IContainer[] getQvtContainers() {
@@ -143,7 +166,11 @@ public class QvtBuilderConfig {
     }
     
     @SuppressWarnings("unchecked")
-	private void setArgument(String name, String value) {
+	private void setBuildCommandArgument(String name, String value) {
+    	assert myCommand != null;
+    	
+    	if(myCommand == null) return;
+    	
         Map arguments = myCommand.getArguments();
         if(arguments == null) {
             arguments = new HashMap();
@@ -151,12 +178,5 @@ public class QvtBuilderConfig {
         
         arguments.put(name, value);
         myCommand.setArguments(arguments);
-    }
-        
-    private final IProject myProject;    
-    private final ICommand myCommand;
-    private static final Map<IProject, QvtBuilderConfig> ourCache = new HashMap<IProject, QvtBuilderConfig>();
-    
-    private static final String SRC_CONTAINER = "src_container"; //$NON-NLS-1$
-    private static final String PROJECT_ROOT = "/"; //$NON-NLS-1$
+    }        
 }
