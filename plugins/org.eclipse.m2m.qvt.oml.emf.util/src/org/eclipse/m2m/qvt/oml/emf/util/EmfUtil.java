@@ -138,7 +138,7 @@ public class EmfUtil {
 		return resourceSet;
 	}
     
-	public static EObject resolveSource(EObject in, EClassifier inputType) {
+	public static EObject resolveSource(EObject in, EObject inputType) {
         if (EmfUtil.isDynamic(in) && inputType.eResource().getResourceSet() != in.eResource().getResourceSet()) {
        		return inputType.eResource().getResourceSet().getEObject(EcoreUtil.getURI(in), true);
         }
@@ -220,6 +220,15 @@ public class EmfUtil {
         } else {
             return pack.getName();
         }
+    }
+
+    public static String getMetamodelName(EPackage pack) {
+    	String name = pack.getName();
+    	String nsURI = pack.getNsURI();
+    	if (nsURI != null && nsURI.length() > 0) {
+    		name += " (" + nsURI + ")";  //$NON-NLS-1$//$NON-NLS-2$
+    	}
+    	return name;
     }
     
     public static EClass getEClass(EPackage root, String[] fullName) throws EmfException {
