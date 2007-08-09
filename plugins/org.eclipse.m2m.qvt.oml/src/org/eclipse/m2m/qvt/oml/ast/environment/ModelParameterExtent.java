@@ -18,7 +18,6 @@ import java.util.List;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -33,39 +32,39 @@ public class ModelParameterExtent {
 		this(null);
 	}
 
-	public ModelParameterExtent(EPackage pack) {
-		myMetamodel = pack;
+	public ModelParameterExtent(EObject initialEObj) {
+		myInitialEObject = initialEObj;
 	}
 	
 	public void addObject(EObject eObject) {
-		myEObjects.add(eObject);
+		myAdditionalEObjects.add(eObject);
 	}
 
 	public List<Object> getAllObjects() {
 		List<Object> objects = new ArrayList<Object>();
-		if (myMetamodel != null) {
-			objects.add(myMetamodel);
-			TreeIterator<Object> iterContents = EcoreUtil.getAllProperContents(myMetamodel, false);
+		if (myInitialEObject != null) {
+			objects.add(myInitialEObject);
+			TreeIterator<Object> iterContents = EcoreUtil.getAllProperContents(myInitialEObject, false);
 			while (iterContents.hasNext()) {
 				objects.add(iterContents.next());
 			}
 		}
-		objects.addAll(myEObjects);
+		objects.addAll(myAdditionalEObjects);
 		return objects;
 	}
 
 	public Resource getModelExtent(ResourceSet outResourceSet) {
 		Resource extent = null;
-		if (myMetamodel != null) {
-			extent = myMetamodel.eResource();
+		if (myInitialEObject != null) {
+			extent = myInitialEObject.eResource();
 		}
 		if (extent == null) {
 			extent = outResourceSet.createResource(URI.createURI("/")); //$NON-NLS-1$
-			if (myMetamodel != null) {
-				extent.getContents().add(myMetamodel);
+			if (myInitialEObject != null) {
+				extent.getContents().add(myInitialEObject);
 			}
 		}
-		for (EObject eObj : myEObjects) {
+		for (EObject eObj : myAdditionalEObjects) {
 			if(eObj.eContainer() == null) {
 				extent.getContents().add(eObj);
 			}
@@ -75,10 +74,10 @@ public class ModelParameterExtent {
 	
 	@Override
 	public String toString() {
-		return myMetamodel != null ? myMetamodel.toString() : super.toString();
+		return myInitialEObject != null ? myInitialEObject.toString() : super.toString();
 	}
 	
-	private final EPackage myMetamodel;
-	private final List<EObject> myEObjects = new ArrayList<EObject>(1);
+	private final EObject myInitialEObject;
+	private final List<EObject> myAdditionalEObjects = new ArrayList<EObject>(1);
 	
 }

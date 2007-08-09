@@ -209,8 +209,8 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	        	EObject argument = (EObject) getOperationArgs().get(argIndex);
 	        	
 	        	while (true) {
-	        		if (argument instanceof EPackage && argument.eClass().eContainer() == expMetamodel) {
-	        			modelExtents.put(modelParam, new ModelParameterExtent((EPackage) argument));
+	        		if (argument.eClass().eContainer() == expMetamodel) {
+	        			modelExtents.put(modelParam, new ModelParameterExtent(argument));
 	        			break;
 	        		}
 	        		if (argument.eContainer() == null) {
