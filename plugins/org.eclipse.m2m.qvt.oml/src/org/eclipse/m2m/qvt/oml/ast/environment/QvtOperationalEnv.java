@@ -33,7 +33,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.qvt.oml.QvtMessage;
-import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfException;
@@ -68,7 +67,6 @@ import org.eclipse.ocl.expressions.ExpressionsFactory;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.internal.cst.CSTNode;
 import org.eclipse.ocl.internal.cst.SimpleNameCS;
-import org.eclipse.ocl.internal.cst.VariableCS;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
@@ -560,23 +558,19 @@ public class QvtOperationalEnv extends EcoreEnvironment {
         }
     }
     
-    public void createVariable(Variable<EClassifier, EParameter> variable, VariableCS variableCS, boolean createASTBinding) {
+    /**
+     * This method creates a copy of the argument variable to avoid unbinding from eContainer
+     * in case when variable is a containment feature. 
+     */
+    public void createVariable(Variable<EClassifier, EParameter> variable) {
         if (lookupLocal(variable.getName()) != null) {
             reportError(NLS.bind(ValidationMessages.SemanticUtil_15,
                     new Object[] { variable.getName() }), variable.getStartPosition(), variable.getEndPosition());
         } else {
-        	// The copy is created to avoid unbinding from eContainer in case when variable
-        	// is a containment feature
 			Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
 			var.setName(variable.getName());
 			var.setType(variable.getType());
 
-			// AST binding
-            if(createASTBinding) {      
-                ASTBindingHelper.createCST2ASTBinding(variableCS, variable, this);
-            }
-            //
-			
 			addElement(variable.getName(), var, true);
         }
     }

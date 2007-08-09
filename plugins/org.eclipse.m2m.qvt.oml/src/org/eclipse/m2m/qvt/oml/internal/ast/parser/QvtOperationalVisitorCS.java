@@ -1468,7 +1468,7 @@ public class QvtOperationalVisitorCS
             }
             if (resolveExpCS.getCondition() != null) {
                 if (variable.getName() != null) {
-                    env.createVariable(variable, resolveExpCS.getTarget(), createASTBinding);
+                    env.createVariable(variable);
                 }
                 OCLExpression<EClassifier> condExp = visitOclExpressionCS(resolveExpCS.getCondition(), env);
                 resolveExp.setCondition(condExp);
