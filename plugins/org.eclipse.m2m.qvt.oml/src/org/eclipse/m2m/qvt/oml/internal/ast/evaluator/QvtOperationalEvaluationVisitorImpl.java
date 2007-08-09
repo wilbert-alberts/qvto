@@ -102,6 +102,7 @@ import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.CollectionKind;
+import org.eclipse.ocl.expressions.EnumLiteralExp;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.PropertyCallExp;
@@ -350,6 +351,11 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 	        pc.setReferredProperty(renamedProperty);
     	}
     	return super.visitPropertyCallExp(pc);
+    }
+    
+    @Override
+    public Object visitEnumLiteralExp(EnumLiteralExp<EClassifier, EEnumLiteral> el) {
+        return el.getReferredEnumLiteral().getInstance();
     }
 
     public Object visitMappingOperation(MappingOperation mappingOperation) {
