@@ -24,6 +24,7 @@ import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData.TargetType;
 import org.eclipse.m2m.qvt.oml.common.ui.IModelParameterInfo;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.StatusUtil;
+import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.IChooser;
 import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.IDestinationChooser;
 import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.IMetamodelHandler;
@@ -323,6 +324,15 @@ public class UriGroupOut extends BaseUriGroup {
 	        	if (cont == null) {
 	                return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidTargetUri, destUri));
 	        	}
+	        	
+            	String uriPath = destUri.isFile() ? destUri.toFileString() :
+        			(destUri.isPlatform() ? destUri.toPlatformString(true) : destUri.toString());
+            	IFile file = WorkspaceUtils.getWorkspaceFile(uriPath);
+            	if (file != null && file.exists() && file.isReadOnly()) {
+	                if (result.getSeverity() < IStatus.WARNING) {
+	                	result = StatusUtil.makeWarningStatus(NLS.bind(Messages.QvtValidator_DestinationReadonly, destUri));
+	                }
+            	}
 	        	
 	        	String feature = myFeatureText.getText();
 	        	if (feature == null || feature.trim().length() == 0) {

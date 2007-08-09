@@ -50,6 +50,7 @@ public class Messages extends NLS {
 	public static String QvtValidator_NewDestinationHasFragment;
 	public static String QvtValidator_NoFeature;
 	public static String QvtValidator_InvalidFeature;
+	public static String QvtValidator_DestinationReadonly;
 	
     static {
         // initialize resource bundle
