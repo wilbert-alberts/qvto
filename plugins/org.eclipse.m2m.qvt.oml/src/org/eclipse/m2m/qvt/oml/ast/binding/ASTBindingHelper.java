@@ -11,6 +11,10 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.ast.binding;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
@@ -36,9 +40,9 @@ public class ASTBindingHelper {
 	}
 	
 	public static ImperativeOperation resolveEnvOperationBinding(EOperation envDefinedOperation) {
-		ASTAdapter adapter = getASTBinding(envDefinedOperation);
-		if(adapter instanceof ImperativeOperationASTAdapter) {
-			ImperativeOperationASTAdapter operationASTAdapter = (ImperativeOperationASTAdapter) adapter;
+		List<ImperativeOperationASTAdapter> adapters = getASTBindings(envDefinedOperation, ImperativeOperationASTAdapter.class);
+		if(!adapters.isEmpty()) {
+			ImperativeOperationASTAdapter operationASTAdapter = (ImperativeOperationASTAdapter) adapters.get(0);
 			return (ImperativeOperation)operationASTAdapter.getASTNode();
 		}
 		return null;
@@ -51,9 +55,9 @@ public class ASTBindingHelper {
 	}
 	
 	public static CFile resolveModuleFile(MappingModuleCS cstModule) {
-		ASTAdapter adapter = getASTBinding(cstModule);
-		if (adapter instanceof ModuleASTAdapter) {
-			ModuleASTAdapter moduleAdapter = (ModuleASTAdapter) adapter;
+		List<ModuleASTAdapter> adapters = getASTBindings(cstModule, ModuleASTAdapter.class);
+		if (!adapters.isEmpty()) {
+			ModuleASTAdapter moduleAdapter = (ModuleASTAdapter) adapters.get(0);
 			return moduleAdapter.getModuleFile();			
 		}
 		return null;
@@ -68,10 +72,13 @@ public class ASTBindingHelper {
 		astNode.eAdapters().add(astAdapter);	
 		cstNode.eAdapters().add(astAdapter);
 	}
-	
+
 	public static ASTNode resolveASTNode(CSTNode cstNode) {
-		ASTAdapter adapter = getASTBinding(cstNode);
-		return adapter != null ? adapter.getASTNode() : null;
+		return resolveASTNode(cstNode, ASTNode.class);
+	}
+	
+	public static <T extends ASTNode> T resolveASTNode(CSTNode cstNode, Class<T> type) {
+		return firstASTNodeOfType(getASTBindings(cstNode), type);
 	}
 	
 	public static final ASTNode resolveEnclosingASTNode(CSTNode cstNode) {
@@ -85,9 +92,12 @@ public class ASTBindingHelper {
 	    return null;
 	}
 	
+	public static <T extends CSTNode> T resolveCSTNode(ASTNode astNode, Class<T> cstType) {
+		return firstCSTNodeOfType(getASTBindings(astNode), cstType);
+	}
+	
 	public static CSTNode resolveCSTNode(ASTNode astNode) {
-		ASTAdapter adapter = getASTBinding(astNode);
-		return (adapter != null) ? adapter.getCSTNode() : null;
+		return resolveCSTNode(astNode, CSTNode.class);
 	}
 	
 	public static EcoreEnvironment resolveEnvironment(ASTNode astNode) {
@@ -103,19 +113,51 @@ public class ASTBindingHelper {
 	}
 	
 	private static EcoreEnvironment localResolveEnvironment(ASTNode astNode) {
-		ASTAdapter adapter = getASTBinding(astNode);
-		
-		return (adapter != null) ? adapter.getEnvironment() : null;
-	}
-	
-	public static ASTAdapter getASTBinding(EObject target) {
-		for (Adapter nextAdapter : target.eAdapters()) {
-			if(nextAdapter instanceof ASTAdapter) {
-				return (ASTAdapter) nextAdapter;
+		List<ASTAdapter> adapters = getASTBindings(astNode);
+		for (ASTAdapter nextAdapter : adapters) {
+			if(nextAdapter.getEnvironment() != null) {
+				return nextAdapter.getEnvironment();
 			}
 		}
-		
 		return null;
+	}
+	
+	private static <T extends ASTNode> T firstASTNodeOfType(List<ASTAdapter> objects, Class<T> type) {
+		for (ASTAdapter nextAST : objects) {
+			if(type.isInstance(nextAST.getASTNode())) {
+				return type.cast(nextAST.getASTNode());
+			}
+		}
+		return null;
+	}
+	
+	private static <T extends CSTNode> T firstCSTNodeOfType(List<ASTAdapter> objects, Class<T> type) {
+		for (ASTAdapter nextCST : objects) {
+			if(type.isInstance(nextCST.getCSTNode())) {
+				return type.cast(nextCST.getCSTNode());
+			}
+		}
+		return null;
+	}
+	
+	static List<ASTAdapter> getASTBindings(EObject target) {
+		return getASTBindings(target, ASTAdapter.class);
+	}
+	
+	static <T extends ASTAdapter> List<T> getASTBindings(EObject target, Class<T> adapterType) {
+		List<T> result = Collections.emptyList();
+		
+		for (Adapter nextAdapter : target.eAdapters()) {
+			if(adapterType.isInstance(nextAdapter)) {
+				if(result.isEmpty()) {
+					result = new ArrayList<T>(3);
+				}
+				
+				result.add(adapterType.cast(nextAdapter));
+			}
+		}
+
+		return result;
 	}
 
 	private static class ASTAdapter extends AdapterImpl {
@@ -144,7 +186,7 @@ public class ASTBindingHelper {
 		
 		public EcoreEnvironment getEnvironment() {
 			return fEnv;
-		}
+		}		
 	}
 	
 	private static class ModuleASTAdapter extends ASTAdapter {

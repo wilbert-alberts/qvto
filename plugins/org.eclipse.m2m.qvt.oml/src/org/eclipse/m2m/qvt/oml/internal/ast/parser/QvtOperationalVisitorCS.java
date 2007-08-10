@@ -1439,14 +1439,18 @@ public class QvtOperationalVisitorCS
         resolveExp.setOne(resolveExpCS.isOne());
         resolveExp.setIsInverse(resolveExpCS.isIsInverse());
         resolveExp.setIsDeferred(resolveExpCS.isIsDeferred());
+        
         if (resolveExpCS.getTarget() != null) { // at least type is defined
             Variable<EClassifier, EParameter> variable = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();
             EClassifier type = visitTypeCS(resolveExpCS.getTarget().getTypeCS(), env);
             variable.setType(type);
             
+            boolean isTargetVarClashing = false;
             String targetVarName = resolveExpCS.getTarget().getName();
             if (targetVarName != null) {
         		if (env.lookupLocal(targetVarName) != null) {
+        			isTargetVarClashing = true;
+        			
         			env.reportError(NLS.bind(ValidationMessages.SemanticUtil_15, new Object[] { targetVarName }),
         					resolveExpCS.getTarget().getStartOffset(), resolveExpCS.getTarget().getEndOffset());
         		}
@@ -1467,13 +1471,16 @@ public class QvtOperationalVisitorCS
                 resolveExp.setType(TypeUtil.resolveType(env, resolveType));
             }
             if (resolveExpCS.getCondition() != null) {
-                if (variable.getName() != null) {
-                    env.createVariable(variable);
+                if (!isTargetVarClashing && variable.getName() != null) {                	
+                	env.addElement(variable.getName(), variable, true);
                 }
                 OCLExpression<EClassifier> condExp = visitOclExpressionCS(resolveExpCS.getCondition(), env);
-                resolveExp.setCondition(condExp);
-                if (variable.getName() != null) {
+                resolveExp.setCondition(condExp);                
+                
+                if (!isTargetVarClashing && variable.getName() != null) {
                     env.deleteElement(variable.getName());
+                    // ensure to bind back to the ResolveExp container
+                    resolveExp.setTarget(variable);
                 }
             }
         } else {

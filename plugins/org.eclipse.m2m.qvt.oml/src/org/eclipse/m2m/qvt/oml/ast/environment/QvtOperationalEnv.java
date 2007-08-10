@@ -558,23 +558,6 @@ public class QvtOperationalEnv extends EcoreEnvironment {
         }
     }
     
-    /**
-     * This method creates a copy of the argument variable to avoid unbinding from eContainer
-     * in case when variable is a containment feature. 
-     */
-    public void createVariable(Variable<EClassifier, EParameter> variable) {
-        if (lookupLocal(variable.getName()) != null) {
-            reportError(NLS.bind(ValidationMessages.SemanticUtil_15,
-                    new Object[] { variable.getName() }), variable.getStartPosition(), variable.getEndPosition());
-        } else {
-			Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
-			var.setName(variable.getName());
-			var.setType(variable.getType());
-
-			addElement(variable.getName(), var, true);
-        }
-    }
-    
 	public void addInitVariable(VariableInitExp varInit) {
 		if (varInit.getName() != null) {
 			Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
