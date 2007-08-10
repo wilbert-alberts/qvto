@@ -22,7 +22,9 @@ import org.eclipse.m2m.qvt.oml.ui.QvtPluginImages;
 
 public class NewQVTTransformationWizard extends AbstractNewQVTElementWizard {
  
-	private NewQvtTransformationCreationPage myNewQvtModulePage;
+	private NewQvtTransformationCreationPage fNewQvtModulePage;
+	private boolean fOpenInEditor = false;
+	
 	public NewQVTTransformationWizard() {
     	setWindowTitle(Messages.NewQVTTransformationWizard_Title);//$NON-NLS-1$
     	
@@ -39,7 +41,11 @@ public class NewQVTTransformationWizard extends AbstractNewQVTElementWizard {
     }
     
     protected final NewQvtTransformationCreationPage getQvtTransformationCreationPage() {
-    	return myNewQvtModulePage;
+    	return fNewQvtModulePage;
+    }
+    
+    public void setOpenNewTransformationInEditor(boolean openFlag) {
+    	fOpenInEditor = openFlag;
     }
         
 	@Override
@@ -56,18 +62,27 @@ public class NewQVTTransformationWizard extends AbstractNewQVTElementWizard {
 	@Override
 	public boolean doPerformFinish(IProgressMonitor monitor) {
         try {
-        	String moduleName = myNewQvtModulePage.getModuleName(); 
+        	String moduleName = fNewQvtModulePage.getModuleName(); 
         	assert QvtNamesChecker.validateQvtModuleIdentifier(moduleName).isOK();
         	
         	String contents = createTransformationContents(moduleName);
-        	IFile transformationFile = myNewQvtModulePage.createNewFile(contents, monitor);            		
+        	IFile transformationFile = fNewQvtModulePage.createNewFile(contents, monitor);            		
             
-        	NewQvtModuleCreationPage.openInEditor(getShell(), transformationFile);
+        	if(fOpenInEditor) {
+        		NewQvtModuleCreationPage.openInEditor(getShell(), transformationFile);
+        	}
             return true;
         } catch (Exception exception) {
             QVTUIPlugin.log(exception);
             return false;
         }
+	}
+	
+	public IFile getNewTransformationFile() {
+		if(fNewQvtModulePage != null) {
+			return fNewQvtModulePage.getNewCreatedModuleFile();
+		}
+		return null;
 	}
 	
     protected String createTransformationContents(String moduleName) {
@@ -85,10 +100,10 @@ public class NewQVTTransformationWizard extends AbstractNewQVTElementWizard {
 	}
 
 	protected void doAddPages() {
-        myNewQvtModulePage = createQvtTransformationCreationPage();        
-        myNewQvtModulePage.setTitle(Messages.NewQVTTransformationWizard_NewModuleFilePageTitle);//$NON-NLS-1$
-        myNewQvtModulePage.setDescription(Messages.NewQVTTransformationWizard_NewModulePageDescription);//$NON-NLS-1$
-        addPage(myNewQvtModulePage);
+        fNewQvtModulePage = createQvtTransformationCreationPage();        
+        fNewQvtModulePage.setTitle(Messages.NewQVTTransformationWizard_NewModuleFilePageTitle);//$NON-NLS-1$
+        fNewQvtModulePage.setDescription(Messages.NewQVTTransformationWizard_NewModulePageDescription);//$NON-NLS-1$
+        addPage(fNewQvtModulePage);
 
         setContentsCreated(true);        
     }

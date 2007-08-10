@@ -81,6 +81,7 @@ public class NewQvtModuleCreationPage extends WizardPage implements Listener {
 		
     private IStatus fStatus;
 	private IPath fInitialContainerPath;
+	private IFile fNewModuleFile;
 	private INewQVTElementDestinationWizardDelegate fDestinationProvider;
     private boolean fWasEverShown = false;    
     
@@ -550,11 +551,16 @@ public class NewQvtModuleCreationPage extends WizardPage implements Listener {
     	try {
     		// set the contents
 			file.create(new ByteArrayInputStream(contents.getBytes()), true, null);
+			fNewModuleFile = file;
 		} catch (CoreException e) {
 			QVTUIPlugin.log(e);
 		}
     	
-    	return file;
+    	return fNewModuleFile;
+    }
+    
+    public IFile getNewCreatedModuleFile() {
+    	return fNewModuleFile;
     }
     
     protected IStatus doValidateNamespace() {
