@@ -464,6 +464,20 @@ public class MetamodelBrowser  implements IAdaptable {
     }
     
     protected Object createInput() {
+    	final Object[] input = new Object[1];
+    	// initializing java generated registry is a long running task
+    	BusyIndicator.showWhile(null, new Runnable() {
+    		public void run() {
+    			input[0] = doCreateInput();
+    		}
+    	});
+    	
+    	assert input.length == 1;
+    	
+    	return input[0];
+    }
+    
+    protected Object doCreateInput() {
         BrowserNode rootContainer = createRootMetamodelContainer();
         
     	BrowserNode globalRegistryNode = new MetamodelContainerNode(
