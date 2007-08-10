@@ -14,7 +14,6 @@ package org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.jface.text.IRegion;
-import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
@@ -24,6 +23,7 @@ import org.eclipse.ocl.ecore.VariableExp;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.internal.cst.CSTNode;
 import org.eclipse.ocl.internal.cst.SimpleNameCS;
+import org.eclipse.ocl.internal.cst.VariableCS;
 import org.eclipse.ocl.internal.cst.VariableExpCS;
 import org.eclipse.ocl.utilities.ASTNode;
 
@@ -37,29 +37,31 @@ public class VariableHyperlinkDetector implements IHyperlinkDetectorHelper {
 		CSTNode syntaxElement = context.getSyntaxElement();
 		if (syntaxElement instanceof SimpleNameCS) {
 			SimpleNameCS nameCS = (SimpleNameCS)context.getSyntaxElement();			
-			SimpleNameCS destNameCS = null;
-			CSTNode declElement = resolveVariableDeclaration(nameCS);
+			CSTNode varDeclElement = resolveVariableDeclaration(nameCS);
 			
-			if(declElement instanceof ParameterDeclarationCS) {
-				ParameterDeclarationCS paramDeclCS = (ParameterDeclarationCS) declElement;
+			CSTNode targetCS = null;			
+			
+			if(varDeclElement instanceof ParameterDeclarationCS) {
+				ParameterDeclarationCS paramDeclCS = (ParameterDeclarationCS) varDeclElement;
 				SimpleNameCS paramNameCS = paramDeclCS.getSimpleNameCS();
 				if(paramNameCS != null && paramNameCS.getValue() != null) {
-					destNameCS = paramNameCS;
+					targetCS = paramNameCS;
 				}
-			} else if(declElement instanceof VariableInitializationCS) {
+			} else if(varDeclElement instanceof VariableInitializationCS) {
 				// resolve declared variable
-				VariableInitializationCS varDecl = (VariableInitializationCS)declElement;
+				VariableInitializationCS varDecl = (VariableInitializationCS)varDeclElement;
 				SimpleNameCS varName = varDecl.getSimpleNameCS();
 				if(varName != null && varName.getValue() != null) {
-					destNameCS = varName;
+					targetCS = varName;
 				}
+			} else if(varDeclElement instanceof VariableCS) {
+				targetCS = varDeclElement;
 			}
 			
-			if(destNameCS != null) {
-				IRegion declRegion = HyperlinkUtil.createRegion(destNameCS);
-				return new QvtFileHyperlink(HyperlinkUtil.createRegion(nameCS), 
-									context.getModule().getSource(), declRegion, declRegion); 
-				
+			if(targetCS != null) {
+				IRegion linkRegion = HyperlinkUtil.createRegion(nameCS);
+				IRegion targetRegion = HyperlinkUtil.createRegion(targetCS);
+				return new QvtFileHyperlink(linkRegion, context.getModule().getSource(), targetRegion, targetRegion); 
 			}
 		}
 		
@@ -97,12 +99,15 @@ public class VariableHyperlinkDetector implements IHyperlinkDetectorHelper {
 					if(cstVarNode instanceof VariableInitializationCS) {
 						// resolve declared variable
 						VariableInitializationCS varDecl = (VariableInitializationCS) cstVarNode;
-						return varDecl;
+						return varDecl;						
+						
+					} else if(cstVarNode instanceof VariableCS) {					
+						return cstVarNode;
 					}
 				}
 			}
 		}			
 		
 		return null;
-	}
+	}	
 }

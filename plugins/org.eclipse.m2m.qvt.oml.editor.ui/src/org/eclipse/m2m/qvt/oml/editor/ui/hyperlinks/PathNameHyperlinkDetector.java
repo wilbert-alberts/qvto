@@ -14,6 +14,7 @@ package org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -23,6 +24,8 @@ import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfException;
+import org.eclipse.m2m.qvt.oml.expressions.ModelType;
+import org.eclipse.m2m.qvt.oml.expressions.PackageRef;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingDeclarationCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ModelTypeCS;
@@ -53,7 +56,7 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 				if(env != null) {
 					try {
 						String id = modelTypeCS.getPackageRefs().get(0).getUriCS().getStringSymbol();
-						// strip quations
+						// strip quotations
 						id = id.substring(1, id.length() - 1);
 						EPackage ePackage = (EPackage)env.getMetamodelRegistry().getMetamodelDesc(id).getModels()[0];
 						return new MetamodelElementHyperlink(HyperlinkUtil.createRegion(modelTypeCS), ePackage);
@@ -108,11 +111,21 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 	private IHyperlink findHyperLink(PathNameCS pathName, IDetectionContext context) {
 		QvtOperationalEnv env = getEnv(pathName, context.getCompletionData());
 		if(env != null) {
-			List<String> names = new ArrayList<String>(3);
+			List<String> names = new ArrayList<String>(5);
 			IRegion linkRegion = findElementInPathName(pathName, context.getRegion(), names);
 			boolean isPackageReferred = names.size() < pathName.getSequenceOfNames().size();
 			
 			EModelElement element = (isPackageReferred) ? env.lookupPackage(names) : env.lookupClassifier(names);
+			if(element == null) {
+				ModelType modelType = env.getModelType(names);
+				if(modelType != null) {
+					EList<PackageRef> metamodels = modelType.getMetamodel();
+					if(!metamodels.isEmpty()) {
+						String uri = metamodels.get(0).getUri();
+						element = env.getEPackageRegistry().getEPackage(uri);
+					}
+				}
+			}
 			if(element != null) {
 				return new MetamodelElementHyperlink(linkRegion, element);
 			}
