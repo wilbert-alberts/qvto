@@ -14,6 +14,7 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,8 +66,12 @@ public class TransformationSignatureLaunchControl extends ScrolledComposite {
 	public void setTransformation(QvtTransformation transformation, List<IUriGroup.IModifyListener> listeners) {
 		myTransformation = transformation;
 
+		List<TargetUriData> oldUriData = new ArrayList<TargetUriData>();
 		Control content = getContent();
 		if (content != null) {
+			for (Map.Entry<IModelParameterInfo, IUriGroup> entry : myParamGroups.entrySet()) {
+				oldUriData.add(entry.getValue().getUriData());
+	    	}
 			content.dispose();
 		}
 		final Composite area = new Composite(this, SWT.NONE);
@@ -74,10 +79,19 @@ public class TransformationSignatureLaunchControl extends ScrolledComposite {
 		setCompositeLayout(area);
 		
 		createContents(area, listeners);
+		
+		Iterator<TargetUriData> itrOldUriData = oldUriData.iterator();
+		for (Map.Entry<IModelParameterInfo, IUriGroup> entry : myParamGroups.entrySet()) {
+			if (!itrOldUriData.hasNext()) {
+				break;
+			}
+			entry.getValue().initializeFrom(itrOldUriData.next());
+    	}
 
 		Point computeSize = area.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		setMinSize(computeSize);
 		setSize(getSize().x, computeSize.y);
+		area.layout();
 		getParent().layout();
 	}
 
