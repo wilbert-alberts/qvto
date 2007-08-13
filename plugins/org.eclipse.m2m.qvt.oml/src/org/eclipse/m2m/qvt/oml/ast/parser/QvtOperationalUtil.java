@@ -15,26 +15,20 @@ import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnvFactory;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.ocl.Environment;
-import org.eclipse.ocl.ecore.CollectionType;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.internal.cst.PathNameCS;
 import org.eclipse.ocl.internal.cst.TypeCS;
-import org.eclipse.ocl.types.BagType;
-import org.eclipse.ocl.types.OrderedSetType;
 import org.eclipse.ocl.types.PrimitiveType;
-import org.eclipse.ocl.types.SequenceType;
-import org.eclipse.ocl.types.SetType;
-import org.eclipse.ocl.types.VoidType;
 
 public class QvtOperationalUtil {
 
+	public static final String MAIN_METHOD_NAME = "main"; //$NON-NLS-1$
 	
 	private QvtOperationalUtil() {
 	}

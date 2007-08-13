@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalFileEnv;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalTypesUtil;
+import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.expressions.LocalProperty;
@@ -399,7 +400,7 @@ public class QvtOperationalParserUtil {
 		for (Iterator<EOperation> ruleIt = module.getEOperations().iterator(); ruleIt.hasNext();) {
 			ImperativeOperation method = (ImperativeOperation) ruleIt.next();
 
-			if (!MAIN_METHOD_NAME.equals(method.getName())) {
+			if (!QvtOperationalUtil.MAIN_METHOD_NAME.equals(method.getName())) {
 				continue;
 			}
 
@@ -544,7 +545,5 @@ public class QvtOperationalParserUtil {
 			return importedModules.toArray(new Module[0]);
 		}
 	};
-
-	private static final String MAIN_METHOD_NAME = "main"; //$NON-NLS-1$
 
 }
