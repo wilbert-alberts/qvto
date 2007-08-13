@@ -217,12 +217,12 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         	case EXISTING_CONTAINER: {
 	        	EObject cont = EmfUtil.loadModel(outUri);
 	            if(cont == null) {
-	                throw new RuntimeException("No object at " + outUri); //$NON-NLS-1$
+	                throw new MdaException("No object at " + outUri); //$NON-NLS-1$
 	            }
 	            
 		        EStructuralFeature feature = cont.eClass().getEStructuralFeature(targetData.getFeature());
 		        if(feature instanceof EReference == false) {
-	                throw new RuntimeException("Reference " + targetData.getFeature() + " not found in " + cont); //$NON-NLS-1$ //$NON-NLS-2$
+	                throw new MdaException("Reference " + targetData.getFeature() + " not found in " + cont); //$NON-NLS-1$ //$NON-NLS-2$
 		        }
 
 		        result = new ArrayList<URI>(outExtent.getContents().size());
@@ -236,8 +236,14 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
 			        	if(targetData.isClearContents()) {
 			        		value.clear();
 			        	}
-			        	
-			        	value.add(out);
+
+			        	try {
+			        		value.add(out);
+			        	}
+			        	catch (RuntimeException ex) {
+			        		throw new MdaException(NLS.bind(Messages.QvtLaunchConfigurationDelegateBase_FeatureSetFailure,
+			        				EmfUtil.getFullName(out.eClass()), targetData.getFeature()));
+			        	}
 			        }
                     IMetamodelHandler handler = MetamodelHandlerManager.getInstance().getHandler(out.eClass());
                     result.add(handler.getSaver().getUri(out));

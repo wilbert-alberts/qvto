@@ -38,6 +38,7 @@ public class Messages extends NLS {
 	public static String QvtCompiledLaunchTab_TransformationNotFound;	
 	
 	public static String QvtLaunchConfigurationDelegateBase_InplaceFailure;
+	public static String QvtLaunchConfigurationDelegateBase_FeatureSetFailure;
 	
 	//public static String QvtLaunchConfigurationDelegate_ErrorsInProject;
 	//public static String QvtLaunchConfigurationDelegate_ErrorsInQVTModule;
