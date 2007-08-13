@@ -49,7 +49,7 @@ public class UriGroupIn extends BaseUriGroup {
 		setLayout(new GridLayout(3, false));
         
 		createLabel(name, 1);
-        
+		
         myUriText = TransformationControls.createText(this, 1);
         myUriText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
@@ -103,10 +103,13 @@ public class UriGroupIn extends BaseUriGroup {
     }
 
 	public IValidator getValidator() {
+		if (myValidator == null) {
+			myValidator = new Validator();
+		}
 		return myValidator;
 	}
 	
-	private class Validator implements IValidator {
+	class Validator implements IValidator {
 
 		public IStatus validate(IModelParameterInfo paramInfo) {
 			if (paramInfo.getMetamodel() == null) {
@@ -175,5 +178,5 @@ public class UriGroupIn extends BaseUriGroup {
     private final Text myUriText;
     private final Button myBrowseButton;
     private SelectionListener myActiveListener;
-    private final IValidator myValidator = new Validator();
+    IValidator myValidator;
 }

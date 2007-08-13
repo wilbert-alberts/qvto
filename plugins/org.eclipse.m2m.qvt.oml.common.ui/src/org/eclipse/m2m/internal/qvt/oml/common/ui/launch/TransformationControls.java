@@ -113,6 +113,10 @@ public class TransformationControls {
 	        UriGroupIn uriGroup = new UriGroupIn(group, Messages.TargetUriSelector_Uri);
 	        return uriGroup;
         }
+        else if (paramInfo.isInOutParameter()) {
+        	UriGroupInOut uriGroup = new UriGroupInOut(group, Messages.TargetUriSelector_Uri);
+            return uriGroup;
+        }
         else {
         	UriGroupOut uriGroup = new UriGroupOut(group, Messages.TargetUriSelector_Uri);
             return uriGroup;

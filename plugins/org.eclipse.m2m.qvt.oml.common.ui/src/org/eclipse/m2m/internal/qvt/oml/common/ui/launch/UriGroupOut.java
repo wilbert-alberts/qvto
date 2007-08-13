@@ -351,11 +351,12 @@ public class UriGroupOut extends BaseUriGroup {
 		                return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidFeature, ref.getName())); 
 		        	}
 		        	
-		        	EClassifier refType = ref.getEType();
-		        	if (!EmfUtil.isAssignableFrom(refType, classifier)) {
-		                return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputTypes,
-		                		EmfUtil.getFullName(classifier), EmfUtil.getFullName(refType)));
-		        	}
+		        	// no need for the check since always whole model extent is saved
+//		        	EClassifier refType = ref.getEType();
+//		        	if (!EmfUtil.isAssignableFrom(refType, classifier)) {
+//		                return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputTypes,
+//		                		EmfUtil.getFullName(classifier), EmfUtil.getFullName(refType)));
+//		        	}
 	        	}
 	        	
 	            break;
@@ -374,10 +375,10 @@ public class UriGroupOut extends BaseUriGroup {
 			UriGroupOut.this.update(EmfUtil.getRootPackageUri(classifier),
 					moduleName, extension, shell);
 			
-			final EClassifier paramType = classifier; 
+			//final EClassifier paramType = classifier; 
 			refFilter = new ReferenceSelectionDialog.IRefFilter() {
 				public boolean accept(EReference ref) {
-					return ref.isChangeable() && EmfUtil.isAssignableFrom(ref.getEType(), paramType);
+					return ref.isChangeable();// && EmfUtil.isAssignableFrom(ref.getEType(), paramType);
 				}
 			};
 		}
