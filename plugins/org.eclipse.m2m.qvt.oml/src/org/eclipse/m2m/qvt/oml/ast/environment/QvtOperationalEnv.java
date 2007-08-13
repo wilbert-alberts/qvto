@@ -476,6 +476,9 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 		for (EPackage pkg : metamodels) {
 			super.setContextPackage(pkg);
 			lookupClassifier = super.lookupClassifier(path);
+			if (EcoreUtil.getRootContainer(lookupClassifier) != pkg) {
+				lookupClassifier = null;
+			}
 			if (lookupClassifier != null) {
 				break;
 			}

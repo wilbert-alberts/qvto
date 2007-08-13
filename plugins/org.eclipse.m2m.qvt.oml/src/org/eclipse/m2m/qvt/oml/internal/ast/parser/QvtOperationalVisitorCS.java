@@ -663,7 +663,7 @@ public class QvtOperationalVisitorCS
 
 			if (paramNames.contains(varParam.getName())) {
 				env.reportError(NLS.bind(ValidationMessages.SameParamName, new Object[] { varParam.getName() }),
-						paramCS.getSimpleNameCS());
+						paramCS.getSimpleNameCS().getValue().length() == 0 ? paramCS : paramCS.getSimpleNameCS());
 			}
 			paramNames.add(varParam.getName());
 			
@@ -1242,6 +1242,14 @@ public class QvtOperationalVisitorCS
 				ExpressionsPackage.eINSTANCE.getDirectionKind(), paramCS.getDirectionKind().getLiteral()));
 		if (paramCS.getTypeSpecCS().getSimpleNameCS() != null) {
 			ModelParameter modelParam = env.lookupModelParameter(paramCS.getTypeSpecCS().getSimpleNameCS(), varParam.getKind());
+			if (modelParam != null) {
+//				type = visitTypeCSInModelType(paramCS.getTypeSpecCS().getTypeCS(),
+//						(ModelType) modelParam.getEType(), env);
+//				if (type == null) {
+//					type = env.getOCLStandardLibrary().getOclVoid();
+//				}
+//				varParam.setEType(type);
+			}
 			varParam.setExtent(modelParam);
 		}
 		if (varParam.getExtent() == null) {
