@@ -603,9 +603,10 @@ public class QvtOperationalVisitorCS
 			if (operation != null) {
 				module.getEOperations().add(operation);
 				checkReturnTypeConformance(operation, 
-						(methodCS.getMappingDeclarationCS().getReturnType() != null) ?
+						methodCS.getMappingDeclarationCS().getReturnType() != null ?
 								methodCS.getMappingDeclarationCS().getReturnType() : 
 									methodCS.getMappingDeclarationCS(), env);
+				checkMainMappingConformance(env, operation);
 			}
 		}
 		
@@ -1087,7 +1088,8 @@ public class QvtOperationalVisitorCS
 
 		List<VarParameter> params = new ArrayList<VarParameter>();
 		for (ParameterDeclarationCS paramCS : mappingDeclarationCS.getParameters()) {
-			VarParameter param = visitParameterDeclarationCS(paramCS, env);
+			VarParameter param = visitParameterDeclarationCS(paramCS, env,
+					QvtOperationalUtil.MAIN_METHOD_NAME.equals(mappingDeclarationCS.getSimpleNameCS().getValue()));
 			if (param == null) {
 				return false;
 			}
@@ -1224,8 +1226,8 @@ public class QvtOperationalVisitorCS
 		return result;
 	}
 
-	private VarParameter visitParameterDeclarationCS(ParameterDeclarationCS paramCS, QvtOperationalEnv env)
-			throws SemanticException {
+	private VarParameter visitParameterDeclarationCS(ParameterDeclarationCS paramCS, QvtOperationalEnv env,
+			boolean isOutAllowed) throws SemanticException {
 		EClassifier type = visitTypeCS(paramCS.getTypeSpecCS().getTypeCS(), env);
 		if (type == null) {
 			type = env.getOCLStandardLibrary().getOclVoid();
@@ -1246,7 +1248,7 @@ public class QvtOperationalVisitorCS
 			varParam.setExtent(env.resolveModelParameter(type, varParam.getKind()));
 		}
 
-		if (varParam.getKind() == DirectionKind.OUT) {
+		if (!isOutAllowed && varParam.getKind() == DirectionKind.OUT) {
 			env.reportError(ValidationMessages.OutParamsNotSupported, paramCS);
 		}
 
@@ -1587,6 +1589,41 @@ public class QvtOperationalVisitorCS
         new GraphWalker(provider).walkDepthFirst(opOwner, processor);
 	}
 	
+	private void checkMainMappingConformance(QvtOperationalEnv env, ImperativeOperation operation) {
+		if (!QvtOperationalUtil.MAIN_METHOD_NAME.equals(operation.getName())) {
+			return;
+		}
+		if (((Module) operation.eContainer()).getModelParameter().isEmpty()) {
+			return;
+		}
+		Set<ModelParameter> usedExtent = new HashSet<ModelParameter>(operation.getEParameters().size());
+		for (EParameter param : operation.getEParameters()) {
+			MappingParameter varParam = (MappingParameter) param;
+			if (usedExtent.contains(varParam.getExtent())) {
+                env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentDuplicateUse, null),  
+                		varParam.getStartPosition(), varParam.getEndPosition());
+			}
+			usedExtent.add(varParam.getExtent());
+			
+			if (varParam.getExtent() == null) {
+                env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentFailToInfer, null),  
+                		varParam.getStartPosition(), varParam.getEndPosition());
+			}
+			else if (varParam.getKind() == DirectionKind.IN) {
+				if (varParam.getExtent().getKind() == DirectionKind.OUT) {
+	                env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentDirectionMismatch, null),  
+	                		varParam.getStartPosition(), varParam.getEndPosition());
+				}
+			}
+			else {
+				if (varParam.getKind() != varParam.getExtent().getKind()) {
+	                env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentDirectionMismatch, null),  
+	                		varParam.getStartPosition(), varParam.getEndPosition());
+				}
+			}
+		}
+	}
+
     private void checkAbstractOutParamsInitialized(EList<VarParameter> result, MappingRuleCS methodCS, QvtOperationalEnv env) {
         for (VarParameter varParameter : result) {
             EClassifier type = varParameter.getEType();
