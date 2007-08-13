@@ -30,6 +30,7 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.qvt.oml.compiler.ParsedModuleCS;
+import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.editor.ui.Activator;
 import org.eclipse.m2m.qvt.oml.editor.ui.QvtCompilerFacade;
 import org.eclipse.m2m.qvt.oml.editor.ui.QvtDocumentProvider;
@@ -131,7 +132,10 @@ public class QvtCompletionProcessor implements IContentAssistProcessor {
             IDocument document = viewer.getDocument();
             document.addDocumentListener(myDocumentListener);
             if (isDocumentChanged) {
-                QvtCompilerFacade.getInstance().compile(myEditor, document, false, null);
+                QvtCompilerOptions options = new QvtCompilerOptions();
+                options.setReportErrors(false);
+                options.setShowAnnotations(false);
+                QvtCompilerFacade.getInstance().compile(myEditor, document, options, null);
             	isDocumentChanged = false;
             }
             QvtDocumentProvider documentProvider = (QvtDocumentProvider) myEditor.getDocumentProvider();

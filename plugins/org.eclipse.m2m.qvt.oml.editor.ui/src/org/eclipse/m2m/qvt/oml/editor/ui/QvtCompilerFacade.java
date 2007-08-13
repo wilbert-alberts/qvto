@@ -41,6 +41,7 @@ import org.eclipse.m2m.qvt.oml.common.Logger;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilationResult;
+import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.ocl.completion.CompletionData;
 import org.eclipse.ui.part.FileEditorInput;
 
@@ -52,12 +53,7 @@ public class QvtCompilerFacade {
 	private QvtCompilerFacade() {}
 	
 	public QvtCompilationResult compile(final QvtEditor editor, final IDocument document, 
-			final boolean reportProblems, IProgressMonitor monitor) {
-		return compile(editor, document, true, reportProblems, monitor);
-	}
-	
-	public QvtCompilationResult compile(final QvtEditor editor, final IDocument document, 
-			final boolean generateCompletionData, final boolean reportProblems, IProgressMonitor monitor) {
+			QvtCompilerOptions options, IProgressMonitor monitor) {
 		if (!checkEditor(editor)) {
 			return null;
 		}
@@ -103,7 +99,7 @@ public class QvtCompilerFacade {
 				
 				QvtEngine engine = QvtEngine.getInstance(file);
 				
-                result = engine.compile(source, generateCompletionData, new SubProgressMonitor(monitor, 2));
+                result = engine.compile(source, options, new SubProgressMonitor(monitor, 2));
                 
                 if (result != null) {
                     documentProvider.setMappingModule(result.getModule());
@@ -115,7 +111,7 @@ public class QvtCompilerFacade {
                 Logger.getLogger().log(Logger.SEVERE, "Error during compiling document", e); //$NON-NLS-1$
             }
             
-            if (reportProblems) {
+            if (options.isReportErrors() && options.isShowAnnotations()) {
             	reportProblems(result, editor.getAnnotationModel());
             }
         } finally {

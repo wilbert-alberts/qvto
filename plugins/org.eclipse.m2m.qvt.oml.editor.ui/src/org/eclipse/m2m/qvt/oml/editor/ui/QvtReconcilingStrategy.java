@@ -24,6 +24,7 @@ import org.eclipse.jface.text.reconciler.DirtyRegion;
 import org.eclipse.jface.text.reconciler.IReconcilingStrategy;
 import org.eclipse.jface.text.reconciler.IReconcilingStrategyExtension;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilationResult;
+import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingMethodCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.ocl.internal.cst.CSTNode;
@@ -59,9 +60,10 @@ public class QvtReconcilingStrategy implements IReconcilingStrategy, IReconcilin
     
     private void reconcileInternal() {
         final ArrayList<Position> positions = new ArrayList<Position>();
-        boolean reportProblems = QvtCompilerFacade.isEditingInQvtSourceContainer(myEditor);
+        QvtCompilerOptions options = new QvtCompilerOptions();
+        options.setShowAnnotations(QvtCompilerFacade.isEditingInQvtSourceContainer(myEditor));
         
-        QvtCompilationResult compilationResult = QvtCompilerFacade.getInstance().compile(myEditor, myDocument, true, reportProblems, myMonitor);
+        QvtCompilationResult compilationResult = QvtCompilerFacade.getInstance().compile(myEditor, myDocument, options, myMonitor);
         
         if (compilationResult != null && compilationResult.getModule() != null) {
             MappingModuleCS mappingModuleCS = compilationResult.getModule().getSyntaxElement().getModuleCS();
