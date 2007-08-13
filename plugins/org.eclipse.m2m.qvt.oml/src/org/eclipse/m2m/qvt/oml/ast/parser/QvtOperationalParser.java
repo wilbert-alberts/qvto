@@ -33,6 +33,7 @@ import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.qvt.oml.compiler.CompilerMessages;
 import org.eclipse.m2m.qvt.oml.compiler.ParsedModuleCS;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtOperationalEvaluationVisitorImpl;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalVisitorCS;
@@ -83,16 +84,16 @@ public class QvtOperationalParser {
 		return result;
 	}
 
-	public Module analyze(final ParsedModuleCS moduleCS, final QvtCompiler compiler, QvtOperationalEnv env, boolean createASTBindingData) {
+	public Module analyze(final ParsedModuleCS moduleCS, final QvtCompiler compiler, QvtOperationalEnv env, QvtCompilerOptions options) {
 		Module module = null;
 		List<QvtMessage> parentWarnings = new ArrayList<QvtMessage>(env != null ? env.getWarningsList() : Collections.<QvtMessage>emptyList());
 		List<QvtMessage> parentErrors = new ArrayList<QvtMessage>(env != null ? env.getErrorsList() : Collections.<QvtMessage>emptyList());
 		myEnv = new QvtOperationalEnvFactory().createEnvironment(env, moduleCS.getSource(), compiler);
+		myEnv.setErrorRecordFlag(options.isReportErrors());
 		try {
 			OCLLexer oclLexer = new OCLLexer();
 			oclLexer.initialize(new OCLInput(moduleCS.getSource().getContents()).getContent(), moduleCS.getSource().getName());
-			QvtOperationalVisitorCS visitor = new QvtOperationalVisitorCS(oclLexer, myEnv);
-			visitor.setCreateASTBinding(createASTBindingData);
+			QvtOperationalVisitorCS visitor = new QvtOperationalVisitorCS(oclLexer, myEnv, options);
 			module = visitor.visitMappingModule(moduleCS, myEnv);
 		} catch (SemanticException e) {
 			getErrorsList().add(new QvtMessage(e.getLocalizedMessage(), 0, 0));

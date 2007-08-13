@@ -11,20 +11,15 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.ast.environment;
 
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.common.io.CResourceRepositoryContext;
 import org.eclipse.m2m.qvt.oml.compiler.ParsedModuleCS;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
-import org.eclipse.m2m.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
-import org.eclipse.m2m.qvt.oml.internal.ast.parser.ValidationMessages;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
-import org.eclipse.ocl.expressions.Variable;
-import org.eclipse.osgi.util.NLS;
 
 public class QvtOperationalFileEnv extends QvtOperationalEnv {
 
@@ -57,9 +52,9 @@ public class QvtOperationalFileEnv extends QvtOperationalEnv {
         return getCompiler().getModule(mmas);
     }
     
-    public Module createModule(MappingModuleCS mmas, boolean createASTBinding,
+    public Module createModule(MappingModuleCS mmas, QvtCompilerOptions options,
     		EcoreEnvironment env, ParsedModuleCS parsedModuleCS) {
-        return getCompiler().createModule(mmas, createASTBinding, env, parsedModuleCS);
+        return getCompiler().createModule(mmas, options, env, parsedModuleCS);
     }
     
 

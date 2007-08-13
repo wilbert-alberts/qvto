@@ -33,6 +33,7 @@ import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalFileEnv;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.compiler.ParsedModuleCS;
+import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.EmfMmUtil;
 import org.eclipse.m2m.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
@@ -135,13 +136,13 @@ public class QvtOperationalVisitorCS
 		OCLParser<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> {
 
     private final Set<String> myLoadedLibraries = new HashSet<String>(1);
+    private final QvtCompilerOptions myCompilerOptions;
     
-    private boolean createASTBinding = false;
-
 	public QvtOperationalVisitorCS(
 			OCLLexer lexStream,
-			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> environment) {
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> environment, QvtCompilerOptions options) {
 		super(lexStream, environment);
+        myCompilerOptions = options;
 	}
 
 	private EClassifier visitTypeCS(TypeCS typeCS, QvtOperationalEnv env) throws SemanticException {
@@ -228,7 +229,7 @@ public class QvtOperationalVisitorCS
         }
         
         // AST binding 
-        if(createASTBinding) {
+        if(myCompilerOptions.isGenerateCompletionData()) {
         	ASTBindingHelper.createCST2ASTBinding(variableDeclarationCS, varDecl);
         }
         //
@@ -253,7 +254,7 @@ public class QvtOperationalVisitorCS
         OCLExpression<EClassifier> result = super.propertyCallExpCS(propertyCallExpCS, env);
         if(result != null) {
             // AST binding    
-            if(createASTBinding) {          
+            if(myCompilerOptions.isGenerateCompletionData()) {          
                 ASTBindingHelper.createCST2ASTBinding(propertyCallExpCS, result, env);
             }
         }
@@ -269,7 +270,7 @@ public class QvtOperationalVisitorCS
     	OCLExpression<EClassifier> result = super.simpleNameCS(simpleNameCS, env, source);
 
         // AST binding    	
-        if(createASTBinding) {    	
+        if(myCompilerOptions.isGenerateCompletionData()) {    	
 	    	if(result instanceof VariableExp || result instanceof PropertyCallExp) { 
 	    		ASTBindingHelper.createCST2ASTBinding(simpleNameCS, result);
 	    	}
@@ -287,7 +288,7 @@ public class QvtOperationalVisitorCS
         OCLExpression<EClassifier> result = super.variableExpCS(variableExpCS, env);
 
         // AST binding      
-        if(createASTBinding) {      
+        if(myCompilerOptions.isGenerateCompletionData()) {      
             if(result instanceof VariableExp || result instanceof PropertyCallExp) { 
                 ASTBindingHelper.createCST2ASTBinding(variableExpCS, result);
             }
@@ -391,7 +392,7 @@ public class QvtOperationalVisitorCS
 			}
 		}
 
-        if(createASTBinding) {          
+        if(myCompilerOptions.isGenerateCompletionData()) {          
             ASTBindingHelper.createCST2ASTBinding(outExpCS, objectExp, env);
         }
 		
@@ -441,7 +442,7 @@ public class QvtOperationalVisitorCS
 		result.setLeft(sourceExp);
 
         // AST binding
-        if(createASTBinding) {		
+        if(myCompilerOptions.isGenerateCompletionData()) {		
         	ASTBindingHelper.createCST2ASTBinding(propCS, result);
         }
 		//		
@@ -456,7 +457,7 @@ public class QvtOperationalVisitorCS
         if (module != null) {
             return module;
         }        
-		module = env.createModule(moduleCS, createASTBinding, env, parsedModuleCS);
+		module = env.createModule(moduleCS, myCompilerOptions, env, parsedModuleCS);
 		module.setStartPosition(moduleCS.getStartOffset());
 		module.setEndPosition(moduleCS.getEndOffset());
 
@@ -546,7 +547,7 @@ public class QvtOperationalVisitorCS
 
 		for (ParsedModuleCS importedModuleCS : parsedModuleCS.getParsedImports()) {
 			// Check for duplicate imports is handled by QvtCompiler
-			Module importedModule = env.getCompiler().analyse(importedModuleCS, createASTBinding, env).getModule().getModule();
+			Module importedModule = env.getCompiler().analyse(importedModuleCS, myCompilerOptions, env).getModule().getModule();
 			if (importedModule == null) {
 				continue;
 			}
@@ -587,7 +588,7 @@ public class QvtOperationalVisitorCS
 				env.setErrorRecordFlag(false);
 				
 	            // AST binding
-		        if(createASTBinding && envOperation != null) {
+		        if(myCompilerOptions.isGenerateCompletionData() && envOperation != null) {
 					ASTBindingHelper.createEnvDefined2ImperativeOperationBinding(methodCS, operation, envOperation, env);
 				} 
 				//				
@@ -1250,7 +1251,7 @@ public class QvtOperationalVisitorCS
 		}
 
         // AST binding
-        if(createASTBinding) {		
+        if(myCompilerOptions.isGenerateCompletionData()) {		
 			ASTBindingHelper.createCST2ASTBinding(paramCS, varParam);
         }
 		//
@@ -1287,7 +1288,7 @@ public class QvtOperationalVisitorCS
 		}
 
         // AST binding
-        if(createASTBinding) {
+        if(myCompilerOptions.isGenerateCompletionData()) {
 			if(result.getName() != null) {
 				Variable<EClassifier, EParameter> envVar = env.lookupLocal(result.getName());
 				if(envVar != null) {
@@ -1392,7 +1393,7 @@ public class QvtOperationalVisitorCS
 		}
 		
         // AST binding
-        if(createASTBinding) {		
+        if(myCompilerOptions.isGenerateCompletionData()) {		
         	ASTBindingHelper.createCST2ASTBinding(propCS, result, env);
         }
 		//
@@ -1428,7 +1429,7 @@ public class QvtOperationalVisitorCS
     
     private OCLExpression<EClassifier> populateResolveExp(ResolveExpCS resolveExpCS, QvtOperationalEnv env, ResolveExp resolveExp) throws SemanticException {
         // AST binding
-        if(createASTBinding) {      
+        if(myCompilerOptions.isGenerateCompletionData()) {      
             ASTBindingHelper.createCST2ASTBinding(resolveExpCS, resolveExp, env);
         }
         //
@@ -1459,7 +1460,7 @@ public class QvtOperationalVisitorCS
             resolveExp.setTarget(variable);
             
             // AST binding
-            if(createASTBinding) {      
+            if(myCompilerOptions.isGenerateCompletionData()) {      
                 ASTBindingHelper.createCST2ASTBinding(resolveExpCS.getTarget(), variable, env);
             }
             //
@@ -1682,9 +1683,5 @@ public class QvtOperationalVisitorCS
 			return mappingRuleCS.getMappingDeclarationCS().getReturnType().getTypeCS();
 		}
 		return null;
-	}
-	
-	public void setCreateASTBinding(boolean createASTBinding) {
-		this.createASTBinding = createASTBinding;
 	}
 }

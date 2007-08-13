@@ -26,6 +26,7 @@ import org.eclipse.m2m.qvt.oml.compiler.IImportResolver;
 import org.eclipse.m2m.qvt.oml.compiler.IImportResolverFactory;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilationResult;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 
 
 /**
@@ -50,11 +51,11 @@ public class QvtEngine {
 	}
 	
 
-    public QvtCompilationResult compile(final CFile source, final boolean generateCompletionData, 
+    public QvtCompilationResult compile(final CFile source, final QvtCompilerOptions options, 
             final IProgressMonitor monitor) throws MdaException {
 		// TODO: remove this reset as soon as timestamps are finished
 		reset();
-		return myCompiler.compile(source, generateCompletionData, monitor);
+		return myCompiler.compile(source, options, monitor);
 	}
     
 	public CompiledModule compile(IFile file, IProgressMonitor monitor) throws MdaException {

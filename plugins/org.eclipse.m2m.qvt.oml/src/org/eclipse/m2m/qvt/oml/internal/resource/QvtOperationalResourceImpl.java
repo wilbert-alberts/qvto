@@ -28,6 +28,7 @@ import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.qvt.oml.compiler.CompilerMessages;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilationResult;
+import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.osgi.util.NLS;
 import org.w3c.dom.Document;
@@ -63,7 +64,9 @@ public class QvtOperationalResourceImpl extends XMIResourceImpl {
             			(normalizedUri.isPlatform() ? normalizedUri.toPlatformString(true) :
             					normalizedUri.toString());
             	IFile file = WorkspaceUtils.getWorkspaceFile(uriPath);
-    			QvtCompilationResult compilationResult = QvtEngine.getInstance(file).compile(new EclipseFile(file), false, null);
+            	QvtCompilerOptions compilerOptions = new QvtCompilerOptions();
+            	compilerOptions.setGenerateCompletionData(false);
+    			QvtCompilationResult compilationResult = QvtEngine.getInstance(file).compile(new EclipseFile(file), compilerOptions, null);
 				fillCompilationDiagnostic(compilationResult, uriPath);
 
 				if (compilationResult.getModule().getModule() == null) {
