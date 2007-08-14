@@ -50,6 +50,9 @@ public class ModelTypeMetamodelsAdapter extends AbstractGenericAdapter<ModelType
     }
 
     public static List<EPackage> getMetamodels(EObject modelType) {
+    	if (modelType == null) {
+    		return Collections.emptyList();
+    	}
     	ModelTypeMetamodelsAdapter adapter = (ModelTypeMetamodelsAdapter) EcoreUtil.getAdapter(modelType.eAdapters(),
     			ModelTypeMetamodelsAdapter.class);
     	if (adapter == null) {

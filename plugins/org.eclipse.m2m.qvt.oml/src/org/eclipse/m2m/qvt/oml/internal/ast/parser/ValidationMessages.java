@@ -71,6 +71,7 @@ public final class ValidationMessages extends NLS {
 	public static String unresolvedNameError;
 	public static String inputParameterModificationError;
 	public static String UnknownClassifierType;
+	public static String UnknownClassifierTypeInModelType;
 	public static String invalidPropertyReferenceError;
 	public static String objectExpressionExpectedError;
 	public static String ConfigPropertyMustHaveType;

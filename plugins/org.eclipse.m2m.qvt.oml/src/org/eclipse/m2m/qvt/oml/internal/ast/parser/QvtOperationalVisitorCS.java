@@ -90,6 +90,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ResolveInExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.StatementCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.TransformationHeaderCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.TypeSpecCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.VariableInitializationCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.WhileExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.adapters.CSTBindingUtil;
@@ -153,6 +154,45 @@ public class QvtOperationalVisitorCS
 					typeCS);
 		}
 		return type;
+	}
+
+	private EClassifier visitTypeCSInModelType(TypeSpecCS typeSpecCS, ModelType modelType,
+			QvtOperationalEnv env) throws SemanticException {
+		env.setPreferredModelType(modelType);
+		EClassifier type = null;
+		try {
+			type = typeCS(typeSpecCS.getTypeCS(), env);
+			if (type == null) {
+				env.reportError(NLS.bind(ValidationMessages.UnknownClassifierTypeInModelType, new Object[] {
+						QvtOperationalParserUtil.getStringRepresentation(typeSpecCS.getTypeCS()), modelType.getName()}),
+						typeSpecCS);
+			}
+		}
+		finally {
+			env.setPreferredModelType(null);
+		}
+		return type;
+	}
+
+	private class TypeSpecPair {
+		public EClassifier myType;
+		public ModelParameter myExtent;
+	}
+	private TypeSpecPair visitTypeSpecCS(TypeSpecCS typeSpecCS, DirectionKind directionKind,
+			QvtOperationalEnv env) throws SemanticException {
+		TypeSpecPair result = new TypeSpecPair();
+		
+		if (typeSpecCS.getSimpleNameCS() != null) {
+			result.myExtent = env.lookupModelParameter(typeSpecCS.getSimpleNameCS(), directionKind);
+			if (result.myExtent != null && result.myExtent.getEType() instanceof ModelType) {
+				result.myType = visitTypeCSInModelType(typeSpecCS, (ModelType) result.myExtent.getEType(), env);
+				return result;
+			}
+		}
+
+		result.myType = visitTypeCS(typeSpecCS.getTypeCS(), env);
+
+		return result;
 	}
 
 	private String visitLiteralExpCS(StringLiteralExpCS stringLiteralExpCS, QvtOperationalEnv env)
@@ -350,16 +390,17 @@ public class QvtOperationalVisitorCS
 	}
 
 	private ObjectExp visitOutExpCS(OutExpCS outExpCS, QvtOperationalEnv env) throws SemanticException {
-		TypeCS typeCS = getOutExpCSType(outExpCS);
-		if (typeCS == null) {
+		TypeSpecCS typeSpecCS = getOutExpCSType(outExpCS);
+		if (typeSpecCS == null) {
 			env.reportError(ValidationMessages.missingTypeError, outExpCS);
 			return null;
 		}
 
-		EClassifier objectType = visitTypeCS(typeCS, env);
-		if (false == objectType instanceof EClass) {
+		TypeSpecPair objectTypeSpec = visitTypeSpecCS(typeSpecCS, DirectionKind.OUT, env);
+		if (false == objectTypeSpec.myType instanceof EClass) {
 			env.reportError(NLS.bind(ValidationMessages.nonModelTypeError,
-					new Object[] { QvtOperationalUtil.getStringRepresentation(typeCS) }), typeCS);
+					new Object[] { QvtOperationalUtil.getStringRepresentation(typeSpecCS.getTypeCS()) }),
+					typeSpecCS.getTypeCS());
 			return null;
 		}
 
@@ -369,14 +410,10 @@ public class QvtOperationalVisitorCS
 		if (outExpCS.getSimpleNameCS() != null) {
 			objectExp.setName(outExpCS.getSimpleNameCS().getValue());
 		}
-		objectExp.setType(objectType);
-		if (outExpCS.getTypeSpecCS() != null && outExpCS.getTypeSpecCS().getSimpleNameCS() != null) {
-			ModelParameter modelParam = env.lookupModelParameter(
-					outExpCS.getTypeSpecCS().getSimpleNameCS(), DirectionKind.OUT);
-			objectExp.setReferredObject(modelParam);
-		}
+		objectExp.setType(objectTypeSpec.myType);
+		objectExp.setReferredObject(objectTypeSpec.myExtent);
 		if (objectExp.getReferredObject() == null) {
-			objectExp.setReferredObject(env.resolveModelParameter(objectType, DirectionKind.OUT));
+			objectExp.setReferredObject(env.resolveModelParameter(objectTypeSpec.myType, DirectionKind.OUT));
 		}
 
 		for (OCLExpressionCS expCS : outExpCS.getExpressions()) {
@@ -418,8 +455,8 @@ public class QvtOperationalVisitorCS
 		EObject eParent = propCS.eContainer();
 		if (eParent instanceof OutExpCS) {
 			OutExpCS outExpCS = (OutExpCS) eParent;
-			TypeCS typeCS = getOutExpCSType(outExpCS);
-			outType = visitTypeCS(typeCS, env);
+			TypeSpecCS typeSpecCS = getOutExpCSType(outExpCS);
+			outType = visitTypeSpecCS(typeSpecCS, DirectionKind.OUT, env).myType;
 		}
 
 		SimpleNameCS variableName = propCS.getSimpleNameCS();
@@ -650,7 +687,6 @@ public class QvtOperationalVisitorCS
 			if (type == null) {
 				env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_transfParamWrongType,
 						new Object[] { }), paramCS.getTypeSpecCS().getTypeCS());
-				type = env.getOCLStandardLibrary().getOclVoid();
 			}
 
 			ModelParameter varParam = ExpressionsFactory.eINSTANCE.createModelParameter();
@@ -1073,17 +1109,15 @@ public class QvtOperationalVisitorCS
 			contextType = env.getOCLStandardLibrary().getOclVoid();
 		}
 
-		EClassifier returnType;
+		TypeSpecPair returnTypeSpec;
 		if (mappingDeclarationCS.getReturnType() != null) {
-			returnType = visitTypeCS(mappingDeclarationCS.getReturnType().getTypeCS(), env);
-			if (returnType == null) {
-				env.reportError(NLS.bind(ValidationMessages.UnknownClassifierType, new Object[] {
-						QvtOperationalParserUtil.getStringRepresentation(mappingDeclarationCS.getReturnType().getTypeCS())}),
-						mappingDeclarationCS.getReturnType());
-				returnType = env.getOCLStandardLibrary().getOclVoid();
+			returnTypeSpec = visitTypeSpecCS(mappingDeclarationCS.getReturnType(), DirectionKind.OUT, env);
+			if (returnTypeSpec.myType == null) {
+				returnTypeSpec.myType = env.getOCLStandardLibrary().getOclVoid();
 			}
 		} else {
-			returnType = env.getOCLStandardLibrary().getOclVoid();
+			returnTypeSpec = new TypeSpecPair();
+			returnTypeSpec.myType = env.getOCLStandardLibrary().getOclVoid();
 		}
 
 		List<VarParameter> params = new ArrayList<VarParameter>();
@@ -1094,7 +1128,7 @@ public class QvtOperationalVisitorCS
 				return false;
 			}
 
-			QvtOperationalParserUtil.validateNameClashing(param.getName(), returnType, contextType, env,
+			QvtOperationalParserUtil.validateNameClashing(param.getName(), returnTypeSpec.myType, contextType, env,
 					mappingDeclarationCS);
 
 			params.add(param);
@@ -1120,20 +1154,15 @@ public class QvtOperationalVisitorCS
 		}
 
 		MappingParameter varResult = ExpressionsFactory.eINSTANCE.createMappingParameter();
-		varResult.setEType(returnType);
+		varResult.setEType(returnTypeSpec.myType);
+		varResult.setExtent(returnTypeSpec.myExtent);
 		varResult.setKind(DirectionKind.OUT);
 		if (mappingDeclarationCS.getReturnType() != null) {
 			varResult.setStartPosition(mappingDeclarationCS.getReturnType().getStartOffset());
 			varResult.setEndPosition(mappingDeclarationCS.getReturnType().getEndOffset());
-
-			if (mappingDeclarationCS.getReturnType().getSimpleNameCS() != null) {
-				ModelParameter modelParam = env.lookupModelParameter(
-						mappingDeclarationCS.getReturnType().getSimpleNameCS(), varResult.getKind());
-				varResult.setExtent(modelParam);
-			}
 		}
 		if (varResult.getExtent() == null) {
-			varResult.setExtent(env.resolveModelParameter(returnType, varResult.getKind()));
+			varResult.setExtent(env.resolveModelParameter(returnTypeSpec.myType, varResult.getKind()));
 		}
 
 		operation.setStartPosition(mappingDeclarationCS.getStartOffset());
@@ -1145,7 +1174,7 @@ public class QvtOperationalVisitorCS
 		operation.setIsBlackbox(mappingDeclarationCS.isBlackBox());
 		
 		if (operation.getResult().size() == 1) {
-			operation.setEType(returnType);
+			operation.setEType(returnTypeSpec.myType);
 		}
 		else {
 			// TODO : create TupleType
@@ -1228,32 +1257,22 @@ public class QvtOperationalVisitorCS
 
 	private VarParameter visitParameterDeclarationCS(ParameterDeclarationCS paramCS, QvtOperationalEnv env,
 			boolean isOutAllowed) throws SemanticException {
-		EClassifier type = visitTypeCS(paramCS.getTypeSpecCS().getTypeCS(), env);
-		if (type == null) {
-			type = env.getOCLStandardLibrary().getOclVoid();
+		DirectionKind directionKind = (DirectionKind) ExpressionsFactory.eINSTANCE.createFromString(
+				ExpressionsPackage.eINSTANCE.getDirectionKind(), paramCS.getDirectionKind().getLiteral());
+		TypeSpecPair typeSpec = visitTypeSpecCS(paramCS.getTypeSpecCS(), directionKind, env);
+		if (typeSpec.myType == null) {
+			typeSpec.myType = env.getOCLStandardLibrary().getOclVoid();
 		}
 
 		MappingParameter varParam = ExpressionsFactory.eINSTANCE.createMappingParameter();
 		varParam.setStartPosition(paramCS.getStartOffset());
 		varParam.setEndPosition(paramCS.getEndOffset());
 		varParam.setName(paramCS.getSimpleNameCS().getValue());
-		varParam.setEType(type);
-		varParam.setKind((DirectionKind) ExpressionsFactory.eINSTANCE.createFromString(
-				ExpressionsPackage.eINSTANCE.getDirectionKind(), paramCS.getDirectionKind().getLiteral()));
-		if (paramCS.getTypeSpecCS().getSimpleNameCS() != null) {
-			ModelParameter modelParam = env.lookupModelParameter(paramCS.getTypeSpecCS().getSimpleNameCS(), varParam.getKind());
-			if (modelParam != null) {
-//				type = visitTypeCSInModelType(paramCS.getTypeSpecCS().getTypeCS(),
-//						(ModelType) modelParam.getEType(), env);
-//				if (type == null) {
-//					type = env.getOCLStandardLibrary().getOclVoid();
-//				}
-//				varParam.setEType(type);
-			}
-			varParam.setExtent(modelParam);
-		}
+		varParam.setEType(typeSpec.myType);
+		varParam.setExtent(typeSpec.myExtent);
+		varParam.setKind(directionKind);
 		if (varParam.getExtent() == null) {
-			varParam.setExtent(env.resolveModelParameter(type, varParam.getKind()));
+			varParam.setExtent(env.resolveModelParameter(typeSpec.myType, directionKind));
 		}
 
 		if (!isOutAllowed && varParam.getKind() == DirectionKind.OUT) {
@@ -1718,14 +1737,14 @@ public class QvtOperationalVisitorCS
 		return true;
 	}
 	
-	private static TypeCS getOutExpCSType(OutExpCS outExpCS) {
+	private static TypeSpecCS getOutExpCSType(OutExpCS outExpCS) {
 		if (outExpCS.getTypeSpecCS() != null) {
-			return outExpCS.getTypeSpecCS().getTypeCS();
+			return outExpCS.getTypeSpecCS();
 		}
 		if ((outExpCS.eContainer() instanceof MappingBodyCS)
 				&& (outExpCS.eContainer().eContainer() instanceof MappingRuleCS)) {
 			MappingRuleCS mappingRuleCS = (MappingRuleCS) outExpCS.eContainer().eContainer();
-			return mappingRuleCS.getMappingDeclarationCS().getReturnType().getTypeCS();
+			return mappingRuleCS.getMappingDeclarationCS().getReturnType();
 		}
 		return null;
 	}

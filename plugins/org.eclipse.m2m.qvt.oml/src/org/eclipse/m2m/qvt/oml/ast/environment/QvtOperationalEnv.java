@@ -460,6 +460,10 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 			}
 		}
 		
+		if (myPreferredModelType != null) {
+			return doLookupModeltypeClassifier(myPreferredModelType, names);
+		}
+		
 		return super.lookupClassifier(names);
 	}
 	
@@ -470,6 +474,9 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 
 
 	private EClassifier doLookupModeltypeClassifier(ModelType modelType, List<String> path) {
+		if (myPreferredModelType != null && myPreferredModelType != modelType) {
+			return null;
+		}
 		EPackage oldContext = super.getContextPackage();
 		EClassifier lookupClassifier = null;
 		List<EPackage> metamodels = ModelTypeMetamodelsAdapter.getMetamodels(modelType);
@@ -488,6 +495,14 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 		return lookupClassifier;
 	}
 	
+	/**
+	 * Preferred model type influence overrode {@link #lookupPackage(List)} and {@link #lookupClassifier(List)}
+	 * methods
+	 * @param modelType
+	 */
+	public void setPreferredModelType(ModelType modelType) {
+		myPreferredModelType = modelType;
+	}
 
 	public EOperation defineImperativeOperation(ImperativeOperation operation, boolean isMappingOperation,
 			boolean isCheckDuplicates) {
@@ -648,6 +663,7 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 	private boolean myErrorRecordFlag;
 
 	private final Map<String, ModelType> myModelTypeRegistry;
+	private ModelType myPreferredModelType;
 	private List<Variable<EClassifier, EParameter>> myModelParameters = Collections.emptyList();
 	
 	private final EPackage.Registry ePackageRegistry;
