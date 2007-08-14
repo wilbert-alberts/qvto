@@ -100,19 +100,28 @@ public class QvtBuilderConfig {
             throw new IllegalArgumentException(NLS.bind(Messages.QvtBuilderConfig_InvalidContainer, container.getFullPath()));
         }
 
-        if(myCommand == null) {
-        	try { 
-        		IProjectDescription pd = myProject.getProject().getDescription();
-				NatureUtils.addBuilders(pd, new String[] { QvtBuilder.ID }, new String[0]);
-				myCommand = NatureUtils.findCommand(pd.getBuildSpec(), QvtBuilder.ID); 
-			} catch (CoreException e) {
-				QvtPlugin.log(e.getStatus());
-			}
-        }
-        
-        if(myCommand != null) {
-        	setBuildCommandArgument(SRC_CONTAINER, getPathString(container));
-        }
+    	try { 
+    		IProjectDescription pd = myProject.getProject().getDescription();
+			NatureUtils.addBuilders(pd, new String[] { QvtBuilder.ID }, new String[0]);
+			ICommand[] buildSpec = pd.getBuildSpec();
+			
+	        if(myCommand == null) {				
+	        	myCommand = NatureUtils.findCommand(buildSpec, QvtBuilder.ID);
+	        }		        	
+	        if(myCommand != null) {		        	
+	        	setBuildCommandArgument(SRC_CONTAINER, getPathString(container));
+	        	for (int i = 0; i < buildSpec.length; i++) {
+					if(QvtBuilder.ID.equals(buildSpec[i].getBuilderName())) {
+						buildSpec[i] = myCommand;
+					}
+				}
+	        	pd.setBuildSpec(buildSpec);
+	        	
+	        }
+	        myProject.getProject().setDescription(pd, null);
+		} catch (CoreException e) {
+			QvtPlugin.log(e.getStatus());
+		}
     }
     
     public IContainer[] getQvtContainers() {
