@@ -46,10 +46,9 @@ public class TransformationNatureImpl implements TransformationNature {
 				TransformationNatureConfigParticipant participant = configParticipants[i];
 				participant.configure(description);
 			}
-
-        	setupDefaultSourceContainer();
         	
         	project.setDescription(description, null);
+        	setupDefaultSourceContainer();        	
         }
     }
     
