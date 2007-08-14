@@ -23,7 +23,7 @@ import org.eclipse.m2m.qvt.oml.ui.QvtPluginImages;
 public class NewQVTTransformationWizard extends AbstractNewQVTElementWizard {
  
 	private NewQvtTransformationCreationPage fNewQvtModulePage;
-	private boolean fOpenInEditor = false;
+	private boolean fOpenInEditor = true;
 	
 	public NewQVTTransformationWizard() {
     	setWindowTitle(Messages.NewQVTTransformationWizard_Title);//$NON-NLS-1$
