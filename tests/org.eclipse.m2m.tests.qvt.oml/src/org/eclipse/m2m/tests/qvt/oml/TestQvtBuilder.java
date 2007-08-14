@@ -20,6 +20,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.m2m.internal.qvt.oml.common.nature.TransformationNature;
+import org.eclipse.m2m.qvt.oml.builder.QvtBuilderConfig;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
@@ -36,6 +37,8 @@ public class TestQvtBuilder extends TestCase {
         
 		myProject = new TestProject("BuilderTest", new String[] {TransformationNature.ID}); //$NON-NLS-1$
         myProject.convertToPlugin();
+        // set source folder explicitly to project, as the default is set to transformations folder
+        QvtBuilderConfig.getConfig(myProject.getProject()).setSourceContainer(myProject.getProject());
         
 		myProject.addPluginImports(new String[] {
                 "org.eclipse.emf.ecore", //$NON-NLS-1$
