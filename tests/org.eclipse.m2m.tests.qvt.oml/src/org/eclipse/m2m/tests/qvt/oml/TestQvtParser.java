@@ -15,7 +15,6 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,9 +36,9 @@ import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
-import org.eclipse.m2m.qvt.oml.common.io.eclipse.WorkspaceMetamodelRegistryProvider;
-import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.qvt.oml.compiler.QvtCompilationResult;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.tests.qvt.oml.ParserTests.TestData;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 
@@ -95,7 +94,7 @@ public class TestQvtParser extends TestCase {
 		assertTrue("Invalid folder " + folder, folder.exists() && folder.isDirectory()); //$NON-NLS-1$
 		
 		//System.err.println("testParsing: " + folder.getName()); //$NON-NLS-1$
-		CompiledModule[] compiled = compile(folder);
+		QvtCompilationResult[] compiled = compile(folder);
 		
 		assertTrue("No results", compiled.length > 0); //$NON-NLS-1$
 		List allErrors = getAllErrors(compiled);
@@ -128,23 +127,24 @@ public class TestQvtParser extends TestCase {
         private final List myExceptions;
     }
     
-	private List getAllErrors(CompiledModule[] compiled) {
+	private List getAllErrors(QvtCompilationResult[] compiled) {
 		List<QvtMessage> errors = new ArrayList<QvtMessage>();
-		for (CompiledModule module : compiled) {
-			TransformationUtil.getErrors(module, errors);
+		for (QvtCompilationResult compilationResult : compiled) {
+			TransformationUtil.getErrors(compilationResult.getModule(), errors);
 		}
 
 		return errors;
 	}
     
-	private CompiledModule[] compile(File folder) throws Exception {
+	private QvtCompilationResult[] compile(File folder) throws Exception {
 		final String topName = folder.getName() + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT;
 		File topFile = getFile(folder, topName);
 		QvtCompiler compiler = new QvtCompiler(
 				new EclipseImportResolver(new IContainer[] {getIFolder(folder)}));
 		IFile topIFile = getIFile(topFile);
-		CompiledModule[] compiled = compiler.compile(new CFile[] {new EclipseFile(topIFile)}, new NullProgressMonitor());
-		return compiled;
+        QvtCompilerOptions options = new QvtCompilerOptions();
+        options.setGenerateCompletionData(false);
+		return compiler.compile(new CFile[] {new EclipseFile(topIFile)}, options, new NullProgressMonitor());
 	}
 	
 	private static File getFile(File folder, final String expectedName) {

@@ -27,13 +27,13 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.qvt.oml.QvtMessage;
 import org.eclipse.m2m.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.qvt.oml.common.cp.ClasspathUtil;
-import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.common.io.CFolder;
 import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseContainer;
 import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.qvt.oml.common.util.CompositeClassLoader;
 import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.qvt.oml.library.IContext;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
@@ -65,7 +65,9 @@ public class TestQvtProjectTransformation extends TestTransformation {
             try {
                 QvtCompiler compiler = new QvtCompiler(
                 		new EclipseImportResolver(new IContainer[] {getProject()}));
-                CompiledModule rootModule = compiler.compile(new CFile[] {new EclipseFile(transformation)}, null)[0];
+                QvtCompilerOptions options = new QvtCompilerOptions();
+                options.setGenerateCompletionData(false);
+                CompiledModule rootModule = compiler.compile(new EclipseFile(transformation), options, null).getModule();
                 List<QvtMessage> errors = new ArrayList<QvtMessage>();
                 TransformationUtil.getErrors(rootModule, errors);
                 assertEquals("QVT compilation failed: " + errors, 0, errors.size()); //$NON-NLS-1$
