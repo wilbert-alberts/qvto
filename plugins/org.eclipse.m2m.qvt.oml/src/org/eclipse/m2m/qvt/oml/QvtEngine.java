@@ -59,17 +59,19 @@ public class QvtEngine {
 	}
     
 	public CompiledModule compile(IFile file, IProgressMonitor monitor) throws MdaException {
-		return compile(new IFile[] { file }, monitor)[0];
+		return compile(new IFile[] { file }, monitor)[0].getModule();
 	}
 	
-    public CompiledModule[] compile(IFile[] files, IProgressMonitor monitor) throws MdaException {
+    public QvtCompilationResult[] compile(IFile[] files, IProgressMonitor monitor) throws MdaException {
 		EclipseFile[] sources = new EclipseFile[files.length];
 		for (int i = 0; i < sources.length; i++) {
 			sources[i] = new EclipseFile(files[i]);
 		}
 		// TODO: remove this reset as soon as timestamps are finished
 		reset();
-		return myCompiler.compile(sources, monitor);
+        QvtCompilerOptions options = new QvtCompilerOptions();
+        options.setGenerateCompletionData(false);
+		return myCompiler.compile(sources, options, monitor);
 	}
 	
 	public QvtCompiler getCompiler() {

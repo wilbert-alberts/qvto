@@ -42,6 +42,7 @@ import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.qvt.oml.compiler.QvtCompilationResult;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.qvt.oml.emf.util.urimap.MetamodelURIMappingHelper;
 import org.eclipse.ui.texteditor.MarkerUtilities;
@@ -194,7 +195,7 @@ public class QvtBuilder extends IncrementalProjectBuilder {
     
     private void rebuildAll(IProgressMonitor monitor) throws CoreException {
         IFile[] files = collectFiles();
-        CompiledModule[] modules;
+        QvtCompilationResult[] modules;
 		try {
 			modules = QvtEngine.getInstance(getProject()).compile(files, null);
             QvtEngine.getInstance(getProject()).getCompiler(); // TODO
@@ -205,7 +206,7 @@ public class QvtBuilder extends IncrementalProjectBuilder {
 		
         List<CompiledModule> cleanModules = new ArrayList<CompiledModule>();
         for (int i = 0; i < modules.length; i++) {
-            CompiledModule module = modules[i];
+            CompiledModule module = modules[i].getModule();
             QvtMessage[] messages = module.getMessages();
             EclipseFile source = (EclipseFile) module.getSource();
             IFile curFile = source.getFile();

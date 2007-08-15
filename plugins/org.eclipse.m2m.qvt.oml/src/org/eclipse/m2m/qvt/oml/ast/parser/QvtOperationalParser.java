@@ -55,7 +55,7 @@ public class QvtOperationalParser {
 	public QvtOperationalParser() {
 	}
 
-	public MappingModuleCS parse(final Reader is, final String name) throws IOException {
+	public MappingModuleCS parse(final Reader is, final String name) {
 		MappingModuleCS result = null;
 		QvtOpLexer lexer = new QvtOpLexer();
 		myEnv = new QvtOperationalEnvFactory().createEnvironment(null, null, null);

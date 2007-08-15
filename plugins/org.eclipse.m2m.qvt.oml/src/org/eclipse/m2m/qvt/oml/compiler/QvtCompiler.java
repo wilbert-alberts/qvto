@@ -89,32 +89,18 @@ public class QvtCompiler {
 	public ResourceSet getResourceSet() {
 		return resourceSet;
 	}
-	    
-    public QvtCompilationResult compile(final CFile source, final QvtCompilerOptions options,
-            IProgressMonitor monitor) throws MdaException {
-        if (monitor == null) {
-            monitor = new NullProgressMonitor();
-        }
-        
-        ParsedModuleCS parsed = null;
-        try {
-            parsed = parse(source);
-        } catch (IOException e) {
-            throw new MdaException(e.getMessage(), e); 
-        }
-        
-        Map<ParsedModuleCS, List<ParsedModuleCS>> removedCyclicImports =
-        	new IdentityHashMap<ParsedModuleCS, List<ParsedModuleCS>>();
-        
-        checkRemoveCycles(parsed, removedCyclicImports);
-        
-        QvtCompilationResult result = analyse(parsed, options);
-        new ImportCompiler(removedCyclicImports, options).compileImports(result.getModule(), parsed);
 
-        return result;
+	/**
+	 * Convenience method for compile(CFile[] sources, QvtCompilerOptions options, IProgressMonitor monitor)
+	 */
+    public QvtCompilationResult compile(CFile source, QvtCompilerOptions options, IProgressMonitor monitor) throws MdaException {
+        return compile(new CFile[] {source}, options, monitor)[0];
     }
-        
-    public CompiledModule[] compile(CFile[] sources, IProgressMonitor monitor) throws MdaException {
+
+    /**
+     * The main compilation method - the common entry point to the compilation 
+     */
+	public QvtCompilationResult[] compile(CFile[] sources, QvtCompilerOptions options, IProgressMonitor monitor) throws MdaException {
         if (monitor == null) {
             monitor = new NullProgressMonitor();
         }
@@ -136,17 +122,15 @@ public class QvtCompiler {
             checkRemoveCycles(parsed, removedImportCycles);
         }
 
-        QvtCompilerOptions options = new QvtCompilerOptions();
-        options.setGenerateCompletionData(false);
         ImportCompiler importCompiler = new ImportCompiler(removedImportCycles, options);
-        List<CompiledModule> mmList = new ArrayList<CompiledModule>(); 
+        List<QvtCompilationResult> resultList = new ArrayList<QvtCompilationResult>(); 
         for (ParsedModuleCS parsed : mmaList) {
-        	CompiledModule compiledModule = analyse(parsed, options).getModule();
-            mmList.add(compiledModule);
-        	importCompiler.compileImports(compiledModule, parsed);
+        	QvtCompilationResult qvtCompilationResult = analyse(parsed, options);
+            resultList.add(qvtCompilationResult);
+        	importCompiler.compileImports(qvtCompilationResult.getModule(), parsed);
         }
         
-        return (CompiledModule[])mmList.toArray(new CompiledModule[mmList.size()]);
+        return resultList.toArray(new QvtCompilationResult[resultList.size()]);
     }
     
     private void checkRemoveCycles(ParsedModuleCS module, Map<ParsedModuleCS, List<ParsedModuleCS>> removedCycles) {

@@ -391,18 +391,22 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         getContext().processDeferredTasks();
 
         QvtEvaluationResult evalResult = getOperationalEvaluationEnv().createEvaluationResult();
-        if (evalResult.getModelExtents().isEmpty() && result instanceof EObject) {
-        	// compatibility reason
-            List<Resource> extents = evalResult.getModelExtents();
-        	if (((EObject) result).eResource() != null) {
-        		extents.add(((EObject) result).eResource());
-        	}
-        	else {
-        		Resource resource = new ResourceSetImpl().createResource(URI.createURI("/")); //$NON-NLS-1$
-        		resource.getContents().add((EObject) result);
-        		extents.add(resource);
-        	}
-        	evalResult = new QvtEvaluationResult(extents);
+        if (evalResult.getModelExtents().isEmpty()) {
+            if (result instanceof EObject) {
+                // compatibility reason
+                List<Resource> extents = evalResult.getModelExtents();
+                if (((EObject) result).eResource() != null) {
+                    extents.add(((EObject) result).eResource());
+                }
+                else {
+                    Resource resource = new ResourceSetImpl().createResource(URI.createURI("/")); //$NON-NLS-1$
+                    resource.getContents().add((EObject) result);
+                    extents.add(resource);
+                }
+                evalResult = new QvtEvaluationResult(extents);
+            } else {
+                return result;
+            }
         }
         return evalResult;
     }

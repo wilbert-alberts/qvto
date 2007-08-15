@@ -52,6 +52,7 @@ import org.eclipse.m2m.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.qvt.oml.expressions.ObjectExp;
+import org.eclipse.m2m.qvt.oml.expressions.OperationBody;
 import org.eclipse.m2m.qvt.oml.expressions.PackageRef;
 import org.eclipse.m2m.qvt.oml.expressions.Property;
 import org.eclipse.m2m.qvt.oml.expressions.Rename;
@@ -210,7 +211,7 @@ public class QvtOperationalVisitorCS
 	}
 
 	@Override
-	protected OCLExpression<EClassifier> oclExpressionCS(
+	public OCLExpression<EClassifier> oclExpressionCS(
 			OCLExpressionCS oclExpressionCS,
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env)
 			throws SemanticException {
@@ -981,6 +982,11 @@ public class QvtOperationalVisitorCS
 		VarParameter operationResult = (operation.getResult().isEmpty() ? null : operation.getResult().get(0));
 		QvtOperationalEnv newEnv = env.createOperationEnvironment(operation.getContext());
 		CSTBindingUtil.bindQvtOperationalEnv(methodCS, newEnv);
+		
+        if(myCompilerOptions.isGenerateCompletionData()) {          
+            ASTBindingHelper.createCST2ASTBinding(methodCS, operation, newEnv);
+        }
+        
 		if (operationResult != null && !(operationResult instanceof VoidType)) {
 			Variable<EClassifier, EParameter> var = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();
 			var.setName(Environment.RESULT_VARIABLE_NAME);
@@ -1084,7 +1090,7 @@ public class QvtOperationalVisitorCS
 			}
 		}
 
-		MappingBody body = ExpressionsFactory.eINSTANCE.createMappingBody();
+		OperationBody body = ExpressionsFactory.eINSTANCE.createOperationBody();
 		body.setStartPosition(methodCS.getMappingDeclarationCS().getEndOffset());
 		body.setEndPosition(methodCS.getEndOffset());
 		body.getContent().addAll(expressions);
