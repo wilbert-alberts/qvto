@@ -521,11 +521,11 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 	public void setPreferredExtentDir(DirectionKind directionKind) {
 		for (Variable<EClassifier, EParameter> var : myModelParameters) {
 			ModelParameter modelParam = (ModelParameter) var.getRepresentedParameter();
-			if (directionKind == DirectionKind.IN) {
-				if (modelParam.getKind() == DirectionKind.OUT) {
-					continue;
-				}
-			}
+//			if (directionKind == DirectionKind.IN) {
+//				if (modelParam.getKind() == DirectionKind.OUT) {
+//					continue;
+//				}
+//			}
 			if (directionKind == DirectionKind.OUT) {
 				if (modelParam.getKind() == DirectionKind.IN) {
 					continue;
