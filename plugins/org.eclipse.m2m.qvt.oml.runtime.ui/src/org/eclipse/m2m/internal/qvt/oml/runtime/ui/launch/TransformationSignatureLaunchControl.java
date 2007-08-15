@@ -29,6 +29,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.IUriGroup;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.TransformationControls;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
+import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtValidator;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
@@ -69,7 +70,7 @@ public class TransformationSignatureLaunchControl extends ScrolledComposite {
 		List<TargetUriData> oldUriData = new ArrayList<TargetUriData>();
 		Control content = getContent();
 		if (content != null) {
-			for (Map.Entry<IModelParameterInfo, IUriGroup> entry : myParamGroups.entrySet()) {
+			for (Map.Entry<ModelParameterInfo, IUriGroup> entry : myParamGroups.entrySet()) {
 				oldUriData.add(entry.getValue().getUriData());
 	    	}
 			content.dispose();
@@ -81,7 +82,7 @@ public class TransformationSignatureLaunchControl extends ScrolledComposite {
 		createContents(area, listeners);
 		
 		Iterator<TargetUriData> itrOldUriData = oldUriData.iterator();
-		for (Map.Entry<IModelParameterInfo, IUriGroup> entry : myParamGroups.entrySet()) {
+		for (Map.Entry<ModelParameterInfo, IUriGroup> entry : myParamGroups.entrySet()) {
 			if (!itrOldUriData.hasNext()) {
 				break;
 			}
@@ -96,14 +97,15 @@ public class TransformationSignatureLaunchControl extends ScrolledComposite {
 	}
 
 	public IStatus validate(String moduleName, Shell shell) {
-		for (Map.Entry<IModelParameterInfo, IUriGroup> entry : myParamGroups.entrySet()) {
-			entry.getValue().getValidator().update(moduleName, entry.getKey(), shell);
+		for (Map.Entry<ModelParameterInfo, IUriGroup> entry : myParamGroups.entrySet()) {
+			entry.getValue().update(moduleName, entry.getKey(), shell);
 		}
 		
 		IStatus result = StatusUtil.makeOkStatus();
-		for (Map.Entry<IModelParameterInfo, IUriGroup> entry : myParamGroups.entrySet()) {
+		for (Map.Entry<ModelParameterInfo, IUriGroup> entry : myParamGroups.entrySet()) {
 			try {
-				IStatus status = entry.getValue().getValidator().validate(entry.getKey());
+				IStatus status = QvtValidator.validateTransformationParameter(
+						entry.getKey().getTransfParam(), entry.getValue().getUriData());
 		        if (StatusUtil.isError(status)) {
 		        	return status;
 		        }
@@ -121,7 +123,7 @@ public class TransformationSignatureLaunchControl extends ScrolledComposite {
 	public void initializeFrom(ILaunchConfiguration configuration) throws CoreException {
 		List<TargetUriData> targetUris = QvtLaunchUtil.getTargetUris(configuration);
     	int i = 0;
-		for (Map.Entry<IModelParameterInfo, IUriGroup> entry : myParamGroups.entrySet()) {
+		for (Map.Entry<ModelParameterInfo, IUriGroup> entry : myParamGroups.entrySet()) {
 			if (i >= targetUris.size()) {
 				break;
 			}
@@ -133,14 +135,14 @@ public class TransformationSignatureLaunchControl extends ScrolledComposite {
 	public void performApply(ILaunchConfigurationWorkingCopy configuration) {
     	configuration.setAttribute(IQvtLaunchConstants.ELEM_COUNT, myParamGroups.size());
     	int i = 0;
-		for (Map.Entry<IModelParameterInfo, IUriGroup> entry : myParamGroups.entrySet()) {
+		for (Map.Entry<ModelParameterInfo, IUriGroup> entry : myParamGroups.entrySet()) {
     		QvtLaunchUtil.saveTargetUriData(configuration, entry.getValue().getUriData(), i+1);
     		i++;
     	}
 	}
 	
 	public String getTraceName() {
-		for (Map.Entry<IModelParameterInfo, IUriGroup> entry : myParamGroups.entrySet()) {
+		for (Map.Entry<ModelParameterInfo, IUriGroup> entry : myParamGroups.entrySet()) {
 			if (entry.getKey().isInOutParameter() || entry.getKey().isOutParameter()) {
 				return entry.getValue().getUriData().getUriString();
 			}
@@ -150,8 +152,8 @@ public class TransformationSignatureLaunchControl extends ScrolledComposite {
 	
 	private void createContents(Composite parent, List<IUriGroup.IModifyListener> listeners) {
         try {
-        	myParamGroups = new LinkedHashMap<IModelParameterInfo, IUriGroup>();
-			for (IModelParameterInfo paramInfo : getTransfParameters()) {
+        	myParamGroups = new LinkedHashMap<ModelParameterInfo, IUriGroup>();
+			for (ModelParameterInfo paramInfo : getTransfParameters()) {
 				IUriGroup uriGroup = TransformationControls.createUriGroup(parent, paramInfo);
 				myParamGroups.put(paramInfo, uriGroup);
 				for (IUriGroup.IModifyListener listener : listeners) {
@@ -175,69 +177,79 @@ public class TransformationSignatureLaunchControl extends ScrolledComposite {
         cm.setLayoutData(data);		
 	}
 	
-	private List<IModelParameterInfo> getTransfParameters() throws MdaException {
+	private List<ModelParameterInfo> getTransfParameters() throws MdaException {
 		if (myTransformation == null) {
 			return Collections.emptyList();
 		}
 		
-		List<IModelParameterInfo> modelParams = new ArrayList<IModelParameterInfo>();
+		List<ModelParameterInfo> modelParams = new ArrayList<ModelParameterInfo>();
 		for (TransformationParameter param : myTransformation.getParameters()) {
 			modelParams.add(createModelParamInfo(param));
 		}		
 		return modelParams;
 	}
 	
-	private IModelParameterInfo createModelParamInfo(final TransformationParameter param) {
-		return new IModelParameterInfo() {
-
-			public Direction getDirection() {
-				if (param.getDirectionKind() == DirectionKind.IN) {
-					return Direction.in;
-				}
-				if (param.getDirectionKind() == DirectionKind.OUT) {
-					return Direction.out;
-				}
-				return Direction.inout;
-			}
-
-			public EClassifier getEntryParamType() {
-				return param.getEntryType();
-			}
-
-			public String getEntryParamTypeName() {
-				return param.getEntryName();
-			}
-
-			public EPackage getMetamodel() {
-				List<EPackage> metamodels = param.getMetamodels();
-				return metamodels.isEmpty()? null : metamodels.get(0);
-			}
-
-			public String getModelTypeName() {
-				List<String> modelTypeNames = param.getModelTypeNames();
-				return modelTypeNames.isEmpty() ? "" : modelTypeNames.get(0); //$NON-NLS-1$
-			}
-
-			public String getName() {
-				return param.getName();
-			}
-
-			public boolean isInOutParameter() {
-				return getDirection() == Direction.inout;
-			}
-
-			public boolean isInParameter() {
-				return getDirection() == Direction.in;
-			}
-
-			public boolean isOutParameter() {
-				return getDirection() == Direction.out;
-			}
-			
-		};
+	private ModelParameterInfo createModelParamInfo(TransformationParameter param) {
+		return new ModelParameterInfo(param);
 	}
 
+	private static class ModelParameterInfo implements IModelParameterInfo {
+		ModelParameterInfo(TransformationParameter transfParam) {
+			myTransfParam = transfParam;
+		}
+		
+		TransformationParameter getTransfParam() {
+			return myTransfParam;
+		}
+		
+		public Direction getDirection() {
+			if (myTransfParam.getDirectionKind() == DirectionKind.IN) {
+				return Direction.in;
+			}
+			if (myTransfParam.getDirectionKind() == DirectionKind.OUT) {
+				return Direction.out;
+			}
+			return Direction.inout;
+		}
+
+		public EClassifier getEntryParamType() {
+			return myTransfParam.getEntryType();
+		}
+
+		public String getEntryParamTypeName() {
+			return myTransfParam.getEntryName();
+		}
+
+		public EPackage getMetamodel() {
+			List<EPackage> metamodels = myTransfParam.getMetamodels();
+			return metamodels.isEmpty()? null : metamodels.get(0);
+		}
+
+		public String getModelTypeName() {
+			List<String> modelTypeNames = myTransfParam.getModelTypeNames();
+			return modelTypeNames.isEmpty() ? "" : modelTypeNames.get(0); //$NON-NLS-1$
+		}
+
+		public String getName() {
+			return myTransfParam.getName();
+		}
+
+		public boolean isInOutParameter() {
+			return getDirection() == Direction.inout;
+		}
+
+		public boolean isInParameter() {
+			return getDirection() == Direction.in;
+		}
+
+		public boolean isOutParameter() {
+			return getDirection() == Direction.out;
+		}
+		
+		private final TransformationParameter myTransfParam;
+	}
+	
 	private QvtTransformation myTransformation;
-	private Map<IModelParameterInfo, IUriGroup> myParamGroups = Collections.emptyMap();
+	private Map<ModelParameterInfo, IUriGroup> myParamGroups = Collections.emptyMap();
 
 }
