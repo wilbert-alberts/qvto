@@ -12,7 +12,6 @@
 package org.eclipse.m2m.internal.qvt.oml.common.ui.launch;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
@@ -83,8 +82,7 @@ public class FileGroup {
     }
     
     private void fireModifiedEvent() {
-        for (Iterator it = myModifyListeners.iterator(); it.hasNext();) {
-            IModifyListener listener = (IModifyListener)it.next();
+        for (IModifyListener listener : myModifyListeners) {
             try {
                 listener.modified();
             }

@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.common.ui.launch;
 
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.qvt.oml.common.ui.IModelParameterInfo;
 import org.eclipse.swt.widgets.Shell;
@@ -29,12 +28,7 @@ public interface IUriGroup {
     void addModifyListener(IModifyListener listener);
     void removeModifyListener(IModifyListener listener);
     
-    public interface IValidator {
-    	IStatus validate(IModelParameterInfo paramInfo);
-    	void update(String moduleName, IModelParameterInfo paramInfo, Shell shell);
-    }
-    
-    IValidator getValidator();
+   	void update(String moduleName, IModelParameterInfo paramInfo, Shell shell);
 
     void initializeFrom(TargetUriData uriData);
     TargetUriData getUriData();

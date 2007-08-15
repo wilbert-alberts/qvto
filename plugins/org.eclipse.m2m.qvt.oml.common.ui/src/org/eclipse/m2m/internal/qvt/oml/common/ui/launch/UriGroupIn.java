@@ -11,20 +11,13 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.common.ui.launch;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.qvt.oml.common.ui.IModelParameterInfo;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
-import org.eclipse.m2m.qvt.oml.emf.util.StatusUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.IChooser;
 import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.IMetamodelHandler;
 import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.MetamodelHandlerManager;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -102,81 +95,16 @@ public class UriGroupIn extends BaseUriGroup {
         }
     }
 
-	public IValidator getValidator() {
-		if (myValidator == null) {
-			myValidator = new Validator();
+	public void update(String moduleName, IModelParameterInfo paramInfo, Shell shell) {
+		EClassifier classifier = paramInfo.getEntryParamType();
+		if (classifier == null) {
+			classifier = paramInfo.getMetamodel().eClass();
 		}
-		return myValidator;
-	}
-	
-	class Validator implements IValidator {
-
-		public IStatus validate(IModelParameterInfo paramInfo) {
-			if (paramInfo.getMetamodel() == null) {
-	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_EmptyInputTransfParam,
-	            		paramInfo.getName()));
-			}
-
-			if (paramInfo.getEntryParamType() != null) {
-				EClassifier classifier = paramInfo.getEntryParamType();
-
-				URI sourceUri = EmfUtil.makeUri(getText());
-		        EObject in = EmfUtil.loadModel(sourceUri, classifier.eResource() != null ? classifier.eResource().getResourceSet() : null);
-		        if (in == null) {
-		            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, getText()));
-		        }
-		        try {
-		        	in = EmfUtil.resolveSource(in, classifier);
-		        }
-		        catch (WrappedException e) {
-		            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, getText()));
-		        }
-				
-		    	if (!EmfUtil.isAssignableFrom(classifier, in.eClass()) || !classifier.isInstance(in)) {
-		            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputTypes, 
-		            		EmfUtil.getFullName(in.eClass()),
-		            		EmfUtil.getFullName(classifier)
-		            		));
-		    	}
-			}
-			else {
-				EPackage metamodel = paramInfo.getMetamodel();
-
-				URI sourceUri = EmfUtil.makeUri(getText());
-		        EObject in = EmfUtil.loadModel(sourceUri, metamodel.eResource() != null ? metamodel.eResource().getResourceSet() : null);
-		        if (in == null) {
-		            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, getText()));
-		        }
-		        try {
-		        	in = EmfUtil.resolveSource(in, metamodel);
-		        }
-		        catch (WrappedException e) {
-		            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, getText()));
-		        }
-		        
-		        if (in.eClass().eContainer() != metamodel) {
-		            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputMetamodels, 
-		            		EmfUtil.getFullName(in.eClass()),
-		            		EmfUtil.getMetamodelName(metamodel)
-		            		));
-		        }
-			}
-			
-			return StatusUtil.makeOkStatus();
-		}
-
-		public void update(String moduleName, IModelParameterInfo paramInfo, Shell shell) {
-			EClassifier classifier = paramInfo.getEntryParamType();
-			if (classifier == null) {
-				classifier = paramInfo.getMetamodel().eClass();
-			}
-			UriGroupIn.this.update(EmfUtil.getRootPackageUri(classifier), shell);
-		}
-
+		UriGroupIn.this.update(EmfUtil.getRootPackageUri(classifier), shell);
 	}
     
     private final Text myUriText;
     private final Button myBrowseButton;
     private SelectionListener myActiveListener;
-    IValidator myValidator;
+
 }

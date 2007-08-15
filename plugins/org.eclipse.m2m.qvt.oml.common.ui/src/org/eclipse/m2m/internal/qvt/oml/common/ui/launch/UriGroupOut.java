@@ -11,8 +11,6 @@
  *******************************************************************************/
  package org.eclipse.m2m.internal.qvt.oml.common.ui.launch;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
@@ -23,13 +21,10 @@ import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData.TargetType;
 import org.eclipse.m2m.qvt.oml.common.ui.IModelParameterInfo;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
-import org.eclipse.m2m.qvt.oml.emf.util.StatusUtil;
-import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.IChooser;
 import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.IDestinationChooser;
 import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.IMetamodelHandler;
 import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.MetamodelHandlerManager;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -165,10 +160,6 @@ public class UriGroupOut extends BaseUriGroup {
         }
     }
 	
-	public IValidator getValidator() {
-		return myValidator;
-	}
-
 	private void updateData() {
 		if (myUpdating) {
 			return;
@@ -180,7 +171,7 @@ public class UriGroupOut extends BaseUriGroup {
 			
 			myObject = null;
 			
-			TargetType targetType = isUriExisted(getText()) ? TargetType.EXISTING_CONTAINER : TargetType.NEW_MODEL;
+			TargetType targetType = EmfUtil.isUriExisted(getText()) ? TargetType.EXISTING_CONTAINER : TargetType.NEW_MODEL;
 			myData = new TargetUriData(targetType,
 					myUriText.getText().trim(),
 					myFeatureText.getText(),
@@ -221,22 +212,6 @@ public class UriGroupOut extends BaseUriGroup {
 		}
 	}
 	
-	private boolean isUriExisted(String textUri) {
-        URI destUri = EmfUtil.makeUri(textUri);
-        if (destUri != null) {
-        	EObject loadModel = null;
-        	try {
-        		loadModel = EmfUtil.loadModel(destUri);
-        	}
-        	catch (Exception e) {
-        	}
-            if (loadModel != null) {
-            	return true;
-            }
-        }
-        return false;
-	}
-	
 	private EObject getEObject(String oldUri, EObject oldObject) {
 		boolean sameUri = oldUri == null ? myData.getUriString() == null : oldUri.equals(myData.getUriString());
 		EObject  obj;
@@ -265,130 +240,26 @@ public class UriGroupOut extends BaseUriGroup {
 		return obj;
 	}
 	
-	private class Validator implements IValidator {
-
-		public IStatus validate(IModelParameterInfo paramInfo) {
-			if (paramInfo.getMetamodel() == null) {
-	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_EmptyInputTransfParam,
-	            		paramInfo.getName()));
-			}
-
-			EClassifier classifier = paramInfo.getEntryParamType();
-			if (classifier == null) {
-				classifier = paramInfo.getMetamodel().eClass();
-			}
-
-	        IMetamodelHandler handler = MetamodelHandlerManager.getInstance().getHandler(classifier);
-	        if (handler == null) {
-	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_UnsupportedDestination, getText()));
-	        }
-			
-            URI destUri = EmfUtil.makeUri(getText());
-            if (destUri == null) {
-                return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidTargetUri, getText()));
-            }
-            
-	        IStatus result = StatusUtil.makeOkStatus();
-	        switch(myData.getTargetType()) {
-	        case NEW_MODEL: {
-	            IFile file = org.eclipse.m2m.qvt.oml.emf.util.URIUtils.getFile(destUri);
-	            if (file != null && file.exists()) {
-	                if (result.getSeverity() < IStatus.WARNING) {
-	                	if (isUriExisted(getText())) {
-	                		result = StatusUtil.makeWarningStatus(NLS.bind(Messages.QvtValidator_DestinationExists, destUri));
-	                	}
-	                	else {
-	                		result = StatusUtil.makeWarningStatus(NLS.bind(Messages.QvtValidator_DestinationExistsNonEObject, destUri));
-	                	}
-	                }
-	            }
-	            
-	        	IStatus canSave = handler.getSaver().canSave(classifier, destUri); 
-	            if (StatusUtil.isError(canSave)) {
-	            	return canSave;
-	            }
-	            if (canSave.getSeverity() > result.getSeverity()) {
-	        		result = canSave;
-	        	}
-	            
-	            if (destUri.hasFragment()) {
-	                if (result.getSeverity() < IStatus.WARNING) {
-	                    result = StatusUtil.makeWarningStatus(NLS.bind(Messages.QvtValidator_NewDestinationHasFragment, destUri.fragment()));
-	                }
-	            }
-	            break;
-	        }
-
-	        case EXISTING_CONTAINER: {
-	        	EObject cont = EmfUtil.loadModel(destUri);
-	        	if (cont == null) {
-	                return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidTargetUri, destUri));
-	        	}
-	        	
-            	String uriPath = destUri.isFile() ? destUri.toFileString() :
-        			(destUri.isPlatform() ? destUri.toPlatformString(true) : destUri.toString());
-            	IFile file = WorkspaceUtils.getWorkspaceFile(uriPath);
-            	if (file != null && file.exists() && file.isReadOnly()) {
-	                if (result.getSeverity() < IStatus.WARNING) {
-	                	result = StatusUtil.makeWarningStatus(NLS.bind(Messages.QvtValidator_DestinationReadonly, destUri));
-	                }
-            	}
-	        	
-	        	String feature = myFeatureText.getText();
-	        	if (feature == null || feature.trim().length() == 0) {
-	                if (result.getSeverity() < IStatus.WARNING) {
-	                	result = StatusUtil.makeWarningStatus(NLS.bind(Messages.QvtValidator_DestinationExists, destUri));
-	                }
-	        	}
-	        	else {
-		        	EStructuralFeature eFeature = cont.eClass().getEStructuralFeature(feature);
-		        	if (eFeature instanceof EReference == false) {
-		                return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidFeature, feature));
-		        	}
-		        	
-		        	EReference ref = (EReference)eFeature;
-		        	if (!ref.isChangeable()) {
-		                return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidFeature, ref.getName())); 
-		        	}
-		        	
-		        	// no need for the check since always whole model extent is saved
-//		        	EClassifier refType = ref.getEType();
-//		        	if (!EmfUtil.isAssignableFrom(refType, classifier)) {
-//		                return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputTypes,
-//		                		EmfUtil.getFullName(classifier), EmfUtil.getFullName(refType)));
-//		        	}
-	        	}
-	        	
-	            break;
-	        }
-	        }
-	        
-			return result;
+	public void update(String moduleName, IModelParameterInfo paramInfo, Shell shell) {
+		EClassifier classifier = paramInfo.getEntryParamType();
+		if (classifier == null) {
+			classifier = paramInfo.getMetamodel().eClass();
 		}
-
-		public void update(String moduleName, IModelParameterInfo paramInfo, Shell shell) {
-			EClassifier classifier = paramInfo.getEntryParamType();
-			if (classifier == null) {
-				classifier = paramInfo.getMetamodel().eClass();
-			}
-	        String extension = paramInfo.getMetamodel().getName();//EmfUtil.getExtensionForResult(classifier);
-			UriGroupOut.this.update(EmfUtil.getRootPackageUri(classifier),
-					moduleName, extension, shell);
-			
-			//final EClassifier paramType = classifier; 
-			refFilter = new ReferenceSelectionDialog.IRefFilter() {
-				public boolean accept(EReference ref) {
-					return ref.isChangeable();// && EmfUtil.isAssignableFrom(ref.getEType(), paramType);
-				}
-			};
-		}
+        String extension = paramInfo.getMetamodel().getName();//EmfUtil.getExtensionForResult(classifier);
+		UriGroupOut.this.update(EmfUtil.getRootPackageUri(classifier),
+				moduleName, extension, shell);
 		
+		//final EClassifier paramType = classifier; 
+		refFilter = new ReferenceSelectionDialog.IRefFilter() {
+			public boolean accept(EReference ref) {
+				return ref.isChangeable();// && EmfUtil.isAssignableFrom(ref.getEType(), paramType);
+			}
+		};
 	}
     
 	private TargetUriData myData;
 	private boolean myUpdating;
 	private EObject myObject;
-    private final IValidator myValidator = new Validator();
 
 	private final Text myUriText;
 	private final Button myUriButton;
