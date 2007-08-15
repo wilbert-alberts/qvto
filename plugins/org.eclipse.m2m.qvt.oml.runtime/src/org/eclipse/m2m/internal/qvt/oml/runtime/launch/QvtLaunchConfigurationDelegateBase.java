@@ -45,6 +45,7 @@ import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.qvt.oml.common.launch.BaseProcess.IRunnable;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfException;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.qvt.oml.emf.util.StatusUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.IMetamodelHandler;
 import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.MetamodelHandlerManager;
@@ -109,13 +110,26 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
     }
 
     public static IStatus validate(QvtTransformation transformation, ILaunchConfiguration configuration) throws CoreException {
-        String sourceModelUri = configuration.getAttribute(IQvtLaunchConstants.SOURCE_MODEL, ""); //$NON-NLS-1$
-        TargetUriData targetData = QvtLaunchUtil.getTargetUriData(configuration);
+    	List<TargetUriData> targetUris;
+    	if (configuration.getAttributes().containsKey(IQvtLaunchConstants.SOURCE_MODEL)) {
+    		// old type configuration, used for compatibility
+    		targetUris = new ArrayList<TargetUriData>(2);
+    		targetUris.add(new TargetUriData(configuration.getAttribute(IQvtLaunchConstants.SOURCE_MODEL, ""))); //$NON-NLS-1$
+    		targetUris.add(QvtLaunchUtil.getTargetUriData(configuration));
+    	}
+    	else {
+    		targetUris = QvtLaunchUtil.getTargetUris(configuration);
+    	}
+    	
         String traceFile = configuration.getAttribute(IQvtLaunchConstants.TRACE_FILE, ""); //$NON-NLS-1$
         boolean useTraceFile = configuration.getAttribute(IQvtLaunchConstants.USE_TRACE_FILE, false); 
         
-        IStatus status = QvtValidator.validateTransformation(transformation, sourceModelUri, targetData, traceFile, useTraceFile);
-        return status;
+        try {
+        	return QvtValidator.validateTransformation(transformation, targetUris, traceFile, useTraceFile);
+        }
+        catch (MdaException ex) {
+        	throw new CoreException(StatusUtil.makeErrorStatus(ex.getMessage(), ex));
+        }
     }
     
     public static BaseProcess.IRunnable getSafeRunnable(QvtTransformation transformation, IRunnable r) throws CoreException {
@@ -147,7 +161,8 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
     		int i = 0;
     		for (TransformationParameter transfParam : transformation.getParameters()) {
     			if (i >= targetUris.size()) {
-    	            throw new MdaException("Invalid launch configuration"); //$NON-NLS-1$
+    	            throw new MdaException(NLS.bind(Messages.QvtValidator_EmptyInputTransfParam,
+    	            		transfParam.getName()));
     			}
     			if (transfParam.getDirectionKind() == DirectionKind.IN || transfParam.getDirectionKind() == DirectionKind.INOUT) {
     		        URI inUri = toUri(targetUris.get(i).getUriString());
