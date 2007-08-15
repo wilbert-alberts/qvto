@@ -145,6 +145,22 @@ public class EmfUtil {
         return in;
     }
 	
+	public static boolean isUriExisted(String textUri) {
+        URI destUri = makeUri(textUri);
+        if (destUri != null) {
+        	EObject loadModel = null;
+        	try {
+        		loadModel = loadModel(destUri);
+        	}
+        	catch (Exception e) {
+        	}
+            if (loadModel != null) {
+            	return true;
+            }
+        }
+        return false;
+	}
+
 	private static boolean isDynamic(EObject eObject) {
 		return eObject instanceof EStructuralFeature.Internal.DynamicValueHolder;
 	}
