@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -87,7 +88,8 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 		super(parent != null ? parent.getEPackageRegistry() : new EPackageRegistryImpl());
 		setParent(parent);
 		myRootEnvironment = parent != null ? parent.myRootEnvironment : null;
-		
+
+		myPreferredModelTypes = new LinkedHashSet<ModelType>();
 		myCompiler = compiler;
 		myWarningsList = new ArrayList<QvtMessage>(2);
 		myErrorsList = new ArrayList<QvtMessage>(2);
@@ -427,7 +429,7 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 	
 	@Override
 	public EClassifier lookupClassifier(List<String> names) {
-		
+
 		if (names.size() == 1) {
 			// Unqualified type. lookup rules:
 			// - Firstly a type definition existing at the level of the current module (a transformation or a library) is searched.
@@ -460,8 +462,15 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 			}
 		}
 		
-		if (myPreferredModelType != null) {
-			return doLookupModeltypeClassifier(myPreferredModelType, names);
+		if (!myPreferredModelTypes.isEmpty()) {
+			EClassifier lookupClassifier = null;
+			for (ModelType modelType : myPreferredModelTypes) {
+				lookupClassifier = doLookupModeltypeClassifier(modelType, names);
+				if (lookupClassifier != null) {
+					return lookupClassifier;
+				}
+			}
+			return lookupClassifier;
 		}
 		
 		return super.lookupClassifier(names);
@@ -474,7 +483,7 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 
 
 	private EClassifier doLookupModeltypeClassifier(ModelType modelType, List<String> path) {
-		if (myPreferredModelType != null && myPreferredModelType != modelType) {
+		if (!myPreferredModelTypes.isEmpty() && !myPreferredModelTypes.contains(modelType)) {
 			return null;
 		}
 		EPackage oldContext = super.getContextPackage();
@@ -496,12 +505,45 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 	}
 	
 	/**
-	 * Preferred model type influence overrode {@link #lookupPackage(List)} and {@link #lookupClassifier(List)}
+	 * Preferred model types influence overrode {@link #lookupPackage(List)} and {@link #lookupClassifier(List)}
 	 * methods
 	 * @param modelType
 	 */
 	public void setPreferredModelType(ModelType modelType) {
-		myPreferredModelType = modelType;
+		myPreferredModelTypes.add(modelType);
+	}
+
+	/**
+	 * Preferred model types influence overrode {@link #lookupPackage(List)} and {@link #lookupClassifier(List)}
+	 * methods
+	 * @param directionKind
+	 */
+	public void setPreferredExtentDir(DirectionKind directionKind) {
+		for (Variable<EClassifier, EParameter> var : myModelParameters) {
+			ModelParameter modelParam = (ModelParameter) var.getRepresentedParameter();
+			if (directionKind == DirectionKind.IN) {
+				if (modelParam.getKind() == DirectionKind.OUT) {
+					continue;
+				}
+			}
+			if (directionKind == DirectionKind.OUT) {
+				if (modelParam.getKind() == DirectionKind.IN) {
+					continue;
+				}
+			}
+			if (modelParam.getEType() instanceof ModelType) {
+				myPreferredModelTypes.add((ModelType) modelParam.getEType());
+			}
+		}
+	}
+
+	/**
+	 * Preferred model types influence overrode {@link #lookupPackage(List)} and {@link #lookupClassifier(List)}
+	 * methods
+	 * @param modelType
+	 */
+	public void unsetPreferredModelType() {
+		myPreferredModelTypes.clear();
 	}
 
 	public EOperation defineImperativeOperation(ImperativeOperation operation, boolean isMappingOperation,
@@ -663,7 +705,7 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 	private boolean myErrorRecordFlag;
 
 	private final Map<String, ModelType> myModelTypeRegistry;
-	private ModelType myPreferredModelType;
+	private final Set<ModelType> myPreferredModelTypes;
 	private List<Variable<EClassifier, EParameter>> myModelParameters = Collections.emptyList();
 	
 	private final EPackage.Registry ePackageRegistry;

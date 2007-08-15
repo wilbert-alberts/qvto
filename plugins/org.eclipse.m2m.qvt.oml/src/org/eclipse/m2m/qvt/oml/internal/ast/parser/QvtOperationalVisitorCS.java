@@ -146,12 +146,21 @@ public class QvtOperationalVisitorCS
         myCompilerOptions = options;
 	}
 
-	private EClassifier visitTypeCS(TypeCS typeCS, QvtOperationalEnv env) throws SemanticException {
-		EClassifier type = typeCS(typeCS, env);
-		if (type == null) {
-			env.reportError(NLS.bind(ValidationMessages.UnknownClassifierType, new Object[] {
-					QvtOperationalParserUtil.getStringRepresentation(typeCS)}),
-					typeCS);
+	private EClassifier visitTypeCS(TypeCS typeCS, DirectionKind directionKind, QvtOperationalEnv env) throws SemanticException {
+		if (directionKind != null) {
+			env.setPreferredExtentDir(directionKind);
+		}
+		EClassifier type = null;
+		try {
+			type = typeCS(typeCS, env);
+			if (type == null) {
+				env.reportError(NLS.bind(ValidationMessages.UnknownClassifierType, new Object[] {
+						QvtOperationalParserUtil.getStringRepresentation(typeCS)}),
+						typeCS);
+			}
+		}
+		finally {
+			env.unsetPreferredModelType();
 		}
 		return type;
 	}
@@ -169,7 +178,7 @@ public class QvtOperationalVisitorCS
 			}
 		}
 		finally {
-			env.setPreferredModelType(null);
+			env.unsetPreferredModelType();
 		}
 		return type;
 	}
@@ -190,7 +199,7 @@ public class QvtOperationalVisitorCS
 			}
 		}
 
-		result.myType = visitTypeCS(typeSpecCS.getTypeCS(), env);
+		result.myType = visitTypeCS(typeSpecCS.getTypeCS(), directionKind, env);
 
 		return result;
 	}
@@ -890,7 +899,7 @@ public class QvtOperationalVisitorCS
 	}
 
 	private Rename visitRenameCS(RenameCS renameCS, QvtOperationalFileEnv env) throws SemanticException {
-		EClassifier type = visitTypeCS(renameCS.getTypeCS(), env);
+		EClassifier type = visitTypeCS(renameCS.getTypeCS(), null, env);
 		if (type == null) {
 			return null;
 		}
@@ -1099,9 +1108,17 @@ public class QvtOperationalVisitorCS
 		if (mappingDeclarationCS == null) {
 			return false;
 		}
+
+		DirectionKind contextDirection = DirectionKind.IN;
+		if (mappingDeclarationCS.getDirectionKindCS() != null) {
+			contextDirection = (DirectionKind) ExpressionsFactory.eINSTANCE.createFromString(
+					ExpressionsPackage.eINSTANCE.getDirectionKind(), mappingDeclarationCS.getDirectionKindCS()
+							.getDirectionKind().getLiteral());
+		}
+
 		EClassifier contextType;
 		if (mappingDeclarationCS.getContextType() != null) {
-			contextType = visitTypeCS(mappingDeclarationCS.getContextType(), env);
+			contextType = visitTypeCS(mappingDeclarationCS.getContextType(), contextDirection, env);
 			if (contextType == null) {
 				contextType = env.getOCLStandardLibrary().getOclVoid();
 			}
@@ -1140,14 +1157,7 @@ public class QvtOperationalVisitorCS
 			varContext.setEndPosition(mappingDeclarationCS.getContextType().getEndOffset());
 		}
 		varContext.setEType(contextType);
-		if (mappingDeclarationCS.getDirectionKindCS() != null) {
-			varContext.setKind((DirectionKind) ExpressionsFactory.eINSTANCE.createFromString(
-					ExpressionsPackage.eINSTANCE.getDirectionKind(), mappingDeclarationCS.getDirectionKindCS()
-							.getDirectionKind().getLiteral()));
-		}
-		else {
-			varContext.setKind(DirectionKind.IN);
-		}
+		varContext.setKind(contextDirection);
 		// TODO check explicit extent specified (using '@')
 		if (varContext.getExtent() == null) {
 			varContext.setExtent(env.resolveModelParameter(contextType, varContext.getKind()));
@@ -1298,10 +1308,16 @@ public class QvtOperationalVisitorCS
         }
 		MappingDeclarationCS mappingDeclCS = ((MappingMethodCS) varInitCS.eContainer().eContainer())
 				.getMappingDeclarationCS();
+		DirectionKind contextDirection = DirectionKind.IN;
+		if (mappingDeclCS.getDirectionKindCS() != null) {
+			contextDirection = (DirectionKind) ExpressionsFactory.eINSTANCE.createFromString(
+					ExpressionsPackage.eINSTANCE.getDirectionKind(), mappingDeclCS.getDirectionKindCS()
+							.getDirectionKind().getLiteral());
+		}
 		EClassifier contextType = mappingDeclCS.getContextType() != null ? visitTypeCS(
-				mappingDeclCS.getContextType(), env) : env.getOCLStandardLibrary().getOclVoid();
-		EClassifier returnType = mappingDeclCS.getReturnType() != null ? visitTypeCS(
-				mappingDeclCS.getReturnType().getTypeCS(), env) : env.getOCLStandardLibrary().getOclVoid();
+				mappingDeclCS.getContextType(), contextDirection, env) : env.getOCLStandardLibrary().getOclVoid();
+		EClassifier returnType = mappingDeclCS.getReturnType() != null ? visitTypeSpecCS(
+				mappingDeclCS.getReturnType(), DirectionKind.OUT, env).myType : env.getOCLStandardLibrary().getOclVoid();
 		if (!QvtOperationalParserUtil.validateNameClashing(varInitCS.getSimpleNameCS().getValue(), returnType,
 				contextType, env, varInitCS)) {
 			return null;
@@ -1375,7 +1391,7 @@ public class QvtOperationalVisitorCS
 
 		EClassifier type;
 		if (propCS.getTypeCS() != null) {
-			type = visitTypeCS(propCS.getTypeCS(), env);
+			type = visitTypeCS(propCS.getTypeCS(), null, env);
 			if (type != null) {
 				property.setEType(type);
 				if (!QvtOperationalUtil.isCreateFromStringSupported(type)) {
@@ -1438,7 +1454,7 @@ public class QvtOperationalVisitorCS
             ResolveInExpCS resolveInExpCS, QvtOperationalEnv env) throws SemanticException {
         ResolveInExp resolveInExp = ExpressionsFactory.eINSTANCE.createResolveInExp();
         TypeCS contextTypeCS = resolveInExpCS.getInMappingType();
-        EClassifier eClassifier = (contextTypeCS == null) ? null : visitTypeCS(contextTypeCS, env); // mapping context type
+        EClassifier eClassifier = (contextTypeCS == null) ? null : visitTypeCS(contextTypeCS, null, env); // mapping context type
         List<EOperation> mappingOperations = env.lookupMappingOperations(eClassifier, resolveInExpCS.getInMappingName());
         if (mappingOperations.size() == 1) {
             env.registerResolveInExp(resolveInExp, eClassifier, resolveInExpCS.getInMappingName());
@@ -1472,7 +1488,7 @@ public class QvtOperationalVisitorCS
         
         if (resolveExpCS.getTarget() != null) { // at least type is defined
             Variable<EClassifier, EParameter> variable = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();
-            EClassifier type = visitTypeCS(resolveExpCS.getTarget().getTypeCS(), env);
+            EClassifier type = visitTypeCS(resolveExpCS.getTarget().getTypeCS(), null, env);
             variable.setType(type);
             
             boolean isTargetVarClashing = false;
@@ -1689,7 +1705,7 @@ public class QvtOperationalVisitorCS
 
 		EClassifier type;
 		if (propCS.getTypeCS() != null) {
-			type = visitTypeCS(propCS.getTypeCS(), env);
+			type = visitTypeCS(propCS.getTypeCS(), null, env);
 			if (type == null) {
 				return false;
 			}
@@ -1716,7 +1732,7 @@ public class QvtOperationalVisitorCS
 
 		EClassifier type;
 		if (varInitCS.getTypeCS() != null) {
-			type = visitTypeCS(varInitCS.getTypeCS(), env);
+			type = visitTypeCS(varInitCS.getTypeCS(), null, env);
 			if (type == null) {
 				return false;
 			}
