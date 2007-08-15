@@ -59,44 +59,6 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         return new IProject[] { getModuleFile(configuration).getProject() };
     }
  
-/*  
- * Commented out as unused code when separating UI specific code 
- * TODO - to revisited
-    public boolean finalLaunchCheck_(ILaunchConfiguration configuration, String mode, IProgressMonitor monitor) throws CoreException {
-        IProject[] projects = getProjectsForProblemSearch(configuration, mode);
-        if (projects == null) {
-            return true; //continue launch
-        }
-        
-        monitor.subTask(Messages.LaunchConfigurationDelegate_SearchingForErrors);
-        List<IProject> errors = new ArrayList<IProject>();
-        for (int i = 0; i < projects.length; i++) {
-            monitor.subTask(NLS.bind(Messages.LaunchConfigurationDelegate_SearchingForErrorsIn, projects[i].getName());
-            if (existsProblems(projects[i])) {
-                errors.add(projects[i]);
-            }   
-        }   
-        
-        if (errors.isEmpty()) {
-            return true;
-        }
-        else {
-            displayHasErrorsDialog();
-            return false;
-        }
-    }
-        
-    private void displayHasErrorsDialog() {
-        QvtLaunchUIUtil.runInUiThread(new Runnable() {
-            public void run() {
-                Shell shell = QvtLaunchUIUtil.getShell();
-                String title = Messages.QvtLaunchConfigurationDelegate_ErrorsInProject;
-                String message = Messages.QvtLaunchConfigurationDelegate_ErrorsInQVTModule;
-                MessageDialog.openError(shell, title, message);
-            }
-        });
-    }
-*/
     protected static IFile getModuleFile(ILaunchConfiguration configuration) throws CoreException {
         String moduleFileName = configuration.getAttribute(IQvtLaunchConstants.MODULE, ""); //$NON-NLS-1$
         IFile moduleFile = WorkspaceUtils.getWorkspaceFile(moduleFileName);
@@ -110,17 +72,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
     }
 
     public static IStatus validate(QvtTransformation transformation, ILaunchConfiguration configuration) throws CoreException {
-    	List<TargetUriData> targetUris;
-    	if (configuration.getAttributes().containsKey(IQvtLaunchConstants.SOURCE_MODEL)) {
-    		// old type configuration, used for compatibility
-    		targetUris = new ArrayList<TargetUriData>(2);
-    		targetUris.add(new TargetUriData(configuration.getAttribute(IQvtLaunchConstants.SOURCE_MODEL, ""))); //$NON-NLS-1$
-    		targetUris.add(QvtLaunchUtil.getTargetUriData(configuration));
-    	}
-    	else {
-    		targetUris = QvtLaunchUtil.getTargetUris(configuration);
-    	}
-    	
+    	List<TargetUriData> targetUris = QvtLaunchUtil.getTargetUris(configuration);
         String traceFile = configuration.getAttribute(IQvtLaunchConstants.TRACE_FILE, ""); //$NON-NLS-1$
         boolean useTraceFile = configuration.getAttribute(IQvtLaunchConstants.USE_TRACE_FILE, false); 
         
@@ -142,39 +94,26 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
     }
     
     public static void doLaunch(QvtTransformation transformation, ILaunchConfiguration configuration, IContext context) throws Exception {
-    	List<EObject> inObjects;
-    	List<TargetUriData> targetData;
-    	
-    	if (configuration.getAttributes().containsKey(IQvtLaunchConstants.SOURCE_MODEL)) {
-    		// old type configuration, used for compatibility
-	        URI inUri = getUri(configuration, IQvtLaunchConstants.SOURCE_MODEL);
-	        EObject inObj = transformation.loadInput(inUri);
-	        inObjects = Collections.singletonList(inObj);
-	        
-	        targetData = Collections.singletonList(QvtLaunchUtil.getTargetUriData(configuration));
-    	}
-    	else {
-    		targetData = new ArrayList<TargetUriData>();
-    		inObjects = new ArrayList<EObject>();
-    		List<TargetUriData> targetUris = QvtLaunchUtil.getTargetUris(configuration);
-    		
-    		int i = 0;
-    		for (TransformationParameter transfParam : transformation.getParameters()) {
-    			if (i >= targetUris.size()) {
-    	            throw new MdaException(NLS.bind(Messages.QvtValidator_EmptyInputTransfParam,
-    	            		transfParam.getName()));
-    			}
-    			if (transfParam.getDirectionKind() == DirectionKind.IN || transfParam.getDirectionKind() == DirectionKind.INOUT) {
-    		        URI inUri = toUri(targetUris.get(i).getUriString());
-    		        EObject inObj = transformation.loadInput(inUri);
-    		        inObjects.add(inObj);
-    			}
-    			if (transfParam.getDirectionKind() == DirectionKind.OUT || transfParam.getDirectionKind() == DirectionKind.INOUT) {
-    				targetData.add(targetUris.get(i));
-    			}
-    			i++;
-    		}
-    	}
+    	List<EObject> inObjects = new ArrayList<EObject>();
+    	List<TargetUriData> targetData = new ArrayList<TargetUriData>();
+		List<TargetUriData> targetUris = QvtLaunchUtil.getTargetUris(configuration);
+		
+		Iterator<TargetUriData> itrTargetData = targetUris.iterator();
+		for (TransformationParameter transfParam : transformation.getParameters()) {
+			if (!itrTargetData.hasNext()) {
+	            throw new MdaException(NLS.bind(Messages.QvtValidator_EmptyInputTransfParam,
+	            		transfParam.getName()));
+			}
+			TargetUriData nextUri = itrTargetData.next();
+			if (transfParam.getDirectionKind() == DirectionKind.IN || transfParam.getDirectionKind() == DirectionKind.INOUT) {
+		        URI inUri = toUri(nextUri.getUriString());
+		        EObject inObj = transformation.loadInput(inUri);
+		        inObjects.add(inObj);
+			}
+			if (transfParam.getDirectionKind() == DirectionKind.OUT || transfParam.getDirectionKind() == DirectionKind.INOUT) {
+				targetData.add(nextUri);
+			}
+		}
 
         IConfiguration qvtConfiguration = QvtLaunchUtil.getConfiguration(configuration);
         boolean saveTrace = configuration.getAttribute(IQvtLaunchConstants.USE_TRACE_FILE, false);
@@ -294,11 +233,6 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
 		resource.save(EmfUtil.DEFAULT_SAVE_OPTIONS);
 	}
 
-	private static URI getUri(ILaunchConfiguration configuration, String propName) throws Exception {
-        String uriString = configuration.getAttribute(propName, "");  //$NON-NLS-1$
-        return toUri(uriString);
-    }
-    
     private static URI toUri(String uriString) throws MdaException {
         URI uri = URI.createURI(uriString);  
         if(uri == null) {
