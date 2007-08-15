@@ -312,7 +312,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
                 method = QvtOperationalParserUtil.findMappingMethod(owningModule, referredOperation, context, getOperationalEnv());
             }
 
-            return executeImperativeOperation(method, source, args);
+            return executeImperativeOperation(method, source, args).myResult;
         }
 
         Object result = null;
@@ -386,26 +386,27 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         getOperationalEvaluationEnv().createModuleParameterExtents(module);
         
         List<Object> entryArgs = makeEntryArgs(myEntryPoint, module);
-        Object result = executeImperativeOperation(myEntryPoint, null, entryArgs);
+        OperationCallResult callResult = executeImperativeOperation(myEntryPoint, null, entryArgs);
         
         getContext().processDeferredTasks();
 
-        QvtEvaluationResult evalResult = getOperationalEvaluationEnv().createEvaluationResult();
+        List<Object> outParamValues = makeOutParamValues(myEntryPoint, callResult.myEvalEnv);
+        QvtEvaluationResult evalResult = getOperationalEvaluationEnv().createEvaluationResult(myEntryPoint, outParamValues);
         if (evalResult.getModelExtents().isEmpty()) {
-            if (result instanceof EObject) {
+            if (callResult.myResult instanceof EObject) {
                 // compatibility reason
                 List<Resource> extents = evalResult.getModelExtents();
-                if (((EObject) result).eResource() != null) {
-                    extents.add(((EObject) result).eResource());
+                if (((EObject) callResult.myResult).eResource() != null) {
+                    extents.add(((EObject) callResult.myResult).eResource());
                 }
                 else {
                     Resource resource = new ResourceSetImpl().createResource(URI.createURI("/")); //$NON-NLS-1$
-                    resource.getContents().add((EObject) result);
+                    resource.getContents().add((EObject) callResult.myResult);
                     extents.add(resource);
                 }
-                evalResult = new QvtEvaluationResult(extents);
+                evalResult = new QvtEvaluationResult(extents, outParamValues);
             } else {
-                return result;
+                return callResult.myResult;
             }
         }
         return evalResult;
@@ -733,7 +734,11 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         return list;
     }
 
-    private Object executeImperativeOperation(ImperativeOperation method, Object source, List<Object> args) {
+    private static class OperationCallResult {
+    	public Object myResult;
+    	public QvtOperationalEvaluationEnv myEvalEnv;
+    }
+    private OperationCallResult executeImperativeOperation(ImperativeOperation method, Object source, List<Object> args) {
         QvtOperationalEvaluationEnv oldEvalEnv = getOperationalEvaluationEnv();
         // create a nested evaluation environment for this operation call
         QvtOperationalEvaluationEnv nestedEnv = getOperationalEnv().getFactory().createEvaluationEnvironment(
@@ -748,7 +753,11 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         setEvaluationEnvironment(nestedEnv);
 
         try {
-        	return ((ImperativeOperationImpl) method).accept(this);
+        	Object result = ((ImperativeOperationImpl) method).accept(this);
+        	OperationCallResult callResult = new OperationCallResult();
+        	callResult.myResult = result;
+        	callResult.myEvalEnv = nestedEnv;
+        	return callResult;
         } finally {
         	setEvaluationEnvironment(oldEvalEnv);
         }
@@ -853,6 +862,31 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 	        paramIndex++;
 		}
 		return args;
+	}
+
+	private List<Object> makeOutParamValues(ImperativeOperation entryPoint, QvtOperationalEvaluationEnv evalEnv) {
+		List<Object> outParamValues = new ArrayList<Object>();
+		for (EParameter param : entryPoint.getEParameters()) {
+			MappingParameter mappingParam  = (MappingParameter) param;
+			if (mappingParam.getKind() == DirectionKind.IN) {
+				continue;
+			}
+			Object valueOf = evalEnv.getValueOf(mappingParam.getName());
+			if (valueOf != null) {
+				outParamValues.add(valueOf);
+			}
+		}
+		for (VarParameter param : entryPoint.getResult()) {
+			MappingParameter mappingParam  = (MappingParameter) param;
+			if (mappingParam.getKind() == DirectionKind.IN) {
+				continue;
+			}
+			Object valueOf = evalEnv.getValueOf(mappingParam.getName());
+			if (valueOf != null) {
+				outParamValues.add(valueOf);
+			}
+		}
+		return outParamValues;
 	}
 
     private ImperativeOperation getVirtualMethod(EOperation ctxOp, Object context, List<Object> args) {

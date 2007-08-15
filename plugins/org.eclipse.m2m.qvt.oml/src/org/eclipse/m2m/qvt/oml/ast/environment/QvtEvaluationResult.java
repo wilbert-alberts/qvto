@@ -22,14 +22,20 @@ import org.eclipse.emf.ecore.resource.Resource;
  */
 public class QvtEvaluationResult {
 	
-	public QvtEvaluationResult(List<Resource> modelExtents) {
+	public QvtEvaluationResult(List<Resource> modelExtents, List<Object> outParamValues) {
 		myModelExtents = modelExtents;
+		myOutParamValues = outParamValues;
 	}
 	
 	public List<Resource> getModelExtents() {
 		return myModelExtents;
 	}
 	
+	public List<Object> getOutParamValues() {
+		return myOutParamValues;
+	}
+	
 	private final List<Resource> myModelExtents;
+	private final List<Object> myOutParamValues;
 
 }

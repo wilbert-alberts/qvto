@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
+import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.ValidationMessages;
@@ -241,11 +242,11 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	}
 
 	/**
-	 * Creates list of output resources (model extents) for each 'inout' and 'out' parameters of
-	 * transformation. For non-changed 'inout' model parameter corresponding resource is empty
+	 * - Creates list of output resources (model extents) for each 'inout' and 'out' parameters of
+	 *   transformation. For non-changed 'inout' model parameter corresponding resource is empty.
 	 * @return ordered list of model extents
 	 */
-	public QvtEvaluationResult createEvaluationResult() {
+	public QvtEvaluationResult createEvaluationResult(ImperativeOperation entryPoint, List<Object> outParamValues) {
 		ResourceSet outResourceSet = new ResourceSetImpl();
 		List<Resource> extents = new ArrayList<Resource>();
 		for (Map.Entry<ModelParameter, ModelParameterExtent> entry : myModelExtents.entrySet()) {
@@ -254,7 +255,8 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         	}
         	extents.add(entry.getValue().getModelExtent(outResourceSet));
 		}
-		return new QvtEvaluationResult(extents);
+		
+		return new QvtEvaluationResult(extents, outParamValues);
 	}
 	
 	public EObject createInstance(EClassifier type, ModelParameter extent) {
