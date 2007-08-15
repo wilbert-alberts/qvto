@@ -62,6 +62,7 @@ import org.eclipse.m2m.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.qvt.oml.expressions.MappingCallExp;
 import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.qvt.oml.expressions.MappingParameter;
+import org.eclipse.m2m.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.expressions.ModuleImport;
@@ -311,25 +312,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
                 method = QvtOperationalParserUtil.findMappingMethod(owningModule, referredOperation, context, getOperationalEnv());
             }
 
-            QvtOperationalEvaluationEnv oldEvalEnv = getOperationalEvaluationEnv();
-            // create a nested evaluation environment for this operation call
-            QvtOperationalEvaluationEnv nestedEnv = getOperationalEnv().getFactory().createEvaluationEnvironment(
-                    getOperationalEvaluationEnv().getContext(), getOperationalEvaluationEnv());
-            addModuleProperties(nestedEnv);
-            nestedEnv.setModelParameterExtents(oldEvalEnv.getModelParameterExtents());
-
-            nestedEnv.getOperationArgs().clear();
-            nestedEnv.getOperationArgs().addAll(args);
-            if (!isUndefined(source)) {
-                nestedEnv.setOperationSelf(source);
-            }
-            setEvaluationEnvironment(nestedEnv);
-
-            try {
-            	return ((ImperativeOperationImpl) method).accept(this);
-            } finally {
-            	setEvaluationEnvironment(oldEvalEnv);
-            }
+            return executeImperativeOperation(method, source, args);
         }
 
         Object result = null;
@@ -401,15 +384,16 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 
         initModuleProperties(module);
         getOperationalEvaluationEnv().createModuleParameterExtents(module);
-
-        Object result = ((ImperativeOperationImpl) myEntryPoint).accept(this);
+        
+        List<Object> entryArgs = makeEntryArgs(myEntryPoint, module);
+        Object result = executeImperativeOperation(myEntryPoint, null, entryArgs);
         
         getContext().processDeferredTasks();
 
         QvtEvaluationResult evalResult = getOperationalEvaluationEnv().createEvaluationResult();
         if (evalResult.getModelExtents().isEmpty() && result instanceof EObject) {
-            List<Resource> extents = evalResult.getModelExtents();
         	// compatibility reason
+            List<Resource> extents = evalResult.getModelExtents();
         	if (((EObject) result).eResource() != null) {
         		extents.add(((EObject) result).eResource());
         	}
@@ -745,6 +729,27 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         return list;
     }
 
+    private Object executeImperativeOperation(ImperativeOperation method, Object source, List<Object> args) {
+        QvtOperationalEvaluationEnv oldEvalEnv = getOperationalEvaluationEnv();
+        // create a nested evaluation environment for this operation call
+        QvtOperationalEvaluationEnv nestedEnv = getOperationalEnv().getFactory().createEvaluationEnvironment(
+                getOperationalEvaluationEnv().getContext(), getOperationalEvaluationEnv());
+        addModuleProperties(nestedEnv);
+        nestedEnv.setModelParameterExtents(oldEvalEnv.getModelParameterExtents());
+
+        nestedEnv.getOperationArgs().addAll(args);
+        if (!isUndefined(source)) {
+            nestedEnv.setOperationSelf(source);
+        }
+        setEvaluationEnvironment(nestedEnv);
+
+        try {
+        	return ((ImperativeOperationImpl) method).accept(this);
+        } finally {
+        	setEvaluationEnvironment(oldEvalEnv);
+        }
+    }
+
     protected QvtOperationalEnv getOperationalEnv() {
         return (QvtOperationalEnv) getEnvironment();
     }
@@ -809,6 +814,42 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 
         return argValues;
     }
+    
+	private List<Object> makeEntryArgs(ImperativeOperation entryPoint, Module module) {
+		List<Object> args = new ArrayList<Object>(entryPoint.getEParameters().size());
+		
+		int paramIndex = 0;
+		for (EParameter param : entryPoint.getEParameters()) {
+			int matchedIndex = paramIndex;
+
+			MappingParameter mappingParam = (MappingParameter) param;
+			if (mappingParam.getKind() == DirectionKind.OUT) {
+				args.add(null);
+				continue;
+			}
+			
+			if (mappingParam.getExtent() != null) {
+				int modelParamIndex = 0;
+		        for (ModelParameter modelParam : module.getModelParameter()) {
+		        	if (modelParam == mappingParam.getExtent()) {
+		        		matchedIndex = modelParamIndex;
+		        		break;
+		        	}
+		        	modelParamIndex++;
+		        }
+			}
+
+	        if (matchedIndex < getOperationalEvaluationEnv().getOperationArgs().size()) {
+	        	args.add(getOperationalEvaluationEnv().getOperationArgs().get(matchedIndex));
+	        }
+			else {
+                throw new IllegalArgumentException("entry operation arguments mismatch: no argument for " + mappingParam + " parameter"); //$NON-NLS-1$ //$NON-NLS-2$
+			}
+
+	        paramIndex++;
+		}
+		return args;
+	}
 
     private ImperativeOperation getVirtualMethod(EOperation ctxOp, Object context, List<Object> args) {
         List<EClassifier> assignableClasses = new ArrayList<EClassifier>();
