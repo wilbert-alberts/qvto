@@ -118,7 +118,8 @@ public class QvtInterpretedTransformation implements QvtTransformation {
             throw new MdaException(Messages.QvtInterpreter_Transformation_failed); 
         }
 
-        return new Out(((QvtEvaluationResult) outObj).getModelExtents(), in.getContext().getTrace());
+        return new Out(((QvtEvaluationResult) outObj).getModelExtents(),
+        		((QvtEvaluationResult) outObj).getOutParamValues(), in.getContext().getTrace());
     }
 	
 	public String getModuleName() throws MdaException {

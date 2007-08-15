@@ -16,6 +16,7 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.generator;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
@@ -87,6 +88,7 @@ public class TransformationRunner {
          */
         public Out(EObject result, Trace trace) {
         	myModelExtents = new ArrayList<Resource>(1);
+        	myOutParamValues = Collections.emptyList();
             myResult = result;
             myTrace = trace;
 
@@ -100,8 +102,9 @@ public class TransformationRunner {
             }
         }
         
-        public Out(List<Resource> modelExtents, Trace trace) {
+        public Out(List<Resource> modelExtents, List<Object> outParamValues, Trace trace) {
         	myModelExtents = modelExtents;
+        	myOutParamValues = outParamValues;
             myResult = null;
             myTrace = trace;
         }
@@ -122,11 +125,16 @@ public class TransformationRunner {
             return myModelExtents;
         }
         
+        public List<Object> getOutParamValues() {
+            return myOutParamValues;
+        }
+        
         public Trace getTrace() {
             return myTrace;
         }
         
         private final List<Resource> myModelExtents;
+        private final List<Object> myOutParamValues;
         private final EObject myResult;
         private final Trace myTrace;
     }

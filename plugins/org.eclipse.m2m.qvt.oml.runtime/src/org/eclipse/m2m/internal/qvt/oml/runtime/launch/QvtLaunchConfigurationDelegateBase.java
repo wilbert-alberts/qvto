@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TraceSerializer;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
@@ -47,8 +48,6 @@ import org.eclipse.m2m.qvt.oml.emf.util.EmfException;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.StatusUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
-import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.IMetamodelHandler;
-import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.MetamodelHandlerManager;
 import org.eclipse.m2m.qvt.oml.library.IConfiguration;
 import org.eclipse.m2m.qvt.oml.library.IContext;
 import org.eclipse.osgi.util.NLS;
@@ -132,13 +131,19 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         TransformationRunner.In in = new TransformationRunner.In(inObjs.toArray(new EObject[inObjs.size()]), context);
         TransformationRunner.Out out = transformation.run(in);
         
-        List<URI> result = new ArrayList<URI>(targetData.size());
         Iterator<Resource> itrExtent = out.getExtents().iterator();
         for (TargetUriData outData : targetData) {
         	if (!itrExtent.hasNext()) {
         		throw new MdaException("Imcomplete transformation results"); //$NON-NLS-1$
         	}
-        	result.addAll(saveTransformationResult(itrExtent.next(), outData));
+        	saveTransformationResult(itrExtent.next(), outData);
+        }
+
+        List<URI> result = new ArrayList<URI>(out.getOutParamValues().size());
+        for (Object outValue : out.getOutParamValues()) {
+        	if (outValue instanceof EObject) {
+        		result.add(EcoreUtil.getURI((EObject) outValue));
+        	}
         }
         
         if(traceFileName != null && out.getTrace() != null) {
@@ -154,9 +159,8 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
     }
     
     @SuppressWarnings("unchecked")
-	private static List<URI> saveTransformationResult(Resource outExtent, TargetUriData targetData) throws MdaException {
+	private static void saveTransformationResult(Resource outExtent, TargetUriData targetData) throws MdaException {
     	URI outUri = toUri(targetData.getUriString());
-    	List<URI> result = Collections.singletonList(outUri);
         switch(targetData.getTargetType()) {
         	case NEW_MODEL: {
         		try {
@@ -179,7 +183,6 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
 	                throw new MdaException("Reference " + targetData.getFeature() + " not found in " + cont); //$NON-NLS-1$ //$NON-NLS-2$
 		        }
 
-		        result = new ArrayList<URI>(outExtent.getContents().size());
         		for (EObject out : outExtent.getContents()) {
 			        EReference ref = (EReference)feature;
 			        if(!ref.isMany()) {
@@ -199,8 +202,6 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
 			        				EmfUtil.getFullName(out.eClass()), targetData.getFeature()));
 			        	}
 			        }
-                    IMetamodelHandler handler = MetamodelHandlerManager.getInstance().getHandler(out.eClass());
-                    result.add(handler.getSaver().getUri(out));
         		}
         		
 		        try {
@@ -219,8 +220,6 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         }
         
         org.eclipse.m2m.qvt.oml.emf.util.URIUtils.refresh(outUri);
-        
-        return result;
     }
     
     private static void saveResource(EObject obj) throws IOException {
