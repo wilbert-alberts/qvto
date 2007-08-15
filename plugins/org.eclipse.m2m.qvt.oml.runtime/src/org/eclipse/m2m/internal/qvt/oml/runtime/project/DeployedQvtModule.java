@@ -18,6 +18,7 @@ import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.qvt.oml.compiler.CompilerMessages;
 import org.eclipse.m2m.qvt.oml.compiler.IImportResolver;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.osgi.util.NLS;
@@ -53,8 +54,10 @@ public class DeployedQvtModule extends QvtModule {
         	}
         	
             QvtCompiler qvtCompiler = new QvtCompiler(importResolver, creatMetamodelRegistryProvider());
-            
-            CompiledModule module = qvtCompiler.compile(new CFile[] { srcFile }, null)[0];
+
+            QvtCompilerOptions options = new QvtCompilerOptions();
+            options.setGenerateCompletionData(false);
+            CompiledModule module = qvtCompiler.compile(srcFile, options, null).getModule();
             
             checkModuleErrors(module);
             
