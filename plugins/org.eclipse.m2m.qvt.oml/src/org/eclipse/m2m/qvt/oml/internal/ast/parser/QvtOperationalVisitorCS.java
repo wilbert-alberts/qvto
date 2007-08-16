@@ -245,7 +245,7 @@ public class QvtOperationalVisitorCS
                 if (type == null) {
                 	((QvtOperationalEnv) env).reportError(OCLMessages.bind(
                             OCLMessages.UnrecognizedType_ERROR_,
-                            QvtOperationalTypesUtil.getTypeFullName(type)), oclExpressionCS);
+                            QvtOperationalUtil.getStringRepresentation((TypeCS) oclExpressionCS)), oclExpressionCS);
                 }
                 else {
 					TypeExp<EClassifier> typeExp = env.getOCLFactory().createTypeExp();
@@ -262,7 +262,7 @@ public class QvtOperationalVisitorCS
 			((QvtOperationalEnv) env).reportError(ex.getLocalizedMessage(), oclExpressionCS);
 		}
 		catch (NullPointerException ex) {
-			((QvtOperationalEnv) env).reportError(ex.getLocalizedMessage(), oclExpressionCS);
+			((QvtOperationalEnv) env).reportError(ValidationMessages.QvtOperationalVisitorCS_oclParseNPE, oclExpressionCS);
 		}
 		return expr;
 	}

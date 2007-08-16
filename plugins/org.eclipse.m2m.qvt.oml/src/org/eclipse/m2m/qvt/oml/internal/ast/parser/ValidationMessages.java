@@ -41,6 +41,7 @@ public final class ValidationMessages extends NLS {
     public static String QvtOperationalVisitorCS_extentDuplicateUse;
     public static String QvtOperationalVisitorCS_extentDirectionMismatch;
     public static String QvtOperationalVisitorCS_extentFailToInfer;
+    public static String QvtOperationalVisitorCS_oclParseNPE;
 	public static String readOnlyPropertyModificationError;
 	public static String useMapKeywordWarning;
 	public static String incorrectCastWarning;
