@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TraceSerializer;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
@@ -145,6 +146,13 @@ public abstract class TestTransformation extends TestCase {
         }
         
         return ifile;
+    }
+    
+    public static void saveModel(Resource extent, CFile qvtFile) throws MdaException {
+        String ext = TransformationUtil.getExtensionForResult(qvtFile);
+        String fileName = qvtFile.getUnitName() + "." + ext; //$NON-NLS-1$
+        CFile outFile = qvtFile.getParent().getFile(fileName);
+        ExtendedEmfUtil.saveModel(extent, outFile);
     }
     
     public static void saveModel(EObject model, CFile qvtFile) throws MdaException {

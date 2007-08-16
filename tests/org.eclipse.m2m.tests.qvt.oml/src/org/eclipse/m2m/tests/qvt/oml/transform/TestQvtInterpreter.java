@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
@@ -48,10 +49,13 @@ public class TestQvtInterpreter extends TestTransformation {
             
             TransformationRunner.Out output = trans.run(input);
             
-            EObject out = output.getResult();
-            saveModel(out, new EclipseFile(transformation));
-            saveTraceData(output.getTrace(), new EclipseFile(transformation)); 
-            return out;
+            List<Resource> extents = output.getExtents();
+            EObject outEObject = extents.isEmpty()? null : extents.get(0).getContents().get(0);
+            for (Resource outRes : extents) {
+                saveModel(outRes, new EclipseFile(transformation));
+            }
+            saveTraceData(output.getTrace(), new EclipseFile(transformation));
+            return outEObject;
         }
     };
 }
