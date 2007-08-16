@@ -1136,6 +1136,7 @@ public class QvtOperationalVisitorCS
 			if (returnTypeSpec.myType == null) {
 				returnTypeSpec.myType = env.getOCLStandardLibrary().getOclVoid();
 			}
+			env.reportWarning(ValidationMessages.QvtOperationalVisitorCS_entryPointReturnDeprecated, mappingDeclarationCS.getReturnType());
 		} else {
 			returnTypeSpec = new TypeSpecPair();
 			returnTypeSpec.myType = env.getOCLStandardLibrary().getOclVoid();
