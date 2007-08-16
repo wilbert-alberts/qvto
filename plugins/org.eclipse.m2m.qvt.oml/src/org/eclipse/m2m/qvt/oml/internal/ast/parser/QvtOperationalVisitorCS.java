@@ -1130,13 +1130,17 @@ public class QvtOperationalVisitorCS
 			contextType = env.getOCLStandardLibrary().getOclVoid();
 		}
 
+		boolean isEntryPoint = QvtOperationalUtil.MAIN_METHOD_NAME.equals(mappingDeclarationCS.getSimpleNameCS().getValue());
 		TypeSpecPair returnTypeSpec;
 		if (mappingDeclarationCS.getReturnType() != null) {
 			returnTypeSpec = visitTypeSpecCS(mappingDeclarationCS.getReturnType(), DirectionKind.OUT, env);
 			if (returnTypeSpec.myType == null) {
 				returnTypeSpec.myType = env.getOCLStandardLibrary().getOclVoid();
 			}
-			env.reportWarning(ValidationMessages.QvtOperationalVisitorCS_entryPointReturnDeprecated, mappingDeclarationCS.getReturnType());
+			if (isEntryPoint) {
+				env.reportWarning(ValidationMessages.QvtOperationalVisitorCS_entryPointReturnDeprecated,
+						mappingDeclarationCS.getReturnType());
+			}
 		} else {
 			returnTypeSpec = new TypeSpecPair();
 			returnTypeSpec.myType = env.getOCLStandardLibrary().getOclVoid();
@@ -1144,8 +1148,7 @@ public class QvtOperationalVisitorCS
 
 		List<VarParameter> params = new ArrayList<VarParameter>();
 		for (ParameterDeclarationCS paramCS : mappingDeclarationCS.getParameters()) {
-			VarParameter param = visitParameterDeclarationCS(paramCS, env,
-					QvtOperationalUtil.MAIN_METHOD_NAME.equals(mappingDeclarationCS.getSimpleNameCS().getValue()));
+			VarParameter param = visitParameterDeclarationCS(paramCS, env, isEntryPoint);
 			if (param == null) {
 				return false;
 			}
