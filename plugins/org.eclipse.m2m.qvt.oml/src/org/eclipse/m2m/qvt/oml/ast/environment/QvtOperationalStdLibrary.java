@@ -48,6 +48,7 @@ public class QvtOperationalStdLibrary {
 	public static final String QVT_STDLIB_TOSTRING_OPERATION = "toString"; //$NON-NLS-1$
 
 	public static final String QVT_STDLIB_OBJECTS_OPERATION = "objects"; //$NON-NLS-1$
+	public static final String QVT_STDLIB_ROOTOBJECTS_OPERATION = "rootObjects"; //$NON-NLS-1$
 	public static final String QVT_STDLIB_OBJECTSOFTYPE_OPERATION = "objectsOfType"; //$NON-NLS-1$
 	
 	public static final QvtOperationalStdLibrary INSTANCE = new QvtOperationalStdLibrary(); 
@@ -88,6 +89,8 @@ public class QvtOperationalStdLibrary {
 		// Operations on models (spec 8.3.5)
 		defineOperation(env, getModelType(), oclStdLib.getSet(),
 				QVT_STDLIB_OBJECTS_OPERATION);
+		defineOperation(env, getModelType(), oclStdLib.getSet(),
+				QVT_STDLIB_ROOTOBJECTS_OPERATION);
 //		defineOperation(env, getModelType(), oclStdLib.getSet(),
 //				QVT_STDLIB_OBJECTSOFTYPE_OPERATION, oclStdLib.getOclType());
 	}
@@ -209,6 +212,21 @@ public class QvtOperationalStdLibrary {
 	        List<Object> objects = ((ModelParameterExtent) source).getAllObjects();
 			for (Object obj : objects) {
 				instances.add(obj);
+			}
+			return instances;
+		}
+
+		if (QVT_STDLIB_ROOTOBJECTS_OPERATION.equals(operation.getName())
+				&& source instanceof ModelParameterExtent
+				&& args.length == 0
+				) {			
+			Set<Object> instances = new LinkedHashSet<Object>();
+	        List<Object> objects = ((ModelParameterExtent) source).getAllObjects();
+			for (Object obj : objects) {
+				if (obj instanceof EObject &&
+						false == ((EObject) obj).eContainer() instanceof EObject) {
+					instances.add(obj);
+				}
 			}
 			return instances;
 		}
