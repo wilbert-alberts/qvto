@@ -1664,8 +1664,8 @@ public class QvtOperationalVisitorCS
 	                		varParam.getStartPosition(), varParam.getEndPosition());
 				}
 			}
-			else {
-				if (varParam.getKind() != varParam.getExtent().getKind()) {
+			else if (varParam.getKind() == DirectionKind.OUT) {
+				if (varParam.getExtent().getKind() == DirectionKind.IN) {
 	                env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentDirectionMismatch, null),  
 	                		varParam.getStartPosition(), varParam.getEndPosition());
 				}
