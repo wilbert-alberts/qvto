@@ -148,10 +148,8 @@ public class QvtOperationalVisitorCS
 	}
 
 	private EClassifier visitTypeCS(TypeCS typeCS, DirectionKind directionKind, QvtOperationalEnv env) throws SemanticException {
-		if (directionKind != null) {
-			env.setPreferredExtentDir(directionKind);
-		}
-		EClassifier type = null;
+		env.setPreferredExtentDir(directionKind);
+		EClassifier type = null; 
 		try {
 			type = typeCS(typeCS, env);
 			if (type == null) {

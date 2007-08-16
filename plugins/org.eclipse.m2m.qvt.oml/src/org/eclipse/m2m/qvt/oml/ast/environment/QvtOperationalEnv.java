@@ -341,9 +341,8 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 	
 	public ModelParameter resolveModelParameter(EClassifier type, DirectionKind directionKind) {
 		EObject rootContainer = EcoreUtil.getRootContainer(type);
-		if (rootContainer == null) {
-			return null;
-		}
+		
+		// lookup explicit extent 
 		for (Variable<EClassifier, EParameter> var : myModelParameters) {
 			ModelParameter modelParam = (ModelParameter) var.getRepresentedParameter();
 			if (directionKind == DirectionKind.IN) {
@@ -361,6 +360,23 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 				return modelParam;
 			}
 		}
+		
+		// lookup implicit extent 
+		for (Variable<EClassifier, EParameter> var : myModelParameters) {
+			ModelParameter modelParam = (ModelParameter) var.getRepresentedParameter();
+			if (directionKind == DirectionKind.IN) {
+				if (modelParam.getKind() == DirectionKind.OUT) {
+					continue;
+				}
+			}
+			if (directionKind == DirectionKind.OUT) {
+				if (modelParam.getKind() == DirectionKind.IN) {
+					continue;
+				}
+			}
+			return modelParam;
+		}
+		
 		return null;
 	}    
 	
@@ -470,7 +486,6 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 					return lookupClassifier;
 				}
 			}
-			return lookupClassifier;
 		}
 		
 		return super.lookupClassifier(names);
@@ -521,11 +536,6 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 	public void setPreferredExtentDir(DirectionKind directionKind) {
 		for (Variable<EClassifier, EParameter> var : myModelParameters) {
 			ModelParameter modelParam = (ModelParameter) var.getRepresentedParameter();
-//			if (directionKind == DirectionKind.IN) {
-//				if (modelParam.getKind() == DirectionKind.OUT) {
-//					continue;
-//				}
-//			}
 			if (directionKind == DirectionKind.OUT) {
 				if (modelParam.getKind() == DirectionKind.IN) {
 					continue;
