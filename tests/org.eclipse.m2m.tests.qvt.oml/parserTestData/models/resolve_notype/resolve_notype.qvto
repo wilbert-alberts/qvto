@@ -39,9 +39,9 @@ query selectionSort(in ar: OrderedSet(ecore::EClass)): OrderedSet(ecore::EClass)
 		let 
 			min = min(ar), 
 			rest = ar->excluding(min)->asOrderedSet(),
-			result = min->asSequence()->union(selectionSort(rest)->asSequence())->asOrderedSet() 
+			res = min->asSequence()->union(selectionSort(rest)->asSequence())->asOrderedSet() 
 		in 
-			result
+			res
 	endif
 }
 
@@ -50,7 +50,7 @@ query min(in ar: OrderedSet(ecore::EClass)): ecore::EClass {
 			i = 2,
 			n = ar->size(),
 			min = ar->at(1),
-			result = while (i <= n; 'anything') {
+			res = while (i <= n; 'anything') {
 				min := if (min.name <= ar->at(i).name) then min else ar->at(i) endif;
 				i := i + 1;
     		} 

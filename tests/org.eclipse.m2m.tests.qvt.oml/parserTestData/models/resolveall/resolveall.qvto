@@ -60,8 +60,8 @@ query selectionSort(in ar: OrderedSet(ecore::ENamedElement)): OrderedSet(ecore::
 		let 
 			min = min(ar), 
 			rest = ar->excluding(min)->asOrderedSet(),
-			result = min->asSequence()->union(selectionSort(rest)->asSequence())->asOrderedSet() 
+			res = min->asSequence()->union(selectionSort(rest)->asSequence())->asOrderedSet() 
 		in 
-			result
+			res
 	endif
 }
