@@ -32,7 +32,7 @@ public class Uml2RdbSampleProjectWizard extends LaunchWizard {
         Data source = new Data("platform:/resource/{0}/pim.simpleuml#/", getProject(0)); //$NON-NLS-1$
 		Data target = new Data("platform:/resource/{0}/Simpleuml_To_Rdb.rdb", getProject(0)); //$NON-NLS-1$
 		
-        setLaunchData(Messages.Uml2RdbSampleProjectWizard_defaultLaunchName, new QVTInterpreter(QVTInterpreter.NEW_MODEL, self, source, target));
+        setLaunchData(Messages.Uml2RdbSampleProjectWizard_defaultLaunchName, new QVTInterpreter(self, source, target));
         setWindowTitle(Messages.Uml2RdbSampleProjectWizard_simpleUml2rdbWizardTitle);
     }
 }

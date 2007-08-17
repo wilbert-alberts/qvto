@@ -8,14 +8,18 @@
  * Sample model pim.simpleuml is included to be used as an input for the transformation.
  */
 
-transformation Simpleuml_To_Rdb;
+transformation Simpleuml_To_Rdb(in uml : UML, out RDB);
 
 modeltype UML uses 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';
 modeltype RDB uses 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/rdb';
 
-mapping main(in model: simpleuml::Model) : rdb::Model {
-	name := model.name;
-	schemas := package2schemas(model); 
+mapping main(in model: simpleuml::Model) {
+	init {
+		object rdb::Model {
+			name := model.name;
+			schemas := package2schemas(model);
+		}
+	} 
 }
 
 query package2schemas(in root: simpleuml::Package) : OrderedSet(rdb::Schema) {
