@@ -25,6 +25,7 @@ import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData.TargetType;
 public class TestLaunchConfiguration extends TestCase {
     
     private static final String IN_ECORE = "platform:/resource/porject/in.ecore"; //$NON-NLS-1$
+    private static final String INOUT_ECORE = "platform:/resource/porject/inout.ecore"; //$NON-NLS-1$
     private static final String OUT_ECORE_NEW = "platform:/resource/porject/out.ecore"; //$NON-NLS-1$
     private static final String OUT_ECORE_EXISTING = "platform:/resource/project/out.ecore#//@eClassifiers.0"; //$NON-NLS-1$
     
@@ -52,19 +53,20 @@ public class TestLaunchConfiguration extends TestCase {
     }
 
     public void testEcoreInplace() throws CoreException {
-        performTest(IN_ECORE, IN_ECORE, TargetType.INPLACE);
+        performTest(INOUT_ECORE, "", TargetType.NEW_MODEL); //$NON-NLS-1$
     }
 
     public void testEcoreExsisting() throws CoreException {
-        performTest(IN_ECORE, OUT_ECORE_EXISTING, TargetType.EXISTING_CONTAINER);
+        performTest(IN_ECORE, OUT_ECORE_EXISTING, TargetType.NEW_MODEL);
     }
 
     private void performTest(String in, String out, TargetType targetType) throws CoreException {
         ILaunchConfigurationType type = DebugPlugin.getDefault().getLaunchManager().getLaunchConfigurationType("org.eclipse.m2m.qvt.oml.QvtTransformation"); //$NON-NLS-1$
         ILaunchConfigurationWorkingCopy copy = type.newInstance(null, "testOne"); //$NON-NLS-1$
-        copy.setAttribute(IQvtLaunchConstants.SOURCE_MODEL, in);
-        copy.setAttribute(IQvtLaunchConstants.TARGET_MODEL, out);
-        TargetUriData targetUriData = QvtLaunchUtil.getTargetUriData(copy.doSave());
+        copy.setAttribute(IQvtLaunchConstants.ELEM_COUNT, 2);
+        copy.setAttribute(IQvtLaunchConstants.TARGET_MODEL+"1", in); //$NON-NLS-1$
+        copy.setAttribute(IQvtLaunchConstants.TARGET_MODEL+"2", out); //$NON-NLS-1$
+        TargetUriData targetUriData = QvtLaunchUtil.getTargetUriData(copy.doSave(), 1);
         assertEquals(targetUriData.getTargetType().toString(), targetUriData.getTargetType(), targetType);
     }
 }
