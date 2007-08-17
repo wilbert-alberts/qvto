@@ -25,12 +25,12 @@ import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessage;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.IUriGroup;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.MdaLaunchTab;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.OptionalFileGroup;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.TransformationControls;
-import org.eclipse.m2m.internal.qvt.oml.runtime.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtValidator;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.ITransformationMaker;
@@ -40,6 +40,7 @@ import org.eclipse.m2m.qvt.oml.common.Logger;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.qvt.oml.emf.util.StatusUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -239,7 +240,8 @@ public class QvtLauncherTab extends MdaLaunchTab {
             	moduleName = myTransformation.getModuleName();
             }
             catch (MdaException e) {
-            	moduleName = ""; //$NON-NLS-1$
+            	IStatus status = StatusUtil.makeErrorStatus(e.getMessage(), e);
+            	return TransformationControls.statusToTab(status, SET_MESSAGE);
             }
             if (myTraceFile.getText().length() == 0) {
             	myTraceFile.update(moduleName, MDAConstants.QVTO_TRACEFILE_EXTENSION);
