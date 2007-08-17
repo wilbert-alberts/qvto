@@ -340,6 +340,9 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 	}    
 	
 	public ModelParameter resolveModelParameter(EClassifier type, DirectionKind directionKind) {
+		if (!isMayBelongToExtent(type)) {
+			return null;
+		}
 		EObject rootContainer = EcoreUtil.getRootContainer(type);
 		
 		// lookup explicit extent 
@@ -668,6 +671,12 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 	    }
 	}
 
+	private boolean isMayBelongToExtent(EClassifier myType) {
+		return myType != null 
+			&& getOCLStandardLibrary().getOclVoid() != myType
+			&& getOCLStandardLibrary().getOclInvalid() != myType;
+	}
+	
 	private void defineStandartOperations() {
 		getQVTStandartLibrary().defineStandartOperations(this);
 	}
