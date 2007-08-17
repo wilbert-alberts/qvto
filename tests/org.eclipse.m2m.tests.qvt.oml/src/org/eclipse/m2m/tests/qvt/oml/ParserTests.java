@@ -68,8 +68,8 @@ public class ParserTests {
         new TestData("modifyfeatureerror", 2), //$NON-NLS-1$
         new TestData("bodywithsemicolon", 0), //$NON-NLS-1$
         new TestData("modifyparam", 0), //$NON-NLS-1$
-        new TestData("wrongparamnameinout", 2), //$NON-NLS-1$
-        new TestData("modifyfeatureininiterror", 3), //$NON-NLS-1$
+        new TestData("wrongparamnameinout", 4), //$NON-NLS-1$
+        new TestData("modifyfeatureininiterror", 4), //$NON-NLS-1$
         new TestData("voidout", 1), //$NON-NLS-1$
         new TestData("modifyinparam", 1), //$NON-NLS-1$
         new TestData("modifyresult", 0), //$NON-NLS-1$
