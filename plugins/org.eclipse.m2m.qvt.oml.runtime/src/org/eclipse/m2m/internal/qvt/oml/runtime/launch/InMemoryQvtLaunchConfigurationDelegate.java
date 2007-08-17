@@ -30,6 +30,7 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.IStatusHandler;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.InMemoryLaunchUtils;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;

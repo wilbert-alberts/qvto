@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;

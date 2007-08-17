@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TraceSerializer;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;

@@ -21,6 +21,7 @@ import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.LaunchConfigurationDelegate;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtCompiledTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformationRegistry;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
