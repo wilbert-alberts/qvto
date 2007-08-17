@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpKWLexer.java,v 1.1 2007/07/29 19:50:55 radvorak Exp $
+* $Id: QvtOpKWLexer.java,v 1.2 2007/08/17 12:21:35 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpKWLexer.java,v 1.1 2007/07/29 19:50:55 radvorak Exp $
+* $Id: QvtOpKWLexer.java,v 1.2 2007/08/17 12:21:35 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -40,7 +40,7 @@ import lpg.lpgjavaruntime.*;
 public class QvtOpKWLexer extends QvtOpKWLexerprs implements QvtOpLPGParsersym
 {
     private char[] inputChars;
-    private final int keywordKind[] = new int[91 + 1];
+    private final int keywordKind[] = new int[92 + 1];
 
     public int[] getKeywordKinds() { return keywordKind; }
 
@@ -680,6 +680,12 @@ public class QvtOpKWLexer extends QvtOpKWLexerprs implements QvtOpLPGParsersym
         // Rule 91:  QVTKeyWord ::= s t a t i c
         //
 		keywordKind[91] = (TK_static);
+	  
+	
+        //
+        // Rule 92:  QVTKeyWord ::= r e s u l t
+        //
+		keywordKind[92] = (TK_result);
 	  
 	
 

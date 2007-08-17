@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.1 2007/07/29 19:50:55 radvorak Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.2 2007/08/17 12:21:35 aigdalov Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -320,6 +320,7 @@ $KeyWords
 	blackbox
 	abstract
 	static
+	result
 	
 	rename
 $End
@@ -339,7 +340,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.1 2007/07/29 19:50:55 radvorak Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.2 2007/08/17 12:21:35 aigdalov Exp $
  */
 	./
 $End
@@ -2528,7 +2529,19 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
+		
+	simpleNameCS ::= result
+		/.$BeginJava
+					CSTNode result = createSimpleNameCS(
+							SimpleTypeEnum.IDENTIFIER_LITERAL,
+							getTokenText($getToken(1))
+						);
+					setOffsets(result, getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
 
+		
 	modelTypeExpCS ::= modeltype IDENTIFIER complianceKindCSOpt uses packageRefList modelTypeWhereCSOpt ;
 		/.$BeginJava
 					EList whereList = (EList)$getSym(6);
