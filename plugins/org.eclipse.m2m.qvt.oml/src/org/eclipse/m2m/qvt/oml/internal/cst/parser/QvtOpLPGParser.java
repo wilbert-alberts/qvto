@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.2 2007/08/17 12:21:35 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.3 2007/08/17 15:59:13 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.2 2007/08/17 12:21:35 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.3 2007/08/17 15:59:13 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -1022,43 +1022,12 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 	protected CSTNode createAssignStatementCS(OCLExpressionCS sym,
 			OCLExpressionCS sym2, boolean b) {
 		AssignStatementCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createAssignStatementCS();
-		result.setPathNameCS(extractQualifiedName(sym));
+		result.setLValueCS(sym);
 		result.setOclExpressionCS(sym2);
 		result.setIncremental(b);
 		return result;
 	}
 	
-    private PathNameCS extractQualifiedName(OCLExpressionCS qualified) {
-    	if (qualified instanceof PathNameCS) {
-    		return (PathNameCS) qualified;
-    	}
-    	else if (qualified instanceof VariableExpCS) {
-    		PathNameCS result = CSTFactory.eINSTANCE.createPathNameCS();
-    		result.getSequenceOfNames().add(((VariableExpCS) qualified).getSimpleNameCS().getValue());
-    		result.setStartOffset(qualified.getStartOffset());
-    		result.setEndOffset(qualified.getEndOffset());
-    		return result;
-    	}
-    	else if (qualified instanceof FeatureCallExpCS) {
-    		FeatureCallExpCS callExp = (FeatureCallExpCS) qualified;
-    		if (callExp.getSource() == null) {
-    			return null;
-    		}
-    		PathNameCS prefix = extractQualifiedName(callExp.getSource());
-    		if (prefix == null) {
-    			return null;
-    		}
-    		PathNameCS result = CSTFactory.eINSTANCE.createPathNameCS();
-    		result.getSequenceOfNames().addAll(prefix.getSequenceOfNames());
-    		result.getSequenceOfNames().add(callExp.getSimpleNameCS().getValue());
-    		result.setStartOffset(qualified.getStartOffset());
-    		result.setEndOffset(qualified.getEndOffset());
-    		return result;
-    	}
-    	return null;
-    }
-	
-
 	protected void updateMappingBodyPositions(MappingBodyCS mappingBody,
 			int bodyLeft, int bodyRight, int outBodyLeft, int outBodyRight) {
 		if (mappingBody != null && mappingBody.isShort() && mappingBody.getOutExpCS() != null) {

@@ -106,7 +106,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="MappingEndCS" eSuperTypes="#//cst/MappingSectionCS"/>
     <eClassifiers xsi:type="ecore:EClass" name="StatementCS" abstract="true" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"/>
     <eClassifiers xsi:type="ecore:EClass" name="AssignStatementCS" eSuperTypes="#//cst/StatementCS">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="pathNameCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/PathNameCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="lValueCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="oclExpressionCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>

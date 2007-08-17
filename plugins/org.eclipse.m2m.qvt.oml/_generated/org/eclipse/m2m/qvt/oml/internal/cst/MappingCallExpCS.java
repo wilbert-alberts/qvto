@@ -31,36 +31,36 @@ import org.eclipse.ocl.internal.cst.OperationCallExpCS;
  */
 public interface MappingCallExpCS extends OperationCallExpCS {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
     /**
-	 * Returns the value of the '<em><b>Strict</b></em>' attribute.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Strict</b></em>' attribute.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Strict</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Strict</em>' attribute.
-	 * @see #setStrict(boolean)
-	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getMappingCallExpCS_Strict()
-	 * @model
-	 * @generated
-	 */
+     * @return the value of the '<em>Strict</em>' attribute.
+     * @see #setStrict(boolean)
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getMappingCallExpCS_Strict()
+     * @model
+     * @generated
+     */
 	boolean isStrict();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.MappingCallExpCS#isStrict <em>Strict</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.MappingCallExpCS#isStrict <em>Strict</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Strict</em>' attribute.
-	 * @see #isStrict()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Strict</em>' attribute.
+     * @see #isStrict()
+     * @generated
+     */
 	void setStrict(boolean value);
 
 } // MappingCallExpCS

@@ -41,153 +41,153 @@ import org.eclipse.ocl.internal.cst.impl.CSTNodeImpl;
  */
 public abstract class ImportCSImpl extends CSTNodeImpl implements ImportCS {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
     /**
-	 * The cached value of the '{@link #getPathNameCS() <em>Path Name CS</em>}' containment reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getPathNameCS() <em>Path Name CS</em>}' containment reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getPathNameCS()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getPathNameCS()
+     * @generated
+     * @ordered
+     */
 	protected PathNameCS pathNameCS;
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected ImportCSImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EClass eStaticClass() {
-		return CSTPackage.Literals.IMPORT_CS;
-	}
+        return CSTPackage.Literals.IMPORT_CS;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public PathNameCS getPathNameCS() {
-		return pathNameCS;
-	}
+        return pathNameCS;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public NotificationChain basicSetPathNameCS(PathNameCS newPathNameCS, NotificationChain msgs) {
-		PathNameCS oldPathNameCS = pathNameCS;
-		pathNameCS = newPathNameCS;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.IMPORT_CS__PATH_NAME_CS, oldPathNameCS, newPathNameCS);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
+        PathNameCS oldPathNameCS = pathNameCS;
+        pathNameCS = newPathNameCS;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.IMPORT_CS__PATH_NAME_CS, oldPathNameCS, newPathNameCS);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setPathNameCS(PathNameCS newPathNameCS) {
-		if (newPathNameCS != pathNameCS) {
-			NotificationChain msgs = null;
-			if (pathNameCS != null)
-				msgs = ((InternalEObject)pathNameCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.IMPORT_CS__PATH_NAME_CS, null, msgs);
-			if (newPathNameCS != null)
-				msgs = ((InternalEObject)newPathNameCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.IMPORT_CS__PATH_NAME_CS, null, msgs);
-			msgs = basicSetPathNameCS(newPathNameCS, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.IMPORT_CS__PATH_NAME_CS, newPathNameCS, newPathNameCS));
-	}
+        if (newPathNameCS != pathNameCS) {
+            NotificationChain msgs = null;
+            if (pathNameCS != null)
+                msgs = ((InternalEObject)pathNameCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.IMPORT_CS__PATH_NAME_CS, null, msgs);
+            if (newPathNameCS != null)
+                msgs = ((InternalEObject)newPathNameCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.IMPORT_CS__PATH_NAME_CS, null, msgs);
+            msgs = basicSetPathNameCS(newPathNameCS, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.IMPORT_CS__PATH_NAME_CS, newPathNameCS, newPathNameCS));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case CSTPackage.IMPORT_CS__PATH_NAME_CS:
-				return basicSetPathNameCS(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case CSTPackage.IMPORT_CS__PATH_NAME_CS:
+                return basicSetPathNameCS(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case CSTPackage.IMPORT_CS__PATH_NAME_CS:
-				return getPathNameCS();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case CSTPackage.IMPORT_CS__PATH_NAME_CS:
+                return getPathNameCS();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case CSTPackage.IMPORT_CS__PATH_NAME_CS:
-				setPathNameCS((PathNameCS)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case CSTPackage.IMPORT_CS__PATH_NAME_CS:
+                setPathNameCS((PathNameCS)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case CSTPackage.IMPORT_CS__PATH_NAME_CS:
-				setPathNameCS((PathNameCS)null);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case CSTPackage.IMPORT_CS__PATH_NAME_CS:
+                setPathNameCS((PathNameCS)null);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case CSTPackage.IMPORT_CS__PATH_NAME_CS:
-				return pathNameCS != null;
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case CSTPackage.IMPORT_CS__PATH_NAME_CS:
+                return pathNameCS != null;
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //ImportCSImpl

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempPackageImpl.java,v 1.1 2007/07/29 19:50:57 radvorak Exp $
+ * $Id: TempPackageImpl.java,v 1.2 2007/08/17 15:59:13 aigdalov Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.temp.impl;
 
@@ -41,278 +41,278 @@ import org.eclipse.ocl.internal.cst.CSTPackage;
  */
 public class TempPackageImpl extends EPackageImpl implements TempPackage {
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private EClass errorCallExpCSEClass = null;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private EClass resolveOpArgsExpCSEClass = null;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private EClass scopedNameCSEClass = null;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private EClass errorVariableInitializationCSEClass = null;
 
     /**
-	 * Creates an instance of the model <b>Package</b>, registered with
-	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
-	 * package URI value.
-	 * <p>Note: the correct way to create the package is via the static
-	 * factory method {@link #init init()}, which also performs
-	 * initialization of the package, or returns the registered package,
-	 * if one already exists.
-	 * <!-- begin-user-doc -->
+     * Creates an instance of the model <b>Package</b>, registered with
+     * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
+     * package URI value.
+     * <p>Note: the correct way to create the package is via the static
+     * factory method {@link #init init()}, which also performs
+     * initialization of the package, or returns the registered package,
+     * if one already exists.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.eclipse.m2m.qvt.oml.internal.cst.temp.TempPackage#eNS_URI
-	 * @see #init()
-	 * @generated
-	 */
+     * @see org.eclipse.emf.ecore.EPackage.Registry
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.temp.TempPackage#eNS_URI
+     * @see #init()
+     * @generated
+     */
     private TempPackageImpl() {
-		super(eNS_URI, TempFactory.eINSTANCE);
-	}
+        super(eNS_URI, TempFactory.eINSTANCE);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private static boolean isInited = false;
 
     /**
-	 * Creates, registers, and initializes the <b>Package</b> for this
-	 * model, and for any others upon which it depends.  Simple
-	 * dependencies are satisfied by calling this method on all
-	 * dependent packages before doing anything else.  This method drives
-	 * initialization for interdependent packages directly, in parallel
-	 * with this package, itself.
-	 * <p>Of this package and its interdependencies, all packages which
-	 * have not yet been registered by their URI values are first created
-	 * and registered.  The packages are then initialized in two steps:
-	 * meta-model objects for all of the packages are created before any
-	 * are initialized, since one package's meta-model objects may refer to
-	 * those of another.
-	 * <p>Invocation of this method will not affect any packages that have
-	 * already been initialized.
-	 * <!-- begin-user-doc -->
+     * Creates, registers, and initializes the <b>Package</b> for this
+     * model, and for any others upon which it depends.  Simple
+     * dependencies are satisfied by calling this method on all
+     * dependent packages before doing anything else.  This method drives
+     * initialization for interdependent packages directly, in parallel
+     * with this package, itself.
+     * <p>Of this package and its interdependencies, all packages which
+     * have not yet been registered by their URI values are first created
+     * and registered.  The packages are then initialized in two steps:
+     * meta-model objects for all of the packages are created before any
+     * are initialized, since one package's meta-model objects may refer to
+     * those of another.
+     * <p>Invocation of this method will not affect any packages that have
+     * already been initialized.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #eNS_URI
-	 * @see #createPackageContents()
-	 * @see #initializePackageContents()
-	 * @generated
-	 */
+     * @see #eNS_URI
+     * @see #createPackageContents()
+     * @see #initializePackageContents()
+     * @generated
+     */
     public static TempPackage init() {
-		if (isInited) return (TempPackage)EPackage.Registry.INSTANCE.getEPackage(TempPackage.eNS_URI);
+        if (isInited) return (TempPackage)EPackage.Registry.INSTANCE.getEPackage(TempPackage.eNS_URI);
 
-		// Obtain or create and register package
-		TempPackageImpl theTempPackage = (TempPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof TempPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(eNS_URI) : new TempPackageImpl());
+        // Obtain or create and register package
+        TempPackageImpl theTempPackage = (TempPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof TempPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(eNS_URI) : new TempPackageImpl());
 
-		isInited = true;
+        isInited = true;
 
-		// Initialize simple dependencies
-		CSTPackage.eINSTANCE.eClass();
+        // Initialize simple dependencies
+        CSTPackage.eINSTANCE.eClass();
 
-		// Obtain or create and register interdependencies
-		CSTPackageImpl theCSTPackage_1 = (CSTPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage.eNS_URI) instanceof CSTPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage.eNS_URI) : org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage.eINSTANCE);
+        // Obtain or create and register interdependencies
+        CSTPackageImpl theCSTPackage_1 = (CSTPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage.eNS_URI) instanceof CSTPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage.eNS_URI) : org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage.eINSTANCE);
 
-		// Create package meta-data objects
-		theTempPackage.createPackageContents();
-		theCSTPackage_1.createPackageContents();
+        // Create package meta-data objects
+        theTempPackage.createPackageContents();
+        theCSTPackage_1.createPackageContents();
 
-		// Initialize created meta-data
-		theTempPackage.initializePackageContents();
-		theCSTPackage_1.initializePackageContents();
+        // Initialize created meta-data
+        theTempPackage.initializePackageContents();
+        theCSTPackage_1.initializePackageContents();
 
-		// Mark meta-data to indicate it can't be changed
-		theTempPackage.freeze();
+        // Mark meta-data to indicate it can't be changed
+        theTempPackage.freeze();
 
-		return theTempPackage;
-	}
+        return theTempPackage;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EClass getErrorCallExpCS() {
-		return errorCallExpCSEClass;
-	}
+        return errorCallExpCSEClass;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EClass getResolveOpArgsExpCS() {
-		return resolveOpArgsExpCSEClass;
-	}
+        return resolveOpArgsExpCSEClass;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EReference getResolveOpArgsExpCS_Target() {
-		return (EReference)resolveOpArgsExpCSEClass.getEStructuralFeatures().get(0);
-	}
+        return (EReference)resolveOpArgsExpCSEClass.getEStructuralFeatures().get(0);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EReference getResolveOpArgsExpCS_Condition() {
-		return (EReference)resolveOpArgsExpCSEClass.getEStructuralFeatures().get(1);
-	}
+        return (EReference)resolveOpArgsExpCSEClass.getEStructuralFeatures().get(1);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EClass getScopedNameCS() {
-		return scopedNameCSEClass;
-	}
+        return scopedNameCSEClass;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EReference getScopedNameCS_TypeCS() {
-		return (EReference)scopedNameCSEClass.getEStructuralFeatures().get(0);
-	}
+        return (EReference)scopedNameCSEClass.getEStructuralFeatures().get(0);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EAttribute getScopedNameCS_Name() {
-		return (EAttribute)scopedNameCSEClass.getEStructuralFeatures().get(1);
-	}
+        return (EAttribute)scopedNameCSEClass.getEStructuralFeatures().get(1);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EClass getErrorVariableInitializationCS() {
-		return errorVariableInitializationCSEClass;
-	}
+        return errorVariableInitializationCSEClass;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public TempFactory getTempFactory() {
-		return (TempFactory)getEFactoryInstance();
-	}
+        return (TempFactory)getEFactoryInstance();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private boolean isCreated = false;
 
     /**
-	 * Creates the meta-model objects for the package.  This method is
-	 * guarded to have no affect on any invocation but its first.
-	 * <!-- begin-user-doc -->
+     * Creates the meta-model objects for the package.  This method is
+     * guarded to have no affect on any invocation but its first.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void createPackageContents() {
-		if (isCreated) return;
-		isCreated = true;
+        if (isCreated) return;
+        isCreated = true;
 
-		// Create classes and their features
-		errorCallExpCSEClass = createEClass(ERROR_CALL_EXP_CS);
+        // Create classes and their features
+        errorCallExpCSEClass = createEClass(ERROR_CALL_EXP_CS);
 
-		resolveOpArgsExpCSEClass = createEClass(RESOLVE_OP_ARGS_EXP_CS);
-		createEReference(resolveOpArgsExpCSEClass, RESOLVE_OP_ARGS_EXP_CS__TARGET);
-		createEReference(resolveOpArgsExpCSEClass, RESOLVE_OP_ARGS_EXP_CS__CONDITION);
+        resolveOpArgsExpCSEClass = createEClass(RESOLVE_OP_ARGS_EXP_CS);
+        createEReference(resolveOpArgsExpCSEClass, RESOLVE_OP_ARGS_EXP_CS__TARGET);
+        createEReference(resolveOpArgsExpCSEClass, RESOLVE_OP_ARGS_EXP_CS__CONDITION);
 
-		scopedNameCSEClass = createEClass(SCOPED_NAME_CS);
-		createEReference(scopedNameCSEClass, SCOPED_NAME_CS__TYPE_CS);
-		createEAttribute(scopedNameCSEClass, SCOPED_NAME_CS__NAME);
+        scopedNameCSEClass = createEClass(SCOPED_NAME_CS);
+        createEReference(scopedNameCSEClass, SCOPED_NAME_CS__TYPE_CS);
+        createEAttribute(scopedNameCSEClass, SCOPED_NAME_CS__NAME);
 
-		errorVariableInitializationCSEClass = createEClass(ERROR_VARIABLE_INITIALIZATION_CS);
-	}
+        errorVariableInitializationCSEClass = createEClass(ERROR_VARIABLE_INITIALIZATION_CS);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private boolean isInitialized = false;
 
     /**
-	 * Complete the initialization of the package and its meta-model.  This
-	 * method is guarded to have no affect on any invocation but its first.
-	 * <!-- begin-user-doc -->
+     * Complete the initialization of the package and its meta-model.  This
+     * method is guarded to have no affect on any invocation but its first.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void initializePackageContents() {
-		if (isInitialized) return;
-		isInitialized = true;
+        if (isInitialized) return;
+        isInitialized = true;
 
-		// Initialize package
-		setName(eNAME);
-		setNsPrefix(eNS_PREFIX);
-		setNsURI(eNS_URI);
+        // Initialize package
+        setName(eNAME);
+        setNsPrefix(eNS_PREFIX);
+        setNsURI(eNS_URI);
 
-		// Obtain other dependent packages
-		CSTPackage theCSTPackage = (CSTPackage)EPackage.Registry.INSTANCE.getEPackage(CSTPackage.eNS_URI);
-		org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage theCSTPackage_1 = (org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage)EPackage.Registry.INSTANCE.getEPackage(org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage.eNS_URI);
+        // Obtain other dependent packages
+        CSTPackage theCSTPackage = (CSTPackage)EPackage.Registry.INSTANCE.getEPackage(CSTPackage.eNS_URI);
+        org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage theCSTPackage_1 = (org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage)EPackage.Registry.INSTANCE.getEPackage(org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage.eNS_URI);
 
-		// Create type parameters
+        // Create type parameters
 
-		// Set bounds for type parameters
+        // Set bounds for type parameters
 
-		// Add supertypes to classes
-		errorCallExpCSEClass.getESuperTypes().add(theCSTPackage.getCallExpCS());
-		resolveOpArgsExpCSEClass.getESuperTypes().add(theCSTPackage.getCSTNode());
-		scopedNameCSEClass.getESuperTypes().add(theCSTPackage.getCSTNode());
-		errorVariableInitializationCSEClass.getESuperTypes().add(theCSTPackage_1.getVariableInitializationCS());
+        // Add supertypes to classes
+        errorCallExpCSEClass.getESuperTypes().add(theCSTPackage.getCallExpCS());
+        resolveOpArgsExpCSEClass.getESuperTypes().add(theCSTPackage.getCSTNode());
+        scopedNameCSEClass.getESuperTypes().add(theCSTPackage.getCSTNode());
+        errorVariableInitializationCSEClass.getESuperTypes().add(theCSTPackage_1.getVariableInitializationCS());
 
-		// Initialize classes and features; add operations and parameters
-		initEClass(errorCallExpCSEClass, ErrorCallExpCS.class, "ErrorCallExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        // Initialize classes and features; add operations and parameters
+        initEClass(errorCallExpCSEClass, ErrorCallExpCS.class, "ErrorCallExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(resolveOpArgsExpCSEClass, ResolveOpArgsExpCS.class, "ResolveOpArgsExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getResolveOpArgsExpCS_Target(), theCSTPackage.getVariableCS(), null, "target", null, 0, 1, ResolveOpArgsExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(getResolveOpArgsExpCS_Condition(), theCSTPackage.getOCLExpressionCS(), null, "condition", null, 0, 1, ResolveOpArgsExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEClass(resolveOpArgsExpCSEClass, ResolveOpArgsExpCS.class, "ResolveOpArgsExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getResolveOpArgsExpCS_Target(), theCSTPackage.getVariableCS(), null, "target", null, 0, 1, ResolveOpArgsExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEReference(getResolveOpArgsExpCS_Condition(), theCSTPackage.getOCLExpressionCS(), null, "condition", null, 0, 1, ResolveOpArgsExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(scopedNameCSEClass, ScopedNameCS.class, "ScopedNameCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getScopedNameCS_TypeCS(), theCSTPackage.getTypeCS(), null, "typeCS", null, 0, 1, ScopedNameCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getScopedNameCS_Name(), ecorePackage.getEString(), "name", null, 1, 1, ScopedNameCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEClass(scopedNameCSEClass, ScopedNameCS.class, "ScopedNameCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getScopedNameCS_TypeCS(), theCSTPackage.getTypeCS(), null, "typeCS", null, 0, 1, ScopedNameCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEAttribute(getScopedNameCS_Name(), ecorePackage.getEString(), "name", null, 1, 1, ScopedNameCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(errorVariableInitializationCSEClass, ErrorVariableInitializationCS.class, "ErrorVariableInitializationCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-	}
+        initEClass(errorVariableInitializationCSEClass, ErrorVariableInitializationCS.class, "ErrorVariableInitializationCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    }
 
 } //TempPackageImpl

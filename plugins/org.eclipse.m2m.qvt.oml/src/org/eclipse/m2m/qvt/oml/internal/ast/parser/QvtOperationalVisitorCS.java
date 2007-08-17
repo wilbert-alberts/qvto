@@ -114,9 +114,11 @@ import org.eclipse.ocl.expressions.PropertyCallExp;
 import org.eclipse.ocl.expressions.TypeExp;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.expressions.VariableExp;
+import org.eclipse.ocl.internal.cst.CSTFactory;
 import org.eclipse.ocl.internal.cst.CSTNode;
 import org.eclipse.ocl.internal.cst.CallExpCS;
 import org.eclipse.ocl.internal.cst.DotOrArrowEnum;
+import org.eclipse.ocl.internal.cst.FeatureCallExpCS;
 import org.eclipse.ocl.internal.cst.OCLExpressionCS;
 import org.eclipse.ocl.internal.cst.OperationCallExpCS;
 import org.eclipse.ocl.internal.cst.PathNameCS;
@@ -1204,27 +1206,31 @@ public class QvtOperationalVisitorCS
 
 	private OCLExpression<EClassifier> visitAssignStatementCS(AssignStatementCS expressionCS, QvtOperationalEnv env)
 			throws SemanticException {
-		if (expressionCS.getPathNameCS() == null) {
+	    OCLExpressionCS lValueCS = expressionCS.getLValueCS();
+	    oclExpressionCS(lValueCS, env);
+	    PathNameCS pathNameCS = extractQualifiedName(lValueCS);
+		if (pathNameCS == null) {
+            env.reportError(ValidationMessages.notAnLValueError, lValueCS);
 			return null;
 		}
-		EList<String> qualifiedName = expressionCS.getPathNameCS().getSequenceOfNames();
+		EList<String> qualifiedName = pathNameCS.getSequenceOfNames();
 		if (qualifiedName.size() > 2) {
-			env.reportError(ValidationMessages.cannotModifyNestedPropertiesError, expressionCS);
+			env.reportError(ValidationMessages.cannotModifyNestedPropertiesError, lValueCS);
 			return null;
 		}
 
 		String lvalueName = qualifiedName.get(0);
 		if (qualifiedName.size() == 1 && Environment.SELF_VARIABLE_NAME.equals(lvalueName)) {
-			env.reportError(ValidationMessages.CantAssignToSelf, expressionCS.getPathNameCS());
+			env.reportError(ValidationMessages.CantAssignToSelf, lValueCS);
 			return null;
 		}
 
 		Variable<EClassifier, EParameter> variable = env.lookup(lvalueName);
 		if (variable != null) {
-			QvtOperationalParserUtil.validateVariableModification(variable, expressionCS.getPathNameCS(), env);
+			QvtOperationalParserUtil.validateVariableModification(variable, pathNameCS, env);
 		} else {
 			env.reportError(NLS.bind(ValidationMessages.unresolvedNameError, new Object[] { lvalueName }),
-					expressionCS.getPathNameCS());
+			        lValueCS);
 			return null;
 		}
 
@@ -1237,19 +1243,18 @@ public class QvtOperationalVisitorCS
 		if (qualifiedName.size() > 1) {
 			leftProp = env.lookupProperty(variable.getType(), qualifiedName.get(1));
 			if (leftProp == null) {
-				String fullName = QvtOperationalParserUtil.getStringRepresentation(expressionCS.getPathNameCS(), "."); //$NON-NLS-1$ 
+				String fullName = QvtOperationalParserUtil.getStringRepresentation(pathNameCS, "."); //$NON-NLS-1$ 
 				env.reportError(NLS.bind(ValidationMessages.invalidPropertyReferenceError,
-						new Object[] { fullName }), expressionCS.getPathNameCS());
+						new Object[] { fullName }), lValueCS);
 				return null;
 			} else if (!leftProp.isChangeable()) {
-				env.reportError(NLS.bind(ValidationMessages.ReadOnlyProperty, leftProp.getName()), expressionCS
-						.getPathNameCS());
+				env.reportError(NLS.bind(ValidationMessages.ReadOnlyProperty, leftProp.getName()), lValueCS);
 			}
 		}
 
 		EClassifier type = leftProp == null ? variable.getType() : env.getUMLReflection().getOCLType(leftProp);
 		QvtOperationalParserUtil.validateAssignment(variable.getName(), type, rightExpr, expressionCS.isIncremental(),
-				expressionCS.getPathNameCS(), env);
+		        pathNameCS, env);
 
 		AssignExp result = ExpressionsFactory.eINSTANCE.createAssignExp();
 		result.setStartPosition(expressionCS.getStartOffset());
@@ -1272,7 +1277,37 @@ public class QvtOperationalVisitorCS
 
 		return result;
 	}
-
+	
+    private PathNameCS extractQualifiedName(OCLExpressionCS qualified) {
+        if (qualified instanceof PathNameCS) {
+            return (PathNameCS) qualified;
+        }
+        else if (qualified instanceof VariableExpCS) {
+            PathNameCS result = CSTFactory.eINSTANCE.createPathNameCS();
+            result.getSequenceOfNames().add(((VariableExpCS) qualified).getSimpleNameCS().getValue());
+            result.setStartOffset(qualified.getStartOffset());
+            result.setEndOffset(qualified.getEndOffset());
+            return result;
+        }
+        else if (qualified instanceof FeatureCallExpCS) {
+            FeatureCallExpCS callExp = (FeatureCallExpCS) qualified;
+            if (callExp.getSource() == null) {
+                return null;
+            }
+            PathNameCS prefix = extractQualifiedName(callExp.getSource());
+            if (prefix == null) {
+                return null;
+            }
+            PathNameCS result = CSTFactory.eINSTANCE.createPathNameCS();
+            result.getSequenceOfNames().addAll(prefix.getSequenceOfNames());
+            result.getSequenceOfNames().add(callExp.getSimpleNameCS().getValue());
+            result.setStartOffset(qualified.getStartOffset());
+            result.setEndOffset(qualified.getEndOffset());
+            return result;
+        }
+        return null;
+    }
+	
 	private VarParameter visitParameterDeclarationCS(ParameterDeclarationCS paramCS, QvtOperationalEnv env,
 			boolean isOutAllowed) throws SemanticException {
 		DirectionKind directionKind = (DirectionKind) ExpressionsFactory.eINSTANCE.createFromString(

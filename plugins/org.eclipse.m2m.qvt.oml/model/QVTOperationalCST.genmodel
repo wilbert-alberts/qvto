@@ -109,8 +109,7 @@
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/MappingEndCS"/>
       <genClasses image="false" ecoreClass="QVTOperationalCST.ecore#//cst/StatementCS"/>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/AssignStatementCS">
-        <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/AssignStatementCS/pathNameCS"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/AssignStatementCS/lValueCS"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/AssignStatementCS/oclExpressionCS"/>
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/AssignStatementCS/incremental"/>

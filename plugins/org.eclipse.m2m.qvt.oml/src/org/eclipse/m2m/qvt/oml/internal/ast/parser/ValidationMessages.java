@@ -68,7 +68,8 @@ public final class ValidationMessages extends NLS {
 	public static String failedToResolveMetamodelError;
 	public static String propertyAlreadyExistsInTypeError;
 	public static String bodyTypeNotCompatibleWithReturnTypeError;
-	public static String cannotModifyNestedPropertiesError;
+    public static String notAnLValueError;
+    public static String cannotModifyNestedPropertiesError;
 	public static String CantAssignToSelf;
 	public static String unresolvedNameError;
 	public static String inputParameterModificationError;

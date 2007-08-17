@@ -50,255 +50,255 @@ import org.eclipse.ocl.internal.cst.impl.OCLExpressionCSImpl;
  */
 public class WhileExpCSImpl extends OCLExpressionCSImpl implements WhileExpCS {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
     /**
-	 * The cached value of the '{@link #getBodyExpressions() <em>Body Expressions</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getBodyExpressions() <em>Body Expressions</em>}' containment reference list.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getBodyExpressions()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getBodyExpressions()
+     * @generated
+     * @ordered
+     */
 	protected EList<OCLExpressionCS> bodyExpressions;
 
 	/**
-	 * The cached value of the '{@link #getCondition() <em>Condition</em>}' containment reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getCondition() <em>Condition</em>}' containment reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getCondition()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getCondition()
+     * @generated
+     * @ordered
+     */
 	protected OCLExpressionCS condition;
 
 	/**
-	 * The cached value of the '{@link #getResult() <em>Result</em>}' containment reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getResult() <em>Result</em>}' containment reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getResult()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getResult()
+     * @generated
+     * @ordered
+     */
 	protected OCLExpressionCS result;
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected WhileExpCSImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EClass eStaticClass() {
-		return CSTPackage.Literals.WHILE_EXP_CS;
-	}
+        return CSTPackage.Literals.WHILE_EXP_CS;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public EList<OCLExpressionCS> getBodyExpressions() {
-		if (bodyExpressions == null) {
-			bodyExpressions = new EObjectContainmentEList<OCLExpressionCS>(OCLExpressionCS.class, this, CSTPackage.WHILE_EXP_CS__BODY_EXPRESSIONS);
-		}
-		return bodyExpressions;
-	}
+        if (bodyExpressions == null) {
+            bodyExpressions = new EObjectContainmentEList<OCLExpressionCS>(OCLExpressionCS.class, this, CSTPackage.WHILE_EXP_CS__BODY_EXPRESSIONS);
+        }
+        return bodyExpressions;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public OCLExpressionCS getCondition() {
-		return condition;
-	}
+        return condition;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public NotificationChain basicSetCondition(OCLExpressionCS newCondition, NotificationChain msgs) {
-		OCLExpressionCS oldCondition = condition;
-		condition = newCondition;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.WHILE_EXP_CS__CONDITION, oldCondition, newCondition);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
+        OCLExpressionCS oldCondition = condition;
+        condition = newCondition;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.WHILE_EXP_CS__CONDITION, oldCondition, newCondition);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setCondition(OCLExpressionCS newCondition) {
-		if (newCondition != condition) {
-			NotificationChain msgs = null;
-			if (condition != null)
-				msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.WHILE_EXP_CS__CONDITION, null, msgs);
-			if (newCondition != null)
-				msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.WHILE_EXP_CS__CONDITION, null, msgs);
-			msgs = basicSetCondition(newCondition, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.WHILE_EXP_CS__CONDITION, newCondition, newCondition));
-	}
+        if (newCondition != condition) {
+            NotificationChain msgs = null;
+            if (condition != null)
+                msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.WHILE_EXP_CS__CONDITION, null, msgs);
+            if (newCondition != null)
+                msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.WHILE_EXP_CS__CONDITION, null, msgs);
+            msgs = basicSetCondition(newCondition, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.WHILE_EXP_CS__CONDITION, newCondition, newCondition));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public OCLExpressionCS getResult() {
-		return result;
-	}
+        return result;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public NotificationChain basicSetResult(OCLExpressionCS newResult, NotificationChain msgs) {
-		OCLExpressionCS oldResult = result;
-		result = newResult;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.WHILE_EXP_CS__RESULT, oldResult, newResult);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
+        OCLExpressionCS oldResult = result;
+        result = newResult;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.WHILE_EXP_CS__RESULT, oldResult, newResult);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setResult(OCLExpressionCS newResult) {
-		if (newResult != result) {
-			NotificationChain msgs = null;
-			if (result != null)
-				msgs = ((InternalEObject)result).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.WHILE_EXP_CS__RESULT, null, msgs);
-			if (newResult != null)
-				msgs = ((InternalEObject)newResult).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.WHILE_EXP_CS__RESULT, null, msgs);
-			msgs = basicSetResult(newResult, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.WHILE_EXP_CS__RESULT, newResult, newResult));
-	}
+        if (newResult != result) {
+            NotificationChain msgs = null;
+            if (result != null)
+                msgs = ((InternalEObject)result).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.WHILE_EXP_CS__RESULT, null, msgs);
+            if (newResult != null)
+                msgs = ((InternalEObject)newResult).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.WHILE_EXP_CS__RESULT, null, msgs);
+            msgs = basicSetResult(newResult, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.WHILE_EXP_CS__RESULT, newResult, newResult));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case CSTPackage.WHILE_EXP_CS__BODY_EXPRESSIONS:
-				return ((InternalEList<?>)getBodyExpressions()).basicRemove(otherEnd, msgs);
-			case CSTPackage.WHILE_EXP_CS__CONDITION:
-				return basicSetCondition(null, msgs);
-			case CSTPackage.WHILE_EXP_CS__RESULT:
-				return basicSetResult(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case CSTPackage.WHILE_EXP_CS__BODY_EXPRESSIONS:
+                return ((InternalEList<?>)getBodyExpressions()).basicRemove(otherEnd, msgs);
+            case CSTPackage.WHILE_EXP_CS__CONDITION:
+                return basicSetCondition(null, msgs);
+            case CSTPackage.WHILE_EXP_CS__RESULT:
+                return basicSetResult(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case CSTPackage.WHILE_EXP_CS__BODY_EXPRESSIONS:
-				return getBodyExpressions();
-			case CSTPackage.WHILE_EXP_CS__CONDITION:
-				return getCondition();
-			case CSTPackage.WHILE_EXP_CS__RESULT:
-				return getResult();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case CSTPackage.WHILE_EXP_CS__BODY_EXPRESSIONS:
+                return getBodyExpressions();
+            case CSTPackage.WHILE_EXP_CS__CONDITION:
+                return getCondition();
+            case CSTPackage.WHILE_EXP_CS__RESULT:
+                return getResult();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case CSTPackage.WHILE_EXP_CS__BODY_EXPRESSIONS:
-				getBodyExpressions().clear();
-				getBodyExpressions().addAll((Collection<? extends OCLExpressionCS>)newValue);
-				return;
-			case CSTPackage.WHILE_EXP_CS__CONDITION:
-				setCondition((OCLExpressionCS)newValue);
-				return;
-			case CSTPackage.WHILE_EXP_CS__RESULT:
-				setResult((OCLExpressionCS)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case CSTPackage.WHILE_EXP_CS__BODY_EXPRESSIONS:
+                getBodyExpressions().clear();
+                getBodyExpressions().addAll((Collection<? extends OCLExpressionCS>)newValue);
+                return;
+            case CSTPackage.WHILE_EXP_CS__CONDITION:
+                setCondition((OCLExpressionCS)newValue);
+                return;
+            case CSTPackage.WHILE_EXP_CS__RESULT:
+                setResult((OCLExpressionCS)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case CSTPackage.WHILE_EXP_CS__BODY_EXPRESSIONS:
-				getBodyExpressions().clear();
-				return;
-			case CSTPackage.WHILE_EXP_CS__CONDITION:
-				setCondition((OCLExpressionCS)null);
-				return;
-			case CSTPackage.WHILE_EXP_CS__RESULT:
-				setResult((OCLExpressionCS)null);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case CSTPackage.WHILE_EXP_CS__BODY_EXPRESSIONS:
+                getBodyExpressions().clear();
+                return;
+            case CSTPackage.WHILE_EXP_CS__CONDITION:
+                setCondition((OCLExpressionCS)null);
+                return;
+            case CSTPackage.WHILE_EXP_CS__RESULT:
+                setResult((OCLExpressionCS)null);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case CSTPackage.WHILE_EXP_CS__BODY_EXPRESSIONS:
-				return bodyExpressions != null && !bodyExpressions.isEmpty();
-			case CSTPackage.WHILE_EXP_CS__CONDITION:
-				return condition != null;
-			case CSTPackage.WHILE_EXP_CS__RESULT:
-				return result != null;
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case CSTPackage.WHILE_EXP_CS__BODY_EXPRESSIONS:
+                return bodyExpressions != null && !bodyExpressions.isEmpty();
+            case CSTPackage.WHILE_EXP_CS__CONDITION:
+                return condition != null;
+            case CSTPackage.WHILE_EXP_CS__RESULT:
+                return result != null;
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //WhileExpCSImpl

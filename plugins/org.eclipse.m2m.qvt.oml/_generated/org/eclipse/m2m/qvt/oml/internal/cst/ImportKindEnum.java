@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ImportKindEnum.java,v 1.1 2007/07/29 19:50:54 radvorak Exp $
+ * $Id: ImportKindEnum.java,v 1.2 2007/08/17 15:59:12 aigdalov Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst;
 
@@ -32,197 +32,197 @@ import org.eclipse.emf.common.util.Enumerator;
  */
 public enum ImportKindEnum implements Enumerator {
 	/**
-	 * The '<em><b>Extension</b></em>' literal object.
-	 * <!-- begin-user-doc -->
+     * The '<em><b>Extension</b></em>' literal object.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #EXTENSION_VALUE
-	 * @generated
-	 * @ordered
-	 */
+     * @see #EXTENSION_VALUE
+     * @generated
+     * @ordered
+     */
 	EXTENSION(0, "extension", "extension"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
-	 * The '<em><b>Access</b></em>' literal object.
-	 * <!-- begin-user-doc -->
+     * The '<em><b>Access</b></em>' literal object.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #ACCESS_VALUE
-	 * @generated
-	 * @ordered
-	 */
+     * @see #ACCESS_VALUE
+     * @generated
+     * @ordered
+     */
 	ACCESS(1, "access", "access"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 	/**
-	 * The '<em><b>Extension</b></em>' literal value.
-	 * <!-- begin-user-doc -->
+     * The '<em><b>Extension</b></em>' literal value.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of '<em><b>Extension</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #EXTENSION
-	 * @model name="extension"
-	 * @generated
-	 * @ordered
-	 */
+     * @see #EXTENSION
+     * @model name="extension"
+     * @generated
+     * @ordered
+     */
 	public static final int EXTENSION_VALUE = 0;
 
 	/**
-	 * The '<em><b>Access</b></em>' literal value.
-	 * <!-- begin-user-doc -->
+     * The '<em><b>Access</b></em>' literal value.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of '<em><b>Access</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #ACCESS
-	 * @model name="access"
-	 * @generated
-	 * @ordered
-	 */
+     * @see #ACCESS
+     * @model name="access"
+     * @generated
+     * @ordered
+     */
 	public static final int ACCESS_VALUE = 1;
 
 	/**
-	 * An array of all the '<em><b>Import Kind Enum</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
+     * An array of all the '<em><b>Import Kind Enum</b></em>' enumerators.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	private static final ImportKindEnum[] VALUES_ARRAY =
 		new ImportKindEnum[] {
-			EXTENSION,
-			ACCESS,
-		};
+            EXTENSION,
+            ACCESS,
+        };
 
 	/**
-	 * A public read-only list of all the '<em><b>Import Kind Enum</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
+     * A public read-only list of all the '<em><b>Import Kind Enum</b></em>' enumerators.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public static final List<ImportKindEnum> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
 	/**
-	 * Returns the '<em><b>Import Kind Enum</b></em>' literal with the specified literal value.
-	 * <!-- begin-user-doc -->
+     * Returns the '<em><b>Import Kind Enum</b></em>' literal with the specified literal value.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public static ImportKindEnum get(String literal) {
-		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-			ImportKindEnum result = VALUES_ARRAY[i];
-			if (result.toString().equals(literal)) {
-				return result;
-			}
-		}
-		return null;
-	}
+        for (int i = 0; i < VALUES_ARRAY.length; ++i) {
+            ImportKindEnum result = VALUES_ARRAY[i];
+            if (result.toString().equals(literal)) {
+                return result;
+            }
+        }
+        return null;
+    }
 
 	/**
-	 * Returns the '<em><b>Import Kind Enum</b></em>' literal with the specified name.
-	 * <!-- begin-user-doc -->
+     * Returns the '<em><b>Import Kind Enum</b></em>' literal with the specified name.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public static ImportKindEnum getByName(String name) {
-		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-			ImportKindEnum result = VALUES_ARRAY[i];
-			if (result.getName().equals(name)) {
-				return result;
-			}
-		}
-		return null;
-	}
+        for (int i = 0; i < VALUES_ARRAY.length; ++i) {
+            ImportKindEnum result = VALUES_ARRAY[i];
+            if (result.getName().equals(name)) {
+                return result;
+            }
+        }
+        return null;
+    }
 
 	/**
-	 * Returns the '<em><b>Import Kind Enum</b></em>' literal with the specified integer value.
-	 * <!-- begin-user-doc -->
+     * Returns the '<em><b>Import Kind Enum</b></em>' literal with the specified integer value.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public static ImportKindEnum get(int value) {
-		switch (value) {
-			case EXTENSION_VALUE: return EXTENSION;
-			case ACCESS_VALUE: return ACCESS;
-		}
-		return null;
-	}
+        switch (value) {
+            case EXTENSION_VALUE: return EXTENSION;
+            case ACCESS_VALUE: return ACCESS;
+        }
+        return null;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	private final int value;
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	private final String name;
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	private final String literal;
 
 	/**
-	 * Only this class can construct instances.
-	 * <!-- begin-user-doc -->
+     * Only this class can construct instances.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	private ImportKindEnum(int value, String name, String literal) {
-		this.value = value;
-		this.name = name;
-		this.literal = literal;
-	}
+        this.value = value;
+        this.name = name;
+        this.literal = literal;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public int getValue() {
-	  return value;
-	}
+      return value;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public String getName() {
-	  return name;
-	}
+      return name;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public String getLiteral() {
-	  return literal;
-	}
+      return literal;
+    }
 
 	/**
-	 * Returns the literal value of the enumerator, which is its string representation.
-	 * <!-- begin-user-doc -->
+     * Returns the literal value of the enumerator, which is its string representation.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public String toString() {
-		return literal;
-	}
+        return literal;
+    }
 	
 } //ImportKindEnum

@@ -22,7 +22,7 @@ import org.eclipse.ocl.internal.cst.PathNameCS;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS#getPathNameCS <em>Path Name CS</em>}</li>
+ *   <li>{@link org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS#getLValueCS <em>LValue CS</em>}</li>
  *   <li>{@link org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS#getOclExpressionCS <em>Ocl Expression CS</em>}</li>
  *   <li>{@link org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS#isIncremental <em>Incremental</em>}</li>
  * </ul>
@@ -34,88 +34,88 @@ import org.eclipse.ocl.internal.cst.PathNameCS;
  */
 public interface AssignStatementCS extends StatementCS {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
     /**
-	 * Returns the value of the '<em><b>Path Name CS</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Path Name CS</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Path Name CS</em>' containment reference.
-	 * @see #setPathNameCS(PathNameCS)
-	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getAssignStatementCS_PathNameCS()
-	 * @model containment="true"
-	 * @generated
-	 */
-	PathNameCS getPathNameCS();
+     * Returns the value of the '<em><b>LValue CS</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>LValue CS</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>LValue CS</em>' containment reference.
+     * @see #setLValueCS(OCLExpressionCS)
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getAssignStatementCS_LValueCS()
+     * @model containment="true"
+     * @generated
+     */
+    OCLExpressionCS getLValueCS();
 
-	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS#getPathNameCS <em>Path Name CS</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Path Name CS</em>' containment reference.
-	 * @see #getPathNameCS()
-	 * @generated
-	 */
-	void setPathNameCS(PathNameCS value);
+    /**
+     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS#getLValueCS <em>LValue CS</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>LValue CS</em>' containment reference.
+     * @see #getLValueCS()
+     * @generated
+     */
+    void setLValueCS(OCLExpressionCS value);
 
-	/**
-	 * Returns the value of the '<em><b>Ocl Expression CS</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
+    /**
+     * Returns the value of the '<em><b>Ocl Expression CS</b></em>' containment reference.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Ocl Expression CS</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Ocl Expression CS</em>' containment reference.
-	 * @see #setOclExpressionCS(OCLExpressionCS)
-	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getAssignStatementCS_OclExpressionCS()
-	 * @model containment="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Ocl Expression CS</em>' containment reference.
+     * @see #setOclExpressionCS(OCLExpressionCS)
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getAssignStatementCS_OclExpressionCS()
+     * @model containment="true"
+     * @generated
+     */
 	OCLExpressionCS getOclExpressionCS();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS#getOclExpressionCS <em>Ocl Expression CS</em>}' containment reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS#getOclExpressionCS <em>Ocl Expression CS</em>}' containment reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Ocl Expression CS</em>' containment reference.
-	 * @see #getOclExpressionCS()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Ocl Expression CS</em>' containment reference.
+     * @see #getOclExpressionCS()
+     * @generated
+     */
 	void setOclExpressionCS(OCLExpressionCS value);
 
 	/**
-	 * Returns the value of the '<em><b>Incremental</b></em>' attribute.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Incremental</b></em>' attribute.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Incremental</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Incremental</em>' attribute.
-	 * @see #setIncremental(boolean)
-	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getAssignStatementCS_Incremental()
-	 * @model
-	 * @generated
-	 */
+     * @return the value of the '<em>Incremental</em>' attribute.
+     * @see #setIncremental(boolean)
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getAssignStatementCS_Incremental()
+     * @model
+     * @generated
+     */
 	boolean isIncremental();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS#isIncremental <em>Incremental</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS#isIncremental <em>Incremental</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Incremental</em>' attribute.
-	 * @see #isIncremental()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Incremental</em>' attribute.
+     * @see #isIncremental()
+     * @generated
+     */
 	void setIncremental(boolean value);
 
 } // AssignStatementCS
