@@ -47,13 +47,13 @@ public class FilesToFilesData extends ModelTestData {
     }
     
     @Override
-	public URI getExpected(IProject project) {
+	public List<URI> getExpected(IProject project) {
         File destFolder = getDestFolder(project);
         List<URI> outUris = new ArrayList<URI>(myExpectedFiles.size());
         for (String outFile : myExpectedFiles) {
         	outUris.add(URI.createFileURI(getFile(destFolder, outFile).getAbsolutePath()));
         }
-        return outUris.get(0); 
+        return outUris; 
     }
     
     public List<String> getFromFiles() {

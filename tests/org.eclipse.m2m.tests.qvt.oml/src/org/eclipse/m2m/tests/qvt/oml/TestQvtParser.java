@@ -15,7 +15,6 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -97,14 +96,14 @@ public class TestQvtParser extends TestCase {
 		QvtCompilationResult[] compiled = compile(folder);
 		
 		assertTrue("No results", compiled.length > 0); //$NON-NLS-1$
-		List allErrors = getAllErrors(compiled);
+		List<QvtMessage> allErrors = getAllErrors(compiled);
 		assertEquals("Wrong error count for '" + folder.getName() + "', error(s)=" + allErrors, myData.getErrCount(), allErrors.size()); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 	
     static class CompositeException extends Exception {
 		private static final long serialVersionUID = -1045874581781288741L;
 
-		public CompositeException(String message, List exceptions) {
+		public CompositeException(String message, List<Throwable> exceptions) {
             super(message);
             myExceptions = exceptions;
         }
@@ -113,9 +112,7 @@ public class TestQvtParser extends TestCase {
 		public String toString() {
             StringBuffer s = new StringBuffer();
             s.append(super.toString());
-            for(Iterator it = myExceptions.iterator(); it.hasNext();) {
-                Throwable t = (Throwable) it.next();
-                
+            for(Throwable t : myExceptions) {
                 StringWriter trace = new StringWriter();
                 t.printStackTrace(new PrintWriter(trace));
                 s.append("\n" + trace.toString()); //$NON-NLS-1$
@@ -124,10 +121,10 @@ public class TestQvtParser extends TestCase {
             return s.toString();
         }
         
-        private final List myExceptions;
+        private final List<Throwable> myExceptions;
     }
     
-	private List getAllErrors(QvtCompilationResult[] compiled) {
+	private List<QvtMessage> getAllErrors(QvtCompilationResult[] compiled) {
 		List<QvtMessage> errors = new ArrayList<QvtMessage>();
 		for (QvtCompilationResult compilationResult : compiled) {
 			TransformationUtil.getErrors(compilationResult.getModule(), errors);

@@ -37,7 +37,7 @@ public class TestQvtInterpreter extends TestTransformation {
     }
     
     public static final ITransformer TRANSFORMER = new ITransformer() {
-        public EObject transform(IFile transformation, List<URI> inUris, IContext qvtContext) throws Exception {
+        public List<EObject> transform(IFile transformation, List<URI> inUris, IContext qvtContext) throws Exception {
         	QvtTransformation trans = new QvtInterpretedTransformation(transformation);
             
         	List<EObject> inputs = new ArrayList<EObject>(inUris.size());
@@ -50,12 +50,15 @@ public class TestQvtInterpreter extends TestTransformation {
             TransformationRunner.Out output = trans.run(input);
             
             List<Resource> extents = output.getExtents();
-            EObject outEObject = extents.isEmpty()? null : extents.get(0).getContents().get(0);
+            List<EObject> result = new ArrayList<EObject>();;
             for (Resource outRes : extents) {
+            	if (!outRes.getContents().isEmpty()) {
+            		result.add(outRes.getContents().get(0));
+            	}
                 saveModel(outRes, new EclipseFile(transformation));
             }
             saveTraceData(output.getTrace(), new EclipseFile(transformation));
-            return outEObject;
+            return result;
         }
     };
 }

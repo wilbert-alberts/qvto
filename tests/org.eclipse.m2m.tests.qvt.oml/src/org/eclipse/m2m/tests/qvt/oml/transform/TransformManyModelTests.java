@@ -40,6 +40,7 @@ public class TransformManyModelTests {
     public static ModelTestData[] createTestData() {
     	return new ModelTestData[] {
     	new FilesToFilesData("mm_modifyvar", Arrays.asList("in.ecore", "in2.ecore"), Arrays.asList("expected.ecore")), //$NON-NLS-1$
+    	new FilesToFilesData("mm_header1", Arrays.asList("in.ecore"), Arrays.asList("expected.uml", "expected.ecore")), //$NON-NLS-1$ //$NON-NLS-2$
     	};
     }
     

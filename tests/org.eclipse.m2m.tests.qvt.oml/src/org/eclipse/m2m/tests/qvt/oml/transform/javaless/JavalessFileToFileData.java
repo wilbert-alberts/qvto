@@ -45,9 +45,9 @@ public class JavalessFileToFileData extends ModelTestData {
     }
     
     @Override
-	public URI getExpected(IProject project) {
+	public List<URI> getExpected(IProject project) {
         File destFolder = getDestFolder(project);
-        return URI.createFileURI(getFile(destFolder, getPatchedData(project).getExpectedFile()).getAbsolutePath()); 
+        return Collections.singletonList(URI.createFileURI(getFile(destFolder, getPatchedData(project).getExpectedFile()).getAbsolutePath())); 
     }
     
     @Override

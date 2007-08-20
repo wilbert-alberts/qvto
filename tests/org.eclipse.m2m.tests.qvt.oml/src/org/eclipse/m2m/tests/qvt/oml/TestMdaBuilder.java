@@ -12,6 +12,7 @@
 package org.eclipse.m2m.tests.qvt.oml;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -56,7 +57,7 @@ public class TestMdaBuilder extends TestCase {
 
 	public void testMdaBuilder() throws Throwable {
         ITransformer transformer = new ITransformer() {
-            public EObject transform(IFile transformation, List<URI> inUris, IContext context) throws Exception {
+            public List<EObject> transform(IFile transformation, List<URI> inUris, IContext context) throws Exception {
                 try {
                     String baseName = transformation.getName();
                     baseName = baseName.substring(0, baseName.length() - transformation.getFileExtension().length());
@@ -68,7 +69,7 @@ public class TestMdaBuilder extends TestCase {
                     launch(transformationId, inUriString, outUriString);
 
                     EObject out = ExtendedEmfUtil.loadModel(new EclipseFile(outFile));
-                    return out;
+                    return Collections.singletonList(out);
                 }
                 finally {
                     TestUtil.deleteJavaFiles(myTest.getProject());

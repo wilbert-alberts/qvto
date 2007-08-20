@@ -50,9 +50,9 @@ public class FileToFileData extends ModelTestData {
     }
     
     @Override
-	public URI getExpected(IProject project) {
+	public List<URI> getExpected(IProject project) {
         File destFolder = getDestFolder(project);
-        return URI.createFileURI(getFile(destFolder, myExpectedFile).getAbsolutePath()); 
+        return Collections.singletonList(URI.createFileURI(getFile(destFolder, myExpectedFile).getAbsolutePath())); 
     }
     
     public String getFromFile() {

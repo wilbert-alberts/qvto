@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TraceSerializer;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
@@ -109,19 +110,23 @@ public abstract class TestTransformation extends TestCase {
         public void check(ModelTestData data, IProject project) throws Exception {
             IFile transformation = getIFile(data.getTransformation(project));
             
-            EObject out = myTransformer.transform(transformation, data.getIn(project), data.getContext());
+            List<EObject> transfResult = myTransformer.transform(transformation, data.getIn(project), data.getContext());
             
-            // for xhtml, as otherwise result contains more elements then the expected one from disk
-            out = saveLoad(transformation, out);
-            
-            data.compareWithExpected(out, project);
+            int index = 0;
+            for (EObject out : transfResult) {
+	            // for xhtml, as otherwise result contains more elements then the expected one from disk
+	            out = saveLoad(transformation, out);
+	            
+	            data.compareWithExpected(out, project, index);
+	            index++;
+            }
         }
         
         private final ITransformer  myTransformer;
     };
     
     public static interface ITransformer {
-        EObject transform(IFile transformation, List<URI> inUris, IContext context) throws Exception;
+        List<EObject> transform(IFile transformation, List<URI> inUris, IContext context) throws Exception;
     }
 
     protected void checkTransformation(IChecker checker) throws Exception {
@@ -149,17 +154,9 @@ public abstract class TestTransformation extends TestCase {
     }
     
     public static void saveModel(Resource extent, CFile qvtFile) throws MdaException {
-        String ext = TransformationUtil.getExtensionForResult(qvtFile);
-        String fileName = qvtFile.getUnitName() + "." + ext; //$NON-NLS-1$
+        String fileName = qvtFile.getUnitName() + "." + getExtensionForExtent(extent); //$NON-NLS-1$
         CFile outFile = qvtFile.getParent().getFile(fileName);
         ExtendedEmfUtil.saveModel(extent, outFile);
-    }
-    
-    public static void saveModel(EObject model, CFile qvtFile) throws MdaException {
-        String ext = TransformationUtil.getExtensionForResult(qvtFile);
-        String fileName = qvtFile.getUnitName() + "." + ext; //$NON-NLS-1$
-        CFile outFile = qvtFile.getParent().getFile(fileName);
-        ExtendedEmfUtil.saveModel(model, outFile);
     }
     
     public static CFile getTraceFile(CFile qvtFile) throws MdaException {
@@ -175,12 +172,27 @@ public abstract class TestTransformation extends TestCase {
     public static EObject saveLoad(IFile transformation, EObject out) throws Exception {
         String baseName = transformation.getName();
         baseName = baseName.substring(0, baseName.length() - transformation.getFileExtension().length());
-        File file = new File(transformation.getParent().getLocation().toFile(), baseName + EmfUtil.getRootPackage(out.eClass().getEPackage()).getName());
+        File file = new File(transformation.getParent().getLocation().toFile(), baseName + getExtensionForEObject(out));
         ExtendedEmfUtil.saveModel(out, new IOFile(file));
         return ExtendedEmfUtil.loadModel(new IOFile(file));
 //        return out;
     }
+    
+    private static String getExtensionForExtent(Resource extent) {
+    	if (extent.getContents().isEmpty()) {
+    		return TransformationUtil.DEFAULT_RESULT_EXTENSION;
+    	}
+    	return getExtensionForEObject(extent.getContents().get(0));
+    }
 
-    private final ModelTestData myData;
+    private static String getExtensionForEObject(EObject eObject) {
+    	EPackage ePackage = eObject.eClass().getEPackage();
+    	if (ePackage == null) {
+    		return TransformationUtil.DEFAULT_RESULT_EXTENSION;
+    	}
+    	return EmfUtil.getRootPackage(ePackage).getName();
+    }
+
+	private final ModelTestData myData;
     private TestProject myProject;
 }

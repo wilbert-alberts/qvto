@@ -48,8 +48,8 @@ public abstract class ModelTestData {
         return myName;
     }
     
-    public void compareWithExpected(EObject out, IProject project) {
-        EObject expected = EmfUtil.loadModel(getExpected(project));
+    public void compareWithExpected(EObject out, IProject project, int index) {
+        EObject expected = EmfUtil.loadModel(getExpected(project).get(index));
         assertEquals(myName + ":", expected, out); //$NON-NLS-1$
     }
     
@@ -85,7 +85,7 @@ public abstract class ModelTestData {
     }
     
     abstract public List<URI> getIn(IProject project); 
-    abstract public URI getExpected(IProject project); 
+    abstract public List<URI> getExpected(IProject project); 
     
     public void prepare(TestProject project) throws Exception {
     }

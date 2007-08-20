@@ -1,16 +1,15 @@
-transformation mm_modifyvar.mm_modifyvar(in model1 : ecore, in model2 : ecore, out ecore);
+transformation mm_modifyvar(in ecore1 : ECORE, in ecore2 : ECORE, out ECORE);
 
-modeltype ecore uses "http://www.eclipse.org/emf/2002/Ecore";
+modeltype ECORE uses "http://www.eclipse.org/emf/2002/Ecore";
 
-mapping main(in model1: EPackage, in model2: EPackage): ecore::EPackage {
+mapping main(in model1: EPackage, in model2: EPackage@ecore2, out ecore3 : EPackage) {
 	init {
 		var pack := object ecore::EPackage { name := 'pack'; };
 		
 		pack.eClassifiers += object ecore::EClass { name := model1.name; };
 		pack.eClassifiers += object ecore::EClass { name := model2.name; };
 		
-		result := pack;
-	}
-	object {
+		ecore3 := pack;
 	}
 }
+
