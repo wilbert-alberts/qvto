@@ -202,6 +202,12 @@ public class NewQVTProjectWizard extends Wizard implements INewWizard, IExecutab
 				BasicNewProjectResourceWizard.updatePerspective(fConfig);
 			}
 			
+			if(fMDAProjectFieldData.isSimple()) {
+				// ensure no Activator class is requested to generate, in case 				
+				// it has been previously selected in the new content page
+				fMDAProjectFieldData.setDoGenerateClass(false);
+			}
+			
             final WorkspaceModifyOperation operation;
             if (fMainPage.isCreatePlugin()) {
                 operation = createNewPluginProjectOperation();

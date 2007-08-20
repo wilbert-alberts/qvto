@@ -678,7 +678,7 @@ public class NewQvtModuleCreationPage extends WizardPage implements Listener {
         // Open an editor on the new file.
         //
         try {
-            IDE.openEditor(page, file);
+            IDE.openEditor(page, file, true);
         } catch (PartInitException exception) {
             MessageDialog.openError(workbenchWindow.getShell(), Messages.NewQVTTransformationWizard_OpenEditorError, exception.getMessage());//$NON-NLS-1$
         }

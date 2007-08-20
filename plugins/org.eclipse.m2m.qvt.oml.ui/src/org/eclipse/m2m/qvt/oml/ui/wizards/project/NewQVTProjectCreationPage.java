@@ -247,6 +247,8 @@ public class NewQVTProjectCreationPage extends WizardNewProjectCreationPage {
 	public void updateData() {
 		fCreationData.setPlugin(!fSimpleProject.getSelection());		
 		fCreationData.setProjectName(getProjectName());
+		fCreationData.setSimple(!fJavaPlugin.getSelection());		
+
 		if(fJavaPlugin.getSelection()) {
 			fCreationData.setSourceFolderName(fSourceText.getText().trim());
 			fCreationData.setOutputFolderName(fOutputText.getText().trim());
@@ -260,6 +262,13 @@ public class NewQVTProjectCreationPage extends WizardNewProjectCreationPage {
 	 * Indicates whether the project to be created is a plugin project.
 	 */
     public boolean isCreatePlugin() {
-        return !fSimpleProject.getSelection();
+        return fSimpleProject != null && !fSimpleProject.getSelection();
+    }
+    
+	/**
+	 * Indicates whether the project to be created is a Java plugin project.
+	 */
+    public boolean isJavaPlugin() {
+        return fJavaPlugin != null && !fJavaPlugin.getSelection();
     }
 }

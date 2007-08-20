@@ -337,12 +337,23 @@ public class NewQVTProjectContentPage extends WizardPage {
 				presetClassField(myClassText, computeId(), "Activator"); //$NON-NLS-1$
 				myChangedGroups = oldChanged;
 			}
+			
 			if (myInitialized) {
 				validatePage();
 			}
 			else {
 				myInitialized = true;
 			}
+			
+			boolean isGenerateClassAllowed = !myData.isSimple();
+			if(!isGenerateClassAllowed) {
+				myGenerateClass.setSelection(false);
+			}
+			
+			myGenerateClass.setEnabled(isGenerateClassAllowed);
+			myClassText.setEnabled(isGenerateClassAllowed);
+			myClassLabel.setEnabled(isGenerateClassAllowed);
+			
 			myIdText.setFocus();
 		} 
 	}
