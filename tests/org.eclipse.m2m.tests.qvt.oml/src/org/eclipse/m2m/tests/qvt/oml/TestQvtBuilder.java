@@ -16,6 +16,7 @@ import java.io.ByteArrayInputStream;
 import junit.framework.TestCase;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
@@ -60,8 +61,8 @@ public class TestQvtBuilder extends TestCase {
         TestUtil.buildProject(myProject.project);
         IFile qvtFile = myProject.project.getFile("/Simpleuml_To_Rdb" + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT); //$NON-NLS-1$
         
-        assertEquals("Expecting NO QVT compiler error markers", //$NON-NLS-1$,
-        		0, qvtFile.findMarkers(QvtCompiler.PROBLEM_MARKER, true, IResource.DEPTH_INFINITE).length);
+        assertFalse("Expecting NO QVT compiler error markers", //$NON-NLS-1$,
+        		hasErrorMarkers(qvtFile));
         qvtFile.setContents(new ByteArrayInputStream(new byte[0]), true, false, null);
         try {
             myProject.project.build(IncrementalProjectBuilder.FULL_BUILD, null);
@@ -77,6 +78,16 @@ public class TestQvtBuilder extends TestCase {
         TestUtil.buildProject(myProject.project);
         TestUtil.buildProject(myProject.project, IncrementalProjectBuilder.CLEAN_BUILD);
         assertFalse("Expected to delete org.eclipse.m2m.qvt.oml", myProject.project.getFolder("src/qvt/library").exists()); //$NON-NLS-1$ //$NON-NLS-2$
+    }
+    
+    private boolean hasErrorMarkers(IFile qvtFile) throws CoreException {
+    	IMarker[] markers = qvtFile.findMarkers(QvtCompiler.PROBLEM_MARKER, true, IResource.DEPTH_INFINITE);
+    	for (IMarker marker : markers) {
+			if(marker.getAttribute(IMarker.SEVERITY, -1) == IMarker.SEVERITY_ERROR) {
+				return true;
+			}
+		}
+    	return false;
     }
     
 	private void copyData() throws Exception {
