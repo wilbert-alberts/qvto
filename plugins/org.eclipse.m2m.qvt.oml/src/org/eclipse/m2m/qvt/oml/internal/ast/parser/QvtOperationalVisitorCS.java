@@ -150,36 +150,22 @@ public class QvtOperationalVisitorCS
 	}
 
 	private EClassifier visitTypeCS(TypeCS typeCS, DirectionKind directionKind, QvtOperationalEnv env) throws SemanticException {
-		env.setPreferredExtentDir(directionKind);
-		EClassifier type = null; 
-		try {
-			type = typeCS(typeCS, env);
-			if (type == null) {
-				env.reportError(NLS.bind(ValidationMessages.UnknownClassifierType, new Object[] {
-						QvtOperationalParserUtil.getStringRepresentation(typeCS)}),
-						typeCS);
-			}
-		}
-		finally {
-			env.unsetPreferredModelType();
+		EClassifier type = typeCS(typeCS, env);
+		if (type == null) {
+			env.reportError(NLS.bind(ValidationMessages.UnknownClassifierType, new Object[] {
+					QvtOperationalParserUtil.getStringRepresentation(typeCS)}),
+					typeCS);
 		}
 		return type;
 	}
 
 	private EClassifier visitTypeCSInModelType(TypeSpecCS typeSpecCS, ModelType modelType,
 			QvtOperationalEnv env) throws SemanticException {
-		env.setPreferredModelType(modelType);
-		EClassifier type = null;
-		try {
-			type = typeCS(typeSpecCS.getTypeCS(), env);
-			if (type == null) {
-				env.reportError(NLS.bind(ValidationMessages.UnknownClassifierTypeInModelType, new Object[] {
-						QvtOperationalParserUtil.getStringRepresentation(typeSpecCS.getTypeCS()), modelType.getName()}),
-						typeSpecCS);
-			}
-		}
-		finally {
-			env.unsetPreferredModelType();
+		EClassifier type = typeCS(typeSpecCS.getTypeCS(), env);
+		if (type == null) {
+			env.reportError(NLS.bind(ValidationMessages.UnknownClassifierType, new Object[] {
+					QvtOperationalParserUtil.getStringRepresentation(typeSpecCS.getTypeCS())}),
+					typeSpecCS.getTypeCS());
 		}
 		return type;
 	}
@@ -425,6 +411,11 @@ public class QvtOperationalVisitorCS
 		if (objectExp.getReferredObject() == null) {
 			objectExp.setReferredObject(env.resolveModelParameter(objectTypeSpec.myType, DirectionKind.OUT));
 		}
+//		if (objectExp.getReferredObject() == null) {
+//			env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentFailToInfer,
+//					QvtOperationalTypesUtil.getTypeFullName(objectExp.getType())),
+//					typeSpecCS);
+//		}
 
 		for (OCLExpressionCS expCS : outExpCS.getExpressions()) {
 			OCLExpression<EClassifier> exp = visitOclExpressionCS(expCS, env);
@@ -1168,7 +1159,6 @@ public class QvtOperationalVisitorCS
 		}
 		varContext.setEType(contextType);
 		varContext.setKind(contextDirection);
-		// TODO check explicit extent specified (using '@')
 		if (varContext.getExtent() == null) {
 			varContext.setExtent(env.resolveModelParameter(contextType, varContext.getKind()));
 		}
@@ -1184,7 +1174,7 @@ public class QvtOperationalVisitorCS
 		if (varResult.getExtent() == null) {
 			varResult.setExtent(env.resolveModelParameter(returnTypeSpec.myType, varResult.getKind()));
 		}
-
+		
 		operation.setStartPosition(mappingDeclarationCS.getStartOffset());
 		operation.setEndPosition(mappingDeclarationCS.getEndOffset());
 		operation.setName(mappingDeclarationCS.getSimpleNameCS().getValue());
@@ -1327,7 +1317,7 @@ public class QvtOperationalVisitorCS
 		if (varParam.getExtent() == null) {
 			varParam.setExtent(env.resolveModelParameter(typeSpec.myType, directionKind));
 		}
-
+		
 		if (!isOutAllowed && varParam.getKind() == DirectionKind.OUT) {
 			env.reportError(ValidationMessages.OutParamsNotSupported, paramCS);
 		}
@@ -1692,7 +1682,8 @@ public class QvtOperationalVisitorCS
 			usedExtent.add(varParam.getExtent());
 			
 			if (varParam.getExtent() == null) {
-                env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentFailToInfer, null),  
+                env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentFailToInfer,
+                		QvtOperationalTypesUtil.getTypeFullName(varParam.getEType())),  
                 		varParam.getStartPosition(), varParam.getEndPosition());
 			}
 			else if (varParam.getKind() == DirectionKind.IN) {
