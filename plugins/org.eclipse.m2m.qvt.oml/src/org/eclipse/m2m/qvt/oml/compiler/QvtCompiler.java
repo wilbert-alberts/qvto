@@ -359,6 +359,10 @@ public class QvtCompiler {
 	
 	    	for (ParsedModuleCS importedModule : importedModules) {	
 	    		String importedModuleId = importedModule.getStringName();
+	    		if(importedModuleId == null) {	    			
+	    			// this case is covered by syntax error report, 
+	    			continue;
+	    		}
 	    		CompiledModule analyzedModule = null;
 	        	if (!importingModule.getStringName().equals(importedModuleId)) {
 	            	analyzedModule = analyse(importedModule, myCompilerOptions).getModule();
