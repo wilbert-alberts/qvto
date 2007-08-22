@@ -204,6 +204,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
 			        	}
 			        }
         		}
+        		outExtent.getContents().clear();
         		
 		        try {
 		        	saveResource(cont);
