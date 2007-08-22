@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalFileEnv;
@@ -133,6 +134,7 @@ import org.eclipse.ocl.internal.parser.OCLParser;
 import org.eclipse.ocl.types.TypeType;
 import org.eclipse.ocl.types.VoidType;
 import org.eclipse.ocl.util.TypeUtil;
+import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.osgi.util.NLS;
 
 public class QvtOperationalVisitorCS
@@ -411,11 +413,14 @@ public class QvtOperationalVisitorCS
 		if (objectExp.getReferredObject() == null) {
 			objectExp.setReferredObject(env.resolveModelParameter(objectTypeSpec.myType, DirectionKind.OUT));
 		}
-//		if (objectExp.getReferredObject() == null) {
-//			env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentFailToInfer,
-//					QvtOperationalTypesUtil.getTypeFullName(objectExp.getType())),
-//					typeSpecCS);
-//		}
+		ASTNode astNode = ASTBindingHelper.resolveASTNode((CSTNode) EcoreUtil.getRootContainer(outExpCS));
+		if (objectExp.getReferredObject() == null 
+				&& astNode instanceof Module 
+				&& !((Module) astNode).getModelParameter().isEmpty()) {
+			env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentFailToInfer,
+					QvtOperationalTypesUtil.getTypeFullName(objectExp.getType())),
+					typeSpecCS);
+		}
 
 		for (OCLExpressionCS expCS : outExpCS.getExpressions()) {
 			OCLExpression<EClassifier> exp = visitOclExpressionCS(expCS, env);
@@ -499,6 +504,10 @@ public class QvtOperationalVisitorCS
 		module.setStartPosition(moduleCS.getStartOffset());
 		module.setEndPosition(moduleCS.getEndOffset());
 
+        if (myCompilerOptions.isGenerateCompletionData()) {          
+            ASTBindingHelper.createCST2ASTBinding(parsedModuleCS.getModuleCS(), module, env);
+        }
+		
 		for (ModelTypeCS modelTypeCS : moduleCS.getMetamodels()) {
 			ModelType modelType = visitModelTypeCS(modelTypeCS, env, module);
 			if (modelType == null) {
@@ -1666,12 +1675,11 @@ public class QvtOperationalVisitorCS
 	}
 	
 	private void checkMainMappingConformance(QvtOperationalEnv env, ImperativeOperation operation) {
-		if (!QvtOperationalUtil.MAIN_METHOD_NAME.equals(operation.getName())) {
+		if (!QvtOperationalUtil.MAIN_METHOD_NAME.equals(operation.getName())
+				|| ((Module) operation.eContainer()).getModelParameter().isEmpty()) {
 			return;
 		}
-		if (((Module) operation.eContainer()).getModelParameter().isEmpty()) {
-			return;
-		}
+
 		Set<ModelParameter> usedExtent = new HashSet<ModelParameter>(operation.getEParameters().size());
 		for (EParameter param : operation.getEParameters()) {
 			MappingParameter varParam = (MappingParameter) param;
