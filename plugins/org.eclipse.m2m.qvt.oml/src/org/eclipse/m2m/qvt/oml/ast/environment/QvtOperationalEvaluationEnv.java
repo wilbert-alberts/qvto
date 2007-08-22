@@ -13,6 +13,7 @@ package org.eclipse.m2m.qvt.oml.ast.environment;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -20,12 +21,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -34,8 +37,10 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.qvt.oml.expressions.MappingParameter;
 import org.eclipse.m2m.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
+import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.ValidationMessages;
 import org.eclipse.m2m.qvt.oml.internal.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.m2m.qvt.oml.library.IContext;
@@ -51,9 +56,17 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	protected QvtOperationalEvaluationEnv(IContext context,
 			EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> parent) {
 		super(parent);
+	    myBindings = new HashMap<String, Object>();
 		myObjectExpOwnerStack = new Stack<Object>();
 		myOperationArgs = new ArrayList<Object>();
 		myContext = context;
+		
+		if (parent instanceof QvtOperationalEvaluationEnv) {
+			setModelParameterExtents(((QvtOperationalEvaluationEnv) parent).myModelExtents);
+		}
+		else {
+			myModelExtents = Collections.emptyMap();
+		}
 	}
 
 	public void popObjectExpOwner() {
@@ -190,6 +203,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 
     public void createModuleParameterExtents(Module module) {        
         Map<ModelParameter, ModelParameterExtent> modelExtents = new LinkedHashMap<ModelParameter, ModelParameterExtent>(module.getModelParameter().size());
+        modelExtents.put(null, new ModelParameterExtent());
         int argIndex = 0;
         for (ModelParameter modelParam : module.getModelParameter()) {
         	if (modelParam.getKind() == DirectionKind.OUT) {
@@ -228,17 +242,13 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         setModelParameterExtents(modelExtents);
 	}
 
-    public void setModelParameterExtents(Map<ModelParameter, ModelParameterExtent> modelExtents) {
+    private void setModelParameterExtents(Map<ModelParameter, ModelParameterExtent> modelExtents) {
 		myModelExtents = modelExtents;
 		for (Map.Entry<ModelParameter, ModelParameterExtent> entry : modelExtents.entrySet()) {
-			if (entry.getKey().getName().length() > 0) {
+			if (entry.getKey() != null && entry.getKey().getName().length() > 0) {
 				add(entry.getKey().getName(), entry.getValue());
 			}
 		}
-	}
-
-	public Map<ModelParameter, ModelParameterExtent> getModelParameterExtents() {
-		return myModelExtents;
 	}
 
 	/**
@@ -246,19 +256,50 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	 *   transformation. For non-changed 'inout' model parameter corresponding resource is empty.
 	 * @return ordered list of model extents
 	 */
-	public QvtEvaluationResult createEvaluationResult(ImperativeOperation entryPoint, List<Object> outParamValues) {
-		ResourceSet outResourceSet = new ResourceSetImpl();
+	public QvtEvaluationResult createEvaluationResult(ImperativeOperation entryPoint, ResourceSet outResourceSet) {
 		List<Resource> extents = new ArrayList<Resource>();
 		for (Map.Entry<ModelParameter, ModelParameterExtent> entry : myModelExtents.entrySet()) {
-        	if (entry.getKey().getKind() == DirectionKind.IN) {
-        		continue;
-        	}
-        	extents.add(entry.getValue().getModelExtent(outResourceSet));
+			if (entry.getKey() != null 
+					&& entry.getKey().getKind() != DirectionKind.IN) {
+	        	extents.add(entry.getValue().getModelExtent(outResourceSet));
+			}
 		}
 		
-		return new QvtEvaluationResult(extents, outParamValues);
+		List<EObject> unboundedObjects = Collections.emptyList();
+		if (myModelExtents.containsKey(null)) {
+			unboundedObjects = myModelExtents.get(null).getEObjectsInExtent();
+		}
+
+        List<Object> outParamValues = makeOutParamValues(entryPoint);
+		
+		return new QvtEvaluationResult(extents, unboundedObjects, outParamValues);
 	}
 	
+	private List<Object> makeOutParamValues(ImperativeOperation entryPoint) {
+		List<Object> outParamValues = new ArrayList<Object>();
+		for (EParameter param : entryPoint.getEParameters()) {
+			MappingParameter mappingParam  = (MappingParameter) param;
+			if (mappingParam.getKind() == DirectionKind.IN) {
+				continue;
+			}
+			Object valueOf = getValueOf(mappingParam.getName());
+			if (valueOf != null) {
+				outParamValues.add(valueOf);
+			}
+		}
+		for (VarParameter param : entryPoint.getResult()) {
+			MappingParameter mappingParam  = (MappingParameter) param;
+			if (mappingParam.getKind() == DirectionKind.IN) {
+				continue;
+			}
+			Object valueOf = getValueOf(mappingParam.getName());
+			if (valueOf != null) {
+				outParamValues.add(valueOf);
+			}
+		}
+		return outParamValues;
+	}
+
 	public EObject createInstance(EClassifier type, ModelParameter extent) {
         if (type instanceof EClass == false) {
             throw new IllegalArgumentException("Expected EClass, got " + type); //$NON-NLS-1$
@@ -269,12 +310,12 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		}
 		
 		EObject newObject = impl.getEPackage().getEFactoryInstance().create(impl);
-		if (!myModelExtents.containsKey(extent)) {
-            //throw new RuntimeException("Indeterminate model extent for the type " + impl.getName()); //$NON-NLS-1$
-			// compatibility reason
+		if (myModelExtents.containsKey(extent)) {
+			myModelExtents.get(extent).addObject(newObject);
 		}
 		else {
-			myModelExtents.get(extent).addObject(newObject);
+			String extentName = extent != null ? extent.getName() : String.valueOf((Object) null) ;
+            throw new RuntimeException("Unknown model extent '" + extentName + "' for the type " + impl.getName()); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		return newObject;
 	}
@@ -400,7 +441,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	private final List<Object> myOperationArgs;
 	private Object myOperationSelf;
 	private final IContext myContext;
-    private final Map<String, Object> myBindings = new HashMap<String, Object>();
-	private Map<ModelParameter, ModelParameterExtent> myModelExtents = new LinkedHashMap<ModelParameter, ModelParameterExtent>(0);
-
+    private final Map<String, Object> myBindings;
+	private Map<ModelParameter, ModelParameterExtent> myModelExtents;
+	
 }

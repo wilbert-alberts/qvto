@@ -13,6 +13,7 @@
 package org.eclipse.m2m.qvt.oml.ast.environment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.common.util.TreeIterator;
@@ -70,6 +71,10 @@ public class ModelParameterExtent {
 			}
 		}
 		return extent;
+	}
+
+	public List<EObject> getEObjectsInExtent() {
+		return Collections.unmodifiableList(myAdditionalEObjects);
 	}
 	
 	@Override

@@ -40,6 +40,7 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtEvaluationResult;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
@@ -390,25 +391,28 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         
         getContext().processDeferredTasks();
 
-        List<Object> outParamValues = makeOutParamValues(myEntryPoint, callResult.myEvalEnv);
-        QvtEvaluationResult evalResult = getOperationalEvaluationEnv().createEvaluationResult(myEntryPoint, outParamValues);
+		ResourceSet outResourceSet = new ResourceSetImpl();
+        QvtEvaluationResult evalResult = callResult.myEvalEnv.createEvaluationResult(myEntryPoint, outResourceSet);
         if (evalResult.getModelExtents().isEmpty()) {
             if (callResult.myResult instanceof EObject) {
                 // compatibility reason
-                List<Resource> extents = evalResult.getModelExtents();
                 if (((EObject) callResult.myResult).eResource() != null) {
-                    extents.add(((EObject) callResult.myResult).eResource());
+                	evalResult.getModelExtents().add(((EObject) callResult.myResult).eResource());
                 }
                 else {
-                    Resource resource = new ResourceSetImpl().createResource(URI.createURI("/")); //$NON-NLS-1$
+                    Resource resource = outResourceSet.createResource(URI.createURI("/")); //$NON-NLS-1$
                     resource.getContents().add((EObject) callResult.myResult);
-                    extents.add(resource);
+                    evalResult.getModelExtents().add(resource);
                 }
-                evalResult = new QvtEvaluationResult(extents, outParamValues);
             } else {
                 return callResult.myResult;
             }
         }
+        else if (!evalResult.getUnboundedObjects().isEmpty()) {
+        	throw new RuntimeException(NLS.bind(
+                    EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_UnboundedObjects, evalResult.getUnboundedObjects().size()));
+        }
+        
         return evalResult;
     }
 
@@ -742,9 +746,8 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         QvtOperationalEvaluationEnv oldEvalEnv = getOperationalEvaluationEnv();
         // create a nested evaluation environment for this operation call
         QvtOperationalEvaluationEnv nestedEnv = getOperationalEnv().getFactory().createEvaluationEnvironment(
-                getOperationalEvaluationEnv().getContext(), getOperationalEvaluationEnv());
+        		oldEvalEnv.getContext(), oldEvalEnv);
         addModuleProperties(nestedEnv);
-        nestedEnv.setModelParameterExtents(oldEvalEnv.getModelParameterExtents());
 
         nestedEnv.getOperationArgs().addAll(args);
         if (!isUndefined(source)) {
@@ -862,31 +865,6 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 	        paramIndex++;
 		}
 		return args;
-	}
-
-	private List<Object> makeOutParamValues(ImperativeOperation entryPoint, QvtOperationalEvaluationEnv evalEnv) {
-		List<Object> outParamValues = new ArrayList<Object>();
-		for (EParameter param : entryPoint.getEParameters()) {
-			MappingParameter mappingParam  = (MappingParameter) param;
-			if (mappingParam.getKind() == DirectionKind.IN) {
-				continue;
-			}
-			Object valueOf = evalEnv.getValueOf(mappingParam.getName());
-			if (valueOf != null) {
-				outParamValues.add(valueOf);
-			}
-		}
-		for (VarParameter param : entryPoint.getResult()) {
-			MappingParameter mappingParam  = (MappingParameter) param;
-			if (mappingParam.getKind() == DirectionKind.IN) {
-				continue;
-			}
-			Object valueOf = evalEnv.getValueOf(mappingParam.getName());
-			if (valueOf != null) {
-				outParamValues.add(valueOf);
-			}
-		}
-		return outParamValues;
 	}
 
     private ImperativeOperation getVirtualMethod(EOperation ctxOp, Object context, List<Object> args) {
