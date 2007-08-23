@@ -150,7 +150,7 @@ public class UriGroupOut extends BaseUriGroup {
                 throw new RuntimeException("No handler for URI " + uri); //$NON-NLS-1$
             }
             else {
-                IChooser chooser = handler.getDestinationChooser();
+                IChooser chooser = handler.getSourceDestChooser();
                 ((IDestinationChooser) chooser).initNewName(baseName, extension);
                 
                 myActiveListener = new UriChooserListener(myUriText, chooser, shell);
