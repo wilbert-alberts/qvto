@@ -33,6 +33,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.ModuleImportCS;
 import org.eclipse.m2m.qvt.oml.ocl.completion.CompletionData;
 import org.eclipse.ocl.internal.cst.CSTNode;
 import org.eclipse.ocl.internal.cst.PathNameCS;
+import org.eclipse.ocl.internal.cst.StringLiteralExpCS;
 import org.eclipse.ocl.internal.cst.TypeCS;
 
 
@@ -55,7 +56,11 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 				QvtOperationalEnv env = getEnv(context.getSyntaxElement(), context.getCompletionData());
 				if(env != null) {
 					try {
-						String id = modelTypeCS.getPackageRefs().get(0).getUriCS().getStringSymbol();
+						StringLiteralExpCS uriLiteral = modelTypeCS.getPackageRefs().get(0).getUriCS();
+						if(uriLiteral == null) {
+							return null;
+						}
+						String id = uriLiteral.getStringSymbol();
 						// strip quotations
 						id = id.substring(1, id.length() - 1);
 						EPackage ePackage = (EPackage)env.getMetamodelRegistry().getMetamodelDesc(id).getModels()[0];
