@@ -60,8 +60,9 @@ public class TransformationNatureImpl implements TransformationNature {
     	if(project != null) {
     		try {
     			QvtBuilderConfig config = QvtBuilderConfig.getConfig(getProject());
-				container = config.getSourceContainer();
-				if(project.equals(container)) {
+				container = config.getRawSourceContainer();
+				if(container == null) {
+					// not set explicitly, use default
 					IFolder folder = getProject().getFolder(new Path(DEFAULT_SOURCE_FOLDER_PATH));
 					container = folder;					
 					if(!folder.exists()) {
