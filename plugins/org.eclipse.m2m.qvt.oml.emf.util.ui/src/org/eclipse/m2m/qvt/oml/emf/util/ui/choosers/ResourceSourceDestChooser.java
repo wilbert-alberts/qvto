@@ -45,7 +45,6 @@ public class ResourceSourceDestChooser extends ResourceSourceChooser implements 
         }
     }
 
-	@Override
 	public void initNewName(String baseName, String extension) {
         myDefaultFileName = baseName;
         if(extension.length() > 0) {
