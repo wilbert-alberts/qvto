@@ -33,9 +33,12 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.ui.provider.EmfModelContentProvider;
 import org.eclipse.m2m.qvt.oml.emf.util.ui.provider.EmfModelLabelProvider;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -45,16 +48,15 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.model.WorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
-import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
-
 public class SelectUriControl extends Composite {
     public static interface ISelectionListener {
         void selectionChanged(URI uri);
     }
     
-    public SelectUriControl(Composite parentComposite) {
+    public SelectUriControl(Composite parentComposite, String defaultFileName) {
         super(parentComposite,SWT.NULL);
         mySelectionListeners = new ArrayList<ISelectionListener>();
+        myDefaultFileName = defaultFileName;
         
         setLayout(new GridLayout());
         
@@ -66,6 +68,7 @@ public class SelectUriControl extends Composite {
         myUriText = new Text(this, SWT.BORDER);
         myUriText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         myUriText.setEnabled(false);
+        myUriText.addModifyListener(FNAME_LISTENER);
         
         myViewer.setContentProvider(CONTENT_PROVIDER);
         myViewer.setLabelProvider(LABEL_PROVIDER);
@@ -121,6 +124,8 @@ public class SelectUriControl extends Composite {
     private final TreeViewer myViewer;
     private final Text myUriText;
     private URI myUri;
+    private Object myResource;
+    private final String myDefaultFileName;
     
     private final List<ISelectionListener> mySelectionListeners;
     
@@ -135,8 +140,7 @@ public class SelectUriControl extends Composite {
 				List<EmfModelContentProvider.Node> children = new ArrayList<EmfModelContentProvider.Node>();
 				try {
 					Resource res = EmfUtil.loadResource(URI.createPlatformResourceURI(file.getFullPath().toString(), false));
-					for(Iterator it = res.getContents().iterator(); it.hasNext(); ) {
-						EObject obj = (EObject)it.next();
+					for(EObject obj : res.getContents()) {
 						children.add(new EmfModelContentProvider.EObjectNode(obj, file));
 					}
 					
@@ -247,8 +251,29 @@ public class SelectUriControl extends Composite {
             	}
             }
             
+            myUriText.setEnabled(false);
+            myResource = null;
             myUriText.setText(uri == null ? "" : uri.toString()); //$NON-NLS-1$
+
+            if (uri == null && selection instanceof IStructuredSelection && myDefaultFileName != null) {
+            	myResource = ((IStructuredSelection) selection).getFirstElement();
+                if(myResource instanceof IContainer) {
+                	myUriText.setEnabled(true);
+                	myUriText.setText(myDefaultFileName);
+                	return;
+                }
+            }
+            
             fireSelectionChanged(myUri = uri);
+        }
+    };
+
+    private final ModifyListener FNAME_LISTENER = new ModifyListener() {
+        public void modifyText(ModifyEvent e) {
+        	if (myResource instanceof IContainer) {
+	        	URI uri = IPathUtils.getUri(IPathUtils.computePath((IResource) myResource, myUriText.getText()));
+	            fireSelectionChanged(myUri = uri);
+        	}
         }
     };
 }

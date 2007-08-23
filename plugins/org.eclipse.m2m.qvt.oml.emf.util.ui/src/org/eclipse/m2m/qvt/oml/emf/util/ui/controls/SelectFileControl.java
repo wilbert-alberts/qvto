@@ -214,40 +214,6 @@ public class SelectFileControl extends Composite {
         return myPath == null ? null : WorkspaceUtils.getWorkspaceFile(myPath.toString());
     }
     
-    private static IPath computePath(IResource resource, String fname) {
-        IPath path;
-        if(resource == null) {
-            path = null;
-        }
-        else {
-            if(resource instanceof IFile) {
-                if(resource.getName().equals(fname)) {
-                    path = resource.getFullPath();
-                }
-                else {
-                    path = makePath(resource.getParent(), fname);
-                }
-            }
-            else {
-                path = makePath(resource, fname);
-            }
-        }
-        
-        return path;
-    }
-    
-    private static IPath makePath(IResource parent, String childName) {
-        IPath path;
-        if(childName == null || childName.length() == 0) {
-            path = null;
-        }
-        else {
-            path = parent.getFullPath().append(childName);
-        }
-        
-        return path;
-    }
-    
     private final ViewerFilter VIEWER_FILTER = new ViewerFilter() {
         @Override
 		public boolean select(Viewer viewer, Object parentElement, Object element) {
@@ -341,7 +307,7 @@ public class SelectFileControl extends Composite {
                         }
                         else {
                             myFileNameText.setEnabled(true);
-                            IPath computePath = computePath(myResource, myFileNameText.getText());
+                            IPath computePath = IPathUtils.computePath(myResource, myFileNameText.getText());
                             if (computePath != null && myDefaultFileName != null) {
                 	            IFile file = WorkspaceUtils.getWorkspaceFile(computePath.toString());
                 	            if (file != null && file.exists()) {
@@ -354,7 +320,7 @@ public class SelectFileControl extends Composite {
                 }
                 
                 myResource = resource;
-                myPath = computePath(myResource, myFileNameText.getText());
+                myPath = IPathUtils.computePath(myResource, myFileNameText.getText());
                 fileSelectionChanged(myPath);
             }
             finally {
@@ -366,7 +332,7 @@ public class SelectFileControl extends Composite {
     private final ModifyListener FNAME_LISTENER = new ModifyListener() {
         public void modifyText(ModifyEvent e) {
             myFileName = myFileNameText.getText();
-            myPath = computePath(myResource, myFileName);
+            myPath = IPathUtils.computePath(myResource, myFileName);
             fileSelectionChanged(myPath);
         }
     };
@@ -482,8 +448,7 @@ public class SelectFileControl extends Composite {
         private List<Object> getCreatedChildren(IContainer container) {
             List<Object> children = new ArrayList<Object>();
             
-            for(Iterator it = myCreatedFiles.iterator(); it.hasNext(); ) {
-                IFile file = (IFile) it.next();
+            for(IFile file : myCreatedFiles) {
                 if(container.equals(file.getParent())) {
                     children.add(file);
                 }

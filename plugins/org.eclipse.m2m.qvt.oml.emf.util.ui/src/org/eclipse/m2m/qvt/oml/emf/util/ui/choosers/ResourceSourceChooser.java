@@ -29,7 +29,7 @@ public class ResourceSourceChooser extends ChooserAdapter implements ISourceChoo
     }
     
     public Control createControl(Composite parent) {
-        myControl = new SelectUriControl(parent);
+        myControl = new SelectUriControl(parent, getDefaultFileName());
         myControl.addSelectionListener(new SelectUriControl.ISelectionListener() {
             public void selectionChanged(URI uri) {
                 if(uri == null) {
@@ -53,7 +53,11 @@ public class ResourceSourceChooser extends ChooserAdapter implements ISourceChoo
         return myControl;
     }
     
-    public void setInitialSelection(String uriString) {
+    protected String getDefaultFileName() {
+		return null;
+	}
+
+	public void setInitialSelection(String uriString) {
     	URI uri = URI.createURI(uriString);
         if(uri == null) {
             return;
@@ -102,7 +106,7 @@ public class ResourceSourceChooser extends ChooserAdapter implements ISourceChoo
     }
     
     private SelectUriControl myControl;
-    private IStructuredSelection myInitialSelection;
+    protected IStructuredSelection myInitialSelection;
     private EObject myObject;
     private URI myUri;
 }

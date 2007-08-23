@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.m2m.qvt.oml.emf.util.ui.controls.IPathUtils;
 import org.eclipse.m2m.qvt.oml.emf.util.ui.controls.SelectFileControl;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -81,17 +82,8 @@ public class ResourceDestinationChooser extends ChooserAdapter implements IDesti
         return myPath;
     }
     
-    public URI getUri() {
-        IPath modelPath = getPath();
-        if(modelPath == null) {
-            return null;
-        }
-        
-        return URI.createPlatformResourceURI(modelPath.toString(), false);
-    }
-    
     public String getUriString() {
-        URI uri = getUri();
+        URI uri = IPathUtils.getUri(getPath());
         return uri == null ? null : uri.toString();
     }
     

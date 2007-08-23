@@ -21,6 +21,10 @@ public class DefaultMetamodelHandler implements IMetamodelHandler {
         return new ResourceSourceChooser();
     }
 
+    public IDestinationChooser getSourceDestChooser() {
+        return new ResourceSourceDestChooser();
+    }
+
     public IDestinationChooser getDestinationChooser() {
         return new ResourceDestinationChooser();
     }
