@@ -22,6 +22,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.m2m.internal.qvt.oml.common.nature.TransformationNature;
 import org.eclipse.m2m.qvt.oml.QvtPlugin;
@@ -83,17 +84,29 @@ public class QvtBuilderConfig {
     }
     
     public IContainer getSourceContainer() {
-        String containerPath = getArgument(SRC_CONTAINER);
+        IContainer containerPath = getRawSourceContainer();
         
-        if(PROJECT_ROOT.equals(containerPath)) {
+        if(containerPath == null) {
             return myProject;
         }
         
-        if(containerPath != null) {
-        	return myProject.getFolder(new Path(containerPath));
-        }
-        return myProject;
+        return containerPath;
     }
+    
+    public IContainer getRawSourceContainer() {
+        String containerPath = getArgument(SRC_CONTAINER);
+
+        if(containerPath != null) {
+            IPath path = new Path(containerPath);
+            if(path.isRoot()) {
+            	return myProject;
+            }
+            
+        	return myProject.getFolder(path);
+        }
+        return null;
+    }
+    
     
     public void setSourceContainer(IContainer container) {
         if(container.getProject() != myProject) {
