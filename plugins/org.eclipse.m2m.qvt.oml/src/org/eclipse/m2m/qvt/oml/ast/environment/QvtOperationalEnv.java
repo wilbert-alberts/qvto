@@ -312,11 +312,6 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 		List<String> validExtents = new ArrayList<String>(1);
 		for (Variable<EClassifier, EParameter> var : myModelParameters) {
 			ModelParameter modelParam = (ModelParameter) var.getRepresentedParameter();
-			if (directionKind == DirectionKind.IN) {
-				if (modelParam.getKind() == DirectionKind.OUT) {
-					continue;
-				}
-			}
 			if (directionKind == DirectionKind.OUT) {
 				if (modelParam.getKind() == DirectionKind.IN) {
 					continue;
@@ -346,11 +341,6 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 		// lookup explicit extent 
 		for (Variable<EClassifier, EParameter> var : myModelParameters) {
 			ModelParameter modelParam = (ModelParameter) var.getRepresentedParameter();
-			if (directionKind == DirectionKind.IN) {
-				if (modelParam.getKind() == DirectionKind.OUT) {
-					continue;
-				}
-			}
 			if (directionKind == DirectionKind.OUT) {
 				if (modelParam.getKind() == DirectionKind.IN) {
 					continue;
@@ -365,11 +355,6 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 		// lookup implicit extent 
 		for (Variable<EClassifier, EParameter> var : myModelParameters) {
 			ModelParameter modelParam = (ModelParameter) var.getRepresentedParameter();
-			if (directionKind == DirectionKind.IN) {
-				if (modelParam.getKind() == DirectionKind.OUT) {
-					continue;
-				}
-			}
 			if (directionKind == DirectionKind.OUT) {
 				if (modelParam.getKind() == DirectionKind.IN) {
 					continue;
