@@ -504,9 +504,9 @@ public class QvtOperationalVisitorCS
 		module.setStartPosition(moduleCS.getStartOffset());
 		module.setEndPosition(moduleCS.getEndOffset());
 
-        if (myCompilerOptions.isGenerateCompletionData()) {          
-            ASTBindingHelper.createCST2ASTBinding(parsedModuleCS.getModuleCS(), module, env);
-        }
+		if (myCompilerOptions.isGenerateCompletionData()) {
+		    ASTBindingHelper.createCST2ASTBinding(parsedModuleCS.getModuleCS(), module, env);
+		}
 		
 		for (ModelTypeCS modelTypeCS : moduleCS.getMetamodels()) {
 			ModelType modelType = visitModelTypeCS(modelTypeCS, env, module);
@@ -1694,14 +1694,14 @@ public class QvtOperationalVisitorCS
                 		QvtOperationalTypesUtil.getTypeFullName(varParam.getEType())),  
                 		varParam.getStartPosition(), varParam.getEndPosition());
 			}
-			else if (varParam.getKind() == DirectionKind.IN) {
-				if (varParam.getExtent().getKind() == DirectionKind.OUT) {
+			else if (varParam.getExtent().getKind() == DirectionKind.IN) {
+				if (varParam.getKind() != DirectionKind.IN) {
 	                env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentDirectionMismatch, null),  
 	                		varParam.getStartPosition(), varParam.getEndPosition());
 				}
 			}
-			else if (varParam.getKind() == DirectionKind.OUT) {
-				if (varParam.getExtent().getKind() == DirectionKind.IN) {
+			else if (varParam.getExtent().getKind() == DirectionKind.OUT) {
+				if (varParam.getKind() != DirectionKind.OUT) {
 	                env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentDirectionMismatch, null),  
 	                		varParam.getStartPosition(), varParam.getEndPosition());
 				}
