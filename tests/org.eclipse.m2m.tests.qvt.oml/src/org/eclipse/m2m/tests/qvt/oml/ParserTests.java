@@ -96,6 +96,13 @@ public class ParserTests {
         new TestData("endsectinitnopopulation", 0), //$NON-NLS-1$
         new TestData("endsectonly", 0), //$NON-NLS-1$
         new TestData("endsectpopulationnoinit", 0), //$NON-NLS-1$
-        new TestData("configpropstype", 0) //$NON-NLS-1$
+        new TestData("configpropstype", 0), //$NON-NLS-1$
+
+        new TestData("mm_header1", 1), //$NON-NLS-1$
+        new TestData("mm_header2", 1), //$NON-NLS-1$
+        new TestData("mm_header3", 1), //$NON-NLS-1$
+        new TestData("mm_header4", 1), //$NON-NLS-1$
+        new TestData("mm_header5", 2), //$NON-NLS-1$
+        new TestData("mm_header6", 2), //$NON-NLS-1$
     };
 }
