@@ -131,7 +131,7 @@ class QVTWizardListSelectionPage extends WizardSelectionPage implements ISelecti
 				if(category == null) {
 					return wizardElement.name;
 				}
-				return wizardElement.name + " - " + category.getLabel(); //$NON-NLS-1$
+				return wizardElement.name;
 			}
 		});
 		

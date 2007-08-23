@@ -20,6 +20,7 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceProxy;
 import org.eclipse.core.resources.IResourceProxyVisitor;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -62,14 +63,18 @@ class SourceContainerUpdater {
 	public static IStatus validate(String srcContainerPath) {
 		IStatus result = Status.OK_STATUS;
 		
-    	if(srcContainerPath == null || srcContainerPath.trim().length() == 0) {
+    	if(srcContainerPath == null || srcContainerPath.length() == 0) {
     		return QVTUIPlugin.createStatus(IStatus.INFO, "Project folder is not recommended as QVT source container");
+    	} else if(srcContainerPath.trim().length() == 0) {
+    		return QVTUIPlugin.createStatus(IStatus.ERROR, "Non-blank QVT source folder path is expected"); 
     	} else {
 			IPath path = new Path(srcContainerPath);
 			if(!path.isValidPath(srcContainerPath)) {
-				return QVTUIPlugin.createStatus(IStatus.ERROR, "InvalidPath");
+				return QVTUIPlugin.createStatus(IStatus.ERROR, "Invalid QVT source folder path");
 			} else if(path.isAbsolute() || path.isUNC() || path.getDevice() != null ) {
-				return QVTUIPlugin.createStatus(IStatus.ERROR, "relative expected");				
+				return QVTUIPlugin.createStatus(IStatus.ERROR, "Relative source folder path expected");
+			} else {
+				result = ResourcesPlugin.getWorkspace().validatePath("/" + path.toString(), IResource.PROJECT | IResource.FOLDER | IResource.FILE);				
 			}
     	}
     	

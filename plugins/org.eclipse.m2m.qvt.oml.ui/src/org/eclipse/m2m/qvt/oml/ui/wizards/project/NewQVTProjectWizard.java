@@ -223,8 +223,9 @@ public class NewQVTProjectWizard extends Wizard implements INewWizard, IExecutab
         catch(Exception e) {
         	QVTUIPlugin.log(e);
             String title = Messages.NewQVTProjectWizard_Error;
-            String message = Messages.NewQVTProjectWizard_ErrorSeeLog; 
-            Status status = new Status(IStatus.ERROR, QVTUIPlugin.PLUGIN_ID, IStatus.ERROR, message, e);
+            String message = Messages.NewQVTProjectWizard_ErrorSeeLog;
+            Throwable exc = (e instanceof InvocationTargetException) ? ((InvocationTargetException)e).getTargetException() : e;
+            Status status = new Status(IStatus.ERROR, QVTUIPlugin.PLUGIN_ID, IStatus.ERROR, message, exc);
             ErrorDialog.openError(getShell(), title, e.getMessage(), status);
             return false;
         }

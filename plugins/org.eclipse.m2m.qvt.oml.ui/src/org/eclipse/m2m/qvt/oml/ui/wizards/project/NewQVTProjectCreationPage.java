@@ -60,9 +60,6 @@ public class NewQVTProjectCreationPage extends WizardNewProjectCreationPage {
     		if(!validateQvtSourceContainer()) {
 	    		return false;
     		}
-    		
-        	setErrorMessage(null);
-        	setMessage(null);    		
     	}
     	
     	return result;
@@ -138,7 +135,7 @@ public class NewQVTProjectCreationPage extends WizardNewProjectCreationPage {
 		//source container
 		String tooltipText = "Enter a path of folder to contain QVT sources";
 		fQvtSourceContainerLabel = new Label(composite, SWT.NONE);
-		fQvtSourceContainerLabel.setText("QVT source container:");
+		fQvtSourceContainerLabel.setText("&QVT source container:");
 		fQvtSourceContainerLabel.setToolTipText(tooltipText);
 
 		fQvtSourceContainerText = createText(composite, "transforms");
