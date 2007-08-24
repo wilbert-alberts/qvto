@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.4 2007/08/24 11:30:56 sboyko Exp $
+* $Id: QvtOpLPGParser.java,v 1.5 2007/08/24 12:16:15 sboyko Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.4 2007/08/24 11:30:56 sboyko Exp $
+* $Id: QvtOpLPGParser.java,v 1.5 2007/08/24 12:16:15 sboyko Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -3460,27 +3460,31 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 270:  libraryCS ::= library qualifiedNameCS ; moduleImportListOpt metamodelListOpt renamingListOpt propertyListOpt mappingRuleListOpt
+			// Rule 270:  libraryCS ::= moduleImportListOpt metamodelListOpt library qualifiedNameCS ; moduleImportListOpt metamodelListOpt renamingListOpt propertyListOpt mappingRuleListOpt
 			//
 			case 270: {
 				
+				EList metamodels = (EList)dtParser.getSym(2);
+				metamodels.addAll((EList)dtParser.getSym(7));
+				EList imports = (EList)dtParser.getSym(1);
+				imports.addAll((EList)dtParser.getSym(6));
 				CSTNode result = createLibraryCS(
-						(PathNameCS)dtParser.getSym(2),
-						(EList)dtParser.getSym(4),
-						(EList)dtParser.getSym(5),
-						(EList)dtParser.getSym(6),
-						(EList)dtParser.getSym(7),
-						(EList)dtParser.getSym(8)
+						(PathNameCS)dtParser.getSym(4),
+						imports,
+						metamodels,
+						(EList)dtParser.getSym(8),
+						(EList)dtParser.getSym(9),
+						(EList)dtParser.getSym(10)
 					);
-				int endOffset = getEndOffset(getIToken(dtParser.getToken(3)), (EList)dtParser.getSym(4),
-						(EList)dtParser.getSym(5), (EList)dtParser.getSym(6), (EList)dtParser.getSym(7), (EList)dtParser.getSym(8)); 
-				setOffsets(result, getIToken(dtParser.getToken(1)), new Token(0, endOffset, 0));
+				int endOffset = getEndOffset(getIToken(dtParser.getToken(5)), (EList)dtParser.getSym(6),
+						(EList)dtParser.getSym(7), (EList)dtParser.getSym(8), (EList)dtParser.getSym(9), (EList)dtParser.getSym(10)); 
+				setOffsets(result, getIToken(dtParser.getToken(3)), new Token(0, endOffset, 0));
 				dtParser.setSym1(result);
 	  		  break;
 			}
 	 
 			//
-			// Rule 271:  libraryCS ::= library qualifiedNameCS ; qvtErrorToken
+			// Rule 271:  libraryCS ::= moduleImportListOpt metamodelListOpt library qualifiedNameCS ; qvtErrorToken
 			//
 			case 271: {
 				
@@ -3492,13 +3496,13 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 						ourEmptyEList,
 						ourEmptyEList
 					);
-				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(3)));
+				setOffsets(result, getIToken(dtParser.getToken(3)), getIToken(dtParser.getToken(5)));
 				dtParser.setSym1(result);
 	  		  break;
 			}
 	 
 			//
-			// Rule 272:  libraryCS ::= library qualifiedNameCS qvtErrorToken
+			// Rule 272:  libraryCS ::= moduleImportListOpt metamodelListOpt library qualifiedNameCS qvtErrorToken
 			//
 			case 272: {
 				
@@ -3510,13 +3514,13 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 						ourEmptyEList,
 						ourEmptyEList
 					);
-				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(2)));
+				setOffsets(result, getIToken(dtParser.getToken(3)), getIToken(dtParser.getToken(4)));
 				dtParser.setSym1(result);
 	  		  break;
 			}
 	 
 			//
-			// Rule 273:  libraryCS ::= library qvtErrorToken
+			// Rule 273:  libraryCS ::= moduleImportListOpt metamodelListOpt library qvtErrorToken
 			//
 			case 273: {
 				
@@ -3528,7 +3532,7 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 						ourEmptyEList,
 						ourEmptyEList
 					);
-				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(1)));
+				setOffsets(result, getIToken(dtParser.getToken(3)), getIToken(dtParser.getToken(3)));
 				dtParser.setSym1(result);
 	  		  break;
 			}

@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.4 2007/08/24 11:30:56 sboyko Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.5 2007/08/24 12:16:15 sboyko Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -340,7 +340,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.4 2007/08/24 11:30:56 sboyko Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.5 2007/08/24 12:16:15 sboyko Exp $
  */
 	./
 $End
@@ -1122,25 +1122,29 @@ $Rules
 		  $EndJava
 		./
 		
-	libraryCS ::= library qualifiedNameCS ';' 
+	libraryCS ::= moduleImportListOpt metamodelListOpt library qualifiedNameCS ';' 
 				moduleImportListOpt metamodelListOpt renamingListOpt
 				propertyListOpt mappingRuleListOpt
 		/.$BeginJava
+					EList metamodels = (EList)$getSym(2);
+					metamodels.addAll((EList)$getSym(7));
+					EList imports = (EList)$getSym(1);
+					imports.addAll((EList)$getSym(6));
 					CSTNode result = createLibraryCS(
-							(PathNameCS)$getSym(2),
-							(EList)$getSym(4),
-							(EList)$getSym(5),
-							(EList)$getSym(6),
-							(EList)$getSym(7),
-							(EList)$getSym(8)
+							(PathNameCS)$getSym(4),
+							imports,
+							metamodels,
+							(EList)$getSym(8),
+							(EList)$getSym(9),
+							(EList)$getSym(10)
 						);
-					int endOffset = getEndOffset(getIToken($getToken(3)), (EList)$getSym(4),
-							(EList)$getSym(5), (EList)$getSym(6), (EList)$getSym(7), (EList)$getSym(8)); 
-					setOffsets(result, getIToken($getToken(1)), new Token(0, endOffset, 0));
+					int endOffset = getEndOffset(getIToken($getToken(5)), (EList)$getSym(6),
+							(EList)$getSym(7), (EList)$getSym(8), (EList)$getSym(9), (EList)$getSym(10)); 
+					setOffsets(result, getIToken($getToken(3)), new Token(0, endOffset, 0));
 					$setResult(result);
 		  $EndJava
 		./
-	libraryCS ::= library qualifiedNameCS ';' qvtErrorToken
+	libraryCS ::= moduleImportListOpt metamodelListOpt library qualifiedNameCS ';' qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createLibraryCS(
 							createPathNameCS(),
@@ -1150,11 +1154,11 @@ $Rules
 							$EMPTY_ELIST,
 							$EMPTY_ELIST
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
+					setOffsets(result, getIToken($getToken(3)), getIToken($getToken(5)));
 					$setResult(result);
 		  $EndJava
 		./
-	libraryCS ::= library qualifiedNameCS qvtErrorToken
+	libraryCS ::= moduleImportListOpt metamodelListOpt library qualifiedNameCS qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createLibraryCS(
 							createPathNameCS(),
@@ -1164,11 +1168,11 @@ $Rules
 							$EMPTY_ELIST,
 							$EMPTY_ELIST
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(2)));
+					setOffsets(result, getIToken($getToken(3)), getIToken($getToken(4)));
 					$setResult(result);
 		  $EndJava
 		./
-	libraryCS ::= library qvtErrorToken
+	libraryCS ::= moduleImportListOpt metamodelListOpt library qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createLibraryCS(
 							createPathNameCS(),
@@ -1178,7 +1182,7 @@ $Rules
 							$EMPTY_ELIST,
 							$EMPTY_ELIST
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
+					setOffsets(result, getIToken($getToken(3)), getIToken($getToken(3)));
 					$setResult(result);
 		  $EndJava
 		./
