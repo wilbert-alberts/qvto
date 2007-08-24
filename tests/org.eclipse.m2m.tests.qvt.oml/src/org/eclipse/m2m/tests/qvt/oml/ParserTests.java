@@ -45,6 +45,8 @@ public class ParserTests {
         new TestData("missinglibmmimport", 1), //$NON-NLS-1$
         new TestData("noglobalallinstances", 0), //$NON-NLS-1$ 
         new TestData("imp", 0), //$NON-NLS-1$ // TODO: independent parsing for imports
+        new TestData("imp2", 0), //$NON-NLS-1$
+        new TestData("imp3", 0), //$NON-NLS-1$
         new TestData("impError", 2), //$NON-NLS-1$        
         new TestData("assignereadonlyprop", 1), //$NON-NLS-1$
         new TestData("nonbooleanguard", 1), //$NON-NLS-1$
