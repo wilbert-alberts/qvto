@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.3 2007/08/17 15:59:13 aigdalov Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.4 2007/08/24 11:30:56 sboyko Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -340,7 +340,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.3 2007/08/17 15:59:13 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.4 2007/08/24 11:30:56 sboyko Exp $
  */
 	./
 $End
@@ -799,42 +799,45 @@ $Rules
 	QVTgoal -> mappingModuleCS
 	QVTgoal -> libraryCS
 
-	mappingModuleCS ::= transformationCS moduleImportListOpt metamodelListOpt renamingListOpt propertyListOpt mappingRuleListOpt
+	mappingModuleCS ::= moduleImportListOpt metamodelListOpt transformationCS moduleImportListOpt metamodelListOpt renamingListOpt propertyListOpt mappingRuleListOpt
 		/.$BeginJava
-					CSTNode header = (CSTNode) $getSym(1);
+					EList metamodels = (EList)$getSym(2);
+					metamodels.addAll((EList)$getSym(5));
+					EList imports = (EList)$getSym(1);
+					imports.addAll((EList)$getSym(4));
+					CSTNode header = (CSTNode) $getSym(3);
 					CSTNode result = createMappingModuleCS(
 							(TransformationHeaderCS) header,
-							(EList)$getSym(2),
-							(EList)$getSym(3),
-							(EList)$getSym(4),
-							(EList)$getSym(5),
-							(EList)$getSym(6)
+							imports,
+							metamodels,
+							(EList)$getSym(6),
+							(EList)$getSym(7),
+							(EList)$getSym(8)
 						);
 					IToken headerToken = new Token(header.getStartOffset(), header.getEndOffset(), 0);
-					int endOffset = getEndOffset(headerToken, (EList)$getSym(2),
-							(EList)$getSym(3), (EList)$getSym(4), (EList)$getSym(5), (EList)$getSym(6)); 
+					int endOffset = getEndOffset(headerToken, (EList)$getSym(4),
+							(EList)$getSym(5), (EList)$getSym(6), (EList)$getSym(7), (EList)$getSym(8)); 
 					setOffsets(result, header);
 					result.setEndOffset(endOffset);
 					$setResult(result);
 		  $EndJava
 		./
-	mappingModuleCS ::=  transformationCS qvtErrorToken
+	mappingModuleCS ::= moduleImportListOpt metamodelListOpt transformationCS qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createMappingModuleCS(
-							(TransformationHeaderCS)$getSym(1),
+							(TransformationHeaderCS)$getSym(3),
 							$EMPTY_ELIST,
 							$EMPTY_ELIST,
 							$EMPTY_ELIST,
 							$EMPTY_ELIST,
 							$EMPTY_ELIST
 						);
-					setOffsets(result, (CSTNode)$getSym(1));
+					setOffsets(result, (CSTNode)$getSym(3));
 					$setResult(result);
 		  $EndJava
 		./
-	mappingModuleCS ::= qualifierListOpt transformation qvtErrorToken
+	mappingModuleCS ::= moduleImportListOpt metamodelListOpt qualifierListOpt transformation qvtErrorToken
 		/.$BeginJava
-					EList qualifierList = (EList) $getSym(1);
 					CSTNode result = createMappingModuleCS(
 							createPathNameCS(),
 							$EMPTY_ELIST,
@@ -843,12 +846,7 @@ $Rules
 							$EMPTY_ELIST,
 							$EMPTY_ELIST
 						);
-					if (qualifierList.isEmpty()) {
-						setOffsets(result, getIToken($getToken(2)));
-					}
-					else {
-						setOffsets(result, (CSTNode) qualifierList.get(qualifierList.size()-1), getIToken($getToken(2)));
-					}
+					setOffsets(result, getIToken($getToken(4)));
 					$setResult(result);
 		  $EndJava
 		./

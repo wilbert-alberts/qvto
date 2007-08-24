@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.3 2007/08/17 15:59:13 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.4 2007/08/24 11:30:56 sboyko Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.3 2007/08/17 15:59:13 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.4 2007/08/24 11:30:56 sboyko Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -3024,22 +3024,26 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 233:  mappingModuleCS ::= transformationCS moduleImportListOpt metamodelListOpt renamingListOpt propertyListOpt mappingRuleListOpt
+			// Rule 233:  mappingModuleCS ::= moduleImportListOpt metamodelListOpt transformationCS moduleImportListOpt metamodelListOpt renamingListOpt propertyListOpt mappingRuleListOpt
 			//
 			case 233: {
 				
-				CSTNode header = (CSTNode) dtParser.getSym(1);
+				EList metamodels = (EList)dtParser.getSym(2);
+				metamodels.addAll((EList)dtParser.getSym(5));
+				EList imports = (EList)dtParser.getSym(1);
+				imports.addAll((EList)dtParser.getSym(4));
+				CSTNode header = (CSTNode) dtParser.getSym(3);
 				CSTNode result = createMappingModuleCS(
 						(TransformationHeaderCS) header,
-						(EList)dtParser.getSym(2),
-						(EList)dtParser.getSym(3),
-						(EList)dtParser.getSym(4),
-						(EList)dtParser.getSym(5),
-						(EList)dtParser.getSym(6)
+						imports,
+						metamodels,
+						(EList)dtParser.getSym(6),
+						(EList)dtParser.getSym(7),
+						(EList)dtParser.getSym(8)
 					);
 				IToken headerToken = new Token(header.getStartOffset(), header.getEndOffset(), 0);
-				int endOffset = getEndOffset(headerToken, (EList)dtParser.getSym(2),
-						(EList)dtParser.getSym(3), (EList)dtParser.getSym(4), (EList)dtParser.getSym(5), (EList)dtParser.getSym(6)); 
+				int endOffset = getEndOffset(headerToken, (EList)dtParser.getSym(4),
+						(EList)dtParser.getSym(5), (EList)dtParser.getSym(6), (EList)dtParser.getSym(7), (EList)dtParser.getSym(8)); 
 				setOffsets(result, header);
 				result.setEndOffset(endOffset);
 				dtParser.setSym1(result);
@@ -3047,29 +3051,28 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 234:  mappingModuleCS ::= transformationCS qvtErrorToken
+			// Rule 234:  mappingModuleCS ::= moduleImportListOpt metamodelListOpt transformationCS qvtErrorToken
 			//
 			case 234: {
 				
 				CSTNode result = createMappingModuleCS(
-						(TransformationHeaderCS)dtParser.getSym(1),
+						(TransformationHeaderCS)dtParser.getSym(3),
 						ourEmptyEList,
 						ourEmptyEList,
 						ourEmptyEList,
 						ourEmptyEList,
 						ourEmptyEList
 					);
-				setOffsets(result, (CSTNode)dtParser.getSym(1));
+				setOffsets(result, (CSTNode)dtParser.getSym(3));
 				dtParser.setSym1(result);
 	  		  break;
 			}
 	 
 			//
-			// Rule 235:  mappingModuleCS ::= qualifierListOpt transformation qvtErrorToken
+			// Rule 235:  mappingModuleCS ::= moduleImportListOpt metamodelListOpt qualifierListOpt transformation qvtErrorToken
 			//
 			case 235: {
 				
-				EList qualifierList = (EList) dtParser.getSym(1);
 				CSTNode result = createMappingModuleCS(
 						createPathNameCS(),
 						ourEmptyEList,
@@ -3078,12 +3081,7 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 						ourEmptyEList,
 						ourEmptyEList
 					);
-				if (qualifierList.isEmpty()) {
-					setOffsets(result, getIToken(dtParser.getToken(2)));
-				}
-				else {
-					setOffsets(result, (CSTNode) qualifierList.get(qualifierList.size()-1), getIToken(dtParser.getToken(2)));
-				}
+				setOffsets(result, getIToken(dtParser.getToken(4)));
 				dtParser.setSym1(result);
 	  		  break;
 			}
