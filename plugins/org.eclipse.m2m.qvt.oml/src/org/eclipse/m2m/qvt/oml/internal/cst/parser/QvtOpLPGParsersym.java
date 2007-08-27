@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.6 2007/08/27 14:39:56 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.7 2007/08/27 18:49:29 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.6 2007/08/27 14:39:56 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.7 2007/08/27 18:49:29 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -54,7 +54,7 @@ public interface QvtOpLPGParsersym {
       TK_RPAREN = 4,
       TK_LBRACE = 81,
       TK_RBRACE = 78,
-      TK_LBRACKET = 114,
+      TK_LBRACKET = 110,
       TK_RBRACKET = 102,
       TK_ARROW = 118,
       TK_BAR = 89,
@@ -69,7 +69,7 @@ public interface QvtOpLPGParsersym {
       TK_CARETCARET = 121,
       TK_QUESTIONMARK = 122,
       TK_QUOTE_STRING_LITERAL = 123,
-      TK_ADD_ASSIGN = 115,
+      TK_ADD_ASSIGN = 111,
       TK_RESET_ASSIGN = 94,
       TK_AT_SIGN = 128,
       TK_self = 50,
@@ -138,7 +138,7 @@ public interface QvtOpLPGParsersym {
       TK_end = 95,
       TK_while = 72,
       TK_out = 96,
-      TK_object = 64,
+      TK_object = 63,
       TK_transformation = 103,
       TK_import = 104,
       TK_library = 97,
@@ -152,13 +152,13 @@ public interface QvtOpLPGParsersym {
       TK_property = 88,
       TK_map = 61,
       TK_xmap = 62,
-      TK_late = 63,
-      TK_resolve = 105,
-      TK_resolveone = 106,
+      TK_late = 64,
+      TK_resolve = 112,
+      TK_resolveone = 113,
       TK_resolveIn = 74,
       TK_resolveoneIn = 75,
-      TK_invresolve = 107,
-      TK_invresolveone = 108,
+      TK_invresolve = 114,
+      TK_invresolveone = 115,
       TK_invresolveIn = 76,
       TK_invresolveoneIn = 77,
       TK_modeltype = 101,
@@ -166,11 +166,11 @@ public interface QvtOpLPGParsersym {
       TK_where = 131,
       TK_refines = 116,
       TK_enforcing = 132,
-      TK_access = 109,
-      TK_extends = 110,
-      TK_blackbox = 111,
-      TK_abstract = 112,
-      TK_static = 113,
+      TK_access = 105,
+      TK_extends = 106,
+      TK_blackbox = 107,
+      TK_abstract = 108,
+      TK_static = 109,
       TK_result = 51,
       TK_rename = 93,
       TK_EOF_TOKEN = 84,
@@ -242,8 +242,8 @@ public interface QvtOpLPGParsersym {
                  "oclIsInState",
                  "map",
                  "xmap",
-                 "late",
                  "object",
+                 "late",
                  "NUMERIC_OPERATION",
                  "INTEGER_LITERAL",
                  "REAL_LITERAL",
@@ -284,10 +284,6 @@ public interface QvtOpLPGParsersym {
                  "RBRACKET",
                  "transformation",
                  "import",
-                 "resolve",
-                 "resolveone",
-                 "invresolve",
-                 "invresolveone",
                  "access",
                  "extends",
                  "blackbox",
@@ -295,6 +291,10 @@ public interface QvtOpLPGParsersym {
                  "static",
                  "LBRACKET",
                  "ADD_ASSIGN",
+                 "resolve",
+                 "resolveone",
+                 "invresolve",
+                 "invresolveone",
                  "refines",
                  "INTEGER_RANGE_START",
                  "ARROW",

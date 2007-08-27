@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.6 2007/08/27 14:39:56 aigdalov Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.7 2007/08/27 18:49:29 aigdalov Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -350,7 +350,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.6 2007/08/27 14:39:56 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.7 2007/08/27 18:49:29 aigdalov Exp $
  */
 	./
 $End
@@ -2453,14 +2453,15 @@ $Rules
         
     resolveResolveInExpCS -> resolveExpCS
     resolveResolveInExpCS -> resolveInExpCS
-        
-	callExpCS ::= '->' resolveResolveInExpCS
-		/.$BeginJava
-					CallExpCS result = (CallExpCS)$getSym(2);
-					result.setAccessor(DotOrArrowEnum.ARROW_LITERAL);
-					$setResult(result);
-		  $EndJava
-		./
+
+	-- commented out since the spec is not clear about the return type of this expression       
+	-- callExpCS ::= '->' resolveResolveInExpCS
+	--	/.$BeginJava
+	--				CallExpCS result = (CallExpCS)$getSym(2);
+	--				result.setAccessor(DotOrArrowEnum.ARROW_LITERAL);
+	--				$setResult(result);
+	--	  $EndJava
+	--	./
 	callExpCS ::= '.' resolveResolveInExpCS
 		/.$BeginJava
 					CallExpCS result = (CallExpCS)$getSym(2);
