@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.5 2007/08/24 12:16:15 sboyko Exp $
+* $Id: QvtOpLPGParser.java,v 1.6 2007/08/27 14:39:56 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.5 2007/08/24 12:16:15 sboyko Exp $
+* $Id: QvtOpLPGParser.java,v 1.6 2007/08/27 14:39:56 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -216,6 +216,7 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 		}
 
 		try {
+		    workaroundEOFErrors();
 			return (EObject) dtParser.parse(error_repair_count);
 		}
 		catch (BadParseException e) {
@@ -227,6 +228,15 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 		}
 
 		return null;
+	}
+
+    private void workaroundEOFErrors() {
+	    IToken lastT = (IToken) getTokens().get((getTokens().size() - 1));
+    	int trailingEOFsAmount = 100;
+    	int someHugeOffset = 100000;
+    	for (int i  = 0; i < trailingEOFsAmount; i++) {
+            makeToken(lastT.getEndOffset() + i + someHugeOffset, lastT.getEndOffset() + i + someHugeOffset + 1, QvtOpLPGParserprs.TK_EOF_TOKEN);
+    	}
 	}
 
 	protected void OnParseError(BadParseException e) {
@@ -4092,9 +4102,28 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 328:  mappingRuleCS ::= mapping qvtErrorToken
+			// Rule 328:  mappingRuleCS ::= mapping mappingDeclarationCS qvtErrorToken
 			//
 			case 328: {
+				
+				MappingDeclarationCS mappingDecl = (MappingDeclarationCS)dtParser.getSym(2);
+				CSTNode result = createMappingRuleCS(
+						mappingDecl,
+						null,
+						null,
+						null,
+						null
+					);
+				mappingDecl.setBlackBox(true);
+				setOffsets(result, getIToken(dtParser.getToken(1)), mappingDecl);
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 329:  mappingRuleCS ::= mapping qvtErrorToken
+			//
+			case 329: {
 				
 				MappingDeclarationCS mappingDecl = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createMappingDeclarationCS();
 				mappingDecl.setSimpleNameCS(createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, "")); //$NON-NLS-1$
@@ -4111,9 +4140,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 329:  mappingQueryCS ::= query mappingDeclarationCS { expressionListOpt }
+			// Rule 330:  mappingQueryCS ::= query mappingDeclarationCS { expressionListOpt }
 			//
-			case 329: {
+			case 330: {
 				
 				CSTNode result = createMappingQueryCS(
 						(MappingDeclarationCS)dtParser.getSym(2),
@@ -4125,9 +4154,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 330:  mappingQueryCS ::= query mappingDeclarationCS ;
+			// Rule 331:  mappingQueryCS ::= query mappingDeclarationCS ;
 			//
-			case 330: {
+			case 331: {
 				
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS)dtParser.getSym(2);
 				CSTNode result = createMappingQueryCS(
@@ -4141,9 +4170,25 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 331:  mappingQueryCS ::= query qvtErrorToken
+			// Rule 332:  mappingQueryCS ::= query mappingDeclarationCS qvtErrorToken
 			//
-			case 331: {
+			case 332: {
+				
+				MappingDeclarationCS mappingDecl = (MappingDeclarationCS)dtParser.getSym(2);
+				CSTNode result = createMappingQueryCS(
+						mappingDecl,
+						ourEmptyEList
+					);
+				mappingDecl.setBlackBox(true);
+				setOffsets(result, getIToken(dtParser.getToken(1)), mappingDecl);
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 333:  mappingQueryCS ::= query qvtErrorToken
+			//
+			case 333: {
 				
 				CSTNode result = createMappingQueryCS(
 						null,
@@ -4155,9 +4200,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 332:  mappingDeclarationCS ::= directionKindOpt scopedNameCS ( parameterListOpt ) : typeSpecCS
+			// Rule 334:  mappingDeclarationCS ::= directionKindOpt scopedNameCS ( parameterListOpt ) : typeSpecCS
 			//
-			case 332: {
+			case 334: {
 				
 				DirectionKindCS directionKind = (DirectionKindCS)dtParser.getSym(1);
 				CSTNode result = createMappingDeclarationCS(
@@ -4172,9 +4217,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 333:  mappingDeclarationCS ::= directionKindOpt scopedNameCS ( parameterListOpt )
+			// Rule 335:  mappingDeclarationCS ::= directionKindOpt scopedNameCS ( parameterListOpt )
 			//
-			case 333: {
+			case 335: {
 				
 				DirectionKindCS directionKind = (DirectionKindCS)dtParser.getSym(1);
 				CSTNode result = createMappingDeclarationCS(
@@ -4189,33 +4234,33 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 334:  mappingDeclarationCS ::= directionKindOpt scopedNameCS ( parameterListOpt ) qvtErrorToken
+			// Rule 336:  mappingDeclarationCS ::= directionKindOpt scopedNameCS qvtErrorToken
 			//
-			case 334: {
+			case 336: {
 				
 				DirectionKindCS directionKind = (DirectionKindCS)dtParser.getSym(1);
 				CSTNode result = createMappingDeclarationCS(
 						directionKind,
 						(ScopedNameCS)dtParser.getSym(2),
-						(EList)dtParser.getSym(4),
+						ourEmptyEList,
 						null
 					);
-				setOffsets(result, (CSTNode)(directionKind == null ? dtParser.getSym(2) : directionKind), getIToken(dtParser.getToken(5)));
+				setOffsets(result, (CSTNode)(directionKind == null ? dtParser.getSym(2) : directionKind), (CSTNode)dtParser.getSym(2));
 				dtParser.setSym1(result);
 	  		  break;
 			}
 	 
 			//
-			// Rule 335:  expressionListOpt ::= $Empty
+			// Rule 337:  expressionListOpt ::= $Empty
 			//
-			case 335:
+			case 337:
 				dtParser.setSym1(new BasicEList());
 				break;
  
 			//
-			// Rule 337:  expressionList ::= oclExpressionCS
+			// Rule 339:  expressionList ::= oclExpressionCS
 			//
-			case 337: {
+			case 339: {
 				
 				EList result = new BasicEList();
 				result.add(dtParser.getSym(1));
@@ -4224,9 +4269,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 338:  expressionList ::= expressionList ; oclExpressionCS
+			// Rule 340:  expressionList ::= expressionList ; oclExpressionCS
 			//
-			case 338: {
+			case 340: {
 				
 				EList result = (EList)dtParser.getSym(1);
 				result.add(dtParser.getSym(3));
@@ -4235,23 +4280,23 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 341:  expressionList ::= qvtErrorToken
+			// Rule 343:  expressionList ::= qvtErrorToken
 			//
-			case 341:
+			case 343:
 				dtParser.setSym1(new BasicEList());
 				break;
  
 			//
-			// Rule 342:  directionKindOpt ::= $Empty
+			// Rule 344:  directionKindOpt ::= $Empty
 			//
-			case 342:
+			case 344:
 				dtParser.setSym1(null);
 				break;
  
 			//
-			// Rule 344:  directionKindCS ::= in
+			// Rule 346:  directionKindCS ::= in
 			//
-			case 344: {
+			case 346: {
 				
 				CSTNode result = createDirectionKindCS(
 						DirectionKindEnum.IN
@@ -4262,9 +4307,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 345:  directionKindCS ::= out
+			// Rule 347:  directionKindCS ::= out
 			//
-			case 345: {
+			case 347: {
 				
 				CSTNode result = createDirectionKindCS(
 						DirectionKindEnum.OUT
@@ -4275,9 +4320,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 346:  directionKindCS ::= inout
+			// Rule 348:  directionKindCS ::= inout
 			//
-			case 346: {
+			case 348: {
 				
 				CSTNode result = createDirectionKindCS(
 						DirectionKindEnum.INOUT
@@ -4288,16 +4333,16 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 347:  parameterListOpt ::= $Empty
+			// Rule 349:  parameterListOpt ::= $Empty
 			//
-			case 347:
+			case 349:
 				dtParser.setSym1(new BasicEList());
 				break;
  
 			//
-			// Rule 349:  parameterList ::= qvtErrorToken
+			// Rule 351:  parameterList ::= qvtErrorToken
 			//
-			case 349: {
+			case 351: {
 				
 				EList result = new BasicEList();
 				dtParser.setSym1(result);
@@ -4305,9 +4350,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 350:  parameterList ::= parameterDeclarationCS
+			// Rule 352:  parameterList ::= parameterDeclarationCS
 			//
-			case 350: {
+			case 352: {
 				
 				EList result = new BasicEList();
 				result.add(dtParser.getSym(1));
@@ -4316,9 +4361,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 351:  parameterList ::= parameterList , parameterDeclarationCS
+			// Rule 353:  parameterList ::= parameterList , parameterDeclarationCS
 			//
-			case 351: {
+			case 353: {
 				
 				EList result = (EList)dtParser.getSym(1);
 				result.add(dtParser.getSym(3));
@@ -4327,9 +4372,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 352:  parameterList ::= parameterList qvtErrorToken
+			// Rule 354:  parameterList ::= parameterList qvtErrorToken
 			//
-			case 352: {
+			case 354: {
 				
 				EList result = (EList)dtParser.getSym(1);
 				dtParser.setSym1(result);
@@ -4337,9 +4382,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 353:  parameterDeclarationCS ::= directionKindOpt IDENTIFIER : typeSpecCS
+			// Rule 355:  parameterDeclarationCS ::= directionKindOpt IDENTIFIER : typeSpecCS
 			//
-			case 353: {
+			case 355: {
 				
 				CSTNode result = createParameterDeclarationCS(
 						(DirectionKindCS)dtParser.getSym(1),
@@ -4352,9 +4397,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 354:  typeSpecCS ::= typeCS
+			// Rule 356:  typeSpecCS ::= typeCS
 			//
-			case 354: {
+			case 356: {
 				
 				CSTNode result = createTypeSpecCS(
 					(TypeCS)dtParser.getSym(1),
@@ -4365,9 +4410,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 355:  typeSpecCS ::= typeCS @ IDENTIFIER
+			// Rule 357:  typeSpecCS ::= typeCS @ IDENTIFIER
 			//
-			case 355: {
+			case 357: {
 				
 				CSTNode result = createTypeSpecCS(
 					(TypeCS)dtParser.getSym(1),
@@ -4378,52 +4423,52 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 356:  mappingGuardOpt ::= $Empty
+			// Rule 358:  mappingGuardOpt ::= $Empty
 			//
-			case 356:
+			case 358:
 				dtParser.setSym1(null);
 				break;
  
 			//
-			// Rule 358:  mappingGuardCS ::= when { oclExpressionCS }
-			//
-			case 358: {
-				
-				OCLExpressionCS result = (OCLExpressionCS)dtParser.getSym(3);
-				dtParser.setSym1(result);
-	  		  break;
-			}
-	 
-			//
-			// Rule 359:  mappingGuardCS ::= when { oclExpressionCS } qvtErrorToken
-			//
-			case 359: {
-				
-				OCLExpressionCS result = (OCLExpressionCS)dtParser.getSym(3);
-				dtParser.setSym1(result);
-	  		  break;
-			}
-	 
-			//
-			// Rule 360:  mappingGuardCS ::= when qvtErrorToken
+			// Rule 360:  mappingGuardCS ::= when { oclExpressionCS }
 			//
 			case 360: {
 				
+				OCLExpressionCS result = (OCLExpressionCS)dtParser.getSym(3);
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 361:  mappingGuardCS ::= when { oclExpressionCS } qvtErrorToken
+			//
+			case 361: {
+				
+				OCLExpressionCS result = (OCLExpressionCS)dtParser.getSym(3);
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 362:  mappingGuardCS ::= when qvtErrorToken
+			//
+			case 362: {
+				
 				dtParser.setSym1(null);
 	  		  break;
 			}
 	 
 			//
-			// Rule 361:  mappingInitOpt ::= $Empty
+			// Rule 363:  mappingInitOpt ::= $Empty
 			//
-			case 361:
+			case 363:
 				dtParser.setSym1(null);
 				break;
  
 			//
-			// Rule 363:  mappingInitCS ::= init { statementListOpt }
+			// Rule 365:  mappingInitCS ::= init { statementListOpt }
 			//
-			case 363: {
+			case 365: {
 				
 				CSTNode result = createMappingInitCS(
 						(EList)dtParser.getSym(3),
@@ -4436,9 +4481,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 364:  mappingInitCS ::= init qvtErrorToken
+			// Rule 366:  mappingInitCS ::= init qvtErrorToken
 			//
-			case 364: {
+			case 366: {
 				
 				CSTNode result = createMappingInitCS(
 						ourEmptyEList,
@@ -4451,16 +4496,16 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 365:  mappingEndOpt ::= $Empty
+			// Rule 367:  mappingEndOpt ::= $Empty
 			//
-			case 365:
+			case 367:
 				dtParser.setSym1(null);
 				break;
  
 			//
-			// Rule 367:  mappingEndCS ::= end { statementListOpt }
+			// Rule 369:  mappingEndCS ::= end { statementListOpt }
 			//
-			case 367: {
+			case 369: {
 				
 				CSTNode result = createMappingEndCS(
 						(EList)dtParser.getSym(3),
@@ -4473,9 +4518,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 368:  mappingEndCS ::= end qvtErrorToken
+			// Rule 370:  mappingEndCS ::= end qvtErrorToken
 			//
-			case 368: {
+			case 370: {
 				
 				CSTNode result = createMappingEndCS(
 						ourEmptyEList,
@@ -4488,16 +4533,16 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 369:  statementListOpt ::= $Empty
+			// Rule 371:  statementListOpt ::= $Empty
 			//
-			case 369:
+			case 371:
 				dtParser.setSym1(new BasicEList());
 				break;
  
 			//
-			// Rule 371:  statementList ::= qvtErrorToken
+			// Rule 373:  statementList ::= qvtErrorToken
 			//
-			case 371: {
+			case 373: {
 				
 				EList result = new BasicEList();
 				dtParser.setSym1(result);
@@ -4505,9 +4550,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 374:  statementInnerList ::= statementCS
+			// Rule 376:  statementInnerList ::= statementCS
 			//
-			case 374: {
+			case 376: {
 				
 				EList result = new BasicEList();
 				result.add(dtParser.getSym(1));
@@ -4516,9 +4561,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 375:  statementInnerList ::= statementInnerList ; statementCS
+			// Rule 377:  statementInnerList ::= statementInnerList ; statementCS
 			//
-			case 375: {
+			case 377: {
 				
 				EList result = (EList)dtParser.getSym(1);
 				result.add(dtParser.getSym(3));
@@ -4527,9 +4572,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 376:  statementInnerList ::= statementInnerList qvtErrorToken
+			// Rule 378:  statementInnerList ::= statementInnerList qvtErrorToken
 			//
-			case 376: {
+			case 378: {
 				
 				EList result = (EList)dtParser.getSym(1);
 				dtParser.setSym1(result);
@@ -4537,9 +4582,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 379:  statementCS ::= oclExpressionCS
+			// Rule 381:  statementCS ::= oclExpressionCS
 			//
-			case 379: {
+			case 381: {
 				
 				CSTNode result = createExpressionStatementCS(
 						(OCLExpressionCS)dtParser.getSym(1)
@@ -4550,9 +4595,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 380:  variableInitializationCS ::= var IDENTIFIER : typeCS := oclExpressionCS
+			// Rule 382:  variableInitializationCS ::= var IDENTIFIER : typeCS := oclExpressionCS
 			//
-			case 380: {
+			case 382: {
 				
 				CSTNode result = createVariableInitializationCS(
 						getIToken(dtParser.getToken(2)),
@@ -4565,9 +4610,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 381:  variableInitializationCS ::= var IDENTIFIER : typeCS := qvtErrorToken
+			// Rule 383:  variableInitializationCS ::= var IDENTIFIER : typeCS := qvtErrorToken
 			//
-			case 381: {
+			case 383: {
 				
 				CSTNode result = createVariableInitializationCS(
 						getIToken(dtParser.getToken(2)),
@@ -4580,9 +4625,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 382:  variableInitializationCS ::= var IDENTIFIER := oclExpressionCS
+			// Rule 384:  variableInitializationCS ::= var IDENTIFIER := oclExpressionCS
 			//
-			case 382: {
+			case 384: {
 				
 				CSTNode result = createVariableInitializationCS(
 						getIToken(dtParser.getToken(2)),
@@ -4595,37 +4640,7 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 383:  variableInitializationCS ::= var IDENTIFIER := qvtErrorToken
-			//
-			case 383: {
-				
-				CSTNode result = createVariableInitializationCS(
-						getIToken(dtParser.getToken(2)),
-						null,
-						createBooleanLiteralExpCS("null")
-					);
-				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(3)));
-				dtParser.setSym1(result);
-	  		  break;
-			}
-	 
-			//
-			// Rule 384:  variableInitializationCS ::= var IDENTIFIER : typeCS
-			//
-			case 384: {
-				
-				CSTNode result = createVariableInitializationCS(
-						getIToken(dtParser.getToken(2)),
-						(TypeCS)dtParser.getSym(4),
-						createBooleanLiteralExpCS("null")
-					);
-				setOffsets(result, getIToken(dtParser.getToken(1)), (CSTNode)dtParser.getSym(4));
-				dtParser.setSym1(result);
-	  		  break;
-			}
-	 
-			//
-			// Rule 385:  variableInitializationCS ::= var IDENTIFIER : qvtErrorToken
+			// Rule 385:  variableInitializationCS ::= var IDENTIFIER := qvtErrorToken
 			//
 			case 385: {
 				
@@ -4640,9 +4655,39 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 386:  variableInitializationCS ::= var IDENTIFIER
+			// Rule 386:  variableInitializationCS ::= var IDENTIFIER : typeCS
 			//
 			case 386: {
+				
+				CSTNode result = createVariableInitializationCS(
+						getIToken(dtParser.getToken(2)),
+						(TypeCS)dtParser.getSym(4),
+						createBooleanLiteralExpCS("null")
+					);
+				setOffsets(result, getIToken(dtParser.getToken(1)), (CSTNode)dtParser.getSym(4));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 387:  variableInitializationCS ::= var IDENTIFIER : qvtErrorToken
+			//
+			case 387: {
+				
+				CSTNode result = createVariableInitializationCS(
+						getIToken(dtParser.getToken(2)),
+						null,
+						createBooleanLiteralExpCS("null")
+					);
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(3)));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 388:  variableInitializationCS ::= var IDENTIFIER
+			//
+			case 388: {
 				
 				CSTNode result = createVariableInitializationCS(
 						getIToken(dtParser.getToken(2)),
@@ -4655,9 +4700,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 387:  variableInitializationCS ::= var qvtErrorToken
+			// Rule 389:  variableInitializationCS ::= var qvtErrorToken
 			//
-			case 387: {
+			case 389: {
 				
 				IToken errorToken = getIToken(dtParser.getToken(2));
 				CSTNode result = createVariableInitializationCS(
@@ -4671,43 +4716,43 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 388:  assignStatementCS ::= oclExpressionCS := oclExpressionCS
-			//
-			case 388: {
-				
-				CSTNode result = createAssignStatementCS(
-						(OCLExpressionCS)dtParser.getSym(1),
-						(OCLExpressionCS)dtParser.getSym(3),
-						false
-					);
-				setOffsets(result, (CSTNode)dtParser.getSym(1), (CSTNode)dtParser.getSym(3));
-				dtParser.setSym1(result);
-	  		  break;
-			}
-	 
-			//
-			// Rule 389:  assignStatementCS ::= oclExpressionCS := qvtErrorToken
-			//
-			case 389: {
-				
-				CSTNode result = createAssignStatementCS(
-						(OCLExpressionCS)dtParser.getSym(1),
-						createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, ""), //$NON-NLS-1$
-						false
-					);
-				setOffsets(result, (CSTNode)dtParser.getSym(1), getIToken(dtParser.getToken(2)));
-				dtParser.setSym1(result);
-	  		  break;
-			}
-	 
-			//
-			// Rule 390:  assignStatementCS ::= oclExpressionCS += oclExpressionCS
+			// Rule 390:  assignStatementCS ::= oclExpressionCS := oclExpressionCS
 			//
 			case 390: {
 				
 				CSTNode result = createAssignStatementCS(
 						(OCLExpressionCS)dtParser.getSym(1),
 						(OCLExpressionCS)dtParser.getSym(3),
+						false
+					);
+				setOffsets(result, (CSTNode)dtParser.getSym(1), (CSTNode)dtParser.getSym(3));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 391:  assignStatementCS ::= oclExpressionCS := qvtErrorToken
+			//
+			case 391: {
+				
+				CSTNode result = createAssignStatementCS(
+						(OCLExpressionCS)dtParser.getSym(1),
+						createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, ""), //$NON-NLS-1$
+						false
+					);
+				setOffsets(result, (CSTNode)dtParser.getSym(1), getIToken(dtParser.getToken(2)));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 392:  assignStatementCS ::= oclExpressionCS += oclExpressionCS
+			//
+			case 392: {
+				
+				CSTNode result = createAssignStatementCS(
+						(OCLExpressionCS)dtParser.getSym(1),
+						(OCLExpressionCS)dtParser.getSym(3),
 						true
 					);
 				setOffsets(result, (CSTNode)dtParser.getSym(1), (CSTNode)dtParser.getSym(3));
@@ -4716,9 +4761,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 391:  assignStatementCS ::= oclExpressionCS += qvtErrorToken
+			// Rule 393:  assignStatementCS ::= oclExpressionCS += qvtErrorToken
 			//
-			case 391: {
+			case 393: {
 				
 				CSTNode result = createAssignStatementCS(
 						(OCLExpressionCS)dtParser.getSym(1),
@@ -4731,9 +4776,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 392:  mappingBodyOpt ::= $Empty
+			// Rule 394:  mappingBodyOpt ::= $Empty
 			//
-			case 392: {
+			case 394: {
 				
 				MappingBodyCS result = createMappingBodyCS(
 						org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createOutExpCS(),
@@ -4744,9 +4789,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 393:  mappingBodyOpt ::= outExpCS
+			// Rule 395:  mappingBodyOpt ::= outExpCS
 			//
-			case 393: {
+			case 395: {
 				
 				MappingBodyCS result = createMappingBodyCS(
 						(OutExpCS)dtParser.getSym(1),
@@ -4758,9 +4803,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 394:  mappingBodyOpt ::= patternPropertyOrAdditionList
+			// Rule 396:  mappingBodyOpt ::= patternPropertyOrAdditionList
 			//
-			case 394: {
+			case 396: {
 				
 				EList props = (EList)dtParser.getSym(1);
 				OutExpCS outExp = createOutExpCS(props, null, getIToken(dtParser.getToken(1)).getStartOffset(), getIToken(dtParser.getToken(1)).getEndOffset());
@@ -4779,16 +4824,16 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 395:  patternPropertyOrAdditionList ::= qvtErrorToken
+			// Rule 397:  patternPropertyOrAdditionList ::= qvtErrorToken
 			//
-			case 395:
+			case 397:
 				dtParser.setSym1(new BasicEList());
 				break;
  
 			//
-			// Rule 398:  patternPropertyOrAdditionInnerList ::= patternPropertyOrAddition
+			// Rule 400:  patternPropertyOrAdditionInnerList ::= patternPropertyOrAddition
 			//
-			case 398: {
+			case 400: {
 				
 				EList result = new BasicEList();
 				result.add(dtParser.getSym(1));
@@ -4797,9 +4842,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 399:  patternPropertyOrAdditionInnerList ::= patternPropertyOrAdditionList ; patternPropertyOrAddition
+			// Rule 401:  patternPropertyOrAdditionInnerList ::= patternPropertyOrAdditionList ; patternPropertyOrAddition
 			//
-			case 399: {
+			case 401: {
 				
 				EList result = (EList)dtParser.getSym(1);
 				result.add(dtParser.getSym(3));
@@ -4808,43 +4853,43 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 402:  patternPropertyOrAddition ::= IDENTIFIER := oclExpressionCS
-			//
-			case 402: {
-				
-				CSTNode result = createPatternPropertyCS(
-						getIToken(dtParser.getToken(1)),
-						(OCLExpressionCS)dtParser.getSym(3),
-						false
-					);
-				setOffsets(result, getIToken(dtParser.getToken(1)), (CSTNode)dtParser.getSym(3));
-				dtParser.setSym1(result);
-	  		  break;
-			}
-	 
-			//
-			// Rule 403:  patternPropertyOrAddition ::= IDENTIFIER := qvtErrorToken
-			//
-			case 403: {
-				
-				CSTNode result = createPatternPropertyCS(
-						getIToken(dtParser.getToken(1)),
-						createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, ""), //$NON-NLS-1$
-						false
-					);
-				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(2)));
-				dtParser.setSym1(result);
-	  		  break;
-			}
-	 
-			//
-			// Rule 404:  patternPropertyOrAddition ::= IDENTIFIER += oclExpressionCS
+			// Rule 404:  patternPropertyOrAddition ::= IDENTIFIER := oclExpressionCS
 			//
 			case 404: {
 				
 				CSTNode result = createPatternPropertyCS(
 						getIToken(dtParser.getToken(1)),
 						(OCLExpressionCS)dtParser.getSym(3),
+						false
+					);
+				setOffsets(result, getIToken(dtParser.getToken(1)), (CSTNode)dtParser.getSym(3));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 405:  patternPropertyOrAddition ::= IDENTIFIER := qvtErrorToken
+			//
+			case 405: {
+				
+				CSTNode result = createPatternPropertyCS(
+						getIToken(dtParser.getToken(1)),
+						createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, ""), //$NON-NLS-1$
+						false
+					);
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(2)));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 406:  patternPropertyOrAddition ::= IDENTIFIER += oclExpressionCS
+			//
+			case 406: {
+				
+				CSTNode result = createPatternPropertyCS(
+						getIToken(dtParser.getToken(1)),
+						(OCLExpressionCS)dtParser.getSym(3),
 						true
 					);
 				setOffsets(result, getIToken(dtParser.getToken(1)), (CSTNode)dtParser.getSym(3));
@@ -4853,9 +4898,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 405:  patternPropertyOrAddition ::= IDENTIFIER += qvtErrorToken
+			// Rule 407:  patternPropertyOrAddition ::= IDENTIFIER += qvtErrorToken
 			//
-			case 405: {
+			case 407: {
 				
 				CSTNode result = createPatternPropertyCS(
 						getIToken(dtParser.getToken(1)),
@@ -4868,9 +4913,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 406:  outExpCS ::= object typeSpecCS { patternPropertyOrAdditionList }
+			// Rule 408:  outExpCS ::= object typeSpecCS { patternPropertyOrAdditionList }
 			//
-			case 406: {
+			case 408: {
 				
 				CSTNode result = createOutExpCS(
 						(EList)dtParser.getSym(4),
@@ -4884,9 +4929,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 407:  outExpCS ::= object typeSpecCS { }
+			// Rule 409:  outExpCS ::= object typeSpecCS { }
 			//
-			case 407: {
+			case 409: {
 				
 				CSTNode result = createOutExpCS(
 						ourEmptyEList,
@@ -4900,9 +4945,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 408:  outExpCS ::= object { patternPropertyOrAdditionList }
+			// Rule 410:  outExpCS ::= object { patternPropertyOrAdditionList }
 			//
-			case 408: {
+			case 410: {
 				
 				CSTNode result = createOutExpCS(
 						(EList)dtParser.getSym(3),
@@ -4916,9 +4961,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 409:  outExpCS ::= object { }
+			// Rule 411:  outExpCS ::= object { }
 			//
-			case 409: {
+			case 411: {
 				
 				CSTNode result = createOutExpCS(
 						ourEmptyEList,
@@ -4932,9 +4977,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 410:  outExpCS ::= object qvtErrorToken
+			// Rule 412:  outExpCS ::= object qvtErrorToken
 			//
-			case 410: {
+			case 412: {
 				
 				CSTNode result = createOutExpCS(
 						ourEmptyEList,
@@ -4948,41 +4993,41 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 411:  featureMappingCallExpCS ::= map simpleNameCS ( argumentsCSopt )
-			//
-			case 411: {
-				
-				CSTNode result = createMappingCallExpCS(
-						(SimpleNameCS)dtParser.getSym(2),
-						(EList)dtParser.getSym(4),
-						false
-					);
-				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(5)));
-				dtParser.setSym1(result);
-	  		  break;
-			}
-	 
-			//
-			// Rule 412:  featureMappingCallExpCS ::= xmap simpleNameCS ( argumentsCSopt )
-			//
-			case 412: {
-				
-				CSTNode result = createMappingCallExpCS(
-						(SimpleNameCS)dtParser.getSym(2),
-						(EList)dtParser.getSym(4),
-						true
-					);
-				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(5)));
-				dtParser.setSym1(result);
-	  		  break;
-			}
-	 
-			//
-			// Rule 413:  mappingCallExpCS ::= map pathNameCS ( argumentsCSopt )
+			// Rule 413:  featureMappingCallExpCS ::= map simpleNameCS ( argumentsCSopt )
 			//
 			case 413: {
 				
 				CSTNode result = createMappingCallExpCS(
+						(SimpleNameCS)dtParser.getSym(2),
+						(EList)dtParser.getSym(4),
+						false
+					);
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(5)));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 414:  featureMappingCallExpCS ::= xmap simpleNameCS ( argumentsCSopt )
+			//
+			case 414: {
+				
+				CSTNode result = createMappingCallExpCS(
+						(SimpleNameCS)dtParser.getSym(2),
+						(EList)dtParser.getSym(4),
+						true
+					);
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(5)));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 415:  mappingCallExpCS ::= map pathNameCS ( argumentsCSopt )
+			//
+			case 415: {
+				
+				CSTNode result = createMappingCallExpCS(
 						(PathNameCS)dtParser.getSym(2),
 						(EList)dtParser.getSym(4),
 						false
@@ -4993,9 +5038,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 414:  mappingCallExpCS ::= xmap pathNameCS ( argumentsCSopt )
+			// Rule 416:  mappingCallExpCS ::= xmap pathNameCS ( argumentsCSopt )
 			//
-			case 414: {
+			case 416: {
 				
 				CSTNode result = createMappingCallExpCS(
 						(PathNameCS)dtParser.getSym(2),
@@ -5008,55 +5053,55 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 415:  resolveConditionOpt ::= $Empty
-			//
-			case 415:
-				dtParser.setSym1(null);
-				break;
- 
-			//
-			// Rule 416:  resolveConditionOpt ::= | oclExpressionCS
-			//
-			case 416: {
-				
-                dtParser.setSym1((OCLExpressionCS)dtParser.getSym(2));
-      		  break;
-			}
-     
-			//
-			// Rule 417:  resolveConditionOpt ::= | qvtErrorToken
+			// Rule 417:  resolveConditionOpt ::= $Empty
 			//
 			case 417:
 				dtParser.setSym1(null);
 				break;
  
 			//
-			// Rule 418:  IDENTIFIEROpt ::= $Empty
+			// Rule 418:  resolveConditionOpt ::= | oclExpressionCS
 			//
-			case 418:
-				dtParser.setSym1(null);
-				break;
- 
-			//
-			// Rule 419:  IDENTIFIEROpt ::= IDENTIFIER :
-			//
-			case 419: {
+			case 418: {
 				
-                dtParser.setSym1(getIToken(dtParser.getToken(1)));
+                dtParser.setSym1((OCLExpressionCS)dtParser.getSym(2));
       		  break;
 			}
      
 			//
-			// Rule 420:  resolveOpArgsExpCS ::= $Empty
+			// Rule 419:  resolveConditionOpt ::= | qvtErrorToken
+			//
+			case 419:
+				dtParser.setSym1(null);
+				break;
+ 
+			//
+			// Rule 420:  IDENTIFIEROpt ::= $Empty
 			//
 			case 420:
 				dtParser.setSym1(null);
 				break;
  
 			//
-			// Rule 421:  resolveOpArgsExpCS ::= IDENTIFIEROpt typeCS resolveConditionOpt
+			// Rule 421:  IDENTIFIEROpt ::= IDENTIFIER :
 			//
 			case 421: {
+				
+                dtParser.setSym1(getIToken(dtParser.getToken(1)));
+      		  break;
+			}
+     
+			//
+			// Rule 422:  resolveOpArgsExpCS ::= $Empty
+			//
+			case 422:
+				dtParser.setSym1(null);
+				break;
+ 
+			//
+			// Rule 423:  resolveOpArgsExpCS ::= IDENTIFIEROpt typeCS resolveConditionOpt
+			//
+			case 423: {
 				
                 CSTNode result = createResolveOpArgsExpCS(
                         getIToken(dtParser.getToken(1)),      // target_type_variable?
@@ -5068,16 +5113,16 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
      
 			//
-			// Rule 426:  lateOpt ::= $Empty
+			// Rule 428:  lateOpt ::= $Empty
 			//
-			case 426:
+			case 428:
 				dtParser.setSym1(null);
 				break;
  
 			//
-			// Rule 428:  resolveExpCS ::= lateOpt resolveOp ( resolveOpArgsExpCS )
+			// Rule 430:  resolveExpCS ::= lateOpt resolveOp ( resolveOpArgsExpCS )
 			//
-			case 428: {
+			case 430: {
 				
                 CSTNode result = createResolveExpCS(
                         getIToken(dtParser.getToken(1)),
@@ -5089,9 +5134,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
      
 			//
-			// Rule 429:  resolveExpCS ::= lateOpt resolveOp ( resolveOpArgsExpCS qvtErrorToken
+			// Rule 431:  resolveExpCS ::= lateOpt resolveOp ( resolveOpArgsExpCS qvtErrorToken
 			//
-			case 429: {
+			case 431: {
 				
                 CSTNode result = createResolveExpCS(
                         getIToken(dtParser.getToken(1)),
@@ -5103,9 +5148,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
      
 			//
-			// Rule 430:  resolveExpCS ::= lateOpt resolveOp qvtErrorToken
+			// Rule 432:  resolveExpCS ::= lateOpt resolveOp qvtErrorToken
 			//
-			case 430: {
+			case 432: {
 				
                 CSTNode result = createResolveExpCS(
                         getIToken(dtParser.getToken(1)),
@@ -5117,9 +5162,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
      
 			//
-			// Rule 431:  resolveExpCS ::= late qvtErrorToken
+			// Rule 433:  resolveExpCS ::= late qvtErrorToken
 			//
-			case 431: {
+			case 433: {
 				
     			IToken lateToken = getIToken(dtParser.getToken(1));
                 CSTNode result = createResolveExpCS(
@@ -5132,9 +5177,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
      
 			//
-			// Rule 436:  resolveInExpCS ::= lateOpt resolveInOp ( scopedNameCS , resolveOpArgsExpCS )
+			// Rule 438:  resolveInExpCS ::= lateOpt resolveInOp ( scopedNameCS , resolveOpArgsExpCS )
 			//
-			case 436: {
+			case 438: {
 				
                 CSTNode result = createResolveInExpCS(
                         getIToken(dtParser.getToken(1)),
@@ -5147,9 +5192,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
      
 			//
-			// Rule 437:  resolveInExpCS ::= lateOpt resolveInOp ( scopedNameCS , resolveOpArgsExpCS qvtErrorToken
+			// Rule 439:  resolveInExpCS ::= lateOpt resolveInOp ( scopedNameCS , resolveOpArgsExpCS qvtErrorToken
 			//
-			case 437: {
+			case 439: {
 				
                 CSTNode result = createResolveInExpCS(
                         getIToken(dtParser.getToken(1)),
@@ -5162,9 +5207,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
      
 			//
-			// Rule 438:  resolveInExpCS ::= lateOpt resolveInOp ( scopedNameCS qvtErrorToken
+			// Rule 440:  resolveInExpCS ::= lateOpt resolveInOp ( scopedNameCS qvtErrorToken
 			//
-			case 438: {
+			case 440: {
 				
                 CSTNode result = createResolveInExpCS(
                         getIToken(dtParser.getToken(1)),
@@ -5177,9 +5222,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
      
 			//
-			// Rule 439:  resolveInExpCS ::= lateOpt resolveInOp ( qvtErrorToken
+			// Rule 441:  resolveInExpCS ::= lateOpt resolveInOp ( qvtErrorToken
 			//
-			case 439: {
+			case 441: {
 				
                 CSTNode result = createResolveInExpCS(
                         getIToken(dtParser.getToken(1)),
@@ -5192,9 +5237,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
      
 			//
-			// Rule 440:  resolveInExpCS ::= lateOpt resolveInOp qvtErrorToken
+			// Rule 442:  resolveInExpCS ::= lateOpt resolveInOp qvtErrorToken
 			//
-			case 440: {
+			case 442: {
 				
                 CSTNode result = createResolveInExpCS(
                         getIToken(dtParser.getToken(1)),
@@ -5207,9 +5252,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
      
 			//
-			// Rule 443:  callExpCS ::= -> resolveResolveInExpCS
+			// Rule 445:  callExpCS ::= -> resolveResolveInExpCS
 			//
-			case 443: {
+			case 445: {
 				
 				CallExpCS result = (CallExpCS)dtParser.getSym(2);
 				result.setAccessor(DotOrArrowEnum.ARROW_LITERAL);
@@ -5218,9 +5263,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 444:  callExpCS ::= . resolveResolveInExpCS
+			// Rule 446:  callExpCS ::= . resolveResolveInExpCS
 			//
-			case 444: {
+			case 446: {
 				
 				CallExpCS result = (CallExpCS)dtParser.getSym(2);
 				result.setAccessor(DotOrArrowEnum.DOT_LITERAL);
@@ -5229,9 +5274,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 446:  whileExpCS ::= while ( oclExpressionCS ; oclExpressionCS ) { statementListOpt }
+			// Rule 448:  whileExpCS ::= while ( oclExpressionCS ; oclExpressionCS ) { statementListOpt }
 			//
-			case 446: {
+			case 448: {
 				
 				CSTNode result = createWhileExpCS(
 						(OCLExpressionCS)dtParser.getSym(3),
@@ -5244,9 +5289,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 452:  letExpSubCS3 ::= variableCS2
+			// Rule 454:  letExpSubCS3 ::= variableCS2
 			//
-			case 452: {
+			case 454: {
 				
 				EList result = new BasicEList();
 				result.add(dtParser.getSym(1));
@@ -5255,9 +5300,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 453:  letExpSubCS3 ::= letExpSubCS3 , variableCS2
+			// Rule 455:  letExpSubCS3 ::= letExpSubCS3 , variableCS2
 			//
-			case 453: {
+			case 455: {
 				
 				EList result = (EList)dtParser.getSym(1);
 				result.add(dtParser.getSym(3));
@@ -5266,9 +5311,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 454:  letExpCS ::= let letExpSubCS3 in oclExpressionCS
+			// Rule 456:  letExpCS ::= let letExpSubCS3 in oclExpressionCS
 			//
-			case 454: {
+			case 456: {
 				
 				EList variables = (EList)dtParser.getSym(2);
 				CSTNode result = createLetExpCS(
@@ -5281,9 +5326,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 455:  letExpCS ::= let letExpSubCS3 in qvtErrorToken
+			// Rule 457:  letExpCS ::= let letExpSubCS3 in qvtErrorToken
 			//
-			case 455: {
+			case 457: {
 				
 				EList variables = (EList)dtParser.getSym(2);
 				CSTNode result = createLetExpCS(
@@ -5296,9 +5341,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 456:  simpleNameCS ::= result
+			// Rule 458:  simpleNameCS ::= result
 			//
-			case 456: {
+			case 458: {
 				
 				CSTNode result = createSimpleNameCS(
 						SimpleTypeEnum.IDENTIFIER_LITERAL,
@@ -5310,9 +5355,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 457:  modelTypeExpCS ::= modeltype IDENTIFIER complianceKindCSOpt uses packageRefList modelTypeWhereCSOpt ;
+			// Rule 459:  modelTypeExpCS ::= modeltype IDENTIFIER complianceKindCSOpt uses packageRefList modelTypeWhereCSOpt ;
 			//
-			case 457: {
+			case 459: {
 				
 				EList whereList = (EList)dtParser.getSym(6);
 				EList packageRefList = (EList)dtParser.getSym(5);
@@ -5335,9 +5380,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 458:  modelTypeExpCS ::= modeltype qvtErrorToken
+			// Rule 460:  modelTypeExpCS ::= modeltype qvtErrorToken
 			//
-			case 458: {
+			case 460: {
 				
 				ModelTypeCS result = createModelTypeCS(
 						new Token(0, 0, 0),
@@ -5351,9 +5396,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 459:  complianceKindCSOpt ::= $Empty
+			// Rule 461:  complianceKindCSOpt ::= $Empty
 			//
-			case 459: {
+			case 461: {
 				
 				CSTNode result = createStringLiteralExpCS("''");
 				setOffsets(result, getIToken(dtParser.getToken(1)));
@@ -5362,9 +5407,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 461:  packageRefList ::= packageRefCS
+			// Rule 463:  packageRefList ::= packageRefCS
 			//
-			case 461: {
+			case 463: {
 				
 				EList result = new BasicEList();
 				result.add(dtParser.getSym(1));
@@ -5373,9 +5418,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 462:  packageRefList ::= packageRefList , packageRefCS
+			// Rule 464:  packageRefList ::= packageRefList , packageRefCS
 			//
-			case 462: {
+			case 464: {
 				
 				EList result = (EList)dtParser.getSym(1);
 				result.add(dtParser.getSym(3));
@@ -5384,9 +5429,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 463:  packageRefCS ::= pathNameCS
+			// Rule 465:  packageRefCS ::= pathNameCS
 			//
-			case 463: {
+			case 465: {
 				
 				CSTNode result = createPackageRefCS(
 						(PathNameCS)dtParser.getSym(1),
@@ -5398,9 +5443,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 464:  packageRefCS ::= pathNameCS ( qvtStringLiteralExpCS )
+			// Rule 466:  packageRefCS ::= pathNameCS ( qvtStringLiteralExpCS )
 			//
-			case 464: {
+			case 466: {
 				
 				CSTNode result = createPackageRefCS(
 						(PathNameCS)dtParser.getSym(1),
@@ -5412,9 +5457,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 465:  packageRefCS ::= qvtStringLiteralExpCS
+			// Rule 467:  packageRefCS ::= qvtStringLiteralExpCS
 			//
-			case 465: {
+			case 467: {
 				
 				CSTNode result = createPackageRefCS(
 						null,
@@ -5426,9 +5471,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 467:  qvtStringLiteralExpCS ::= QUOTE_STRING_LITERAL
+			// Rule 469:  qvtStringLiteralExpCS ::= QUOTE_STRING_LITERAL
 			//
-			case 467: {
+			case 469: {
 				
 				CSTNode result = createStringLiteralExpCS("'" + unquote(getTokenText(dtParser.getToken(1))) + "'"); //$NON-NLS-1$ //$NON-NLS-2$
 				setOffsets(result, getIToken(dtParser.getToken(1)));
@@ -5437,16 +5482,16 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 468:  modelTypeWhereCSOpt ::= $Empty
+			// Rule 470:  modelTypeWhereCSOpt ::= $Empty
 			//
-			case 468:
+			case 470:
 				dtParser.setSym1(new BasicEList());
 				break;
  
 			//
-			// Rule 469:  modelTypeWhereCSOpt ::= where { statementListOpt }
+			// Rule 471:  modelTypeWhereCSOpt ::= where { statementListOpt }
 			//
-			case 469: {
+			case 471: {
 				
 				EList result = (EList)dtParser.getSym(3);
 				dtParser.setSym1(result);
@@ -5454,18 +5499,18 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 472:  qvtErrorToken ::= ERROR_TOKEN
+			// Rule 474:  qvtErrorToken ::= ERROR_TOKEN
 			//
-			case 472: {
+			case 474: {
 				
 				diagnozeErrorToken(dtParser.getToken(1));
 	  		  break;
 			}
 	 
 			//
-			// Rule 473:  iterContents ::= qvtErrorToken oclExpressionCS
+			// Rule 475:  iterContents ::= qvtErrorToken oclExpressionCS
 			//
-			case 473: {
+			case 475: {
 				
 				dtParser.setSym1(new Object[] {
 						null,
@@ -5476,9 +5521,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 474:  iterContents ::= variableCS | qvtErrorToken
+			// Rule 476:  iterContents ::= variableCS | qvtErrorToken
 			//
-			case 474: {
+			case 476: {
 				
 				CSTNode fakeCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, ""); //$NON-NLS-1$
 				setOffsets(fakeCS, getIToken(dtParser.getToken(3)));
@@ -5491,9 +5536,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 475:  callExpCS ::= . qvtErrorToken
+			// Rule 477:  callExpCS ::= . qvtErrorToken
 			//
-			case 475: {
+			case 477: {
 				
 				CallExpCS result = TempFactory.eINSTANCE.createErrorCallExpCS();
 	 			result.setAccessor(DotOrArrowEnum.DOT_LITERAL);
@@ -5503,9 +5548,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 476:  callExpCS ::= -> qvtErrorToken
+			// Rule 478:  callExpCS ::= -> qvtErrorToken
 			//
-			case 476: {
+			case 478: {
 				
 				CallExpCS result = TempFactory.eINSTANCE.createErrorCallExpCS();
 	 			result.setAccessor(DotOrArrowEnum.ARROW_LITERAL);
@@ -5515,26 +5560,26 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 477:  argumentsCS ::= qvtErrorToken
+			// Rule 479:  argumentsCS ::= qvtErrorToken
 			//
-			case 477:
+			case 479:
 				dtParser.setSym1(new BasicEList());
 				break;
  
 			//
-			// Rule 479:  operationCallExpCS ::= oclAsType isMarkedPreCS ( typeCS )
+			// Rule 481:  operationCallExpCS ::= oclAsType isMarkedPreCS ( typeCS )
 			//
-			case 479:
+			case 481:
  
 			//
-			// Rule 480:  operationCallExpCS ::= oclIsKindOf isMarkedPreCS ( typeCS )
+			// Rule 482:  operationCallExpCS ::= oclIsKindOf isMarkedPreCS ( typeCS )
 			//
-			case 480:
+			case 482:
  
 			//
-			// Rule 481:  operationCallExpCS ::= oclIsTypeOf isMarkedPreCS ( typeCS )
+			// Rule 483:  operationCallExpCS ::= oclIsTypeOf isMarkedPreCS ( typeCS )
 			//
-			case 481: {
+			case 483: {
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 							SimpleTypeEnum.IDENTIFIER_LITERAL,

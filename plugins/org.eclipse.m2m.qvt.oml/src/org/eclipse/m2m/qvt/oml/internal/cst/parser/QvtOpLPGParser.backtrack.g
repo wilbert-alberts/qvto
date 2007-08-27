@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.5 2007/08/24 12:16:15 sboyko Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.6 2007/08/27 14:39:56 aigdalov Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -199,6 +199,7 @@ $Define
 			}
 
 			try {
+			    workaroundEOFErrors();
 				return ($ast_type) dtParser.parse(error_repair_count);
 			}
 			catch (BadParseException e) {
@@ -211,6 +212,15 @@ $Define
 
 			return null;
 		}
+
+	    private void workaroundEOFErrors() {
+    	    IToken lastT = (IToken) getTokens().get((getTokens().size() - 1));
+        	int trailingEOFsAmount = 100;
+        	int someHugeOffset = 100000;
+        	for (int i  = 0; i < trailingEOFsAmount; i++) {
+	            makeToken(lastT.getEndOffset() + i + someHugeOffset, lastT.getEndOffset() + i + someHugeOffset + 1, QvtOpLPGParserprs.TK_EOF_TOKEN);
+        	}
+    	}
 
 		protected void OnParseError(BadParseException e) {
 			System.err.println(getFileName());
@@ -340,7 +350,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.5 2007/08/24 12:16:15 sboyko Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.6 2007/08/27 14:39:56 aigdalov Exp $
  */
 	./
 $End
@@ -1582,6 +1592,21 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
+	mappingRuleCS ::= mapping mappingDeclarationCS qvtErrorToken  
+		/.$BeginJava
+					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(2);
+					CSTNode result = createMappingRuleCS(
+							mappingDecl,
+							null,
+							null,
+							null,
+							null
+						);
+					mappingDecl.setBlackBox(true);
+					setOffsets(result, getIToken($getToken(1)), mappingDecl);
+					$setResult(result);
+		  $EndJava
+		./
 	mappingRuleCS ::= mapping qvtErrorToken
 		/.$BeginJava
 					MappingDeclarationCS mappingDecl = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createMappingDeclarationCS();
@@ -1597,7 +1622,6 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	
 	mappingQueryCS ::= query mappingDeclarationCS '{' expressionListOpt '}'  
 		/.$BeginJava
 					CSTNode result = createMappingQueryCS(
@@ -1617,6 +1641,18 @@ $Rules
 						);
 					mappingDecl.setBlackBox(true);
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
+					$setResult(result);
+		  $EndJava
+		./
+	mappingQueryCS ::= query mappingDeclarationCS qvtErrorToken  
+		/.$BeginJava
+					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(2);
+					CSTNode result = createMappingQueryCS(
+							mappingDecl,
+							$EMPTY_ELIST
+						);
+					mappingDecl.setBlackBox(true);
+					setOffsets(result, getIToken($getToken(1)), mappingDecl);
 					$setResult(result);
 		  $EndJava
 		./
@@ -1657,19 +1693,20 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	mappingDeclarationCS ::= directionKindOpt scopedNameCS '(' parameterListOpt ')' qvtErrorToken
+	mappingDeclarationCS ::= directionKindOpt scopedNameCS qvtErrorToken
 		/.$BeginJava
 					DirectionKindCS directionKind = (DirectionKindCS)$getSym(1);
 					CSTNode result = createMappingDeclarationCS(
 							directionKind,
 							(ScopedNameCS)$getSym(2),
-							(EList)$getSym(4),
+							$EMPTY_ELIST,
 							null
 						);
-					setOffsets(result, (CSTNode)(directionKind == null ? $getSym(2) : directionKind), getIToken($getToken(5)));
+					setOffsets(result, (CSTNode)(directionKind == null ? $getSym(2) : directionKind), (CSTNode)$getSym(2));
 					$setResult(result);
 		  $EndJava
 		./
+
 
 	expressionListOpt ::= $empty
 		/.$EmptyListAction./

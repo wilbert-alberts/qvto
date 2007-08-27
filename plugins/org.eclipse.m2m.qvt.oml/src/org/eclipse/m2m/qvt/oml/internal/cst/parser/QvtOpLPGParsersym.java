@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.5 2007/08/24 12:16:15 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.6 2007/08/27 14:39:56 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.5 2007/08/24 12:16:15 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.6 2007/08/27 14:39:56 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -71,7 +71,7 @@ public interface QvtOpLPGParsersym {
       TK_QUOTE_STRING_LITERAL = 123,
       TK_ADD_ASSIGN = 115,
       TK_RESET_ASSIGN = 94,
-      TK_AT_SIGN = 129,
+      TK_AT_SIGN = 128,
       TK_self = 50,
       TK_inv = 133,
       TK_pre = 134,
@@ -146,7 +146,7 @@ public interface QvtOpLPGParsersym {
       TK_mapping = 86,
       TK_query = 87,
       TK_inout = 99,
-      TK_when = 128,
+      TK_when = 129,
       TK_var = 100,
       TK_configuration = 91,
       TK_property = 88,
@@ -307,8 +307,8 @@ public interface QvtOpLPGParsersym {
                  "else",
                  "endif",
                  "implies",
-                 "when",
                  "AT_SIGN",
+                 "when",
                  "uses",
                  "where",
                  "enforcing",
