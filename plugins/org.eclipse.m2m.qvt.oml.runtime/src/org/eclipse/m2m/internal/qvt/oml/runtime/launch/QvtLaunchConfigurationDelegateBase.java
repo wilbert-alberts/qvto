@@ -13,7 +13,6 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.launch;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -49,6 +48,7 @@ import org.eclipse.m2m.qvt.oml.emf.util.EmfException;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.StatusUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
+import org.eclipse.m2m.qvt.oml.library.Context;
 import org.eclipse.m2m.qvt.oml.library.IConfiguration;
 import org.eclipse.m2m.qvt.oml.library.IContext;
 import org.eclipse.osgi.util.NLS;
@@ -122,8 +122,8 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         doLaunch(transformation, inObjects, targetData, qvtConfiguration, traceFileName, context);
     }
     
-    public static List<URI> doLaunch(final QvtTransformation transformation, final EObject inObj, TargetUriData targetData, IConfiguration configuration, final String traceFileName) throws Exception {
-    	return doLaunch(transformation, Collections.singletonList(inObj), Collections.singletonList(targetData), configuration, traceFileName, null);
+    public static List<URI> doLaunch(final QvtTransformation transformation, final List<EObject> inObjs, List<TargetUriData> targetData, IConfiguration configuration, final String traceFileName) throws Exception {
+    	return doLaunch(transformation, inObjs, targetData, configuration, traceFileName, new Context(configuration));
     }
     
     private static List<URI> doLaunch(final QvtTransformation transformation, final List<EObject> inObjs, List<TargetUriData> targetData, IConfiguration configuration, final String traceFileName, IContext context) throws Exception {
