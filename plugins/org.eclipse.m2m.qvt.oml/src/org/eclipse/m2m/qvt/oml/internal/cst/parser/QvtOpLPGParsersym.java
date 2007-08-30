@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.7 2007/08/27 18:49:29 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.8 2007/08/30 13:31:01 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.7 2007/08/27 18:49:29 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.8 2007/08/30 13:31:01 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -53,15 +53,15 @@ public interface QvtOpLPGParsersym {
       TK_LPAREN = 1,
       TK_RPAREN = 4,
       TK_LBRACE = 81,
-      TK_RBRACE = 78,
+      TK_RBRACE = 79,
       TK_LBRACKET = 110,
-      TK_RBRACKET = 102,
+      TK_RBRACKET = 101,
       TK_ARROW = 118,
       TK_BAR = 89,
       TK_COMMA = 80,
       TK_COLON = 83,
       TK_COLONCOLON = 82,
-      TK_SEMICOLON = 79,
+      TK_SEMICOLON = 78,
       TK_DOT = 90,
       TK_DOTDOT = 119,
       TK_ATPRE = 92,
@@ -135,19 +135,19 @@ public interface QvtOpLPGParsersym {
       TK_Invalid = 18,
       TK_OclMessage = 19,
       TK_OclInvalid = 71,
-      TK_end = 95,
+      TK_end = 102,
       TK_while = 72,
-      TK_out = 96,
+      TK_out = 95,
       TK_object = 63,
       TK_transformation = 103,
       TK_import = 104,
-      TK_library = 97,
-      TK_metamodel = 98,
+      TK_library = 96,
+      TK_metamodel = 97,
       TK_mapping = 86,
       TK_query = 87,
-      TK_inout = 99,
+      TK_inout = 98,
       TK_when = 129,
-      TK_var = 100,
+      TK_var = 99,
       TK_configuration = 91,
       TK_property = 88,
       TK_map = 61,
@@ -161,7 +161,7 @@ public interface QvtOpLPGParsersym {
       TK_invresolveone = 115,
       TK_invresolveIn = 76,
       TK_invresolveoneIn = 77,
-      TK_modeltype = 101,
+      TK_modeltype = 100,
       TK_uses = 130,
       TK_where = 131,
       TK_refines = 116,
@@ -257,8 +257,8 @@ public interface QvtOpLPGParsersym {
                  "resolveoneIn",
                  "invresolveIn",
                  "invresolveoneIn",
-                 "RBRACE",
                  "SEMICOLON",
+                 "RBRACE",
                  "COMMA",
                  "LBRACE",
                  "COLONCOLON",
@@ -274,7 +274,6 @@ public interface QvtOpLPGParsersym {
                  "ATPRE",
                  "rename",
                  "RESET_ASSIGN",
-                 "end",
                  "out",
                  "library",
                  "metamodel",
@@ -282,6 +281,7 @@ public interface QvtOpLPGParsersym {
                  "var",
                  "modeltype",
                  "RBRACKET",
+                 "end",
                  "transformation",
                  "import",
                  "access",

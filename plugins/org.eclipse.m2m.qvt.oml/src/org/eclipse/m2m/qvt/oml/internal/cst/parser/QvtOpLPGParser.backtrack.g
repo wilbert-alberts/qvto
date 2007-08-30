@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.7 2007/08/27 18:49:29 aigdalov Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.8 2007/08/30 13:31:01 aigdalov Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -263,13 +263,14 @@ $Globals
 	import org.eclipse.m2m.qvt.oml.internal.cst.ParameterDeclarationCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.PatternPropertyExpCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.RenameCS;
-    import org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS;
-    import org.eclipse.m2m.qvt.oml.internal.cst.ResolveInExpCS;
+	import org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS;
+	import org.eclipse.m2m.qvt.oml.internal.cst.ResolveInExpCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.VariableInitializationCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.WhileExpCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.ModelTypeCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.PackageRefCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.ElementWithBody;
+	import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorOutExpCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.temp.ResolveOpArgsExpCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.temp.ScopedNameCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.temp.TempFactory;
@@ -350,7 +351,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.7 2007/08/27 18:49:29 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.8 2007/08/30 13:31:01 aigdalov Exp $
  */
 	./
 $End
@@ -612,14 +613,27 @@ $Headers
 			}
 		}
 	
-		protected OutExpCS createOutExpCS(EList expressions, TypeSpecCS typeSpecCS, int startOffset,
+		protected OutExpCS createOutExpCS(OutExpCS result, EList expressions, TypeSpecCS typeSpecCS, int startOffset,
 				int endOffset) {
-			OutExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createOutExpCS();
 			result.setTypeSpecCS(typeSpecCS);
 			result.getExpressions().addAll(expressions);
 			result.setBodyStartLocation(startOffset);
 			result.setBodyEndLocation(endOffset);
 			return result;
+		}
+
+		protected OutExpCS createOutExpCS(EList expressions, TypeSpecCS typeSpecCS, int startOffset,
+				int endOffset) {
+			OutExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createOutExpCS();
+			return createOutExpCS(result, expressions, typeSpecCS, startOffset, endOffset);
+		}
+	
+		protected OutExpCS createErrorOutExpCS(EList expressions, TypeSpecCS typeSpecCS, int startOffset,
+				int endOffset, int fullStartOffset, int fullEndOffset) {
+			ErrorOutExpCS result = TempFactory.eINSTANCE.createErrorOutExpCS();
+			result.setFullStartOffset(fullStartOffset);
+			result.setFullEndOffset(fullEndOffset);
+			return createOutExpCS(result, expressions, typeSpecCS, startOffset, endOffset);
 		}
 	
 		protected MappingBodyCS createMappingBodyCS(OutExpCS sym, boolean b) {
@@ -2083,15 +2097,6 @@ $Rules
 		  $EndJava
 		./
 		
-	mappingBodyOpt ::= $empty
-		/.$BeginJava
-					MappingBodyCS result = createMappingBodyCS(
-							org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createOutExpCS(),
-							true
-						);
-					$setResult(result);
-		  $EndJava
-		./
 	mappingBodyOpt ::= outExpCS
 		/.$BeginJava
 					MappingBodyCS result = createMappingBodyCS(
@@ -2120,28 +2125,27 @@ $Rules
 		  $EndJava
 		./
 	
-	patternPropertyOrAdditionList ::= qvtErrorToken
+	patternPropertyOrAdditionList ::= $empty
 		/.$EmptyListAction./
 	patternPropertyOrAdditionList -> patternPropertyOrAdditionInnerList
 	patternPropertyOrAdditionList -> patternPropertyOrAdditionList ';'
 	
-	patternPropertyOrAdditionInnerList ::= patternPropertyOrAddition
+	patternPropertyOrAdditionInnerList ::= patternPropertyOrAddition2
 		/.$BeginJava
 					EList result = new BasicEList();
 					result.add($getSym(1));
 					$setResult(result);
 		  $EndJava
 		./
-	patternPropertyOrAdditionInnerList ::= patternPropertyOrAdditionList ';' patternPropertyOrAddition
+	patternPropertyOrAdditionInnerList ::= patternPropertyOrAdditionList ';' patternPropertyOrAddition2
 		/.$BeginJava
 					EList result = (EList)$getSym(1);
 					result.add($getSym(3));
 					$setResult(result);
 		  $EndJava
 		./
-	patternPropertyOrAdditionInnerList -> patternPropertyOrAdditionList ';' qvtErrorToken
-	patternPropertyOrAdditionInnerList -> patternPropertyOrAdditionInnerList qvtErrorToken
-	
+	patternPropertyOrAddition2 -> patternPropertyOrAddition
+	patternPropertyOrAddition2 -> qvtErrorToken patternPropertyOrAddition
 	patternPropertyOrAddition ::= IDENTIFIER ':=' oclExpressionCS
 		/.$BeginJava
 					CSTNode result = createPatternPropertyCS(
@@ -2187,8 +2191,23 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
+	patternPropertyOrAddition ::= IDENTIFIER qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createPatternPropertyCS(
+							getIToken($getToken(1)),
+							createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, ""), //$NON-NLS-1$
+							true
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
 	
-	outExpCS ::= object typeSpecCS '{' patternPropertyOrAdditionList '}' 
+	typeSpecCSOpt ::= $empty
+		/.$NullAction./
+	typeSpecCSOpt -> typeSpecCS
+
+	outExpCS ::= object typeSpecCSOpt '{' patternPropertyOrAdditionList '}' 
 		/.$BeginJava
 					CSTNode result = createOutExpCS(
 							(EList)$getSym(4),
@@ -2200,51 +2219,42 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	outExpCS ::= object typeSpecCS '{' '}' 
+	outExpCS ::= object typeSpecCSOpt '{' patternPropertyOrAdditionList qvtErrorToken
 		/.$BeginJava
-					CSTNode result = createOutExpCS(
-							$EMPTY_ELIST,
+					EList<CSTNode> patternPropertyOrAdditionList = (EList<CSTNode>)$getSym(4);
+					CSTNode result = createErrorOutExpCS(
+							(EList)$getSym(4),
 							(TypeSpecCS)$getSym(2),
 							getIToken($getToken(3)).getEndOffset(),
-							getIToken($getToken(4)).getStartOffset()
+							getIToken($getToken(5)).getStartOffset(),
+							getIToken($getToken(1)).getStartOffset(),
+							getIToken($getToken(5)).getStartOffset()
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
+					if (patternPropertyOrAdditionList.isEmpty()) {
+					    setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
+					} else {
+					    CSTNode lastNode = patternPropertyOrAdditionList.get(patternPropertyOrAdditionList.size() - 1);
+					    setOffsets(result, getIToken($getToken(1)), lastNode);
+					}
 					$setResult(result);
 		  $EndJava
 		./
-	outExpCS ::= object '{' patternPropertyOrAdditionList '}' 
+	outExpCS ::= object typeSpecCSOpt qvtErrorToken
 		/.$BeginJava
-					CSTNode result = createOutExpCS(
-							(EList)$getSym(3),
-							null,
-							getIToken($getToken(2)).getEndOffset(),
-							getIToken($getToken(4)).getStartOffset()
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
-					$setResult(result);
-		  $EndJava
-		./
-	outExpCS ::= object '{' '}' 
-		/.$BeginJava
-					CSTNode result = createOutExpCS(
+		                        TypeSpecCS typeSpecCS = (TypeSpecCS)$getSym(2);  
+					CSTNode result = createErrorOutExpCS(
 							$EMPTY_ELIST,
-							null,
-							getIToken($getToken(2)).getEndOffset(),
+							typeSpecCS,
+							getIToken($getToken(1)).getEndOffset(),
+							getIToken($getToken(1)).getStartOffset(),
+							getIToken($getToken(1)).getStartOffset(),
 							getIToken($getToken(3)).getStartOffset()
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
-					$setResult(result);
-		  $EndJava
-		./
-	outExpCS ::= object qvtErrorToken
-		/.$BeginJava
-					CSTNode result = createOutExpCS(
-							$EMPTY_ELIST,
-							null,
-							getIToken($getToken(1)).getEndOffset(),
-							getIToken($getToken(1)).getStartOffset()
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
+					if (typeSpecCS  == null) {
+					    setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
+					} else {
+					    setOffsets(result, getIToken($getToken(1)), typeSpecCS);
+					}
 					$setResult(result);
 		  $EndJava
 		./

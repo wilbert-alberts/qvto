@@ -268,6 +268,11 @@
             eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="ErrorVariableInitializationCS" eSuperTypes="#//cst/VariableInitializationCS"/>
+      <eClassifiers xsi:type="ecore:EClass" name="ErrorOutExpCS" eSuperTypes="#//cst/OutExpCS #//cst/temp/ErrorCSTNode"/>
+      <eClassifiers xsi:type="ecore:EClass" name="ErrorCSTNode">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="fullStartOffset" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="fullEndOffset" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eClassifiers>
     </eSubpackages>
   </eSubpackages>
 </ecore:EPackage>

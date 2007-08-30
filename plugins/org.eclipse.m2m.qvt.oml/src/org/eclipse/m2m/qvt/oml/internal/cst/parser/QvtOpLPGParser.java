@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.7 2007/08/27 18:49:28 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.8 2007/08/30 13:31:01 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.7 2007/08/27 18:49:28 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.8 2007/08/30 13:31:01 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -142,6 +142,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.WhileExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ModelTypeCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.PackageRefCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ElementWithBody;
+import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorOutExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ResolveOpArgsExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.TempFactory;
@@ -1051,14 +1052,27 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 		}
 	}
 
-	protected OutExpCS createOutExpCS(EList expressions, TypeSpecCS typeSpecCS, int startOffset,
+	protected OutExpCS createOutExpCS(OutExpCS result, EList expressions, TypeSpecCS typeSpecCS, int startOffset,
 			int endOffset) {
-		OutExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createOutExpCS();
 		result.setTypeSpecCS(typeSpecCS);
 		result.getExpressions().addAll(expressions);
 		result.setBodyStartLocation(startOffset);
 		result.setBodyEndLocation(endOffset);
 		return result;
+	}
+
+	protected OutExpCS createOutExpCS(EList expressions, TypeSpecCS typeSpecCS, int startOffset,
+			int endOffset) {
+		OutExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createOutExpCS();
+		return createOutExpCS(result, expressions, typeSpecCS, startOffset, endOffset);
+	}
+
+	protected OutExpCS createErrorOutExpCS(EList expressions, TypeSpecCS typeSpecCS, int startOffset,
+			int endOffset, int fullStartOffset, int fullEndOffset) {
+		ErrorOutExpCS result = TempFactory.eINSTANCE.createErrorOutExpCS();
+		result.setFullStartOffset(fullStartOffset);
+		result.setFullEndOffset(fullEndOffset);
+		return createOutExpCS(result, expressions, typeSpecCS, startOffset, endOffset);
 	}
 
 	protected MappingBodyCS createMappingBodyCS(OutExpCS sym, boolean b) {
@@ -4776,22 +4790,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 394:  mappingBodyOpt ::= $Empty
+			// Rule 394:  mappingBodyOpt ::= outExpCS
 			//
 			case 394: {
-				
-				MappingBodyCS result = createMappingBodyCS(
-						org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createOutExpCS(),
-						true
-					);
-				dtParser.setSym1(result);
-	  		  break;
-			}
-	 
-			//
-			// Rule 395:  mappingBodyOpt ::= outExpCS
-			//
-			case 395: {
 				
 				MappingBodyCS result = createMappingBodyCS(
 						(OutExpCS)dtParser.getSym(1),
@@ -4803,9 +4804,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 396:  mappingBodyOpt ::= patternPropertyOrAdditionList
+			// Rule 395:  mappingBodyOpt ::= patternPropertyOrAdditionList
 			//
-			case 396: {
+			case 395: {
 				
 				EList props = (EList)dtParser.getSym(1);
 				OutExpCS outExp = createOutExpCS(props, null, getIToken(dtParser.getToken(1)).getStartOffset(), getIToken(dtParser.getToken(1)).getEndOffset());
@@ -4824,16 +4825,16 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 397:  patternPropertyOrAdditionList ::= qvtErrorToken
+			// Rule 396:  patternPropertyOrAdditionList ::= $Empty
 			//
-			case 397:
+			case 396:
 				dtParser.setSym1(new BasicEList());
 				break;
  
 			//
-			// Rule 400:  patternPropertyOrAdditionInnerList ::= patternPropertyOrAddition
+			// Rule 399:  patternPropertyOrAdditionInnerList ::= patternPropertyOrAddition2
 			//
-			case 400: {
+			case 399: {
 				
 				EList result = new BasicEList();
 				result.add(dtParser.getSym(1));
@@ -4842,9 +4843,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 401:  patternPropertyOrAdditionInnerList ::= patternPropertyOrAdditionList ; patternPropertyOrAddition
+			// Rule 400:  patternPropertyOrAdditionInnerList ::= patternPropertyOrAdditionList ; patternPropertyOrAddition2
 			//
-			case 401: {
+			case 400: {
 				
 				EList result = (EList)dtParser.getSym(1);
 				result.add(dtParser.getSym(3));
@@ -4853,9 +4854,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 404:  patternPropertyOrAddition ::= IDENTIFIER := oclExpressionCS
+			// Rule 403:  patternPropertyOrAddition ::= IDENTIFIER := oclExpressionCS
 			//
-			case 404: {
+			case 403: {
 				
 				CSTNode result = createPatternPropertyCS(
 						getIToken(dtParser.getToken(1)),
@@ -4868,9 +4869,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 405:  patternPropertyOrAddition ::= IDENTIFIER := qvtErrorToken
+			// Rule 404:  patternPropertyOrAddition ::= IDENTIFIER := qvtErrorToken
 			//
-			case 405: {
+			case 404: {
 				
 				CSTNode result = createPatternPropertyCS(
 						getIToken(dtParser.getToken(1)),
@@ -4883,9 +4884,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 406:  patternPropertyOrAddition ::= IDENTIFIER += oclExpressionCS
+			// Rule 405:  patternPropertyOrAddition ::= IDENTIFIER += oclExpressionCS
 			//
-			case 406: {
+			case 405: {
 				
 				CSTNode result = createPatternPropertyCS(
 						getIToken(dtParser.getToken(1)),
@@ -4898,7 +4899,22 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 407:  patternPropertyOrAddition ::= IDENTIFIER += qvtErrorToken
+			// Rule 406:  patternPropertyOrAddition ::= IDENTIFIER += qvtErrorToken
+			//
+			case 406: {
+				
+				CSTNode result = createPatternPropertyCS(
+						getIToken(dtParser.getToken(1)),
+						createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, ""), //$NON-NLS-1$
+						true
+					);
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(2)));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 407:  patternPropertyOrAddition ::= IDENTIFIER qvtErrorToken
 			//
 			case 407: {
 				
@@ -4907,15 +4923,22 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 						createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, ""), //$NON-NLS-1$
 						true
 					);
-				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(2)));
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(1)));
 				dtParser.setSym1(result);
 	  		  break;
 			}
 	 
 			//
-			// Rule 408:  outExpCS ::= object typeSpecCS { patternPropertyOrAdditionList }
+			// Rule 408:  typeSpecCSOpt ::= $Empty
 			//
-			case 408: {
+			case 408:
+				dtParser.setSym1(null);
+				break;
+ 
+			//
+			// Rule 410:  outExpCS ::= object typeSpecCSOpt { patternPropertyOrAdditionList }
+			//
+			case 410: {
 				
 				CSTNode result = createOutExpCS(
 						(EList)dtParser.getSym(4),
@@ -4929,65 +4952,48 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 409:  outExpCS ::= object typeSpecCS { }
-			//
-			case 409: {
-				
-				CSTNode result = createOutExpCS(
-						ourEmptyEList,
-						(TypeSpecCS)dtParser.getSym(2),
-						getIToken(dtParser.getToken(3)).getEndOffset(),
-						getIToken(dtParser.getToken(4)).getStartOffset()
-					);
-				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(4)));
-				dtParser.setSym1(result);
-	  		  break;
-			}
-	 
-			//
-			// Rule 410:  outExpCS ::= object { patternPropertyOrAdditionList }
-			//
-			case 410: {
-				
-				CSTNode result = createOutExpCS(
-						(EList)dtParser.getSym(3),
-						null,
-						getIToken(dtParser.getToken(2)).getEndOffset(),
-						getIToken(dtParser.getToken(4)).getStartOffset()
-					);
-				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(4)));
-				dtParser.setSym1(result);
-	  		  break;
-			}
-	 
-			//
-			// Rule 411:  outExpCS ::= object { }
+			// Rule 411:  outExpCS ::= object typeSpecCSOpt { patternPropertyOrAdditionList qvtErrorToken
 			//
 			case 411: {
 				
-				CSTNode result = createOutExpCS(
-						ourEmptyEList,
-						null,
-						getIToken(dtParser.getToken(2)).getEndOffset(),
-						getIToken(dtParser.getToken(3)).getStartOffset()
+				EList<CSTNode> patternPropertyOrAdditionList = (EList<CSTNode>)dtParser.getSym(4);
+				CSTNode result = createErrorOutExpCS(
+						(EList)dtParser.getSym(4),
+						(TypeSpecCS)dtParser.getSym(2),
+						getIToken(dtParser.getToken(3)).getEndOffset(),
+						getIToken(dtParser.getToken(5)).getStartOffset(),
+						getIToken(dtParser.getToken(1)).getStartOffset(),
+						getIToken(dtParser.getToken(5)).getStartOffset()
 					);
-				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(3)));
+				if (patternPropertyOrAdditionList.isEmpty()) {
+				    setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(3)));
+				} else {
+				    CSTNode lastNode = patternPropertyOrAdditionList.get(patternPropertyOrAdditionList.size() - 1);
+				    setOffsets(result, getIToken(dtParser.getToken(1)), lastNode);
+				}
 				dtParser.setSym1(result);
 	  		  break;
 			}
 	 
 			//
-			// Rule 412:  outExpCS ::= object qvtErrorToken
+			// Rule 412:  outExpCS ::= object typeSpecCSOpt qvtErrorToken
 			//
 			case 412: {
 				
-				CSTNode result = createOutExpCS(
+	                        TypeSpecCS typeSpecCS = (TypeSpecCS)dtParser.getSym(2);  
+				CSTNode result = createErrorOutExpCS(
 						ourEmptyEList,
-						null,
+						typeSpecCS,
 						getIToken(dtParser.getToken(1)).getEndOffset(),
-						getIToken(dtParser.getToken(1)).getStartOffset()
+						getIToken(dtParser.getToken(1)).getStartOffset(),
+						getIToken(dtParser.getToken(1)).getStartOffset(),
+						getIToken(dtParser.getToken(3)).getStartOffset()
 					);
-				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(1)));
+				if (typeSpecCS  == null) {
+				    setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(1)));
+				} else {
+				    setOffsets(result, getIToken(dtParser.getToken(1)), typeSpecCS);
+				}
 				dtParser.setSym1(result);
 	  		  break;
 			}

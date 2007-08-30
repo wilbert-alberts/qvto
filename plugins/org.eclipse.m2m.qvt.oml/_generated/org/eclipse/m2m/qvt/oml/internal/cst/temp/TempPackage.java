@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempPackage.java,v 1.2 2007/08/17 15:59:13 aigdalov Exp $
+ * $Id: TempPackage.java,v 1.3 2007/08/30 13:31:02 aigdalov Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.temp;
 
@@ -318,6 +318,145 @@ public interface TempPackage extends EPackage {
 
 
     /**
+     * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.temp.impl.ErrorOutExpCSImpl <em>Error Out Exp CS</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.temp.impl.ErrorOutExpCSImpl
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.temp.impl.TempPackageImpl#getErrorOutExpCS()
+     * @generated
+     */
+    int ERROR_OUT_EXP_CS = 4;
+
+    /**
+     * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ERROR_OUT_EXP_CS__START_OFFSET = org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage.OUT_EXP_CS__START_OFFSET;
+
+    /**
+     * The feature id for the '<em><b>End Offset</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ERROR_OUT_EXP_CS__END_OFFSET = org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage.OUT_EXP_CS__END_OFFSET;
+
+    /**
+     * The feature id for the '<em><b>Body Start Location</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ERROR_OUT_EXP_CS__BODY_START_LOCATION = org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage.OUT_EXP_CS__BODY_START_LOCATION;
+
+    /**
+     * The feature id for the '<em><b>Body End Location</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ERROR_OUT_EXP_CS__BODY_END_LOCATION = org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage.OUT_EXP_CS__BODY_END_LOCATION;
+
+    /**
+     * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ERROR_OUT_EXP_CS__SIMPLE_NAME_CS = org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage.OUT_EXP_CS__SIMPLE_NAME_CS;
+
+    /**
+     * The feature id for the '<em><b>Type Spec CS</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ERROR_OUT_EXP_CS__TYPE_SPEC_CS = org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage.OUT_EXP_CS__TYPE_SPEC_CS;
+
+    /**
+     * The feature id for the '<em><b>Expressions</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ERROR_OUT_EXP_CS__EXPRESSIONS = org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage.OUT_EXP_CS__EXPRESSIONS;
+
+    /**
+     * The feature id for the '<em><b>Full Start Offset</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ERROR_OUT_EXP_CS__FULL_START_OFFSET = org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage.OUT_EXP_CS_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Full End Offset</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ERROR_OUT_EXP_CS__FULL_END_OFFSET = org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage.OUT_EXP_CS_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>Error Out Exp CS</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ERROR_OUT_EXP_CS_FEATURE_COUNT = org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage.OUT_EXP_CS_FEATURE_COUNT + 2;
+
+
+    /**
+     * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.temp.impl.ErrorCSTNodeImpl <em>Error CST Node</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.temp.impl.ErrorCSTNodeImpl
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.temp.impl.TempPackageImpl#getErrorCSTNode()
+     * @generated
+     */
+    int ERROR_CST_NODE = 5;
+
+    /**
+     * The feature id for the '<em><b>Full Start Offset</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ERROR_CST_NODE__FULL_START_OFFSET = 0;
+
+    /**
+     * The feature id for the '<em><b>Full End Offset</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ERROR_CST_NODE__FULL_END_OFFSET = 1;
+
+    /**
+     * The number of structural features of the '<em>Error CST Node</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ERROR_CST_NODE_FEATURE_COUNT = 2;
+
+
+    /**
      * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorCallExpCS <em>Error Call Exp CS</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -400,6 +539,48 @@ public interface TempPackage extends EPackage {
      * @generated
      */
     EClass getErrorVariableInitializationCS();
+
+    /**
+     * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorOutExpCS <em>Error Out Exp CS</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Error Out Exp CS</em>'.
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorOutExpCS
+     * @generated
+     */
+    EClass getErrorOutExpCS();
+
+    /**
+     * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorCSTNode <em>Error CST Node</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Error CST Node</em>'.
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorCSTNode
+     * @generated
+     */
+    EClass getErrorCSTNode();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorCSTNode#getFullStartOffset <em>Full Start Offset</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Full Start Offset</em>'.
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorCSTNode#getFullStartOffset()
+     * @see #getErrorCSTNode()
+     * @generated
+     */
+    EAttribute getErrorCSTNode_FullStartOffset();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorCSTNode#getFullEndOffset <em>Full End Offset</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Full End Offset</em>'.
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorCSTNode#getFullEndOffset()
+     * @see #getErrorCSTNode()
+     * @generated
+     */
+    EAttribute getErrorCSTNode_FullEndOffset();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -494,6 +675,42 @@ public interface TempPackage extends EPackage {
          * @generated
          */
         EClass ERROR_VARIABLE_INITIALIZATION_CS = eINSTANCE.getErrorVariableInitializationCS();
+
+        /**
+         * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.temp.impl.ErrorOutExpCSImpl <em>Error Out Exp CS</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.eclipse.m2m.qvt.oml.internal.cst.temp.impl.ErrorOutExpCSImpl
+         * @see org.eclipse.m2m.qvt.oml.internal.cst.temp.impl.TempPackageImpl#getErrorOutExpCS()
+         * @generated
+         */
+        EClass ERROR_OUT_EXP_CS = eINSTANCE.getErrorOutExpCS();
+
+        /**
+         * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.temp.impl.ErrorCSTNodeImpl <em>Error CST Node</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.eclipse.m2m.qvt.oml.internal.cst.temp.impl.ErrorCSTNodeImpl
+         * @see org.eclipse.m2m.qvt.oml.internal.cst.temp.impl.TempPackageImpl#getErrorCSTNode()
+         * @generated
+         */
+        EClass ERROR_CST_NODE = eINSTANCE.getErrorCSTNode();
+
+        /**
+         * The meta object literal for the '<em><b>Full Start Offset</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute ERROR_CST_NODE__FULL_START_OFFSET = eINSTANCE.getErrorCSTNode_FullStartOffset();
+
+        /**
+         * The meta object literal for the '<em><b>Full End Offset</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute ERROR_CST_NODE__FULL_END_OFFSET = eINSTANCE.getErrorCSTNode_FullEndOffset();
 
     }
 

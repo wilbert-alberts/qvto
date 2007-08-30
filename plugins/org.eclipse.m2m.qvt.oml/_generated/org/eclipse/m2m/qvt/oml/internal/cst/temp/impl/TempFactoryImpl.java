@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempFactoryImpl.java,v 1.2 2007/08/17 15:59:13 aigdalov Exp $
+ * $Id: TempFactoryImpl.java,v 1.3 2007/08/30 13:31:02 aigdalov Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.temp.impl;
 
@@ -80,6 +80,8 @@ public class TempFactoryImpl extends EFactoryImpl implements TempFactory {
             case TempPackage.RESOLVE_OP_ARGS_EXP_CS: return createResolveOpArgsExpCS();
             case TempPackage.SCOPED_NAME_CS: return createScopedNameCS();
             case TempPackage.ERROR_VARIABLE_INITIALIZATION_CS: return createErrorVariableInitializationCS();
+            case TempPackage.ERROR_OUT_EXP_CS: return createErrorOutExpCS();
+            case TempPackage.ERROR_CST_NODE: return createErrorCSTNode();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
         }
@@ -123,6 +125,26 @@ public class TempFactoryImpl extends EFactoryImpl implements TempFactory {
     public ErrorVariableInitializationCS createErrorVariableInitializationCS() {
         ErrorVariableInitializationCSImpl errorVariableInitializationCS = new ErrorVariableInitializationCSImpl();
         return errorVariableInitializationCS;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ErrorOutExpCS createErrorOutExpCS() {
+        ErrorOutExpCSImpl errorOutExpCS = new ErrorOutExpCSImpl();
+        return errorOutExpCS;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ErrorCSTNode createErrorCSTNode() {
+        ErrorCSTNodeImpl errorCSTNode = new ErrorCSTNodeImpl();
+        return errorCSTNode;
     }
 
     /**

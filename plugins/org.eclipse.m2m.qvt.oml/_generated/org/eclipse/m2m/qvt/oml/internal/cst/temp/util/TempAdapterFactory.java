@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempAdapterFactory.java,v 1.2 2007/08/17 15:59:13 aigdalov Exp $
+ * $Id: TempAdapterFactory.java,v 1.3 2007/08/30 13:31:01 aigdalov Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.temp.util;
 
@@ -22,6 +22,8 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 
 import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.m2m.qvt.oml.internal.cst.ElementWithBody;
+import org.eclipse.m2m.qvt.oml.internal.cst.OutExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.StatementCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.VariableInitializationCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.*;
@@ -110,6 +112,14 @@ public class TempAdapterFactory extends AdapterFactoryImpl {
                 return createErrorVariableInitializationCSAdapter();
             }
             @Override
+            public Adapter caseErrorOutExpCS(ErrorOutExpCS object) {
+                return createErrorOutExpCSAdapter();
+            }
+            @Override
+            public Adapter caseErrorCSTNode(ErrorCSTNode object) {
+                return createErrorCSTNodeAdapter();
+            }
+            @Override
             public Adapter caseCSTNode(CSTNode object) {
                 return createCSTNodeAdapter();
             }
@@ -128,6 +138,14 @@ public class TempAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseVariableInitializationCS(VariableInitializationCS object) {
                 return createVariableInitializationCSAdapter();
+            }
+            @Override
+            public Adapter caseElementWithBody(ElementWithBody object) {
+                return createElementWithBodyAdapter();
+            }
+            @Override
+            public Adapter caseOutExpCS(OutExpCS object) {
+                return createOutExpCSAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -206,6 +224,34 @@ public class TempAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorOutExpCS <em>Error Out Exp CS</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorOutExpCS
+     * @generated
+     */
+    public Adapter createErrorOutExpCSAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorCSTNode <em>Error CST Node</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorCSTNode
+     * @generated
+     */
+    public Adapter createErrorCSTNodeAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link org.eclipse.ocl.internal.cst.CSTNode <em>Node</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -272,6 +318,34 @@ public class TempAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createVariableInitializationCSAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.internal.cst.ElementWithBody <em>Element With Body</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.ElementWithBody
+     * @generated
+     */
+    public Adapter createElementWithBodyAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.internal.cst.OutExpCS <em>Out Exp CS</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.OutExpCS
+     * @generated
+     */
+    public Adapter createOutExpCSAdapter() {
         return null;
     }
 
