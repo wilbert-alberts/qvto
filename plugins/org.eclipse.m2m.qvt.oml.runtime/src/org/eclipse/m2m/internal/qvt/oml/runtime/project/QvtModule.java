@@ -108,7 +108,8 @@ public abstract class QvtModule {
 	    }
 	    
 	    if (transfParams.isEmpty() && mainMethod != null) {
-	    	if (mainMethod.getContext().getEType() != QvtOperationalUtil.getOclVoid()) {
+	    	//if (mainMethod.getContext().getEType() != QvtOperationalUtil.getOclVoid()) {
+	    	if (mainMethod.getContext().getEType() != module) {
 	    		transfParams.add(createTransfParam((MappingParameter) mainMethod.getContext()));
 	    	}
 	    	for (EParameter mainParam : mainMethod.getEParameters()) {
