@@ -1,5 +1,0 @@
-library m3;
-
-query q3(inout ee : ecore::ENamedElement) : String{
-	'value:'
-}

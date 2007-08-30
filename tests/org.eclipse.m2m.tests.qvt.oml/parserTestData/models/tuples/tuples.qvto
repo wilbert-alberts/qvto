@@ -1,0 +1,17 @@
+transformation tuples(in model : ecore, out model1 : uml);
+
+modeltype ecore uses "http://www.eclipse.org/emf/2002/Ecore";
+modeltype uml uses "http://www.eclipse.org/uml2/2.1.0/UML";
+
+
+mapping main(in inModel : EPackage) : EPackage { 
+	init {   
+ 		var tuples: Set(Tuple(name:String)) := Set { Tuple{name='A'},Tuple{name='B'} };
+			result := object EPackage {
+            	name:= inModel.name;
+                eClassifiers := tuples->collect(t| tupleToClass(t))->asOrderedSet(); };
+}}
+
+mapping tupleToClass(in tup:Tuple(name:String)): EClass {
+        name:=tup.name;
+}

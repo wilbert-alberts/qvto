@@ -93,6 +93,8 @@ public class TransformTests {
     
     public static ModelTestData[] createTestData() {
     	return new ModelTestData[] {
+    	new FileToFileData("tuples"), //$NON-NLS-1$    			
+    	new FileToFileData("oclany"), //$NON-NLS-1$    			
     	new FileToFileData("modifyvar"), //$NON-NLS-1$
     	new FileToFileData("abstractresult"), //$NON-NLS-1$
 		new FileToFileData("bagorderedsetintersection"), //$NON-NLS-1$
@@ -110,8 +112,8 @@ public class TransformTests {
         }), 
         new FileToFileData("resolveall"), //$NON-NLS-1$
         new FileToFileData("egetcodegen"), //$NON-NLS-1$
-        new FileToFileData("implicitimports"), //$NON-NLS-1$
-        new FileToFileData("implicit_imports_transformations"), //$NON-NLS-1$        
+        new FileToFileData("imports"), //$NON-NLS-1$
+        new FileToFileData("imports_transformations"), //$NON-NLS-1$        
 //        new MyUmlToFileData("libop", "manylinks", "expected.ecore"),  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     	new FileToFileData("assigntoprimfeature"), //$NON-NLS-1$    	
     	new FileToFileData("assigntonullowner"), //$NON-NLS-1$
@@ -224,7 +226,7 @@ public class TransformTests {
     
     private static final Set<String> JAVALESS_EXCLUDES = new HashSet<String>(Arrays.asList(new String[] {
     	"primtypesecore", // uses getDataTypeInstance() defined on ecore //$NON-NLS-1$
-    	"implicit_imports_transformations", "implicitimports", "virt", "full", "fqntraces", // TODO import other files //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+    	"imports_transformations", "imports", "virt", "full", "fqntraces", // TODO import other files //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
     	"assigntonullowner", "resolveall", // reference not in required format: eSuperTypes = "#//NEW_Class1" insteand of "//@eClassifiers.0" //$NON-NLS-1$ //$NON-NLS-2$
     	"egetcodegen", // java method can't be called//$NON-NLS-1$
     }));

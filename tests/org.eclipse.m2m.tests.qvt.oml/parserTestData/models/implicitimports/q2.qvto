@@ -1,7 +1,0 @@
-library q2;
-
-import models.implicitimports.q1;
-
-query q2(inout ee : ecore::ENamedElement) : String{
-	'value:'+qq1(ee)
-}

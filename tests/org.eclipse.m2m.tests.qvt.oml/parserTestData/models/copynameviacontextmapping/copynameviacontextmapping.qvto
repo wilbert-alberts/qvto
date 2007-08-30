@@ -8,7 +8,7 @@ mapping main(in pack: ecore::EPackage): ecore::EPackage {
 }
 
 query ecore::EPackage::getNameCtx(): String {
-    null.getName(self)
+    getName(self)
 }
 
 query getName(in pack: ecore::EPackage): String {
