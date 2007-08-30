@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.qvt.oml.QvtMessage;
+import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfException;
@@ -59,8 +60,6 @@ import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.EnvironmentFactory;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
-import org.eclipse.ocl.ecore.EcoreEnvironment;
-import org.eclipse.ocl.ecore.EcoreEnvironmentFactory;
 import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.ExpressionsFactory;
@@ -73,8 +72,11 @@ import org.eclipse.ocl.utilities.UMLReflection;
 import org.eclipse.osgi.util.NLS;
 
 
-public class QvtOperationalEnv extends EcoreEnvironment {
 
+public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
+
+	public static final String THIS = "this"; //$NON-NLS-1$
+	
 	public static final String MAPPING_OPERATION_STEREOTYPE = "mapping_operation"; //$NON-NLS-1$
 	public static final String IMPERATIVE_OPERATION_STEREOTYPE = "imperative_operation"; //$NON-NLS-1$
 	public static final String RENAMED_PROPERTY_STEREOTYPE = "renamed_property"; //$NON-NLS-1$
@@ -82,9 +84,9 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 	public static final String METAMODEL_COMPLIANCE_KIND_STRICT = "strict"; //$NON-NLS-1$
 	
 	
-	protected QvtOperationalEnv(QvtOperationalEnv parent, QvtCompiler compiler) {
+	protected QvtOperationalEnv(QvtOperationalEnv parent, QvtCompiler compiler, EPackage.Registry eRegistry) {
 		// Set our own package registry to be populated by imported metamodels
-		super(parent != null ? parent.getEPackageRegistry() : new EPackageRegistryImpl());
+		super(eRegistry);
 		setParent(parent);
 		myRootEnvironment = parent != null ? parent.myRootEnvironment : null;
 
@@ -94,11 +96,15 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 		myErrorRecordFlag = true;
 
 		defineStandartOperations();
-		// Remark: the only way how to retrieve the package registry in use is from the factory
-		ePackageRegistry = parent != null ? parent.getEPackageRegistry() : ((EcoreEnvironmentFactory)super.getFactory()).getEPackageRegistry();		
+
+		ePackageRegistry = eRegistry;		
 		myModelTypeRegistry = parent != null ? parent.myModelTypeRegistry : new LinkedHashMap<String, ModelType>(1);
 	}
-
+	
+	protected QvtOperationalEnv(QvtOperationalEnv parent, QvtCompiler compiler) {
+		this(parent, compiler, parent != null ? parent.getEPackageRegistry() : new EPackageRegistryImpl());
+	}
+	
 	/**
 	* Gets the package registry used in this environment EClassifier lookup.
 	*/
@@ -224,7 +230,7 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 	
     public List<EOperation> lookupMappingOperations(EClassifier owner, String name) {
         if (owner == null) {
-            owner = getOCLStandardLibrary().getOclVoid();
+            owner = getModuleContextType();//getOCLStandardLibrary().getOclVoid();
         }
 
         UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> uml = getUMLReflection();
@@ -391,6 +397,17 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 		return myModelTypeRegistry.get(path.get(0));
 	}
 	
+	@Override
+	public Variable<EClassifier, EParameter> lookupImplicitSourceForOperation(
+			String name, List<? extends TypedElement<EClassifier>> args) {
+		// propagate implict source lookup to parent, allowing to reach the module-wide 'this'
+		Variable<EClassifier, EParameter> result = super.lookupImplicitSourceForOperation(name, args);
+		if(result == null && getParent() != null) {
+			result = getParent().lookupImplicitSourceForOperation(name, args);
+		}
+		return result;
+	}
+	
 	// TODO This stub fixes stack overflow in recurrent calls. Should be fixed in OCL
 	private final Set<String> myLookupPropertyNames = new HashSet<String>(1);
 	@Override
@@ -496,26 +513,39 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 			boolean isCheckDuplicates) {
 		EClassifier contextType = operation.getContext().getEType();
 		if (contextType == null) {
-			contextType = getOCLStandardLibrary().getOclVoid();
+			contextType = getModuleContextType();
 		}
 		
 		Constraint constraint = EcoreFactory.eINSTANCE.createConstraint();
 		constraint.setStereotype(isMappingOperation ?
 				QvtOperationalEnv.MAPPING_OPERATION_STEREOTYPE : QvtOperationalEnv.IMPERATIVE_OPERATION_STEREOTYPE);
 
-		EOperation newOperation = createOperation(operation.getName(), operation.getEType(), operation.getEParameters(), constraint);		
+		EOperation newOperation = createOperation(operation.getName(), operation.getEType(), operation.getEParameters(), constraint);
 		EOperation addOperation = addOperation(contextType, newOperation, isCheckDuplicates);
 		
-		if (isCheckDuplicates && addOperation != newOperation) {
-			reportError(
-					NLS.bind(ValidationMessages.SemanticUtil_0, new Object[] {
-							operation.getName(), contextType.getName() }),
+		if (isCheckDuplicates) {
+			CollisionStatus collidingOperStatus = findCollidingOperation(contextType, newOperation);
+			if(collidingOperStatus != null) {
+				if(collidingOperStatus.getCollisionKind() == CollisionStatus.ALREADY_DEFINED) {
+					reportError(NLS.bind(ValidationMessages.SemanticUtil_0, new Object[] {
+									operation.getName(), contextType.getName() }),
+									operation.getStartPosition(), operation.getEndPosition());
+				} 
+				else if(collidingOperStatus.getCollisionKind() == CollisionStatus.VIRTUAL_METHOD_RETURNTYPE) {
+					reportError(NLS.bind(ValidationMessages.ReturnTypeMismatch,  
+							operation.getName(), QvtOperationalTypesUtil.getTypeFullName(collidingOperStatus.getOperation().getEType())), 
 							operation.getStartPosition(), operation.getEndPosition());
-			return null;
+				}
+				return null;
+			} 
 		}
 		return addOperation;
 	}
 	
+	public EClassifier getModuleContextType() {
+		return lookup(THIS).getType();
+	}	
+		
 	public void defineOperationParameters(ImperativeOperation operation) {
 		for (EParameter parameter : operation.getEParameters()) {
 	        if (lookupLocal(parameter.getName()) != null) {
@@ -534,11 +564,15 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 	
 	public QvtOperationalEnv createOperationEnvironment(VarParameter context) {
 		QvtOperationalEnv newEnvironment = new QvtOperationalEnv(this, myCompiler);
-		Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
-		var.setName(Environment.SELF_VARIABLE_NAME);
-		var.setType(context.getEType());
-		var.setRepresentedParameter(context);
-		newEnvironment.addElement(var.getName(), var, false);
+
+		if(context.getEType() != getModuleContextType()) {
+			// define self implicit source only in case if context-less operations
+			Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
+			var.setName(Environment.SELF_VARIABLE_NAME);
+			var.setType(context.getEType());
+			var.setRepresentedParameter(context);
+			newEnvironment.addElement(var.getName(), var, false);
+		}		
 		if (context != getOCLStandardLibrary().getOclVoid()) {
 			Variable<EClassifier, EParameter> mainVar = ExpressionsFactory.eINSTANCE.createVariable();
 			mainVar.setName(getOCLStandardLibrary().getOclVoid().getName());
@@ -601,6 +635,8 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 	            ResolveInExp resolveInExp = entry.getKey();
 	            resolveInExp.setInMapping(mappingOperation);
 	        }
+	    } else {
+	    	((QvtOperationalEnv)getParent()).resolveResolveInExpInMappings();
 	    }
 	}
 
@@ -656,13 +692,13 @@ public class QvtOperationalEnv extends EcoreEnvironment {
 	private final List<QvtMessage> myErrorsList;
 	private boolean myErrorRecordFlag;
 
-	private final Map<String, ModelType> myModelTypeRegistry;
+	private Map<String, ModelType> myModelTypeRegistry;
 	private List<Variable<EClassifier, EParameter>> myModelParameters = Collections.emptyList();
 	
 	private final EPackage.Registry ePackageRegistry;
     private final Map<MappingsMapKey, MappingOperation> myMappingsMap = new HashMap<MappingsMapKey, MappingOperation>();
     private final Map<ResolveInExp, MappingsMapKey> myResolveInExps = new HashMap<ResolveInExp, MappingsMapKey>();
-	
+
     private static final QvtOperationalEnvFactory myFactory = new QvtOperationalEnvFactory();
 
 }

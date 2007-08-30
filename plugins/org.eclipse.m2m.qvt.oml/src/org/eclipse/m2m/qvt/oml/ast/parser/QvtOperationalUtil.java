@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnvFactory;
+import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.ecore.Constraint;
@@ -90,6 +91,9 @@ public class QvtOperationalUtil {
     }
 
     public static boolean isImperativeOperation(EOperation operation) {
+    	if(operation instanceof ImperativeOperation) {
+    		return true;
+    	}    	
         EAnnotation ann = operation.getEAnnotation(Environment.OCL_NAMESPACE_URI);
         if ((ann != null) && !ann.getContents().isEmpty()) {
             for (EObject o : ann.getContents()) {

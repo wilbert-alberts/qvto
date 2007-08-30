@@ -115,6 +115,7 @@ import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.types.VoidType;
 import org.eclipse.ocl.util.Bag;
 import org.eclipse.ocl.util.CollectionUtil;
+import org.eclipse.ocl.utilities.PredefinedType;
 import org.eclipse.osgi.util.NLS;
 
 public class QvtOperationalEvaluationVisitorImpl
@@ -134,7 +135,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 	public EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> getEvaluationEnvironment() {
 		return myEvalEnv;
 	}
-
+	
 	public void setEvaluationEnvironment(EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> evalEnv) {
 		myEvalEnv = evalEnv;
     }
@@ -257,6 +258,8 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         if (!isNullOrVoidType(imperativeOperation.getContext())) {
             env.add(Environment.SELF_VARIABLE_NAME, env.getOperationSelf());
         }
+        
+        env.add(QvtOperationalEnv.THIS, imperativeOperation.eContainer());
 
         return null;
     }
@@ -629,7 +632,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
     }
     
     private static boolean isNullOrVoidType(ETypedElement eTypedElement) {
-        return (eTypedElement == null) || (eTypedElement.getEType() instanceof VoidType);
+        return (eTypedElement == null) || (eTypedElement.getEType() instanceof Module);
     }
 
     private TraceRecord addTraces(MappingOperation mappingOperation) {
@@ -655,7 +658,23 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
             EList<TraceRecord> contextMappings = createOrGetListElementFromMap(trace.getSourceToTraceRecordMap(), contextVPV.getValue().getOclObject());
             contextMappings.add(traceRecord);
         }
-
+        else if(!mappingOperation.getEParameters().isEmpty()) {
+        	// make the first in parameter as the mapping source object
+        	for (EParameter nextEParam : mappingOperation.getEParameters()) {
+        		if(nextEParam instanceof VarParameter) {
+        			VarParameter firstInVarParam = (VarParameter) nextEParam;
+        			if((firstInVarParam.getEType() instanceof PredefinedType == false) && (firstInVarParam.getKind() == DirectionKind.IN || firstInVarParam.getKind() == DirectionKind.INOUT)) {
+        				Object val = createVarParameterValue(mappingOperation, firstInVarParam.getKind() ,
+        							firstInVarParam.getEType(), firstInVarParam.getName()).getValue().getOclObject();        	
+        				EList<TraceRecord> sourceMappings = createOrGetListElementFromMap(trace.getSourceToTraceRecordMap(), val);
+        				sourceMappings.add(traceRecord);
+        				break;
+        				
+        			}
+        		}
+			}
+        }
+        
         EMappingParameters eMappingParameters = TraceFactory.eINSTANCE.createEMappingParameters();
         traceRecord.setParameters(eMappingParameters);
         for (EParameter param : mappingOperation.getEParameters()) {
@@ -883,7 +902,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 //          if (!QvtOperationalParserUtil.isAssignableElementToFrom(dynamicType, derived)) {
 //              continue;
 //          }
-            if (!derived.isInstance(context)) {
+            if (!derived.isInstance(context) && derived != getOperationalEnv().getOCLStandardLibrary().getOclAny()) {
                 continue;
             }
 
@@ -909,7 +928,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 
     private boolean isApplicable(QvtOperationalEnv env, EOperation op, Object context, List<Object> args) {
     	EClassifier formalType = env.getUMLReflection().getOwningClassifier(op);
-        if (!oclIsKindOf(context, formalType)) {
+        if (getOperationalEnv().getOCLStandardLibrary().getOclAny() != formalType && !oclIsKindOf(context, formalType)) {
             return false;
         }
 

@@ -440,7 +440,8 @@ public class QvtOperationalParserUtil {
 
 	public static boolean isOverloadableMapping(final EOperation op, final QvtOperationalEnv env) {
 		EObject context = op.eContainer();
-		if (context instanceof EModelElement && isOclVoid((EModelElement) context, env)) {
+		if (env.getUMLReflection().getOwningClassifier(op) instanceof Module) {
+			// no context to overload
 			return false;
 		}
 		return context instanceof EClass;

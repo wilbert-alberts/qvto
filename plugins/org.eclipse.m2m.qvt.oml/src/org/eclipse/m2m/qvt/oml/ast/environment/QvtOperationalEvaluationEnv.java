@@ -1,5 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2007 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -48,6 +47,7 @@ import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.ecore.EcoreEvaluationEnvironment;
 import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.types.PrimitiveType;
+import org.eclipse.ocl.util.Tuple;
 import org.eclipse.osgi.util.NLS;
 
 
@@ -118,6 +118,25 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		return super.callOperation(operation, opcode, source, args);
 	}
 
+	@Override
+	public Object navigateProperty(EStructuralFeature property, List<?> qualifiers, Object target) throws IllegalArgumentException {
+		EStructuralFeature resolvedProperty = property;		
+		
+		// Remark: workaround for a issue of multiple typle type instances, possibly coming from 
+		// imported modules. The super impl. looks for the property by feature instance, do it
+		// by name here to avoid lookup failure, IllegalArgExc...
+		if(target instanceof Tuple && target instanceof EObject) {
+            EObject etarget = (EObject) target;
+            resolvedProperty = etarget.eClass().getEStructuralFeature(property.getName());
+            if(resolvedProperty == null) { 
+            	return null;
+            }
+		}
+		//
+		
+		return super.navigateProperty(resolvedProperty, qualifiers, target);
+	}
+	
 	@Override
 	public QvtOperationalEvaluationEnv getParent() {
 		return (QvtOperationalEvaluationEnv) super.getParent();

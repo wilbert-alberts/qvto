@@ -1,5 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2007 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,12 +12,14 @@ package org.eclipse.m2m.qvt.oml.internal.ast.parser;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
@@ -414,6 +415,9 @@ public class QvtOperationalVisitorCS
 			objectExp.setReferredObject(env.resolveModelParameter(objectTypeSpec.myType, DirectionKind.OUT));
 		}
 		ASTNode astNode = ASTBindingHelper.resolveASTNode((CSTNode) EcoreUtil.getRootContainer(outExpCS));
+		// FIXME - #visitOutExpCS(...)
+		// relies on CST/AST bindings always being set for module when visited
+		// - find a better way of resolving module CST-AST, as this bindings are dependent on compilation options
 		if (objectExp.getReferredObject() == null 
 				&& astNode instanceof Module 
 				&& !((Module) astNode).getModelParameter().isEmpty()) {
@@ -504,9 +508,10 @@ public class QvtOperationalVisitorCS
 		module.setStartPosition(moduleCS.getStartOffset());
 		module.setEndPosition(moduleCS.getEndOffset());
 
-		if (myCompilerOptions.isGenerateCompletionData()) {
-		    ASTBindingHelper.createCST2ASTBinding(parsedModuleCS.getModuleCS(), module, env);
-		}
+        // Note: always create moduleCS->moduleAS binding, 
+        // see #visitOutExpCS(...)
+		ASTBindingHelper.createCST2ASTBinding(parsedModuleCS.getModuleCS(), module, env);
+            
 		
 		for (ModelTypeCS modelTypeCS : moduleCS.getMetamodels()) {
 			ModelType modelType = visitModelTypeCS(modelTypeCS, env, module);
@@ -594,7 +599,7 @@ public class QvtOperationalVisitorCS
 
 		for (ParsedModuleCS importedModuleCS : parsedModuleCS.getParsedImports()) {
 			// Check for duplicate imports is handled by QvtCompiler
-			Module importedModule = env.getCompiler().analyse(importedModuleCS, myCompilerOptions, env).getModule().getModule();
+			Module importedModule = env.getCompiler().analyse(importedModuleCS, myCompilerOptions).getModule().getModule();
 			if (importedModule == null) {
 				continue;
 			}
@@ -613,6 +618,7 @@ public class QvtOperationalVisitorCS
 			}
 		}
 		QvtOperationalParserUtil.defineImportedConfigProperties(module, env);
+		//QvtOperationalParserUtil.defineImportedOperations(module, env);
 
 		for (ModulePropertyCS propCS : moduleCS.getProperties()) {
 			if (moduleCS instanceof LibraryCS && propCS instanceof LocalPropertyCS) {
@@ -625,6 +631,8 @@ public class QvtOperationalVisitorCS
 			}
 		}
 
+		HashMap<MappingMethodCS, EOperation> methodMap =  new HashMap<MappingMethodCS, EOperation>();
+		
 		// define local and imported operations as they are required to analyze rules' contents
 		env.setErrorRecordFlag(false);
 		for (MappingMethodCS methodCS : moduleCS.getMethods()) {
@@ -632,28 +640,46 @@ public class QvtOperationalVisitorCS
 			if (visitMappingDeclarationCS(methodCS.getMappingDeclarationCS(), env, operation)) {
 				env.setErrorRecordFlag(true);
 				EOperation envOperation = env.defineImperativeOperation(operation, methodCS instanceof MappingRuleCS, true);
-				env.setErrorRecordFlag(false);
-				
-	            // AST binding
-		        if(myCompilerOptions.isGenerateCompletionData() && envOperation != null) {
-					ASTBindingHelper.createEnvDefined2ImperativeOperationBinding(methodCS, operation, envOperation, env);
-				} 
-				//				
+				if(envOperation != null) {
+					methodMap.put(methodCS, envOperation);
+				}
+				env.setErrorRecordFlag(false);				
 			}
 		}
 		env.setErrorRecordFlag(true);
 		
-		QvtOperationalParserUtil.defineImportedOperations(module, env);
+		//QvtOperationalParserUtil.defineImportedOperations(module, env); // no needed as operation can be resolved in imported modules
 
 		for (MappingMethodCS methodCS : moduleCS.getMethods()) {
 			ImperativeOperation operation = visitMappingMethodCS(methodCS, env);
 			if (operation != null) {
 				module.getEOperations().add(operation);
+				
+				EOperation envDefinedOper = methodMap.get(methodCS);										
+				if(envDefinedOper != null) {
+					//
+			        if(myCompilerOptions.isGenerateCompletionData()) {
+						ASTBindingHelper.createEnvDefined2ImperativeOperationBinding(methodCS, operation, envDefinedOper, env);
+					} 
+					//																	
+				}
+				/* done in #defineImperativeOperation(...)
 				checkReturnTypeConformance(operation, 
 						methodCS.getMappingDeclarationCS().getReturnType() != null ?
 								methodCS.getMappingDeclarationCS().getReturnType() : 
 									methodCS.getMappingDeclarationCS(), env);
+				 */									
 				checkMainMappingConformance(env, operation);
+			}
+		}
+		
+		
+		for (ModuleImport moduleImport : module.getModuleImport()) {
+			for (EOperation operation : moduleImport.getImportedModule().getEOperations()) {
+				if(operation instanceof MappingOperation) {
+					MappingOperation mappingOperation = (MappingOperation) operation;
+					env.registerMappingOperation(mappingOperation);
+				}
 			}
 		}
 		
@@ -1126,10 +1152,10 @@ public class QvtOperationalVisitorCS
 		if (mappingDeclarationCS.getContextType() != null) {
 			contextType = visitTypeCS(mappingDeclarationCS.getContextType(), contextDirection, env);
 			if (contextType == null) {
-				contextType = env.getOCLStandardLibrary().getOclVoid();
+				contextType = env.getModuleContextType();//env.getOCLStandardLibrary().getOclVoid();
 			}
 		} else {
-			contextType = env.getOCLStandardLibrary().getOclVoid();
+			contextType = env.getModuleContextType();//env.getOCLStandardLibrary().getOclVoid();
 		}
 
 		boolean isEntryPoint = QvtOperationalUtil.MAIN_METHOD_NAME.equals(mappingDeclarationCS.getSimpleNameCS().getValue());
@@ -1499,6 +1525,7 @@ public class QvtOperationalVisitorCS
         EClassifier eClassifier = (contextTypeCS == null) ? null : visitTypeCS(contextTypeCS, null, env); // mapping context type
         List<EOperation> mappingOperations = env.lookupMappingOperations(eClassifier, resolveInExpCS.getInMappingName());
         if (mappingOperations.size() == 1) {
+        	eClassifier = eClassifier != null ? eClassifier : env.getModuleContextType(); 
             env.registerResolveInExp(resolveInExp, eClassifier, resolveInExpCS.getInMappingName());
         } else {
             String mappingFQName = (eClassifier == null) ? "" : eClassifier.getName() + QvtOperationalTypesUtil.TYPE_NAME_SEPARATOR; //$NON-NLS-1$

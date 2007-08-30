@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -37,6 +38,8 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.qvt.oml.QvtMessage;
 import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
+import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnvFactory;
+import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalFileEnv;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalParser;
 import org.eclipse.m2m.qvt.oml.common.Logger;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
@@ -122,13 +125,14 @@ public class QvtCompiler {
             checkRemoveCycles(parsed, removedImportCycles);
         }
 
-        ImportCompiler importCompiler = new ImportCompiler(removedImportCycles, options);
+        this.importCompiler = new ImportCompiler(removedImportCycles, options);
         List<QvtCompilationResult> resultList = new ArrayList<QvtCompilationResult>(); 
-        for (ParsedModuleCS parsed : mmaList) {
+        for (ParsedModuleCS parsed : mmaList) {        	
         	QvtCompilationResult qvtCompilationResult = analyse(parsed, options);
             resultList.add(qvtCompilationResult);
-        	importCompiler.compileImports(qvtCompilationResult.getModule(), parsed);
         }
+        
+        afterCompileCleanup();
         
         return resultList.toArray(new QvtCompilationResult[resultList.size()]);
     }
@@ -234,15 +238,57 @@ public class QvtCompiler {
     }    
 
     public QvtCompilationResult analyse(final ParsedModuleCS mma, QvtCompilerOptions options) {
-    	return analyse(mma, options, null);
-    }
-    
-    public QvtCompilationResult analyse(final ParsedModuleCS mma, QvtCompilerOptions options,
-    		QvtOperationalEnv env) {
         QvtCompilationResult result = myCompilationResults.get(mma);
         if (result != null && result.getModule() != null) {
             return result;
         }
+
+        List<CompiledModule> compiledImports = importCompiler.compileImports(mma);            	
+        
+    	QvtOperationalEnv parentEnv = null; 
+    	QvtOperationalFileEnv moduleEnv = new QvtOperationalEnvFactory().createEnvironment(parentEnv, mma.getSource(), this);
+    	// setup import environments
+    	for (ParsedModuleCS parsedImport : mma.getParsedImports()) {
+    		if(myModule2EnvMap.containsKey(parsedImport)) {
+    			QvtOperationalEnv importEnv = myModule2EnvMap.get(parsedImport);    			
+    			moduleEnv.addSibling(importEnv);
+    		}    		
+    	}
+    	
+    	result = analyse(mma, options, moduleEnv);
+    	result.getModule().getCompiledImports().addAll(compiledImports);
+
+    	myCompilationResults.put(mma, result);    	
+
+    	for (ParsedModuleCS parsedImport : mma.getParsedImports()) {
+			QvtCompilationResult importCompilationResult = myCompilationResults.get(parsedImport);
+        	if (importCompilationResult != null && importCompilationResult.getErrors().length > 0) {
+	    		String importedModuleId = parsedImport.getStringName();
+	    		if(importedModuleId == null) {	    			
+	    			// this case is covered by syntax error report, 
+	    			continue;
+	    		}
+        		
+        		// find moduleImport syntax element
+        		ImportCS targetImportCS = null;
+        		for (ImportCS importCS : mma.getModuleCS().getImports()) {
+        			if (importedModuleId.equals(QvtOperationalParserUtil.getStringRepresentation(importCS.getPathNameCS(), "."))) { //$NON-NLS-1$
+        				targetImportCS = importCS;
+        				break;
+        			}
+				}
+        		if (targetImportCS != null) {
+        			result.getModule().addMessage(new QvtMessage(NLS.bind(CompilerMessages.importHasCompilationError, importedModuleId), targetImportCS));
+        		}
+        	}    		
+    	}
+    	
+    	return result;
+    }
+    
+    private QvtCompilationResult analyse(final ParsedModuleCS mma, QvtCompilerOptions options,
+    		QvtOperationalFileEnv env) {
+        QvtCompilationResult result = null;
         
         Module module = null;
         Map syntaxToSemanticMap = new IdentityHashMap();
@@ -261,6 +307,7 @@ public class QvtCompiler {
             try {
                 QvtOperationalParser parser = new QvtOperationalParser();
                 module = parser.analyze(mma, this, env, options);
+                myModule2EnvMap.put(mma, parser.getEnvironment());                
                 if (options.isGenerateCompletionData()) {
 					// Remark: added just for the support of basic metamodel navigability from the QVT editor
 					//    - Consider using EMF Adapters instead of various maps to keep such additional info
@@ -284,9 +331,7 @@ public class QvtCompiler {
 
         result = new QvtCompilationResult(compModule,
         		new CompletionData(syntaxToSemanticMap, syntaxToEnvironmentMap, semanticToEnvironmentMap));
-        
-        myCompilationResults.put(mma, result);
-        
+                
         return result;
     }    
     
@@ -342,12 +387,11 @@ public class QvtCompiler {
 			this.myCompilerOptions = options;
 		}
     	
-	    void compileImports(final CompiledModule compiledModule, final ParsedModuleCS importingModule) {
-	    	if (myProcessedImporters.contains(importingModule)) {
-	    		return;
+		List<CompiledModule> compileImports(final ParsedModuleCS importingModule) {			
+        	if(myCompilationResults.containsKey(importingModule)) {
+        		return myCompilationResults.get(importingModule).getModule().getCompiledImports(); 
 	    	}
-	    	myProcessedImporters.add(importingModule);
-	    	
+        	
 	    	Collection<ParsedModuleCS> importedModules = importingModule.getParsedImports();
 	    	List<ParsedModuleCS> removedImports = myRemovedCycles.containsKey(importingModule) ?
 	    			myRemovedCycles.get(importingModule) : Collections.<ParsedModuleCS>emptyList();    	
@@ -357,6 +401,7 @@ public class QvtCompiler {
 	    		importedModules.addAll(removedImports);
 	    	}
 	
+			List<CompiledModule> directImportsCompiled = new LinkedList<CompiledModule>();        		    	
 	    	for (ParsedModuleCS importedModule : importedModules) {	
 	    		String importedModuleId = importedModule.getStringName();
 	    		if(importedModuleId == null) {	    			
@@ -365,8 +410,18 @@ public class QvtCompiler {
 	    		}
 	    		CompiledModule analyzedModule = null;
 	        	if (!importingModule.getStringName().equals(importedModuleId)) {
+	        		if (removedImports.contains(importedModule)) {
+	        			continue;
+	        		}
+	        		
+	        		List<CompiledModule> nextCompiledImports = compileImports(importedModule);
+	        		
 	            	analyzedModule = analyse(importedModule, myCompilerOptions).getModule();
-	            	if (analyzedModule.getErrors().length > 0 && importedModule != importingModule) { 
+	            	analyzedModule.getCompiledImports().addAll(nextCompiledImports);
+	            		            	
+	            	directImportsCompiled.add(analyzedModule);
+	            	
+/*	            	if (analyzedModule.getErrors().length > 0 && importedModule != importingModule) { 
 		        		// find moduleImport syntax element
 		        		ImportCS targetImportCS = null;
 		        		for (ImportCS importCS : importingModule.getModuleCS().getImports()) {
@@ -376,25 +431,34 @@ public class QvtCompiler {
 		        			}
 						}
 		        		if (targetImportCS != null) {
-		        			analyse(importingModule, myCompilerOptions).getModule().addMessage(
-		        				new QvtMessage(NLS.bind(CompilerMessages.importHasCompilationError, importedModuleId), targetImportCS));
+		        			analyzedModule.addMessage(new QvtMessage(NLS.bind(CompilerMessages.importHasCompilationError, importedModuleId), targetImportCS));
+
+		        			//analyse(importingModule, myCompilerOptions).getModule().addMessage(
+		        				//new QvtMessage(NLS.bind(CompilerMessages.importHasCompilationError, importedModuleId), targetImportCS));
 		        		}
-	            	}
-		        	compiledModule.getCompiledImports().add(analyzedModule);
-	        	}
-	        	
-	        	if (!removedImports.contains(importedModule)) {
-	        		compileImports(analyzedModule != null ? analyzedModule : compiledModule, importedModule);
-	        	}
+	            	} */
+	            	
+	        	}	        	
 	    	}
+	    	
+	    	return directImportsCompiled; 
 	    }
     }
 
+    private void afterCompileCleanup() {
+        this.importCompiler = null;
+        
+    	myModule2EnvMap.clear();
+    	myCompilationResults.clear();
+    	mySyntaxModules.clear();
+    }
     
     private final Map<MappingModuleCS, Module> mySyntaxToSemanticMap;
     
     private final Map<CFile, ParsedModuleCS> mySyntaxModules;
     private final Map<ParsedModuleCS, QvtCompilationResult> myCompilationResults;
+    private Map<ParsedModuleCS, QvtOperationalEnv> myModule2EnvMap = new HashMap<ParsedModuleCS, QvtOperationalEnv>(5);
+    private ImportCompiler importCompiler;
     
 	private final IImportResolver myImportResolver;
 	private final IMetamodelRegistryProvider metamodelRegistryProvider;

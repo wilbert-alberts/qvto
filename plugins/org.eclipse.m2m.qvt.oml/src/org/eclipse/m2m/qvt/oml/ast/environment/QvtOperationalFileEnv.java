@@ -11,23 +11,31 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.ast.environment;
 
+import java.util.LinkedHashMap;
+
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.common.io.CResourceRepositoryContext;
 import org.eclipse.m2m.qvt.oml.compiler.ParsedModuleCS;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
+import org.eclipse.m2m.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
+import org.eclipse.ocl.expressions.ExpressionsFactory;
+import org.eclipse.ocl.expressions.Variable;
 
 public class QvtOperationalFileEnv extends QvtOperationalEnv {
 
 	protected QvtOperationalFileEnv(final QvtOperationalEnv parent, final CFile file, final QvtCompiler compiler) {
-		super(parent, compiler);
-		myFile = file;
+		super(parent, compiler, new EPackageRegistryImpl());
+		myFile = file;		
 	}
-	
+
 	@Override
 	public MetamodelRegistry getMetamodelRegistry() {
 		
@@ -54,7 +62,19 @@ public class QvtOperationalFileEnv extends QvtOperationalEnv {
     
     public Module createModule(MappingModuleCS mmas, QvtCompilerOptions options,
     		EcoreEnvironment env, ParsedModuleCS parsedModuleCS) {
-        return getCompiler().createModule(mmas, options, env, parsedModuleCS);
+        Module module = getCompiler().createModule(mmas, options, env, parsedModuleCS);
+        
+		Variable<EClassifier, EParameter> thisVar = ExpressionsFactory.eINSTANCE.createVariable();
+		thisVar.setName(THIS);
+		thisVar.setType(module);
+        addElement(THIS, thisVar, false);
+        
+        return module; 
+    }
+    
+    @Override
+    public String toString() {    
+    	return  "Env:" + myFile.getFullPath(); //$NON-NLS-1$
     }
     
 
