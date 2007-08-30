@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.adapters.CSTBindingUtil;
 import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLexer;
+import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorCSTNode;
 import org.eclipse.ocl.internal.cst.CSTNode;
 import org.eclipse.ocl.internal.cst.IsMarkedPreCS;
 
@@ -64,18 +65,38 @@ public class CSTTraverseUtil {
 
     public static final CSTNode findCSTNode(CSTNode root, int offset) {
         CSTNode result = root;
+        int resultFullStartOffset = getFullStartOffset(result);
+        int resultFullEndOffset = getFullEndOffset(result);
         for (TreeIterator<EObject> iterator = root.eAllContents(); iterator.hasNext(); ) {
             EObject next = iterator.next();
             if (next instanceof CSTNode) {
                 CSTNode child = (CSTNode) next;
-                if ((child.getStartOffset() >= result.getStartOffset()) && (child.getEndOffset() <= result.getEndOffset())
-                        && (offset >= child.getStartOffset()) && (offset <= child.getEndOffset())) {
+                int childFullStartOffset = getFullStartOffset(child);
+                int childFullEndOffset = getFullEndOffset(child);
+                if ((childFullStartOffset >= resultFullStartOffset) && (childFullEndOffset <= resultFullEndOffset)
+                        && (offset >= childFullStartOffset) && (offset <= childFullEndOffset)) {
                     if (!(child instanceof IsMarkedPreCS)) {
                         result = child;
+                        resultFullStartOffset = childFullStartOffset;
+                        resultFullEndOffset = childFullEndOffset;
                     }
                 }
             }
         }
         return result;
+    }
+    
+    private static int getFullStartOffset(CSTNode cstNode) {
+        if (cstNode instanceof ErrorCSTNode) {
+            return ((ErrorCSTNode) cstNode).getFullStartOffset();
+        }
+        return cstNode.getStartOffset();
+    }
+    
+    private static int getFullEndOffset(CSTNode cstNode) {
+        if (cstNode instanceof ErrorCSTNode) {
+            return ((ErrorCSTNode) cstNode).getFullEndOffset();
+        }
+        return cstNode.getEndOffset();
     }
 }
