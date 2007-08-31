@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.8 2007/08/30 13:31:01 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.9 2007/08/31 13:37:34 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.8 2007/08/30 13:31:01 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.9 2007/08/31 13:37:34 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -4850,6 +4850,15 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 				EList result = (EList)dtParser.getSym(1);
 				result.add(dtParser.getSym(3));
 				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 402:  patternPropertyOrAddition2 ::= qvtErrorToken patternPropertyOrAddition
+			//
+			case 402: {
+				
+				dtParser.setSym1(dtParser.getSym(2));
 	  		  break;
 			}
 	 

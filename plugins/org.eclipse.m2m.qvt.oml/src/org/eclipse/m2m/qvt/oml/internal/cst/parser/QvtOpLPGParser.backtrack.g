@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.8 2007/08/30 13:31:01 aigdalov Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.9 2007/08/31 13:37:34 aigdalov Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -351,7 +351,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.8 2007/08/30 13:31:01 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.9 2007/08/31 13:37:34 aigdalov Exp $
  */
 	./
 $End
@@ -2145,7 +2145,11 @@ $Rules
 		  $EndJava
 		./
 	patternPropertyOrAddition2 -> patternPropertyOrAddition
-	patternPropertyOrAddition2 -> qvtErrorToken patternPropertyOrAddition
+	patternPropertyOrAddition2 ::= qvtErrorToken patternPropertyOrAddition
+		/.$BeginJava
+					$setResult($getSym(2));
+		  $EndJava
+		./
 	patternPropertyOrAddition ::= IDENTIFIER ':=' oclExpressionCS
 		/.$BeginJava
 					CSTNode result = createPatternPropertyCS(
