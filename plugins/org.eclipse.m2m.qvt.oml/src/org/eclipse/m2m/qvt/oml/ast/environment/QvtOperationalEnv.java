@@ -254,7 +254,9 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			parent = (QvtOperationalEnv) parent.getParent();
 		}
 		parent.myErrorsList.add(new QvtMessage(message, QvtMessage.SEVERITY_ERROR, startOffset, endOffset-startOffset+1));
-		System.err.println("Error: " + message + ", Pos: " + startOffset + "-" + endOffset);
+		
+		// TODO #199408  Use traces in QVTParser instead of System.xxx output facilities
+		//System.err.println("Error: " + message + ", Pos: " + startOffset + "-" + endOffset);
 	}
 
 	public void reportWarning(String message, int startOffset, int endOffset) {
@@ -266,7 +268,9 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			parent = (QvtOperationalEnv) parent.getParent();
 		}
 		parent.myWarningsList.add(new QvtMessage(message, QvtMessage.SEVERITY_WARNING, startOffset, endOffset-startOffset+1));
-		System.err.println("Warning: " + message + ", Pos: " + startOffset + "-" + endOffset);
+
+		// TODO #199408  Use traces in QVTParser instead of System.xxx output facilities
+		//System.err.println("Warning: " + message + ", Pos: " + startOffset + "-" + endOffset);
 	}
 
 	public void reportError(String message, CSTNode node) {
