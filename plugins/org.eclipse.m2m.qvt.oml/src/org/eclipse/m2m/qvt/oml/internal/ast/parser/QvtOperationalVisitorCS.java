@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
@@ -135,7 +134,6 @@ import org.eclipse.ocl.internal.parser.OCLParser;
 import org.eclipse.ocl.types.TypeType;
 import org.eclipse.ocl.types.VoidType;
 import org.eclipse.ocl.util.TypeUtil;
-import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.osgi.util.NLS;
 
 public class QvtOperationalVisitorCS
@@ -414,13 +412,12 @@ public class QvtOperationalVisitorCS
 		if (objectExp.getReferredObject() == null) {
 			objectExp.setReferredObject(env.resolveModelParameter(objectTypeSpec.myType, DirectionKind.OUT));
 		}
-		ASTNode astNode = ASTBindingHelper.resolveASTNode((CSTNode) EcoreUtil.getRootContainer(outExpCS));
-		// FIXME - #visitOutExpCS(...)
-		// relies on CST/AST bindings always being set for module when visited
-		// - find a better way of resolving module CST-AST, as this bindings are dependent on compilation options
-		if (objectExp.getReferredObject() == null 
-				&& astNode instanceof Module 
-				&& !((Module) astNode).getModelParameter().isEmpty()) {
+		EObject rootEObj = EcoreUtil.getRootContainer(outExpCS);
+		Module module = null;
+		if (env.getParent() instanceof QvtOperationalFileEnv && rootEObj instanceof MappingModuleCS) {
+			module = ((QvtOperationalFileEnv) env.getParent()).getModule((MappingModuleCS) rootEObj);
+		}
+		if (objectExp.getReferredObject() == null && module != null && !module.getModelParameter().isEmpty()) {
 			env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentFailToInfer,
 					QvtOperationalTypesUtil.getTypeFullName(objectExp.getType())),
 					typeSpecCS);
@@ -508,11 +505,6 @@ public class QvtOperationalVisitorCS
 		module.setStartPosition(moduleCS.getStartOffset());
 		module.setEndPosition(moduleCS.getEndOffset());
 
-        // Note: always create moduleCS->moduleAS binding, 
-        // see #visitOutExpCS(...)
-		ASTBindingHelper.createCST2ASTBinding(parsedModuleCS.getModuleCS(), module, env);
-            
-		
 		for (ModelTypeCS modelTypeCS : moduleCS.getMetamodels()) {
 			ModelType modelType = visitModelTypeCS(modelTypeCS, env, module);
 			if (modelType == null) {
