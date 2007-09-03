@@ -133,7 +133,7 @@ public class QvtOperationalParserUtil {
 		}
 	}
 
-	private static void collectAllImports(Module module, Set<Module> result) {
+	public static void collectAllImports(Module module, Set<Module> result) {
 		for (ModuleImport imp : module.getModuleImport()) {
 			if (imp == null || imp.getImportedModule() == null) {
 				continue;

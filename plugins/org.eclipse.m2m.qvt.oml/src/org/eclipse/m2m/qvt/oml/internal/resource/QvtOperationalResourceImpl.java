@@ -17,19 +17,15 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Map;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.xmi.DOMHandler;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
-import org.eclipse.m2m.qvt.oml.QvtEngine;
 import org.eclipse.m2m.qvt.oml.QvtMessage;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
-import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
+import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.qvt.oml.compiler.CompilerMessages;
-import org.eclipse.m2m.qvt.oml.compiler.QvtCompilationResult;
-import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
-import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
+import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerFacade;
 import org.eclipse.osgi.util.NLS;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -60,22 +56,16 @@ public class QvtOperationalResourceImpl extends XMIResourceImpl {
     		
             try {
             	URI normalizedUri = getURIConverter().normalize(getURI());
-            	String uriPath = normalizedUri.isFile() ? normalizedUri.toFileString() :
-            			(normalizedUri.isPlatform() ? normalizedUri.toPlatformString(true) :
-            					normalizedUri.toString());
-            	IFile file = WorkspaceUtils.getWorkspaceFile(uriPath);
-            	QvtCompilerOptions compilerOptions = new QvtCompilerOptions();
-            	compilerOptions.setGenerateCompletionData(false);
-    			QvtCompilationResult compilationResult = QvtEngine.getInstance(file).compile(new EclipseFile(file), compilerOptions, null);
-				fillCompilationDiagnostic(compilationResult, uriPath);
+            	CompiledModule compiledModule = QvtCompilerFacade.getCompiledModule(normalizedUri);
+				fillCompilationDiagnostic(compiledModule, normalizedUri);
 
-				if (compilationResult.getModule().getModule() == null) {
+				if (compiledModule.getModule() == null) {
     				throw new IOException(NLS.bind(CompilerMessages.moduleCompilationErrors, 
-    						file, Arrays.asList(compilationResult.getErrors())));
+    						normalizedUri, Arrays.asList(compiledModule.getErrors())));
     			}
 
         		notification = setLoaded(true);
-    			getContents().add(compilationResult.getModule().getModule());
+    			getContents().add(compiledModule.getModule());
             }
             catch (MdaException e) {
 				throw new IOWrappedException(e);
@@ -92,14 +82,14 @@ public class QvtOperationalResourceImpl extends XMIResourceImpl {
     	}
     }
     
-    private void fillCompilationDiagnostic(QvtCompilationResult compilationResult, String uriPath) {
+    private void fillCompilationDiagnostic(CompiledModule compiledModule, URI uri) {
     	warnings = getWarnings();
-		for (QvtMessage msg : compilationResult.getWarnings()) {
-			warnings.add(new QvtCompilationErrorException(msg, uriPath));
+		for (QvtMessage msg : compiledModule.getWarnings()) {
+			warnings.add(new QvtCompilationErrorException(msg, uri.toString()));
 		}
 		errors = getErrors();
-		for (QvtMessage msg : compilationResult.getErrors()) {
-			errors.add(new QvtCompilationErrorException(msg, uriPath));
+		for (QvtMessage msg : compiledModule.getErrors()) {
+			errors.add(new QvtCompilationErrorException(msg, uri.toString()));
 		}
 	}
 

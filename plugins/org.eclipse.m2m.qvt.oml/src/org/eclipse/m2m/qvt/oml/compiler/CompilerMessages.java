@@ -25,6 +25,9 @@ public class CompilerMessages extends NLS {
 	public static String moduleCompilationErrors;
 	public static String moduleTransformationExpected;
 	
+	public static String QvtCompilerFacade_compilingScript;
+	public static String QvtCompilerFacade_acquiringScript;
+	
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, CompilerMessages.class);

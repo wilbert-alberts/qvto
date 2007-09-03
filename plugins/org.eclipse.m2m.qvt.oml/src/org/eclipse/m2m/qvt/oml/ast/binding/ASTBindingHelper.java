@@ -63,6 +63,15 @@ public class ASTBindingHelper {
 		return null;
 	}
 
+	public static CFile resolveModuleFile(Module astModule) {
+		List<ModuleASTAdapter> adapters = getASTBindings(astModule, ModuleASTAdapter.class);
+		if (!adapters.isEmpty()) {
+			ModuleASTAdapter moduleAdapter = (ModuleASTAdapter) adapters.get(0);
+			return moduleAdapter.getModuleFile();			
+		}
+		return null;
+	}
+
 	public static void createCST2ASTBinding(CSTNode cstNode, ASTNode astNode) {
 		createCST2ASTBinding(cstNode, astNode, null);
 	}
