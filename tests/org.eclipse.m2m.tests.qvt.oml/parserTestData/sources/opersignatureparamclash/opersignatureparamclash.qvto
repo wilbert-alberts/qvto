@@ -1,0 +1,8 @@
+library opersignatureparamclash;
+
+query name(s : String) : String {
+}
+
+-- still clash here
+query name(ss : String ) : String {
+}

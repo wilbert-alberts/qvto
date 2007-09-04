@@ -38,6 +38,7 @@ public class ParserTests {
     
     static TestData[] ourData = new TestData[] {
         //new TestData("orderedsetdoesnotconformtoset", 1), //$NON-NLS-1$
+        new TestData("opersignatureparamclash", 1), //$NON-NLS-1$    	
         new TestData("collectreturntype", 0), //$NON-NLS-1$
         new TestData("nocollectoncollection", 0), //$NON-NLS-1$
         new TestData("nonstaticcallinstaticcontext", 1), //$NON-NLS-1$
