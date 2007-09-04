@@ -45,7 +45,6 @@ import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
-import org.eclipse.m2m.qvt.oml.expressions.Property;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.expressions.VariableInitExp;
@@ -75,7 +74,7 @@ import org.eclipse.osgi.util.NLS;
 
 public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 
-	public static final String THIS = "this"; //$NON-NLS-1$
+	public static final String THIS = "this"; //$NON-NLS-1$	
 	
 	public static final String MAPPING_OPERATION_STEREOTYPE = "mapping_operation"; //$NON-NLS-1$
 	public static final String IMPERATIVE_OPERATION_STEREOTYPE = "imperative_operation"; //$NON-NLS-1$
@@ -424,6 +423,9 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		try {
 			myLookupPropertyNames.add(name);
 			implicitSource = super.lookupImplicitSourceForProperty(name);
+			if(implicitSource == null && getParent() != null) {
+				implicitSource = getParent().lookupImplicitSourceForProperty(name);
+			}			
 		}
 		finally {
 			myLookupPropertyNames.remove(name);
@@ -546,8 +548,9 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		return addOperation;
 	}
 	
-	public EClassifier getModuleContextType() {
-		return lookup(THIS).getType();
+	@Override
+	public EClass getModuleContextType() {
+		return getParent() instanceof QvtOperationalEnv ? ((QvtOperationalEnv)getParent()).getModuleContextType() : null;
 	}	
 		
 	public void defineOperationParameters(ImperativeOperation operation) {
@@ -586,21 +589,6 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		newEnvironment.registerModelParametersImpl(myModelParameters);
 		return newEnvironment;
 	}
-
-    public void addPropertyVariable(Property prop) {
-        if (lookupLocal(prop.getName()) != null) {
-            reportError(NLS.bind(ValidationMessages.SemanticUtil_15,
-                    new Object[] { prop.getName() }), prop.getStartPosition(), prop.getEndPosition());
-        } else {
-            if (prop.getName() != null && prop.getEType() != null) {
-                Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
-                var.setName(prop.getName());
-                var.setType(prop.getEType());
-                var.setRepresentedParameter(prop);
-                addElement(prop.getName(), var, true);
-            }
-        }
-    }
     
 	public void addInitVariable(VariableInitExp varInit) {
 		if (varInit.getName() != null) {

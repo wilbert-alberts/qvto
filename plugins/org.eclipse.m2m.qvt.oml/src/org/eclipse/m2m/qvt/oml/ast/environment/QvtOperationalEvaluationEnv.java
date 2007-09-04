@@ -20,7 +20,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
@@ -32,7 +31,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
@@ -151,7 +149,13 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
      */
 	@Override
     public Object getValueOf(String name) {
-        return myBindings.get(name);
+        Object result = myBindings.get(name);
+        if(result == null && name != null && !myBindings.containsKey(name)) {
+        	if(getParent() != null && (name.endsWith(QvtOperationalFileEnv.THIS_VAR_QNAME_SUFFIX))) {
+        		return getParent().getValueOf(name);
+        	}
+        }
+        return result;
     }
 
     /**

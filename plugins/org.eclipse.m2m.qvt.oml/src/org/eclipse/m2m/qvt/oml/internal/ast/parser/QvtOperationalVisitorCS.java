@@ -601,6 +601,13 @@ public class QvtOperationalVisitorCS
 			// imp.setEndPosition(libImport.getEndOffset());
 			imp.setImportedModule(importedModule);
 			module.getModuleImport().add(imp);
+			
+			// define default instances access variable
+			/*Variable<EClassifier, EParameter> importedModulethisVar = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();
+			importedModulethisVar.setName(importedModule.getName() + "." + QvtOperationalEnv.THIS);
+			importedModulethisVar.setType(module);
+	        env.addElement(importedModulethisVar.getName(), importedModulethisVar, false);
+	        */
 		}
 
 		for (RenameCS renameCS : moduleCS.getRenamings()) {
@@ -609,7 +616,7 @@ public class QvtOperationalVisitorCS
 				module.getOwnedRenaming().add(rename);
 			}
 		}
-		QvtOperationalParserUtil.defineImportedConfigProperties(module, env);
+		//QvtOperationalParserUtil.defineImportedConfigProperties(module, env);
 		//QvtOperationalParserUtil.defineImportedOperations(module, env);
 
 		for (ModulePropertyCS propCS : moduleCS.getProperties()) {
@@ -645,7 +652,7 @@ public class QvtOperationalVisitorCS
 		for (MappingMethodCS methodCS : moduleCS.getMethods()) {
 			ImperativeOperation operation = visitMappingMethodCS(methodCS, env);
 			if (operation != null) {
-				module.getEOperations().add(operation);
+				//module.getEOperations().add(operation); analyze first, add all together
 				
 				EOperation envDefinedOper = methodMap.get(methodCS);										
 				if(envDefinedOper != null) {
@@ -655,16 +662,24 @@ public class QvtOperationalVisitorCS
 					} 
 					//																	
 				}
+				
+				methodMap.put(methodCS, operation);
+				
 				/* done in #defineImperativeOperation(...)
 				checkReturnTypeConformance(operation, 
 						methodCS.getMappingDeclarationCS().getReturnType() != null ?
 								methodCS.getMappingDeclarationCS().getReturnType() : 
 									methodCS.getMappingDeclarationCS(), env);
 				 */									
-				checkMainMappingConformance(env, operation);
+				//checkMainMappingConformance(env, operation);
 			}
 		}
 		
+		env.getQVTTypeResolver().close();
+		for (EOperation nextImperOperation: methodMap.values()) {
+			module.getEOperations().add(nextImperOperation);
+			checkMainMappingConformance(env, (ImperativeOperation)nextImperOperation);
+		}
 		
 		for (ModuleImport moduleImport : module.getModuleImport()) {
 			for (EOperation operation : moduleImport.getImportedModule().getEOperations()) {
@@ -1465,7 +1480,7 @@ public class QvtOperationalVisitorCS
 					new Object[] { property.getName() }), propCS);
 		}
 
-		env.addPropertyVariable(property);
+		env.addModuleProperty(property);
 
 		return property;
 	}
@@ -1479,7 +1494,7 @@ public class QvtOperationalVisitorCS
 		if (validateLocalPropertyCS(propCS, prop, env)) {
 			if (QvtOperationalParserUtil.validateLocalProperty(prop, env)) {
 				if (prop.getName() != null) {
-					env.addPropertyVariable(prop);
+					env.addModuleProperty(prop);
 				}
 			}
 		}

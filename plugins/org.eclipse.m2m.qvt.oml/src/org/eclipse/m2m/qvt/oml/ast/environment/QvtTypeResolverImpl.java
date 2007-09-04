@@ -12,6 +12,7 @@
 package org.eclipse.m2m.qvt.oml.ast.environment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
@@ -32,7 +33,6 @@ import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.types.MessageType;
 import org.eclipse.ocl.types.TupleType;
 import org.eclipse.ocl.types.TypeType;
-import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
 
@@ -41,11 +41,12 @@ import org.eclipse.ocl.utilities.UMLReflection;
  * This type of resolver takes into account element resolutions with sibling environments to 
  * this owning environment. (sibling env, stands for imported one)
  */
-class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation, EStructuralFeature> {
+public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation, EStructuralFeature> {
 
 	private TypeResolver<EClassifier, EOperation, EStructuralFeature> fDelegate;
 	private QvtEnvironmentBase fOwner;
     private boolean fdefinesOclAnyFeatures;
+    private boolean isClosed;    
     	
 		
 	QvtTypeResolverImpl(QvtEnvironmentBase owningEnv, TypeResolver<EClassifier, EOperation, EStructuralFeature> delegate) {
@@ -62,14 +63,8 @@ class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation, EStru
 		return fOwner;
 	}
 	
-	public EOperation findLocalOperation(EOperation oper) {
-		EClassifier owningClassifier = uml().getOwningClassifier(oper);
-		if(owningClassifier == null) {
-			return null;
-		}
-
-		List<EOperation> opers = this.getAdditionalOperations(owningClassifier);
-		return findMatchingOperation(opers, oper);
+	public void close() {		
+		isClosed = true;
 	}
 	
 	public List<EStructuralFeature> getAdditionalAttributes(EClassifier owner) {
@@ -87,8 +82,10 @@ class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation, EStru
 		result.addAll(fDelegate.getAdditionalAttributes(owner));
 	}
 
-
-	public List<EOperation> getAdditionalOperations(EClassifier owner) {		
+	public List<EOperation> getAdditionalOperations(EClassifier owner) {
+		if(isClosed && owner == fOwner.getModuleContextType()) {
+			return Collections.emptyList();
+		}
 		List<EOperation> result = new ArrayList<EOperation>();
 		result.addAll(fDelegate.getAdditionalOperations(owner));
 		
@@ -104,51 +101,7 @@ class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation, EStru
 		if(fdefinesOclAnyFeatures) {
 			result.addAll(fDelegate.getAdditionalOperations(fOwner.getOCLStandardLibrary().getOclAny()));
 		}
-	}
-	
-	@SuppressWarnings("unchecked")
-	protected EOperation findMatchingOperation(List<EOperation> operList, EOperation operation) {
-        String operationName = uml().getName(operation);
-        
-		for (EOperation next : operList) {
-			if ((next == operation)
-					|| (uml().getName(next).equals(operationName)
-							&& matchParameters(next, operation))) {
-				return next;
-			}
-		}
-		
-		return null;
-	}
-	
-	private boolean matchParameters(EOperation a, EOperation b) {
-		List<EParameter> aparms = uml().getParameters(a);
-		List<EParameter> bparms = uml().getParameters(b);
-		
-		if (aparms.size() == bparms.size()) {
-			int count = aparms.size();
-			
-			for (int i = 0; i < count; i++) {
-				EParameter aparm = aparms.get(i);
-				EParameter bparm = bparms.get(i);
-				
-				if (!uml().getName(aparm).equals(uml().getName(bparm))
-						|| TypeUtil.getRelationship(
-								fOwner,
-								uml().getOCLType(aparm),
-                                uml().getOCLType(bparm))
-							!= UMLReflection.SAME_TYPE) {
-					
-					return false;
-				}
-			}
-			
-			return true;
-		}
-		
-		return false;
 	}	
-
 
 	public Resource getResource() {
 		return fDelegate.getResource();

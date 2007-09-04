@@ -34,7 +34,6 @@ import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.expressions.LocalProperty;
-import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.expressions.ModuleImport;
@@ -121,17 +120,6 @@ public class QvtOperationalParserUtil {
         return metamodels;
 	}
 
-	public static void defineImportedConfigProperties(Module module, QvtOperationalFileEnv env) {
-		Set<Module> imports = new LinkedHashSet<Module>();
-		collectAllImports(module, imports);
-		for (Module imported : imports) {
-			List<Property> properties = imported.getConfigProperty();
-			for (Iterator<Property> iter = properties.iterator(); iter.hasNext();) {
-				Property property = iter.next();
-				env.addPropertyVariable(property);
-			}
-		}
-	}
 
 	public static void collectAllImports(Module module, Set<Module> result) {
 		for (ModuleImport imp : module.getModuleImport()) {
@@ -145,20 +133,6 @@ public class QvtOperationalParserUtil {
 		}
 	}
 
-	public static void defineImportedOperations(Module module, QvtOperationalFileEnv env) {
-		Set<Module> imports = new LinkedHashSet<Module>();
-		collectAllImports(module, imports);
-		for (Module imported : imports) {
-			defineLocalOperations(imported, env);
-		}
-	}
-
-	private static void defineLocalOperations(Module module, QvtOperationalFileEnv env) {
-		for (Iterator<EOperation> iter = module.getEOperations().iterator(); iter.hasNext();) {
-			ImperativeOperation operation = (ImperativeOperation) iter.next();
-			env.defineImperativeOperation(operation, operation instanceof MappingOperation, false);
-		}
-	}
 
 	public static boolean validateNameClashing(String name, EClassifier returnType, EClassifier contextType,
 			QvtOperationalEnv env, CSTNode cstNode) {
@@ -292,7 +266,11 @@ public class QvtOperationalParserUtil {
 	}	
 	
 	public static String getMappingModuleQualifiedName(TransformationHeaderCS headerCS) {
-		return getMappingModuleNamespace(headerCS) + NAMESPACE_SEPARATOR + getMappingModuleSimpleName(headerCS);
+		String namespace = getMappingModuleNamespace(headerCS);
+		if(namespace == null || namespace.length() == 0) {
+			return getMappingModuleSimpleName(headerCS);
+		}
+		return namespace + NAMESPACE_SEPARATOR + getMappingModuleSimpleName(headerCS);
 	}
 	
 	/**

@@ -12,13 +12,12 @@
 package org.eclipse.m2m.qvt.oml.ast.environment;
 
 import static org.eclipse.ocl.utilities.UMLReflection.SAME_TYPE;
-import static org.eclipse.ocl.utilities.UMLReflection.STRICT_SUBTYPE;
-import static org.eclipse.ocl.utilities.UMLReflection.STRICT_SUPERTYPE;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -33,7 +32,7 @@ import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
 
 
-class QvtEnvironmentBase extends EcoreEnvironment {
+abstract class QvtEnvironmentBase extends EcoreEnvironment {
 
 	public static class CollisionStatus {
 		public static final int ALREADY_DEFINED = 1;		
@@ -76,6 +75,8 @@ class QvtEnvironmentBase extends EcoreEnvironment {
 		super(reg);
 	}
 	
+	public abstract EClass getModuleContextType();	
+	
 	@Override
 	public Variable<EClassifier, EParameter> lookupImplicitSourceForOperation(String name, List<? extends TypedElement<EClassifier>> args) {
 		Variable<EClassifier, EParameter> result = super.lookupImplicitSourceForOperation(name, args);
@@ -88,6 +89,21 @@ class QvtEnvironmentBase extends EcoreEnvironment {
 			}
 		}
 		return result;
+	}
+	
+	@Override
+	public Variable<EClassifier, EParameter> lookupImplicitSourceForProperty(String name) {
+		Variable<EClassifier, EParameter> result = super.lookupImplicitSourceForProperty(name);
+		if(result == null) {
+			for (QvtEnvironmentBase nextSiblingEnv : getSiblings()) {
+				result = nextSiblingEnv.lookupImplicitSourceForProperty(name);
+				if(result != null) {
+					break;
+				}
+			}
+		}
+		return result;
+		
 	}
 
 	@Override

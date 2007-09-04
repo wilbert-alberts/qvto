@@ -1,0 +1,47 @@
+/*******************************************************************************
+ * Copyright (c) 2007 Borland Software Corporation
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *   
+ * Contributors:
+ *     Borland Software Corporation - initial API and implementation
+ *******************************************************************************/
+package org.eclipse.m2m.qvt.oml.internal.ast.evaluator;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EFactory;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
+import org.eclipse.emf.ecore.impl.EFactoryImpl;
+	
+
+class ModuleInstanceFactory extends EFactoryImpl {
+	
+	public static final EFactory eINSTANCE = new ModuleInstanceFactory(); 
+	
+	private ModuleInstanceFactory() {
+		super();
+	}
+	
+	@Override
+	protected EObject basicCreate(EClass eClass) {
+		ModuleInstance result = new ModuleInstance();
+		result.eSetClass(eClass);
+		return result;
+	}
+	
+	private static final class ModuleInstance extends DynamicEObjectImpl {
+
+		ModuleInstance() {
+			super();
+		}
+		
+		@Override
+		public String toString() {
+			return eClass().getName() + " @" + this.hashCode(); //$NON-NLS-1$
+		}
+	}
+}

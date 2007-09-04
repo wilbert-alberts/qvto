@@ -16,14 +16,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.Map.Entry;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -45,6 +42,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtEvaluationResult;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalFileEnv;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.common.Logger;
@@ -128,7 +126,6 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         super(env, evalEnv, evalEnv.createExtentMap(null));
 
         myEvalEnv = evalEnv;
-        myProps = new HashMap<String, Object>();
     }
 
 	@Override
@@ -258,8 +255,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         if (!isNullOrVoidType(imperativeOperation.getContext())) {
             env.add(Environment.SELF_VARIABLE_NAME, env.getOperationSelf());
         }
-        
-        env.add(QvtOperationalEnv.THIS, imperativeOperation.eContainer());
+
 
         return null;
     }
@@ -386,6 +382,15 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
             myInheritanceTree = new InheritanceTree(getOperationalEnv(), new EmfClassifierProvider(getOperationalEnv()), metamodels);
         }
 
+        createModuleDefaultInstance(module, getOperationalEvaluationEnv());
+        
+        for (ModuleImport moduleImport : module.getModuleImport()) {
+			if(moduleImport.getModule() != null) {
+				Module importedModule = moduleImport.getImportedModule();
+				createModuleDefaultInstance(importedModule, getOperationalEvaluationEnv());
+			}
+		}        
+        
         initModuleProperties(module);
         getOperationalEvaluationEnv().createModuleParameterExtents(module);
         
@@ -558,14 +563,24 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         QvtOperationalEvaluationEnv env = getOperationalEvaluationEnv();
         for (Property prop : module.getConfigProperty()) {
             Object propValue = ((PropertyImpl) prop).accept(this);
-            myProps.put(prop.getName(), propValue);
-            env.add(prop.getName(), propValue);
+            EObject moduleInstance = getModuleDefaultInstance(module, env);
+            env.callSetter(moduleInstance, module.getEStructuralFeature(prop.getName()), propValue, isUndefined(propValue), true);            
         }
         
         for (Rename rename : module.getOwnedRenaming()) {
             Object value = ((RenameImpl) rename).accept(this);
         }
     }
+    
+    private EObject getModuleDefaultInstance(Module moduleClass, QvtOperationalEvaluationEnv env) {
+    	return (EObject)env.getValueOf(moduleClass.getName() + QvtOperationalFileEnv.THIS_VAR_QNAME_SUFFIX);
+    }
+    
+    private EObject createModuleDefaultInstance(Module moduleClass, QvtOperationalEvaluationEnv env) {
+    	EObject instance = ModuleInstanceFactory.eINSTANCE.create(moduleClass);
+    	env.add(moduleClass.getName() + QvtOperationalFileEnv.THIS_VAR_QNAME_SUFFIX, instance);
+    	return instance;
+    }    
 
     private Object createOrGetResult(MappingOperation mappingOperation) {
     	QvtOperationalEvaluationEnv env = getOperationalEvaluationEnv();
@@ -766,7 +781,8 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         // create a nested evaluation environment for this operation call
         QvtOperationalEvaluationEnv nestedEnv = getOperationalEnv().getFactory().createEvaluationEnvironment(
         		oldEvalEnv.getContext(), oldEvalEnv);
-        addModuleProperties(nestedEnv);
+        // No need now to pass properties as variables, as they are accessed as module features
+        //addModuleProperties(nestedEnv, (Module)method.eContainer());
 
         nestedEnv.getOperationArgs().addAll(args);
         if (!isUndefined(source)) {
@@ -969,19 +985,11 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
     	}
     	return property;
     }
-
-    private void addModuleProperties(QvtOperationalEvaluationEnv env) {
-        for (Entry<String, Object> entry : myProps.entrySet()) {
-            env.add(entry.getKey(), entry.getValue());
-        }
-    }
     
     // allow to redefine "entry" point
     private ImperativeOperation myEntryPoint;
     private Module myRootModule;
     private InheritanceTree myInheritanceTree;
     private EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> myEvalEnv;
-
-    private final Map<String, Object> myProps;
 
 }
