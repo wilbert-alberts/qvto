@@ -79,7 +79,9 @@ public class ComplexClassifierProvider extends AbstractClassifierProvider implem
 		return matches(classifier.getName(), classifierQuery, true);
 	}
 	
-	protected boolean matches(final String string, final String pattern, final boolean prefix) {
+	protected boolean matches(final String str, final String pattern, final boolean prefix) {
+		String string = (str == null) ? "" : str; //$NON-NLS-1$
+		
 		List<String> parts = new ArrayList<String>(Arrays.asList(pattern.split("\\*"))); //$NON-NLS-1$
 
 		if (pattern.startsWith("*")) { //$NON-NLS-1$
