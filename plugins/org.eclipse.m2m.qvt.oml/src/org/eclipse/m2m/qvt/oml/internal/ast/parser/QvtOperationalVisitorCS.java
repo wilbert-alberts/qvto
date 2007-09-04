@@ -601,13 +601,14 @@ public class QvtOperationalVisitorCS
 			// imp.setEndPosition(libImport.getEndOffset());
 			imp.setImportedModule(importedModule);
 			module.getModuleImport().add(imp);
-			
-			// define default instances access variable
-			/*Variable<EClassifier, EParameter> importedModulethisVar = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();
-			importedModulethisVar.setName(importedModule.getName() + "." + QvtOperationalEnv.THIS);
-			importedModulethisVar.setType(module);
-	        env.addElement(importedModulethisVar.getName(), importedModulethisVar, false);
-	        */
+
+			if(myCompilerOptions.isGenerateCompletionData()) {
+				for (ImportCS nextImport : parsedModuleCS.getModuleCS().getImports()) {
+					if(nextImport.getPathNameCS() != null && parsedModuleCS.getParsedImport(nextImport.getPathNameCS()) == importedModuleCS) {
+						ASTBindingHelper.createCST2ASTBinding(nextImport, imp);
+					}					
+				}
+			}
 		}
 
 		for (RenameCS renameCS : moduleCS.getRenamings()) {
