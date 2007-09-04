@@ -111,7 +111,7 @@ mapping enumerationAttribute2column(in prop: simpleuml::Property) : rdb::TableCo
 }
 
 query relationshipAttributes2columns(in dt: simpleuml::DataType) : OrderedSet(rdb::TableColumn) {
-	dt.attributes->collect(a | relationshipAttribute2foreignKey(a))->
+	dt.attributes->collect(a | relationshipAttribute2foreignKey(a))->reject(a | a.oclIsUndefined())->
 		collect(includedColumns)->asOrderedSet();
 }
 
