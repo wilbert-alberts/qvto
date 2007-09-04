@@ -108,10 +108,6 @@ public abstract class QvtModule {
 	    }
 	    
 	    if (transfParams.isEmpty() && mainMethod != null) {
-	    	//if (mainMethod.getContext().getEType() != QvtOperationalUtil.getOclVoid()) {
-	    	if (mainMethod.getContext().getEType() != module) {
-	    		transfParams.add(createTransfParam((MappingParameter) mainMethod.getContext()));
-	    	}
 	    	for (EParameter mainParam : mainMethod.getEParameters()) {
 	    		transfParams.add(createTransfParam((MappingParameter) mainParam));
 	    	}
@@ -216,9 +212,6 @@ public abstract class QvtModule {
 	    		if (((MappingParameter) mainParam).getExtent() == modelParam) {
 	    			return (MappingParameter) mainParam;
 	    		}
-	    	}
-	    	if (((MappingParameter) mainMethod.getContext()).getExtent() == modelParam) {
-	    		return (MappingParameter) mainMethod.getContext();
 	    	}
 	    }
 	    return null;
