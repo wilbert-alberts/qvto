@@ -112,10 +112,10 @@ public class SelectQvtProjectTransformationPage extends SelectTransformationPage
         try {
             IProject project = resource.getProject();
             if (myInterpretedModeCheckbox.getSelection()) {
-                if (!ProjectUtil.isBuilt(project, QvtCompiler.PROBLEM_MARKER)) {
-                    setErrorMessage(NLS.bind(Messages.ApplyTransformationWizard_QVTErrors, resource.getProject().getName()));
-                    return false;
-                }
+//                if (!ProjectUtil.isBuilt(project, QvtCompiler.PROBLEM_MARKER)) {
+//                    setErrorMessage(NLS.bind(Messages.ApplyTransformationWizard_QVTErrors, resource.getProject().getName()));
+//                    return false;
+//                }
             } else {
                 if (!ProjectUtil.isBuilt(project, QvtCompiler.PROBLEM_MARKER)) {
                     setErrorMessage(NLS.bind(Messages.ApplyTransformationWizard_ProjectNotBuilt, resource.getProject().getName()));
