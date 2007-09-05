@@ -114,7 +114,6 @@ import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.PropertyCallExp;
 import org.eclipse.ocl.expressions.TypeExp;
 import org.eclipse.ocl.expressions.Variable;
-import org.eclipse.ocl.expressions.VariableExp;
 import org.eclipse.ocl.internal.cst.CSTFactory;
 import org.eclipse.ocl.internal.cst.CSTNode;
 import org.eclipse.ocl.internal.cst.CallExpCS;
@@ -308,9 +307,7 @@ public class QvtOperationalVisitorCS
 
         // AST binding    	
         if(myCompilerOptions.isGenerateCompletionData()) {    	
-	    	if(result instanceof VariableExp || result instanceof PropertyCallExp) { 
-	    		ASTBindingHelper.createCST2ASTBinding(simpleNameCS, result);
-	    	}
+            ASTBindingHelper.createCST2ASTBinding(simpleNameCS, result);
         }
     	//
     	
@@ -326,9 +323,7 @@ public class QvtOperationalVisitorCS
 
         // AST binding      
         if(myCompilerOptions.isGenerateCompletionData()) {      
-            if(result instanceof VariableExp || result instanceof PropertyCallExp) { 
-                ASTBindingHelper.createCST2ASTBinding(variableExpCS, result);
-            }
+            ASTBindingHelper.createCST2ASTBinding(variableExpCS, result);
         }
         //
         return result;

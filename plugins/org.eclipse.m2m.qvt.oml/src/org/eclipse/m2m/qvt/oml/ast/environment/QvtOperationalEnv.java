@@ -111,6 +111,10 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		return ePackageRegistry;
 	}
 	
+    public Map<String, ModelType> getModelTypeRegistry() {
+        return myModelTypeRegistry;
+    }
+
 	public MetamodelRegistry getMetamodelRegistry() {
 		if(getParent() instanceof QvtOperationalEnv) {
 			return ((QvtOperationalEnv)getParent()).getMetamodelRegistry();
@@ -492,29 +496,49 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	
 	@Override
 	public EPackage lookupPackage(List<String> path) {
-		return super.lookupPackage(path);
+        if (path.size() > 1) {
+            // Qualified type 
+            // It is possible to either qualify the type name with a model type or a package name
+
+            if (myModelTypeRegistry.containsKey(path.get(0))) {
+                EPackage lookupPackage = doLookupModeltypePackage(
+                        myModelTypeRegistry.get(path.get(0)), path.subList(1, path.size()));
+                if (lookupPackage != null) {
+                    return lookupPackage;
+                }
+            }
+        }
+
+        return super.lookupPackage(path);
 	}
 
-
-	private EClassifier doLookupModeltypeClassifier(ModelType modelType, List<String> path) {
-		EPackage oldContext = super.getContextPackage();
-		EClassifier lookupClassifier = null;
-		List<EPackage> metamodels = ModelTypeMetamodelsAdapter.getMetamodels(modelType);
-		for (EPackage pkg : metamodels) {
-			super.setContextPackage(pkg);
-			lookupClassifier = super.lookupClassifier(path);
-			if (EcoreUtil.getRootContainer(lookupClassifier) != pkg) {
-				lookupClassifier = null;
-			}
-			if (lookupClassifier != null) {
-				break;
-			}
-		}
-		super.setContextPackage(oldContext);
-		
-		return lookupClassifier;
+    private EPackage doLookupModeltypePackage(ModelType modelType, List<String> path) {
+        return lookupPackageableElement(modelType, path, LOOKUP_PACKAGE_DELEGATE);
+    }
+    
+    private EClassifier doLookupModeltypeClassifier(ModelType modelType, List<String> path) {
+		return lookupPackageableElement(modelType, path, LOOKUP_CLASSIFIER_DELEGATE);
 	}
 	
+    private <T extends EObject> T lookupPackageableElement(ModelType modelType, List<String> path, LookupPackageableElementDelegate<T> lookupPackageableElementDelegate) {
+        EPackage oldContext = super.getContextPackage();
+        T result = null;
+        List<EPackage> metamodels = ModelTypeMetamodelsAdapter.getMetamodels(modelType);
+        for (EPackage pkg : metamodels) {
+            super.setContextPackage(pkg);
+            result = lookupPackageableElementDelegate.lookupPackageableElement(path);
+            if (EcoreUtil.getRootContainer(result) != pkg) {
+                result = null;
+            }
+            if (result != null) {
+                break;
+            }
+        }
+        super.setContextPackage(oldContext);
+        
+        return result;
+    }
+    
 	public EOperation defineImperativeOperation(ImperativeOperation operation, boolean isMappingOperation,
 			boolean isCheckDuplicates) {
 		EClassifier contextType = operation.getContext().getEType();
@@ -692,5 +716,20 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
     private final Map<ResolveInExp, MappingsMapKey> myResolveInExps = new HashMap<ResolveInExp, MappingsMapKey>();
 
     private static final QvtOperationalEnvFactory myFactory = new QvtOperationalEnvFactory();
+    
+    private interface LookupPackageableElementDelegate<T> {
+        public T lookupPackageableElement(List<String> names);
+    };
 
+    private final LookupPackageableElementDelegate<EClassifier> LOOKUP_CLASSIFIER_DELEGATE = new LookupPackageableElementDelegate<EClassifier>() {
+        public EClassifier lookupPackageableElement(List<String> names) {
+            return QvtOperationalEnv.super.lookupClassifier(names);
+        }
+    };
+
+    private final LookupPackageableElementDelegate<EPackage> LOOKUP_PACKAGE_DELEGATE = new LookupPackageableElementDelegate<EPackage>() {
+        public EPackage lookupPackageableElement(List<String> names) {
+            return QvtOperationalEnv.super.lookupPackage(names);
+        }
+    };
 }
