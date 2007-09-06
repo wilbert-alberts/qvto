@@ -216,7 +216,14 @@ public class NewQvtModuleCreationPage extends WizardPage implements Listener {
     		}
     	}
     	
-        IQvtElement initialContext = findInitialQvtProjectScopeContext();
+        IQvtElement initialContext = null;
+        try {
+        	initialContext = findInitialQvtProjectScopeContext();
+        } catch (Exception e) {
+        	// catch in order no to prevent to continue if initial context fails
+        	QVTUIPlugin.log(e);
+		}
+        
         if(initialContext != null) {
 		    String initialNamespace = computeInitialNamespace(initialContext);
 		    if(initialNamespace != null) {
@@ -459,19 +466,7 @@ public class NewQvtModuleCreationPage extends WizardPage implements Listener {
     	
     	IQvtElement context = null;
     	IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-    	
-    	IEditorPart editorPart = activePage.getActiveEditor();
-    	if(editorPart != null && editorPart.getEditorInput() != null) {
-    		IResource resource = (IResource)editorPart.getEditorInput().getAdapter(IResource.class);
-    		if(resource != null && QvtProjectUtil.isQvtProject(resource.getProject())) {
-    			context = computeInitialQvtElement(resource);
-    		}
-    	}
-    	 
-    	if(context != null) {
-    		return context;
-    	}
-    	
+    	    	
     	if(activePage.getActivePart() instanceof IViewPart) {
     		IWorkbenchPartSite site = activePage.getActivePart().getSite();
     		if(site.getSelectionProvider() != null) {
@@ -483,8 +478,9 @@ public class NewQvtModuleCreationPage extends WizardPage implements Listener {
 						if(nextElement instanceof IAdaptable) {
 							IResource resource = (IResource)((IAdaptable)nextElement).getAdapter(IResource.class);
 							if(resource != null && QvtProjectUtil.isQvtProject(resource.getProject())) {
-								if((context = computeInitialQvtElement(resource)) != null) {
-									break;
+								context = computeInitialQvtElement(resource);
+								if(context != null) {
+									return context;
 								}
 							}
 						}
@@ -493,6 +489,14 @@ public class NewQvtModuleCreationPage extends WizardPage implements Listener {
     		}
     	}
     	
+    	IEditorPart editorPart = activePage.getActiveEditor();
+    	if(editorPart != null && editorPart.getEditorInput() != null) {
+    		IResource resource = (IResource)editorPart.getEditorInput().getAdapter(IResource.class);
+    		if(resource != null && QvtProjectUtil.isQvtProject(resource.getProject())) {
+    			context = computeInitialQvtElement(resource);
+    		}
+    	}
+    	 
     	if(context == null) {
 	    	// no contextual selection has been deduced, try selecting the first QVT project in workspace
 	    	for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
