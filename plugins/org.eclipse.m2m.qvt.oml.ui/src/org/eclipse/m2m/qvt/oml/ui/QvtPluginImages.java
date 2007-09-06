@@ -32,6 +32,9 @@ public class QvtPluginImages extends PluginImages {
     public static final String TEMPLATE = "cat-template"; //$NON-NLS-1$
     public static final String MAPPING = "qvt-mapping"; //$NON-NLS-1$
     public static final String QUERY = "qvt-query"; //$NON-NLS-1$
+    public static final String PARAM_IN = "transf-param-in"; //$NON-NLS-1$
+    public static final String PARAM_INOUT = "transf-param-inout"; //$NON-NLS-1$
+    public static final String PARAM_OUT = "transf-param-out"; //$NON-NLS-1$
     
     public static final String NEW_PROJECT_WIZARD = "new_project_wizard";     //$NON-NLS-1$
     public static final String CU_NAMESPACE = "cu_namespace";     //$NON-NLS-1$    
@@ -56,6 +59,9 @@ public class QvtPluginImages extends PluginImages {
         declareRegistryImage(TEMPLATE, "icons/template_obj.gif"); //$NON-NLS-1$
         declareRegistryImage(MAPPING, "icons/qvt-mapping.gif"); //$NON-NLS-1$
         declareRegistryImage(QUERY, "icons/qvt-query.gif"); //$NON-NLS-1$
+        declareRegistryImage(PARAM_IN, "icons/transf_param_in.gif"); //$NON-NLS-1$
+        declareRegistryImage(PARAM_INOUT, "icons/transf_param_inout.gif"); //$NON-NLS-1$
+        declareRegistryImage(PARAM_OUT, "icons/transf_param_out.gif"); //$NON-NLS-1$
         
         declareRegistryImage(NEW_PROJECT_WIZARD, "icons/pr-MDA_wizard.gif"); //$NON-NLS-1$        
         declareRegistryImage(CU_NAMESPACE, "icons/cu_namespace.gif"); //$NON-NLS-1$        
