@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.m2m.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalFileEnv;
@@ -114,6 +115,7 @@ import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.PropertyCallExp;
 import org.eclipse.ocl.expressions.TypeExp;
 import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.expressions.VariableExp;
 import org.eclipse.ocl.internal.cst.CSTFactory;
 import org.eclipse.ocl.internal.cst.CSTNode;
 import org.eclipse.ocl.internal.cst.CallExpCS;
@@ -617,8 +619,9 @@ public class QvtOperationalVisitorCS
 
 		for (ModulePropertyCS propCS : moduleCS.getProperties()) {
 			if (moduleCS instanceof LibraryCS && propCS instanceof LocalPropertyCS) {
-				env.reportError(ValidationMessages.Local_properties_are_not_allowed_in_libraries, propCS);
-				continue;
+				// We should support Library module properties
+				//env.reportError(ValidationMessages.Local_properties_are_not_allowed_in_libraries, propCS);
+				//continue;
 			}
 			Property prop = visitModulePropertyCS(propCS, env);
 			if (prop != null) {
@@ -626,28 +629,31 @@ public class QvtOperationalVisitorCS
 			}
 		}
 
-		HashMap<MappingMethodCS, EOperation> methodMap =  new HashMap<MappingMethodCS, EOperation>();
+		HashMap<MappingMethodCS, ImperativeOperation> methodMap =  new HashMap<MappingMethodCS, ImperativeOperation>();
 		
-		// define local and imported operations as they are required to analyze rules' contents
-		env.setErrorRecordFlag(false);
+		// declare module operations as they are required to analyze rules' contents
+		//env.setErrorRecordFlag(false);
 		for (MappingMethodCS methodCS : moduleCS.getMethods()) {
-			ImperativeOperation operation = ExpressionsFactory.eINSTANCE.createImperativeOperation();
+			boolean isMapping = methodCS instanceof MappingRuleCS;
+			ImperativeOperation operation = isMapping ? ExpressionsFactory.eINSTANCE.createMappingOperation() : ExpressionsFactory.eINSTANCE.createHelper();
 			if (visitMappingDeclarationCS(methodCS.getMappingDeclarationCS(), env, operation)) {
-				env.setErrorRecordFlag(true);
+				//env.setErrorRecordFlag(true);
 				EOperation envOperation = env.defineImperativeOperation(operation, methodCS instanceof MappingRuleCS, true);
 				if(envOperation != null) {
-					methodMap.put(methodCS, envOperation);
+					methodMap.put(methodCS, (ImperativeOperation)envOperation);
+					if(operation.getContext().getEType() != module) {
+						QvtOperationalParserUtil.addOwnedOperations(module, operation);
+					}
 				}
-				env.setErrorRecordFlag(false);				
+				//env.setErrorRecordFlag(false);				
 			}
 		}
-		env.setErrorRecordFlag(true);
+		//env.setErrorRecordFlag(true);
 		
-		//QvtOperationalParserUtil.defineImportedOperations(module, env); // no needed as operation can be resolved in imported modules
-
 		for (MappingMethodCS methodCS : moduleCS.getMethods()) {
-			ImperativeOperation operation = visitMappingMethodCS(methodCS, env);
-			if (operation != null) {
+			ImperativeOperation declaredOperation = methodMap.get(methodCS);
+			if (declaredOperation != null) {
+				ImperativeOperation operation = visitMappingMethodCS(methodCS, env, declaredOperation);				
 				//module.getEOperations().add(operation); analyze first, add all together
 				
 				EOperation envDefinedOper = methodMap.get(methodCS);										
@@ -671,14 +677,15 @@ public class QvtOperationalVisitorCS
 			}
 		}
 		
-		env.getQVTTypeResolver().close();
-		for (EOperation nextImperOperation: methodMap.values()) {
-			module.getEOperations().add(nextImperOperation);
+		for (ImperativeOperation nextImperOperation: methodMap.values()) {
+			if(nextImperOperation.getContext().getEType() == module) {
+				module.getEOperations().add(nextImperOperation);
+			}
 			checkMainMappingConformance(env, (ImperativeOperation)nextImperOperation);
 		}
 		
 		for (ModuleImport moduleImport : module.getModuleImport()) {
-			for (EOperation operation : moduleImport.getImportedModule().getEOperations()) {
+			for (EOperation operation : QvtOperationalParserUtil.getOwnedOperations(moduleImport.getImportedModule())) {
 				if(operation instanceof MappingOperation) {
 					MappingOperation mappingOperation = (MappingOperation) operation;
 					env.registerMappingOperation(mappingOperation);
@@ -986,20 +993,16 @@ public class QvtOperationalVisitorCS
 		return statements;
 	}
 
-	private ImperativeOperation visitMappingMethodCS(MappingMethodCS methodCS, QvtOperationalEnv env)
+	private ImperativeOperation visitMappingMethodCS(MappingMethodCS methodCS, QvtOperationalEnv env, ImperativeOperation declaredOperation)
 			throws SemanticException {
 		if (methodCS instanceof MappingRuleCS) {
-			return visitMappingRuleCS((MappingRuleCS) methodCS, env);
+			return visitMappingRuleCS((MappingRuleCS) methodCS, env, (MappingOperation)declaredOperation);
 		}
-		return visitMappingQueryCS((MappingQueryCS) methodCS, env);
+		return visitMappingQueryCS((MappingQueryCS) methodCS, env, (Helper)declaredOperation);
 	}
 
-	private ImperativeOperation visitMappingRuleCS(MappingRuleCS methodCS, QvtOperationalEnv env)
+	private ImperativeOperation visitMappingRuleCS(MappingRuleCS methodCS, QvtOperationalEnv env, MappingOperation operation)
 			throws SemanticException {
-		MappingOperation operation = ExpressionsFactory.eINSTANCE.createMappingOperation();
-		if (!visitMappingDeclarationCS(methodCS.getMappingDeclarationCS(), env, operation)) {
-			return null;
-		}
 		env.registerMappingOperation(operation);
 		operation.setEndPosition(methodCS.getEndOffset());
 
@@ -1091,12 +1094,8 @@ public class QvtOperationalVisitorCS
 		return operation;
 	}
 
-	private ImperativeOperation visitMappingQueryCS(MappingQueryCS methodCS, QvtOperationalEnv env)
+	private ImperativeOperation visitMappingQueryCS(MappingQueryCS methodCS, QvtOperationalEnv env, Helper helper)
 			throws SemanticException {
-		Helper helper = ExpressionsFactory.eINSTANCE.createHelper();
-		if (!visitMappingDeclarationCS(methodCS.getMappingDeclarationCS(), env, helper)) {
-			return null;
-		}
 		helper.setEndPosition(methodCS.getEndOffset());
 
 		if (helper.getContext().getKind() != DirectionKind.IN) {
@@ -1676,7 +1675,7 @@ public class QvtOperationalVisitorCS
                 }
                 
                 EClassifier context = (EClassifier) node;
-                Module baseModule = QvtOperationalParserUtil.getOutermostDefiningModule((Module) operation.eContainer(), op, context, env);
+                Module baseModule = QvtOperationalParserUtil.getOutermostDefiningModule(QvtOperationalParserUtil.getOwningModule(operation), op, context, env);
                 if (baseModule == null) {
                     return false;
                 }
@@ -1706,7 +1705,7 @@ public class QvtOperationalVisitorCS
 	
 	private void checkMainMappingConformance(QvtOperationalEnv env, ImperativeOperation operation) {
 		if (!QvtOperationalUtil.MAIN_METHOD_NAME.equals(operation.getName())
-				|| ((Module) operation.eContainer()).getModelParameter().isEmpty()) {
+				|| ((Module) env.getModuleContextType()).getModelParameter().isEmpty()) {
 			return;
 		}
 

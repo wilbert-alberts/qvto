@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalFileEnv;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalTypesUtil;
@@ -70,6 +71,10 @@ import org.eclipse.osgi.util.NLS;
 public class QvtOperationalParserUtil {
 	
 	private static final String NAMESPACE_SEPARATOR = "."; //$NON-NLS-1$
+	
+	private static final String QVT_NAMESPACE_URI = "http://www.eclipse.org/m2m/1.0.0/QVT"; //$NON-NLS-1$
+	private static final String OPERATION_OWNING_MODULE_URI = QVT_NAMESPACE_URI + "/module"; //$NON-NLS-1$
+	private static final String MODULE_OWNED_OPERATION_URI =	QVT_NAMESPACE_URI + "/operation"; //$NON-NLS-1$;	
 
 	private QvtOperationalParserUtil() {
 	}
@@ -120,6 +125,61 @@ public class QvtOperationalParserUtil {
         return metamodels;
 	}
 
+	public static void setOwningModule(ImperativeOperation operation, Module module) {
+		EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
+		annotation.setSource(OPERATION_OWNING_MODULE_URI);
+		annotation.getReferences().add(module);
+	
+		operation.getEAnnotations().add(annotation);
+	}
+	
+	public static Module getOwningModule(ImperativeOperation operation) {
+		if(operation.getEContainingClass() instanceof Module) {
+			return (Module) operation.getEContainingClass();
+		}
+		EAnnotation annotation = operation.getEAnnotation(OPERATION_OWNING_MODULE_URI);		
+		if(annotation != null) {
+			for (EObject referredObj : annotation.getReferences()) {
+				if(referredObj instanceof Module) {
+					return (Module)referredObj;
+				}
+			}
+		}
+		return null; 
+	}
+	
+	
+	public static List<EOperation> getOwnedOperations(Module module) {
+		EAnnotation annotation = module.getEAnnotation(MODULE_OWNED_OPERATION_URI);
+		if(annotation == null) {
+			return module.getEOperations();
+		}
+		
+		List<EOperation> result = new ArrayList<EOperation>(annotation.getReferences().size());
+		result.addAll(module.getEOperations());
+		
+		for (EObject referredObj : annotation.getReferences()) {
+			if(referredObj instanceof EOperation) {
+				result.add((EOperation) referredObj);
+			}
+		}
+		
+		return result;
+	}
+	
+	
+	public static void addOwnedOperations(Module module, ImperativeOperation operation) {
+		EAnnotation annotation = module.getEAnnotation(MODULE_OWNED_OPERATION_URI);
+		if(annotation == null) {
+			annotation = EcoreFactory.eINSTANCE.createEAnnotation();
+			annotation.setSource(MODULE_OWNED_OPERATION_URI);
+			module.getEAnnotations().add(annotation);
+		}
+		
+		annotation.getReferences().add(operation);
+		setOwningModule(operation, module);
+	}
+	
 
 	public static void collectAllImports(Module module, Set<Module> result) {
 		for (ModuleImport imp : module.getModuleImport()) {
@@ -498,7 +558,10 @@ public class QvtOperationalParserUtil {
 
 	public static ImperativeOperation findMappingMethod(final Module module, final EOperation signature,
 			final EClassifier context, final QvtOperationalEnv env) {
-		for (EOperation op : module.getEOperations()) {
+		for (EOperation op : QvtOperationalParserUtil.getOwnedOperations(module)) {
+			if(op instanceof ImperativeOperation == false) {
+				continue;
+			}
 			ImperativeOperation cur = (ImperativeOperation) op;
 			if (isOperationEquals(cur, signature, context, env)) {
 				return cur;

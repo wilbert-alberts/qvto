@@ -307,9 +307,13 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
                 method = getVirtualMethod(referredOperation, source, args);
             } else {
             	EClassifier context = getOperationalEnv().getUMLReflection().getOwningClassifier(referredOperation);
-                Module owningModule = QvtOperationalParserUtil.getInnermostDefiningModule(myRootModule,
+				if(referredOperation instanceof ImperativeOperation) {
+					method = (ImperativeOperation)referredOperation;
+				} else {
+                	Module owningModule = QvtOperationalParserUtil.getInnermostDefiningModule(myRootModule,
                         referredOperation, context, getOperationalEnv());
-                method = QvtOperationalParserUtil.findMappingMethod(owningModule, referredOperation, context, getOperationalEnv());
+                	method = QvtOperationalParserUtil.findMappingMethod(owningModule, referredOperation, context, getOperationalEnv());
+                }
             }
 
             return executeImperativeOperation(method, source, args).myResult;
@@ -659,7 +663,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         EMappingOperation eMappingOperation = TraceFactory.eINSTANCE.createEMappingOperation();
         traceRecord.setMappingOperation(eMappingOperation);
         eMappingOperation.setName(mappingOperation.getName());
-        Module module = (Module) mappingOperation.eContainer();
+        Module module = QvtOperationalParserUtil.getOwningModule(mappingOperation);
         eMappingOperation.setPackage(module.getNsPrefix());
         eMappingOperation.setModule(module.getName());
         eMappingOperation.setRuntimeMappingOperation(mappingOperation);

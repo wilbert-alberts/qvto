@@ -550,7 +550,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		constraint.setStereotype(isMappingOperation ?
 				QvtOperationalEnv.MAPPING_OPERATION_STEREOTYPE : QvtOperationalEnv.IMPERATIVE_OPERATION_STEREOTYPE);
 
-		EOperation newOperation = createOperation(operation.getName(), operation.getEType(), operation.getEParameters(), constraint);
+		EOperation newOperation = operation;
 		EOperation addOperation = addOperation(contextType, newOperation, isCheckDuplicates);
 		
 		if (isCheckDuplicates) {
