@@ -16,6 +16,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.ui.ISharedImages;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -147,6 +149,12 @@ public class QvtOutlineLabelProvider implements ILabelProvider {
     		listParam.add(getParameterDeclarationAsString(param));
     	}
     	String context = getTypeAsString(decl.getContextType());
+    	if (decl.getContextType() == null) {
+        	EObject rootContainer = EcoreUtil.getRootContainer(decl);
+        	if (rootContainer instanceof MappingModuleCS) {
+        		context = getMappingModuleLabel((MappingModuleCS) rootContainer);
+        	}
+    	}
 		return getMappingDeclarationAsString(decl.getSimpleNameCS().getValue(), context, listParam);
     }
 
