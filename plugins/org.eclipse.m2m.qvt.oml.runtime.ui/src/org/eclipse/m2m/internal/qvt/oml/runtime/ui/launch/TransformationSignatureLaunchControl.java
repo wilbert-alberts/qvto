@@ -133,6 +133,9 @@ public class TransformationSignatureLaunchControl extends ScrolledComposite {
 	}
 
 	public void performApply(ILaunchConfigurationWorkingCopy configuration) {
+		if (!isTransformationValid()) {
+			return;
+		}
     	configuration.setAttribute(IQvtLaunchConstants.ELEM_COUNT, myParamGroups.size());
     	int i = 0;
 		for (Map.Entry<ModelParameterInfo, IUriGroup> entry : myParamGroups.entrySet()) {
@@ -141,6 +144,17 @@ public class TransformationSignatureLaunchControl extends ScrolledComposite {
     	}
 	}
 	
+	private boolean isTransformationValid() {
+		if (myTransformation == null) {
+			return false;
+		}
+		try {
+			return myTransformation.getModuleName().length() > 0;
+		} catch (MdaException e) {
+			return false;
+		}
+	}
+
 	public String getTraceName() {
 		for (Map.Entry<ModelParameterInfo, IUriGroup> entry : myParamGroups.entrySet()) {
 			if (entry.getKey().isInOutParameter() || entry.getKey().isOutParameter()) {
