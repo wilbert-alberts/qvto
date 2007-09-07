@@ -471,7 +471,7 @@ public class NewQvtModuleCreationPage extends WizardPage implements Listener {
     		IWorkbenchPartSite site = activePage.getActivePart().getSite();
     		if(site.getSelectionProvider() != null) {
     			ISelection selection = site.getSelectionProvider().getSelection();
-    			if(!selection.isEmpty() && selection instanceof IStructuredSelection) {
+    			if(selection instanceof IStructuredSelection && !selection.isEmpty()) {
     				IStructuredSelection structuredSelection = (IStructuredSelection) selection;
     				for (Iterator<?> it = structuredSelection.iterator(); it.hasNext();) {
 						Object nextElement = it.next();
