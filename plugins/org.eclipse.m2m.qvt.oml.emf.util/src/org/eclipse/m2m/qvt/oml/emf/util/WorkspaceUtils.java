@@ -20,6 +20,7 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.util.URI;
 
 /** @author pkobiakov */
 public class WorkspaceUtils {
@@ -40,6 +41,13 @@ public class WorkspaceUtils {
         catch(Exception e) {
             return null;
         }
+    }
+    
+    public static IFile getWorkspaceFile(URI uri) {
+		String uriPath = uri.isFile() ? uri.toFileString() :
+			(uri.isPlatform() ? uri.toPlatformString(true) :
+					uri.toString());
+		return getWorkspaceFile(uriPath);
     }
     
     public static IContainer getIContainer(String folderUnderWorkspace) {
