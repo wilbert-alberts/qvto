@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.9 2007/08/31 13:37:34 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.10 2007/09/07 13:38:10 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.9 2007/08/31 13:37:34 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.10 2007/09/07 13:38:10 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -5571,19 +5571,109 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 				break;
  
 			//
-			// Rule 480:  operationCallExpCS ::= oclAsType isMarkedPreCS ( typeCS )
+			// Rule 480:  ifExpCS ::= if oclExpressionCS then oclExpressionCS else oclExpressionCS qvtErrorToken
 			//
-			case 480:
- 
+			case 480: {
+				
+				CSTNode result = createIfExpCS(
+						(OCLExpressionCS)dtParser.getSym(2),
+						(OCLExpressionCS)dtParser.getSym(4),
+						(OCLExpressionCS)dtParser.getSym(6)
+					);
+				setOffsets(result, getIToken(dtParser.getToken(1)), (CSTNode)dtParser.getSym(6));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
 			//
-			// Rule 481:  operationCallExpCS ::= oclIsKindOf isMarkedPreCS ( typeCS )
+			// Rule 481:  ifExpCS ::= if oclExpressionCS then oclExpressionCS else qvtErrorToken
 			//
-			case 481:
- 
+			case 481: {
+				
+				CSTNode result = createIfExpCS(
+						(OCLExpressionCS)dtParser.getSym(2),
+						(OCLExpressionCS)dtParser.getSym(4),
+						null
+					);
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(5)));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
 			//
-			// Rule 482:  operationCallExpCS ::= oclIsTypeOf isMarkedPreCS ( typeCS )
+			// Rule 482:  ifExpCS ::= if oclExpressionCS then oclExpressionCS qvtErrorToken
 			//
 			case 482: {
+				
+				CSTNode result = createIfExpCS(
+						(OCLExpressionCS)dtParser.getSym(2),
+						(OCLExpressionCS)dtParser.getSym(4),
+						null
+					);
+				setOffsets(result, getIToken(dtParser.getToken(1)), (CSTNode)dtParser.getSym(4));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 483:  ifExpCS ::= if oclExpressionCS then qvtErrorToken
+			//
+			case 483: {
+				
+				CSTNode result = createIfExpCS(
+						(OCLExpressionCS)dtParser.getSym(2),
+						null,
+						null
+					);
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(3)));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 484:  ifExpCS ::= if oclExpressionCS qvtErrorToken
+			//
+			case 484: {
+				
+				CSTNode result = createIfExpCS(
+						(OCLExpressionCS)dtParser.getSym(2),
+						null,
+						null
+					);
+				setOffsets(result, getIToken(dtParser.getToken(1)), (CSTNode)dtParser.getSym(2));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 485:  ifExpCS ::= if qvtErrorToken
+			//
+			case 485: {
+				
+				CSTNode result = createIfExpCS(
+						null,
+						null,
+						null
+					);
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(1)));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 486:  operationCallExpCS ::= oclAsType isMarkedPreCS ( typeCS )
+			//
+			case 486:
+ 
+			//
+			// Rule 487:  operationCallExpCS ::= oclIsKindOf isMarkedPreCS ( typeCS )
+			//
+			case 487:
+ 
+			//
+			// Rule 488:  operationCallExpCS ::= oclIsTypeOf isMarkedPreCS ( typeCS )
+			//
+			case 488: {
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 							SimpleTypeEnum.IDENTIFIER_LITERAL,

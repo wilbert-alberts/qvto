@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.9 2007/08/31 13:37:34 aigdalov Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.10 2007/09/07 13:38:11 aigdalov Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -351,7 +351,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.9 2007/08/31 13:37:34 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.10 2007/09/07 13:38:11 aigdalov Exp $
  */
 	./
 $End
@@ -2725,6 +2725,80 @@ $Rules
 		/.$EmptyListAction./	
 	argumentsCS -> argumentsCS ',' qvtErrorToken
 
+	ifExpCS ::= if oclExpressionCS then oclExpressionCS else oclExpressionCS qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createIfExpCS(
+							(OCLExpressionCS)$getSym(2),
+							(OCLExpressionCS)$getSym(4),
+							(OCLExpressionCS)$getSym(6)
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(6));
+					$setResult(result);
+		  $EndJava
+		./
+
+	ifExpCS ::= if oclExpressionCS then oclExpressionCS else qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createIfExpCS(
+							(OCLExpressionCS)$getSym(2),
+							(OCLExpressionCS)$getSym(4),
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	ifExpCS ::= if oclExpressionCS then oclExpressionCS qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createIfExpCS(
+							(OCLExpressionCS)$getSym(2),
+							(OCLExpressionCS)$getSym(4),
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(4));
+					$setResult(result);
+		  $EndJava
+		./
+
+	ifExpCS ::= if oclExpressionCS then qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createIfExpCS(
+							(OCLExpressionCS)$getSym(2),
+							null,
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	ifExpCS ::= if oclExpressionCS qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createIfExpCS(
+							(OCLExpressionCS)$getSym(2),
+							null,
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(2));
+					$setResult(result);
+		  $EndJava
+		./
+
+
+	ifExpCS ::= if qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createIfExpCS(
+							null,
+							null,
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	
 	-- error in OCLLPGParser.g in definition of type-argued calls
 	operationCallExpCS ::= oclAsType isMarkedPreCS '(' typeCS ')'
 		/.$NewCase./
