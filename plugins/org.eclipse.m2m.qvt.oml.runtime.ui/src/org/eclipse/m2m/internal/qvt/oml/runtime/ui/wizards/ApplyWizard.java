@@ -165,7 +165,7 @@ public abstract class ApplyWizard extends PersistedValuesWizard {
     }
     
     private static ILaunchConfigurationWorkingCopy createLaunchConfiguration(ApplyTransformationData data) throws Exception {
-        ILaunchConfigurationWorkingCopy workingCopy = getLaunchConfigurationType().newInstance(null, MDAConstants.QVTO_LAUNCH_CONFIGURATION_NAME); 
+        ILaunchConfigurationWorkingCopy workingCopy = QvtLaunchUtil.getInMemoryLaunchConfigurationType().newInstance(null, MDAConstants.QVTO_LAUNCH_CONFIGURATION_NAME); 
         
         workingCopy.setAttribute(IDebugUIConstants.ATTR_LAUNCH_IN_BACKGROUND, false); 
         
@@ -183,15 +183,6 @@ public abstract class ApplyWizard extends PersistedValuesWizard {
 
         return workingCopy;
     }
-
-	private static ILaunchConfigurationType getLaunchConfigurationType() {
-		ILaunchManager manager = DebugPlugin.getDefault().getLaunchManager();
-        ILaunchConfigurationType type = manager.getLaunchConfigurationType(InMemoryQvtLaunchConfigurationDelegate.LAUNCH_CONFIGURATION_TYPE_ID);
-        if (type == null) {
-            throw new RuntimeException("No launch configuration for id " + InMemoryQvtLaunchConfigurationDelegate.LAUNCH_CONFIGURATION_TYPE_ID); //$NON-NLS-1$
-        }
-		return type;
-	}
 
 	private static Runnable createShowResultAction(final ApplyTransformationData data) {
 		if (!data.isOpenEditor()) {

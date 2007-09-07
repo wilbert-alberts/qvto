@@ -22,5 +22,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore.edit
 Export-Package: org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards,
  org.eclipse.m2m.qvt.oml.runtime.ui.trace.common,
- org.eclipse.m2m.internal.qvt.oml.runtime.ui
+ org.eclipse.m2m.internal.qvt.oml.runtime.ui,
+ org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch
 Eclipse-LazyStart: true
