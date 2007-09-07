@@ -23,6 +23,7 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.window.Window;
 import org.eclipse.m2m.internal.qvt.oml.common.CommonPlugin;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessage;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessageEx;
 import org.eclipse.m2m.qvt.oml.common.ui.IModelParameterInfo;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
@@ -243,11 +244,19 @@ public class TransformationControls {
             }
             
             case IStatus.WARNING: {
-                tab.setMessage(status.getMessage());
+            	if (tab instanceof ISetMessageEx) {
+                    ((ISetMessageEx) tab).setWarningMessage(status.getMessage());
+            	}
+            	else {
+                    tab.setMessage(status.getMessage());
+            	}
                 return true;
             }
             
             default: {
+            	if (tab instanceof ISetMessageEx) {
+                    tab.setMessage(status.getMessage());
+            	}
                 return true;
             }
         }
