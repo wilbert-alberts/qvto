@@ -13,13 +13,12 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards;
 
 import java.util.Map;
 
-import org.eclipse.debug.core.DebugPlugin;
-import org.eclipse.debug.core.ILaunchConfigurationType;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.debug.ui.DebugUITools;
 import org.eclipse.debug.ui.IDebugUIConstants;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.IWizardPage;
@@ -27,7 +26,6 @@ import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.InMemoryLaunchUtils;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.wizards.ITransformationSelector;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.wizards.PersistedValuesWizard;
-import org.eclipse.m2m.internal.qvt.oml.runtime.launch.InMemoryQvtLaunchConfigurationDelegate;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.QvtRuntimePluginImages;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.QvtRuntimeUIPlugin;
@@ -159,7 +157,7 @@ public abstract class ApplyWizard extends PersistedValuesWizard {
         } catch (Exception e) {
             String message = NLS.bind(Messages.ApplyWizard_FailedToApply, myData.getTransformation());
             Logger.getLogger().log(Logger.SEVERE, message, e); 
-            MessageDialog.openError(getShell(), Messages.ApplyWizard_Error, message);//$NON-NLS-1$
+            MessageDialog.openError(getShell(), Messages.ApplyWizard_Error, message);
         }
         return true;
     }
@@ -170,16 +168,18 @@ public abstract class ApplyWizard extends PersistedValuesWizard {
         workingCopy.setAttribute(IDebugUIConstants.ATTR_LAUNCH_IN_BACKGROUND, false); 
         
         InMemoryLaunchUtils.setAttribute(workingCopy, IQvtLaunchConstants.TRANSFOMATION_ID, data.getTransformation());
-        InMemoryLaunchUtils.setAttribute(workingCopy, IQvtLaunchConstants.SOURCE_MODEL, data.getSource());
-
-		QvtLaunchUtil.saveTargetUriData(workingCopy, data.getTargetData());
         
+		workingCopy.setAttribute(IQvtLaunchConstants.ELEM_COUNT, 2);
+   		QvtLaunchUtil.saveTargetUriData(workingCopy, new TargetUriData(EcoreUtil.getURI(data.getSource()).toPlatformString(true)), 1);
+   		QvtLaunchUtil.saveTargetUriData(workingCopy, data.getTargetData(), 2);
+		
 		String traceFileName = data.getTraceFilePath() == null ? null : data.getTraceFilePath().toOSString();
 		workingCopy.setAttribute(IQvtLaunchConstants.TRACE_FILE, traceFileName);
+		workingCopy.setAttribute(IQvtLaunchConstants.USE_TRACE_FILE, data.isUseTraceFile());
 		
 		InMemoryLaunchUtils.setAttribute(workingCopy, IQvtLaunchConstants.DONE_ACTION, createShowResultAction(data));
         
-        InMemoryLaunchUtils.setAttribute(workingCopy, IQvtLaunchConstants.CONFIGURATION_PROPERTIES, data.getConfiguration());
+		workingCopy.setAttribute(IQvtLaunchConstants.CONFIGURATION_PROPERTIES, data.getConfiguration());
 
         return workingCopy;
     }
