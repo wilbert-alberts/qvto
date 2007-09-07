@@ -167,7 +167,7 @@ public class EmfUtil {
 	
     @SuppressWarnings("unchecked")
 	public static void saveModel(EObject eObject, URI uri, Map opts) throws EmfException {    
-        ResourceSet resourceSet = new ResourceSetImpl();
+        ResourceSet resourceSet = getOutputResourceSet();
 
         Resource resource = resourceSet.createResource(uri);
         resource.getContents().add(eObject);
@@ -187,7 +187,7 @@ public class EmfUtil {
     }
     
 	public static void saveModel(Resource modelExtent, URI uri, Map opts) throws EmfException {    
-        ResourceSet resourceSet = new ResourceSetImpl();
+        ResourceSet resourceSet = getOutputResourceSet();
 
         Resource resource = resourceSet.createResource(uri);
         resource.getContents().addAll(modelExtent.getContents());
@@ -208,6 +208,10 @@ public class EmfUtil {
             throw new EmfException(NLS.bind(Messages.EmfUtil_1, uri), e);
         }
     }
+	
+	public static ResourceSet getOutputResourceSet() {
+		return new ResourceSetImpl();
+	}
     
     public static EPackage getRootPackage(EPackage pack) {
         EPackage parent = pack.getESuperPackage();
@@ -289,9 +293,12 @@ public class EmfUtil {
             return null;
         }
         
-        URI uri = URI.createURI(uriString);
-        if(uri == null) {
-            return null;
+        URI uri = null;
+        try {
+	        uri = URI.createURI(uriString);
+        }
+        catch (Exception e) {
+        	return null;
         }
         
         return uri;
