@@ -73,6 +73,10 @@ public abstract class PluginImages {
             desc = myMissingImageDescriptor;            
         }
         
+        declareImage(key, desc);
+    }
+    
+    public void declareImage(String key, ImageDescriptor desc) {
         myImageRegistry.put(key, desc);
         myImageDescriptors.put(key, desc);
     }
