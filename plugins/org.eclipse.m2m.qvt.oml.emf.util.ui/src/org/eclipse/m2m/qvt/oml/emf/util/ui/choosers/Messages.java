@@ -22,6 +22,7 @@ public class Messages {
 	public static String ResourceDestinationChooser_0;
 
 	public static String ResourceSaver_UriNotFile;
+	public static String ResourceSaver_UriCorrupted;
 
 	public static String EObjectResourceChooser_0;
 

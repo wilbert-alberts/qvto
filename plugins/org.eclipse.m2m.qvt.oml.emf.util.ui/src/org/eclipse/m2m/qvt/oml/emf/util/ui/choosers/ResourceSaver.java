@@ -11,6 +11,9 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.emf.util.ui.choosers;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +28,7 @@ import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.ui.EmfUtilUiPlugin;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IEditorDescriptor;
@@ -38,12 +42,39 @@ import org.eclipse.ui.ide.IGotoMarker;
 
 public class ResourceSaver implements IResultSaver{
     public IStatus canSave(EClassifier cls, URI destUri) {
-        String protocol = destUri.scheme();
-        if(!"file".equals(protocol) && !"platform".equals(protocol)) { //$NON-NLS-1$ //$NON-NLS-2$
-            return new Status(IStatus.ERROR, EmfUtilUiPlugin.ID, IStatus.ERROR, NLS.bind(Messages.ResourceSaver_UriNotFile, destUri, protocol), null);
-        }
-        
-        return new Status(IStatus.OK, EmfUtilUiPlugin.ID, IStatus.OK,"",null);//$NON-NLS-1$
+        ResourceSet outputRS = EmfUtil.getOutputResourceSet();
+		URI converted = outputRS.getURIConverter().normalize(destUri);
+		
+		IStatus okStatus = new Status(IStatus.OK, EmfUtilUiPlugin.ID, IStatus.OK, "", null);//$NON-NLS-1$
+		String scheme = converted.scheme();
+		if (converted.isFile()) {
+			if (!"file".equals(scheme) && !"platform".equals(scheme)) { //$NON-NLS-1$ //$NON-NLS-2$
+				return new Status(IStatus.ERROR, EmfUtilUiPlugin.ID, IStatus.ERROR, Messages.format(Messages.ResourceSaver_UriNotFile, new Object[] {destUri, scheme}), null);
+			}
+		}
+		else {
+			if ("archive".equals(scheme)) { //$NON-NLS-1$
+				return okStatus;  
+			}
+			else if (converted.isPlatformResource()) {
+				return okStatus;
+			}
+//			else if (isEFSScheme(scheme)) {
+//				return true;
+//			}
+			else {
+				try	{
+					URL url = new URL(destUri.toString());
+					url.openConnection();
+					return okStatus;
+				}
+				catch (MalformedURLException e) {
+				}
+				catch (IOException e) {
+				}
+			}
+		}
+    	return new Status(IStatus.ERROR, EmfUtilUiPlugin.ID, IStatus.ERROR, NLS.bind(Messages.ResourceSaver_UriCorrupted, destUri), null);
     }
     	
     public void clean(URI destUri) throws Exception {
@@ -105,16 +136,6 @@ public class ResourceSaver implements IResultSaver{
         return obj == null ? null : EcoreUtil.getURI(obj);
     }
     
-    private IMarker makeMarker(EObject obj) {
-        ShallowMarker marker = new ShallowMarker(EValidator.MARKER);
-        URI uri = EcoreUtil.getURI(obj);
-        Map<String, String> attributes = new HashMap<String, String>();
-        attributes.put(EValidator.URI_ATTRIBUTE, String.valueOf(uri));
-        marker.setAttributes(attributes);
-        
-        return marker;
-    }
-
     public static IFile getFile(EObject obj) {
         URI uri = EcoreUtil.getURI(obj);
         return org.eclipse.m2m.qvt.oml.emf.util.URIUtils.getFile(uri);
@@ -132,4 +153,15 @@ public class ResourceSaver implements IResultSaver{
          
         return org.eclipse.m2m.qvt.oml.emf.util.URIUtils.getFile(uri);
     }
+
+    private IMarker makeMarker(EObject obj) {
+        ShallowMarker marker = new ShallowMarker(EValidator.MARKER);
+        URI uri = EcoreUtil.getURI(obj);
+        Map<String, String> attributes = new HashMap<String, String>();
+        attributes.put(EValidator.URI_ATTRIBUTE, String.valueOf(uri));
+        marker.setAttributes(attributes);
+        
+        return marker;
+    }
+
 }
