@@ -169,6 +169,15 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 		return module.getModule().accept(evaluator);
 	}
 
+	@Override
+	public String toString() {
+		try {
+			return getModuleName();
+		}
+		catch (MdaException e) {
+		}
+		return super.toString();
+	}
     
     private final QvtModule myModule;
 }

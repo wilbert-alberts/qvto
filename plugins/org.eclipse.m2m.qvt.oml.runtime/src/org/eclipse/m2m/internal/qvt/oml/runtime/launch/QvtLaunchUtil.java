@@ -20,8 +20,11 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchConfiguration;
+import org.eclipse.debug.core.ILaunchConfigurationType;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
+import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
@@ -36,6 +39,15 @@ import org.eclipse.m2m.qvt.oml.library.QvtConfiguration;
 public class QvtLaunchUtil {
 	private QvtLaunchUtil() {}
 
+	public static ILaunchConfigurationType getInMemoryLaunchConfigurationType() {
+		ILaunchManager manager = DebugPlugin.getDefault().getLaunchManager();
+        ILaunchConfigurationType type = manager.getLaunchConfigurationType(InMemoryQvtLaunchConfigurationDelegate.LAUNCH_CONFIGURATION_TYPE_ID);
+        if (type == null) {
+            throw new RuntimeException("No launch configuration for id " + InMemoryQvtLaunchConfigurationDelegate.LAUNCH_CONFIGURATION_TYPE_ID); //$NON-NLS-1$
+        }
+		return type;
+	}
+	
 	public static List<TargetUriData> getTargetUris(ILaunchConfiguration configuration) throws CoreException {
     	int elemCount = configuration.getAttribute(IQvtLaunchConstants.ELEM_COUNT, 0);
 		List<TargetUriData> targetUris = new ArrayList<TargetUriData>(elemCount);
