@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.m2m.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalFileEnv;
@@ -115,10 +114,10 @@ import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.PropertyCallExp;
 import org.eclipse.ocl.expressions.TypeExp;
 import org.eclipse.ocl.expressions.Variable;
-import org.eclipse.ocl.expressions.VariableExp;
 import org.eclipse.ocl.internal.cst.CSTFactory;
 import org.eclipse.ocl.internal.cst.CSTNode;
 import org.eclipse.ocl.internal.cst.CallExpCS;
+import org.eclipse.ocl.internal.cst.CollectionTypeCS;
 import org.eclipse.ocl.internal.cst.DotOrArrowEnum;
 import org.eclipse.ocl.internal.cst.FeatureCallExpCS;
 import org.eclipse.ocl.internal.cst.OCLExpressionCS;
@@ -126,12 +125,14 @@ import org.eclipse.ocl.internal.cst.OperationCallExpCS;
 import org.eclipse.ocl.internal.cst.PathNameCS;
 import org.eclipse.ocl.internal.cst.SimpleNameCS;
 import org.eclipse.ocl.internal.cst.StringLiteralExpCS;
+import org.eclipse.ocl.internal.cst.TupleTypeCS;
 import org.eclipse.ocl.internal.cst.TypeCS;
 import org.eclipse.ocl.internal.cst.VariableCS;
 import org.eclipse.ocl.internal.cst.VariableExpCS;
 import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.internal.parser.OCLLexer;
 import org.eclipse.ocl.internal.parser.OCLParser;
+import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.types.TypeType;
 import org.eclipse.ocl.types.VoidType;
 import org.eclipse.ocl.util.TypeUtil;
@@ -151,6 +152,40 @@ public class QvtOperationalVisitorCS
         myCompilerOptions = options;
 	}
 
+	@Override
+	protected EClassifier tupleTypeCS(TupleTypeCS tupleTypeCS, Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) throws SemanticException {
+		EClassifier type = null;
+		try {			
+			type = super.tupleTypeCS(tupleTypeCS, env);
+		} catch (Exception e) {
+			// catch MDT OCL exception related to unresolved types used in Tuples, and report error
+			String message = NLS.bind(ValidationMessages.UnknownClassifierType, QvtOperationalParserUtil.getStringRepresentation(tupleTypeCS), tupleTypeCS);
+			((QvtOperationalEnv)env).reportError(message, tupleTypeCS);
+		}
+		
+		return type;
+	}
+	
+	@Override
+	protected EClassifier typeCS(TypeCS typeCS, Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env)throws SemanticException {
+		EClassifier type = super.typeCS(typeCS, env);
+		// MDT OCL does not check for nested type whether they are resolved
+		// do it here if element type is null
+		if(type instanceof CollectionType && typeCS instanceof CollectionTypeCS) {
+			CollectionType<?, ?> collectionType = (CollectionType<?, ?>)type;			
+			
+			if(collectionType.getElementType() == null) {
+				
+				CollectionTypeCS collectionTypeCS = (CollectionTypeCS)typeCS;				
+				((QvtOperationalEnv)env).reportError(NLS.bind(ValidationMessages.UnknownClassifierType, new Object[] {
+						QvtOperationalParserUtil.getStringRepresentation(collectionTypeCS.getTypeCS())}),
+						collectionTypeCS.getTypeCS());
+			}
+		}
+		
+		return type;
+	}
+	
 	private EClassifier visitTypeCS(TypeCS typeCS, DirectionKind directionKind, QvtOperationalEnv env) throws SemanticException {
 		EClassifier type = typeCS(typeCS, env);
 		if (type == null) {
