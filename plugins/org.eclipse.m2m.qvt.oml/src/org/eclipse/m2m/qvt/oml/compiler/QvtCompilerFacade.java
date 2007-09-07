@@ -36,14 +36,11 @@ public class QvtCompilerFacade {
         try {
 			monitor.subTask(CompilerMessages.QvtCompilerFacade_acquiringScript);
 			
-			String uriPath = uriTransf.isFile() ? uriTransf.toFileString() :
-				(uriTransf.isPlatform() ? uriTransf.toPlatformString(true) :
-						uriTransf.toString());
-			IFile file = WorkspaceUtils.getWorkspaceFile(uriPath);
+			IFile ifile = WorkspaceUtils.getWorkspaceFile(uriTransf);
 			
 			monitor.worked(1);
 
-			return QvtEngine.getInstance(file).compile(new EclipseFile(file), compilerOptions,
+			return QvtEngine.getInstance(ifile).compile(new EclipseFile(ifile), compilerOptions,
 					new SubProgressMonitor(monitor, 2)).getModule();
         }
         finally {
