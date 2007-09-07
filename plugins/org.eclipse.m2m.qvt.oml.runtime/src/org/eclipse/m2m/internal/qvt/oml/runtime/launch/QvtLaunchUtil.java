@@ -111,7 +111,7 @@ public class QvtLaunchUtil {
             map = configuration.getAttribute(IQvtLaunchConstants.CONFIGURATION_PROPERTIES, Collections.<String, String>emptyMap());            
         } catch (CoreException e) {
             map = Collections.<String, String>emptyMap();
-           QvtRuntimePlugin.getDefault().getLog().log(MiscUtil.makeErrorStatus(e)); 
+            QvtRuntimePlugin.getDefault().getLog().log(MiscUtil.makeErrorStatus(e)); 
         }
         return map;
     }

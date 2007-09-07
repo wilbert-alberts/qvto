@@ -12,8 +12,6 @@
 package org.eclipse.m2m.internal.qvt.oml.runtime.launch;
 
 import java.io.PrintWriter;
-import java.util.Collections;
-import java.util.Map;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
@@ -28,8 +26,6 @@ import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.IStatusHandler;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.InMemoryLaunchUtils;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
@@ -41,14 +37,12 @@ import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.common.launch.EmptyDebugTarget;
 import org.eclipse.m2m.qvt.oml.common.launch.ShallowProcess;
 import org.eclipse.m2m.qvt.oml.common.launch.StreamsProxy;
-import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.qvt.oml.library.Context;
-import org.eclipse.m2m.qvt.oml.library.IConfiguration;
 import org.eclipse.m2m.qvt.oml.library.IContext;
-import org.eclipse.m2m.qvt.oml.library.QvtConfiguration;
 
 
 public class InMemoryQvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelegateBase {
+	
     public static final String LAUNCH_CONFIGURATION_TYPE_ID = "org.eclipse.m2m.qvt.oml.InMemoryQvtTransfomation"; //$NON-NLS-1$
 	
     /**
@@ -63,13 +57,10 @@ public class InMemoryQvtLaunchConfigurationDelegate extends QvtLaunchConfigurati
 
 	public void launch(final ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {        
         Object transObj = InMemoryLaunchUtils.getAttribute(configuration, IQvtLaunchConstants.TRANSFOMATION_ID);
-        if(transObj instanceof QvtTransformation == false) {
+        if (transObj instanceof QvtTransformation == false) {
             throw new IllegalArgumentException("Invalid transformation " + transObj); //$NON-NLS-1$
         }
-        final QvtTransformation transformation = (QvtTransformation) transObj;
-        
-        final URI targetModelURI = URI.createURI(configuration.getAttribute(IQvtLaunchConstants.TARGET_MODEL, "")); //$NON-NLS-1$
-        
+        final QvtTransformation qvtTransformation = (QvtTransformation) transObj;
         final Runnable doneAction = (Runnable) InMemoryLaunchUtils.getAttribute(configuration, IQvtLaunchConstants.DONE_ACTION);
         
         StreamsProxy streamsProxy = new StreamsProxy();
@@ -78,40 +69,25 @@ public class InMemoryQvtLaunchConfigurationDelegate extends QvtLaunchConfigurati
         ShallowProcess.IRunnable r = new ShallowProcess.IRunnable() {
             @SuppressWarnings("unchecked")
             public void run() throws Exception {
-                Object inObj = InMemoryLaunchUtils.getAttribute(configuration, IQvtLaunchConstants.SOURCE_MODEL);
-                if(inObj instanceof EObject == false) {
-                    throw new IllegalArgumentException("Invalid input object " + inObj); //$NON-NLS-1$
-                }
-                EObject in = (EObject) inObj;
-                
-                TargetUriData targetData = QvtLaunchUtil.getTargetUriData(configuration);
-                if(targetData.getUriString() == null) {
-                    throw new IllegalArgumentException("Invalid out URI"); //$NON-NLS-1$
-                }
-                
-                // Work around storing lists in InMemoryLC (QvtLaunchUtils.getConfiguration(configuration) 
-                // doesn't work)
-                IConfiguration qvtConfiguration = new QvtConfiguration(
-                        (Map<String, String>) InMemoryLaunchUtils.getAttribute(
-                                configuration,
-                                IQvtLaunchConstants.CONFIGURATION_PROPERTIES));                
-
-                String traceFileName = configuration.getAttribute(IQvtLaunchConstants.TRACE_FILE, ""); //$NON-NLS-1$
-                
+                IStatus status = QvtLaunchConfigurationDelegateBase.validate(qvtTransformation, configuration);                    
+                if (status.getSeverity() > IStatus.WARNING) {
+                	throw new CoreException(status);
+                }                	
+            	
             	IContext context = new Context(QvtLaunchUtil.getConfiguration(configuration));
                 context.put(QvtOperationalStdLibrary.OUT_PRINT_WRITER, printWriter);
-                
-                doLaunch(transformation, configuration, context);
+
+            	QvtLaunchConfigurationDelegateBase.doLaunch(qvtTransformation, configuration, context);
             }
         };
         
-        r = getSafeRunnable(transformation, r);
+        r = getSafeRunnable(qvtTransformation, r);
         
         ShallowProcess process = new ShallowProcess(launch, r);
         process.setStreamsProxy(streamsProxy);
         final EmptyDebugTarget debugTarget = new EmptyDebugTarget(launch, process, QvtRuntimePlugin.ID, MDAConstants.QVTO_LAUNCH_CONFIGURATION_NAME);
 
-    	final Job job = createTransformationJob(transformation, process, debugTarget, targetModelURI, doneAction);
+    	final Job job = createTransformationJob(qvtTransformation, process, debugTarget, doneAction);
     	job.addJobChangeListener(new JobChangeAdapter() {
     		
     		@Override
@@ -119,21 +95,20 @@ public class InMemoryQvtLaunchConfigurationDelegate extends QvtLaunchConfigurati
     			try {
 					debugTarget.terminate();
 				} catch (DebugException e) {
-					Logger.getLogger().log(Logger.SEVERE, "Debug target termination for " + transformation + " failed", e);  //$NON-NLS-1$//$NON-NLS-2$
+					Logger.getLogger().log(Logger.SEVERE, "Debug target termination for " + qvtTransformation + " failed", e);  //$NON-NLS-1$//$NON-NLS-2$
 				}
     		}
     		
     	});
-    	job.schedule();
-        
+    	job.schedule();        
     }
 
-	private Job createTransformationJob(final QvtTransformation transformation, final ShallowProcess process, final EmptyDebugTarget debugTarget, final URI targetModelURI, final Runnable doneAction) {
+	private Job createTransformationJob(final QvtTransformation transformation, final ShallowProcess process, final EmptyDebugTarget debugTarget, final Runnable doneAction) {
 		Job job = new Job(Messages.InMemoryQvtLaunchConfigurationDelegate_TransformationJobName) {
 		
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				monitor.beginTask(Messages.InMemoryQvtLaunchConfigurationDelegate_RunningTaskName, IProgressMonitor.UNKNOWN); //$NON-NLS-1$
+				monitor.beginTask(Messages.InMemoryQvtLaunchConfigurationDelegate_RunningTaskName, IProgressMonitor.UNKNOWN);
 				try {
 					process.run(debugTarget);
 					
@@ -147,7 +122,6 @@ public class InMemoryQvtLaunchConfigurationDelegate extends QvtLaunchConfigurati
 					Logger.getLogger().log(Logger.SEVERE, "Transformation " + transformation + " failed", e); //$NON-NLS-1$ //$NON-NLS-2$
 					return MiscUtil.makeErrorStatus(org.eclipse.m2m.qvt.oml.emf.util.StatusUtil.getExceptionMessages(e), e);
 				} finally {
-					org.eclipse.m2m.qvt.oml.emf.util.URIUtils.refresh(targetModelURI);
 					monitor.done();
 				}
 				return Status.OK_STATUS;

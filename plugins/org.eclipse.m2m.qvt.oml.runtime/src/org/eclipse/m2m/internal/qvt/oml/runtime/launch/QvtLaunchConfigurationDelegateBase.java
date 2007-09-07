@@ -145,6 +145,9 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         	if (outValue instanceof EObject) {
         		result.add(EcoreUtil.getURI((EObject) outValue));
         	}
+        	else {
+        		result.add(null);
+        	}
         }
         
         if(traceFileName != null && out.getTrace() != null) {
