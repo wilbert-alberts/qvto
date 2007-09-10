@@ -25,6 +25,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.CommonPlugin;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessage;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessageEx;
 import org.eclipse.m2m.qvt.oml.common.ui.IModelParameterInfo;
+import org.eclipse.m2m.qvt.oml.common.ui.IModelParameterInfo.Direction;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.swt.SWT;
@@ -125,15 +126,21 @@ public class TransformationControls {
     }
     
     private static String getParameterName(IModelParameterInfo paramInfo) {
-    	String typeName = ""; //$NON-NLS-1$
-    	if (paramInfo.getEntryParamType() != null) {
+    	String typeName;
+    	if (paramInfo.getDirection() == Direction.out
+    			|| paramInfo.getEntryParamType() == null) {
+    		typeName = paramInfo.getModelTypeName();
+    		if (paramInfo.getMetamodel() != null
+    				&& paramInfo.getMetamodel().getNsURI().length() > 0) {
+    			typeName += " (" + paramInfo.getMetamodel().getNsURI() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+    		}
+    	}
+    	else {
     		typeName = EmfUtil.getFullName(paramInfo.getEntryParamType()); 
-    	}
-    	if (typeName.length() > 0) {
     		typeName += '@';
+	    	typeName += paramInfo.getModelTypeName();
     	}
-    	typeName += paramInfo.getModelTypeName();
-    	return paramInfo.getDirection().name() + " " + paramInfo.getName() //$NON-NLS-1$ 
+    	return paramInfo.getDirection().name().toUpperCase() + "  " + paramInfo.getName() //$NON-NLS-1$ 
     			+ " : " + typeName; //$NON-NLS-1$
     }
     
