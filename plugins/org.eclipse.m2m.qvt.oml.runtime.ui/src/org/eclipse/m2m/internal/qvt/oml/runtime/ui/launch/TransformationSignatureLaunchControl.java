@@ -240,8 +240,7 @@ public class TransformationSignatureLaunchControl extends ScrolledComposite {
 		}
 
 		public String getModelTypeName() {
-			List<String> modelTypeNames = myTransfParam.getModelTypeNames();
-			return modelTypeNames.isEmpty() ? "" : modelTypeNames.get(0); //$NON-NLS-1$
+			return myTransfParam.getModelTypeName();
 		}
 
 		public String getName() {
