@@ -26,8 +26,6 @@ public class ShallowProcess extends BaseProcess {
     public ShallowProcess(ILaunch launch, IRunnable r) {
         myLaunch = launch;
         myRunnable = r;
-        
-        myLaunch.addProcess(this);
     }
     
     public void run() throws Exception {
@@ -35,6 +33,7 @@ public class ShallowProcess extends BaseProcess {
     }
     
     public void run(IDebugTarget debugTarget) throws Exception {
+        myLaunch.addProcess(this);
         try {
             if(debugTarget != null) {
                 myLaunch.addDebugTarget(debugTarget);
