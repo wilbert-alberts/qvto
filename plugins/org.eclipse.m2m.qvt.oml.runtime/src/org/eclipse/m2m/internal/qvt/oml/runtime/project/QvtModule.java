@@ -148,11 +148,11 @@ public abstract class QvtModule {
 				return Collections.emptyList();
 			}
 
-			public List<String> getModelTypeNames() {
+			public String getModelTypeName() {
 				if (getMetamodels().isEmpty()) {
-					return Collections.emptyList();
+					return ""; //$NON-NLS-1$
 				}
-				return Collections.singletonList(getMetamodels().get(0).getName());
+				return getMetamodels().get(0).getName();
 			}
 			
 			public String getName() {
@@ -187,11 +187,11 @@ public abstract class QvtModule {
 				return ModelTypeMetamodelsAdapter.getMetamodels(modelParam.getEType());
 			}
 
-			public List<String> getModelTypeNames() {
+			public String getModelTypeName() {
 				if (modelParam.getEType() instanceof ModelType) {
-					return Collections.singletonList(((ModelType) modelParam.getEType()).getName());
+					return ((ModelType) modelParam.getEType()).getName();
 				}
-				return Collections.emptyList();
+				return ""; //$NON-NLS-1$
 			}
 			
 			public String getName() {

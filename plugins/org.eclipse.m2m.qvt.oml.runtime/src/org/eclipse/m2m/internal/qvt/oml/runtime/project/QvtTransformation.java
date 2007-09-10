@@ -50,9 +50,9 @@ public interface QvtTransformation extends Transformation {
 		
 		/**
 		 * 
-		 * @return list of model type's names
+		 * @return model type name
 		 */
-		List<String> getModelTypeNames();
+		String getModelTypeName();
 		
 		/**
 		 * 
