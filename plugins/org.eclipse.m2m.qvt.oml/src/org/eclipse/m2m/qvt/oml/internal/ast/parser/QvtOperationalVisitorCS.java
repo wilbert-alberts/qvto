@@ -1751,7 +1751,9 @@ public class QvtOperationalVisitorCS
                 env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentDuplicateUse, null),  
                 		varParam.getStartPosition(), varParam.getEndPosition());
 			}
-			usedExtent.add(varParam.getExtent());
+			if (varParam.getKind() != DirectionKind.OUT) {
+				usedExtent.add(varParam.getExtent());
+			}
 			
 			if (varParam.getExtent() == null) {
                 env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentFailToInfer,
