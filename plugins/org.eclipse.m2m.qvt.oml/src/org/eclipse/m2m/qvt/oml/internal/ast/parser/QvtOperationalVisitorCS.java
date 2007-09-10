@@ -108,6 +108,7 @@ import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.ecore.SendSignalAction;
+import org.eclipse.ocl.ecore.StringLiteralExp;
 import org.eclipse.ocl.expressions.IteratorExp;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.OperationCallExp;
@@ -120,6 +121,7 @@ import org.eclipse.ocl.internal.cst.CallExpCS;
 import org.eclipse.ocl.internal.cst.CollectionTypeCS;
 import org.eclipse.ocl.internal.cst.DotOrArrowEnum;
 import org.eclipse.ocl.internal.cst.FeatureCallExpCS;
+import org.eclipse.ocl.internal.cst.LiteralExpCS;
 import org.eclipse.ocl.internal.cst.OCLExpressionCS;
 import org.eclipse.ocl.internal.cst.OperationCallExpCS;
 import org.eclipse.ocl.internal.cst.PathNameCS;
@@ -230,7 +232,10 @@ public class QvtOperationalVisitorCS
 
 	private String visitLiteralExpCS(StringLiteralExpCS stringLiteralExpCS, QvtOperationalEnv env)
 			throws SemanticException {
-		return stringLiteralExpCS(stringLiteralExpCS, env).getStringSymbol();
+	    // stringLiteralExpCS() is not called directly for AST-CST binding creation done in literalExpCS()
+		OCLExpression<EClassifier> literalExpCS = literalExpCS(stringLiteralExpCS, env);
+		StringLiteralExp stringLiteralExp = (StringLiteralExp) literalExpCS;
+        return stringLiteralExp.getStringSymbol();
 	}
 
 	@Override
@@ -292,6 +297,20 @@ public class QvtOperationalVisitorCS
 		return expr;
 	}
 	
+    @Override
+    protected OCLExpression<EClassifier> literalExpCS(
+            LiteralExpCS literalExpCS,
+            Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env)
+            throws SemanticException {
+        OCLExpression<EClassifier> literalExp = super.literalExpCS(literalExpCS, env);
+        // AST binding 
+        if(myCompilerOptions.isGenerateCompletionData()) {
+            ASTBindingHelper.createCST2ASTBinding(literalExpCS, literalExp);
+        }
+        //
+        return literalExp;
+    }
+
     @Override
     protected Variable<EClassifier, EParameter> variableDeclarationCS(VariableCS variableDeclarationCS,
             Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
