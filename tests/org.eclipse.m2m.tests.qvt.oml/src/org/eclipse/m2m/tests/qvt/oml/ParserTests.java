@@ -107,5 +107,6 @@ public class ParserTests {
         new TestData("mm_header4", 1), //$NON-NLS-1$
         new TestData("mm_header5", 2), //$NON-NLS-1$
         new TestData("mm_header6", 2), //$NON-NLS-1$
+        new TestData("entryOpDupl", 1), //$NON-NLS-1$
     };
 }
