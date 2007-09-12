@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.10 2007/09/07 13:38:11 aigdalov Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.11 2007/09/12 12:58:30 sboyko Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -332,6 +332,7 @@ $KeyWords
 	abstract
 	static
 	result
+	main
 	
 	rename
 $End
@@ -351,7 +352,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.10 2007/09/07 13:38:11 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.11 2007/09/12 12:58:30 sboyko Exp $
  */
 	./
 $End
@@ -442,7 +443,7 @@ $Headers
 			result.getMethods().addAll(methods);
 		}
 		
-		protected CSTNode createMappingQueryCS(MappingDeclarationCS sym, EList sym2) {
+		protected MappingQueryCS createMappingQueryCS(MappingDeclarationCS sym, EList sym2) {
 			MappingQueryCS query = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createMappingQueryCS();
 			query.setMappingDeclarationCS(sym);
 			query.getExpressions().addAll(sym2);
@@ -1284,6 +1285,13 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
+	scopedNameCS2 ::= main
+		/.$BeginJava
+					CSTNode result = createPathNameCS(getTokenText($getToken(1)));
+					setOffsets(result, getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
 	scopedNameCS2 ::= scopedNameCS2 '::' IDENTIFIER
 		/.$BeginJava
 					PathNameCS result = (PathNameCS)$getSym(1);
@@ -1566,6 +1574,16 @@ $Rules
 		  $EndJava
 		./
 	
+	mappingRuleCS ::= entryDeclarationCS '{' statementListOpt '}'
+		/.$BeginJava
+					MappingQueryCS result = createMappingQueryCS(
+							(MappingDeclarationCS)$getSym(1),
+							(EList)$getSym(3)
+						);
+					setOffsets(result, (CSTNode)$getSym(1), getIToken($getToken(4)));
+					$setResult(result);
+		  $EndJava
+		./
 	mappingRuleCS ::= mapping mappingDeclarationCS mappingGuardOpt '{' mappingInitOpt mappingBodyOpt mappingEndOpt '}'  
 		/.$BeginJava
 					MappingInitCS mappingInit = (MappingInitCS)$getSym(5);
@@ -1680,7 +1698,20 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-		
+
+	entryDeclarationCS ::= main '(' parameterListOpt ')'
+		/.$BeginJava
+					CSTNode result = createMappingDeclarationCS(
+							null,
+							createScopedNameCS(null, getTokenText($getToken(1))),
+							(EList)$getSym(3),
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
+					$setResult(result);
+		  $EndJava
+		./
+
 	mappingDeclarationCS ::= directionKindOpt scopedNameCS '(' parameterListOpt ')' ':' typeSpecCS
 		/.$BeginJava
 					DirectionKindCS directionKind = (DirectionKindCS)$getSym(1);

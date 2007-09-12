@@ -70,11 +70,10 @@ import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
 import org.eclipse.osgi.util.NLS;
 
-
-
 public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 
 	public static final String THIS = "this"; //$NON-NLS-1$	
+	public static final String MAIN = "main"; //$NON-NLS-1$	
 	
 	public static final String MAPPING_OPERATION_STEREOTYPE = "mapping_operation"; //$NON-NLS-1$
 	public static final String IMPERATIVE_OPERATION_STEREOTYPE = "imperative_operation"; //$NON-NLS-1$

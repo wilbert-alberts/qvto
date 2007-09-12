@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -683,7 +684,7 @@ public class QvtOperationalVisitorCS
 			}
 		}
 
-		HashMap<MappingMethodCS, ImperativeOperation> methodMap =  new HashMap<MappingMethodCS, ImperativeOperation>();
+		HashMap<MappingMethodCS, ImperativeOperation> methodMap = new LinkedHashMap<MappingMethodCS, ImperativeOperation>(moduleCS.getMethods().size());
 		
 		// declare module operations as they are required to analyze rules' contents
 		//env.setErrorRecordFlag(false);
@@ -731,11 +732,23 @@ public class QvtOperationalVisitorCS
 			}
 		}
 		
+		boolean moduleEntryFound = false;
 		for (ImperativeOperation nextImperOperation: methodMap.values()) {
 			if(nextImperOperation.getContext().getEType() == module) {
 				module.getEOperations().add(nextImperOperation);
 			}
-			checkMainMappingConformance(env, (ImperativeOperation)nextImperOperation);
+			
+			checkMainMappingConformance(env, nextImperOperation);
+			
+			if (false == moduleCS instanceof LibraryCS
+					&& QvtOperationalEnv.MAIN.equals(nextImperOperation.getName())) {
+				if (moduleEntryFound) {
+					env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_entryPointShouldBeDeclOnce,
+							QvtOperationalEnv.MAIN),
+							nextImperOperation.getStartPosition(), nextImperOperation.getEndPosition());
+				}
+				moduleEntryFound = true;
+			}
 		}
 		
 		for (ModuleImport moduleImport : module.getModuleImport()) {
