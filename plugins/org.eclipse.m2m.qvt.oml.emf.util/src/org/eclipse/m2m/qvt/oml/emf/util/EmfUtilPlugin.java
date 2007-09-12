@@ -11,7 +11,9 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.emf.util;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.core.runtime.Status;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -53,5 +55,10 @@ public class EmfUtilPlugin extends Plugin {
 		return plugin;
 	}
 
+    public static void log(Throwable e) {
+        getDefault().getLog().log(new Status(IStatus.ERROR, ID, 0, "Unexpected error caught", e)); //$NON-NLS-1$
+    }
+	
+	
 	public static final String ID = "org.eclipse.m2m.qvt.oml.emf.util"; //$NON-NLS-1$
 }

@@ -14,6 +14,11 @@ package org.eclipse.m2m.qvt.oml.emf.util.mmregistry;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceProxy;
+import org.eclipse.core.resources.IResourceProxyVisitor;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EFactory;
@@ -22,6 +27,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.m2m.qvt.oml.emf.util.EmfUtilPlugin;
 import org.eclipse.osgi.util.NLS;
 
 public class WorskpaceMetamodelProvider implements IMetamodelProvider {
@@ -57,6 +63,37 @@ public class WorskpaceMetamodelProvider implements IMetamodelProvider {
 		return metamodels.toArray(new IMetamodelDesc[metamodels.size()]);
 	}
 
+	
+	public static IMetamodelProvider getAllWorkspaceMetamodelProvider() {
+        WorskpaceMetamodelProvider ws = new WorskpaceMetamodelProvider(new ResourceSetImpl());
+
+        List<IResource> wsModels = collectWorkspaceMetamodels();        
+        for (IResource res : wsModels) {
+			URI resURI = URI.createPlatformResourceURI(res.getFullPath().toString(), false);
+			ws.addMetamodel(resURI.toString(), resURI, res.getProject().getName());					
+		}
+        
+		return ws;
+	}
+	
+    public static List<IResource> collectWorkspaceMetamodels() {
+    	final List<IResource> result = new ArrayList<IResource>();
+    
+    	try {
+			ResourcesPlugin.getWorkspace().getRoot().accept(new IResourceProxyVisitor() {
+				public boolean visit(IResourceProxy proxy) throws CoreException {
+					if(proxy.getName().endsWith(".ecore")) { //$NON-NLS-1$
+						result.add(proxy.requestResource());
+					}
+					return true;
+				}
+			}, IResource.NONE);
+		} catch (CoreException e) {
+			EmfUtilPlugin.log(e);
+		}
+		
+		return result;
+    }	
 	
 	/**
 	 * Loads a metamodel from resource denoted by the given URI.

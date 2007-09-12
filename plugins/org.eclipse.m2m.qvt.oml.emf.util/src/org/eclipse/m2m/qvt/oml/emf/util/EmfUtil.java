@@ -234,6 +234,10 @@ public class EmfUtil {
         return getFullName(cls.getEPackage(), delim) + delim + cls.getName();
     }
 
+    public static String getFullName(EPackage pack) {
+        return getFullName(pack, "::"); //$NON-NLS-1$
+    }    
+    
     public static String getFullName(EPackage pack, String delim) {
         if(pack.getESuperPackage() != null) {
             return getFullName(pack.getESuperPackage(), delim) + delim + pack.getName();
