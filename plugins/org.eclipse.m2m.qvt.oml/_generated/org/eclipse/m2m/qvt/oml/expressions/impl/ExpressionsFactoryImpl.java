@@ -90,6 +90,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 			case ExpressionsPackage.ASSIGN_EXP: return createAssignExp();
 			case ExpressionsPackage.VARIABLE_INIT_EXP: return createVariableInitExp();
 			case ExpressionsPackage.MAPPING_CALL_EXP: return createMappingCallExp();
+			case ExpressionsPackage.BLOCK_EXP: return createBlockExp();
 			case ExpressionsPackage.OBJECT_EXP: return createObjectExp();
 			case ExpressionsPackage.WHILE_EXP: return createWhileExp();
 			case ExpressionsPackage.RESOLVE_EXP: return createResolveExp();
@@ -300,6 +301,16 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	public MappingCallExp createMappingCallExp() {
 		MappingCallExpImpl mappingCallExp = new MappingCallExpImpl();
 		return mappingCallExp;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public BlockExp createBlockExp() {
+		BlockExpImpl blockExp = new BlockExpImpl();
+		return blockExp;
 	}
 
 	/**

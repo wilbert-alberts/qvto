@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import org.eclipse.m2m.qvt.oml.expressions.AssignExp;
+import org.eclipse.m2m.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsFactory;
@@ -198,6 +199,13 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 	 * @generated
 	 */
 	private EClass mappingCallExpEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass blockExpEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -805,6 +813,24 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getBlockExp() {
+		return blockExpEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getBlockExp_Body() {
+		return (EReference)blockExpEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getObjectExp() {
 		return objectExpEClass;
 	}
@@ -1137,6 +1163,9 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		mappingCallExpEClass = createEClass(MAPPING_CALL_EXP);
 		createEAttribute(mappingCallExpEClass, MAPPING_CALL_EXP__IS_STRICT);
 
+		blockExpEClass = createEClass(BLOCK_EXP);
+		createEReference(blockExpEClass, BLOCK_EXP__BODY);
+
 		objectExpEClass = createEClass(OBJECT_EXP);
 		createEReference(objectExpEClass, OBJECT_EXP__CONTENT);
 		createEReference(objectExpEClass, OBJECT_EXP__REFERRED_OBJECT);
@@ -1246,6 +1275,7 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		g2 = createEGenericType(theEcorePackage.getEOperation());
 		g1.getETypeArguments().add(g2);
 		mappingCallExpEClass.getEGenericSuperTypes().add(g1);
+		blockExpEClass.getESuperTypes().add(this.getImperativeExpression());
 		objectExpEClass.getESuperTypes().add(this.getImperativeExpression());
 		whileExpEClass.getESuperTypes().add(this.getImperativeExpression());
 		g1 = createEGenericType(theUtilitiesPackage.getVisitor());
@@ -1853,6 +1883,42 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
 
+		initEClass(blockExpEClass, BlockExp.class, "BlockExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		g1 = createEGenericType(theExpressionsPackage_1.getOCLExpression());
+		g2 = createEGenericType(theEcorePackage.getEClassifier());
+		g1.getETypeArguments().add(g2);
+		initEReference(getBlockExp_Body(), g1, null, "body", null, 0, -1, BlockExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		op = addEOperation(blockExpEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		t1 = addETypeParameter(op, "T"); //$NON-NLS-1$
+		t2 = addETypeParameter(op, "U"); //$NON-NLS-1$
+		g1 = createEGenericType(theUtilitiesPackage.getVisitor());
+		g2 = createEGenericType(t1);
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		t2.getEBounds().add(g1);
+		g1 = createEGenericType(t2);
+		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(t1);
+		initEOperation(op, g1);
+
 		initEClass(objectExpEClass, ObjectExp.class, "ObjectExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		g1 = createEGenericType(theExpressionsPackage_1.getOCLExpression());
 		g2 = createEGenericType(theEcorePackage.getEClassifier());
@@ -2023,6 +2089,11 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 
 		op = addEOperation(extendedVisitorEClass, null, "visitResolveInExp", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getResolveInExp(), "resolveInExp", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(extendedVisitorEClass_T);
+		initEOperation(op, g1);
+
+		op = addEOperation(extendedVisitorEClass, null, "visitBlockExp", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getBlockExp(), "blockExp", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(extendedVisitorEClass_T);
 		initEOperation(op, g1);
 

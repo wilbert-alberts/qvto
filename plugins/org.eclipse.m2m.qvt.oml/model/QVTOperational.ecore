@@ -518,6 +518,38 @@
         <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EOperation"/>
       </eGenericSuperTypes>
     </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="BlockExp" eSuperTypes="#//expressions/ImperativeExpression">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitBlockExp(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/BlockExp/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/BlockExp/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/BlockExp/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="body" upperBound="-1"
+          containment="true">
+        <eGenericType eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+        </eGenericType>
+      </eStructuralFeatures>
+    </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ObjectExp" eSuperTypes="#//expressions/ImperativeExpression">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -672,6 +704,10 @@
       <eOperations name="visitResolveInExp">
         <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
         <eParameters name="resolveInExp" lowerBound="1" eType="#//expressions/ResolveInExp"/>
+      </eOperations>
+      <eOperations name="visitBlockExp">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="blockExp" lowerBound="1" eType="#//expressions/BlockExp"/>
       </eOperations>
       <eOperations name="visitObjectExp">
         <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>

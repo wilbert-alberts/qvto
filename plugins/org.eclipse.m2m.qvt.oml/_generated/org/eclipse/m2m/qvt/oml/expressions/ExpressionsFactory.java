@@ -190,6 +190,15 @@ public interface ExpressionsFactory extends EFactory {
 	MappingCallExp createMappingCallExp();
 
 	/**
+	 * Returns a new object of class '<em>Block Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Block Exp</em>'.
+	 * @generated
+	 */
+	BlockExp createBlockExp();
+
+	/**
 	 * Returns a new object of class '<em>Object Exp</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

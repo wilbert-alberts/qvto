@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.qvt.oml.expressions.AssignExp;
+import org.eclipse.m2m.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.qvt.oml.expressions.Helper;
@@ -213,6 +214,14 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
 
     public Object visitVariableInitExp(VariableInitExp variableInitExp) {
         doProcess(variableInitExp.getValue(), variableInitExp);
+        return null;
+    }
+
+    
+    public Object visitBlockExp(BlockExp blockExp) {
+        for (OCLExpression<EClassifier> exp : blockExp.getBody()) {
+            doProcess(exp, blockExp);
+        }
         return null;
     }
 

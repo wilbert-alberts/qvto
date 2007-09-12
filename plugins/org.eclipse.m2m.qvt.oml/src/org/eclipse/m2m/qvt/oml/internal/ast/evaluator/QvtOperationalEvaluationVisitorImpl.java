@@ -50,6 +50,7 @@ import org.eclipse.m2m.qvt.oml.emf.util.EmfException;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.DependencyHelper;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
 import org.eclipse.m2m.qvt.oml.expressions.AssignExp;
+import org.eclipse.m2m.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor;
@@ -477,6 +478,13 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         return varValue;
     }
 
+    public Object visitBlockExp(BlockExp blockExp) {
+        for (OCLExpression<EClassifier> exp : blockExp.getBody()) {
+            exp.accept(this);
+        }
+        return null;
+    }
+    
     public Object visitWhileExp(WhileExp whileExp) {
         while (true) {
             Object condition = whileExp.getCondition().accept(this);

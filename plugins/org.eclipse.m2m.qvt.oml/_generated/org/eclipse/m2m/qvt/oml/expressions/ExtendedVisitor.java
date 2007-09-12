@@ -184,6 +184,14 @@ public interface ExtendedVisitor<T, S, COA, SSA, CT> extends Visitor<T, EClassif
     /**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @model blockExpRequired="true"
+	 * @generated
+	 */
+	T visitBlockExp(BlockExp blockExp);
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @model objectExpRequired="true"
 	 * @generated
 	 */
