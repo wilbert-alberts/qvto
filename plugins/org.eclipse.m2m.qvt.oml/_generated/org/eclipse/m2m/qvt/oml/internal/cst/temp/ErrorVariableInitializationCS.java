@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ErrorVariableInitializationCS.java,v 1.2 2007/08/17 15:59:13 aigdalov Exp $
+ * $Id: ErrorVariableInitializationCS.java,v 1.3 2007/09/13 11:39:53 sboyko Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.temp;
 
@@ -29,10 +29,10 @@ import org.eclipse.m2m.qvt.oml.internal.cst.VariableInitializationCS;
  */
 public interface ErrorVariableInitializationCS extends VariableInitializationCS {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 } // ErrorVariableInitializationCS

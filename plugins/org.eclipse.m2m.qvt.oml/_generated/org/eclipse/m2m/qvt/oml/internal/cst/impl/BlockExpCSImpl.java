@@ -11,36 +11,43 @@
  * 
  * 
  *
- * $Id: ModuleKindCSImpl.java,v 1.3 2007/09/13 11:39:52 sboyko Exp $
+ * $Id: BlockExpCSImpl.java,v 1.1 2007/09/13 11:39:52 sboyko Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.impl;
 
-import org.eclipse.emf.common.notify.Notification;
+import java.util.Collection;
+
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.eclipse.m2m.qvt.oml.internal.cst.BlockExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage;
-import org.eclipse.m2m.qvt.oml.internal.cst.ModuleKindCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.ModuleKindEnum;
 
-import org.eclipse.ocl.internal.cst.impl.CSTNodeImpl;
+import org.eclipse.ocl.internal.cst.OCLExpressionCS;
+
+import org.eclipse.ocl.internal.cst.impl.OCLExpressionCSImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Module Kind CS</b></em>'.
+ * An implementation of the model object '<em><b>Block Exp CS</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.m2m.qvt.oml.internal.cst.impl.ModuleKindCSImpl#getModuleKind <em>Module Kind</em>}</li>
+ *   <li>{@link org.eclipse.m2m.qvt.oml.internal.cst.impl.BlockExpCSImpl#getBodyExpressions <em>Body Expressions</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ModuleKindCSImpl extends CSTNodeImpl implements ModuleKindCS {
+public class BlockExpCSImpl extends OCLExpressionCSImpl implements BlockExpCS {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -49,31 +56,21 @@ public class ModuleKindCSImpl extends CSTNodeImpl implements ModuleKindCS {
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 	/**
-	 * The default value of the '{@link #getModuleKind() <em>Module Kind</em>}' attribute.
+	 * The cached value of the '{@link #getBodyExpressions() <em>Body Expressions</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getModuleKind()
+	 * @see #getBodyExpressions()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final ModuleKindEnum MODULE_KIND_EDEFAULT = ModuleKindEnum.TRANSFORMATION;
-
-	/**
-	 * The cached value of the '{@link #getModuleKind() <em>Module Kind</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getModuleKind()
-	 * @generated
-	 * @ordered
-	 */
-	protected ModuleKindEnum moduleKind = MODULE_KIND_EDEFAULT;
+	protected EList<OCLExpressionCS> bodyExpressions;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ModuleKindCSImpl() {
+	protected BlockExpCSImpl() {
 		super();
 	}
 
@@ -84,7 +81,7 @@ public class ModuleKindCSImpl extends CSTNodeImpl implements ModuleKindCS {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return CSTPackage.Literals.MODULE_KIND_CS;
+		return CSTPackage.Literals.BLOCK_EXP_CS;
 	}
 
 	/**
@@ -92,8 +89,11 @@ public class ModuleKindCSImpl extends CSTNodeImpl implements ModuleKindCS {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ModuleKindEnum getModuleKind() {
-		return moduleKind;
+	public EList<OCLExpressionCS> getBodyExpressions() {
+		if (bodyExpressions == null) {
+			bodyExpressions = new EObjectContainmentEList<OCLExpressionCS>(OCLExpressionCS.class, this, CSTPackage.BLOCK_EXP_CS__BODY_EXPRESSIONS);
+		}
+		return bodyExpressions;
 	}
 
 	/**
@@ -101,11 +101,13 @@ public class ModuleKindCSImpl extends CSTNodeImpl implements ModuleKindCS {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setModuleKind(ModuleKindEnum newModuleKind) {
-		ModuleKindEnum oldModuleKind = moduleKind;
-		moduleKind = newModuleKind == null ? MODULE_KIND_EDEFAULT : newModuleKind;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.MODULE_KIND_CS__MODULE_KIND, oldModuleKind, moduleKind));
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case CSTPackage.BLOCK_EXP_CS__BODY_EXPRESSIONS:
+				return ((InternalEList<?>)getBodyExpressions()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -116,8 +118,8 @@ public class ModuleKindCSImpl extends CSTNodeImpl implements ModuleKindCS {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CSTPackage.MODULE_KIND_CS__MODULE_KIND:
-				return getModuleKind();
+			case CSTPackage.BLOCK_EXP_CS__BODY_EXPRESSIONS:
+				return getBodyExpressions();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -127,11 +129,13 @@ public class ModuleKindCSImpl extends CSTNodeImpl implements ModuleKindCS {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CSTPackage.MODULE_KIND_CS__MODULE_KIND:
-				setModuleKind((ModuleKindEnum)newValue);
+			case CSTPackage.BLOCK_EXP_CS__BODY_EXPRESSIONS:
+				getBodyExpressions().clear();
+				getBodyExpressions().addAll((Collection<? extends OCLExpressionCS>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -145,8 +149,8 @@ public class ModuleKindCSImpl extends CSTNodeImpl implements ModuleKindCS {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CSTPackage.MODULE_KIND_CS__MODULE_KIND:
-				setModuleKind(MODULE_KIND_EDEFAULT);
+			case CSTPackage.BLOCK_EXP_CS__BODY_EXPRESSIONS:
+				getBodyExpressions().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -160,26 +164,10 @@ public class ModuleKindCSImpl extends CSTNodeImpl implements ModuleKindCS {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CSTPackage.MODULE_KIND_CS__MODULE_KIND:
-				return moduleKind != MODULE_KIND_EDEFAULT;
+			case CSTPackage.BLOCK_EXP_CS__BODY_EXPRESSIONS:
+				return bodyExpressions != null && !bodyExpressions.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (moduleKind: "); //$NON-NLS-1$
-		result.append(moduleKind);
-		result.append(')');
-		return result.toString();
-	}
-
-} //ModuleKindCSImpl
+} //BlockExpCSImpl

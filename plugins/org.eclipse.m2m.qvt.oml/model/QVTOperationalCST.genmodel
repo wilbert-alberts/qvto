@@ -153,6 +153,9 @@
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/WhileExpCS/result"/>
       </genClasses>
+      <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/BlockExpCS">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/BlockExpCS/bodyExpressions"/>
+      </genClasses>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/DirectionKindCS">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/DirectionKindCS/directionKind"/>
       </genClasses>

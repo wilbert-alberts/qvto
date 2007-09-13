@@ -35,91 +35,91 @@ import org.eclipse.ocl.internal.cst.TypeCS;
  */
 public interface ParameterDeclarationCS extends CSTNode {
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
     /**
-     * Returns the value of the '<em><b>Simple Name CS</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Simple Name CS</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Simple Name CS</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Simple Name CS</em>' containment reference.
-     * @see #setSimpleNameCS(SimpleNameCS)
-     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getParameterDeclarationCS_SimpleNameCS()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Simple Name CS</em>' containment reference.
+	 * @see #setSimpleNameCS(SimpleNameCS)
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getParameterDeclarationCS_SimpleNameCS()
+	 * @model containment="true"
+	 * @generated
+	 */
 	SimpleNameCS getSimpleNameCS();
 
 	/**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.ParameterDeclarationCS#getSimpleNameCS <em>Simple Name CS</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.ParameterDeclarationCS#getSimpleNameCS <em>Simple Name CS</em>}' containment reference.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Simple Name CS</em>' containment reference.
-     * @see #getSimpleNameCS()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Simple Name CS</em>' containment reference.
+	 * @see #getSimpleNameCS()
+	 * @generated
+	 */
 	void setSimpleNameCS(SimpleNameCS value);
 
 	/**
-     * Returns the value of the '<em><b>Type Spec CS</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Type Spec CS</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Type Spec CS</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Type Spec CS</em>' containment reference.
-     * @see #setTypeSpecCS(TypeSpecCS)
-     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getParameterDeclarationCS_TypeSpecCS()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Type Spec CS</em>' containment reference.
+	 * @see #setTypeSpecCS(TypeSpecCS)
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getParameterDeclarationCS_TypeSpecCS()
+	 * @model containment="true"
+	 * @generated
+	 */
 	TypeSpecCS getTypeSpecCS();
 
 	/**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.ParameterDeclarationCS#getTypeSpecCS <em>Type Spec CS</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.ParameterDeclarationCS#getTypeSpecCS <em>Type Spec CS</em>}' containment reference.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Type Spec CS</em>' containment reference.
-     * @see #getTypeSpecCS()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Type Spec CS</em>' containment reference.
+	 * @see #getTypeSpecCS()
+	 * @generated
+	 */
 	void setTypeSpecCS(TypeSpecCS value);
 
 	/**
-     * Returns the value of the '<em><b>Direction Kind</b></em>' attribute.
-     * The literals are from the enumeration {@link org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Direction Kind</b></em>' attribute.
+	 * The literals are from the enumeration {@link org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum}.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Direction Kind</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Direction Kind</em>' attribute.
-     * @see org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum
-     * @see #setDirectionKind(DirectionKindEnum)
-     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getParameterDeclarationCS_DirectionKind()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>Direction Kind</em>' attribute.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum
+	 * @see #setDirectionKind(DirectionKindEnum)
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getParameterDeclarationCS_DirectionKind()
+	 * @model
+	 * @generated
+	 */
 	DirectionKindEnum getDirectionKind();
 
 	/**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.ParameterDeclarationCS#getDirectionKind <em>Direction Kind</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.ParameterDeclarationCS#getDirectionKind <em>Direction Kind</em>}' attribute.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Direction Kind</em>' attribute.
-     * @see org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum
-     * @see #getDirectionKind()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Direction Kind</em>' attribute.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum
+	 * @see #getDirectionKind()
+	 * @generated
+	 */
 	void setDirectionKind(DirectionKindEnum value);
 
 } // ParameterDeclarationCS

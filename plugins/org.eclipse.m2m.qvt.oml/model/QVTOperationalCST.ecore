@@ -157,6 +157,11 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="result" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
     </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="BlockExpCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="bodyExpressions" upperBound="-1"
+          eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+          containment="true"/>
+    </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="DirectionKindCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="directionKind" eType="#//cst/DirectionKindEnum"/>
     </eClassifiers>
