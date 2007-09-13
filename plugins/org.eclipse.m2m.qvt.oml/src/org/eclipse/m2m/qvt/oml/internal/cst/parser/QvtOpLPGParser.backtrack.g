@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.14 2007/09/13 13:58:15 sboyko Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.15 2007/09/13 14:02:36 aigdalov Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -98,6 +98,18 @@ $DropRules
 	operationCallExpCS ::= oclAsType isMarkedPreCS '(' argumentsCSopt ')'
 	operationCallExpCS ::= oclIsKindOf isMarkedPreCS '(' argumentsCSopt ')'
 	operationCallExpCS ::= oclIsTypeOf isMarkedPreCS '(' argumentsCSopt ')'
+
+	iteratorExpCS ::= forAll '(' iterContents ')'
+	iteratorExpCS ::= exists '(' iterContents ')'
+	iteratorExpCS ::= isUnique '(' iterContents ')'
+	iteratorExpCS ::= one '(' iterContents ')'
+	iteratorExpCS ::= any '(' iterContents ')'
+	iteratorExpCS ::= collect '(' iterContents ')'
+	iteratorExpCS ::= select '(' iterContents ')'
+	iteratorExpCS ::= reject '(' iterContents ')'
+	iteratorExpCS ::= collectNested '(' iterContents ')'
+	iteratorExpCS ::= sortedBy '(' iterContents ')'
+	iteratorExpCS ::= closure '(' iterContents ')'
 
 $DropSymbols
 
@@ -355,7 +367,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.14 2007/09/13 13:58:15 sboyko Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.15 2007/09/13 14:02:36 aigdalov Exp $
  */
 	./
 $End
@@ -2726,15 +2738,6 @@ $Rules
 
 	-- error recovery extensions to OCL grammer
 	--
-	iterContents ::= qvtErrorToken oclExpressionCS
-		/.$BeginJava
-					$setResult(new Object[] {
-							null,
-							null,
-							$getSym(2)
-						});
-		  $EndJava
-		./
 	iterContents ::= variableCS '|' qvtErrorToken
 		/.$BeginJava
 					CSTNode fakeCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, ""); //$NON-NLS-1$
@@ -2880,7 +2883,84 @@ $Rules
 		  $EndJava
 		./
 
-	
+
+	iteratorExpCSToken -> forAll
+	iteratorExpCSToken -> exists
+	iteratorExpCSToken -> isUnique
+	iteratorExpCSToken -> one
+	iteratorExpCSToken -> any
+	iteratorExpCSToken -> collect
+	iteratorExpCSToken -> select
+	iteratorExpCSToken -> reject
+	iteratorExpCSToken -> collectNested
+	iteratorExpCSToken -> sortedBy
+	iteratorExpCSToken -> closure
+
+	iteratorExpCS ::= iteratorExpCSToken '(' iterContents ')'
+		/.$BeginJava
+					SimpleNameCS simpleNameCS = createSimpleNameCS(
+								SimpleTypeEnum.KEYWORD_LITERAL,
+								getTokenText($getToken(1))
+							);
+					setOffsets(simpleNameCS, getIToken($getToken(1)));
+					Object[] iterContents = (Object[])$getSym(3);
+					CSTNode result = createIteratorExpCS(
+							simpleNameCS,
+							(VariableCS)iterContents[0],
+							(VariableCS)iterContents[1],
+							(OCLExpressionCS)iterContents[2]
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	iteratorExpCS ::= iteratorExpCSToken '(' iterContents qvtErrorToken
+		/.$BeginJava
+					SimpleNameCS simpleNameCS = createSimpleNameCS(
+								SimpleTypeEnum.KEYWORD_LITERAL,
+								getTokenText($getToken(1))
+							);
+					setOffsets(simpleNameCS, getIToken($getToken(1)));
+					Object[] iterContents = (Object[])$getSym(3);
+					CSTNode result = createIteratorExpCS(
+							simpleNameCS,
+							(VariableCS)iterContents[0],
+							(VariableCS)iterContents[1],
+							(OCLExpressionCS)iterContents[2]
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(2)));
+					if ((iterContents != null) || (iterContents.length == 0)) {
+					        for (int i = iterContents.length - 1; i >= 0; i--) {
+					        	if (iterContents[i] instanceof CSTNode) {
+					        		setOffsets(result, getIToken($getToken(1)), (CSTNode) iterContents[i]);
+					        		break;
+					        	}
+					        }
+					}
+					$setResult(result);
+		  $EndJava
+		./
+		
+	iteratorExpCS ::= iteratorExpCSToken '(' qvtErrorToken
+		/.$BeginJava
+					SimpleNameCS simpleNameCS = createSimpleNameCS(
+								SimpleTypeEnum.KEYWORD_LITERAL,
+								getTokenText($getToken(1))
+							);
+					setOffsets(simpleNameCS, getIToken($getToken(1)));
+					Object[] iterContents = (Object[])$getSym(3);
+					CSTNode result = createIteratorExpCS(
+							simpleNameCS,
+							(VariableCS)iterContents[0],
+							(VariableCS)iterContents[1],
+							(OCLExpressionCS)iterContents[2]
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(2)));
+					$setResult(result);
+		  $EndJava
+		./
+		
 	-- error in OCLLPGParser.g in definition of type-argued calls
 	operationCallExpCS ::= oclAsType isMarkedPreCS '(' typeCS ')'
 		/.$NewCase./
