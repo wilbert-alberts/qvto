@@ -112,6 +112,7 @@ import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.ecore.StringLiteralExp;
+import org.eclipse.ocl.expressions.IfExp;
 import org.eclipse.ocl.expressions.IteratorExp;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.OperationCallExp;
@@ -124,6 +125,7 @@ import org.eclipse.ocl.internal.cst.CallExpCS;
 import org.eclipse.ocl.internal.cst.CollectionTypeCS;
 import org.eclipse.ocl.internal.cst.DotOrArrowEnum;
 import org.eclipse.ocl.internal.cst.FeatureCallExpCS;
+import org.eclipse.ocl.internal.cst.IfExpCS;
 import org.eclipse.ocl.internal.cst.LiteralExpCS;
 import org.eclipse.ocl.internal.cst.OCLExpressionCS;
 import org.eclipse.ocl.internal.cst.OperationCallExpCS;
@@ -239,6 +241,30 @@ public class QvtOperationalVisitorCS
 		OCLExpression<EClassifier> literalExpCS = literalExpCS(stringLiteralExpCS, env);
 		StringLiteralExp stringLiteralExp = (StringLiteralExp) literalExpCS;
         return stringLiteralExp.getStringSymbol();
+	}
+	
+	@Override
+	protected IfExp<EClassifier> ifExpCS(
+			IfExpCS ifExpCS,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env)
+			throws SemanticException {
+		boolean isElseMissed = false;
+		if (ifExpCS.getElseExpression() == null) {
+			isElseMissed = true;
+			ifExpCS.setElseExpression(createNullLiteralExpCS("null")); //$NON-NLS-1$
+		}
+		IfExp<EClassifier> ifExp = super.ifExpCS(ifExpCS, env);
+		
+		EObject container = ifExpCS.eContainer();
+		if (container instanceof PatternPropertyExpCS 
+				|| container instanceof VariableInitializationCS) {
+			if (isElseMissed) {
+				((QvtOperationalEnv)env).reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ifExpWithoutElseAssignment,
+						new Object[] { }), ifExpCS);
+			}
+		}
+		
+		return ifExp;
 	}
 
 	@Override

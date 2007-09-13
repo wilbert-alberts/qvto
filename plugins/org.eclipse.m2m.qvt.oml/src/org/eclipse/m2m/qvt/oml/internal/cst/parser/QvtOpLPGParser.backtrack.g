@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.13 2007/09/13 13:10:53 sboyko Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.14 2007/09/13 13:58:15 sboyko Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -355,7 +355,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.13 2007/09/13 13:10:53 sboyko Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.14 2007/09/13 13:58:15 sboyko Exp $
  */
 	./
 $End
@@ -2800,7 +2800,7 @@ $Rules
 					CSTNode result = createIfExpCS(
 							(OCLExpressionCS)$getSym(2),
 							(OCLExpressionCS)$getSym(4),
-							createNullLiteralExpCS("null") //$NON-NLS-1$
+							null
 						);
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
 					$setResult(result);
