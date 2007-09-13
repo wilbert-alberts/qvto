@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.12 2007/09/13 09:32:21 sboyko Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.13 2007/09/13 13:10:53 sboyko Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -92,6 +92,7 @@ $DropRules
 
 	-- 'if' extension in QVT
 	ifExpCSPrec -> ifExpCS
+	ifExpCS ::= if oclExpressionCS then oclExpressionCS else oclExpressionCS endif
 
 	-- error in OCLLPGParser.g in definition of type-argued calls
 	operationCallExpCS ::= oclAsType isMarkedPreCS '(' argumentsCSopt ')'
@@ -267,6 +268,7 @@ $Globals
 	import org.eclipse.m2m.qvt.oml.internal.cst.ResolveInExpCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.VariableInitializationCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.WhileExpCS;
+	import org.eclipse.m2m.qvt.oml.internal.cst.BlockExpCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.ModelTypeCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.PackageRefCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.ElementWithBody;
@@ -353,7 +355,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.12 2007/09/13 09:32:21 sboyko Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.13 2007/09/13 13:10:53 sboyko Exp $
  */
 	./
 $End
@@ -723,6 +725,12 @@ $Headers
 			WhileExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createWhileExpCS();
 			result.setCondition(cond);
 			result.setResult(res);
+			result.getBodyExpressions().addAll(expressions);
+			return result;
+		}
+
+		private CSTNode createBlockExpCS(EList expressions) {
+			BlockExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createBlockExpCS();
 			result.getBodyExpressions().addAll(expressions);
 			return result;
 		}
@@ -2757,8 +2765,49 @@ $Rules
 	argumentsCS ::= qvtErrorToken
 		/.$EmptyListAction./	
 	argumentsCS -> argumentsCS ',' qvtErrorToken
+	
+	ifExpBodyCS -> oclExpressionCS
+	ifExpBodyCS ::= '{' statementListOpt '}'
+		/.$BeginJava
+					EList bodyList = (EList) $getSym(2);
+					CSTNode result = createBlockExpCS(
+							bodyList
+						);
+					if (bodyList.isEmpty()) {
+						setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
+					}
+					else {
+						setOffsets(result, (CSTNode) bodyList.get(0), (CSTNode) bodyList.get(bodyList.size()-1));
+					}
+					$setResult(result);
+		  $EndJava
+		./
 
-	ifExpCS ::= if oclExpressionCS then oclExpressionCS else oclExpressionCS qvtErrorToken
+	ifExpCS ::= if oclExpressionCS then ifExpBodyCS else ifExpBodyCS endif
+		/.$BeginJava
+					CSTNode result = createIfExpCS(
+							(OCLExpressionCS)$getSym(2),
+							(OCLExpressionCS)$getSym(4),
+							(OCLExpressionCS)$getSym(6)
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	ifExpCS ::= if oclExpressionCS then ifExpBodyCS endif
+		/.$BeginJava
+					CSTNode result = createIfExpCS(
+							(OCLExpressionCS)$getSym(2),
+							(OCLExpressionCS)$getSym(4),
+							createNullLiteralExpCS("null") //$NON-NLS-1$
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	ifExpCS ::= if oclExpressionCS then ifExpBodyCS else ifExpBodyCS qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createIfExpCS(
 							(OCLExpressionCS)$getSym(2),
@@ -2770,7 +2819,7 @@ $Rules
 		  $EndJava
 		./
 
-	ifExpCS ::= if oclExpressionCS then oclExpressionCS else qvtErrorToken
+	ifExpCS ::= if oclExpressionCS then ifExpBodyCS else qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createIfExpCS(
 							(OCLExpressionCS)$getSym(2),
@@ -2782,7 +2831,7 @@ $Rules
 		  $EndJava
 		./
 
-	ifExpCS ::= if oclExpressionCS then oclExpressionCS qvtErrorToken
+	ifExpCS ::= if oclExpressionCS then ifExpBodyCS qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createIfExpCS(
 							(OCLExpressionCS)$getSym(2),

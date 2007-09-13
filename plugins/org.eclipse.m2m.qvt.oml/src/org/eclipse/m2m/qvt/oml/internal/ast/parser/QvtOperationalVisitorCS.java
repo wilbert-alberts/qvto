@@ -38,6 +38,7 @@ import org.eclipse.m2m.qvt.oml.compiler.ParsedModuleCS;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.EmfMmUtil;
 import org.eclipse.m2m.qvt.oml.expressions.AssignExp;
+import org.eclipse.m2m.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage;
@@ -67,6 +68,7 @@ import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.GraphWalker;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.GraphWalker.NodeProvider;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.GraphWalker.VertexProcessor;
 import org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.BlockExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ConfigPropertyCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ExpressionStatementCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ImportCS;
@@ -244,6 +246,9 @@ public class QvtOperationalVisitorCS
 			OCLExpressionCS oclExpressionCS,
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env)
 			throws SemanticException {
+		if (oclExpressionCS instanceof BlockExpCS) {
+			return visitBlockExpCS((BlockExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+		}
 		if (oclExpressionCS instanceof WhileExpCS) {
 			return visitWhileExpCS((WhileExpCS) oclExpressionCS, (QvtOperationalEnv) env);
 		}
@@ -298,7 +303,7 @@ public class QvtOperationalVisitorCS
 		return expr;
 	}
 	
-    @Override
+	@Override
     protected OCLExpression<EClassifier> literalExpCS(
             LiteralExpCS literalExpCS,
             Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env)
@@ -414,6 +419,23 @@ public class QvtOperationalVisitorCS
 
 		return result;
 	}
+
+    private OCLExpression<EClassifier> visitBlockExpCS(BlockExpCS expressionCS, QvtOperationalEnv env)
+    		throws SemanticException {
+		BlockExp result = ExpressionsFactory.eINSTANCE.createBlockExp();
+		result.setStartPosition(expressionCS.getStartOffset());
+		result.setEndPosition(expressionCS.getEndOffset());
+		result.setType(env.getOCLStandardLibrary().getOclVoid());
+
+		for (OCLExpressionCS oclExpCS : expressionCS.getBodyExpressions()) {
+			OCLExpression<EClassifier> bodyExp = visitOclExpressionCS(oclExpCS, env);
+			if (bodyExp != null) {
+    				result.getBody().add(bodyExp);
+			}
+		}
+
+		return result;
+    }
 
 	private OCLExpression<EClassifier> visitWhileExpCS(WhileExpCS expressionCS, QvtOperationalEnv env)
 			throws SemanticException {
@@ -1443,8 +1465,17 @@ public class QvtOperationalVisitorCS
             result.setEndPosition(varInitCS.getEndOffset());
             return result;
         }
-		MappingDeclarationCS mappingDeclCS = ((MappingMethodCS) varInitCS.eContainer().eContainer())
-				.getMappingDeclarationCS();
+        MappingMethodCS mappingMethod = null;
+        if (varInitCS.eContainer() instanceof MappingMethodCS) {
+        	mappingMethod = (MappingMethodCS) varInitCS.eContainer();
+        }
+        else if (varInitCS.eContainer().eContainer() instanceof MappingMethodCS) {
+        	mappingMethod = (MappingMethodCS) varInitCS.eContainer().eContainer();
+        }
+        if (mappingMethod == null) {
+        	return null;
+        }
+		MappingDeclarationCS mappingDeclCS = mappingMethod.getMappingDeclarationCS();
 		DirectionKind contextDirection = DirectionKind.IN;
 		if (mappingDeclCS.getDirectionKindCS() != null) {
 			contextDirection = (DirectionKind) ExpressionsFactory.eINSTANCE.createFromString(
