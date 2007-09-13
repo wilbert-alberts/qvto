@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpKWLexer.g,v 1.3 2007/09/12 12:58:31 sboyko Exp $
+-- * $Id: QvtOpKWLexer.g,v 1.4 2007/09/13 09:32:21 sboyko Exp $
 -- */
 --
 -- The QVT KeyWord Lexer
@@ -39,6 +39,7 @@ $DropRules
 	KeyWord ::= p o s t
 	KeyWord ::= b o d y
 	KeyWord ::= c o n t e x t
+	KeyWord ::= p a c k a g e
 	KeyWord ::= e n d p a c k a g e
 	KeyWord ::= d e f
 	KeyWord ::= a t t r
@@ -55,7 +56,8 @@ $DropSymbols
 	endpackage
 	def
 	attr
-	oper  	
+	oper
+	derive
 	
 $End
 
@@ -74,7 +76,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpKWLexer.g,v 1.3 2007/09/12 12:58:31 sboyko Exp $
+ * $Id: QvtOpKWLexer.g,v 1.4 2007/09/13 09:32:21 sboyko Exp $
  */
 	./
 $End
@@ -118,6 +120,7 @@ $Export
 	static
 	result
 	main
+	this
 	
 	rename
 $End
@@ -360,6 +363,12 @@ $Rules
 		| m a i n
 		/.$BeginAction
 			$setResult($_main);
+		  $EndAction
+		./
+		
+		| t h i s
+		/.$BeginAction
+			$setResult($_this);
 		  $EndAction
 		./
 		

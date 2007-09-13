@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.11 2007/09/12 12:58:30 sboyko Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.12 2007/09/13 09:32:21 sboyko Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -333,6 +333,7 @@ $KeyWords
 	static
 	result
 	main
+	this
 	
 	rename
 $End
@@ -352,7 +353,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.11 2007/09/12 12:58:30 sboyko Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.12 2007/09/13 09:32:21 sboyko Exp $
  */
 	./
 $End
@@ -2584,6 +2585,8 @@ $Rules
 		  $EndJava
 		./
 		
+	simpleNameCS ::= this
+		/.$NewCase./
 	simpleNameCS ::= result
 		/.$BeginJava
 					CSTNode result = createSimpleNameCS(
@@ -2594,7 +2597,6 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-
 		
 	modelTypeExpCS ::= modeltype IDENTIFIER complianceKindCSOpt uses packageRefList modelTypeWhereCSOpt ;
 		/.$BeginJava
