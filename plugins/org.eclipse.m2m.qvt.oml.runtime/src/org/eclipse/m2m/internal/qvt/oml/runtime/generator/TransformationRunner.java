@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.common.Logger;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.emf.util.StatusUtil;
@@ -206,7 +206,7 @@ public class TransformationRunner {
         Method[] methods = tClass.getMethods();
         for (int i = 0; i < methods.length; i++) {
             Method method = methods[i];
-            if(!QvtOperationalUtil.MAIN_METHOD_NAME.equals(method.getName())) {
+            if(!QvtOperationalEnv.MAIN.equals(method.getName())) {
                 continue;
             }
             
