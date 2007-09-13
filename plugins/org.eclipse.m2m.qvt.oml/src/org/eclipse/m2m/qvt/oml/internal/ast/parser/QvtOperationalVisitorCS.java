@@ -1227,7 +1227,7 @@ public class QvtOperationalVisitorCS
 			contextType = env.getModuleContextType();//env.getOCLStandardLibrary().getOclVoid();
 		}
 
-		boolean isEntryPoint = QvtOperationalUtil.MAIN_METHOD_NAME.equals(mappingDeclarationCS.getSimpleNameCS().getValue());
+		boolean isEntryPoint = QvtOperationalEnv.MAIN.equals(mappingDeclarationCS.getSimpleNameCS().getValue());
 		TypeSpecPair returnTypeSpec;
 		if (mappingDeclarationCS.getReturnType() != null) {
 			returnTypeSpec = visitTypeSpecCS(mappingDeclarationCS.getReturnType(), DirectionKind.OUT, env);
@@ -1771,7 +1771,7 @@ public class QvtOperationalVisitorCS
 	}
 	
 	private void checkMainMappingConformance(QvtOperationalEnv env, ImperativeOperation operation) {
-		if (!QvtOperationalUtil.MAIN_METHOD_NAME.equals(operation.getName())
+		if (!QvtOperationalEnv.MAIN.equals(operation.getName())
 				|| ((Module) env.getModuleContextType()).getModelParameter().isEmpty()) {
 			return;
 		}

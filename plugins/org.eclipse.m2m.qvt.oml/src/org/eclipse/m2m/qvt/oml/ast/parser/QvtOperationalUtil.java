@@ -30,8 +30,6 @@ import org.eclipse.ocl.types.PrimitiveType;
 
 public class QvtOperationalUtil {
 
-	public static final String MAIN_METHOD_NAME = "main"; //$NON-NLS-1$
-	
 	private QvtOperationalUtil() {
 	}
 
