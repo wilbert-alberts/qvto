@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.15 2007/09/13 14:02:36 aigdalov Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.16 2007/09/14 13:40:49 aigdalov Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -367,7 +367,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.15 2007/09/13 14:02:36 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.16 2007/09/14 13:40:49 aigdalov Exp $
  */
 	./
 $End
@@ -2952,9 +2952,9 @@ $Rules
 					Object[] iterContents = (Object[])$getSym(3);
 					CSTNode result = createIteratorExpCS(
 							simpleNameCS,
-							(VariableCS)iterContents[0],
-							(VariableCS)iterContents[1],
-							(OCLExpressionCS)iterContents[2]
+							null,
+							null,
+							null
 						);
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(2)));
 					$setResult(result);
