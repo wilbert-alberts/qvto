@@ -245,6 +245,53 @@ public class EmfUtil {
             return pack.getName();
         }
     }
+    
+    /**
+	 * Get the given package full name relative to the specified owning package
+	 * 
+	 * @param ePackage
+	 *            the package of which to retrieve the full name
+	 * @param baseOwningPackage
+	 *            the package representing the root context for relative name
+	 *            resolution.
+	 *            <p>
+	 *            This package and its possible super-packages will be excluded
+	 *            from the full-name. If it is the immediate owning package of
+	 *            the <code>ePackage</code>, the local name of <code>ePackage</code> is
+	 *            returned.
+	 */    
+    public static String getFullNameRelativeToPackage(EPackage ePackage, EPackage baseQwningPackage) {
+    	String delim = "::"; //$NON-NLS-1$
+        if(ePackage.getESuperPackage() != null && ePackage.getESuperPackage() != baseQwningPackage) {
+            return getFullName(ePackage.getESuperPackage(), delim) + delim + ePackage.getName();
+        } else {
+            return ePackage.getName();
+        }
+    }
+    
+    /**
+	 * Get the given classifier's full name relative to the specified owning package
+	 * 
+	 * @param eClassifier
+	 *            the classifier of which to retrieve name
+	 * @param baseOwningPackage
+	 *            the package representing the root context for relative name
+	 *            resolution.
+	 *            <p>
+	 *            This package and its possible super-packages will be excluded
+	 *            from the full-name. If it is the immediate owning package of
+	 *            the given classifier, the local name of the classifier is
+	 *            returned.
+	 */
+    public static String getFullNameRelativeToPackage(EClassifier eClassifier, EPackage baseOwningPackage) {
+		EPackage immediateOwner = eClassifier.getEPackage();
+		
+		if(baseOwningPackage != null && immediateOwner != null && baseOwningPackage != immediateOwner) {
+			String parentName = EmfUtil.getFullNameRelativeToPackage(immediateOwner, baseOwningPackage);
+			return parentName + "::" + eClassifier.getName(); //$NON-NLS-1$
+		}
+		return eClassifier.getName();		
+	}
 
     public static String getMetamodelName(EPackage pack) {
     	String name = pack.getName();
