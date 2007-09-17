@@ -14,8 +14,6 @@ package org.eclipse.m2m.tests.qvt.oml;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.eclipse.m2m.qvt.oml.internal.ast.parser.ValidationMessages;
-
 public class ParserTests {
     public static Test suite() {
         TestSuite suite = new TestSuite("QVT parser"); //$NON-NLS-1$
@@ -29,7 +27,7 @@ public class ParserTests {
     }
     
     public static class TestData {
-        public TestData(String dir, int errCount) { this(dir, errCount, null); } 
+        public TestData(String dir, int errCount) { this(dir, errCount, new String[0]); } 
         public TestData(String dir, int errCount, String... warnings) { 
             myDir = dir; 
             myErrCount = errCount; 
