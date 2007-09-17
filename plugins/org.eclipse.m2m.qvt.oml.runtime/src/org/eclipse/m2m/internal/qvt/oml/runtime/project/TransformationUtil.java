@@ -27,5 +27,12 @@ public class TransformationUtil {
         }
     }
     
+    public static void getWarnings(CompiledModule module, List<QvtMessage> warnings) {
+        warnings.addAll(Arrays.asList(module.getWarnings()));
+        for (CompiledModule imp : module.getCompiledImports()) {
+            getWarnings(imp, warnings);
+        }
+    }
+    
     public static final String DEFAULT_RESULT_EXTENSION = "psm"; //$NON-NLS-1$
 }
