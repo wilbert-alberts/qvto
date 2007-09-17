@@ -1243,7 +1243,11 @@ public class QvtOperationalVisitorCS
 
 		EClassifier returnType = (helper.getResult().isEmpty() ? null : helper.getResult().get(0).getEType());
 		EClassifier helperType = (body.getContent().size() == 1 ? body.getContent().get(0).getType() : null);
-		if (helperType != null && !QvtOperationalParserUtil.isAssignableToFrom(env, returnType, helperType)) {
+		if (QvtOperationalEnv.MAIN.equals(helper.getName()) 
+				&& (returnType == null || returnType == env.getOCLStandardLibrary().getOclVoid())) {
+			// OK
+		}
+		else  if (helperType != null && !QvtOperationalParserUtil.isAssignableToFrom(env, returnType, helperType)) {
 			env.reportError(NLS.bind(ValidationMessages.bodyTypeNotCompatibleWithReturnTypeError, new Object[] {
 			        QvtOperationalTypesUtil.getTypeFullName(helperType), QvtOperationalTypesUtil.getTypeFullName(returnType) }),
 					methodCS.getMappingDeclarationCS());

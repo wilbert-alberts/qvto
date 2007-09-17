@@ -86,12 +86,8 @@ public class QvtOperationalParser {
 
 	public Module analyze(final ParsedModuleCS moduleCS, final QvtCompiler compiler, QvtOperationalFileEnv env, QvtCompilerOptions options) {
 		Module module = null;
-		List<QvtMessage> parentWarnings = new ArrayList<QvtMessage>(env != null ? env.getWarningsList() : Collections.<QvtMessage>emptyList());
-		List<QvtMessage> parentErrors = new ArrayList<QvtMessage>(env != null ? env.getErrorsList() : Collections.<QvtMessage>emptyList());
-		
+	
 		myEnv = env;
-		
-		
 		myEnv.setErrorRecordFlag(options.isReportErrors());
 		try {
 			OCLLexer oclLexer = new OCLLexer();
@@ -104,20 +100,6 @@ public class QvtOperationalParser {
 			getErrorsList().add(new QvtMessage(e.getLocalizedMessage(), 0, 0));
 		} catch (IOException e) {
 			getErrorsList().add(new QvtMessage(e.getLocalizedMessage(), 0, 0));
-		}
-		
-		if (env != null) {
-			 
-/*			List<QvtMessage> newWarnings = new ArrayList<QvtMessage>(env.getWarningsList());
-			newWarnings.removeAll(parentWarnings);
-			List<QvtMessage> newErrors = new ArrayList<QvtMessage>(env.getErrorsList());
-			newErrors.removeAll(parentErrors);
-			
-			myEnv.getWarningsList().addAll(newWarnings);
-			myEnv.getErrorsList().addAll(newErrors);
-			env.getWarningsList().removeAll(newWarnings);
-			env.getErrorsList().removeAll(newErrors);
-*/			
 		}
 		
 		return module;

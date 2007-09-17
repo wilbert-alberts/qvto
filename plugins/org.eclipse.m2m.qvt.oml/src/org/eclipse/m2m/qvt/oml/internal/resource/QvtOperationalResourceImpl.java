@@ -56,7 +56,7 @@ public class QvtOperationalResourceImpl extends XMIResourceImpl {
     		
             try {
             	URI normalizedUri = getURIConverter().normalize(getURI());
-            	CompiledModule compiledModule = QvtCompilerFacade.getCompiledModule(normalizedUri);
+            	CompiledModule compiledModule = QvtCompilerFacade.getCompiledModule(normalizedUri).getCompiledModule();
 				fillCompilationDiagnostic(compiledModule, normalizedUri);
 
 				if (compiledModule.getModule() == null) {

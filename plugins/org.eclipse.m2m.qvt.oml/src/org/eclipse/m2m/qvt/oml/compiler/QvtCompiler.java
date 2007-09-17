@@ -245,8 +245,7 @@ public class QvtCompiler {
 
         List<CompiledModule> compiledImports = importCompiler.compileImports(mma);            	
         
-    	QvtOperationalEnv parentEnv = null; 
-    	QvtOperationalFileEnv moduleEnv = new QvtOperationalEnvFactory().createEnvironment(parentEnv, mma.getSource(), this);
+    	QvtOperationalFileEnv moduleEnv = new QvtOperationalEnvFactory().createEnvironment(null, mma.getSource(), this);
     	// setup import environments
     	for (ParsedModuleCS parsedImport : mma.getParsedImports()) {
     		if(myModule2EnvMap.containsKey(parsedImport)) {
@@ -337,7 +336,10 @@ public class QvtCompiler {
     
     private ParsedModuleCS getImportedModule(final CFile source, final String qualifiedName) {
     	CFile importSource = myImportResolver.resolveImport(qualifiedName);
-    	if(importSource == null) {
+//    	if (importSource == null) {
+//    		importSource = new IOImportResolver(source).resolveImport(qualifiedName);
+//    	}
+    	if (importSource == null) {
     		return null;
     	}
         try {
@@ -380,7 +382,6 @@ public class QvtCompiler {
     private class ImportCompiler {
     	private final Map<ParsedModuleCS, List<ParsedModuleCS>> myRemovedCycles;    	
     	private final QvtCompilerOptions myCompilerOptions;    	
-    	private final List<ParsedModuleCS> myProcessedImporters = new ArrayList<ParsedModuleCS>();
     	
 		ImportCompiler(Map<ParsedModuleCS, List<ParsedModuleCS>> removedCycles, QvtCompilerOptions options) {
 			this.myRemovedCycles = removedCycles;

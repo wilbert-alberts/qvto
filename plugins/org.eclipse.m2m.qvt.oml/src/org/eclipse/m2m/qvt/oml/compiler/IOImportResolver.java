@@ -26,6 +26,10 @@ public class IOImportResolver implements IImportResolver {
 	public IOImportResolver(File root) {
 		myRoot = root;
 	}
+
+	public IOImportResolver(CFile root) {
+		myRoot = new File(root.getParent().getFullPath());
+	}
 	
 	public CFile resolveImport(String importedUnitName) {
         String path = importedUnitName.replace('.', '/');

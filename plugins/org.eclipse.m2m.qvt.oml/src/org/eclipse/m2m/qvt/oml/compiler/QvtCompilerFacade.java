@@ -11,6 +11,13 @@ import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
 
 public class QvtCompilerFacade {
+	public static interface CompilationResult {
+		
+		QvtCompiler getCompiler();
+		
+		CompiledModule getCompiledModule();
+	}
+	
 	private QvtCompilerFacade() {
 	}
 
@@ -21,13 +28,13 @@ public class QvtCompilerFacade {
 	 * @return
 	 * @throws MdaException
 	 */
-	public static CompiledModule getCompiledModule(URI uriTransf) throws MdaException {
+	public static CompilationResult getCompiledModule(URI uriTransf) throws MdaException {
 		QvtCompilerOptions compilerOptions = new QvtCompilerOptions();
 		compilerOptions.setGenerateCompletionData(false);
 		return getCompiledModule(uriTransf, compilerOptions, null);
 	}
 	
-	public static CompiledModule getCompiledModule(URI uriTransf, QvtCompilerOptions compilerOptions, IProgressMonitor monitor) throws MdaException {
+	public static CompilationResult getCompiledModule(URI uriTransf, QvtCompilerOptions compilerOptions, IProgressMonitor monitor) throws MdaException {
         if (monitor == null) {
             monitor = new NullProgressMonitor();
         }
@@ -40,8 +47,19 @@ public class QvtCompilerFacade {
 			
 			monitor.worked(1);
 
-			return QvtEngine.getInstance(ifile).compile(new EclipseFile(ifile), compilerOptions,
+			QvtEngine qvtEngine = QvtEngine.getInstance(ifile);
+			final CompiledModule module = qvtEngine.compile(new EclipseFile(ifile), compilerOptions,
 					new SubProgressMonitor(monitor, 2)).getModule();
+			final QvtCompiler compiler = qvtEngine.getCompiler();
+			
+			return new CompilationResult() {
+				public CompiledModule getCompiledModule() {
+					return module;
+				}
+				public QvtCompiler getCompiler() {
+					return compiler;
+				}				
+			};
         }
         finally {
             monitor.done();
