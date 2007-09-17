@@ -35,6 +35,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.m2m.qvt.oml.builder.QvtBuilder;
 import org.eclipse.m2m.qvt.oml.common.Logger;
 import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.qvt.oml.editor.ui.actions.OpenDeclarationAction;
 import org.eclipse.m2m.qvt.oml.editor.ui.outline.QvtOutlineContentProvider;
 import org.eclipse.m2m.qvt.oml.editor.ui.outline.QvtOutlineInput;
 import org.eclipse.m2m.qvt.oml.editor.ui.outline.QvtOutlineLabelProvider;
@@ -58,6 +59,7 @@ import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 public class QvtEditor extends TextEditor {
+	private static final String QVT_EDITOR_UI_CONTEXT = "org.eclipse.m2m.qvt.oml.editor.ui.context";
 	public final static String ID = "org.eclipse.m2m.qvt.oml.editor.ui.QvtEditor"; //$NON-NLS-1$
     protected final static String MATCHING_BRACKETS = "matchingBrackets"; //$NON-NLS-1$
     protected final static String MATCHING_BRACKETS_COLOR = "matchingBracketsColor"; //$NON-NLS-1$
@@ -71,6 +73,11 @@ public class QvtEditor extends TextEditor {
         setEditorContextMenuId("#QvtEditorContext");   //$NON-NLS-1$
         
         QvtBuilder.addBuildListener(myBuildListener);
+    }
+    
+    @Override
+    protected void initializeKeyBindingScopes() {
+    	setKeyBindingScopes(new String[] { QVT_EDITOR_UI_CONTEXT });    
     }
     
     @Override
@@ -270,6 +277,11 @@ public class QvtEditor extends TextEditor {
         action.setActionDefinitionId(ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS);
         setAction("ContentAssistProposal", action); //$NON-NLS-1$
 		markAsStateDependentAction("ContentAssistProposal", true); //$NON-NLS-1$
+		
+		action = new OpenDeclarationAction(ActionMessages.getResourceBundle(), "OpenDeclaration", this); //$NON-NLS-1$
+ 
+		setAction(action.getActionDefinitionId(), action);
+
     }
     
     

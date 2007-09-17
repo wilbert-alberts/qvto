@@ -23,6 +23,8 @@ public class Messages extends NLS {
 	public static String QvtCompilerFacade_acquiringDoc;
 	
 	public static String QvtAnnotationHover_multipleMarkers;
+
+	public static String OpenDeclarationAction_selectionDoesNotResolveToElement;	
 	
 	static {
 		// initialize resource bundle

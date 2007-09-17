@@ -56,6 +56,7 @@ public class QvtEditorActionContributor extends BasicTextEditorActionContributor
 
         myPreviousAnnotation.setEditor(textEditor);
         myNextAnnotation.setEditor(textEditor);
+       // myOpenAction.setEditor(textEditor);
     }
 
     @Override
