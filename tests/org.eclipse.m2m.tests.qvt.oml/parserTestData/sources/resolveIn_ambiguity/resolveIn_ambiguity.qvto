@@ -1,0 +1,26 @@
+modeltype A uses ecore('http://www.eclipse.org/emf/2002/Ecore');
+	
+transformation resolveIn_ambiguity();
+
+mapping main(in model: ecore::EPackage): ecore::EPackage {
+	init {
+		var tmp := model.createEClass();
+		model.createEClass(1);
+	}
+    object {
+    	name := 'a';
+    	eClassifiers := resolveIn(ecore::ENamedElement::createEClass, ecore::EClass)->asOrderedSet();
+    }
+}
+
+mapping ecore::ENamedElement::createEClass() : ecore::EClass {
+	object {
+		name := 'mapped1' + self.name;
+	}
+}
+
+mapping ecore::ENamedElement::createEClass(in i : Integer) : ecore::EClass {
+	object {
+		name := 'mapped2' + self.name;
+	}
+}
