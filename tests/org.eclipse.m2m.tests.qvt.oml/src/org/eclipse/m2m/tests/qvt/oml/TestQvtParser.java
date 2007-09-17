@@ -14,6 +14,7 @@ package org.eclipse.m2m.tests.qvt.oml;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,6 +99,17 @@ public class TestQvtParser extends TestCase {
 		assertTrue("No results", compiled.length > 0); //$NON-NLS-1$
 		List<QvtMessage> allErrors = getAllErrors(compiled);
 		assertEquals("Wrong error count for '" + folder.getName() + "', error(s)=" + allErrors, myData.getErrCount(), allErrors.size()); //$NON-NLS-1$ //$NON-NLS-2$
+		if (myData.getWarnings() != null) {
+	        List<QvtMessage> allWarnings = getAllWarnings(compiled);
+	        expectedWarningsCycle : for (String expectedWarning : myData.getWarnings()) {
+	            for (QvtMessage qvtMessage : allWarnings) {
+	                if (expectedWarning.equals(qvtMessage.getMessage())) {
+	                    continue expectedWarningsCycle;
+	                }
+	            }
+	            fail(MessageFormat.format("Expected warning {0} not found!", new Object[] {expectedWarning})); //$NON-NLS-1$
+	        }
+		}
 	}
 	
     static class CompositeException extends Exception {
@@ -124,14 +136,23 @@ public class TestQvtParser extends TestCase {
         private final List<Throwable> myExceptions;
     }
     
-	private List<QvtMessage> getAllErrors(QvtCompilationResult[] compiled) {
-		List<QvtMessage> errors = new ArrayList<QvtMessage>();
-		for (QvtCompilationResult compilationResult : compiled) {
-			TransformationUtil.getErrors(compilationResult.getModule(), errors);
-		}
+    private List<QvtMessage> getAllErrors(QvtCompilationResult[] compiled) {
+        List<QvtMessage> errors = new ArrayList<QvtMessage>();
+        for (QvtCompilationResult compilationResult : compiled) {
+            TransformationUtil.getErrors(compilationResult.getModule(), errors);
+        }
 
-		return errors;
-	}
+        return errors;
+    }
+    
+    private List<QvtMessage> getAllWarnings(QvtCompilationResult[] compiled) {
+        List<QvtMessage> warnings = new ArrayList<QvtMessage>();
+        for (QvtCompilationResult compilationResult : compiled) {
+            TransformationUtil.getWarnings(compilationResult.getModule(), warnings);
+        }
+
+        return warnings;
+    }
     
 	private QvtCompilationResult[] compile(File folder) throws Exception {
 		final String topName = folder.getName() + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT;

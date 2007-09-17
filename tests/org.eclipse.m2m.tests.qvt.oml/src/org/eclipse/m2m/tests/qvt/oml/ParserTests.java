@@ -14,6 +14,8 @@ package org.eclipse.m2m.tests.qvt.oml;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.eclipse.m2m.qvt.oml.internal.ast.parser.ValidationMessages;
+
 public class ParserTests {
     public static Test suite() {
         TestSuite suite = new TestSuite("QVT parser"); //$NON-NLS-1$
@@ -27,13 +29,20 @@ public class ParserTests {
     }
     
     public static class TestData {
-        public TestData(String dir, int errCount) { myDir = dir; myErrCount = errCount; } 
+        public TestData(String dir, int errCount) { this(dir, errCount, null); } 
+        public TestData(String dir, int errCount, String... warnings) { 
+            myDir = dir; 
+            myErrCount = errCount; 
+            myWarnings = warnings; 
+        } 
         
         public String getDir() { return myDir; }
         public int getErrCount() { return myErrCount; }
+        public String[] getWarnings() { return myWarnings; }
         
         private final String myDir;
         private final int myErrCount;
+        private final String[] myWarnings;
     }
     
     static TestData[] ourData = new TestData[] {
@@ -108,5 +117,6 @@ public class ParserTests {
         new TestData("mm_header5", 2), //$NON-NLS-1$
         new TestData("mm_header6", 2), //$NON-NLS-1$
         new TestData("entryOpDupl", 1), //$NON-NLS-1$
+        new TestData("resolveIn_ambiguity", 0, "Mappings referred in resolveIn must not be overloaded! Several 'ENamedElement::createEClass' mappings found. All of them will participate in resolution."), //$NON-NLS-1$ //$NON-NLS-2$
     };
 }

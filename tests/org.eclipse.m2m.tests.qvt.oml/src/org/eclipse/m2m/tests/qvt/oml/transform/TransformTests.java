@@ -219,6 +219,7 @@ public class TransformTests {
         new FileToFileData("resolve_invresolveoneIn"), //$NON-NLS-1$        
         new FileToFileData("resolve_lateresolveoneIn"), //$NON-NLS-1$        
         new FileToFileData("resolve_lateresolveoneInaccess"), //$NON-NLS-1$        
+        new FileToFileData("resolveIn_ambiguity") //$NON-NLS-1$        
 //        new MyUmlToMyUmlData("eobjectmodelopcall", "eobjectmodelopcallsource", "eobjectmodelopcalldest"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 // */        
     	};
