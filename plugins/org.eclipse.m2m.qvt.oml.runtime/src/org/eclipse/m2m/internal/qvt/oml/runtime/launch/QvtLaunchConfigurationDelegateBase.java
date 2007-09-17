@@ -51,6 +51,7 @@ import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.m2m.qvt.oml.library.Context;
 import org.eclipse.m2m.qvt.oml.library.IConfiguration;
 import org.eclipse.m2m.qvt.oml.library.IContext;
+import org.eclipse.m2m.qvt.oml.trace.Trace;
 import org.eclipse.osgi.util.NLS;
 
 public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigurationDelegate {
@@ -122,11 +123,42 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         doLaunch(transformation, inObjects, targetData, qvtConfiguration, traceFileName, context);
     }
     
-    public static List<URI> doLaunch(final QvtTransformation transformation, final List<EObject> inObjs, List<TargetUriData> targetData, IConfiguration configuration, final String traceFileName) throws Exception {
+    public static List<URI> doLaunch(final QvtTransformation transformation, final List<EObject> inObjs,
+    		List<TargetUriData> targetData, IConfiguration configuration, final String traceFileName) throws Exception {
     	return doLaunch(transformation, inObjs, targetData, configuration, traceFileName, new Context(configuration));
     }
-    
-    private static List<URI> doLaunch(final QvtTransformation transformation, final List<EObject> inObjs, List<TargetUriData> targetData, IConfiguration configuration, final String traceFileName, IContext context) throws Exception {
+
+    public static void doLaunch(QvtTransformation transformation, List<EObject> inObjs, IConfiguration configuration,
+    		List<Resource> outExtents, List<EObject> outMainParams, List<Trace> outTraces) throws MdaException {
+    	Context context = new Context(configuration);    	
+    	try {
+	        context.launch();
+	    	
+	        TransformationRunner.In in = new TransformationRunner.In(inObjs.toArray(new EObject[inObjs.size()]), context);
+	        TransformationRunner.Out out = transformation.run(in);
+	
+	        outExtents.addAll(out.getExtents());
+	
+	        for (Object outValue : out.getOutParamValues()) {
+	        	if (outValue instanceof EObject) {
+	        		outMainParams.add((EObject) outValue);
+	        	}
+	        	else {
+	        		outMainParams.add(null);
+	        	}
+	        }
+	        
+	        if (out.getTrace() != null) {
+	        	outTraces.add(out.getTrace());
+	        }
+    	}
+    	finally {
+    		context.release();
+    	}
+    }
+        
+    private static List<URI> doLaunch(final QvtTransformation transformation, final List<EObject> inObjs,
+    		List<TargetUriData> targetData, IConfiguration configuration, final String traceFileName, IContext context) throws Exception {
         context.launch();
     	
         TransformationRunner.In in = new TransformationRunner.In(inObjs.toArray(new EObject[inObjs.size()]), context);
