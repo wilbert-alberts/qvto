@@ -284,7 +284,7 @@
       </genClasses>
       <genClasses ecoreClass="QVTOperational.ecore#//expressions/ResolveInExp">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference QVTOperational.ecore#//expressions/ResolveInExp/inMapping"/>
+            ecoreFeature="ecore:EReference QVTOperational.ecore#//expressions/ResolveInExp/inMappings"/>
         <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ResolveInExp/accept">
           <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ResolveInExp/accept/v"/>
           <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/ResolveInExp/accept/T"/>

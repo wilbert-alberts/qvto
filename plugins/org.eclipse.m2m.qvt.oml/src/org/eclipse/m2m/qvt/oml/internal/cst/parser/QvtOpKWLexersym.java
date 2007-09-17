@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpKWLexersym.java,v 1.16 2007/09/14 13:40:48 aigdalov Exp $
+* $Id: QvtOpKWLexersym.java,v 1.17 2007/09/17 10:17:37 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpKWLexersym.java,v 1.16 2007/09/14 13:40:48 aigdalov Exp $
+* $Id: QvtOpKWLexersym.java,v 1.17 2007/09/17 10:17:37 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -37,33 +37,33 @@ package org.eclipse.m2m.qvt.oml.internal.cst.parser;
 public interface QvtOpKWLexersym {
     public final static int
       Char_DollarSign = 40,
-      Char_a = 5,
+      Char_a = 6,
       Char_b = 20,
-      Char_c = 11,
-      Char_d = 10,
+      Char_c = 10,
+      Char_d = 11,
       Char_e = 1,
       Char_f = 13,
       Char_g = 17,
-      Char_h = 29,
-      Char_i = 6,
-      Char_j = 30,
+      Char_h = 21,
+      Char_i = 5,
+      Char_j = 31,
       Char_k = 33,
       Char_l = 4,
       Char_m = 18,
-      Char_n = 2,
+      Char_n = 3,
       Char_o = 7,
       Char_p = 14,
-      Char_q = 21,
+      Char_q = 22,
       Char_r = 8,
       Char_s = 9,
-      Char_t = 3,
+      Char_t = 2,
       Char_u = 12,
       Char_v = 19,
-      Char_w = 31,
-      Char_x = 22,
+      Char_w = 23,
+      Char_x = 24,
       Char_y = 15,
       Char_z = 41,
-      Char_A = 23,
+      Char_A = 25,
       Char_B = 32,
       Char_C = 34,
       Char_D = 42,
@@ -76,14 +76,14 @@ public interface QvtOpKWLexersym {
       Char_K = 35,
       Char_L = 48,
       Char_M = 36,
-      Char_N = 24,
-      Char_O = 25,
+      Char_N = 26,
+      Char_O = 27,
       Char_P = 49,
       Char_Q = 50,
       Char_R = 37,
-      Char_S = 26,
-      Char_T = 27,
-      Char_U = 28,
+      Char_S = 28,
+      Char_T = 29,
+      Char_U = 30,
       Char_V = 38,
       Char_W = 51,
       Char_X = 52,
@@ -94,16 +94,16 @@ public interface QvtOpKWLexersym {
       public final static String orderedTerminalSymbols[] = {
                  "",
                  "e",
-                 "n",
                  "t",
+                 "n",
                  "l",
-                 "a",
                  "i",
+                 "a",
                  "o",
                  "r",
                  "s",
-                 "d",
                  "c",
+                 "d",
                  "u",
                  "f",
                  "p",
@@ -113,7 +113,9 @@ public interface QvtOpKWLexersym {
                  "m",
                  "v",
                  "b",
+                 "h",
                  "q",
+                 "w",
                  "x",
                  "A",
                  "N",
@@ -121,9 +123,7 @@ public interface QvtOpKWLexersym {
                  "S",
                  "T",
                  "U",
-                 "h",
                  "j",
-                 "w",
                  "B",
                  "k",
                  "C",

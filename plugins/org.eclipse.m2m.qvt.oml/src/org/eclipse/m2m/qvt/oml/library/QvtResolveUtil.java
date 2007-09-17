@@ -7,6 +7,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtOperationalEvaluationVisitorImpl;
@@ -42,8 +43,14 @@ public class QvtResolveUtil {
         List<TraceRecord> selectedTraceRecords = new ArrayList<TraceRecord>();
         Trace trace = visitor.getContext().getTrace();
         if (source == null) {
-            EList<TraceRecord> traceRecords = trace.getTraceRecordMap().get(resolveInExp.getInMapping());
-            if (traceRecords == null) {
+            List<TraceRecord> traceRecords = new ArrayList<TraceRecord>();
+            for (MappingOperation inMapping : resolveInExp.getInMappings()) {
+                EList<TraceRecord> inMappingTraceRecords = trace.getTraceRecordMap().get(inMapping);
+                if (inMappingTraceRecords != null) {
+                    traceRecords.addAll(inMappingTraceRecords);
+                }
+            }
+            if (traceRecords.isEmpty()) {
                 return createEmptyCollectionOrNull(resolveInExp);
             }
             selectedTraceRecords.addAll(traceRecords);
@@ -55,8 +62,10 @@ public class QvtResolveUtil {
                 return createEmptyCollectionOrNull(resolveInExp);
             }
             for (TraceRecord traceRecord : traceRecords) {
-                if (traceRecord.getMappingOperation().getRuntimeMappingOperation().equals(resolveInExp.getInMapping())) {
-                    selectedTraceRecords.add(traceRecord);
+                for (MappingOperation inMapping : resolveInExp.getInMappings()) {
+                    if (traceRecord.getMappingOperation().getRuntimeMappingOperation().equals(inMapping)) {
+                        selectedTraceRecords.add(traceRecord);
+                    }
                 }
             }
         }

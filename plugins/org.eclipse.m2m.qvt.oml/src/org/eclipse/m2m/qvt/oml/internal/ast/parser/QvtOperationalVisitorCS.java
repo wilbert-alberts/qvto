@@ -1653,9 +1653,9 @@ public class QvtOperationalVisitorCS
         ResolveInExp resolveInExp = ExpressionsFactory.eINSTANCE.createResolveInExp();
         TypeCS contextTypeCS = resolveInExpCS.getInMappingType();
         EClassifier eClassifier = (contextTypeCS == null) ? null : visitTypeCS(contextTypeCS, null, env); // mapping context type
+        eClassifier = eClassifier != null ? eClassifier : env.getModuleContextType(); 
         List<EOperation> mappingOperations = env.lookupMappingOperations(eClassifier, resolveInExpCS.getInMappingName());
         if (mappingOperations.size() == 1) {
-        	eClassifier = eClassifier != null ? eClassifier : env.getModuleContextType(); 
             env.registerResolveInExp(resolveInExp, eClassifier, resolveInExpCS.getInMappingName());
         } else {
             String mappingFQName = (eClassifier == null) ? "" : eClassifier.getName() + QvtOperationalTypesUtil.TYPE_NAME_SEPARATOR; //$NON-NLS-1$
@@ -1664,8 +1664,9 @@ public class QvtOperationalVisitorCS
                 env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ResolveInMappingNotFound, new Object[] {
                         mappingFQName}), resolveInExpCS);
             } else if (mappingOperations.size() > 1) {
-                env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ResolveInSeveralMappingsFound, new Object[] {
+                env.reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ResolveInSeveralMappingsFound, new Object[] {
                         mappingFQName}), resolveInExpCS);
+                env.registerResolveInExp(resolveInExp, eClassifier, resolveInExpCS.getInMappingName());
             }
         }
         return populateResolveExp(resolveInExpCS, env, resolveInExp);

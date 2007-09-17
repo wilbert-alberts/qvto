@@ -30,397 +30,397 @@ import org.eclipse.m2m.qvt.oml.expressions.*;
  */
 public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsFactory {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
     /**
-	 * Creates the default factory implementation.
-	 * <!-- begin-user-doc -->
+     * Creates the default factory implementation.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public static ExpressionsFactory init() {
-		try {
-			ExpressionsFactory theExpressionsFactory = (ExpressionsFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/qvt/1.0.0/Operational/Expressions"); //$NON-NLS-1$ 
-			if (theExpressionsFactory != null) {
-				return theExpressionsFactory;
-			}
-		}
-		catch (Exception exception) {
-			EcorePlugin.INSTANCE.log(exception);
-		}
-		return new ExpressionsFactoryImpl();
-	}
+        try {
+            ExpressionsFactory theExpressionsFactory = (ExpressionsFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/qvt/1.0.0/Operational/Expressions"); //$NON-NLS-1$ 
+            if (theExpressionsFactory != null) {
+                return theExpressionsFactory;
+            }
+        }
+        catch (Exception exception) {
+            EcorePlugin.INSTANCE.log(exception);
+        }
+        return new ExpressionsFactoryImpl();
+    }
 
 	/**
-	 * Creates an instance of the factory.
-	 * <!-- begin-user-doc -->
+     * Creates an instance of the factory.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public ExpressionsFactoryImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public EObject create(EClass eClass) {
-		switch (eClass.getClassifierID()) {
-			case ExpressionsPackage.MODULE: return createModule();
-			case ExpressionsPackage.LIBRARY: return createLibrary();
-			case ExpressionsPackage.RENAME: return createRename();
-			case ExpressionsPackage.MODULE_IMPORT: return createModuleImport();
-			case ExpressionsPackage.PROPERTY: return createProperty();
-			case ExpressionsPackage.LOCAL_PROPERTY: return createLocalProperty();
-			case ExpressionsPackage.CONFIG_PROPERTY: return createConfigProperty();
-			case ExpressionsPackage.IMPERATIVE_OPERATION: return createImperativeOperation();
-			case ExpressionsPackage.MODEL_PARAMETER: return createModelParameter();
-			case ExpressionsPackage.VAR_PARAMETER: return createVarParameter();
-			case ExpressionsPackage.OPERATION_BODY: return createOperationBody();
-			case ExpressionsPackage.MAPPING_OPERATION: return createMappingOperation();
-			case ExpressionsPackage.HELPER: return createHelper();
-			case ExpressionsPackage.MAPPING_BODY: return createMappingBody();
-			case ExpressionsPackage.ASSIGN_EXP: return createAssignExp();
-			case ExpressionsPackage.VARIABLE_INIT_EXP: return createVariableInitExp();
-			case ExpressionsPackage.MAPPING_CALL_EXP: return createMappingCallExp();
-			case ExpressionsPackage.BLOCK_EXP: return createBlockExp();
-			case ExpressionsPackage.OBJECT_EXP: return createObjectExp();
-			case ExpressionsPackage.WHILE_EXP: return createWhileExp();
-			case ExpressionsPackage.RESOLVE_EXP: return createResolveExp();
-			case ExpressionsPackage.RESOLVE_IN_EXP: return createResolveInExp();
-			case ExpressionsPackage.MODEL_TYPE: return createModelType();
-			case ExpressionsPackage.PACKAGE_REF: return createPackageRef();
-			case ExpressionsPackage.MAPPING_PARAMETER: return createMappingParameter();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
-		}
-	}
+        switch (eClass.getClassifierID()) {
+            case ExpressionsPackage.MODULE: return createModule();
+            case ExpressionsPackage.LIBRARY: return createLibrary();
+            case ExpressionsPackage.RENAME: return createRename();
+            case ExpressionsPackage.MODULE_IMPORT: return createModuleImport();
+            case ExpressionsPackage.PROPERTY: return createProperty();
+            case ExpressionsPackage.LOCAL_PROPERTY: return createLocalProperty();
+            case ExpressionsPackage.CONFIG_PROPERTY: return createConfigProperty();
+            case ExpressionsPackage.IMPERATIVE_OPERATION: return createImperativeOperation();
+            case ExpressionsPackage.MODEL_PARAMETER: return createModelParameter();
+            case ExpressionsPackage.VAR_PARAMETER: return createVarParameter();
+            case ExpressionsPackage.OPERATION_BODY: return createOperationBody();
+            case ExpressionsPackage.MAPPING_OPERATION: return createMappingOperation();
+            case ExpressionsPackage.HELPER: return createHelper();
+            case ExpressionsPackage.MAPPING_BODY: return createMappingBody();
+            case ExpressionsPackage.ASSIGN_EXP: return createAssignExp();
+            case ExpressionsPackage.VARIABLE_INIT_EXP: return createVariableInitExp();
+            case ExpressionsPackage.MAPPING_CALL_EXP: return createMappingCallExp();
+            case ExpressionsPackage.BLOCK_EXP: return createBlockExp();
+            case ExpressionsPackage.OBJECT_EXP: return createObjectExp();
+            case ExpressionsPackage.WHILE_EXP: return createWhileExp();
+            case ExpressionsPackage.RESOLVE_EXP: return createResolveExp();
+            case ExpressionsPackage.RESOLVE_IN_EXP: return createResolveInExp();
+            case ExpressionsPackage.MODEL_TYPE: return createModelType();
+            case ExpressionsPackage.PACKAGE_REF: return createPackageRef();
+            case ExpressionsPackage.MAPPING_PARAMETER: return createMappingParameter();
+            default:
+                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+        }
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
-		switch (eDataType.getClassifierID()) {
-			case ExpressionsPackage.DIRECTION_KIND:
-				return createDirectionKindFromString(eDataType, initialValue);
-			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
-		}
-	}
+        switch (eDataType.getClassifierID()) {
+            case ExpressionsPackage.DIRECTION_KIND:
+                return createDirectionKindFromString(eDataType, initialValue);
+            default:
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+        }
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
-		switch (eDataType.getClassifierID()) {
-			case ExpressionsPackage.DIRECTION_KIND:
-				return convertDirectionKindToString(eDataType, instanceValue);
-			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
-		}
-	}
+        switch (eDataType.getClassifierID()) {
+            case ExpressionsPackage.DIRECTION_KIND:
+                return convertDirectionKindToString(eDataType, instanceValue);
+            default:
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+        }
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Module createModule() {
-		ModuleImpl module = new ModuleImpl();
-		return module;
-	}
+        ModuleImpl module = new ModuleImpl();
+        return module;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Library createLibrary() {
-		LibraryImpl library = new LibraryImpl();
-		return library;
-	}
+        LibraryImpl library = new LibraryImpl();
+        return library;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Rename createRename() {
-		RenameImpl rename = new RenameImpl();
-		return rename;
-	}
+        RenameImpl rename = new RenameImpl();
+        return rename;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public ModuleImport createModuleImport() {
-		ModuleImportImpl moduleImport = new ModuleImportImpl();
-		return moduleImport;
-	}
+        ModuleImportImpl moduleImport = new ModuleImportImpl();
+        return moduleImport;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Property createProperty() {
-		PropertyImpl property = new PropertyImpl();
-		return property;
-	}
+        PropertyImpl property = new PropertyImpl();
+        return property;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public LocalProperty createLocalProperty() {
-		LocalPropertyImpl localProperty = new LocalPropertyImpl();
-		return localProperty;
-	}
+        LocalPropertyImpl localProperty = new LocalPropertyImpl();
+        return localProperty;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public ConfigProperty createConfigProperty() {
-		ConfigPropertyImpl configProperty = new ConfigPropertyImpl();
-		return configProperty;
-	}
+        ConfigPropertyImpl configProperty = new ConfigPropertyImpl();
+        return configProperty;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public ImperativeOperation createImperativeOperation() {
-		ImperativeOperationImpl imperativeOperation = new ImperativeOperationImpl();
-		return imperativeOperation;
-	}
+        ImperativeOperationImpl imperativeOperation = new ImperativeOperationImpl();
+        return imperativeOperation;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public ModelParameter createModelParameter() {
-		ModelParameterImpl modelParameter = new ModelParameterImpl();
-		return modelParameter;
-	}
+        ModelParameterImpl modelParameter = new ModelParameterImpl();
+        return modelParameter;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public VarParameter createVarParameter() {
-		VarParameterImpl varParameter = new VarParameterImpl();
-		return varParameter;
-	}
+        VarParameterImpl varParameter = new VarParameterImpl();
+        return varParameter;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public OperationBody createOperationBody() {
-		OperationBodyImpl operationBody = new OperationBodyImpl();
-		return operationBody;
-	}
+        OperationBodyImpl operationBody = new OperationBodyImpl();
+        return operationBody;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public MappingOperation createMappingOperation() {
-		MappingOperationImpl mappingOperation = new MappingOperationImpl();
-		return mappingOperation;
-	}
+        MappingOperationImpl mappingOperation = new MappingOperationImpl();
+        return mappingOperation;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Helper createHelper() {
-		HelperImpl helper = new HelperImpl();
-		return helper;
-	}
+        HelperImpl helper = new HelperImpl();
+        return helper;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public MappingBody createMappingBody() {
-		MappingBodyImpl mappingBody = new MappingBodyImpl();
-		return mappingBody;
-	}
+        MappingBodyImpl mappingBody = new MappingBodyImpl();
+        return mappingBody;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public AssignExp createAssignExp() {
-		AssignExpImpl assignExp = new AssignExpImpl();
-		return assignExp;
-	}
+        AssignExpImpl assignExp = new AssignExpImpl();
+        return assignExp;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public VariableInitExp createVariableInitExp() {
-		VariableInitExpImpl variableInitExp = new VariableInitExpImpl();
-		return variableInitExp;
-	}
+        VariableInitExpImpl variableInitExp = new VariableInitExpImpl();
+        return variableInitExp;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public MappingCallExp createMappingCallExp() {
-		MappingCallExpImpl mappingCallExp = new MappingCallExpImpl();
-		return mappingCallExp;
-	}
+        MappingCallExpImpl mappingCallExp = new MappingCallExpImpl();
+        return mappingCallExp;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public BlockExp createBlockExp() {
-		BlockExpImpl blockExp = new BlockExpImpl();
-		return blockExp;
-	}
+        BlockExpImpl blockExp = new BlockExpImpl();
+        return blockExp;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public ObjectExp createObjectExp() {
-		ObjectExpImpl objectExp = new ObjectExpImpl();
-		return objectExp;
-	}
+        ObjectExpImpl objectExp = new ObjectExpImpl();
+        return objectExp;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public WhileExp createWhileExp() {
-		WhileExpImpl whileExp = new WhileExpImpl();
-		return whileExp;
-	}
+        WhileExpImpl whileExp = new WhileExpImpl();
+        return whileExp;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ResolveExp createResolveExp() {
-		ResolveExpImpl resolveExp = new ResolveExpImpl();
-		return resolveExp;
-	}
+        ResolveExpImpl resolveExp = new ResolveExpImpl();
+        return resolveExp;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ResolveInExp createResolveInExp() {
-		ResolveInExpImpl resolveInExp = new ResolveInExpImpl();
-		return resolveInExp;
-	}
+        ResolveInExpImpl resolveInExp = new ResolveInExpImpl();
+        return resolveInExp;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public ModelType createModelType() {
-		ModelTypeImpl modelType = new ModelTypeImpl();
-		return modelType;
-	}
+        ModelTypeImpl modelType = new ModelTypeImpl();
+        return modelType;
+    }
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public PackageRef createPackageRef() {
-		PackageRefImpl packageRef = new PackageRefImpl();
-		return packageRef;
-	}
+        PackageRefImpl packageRef = new PackageRefImpl();
+        return packageRef;
+    }
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public MappingParameter createMappingParameter() {
-		MappingParameterImpl mappingParameter = new MappingParameterImpl();
-		return mappingParameter;
-	}
+        MappingParameterImpl mappingParameter = new MappingParameterImpl();
+        return mappingParameter;
+    }
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public DirectionKind createDirectionKindFromString(EDataType eDataType, String initialValue) {
-		DirectionKind result = DirectionKind.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		return result;
-	}
+        DirectionKind result = DirectionKind.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        return result;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public String convertDirectionKindToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
-	}
+        return instanceValue == null ? null : instanceValue.toString();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public ExpressionsPackage getExpressionsPackage() {
-		return (ExpressionsPackage)getEPackage();
-	}
+        return (ExpressionsPackage)getEPackage();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @deprecated
-	 * @generated
-	 */
+     * @deprecated
+     * @generated
+     */
 	@Deprecated
 	public static ExpressionsPackage getPackage() {
-		return ExpressionsPackage.eINSTANCE;
-	}
+        return ExpressionsPackage.eINSTANCE;
+    }
 
 } //ExpressionsFactoryImpl

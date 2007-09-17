@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.16 2007/09/14 13:40:49 aigdalov Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.17 2007/09/17 10:17:37 aigdalov Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -348,6 +348,7 @@ $KeyWords
 	result
 	main
 	this
+	switch
 	
 	rename
 $End
@@ -367,7 +368,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.16 2007/09/14 13:40:49 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.17 2007/09/17 10:17:37 aigdalov Exp $
  */
 	./
 $End
@@ -2882,6 +2883,22 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
+
+
+	oclExpCS -> switchExpCS
+
+	switchExpCS ::= switch '{' '}'
+		/.$BeginJava
+					CSTNode result = createIfExpCS(
+							null,
+							null,
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+
 
 
 	iteratorExpCSToken -> forAll

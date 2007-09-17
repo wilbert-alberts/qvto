@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.16 2007/09/14 13:40:47 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.17 2007/09/17 10:17:37 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.16 2007/09/14 13:40:47 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.17 2007/09/17 10:17:37 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -5663,9 +5663,24 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 492:  iteratorExpCS ::= iteratorExpCSToken ( iterContents )
+			// Rule 482:  switchExpCS ::= switch { }
 			//
-			case 492: {
+			case 482: {
+				
+				CSTNode result = createIfExpCS(
+						null,
+						null,
+						null
+					);
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(1)));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 494:  iteratorExpCS ::= iteratorExpCSToken ( iterContents )
+			//
+			case 494: {
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 							SimpleTypeEnum.KEYWORD_LITERAL,
@@ -5685,9 +5700,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 493:  iteratorExpCS ::= iteratorExpCSToken ( iterContents qvtErrorToken
+			// Rule 495:  iteratorExpCS ::= iteratorExpCSToken ( iterContents qvtErrorToken
 			//
-			case 493: {
+			case 495: {
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 							SimpleTypeEnum.KEYWORD_LITERAL,
@@ -5715,9 +5730,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 494:  iteratorExpCS ::= iteratorExpCSToken ( qvtErrorToken
+			// Rule 496:  iteratorExpCS ::= iteratorExpCSToken ( qvtErrorToken
 			//
-			case 494: {
+			case 496: {
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 							SimpleTypeEnum.KEYWORD_LITERAL,
@@ -5737,19 +5752,19 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 495:  operationCallExpCS ::= oclAsType isMarkedPreCS ( typeCS )
+			// Rule 497:  operationCallExpCS ::= oclAsType isMarkedPreCS ( typeCS )
 			//
-			case 495:
+			case 497:
  
 			//
-			// Rule 496:  operationCallExpCS ::= oclIsKindOf isMarkedPreCS ( typeCS )
+			// Rule 498:  operationCallExpCS ::= oclIsKindOf isMarkedPreCS ( typeCS )
 			//
-			case 496:
+			case 498:
  
 			//
-			// Rule 497:  operationCallExpCS ::= oclIsTypeOf isMarkedPreCS ( typeCS )
+			// Rule 499:  operationCallExpCS ::= oclIsTypeOf isMarkedPreCS ( typeCS )
 			//
-			case 497: {
+			case 499: {
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 							SimpleTypeEnum.IDENTIFIER_LITERAL,

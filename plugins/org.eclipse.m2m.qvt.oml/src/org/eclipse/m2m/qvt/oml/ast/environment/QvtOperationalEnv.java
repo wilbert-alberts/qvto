@@ -630,7 +630,14 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	    if (getParent() != null) {
 	        ((QvtOperationalEnv) getParent()).registerMappingOperation(operation);
 	    } else {
-	        myMappingsMap.put(new MappingsMapKey(operation.getContext().getEType(), operation.getName()), operation);
+            MappingsMapKey key = new MappingsMapKey(operation.getContext().getEType(), operation.getName());
+            List<MappingOperation> sameNameAndContextOperations = myMappingsMap.get(key);
+            if (sameNameAndContextOperations == null) {
+                sameNameAndContextOperations = new ArrayList<MappingOperation>();
+                myMappingsMap.put(key, sameNameAndContextOperations);
+            }
+            sameNameAndContextOperations.add(operation);
+	        myMappingsMap.put(key, sameNameAndContextOperations);
 	    }
 	}
 	
@@ -646,9 +653,11 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	    if (getParent() == null) {
 	        for (Map.Entry<ResolveInExp, MappingsMapKey> entry : myResolveInExps.entrySet()) {
 	            MappingsMapKey mappingsMapKey = entry.getValue();
-	            MappingOperation mappingOperation = myMappingsMap.get(mappingsMapKey);
-	            ResolveInExp resolveInExp = entry.getKey();
-	            resolveInExp.setInMapping(mappingOperation);
+	            List<MappingOperation> sameNameAndContextOperations = myMappingsMap.get(mappingsMapKey);
+	            for (MappingOperation mappingOperation : sameNameAndContextOperations) {
+	                ResolveInExp resolveInExp = entry.getKey();
+	                resolveInExp.getInMappings().add(mappingOperation);
+                }
 	        }
 	    } else {
 	    	((QvtOperationalEnv)getParent()).resolveResolveInExpInMappings();
@@ -711,7 +720,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	private List<Variable<EClassifier, EParameter>> myModelParameters = Collections.emptyList();
 	
 	private final EPackage.Registry ePackageRegistry;
-    private final Map<MappingsMapKey, MappingOperation> myMappingsMap = new HashMap<MappingsMapKey, MappingOperation>();
+    private final Map<MappingsMapKey, List<MappingOperation>> myMappingsMap = new HashMap<MappingsMapKey, List<MappingOperation>>();
     private final Map<ResolveInExp, MappingsMapKey> myResolveInExps = new HashMap<ResolveInExp, MappingsMapKey>();
 
     private static final QvtOperationalEnvFactory myFactory = new QvtOperationalEnvFactory();

@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpKWLexer.g,v 1.4 2007/09/13 09:32:21 sboyko Exp $
+-- * $Id: QvtOpKWLexer.g,v 1.5 2007/09/17 10:17:37 aigdalov Exp $
 -- */
 --
 -- The QVT KeyWord Lexer
@@ -76,7 +76,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpKWLexer.g,v 1.4 2007/09/13 09:32:21 sboyko Exp $
+ * $Id: QvtOpKWLexer.g,v 1.5 2007/09/17 10:17:37 aigdalov Exp $
  */
 	./
 $End
@@ -121,6 +121,7 @@ $Export
 	result
 	main
 	this
+	switch
 	
 	rename
 $End
@@ -369,6 +370,12 @@ $Rules
 		| t h i s
 		/.$BeginAction
 			$setResult($_this);
+		  $EndAction
+		./
+		
+		| s w i t c h
+		/.$BeginAction
+			$setResult($_switch);
 		  $EndAction
 		./
 		

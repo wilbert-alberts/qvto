@@ -52,266 +52,266 @@ import org.eclipse.ocl.utilities.Visitor;
  */
 public class AssignExpImpl extends ImperativeExpressionImpl implements AssignExp {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
     /**
-	 * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference list.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getValue()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getValue()
+     * @generated
+     * @ordered
+     */
 	protected EList<OCLExpression<EClassifier>> value;
 
 	/**
-	 * The cached value of the '{@link #getLeft() <em>Left</em>}' containment reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getLeft() <em>Left</em>}' containment reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getLeft()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getLeft()
+     * @generated
+     * @ordered
+     */
 	protected OCLExpression<EClassifier> left;
 
 	/**
-	 * The default value of the '{@link #isIsReset() <em>Is Reset</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #isIsReset() <em>Is Reset</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isIsReset()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #isIsReset()
+     * @generated
+     * @ordered
+     */
 	protected static final boolean IS_RESET_EDEFAULT = false;
 
 	/**
-	 * The flag representing the value of the '{@link #isIsReset() <em>Is Reset</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The flag representing the value of the '{@link #isIsReset() <em>Is Reset</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isIsReset()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #isIsReset()
+     * @generated
+     * @ordered
+     */
 	protected static final int IS_RESET_EFLAG = 1 << 8;
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected AssignExpImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EClass eStaticClass() {
-		return ExpressionsPackage.Literals.ASSIGN_EXP;
-	}
+        return ExpressionsPackage.Literals.ASSIGN_EXP;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public EList<OCLExpression<EClassifier>> getValue() {
-		if (value == null) {
-			value = new EObjectContainmentEList<OCLExpression<EClassifier>>(OCLExpression.class, this, ExpressionsPackage.ASSIGN_EXP__VALUE);
-		}
-		return value;
-	}
+        if (value == null) {
+            value = new EObjectContainmentEList<OCLExpression<EClassifier>>(OCLExpression.class, this, ExpressionsPackage.ASSIGN_EXP__VALUE);
+        }
+        return value;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public OCLExpression<EClassifier> getLeft() {
-		return left;
-	}
+        return left;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public NotificationChain basicSetLeft(OCLExpression<EClassifier> newLeft, NotificationChain msgs) {
-		OCLExpression<EClassifier> oldLeft = left;
-		left = newLeft;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpressionsPackage.ASSIGN_EXP__LEFT, oldLeft, newLeft);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
+        OCLExpression<EClassifier> oldLeft = left;
+        left = newLeft;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpressionsPackage.ASSIGN_EXP__LEFT, oldLeft, newLeft);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setLeft(OCLExpression<EClassifier> newLeft) {
-		if (newLeft != left) {
-			NotificationChain msgs = null;
-			if (left != null)
-				msgs = ((InternalEObject)left).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.ASSIGN_EXP__LEFT, null, msgs);
-			if (newLeft != null)
-				msgs = ((InternalEObject)newLeft).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.ASSIGN_EXP__LEFT, null, msgs);
-			msgs = basicSetLeft(newLeft, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.ASSIGN_EXP__LEFT, newLeft, newLeft));
-	}
+        if (newLeft != left) {
+            NotificationChain msgs = null;
+            if (left != null)
+                msgs = ((InternalEObject)left).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.ASSIGN_EXP__LEFT, null, msgs);
+            if (newLeft != null)
+                msgs = ((InternalEObject)newLeft).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.ASSIGN_EXP__LEFT, null, msgs);
+            msgs = basicSetLeft(newLeft, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.ASSIGN_EXP__LEFT, newLeft, newLeft));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public boolean isIsReset() {
-		return (eFlags & IS_RESET_EFLAG) != 0;
-	}
+        return (eFlags & IS_RESET_EFLAG) != 0;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setIsReset(boolean newIsReset) {
-		boolean oldIsReset = (eFlags & IS_RESET_EFLAG) != 0;
-		if (newIsReset) eFlags |= IS_RESET_EFLAG; else eFlags &= ~IS_RESET_EFLAG;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.ASSIGN_EXP__IS_RESET, oldIsReset, newIsReset));
-	}
+        boolean oldIsReset = (eFlags & IS_RESET_EFLAG) != 0;
+        if (newIsReset) eFlags |= IS_RESET_EFLAG; else eFlags &= ~IS_RESET_EFLAG;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.ASSIGN_EXP__IS_RESET, oldIsReset, newIsReset));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
-		return ((ExtendedVisitor<T, ?, ?, ?, ?>) v).visitAssignExp(this);
-	}
+        return ((ExtendedVisitor<T, ?, ?, ?, ?>) v).visitAssignExp(this);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case ExpressionsPackage.ASSIGN_EXP__VALUE:
-				return ((InternalEList<?>)getValue()).basicRemove(otherEnd, msgs);
-			case ExpressionsPackage.ASSIGN_EXP__LEFT:
-				return basicSetLeft(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case ExpressionsPackage.ASSIGN_EXP__VALUE:
+                return ((InternalEList<?>)getValue()).basicRemove(otherEnd, msgs);
+            case ExpressionsPackage.ASSIGN_EXP__LEFT:
+                return basicSetLeft(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case ExpressionsPackage.ASSIGN_EXP__VALUE:
-				return getValue();
-			case ExpressionsPackage.ASSIGN_EXP__LEFT:
-				return getLeft();
-			case ExpressionsPackage.ASSIGN_EXP__IS_RESET:
-				return isIsReset() ? Boolean.TRUE : Boolean.FALSE;
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case ExpressionsPackage.ASSIGN_EXP__VALUE:
+                return getValue();
+            case ExpressionsPackage.ASSIGN_EXP__LEFT:
+                return getLeft();
+            case ExpressionsPackage.ASSIGN_EXP__IS_RESET:
+                return isIsReset() ? Boolean.TRUE : Boolean.FALSE;
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case ExpressionsPackage.ASSIGN_EXP__VALUE:
-				getValue().clear();
-				getValue().addAll((Collection<? extends OCLExpression<EClassifier>>)newValue);
-				return;
-			case ExpressionsPackage.ASSIGN_EXP__LEFT:
-				setLeft((OCLExpression<EClassifier>)newValue);
-				return;
-			case ExpressionsPackage.ASSIGN_EXP__IS_RESET:
-				setIsReset(((Boolean)newValue).booleanValue());
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case ExpressionsPackage.ASSIGN_EXP__VALUE:
+                getValue().clear();
+                getValue().addAll((Collection<? extends OCLExpression<EClassifier>>)newValue);
+                return;
+            case ExpressionsPackage.ASSIGN_EXP__LEFT:
+                setLeft((OCLExpression<EClassifier>)newValue);
+                return;
+            case ExpressionsPackage.ASSIGN_EXP__IS_RESET:
+                setIsReset(((Boolean)newValue).booleanValue());
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case ExpressionsPackage.ASSIGN_EXP__VALUE:
-				getValue().clear();
-				return;
-			case ExpressionsPackage.ASSIGN_EXP__LEFT:
-				setLeft((OCLExpression<EClassifier>)null);
-				return;
-			case ExpressionsPackage.ASSIGN_EXP__IS_RESET:
-				setIsReset(IS_RESET_EDEFAULT);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case ExpressionsPackage.ASSIGN_EXP__VALUE:
+                getValue().clear();
+                return;
+            case ExpressionsPackage.ASSIGN_EXP__LEFT:
+                setLeft((OCLExpression<EClassifier>)null);
+                return;
+            case ExpressionsPackage.ASSIGN_EXP__IS_RESET:
+                setIsReset(IS_RESET_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case ExpressionsPackage.ASSIGN_EXP__VALUE:
-				return value != null && !value.isEmpty();
-			case ExpressionsPackage.ASSIGN_EXP__LEFT:
-				return left != null;
-			case ExpressionsPackage.ASSIGN_EXP__IS_RESET:
-				return ((eFlags & IS_RESET_EFLAG) != 0) != IS_RESET_EDEFAULT;
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case ExpressionsPackage.ASSIGN_EXP__VALUE:
+                return value != null && !value.isEmpty();
+            case ExpressionsPackage.ASSIGN_EXP__LEFT:
+                return left != null;
+            case ExpressionsPackage.ASSIGN_EXP__IS_RESET:
+                return ((eFlags & IS_RESET_EFLAG) != 0) != IS_RESET_EDEFAULT;
+        }
+        return super.eIsSet(featureID);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (isReset: "); //$NON-NLS-1$
-		result.append((eFlags & IS_RESET_EFLAG) != 0);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (isReset: "); //$NON-NLS-1$
+        result.append((eFlags & IS_RESET_EFLAG) != 0);
+        result.append(')');
+        return result.toString();
+    }
 
 } //AssignExpImpl

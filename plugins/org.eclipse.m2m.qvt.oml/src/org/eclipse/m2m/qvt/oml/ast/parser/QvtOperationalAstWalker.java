@@ -426,7 +426,9 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
     }
 
     public Object visitResolveInExp(ResolveInExp resolveInExp) {
-        doProcess(resolveInExp.getInMapping(), resolveInExp);
+        for (MappingOperation mappingOperation : resolveInExp.getInMappings()) {
+            doProcess(mappingOperation, resolveInExp);
+        }
         return visitResolveExp(resolveInExp);
     }
 

@@ -806,7 +806,8 @@
           <eGenericType eTypeParameter="#//expressions/ResolveInExp/accept/U"/>
         </eParameters>
       </eOperations>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="inMapping" eType="#//expressions/MappingOperation"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="inMappings" upperBound="-1"
+          eType="#//expressions/MappingOperation"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ModelType" eSuperTypes="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass #//expressions/VisitableASTNode">
       <eOperations name="accept">
