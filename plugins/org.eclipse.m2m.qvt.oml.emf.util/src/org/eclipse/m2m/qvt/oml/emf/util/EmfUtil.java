@@ -263,7 +263,19 @@ public class EmfUtil {
     public static String getFullNameRelativeToPackage(EPackage ePackage, EPackage baseQwningPackage) {
     	String delim = "::"; //$NON-NLS-1$
         if(ePackage.getESuperPackage() != null && ePackage.getESuperPackage() != baseQwningPackage) {
-            return getFullName(ePackage.getESuperPackage(), delim) + delim + ePackage.getName();
+        	StringBuilder buf = new StringBuilder();        	
+        	
+        	EPackage nextPackage = ePackage;        	
+        	for(int i = 0; nextPackage != null && nextPackage != baseQwningPackage ; i++) {
+        		if(i > 0) {
+        			buf.insert(0, delim);
+        		}
+        		buf.insert(0, nextPackage.getName());        		
+        		
+        		nextPackage = nextPackage.getESuperPackage(); 
+        	}
+        	
+            return getFullNameRelativeToPackage(ePackage.getESuperPackage(), baseQwningPackage) + delim + ePackage.getName();
         } else {
             return ePackage.getName();
         }
@@ -284,11 +296,10 @@ public class EmfUtil {
 	 *            returned.
 	 */
     public static String getFullNameRelativeToPackage(EClassifier eClassifier, EPackage baseOwningPackage) {
-		EPackage immediateOwner = eClassifier.getEPackage();
-		
+		EPackage immediateOwner = eClassifier.getEPackage();		
 		if(baseOwningPackage != null && immediateOwner != null && baseOwningPackage != immediateOwner) {
 			String parentName = EmfUtil.getFullNameRelativeToPackage(immediateOwner, baseOwningPackage);
-			return parentName + "::" + eClassifier.getName(); //$NON-NLS-1$
+			return parentName + "::" + eClassifier.getName(); //$NON-NLS-1$ 
 		}
 		return eClassifier.getName();		
 	}
