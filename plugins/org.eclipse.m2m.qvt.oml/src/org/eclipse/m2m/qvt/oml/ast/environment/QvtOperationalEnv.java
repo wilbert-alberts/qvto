@@ -20,8 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
@@ -190,18 +188,6 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		super.setFactory(factory);
 	}
 	
-//	@Override
-//	public List<EOperation> getAdditionalOperations(EClassifier classifier) {
-//		List<EOperation> result = super.getAdditionalOperations(classifier);
-//		if (getParent() == null
-//				&& false == classifier instanceof CollectionType
-//				&& false == classifier instanceof TupleType) {
-//			result = new ArrayList<EOperation>(result == null ? Collections.<EOperation>emptyList() : result);
-//			result.addAll(getTypeResolver().getAdditionalOperations(getOCLStandardLibrary().getOclAny()));
-//		}
-//		return result;
-//	}
-
 	@Override
 	public EOperation lookupOperation(EClassifier owner, String name,
 			List<? extends TypedElement<EClassifier>> args) {
@@ -526,7 +512,14 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
         for (EPackage pkg : metamodels) {
             super.setContextPackage(pkg);
             result = lookupPackageableElementDelegate.lookupPackageableElement(path);
-            if (EcoreUtil.getRootContainer(result) != pkg) {
+            EObject eContainer = result;
+            for (int i = 0, n = path.size(); i < n; ++i) {
+            	if (eContainer == null) {
+            		break;
+            	}
+            	eContainer = eContainer.eContainer();
+            }
+            if (eContainer != pkg) {
                 result = null;
             }
             if (result != null) {
@@ -672,30 +665,6 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	
 	private void defineStandartOperations() {
 		getQVTStandartLibrary().defineStandartOperations(this);
-	}
-
-	private EOperation createOperation(String name, EClassifier type, EList<EParameter> params,
-			Constraint constraint) {
-		EOperation result = org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.createEOperation();
-		
-		result.setName(name);
-		result.setEType((type == null) ? getOCLStandardLibrary().getOclVoid() : type);
-		
-		for (EParameter next : params) {
-			EParameter param = org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.createEParameter();
-			param.setName(next.getName());
-			param.setEType((next.getEType() == null) ?
-					getOCLStandardLibrary().getOclVoid() : next.getEType());
-			
-			result.getEParameters().add(param);
-		}
-		
-		EAnnotation ann = org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.createEAnnotation();
-		ann.setSource(Environment.OCL_NAMESPACE_URI);
-		result.getEAnnotations().add(ann);
-		ann.getContents().add(constraint);
-		
-		return result;
 	}
 
 	private EOperation addOperation(EClassifier owner, EOperation operation, boolean fake) {
