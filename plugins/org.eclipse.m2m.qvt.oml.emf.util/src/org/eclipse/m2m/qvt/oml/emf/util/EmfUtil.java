@@ -176,7 +176,7 @@ public class EmfUtil {
         options.put(XMLResource.OPTION_ENCODING, "UTF-8"); //$NON-NLS-1$
         
         if(isDynamic(eObject)) {
-        	options.put("SCHEMA_LOCATION", Boolean.TRUE);
+        	options.put("SCHEMA_LOCATION", Boolean.TRUE); //$NON-NLS-1$
         }
         
         try {
@@ -197,7 +197,7 @@ public class EmfUtil {
         
         for (EObject eObject : resource.getContents()) {
 	        if(isDynamic(eObject)) {
-	        	options.put("SCHEMA_LOCATION", Boolean.TRUE);
+	        	options.put("SCHEMA_LOCATION", Boolean.TRUE); //$NON-NLS-1$
 	        	break;
 	        }
         }
