@@ -12,6 +12,7 @@
 package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -29,6 +30,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner.In;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner.Out;
@@ -115,7 +117,8 @@ public class QvtInterpretedTransformation implements QvtTransformation {
         Object outObj = evaluate(myModule.getCompiler(), module, inputs, in.getContext());
         
         if (false == outObj instanceof QvtEvaluationResult) {
-            throw new MdaException(Messages.QvtInterpreter_Transformation_failed); 
+            return new Out(Collections.<Resource>emptyList(),
+            		Collections.emptyList(), in.getContext().getTrace());
         }
 
         return new Out(((QvtEvaluationResult) outObj).getModelExtents(),
