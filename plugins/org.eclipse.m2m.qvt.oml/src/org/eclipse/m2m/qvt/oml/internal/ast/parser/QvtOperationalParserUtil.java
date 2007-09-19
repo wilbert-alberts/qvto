@@ -413,20 +413,42 @@ public class QvtOperationalParserUtil {
 		return true;
 	}
 
+	/**
+	 * Checks if the given variable is allowed to be modified, reports an error in
+	 * case it is not.
+	 * 
+	 * @param variable
+	 *            the variable to be assigned a value or indirectly modified through
+	 *            an owned property
+	 * @param varPathNameNodeCS
+	 *            the pathname representing the left side of an assignment. It can be a simple name
+	 *            representing a variable direct access or a path navigating to owned property.
+	 *             
+	 * @return <code>true</code> if it can be modified, <code>false</code>
+	 *         otherwise.
+	 */
 	public static boolean validateVariableModification(Variable<EClassifier, EParameter> variable,
-			CSTNode cstNode, QvtOperationalEnv env) {
+			PathNameCS varPathNameNodeCS, QvtOperationalEnv env) {
 		EParameter representedParameter = variable.getRepresentedParameter();
 		if (representedParameter instanceof VarParameter) {
 			VarParameter parameter = (VarParameter) representedParameter;
+			// detect whether an [inout] parameter variable is to be assigned a new value 
+			boolean isDirectInoutModification = parameter.getKind() == DirectionKind.INOUT && varPathNameNodeCS.getSequenceOfNames().size() == 1;				
+			if(isDirectInoutModification) {
+				env.reportError(NLS.bind(ValidationMessages.QvtOperationalParserUtil_inoutParamAssignmentError, parameter.getName()),
+						varPathNameNodeCS);
+				return false;
+			}
+			
 			if (parameter.getKind() != DirectionKind.OUT && parameter.getKind() != DirectionKind.INOUT) {
 				env.reportError(NLS.bind(ValidationMessages.inputParameterModificationError, parameter.getName()),
-						cstNode);
+						varPathNameNodeCS);
 				return false;
 			}
 		}
 		if (representedParameter instanceof Property) {
 			env.reportError(NLS.bind(ValidationMessages.readOnlyPropertyModificationError, variable.getName()),
-					cstNode);
+					varPathNameNodeCS);
 			return false;
 		}
 		return true;

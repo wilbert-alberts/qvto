@@ -22,6 +22,7 @@ public final class ValidationMessages extends NLS {
 	}
 
     public static String mappingOperationExpected;
+	public static String QvtOperationalParserUtil_inoutParamAssignmentError;
     public static String QvtOperationalVisitorCS_AbstractTypesNotInitialized;
     public static String QvtOperationalVisitorCS_ResolveInMappingNotFound;
     public static String QvtOperationalVisitorCS_ResolveInSeveralMappingsFound;
