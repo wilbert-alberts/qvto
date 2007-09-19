@@ -46,6 +46,7 @@ import org.eclipse.m2m.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.qvt.oml.expressions.Property;
 import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.internal.cst.adapters.ModelTypeMetamodelsAdapter;
+import org.eclipse.ocl.types.VoidType;
 import org.eclipse.osgi.util.NLS;
 
 public abstract class QvtModule {
@@ -112,6 +113,9 @@ public abstract class QvtModule {
 	    		transfParams.add(createTransfParam((MappingParameter) mainParam));
 	    	}
 	    	for (VarParameter mainParam : mainMethod.getResult()) {
+	    		if (mainParam.getEType() instanceof VoidType) {
+	    			continue;
+	    		}
     			transfParams.add(createTransfParam((MappingParameter) mainParam));
 	    	}
 	    }
