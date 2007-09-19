@@ -22,6 +22,6 @@ mapping EClass::toClass2() : SimpleUML::Class {
 	name := self.name + '_SimpleClass2';
 }
 
-mapping EClass::toTable() : RDB::rdb::Table {
+mapping EClass::toTable() : RDB::Table {
 	name := self.name + '_Table';
 }
