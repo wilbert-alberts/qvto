@@ -194,7 +194,7 @@ public class QvtOperationalStdLibrary {
 	        	System.out.println(toPrint);
 	        	System.out.flush();
 	        }
-	        return Boolean.valueOf(true);
+	        return null;
 		}
 		
 		if (QVT_STDLIB_TOSTRING_OPERATION.equals(operation.getName())
