@@ -12,6 +12,7 @@
 package org.eclipse.m2m.internal.qvt.oml.common.ui.views;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
@@ -23,8 +24,8 @@ class BrowserNode implements IAdaptable {
 
 	private final EObject myEObject;
 	private final BrowserNode myParent;
-	private BrowserNode[] myChildren;
-	private BrowserNode[] myAllChildren;
+	private List<BrowserNode> myChildren;
+	private List<BrowserNode> myAllChildren;
 			
 	public BrowserNode() {
 		this(null, null);
@@ -52,10 +53,10 @@ class BrowserNode implements IAdaptable {
 	}
 	
 	public boolean hasChildren(final boolean includeInheritedFeatures) {
-		return getChildren(includeInheritedFeatures).length > 0;
+		return getChildren(includeInheritedFeatures).size() > 0;
 	}
 	
-	public BrowserNode[] getChildren(final boolean includeInheritedFeatures) {
+	public List<BrowserNode> getChildren(final boolean includeInheritedFeatures) {
 		if (getEObject() != null) {
 			if (includeInheritedFeatures && getEObject() instanceof EClass) {
 				if (myAllChildren == null) {
@@ -70,7 +71,7 @@ class BrowserNode implements IAdaptable {
 					for (EObject annotation : eClass.getEAnnotations()) {
 						allChildren.add(new BrowserNode(annotation, this));
 					}
-					myAllChildren = allChildren.toArray(new BrowserNode[allChildren.size()]);
+					myAllChildren = allChildren;
 				}
 				return myAllChildren;
 			} 
@@ -80,17 +81,27 @@ class BrowserNode implements IAdaptable {
 				for (EObject child : getEObject().eContents()) {
 					children.add(new BrowserNode(child, this));
 				}
-				myChildren = (BrowserNode[]) children.toArray(new BrowserNode[children.size()]);
+				myChildren = children;
 			}
 			return myChildren;
 		}
 		
-		return myChildren != null ? myChildren : new BrowserNode[0];
+		return myChildren != null ? myChildren : Collections.<BrowserNode>emptyList();
 	}
 	
-	public void setChildren(final BrowserNode[] children) {
-		myChildren = children;
+	public void addChild(BrowserNode child) {
+		if(myChildren == null) {
+			myChildren = new ArrayList<BrowserNode>();
+		}
+		myChildren.add(child);
 	}
+	
+	public void removeChild(BrowserNode child) {
+		if(myChildren != null) {
+			myChildren.remove(child);
+		}
+	}
+	
 
 	public Image getImage() {
 		return null;
@@ -105,11 +116,11 @@ class BrowserNode implements IAdaptable {
 			return node;
 		}
 				
-		BrowserNode[] children = node.getChildren(false);
+		List<BrowserNode> children = node.getChildren(false);
 		BrowserNode foundNode = null;
 		
-		for (int i = 0; i < children.length; i++) {
-			foundNode = findNodeForInstance(children[i], ownedEObject);
+		for (int i = 0; i < children.size(); i++) {
+			foundNode = findNodeForInstance(children.get(i), ownedEObject);
 			if(foundNode != null) break;
 		}
 		return foundNode;

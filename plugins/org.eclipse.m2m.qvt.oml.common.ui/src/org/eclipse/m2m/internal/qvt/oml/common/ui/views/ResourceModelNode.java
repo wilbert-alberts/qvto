@@ -11,6 +11,11 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.common.ui.views;
 
+import java.util.Collections;
+import java.util.List;
+
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
@@ -26,7 +31,7 @@ class ResourceModelNode extends MetamodelContainerNode {
 	final MetamodelNode contentNode;
 	
 	ResourceModelNode(URI resourceURI, IMetamodelDesc descriptor, BrowserNode parent) {
-		super(WORKSPACE_MODELS_TYPE,resourceURI.toString(), image(), parent);
+		super(WORKSPACE_MODELS_TYPE, getLabel(resourceURI), image(), parent);
 		
 		this.uri = resourceURI;			
 		this.contentNode = new MetamodelNode(descriptor, this, true) {
@@ -83,7 +88,17 @@ class ResourceModelNode extends MetamodelContainerNode {
 	}
 	
 	@Override
-	public BrowserNode[] getChildren(boolean includeInheritedFeatures) {
-		return new BrowserNode[] { contentNode };
+	public List<BrowserNode> getChildren(boolean includeInheritedFeatures) {
+		return Collections.<BrowserNode>singletonList(contentNode);
 	}		
+	
+	private static String getLabel(URI resourceUri) {
+		if(!resourceUri.isPlatformResource()) {
+			return resourceUri.toString();
+		}
+		
+		IPath path = new Path(resourceUri.path());
+		IPath wsPath = path.removeFirstSegments(1);
+		return wsPath.toString();		
+	}	
 }

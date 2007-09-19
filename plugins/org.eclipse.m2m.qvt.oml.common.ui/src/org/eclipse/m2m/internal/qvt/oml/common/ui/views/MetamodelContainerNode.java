@@ -59,9 +59,9 @@ class MetamodelContainerNode extends BrowserNode {
 		});
 		
 		BrowserNode result = null;
-		BrowserNode[] allChildNodes = getChildren(false);
-		for (int i = 0; i < allChildNodes.length; i++) {
-			BrowserNode node = allChildNodes[i];
+		List<BrowserNode> allChildNodes = getChildren(false);
+		for (int i = 0; i < allChildNodes.size(); i++) {
+			BrowserNode node = allChildNodes.get(i);
 			if(node instanceof MetamodelNode) {
 				MetamodelNode mmNode = (MetamodelNode)node;
 				if(mmNode.mayContain(element)) {
@@ -82,9 +82,9 @@ class MetamodelContainerNode extends BrowserNode {
 	
 	public List<MetamodelContainerNode> childContainers() {
 		List<MetamodelContainerNode> childContainers = new ArrayList<MetamodelContainerNode>();
-		BrowserNode[] childNodes = getChildren(false);
-		for (int i = 0; i < childNodes.length; i++) {
-			BrowserNode node = childNodes[i];
+		List<BrowserNode> childNodes = getChildren(false);
+		for (int i = 0; i < childNodes.size(); i++) {
+			BrowserNode node = childNodes.get(i);
 			if(node instanceof MetamodelContainerNode) {
 				childContainers.add((MetamodelContainerNode)node);
 			}

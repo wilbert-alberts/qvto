@@ -11,9 +11,18 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.common.ui.views;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IResourceDeltaVisitor;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.emf.common.ui.CommonUIPlugin;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.m2m.internal.qvt.oml.common.CommonPlugin;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.services.IServiceLocator;
@@ -22,7 +31,7 @@ import org.eclipse.ui.services.IServiceLocator;
 /**
  * @author vrepeshko
  */
-public class MetamodelBrowserView extends ViewPart {
+public class MetamodelBrowserView extends ViewPart implements IResourceChangeListener {
 	
 	public static final String ID = "org.eclipse.m2m.internal.qvt.oml.common.views.MetamodelBrowserView"; //$NON-NLS-1$
 	
@@ -33,6 +42,55 @@ public class MetamodelBrowserView extends ViewPart {
      */
     public MetamodelBrowserView() {
     	super();
+    	
+    	ResourcesPlugin.getWorkspace().addResourceChangeListener(this);
+    }
+
+    public void resourceChanged(IResourceChangeEvent event) {
+    	try {
+    		handleResourceChanged(event);
+    	} catch (Exception e) {
+    		CommonUIPlugin.getPlugin().log(e);
+		}
+    }
+    
+    private void handleResourceChanged(IResourceChangeEvent event) {
+    	final WorkspaceMetamodelsDelta wsDelta = new WorkspaceMetamodelsDelta();    	
+    	IResourceDelta delta = event.getDelta();
+    	try {
+			delta.accept(new IResourceDeltaVisitor() {
+				public boolean visit(IResourceDelta delta) throws CoreException {
+					if(isEcoreFile(delta.getResource())) {
+						if(delta.getKind() == IResourceDelta.ADDED) {
+					    	wsDelta.addAddition(delta.getFullPath());
+						} else if(delta.getKind() == IResourceDelta.REMOVED) {
+							wsDelta.addDeletion(delta.getFullPath());						
+						} else if(delta.getKind() == IResourceDelta.CHANGED) { 
+							wsDelta.addModification(delta.getFullPath());						
+						} else if(delta.getKind() == IResourceDelta.MOVED_FROM) {
+							wsDelta.addMove(delta.getMovedFromPath(), delta.getMovedToPath());
+						}
+					}
+					return true;
+				}
+			});
+		} catch (CoreException e) {
+			CommonPlugin.log(e);
+		}
+		
+		getSite().getShell().getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				if(!browser.getControl().isDisposed()) {
+					if(!wsDelta.isEmpty()) {
+						browser.update(wsDelta);
+					}
+				}
+			}
+		});
+    }
+    
+    private boolean isEcoreFile(IResource resource) {
+		return resource.getType() == IResource.FILE && "ecore".equals(resource.getFileExtension());		
     }
     
 	public EObject navigate(EModelElement eModelElement) {
@@ -77,5 +135,12 @@ public class MetamodelBrowserView extends ViewPart {
         }
         
         return adaptedObject;
+    }
+    
+    @Override
+    public void dispose() {
+    	ResourcesPlugin.getWorkspace().removeResourceChangeListener(this);
+    	
+    	super.dispose();
     }
 }
