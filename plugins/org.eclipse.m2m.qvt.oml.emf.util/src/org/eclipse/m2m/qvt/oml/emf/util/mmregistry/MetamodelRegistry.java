@@ -71,6 +71,9 @@ public class MetamodelRegistry {
 		if(desc == null && id != null) {
             for(IMetamodelDesc d: myMetamodelDescs.values()) {
             	EPackage pack = (EPackage) d.getModels()[0];
+            	if (pack == null) {
+            		continue;
+            	}
             	if (id.equals(pack.getNsURI())) {
             		desc = d;
             		break;
