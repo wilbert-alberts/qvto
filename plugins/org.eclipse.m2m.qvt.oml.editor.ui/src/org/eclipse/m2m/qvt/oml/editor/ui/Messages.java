@@ -24,6 +24,8 @@ public class Messages extends NLS {
 	
 	public static String QvtAnnotationHover_multipleMarkers;
 
+    public static String QvtReconcilingStrategy_TooManyExceptions;
+
 	public static String OpenDeclarationAction_selectionDoesNotResolveToElement;	
 	
 	static {

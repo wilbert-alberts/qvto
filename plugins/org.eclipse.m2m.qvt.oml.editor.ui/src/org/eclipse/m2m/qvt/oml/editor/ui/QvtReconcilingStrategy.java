@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
@@ -75,6 +77,9 @@ public class QvtReconcilingStrategy implements IReconcilingStrategy, IReconcilin
             if (loggedCompilationExceptionsCount < MAX_LOGGED_COMPILATION_EXCEPTIONS) {
                 loggedCompilationExceptionsCount ++;
                 Activator.log(ex);
+                if (loggedCompilationExceptionsCount == MAX_LOGGED_COMPILATION_EXCEPTIONS) {
+                    Activator.log(new Status(IStatus.WARNING, Activator.PLUGIN_ID, Messages.QvtReconcilingStrategy_TooManyExceptions));
+                }                
             }
         }
         
