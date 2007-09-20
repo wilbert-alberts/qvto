@@ -90,6 +90,7 @@ public class ParserTests {
         new TestData("assignresultininit", 0), //$NON-NLS-1$
         new TestData("assign_inoutParam", 2), //$NON-NLS-1$
         new TestData("assign_inParam", 2), //$NON-NLS-1$
+        new TestData("assign_varThis", 1), //$NON-NLS-1$                        
         
         new TestData("errorinexpressionlist", 1), //$NON-NLS-1$
         new TestData("largefile", 0), //$NON-NLS-1$
