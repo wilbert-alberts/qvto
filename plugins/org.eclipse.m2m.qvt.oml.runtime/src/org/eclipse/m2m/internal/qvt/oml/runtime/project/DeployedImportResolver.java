@@ -51,10 +51,13 @@ public class DeployedImportResolver implements IImportResolver {
 			bundleModules = createModulesRegistry();
 		}
 				
-		IPath fullPath = new Path(importedUnitName.replace('.', '/') + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT); //$NON-NLS-1$
+		IPath fullPath = new Path(importedUnitName.replace('.', '/') + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT);
 		
 		for (BundleModuleRegistry nextRegistry : bundleModules) {
-			if(nextRegistry.fileExists(fullPath)) {
+			if (importedUnitName.indexOf(nextRegistry.getBundleSymbolicName()) == 1) {
+				fullPath = new Path(importedUnitName.substring(nextRegistry.getBundleSymbolicName().length()+2));
+			}
+			if (nextRegistry.fileExists(fullPath)) {
 				return new BundleFile(fullPath, nextRegistry);
 			}
 		}

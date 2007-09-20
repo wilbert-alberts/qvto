@@ -11,8 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -29,7 +27,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.QvtConfigurationProperty;
@@ -42,19 +39,17 @@ import org.eclipse.osgi.util.NLS;
 public class QvtCompiledTransformation implements QvtTransformation, CompiledTransformation {
    
 	public static QvtCompiledTransformation createLibraryModule(String namespace, String id, String file) {
-		QvtCompiledTransformation result = new QvtCompiledTransformation(namespace, id, null, null, file);
+		QvtCompiledTransformation result = new QvtCompiledTransformation(namespace, id, file);
 		result.isLibrary = true;
 		return result;
 	}
 	
-	public QvtCompiledTransformation(String namespace, String id, EClass in, EClass out, String file) {
-        myIn = in;
-        myOut = out;
+	public QvtCompiledTransformation(String namespace, String id, String file) {
         myNamespace = namespace;
         myId = id;
         this.isLibrary = false; 
         this.transformationFilePath = file != null ? new Path(file) :
-        	new Path(id.replace('.', '/') + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT); //$NON-NLS-1$
+        	new Path(id.replace('.', '/') + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT);
     }
 	
 	protected QvtTransformation getImpl() throws MdaException {
@@ -104,36 +99,41 @@ public class QvtCompiledTransformation implements QvtTransformation, CompiledTra
         return myNamespace;
     }
 
-    public EClass getIn() {
-        return myIn;
+    public EClass getIn() throws MdaException {
+    	return getImpl().getIn();
     }
 
-    public EClass getOut() {
-        return myOut;
+    public EClass getOut() throws MdaException {
+    	return getImpl().getOut();
     }
     
     public List<TransformationParameter> getParameters() throws MdaException {
-    	return Collections.emptyList();
-    }
-
-    public EPackage[] getModels() {
-    	ArrayList<EPackage> modelList = new ArrayList<EPackage>(2);
-    	if(getIn() != null) {
-    		modelList.add(EmfUtil.getRootPackage(getIn().getEPackage()));
-    	}
-    	if(getOut() != null) {
-    		modelList.add(EmfUtil.getRootPackage(getOut().getEPackage()));
-    	}
-        return modelList.toArray(new EPackage[modelList.size()]);
+    	return getImpl().getParameters();
     }
 
     @Override
 	public String toString() {
-        return myId + "(" + toString(getIn()) + "->" + toString(getOut()) + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    	String listParams = ""; //$NON-NLS-1$
+    	try {
+    		for (TransformationParameter param : getParameters()) {
+    			listParams += toString(param);
+    		}
+    	}
+    	catch (MdaException e) {
+    		listParams = null;
+    	}
+        return myId + "(" + listParams + ")"; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    private static String toString(EClass cls) {
-        return EmfUtil.getFullName(cls.getEPackage(), ".") + "." + cls.getName(); //$NON-NLS-1$ //$NON-NLS-2$
+    private static String toString(TransformationParameter param) {
+    	String name = param.getName();
+    	if (param.getEntryType() != null) {
+    		return name + ":" + EmfUtil.getFullName(param.getEntryType()); //$NON-NLS-1$
+    	}
+    	if (param.getMetamodels().isEmpty()) {
+    		return name;
+    	}
+        return name + ":" + EmfUtil.getFullName(param.getMetamodels().get(0)); //$NON-NLS-1$
     }
 
     @Override
@@ -154,55 +154,35 @@ public class QvtCompiledTransformation implements QvtTransformation, CompiledTra
     	return getImpl().getConfigurationProperties();
     }
     
-    public IPath getTransformationFilePath() {
-		return transformationFilePath;
-	}
-    
     public EObject loadInput(URI inputObjectURI) throws MdaException {
     	return qvtTransformationImpl.loadInput(inputObjectURI);
     }    
     
-    public static String[] getUsedMetamodelsNsURIs(QvtCompiledTransformation transformation) {
-	    EPackage[] packs = transformation.getModels();
-	    List<String> ids = new ArrayList<String>();
-	    for (int i = 0; i < packs.length; i++) {
-	        EPackage pack = packs[i];
-	        ids.add(pack.getNsURI());
-	    }
-	    
-	    return ids.toArray(new String[ids.size()]);
-	}
-
 	private static QvtTransformationInterpreterFactory getInterpreterFactory() throws MdaException {
-    	if(implFactory != null) {
+    	if (implFactory != null) {
     		return implFactory;
     	}
 		IExtensionRegistry pluginRegistry = Platform.getExtensionRegistry();
 		IExtensionPoint extensionPoint = pluginRegistry.getExtensionPoint(QvtTransformationInterpreterFactory.Descriptor.FACTORY_POINT_ID);
-		if(extensionPoint != null) {
+		if (extensionPoint != null) {
 			IExtension[] allExtensions = extensionPoint.getExtensions();
-			if(allExtensions.length == 0) {
-				throw new MdaException(Messages.NoQvtImplementorFactoryRegistered);
+			// take only first suitable factory
+			for (IExtension ext : allExtensions) {
+				IConfigurationElement[] elements = ext.getConfigurationElements();
+				Object factoryObj = null;
+				try {
+					factoryObj = elements[0].createExecutableExtension(QvtTransformationInterpreterFactory.Descriptor.CLASS_ATTR);
+				} catch (CoreException e) {
+					throw new MdaException(e);
+				}
+				return implFactory = (QvtTransformationInterpreterFactory) factoryObj;
 			}
-			// take only first;			
-			IConfigurationElement[] elements = allExtensions[0].getConfigurationElements();
-			Object factoryObj = null;
-			try {
-				factoryObj = elements[0].createExecutableExtension(QvtTransformationInterpreterFactory.Descriptor.CLASS_ATTR);
-			} catch (CoreException e) {
-				throw new MdaException(e);
-			}
-			return implFactory = (QvtTransformationInterpreterFactory)factoryObj;
 		}
-		return null;
+		throw new MdaException(Messages.NoQvtImplementorFactoryRegistered);
     }
     
     private static QvtTransformationInterpreterFactory implFactory;
     
-    private final EClass myIn;
-
-    private final EClass myOut;
-
     private final String myNamespace;
 
     private final String myId;
