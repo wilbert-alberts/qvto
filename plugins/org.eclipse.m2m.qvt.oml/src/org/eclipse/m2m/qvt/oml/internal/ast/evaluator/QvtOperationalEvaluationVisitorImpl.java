@@ -49,6 +49,7 @@ import org.eclipse.m2m.qvt.oml.common.Logger;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfException;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.DependencyHelper;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
+import org.eclipse.m2m.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.qvt.oml.expressions.ConfigProperty;
@@ -73,6 +74,7 @@ import org.eclipse.m2m.qvt.oml.expressions.Property;
 import org.eclipse.m2m.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveInExp;
+import org.eclipse.m2m.qvt.oml.expressions.SwitchExp;
 import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.expressions.VariableInitExp;
 import org.eclipse.m2m.qvt.oml.expressions.WhileExp;
@@ -500,6 +502,28 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         return whileExp.getResult().accept(this);
     }
     
+    public Object visitSwitchAltExp(AltExp switchAltExp) {
+       Object condition = switchAltExp.getCondition().accept(this);
+       if (Boolean.TRUE.equals(condition)) {
+           switchAltExp.getBody().accept(this);
+       }
+       return condition;
+    }
+
+    public Object visitSwitchExp(SwitchExp switchExp) {
+        for (AltExp altExp : switchExp.getAlternativePart()) {
+            if (Boolean.TRUE.equals(altExp.accept(this))) {
+                return null;
+            }
+        }
+        OCLExpression<EClassifier> elsePart = switchExp.getElsePart();
+        if (elsePart != null) {
+            elsePart.accept(this);
+            return null;
+        }
+        return null;
+    }
+
     /* resolve expressions family */
 
     public Object visitResolveExp(ResolveExp resolveExp) {
@@ -1003,5 +1027,4 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
     private Module myRootModule;
     private InheritanceTree myInheritanceTree;
     private EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> myEvalEnv;
-
 }

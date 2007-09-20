@@ -950,7 +950,7 @@ public interface ExpressionsPackage extends EPackage {
      * @see org.eclipse.m2m.qvt.oml.expressions.impl.ExpressionsPackageImpl#getVisitableASTNode()
      * @generated
      */
-	int VISITABLE_AST_NODE = 22;
+	int VISITABLE_AST_NODE = 24;
 
 	/**
      * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -2996,6 +2996,116 @@ public interface ExpressionsPackage extends EPackage {
 	int WHILE_EXP_FEATURE_COUNT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 3;
 
 	/**
+     * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.expressions.impl.SwitchExpImpl <em>Switch Exp</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.m2m.qvt.oml.expressions.impl.SwitchExpImpl
+     * @see org.eclipse.m2m.qvt.oml.expressions.impl.ExpressionsPackageImpl#getSwitchExp()
+     * @generated
+     */
+    int SWITCH_EXP = 21;
+
+    /**
+     * The feature id for the '<em><b>Start Position</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SWITCH_EXP__START_POSITION = IMPERATIVE_EXPRESSION__START_POSITION;
+
+    /**
+     * The feature id for the '<em><b>End Position</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SWITCH_EXP__END_POSITION = IMPERATIVE_EXPRESSION__END_POSITION;
+
+    /**
+     * The feature id for the '<em><b>Alternative Part</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SWITCH_EXP__ALTERNATIVE_PART = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Else Part</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SWITCH_EXP__ELSE_PART = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>Switch Exp</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SWITCH_EXP_FEATURE_COUNT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 2;
+
+    /**
+     * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.expressions.impl.AltExpImpl <em>Alt Exp</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.m2m.qvt.oml.expressions.impl.AltExpImpl
+     * @see org.eclipse.m2m.qvt.oml.expressions.impl.ExpressionsPackageImpl#getAltExp()
+     * @generated
+     */
+    int ALT_EXP = 22;
+
+    /**
+     * The feature id for the '<em><b>Start Position</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ALT_EXP__START_POSITION = IMPERATIVE_EXPRESSION__START_POSITION;
+
+    /**
+     * The feature id for the '<em><b>End Position</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ALT_EXP__END_POSITION = IMPERATIVE_EXPRESSION__END_POSITION;
+
+    /**
+     * The feature id for the '<em><b>Condition</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ALT_EXP__CONDITION = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Body</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ALT_EXP__BODY = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>Alt Exp</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ALT_EXP_FEATURE_COUNT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 2;
+
+    /**
      * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor <em>Extended Visitor</em>}' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3003,7 +3113,7 @@ public interface ExpressionsPackage extends EPackage {
      * @see org.eclipse.m2m.qvt.oml.expressions.impl.ExpressionsPackageImpl#getExtendedVisitor()
      * @generated
      */
-	int EXTENDED_VISITOR = 21;
+	int EXTENDED_VISITOR = 23;
 
 	/**
      * The number of structural features of the '<em>Extended Visitor</em>' class.
@@ -3022,7 +3132,7 @@ public interface ExpressionsPackage extends EPackage {
      * @see org.eclipse.m2m.qvt.oml.expressions.impl.ExpressionsPackageImpl#getResolveExp()
      * @generated
      */
-    int RESOLVE_EXP = 23;
+    int RESOLVE_EXP = 25;
 
     /**
      * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -3131,7 +3241,7 @@ public interface ExpressionsPackage extends EPackage {
      * @see org.eclipse.m2m.qvt.oml.expressions.impl.ExpressionsPackageImpl#getResolveInExp()
      * @generated
      */
-    int RESOLVE_IN_EXP = 24;
+    int RESOLVE_IN_EXP = 26;
 
     /**
      * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -3249,7 +3359,7 @@ public interface ExpressionsPackage extends EPackage {
      * @see org.eclipse.m2m.qvt.oml.expressions.impl.ExpressionsPackageImpl#getModelType()
      * @generated
      */
-	int MODEL_TYPE = 25;
+	int MODEL_TYPE = 27;
 
 				/**
      * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
@@ -3529,7 +3639,7 @@ public interface ExpressionsPackage extends EPackage {
      * @see org.eclipse.m2m.qvt.oml.expressions.impl.ExpressionsPackageImpl#getPackageRef()
      * @generated
      */
-	int PACKAGE_REF = 26;
+	int PACKAGE_REF = 28;
 
 				/**
      * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -3584,7 +3694,7 @@ public interface ExpressionsPackage extends EPackage {
      * @see org.eclipse.m2m.qvt.oml.expressions.impl.ExpressionsPackageImpl#getMappingParameter()
      * @generated
      */
-	int MAPPING_PARAMETER = 27;
+	int MAPPING_PARAMETER = 29;
 
 				/**
      * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
@@ -3756,7 +3866,7 @@ public interface ExpressionsPackage extends EPackage {
      * @see org.eclipse.m2m.qvt.oml.expressions.impl.ExpressionsPackageImpl#getDirectionKind()
      * @generated
      */
-	int DIRECTION_KIND = 28;
+	int DIRECTION_KIND = 30;
 
 
 	/**
@@ -4366,6 +4476,70 @@ public interface ExpressionsPackage extends EPackage {
 	EReference getWhileExp_Result();
 
 	/**
+     * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.expressions.SwitchExp <em>Switch Exp</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Switch Exp</em>'.
+     * @see org.eclipse.m2m.qvt.oml.expressions.SwitchExp
+     * @generated
+     */
+    EClass getSwitchExp();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.qvt.oml.expressions.SwitchExp#getAlternativePart <em>Alternative Part</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Alternative Part</em>'.
+     * @see org.eclipse.m2m.qvt.oml.expressions.SwitchExp#getAlternativePart()
+     * @see #getSwitchExp()
+     * @generated
+     */
+    EReference getSwitchExp_AlternativePart();
+
+    /**
+     * Returns the meta object for the containment reference '{@link org.eclipse.m2m.qvt.oml.expressions.SwitchExp#getElsePart <em>Else Part</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Else Part</em>'.
+     * @see org.eclipse.m2m.qvt.oml.expressions.SwitchExp#getElsePart()
+     * @see #getSwitchExp()
+     * @generated
+     */
+    EReference getSwitchExp_ElsePart();
+
+    /**
+     * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.expressions.AltExp <em>Alt Exp</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Alt Exp</em>'.
+     * @see org.eclipse.m2m.qvt.oml.expressions.AltExp
+     * @generated
+     */
+    EClass getAltExp();
+
+    /**
+     * Returns the meta object for the containment reference '{@link org.eclipse.m2m.qvt.oml.expressions.AltExp#getCondition <em>Condition</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Condition</em>'.
+     * @see org.eclipse.m2m.qvt.oml.expressions.AltExp#getCondition()
+     * @see #getAltExp()
+     * @generated
+     */
+    EReference getAltExp_Condition();
+
+    /**
+     * Returns the meta object for the containment reference '{@link org.eclipse.m2m.qvt.oml.expressions.AltExp#getBody <em>Body</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Body</em>'.
+     * @see org.eclipse.m2m.qvt.oml.expressions.AltExp#getBody()
+     * @see #getAltExp()
+     * @generated
+     */
+    EReference getAltExp_Body();
+
+    /**
      * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor <em>Extended Visitor</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5098,6 +5272,58 @@ public interface ExpressionsPackage extends EPackage {
 		EReference WHILE_EXP__RESULT = eINSTANCE.getWhileExp_Result();
 
 		/**
+         * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.expressions.impl.SwitchExpImpl <em>Switch Exp</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.eclipse.m2m.qvt.oml.expressions.impl.SwitchExpImpl
+         * @see org.eclipse.m2m.qvt.oml.expressions.impl.ExpressionsPackageImpl#getSwitchExp()
+         * @generated
+         */
+        EClass SWITCH_EXP = eINSTANCE.getSwitchExp();
+
+        /**
+         * The meta object literal for the '<em><b>Alternative Part</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference SWITCH_EXP__ALTERNATIVE_PART = eINSTANCE.getSwitchExp_AlternativePart();
+
+        /**
+         * The meta object literal for the '<em><b>Else Part</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference SWITCH_EXP__ELSE_PART = eINSTANCE.getSwitchExp_ElsePart();
+
+        /**
+         * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.expressions.impl.AltExpImpl <em>Alt Exp</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.eclipse.m2m.qvt.oml.expressions.impl.AltExpImpl
+         * @see org.eclipse.m2m.qvt.oml.expressions.impl.ExpressionsPackageImpl#getAltExp()
+         * @generated
+         */
+        EClass ALT_EXP = eINSTANCE.getAltExp();
+
+        /**
+         * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference ALT_EXP__CONDITION = eINSTANCE.getAltExp_Condition();
+
+        /**
+         * The meta object literal for the '<em><b>Body</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference ALT_EXP__BODY = eINSTANCE.getAltExp_Body();
+
+        /**
          * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor <em>Extended Visitor</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->

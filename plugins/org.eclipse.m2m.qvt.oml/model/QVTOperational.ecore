@@ -627,6 +627,77 @@
         </eGenericType>
       </eStructuralFeatures>
     </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SwitchExp" eSuperTypes="#//expressions/ImperativeExpression">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitSwitchExp(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/SwitchExp/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/SwitchExp/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/SwitchExp/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="alternativePart" lowerBound="1"
+          upperBound="-1" eType="#//expressions/AltExp" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="elsePart" containment="true">
+        <eGenericType eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+        </eGenericType>
+      </eStructuralFeatures>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="AltExp" eSuperTypes="#//expressions/ImperativeExpression">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitSwitchAltExp(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/AltExp/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/AltExp/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/AltExp/accept/U"/>
+        </eParameters>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="condition" lowerBound="1"
+          containment="true">
+        <eGenericType eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="body" lowerBound="1"
+          containment="true">
+        <eGenericType eClassifier="ecore:EClass ../../org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+        </eGenericType>
+      </eStructuralFeatures>
+    </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ExtendedVisitor" abstract="true" interface="true">
       <eTypeParameters name="T"/>
       <eTypeParameters name="S"/>
@@ -716,6 +787,14 @@
       <eOperations name="visitWhileExp">
         <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
         <eParameters name="whileExp" lowerBound="1" eType="#//expressions/WhileExp"/>
+      </eOperations>
+      <eOperations name="visitSwitchExp">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="switchExp" lowerBound="1" eType="#//expressions/SwitchExp"/>
+      </eOperations>
+      <eOperations name="visitSwitchAltExp">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="switchAltExp" lowerBound="1" eType="#//expressions/AltExp"/>
       </eOperations>
       <eOperations name="visitModelType">
         <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>

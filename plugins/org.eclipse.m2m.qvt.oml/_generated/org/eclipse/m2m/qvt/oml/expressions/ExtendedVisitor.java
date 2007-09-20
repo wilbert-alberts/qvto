@@ -207,6 +207,22 @@ public interface ExtendedVisitor<T, S, COA, SSA, CT> extends Visitor<T, EClassif
 
 	/**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @model switchExpRequired="true"
+     * @generated
+     */
+    T visitSwitchExp(SwitchExp switchExp);
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @model switchAltExpRequired="true"
+     * @generated
+     */
+    T visitSwitchAltExp(AltExp switchAltExp);
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @model modelTypeRequired="true"
      * @generated

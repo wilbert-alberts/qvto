@@ -37,197 +37,197 @@ import org.eclipse.m2m.qvt.oml.internal.cst.ElementWithBody;
  */
 public abstract class ElementWithBodyImpl extends EObjectImpl implements ElementWithBody {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
     /**
-	 * The default value of the '{@link #getBodyStartLocation() <em>Body Start Location</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getBodyStartLocation() <em>Body Start Location</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getBodyStartLocation()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getBodyStartLocation()
+     * @generated
+     * @ordered
+     */
 	protected static final int BODY_START_LOCATION_EDEFAULT = 0;
 
 	/**
-	 * The cached value of the '{@link #getBodyStartLocation() <em>Body Start Location</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getBodyStartLocation() <em>Body Start Location</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getBodyStartLocation()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getBodyStartLocation()
+     * @generated
+     * @ordered
+     */
 	protected int bodyStartLocation = BODY_START_LOCATION_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getBodyEndLocation() <em>Body End Location</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getBodyEndLocation() <em>Body End Location</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getBodyEndLocation()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getBodyEndLocation()
+     * @generated
+     * @ordered
+     */
 	protected static final int BODY_END_LOCATION_EDEFAULT = 0;
 
 	/**
-	 * The cached value of the '{@link #getBodyEndLocation() <em>Body End Location</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getBodyEndLocation() <em>Body End Location</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getBodyEndLocation()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getBodyEndLocation()
+     * @generated
+     * @ordered
+     */
 	protected int bodyEndLocation = BODY_END_LOCATION_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected ElementWithBodyImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EClass eStaticClass() {
-		return CSTPackage.Literals.ELEMENT_WITH_BODY;
-	}
+        return CSTPackage.Literals.ELEMENT_WITH_BODY;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public int getBodyStartLocation() {
-		return bodyStartLocation;
-	}
+        return bodyStartLocation;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setBodyStartLocation(int newBodyStartLocation) {
-		int oldBodyStartLocation = bodyStartLocation;
-		bodyStartLocation = newBodyStartLocation;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION, oldBodyStartLocation, bodyStartLocation));
-	}
+        int oldBodyStartLocation = bodyStartLocation;
+        bodyStartLocation = newBodyStartLocation;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION, oldBodyStartLocation, bodyStartLocation));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public int getBodyEndLocation() {
-		return bodyEndLocation;
-	}
+        return bodyEndLocation;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setBodyEndLocation(int newBodyEndLocation) {
-		int oldBodyEndLocation = bodyEndLocation;
-		bodyEndLocation = newBodyEndLocation;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION, oldBodyEndLocation, bodyEndLocation));
-	}
+        int oldBodyEndLocation = bodyEndLocation;
+        bodyEndLocation = newBodyEndLocation;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION, oldBodyEndLocation, bodyEndLocation));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case CSTPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION:
-				return new Integer(getBodyStartLocation());
-			case CSTPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION:
-				return new Integer(getBodyEndLocation());
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case CSTPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION:
+                return new Integer(getBodyStartLocation());
+            case CSTPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION:
+                return new Integer(getBodyEndLocation());
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case CSTPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION:
-				setBodyStartLocation(((Integer)newValue).intValue());
-				return;
-			case CSTPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION:
-				setBodyEndLocation(((Integer)newValue).intValue());
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case CSTPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION:
+                setBodyStartLocation(((Integer)newValue).intValue());
+                return;
+            case CSTPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION:
+                setBodyEndLocation(((Integer)newValue).intValue());
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case CSTPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION:
-				setBodyStartLocation(BODY_START_LOCATION_EDEFAULT);
-				return;
-			case CSTPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION:
-				setBodyEndLocation(BODY_END_LOCATION_EDEFAULT);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case CSTPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION:
+                setBodyStartLocation(BODY_START_LOCATION_EDEFAULT);
+                return;
+            case CSTPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION:
+                setBodyEndLocation(BODY_END_LOCATION_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case CSTPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION:
-				return bodyStartLocation != BODY_START_LOCATION_EDEFAULT;
-			case CSTPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION:
-				return bodyEndLocation != BODY_END_LOCATION_EDEFAULT;
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case CSTPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION:
+                return bodyStartLocation != BODY_START_LOCATION_EDEFAULT;
+            case CSTPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION:
+                return bodyEndLocation != BODY_END_LOCATION_EDEFAULT;
+        }
+        return super.eIsSet(featureID);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (bodyStartLocation: "); //$NON-NLS-1$
-		result.append(bodyStartLocation);
-		result.append(", bodyEndLocation: "); //$NON-NLS-1$
-		result.append(bodyEndLocation);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (bodyStartLocation: "); //$NON-NLS-1$
+        result.append(bodyStartLocation);
+        result.append(", bodyEndLocation: "); //$NON-NLS-1$
+        result.append(bodyEndLocation);
+        result.append(')');
+        return result.toString();
+    }
 
 } //ElementWithBodyImpl

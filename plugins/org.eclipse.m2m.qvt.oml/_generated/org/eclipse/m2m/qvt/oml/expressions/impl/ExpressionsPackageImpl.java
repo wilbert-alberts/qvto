@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.EcorePackage;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.m2m.qvt.oml.expressions.AltExp;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import org.eclipse.m2m.qvt.oml.expressions.AssignExp;
@@ -51,6 +52,7 @@ import org.eclipse.m2m.qvt.oml.expressions.Property;
 import org.eclipse.m2m.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveInExp;
+import org.eclipse.m2m.qvt.oml.expressions.SwitchExp;
 import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.expressions.VariableInitExp;
 import org.eclipse.m2m.qvt.oml.expressions.VisitableASTNode;
@@ -222,6 +224,20 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 	private EClass whileExpEClass = null;
 
 	/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass switchExpEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass altExpEClass = null;
+
+    /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
@@ -891,6 +907,60 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 
 	/**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getSwitchExp() {
+        return switchExpEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getSwitchExp_AlternativePart() {
+        return (EReference)switchExpEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getSwitchExp_ElsePart() {
+        return (EReference)switchExpEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getAltExp() {
+        return altExpEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getAltExp_Condition() {
+        return (EReference)altExpEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getAltExp_Body() {
+        return (EReference)altExpEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
@@ -1175,6 +1245,14 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
         createEReference(whileExpEClass, WHILE_EXP__BODY);
         createEReference(whileExpEClass, WHILE_EXP__RESULT);
 
+        switchExpEClass = createEClass(SWITCH_EXP);
+        createEReference(switchExpEClass, SWITCH_EXP__ALTERNATIVE_PART);
+        createEReference(switchExpEClass, SWITCH_EXP__ELSE_PART);
+
+        altExpEClass = createEClass(ALT_EXP);
+        createEReference(altExpEClass, ALT_EXP__CONDITION);
+        createEReference(altExpEClass, ALT_EXP__BODY);
+
         extendedVisitorEClass = createEClass(EXTENDED_VISITOR);
 
         visitableASTNodeEClass = createEClass(VISITABLE_AST_NODE);
@@ -1278,6 +1356,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
         blockExpEClass.getESuperTypes().add(this.getImperativeExpression());
         objectExpEClass.getESuperTypes().add(this.getImperativeExpression());
         whileExpEClass.getESuperTypes().add(this.getImperativeExpression());
+        switchExpEClass.getESuperTypes().add(this.getImperativeExpression());
+        altExpEClass.getESuperTypes().add(this.getImperativeExpression());
         g1 = createEGenericType(theUtilitiesPackage.getVisitor());
         g2 = createEGenericType(extendedVisitorEClass_T);
         g1.getETypeArguments().add(g2);
@@ -2000,6 +2080,83 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
         g1 = createEGenericType(t1);
         initEOperation(op, g1);
 
+        initEClass(switchExpEClass, SwitchExp.class, "SwitchExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getSwitchExp_AlternativePart(), this.getAltExp(), null, "alternativePart", null, 1, -1, SwitchExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        g1 = createEGenericType(theExpressionsPackage_1.getOCLExpression());
+        g2 = createEGenericType(theEcorePackage.getEClassifier());
+        g1.getETypeArguments().add(g2);
+        initEReference(getSwitchExp_ElsePart(), g1, null, "elsePart", null, 0, 1, SwitchExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+        op = addEOperation(switchExpEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        t1 = addETypeParameter(op, "T"); //$NON-NLS-1$
+        t2 = addETypeParameter(op, "U"); //$NON-NLS-1$
+        g1 = createEGenericType(theUtilitiesPackage.getVisitor());
+        g2 = createEGenericType(t1);
+        g1.getETypeArguments().add(g2);
+        g2 = createEGenericType();
+        g1.getETypeArguments().add(g2);
+        g2 = createEGenericType();
+        g1.getETypeArguments().add(g2);
+        g2 = createEGenericType();
+        g1.getETypeArguments().add(g2);
+        g2 = createEGenericType();
+        g1.getETypeArguments().add(g2);
+        g2 = createEGenericType();
+        g1.getETypeArguments().add(g2);
+        g2 = createEGenericType();
+        g1.getETypeArguments().add(g2);
+        g2 = createEGenericType();
+        g1.getETypeArguments().add(g2);
+        g2 = createEGenericType();
+        g1.getETypeArguments().add(g2);
+        g2 = createEGenericType();
+        g1.getETypeArguments().add(g2);
+        t2.getEBounds().add(g1);
+        g1 = createEGenericType(t2);
+        addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        g1 = createEGenericType(t1);
+        initEOperation(op, g1);
+
+        initEClass(altExpEClass, AltExp.class, "AltExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        g1 = createEGenericType(theExpressionsPackage_1.getOCLExpression());
+        g2 = createEGenericType(theEcorePackage.getEClassifier());
+        g1.getETypeArguments().add(g2);
+        initEReference(getAltExp_Condition(), g1, null, "condition", null, 1, 1, AltExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        g1 = createEGenericType(theExpressionsPackage_1.getOCLExpression());
+        g2 = createEGenericType(theEcorePackage.getEClassifier());
+        g1.getETypeArguments().add(g2);
+        initEReference(getAltExp_Body(), g1, null, "body", null, 1, 1, AltExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+        op = addEOperation(altExpEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        t1 = addETypeParameter(op, "T"); //$NON-NLS-1$
+        t2 = addETypeParameter(op, "U"); //$NON-NLS-1$
+        g1 = createEGenericType(theUtilitiesPackage.getVisitor());
+        g2 = createEGenericType(t1);
+        g1.getETypeArguments().add(g2);
+        g2 = createEGenericType();
+        g1.getETypeArguments().add(g2);
+        g2 = createEGenericType();
+        g1.getETypeArguments().add(g2);
+        g2 = createEGenericType();
+        g1.getETypeArguments().add(g2);
+        g2 = createEGenericType();
+        g1.getETypeArguments().add(g2);
+        g2 = createEGenericType();
+        g1.getETypeArguments().add(g2);
+        g2 = createEGenericType();
+        g1.getETypeArguments().add(g2);
+        g2 = createEGenericType();
+        g1.getETypeArguments().add(g2);
+        g2 = createEGenericType();
+        g1.getETypeArguments().add(g2);
+        g2 = createEGenericType();
+        g1.getETypeArguments().add(g2);
+        t2.getEBounds().add(g1);
+        g1 = createEGenericType(t2);
+        addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        g1 = createEGenericType(t1);
+        initEOperation(op, g1);
+
         initEClass(extendedVisitorEClass, ExtendedVisitor.class, "ExtendedVisitor", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
         op = addEOperation(extendedVisitorEClass, null, "visitModule", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -2104,6 +2261,16 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 
         op = addEOperation(extendedVisitorEClass, null, "visitWhileExp", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         addEParameter(op, this.getWhileExp(), "whileExp", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        g1 = createEGenericType(extendedVisitorEClass_T);
+        initEOperation(op, g1);
+
+        op = addEOperation(extendedVisitorEClass, null, "visitSwitchExp", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEParameter(op, this.getSwitchExp(), "switchExp", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        g1 = createEGenericType(extendedVisitorEClass_T);
+        initEOperation(op, g1);
+
+        op = addEOperation(extendedVisitorEClass, null, "visitSwitchAltExp", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEParameter(op, this.getAltExp(), "switchAltExp", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         g1 = createEGenericType(extendedVisitorEClass_T);
         initEOperation(op, g1);
 

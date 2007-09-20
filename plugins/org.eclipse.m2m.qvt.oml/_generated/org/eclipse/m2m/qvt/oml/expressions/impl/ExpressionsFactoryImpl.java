@@ -93,6 +93,8 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
             case ExpressionsPackage.BLOCK_EXP: return createBlockExp();
             case ExpressionsPackage.OBJECT_EXP: return createObjectExp();
             case ExpressionsPackage.WHILE_EXP: return createWhileExp();
+            case ExpressionsPackage.SWITCH_EXP: return createSwitchExp();
+            case ExpressionsPackage.ALT_EXP: return createAltExp();
             case ExpressionsPackage.RESOLVE_EXP: return createResolveExp();
             case ExpressionsPackage.RESOLVE_IN_EXP: return createResolveInExp();
             case ExpressionsPackage.MODEL_TYPE: return createModelType();
@@ -334,6 +336,26 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
     }
 
 	/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public SwitchExp createSwitchExp() {
+        SwitchExpImpl switchExp = new SwitchExpImpl();
+        return switchExp;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public AltExp createAltExp() {
+        AltExpImpl altExp = new AltExpImpl();
+        return altExp;
+    }
+
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated

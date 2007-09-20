@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.17 2007/09/17 10:17:37 aigdalov Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.18 2007/09/20 10:14:06 aigdalov Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -279,6 +279,8 @@ $Globals
 	import org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.ResolveInExpCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.VariableInitializationCS;
+	import org.eclipse.m2m.qvt.oml.internal.cst.SwitchAltExpCS;
+	import org.eclipse.m2m.qvt.oml.internal.cst.SwitchExpCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.WhileExpCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.BlockExpCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.ModelTypeCS;
@@ -368,7 +370,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.17 2007/09/17 10:17:37 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.18 2007/09/20 10:14:06 aigdalov Exp $
  */
 	./
 $End
@@ -739,6 +741,20 @@ $Headers
 			result.setCondition(cond);
 			result.setResult(res);
 			result.getBodyExpressions().addAll(expressions);
+			return result;
+		}
+
+		protected CSTNode createSwitchExpCS(EList<SwitchAltExpCS> altExps, OCLExpressionCS elseExp) {
+			SwitchExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createSwitchExpCS();
+			result.getAlternativePart().addAll(altExps);
+			result.setElsePart(elseExp);
+			return result;
+		}
+
+		protected CSTNode createSwitchAltExpCS(OCLExpressionCS cond, OCLExpressionCS body) {
+			SwitchAltExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createSwitchAltExpCS();
+			result.setCondition(cond);
+			result.setBody(body);
 			return result;
 		}
 
@@ -2884,22 +2900,69 @@ $Rules
 		  $EndJava
 		./
 
+	----- switch -----
 
 	oclExpCS -> switchExpCS
 
-	switchExpCS ::= switch '{' '}'
+	switchExpCS ::= switch switchBodyExpCS
 		/.$BeginJava
-					CSTNode result = createIfExpCS(
-							null,
-							null,
-							null
+					Object[] switchBody = (Object[]) $getSym(2);
+
+					CSTNode result = createSwitchExpCS(
+							(EList<SwitchAltExpCS>) switchBody[0],
+							(OCLExpressionCS) switchBody[1]
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
+					setOffsets(result, getIToken($getToken(1)), (IToken) switchBody[2]);
+					$setResult(result);
+		  $EndJava
+		./
+
+	switchBodyExpCS ::= '{' switchAltExpCSList switchElseExpCSOpt '}'
+		/.$BeginJava
+					Object[] result = new Object[] {$getSym(2), $getSym(3), getIToken($getToken(4))};
+					$setResult(result);
+		  $EndJava
+		./
+
+	switchAltExpCSList ::= switchAltExpCS
+		/.$BeginJava
+					EList result = new BasicEList();
+					result.add($getSym(1));
+					$setResult(result);
+		  $EndJava
+		./
+	switchAltExpCSList ::= switchAltExpCSList switchAltExpCS
+		/.$BeginJava
+					EList result = (EList)$getSym(1);
+					result.add($getSym(2));
 					$setResult(result);
 		  $EndJava
 		./
 
 
+	switchAltExpCS ::= '(' oclExpressionCS ')' '?' statementCS ';'
+		/.$BeginJava
+					CSTNode result = createSwitchAltExpCS(
+							(OCLExpressionCS) $getSym(2),
+							(OCLExpressionCS) $getSym(5)
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(6)));
+					$setResult(result);
+		  $EndJava
+		./
+	
+	switchElseExpCSOpt ::= $empty
+		/.$NullAction./
+	switchElseExpCSOpt -> switchElseExpCS
+
+	switchElseExpCS ::= else '?' statementCS ';'
+		/.$BeginJava
+					$setResult((CSTNode)$getSym(3));
+		  $EndJava
+		./
+
+
+	----- switch -----
 
 	iteratorExpCSToken -> forAll
 	iteratorExpCSToken -> exists

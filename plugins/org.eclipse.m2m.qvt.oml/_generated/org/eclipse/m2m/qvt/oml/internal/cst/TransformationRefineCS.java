@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TransformationRefineCS.java,v 1.3 2007/09/13 11:39:52 sboyko Exp $
+ * $Id: TransformationRefineCS.java,v 1.4 2007/09/20 10:14:05 aigdalov Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst;
 
@@ -37,62 +37,62 @@ import org.eclipse.ocl.internal.cst.SimpleNameCS;
  */
 public interface TransformationRefineCS extends CSTNode {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 	/**
-	 * Returns the value of the '<em><b>Module Ref CS</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Module Ref CS</b></em>' containment reference.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Module Ref CS</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Module Ref CS</em>' containment reference.
-	 * @see #setModuleRefCS(ModuleRefCS)
-	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getTransformationRefineCS_ModuleRefCS()
-	 * @model containment="true" required="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Module Ref CS</em>' containment reference.
+     * @see #setModuleRefCS(ModuleRefCS)
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getTransformationRefineCS_ModuleRefCS()
+     * @model containment="true" required="true"
+     * @generated
+     */
 	ModuleRefCS getModuleRefCS();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.TransformationRefineCS#getModuleRefCS <em>Module Ref CS</em>}' containment reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.TransformationRefineCS#getModuleRefCS <em>Module Ref CS</em>}' containment reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Module Ref CS</em>' containment reference.
-	 * @see #getModuleRefCS()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Module Ref CS</em>' containment reference.
+     * @see #getModuleRefCS()
+     * @generated
+     */
 	void setModuleRefCS(ModuleRefCS value);
 
 	/**
-	 * Returns the value of the '<em><b>Simple Name CS</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Simple Name CS</b></em>' containment reference.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Simple Name CS</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Simple Name CS</em>' containment reference.
-	 * @see #setSimpleNameCS(SimpleNameCS)
-	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getTransformationRefineCS_SimpleNameCS()
-	 * @model containment="true" required="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Simple Name CS</em>' containment reference.
+     * @see #setSimpleNameCS(SimpleNameCS)
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getTransformationRefineCS_SimpleNameCS()
+     * @model containment="true" required="true"
+     * @generated
+     */
 	SimpleNameCS getSimpleNameCS();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.TransformationRefineCS#getSimpleNameCS <em>Simple Name CS</em>}' containment reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.TransformationRefineCS#getSimpleNameCS <em>Simple Name CS</em>}' containment reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Simple Name CS</em>' containment reference.
-	 * @see #getSimpleNameCS()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Simple Name CS</em>' containment reference.
+     * @see #getSimpleNameCS()
+     * @generated
+     */
 	void setSimpleNameCS(SimpleNameCS value);
 
 } // TransformationRefineCS

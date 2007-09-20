@@ -37,6 +37,7 @@ import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.compiler.ParsedModuleCS;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.EmfMmUtil;
+import org.eclipse.m2m.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
@@ -61,6 +62,7 @@ import org.eclipse.m2m.qvt.oml.expressions.Property;
 import org.eclipse.m2m.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveInExp;
+import org.eclipse.m2m.qvt.oml.expressions.SwitchExp;
 import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.expressions.VariableInitExp;
 import org.eclipse.m2m.qvt.oml.expressions.WhileExp;
@@ -94,6 +96,8 @@ import org.eclipse.m2m.qvt.oml.internal.cst.RenameCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ResolveInExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.StatementCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.SwitchAltExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.SwitchExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.TransformationHeaderCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.TypeSpecCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.VariableInitializationCS;
@@ -275,9 +279,12 @@ public class QvtOperationalVisitorCS
 		if (oclExpressionCS instanceof BlockExpCS) {
 			return visitBlockExpCS((BlockExpCS) oclExpressionCS, (QvtOperationalEnv) env);
 		}
-		if (oclExpressionCS instanceof WhileExpCS) {
-			return visitWhileExpCS((WhileExpCS) oclExpressionCS, (QvtOperationalEnv) env);
-		}
+        if (oclExpressionCS instanceof WhileExpCS) {
+            return visitWhileExpCS((WhileExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+        }
+        if (oclExpressionCS instanceof SwitchExpCS) {
+            return visitSwitchExpCS((SwitchExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+        }
 		if (oclExpressionCS instanceof OutExpCS) {
 			return visitOutExpCS((OutExpCS) oclExpressionCS, (QvtOperationalEnv) env);
 		}
@@ -329,7 +336,7 @@ public class QvtOperationalVisitorCS
 		return expr;
 	}
 	
-	@Override
+    @Override
     protected OCLExpression<EClassifier> literalExpCS(
             LiteralExpCS literalExpCS,
             Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env)
@@ -463,7 +470,39 @@ public class QvtOperationalVisitorCS
 		return result;
     }
 
-	private OCLExpression<EClassifier> visitWhileExpCS(WhileExpCS expressionCS, QvtOperationalEnv env)
+    private OCLExpression<EClassifier> visitSwitchExpCS(SwitchExpCS switchExpCS, QvtOperationalEnv env)
+            throws SemanticException {
+        SwitchExp switchExp = ExpressionsFactory.eINSTANCE.createSwitchExp();
+        switchExp.setStartPosition(switchExpCS.getStartOffset());
+        switchExp.setEndPosition(switchExpCS.getEndOffset());
+        
+        if (switchExpCS.getAlternativePart() != null) {
+            for (SwitchAltExpCS altExpCS : switchExpCS.getAlternativePart()) {
+                OCLExpression<EClassifier> altExp = visitSwitchAltExpCS(altExpCS, env);
+                switchExp.getAlternativePart().add((AltExp) altExp);
+            }
+        }
+        if (switchExpCS.getElsePart() != null) {
+            OCLExpression<EClassifier> elsePart = visitOclExpressionCS(switchExpCS.getElsePart(), env);
+            switchExp.setElsePart(elsePart);
+        }
+        return switchExp;
+    }
+
+	private OCLExpression<EClassifier> visitSwitchAltExpCS(SwitchAltExpCS altExpCS, QvtOperationalEnv env) 
+	        throws SemanticException {
+	    AltExp altExp = ExpressionsFactory.eINSTANCE.createAltExp();
+	    altExp.setStartPosition(altExpCS.getStartOffset());
+	    altExp.setEndPosition(altExpCS.getEndOffset());
+        
+	    OCLExpression<EClassifier> condition = visitOclExpressionCS(altExpCS.getCondition(), env);
+	    altExp.setCondition(condition);
+	    OCLExpression<EClassifier> body = visitOclExpressionCS(altExpCS.getBody(), env);
+	    altExp.setBody(body);
+	    return altExp;
+    }
+
+    private OCLExpression<EClassifier> visitWhileExpCS(WhileExpCS expressionCS, QvtOperationalEnv env)
 			throws SemanticException {
 		WhileExp result = ExpressionsFactory.eINSTANCE.createWhileExp();
 		result.setStartPosition(expressionCS.getStartOffset());

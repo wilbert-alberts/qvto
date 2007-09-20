@@ -373,6 +373,28 @@ public class ExpressionsSwitch<T1> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case ExpressionsPackage.SWITCH_EXP: {
+                SwitchExp switchExp = (SwitchExp)theEObject;
+                T1 result = caseSwitchExp(switchExp);
+                if (result == null) result = caseImperativeExpression(switchExp);
+                if (result == null) result = caseOCLExpression(switchExp);
+                if (result == null) result = caseTypedElement(switchExp);
+                if (result == null) result = caseVisitable(switchExp);
+                if (result == null) result = caseASTNode(switchExp);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case ExpressionsPackage.ALT_EXP: {
+                AltExp altExp = (AltExp)theEObject;
+                T1 result = caseAltExp(altExp);
+                if (result == null) result = caseImperativeExpression(altExp);
+                if (result == null) result = caseOCLExpression(altExp);
+                if (result == null) result = caseTypedElement(altExp);
+                if (result == null) result = caseVisitable(altExp);
+                if (result == null) result = caseASTNode(altExp);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case ExpressionsPackage.EXTENDED_VISITOR: {
                 @SuppressWarnings("unchecked") ExtendedVisitor<?, ?, ?, ?, ?> extendedVisitor = (ExtendedVisitor<?, ?, ?, ?, ?>)theEObject;
                 T1 result = caseExtendedVisitor(extendedVisitor);
@@ -767,6 +789,36 @@ public class ExpressionsSwitch<T1> {
     }
 
 	/**
+     * Returns the result of interpreting the object as an instance of '<em>Switch Exp</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Switch Exp</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T1 caseSwitchExp(SwitchExp object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Alt Exp</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Alt Exp</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T1 caseAltExp(AltExp object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Extended Visitor</em>'.
      * <!-- begin-user-doc -->
 	 * This implementation returns null;

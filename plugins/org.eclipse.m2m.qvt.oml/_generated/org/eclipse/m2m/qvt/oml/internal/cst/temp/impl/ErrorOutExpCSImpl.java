@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ErrorOutExpCSImpl.java,v 1.2 2007/09/13 11:39:52 sboyko Exp $
+ * $Id: ErrorOutExpCSImpl.java,v 1.3 2007/09/20 10:14:06 aigdalov Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.temp.impl;
 
@@ -41,228 +41,228 @@ import org.eclipse.m2m.qvt.oml.internal.cst.temp.TempPackage;
  */
 public class ErrorOutExpCSImpl extends OutExpCSImpl implements ErrorOutExpCS {
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
     /**
-	 * The default value of the '{@link #getFullStartOffset() <em>Full Start Offset</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getFullStartOffset() <em>Full Start Offset</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getFullStartOffset()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getFullStartOffset()
+     * @generated
+     * @ordered
+     */
     protected static final int FULL_START_OFFSET_EDEFAULT = 0;
     /**
-	 * The cached value of the '{@link #getFullStartOffset() <em>Full Start Offset</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getFullStartOffset() <em>Full Start Offset</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getFullStartOffset()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getFullStartOffset()
+     * @generated
+     * @ordered
+     */
     protected int fullStartOffset = FULL_START_OFFSET_EDEFAULT;
     /**
-	 * The default value of the '{@link #getFullEndOffset() <em>Full End Offset</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getFullEndOffset() <em>Full End Offset</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getFullEndOffset()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getFullEndOffset()
+     * @generated
+     * @ordered
+     */
     protected static final int FULL_END_OFFSET_EDEFAULT = 0;
     /**
-	 * The cached value of the '{@link #getFullEndOffset() <em>Full End Offset</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getFullEndOffset() <em>Full End Offset</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getFullEndOffset()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getFullEndOffset()
+     * @generated
+     * @ordered
+     */
     protected int fullEndOffset = FULL_END_OFFSET_EDEFAULT;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected ErrorOutExpCSImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return TempPackage.Literals.ERROR_OUT_EXP_CS;
-	}
+        return TempPackage.Literals.ERROR_OUT_EXP_CS;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public int getFullStartOffset() {
-		return fullStartOffset;
-	}
+        return fullStartOffset;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setFullStartOffset(int newFullStartOffset) {
-		int oldFullStartOffset = fullStartOffset;
-		fullStartOffset = newFullStartOffset;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TempPackage.ERROR_OUT_EXP_CS__FULL_START_OFFSET, oldFullStartOffset, fullStartOffset));
-	}
+        int oldFullStartOffset = fullStartOffset;
+        fullStartOffset = newFullStartOffset;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, TempPackage.ERROR_OUT_EXP_CS__FULL_START_OFFSET, oldFullStartOffset, fullStartOffset));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public int getFullEndOffset() {
-		return fullEndOffset;
-	}
+        return fullEndOffset;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setFullEndOffset(int newFullEndOffset) {
-		int oldFullEndOffset = fullEndOffset;
-		fullEndOffset = newFullEndOffset;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TempPackage.ERROR_OUT_EXP_CS__FULL_END_OFFSET, oldFullEndOffset, fullEndOffset));
-	}
+        int oldFullEndOffset = fullEndOffset;
+        fullEndOffset = newFullEndOffset;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, TempPackage.ERROR_OUT_EXP_CS__FULL_END_OFFSET, oldFullEndOffset, fullEndOffset));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case TempPackage.ERROR_OUT_EXP_CS__FULL_START_OFFSET:
-				return new Integer(getFullStartOffset());
-			case TempPackage.ERROR_OUT_EXP_CS__FULL_END_OFFSET:
-				return new Integer(getFullEndOffset());
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case TempPackage.ERROR_OUT_EXP_CS__FULL_START_OFFSET:
+                return new Integer(getFullStartOffset());
+            case TempPackage.ERROR_OUT_EXP_CS__FULL_END_OFFSET:
+                return new Integer(getFullEndOffset());
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case TempPackage.ERROR_OUT_EXP_CS__FULL_START_OFFSET:
-				setFullStartOffset(((Integer)newValue).intValue());
-				return;
-			case TempPackage.ERROR_OUT_EXP_CS__FULL_END_OFFSET:
-				setFullEndOffset(((Integer)newValue).intValue());
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case TempPackage.ERROR_OUT_EXP_CS__FULL_START_OFFSET:
+                setFullStartOffset(((Integer)newValue).intValue());
+                return;
+            case TempPackage.ERROR_OUT_EXP_CS__FULL_END_OFFSET:
+                setFullEndOffset(((Integer)newValue).intValue());
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eUnset(int featureID) {
-		switch (featureID) {
-			case TempPackage.ERROR_OUT_EXP_CS__FULL_START_OFFSET:
-				setFullStartOffset(FULL_START_OFFSET_EDEFAULT);
-				return;
-			case TempPackage.ERROR_OUT_EXP_CS__FULL_END_OFFSET:
-				setFullEndOffset(FULL_END_OFFSET_EDEFAULT);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case TempPackage.ERROR_OUT_EXP_CS__FULL_START_OFFSET:
+                setFullStartOffset(FULL_START_OFFSET_EDEFAULT);
+                return;
+            case TempPackage.ERROR_OUT_EXP_CS__FULL_END_OFFSET:
+                setFullEndOffset(FULL_END_OFFSET_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case TempPackage.ERROR_OUT_EXP_CS__FULL_START_OFFSET:
-				return fullStartOffset != FULL_START_OFFSET_EDEFAULT;
-			case TempPackage.ERROR_OUT_EXP_CS__FULL_END_OFFSET:
-				return fullEndOffset != FULL_END_OFFSET_EDEFAULT;
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case TempPackage.ERROR_OUT_EXP_CS__FULL_START_OFFSET:
+                return fullStartOffset != FULL_START_OFFSET_EDEFAULT;
+            case TempPackage.ERROR_OUT_EXP_CS__FULL_END_OFFSET:
+                return fullEndOffset != FULL_END_OFFSET_EDEFAULT;
+        }
+        return super.eIsSet(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
-		if (baseClass == ErrorCSTNode.class) {
-			switch (derivedFeatureID) {
-				case TempPackage.ERROR_OUT_EXP_CS__FULL_START_OFFSET: return TempPackage.ERROR_CST_NODE__FULL_START_OFFSET;
-				case TempPackage.ERROR_OUT_EXP_CS__FULL_END_OFFSET: return TempPackage.ERROR_CST_NODE__FULL_END_OFFSET;
-				default: return -1;
-			}
-		}
-		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-	}
+        if (baseClass == ErrorCSTNode.class) {
+            switch (derivedFeatureID) {
+                case TempPackage.ERROR_OUT_EXP_CS__FULL_START_OFFSET: return TempPackage.ERROR_CST_NODE__FULL_START_OFFSET;
+                case TempPackage.ERROR_OUT_EXP_CS__FULL_END_OFFSET: return TempPackage.ERROR_CST_NODE__FULL_END_OFFSET;
+                default: return -1;
+            }
+        }
+        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
-		if (baseClass == ErrorCSTNode.class) {
-			switch (baseFeatureID) {
-				case TempPackage.ERROR_CST_NODE__FULL_START_OFFSET: return TempPackage.ERROR_OUT_EXP_CS__FULL_START_OFFSET;
-				case TempPackage.ERROR_CST_NODE__FULL_END_OFFSET: return TempPackage.ERROR_OUT_EXP_CS__FULL_END_OFFSET;
-				default: return -1;
-			}
-		}
-		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
-	}
+        if (baseClass == ErrorCSTNode.class) {
+            switch (baseFeatureID) {
+                case TempPackage.ERROR_CST_NODE__FULL_START_OFFSET: return TempPackage.ERROR_OUT_EXP_CS__FULL_START_OFFSET;
+                case TempPackage.ERROR_CST_NODE__FULL_END_OFFSET: return TempPackage.ERROR_OUT_EXP_CS__FULL_END_OFFSET;
+                default: return -1;
+            }
+        }
+        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public String toString() {
-		if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (fullStartOffset: "); //$NON-NLS-1$
-		result.append(fullStartOffset);
-		result.append(", fullEndOffset: "); //$NON-NLS-1$
-		result.append(fullEndOffset);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (fullStartOffset: "); //$NON-NLS-1$
+        result.append(fullStartOffset);
+        result.append(", fullEndOffset: "); //$NON-NLS-1$
+        result.append(fullEndOffset);
+        result.append(')');
+        return result.toString();
+    }
 
 } //ErrorOutExpCSImpl

@@ -14,12 +14,14 @@ package org.eclipse.m2m.qvt.oml.ast.parser;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.m2m.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.qvt.oml.expressions.ConfigProperty;
@@ -40,6 +42,7 @@ import org.eclipse.m2m.qvt.oml.expressions.Property;
 import org.eclipse.m2m.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveInExp;
+import org.eclipse.m2m.qvt.oml.expressions.SwitchExp;
 import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.expressions.VariableInitExp;
 import org.eclipse.m2m.qvt.oml.expressions.WhileExp;
@@ -449,5 +452,22 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
 
     private final NodeProcessor myNodeProcessor;
     private final Set<Visitable> myProcessed;
+    
+    public Object visitSwitchAltExp(AltExp switchAltExp) {
+        doProcess(switchAltExp.getCondition(), switchAltExp);
+        doProcess(switchAltExp.getBody(), switchAltExp);
+        return null;
+    }
+
+    public Object visitSwitchExp(SwitchExp switchExp) {
+        EList<AltExp> alternativePart = switchExp.getAlternativePart();
+        if (alternativePart != null) {
+            for (AltExp altExp  : alternativePart) {
+                doProcess(altExp, switchExp);
+            }
+        }
+        doProcess(switchExp.getElsePart(), switchExp);
+        return null;
+    }
 
 }

@@ -217,6 +217,24 @@ public interface ExpressionsFactory extends EFactory {
 	WhileExp createWhileExp();
 
 	/**
+     * Returns a new object of class '<em>Switch Exp</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Switch Exp</em>'.
+     * @generated
+     */
+    SwitchExp createSwitchExp();
+
+    /**
+     * Returns a new object of class '<em>Alt Exp</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Alt Exp</em>'.
+     * @generated
+     */
+    AltExp createAltExp();
+
+    /**
      * Returns a new object of class '<em>Resolve Exp</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

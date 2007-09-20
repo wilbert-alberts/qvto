@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TransformationHeaderCS.java,v 1.3 2007/09/13 11:39:51 sboyko Exp $
+ * $Id: TransformationHeaderCS.java,v 1.4 2007/09/20 10:14:04 aigdalov Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst;
 
@@ -43,110 +43,110 @@ import org.eclipse.ocl.internal.cst.StringLiteralExpCS;
  */
 public interface TransformationHeaderCS extends CSTNode {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 	/**
-	 * Returns the value of the '<em><b>Qualifiers</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.internal.cst.StringLiteralExpCS}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Qualifiers</b></em>' containment reference list.
+     * The list contents are of type {@link org.eclipse.ocl.internal.cst.StringLiteralExpCS}.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Qualifiers</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Qualifiers</em>' containment reference list.
-	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getTransformationHeaderCS_Qualifiers()
-	 * @model containment="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Qualifiers</em>' containment reference list.
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getTransformationHeaderCS_Qualifiers()
+     * @model containment="true"
+     * @generated
+     */
 	EList<StringLiteralExpCS> getQualifiers();
 
 	/**
-	 * Returns the value of the '<em><b>Path Name CS</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Path Name CS</b></em>' containment reference.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Path Name CS</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Path Name CS</em>' containment reference.
-	 * @see #setPathNameCS(PathNameCS)
-	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getTransformationHeaderCS_PathNameCS()
-	 * @model containment="true" required="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Path Name CS</em>' containment reference.
+     * @see #setPathNameCS(PathNameCS)
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getTransformationHeaderCS_PathNameCS()
+     * @model containment="true" required="true"
+     * @generated
+     */
 	PathNameCS getPathNameCS();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.TransformationHeaderCS#getPathNameCS <em>Path Name CS</em>}' containment reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.TransformationHeaderCS#getPathNameCS <em>Path Name CS</em>}' containment reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Path Name CS</em>' containment reference.
-	 * @see #getPathNameCS()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Path Name CS</em>' containment reference.
+     * @see #getPathNameCS()
+     * @generated
+     */
 	void setPathNameCS(PathNameCS value);
 
 	/**
-	 * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.m2m.qvt.oml.internal.cst.ParameterDeclarationCS}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.
+     * The list contents are of type {@link org.eclipse.m2m.qvt.oml.internal.cst.ParameterDeclarationCS}.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Parameters</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Parameters</em>' containment reference list.
-	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getTransformationHeaderCS_Parameters()
-	 * @model containment="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Parameters</em>' containment reference list.
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getTransformationHeaderCS_Parameters()
+     * @model containment="true"
+     * @generated
+     */
 	EList<ParameterDeclarationCS> getParameters();
 
 	/**
-	 * Returns the value of the '<em><b>Module Usages</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.m2m.qvt.oml.internal.cst.ModuleUsageCS}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Module Usages</b></em>' containment reference list.
+     * The list contents are of type {@link org.eclipse.m2m.qvt.oml.internal.cst.ModuleUsageCS}.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Module Usages</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Module Usages</em>' containment reference list.
-	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getTransformationHeaderCS_ModuleUsages()
-	 * @model containment="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Module Usages</em>' containment reference list.
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getTransformationHeaderCS_ModuleUsages()
+     * @model containment="true"
+     * @generated
+     */
 	EList<ModuleUsageCS> getModuleUsages();
 
 	/**
-	 * Returns the value of the '<em><b>Transformation Refine CS</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Transformation Refine CS</b></em>' containment reference.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Transformation Refine CS</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Transformation Refine CS</em>' containment reference.
-	 * @see #setTransformationRefineCS(TransformationRefineCS)
-	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getTransformationHeaderCS_TransformationRefineCS()
-	 * @model containment="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Transformation Refine CS</em>' containment reference.
+     * @see #setTransformationRefineCS(TransformationRefineCS)
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getTransformationHeaderCS_TransformationRefineCS()
+     * @model containment="true"
+     * @generated
+     */
 	TransformationRefineCS getTransformationRefineCS();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.TransformationHeaderCS#getTransformationRefineCS <em>Transformation Refine CS</em>}' containment reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.TransformationHeaderCS#getTransformationRefineCS <em>Transformation Refine CS</em>}' containment reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Transformation Refine CS</em>' containment reference.
-	 * @see #getTransformationRefineCS()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Transformation Refine CS</em>' containment reference.
+     * @see #getTransformationRefineCS()
+     * @generated
+     */
 	void setTransformationRefineCS(TransformationRefineCS value);
 
 } // TransformationHeaderCS

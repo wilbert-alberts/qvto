@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.17 2007/09/17 10:17:37 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.18 2007/09/20 10:14:06 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.17 2007/09/17 10:17:37 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.18 2007/09/20 10:14:06 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -138,6 +138,8 @@ import org.eclipse.m2m.qvt.oml.internal.cst.RenameCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ResolveInExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.VariableInitializationCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.SwitchAltExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.SwitchExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.WhileExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.BlockExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ModelTypeCS;
@@ -1162,6 +1164,20 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 		result.setCondition(cond);
 		result.setResult(res);
 		result.getBodyExpressions().addAll(expressions);
+		return result;
+	}
+
+	protected CSTNode createSwitchExpCS(EList<SwitchAltExpCS> altExps, OCLExpressionCS elseExp) {
+		SwitchExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createSwitchExpCS();
+		result.getAlternativePart().addAll(altExps);
+		result.setElsePart(elseExp);
+		return result;
+	}
+
+	protected CSTNode createSwitchAltExpCS(OCLExpressionCS cond, OCLExpressionCS body) {
+		SwitchAltExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createSwitchAltExpCS();
+		result.setCondition(cond);
+		result.setBody(body);
 		return result;
 	}
 
@@ -5663,24 +5679,87 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 482:  switchExpCS ::= switch { }
+			// Rule 482:  switchExpCS ::= switch switchBodyExpCS
 			//
 			case 482: {
 				
-				CSTNode result = createIfExpCS(
-						null,
-						null,
-						null
+				Object[] switchBody = (Object[]) dtParser.getSym(2);
+
+				CSTNode result = createSwitchExpCS(
+						(EList<SwitchAltExpCS>) switchBody[0],
+						(OCLExpressionCS) switchBody[1]
 					);
-				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(1)));
+				setOffsets(result, getIToken(dtParser.getToken(1)), (IToken) switchBody[2]);
 				dtParser.setSym1(result);
 	  		  break;
 			}
 	 
 			//
-			// Rule 494:  iteratorExpCS ::= iteratorExpCSToken ( iterContents )
+			// Rule 483:  switchBodyExpCS ::= { switchAltExpCSList switchElseExpCSOpt }
 			//
-			case 494: {
+			case 483: {
+				
+				Object[] result = new Object[] {dtParser.getSym(2), dtParser.getSym(3), getIToken(dtParser.getToken(4))};
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 484:  switchAltExpCSList ::= switchAltExpCS
+			//
+			case 484: {
+				
+				EList result = new BasicEList();
+				result.add(dtParser.getSym(1));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 485:  switchAltExpCSList ::= switchAltExpCSList switchAltExpCS
+			//
+			case 485: {
+				
+				EList result = (EList)dtParser.getSym(1);
+				result.add(dtParser.getSym(2));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 486:  switchAltExpCS ::= ( oclExpressionCS ) ? statementCS ;
+			//
+			case 486: {
+				
+				CSTNode result = createSwitchAltExpCS(
+						(OCLExpressionCS) dtParser.getSym(2),
+						(OCLExpressionCS) dtParser.getSym(5)
+					);
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(6)));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 487:  switchElseExpCSOpt ::= $Empty
+			//
+			case 487:
+				dtParser.setSym1(null);
+				break;
+ 
+			//
+			// Rule 489:  switchElseExpCS ::= else ? statementCS ;
+			//
+			case 489: {
+				
+				dtParser.setSym1((CSTNode)dtParser.getSym(3));
+	  		  break;
+			}
+	 
+			//
+			// Rule 501:  iteratorExpCS ::= iteratorExpCSToken ( iterContents )
+			//
+			case 501: {
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 							SimpleTypeEnum.KEYWORD_LITERAL,
@@ -5700,9 +5779,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 495:  iteratorExpCS ::= iteratorExpCSToken ( iterContents qvtErrorToken
+			// Rule 502:  iteratorExpCS ::= iteratorExpCSToken ( iterContents qvtErrorToken
 			//
-			case 495: {
+			case 502: {
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 							SimpleTypeEnum.KEYWORD_LITERAL,
@@ -5730,9 +5809,9 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 496:  iteratorExpCS ::= iteratorExpCSToken ( qvtErrorToken
+			// Rule 503:  iteratorExpCS ::= iteratorExpCSToken ( qvtErrorToken
 			//
-			case 496: {
+			case 503: {
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 							SimpleTypeEnum.KEYWORD_LITERAL,
@@ -5752,19 +5831,19 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 497:  operationCallExpCS ::= oclAsType isMarkedPreCS ( typeCS )
+			// Rule 504:  operationCallExpCS ::= oclAsType isMarkedPreCS ( typeCS )
 			//
-			case 497:
+			case 504:
  
 			//
-			// Rule 498:  operationCallExpCS ::= oclIsKindOf isMarkedPreCS ( typeCS )
+			// Rule 505:  operationCallExpCS ::= oclIsKindOf isMarkedPreCS ( typeCS )
 			//
-			case 498:
+			case 505:
  
 			//
-			// Rule 499:  operationCallExpCS ::= oclIsTypeOf isMarkedPreCS ( typeCS )
+			// Rule 506:  operationCallExpCS ::= oclIsTypeOf isMarkedPreCS ( typeCS )
 			//
-			case 499: {
+			case 506: {
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 							SimpleTypeEnum.IDENTIFIER_LITERAL,

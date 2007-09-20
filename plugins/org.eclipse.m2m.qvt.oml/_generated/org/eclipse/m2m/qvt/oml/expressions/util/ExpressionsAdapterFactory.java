@@ -186,6 +186,14 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createWhileExpAdapter();
             }
             @Override
+            public Adapter caseSwitchExp(SwitchExp object) {
+                return createSwitchExpAdapter();
+            }
+            @Override
+            public Adapter caseAltExp(AltExp object) {
+                return createAltExpAdapter();
+            }
+            @Override
             public <T, S, COA, SSA, CT> Adapter caseExtendedVisitor(ExtendedVisitor<T, S, COA, SSA, CT> object) {
                 return createExtendedVisitorAdapter();
             }
@@ -596,6 +604,34 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
     }
 
 	/**
+     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.expressions.SwitchExp <em>Switch Exp</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.eclipse.m2m.qvt.oml.expressions.SwitchExp
+     * @generated
+     */
+    public Adapter createSwitchExpAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.expressions.AltExp <em>Alt Exp</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.eclipse.m2m.qvt.oml.expressions.AltExp
+     * @generated
+     */
+    public Adapter createAltExpAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor <em>Extended Visitor</em>}'.
      * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;

@@ -194,6 +194,24 @@
           <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/WhileExp/accept/U"/>
         </genOperations>
       </genClasses>
+      <genClasses ecoreClass="QVTOperational.ecore#//expressions/SwitchExp">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//expressions/SwitchExp/alternativePart"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//expressions/SwitchExp/elsePart"/>
+        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/SwitchExp/accept">
+          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/SwitchExp/accept/v"/>
+          <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/SwitchExp/accept/T"/>
+          <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/SwitchExp/accept/U"/>
+        </genOperations>
+      </genClasses>
+      <genClasses ecoreClass="QVTOperational.ecore#//expressions/AltExp">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//expressions/AltExp/condition"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//expressions/AltExp/body"/>
+        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/AltExp/accept">
+          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/AltExp/accept/v"/>
+          <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/AltExp/accept/T"/>
+          <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/AltExp/accept/U"/>
+        </genOperations>
+      </genClasses>
       <genClasses image="false" ecoreClass="QVTOperational.ecore#//expressions/ExtendedVisitor">
         <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/T"/>
         <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/S"/>
@@ -262,6 +280,12 @@
         </genOperations>
         <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitWhileExp">
           <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitWhileExp/whileExp"/>
+        </genOperations>
+        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitSwitchExp">
+          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitSwitchExp/switchExp"/>
+        </genOperations>
+        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitSwitchAltExp">
+          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitSwitchAltExp/switchAltExp"/>
         </genOperations>
         <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitModelType">
           <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitModelType/modelType"/>
