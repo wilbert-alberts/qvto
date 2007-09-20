@@ -44,6 +44,7 @@ import org.eclipse.m2m.qvt.oml.library.IContext;
 import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.ecore.EcoreEvaluationEnvironment;
 import org.eclipse.ocl.internal.l10n.OCLMessages;
+import org.eclipse.ocl.types.AnyType;
 import org.eclipse.ocl.types.PrimitiveType;
 import org.eclipse.ocl.util.Tuple;
 import org.eclipse.osgi.util.NLS;
@@ -222,6 +223,18 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	
 	public Set<String> getKeys() {
 		return myBindings.keySet();
+	}
+	
+	@Override
+	public boolean isKindOf(Object object, EClassifier classifier) {
+		if (classifier instanceof AnyType) {
+			// [Spec 11.2.1] All types in the UML model and the primitive types in the OCL standard library
+			// comply with the type OclAny.
+			// OclAny behaves as a supertype for all the types except for the OCL pre-defined collection types.
+			// OclAny is itself an instance of the metatype AnyType.
+			return false == object instanceof Collection;
+		}
+		return super.isKindOf(object, classifier);
 	}
 
     public void createModuleParameterExtents(Module module) {        
