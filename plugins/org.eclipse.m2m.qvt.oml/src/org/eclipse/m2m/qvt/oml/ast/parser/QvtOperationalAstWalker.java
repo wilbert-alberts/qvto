@@ -46,6 +46,7 @@ import org.eclipse.m2m.qvt.oml.expressions.SwitchExp;
 import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.expressions.VariableInitExp;
 import org.eclipse.m2m.qvt.oml.expressions.WhileExp;
+import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
@@ -169,7 +170,11 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
         for (Rename rename : module.getOwnedRenaming()) {
             doProcess(rename, module);
         }
-        for (EOperation op : module.getEOperations()) {
+        
+        // Remark: using QvtOperationalParserUtil.getOwnedOperations() operation instead of direct
+        // access to EClass::getEOperations(), as contextual mappings are in owned by the module type 
+        // as it is understood by MDT OCL and would produce wrong behavior in operations lookup
+        for (EOperation op : QvtOperationalParserUtil.getOwnedOperations(module)) {
             doProcess((ImperativeOperation) op, module);
         }
         for (Property prop : module.getConfigProperty()) {
