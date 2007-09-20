@@ -74,6 +74,7 @@ public final class ValidationMessages extends NLS {
     public static String notAnLValueError;
     public static String cannotModifyNestedPropertiesError;
 	public static String CantAssignToSelf;
+	public static String CantAssignToThis;	
 	public static String unresolvedNameError;
 	public static String inputParameterModificationError;
 	public static String UnknownClassifierType;

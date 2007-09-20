@@ -1409,6 +1409,13 @@ public class QvtOperationalVisitorCS
 			env.reportError(ValidationMessages.CantAssignToSelf, lValueCS);
 			return null;
 		}
+		
+
+		if (qualifiedName.size() == 1 && QvtOperationalEnv.THIS.equals(lvalueName)) {
+			env.reportError(ValidationMessages.CantAssignToThis, lValueCS);
+			return null;
+		}
+		
 
 		Variable<EClassifier, EParameter> variable = env.lookup(lvalueName);
 		if (variable != null) {
