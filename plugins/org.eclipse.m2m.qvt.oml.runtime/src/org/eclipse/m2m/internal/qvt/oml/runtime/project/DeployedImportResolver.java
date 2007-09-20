@@ -50,12 +50,15 @@ public class DeployedImportResolver implements IImportResolver {
 		if(bundleModules == null) {
 			bundleModules = createModulesRegistry();
 		}
-				
+		
 		IPath fullPath = new Path(importedUnitName.replace('.', '/') + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT);
 		
 		for (BundleModuleRegistry nextRegistry : bundleModules) {
 			if (importedUnitName.indexOf(nextRegistry.getBundleSymbolicName()) == 1) {
 				fullPath = new Path(importedUnitName.substring(nextRegistry.getBundleSymbolicName().length()+2));
+			}
+			else if (importedUnitName.startsWith("/")) { //$NON-NLS-1$
+				fullPath = new Path(importedUnitName.substring(1).replace('.', '/') + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT);
 			}
 			if (nextRegistry.fileExists(fullPath)) {
 				return new BundleFile(fullPath, nextRegistry);
