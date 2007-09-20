@@ -1,0 +1,31 @@
+transformation bug204126_5;
+metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+
+mapping main(in model: ecore::EPackage): ecore::EPackage {
+	init {
+		var tmp := model.createEClass();
+		model.createEClass(2);
+	}
+    object {
+    	name := 'a';
+    	eClassifiers := resolveIn(ecore::ENamedElement::createEClass, ecore::EClass)->asOrderedSet();
+    }
+}
+
+mapping ecore::ENamedElement::createEClass() : ecore::EClass {
+	object {
+		name := 'mapped1' + self.name;
+	}
+}
+
+mapping ecore::ENamedElement::createEClass(in i : Integer) : ecore::EClass {
+	object {
+		  name := 'mapped2' + self.name;
+	}
+	end {
+		switch {
+			(i = 2) ? result.name := result.name + 'switch2A'; 
+			else ? result.name := result.name + 'else';
+		}
+	}
+}
