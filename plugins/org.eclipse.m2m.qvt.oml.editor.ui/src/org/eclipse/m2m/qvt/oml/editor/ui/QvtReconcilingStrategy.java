@@ -32,6 +32,11 @@ import org.eclipse.swt.widgets.Display;
 
 
 public class QvtReconcilingStrategy implements IReconcilingStrategy, IReconcilingStrategyExtension {
+    private static final int MAX_LOGGED_COMPILATION_EXCEPTIONS = 5;
+    private IProgressMonitor myMonitor;
+    private IDocument myDocument;
+    private final QvtEditor myEditor;
+    private int loggedCompilationExceptionsCount = 0;
 
     public QvtReconcilingStrategy(final QvtEditor editor) {
         myEditor = editor;
@@ -63,7 +68,15 @@ public class QvtReconcilingStrategy implements IReconcilingStrategy, IReconcilin
         QvtCompilerOptions options = new QvtCompilerOptions();
         options.setShowAnnotations(QvtCompilerFacade.isEditingInQvtSourceContainer(myEditor));
         
-        QvtCompilationResult compilationResult = QvtCompilerFacade.getInstance().compile(myEditor, myDocument, options, myMonitor);
+        QvtCompilationResult compilationResult = null;
+        try {
+            QvtCompilerFacade.getInstance().compile(myEditor, myDocument, options, myMonitor);
+        } catch (Exception ex) {
+            if (loggedCompilationExceptionsCount < MAX_LOGGED_COMPILATION_EXCEPTIONS) {
+                loggedCompilationExceptionsCount ++;
+                Activator.log(ex);
+            }
+        }
         
         if (compilationResult != null && compilationResult.getModule() != null) {
             MappingModuleCS mappingModuleCS = compilationResult.getModule().getSyntaxElement().getModuleCS();
@@ -167,8 +180,4 @@ public class QvtReconcilingStrategy implements IReconcilingStrategy, IReconcilin
 			return null;
 		}
 	}
-    
-    private IProgressMonitor myMonitor;
-    private IDocument myDocument;
-    private final QvtEditor myEditor;
 }
