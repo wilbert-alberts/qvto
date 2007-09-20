@@ -11,10 +11,8 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.common.project;
 
-import org.eclipse.emf.ecore.EPackage;
-
-
 public interface CompiledTransformation extends Transformation {
-    String getId();
-    EPackage[] getModels();
+
+	String getId();
+	
 }
