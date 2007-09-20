@@ -93,6 +93,7 @@ public class TransformTests {
     
     public static ModelTestData[] createTestData() {
     	return new ModelTestData[] {
+    	new FileToFileData("ocl_test"), //$NON-NLS-1$    			
     	new FileToFileData("tuples"), //$NON-NLS-1$    			
     	new FileToFileData("oclany"), //$NON-NLS-1$    			
     	new FileToFileData("modifyvar"), //$NON-NLS-1$
