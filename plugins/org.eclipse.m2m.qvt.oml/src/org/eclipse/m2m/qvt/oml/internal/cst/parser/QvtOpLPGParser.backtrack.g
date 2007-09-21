@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.18 2007/09/20 10:14:06 aigdalov Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.19 2007/09/21 13:19:09 aigdalov Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -138,12 +138,56 @@ $DropSymbols
 	
 $End
 
-
 $Define
 
 	-- Definition of macros used in the parser template
 	--
 	$EMPTY_ELIST /.ourEmptyEList./
+
+	$DebugModeOn /.private static final boolean DEBUG = true;
+			static {
+				if (DEBUG) {
+					ruleTexts = Collections.synchronizedMap(new HashMap<Integer, String>());
+					try {
+						InputStream inputStream = FileLocator.openStream(QvtPlugin.getDefault().getBundle(),
+										new Path("src/org/eclipse/m2m/qvt/oml/internal/cst/parser/QvtOpLPGParser.l"), false); //$NON-NLS-1$
+						BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+						String line;
+						while ((line = reader.readLine()) != null) {
+							if ("Rules:".equals(line)) {
+								reader.readLine();
+								break;
+							}
+						}
+						while ((line = reader.readLine()) != null) {
+							if (line.trim().length() == 0) {
+								break;
+							}
+							int wsIndex = line.indexOf(' ');
+							String ruleNumberText = line.substring(0, wsIndex);
+							Integer ruleNumber = new Integer(ruleNumberText);
+							String ruleText = line.substring(wsIndex).trim();
+							ruleTexts.put(ruleNumber, ruleText);
+						}
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+				}
+			}
+
+	./
+	$DebugModeOff /.private static final boolean DEBUG = false;./
+
+	$BeginActions    
+	/.
+        public void ruleAction(int ruleNumber)
+        {
+            if (DEBUG) {
+               System.out.println("RULE[" + ruleNumber + "]:   " + ruleTexts.get(ruleNumber)); //$NON-NLS-1$
+            }
+            switch(ruleNumber)
+            {./
+
 
 	-- copied from OCLLPGParser.g
 	--
@@ -153,6 +197,7 @@ $Define
 	public class $action_class extends PrsStream implements RuleAction$additional_interfaces {
 		protected static ParseTable prs = new $prs_type();
 		private BacktrackingParser dtParser;
+		private static Map<Integer, String> ruleTexts;
 
 		public $action_class(LexStream lexStream) {
 			super(lexStream);
@@ -251,9 +296,19 @@ $End
 
 $Globals
 	/.
+	import java.io.BufferedReader;
+	import java.io.IOException;
+	import java.io.InputStream;
+	import java.io.InputStreamReader;
+	import java.util.Collections;
+	import java.util.HashMap;
+	import java.util.Map;
 	import lpg.lpgjavaruntime.Token;
 	import lpg.lpgjavaruntime.BacktrackingParser;
 	import lpg.lpgjavaruntime.NotBacktrackParseTableException;
+	import org.eclipse.core.runtime.FileLocator;
+	import org.eclipse.core.runtime.Path;
+	import org.eclipse.m2m.qvt.oml.QvtPlugin;
 	import org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.ConfigPropertyCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindCS;
@@ -370,7 +425,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.18 2007/09/20 10:14:06 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.19 2007/09/21 13:19:09 aigdalov Exp $
  */
 	./
 $End
@@ -382,6 +437,7 @@ $Headers
 		 * QVT Operational specific part
 		 *
 		 */
+		$DebugModeOff
 		private static final EList ourEmptyEList = new BasicEList.UnmodifiableEList(0, new Object[0]);
 		
 		protected void setBodyOffsets(ElementWithBody element, CSTNode start, IToken end) {
@@ -2912,7 +2968,22 @@ $Rules
 							(EList<SwitchAltExpCS>) switchBody[0],
 							(OCLExpressionCS) switchBody[1]
 						);
-					setOffsets(result, getIToken($getToken(1)), (IToken) switchBody[2]);
+					if (switchBody[2] instanceof IToken) { // In case of correct and incorrect syntax
+						setOffsets(result, getIToken($getToken(1)), (IToken) switchBody[2]);
+					} else { // In case of errors in switchBody
+						setOffsets(result, getIToken($getToken(1)), (CSTNode) switchBody[2]);
+					}
+					$setResult(result);
+		  $EndJava
+		./
+
+	switchExpCS ::= switch qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createSwitchExpCS(
+							new BasicEList(),
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
 					$setResult(result);
 		  $EndJava
 		./
@@ -2920,6 +2991,20 @@ $Rules
 	switchBodyExpCS ::= '{' switchAltExpCSList switchElseExpCSOpt '}'
 		/.$BeginJava
 					Object[] result = new Object[] {$getSym(2), $getSym(3), getIToken($getToken(4))};
+					$setResult(result);
+		  $EndJava
+		./
+
+	switchBodyExpCS ::= '{' switchAltExpCSList switchElseExpCSOpt qvtErrorToken
+		/.$BeginJava
+					Object[] result = new Object[] {$getSym(2), $getSym(3), $getSym(3)};
+					$setResult(result);
+		  $EndJava
+		./
+
+	switchBodyExpCS ::= '{' qvtErrorToken
+		/.$BeginJava
+					Object[] result = new Object[] {new BasicEList(), null, getIToken($getToken(1))};
 					$setResult(result);
 		  $EndJava
 		./
@@ -2951,6 +3036,49 @@ $Rules
 		  $EndJava
 		./
 	
+	switchAltExpCS ::= '(' oclExpressionCS ')' '?' statementCS qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createSwitchAltExpCS(
+							(OCLExpressionCS) $getSym(2),
+							(OCLExpressionCS) $getSym(5)
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode) $getSym(5));
+					$setResult(result);
+		  $EndJava
+		./
+	
+	switchAltExpCS ::= '(' oclExpressionCS ')' qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createSwitchAltExpCS(
+							(OCLExpressionCS) $getSym(2),
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
+					$setResult(result);
+		  $EndJava
+		./
+	
+	--switchAltExpCS ::= '(' oclExpressionCS qvtErrorToken
+	--	/.$BeginJava
+	--				CSTNode result = createSwitchAltExpCS(
+	--						(OCLExpressionCS) $getSym(2),
+	--						null
+	--					);
+	--				setOffsets(result, getIToken($getToken(1)), (CSTNode) $getSym(2));
+	--				$setResult(result);
+	--	  $EndJava
+	--	./
+	
+	switchAltExpCS ::= '(' qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createSwitchAltExpCS(
+							null,
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
 	switchElseExpCSOpt ::= $empty
 		/.$NullAction./
 	switchElseExpCSOpt -> switchElseExpCS
@@ -2961,8 +3089,20 @@ $Rules
 		  $EndJava
 		./
 
+	switchElseExpCS ::= else '?' statementCS qvtErrorToken
+		/.$BeginJava
+					$setResult((CSTNode)$getSym(3));
+		  $EndJava
+		./
+
+	switchElseExpCS ::= else qvtErrorToken
+		/.$BeginJava
+					$setResult(null);
+		  $EndJava
+		./
 
 	----- switch -----
+
 
 	iteratorExpCSToken -> forAll
 	iteratorExpCSToken -> exists
