@@ -54,9 +54,14 @@ public class MetamodelBrowserView extends ViewPart implements IResourceChangeLis
 		}
     }
     
-    private void handleResourceChanged(IResourceChangeEvent event) {
-    	final WorkspaceMetamodelsDelta wsDelta = new WorkspaceMetamodelsDelta();    	
+    private void handleResourceChanged(IResourceChangeEvent event) {    	
     	IResourceDelta delta = event.getDelta();
+    	if(delta == null) {
+    		// nothing applicable
+    		return;
+    	}
+    	
+        final WorkspaceMetamodelsDelta wsDelta = new WorkspaceMetamodelsDelta();    		
     	try {
 			delta.accept(new IResourceDeltaVisitor() {
 				public boolean visit(IResourceDelta delta) throws CoreException {
