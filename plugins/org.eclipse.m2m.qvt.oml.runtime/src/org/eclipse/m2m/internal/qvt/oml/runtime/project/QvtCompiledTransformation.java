@@ -116,24 +116,29 @@ public class QvtCompiledTransformation implements QvtTransformation, CompiledTra
     	String listParams = ""; //$NON-NLS-1$
     	try {
     		for (TransformationParameter param : getParameters()) {
+    			if (listParams.length() > 0) {
+    				listParams += ", "; //$NON-NLS-1$
+    			}
     			listParams += toString(param);
     		}
     	}
     	catch (MdaException e) {
     		listParams = null;
     	}
+    	if (listParams == null) {
+    		return myId;
+    	}
         return myId + "(" + listParams + ")"; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     private static String toString(TransformationParameter param) {
-    	String name = param.getName();
     	if (param.getEntryType() != null) {
-    		return name + ":" + EmfUtil.getFullName(param.getEntryType()); //$NON-NLS-1$
+    		return EmfUtil.getFullName(param.getEntryType());
     	}
     	if (param.getMetamodels().isEmpty()) {
-    		return name;
+    		return param.getName();
     	}
-        return name + ":" + EmfUtil.getFullName(param.getMetamodels().get(0)); //$NON-NLS-1$
+        return EmfUtil.getFullName(param.getMetamodels().get(0));
     }
 
     @Override
