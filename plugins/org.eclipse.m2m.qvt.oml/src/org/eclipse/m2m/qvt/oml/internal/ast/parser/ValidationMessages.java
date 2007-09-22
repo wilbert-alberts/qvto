@@ -65,7 +65,7 @@ public final class ValidationMessages extends NLS {
 	public static String ReturnTypeMismatch;
 	public static String DuplicateLibraryImport;
 	public static String DuplicateMetamodelImport;
-	public static String moduleNameMustMatchFileNameError;
+	public static String moduleNameMustMatchFileName;
 	public static String moduleNameMustBeSimpleIdentifierError;	
 	public static String wrongPackageError;
 	public static String failedToResolveMetamodelError;
