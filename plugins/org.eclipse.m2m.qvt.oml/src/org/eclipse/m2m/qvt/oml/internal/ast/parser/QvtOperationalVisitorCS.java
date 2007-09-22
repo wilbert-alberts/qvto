@@ -867,7 +867,7 @@ public class QvtOperationalVisitorCS
 		String unitNamespace = env.getExpectedPackageName();
 		
 		if (!unitSimpleName.equals(env.getUnitName())) {
-			env.reportError(NLS.bind(ValidationMessages.moduleNameMustMatchFileNameError, new Object[] { env
+			env.reportWarning(NLS.bind(ValidationMessages.moduleNameMustMatchFileNameError, new Object[] { env
 					.getUnitName() }), headerCS.getPathNameCS());
 		}
 		if(!QvtOperationalParserUtil.hasSimpleName(headerCS)) {
