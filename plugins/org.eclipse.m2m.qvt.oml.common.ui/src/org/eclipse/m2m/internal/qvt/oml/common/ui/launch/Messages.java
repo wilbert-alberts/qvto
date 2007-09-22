@@ -38,6 +38,9 @@ public class Messages extends NLS {
     public static String ReferenceSelectionDialog_Title;
     
     public static String TransformationControls_TargetModel;
+    
+    public static String UniSelectTransformationControl_CurrentSelection;
+    public static String UniSelectTransformationControl_DeployedTransformations;
 
     static {
         // initialize resource bundle
