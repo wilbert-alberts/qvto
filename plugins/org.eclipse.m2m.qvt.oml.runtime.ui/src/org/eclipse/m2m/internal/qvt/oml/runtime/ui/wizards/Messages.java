@@ -43,6 +43,23 @@ public class Messages extends NLS {
 	public static String SelectQvtProjectTransformationPage_Title;
 	public static String SelectQvtProjectTransformationPage_RunInterpretedMode;
 	public static String SelectQvtProjectTransformationPage_Description;
+
+    public static String SelectWorkspaceTransformationPage_emptyTransformation;
+    public static String SelectWorkspaceTransformationPage_Title;
+    public static String SelectWorkspaceTransformationPage_Description;
+    public static String SelectWorkspaceTransformationPage_transformationSelected;
+    
+    public static String TransformationParametersPage_Title;
+    public static String TransformationParametersPage_TitleWithTransf;
+    public static String TransformationParametersPage_Description;
+    
+    public static String LaunchWorkspaceTransformationWizard_Title;
+    public static String LaunchWorkspaceTransformationWizard_FailedToLaunch;
+    public static String LaunchWorkspaceTransformationWizard_Error;
+    public static String LaunchWorkspaceTransformationWizard_ShowResultError;
+    
+    public static String RunInterpretedTransformationAction_title;
+    public static String RunInterpretedTransformationAction_message;
 	
 	static {
 		// initialize resource bundle

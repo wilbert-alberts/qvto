@@ -1,0 +1,261 @@
+/*******************************************************************************
+ * Copyright (c) 2007 Borland Software Corporation
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Borland Software Corporation - initial API and implementation
+ *******************************************************************************/
+package org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessageEx;
+import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.IUriGroup;
+import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.OptionalFileGroup;
+import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.TransformationControls;
+import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
+import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtValidator;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
+import org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch.Messages;
+import org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch.TransformationSignatureLaunchControl;
+import org.eclipse.m2m.qvt.oml.common.Logger;
+import org.eclipse.m2m.qvt.oml.common.MDAConstants;
+import org.eclipse.m2m.qvt.oml.common.MdaException;
+import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
+import org.eclipse.m2m.qvt.oml.emf.util.StatusUtil;
+import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
+import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+
+/**
+ * @author sboyko
+ */
+public class TransformationParametersPage extends WizardPage {
+	
+	public TransformationParametersPage(String pageId, List<URI> paramUris) {
+		super(pageId);
+		myInitialParamUris = paramUris;
+        setDescription(org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.Messages.TransformationParametersPage_Description);
+
+        myUriListeners = new ArrayList<IUriGroup.IModifyListener>(1);
+        myUriListeners.add(new IUriGroup.IModifyListener() {
+			public void modified() {
+				initTraceFileText();
+				setPageComplete(validatePage());
+			}
+		});
+	}
+
+	public void setTransformation(QvtTransformation transformation) {
+		myTransformation = transformation;
+		if (myTransfSignatureControl != null) {
+			myTransfSignatureControl.setTransformation(myTransformation, myUriListeners);
+		}
+		setTitle(NLS.bind(org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.Messages.TransformationParametersPage_TitleWithTransf, myTransformation));
+	}
+
+	public void createControl(Composite parent) {
+        Composite composite = new Composite(parent, SWT.NONE);
+        composite.setLayout(new GridLayout(TransformationControls.GRID, false));
+        
+        GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+        composite.setLayoutData(gridData);
+        
+        createTransformationSection(composite);
+        
+        setControl(composite);
+        Dialog.applyDialogFont(composite);
+        
+        setPageComplete(validatePage());
+	}
+
+	protected void createTransformationSection(Composite parent) {
+
+        myTraceFile = new OptionalFileGroup(parent, Messages.QvtLauncherTab_TraceFile);
+        myTraceFile.addModifyListener(new OptionalFileGroup.IModifyListener() {
+            public void modified() {
+            	myTraceNameNonChanged = myTraceFile.getText().equals(getTraceFileName());
+            }});
+
+        TransformationControls.createLabel(parent, Messages.QvtLauncherTab_ParametersLabel, TransformationControls.GRID);
+        myTransfSignatureControl = new TransformationSignatureLaunchControl(parent, SWT.NONE|SWT.BORDER);
+        if (myTransformation != null) {
+        	myTransfSignatureControl.setTransformation(myTransformation, myUriListeners);
+    		setTitle(NLS.bind(org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.Messages.TransformationParametersPage_TitleWithTransf, myTransformation));
+       		initializeControlWithUris();
+        }
+
+        TransformationControls.createLabel(parent, "", TransformationControls.GRID); //$NON-NLS-1$
+        myOpenEditor = new Button(parent, SWT.CHECK);
+        myOpenEditor.setText(org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.Messages.ApplyTransformationFinalPage_OpenEditor);
+        myOpenEditor.setSelection(false);
+        //myOpenEditor.setVisible(false);
+        myOpenEditor.addSelectionListener(new SelectionAdapter() {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
+                setPageComplete(validatePage());
+            }
+        });
+        myOpenEditor.setLayoutData(new GridData());
+	}
+	
+    private void initializeControlWithUris() {
+    	if (myInitialParamUris == null) {
+    		return;
+    	}
+    	
+    	List<TargetUriData> proposedUris = new ArrayList<TargetUriData>();
+        for (URI uri : myInitialParamUris) {
+        	proposedUris.add(new TargetUriData(URI.createPlatformResourceURI(uri.toFileString(), true).toString()));
+        }
+    	try {
+    		initTargetUriText(myInitialParamUris, proposedUris);
+    	}
+    	catch (MdaException e) {
+    	}
+    	
+    	try {
+	        ILaunchConfigurationWorkingCopy workingCopy = QvtLaunchUtil.getInMemoryLaunchConfigurationType().newInstance(null, MDAConstants.QVTO_LAUNCH_CONFIGURATION_NAME); 
+	        
+	        workingCopy.setAttribute(IQvtLaunchConstants.ELEM_COUNT, proposedUris.size());
+	        int index = 1;
+	        for (TargetUriData targetUri : proposedUris) {
+	    		QvtLaunchUtil.saveTargetUriData(workingCopy, targetUri, index);
+	    		++index;
+	        }
+	
+	        myTransfSignatureControl.initializeFrom(workingCopy);
+    	}
+    	catch (CoreException e) {
+            Logger.getLogger().log(Logger.SEVERE, "Fail to initialize luanch configuration", e); //$NON-NLS-1$
+    	}
+    }
+
+    private void initTargetUriText(List<URI> paramUris, List<TargetUriData> proposedUris) throws MdaException {
+    	if (paramUris.isEmpty()) {
+    		return;
+    	}
+    	URI firstUri = paramUris.get(0);
+        IFile ifile = WorkspaceUtils.getWorkspaceFile(firstUri);
+        if (ifile == null) {
+            return;
+        }
+        
+        int index = 0;
+        for (TransformationParameter transfParam : myTransformation.getParameters()) {
+        	++index;
+        	if (index <= paramUris.size()) {
+        		continue;
+        	}
+        	if (transfParam.getDirectionKind() != DirectionKind.OUT) {
+        		continue;
+        	}
+
+        	try {
+        		String extension = transfParam.getMetamodels().isEmpty() ? "xmi" : transfParam.getMetamodels().get(0).getName(); //$NON-NLS-1$
+                String fileName = myTransformation.getModuleName() + "." + extension; //$NON-NLS-1$
+                IPath targetPath = new Path(ifile.getParent().getFullPath() + "/" + fileName);  //$NON-NLS-1$
+                URI targetUri = URI.createPlatformResourceURI(targetPath.toString(), false);
+                proposedUris.add(new TargetUriData(targetUri == null ? "" : targetUri.toString())); //$NON-NLS-1$
+            }
+            catch (MdaException e) {
+                Logger.getLogger().log(Logger.SEVERE, "Failed to get outClass for " + transfParam, e); //$NON-NLS-1$
+            }
+        }        
+    }
+    
+	public void applyConfiguration(ILaunchConfigurationWorkingCopy workingCopy) {
+		myTransfSignatureControl.performApply(workingCopy);
+		workingCopy.setAttribute(IQvtLaunchConstants.TRACE_FILE, myTraceFile.getText());
+		workingCopy.setAttribute(IQvtLaunchConstants.USE_TRACE_FILE, myTraceFile.getUseFileFlag());
+	}
+    
+	protected boolean validatePage() {
+        if (myTransformation == null) {
+            return false;
+        }
+
+        setMessage(null);
+        setErrorMessage(null);
+        String moduleName;
+        try {
+        	moduleName = myTransformation.getModuleName();
+        }
+        catch (MdaException e) {
+        	IStatus status = StatusUtil.makeErrorStatus(e.getMessage(), e);
+        	return TransformationControls.statusToTab(status, SET_MESSAGE);
+        }
+        if (myTraceFile.getText().length() == 0) {
+        	myTraceFile.update(moduleName, MDAConstants.QVTO_TRACEFILE_EXTENSION);
+        }
+        IStatus status = myTransfSignatureControl.validate(moduleName, getShell());
+    	IStatus traceStatus = QvtValidator.validateTrace(myTraceFile.getText(), myTraceFile.getUseFileFlag()); 
+        if (traceStatus.getSeverity() > status.getSeverity()) {
+    		status = traceStatus;
+    	}
+        return TransformationControls.statusToTab(status, SET_MESSAGE);
+    }
+
+    private String getTraceFileName() {
+        URI targetUri = URI.createURI(myTransfSignatureControl.getTraceName());
+        return QvtLaunchUtil.getTraceFileName(targetUri);
+    }
+
+    private void initTraceFileText() {
+    	if (myTraceNameNonChanged || myTraceFile.getText().length() == 0) {
+	        String traceFileName = getTraceFileName();
+	        myTraceFile.setText(traceFileName);
+	        myTraceFile.setUseFileFlag(traceFileName != null);
+	        if (traceFileName != null) {
+	            IPath path = Path.fromOSString(traceFileName);
+	        	myTraceFile.update(path.lastSegment().replaceAll(MDAConstants.QVTO_TRACEFILE_EXTENSION_WITH_DOT, ""), //$NON-NLS-1$
+	        			MDAConstants.QVTO_TRACEFILE_EXTENSION);
+	        }
+    	}
+    }
+    
+    private final ISetMessageEx SET_MESSAGE = new ISetMessageEx() {
+        public void setErrorMessage(String message) {
+        	TransformationParametersPage.this.setErrorMessage(message);
+        }
+
+        public void setWarningMessage(String message) {
+        	TransformationParametersPage.this.setMessage(message, WARNING);
+        }
+
+        public void setMessage(String message) {
+        	TransformationParametersPage.this.setMessage(message);
+        }
+    };
+    
+    private QvtTransformation myTransformation;
+    private final List<IUriGroup.IModifyListener> myUriListeners;
+    private OptionalFileGroup myTraceFile;
+    private boolean myTraceNameNonChanged;
+    private TransformationSignatureLaunchControl myTransfSignatureControl;
+    private final List<URI> myInitialParamUris;
+    private Button myOpenEditor;
+}
