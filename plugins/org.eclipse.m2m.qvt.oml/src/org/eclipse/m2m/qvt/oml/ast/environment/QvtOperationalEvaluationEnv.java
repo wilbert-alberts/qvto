@@ -239,11 +239,12 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 
     public void createModuleParameterExtents(Module module) {        
         Map<ModelParameter, ModelParameterExtent> modelExtents = new LinkedHashMap<ModelParameter, ModelParameterExtent>(module.getModelParameter().size());
-        modelExtents.put(null, new ModelParameterExtent());
+        modelExtents.put(null, new ModelParameterExtent(Collections.<EPackage>emptyList()));
         int argIndex = 0;
         for (ModelParameter modelParam : module.getModelParameter()) {
+        	List<EPackage> metamodels = ModelTypeMetamodelsAdapter.getMetamodels(modelParam.getEType());
         	if (modelParam.getKind() == DirectionKind.OUT) {
-        		modelExtents.put(modelParam, new ModelParameterExtent());
+        		modelExtents.put(modelParam, new ModelParameterExtent(metamodels));
         		continue;
         	}
         	if (argIndex >= getOperationArgs().size()
@@ -251,9 +252,8 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
                 throw new IllegalArgumentException("Missed argument for model parameter: " + modelParam.getName()); //$NON-NLS-1$
         	}
 
-        	List<EPackage> metamodels = ModelTypeMetamodelsAdapter.getMetamodels(modelParam.getEType());
         	if (metamodels.isEmpty()) {
-        		modelExtents.put(modelParam, new ModelParameterExtent());
+        		modelExtents.put(modelParam, new ModelParameterExtent(metamodels));
         	}
         	else {        	
 	        	EPackage expMetamodel = metamodels.get(0);
@@ -261,11 +261,11 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	        	
 	        	while (true) {
 	        		if (argument.eClass().eContainer() == expMetamodel) {
-	        			modelExtents.put(modelParam, new ModelParameterExtent(argument));
+	        			modelExtents.put(modelParam, new ModelParameterExtent(argument, metamodels));
 	        			break;
 	        		}
 	        		if (argument.eContainer() == null) {
-	        			modelExtents.put(modelParam, new ModelParameterExtent());
+	        			modelExtents.put(modelParam, new ModelParameterExtent(metamodels));
 	        			break;
 	        		}
 	        		argument = argument.eContainer();

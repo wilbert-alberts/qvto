@@ -19,6 +19,7 @@ import java.util.List;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -29,16 +30,25 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class ModelParameterExtent {
 	
-	public ModelParameterExtent() {
-		this(null);
+	public ModelParameterExtent(List<EPackage> metamodels) {
+		this(null, metamodels);
 	}
 
-	public ModelParameterExtent(EObject initialEObj) {
+	public ModelParameterExtent(EObject initialEObj, List<EPackage> metamodels) {
 		myInitialEObject = initialEObj;
+		myMetamodels = metamodels;
 	}
 	
 	public void addObject(EObject eObject) {
 		myAdditionalEObjects.add(eObject);
+	}
+	
+	public EObject getInitialObject() {
+		return myInitialEObject;
+	}
+	
+	public List<EPackage> getMetamodels() {
+		return myMetamodels;
 	}
 
 	public List<Object> getAllObjects() {
@@ -83,6 +93,7 @@ public class ModelParameterExtent {
 	}
 	
 	private final EObject myInitialEObject;
+	private final List<EPackage> myMetamodels;
 	private final List<EObject> myAdditionalEObjects = new ArrayList<EObject>(1);
 	
 }

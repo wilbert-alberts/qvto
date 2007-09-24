@@ -290,9 +290,6 @@ public class QvtCompiler {
         QvtCompilationResult result = null;
         
         Module module = null;
-        Map syntaxToSemanticMap = new IdentityHashMap();
-        Map syntaxToEnvironmentMap = new IdentityHashMap();
-        Map semanticToEnvironmentMap = new IdentityHashMap();
         List<QvtMessage> allMessages = new ArrayList<QvtMessage>();
         Collections.addAll(allMessages, mma.getMessages());
         
@@ -307,11 +304,6 @@ public class QvtCompiler {
                 QvtOperationalParser parser = new QvtOperationalParser();
                 module = parser.analyze(mma, this, env, options);
                 myModule2EnvMap.put(mma, parser.getEnvironment());                
-                if (options.isGenerateCompletionData()) {
-					// Remark: added just for the support of basic metamodel navigability from the QVT editor
-					//    - Consider using EMF Adapters instead of various maps to keep such additional info
-					syntaxToEnvironmentMap.put(mma.getModuleCS(), parser.getEnvironment());
-                }
                 
                 allMessages.addAll(parser.getWarningsList());
                 allMessages.addAll(parser.getErrorsList());
@@ -328,8 +320,7 @@ public class QvtCompiler {
         
         CompiledModule compModule = new CompiledModule(module, mma, mma.getSource(), allMessages);
 
-        result = new QvtCompilationResult(compModule,
-        		new CompletionData(syntaxToSemanticMap, syntaxToEnvironmentMap, semanticToEnvironmentMap));
+        result = new QvtCompilationResult(compModule, CompletionData.EMPTY);
                 
         return result;
     }    
