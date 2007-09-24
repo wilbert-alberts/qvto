@@ -66,7 +66,7 @@ public abstract class WindowActionDelegate
 				"org.eclipse.m2m.qvt.oml", IStatus.ERROR, exMessage, e); //$NON-NLS-1$
 		ErrorDialog.openError(
 				getShell(),
-				Messages.ActionDelegate_Failed, action.getText(), status); //$NON-NLS-1$
+				Messages.ActionDelegate_Failed, action.getText(), status);
 	}
 
 	protected Object getSelectedElement() {
