@@ -24,12 +24,14 @@ import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessage;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.TransformationControls;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.ITransformationMaker;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.QvtConfigurationProperty;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.QvtRuntimeUIPlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.QvtTransformationConfigurationUI;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.QvtTransformationConfigurationUI.PropertyChangeListener;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.ApplyTransformationData;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
+import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
@@ -78,7 +80,12 @@ public class QvtTransformationConfigurationTab extends AbstractLaunchConfigurati
            QvtRuntimeUIPlugin.getDefault().getLog().log(MiscUtil.makeErrorStatus(e));
         }
         
-        myData.setTransformation(myTransformationMaker.makeTransformation(fileName));
+        QvtTransformation qvtTransformation = null;
+        try {
+        	qvtTransformation = myTransformationMaker.makeTransformation(fileName);
+		} catch (MdaException e) {
+		}
+        myData.setTransformation(qvtTransformation);
         
         Map<String, String> valueMap = Collections.<String, String>emptyMap();
         try {
