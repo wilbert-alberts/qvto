@@ -26,6 +26,9 @@ public class CommonPluginImages extends PluginImages {
     public static final String UML14_PROJECT = "uml14_project"; //$NON-NLS-1$
     public static final String UML20_PROJECT = "uml20_project"; //$NON-NLS-1$
     public static final String BPMN_PROJECT = "bpmn_project"; //$NON-NLS-1$
+
+    public static final String DIAGRAM = "diagram"; //$NON-NLS-1$
+    public static final String REGISTRY = "registry"; //$NON-NLS-1$
     
     public static final String METAMODELS = "metamodels"; //$NON-NLS-1$
     public static final String METAMODEL_FILE = "metamodelfile"; //$NON-NLS-1$    
@@ -45,6 +48,8 @@ public class CommonPluginImages extends PluginImages {
         declareRegistryImage(UML14_PROJECT, "icons/project-uml_14.gif"); //$NON-NLS-1$
         declareRegistryImage(UML20_PROJECT, "icons/project-uml_20.gif"); //$NON-NLS-1$
         declareRegistryImage(BPMN_PROJECT, "icons/project-bpmn.gif"); //$NON-NLS-1$
+        declareRegistryImage(DIAGRAM, "icons/diagram.gif"); //$NON-NLS-1$
+        declareRegistryImage(REGISTRY, "icons/registry.gif"); //$NON-NLS-1$
         declareRegistryImage(METAMODELS, "icons/metamodels.gif"); //$NON-NLS-1$        
         declareRegistryImage(METAMODEL_FILE, "icons/metamodelfile.gif"); //$NON-NLS-1$
         declareRegistryImage(COLLAPSE_ALL, "icons/collapseall.gif"); //$NON-NLS-1$

@@ -31,10 +31,12 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.m2m.internal.qvt.oml.common.ui.CommonPluginImages;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.Messages;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.TransformationControls;
 import org.eclipse.m2m.qvt.oml.common.project.CompiledTransformation;
 import org.eclipse.m2m.qvt.oml.common.project.TransformationRegistry;
+import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -46,7 +48,7 @@ import org.eclipse.ui.model.WorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 public class UniSelectTransformationControl extends Composite {
-    public static interface IFilter {
+    public static interface IResourceFilter {
         boolean accept(IResource resource);
     }
     
@@ -54,7 +56,7 @@ public class UniSelectTransformationControl extends Composite {
         void selectionChanged(URI selectedUri);
     }
 
-    public UniSelectTransformationControl(Composite parentComposite, IFilter resourceFilter,
+    public UniSelectTransformationControl(Composite parentComposite, IResourceFilter resourceFilter,
     		ILabelProvider transfLabelProvider, TransformationRegistry transfRegistry, TransformationRegistry.Filter transfFilter) {
         super(parentComposite,SWT.NULL);
         myResourceFilter = resourceFilter;
@@ -85,6 +87,13 @@ public class UniSelectTransformationControl extends Composite {
 				}
 				return super.getText(element);
 			}
+			@Override
+			public Image getImage(Object element) {
+				if (element instanceof CompiledTransformationRoot) {
+					return CommonPluginImages.getInstance().getImage(CommonPluginImages.REGISTRY);
+				}
+				return super.getImage(element);
+			}
         });
         
         myViewer = new TreeViewer(this, SWT.SINGLE | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
@@ -105,7 +114,8 @@ public class UniSelectTransformationControl extends Composite {
         
         List<Object> inputs = new ArrayList<Object>(2);
         inputs.add(ResourcesPlugin.getWorkspace().getRoot());
-        inputs.add(new CompiledTransformationRoot(transfRegistry.getTransformations(transfFilter)));
+        myCompiledTransformations = transfRegistry.getTransformations(transfFilter);
+        inputs.add(new CompiledTransformationRoot(myCompiledTransformations));
         myViewer.setInput(inputs);
 
 
@@ -128,12 +138,29 @@ public class UniSelectTransformationControl extends Composite {
         return myUri;
     }
     
-    public void selectFileByPath(String path) {
-        IFile file = WorkspaceUtils.getWorkspaceFile(path); 
-        if (file != null) {
-            StructuredSelection sel = new StructuredSelection(new Object[] {file});
-            myViewer.setSelection(sel);
+    public void selectTransformationByUri(String uriString) {
+        URI uri = EmfUtil.makeUri(uriString);
+        if (uri == null) {
+        	return;
         }
+        
+		if (uri.isPlatformPlugin()) {
+			final String transfId = uri.toPlatformString(false).replace("/", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			for (CompiledTransformation compiledTransf : myCompiledTransformations) {
+				if (compiledTransf.getId().equals(transfId)) {
+		            StructuredSelection sel = new StructuredSelection(new Object[] {compiledTransf});
+		            myViewer.setSelection(sel);
+		            break;
+				}
+			}
+		}
+		else {
+			IFile ifile = WorkspaceUtils.getWorkspaceFile(uri);
+			if (ifile != null) {
+	            StructuredSelection sel = new StructuredSelection(new Object[] {ifile});
+	            myViewer.setSelection(sel);
+			}
+		}
     }
     
     private void fileSelectionChanged(URI selectedUri) {
@@ -161,7 +188,7 @@ public class UniSelectTransformationControl extends Composite {
             }
         }
         
-        private boolean hasMatchingChildrenRecursive(IContainer container, final IFilter filter) {
+        private boolean hasMatchingChildrenRecursive(IContainer container, final IResourceFilter filter) {
             try {
 				IResource[] members = container.members();
                 for (IResource member : members) {
@@ -183,7 +210,7 @@ public class UniSelectTransformationControl extends Composite {
             return false;
         }
 
-		private boolean resourceMatches(final IFilter filter, IResource member) {
+		private boolean resourceMatches(final IResourceFilter filter, IResource member) {
 			return filter == null || filter.accept(member);
 		}
     };
@@ -204,7 +231,7 @@ public class UniSelectTransformationControl extends Composite {
         public void selectionChanged(SelectionChangedEvent event) {
             IStructuredSelection selection = (IStructuredSelection)event.getSelection();
             
-            myFileNameText.setText("");//$NON-NLS-1$
+            myFileNameText.setText(""); //$NON-NLS-1$
             myUri = null;
             
             if (selection != null && selection.getFirstElement() instanceof IFile){
@@ -225,8 +252,9 @@ public class UniSelectTransformationControl extends Composite {
     
     private TreeViewer myViewer;
     private Text myFileNameText;
-    private final IFilter myResourceFilter;
+    private final IResourceFilter myResourceFilter;
     private URI myUri;
+    private final List<CompiledTransformation> myCompiledTransformations;
     
     private final List<ISelectionListener> mySelectionListeners;
     

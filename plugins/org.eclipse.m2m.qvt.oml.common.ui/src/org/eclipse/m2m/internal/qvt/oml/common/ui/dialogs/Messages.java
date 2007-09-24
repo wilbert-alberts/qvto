@@ -23,6 +23,9 @@ public class Messages extends NLS {
     public static String OpenClassifierDialog_queryLabel;
     public static String OpenClassifierDialog_resultsLabel;
     
+    public static String BrowseInterpretedTransfomationDialog_Title;
+    public static String BrowseInterpretedTransfomationDialog_Description;
+    
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);
