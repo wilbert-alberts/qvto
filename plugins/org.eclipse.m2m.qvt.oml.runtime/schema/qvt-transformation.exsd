@@ -3,17 +3,17 @@
 <schema targetNamespace="org.eclipse.m2m.qvt.oml.runtime">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.eclipse.m2m.qvt.oml.runtime" id="transformation" name="QVT transformation"/>
+         <meta.schema plugin="org.eclipse.m2m.qvt.oml.runtime" id="qvtTransformation" name="QVT transformation"/>
       </appInfo>
       <documentation>
-         [Enter description of this extension point.]
+         Specify deployed QVT transformation
       </documentation>
    </annotation>
 
    <element name="extension">
       <complexType>
          <sequence>
-            <choice>
+            <choice minOccurs="1" maxOccurs="unbounded">
                <element ref="transformation"/>
                <element ref="library"/>
             </choice>
@@ -49,14 +49,14 @@
       <complexType>
          <sequence>
          </sequence>
-         <attribute name="metamodel" type="string" use="required">
+         <attribute name="metamodel" type="string">
             <annotation>
                <documentation>
                   
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="metaclass" type="string" use="required">
+         <attribute name="metaclass" type="string">
             <annotation>
                <documentation>
                   
@@ -70,14 +70,14 @@
       <complexType>
          <sequence>
          </sequence>
-         <attribute name="metamodel" type="string" use="required">
+         <attribute name="metamodel" type="string">
             <annotation>
                <documentation>
                   
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="metaclass" type="string" use="required">
+         <attribute name="metaclass" type="string">
             <annotation>
                <documentation>
                   
@@ -89,7 +89,7 @@
 
    <element name="transformation">
       <complexType>
-         <sequence>
+         <sequence minOccurs="0" maxOccurs="1">
             <element ref="input"/>
             <element ref="output"/>
          </sequence>
@@ -176,7 +176,7 @@
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-         
+         Copyright (c) 2007 Borland Software Corporation
       </documentation>
    </annotation>
 

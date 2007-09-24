@@ -248,15 +248,20 @@ public class QvtValidator {
 			EClassifier classifier = transfParam.getEntryType();
 
 			URI sourceUri = EmfUtil.makeUri(targetData.getUriString());
-	        EObject in = EmfUtil.loadModel(sourceUri, classifier.eResource() != null ? classifier.eResource().getResourceSet() : null);
+	        EObject in = null;
+	        try {
+	        	in = EmfUtil.loadModel(sourceUri, classifier.eResource() != null ? classifier.eResource().getResourceSet() : null);
+	        }
+	        catch (Exception e) {
+	        }
 	        if (in == null) {
-	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, targetData.getUriString()));
+	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, targetData.getUriString(), transfParam.getName()));
 	        }
 	        try {
 	        	in = EmfUtil.resolveSource(in, classifier);
 	        }
 	        catch (WrappedException e) {
-	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, targetData.getUriString()));
+	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, targetData.getUriString(), transfParam.getName()));
 	        }
 			
 	    	if (!EmfUtil.isAssignableFrom(classifier, in.eClass()) || !classifier.isInstance(in)) {
@@ -270,15 +275,20 @@ public class QvtValidator {
 			EPackage metamodel = transfParam.getMetamodels().get(0);
 
 			URI sourceUri = EmfUtil.makeUri(targetData.getUriString());
-	        EObject in = EmfUtil.loadModel(sourceUri, metamodel.eResource() != null ? metamodel.eResource().getResourceSet() : null);
+	        EObject in = null;
+	        try {
+	        	in = EmfUtil.loadModel(sourceUri, metamodel.eResource() != null ? metamodel.eResource().getResourceSet() : null);
+	        }
+	        catch (Exception e) {
+	        }
 	        if (in == null) {
-	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, targetData.getUriString()));
+	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, targetData.getUriString(), transfParam.getName()));
 	        }
 	        try {
 	        	in = EmfUtil.resolveSource(in, metamodel);
 	        }
 	        catch (WrappedException e) {
-	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, targetData.getUriString()));
+	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, targetData.getUriString(), transfParam.getName()));
 	        }
 	        
 	        if (in.eClass().eContainer() != metamodel) {

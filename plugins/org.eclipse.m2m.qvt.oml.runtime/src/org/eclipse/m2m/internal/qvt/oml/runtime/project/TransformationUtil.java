@@ -20,6 +20,7 @@ import org.eclipse.m2m.qvt.oml.QvtMessage;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
+import org.eclipse.osgi.util.NLS;
 
 public class TransformationUtil {
     
@@ -42,11 +43,18 @@ public class TransformationUtil {
     }
     
 	public static QvtModule getQvtModule(final URI uriTransf) throws MdaException {
+		if (uriTransf == null) {
+			throw new MdaException(NLS.bind(Messages.TransformationUtil_InvalidUri, uriTransf));
+		}
+
 		if (uriTransf.isPlatformPlugin()) {
 			return new DeployedQvtModule(uriTransf.toPlatformString(false));
 		}
 		else {
 			IFile ifile = WorkspaceUtils.getWorkspaceFile(uriTransf);
+			if (ifile == null || !ifile.exists()) {
+				throw new MdaException(NLS.bind(Messages.TransformationUtil_InvalidUri, uriTransf));
+			}
 			return new WorkspaceQvtModule(ifile);
 		}
 	}

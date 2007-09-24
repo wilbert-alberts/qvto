@@ -13,13 +13,12 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.launch;
 
 import java.io.PrintWriter;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
-import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtProjectTransformation;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalStdLibrary;
@@ -33,8 +32,7 @@ import org.eclipse.m2m.qvt.oml.library.IContext;
 public class NonInterpretedQvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelegateBase {
 	public void launch(final ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {
         
-        IFile moduleFile = getModuleFile(configuration);
-        final QvtTransformation transformation = new QvtProjectTransformation(moduleFile);
+        final QvtTransformation transformation = new QvtInterpretedTransformation(getQvtModule(configuration));
 
         final StreamsProxy streamsProxy = new StreamsProxy();
         

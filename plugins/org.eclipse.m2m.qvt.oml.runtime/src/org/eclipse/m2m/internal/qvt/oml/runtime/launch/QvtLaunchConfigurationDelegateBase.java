@@ -33,7 +33,9 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TraceSerializer;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtModule;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
@@ -57,9 +59,23 @@ import org.eclipse.osgi.util.NLS;
 public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigurationDelegate {
     @Override
 	protected IProject[] getProjectsForProblemSearch(ILaunchConfiguration configuration, String mode) throws CoreException {
-        return new IProject[] { getModuleFile(configuration).getProject() };
+    	IFile moduleFile = getModuleFile(configuration);
+    	if (moduleFile == null || !moduleFile.exists()) {
+    		return new IProject[0];
+    	}
+        return new IProject[] { moduleFile.getProject() };
     }
  
+    protected static QvtModule getQvtModule(ILaunchConfiguration configuration) throws CoreException {
+        String moduleName = configuration.getAttribute(IQvtLaunchConstants.MODULE, ""); //$NON-NLS-1$
+		try {
+			return TransformationUtil.getQvtModule(EmfUtil.makeUri(moduleName));
+		} catch (MdaException e) {
+        	IStatus errorStatus = MiscUtil.makeErrorStatus(e.getMessage());
+        	throw new CoreException(errorStatus);
+		}
+    }
+
     protected static IFile getModuleFile(ILaunchConfiguration configuration) throws CoreException {
         String moduleFileName = configuration.getAttribute(IQvtLaunchConstants.MODULE, ""); //$NON-NLS-1$
         IFile moduleFile = WorkspaceUtils.getWorkspaceFile(moduleFileName);

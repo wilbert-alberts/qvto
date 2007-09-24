@@ -25,6 +25,7 @@ public class Messages extends NLS {
 	public static String QvtProjectTransformation_NoJavaGenerated;
 	
 	public static String TransformationUtil_ParseTransformationError;
+	public static String TransformationUtil_InvalidUri;
 	
 	public static String NoQvtImplementorFactoryRegistered;
 	
