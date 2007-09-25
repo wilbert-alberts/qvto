@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: MappingOperationToTraceRecordMapEntryItemProvider.java,v 1.1 2007/07/29 20:38:28 radvorak Exp $
+ * $Id: MappingOperationToTraceRecordMapEntryItemProvider.java,v 1.2 2007/09/25 12:57:13 aigdalov Exp $
  */
 package org.eclipse.m2m.qvt.oml.trace.provider;
 
@@ -49,140 +49,140 @@ public class MappingOperationToTraceRecordMapEntryItemProvider
 		IItemLabelProvider,	
 		IItemPropertySource {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
 
 	/**
-	 * This constructs an instance from a factory and a notifier.
-	 * <!-- begin-user-doc -->
+     * This constructs an instance from a factory and a notifier.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public MappingOperationToTraceRecordMapEntryItemProvider(AdapterFactory adapterFactory) {
-		super(adapterFactory);
-	}
+        super(adapterFactory);
+    }
 
 	/**
-	 * This returns the property descriptors for the adapted class.
-	 * <!-- begin-user-doc -->
+     * This returns the property descriptors for the adapted class.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
-			super.getPropertyDescriptors(object);
+        if (itemPropertyDescriptors == null) {
+            super.getPropertyDescriptors(object);
 
-			addValuePropertyDescriptor(object);
-			addKeyPropertyDescriptor(object);
-		}
-		return itemPropertyDescriptors;
-	}
+            addValuePropertyDescriptor(object);
+            addKeyPropertyDescriptor(object);
+        }
+        return itemPropertyDescriptors;
+    }
 
 	/**
-	 * This adds a property descriptor for the Value feature.
-	 * <!-- begin-user-doc -->
+     * This adds a property descriptor for the Value feature.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected void addValuePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_MappingOperationToTraceRecordMapEntry_value_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_MappingOperationToTraceRecordMapEntry_value_feature", "_UI_MappingOperationToTraceRecordMapEntry_type"),
-				 TracePackage.Literals.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__VALUE,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_MappingOperationToTraceRecordMapEntry_value_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_MappingOperationToTraceRecordMapEntry_value_feature", "_UI_MappingOperationToTraceRecordMapEntry_type"),
+                 TracePackage.Literals.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__VALUE,
+                 true,
+                 false,
+                 true,
+                 null,
+                 null,
+                 null));
+    }
 
 	/**
-	 * This adds a property descriptor for the Key feature.
-	 * <!-- begin-user-doc -->
+     * This adds a property descriptor for the Key feature.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected void addKeyPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_MappingOperationToTraceRecordMapEntry_key_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_MappingOperationToTraceRecordMapEntry_key_feature", "_UI_MappingOperationToTraceRecordMapEntry_type"),
-				 TracePackage.Literals.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__KEY,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_MappingOperationToTraceRecordMapEntry_key_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_MappingOperationToTraceRecordMapEntry_key_feature", "_UI_MappingOperationToTraceRecordMapEntry_type"),
+                 TracePackage.Literals.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__KEY,
+                 true,
+                 false,
+                 true,
+                 null,
+                 null,
+                 null));
+    }
 
 	/**
-	 * This returns MappingOperationToTraceRecordMapEntry.gif.
-	 * <!-- begin-user-doc -->
+     * This returns MappingOperationToTraceRecordMapEntry.gif.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/MappingOperationToTraceRecordMapEntry"));
-	}
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/MappingOperationToTraceRecordMapEntry"));
+    }
 
 	/**
-	 * This returns the label text for the adapted class.
-	 * <!-- begin-user-doc -->
+     * This returns the label text for the adapted class.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public String getText(Object object) {
-		Map.Entry<?, ?> mappingOperationToTraceRecordMapEntry = (Map.Entry<?, ?>)object;
-		return "" + mappingOperationToTraceRecordMapEntry.getKey() + " -> " + mappingOperationToTraceRecordMapEntry.getValue();
-	}
+        Map.Entry<?, ?> mappingOperationToTraceRecordMapEntry = (Map.Entry<?, ?>)object;
+        return "" + mappingOperationToTraceRecordMapEntry.getKey() + " -> " + mappingOperationToTraceRecordMapEntry.getValue();
+    }
 
 	/**
-	 * This handles model notifications by calling {@link #updateChildren} to update any cached
-	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
-	 * <!-- begin-user-doc -->
+     * This handles model notifications by calling {@link #updateChildren} to update any cached
+     * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void notifyChanged(Notification notification) {
-		updateChildren(notification);
-		super.notifyChanged(notification);
-	}
+        updateChildren(notification);
+        super.notifyChanged(notification);
+    }
 
 	/**
-	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
-	 * that can be created under this object.
-	 * <!-- begin-user-doc -->
+     * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+     * that can be created under this object.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
-		super.collectNewChildDescriptors(newChildDescriptors, object);
-	}
+        super.collectNewChildDescriptors(newChildDescriptors, object);
+    }
 
 	/**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
+     * Return the resource locator for this item provider's resources.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return TraceEditPlugin.INSTANCE;
-	}
+        return TraceEditPlugin.INSTANCE;
+    }
 
 }
