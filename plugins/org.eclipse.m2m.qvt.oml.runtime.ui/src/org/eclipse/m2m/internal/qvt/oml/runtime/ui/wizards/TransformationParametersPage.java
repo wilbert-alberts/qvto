@@ -12,6 +12,7 @@
 package org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -55,9 +56,8 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class TransformationParametersPage extends WizardPage {
 	
-	public TransformationParametersPage(String pageId, List<URI> paramUris) {
+	public TransformationParametersPage(String pageId) {
 		super(pageId);
-		myInitialParamUris = paramUris;
         setDescription(org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.Messages.TransformationParametersPage_Description);
 
         myUriListeners = new ArrayList<IUriGroup.IModifyListener>(1);
@@ -74,7 +74,9 @@ public class TransformationParametersPage extends WizardPage {
 		if (myTransfSignatureControl != null) {
 			myTransfSignatureControl.setTransformation(myTransformation, myUriListeners);
 		}
-		setTitle(NLS.bind(org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.Messages.TransformationParametersPage_TitleWithTransf, myTransformation));
+		if (myTransformation != null) {
+			setTitle(NLS.bind(org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.Messages.TransformationParametersPage_TitleWithTransf, myTransformation));
+		}
 	}
 
 	public void createControl(Composite parent) {
@@ -102,11 +104,7 @@ public class TransformationParametersPage extends WizardPage {
 
         TransformationControls.createLabel(parent, Messages.QvtLauncherTab_ParametersLabel, TransformationControls.GRID);
         myTransfSignatureControl = new TransformationSignatureLaunchControl(parent, SWT.NONE|SWT.BORDER);
-        if (myTransformation != null) {
-        	myTransfSignatureControl.setTransformation(myTransformation, myUriListeners);
-    		setTitle(NLS.bind(org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.Messages.TransformationParametersPage_TitleWithTransf, myTransformation));
-       		initializeControlWithUris();
-        }
+        setTransformation(myTransformation);
 
         TransformationControls.createLabel(parent, "", TransformationControls.GRID); //$NON-NLS-1$
         myOpenEditor = new Button(parent, SWT.CHECK);
@@ -122,17 +120,10 @@ public class TransformationParametersPage extends WizardPage {
         myOpenEditor.setLayoutData(new GridData());
 	}
 	
-    private void initializeControlWithUris() {
-    	if (myInitialParamUris == null) {
-    		return;
-    	}
-    	
-    	List<TargetUriData> proposedUris = new ArrayList<TargetUriData>();
-        for (URI uri : myInitialParamUris) {
-        	proposedUris.add(new TargetUriData(URI.createPlatformResourceURI(uri.toFileString(), true).toString()));
-        }
+    public void initializeParamWithUris(List<URI> paramUris) {
+    	List<TargetUriData> proposedUris = Collections.emptyList();
     	try {
-    		initTargetUriText(myInitialParamUris, proposedUris);
+    		proposedUris = initTargetUriData(paramUris);
     	}
     	catch (MdaException e) {
     	}
@@ -154,37 +145,50 @@ public class TransformationParametersPage extends WizardPage {
     	}
     }
 
-    private void initTargetUriText(List<URI> paramUris, List<TargetUriData> proposedUris) throws MdaException {
+    private List<TargetUriData> initTargetUriData(List<URI> paramUris) throws MdaException {
     	if (paramUris.isEmpty()) {
-    		return;
+    		return Collections.emptyList();
     	}
     	URI firstUri = paramUris.get(0);
         IFile ifile = WorkspaceUtils.getWorkspaceFile(firstUri);
         if (ifile == null) {
-            return;
+        	return Collections.emptyList();
         }
+        
+        List<TargetUriData> proposedUris = new ArrayList<TargetUriData>(myTransformation.getParameters().size());
         
         int index = 0;
         for (TransformationParameter transfParam : myTransformation.getParameters()) {
-        	++index;
-        	if (index <= paramUris.size()) {
-        		continue;
+        	if (transfParam.getDirectionKind() == DirectionKind.IN
+        			|| transfParam.getDirectionKind() == DirectionKind.INOUT) {
+            	if (index >= paramUris.size()) {
+                    proposedUris.add(new TargetUriData("")); //$NON-NLS-1$
+            	}
+            	else {
+                	URI localURI = paramUris.get(index);
+                	if (localURI.isFile()) {
+                		localURI = URI.createPlatformResourceURI(localURI.toFileString(), false);
+                	}
+               		proposedUris.add(new TargetUriData(localURI != null ? localURI.toString() : "")); //$NON-NLS-1$
+            	}
+            	++index;
         	}
-        	if (transfParam.getDirectionKind() != DirectionKind.OUT) {
-        		continue;
+        	else {
+	        	try {
+	        		String extension = transfParam.getMetamodels().isEmpty() ? "xmi" : transfParam.getMetamodels().get(0).getName(); //$NON-NLS-1$
+	                String fileName = myTransformation.getModuleName() + "." + extension; //$NON-NLS-1$
+	                IPath targetPath = new Path(ifile.getParent().getFullPath() + "/" + fileName);  //$NON-NLS-1$
+	                URI targetUri = URI.createPlatformResourceURI(targetPath.toString(), false);
+	                proposedUris.add(new TargetUriData(targetUri == null ? "" : targetUri.toString())); //$NON-NLS-1$
+	            }
+	            catch (Exception e) {
+	                Logger.getLogger().log(Logger.SEVERE, "Failed to get outClass for " + transfParam, e); //$NON-NLS-1$
+	                proposedUris.add(new TargetUriData("")); //$NON-NLS-1$
+	            }
         	}
-
-        	try {
-        		String extension = transfParam.getMetamodels().isEmpty() ? "xmi" : transfParam.getMetamodels().get(0).getName(); //$NON-NLS-1$
-                String fileName = myTransformation.getModuleName() + "." + extension; //$NON-NLS-1$
-                IPath targetPath = new Path(ifile.getParent().getFullPath() + "/" + fileName);  //$NON-NLS-1$
-                URI targetUri = URI.createPlatformResourceURI(targetPath.toString(), false);
-                proposedUris.add(new TargetUriData(targetUri == null ? "" : targetUri.toString())); //$NON-NLS-1$
-            }
-            catch (MdaException e) {
-                Logger.getLogger().log(Logger.SEVERE, "Failed to get outClass for " + transfParam, e); //$NON-NLS-1$
-            }
-        }        
+        }
+        
+        return proposedUris;
     }
     
 	public void applyConfiguration(ILaunchConfigurationWorkingCopy workingCopy) {
@@ -256,6 +260,5 @@ public class TransformationParametersPage extends WizardPage {
     private OptionalFileGroup myTraceFile;
     private boolean myTraceNameNonChanged;
     private TransformationSignatureLaunchControl myTransfSignatureControl;
-    private final List<URI> myInitialParamUris;
     private Button myOpenEditor;
 }
