@@ -40,7 +40,9 @@ public class ModelParameterExtent {
 	}
 	
 	public void addObject(EObject eObject) {
-		myAdditionalEObjects.add(eObject);
+		if (eObject != null) {
+			myAdditionalEObjects.add(eObject);
+		}
 	}
 	
 	public EObject getInitialObject() {
