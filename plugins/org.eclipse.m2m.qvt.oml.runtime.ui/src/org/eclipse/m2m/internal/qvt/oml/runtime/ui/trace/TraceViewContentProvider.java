@@ -21,6 +21,7 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.presentation.EObjectNod
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.presentation.Node;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.presentation.NodeContentProvider;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.presentation.StringNode;
+import org.eclipse.m2m.qvt.oml.trace.ETuplePartValue;
 import org.eclipse.m2m.qvt.oml.trace.EValue;
 import org.eclipse.m2m.qvt.oml.trace.Trace;
 import org.eclipse.m2m.qvt.oml.trace.TraceRecord;
@@ -66,6 +67,9 @@ public class TraceViewContentProvider implements ITreeContentProvider {
         } else if (element instanceof VarParameterValue) {
             VarParameterValue varParameterValue = (VarParameterValue) element;
             return getElements(varParameterValue.getValue());
+        } else if (element instanceof ETuplePartValue) {
+            ETuplePartValue tuplePartValue = (ETuplePartValue) element;
+            return getElements(tuplePartValue.getValue());
         } else if (element instanceof EValue) {
         	EValue eValue = (EValue) element;
             if (eValue.getModelElement() != null) {

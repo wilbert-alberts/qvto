@@ -17,6 +17,7 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.presentation.Node;
 import org.eclipse.m2m.qvt.oml.emf.util.ui.provider.EMFLabelProvider;
 import org.eclipse.m2m.qvt.oml.trace.EMappingOperation;
+import org.eclipse.m2m.qvt.oml.trace.ETuplePartValue;
 import org.eclipse.m2m.qvt.oml.trace.EValue;
 import org.eclipse.m2m.qvt.oml.trace.TraceRecord;
 import org.eclipse.m2m.qvt.oml.trace.VarParameterValue;
@@ -105,7 +106,10 @@ public class TraceViewLabelProvider extends EMFLabelProvider {
 	}
 	
 	private static String getValue(EValue eValue) {
-		if (eValue.getModelElement() != null) {
+	    if (eValue instanceof ETuplePartValue) {
+	        ETuplePartValue tuplePartValue = (ETuplePartValue) eValue;
+	        return '[' + tuplePartValue.getName() + "]: " + getValue(tuplePartValue.getValue());  //$NON-NLS-1$
+	    } else if (eValue.getModelElement() != null) {
 			return eValue.getModelElement().eClass().getName();
         } else if (eValue.getPrimitiveValue() != null) {
             return eValue.getPrimitiveValue();
