@@ -318,6 +318,21 @@ public class QvtValidator {
             }
     	}
 		
+		EClassifier classifier = transfParam.getEntryType();
+		if (classifier == null) {
+			classifier = transfParam.getMetamodels().get(0).eClass();
+		}
+
+		IMetamodelHandler handler = MetamodelHandlerManager.getInstance().getHandler(classifier);
+        if (handler == null) {
+            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_UnsupportedDestination, targetData.getUriString()));
+        }
+
+        IStatus canSave = handler.getSaver().canSave(classifier, sourceUri); 
+        if (StatusUtil.isError(canSave)) {
+        	return canSave;
+        }
+    	
 		return result;
 	}
 
@@ -387,6 +402,11 @@ public class QvtValidator {
                 	result = StatusUtil.makeWarningStatus(NLS.bind(Messages.QvtValidator_DestinationReadonly, destUri));
                 }
         	}
+        	
+        	IStatus canSave = handler.getSaver().canSave(classifier, destUri); 
+            if (StatusUtil.isError(canSave)) {
+            	return canSave;
+            }
         	
         	String feature = targetData.getFeature();
         	if (feature == null || feature.trim().length() == 0) {
