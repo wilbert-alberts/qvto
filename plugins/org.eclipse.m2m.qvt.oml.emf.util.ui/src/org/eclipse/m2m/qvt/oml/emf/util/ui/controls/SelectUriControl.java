@@ -23,6 +23,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -121,6 +123,13 @@ public class SelectUriControl extends Composite {
     	return myViewer;
     }
     
+    private Object getAdapterSafe(Object adaptable, Class<?> adapterType) {
+    	if (adaptable == null) {
+    		return null;
+    	}
+		return org.eclipse.core.runtime.Platform.getAdapterManager().getAdapter(adaptable, adapterType);
+    }
+    
     private final TreeViewer myViewer;
     private final Text myUriText;
     private URI myUri;
@@ -180,7 +189,19 @@ public class SelectUriControl extends Composite {
 		}
 
 		public Object[] getElements(Object inputElement) {
-			return myWorkbenchProvider.getElements(inputElement);
+			Object[] elements = myWorkbenchProvider.getElements(inputElement);
+			
+			Object[] clonedElems = new Object[elements.length];
+			for (int  i = 0; i < elements.length; ++i) {
+				EObject eObject = (EObject) getAdapterSafe(elements[i], EObject.class);
+	            if (eObject != null) {
+	            	clonedElems[i] = new EmfModelContentProvider.EObjectNode(eObject, null);
+	            }
+	            else {
+	            	clonedElems[i] = elements[i];
+	            }
+			}
+			return clonedElems;
 		}
 
 		public void dispose() {
@@ -190,11 +211,14 @@ public class SelectUriControl extends Composite {
 		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 			myWorkbenchProvider.inputChanged(viewer, oldInput, newInput);
 		}
+		
     };
     
     private ILabelProvider LABEL_PROVIDER = new LabelProvider() {
     	private final ILabelProvider myWorkbenchLabelProvider = new WorkbenchLabelProvider();
     	private final ILabelProvider myEmfModelLabelProvider = new EmfModelLabelProvider();
+    	private final ILabelProvider myEObjectLabelProvider = new AdapterFactoryLabelProvider(
+        		new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
     	
     	@Override
 		public String getText(Object element) {
@@ -202,7 +226,11 @@ public class SelectUriControl extends Composite {
     			return myEmfModelLabelProvider.getText(element);
     		}
     		else {
-    			return myWorkbenchLabelProvider.getText(element);
+				EObject eObject = (EObject) getAdapterSafe(element, EObject.class);
+	            if (eObject != null) {
+	            	return myEObjectLabelProvider.getText(eObject);
+	            }
+            	return myWorkbenchLabelProvider.getText(element);
     		}
     	};
     	
@@ -212,7 +240,11 @@ public class SelectUriControl extends Composite {
     			return myEmfModelLabelProvider.getImage(element);
     		}
     		else {
-    			return myWorkbenchLabelProvider.getImage(element);
+				EObject eObject = (EObject) getAdapterSafe(element, EObject.class);
+	            if (eObject != null) {
+	            	return myEObjectLabelProvider.getImage(eObject);
+	            }
+            	return myWorkbenchLabelProvider.getImage(element);
     		}
     	}
     };
@@ -238,7 +270,7 @@ public class SelectUriControl extends Composite {
             }
             else {
             	Object selected = ((IStructuredSelection)selection).getFirstElement();
-            	if(selected instanceof IFile) {
+            	if (selected instanceof IFile) {
             		IFile file = (IFile)selected;
             		uri = URI.createPlatformResourceURI(file.getFullPath().toString(), false);
             	}
@@ -247,7 +279,13 @@ public class SelectUriControl extends Composite {
             		uri = EcoreUtil.getURI(obj);
             	}
             	else {
-            		uri = null;
+    				EObject eObject = (EObject) getAdapterSafe(selected, EObject.class);
+    	            if (eObject != null) {
+    	            	uri = EcoreUtil.getURI(eObject);
+    	            }
+    	            else {
+    	            	uri = null;
+    	            }
             	}
             }
             
