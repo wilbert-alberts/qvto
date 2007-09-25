@@ -25,11 +25,12 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
 
 public class ResourceSourceChooser extends ChooserAdapter implements ISourceChooser {
-    public ResourceSourceChooser() {
+    public ResourceSourceChooser(boolean isConsiderAdapters) {
+    	myIsConsiderAdaptes = isConsiderAdapters;
     }
     
     public Control createControl(Composite parent) {
-        myControl = new SelectUriControl(parent, getDefaultFileName());
+        myControl = new SelectUriControl(parent, getDefaultFileName(), myIsConsiderAdaptes);
         myControl.addSelectionListener(new SelectUriControl.ISelectionListener() {
             public void selectionChanged(URI uri) {
                 if(uri == null) {
@@ -53,7 +54,7 @@ public class ResourceSourceChooser extends ChooserAdapter implements ISourceChoo
         return myControl;
     }
     
-    protected String getDefaultFileName() {
+	protected String getDefaultFileName() {
 		return null;
 	}
 
@@ -109,4 +110,5 @@ public class ResourceSourceChooser extends ChooserAdapter implements ISourceChoo
     protected IStructuredSelection myInitialSelection;
     private EObject myObject;
     private URI myUri;
+    private final boolean myIsConsiderAdaptes;
 }

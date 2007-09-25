@@ -14,6 +14,7 @@ package org.eclipse.m2m.qvt.oml.emf.util.ui.choosers;
 public interface IMetamodelHandler {
     IResultSaver getSaver();
     ISourceChooser getSourceChooser();
+    ISourceChooser getSourceAdaptableChooser();
     IDestinationChooser getSourceDestChooser();
     IDestinationChooser getDestinationChooser();
     String[] getRequiredNamespaces();

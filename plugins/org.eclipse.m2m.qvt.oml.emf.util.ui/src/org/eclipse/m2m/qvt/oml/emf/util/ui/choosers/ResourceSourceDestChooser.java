@@ -17,6 +17,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 
 public class ResourceSourceDestChooser extends ResourceSourceChooser implements IDestinationChooser {
     public ResourceSourceDestChooser() {
+    	super(false);
     }
     
     protected String getDefaultFileName() {

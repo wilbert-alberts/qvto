@@ -55,10 +55,11 @@ public class SelectUriControl extends Composite {
         void selectionChanged(URI uri);
     }
     
-    public SelectUriControl(Composite parentComposite, String defaultFileName) {
+    public SelectUriControl(Composite parentComposite, String defaultFileName, boolean isConsiderAdaptes) {
         super(parentComposite,SWT.NULL);
         mySelectionListeners = new ArrayList<ISelectionListener>();
         myDefaultFileName = defaultFileName;
+        myIsConsiderAdaptes = isConsiderAdaptes;
         
         setLayout(new GridLayout());
         
@@ -124,7 +125,7 @@ public class SelectUriControl extends Composite {
     }
     
     private Object getAdapterSafe(Object adaptable, Class<?> adapterType) {
-    	if (adaptable == null) {
+    	if (adaptable == null || !myIsConsiderAdaptes) {
     		return null;
     	}
 		return org.eclipse.core.runtime.Platform.getAdapterManager().getAdapter(adaptable, adapterType);
@@ -135,6 +136,7 @@ public class SelectUriControl extends Composite {
     private URI myUri;
     private Object myResource;
     private final String myDefaultFileName;
+    private final boolean myIsConsiderAdaptes;
     
     private final List<ISelectionListener> mySelectionListeners;
     
