@@ -396,8 +396,9 @@ public class QvtOperationalParserUtil {
 			}
 
 			if (!QvtOperationalParserUtil.isAssignableToFrom(env, baseType, actualType)) {
-				env.reportError(NLS.bind(ValidationMessages.SemanticUtil_5, new Object[] { leftName, baseType,
-						actualType }), cstNode);
+				env.reportError(NLS.bind(ValidationMessages.SemanticUtil_5, 
+						new Object[] { leftName, QvtOperationalTypesUtil.getTypeFullName(baseType),
+							QvtOperationalTypesUtil.getTypeFullName(actualType) }), cstNode);
 				return false;
 			}
 		} else {
