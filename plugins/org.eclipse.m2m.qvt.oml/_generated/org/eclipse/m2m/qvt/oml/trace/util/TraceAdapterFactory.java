@@ -35,6 +35,12 @@ import org.eclipse.m2m.qvt.oml.trace.*;
  */
 public class TraceAdapterFactory extends AdapterFactoryImpl {
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
+    /**
      * The cached model package.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -104,6 +110,10 @@ public class TraceAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseEValue(EValue object) {
                 return createEValueAdapter();
+            }
+            @Override
+            public Adapter caseETuplePartValue(ETuplePartValue object) {
+                return createETuplePartValueAdapter();
             }
             @Override
             public Adapter caseEMappingContext(EMappingContext object) {
@@ -222,6 +232,20 @@ public class TraceAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createEValueAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.trace.ETuplePartValue <em>ETuple Part Value</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.eclipse.m2m.qvt.oml.trace.ETuplePartValue
+     * @generated
+     */
+    public Adapter createETuplePartValueAdapter() {
         return null;
     }
 

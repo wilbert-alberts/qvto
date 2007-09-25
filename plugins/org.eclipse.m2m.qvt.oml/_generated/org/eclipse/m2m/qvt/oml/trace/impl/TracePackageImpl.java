@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: TracePackageImpl.java,v 1.1 2007/07/29 19:50:53 radvorak Exp $
+ * $Id: TracePackageImpl.java,v 1.2 2007/09/25 12:57:18 aigdalov Exp $
  */
 package org.eclipse.m2m.qvt.oml.trace.impl;
 
@@ -22,6 +22,7 @@ import org.eclipse.m2m.qvt.oml.trace.EMappingContext;
 import org.eclipse.m2m.qvt.oml.trace.EMappingOperation;
 import org.eclipse.m2m.qvt.oml.trace.EMappingParameters;
 import org.eclipse.m2m.qvt.oml.trace.EMappingResults;
+import org.eclipse.m2m.qvt.oml.trace.ETuplePartValue;
 import org.eclipse.m2m.qvt.oml.trace.EValue;
 import org.eclipse.m2m.qvt.oml.trace.Trace;
 import org.eclipse.m2m.qvt.oml.trace.TraceFactory;
@@ -42,6 +43,13 @@ import org.eclipse.ocl.utilities.UtilitiesPackage;
  * @generated
  */
 public class TracePackageImpl extends EPackageImpl implements TracePackage {
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
+
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -83,6 +91,13 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
      * @generated
      */
     private EClass eValueEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass eTuplePartValueEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -469,6 +484,33 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getETuplePartValue() {
+        return eTuplePartValueEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getETuplePartValue_Name() {
+        return (EAttribute)eTuplePartValueEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getETuplePartValue_Value() {
+        return (EReference)eTuplePartValueEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getEMappingContext() {
         return eMappingContextEClass;
     }
@@ -618,6 +660,10 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
         createEAttribute(eValueEClass, EVALUE__COLLECTION_TYPE);
         createEReference(eValueEClass, EVALUE__COLLECTION);
 
+        eTuplePartValueEClass = createEClass(ETUPLE_PART_VALUE);
+        createEAttribute(eTuplePartValueEClass, ETUPLE_PART_VALUE__NAME);
+        createEReference(eTuplePartValueEClass, ETUPLE_PART_VALUE__VALUE);
+
         eMappingContextEClass = createEClass(EMAPPING_CONTEXT);
         createEReference(eMappingContextEClass, EMAPPING_CONTEXT__CONTEXT);
 
@@ -666,6 +712,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
         // Set bounds for type parameters
 
         // Add supertypes to classes
+        eTuplePartValueEClass.getESuperTypes().add(this.getEValue());
 
         // Initialize classes and features; add operations and parameters
         initEClass(traceEClass, Trace.class, "Trace", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -703,6 +750,10 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
         initEReference(getEValue_IntermediateElement(), ecorePackage.getEObject(), null, "intermediateElement", null, 0, 1, EValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getEValue_CollectionType(), ecorePackage.getEString(), "collectionType", null, 0, 1, EValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getEValue_Collection(), this.getEValue(), null, "collection", null, 0, -1, EValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(eTuplePartValueEClass, ETuplePartValue.class, "ETuplePartValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getETuplePartValue_Name(), ecorePackage.getEString(), "name", null, 0, 1, ETuplePartValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getETuplePartValue_Value(), this.getEValue(), null, "value", null, 0, 1, ETuplePartValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(eMappingContextEClass, EMappingContext.class, "EMappingContext", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getEMappingContext_Context(), this.getVarParameterValue(), null, "context", null, 0, 1, EMappingContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

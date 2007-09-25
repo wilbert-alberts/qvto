@@ -38,6 +38,13 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface EValue extends EObject {
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
+
+    /**
      * Returns the value of the '<em><b>Primitive Value</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
@@ -178,7 +185,7 @@ public interface EValue extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Collection</em>' containment reference list.
      * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getEValue_Collection()
-     * @model type="org.eclipse.m2m.qvt.oml.trace.EValue" containment="true"
+     * @model containment="true"
      * @generated
      */
     EList<EValue> getCollection();

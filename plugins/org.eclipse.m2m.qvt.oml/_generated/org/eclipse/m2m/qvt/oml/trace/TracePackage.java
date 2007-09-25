@@ -34,6 +34,13 @@ import org.eclipse.emf.ecore.EReference;
  */
 public interface TracePackage extends EPackage {
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
+
+    /**
      * The package name.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -396,6 +403,97 @@ public interface TracePackage extends EPackage {
     int EVALUE_FEATURE_COUNT = 6;
 
     /**
+     * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.trace.impl.ETuplePartValueImpl <em>ETuple Part Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.m2m.qvt.oml.trace.impl.ETuplePartValueImpl
+     * @see org.eclipse.m2m.qvt.oml.trace.impl.TracePackageImpl#getETuplePartValue()
+     * @generated
+     */
+    int ETUPLE_PART_VALUE = 6;
+
+    /**
+     * The feature id for the '<em><b>Primitive Value</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ETUPLE_PART_VALUE__PRIMITIVE_VALUE = EVALUE__PRIMITIVE_VALUE;
+
+    /**
+     * The feature id for the '<em><b>Model Element</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ETUPLE_PART_VALUE__MODEL_ELEMENT = EVALUE__MODEL_ELEMENT;
+
+    /**
+     * The feature id for the '<em><b>Ocl Object</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ETUPLE_PART_VALUE__OCL_OBJECT = EVALUE__OCL_OBJECT;
+
+    /**
+     * The feature id for the '<em><b>Intermediate Element</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ETUPLE_PART_VALUE__INTERMEDIATE_ELEMENT = EVALUE__INTERMEDIATE_ELEMENT;
+
+    /**
+     * The feature id for the '<em><b>Collection Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ETUPLE_PART_VALUE__COLLECTION_TYPE = EVALUE__COLLECTION_TYPE;
+
+    /**
+     * The feature id for the '<em><b>Collection</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ETUPLE_PART_VALUE__COLLECTION = EVALUE__COLLECTION;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ETUPLE_PART_VALUE__NAME = EVALUE_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Value</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ETUPLE_PART_VALUE__VALUE = EVALUE_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>ETuple Part Value</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ETUPLE_PART_VALUE_FEATURE_COUNT = EVALUE_FEATURE_COUNT + 2;
+
+    /**
      * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.trace.impl.EMappingContextImpl <em>EMapping Context</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -403,7 +501,7 @@ public interface TracePackage extends EPackage {
      * @see org.eclipse.m2m.qvt.oml.trace.impl.TracePackageImpl#getEMappingContext()
      * @generated
      */
-    int EMAPPING_CONTEXT = 6;
+    int EMAPPING_CONTEXT = 7;
 
     /**
      * The feature id for the '<em><b>Context</b></em>' containment reference.
@@ -431,7 +529,7 @@ public interface TracePackage extends EPackage {
      * @see org.eclipse.m2m.qvt.oml.trace.impl.TracePackageImpl#getEMappingParameters()
      * @generated
      */
-    int EMAPPING_PARAMETERS = 7;
+    int EMAPPING_PARAMETERS = 8;
 
     /**
      * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
@@ -459,7 +557,7 @@ public interface TracePackage extends EPackage {
      * @see org.eclipse.m2m.qvt.oml.trace.impl.TracePackageImpl#getEMappingResults()
      * @generated
      */
-    int EMAPPING_RESULTS = 8;
+    int EMAPPING_RESULTS = 9;
 
     /**
      * The feature id for the '<em><b>Result</b></em>' containment reference list.
@@ -487,7 +585,7 @@ public interface TracePackage extends EPackage {
      * @see org.eclipse.m2m.qvt.oml.trace.impl.TracePackageImpl#getObjectToTraceRecordMapEntry()
      * @generated
      */
-    int OBJECT_TO_TRACE_RECORD_MAP_ENTRY = 9;
+    int OBJECT_TO_TRACE_RECORD_MAP_ENTRY = 10;
 
     /**
      * The feature id for the '<em><b>Value</b></em>' reference list.
@@ -524,7 +622,7 @@ public interface TracePackage extends EPackage {
      * @see org.eclipse.m2m.qvt.oml.trace.impl.TracePackageImpl#getEDirectionKind()
      * @generated
      */
-    int EDIRECTION_KIND = 10;
+    int EDIRECTION_KIND = 11;
 
 
     /**
@@ -855,6 +953,38 @@ public interface TracePackage extends EPackage {
     EReference getEValue_Collection();
 
     /**
+     * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.trace.ETuplePartValue <em>ETuple Part Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>ETuple Part Value</em>'.
+     * @see org.eclipse.m2m.qvt.oml.trace.ETuplePartValue
+     * @generated
+     */
+    EClass getETuplePartValue();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.eclipse.m2m.qvt.oml.trace.ETuplePartValue#getName <em>Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see org.eclipse.m2m.qvt.oml.trace.ETuplePartValue#getName()
+     * @see #getETuplePartValue()
+     * @generated
+     */
+    EAttribute getETuplePartValue_Name();
+
+    /**
+     * Returns the meta object for the containment reference '{@link org.eclipse.m2m.qvt.oml.trace.ETuplePartValue#getValue <em>Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Value</em>'.
+     * @see org.eclipse.m2m.qvt.oml.trace.ETuplePartValue#getValue()
+     * @see #getETuplePartValue()
+     * @generated
+     */
+    EReference getETuplePartValue_Value();
+
+    /**
      * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.trace.EMappingContext <em>EMapping Context</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -925,7 +1055,7 @@ public interface TracePackage extends EPackage {
      * @see java.util.Map.Entry
      * @model features="value key" 
      *        valueType="org.eclipse.m2m.qvt.oml.trace.TraceRecord" valueMany="true"
-     *        keyType="java.lang.Object" keyRequired="true"
+     *        keyDataType="org.eclipse.emf.ecore.EJavaObject" keyRequired="true"
      * @generated
      */
     EClass getObjectToTraceRecordMapEntry();
@@ -1235,6 +1365,32 @@ public interface TracePackage extends EPackage {
          * @generated
          */
         EReference EVALUE__COLLECTION = eINSTANCE.getEValue_Collection();
+
+        /**
+         * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.trace.impl.ETuplePartValueImpl <em>ETuple Part Value</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.eclipse.m2m.qvt.oml.trace.impl.ETuplePartValueImpl
+         * @see org.eclipse.m2m.qvt.oml.trace.impl.TracePackageImpl#getETuplePartValue()
+         * @generated
+         */
+        EClass ETUPLE_PART_VALUE = eINSTANCE.getETuplePartValue();
+
+        /**
+         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute ETUPLE_PART_VALUE__NAME = eINSTANCE.getETuplePartValue_Name();
+
+        /**
+         * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference ETUPLE_PART_VALUE__VALUE = eINSTANCE.getETuplePartValue_Value();
 
         /**
          * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.trace.impl.EMappingContextImpl <em>EMapping Context</em>}' class.

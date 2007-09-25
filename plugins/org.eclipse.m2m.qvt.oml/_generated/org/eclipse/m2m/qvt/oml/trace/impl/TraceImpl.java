@@ -51,6 +51,13 @@ import org.eclipse.m2m.qvt.oml.trace.TraceRecord;
  */
 public class TraceImpl extends EObjectImpl implements Trace {
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
+
+    /**
      * The cached value of the '{@link #getTraceRecords() <em>Trace Records</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

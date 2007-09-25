@@ -38,6 +38,13 @@ import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
  */
 public interface Trace extends EObject {
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
+
+    /**
      * Returns the value of the '<em><b>Trace Records</b></em>' containment reference list.
      * The list contents are of type {@link org.eclipse.m2m.qvt.oml.trace.TraceRecord}.
      * <!-- begin-user-doc -->
@@ -48,7 +55,7 @@ public interface Trace extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Trace Records</em>' containment reference list.
      * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getTrace_TraceRecords()
-     * @model type="org.eclipse.m2m.qvt.oml.trace.TraceRecord" containment="true"
+     * @model containment="true"
      * @generated
      */
     EList<TraceRecord> getTraceRecords();
@@ -65,7 +72,7 @@ public interface Trace extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Trace Record Map</em>' map.
      * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getTrace_TraceRecordMap()
-     * @model mapType="org.eclipse.m2m.qvt.oml.trace.MappingOperationToTraceRecordMapEntry" keyType="org.eclipse.m2m.qvt.oml.expressions.MappingOperation" valueType="org.eclipse.m2m.qvt.oml.trace.TraceRecord" transient="true" ordered="false"
+     * @model mapType="org.eclipse.m2m.qvt.oml.trace.MappingOperationToTraceRecordMapEntry<org.eclipse.m2m.qvt.oml.expressions.MappingOperation, org.eclipse.m2m.qvt.oml.trace.TraceRecord>" transient="true" ordered="false"
      * @generated
      */
     EMap<MappingOperation, EList<TraceRecord>> getTraceRecordMap();
@@ -82,7 +89,7 @@ public interface Trace extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Source To Trace Record Map</em>' map.
      * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getTrace_SourceToTraceRecordMap()
-     * @model mapType="org.eclipse.m2m.qvt.oml.trace.ObjectToTraceRecordMapEntry" keyType="java.lang.Object" valueType="org.eclipse.m2m.qvt.oml.trace.TraceRecord" transient="true" ordered="false"
+     * @model mapType="org.eclipse.m2m.qvt.oml.trace.ObjectToTraceRecordMapEntry<org.eclipse.emf.ecore.EJavaObject, org.eclipse.m2m.qvt.oml.trace.TraceRecord>" transient="true" ordered="false"
      * @generated
      */
     EMap<Object, EList<TraceRecord>> getSourceToTraceRecordMap();
@@ -99,7 +106,7 @@ public interface Trace extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Target To Trace Record Map</em>' map.
      * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getTrace_TargetToTraceRecordMap()
-     * @model mapType="org.eclipse.m2m.qvt.oml.trace.ObjectToTraceRecordMapEntry" keyType="java.lang.Object" valueType="org.eclipse.m2m.qvt.oml.trace.TraceRecord" transient="true" ordered="false"
+     * @model mapType="org.eclipse.m2m.qvt.oml.trace.ObjectToTraceRecordMapEntry<org.eclipse.emf.ecore.EJavaObject, org.eclipse.m2m.qvt.oml.trace.TraceRecord>" transient="true" ordered="false"
      * @generated
      */
     EMap<Object, EList<TraceRecord>> getTargetToTraceRecordMap();

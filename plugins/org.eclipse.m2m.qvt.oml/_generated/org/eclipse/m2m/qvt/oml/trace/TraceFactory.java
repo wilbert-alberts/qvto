@@ -23,6 +23,12 @@ import org.eclipse.emf.ecore.EFactory;
  */
 public interface TraceFactory extends EFactory {
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
+    /**
      * The singleton instance of the factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -74,6 +80,15 @@ public interface TraceFactory extends EFactory {
      * @generated
      */
     EValue createEValue();
+
+    /**
+     * Returns a new object of class '<em>ETuple Part Value</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>ETuple Part Value</em>'.
+     * @generated
+     */
+    ETuplePartValue createETuplePartValue();
 
     /**
      * Returns a new object of class '<em>EMapping Context</em>'.

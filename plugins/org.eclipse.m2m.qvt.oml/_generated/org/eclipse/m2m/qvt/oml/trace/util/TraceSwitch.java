@@ -37,6 +37,12 @@ import org.eclipse.m2m.qvt.oml.trace.*;
  */
 public class TraceSwitch<T> {
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
+    /**
      * The cached model package
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -132,6 +138,13 @@ public class TraceSwitch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case TracePackage.ETUPLE_PART_VALUE: {
+                ETuplePartValue eTuplePartValue = (ETuplePartValue)theEObject;
+                T result = caseETuplePartValue(eTuplePartValue);
+                if (result == null) result = caseEValue(eTuplePartValue);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case TracePackage.EMAPPING_CONTEXT: {
                 EMappingContext eMappingContext = (EMappingContext)theEObject;
                 T result = caseEMappingContext(eMappingContext);
@@ -161,13 +174,13 @@ public class TraceSwitch<T> {
     }
 
     /**
-     * Returns the result of interpretting the object as an instance of '<em>Trace</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Trace</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpretting the object as an instance of '<em>Trace</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Trace</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
@@ -176,13 +189,13 @@ public class TraceSwitch<T> {
     }
 
     /**
-     * Returns the result of interpretting the object as an instance of '<em>Record</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Record</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpretting the object as an instance of '<em>Record</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Record</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
@@ -191,13 +204,13 @@ public class TraceSwitch<T> {
     }
 
     /**
-     * Returns the result of interpretting the object as an instance of '<em>Var Parameter Value</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Var Parameter Value</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpretting the object as an instance of '<em>Var Parameter Value</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Var Parameter Value</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
@@ -206,13 +219,13 @@ public class TraceSwitch<T> {
     }
 
     /**
-     * Returns the result of interpretting the object as an instance of '<em>Mapping Operation To Trace Record Map Entry</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Mapping Operation To Trace Record Map Entry</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpretting the object as an instance of '<em>Mapping Operation To Trace Record Map Entry</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Mapping Operation To Trace Record Map Entry</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
@@ -221,13 +234,13 @@ public class TraceSwitch<T> {
     }
 
     /**
-     * Returns the result of interpretting the object as an instance of '<em>EMapping Operation</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>EMapping Operation</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpretting the object as an instance of '<em>EMapping Operation</em>'.
+     * @return the result of interpreting the object as an instance of '<em>EMapping Operation</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
@@ -236,13 +249,13 @@ public class TraceSwitch<T> {
     }
 
     /**
-     * Returns the result of interpretting the object as an instance of '<em>EValue</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>EValue</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpretting the object as an instance of '<em>EValue</em>'.
+     * @return the result of interpreting the object as an instance of '<em>EValue</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
@@ -251,13 +264,28 @@ public class TraceSwitch<T> {
     }
 
     /**
-     * Returns the result of interpretting the object as an instance of '<em>EMapping Context</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>ETuple Part Value</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpretting the object as an instance of '<em>EMapping Context</em>'.
+     * @return the result of interpreting the object as an instance of '<em>ETuple Part Value</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseETuplePartValue(ETuplePartValue object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>EMapping Context</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>EMapping Context</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
@@ -266,13 +294,13 @@ public class TraceSwitch<T> {
     }
 
     /**
-     * Returns the result of interpretting the object as an instance of '<em>EMapping Parameters</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>EMapping Parameters</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpretting the object as an instance of '<em>EMapping Parameters</em>'.
+     * @return the result of interpreting the object as an instance of '<em>EMapping Parameters</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
@@ -281,13 +309,13 @@ public class TraceSwitch<T> {
     }
 
     /**
-     * Returns the result of interpretting the object as an instance of '<em>EMapping Results</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>EMapping Results</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpretting the object as an instance of '<em>EMapping Results</em>'.
+     * @return the result of interpreting the object as an instance of '<em>EMapping Results</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
@@ -296,13 +324,13 @@ public class TraceSwitch<T> {
     }
 
     /**
-     * Returns the result of interpretting the object as an instance of '<em>Object To Trace Record Map Entry</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Object To Trace Record Map Entry</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpretting the object as an instance of '<em>Object To Trace Record Map Entry</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Object To Trace Record Map Entry</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
@@ -311,13 +339,13 @@ public class TraceSwitch<T> {
     }
 
     /**
-     * Returns the result of interpretting the object as an instance of '<em>EObject</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch, but this is the last case anyway.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpretting the object as an instance of '<em>EObject</em>'.
+     * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject)
      * @generated
      */

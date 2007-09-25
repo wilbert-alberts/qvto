@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: TraceFactoryImpl.java,v 1.1 2007/07/29 19:50:53 radvorak Exp $
+ * $Id: TraceFactoryImpl.java,v 1.2 2007/09/25 12:57:18 aigdalov Exp $
  */
 package org.eclipse.m2m.qvt.oml.trace.impl;
 
@@ -30,6 +30,13 @@ import org.eclipse.m2m.qvt.oml.trace.*;
  * @generated
  */
 public class TraceFactoryImpl extends EFactoryImpl implements TraceFactory {
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
+
     /**
      * Creates the default factory implementation.
      * <!-- begin-user-doc -->
@@ -73,6 +80,7 @@ public class TraceFactoryImpl extends EFactoryImpl implements TraceFactory {
             case TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY: return (EObject)createMappingOperationToTraceRecordMapEntry();
             case TracePackage.EMAPPING_OPERATION: return createEMappingOperation();
             case TracePackage.EVALUE: return createEValue();
+            case TracePackage.ETUPLE_PART_VALUE: return createETuplePartValue();
             case TracePackage.EMAPPING_CONTEXT: return createEMappingContext();
             case TracePackage.EMAPPING_PARAMETERS: return createEMappingParameters();
             case TracePackage.EMAPPING_RESULTS: return createEMappingResults();
@@ -170,6 +178,16 @@ public class TraceFactoryImpl extends EFactoryImpl implements TraceFactory {
     public EValue createEValue() {
         EValueImpl eValue = new EValueImpl();
         return eValue;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ETuplePartValue createETuplePartValue() {
+        ETuplePartValueImpl eTuplePartValue = new ETuplePartValueImpl();
+        return eTuplePartValue;
     }
 
     /**

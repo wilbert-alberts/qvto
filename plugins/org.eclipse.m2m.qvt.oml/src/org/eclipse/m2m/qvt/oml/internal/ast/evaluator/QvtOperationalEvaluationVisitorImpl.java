@@ -94,6 +94,7 @@ import org.eclipse.m2m.qvt.oml.trace.EMappingContext;
 import org.eclipse.m2m.qvt.oml.trace.EMappingOperation;
 import org.eclipse.m2m.qvt.oml.trace.EMappingParameters;
 import org.eclipse.m2m.qvt.oml.trace.EMappingResults;
+import org.eclipse.m2m.qvt.oml.trace.ETuplePartValue;
 import org.eclipse.m2m.qvt.oml.trace.EValue;
 import org.eclipse.m2m.qvt.oml.trace.Trace;
 import org.eclipse.m2m.qvt.oml.trace.TraceFactory;
@@ -113,9 +114,11 @@ import org.eclipse.ocl.internal.OCLPlugin;
 import org.eclipse.ocl.internal.evaluation.EvaluationVisitorImpl;
 import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.types.CollectionType;
+import org.eclipse.ocl.types.TupleType;
 import org.eclipse.ocl.types.VoidType;
 import org.eclipse.ocl.util.Bag;
 import org.eclipse.ocl.util.CollectionUtil;
+import org.eclipse.ocl.util.Tuple;
 import org.eclipse.ocl.utilities.PredefinedType;
 import org.eclipse.osgi.util.NLS;
 
@@ -775,6 +778,18 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
                 value.setCollectionType("OclCollection"); //$NON-NLS-1$
                 for (Object collectionElement : oclCollection) {
                     value.getCollection().add(createEValue(collectionElement));
+                }
+            } else if (oclObject instanceof Tuple) {
+                Tuple<EOperation, EStructuralFeature> tuple = (Tuple<EOperation, EStructuralFeature>) oclObject;
+                value.setCollectionType("Tuple"); //$NON-NLS-1$
+                TupleType<EOperation, EStructuralFeature> tupleType = tuple.getTupleType();
+                for (EStructuralFeature part : tupleType.oclProperties()) {
+                    Object partValue = tuple.getValue(part);
+                    ETuplePartValue tuplePartValue = TraceFactory.eINSTANCE.createETuplePartValue();
+                    tuplePartValue.setName(part.getName());
+                    EValue partEValue = createEValue(partValue);
+                    tuplePartValue.setValue(partEValue);
+                    value.getCollection().add(tuplePartValue);
                 }
             } else if (oclObject instanceof EObject) {
                 value.setModelElement((EObject) oclObject);

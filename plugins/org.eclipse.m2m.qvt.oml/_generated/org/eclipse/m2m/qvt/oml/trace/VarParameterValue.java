@@ -34,6 +34,13 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface VarParameterValue extends EObject {
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
+
+    /**
      * Returns the value of the '<em><b>Kind</b></em>' attribute.
      * The default value is <code>"IN"</code>.
      * The literals are from the enumeration {@link org.eclipse.m2m.qvt.oml.trace.EDirectionKind}.

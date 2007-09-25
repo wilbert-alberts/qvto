@@ -49,6 +49,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute trace.ecore#//EValue/collectionType"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference trace.ecore#//EValue/collection"/>
     </genClasses>
+    <genClasses ecoreClass="trace.ecore#//ETuplePartValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute trace.ecore#//ETuplePartValue/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference trace.ecore#//ETuplePartValue/value"/>
+    </genClasses>
     <genClasses ecoreClass="trace.ecore#//EMappingContext">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference trace.ecore#//EMappingContext/context"/>
     </genClasses>
