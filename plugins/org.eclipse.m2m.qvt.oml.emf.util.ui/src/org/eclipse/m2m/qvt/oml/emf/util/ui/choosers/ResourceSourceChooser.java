@@ -65,11 +65,16 @@ public class ResourceSourceChooser extends ChooserAdapter implements ISourceChoo
         }
 
         IFile file = org.eclipse.m2m.qvt.oml.emf.util.URIUtils.getFile(uri);
-        if(file == null) {
+        if (file != null) {
+            myInitialSelection = createSelectionForUri(uri, file);
             return;
         }
 
-        myInitialSelection = createSelectionForUri(uri, file);
+        EObject obj = EmfUtil.safeLoadModel(uri);
+        if (obj != null) {
+            myInitialSelection = new StructuredSelection(EmfModelContentProvider.makeEObjectNode(obj, null));
+            return;
+        }
     }
 
 	public static IStructuredSelection createSelectionForUri(URI uri, IFile file) {
