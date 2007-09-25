@@ -123,7 +123,7 @@ public class EmfModelContentProvider implements ITreeContentProvider {
 
 			List<Object> children = new ArrayList<Object>();
 			if(value instanceof List) {
-				for(Iterator it = ((List)value).iterator(); it.hasNext(); ) {
+				for(Iterator<?> it = ((List<?>) value).iterator(); it.hasNext(); ) {
 					EObject child = (EObject)it.next();
 					children.add(new EObjectNode(child, this));
 				}
@@ -160,8 +160,7 @@ public class EmfModelContentProvider implements ITreeContentProvider {
 		@Override
 		public Object[] getChildren() {
 			List<Object> children = new ArrayList<Object>();
-			for(Iterator it = myObj.eClass().getEAllContainments().iterator(); it.hasNext(); ) {
-				EReference ref = (EReference) it.next();
+			for(EReference ref : myObj.eClass().getEAllContainments()) {
 				if(ref.isDerived()) {
 					continue;
 				}
@@ -217,8 +216,7 @@ public class EmfModelContentProvider implements ITreeContentProvider {
 		@Override
 		public Object[] getChildren() {
 			List<Object> children = new ArrayList<Object>();
-			for(Iterator it = myResource.getContents().iterator(); it.hasNext(); ) {
-				EObject child = (EObject)it.next();
+			for(EObject child : myResource.getContents()) {
 				children.add(new EObjectNode(child, this));
 			}
 			
