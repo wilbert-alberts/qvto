@@ -86,13 +86,15 @@ public class UriGroupIn extends BaseUriGroup {
                 throw new RuntimeException("No handler for URI " + uri); //$NON-NLS-1$
             }
             else {
-                IChooser chooser = handler.getSourceChooser();
-                
-                myActiveListener = new UriChooserListener(myUriText, chooser, shell);
+                myActiveListener = new UriChooserListener(myUriText, getChooser(handler), shell);
                 myUriText.setEnabled(true);
                 myBrowseButton.setEnabled(true);
             }
         }
+    }
+    
+    protected IChooser getChooser(IMetamodelHandler handler) {
+    	return handler.getSourceAdaptableChooser();
     }
 
 	public void update(String moduleName, IModelParameterInfo paramInfo, Shell shell) {
