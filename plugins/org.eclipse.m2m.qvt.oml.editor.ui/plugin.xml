@@ -90,7 +90,7 @@
 	 <extension point="org.eclipse.ui.popupMenus">
 		 <viewerContribution
 	            targetID="#QvtEditorContext"	            
-	            id="com.borland.m2m.qvt.QvtEditorNavigateActions">
+	            id="org.eclipse.m2m.qvt.oml.editor.NavigateActions">
 
 		   <action id="org.eclipse.m2m.qvt.oml.editor.ui.actions.OpenDeclaration"
 			   class="org.eclipse.m2m.qvt.oml.editor.ui.actions.OpenDeclarationActionDelegate"
