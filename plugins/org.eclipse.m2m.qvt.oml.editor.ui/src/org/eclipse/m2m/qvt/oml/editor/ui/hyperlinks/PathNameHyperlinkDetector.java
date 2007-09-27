@@ -22,7 +22,9 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
+import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
+import org.eclipse.m2m.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfException;
 import org.eclipse.m2m.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.qvt.oml.expressions.PackageRef;
@@ -31,6 +33,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ModelTypeCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ModuleImportCS;
 import org.eclipse.m2m.qvt.oml.ocl.completion.CompletionData;
+import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.internal.cst.CSTNode;
 import org.eclipse.ocl.internal.cst.PathNameCS;
 import org.eclipse.ocl.internal.cst.StringLiteralExpCS;
@@ -45,7 +48,7 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 
 	public IHyperlink detectHyperlink(IDetectionContext context) {		
 		PathNameCS pathNameCS = null;
-
+				
 		if (context.getSyntaxElement() instanceof ModelTypeCS && context.getSyntaxElement().eContainer() instanceof MappingModuleCS) {
 			MappingModuleCS moduleCS = (MappingModuleCS) context.getSyntaxElement().eContainer();
 			for (ModelTypeCS modelTypeCS : moduleCS.getMetamodels()) {
@@ -53,7 +56,7 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 					continue;
 				}
 				// we have detected metamodel import
-				QvtOperationalEnv env = getEnv(context.getSyntaxElement(), context.getCompletionData());
+				QvtOperationalEnv env = getEnv(context.getSyntaxElement());
 				if(env != null) {
 					try {
 						StringLiteralExpCS uriLiteral = modelTypeCS.getPackageRefs().get(0).getUriCS();
@@ -114,7 +117,7 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 	}
 
 	private IHyperlink findHyperLink(PathNameCS pathName, IDetectionContext context) {
-		QvtOperationalEnv env = getEnv(pathName, context.getCompletionData());
+		QvtOperationalEnv env = getEnv(pathName);
 		if(env != null) {
 			List<String> names = new ArrayList<String>(5);
 			IRegion linkRegion = findElementInPathName(pathName, context.getRegion(), names);
@@ -162,12 +165,7 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 		return HyperlinkUtil.createRegion(pathNameCS);
 	}
 	
-	private QvtOperationalEnv getEnv(CSTNode node, CompletionData data) {
-		EObject eObject = EcoreUtil.getRootContainer(node);
-		if(eObject instanceof CSTNode) {
-			CSTNode rootNode = (CSTNode)eObject;
-			return (QvtOperationalEnv)data.getSyntaxToEnvironmentMap().get(rootNode);
-		}
-		return null;	
+	private QvtOperationalEnv getEnv(CSTNode node) {
+		return (QvtOperationalEnv)CSTHelper.getEnvironment(node);
 	}	
 }
