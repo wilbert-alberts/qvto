@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionDelta;
+import org.eclipse.core.runtime.IRegistryChangeEvent;
+import org.eclipse.core.runtime.IRegistryChangeListener;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.m2m.qvt.oml.editor.ui.Activator;
 
@@ -27,8 +30,22 @@ public final class CollectorRegistry {
     public static final String ATTRIBUTE_CLASS = "class"; //$NON-NLS-1$
     public static final String ATTRIBUTE_CATEGORY= "category"; //$NON-NLS-1$
     
-    private static CategoryDescriptor[] ourCategories = initCategories();
-    private static Map<String, List<CollectorDescriptor>> ourCollectors = initCollectors();
+    private static CategoryDescriptor[] ourCategories;
+    private static Map<String, List<CollectorDescriptor>> ourCollectors;
+
+    private static IRegistryChangeListener ourRegistryChangeListener = new IRegistryChangeListener() {
+        public void registryChanged(IRegistryChangeEvent event) {
+            IExtensionDelta[] extensionDeltas = event.getExtensionDeltas(Activator.PLUGIN_ID, EXT_POINT_ID);
+            if (extensionDeltas.length != 0) {
+                refresh();
+            }
+        }
+    };
+    
+    static {
+        refresh();
+        Platform.getExtensionRegistry().addRegistryChangeListener(ourRegistryChangeListener, Activator.PLUGIN_ID);
+    }
     
     public static CategoryDescriptor[] getCategories() {
 		return ourCategories;
@@ -83,5 +100,10 @@ public final class CollectorRegistry {
     private static CollectorDescriptor initCollector(IConfigurationElement configurationElement) {
     	String category = configurationElement.getAttribute(ATTRIBUTE_CATEGORY);
     	return new CollectorDescriptor(category, ATTRIBUTE_CLASS, configurationElement);
+    }
+    
+    public static final void refresh() {
+        ourCategories = initCategories();
+        ourCollectors = initCollectors();
     }
 }
