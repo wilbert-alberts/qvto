@@ -147,6 +147,7 @@ import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.types.TypeType;
 import org.eclipse.ocl.types.VoidType;
 import org.eclipse.ocl.util.TypeUtil;
+import org.eclipse.ocl.utilities.UMLReflection;
 import org.eclipse.osgi.util.NLS;
 
 public class QvtOperationalVisitorCS
@@ -1699,8 +1700,17 @@ public class QvtOperationalVisitorCS
         ResolveInExp resolveInExp = ExpressionsFactory.eINSTANCE.createResolveInExp();
         TypeCS contextTypeCS = resolveInExpCS.getInMappingType();
         EClassifier eClassifier = (contextTypeCS == null) ? null : visitTypeCS(contextTypeCS, null, env); // mapping context type
-        eClassifier = eClassifier != null ? eClassifier : env.getModuleContextType(); 
-        List<EOperation> mappingOperations = env.lookupMappingOperations(eClassifier, resolveInExpCS.getInMappingName());
+        eClassifier = eClassifier != null ? eClassifier : env.getModuleContextType();
+        List<EOperation> rawMappingOperations = env.lookupMappingOperations(eClassifier, resolveInExpCS.getInMappingName());
+        List<EOperation> mappingOperations = new ArrayList<EOperation>();
+        EClassifier resolvedContextType = TypeUtil.resolveType(env, eClassifier);
+        for (EOperation operation : rawMappingOperations) {
+            EClassifier owner = env.getUMLReflection().getOwningClassifier(operation);
+            if (((contextTypeCS == null) && (owner == null))
+                    || (TypeUtil.resolveType(env, owner) == eClassifier)) {
+                mappingOperations.add(operation);
+            }
+        }
         if (mappingOperations.size() == 1) {
             env.registerResolveInExp(resolveInExp, eClassifier, resolveInExpCS.getInMappingName());
         } else {
