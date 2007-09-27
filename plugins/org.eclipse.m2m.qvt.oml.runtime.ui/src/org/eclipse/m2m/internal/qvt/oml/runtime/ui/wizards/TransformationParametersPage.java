@@ -56,10 +56,12 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class TransformationParametersPage extends WizardPage {
 	
-	public TransformationParametersPage(String pageId) {
+	public TransformationParametersPage(String pageId, List<URI> paramUris) {
 		super(pageId);
         setDescription(org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.Messages.TransformationParametersPage_Description);
 
+        myInitialParamUris = paramUris != null ? paramUris : Collections.<URI>emptyList();
+        
         myUriListeners = new ArrayList<IUriGroup.IModifyListener>(1);
         myUriListeners.add(new IUriGroup.IModifyListener() {
 			public void modified() {
@@ -71,11 +73,21 @@ public class TransformationParametersPage extends WizardPage {
 
 	public void setTransformation(QvtTransformation transformation) {
 		myTransformation = transformation;
+		if (myTransformation != null) {
+			setTitle(NLS.bind(org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.Messages.TransformationParametersPage_TitleWithTransf, myTransformation));
+		}
 		if (myTransfSignatureControl != null) {
 			myTransfSignatureControl.setTransformation(myTransformation, myUriListeners);
 		}
-		if (myTransformation != null) {
-			setTitle(NLS.bind(org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.Messages.TransformationParametersPage_TitleWithTransf, myTransformation));
+		if (myTransfSignatureControl != null && myTransformation != null) {
+	    	try {
+	    		List<TargetUriData> initTargetUriData = initTargetUriData(myInitialParamUris);
+	    		if (!initTargetUriData.isEmpty()) {
+	    			applyTargetUris(initTargetUriData);
+	    		}
+	    	}
+	    	catch (MdaException e) {
+	    	}
 		}
 	}
 
@@ -120,20 +132,13 @@ public class TransformationParametersPage extends WizardPage {
         myOpenEditor.setLayoutData(new GridData());
 	}
 	
-    public void initializeParamWithUris(List<URI> paramUris) {
-    	List<TargetUriData> proposedUris = Collections.emptyList();
-    	try {
-    		proposedUris = initTargetUriData(paramUris);
-    	}
-    	catch (MdaException e) {
-    	}
-    	
+    private void applyTargetUris(List<TargetUriData> paramTargetUris) {
     	try {
 	        ILaunchConfigurationWorkingCopy workingCopy = QvtLaunchUtil.getInMemoryLaunchConfigurationType().newInstance(null, MDAConstants.QVTO_LAUNCH_CONFIGURATION_NAME); 
 	        
-	        workingCopy.setAttribute(IQvtLaunchConstants.ELEM_COUNT, proposedUris.size());
+	        workingCopy.setAttribute(IQvtLaunchConstants.ELEM_COUNT, paramTargetUris.size());
 	        int index = 1;
-	        for (TargetUriData targetUri : proposedUris) {
+	        for (TargetUriData targetUri : paramTargetUris) {
 	    		QvtLaunchUtil.saveTargetUriData(workingCopy, targetUri, index);
 	    		++index;
 	        }
@@ -151,9 +156,6 @@ public class TransformationParametersPage extends WizardPage {
     	}
     	URI firstUri = paramUris.get(0);
         IFile ifile = WorkspaceUtils.getWorkspaceFile(firstUri);
-        if (ifile == null) {
-        	return Collections.emptyList();
-        }
         
         List<TargetUriData> proposedUris = new ArrayList<TargetUriData>(myTransformation.getParameters().size());
         
@@ -173,7 +175,7 @@ public class TransformationParametersPage extends WizardPage {
             	}
             	++index;
         	}
-        	else {
+        	else if (ifile != null) {
 	        	try {
 	        		String extension = transfParam.getMetamodels().isEmpty() ? "xmi" : transfParam.getMetamodels().get(0).getName(); //$NON-NLS-1$
 	                String fileName = myTransformation.getModuleName() + "." + extension; //$NON-NLS-1$
@@ -185,6 +187,9 @@ public class TransformationParametersPage extends WizardPage {
 	                Logger.getLogger().log(Logger.SEVERE, "Failed to get outClass for " + transfParam, e); //$NON-NLS-1$
 	                proposedUris.add(new TargetUriData("")); //$NON-NLS-1$
 	            }
+        	}
+        	else {
+                proposedUris.add(new TargetUriData("")); //$NON-NLS-1$
         	}
         }
         
@@ -260,5 +265,6 @@ public class TransformationParametersPage extends WizardPage {
     private OptionalFileGroup myTraceFile;
     private boolean myTraceNameNonChanged;
     private TransformationSignatureLaunchControl myTransfSignatureControl;
+    private final List<URI> myInitialParamUris;
     private Button myOpenEditor;
 }

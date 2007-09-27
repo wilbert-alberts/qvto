@@ -50,7 +50,6 @@ public class RunInterpretedTransformationWizard extends PersistedValuesWizard {
 	public RunInterpretedTransformationWizard(URI uriTransf, List<URI> paramUris) {
 		super(QvtRuntimeUIPlugin.getDefault());
 		myTransfUri = uriTransf;
-		myInitialParamUris = paramUris;
 
         setNeedsProgressMonitor(false);
         setWindowTitle(Messages.LaunchWorkspaceTransformationWizard_Title);
@@ -61,7 +60,7 @@ public class RunInterpretedTransformationWizard extends PersistedValuesWizard {
 		
 		mySelectTransformationPage = new SelectInterpretedTransformationPage("SelectTransfromationPageId"); //$NON-NLS-1$
         mySelectTransformationPage.setTitle(Messages.SelectWorkspaceTransformationPage_Title);
-        myTransformationParametersPage = new TransformationParametersPage("TransformationParametersPageId"); //$NON-NLS-1$
+        myTransformationParametersPage = new TransformationParametersPage("TransformationParametersPageId", paramUris); //$NON-NLS-1$
         myTransformationParametersPage.setTitle(Messages.TransformationParametersPage_Title);
         myQvtTransformationConfigurationPage = new QvtTransformationConfigurationPage("QvtTransformationConfigurationPage", myTransformationData); //$NON-NLS-1$
         myQvtTransformationConfigurationPage.setTitle(org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.Messages.ApplyTransformationWizard_ConfigProperties);
@@ -104,10 +103,6 @@ public class RunInterpretedTransformationWizard extends PersistedValuesWizard {
 	public IWizardPage getNextPage(IWizardPage page) {
 		if (page == mySelectTransformationPage) {
 			setQvtTransformation(mySelectTransformationPage.getTransformation());
-			if (myInitialParamUris != null) {
-				myTransformationParametersPage.initializeParamWithUris(myInitialParamUris);
-				myInitialParamUris = null;
-			}
 		}
         if (page == myTransformationParametersPage) {
             try {
@@ -186,6 +181,5 @@ public class RunInterpretedTransformationWizard extends PersistedValuesWizard {
     private final QvtTransformationConfigurationPage myQvtTransformationConfigurationPage;
     private final ApplyTransformationData myTransformationData;
     private final URI myTransfUri;
-    private List<URI> myInitialParamUris;
     private QvtTransformation myTransformation;
 }
