@@ -32,6 +32,8 @@ public class CommonPluginImages extends PluginImages {
     
     public static final String METAMODELS = "metamodels"; //$NON-NLS-1$
     public static final String METAMODEL_FILE = "metamodelfile"; //$NON-NLS-1$    
+
+    public static final String ERROR_DECORATOR = "error-co"; //$NON-NLS-1$    
     
     public static final String COLLAPSE_ALL = "collapseall"; //$NON-NLS-1$
     public static final String SHOW_INHERITED_FEATURES = "showinherf"; //$NON-NLS-1$
@@ -52,6 +54,7 @@ public class CommonPluginImages extends PluginImages {
         declareRegistryImage(REGISTRY, "icons/registry.gif"); //$NON-NLS-1$
         declareRegistryImage(METAMODELS, "icons/metamodels.gif"); //$NON-NLS-1$        
         declareRegistryImage(METAMODEL_FILE, "icons/metamodelfile.gif"); //$NON-NLS-1$
+        declareRegistryImage(ERROR_DECORATOR, "icons/error-co.gif"); //$NON-NLS-1$
         declareRegistryImage(COLLAPSE_ALL, "icons/collapseall.gif"); //$NON-NLS-1$
         declareRegistryImage(SHOW_INHERITED_FEATURES, "icons/showinherf.gif"); //$NON-NLS-1$
         declareRegistryImage(SHOW_FULL_QUALIFIED_NAMES, "icons/showfullq.gif"); //$NON-NLS-1$

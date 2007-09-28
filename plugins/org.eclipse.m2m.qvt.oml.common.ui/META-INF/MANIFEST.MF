@@ -24,7 +24,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.m2m.qvt.oml.emf.util.ui,
  org.eclipse.core.expressions
 Eclipse-LazyStart: true
-Export-Package: org.eclipse.m2m.internal.qvt.oml.common.ui.launch,
+Export-Package:  org.eclipse.m2m.internal.qvt.oml.common.ui,
+ org.eclipse.m2m.internal.qvt.oml.common.ui.launch,
  org.eclipse.m2m.internal.qvt.oml.common.ui.controls,
  org.eclipse.m2m.internal.qvt.oml.common.ui.util,
  org.eclipse.m2m.internal.qvt.oml.common.ui.views,
