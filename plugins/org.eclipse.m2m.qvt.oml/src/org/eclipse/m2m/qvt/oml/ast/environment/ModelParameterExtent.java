@@ -39,6 +39,13 @@ public class ModelParameterExtent {
 		myMetamodels = metamodels;
 	}
 	
+	public ModelParameterExtent(EObject initialEObj) {
+		myInitialEObject = initialEObj;
+    	EObject rootContainer = EcoreUtil.getRootContainer(initialEObj);
+		myMetamodels = rootContainer instanceof EPackage ?
+				Collections.singletonList((EPackage) rootContainer) : Collections.<EPackage>emptyList();
+	}
+	
 	public void addObject(EObject eObject) {
 		if (eObject != null) {
 			myAdditionalEObjects.add(eObject);
@@ -72,7 +79,7 @@ public class ModelParameterExtent {
 			extent = myInitialEObject.eResource();
 		}
 		if (extent == null) {
-			extent = outResourceSet.createResource(URI.createURI("/")); //$NON-NLS-1$
+			extent = createResource(outResourceSet);
 			if (myInitialEObject != null) {
 				extent.getContents().add(myInitialEObject);
 			}
@@ -94,6 +101,27 @@ public class ModelParameterExtent {
 		return myInitialEObject != null ? myInitialEObject.toString() : super.toString();
 	}
 	
+	private Resource createResource(ResourceSet outResourceSet) {
+		if (myMetamodels.isEmpty()) {
+			return outResourceSet.createResource(URI.createURI("/")); //$NON-NLS-1$;
+		}
+		
+		String mmName = myMetamodels.get(0).getName();
+		URI extentURI = URI.createURI("extent." + mmName); //$NON-NLS-1$;
+		Object possibleFactory = Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().get(mmName);
+		Resource.Factory factory = null;
+		if (possibleFactory instanceof Resource.Factory) {
+			factory = (Resource.Factory) possibleFactory;
+		}
+		if (possibleFactory instanceof Resource.Factory.Descriptor) {
+			factory = ((Resource.Factory.Descriptor) possibleFactory).createFactory();
+		}
+		if (factory == null) {
+			return outResourceSet.createResource(extentURI);
+		}
+		return factory.createResource(extentURI);
+	}
+
 	private final EObject myInitialEObject;
 	private final List<EPackage> myMetamodels;
 	private final List<EObject> myAdditionalEObjects = new ArrayList<EObject>(1);
