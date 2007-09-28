@@ -190,15 +190,12 @@ public class EmfUtil {
     }
     
 	public static void saveModel(Resource modelExtent, URI uri, Map opts) throws EmfException {    
-        ResourceSet resourceSet = getOutputResourceSet();
-
-        Resource resource = resourceSet.createResource(uri);
-        resource.getContents().addAll(modelExtent.getContents());
+		modelExtent.setURI(uri);
 
         Map options = new HashMap(opts);
         options.put(XMLResource.OPTION_ENCODING, "UTF-8"); //$NON-NLS-1$
         
-        for (EObject eObject : resource.getContents()) {
+        for (EObject eObject : modelExtent.getContents()) {
 	        if(isDynamic(eObject)) {
 	        	options.put("SCHEMA_LOCATION", Boolean.TRUE); //$NON-NLS-1$
 	        	break;
@@ -206,7 +203,7 @@ public class EmfUtil {
         }
         
         try {
-            resource.save(options);
+        	modelExtent.save(options);
         } catch (Exception e) {
             throw new EmfException(NLS.bind(Messages.EmfUtil_1, uri), e);
         }
