@@ -421,10 +421,10 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         }
         else if (!evalResult.getUnboundedObjects().isEmpty()) {
 //        	throw new RuntimeException(NLS.bind(
-//                    EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_UnboundedObjects, evalResult.getUnboundedObjects().size()));
-        	// NOTE: unbound objects saved into trace file
+//                    EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_UnboundedObjects, module.getName()));
+        	// NOTE: unbound objects are saved into trace file
 			Logger.getLogger().log(Logger.SEVERE, NLS.bind(
-					EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_UnboundedObjects, evalResult.getUnboundedObjects().size(), module.getName()));
+					EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_UnboundedObjects, module.getName()));
         }
         
         return evalResult;
