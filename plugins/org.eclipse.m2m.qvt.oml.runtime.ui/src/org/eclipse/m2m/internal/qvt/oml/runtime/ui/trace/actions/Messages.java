@@ -24,6 +24,10 @@ public class Messages extends NLS {
     public static String OpenEObjectAction_NavigationFailed;
     public static String ShowQualifiedNamesAction_0;
     public static String ShowQualifiedNamesAction_1;
+    
+    public static String OpenEObjectAction_UnboundObjectTitle;
+    public static String OpenEObjectAction_UnboundObjectMsg;
+    
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);
