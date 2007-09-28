@@ -41,7 +41,7 @@ public class ModelParameterExtent {
 	
 	public ModelParameterExtent(EObject initialEObj) {
 		myInitialEObject = initialEObj;
-    	EObject rootContainer = EcoreUtil.getRootContainer(initialEObj);
+    	EObject rootContainer = initialEObj != null ? EcoreUtil.getRootContainer(initialEObj.eClass()) : null;
 		myMetamodels = rootContainer instanceof EPackage ?
 				Collections.singletonList((EPackage) rootContainer) : Collections.<EPackage>emptyList();
 	}
