@@ -25,7 +25,6 @@ import java.util.Set;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -36,9 +35,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.m2m.qvt.oml.ast.environment.ModelParameterExtent;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtEvaluationResult;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEvaluationEnv;
@@ -47,6 +45,7 @@ import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.common.Logger;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfException;
+import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.DependencyHelper;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
 import org.eclipse.m2m.qvt.oml.expressions.AltExp;
@@ -409,26 +408,23 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         
         getContext().processDeferredTasks();
 
-		ResourceSet outResourceSet = new ResourceSetImpl();
+		ResourceSet outResourceSet = EmfUtil.getOutputResourceSet();
         QvtEvaluationResult evalResult = callResult.myEvalEnv.createEvaluationResult(myEntryPoint, outResourceSet);
         if (evalResult.getModelExtents().isEmpty()) {
             if (callResult.myResult instanceof EObject) {
                 // compatibility reason
-                if (((EObject) callResult.myResult).eResource() != null) {
-                	evalResult.getModelExtents().add(((EObject) callResult.myResult).eResource());
-                }
-                else {
-                    Resource resource = outResourceSet.createResource(URI.createURI("/")); //$NON-NLS-1$
-                    resource.getContents().add((EObject) callResult.myResult);
-                    evalResult.getModelExtents().add(resource);
-                }
+            	ModelParameterExtent modelParameter = new ModelParameterExtent((EObject) callResult.myResult);
+                evalResult.getModelExtents().add(modelParameter.getModelExtent(outResourceSet));
             } else {
                 return callResult.myResult;
             }
         }
         else if (!evalResult.getUnboundedObjects().isEmpty()) {
-        	throw new RuntimeException(NLS.bind(
-                    EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_UnboundedObjects, evalResult.getUnboundedObjects().size()));
+//        	throw new RuntimeException(NLS.bind(
+//                    EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_UnboundedObjects, evalResult.getUnboundedObjects().size()));
+        	// NOTE: unbound objects saved into trace file
+			Logger.getLogger().log(Logger.SEVERE, NLS.bind(
+					EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_UnboundedObjects, evalResult.getUnboundedObjects().size(), module.getName()));
         }
         
         return evalResult;

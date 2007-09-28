@@ -239,7 +239,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 
     public void createModuleParameterExtents(Module module) {        
         Map<ModelParameter, ModelParameterExtent> modelExtents = new LinkedHashMap<ModelParameter, ModelParameterExtent>(module.getModelParameter().size());
-        modelExtents.put(null, new ModelParameterExtent(Collections.<EPackage>emptyList()));
+        modelExtents.put(UNBOUND_MODEL_EXTENT, new ModelParameterExtent(Collections.<EPackage>emptyList()));
         int argIndex = 0;
         for (ModelParameter modelParam : module.getModelParameter()) {
         	List<EPackage> metamodels = ModelTypeMetamodelsAdapter.getMetamodels(modelParam.getEType());
@@ -281,7 +281,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
     private void setModelParameterExtents(Map<ModelParameter, ModelParameterExtent> modelExtents) {
 		myModelExtents = modelExtents;
 		for (Map.Entry<ModelParameter, ModelParameterExtent> entry : modelExtents.entrySet()) {
-			if (entry.getKey() != null && entry.getKey().getName().length() > 0) {
+			if (entry.getKey() != UNBOUND_MODEL_EXTENT && entry.getKey().getName().length() > 0) {
 				add(entry.getKey().getName(), entry.getValue());
 			}
 		}
@@ -295,20 +295,16 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	public QvtEvaluationResult createEvaluationResult(ImperativeOperation entryPoint, ResourceSet outResourceSet) {
 		List<Resource> extents = new ArrayList<Resource>();
 		for (Map.Entry<ModelParameter, ModelParameterExtent> entry : myModelExtents.entrySet()) {
-			if (entry.getKey() != null 
+			if (entry.getKey() != UNBOUND_MODEL_EXTENT 
 					&& entry.getKey().getKind() != DirectionKind.IN) {
 	        	extents.add(entry.getValue().getModelExtent(outResourceSet));
 			}
 		}
 		
-		List<EObject> unboundedObjects = Collections.emptyList();
-		if (myModelExtents.containsKey(null)) {
-			unboundedObjects = myModelExtents.get(null).getEObjectsInExtent();
-		}
-
         List<Object> outParamValues = makeOutParamValues(entryPoint);
 		
-		return new QvtEvaluationResult(extents, unboundedObjects, outParamValues);
+		return new QvtEvaluationResult(extents,
+				myModelExtents.get(UNBOUND_MODEL_EXTENT).getEObjectsInExtent(), outParamValues);
 	}
 	
 	private List<Object> makeOutParamValues(ImperativeOperation entryPoint) {
@@ -350,8 +346,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			myModelExtents.get(extent).addObject(newObject);
 		}
 		else {
-			String extentName = extent != null ? extent.getName() : String.valueOf((Object) null) ;
-            throw new RuntimeException("Unknown model extent '" + extentName + "' for the type " + impl.getName()); //$NON-NLS-1$ //$NON-NLS-2$
+			myModelExtents.get(UNBOUND_MODEL_EXTENT).addObject(newObject);
 		}
 		return newObject;
 	}
@@ -479,5 +474,6 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	private final IContext myContext;
     private final Map<String, Object> myBindings;
 	private Map<ModelParameter, ModelParameterExtent> myModelExtents;
+	private static final ModelParameter UNBOUND_MODEL_EXTENT = null;
 	
 }
