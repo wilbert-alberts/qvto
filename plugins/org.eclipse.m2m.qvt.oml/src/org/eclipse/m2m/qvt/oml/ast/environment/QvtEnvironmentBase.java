@@ -13,10 +13,12 @@ package org.eclipse.m2m.qvt.oml.ast.environment;
 
 import static org.eclipse.ocl.utilities.UMLReflection.SAME_TYPE;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -64,7 +66,7 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 	
 	private List<QvtEnvironmentBase> siblings;
 	private QvtTypeResolverImpl typeResolver;
-	
+	private Set<EOperation> fOperationsHolder;	
 
 	protected QvtEnvironmentBase(QvtEnvironmentBase parent) {
 		super(parent);
@@ -144,20 +146,31 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 	}
 
 	protected final CollisionStatus findCollidingOperation(EClassifier ownerType, EOperation operation) {
+		try {
+			return doFindCollidingOperation(ownerType, operation);
+		} finally {
+			fOperationsHolder.clear();
+		}
+	}
+	
+	private CollisionStatus doFindCollidingOperation(EClassifier ownerType, EOperation operation) {
         String operationName = getUMLReflection().getName(operation);
-        List<EOperation> ownedOperations = TypeUtil.getOperations(this, ownerType);
+        List<EOperation> ownedOperations = TypeUtil.getOperations(this, ownerType);        
         
-        List<EOperation> operations = new ArrayList<EOperation>(ownedOperations);
+        Set<EOperation> operations = operationHolder(); 
+        operations.addAll(ownedOperations);
+        
         if(ownerType instanceof Module) {
-        	// collect all imported (extended) modules operations to check for clashes with this env's module
+        	// collect all imported (extended) modules fOperationsHolder to check for clashes with this env's module
         	collectImportedModuleOwnedOperations(operations);
-        }
+        } else {
         
-        // collect operations additional operations defined for sub-types of the checked owner type,
+        // collect fOperationsHolder additional fOperationsHolder defined for sub-types of the checked owner type,
         // Note: those from super-types are included by MDT OCL TypeUtil.getOperations(...);
-        // => union forms the whole scope for potentially virtually called operations;
-        // all operations ever defined goes through this check, so all applicable get into VTABLEs
-        getQVTTypeResolver().collectAdditionalOperationsInTypeHierarchy(ownerType, true, operations);
+        // => union forms the whole scope for potentially virtually called fOperationsHolder;
+        // all fOperationsHolder ever defined goes through this check, so all applicable get into VTABLEs
+	        getQVTTypeResolver().collectAdditionalOperationsInTypeHierarchy(ownerType, true, operations);
+	    }
         
 		for (EOperation next : operations) {
 			if ((next != operation) && 
@@ -244,7 +257,7 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 		return false;
 	}
 	
-	private List<EOperation> collectImportedModuleOwnedOperations(List<EOperation> result) {
+	private Collection<EOperation> collectImportedModuleOwnedOperations(Collection<EOperation> result) {
 		for (QvtEnvironmentBase nextEnv : getSiblings()) {
 			List<EOperation> nextModuleOpers = nextEnv.getModuleContextType().getEOperations();
 			if(nextModuleOpers != null) {
@@ -254,4 +267,11 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 		
 		return result;
 	}	
+	
+	private Set<EOperation> operationHolder() {
+		if(fOperationsHolder == null) {
+			fOperationsHolder  = new LinkedHashSet<EOperation>();
+		}
+		return fOperationsHolder;
+	}
 }

@@ -12,13 +12,13 @@
 package org.eclipse.m2m.qvt.oml.ast.environment;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
@@ -36,6 +36,7 @@ import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.types.MessageType;
 import org.eclipse.ocl.types.TupleType;
 import org.eclipse.ocl.types.TypeType;
+import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
 
@@ -51,8 +52,7 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
     private boolean fdefinesOclAnyFeatures;
     private boolean isClosed;    
     	
-    private Set<EClassifier> fAdditionalTypes;
-    
+    private Set<EClassifier> fAdditionalTypes;    
 	QvtTypeResolverImpl(QvtEnvironmentBase owningEnv, TypeResolver<EClassifier, EOperation, EStructuralFeature> delegate) {
 		if(delegate == null || owningEnv == null) {
 			throw new IllegalArgumentException();
@@ -67,18 +67,13 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 		return fOwner;
 	}
 	
-	public void collectAdditionalOperationsInTypeHierarchy(EClassifier type, boolean subTypesOnly, List<EOperation> result) {
+	public void collectAdditionalOperationsInTypeHierarchy(EClassifier type, boolean subTypesOnly, Collection<EOperation> result) {
 		if(fAdditionalTypes != null) {
-			for (EClassifier nextType : fAdditionalTypes) {
-				if(type instanceof EClass && nextType instanceof EClass) {
-					EClass eClass = (EClass) type;
-					boolean isPartOfHierarchy = eClass.isSuperTypeOf((EClass)nextType) || 
-							(subTypesOnly == false && ((EClass)nextType).isSuperTypeOf(eClass));
-							
-					if(type != nextType && isPartOfHierarchy) {
-						getLocalAdditionalOperations(nextType, result);
-					}
-				}
+			for (EClassifier nextType : fAdditionalTypes) {					
+				boolean isPartOfHierarchy = TypeUtil.getRelationship(fOwner, type, nextType) == UMLReflection.STRICT_SUPERTYPE;					  
+				if(type != nextType && isPartOfHierarchy) {
+					getLocalAdditionalOperations(nextType, result);
+				}				
 			}
 		}
 		// continue in imported environments
@@ -119,7 +114,7 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 		return result;
 	}
 	
-	protected void getLocalAdditionalOperations(EClassifier owner, List<EOperation> result) {		
+	protected void getLocalAdditionalOperations(EClassifier owner, Collection<EOperation> result) {		
 		result.addAll(fDelegate.getAdditionalOperations(owner));
 		if(fdefinesOclAnyFeatures && (owner instanceof CollectionType == false) && (owner instanceof TupleType == false)) {
 			result.addAll(fDelegate.getAdditionalOperations(fOwner.getOCLStandardLibrary().getOclAny()));
