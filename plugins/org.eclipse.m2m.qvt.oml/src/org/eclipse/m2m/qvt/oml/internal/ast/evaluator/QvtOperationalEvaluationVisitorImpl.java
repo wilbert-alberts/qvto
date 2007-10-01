@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.m2m.qvt.oml.ast.environment.IVirtualOperationTable;
 import org.eclipse.m2m.qvt.oml.ast.environment.ModelParameterExtent;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtEvaluationResult;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
@@ -304,24 +305,32 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
             Object source = operationCallExp.getSource().accept(this);
             List<Object> args = makeArgs(operationCallExp);
 
-            ImperativeOperation method;
+            ImperativeOperation method = null;
             if (QvtOperationalParserUtil.isOverloadableMapping(referredOperation, getOperationalEnv())) {
                 if (isUndefined(source)) {
                     return getOclInvalid();
                 }
-                method = getVirtualMethod(referredOperation, source, args);
-            } else {
-            	EClassifier context = getOperationalEnv().getUMLReflection().getOwningClassifier(referredOperation);
-				if(referredOperation instanceof ImperativeOperation) {
-					method = (ImperativeOperation)referredOperation;
-				} else {
-                	Module owningModule = QvtOperationalParserUtil.getInnermostDefiningModule(myRootModule,
-                        referredOperation, context, getOperationalEnv());
-                	method = QvtOperationalParserUtil.findMappingMethod(owningModule, referredOperation, context, getOperationalEnv());
-                }
+                	
+            	if(source instanceof EObject) {
+            		EClass sourceEClass = ((EObject)source).eClass();
+            		IVirtualOperationTable vTable = getVirtualTable(referredOperation);
+            		if(vTable != null) {
+            			EOperation virtualOperation = vTable.lookupActualOperation(sourceEClass, getEnvironment());
+            			if(virtualOperation instanceof ImperativeOperation) {
+            				method = (ImperativeOperation) virtualOperation;
+            			}
+            		}            		
+            	}
             }
+            
+    		if((method instanceof ImperativeOperation == false) && referredOperation instanceof ImperativeOperation) {
+    			// we can't dispatch non-imperative as we already evaluated the source 
+    			method = (ImperativeOperation)referredOperation;
+    		}
 
-            return executeImperativeOperation(method, source, args).myResult;
+            if(method != null) {
+            	return executeImperativeOperation(method, source, args).myResult;
+            }
         }
 
         Object result = null;
@@ -388,18 +397,11 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         if (myRootModule == null) {
             myRootModule = module;
             PackageRef[] metamodels = QvtOperationalParserUtil.getRequiredMetamodelIds(myRootModule);
-            myInheritanceTree = new InheritanceTree(getOperationalEnv(), new EmfClassifierProvider(getOperationalEnv()), metamodels);
+            //myInheritanceTree = new InheritanceTree(getOperationalEnv(), new EmfClassifierProvider(getOperationalEnv()), metamodels);
         }
 
-        createModuleDefaultInstance(module, getOperationalEvaluationEnv());
-        
-        for (ModuleImport moduleImport : module.getModuleImport()) {
-			if(moduleImport.getModule() != null) {
-				Module importedModule = moduleImport.getImportedModule();
-				createModuleDefaultInstance(importedModule, getOperationalEvaluationEnv());
-			}
-		}        
-        
+        initAllModuleDefaultInstances(module, getOperationalEvaluationEnv());
+
         initModuleProperties(module);
         getOperationalEvaluationEnv().createModuleParameterExtents(module);
         
@@ -613,10 +615,25 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
     
     private EObject createModuleDefaultInstance(Module moduleClass, QvtOperationalEvaluationEnv env) {
     	EObject instance = ModuleInstanceFactory.eINSTANCE.create(moduleClass);
-    	env.add(moduleClass.getName() + QvtOperationalFileEnv.THIS_VAR_QNAME_SUFFIX, instance);
+    	// use replace as multiple imports of the same module might happen
+    	env.replace(moduleClass.getName() + QvtOperationalFileEnv.THIS_VAR_QNAME_SUFFIX, instance);
     	return instance;
     }    
 
+    private void initAllModuleDefaultInstances(Module module, QvtOperationalEvaluationEnv env) {
+    	createModuleDefaultInstance(module, env);
+		for (ModuleImport moduleImport : module.getModuleImport()) {
+			if(moduleImport.getModule() != null) {
+				Module importedModule = moduleImport.getImportedModule();
+				initAllModuleDefaultInstances(importedModule, getOperationalEvaluationEnv());
+			}
+		}
+    }        
+    
+	private IVirtualOperationTable getVirtualTable(EOperation operation) {
+		return IVirtualOperationTable.Access.INSTANCE.getVirtualTable(operation);
+	}
+    
     private Object createOrGetResult(MappingOperation mappingOperation) {
     	QvtOperationalEvaluationEnv env = getOperationalEvaluationEnv();
         Object result = getRuntimeValue(Environment.RESULT_VARIABLE_NAME);
@@ -953,10 +970,10 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         List<EClassifier> assignableClasses = new ArrayList<EClassifier>();
         try {
         	EClassifier ctxOwner = getOperationalEnv().getUMLReflection().getOwningClassifier(ctxOp);
-            EClassifier[] derivedClasses = myInheritanceTree.getSortedDerivedClasses(ctxOwner);
+            EClassifier[] derivedClasses = new EClassifier[0];//myInheritanceTree.getSortedDerivedClasses(ctxOwner);
             assignableClasses.addAll(Arrays.asList(derivedClasses));
             //assignableClasses.add(ctxOwner);
-        } catch (EmfException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -1032,10 +1049,9 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
     	}
     	return property;
     }
-    
+        
     // allow to redefine "entry" point
     private ImperativeOperation myEntryPoint;
-    private Module myRootModule;
-    private InheritanceTree myInheritanceTree;
+    private Module myRootModule; 
     private EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> myEvalEnv;
 }

@@ -13,6 +13,7 @@ package org.eclipse.m2m.qvt.oml.ast.environment;
 
 import static org.eclipse.ocl.utilities.UMLReflection.SAME_TYPE;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,6 +25,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.ocl.TypeResolver;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.expressions.Variable;
@@ -142,37 +145,62 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 
 	protected final CollisionStatus findCollidingOperation(EClassifier ownerType, EOperation operation) {
         String operationName = getUMLReflection().getName(operation);
-        List<EOperation> operations = TypeUtil.getOperations(this, ownerType);
-
+        List<EOperation> ownedOperations = TypeUtil.getOperations(this, ownerType);
+        
+        List<EOperation> operations = new ArrayList<EOperation>(ownedOperations);
+        if(ownerType instanceof Module) {
+        	// collect all imported (extended) modules operations to check for clashes with this env's module
+        	collectImportedModuleOwnedOperations(operations);
+        }
+        
+        // collect operations additional operations defined for sub-types of the checked owner type,
+        // Note: those from super-types are included by MDT OCL TypeUtil.getOperations(...);
+        // => union forms the whole scope for potentially virtually called operations;
+        // all operations ever defined goes through this check, so all applicable get into VTABLEs
+        getQVTTypeResolver().collectAdditionalOperationsInTypeHierarchy(ownerType, true, operations);
+        
 		for (EOperation next : operations) {
 			if ((next != operation) && 
 					(getUMLReflection().getName(next).equals(operationName) && matchParameters(next, operation))) {
-
+				
 				EClassifier nextOwner = getUMLReflection().getOwningClassifier(next);
 				if(nextOwner != null) {
 					int rel = TypeUtil.getRelationship(this, ownerType, nextOwner); 
-					if((rel != UMLReflection.SAME_TYPE) && ((UMLReflection.STRICT_SUBTYPE | rel) != 0 || (rel | UMLReflection.STRICT_SUPERTYPE) != 0)) {
+					if((rel != UMLReflection.SAME_TYPE) && (UMLReflection.RELATED_TYPE | rel) != 0) {
 						EClassifier ret1 = next.getEType(); 
 						EClassifier ret2 = operation.getEType();
 						if(ret1 != null && ret2 != null && TypeUtil.getRelationship(this, ret1, ret2) != SAME_TYPE) {
+							if(QvtOperationalEnv.MAIN.equals(operationName)) {
+								// clashes with main(..) are handled separately
+								return null;
+							}
 							return new CollisionStatus(next, CollisionStatus.VIRTUAL_METHOD_RETURNTYPE);
 						}
-						continue;
-					}  
-				}
 
- 				return new CollisionStatus(next, CollisionStatus.ALREADY_DEFINED);
+						// assemble virtual table info
+						if(QvtOperationalUtil.isImperativeOperation(operation) && QvtOperationalUtil.isImperativeOperation(next)) {
+							VirtualTable sourceOperVtable = getVirtualTable(operation);
+							sourceOperVtable.addOperation(next);
+							VirtualTable targetOperVtable = getVirtualTable(next);
+							targetOperVtable.addOperation(operation);
+						}
+						///
+
+						continue;
+					}
+
+					if(ownerType == nextOwner) {
+						return new CollisionStatus(next, CollisionStatus.ALREADY_DEFINED);
+					}
+				}
 			}
 		}
-		
-		for (QvtEnvironmentBase nextSiblingEnv : getSiblings()) {
-			CollisionStatus nextStatus = nextSiblingEnv.findCollidingOperation(ownerType, operation);
-			if(nextStatus != null) {
-				return nextStatus;
-			}
-		}
-		
+				
 		return null;
+	}
+
+	private VirtualTable getVirtualTable(EOperation operation) {
+		return VirtualTableAdapter.getAdapter(operation, true).getVirtualTable();
 	}
 	
 	/**
@@ -215,4 +243,15 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 		}
 		return false;
 	}
+	
+	private List<EOperation> collectImportedModuleOwnedOperations(List<EOperation> result) {
+		for (QvtEnvironmentBase nextEnv : getSiblings()) {
+			List<EOperation> nextModuleOpers = nextEnv.getModuleContextType().getEOperations();
+			if(nextModuleOpers != null) {
+				result.addAll(nextModuleOpers);
+			}
+		}
+		
+		return result;
+	}	
 }
