@@ -45,6 +45,7 @@ public class TransformManyModelTests {
     	new FilesToFilesData("mm_header3", Arrays.asList("in.ecore"), Arrays.asList("expected.simpleuml", "expected.rdb")), //$NON-NLS-1$ //$NON-NLS-2$
     	new FilesToFilesData("mm_header4", Arrays.asList("in1.ecore", "in2.ecore", "in3.ecore"), Arrays.asList("expected.uml", "expected.rdb")), //$NON-NLS-1$ //$NON-NLS-2$
     	new FilesToFilesData("entryOp", Arrays.asList("in1.ecore", "in2.ecore", "in3.ecore"), Arrays.asList("expected.uml", "expected.rdb")), //$NON-NLS-1$ //$NON-NLS-2$
+    	new FilesToFilesData("importedExtents", Arrays.asList("in.ecore"), Arrays.asList("expected.ecore")), //$NON-NLS-1$ //$NON-NLS-2$
     	};
     }
     

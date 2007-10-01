@@ -1,0 +1,8 @@
+modeltype Uml uses "http://www.eclipse.org/uml2/2.1.0/UML";
+modeltype Ecore uses "http://www.eclipse.org/emf/2002/Ecore";
+	
+transformation transf3(inout uml : Uml);
+
+mapping createUmlClass(name : String) : Class {
+	name := name;
+}

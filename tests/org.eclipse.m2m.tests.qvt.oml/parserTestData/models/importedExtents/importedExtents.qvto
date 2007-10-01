@@ -1,0 +1,12 @@
+modeltype Uml uses "http://www.eclipse.org/uml2/2.1.0/UML";
+modeltype Ecore uses "http://www.eclipse.org/emf/2002/Ecore";
+
+transformation importedExtents(out model : Ecore);
+
+import models.importedExtents.transf2;
+import models.importedExtents.transf3;
+
+main() {
+	ecore2ecore(object EClass { name := 'a' });
+	createUmlClass('cls');
+}
