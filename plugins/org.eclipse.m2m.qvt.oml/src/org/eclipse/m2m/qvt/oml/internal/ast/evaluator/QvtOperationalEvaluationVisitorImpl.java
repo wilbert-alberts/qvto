@@ -396,7 +396,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 
         if (myRootModule == null) {
             myRootModule = module;
-            PackageRef[] metamodels = QvtOperationalParserUtil.getRequiredMetamodelIds(myRootModule);
+            //PackageRef[] metamodels = QvtOperationalParserUtil.getRequiredMetamodelIds(myRootModule);
             //myInheritanceTree = new InheritanceTree(getOperationalEnv(), new EmfClassifierProvider(getOperationalEnv()), metamodels);
         }
 

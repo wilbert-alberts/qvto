@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,7 @@ import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.expressions.MappingParameter;
 import org.eclipse.m2m.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
+import org.eclipse.m2m.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.ValidationMessages;
 import org.eclipse.m2m.qvt.oml.internal.cst.adapters.ModelTypeMetamodelsAdapter;
@@ -61,10 +63,11 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		myContext = context;
 		
 		if (parent instanceof QvtOperationalEvaluationEnv) {
-			setModelParameterExtents(((QvtOperationalEvaluationEnv) parent).myModelExtents);
+			setModelParameterExtents(((QvtOperationalEvaluationEnv) parent).myModelExtents, ((QvtOperationalEvaluationEnv) parent).myMapImportedExtents);
 		}
 		else {
 			myModelExtents = Collections.emptyMap();
+			myMapImportedExtents = Collections.emptyMap();
 		}
 	}
 
@@ -275,11 +278,59 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         	argIndex++;
         }
 		
-        setModelParameterExtents(modelExtents);
+        Map<ModelParameter, ModelParameter> mapImportedExtents = createImportedExtentMap(module, module);
+        setModelParameterExtents(modelExtents, mapImportedExtents);
 	}
 
-    private void setModelParameterExtents(Map<ModelParameter, ModelParameterExtent> modelExtents) {
+	private Map<ModelParameter, ModelParameter> createImportedExtentMap(Module rootModule, Module importedModule) {
+		Map<ModelParameter, ModelParameter> mapImportedExtents = new HashMap<ModelParameter, ModelParameter>();
+		for (ModuleImport moduleImport : importedModule.getModuleImport()) {
+			if(moduleImport.getModule() != null) {
+				Module nextModule = moduleImport.getImportedModule();
+				mapImportedExtents.putAll(getExtentMap(rootModule, nextModule));
+				mapImportedExtents.putAll(createImportedExtentMap(rootModule, nextModule));
+			}
+		}
+		return mapImportedExtents;
+	}
+
+	private Map<ModelParameter, ModelParameter> getExtentMap(Module rootModule, Module importedModule) {
+		Map<ModelParameter, ModelParameter> mapImportedModelParams = new HashMap<ModelParameter, ModelParameter>();
+		Set<ModelParameter> consideredParams = new HashSet<ModelParameter>();
+		for (ModelParameter importedParam : importedModule.getModelParameter()) {
+			for (ModelParameter param : rootModule.getModelParameter()) {
+				if (consideredParams.contains(param)) {
+					continue;
+				}
+				if (QvtOperationalUtil.isModelParamEqual(param, importedParam, true)) {
+					consideredParams.add(param);
+					mapImportedModelParams.put(importedParam, param);
+					break;
+				}
+			}
+		}
+
+		for (ModelParameter importedParam : importedModule.getModelParameter()) {
+			if (mapImportedModelParams.containsKey(importedParam)) {
+				continue;
+			}
+			for (ModelParameter param : rootModule.getModelParameter()) {
+				if (consideredParams.contains(param)) {
+					continue;
+				}
+				if (QvtOperationalUtil.isModelParamEqual(param, importedParam, false)) {
+					consideredParams.add(param);
+					mapImportedModelParams.put(importedParam, param);
+					break;
+				}
+			}
+		}
+		return mapImportedModelParams;
+	}
+
+    private void setModelParameterExtents(Map<ModelParameter, ModelParameterExtent> modelExtents, Map<ModelParameter, ModelParameter> mapImportedExtents) {
 		myModelExtents = modelExtents;
+		myMapImportedExtents = mapImportedExtents;
 		for (Map.Entry<ModelParameter, ModelParameterExtent> entry : modelExtents.entrySet()) {
 			if (entry.getKey() != UNBOUND_MODEL_EXTENT && entry.getKey().getName().length() > 0) {
 				add(entry.getKey().getName(), entry.getValue());
@@ -344,6 +395,15 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		EObject newObject = impl.getEPackage().getEFactoryInstance().create(impl);
 		if (myModelExtents.containsKey(extent)) {
 			myModelExtents.get(extent).addObject(newObject);
+		}
+		else if (myMapImportedExtents.containsKey(extent)) {
+			ModelParameter mappedExtent = myMapImportedExtents.get(extent);
+			if (myModelExtents.containsKey(mappedExtent)) {
+				myModelExtents.get(mappedExtent).addObject(newObject);
+			}
+			else {
+				myModelExtents.get(UNBOUND_MODEL_EXTENT).addObject(newObject);
+			}
 		}
 		else {
 			myModelExtents.get(UNBOUND_MODEL_EXTENT).addObject(newObject);
@@ -474,6 +534,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	private final IContext myContext;
     private final Map<String, Object> myBindings;
 	private Map<ModelParameter, ModelParameterExtent> myModelExtents;
+	private Map<ModelParameter, ModelParameter> myMapImportedExtents;
 	private static final ModelParameter UNBOUND_MODEL_EXTENT = null;
 	
 }

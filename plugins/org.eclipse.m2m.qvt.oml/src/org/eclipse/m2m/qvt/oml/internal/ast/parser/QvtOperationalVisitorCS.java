@@ -1889,28 +1889,31 @@ public class QvtOperationalVisitorCS
 	}
 	
 	private void validateImportedSignature(QvtOperationalEnv env, Module module, Module importedModule, ASTNode astNode) {
+		Set<ModelParameter> processedParams = new HashSet<ModelParameter>();
 		Set<ModelParameter> consideredParams = new HashSet<ModelParameter>();
 		for (ModelParameter importedParam : importedModule.getModelParameter()) {
+			for (ModelParameter param : module.getModelParameter()) {
+				if (consideredParams.contains(param)) {
+					continue;
+				}
+				if (QvtOperationalUtil.isModelParamEqual(param, importedParam, true)) {
+					consideredParams.add(param);
+					processedParams.add(importedParam);
+					break;
+				}
+			}
+		}
+
+		for (ModelParameter importedParam : importedModule.getModelParameter()) {
+			if (processedParams.contains(importedParam)) {
+				continue;
+			}
 			boolean isCorrespondanceFound = false;
 			for (ModelParameter param : module.getModelParameter()) {
 				if (consideredParams.contains(param)) {
 					continue;
 				}
-				if (isModelParamEqual(param, importedParam, true)) {
-					consideredParams.add(param);
-					isCorrespondanceFound = true;
-					break;
-				}
-			}
-			if (isCorrespondanceFound) {
-				continue;
-			}
-
-			for (ModelParameter param : module.getModelParameter()) {
-				if (consideredParams.contains(param)) {
-					continue;
-				}
-				if (isModelParamEqual(param, importedParam, false)) {
+				if (QvtOperationalUtil.isModelParamEqual(param, importedParam, false)) {
 					consideredParams.add(param);
 					isCorrespondanceFound = true;
 					break;
@@ -1923,19 +1926,6 @@ public class QvtOperationalVisitorCS
 				return;
 			}
 		}
-	}
-
-	private boolean isModelParamEqual(ModelParameter param, ModelParameter importedParam, boolean isStrictCompare) {
-		if (param.getKind() == DirectionKind.IN) {
-			if (importedParam.getKind() != DirectionKind.IN) {
-				return false;
-			}
-		}
-		if (!isStrictCompare) {
-			return true;
-		}
-		return ModelTypeMetamodelsAdapter.getMetamodels(param.getEType()).equals(
-				ModelTypeMetamodelsAdapter.getMetamodels(importedParam.getEType()));
 	}
 
 	private void checkMainMappingConformance(QvtOperationalEnv env, ImperativeOperation operation) {

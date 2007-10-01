@@ -19,9 +19,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnvFactory;
+import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
+import org.eclipse.m2m.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalParserUtil;
+import org.eclipse.m2m.qvt.oml.internal.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.internal.cst.PathNameCS;
@@ -110,7 +113,21 @@ public class QvtOperationalUtil {
         }
         return false;
     }
-	
+
+	public static boolean isModelParamEqual(ModelParameter param, ModelParameter importedParam, boolean isStrictCompare) {
+		if (param.getKind() == DirectionKind.IN) {
+			if (importedParam.getKind() != DirectionKind.IN) {
+				return false;
+			}
+		}
+		if (!isStrictCompare) {
+			return true;
+		}
+		return ModelTypeMetamodelsAdapter.getMetamodels(param.getEType()).equals(
+				ModelTypeMetamodelsAdapter.getMetamodels(importedParam.getEType()));
+	}
+
+    
 	private static final Object ourOclInvalid = new QvtOperationalEnvFactory().createEnvironment(null, null).getOCLStandardLibrary().getOclInvalid();
 	private static final EClassifier ourOclVoid = new QvtOperationalEnvFactory().createEnvironment(null, null).getOCLStandardLibrary().getOclVoid();
 
