@@ -147,7 +147,7 @@ import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.types.TypeType;
 import org.eclipse.ocl.types.VoidType;
 import org.eclipse.ocl.util.TypeUtil;
-import org.eclipse.ocl.utilities.UMLReflection;
+import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.osgi.util.NLS;
 
 public class QvtOperationalVisitorCS
@@ -737,18 +737,24 @@ public class QvtOperationalVisitorCS
 			}
 
 			ModuleImport imp = ExpressionsFactory.eINSTANCE.createModuleImport();
-			// imp.setStartPosition(libImport.getStartOffset());
-			// imp.setEndPosition(libImport.getEndOffset());
 			imp.setImportedModule(importedModule);
 			module.getModuleImport().add(imp);
 
-			if(myCompilerOptions.isGenerateCompletionData()) {
-				for (ImportCS nextImport : parsedModuleCS.getModuleCS().getImports()) {
-					if(nextImport.getPathNameCS() != null && parsedModuleCS.getParsedImport(nextImport.getPathNameCS()) == importedModuleCS) {
+			ImportCS cstImport = null;
+			for (ImportCS nextImport : parsedModuleCS.getModuleCS().getImports()) {
+				if(nextImport.getPathNameCS() != null && parsedModuleCS.getParsedImport(nextImport.getPathNameCS()) == importedModuleCS) {
+					cstImport = nextImport;
+					if(myCompilerOptions.isGenerateCompletionData()) {
 						ASTBindingHelper.createCST2ASTBinding(nextImport, imp);
-					}					
-				}
+					}
+				}					
 			}
+
+			if (cstImport != null) {
+				imp.setStartPosition(cstImport.getStartOffset());
+				imp.setEndPosition(cstImport.getEndOffset());
+			}
+			validateImportedSignature(env, module, importedModule, imp);
 		}
 
 		for (RenameCS renameCS : moduleCS.getRenamings()) {
@@ -775,12 +781,10 @@ public class QvtOperationalVisitorCS
 		HashMap<MappingMethodCS, ImperativeOperation> methodMap = new LinkedHashMap<MappingMethodCS, ImperativeOperation>(moduleCS.getMethods().size());
 		
 		// declare module operations as they are required to analyze rules' contents
-		//env.setErrorRecordFlag(false);
 		for (MappingMethodCS methodCS : moduleCS.getMethods()) {
 			boolean isMapping = methodCS instanceof MappingRuleCS;
 			ImperativeOperation operation = isMapping ? ExpressionsFactory.eINSTANCE.createMappingOperation() : ExpressionsFactory.eINSTANCE.createHelper();
 			if (visitMappingDeclarationCS(methodCS.getMappingDeclarationCS(), env, operation)) {
-				//env.setErrorRecordFlag(true);
 				EOperation envOperation = env.defineImperativeOperation(operation, methodCS instanceof MappingRuleCS, true);
 				if(envOperation != null) {
 					methodMap.put(methodCS, (ImperativeOperation)envOperation);
@@ -788,16 +792,13 @@ public class QvtOperationalVisitorCS
 						QvtOperationalParserUtil.addOwnedOperations(module, operation);
 					}
 				}
-				//env.setErrorRecordFlag(false);				
 			}
 		}
-		//env.setErrorRecordFlag(true);
 		
 		for (MappingMethodCS methodCS : moduleCS.getMethods()) {
 			ImperativeOperation declaredOperation = methodMap.get(methodCS);
 			if (declaredOperation != null) {
 				ImperativeOperation operation = visitMappingMethodCS(methodCS, env, declaredOperation);				
-				//module.getEOperations().add(operation); analyze first, add all together
 				
 				EOperation envDefinedOper = methodMap.get(methodCS);										
 				if(envDefinedOper != null) {
@@ -816,7 +817,6 @@ public class QvtOperationalVisitorCS
 								methodCS.getMappingDeclarationCS().getReturnType() : 
 									methodCS.getMappingDeclarationCS(), env);
 				 */									
-				//checkMainMappingConformance(env, operation);
 			}
 		}
 		
@@ -1888,6 +1888,56 @@ public class QvtOperationalVisitorCS
         new GraphWalker(provider).walkDepthFirst(opOwner, processor);
 	}
 	
+	private void validateImportedSignature(QvtOperationalEnv env, Module module, Module importedModule, ASTNode astNode) {
+		Set<ModelParameter> consideredParams = new HashSet<ModelParameter>();
+		for (ModelParameter importedParam : importedModule.getModelParameter()) {
+			boolean isCorrespondanceFound = false;
+			for (ModelParameter param : module.getModelParameter()) {
+				if (consideredParams.contains(param)) {
+					continue;
+				}
+				if (isModelParamEqual(param, importedParam, true)) {
+					consideredParams.add(param);
+					isCorrespondanceFound = true;
+					break;
+				}
+			}
+			if (isCorrespondanceFound) {
+				continue;
+			}
+
+			for (ModelParameter param : module.getModelParameter()) {
+				if (consideredParams.contains(param)) {
+					continue;
+				}
+				if (isModelParamEqual(param, importedParam, false)) {
+					consideredParams.add(param);
+					isCorrespondanceFound = true;
+					break;
+				}
+			}
+			if (!isCorrespondanceFound) {
+				env.reportWarning(
+						NLS.bind(ValidationMessages.QvtOperationalVisitorCS_incompatibleTransfSignature, importedModule.getName()),
+						astNode.getStartPosition(), astNode.getEndPosition());
+				return;
+			}
+		}
+	}
+
+	private boolean isModelParamEqual(ModelParameter param, ModelParameter importedParam, boolean isStrictCompare) {
+		if (param.getKind() == DirectionKind.IN) {
+			if (importedParam.getKind() != DirectionKind.IN) {
+				return false;
+			}
+		}
+		if (!isStrictCompare) {
+			return true;
+		}
+		return ModelTypeMetamodelsAdapter.getMetamodels(param.getEType()).equals(
+				ModelTypeMetamodelsAdapter.getMetamodels(importedParam.getEType()));
+	}
+
 	private void checkMainMappingConformance(QvtOperationalEnv env, ImperativeOperation operation) {
 		if (!QvtOperationalEnv.MAIN.equals(operation.getName())
 				|| ((Module) env.getModuleContextType()).getModelParameter().isEmpty()) {
