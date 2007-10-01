@@ -93,6 +93,7 @@ public class TransformTests {
     
     public static ModelTestData[] createTestData() {
     	return new ModelTestData[] {
+    	new FileToFileData("importedvirtuals"), //$NON-NLS-1$    	
     	new FileToFileData("ocl_test"), //$NON-NLS-1$    			
     	new FileToFileData("tuples"), //$NON-NLS-1$    			
     	new FileToFileData("oclany"), //$NON-NLS-1$    			
@@ -235,7 +236,7 @@ public class TransformTests {
     
     private static final Set<String> JAVALESS_EXCLUDES = new HashSet<String>(Arrays.asList(new String[] {
     	"primtypesecore", // uses getDataTypeInstance() defined on ecore //$NON-NLS-1$
-    	"imports_transformations", "imports", "virt", "full", "fqntraces", // TODO import other files //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+    	"importedvirtuals", "imports_transformations", "imports", "virt", "full", "fqntraces", // TODO import other files //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
     	"assigntonullowner", "resolveall", // reference not in required format: eSuperTypes = "#//NEW_Class1" insteand of "//@eClassifiers.0" //$NON-NLS-1$ //$NON-NLS-2$
     	"egetcodegen", // java method can't be called//$NON-NLS-1$
     }));

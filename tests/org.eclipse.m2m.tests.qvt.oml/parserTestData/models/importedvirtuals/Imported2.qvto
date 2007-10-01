@@ -1,0 +1,61 @@
+-- Note: import ImportedMappingTest indiractly in relation the main transf. 
+import models.importedvirtuals.ImportedMappingTest; 
+
+modeltype ecore uses "http://www.eclipse.org/emf/2002/Ecore";
+
+transformation Imported2();
+
+property LOCAL_PROP : String = 'Imported2::LOCAL_PROP';
+property Imported2_PROP : String = 'Imported2::PROP';
+
+
+main(inout inoutModel : ecore::EPackage) {
+}
+
+
+/*
+ Tests that matching context-less query overrides imported ones
+*/
+query checkImported2LocalQuery() : String {
+	localQuery();
+}
+
+query localQuery() : String {
+	'Imported2::localQuery'
+}
+
+
+
+/**
+ Test virtual operations defined fully here but accessed but importer
+*/
+query ENamedElement::remoteVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
+	'ENamedElement::remoteVirtualQuery';
+}
+
+query EClass::remoteVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
+	'EClass::remoteVirtualQuery';
+}
+
+query EClassifier::remoteVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
+	'EClassifier::remoteVirtualQuery';
+}
+
+-- messup operation for remoteVirtual testing, ensuring exact signature match   
+query EClassifier::remoteVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Sequence(OclAny))) : String {
+	'please help!'
+}
+query EClass::remoteVirtualQuery(in arg1 : OclAny, in arg2 : Set(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
+	'error';
+}
+
+
+query getImported2LocalProperty() : String {
+	LOCAL_PROP;
+}
+
+
+----- virtual mapping exposed to indirectly imported ImportMappingTest
+mapping EStructuralFeature::globalVirtualMapping(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : EClass {
+	name:='EStructuralFeature::globalVirtualMapping';
+}
