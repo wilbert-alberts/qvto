@@ -59,3 +59,14 @@ query getImported2LocalProperty() : String {
 mapping EStructuralFeature::globalVirtualMapping(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : EClass {
 	name:='EStructuralFeature::globalVirtualMapping';
 }
+
+
+
+
+query EModelElement::globalVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
+	'EModelElement::globalVirtualQuery';
+}
+
+query ETypedElement::globalVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
+	'ETypedElement::globalVirtualQuery';
+}

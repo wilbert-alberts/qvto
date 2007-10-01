@@ -130,13 +130,12 @@ query testLocalVirtualQuery(in arg1: EClass, in arg2: EDataType, in arg3 : EPack
 	}
 }
 
+query EClass::localVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
+	'EClass::localVirtualQuery';
+}
 
 query ENamedElement::localVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
 	'ENamedElement::localVirtualQuery';
-}
-
-query EClass::localVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
-	'EClass::localVirtualQuery';
 }
 
 query EClassifier::localVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
@@ -145,7 +144,7 @@ query EClassifier::localVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real
 
 
 /**
- Test virtual operations deifned in a single module
+ Test virtual operations defined in a multiple module module
 */
 query testGlobalVirtualQuery(
 	element: EModelElement, named: ENamedElement, 
@@ -169,22 +168,6 @@ query testGlobalVirtualQuery(
 	}
 }
 
-query EModelElement::globalVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
-	'EModelElement::globalVirtualQuery';
-}
-
-query ENamedElement::globalVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
-	'ENamedElement::globalVirtualQuery';
-}
-
-query ETypedElement::globalVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
-	'ETypedElement::globalVirtualQuery';
-}
-
-query EStructuralFeature::globalVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
-	'EStructuralFeature::globalVirtualQuery';
-}
-
 
 query EReference::globalVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
 	'EReference::globalVirtualQuery';
@@ -195,7 +178,9 @@ query EParameter::globalVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real
 }
 
 
-
+query EStructuralFeature::globalVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
+	'EStructuralFeature::globalVirtualQuery';
+}
 
 /**
  Test virtual operations fully defined in a single module, imported indirectly

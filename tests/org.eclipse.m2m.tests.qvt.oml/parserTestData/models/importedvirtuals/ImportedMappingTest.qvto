@@ -47,16 +47,20 @@ mapping testGlobalVirtualMapping(
 	}
 }
 
-mapping EModelElement::globalVirtualMapping(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : EClass {
-	name:='EModelElement::globalVirtualMapping';
+/**
+ Define for the leaf sub-types first as the subsequent operations on super-types are not be available 
+ to MDT OCL yet. Otherwise they would be resolved as available on supertype.
+ => this test the lookup including methods defined on subtyps
+*/
+mapping EReference::globalVirtualMapping(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : EClass {
+	name:='EReference::globalVirtualMapping';
 }
 
 mapping ENamedElement::globalVirtualMapping(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : EClass {
 	name:='ENamedElement::globalVirtualMapping';
 }
 
-
-mapping EReference::globalVirtualMapping(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : EClass {
-	name:='EReference::globalVirtualMapping';
+mapping EModelElement::globalVirtualMapping(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : EClass {
+	name:='EModelElement::globalVirtualMapping';
 }
 

@@ -35,3 +35,9 @@ query getImportedLocalProperty() : String {
 mapping ETypedElement::globalVirtualMapping(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : EClass {
 	name:='ETypedElement::globalVirtualMapping';
 }
+
+
+
+query ENamedElement::globalVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
+	'ENamedElement::globalVirtualQuery';
+}
