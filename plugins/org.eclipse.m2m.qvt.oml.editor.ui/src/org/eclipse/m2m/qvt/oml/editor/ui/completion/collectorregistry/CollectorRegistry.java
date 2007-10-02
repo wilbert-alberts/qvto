@@ -8,11 +8,17 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionDelta;
 import org.eclipse.core.runtime.IRegistryChangeEvent;
 import org.eclipse.core.runtime.IRegistryChangeListener;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.m2m.qvt.oml.editor.ui.Activator;
+import org.eclipse.ui.IPluginContribution;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.activities.ActivityManagerEvent;
+import org.eclipse.ui.activities.IActivityManagerListener;
+import org.eclipse.ui.activities.WorkbenchActivityHelper;
 
 /**
  * @author aigdalov
@@ -42,9 +48,19 @@ public final class CollectorRegistry {
         }
     };
     
+    private static IActivityManagerListener ourActivityChangeListener = new IActivityManagerListener() {
+    	public void activityManagerChanged(ActivityManagerEvent event) {
+    		if(event.haveEnabledActivityIdsChanged()) {
+                refresh();
+    		}
+        }
+    };
+    
+    
     static {
         refresh();
         Platform.getExtensionRegistry().addRegistryChangeListener(ourRegistryChangeListener, Activator.PLUGIN_ID);
+        PlatformUI.getWorkbench().getActivitySupport().getActivityManager().addActivityManagerListener(ourActivityChangeListener);
     }
     
     public static CategoryDescriptor[] getCategories() {
@@ -84,6 +100,9 @@ public final class CollectorRegistry {
     	Map<String, List<CollectorDescriptor>> result = new HashMap<String, List<CollectorDescriptor>>();
         IConfigurationElement[] configurationElements = Platform.getExtensionRegistry().getConfigurationElementsFor(Activator.PLUGIN_ID, EXT_POINT_ID);
         for (IConfigurationElement configurationElement : configurationElements) {
+        	if(isFiltered(configurationElement)) {
+        		continue;
+        	}
         	if (ELEMENT_COLLECTOR.equals(configurationElement.getName())) {
             	CollectorDescriptor collector = initCollector(configurationElement);
             	List<CollectorDescriptor> collectorsForCategory = result.get(collector.getCategoryDescriptor().getId()); 
@@ -105,5 +124,18 @@ public final class CollectorRegistry {
     public static final void refresh() {
         ourCategories = initCategories();
         ourCollectors = initCollectors();
+    }
+    
+    private static boolean isFiltered(IConfigurationElement configurationElement) {
+    	final IExtension extension = configurationElement.getDeclaringExtension();
+		IPluginContribution contribution = new IPluginContribution() {
+			public String getLocalId() {				
+				return extension.getSimpleIdentifier();
+			}
+			public String getPluginId() {
+				return extension.getContributor().getName();
+			}
+		};
+		return WorkbenchActivityHelper.filterItem(contribution);
     }
 }
