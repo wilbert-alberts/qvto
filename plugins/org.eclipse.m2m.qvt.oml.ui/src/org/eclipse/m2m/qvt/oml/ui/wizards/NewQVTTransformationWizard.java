@@ -26,7 +26,7 @@ public class NewQVTTransformationWizard extends AbstractNewQVTElementWizard {
 	private boolean fOpenInEditor = true;
 	
 	public NewQVTTransformationWizard() {
-    	setWindowTitle(Messages.NewQVTTransformationWizard_Title);//$NON-NLS-1$
+    	setWindowTitle(Messages.NewQVTTransformationWizard_Title);
     	
         ImageDescriptor desc = QvtPluginImages.getInstance().getImageDescriptor(QvtPluginImages.NEW_WIZARD);
         setDefaultPageImageDescriptor(desc);        
@@ -101,8 +101,8 @@ public class NewQVTTransformationWizard extends AbstractNewQVTElementWizard {
 
 	protected void doAddPages() {
         fNewQvtModulePage = createQvtTransformationCreationPage();        
-        fNewQvtModulePage.setTitle(Messages.NewQVTTransformationWizard_NewModuleFilePageTitle);//$NON-NLS-1$
-        fNewQvtModulePage.setDescription(Messages.NewQVTTransformationWizard_NewModulePageDescription);//$NON-NLS-1$
+        fNewQvtModulePage.setTitle(Messages.NewQVTTransformationWizard_NewModuleFilePageTitle);
+        fNewQvtModulePage.setDescription(Messages.NewQVTTransformationWizard_NewModulePageDescription);
         addPage(fNewQvtModulePage);
 
         setContentsCreated(true);        
