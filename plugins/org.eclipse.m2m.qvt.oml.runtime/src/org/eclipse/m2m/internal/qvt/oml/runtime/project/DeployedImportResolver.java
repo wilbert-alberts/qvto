@@ -12,6 +12,7 @@
 package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,8 @@ import java.util.Map;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.common.io.CFolder;
@@ -64,7 +67,29 @@ public class DeployedImportResolver implements IImportResolver {
 				return new BundleFile(fullPath, nextRegistry);
 			}
 		}
-		
+
+		return resolveResourcePluginPath(importedUnitName);
+	}
+
+	private CFile resolveResourcePluginPath(String importedUnitName) {
+		try {
+			URI uri = URI.createURI(importedUnitName);
+			String[] segments = uri.segments();
+			if (segments.length > 0 
+					&& Platform.getBundle(segments[0]) != null 
+					&& MDAConstants.QVTO_FILE_EXTENSION.equals(uri.fileExtension())) {
+				URI pathUri = URI.createURI(""); //$NON-NLS-1$
+				for (int i = 1; i < segments.length; ++i) {
+					pathUri = pathUri.appendSegment(segments[i]);
+				}
+				IPath ipath = new Path(pathUri.toFileString());
+				BundleModuleRegistry newBundle = new BundleModuleRegistry(segments[0], Collections.singletonList(ipath));
+				bundleModules.add(newBundle);
+				return new BundleFile(ipath, newBundle);
+			}
+		}
+		catch (Exception e) {
+		}
 		return null;
 	}
 
