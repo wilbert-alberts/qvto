@@ -33,7 +33,7 @@ public class BundleModuleRegistry {
 		
 		for (IPath nextPath : paths) {
 			if(nextPath == null || nextPath.isEmpty() || !nextPath.isValidPath(nextPath.toString())) {
-				throw new IllegalArgumentException("Invalid resource path:" + nextPath);
+				throw new IllegalArgumentException("Invalid resource path:" + nextPath); //$NON-NLS-1$
 			}
 		}
 		
