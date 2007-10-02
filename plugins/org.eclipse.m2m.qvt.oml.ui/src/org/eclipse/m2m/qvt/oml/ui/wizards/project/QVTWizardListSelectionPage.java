@@ -50,7 +50,9 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IPluginContribution;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.activities.WorkbenchActivityHelper;
 import org.eclipse.ui.wizards.IWizardCategory;
 import org.eclipse.ui.wizards.IWizardDescriptor;
 import org.eclipse.ui.wizards.IWizardRegistry;
@@ -266,7 +268,22 @@ class QVTWizardListSelectionPage extends WizardSelectionPage implements ISelecti
 		
 		IExtension[] extensions = point.getExtensions();
 		for (int i = 0; i < extensions.length; i++) {
-			IConfigurationElement[] elements = extensions[i].getConfigurationElements();
+			final IExtension nextExtension = extensions[i];
+
+			IPluginContribution contribution = new IPluginContribution() {
+				public String getLocalId() {				
+					return nextExtension.getSimpleIdentifier();
+				}
+				public String getPluginId() {
+					return nextExtension.getContributor().getName();
+				}
+			};
+			
+			if(WorkbenchActivityHelper.filterItem(contribution)) {
+				continue;
+			}
+			
+			IConfigurationElement[] elements = nextExtension.getConfigurationElements();			
 			for (int j = 0; j < elements.length; j++) {
 				IConfigurationElement element = elements[j];
 				String refID = element.getAttribute(REF_ID_ATTR);
