@@ -1833,6 +1833,11 @@ public class QvtOperationalVisitorCS
 				}
 			}
 		}
+		if (QvtOperationalUtil.isMappingOperation(operationCallExp.getReferredOperation())) {
+			if (false == opCallCS instanceof MappingCallExpCS) {
+				env.reportWarning(ValidationMessages.QvtOperationalVisitorCS_mapKeywordNotUsed, opCallCS);
+			}
+		}
 	}
 
 	private void checkReturnTypeConformance(final ImperativeOperation operation, final CSTNode cstNode,

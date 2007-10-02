@@ -81,8 +81,8 @@ public class QvtOperationalUtil {
     	if(operation instanceof MappingOperation) { 
     		return true;
     	}
-        EAnnotation ann = operation.getEAnnotation(Environment.OCL_NAMESPACE_URI);
-        if ((ann != null) && !ann.getContents().isEmpty()) {
+        EAnnotation ann = operation != null ? operation.getEAnnotation(Environment.OCL_NAMESPACE_URI) : null;
+        if (ann != null && !ann.getContents().isEmpty()) {
             for (EObject o : ann.getContents()) {
                 if (false == o instanceof Constraint) {
                     continue;

@@ -47,6 +47,7 @@ public final class ValidationMessages extends NLS {
     public static String QvtOperationalVisitorCS_entryPointShouldBeDeclOnce;
     public static String QvtOperationalVisitorCS_ifExpWithoutElseAssignment;
     public static String QvtOperationalVisitorCS_incompatibleTransfSignature;
+    public static String QvtOperationalVisitorCS_mapKeywordNotUsed;
     
 	public static String readOnlyPropertyModificationError;
 	public static String useMapKeywordWarning;
