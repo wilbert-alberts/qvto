@@ -26,7 +26,8 @@ main(in inModel : ecore::EPackage, out outModel : ecore::EPackage@model) {
 			object EParameter@model {});	
 
 	var testResult : Boolean :=
-		-- INDIRECT_IMPORT_PROP; -- test access
+		INDIRECT_IMPORT_PROP = 'ImportedMappingTest::INDIRECT_IMPORT_PROP'
+			and
 		echoMapping(inModel) = inModel	
 	 		and
 		testGlobalVirtualMapping.status			
