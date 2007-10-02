@@ -81,6 +81,7 @@ public class TraceViewContentProvider implements ITreeContentProvider {
             } else if (!eValue.getCollection().isEmpty()) {
             	return eValue.getCollection().toArray();
             }
+            return new Object[0]; 
         }
         return myNodeContentProvider.getElements(element);  
     }
