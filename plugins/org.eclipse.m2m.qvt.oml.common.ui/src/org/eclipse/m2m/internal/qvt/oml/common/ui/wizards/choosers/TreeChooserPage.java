@@ -145,7 +145,7 @@ public abstract class TreeChooserPage extends WizardPage {
     
     private final boolean myUseCheckboxes;
     private AbstractTreeViewer myViewer;
-    private String myHelpId;
+    private final String myHelpId;
     private final String myTitle;
     
     private static final ITreeContentProvider CONTENT_PROVIDER = new ChooserNodeContentProvider();
