@@ -22,7 +22,6 @@ public class CompilerMessages extends NLS {
 	public static String importHasCompilationError;
 	public static String emptyImport;	
 	public static String analyserExceptionLogPattern;
-	public static String moduleCompilationErrors;
 	public static String moduleTransformationExpected;
 	
 	public static String QvtCompilerFacade_compilingScript;
