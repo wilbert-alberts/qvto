@@ -58,6 +58,7 @@ public class AllTests {
         suite.addTestSuite(TestLaunchConfigs.class);
 //        suite.addTestSuite(TestModelElementSaver.class);
         suite.addTestSuite(TestTraceFile.class);
+        suite.addTestSuite(TestQvtResourceFactory.class);
 //        suite.addTestSuite(TestTraceFileForMyUml.class);
 //        suite.addTestSuite(TestTreeContentProvider.class);
 		//$JUnit-END$

@@ -33,9 +33,18 @@ public class TestQvtResourceFactory extends TestTransformation {
 	
 	public void testResourceLoad() throws Exception {
 		IFile testFile = getProject().getFile(
-				"models/" + TEST_MODEL_NAME + "/" + TEST_MODEL_NAME + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT); //$NON-NLS-1$
-		URI fileUri = URI.createFileURI(testFile.getFullPath().toOSString());
-		Resource resource = Resource.Factory.Registry.INSTANCE.getFactory(fileUri).createResource(fileUri);
+				"models/" + TEST_MODEL_NAME + "/" + TEST_MODEL_NAME + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT); //$NON-NLS-1$ //$NON-NLS-2$
+		checkResourceByUri(URI.createFileURI(testFile.getFullPath().toOSString()));
+	}
+	
+	public void testBundleResourceLoad() throws Exception {
+		String testFile = "org.eclipse.m2m.tests.qvt.oml/parserTestData/models/" + TEST_MODEL_NAME + "/"  //$NON-NLS-1$ //$NON-NLS-2$
+				+ TEST_MODEL_NAME + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT; 
+		checkResourceByUri(URI.createPlatformPluginURI(testFile, false));
+	}
+	
+	private void checkResourceByUri(URI scriptUri) throws Exception {
+		Resource resource = Resource.Factory.Registry.INSTANCE.getFactory(scriptUri).createResource(scriptUri);
 		resource.load(Collections.emptyMap());
 		assertTrue(resource.getContents().get(0) instanceof Module);
 	}

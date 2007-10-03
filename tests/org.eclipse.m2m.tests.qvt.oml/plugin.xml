@@ -14,4 +14,13 @@
    <extension point="org.eclipse.m2m.qvt.oml.emf.util.metamodelProvider">
       <provider class="org.eclipse.m2m.tests.qvt.oml.transform.javaless.JavalessMetamodelProvider"/>
    </extension>
+   
+   <extension
+         point="org.eclipse.m2m.qvt.oml.runtime.qvtTransformation">
+      <transformation
+            file="parserTestData/models/abstractresult/abstractresult.qvto"
+            id="parserTestData.models.abstractresult.abstractresult">
+      </transformation>
+   </extension>
+   
 </plugin>
