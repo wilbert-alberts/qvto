@@ -48,4 +48,11 @@
 		<factory class="org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformationFactory"/>
  	</extension>
 
+	<extension point="org.eclipse.emf.ecore.extension_parser">
+		<parser
+			class="org.eclipse.m2m.internal.qvt.oml.runtime.resource.QvtOperationalResourceFactoryImpl"
+			type="%qvtFileExtension">
+		</parser>
+	</extension>
+
 </plugin>

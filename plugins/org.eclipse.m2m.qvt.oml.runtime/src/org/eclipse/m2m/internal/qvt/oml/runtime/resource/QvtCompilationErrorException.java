@@ -9,22 +9,22 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.internal.qvt.oml.runtime.util;
 
-import org.eclipse.osgi.util.NLS;
+package org.eclipse.m2m.internal.qvt.oml.runtime.resource;
 
-public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "org.eclipse.m2m.internal.qvt.oml.runtime.util.messages"; //$NON-NLS-1$
-		
-	public static String MiscUtil_ErrorMessage;
-	public static String MiscUtil_WarnMessage;
-	public static String QvtResource_moduleCompilationErrors;
+import org.eclipse.emf.ecore.xmi.XMIException;
+import org.eclipse.m2m.qvt.oml.QvtMessage;
+
+/**
+ * @author sboyko
+ *
+ */
+public class QvtCompilationErrorException extends XMIException {
+
+	private static final long serialVersionUID = 1L;
 	
-	static {
-		// initialize resource bundle
-		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+	public QvtCompilationErrorException(QvtMessage qvtMessage, String location) {
+		super(qvtMessage.getMessage(), location, qvtMessage.getOffset(), qvtMessage.getLength());
 	}
 
-	private Messages() {
-	}
 }

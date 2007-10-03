@@ -9,22 +9,21 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.internal.qvt.oml.runtime.util;
 
-import org.eclipse.osgi.util.NLS;
+package org.eclipse.m2m.internal.qvt.oml.runtime.resource;
 
-public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "org.eclipse.m2m.internal.qvt.oml.runtime.util.messages"; //$NON-NLS-1$
-		
-	public static String MiscUtil_ErrorMessage;
-	public static String MiscUtil_WarnMessage;
-	public static String QvtResource_moduleCompilationErrors;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+
+/**
+ * @author sboyko
+ *
+ */
+public class QvtOperationalResourceFactoryImpl implements Resource.Factory {
 	
-	static {
-		// initialize resource bundle
-		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+	public Resource createResource(URI uri) {
+		Resource resource = new QvtOperationalResourceImpl(uri);
+        return resource;
 	}
 
-	private Messages() {
-	}
 }
