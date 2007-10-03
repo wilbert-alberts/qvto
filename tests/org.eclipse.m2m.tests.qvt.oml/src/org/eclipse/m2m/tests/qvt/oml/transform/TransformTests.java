@@ -15,12 +15,12 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 import org.eclipse.m2m.tests.qvt.oml.transform.javaless.JavalessFileToFileData;
 import org.eclipse.m2m.tests.qvt.oml.transform.javaless.JavalessMetamodelProvider;
 import org.eclipse.m2m.tests.qvt.oml.transform.javaless.JavalessUtil;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 
 /**
@@ -229,6 +229,7 @@ public class TransformTests {
         new FileToFileData("bug204126_5"), //$NON-NLS-1$        
         new FileToFileData("bug204126_6"), //$NON-NLS-1$        
         new FileToFileData("bug204126_7"), //$NON-NLS-1$        
+        new FileToFileData("bug205303_1"), //$NON-NLS-1$        
 //        new MyUmlToMyUmlData("eobjectmodelopcall", "eobjectmodelopcallsource", "eobjectmodelopcalldest"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 // */        
     	};
