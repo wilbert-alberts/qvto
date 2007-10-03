@@ -206,7 +206,7 @@ public class QvtCompletionProcessor implements IContentAssistProcessor {
             current = prsStream.getTokenAt(tokenIndex);
         } else {
             int tokenIndex = prsStream.getTokenIndexAtCharacter(offset);
-            int leftTokenIndex = (tokenIndex < 0)  ? -tokenIndex : tokenIndex - 1;
+            int leftTokenIndex = (tokenIndex <= 0)  ? -tokenIndex : tokenIndex - 1;
             if (leftTokenIndex != 0) {
                 left = prsStream.getTokenAt(leftTokenIndex);
             }
