@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.19 2007/09/21 13:19:08 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.20 2007/10/03 16:34:49 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.19 2007/09/21 13:19:08 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.20 2007/10/03 16:34:49 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;

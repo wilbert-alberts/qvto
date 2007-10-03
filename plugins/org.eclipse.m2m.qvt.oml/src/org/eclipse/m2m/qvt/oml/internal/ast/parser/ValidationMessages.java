@@ -103,6 +103,7 @@ public final class ValidationMessages extends NLS {
 
     public static String LibOperationAnalyser_ParametersOsReturnTypeNotFound;
     public static String LibOperationAnalyser_OperationParsingError;
+    public static String ResolveExpMustHaveASource;
 	
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, ValidationMessages.class);

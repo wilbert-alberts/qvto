@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,6 +80,12 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	
 	public static final String METAMODEL_COMPLIANCE_KIND_STRICT = "strict"; //$NON-NLS-1$
 	
+    /*
+     * List of declared variables and implicit variables, including "self".
+     * Implicit variables are generated when there is an iterator without any
+     * iteration variable specified.
+     */
+    private List<QvtVariableEntry> myNamedElements = new java.util.ArrayList<QvtVariableEntry>();
 	
 	protected QvtOperationalEnv(QvtOperationalEnv parent, QvtCompiler compiler, EPackage.Registry eRegistry) {
 		// Set our own package registry to be populated by imported metamodels
@@ -232,6 +239,43 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 
         return result;
     } 
+    
+    @Override
+    protected void addedVariable(String name,
+            Variable<EClassifier, EParameter> elem, boolean isExplicit) {
+        super.addedVariable(name, elem, isExplicit);
+        if (!getOCLStandardLibrary().getOclVoid().getName().equals(name)) {
+            QvtVariableEntry newelem = new QvtVariableEntry(name, elem, isExplicit);
+            myNamedElements.add(newelem);
+        }
+    }
+
+    @Override
+    protected void removedVariable(String name,
+            Variable<EClassifier, EParameter> variable, boolean isExplicit) {
+        for (Iterator<QvtVariableEntry> iter = myNamedElements.iterator(); iter.hasNext();) {
+            QvtVariableEntry elem = iter.next();
+            
+            if (elem.getName().equals(name)) {
+                iter.remove();
+                
+                removedVariable(name, elem.getVariable(), elem.isExplicit);
+            }
+        }
+        super.removedVariable(name, variable, isExplicit);
+    }
+
+    public Variable<EClassifier, EParameter> lookupImplicitSource() {
+        for (int i = myNamedElements.size() - 1; i >= 0; i--) {
+            QvtVariableEntry element = myNamedElements.get(i);
+            Variable<EClassifier, EParameter> vdcl = element.getVariable();
+            
+            if (!element.isExplicit) {
+                return vdcl;
+            }
+        }
+        return null;
+    }
     
 	public void reportError(String message, int startOffset, int endOffset) {
 		if (!myErrorRecordFlag) {
@@ -709,4 +753,28 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
             return QvtOperationalEnv.super.lookupPackage(names);
         }
     };
+    
+    protected final class QvtVariableEntry {
+        private final String myName;
+        private final Variable<EClassifier, EParameter> myVariable;
+        private final boolean isExplicit;
+        
+        public QvtVariableEntry(String name, Variable<EClassifier, EParameter> variable, boolean isExplicit) {
+            this.myName = name;
+            this.myVariable = variable;
+            this.isExplicit = isExplicit;
+        }
+
+        public String getName() {
+            return myName;
+        }
+
+        public Variable<EClassifier, EParameter> getVariable() {
+            return myVariable;
+        }
+
+        public boolean isExplicit() {
+            return isExplicit;
+        }
+    }
 }

@@ -123,6 +123,7 @@ import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.PropertyCallExp;
 import org.eclipse.ocl.expressions.TypeExp;
 import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.expressions.VariableExp;
 import org.eclipse.ocl.internal.cst.CSTFactory;
 import org.eclipse.ocl.internal.cst.CSTNode;
 import org.eclipse.ocl.internal.cst.CallExpCS;
@@ -1692,7 +1693,11 @@ public class QvtOperationalVisitorCS
 
     private OCLExpression<EClassifier> visitResolveExpCS(ResolveExpCS resolveExpCS, QvtOperationalEnv env)
             throws SemanticException {
-        return populateResolveExp(resolveExpCS, env, ExpressionsFactory.eINSTANCE.createResolveExp());
+        ResolveExp resolveExp = populateResolveExp(resolveExpCS, env, ExpressionsFactory.eINSTANCE.createResolveExp());
+        if (resolveExp.getSource() == null) {
+            env.reportError(NLS.bind(ValidationMessages.ResolveExpMustHaveASource, new Object[] { }), resolveExpCS);
+        }
+        return resolveExp;
     }
     
     private OCLExpression<EClassifier> visitResolveInExpCS(
@@ -1728,7 +1733,7 @@ public class QvtOperationalVisitorCS
         return populateResolveExp(resolveInExpCS, env, resolveInExp);
     }
     
-    private OCLExpression<EClassifier> populateResolveExp(ResolveExpCS resolveExpCS, QvtOperationalEnv env, ResolveExp resolveExp) throws SemanticException {
+    private ResolveExp populateResolveExp(ResolveExpCS resolveExpCS, QvtOperationalEnv env, ResolveExp resolveExp) throws SemanticException {
         // AST binding
         if(myCompilerOptions.isGenerateCompletionData()) {      
             ASTBindingHelper.createCST2ASTBinding(resolveExpCS, resolveExp, env);
@@ -1737,6 +1742,18 @@ public class QvtOperationalVisitorCS
         if (resolveExpCS.getSource() != null) {
             OCLExpression<EClassifier> sourceExp = visitOclExpressionCS(resolveExpCS.getSource(), env);
             resolveExp.setSource(sourceExp);
+        } else {
+            // lookup for implicit source
+            Variable<EClassifier,EParameter> implicitSource = env.lookupImplicitSource();
+            if (implicitSource != null) {
+                VariableExp<EClassifier,EParameter> vexp = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariableExp();
+                
+                vexp.setType(implicitSource.getType());
+                vexp.setReferredVariable(implicitSource);
+                vexp.setName(implicitSource.getName());
+                
+                resolveExp.setSource(vexp);
+            }
         }
         resolveExp.setOne(resolveExpCS.isOne());
         resolveExp.setIsInverse(resolveExpCS.isIsInverse());

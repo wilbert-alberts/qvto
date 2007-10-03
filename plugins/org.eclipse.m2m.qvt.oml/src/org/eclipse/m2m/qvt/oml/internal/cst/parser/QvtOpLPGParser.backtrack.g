@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.19 2007/09/21 13:19:09 aigdalov Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.20 2007/10/03 16:34:50 aigdalov Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -425,7 +425,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.19 2007/09/21 13:19:09 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.20 2007/10/03 16:34:50 aigdalov Exp $
  */
 	./
 $End
@@ -2610,7 +2610,7 @@ $Rules
 		./
         
     -- case with no source of resolveIn
-	oclExpCS -> resolveInExpCS
+	oclExpCS -> resolveResolveInExpCS
 
     -- Resolve family ends here
 
