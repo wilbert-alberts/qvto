@@ -47,12 +47,4 @@
       genModel = "model/QVTOperational.genmodel" /> 
  </extension>
  
- <extension
-       point="org.eclipse.emf.ecore.extension_parser">
-    <parser
-          class="org.eclipse.m2m.qvt.oml.internal.resource.QvtOperationalResourceFactoryImpl"
-          type="%qvtFileExtension">
-    </parser>
- </extension>
-
 </plugin>
