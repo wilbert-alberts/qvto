@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
+import org.eclipse.m2m.qvt.oml.common.io.eclipse.MetamodelRegistryProvider;
 import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.qvt.oml.compiler.IImportResolver;
 import org.eclipse.m2m.qvt.oml.compiler.IImportResolverFactory;
@@ -47,30 +48,40 @@ public class QvtEngine {
 		myProject = project;
 		IImportResolverFactory resolverFactory = IImportResolverFactory.Registry.INSTANCE.getFactory(myProject);		
         myImportResolver = resolverFactory.createResolver(myProject);
-		reset();
+		reset(null);
 	}
 	
 
     public QvtCompilationResult compile(final CFile source, final QvtCompilerOptions options, 
             final IProgressMonitor monitor) throws MdaException {
 		// TODO: remove this reset as soon as timestamps are finished
-		reset();
+		reset(options);
 		return myCompiler.compile(source, options, monitor);
 	}
     
 	public CompiledModule compile(IFile file, IProgressMonitor monitor) throws MdaException {
-		return compile(new IFile[] { file }, monitor)[0].getModule();
+		return compile(file, monitor, null);
+	}
+	
+	public CompiledModule compile(IFile file, IProgressMonitor monitor, QvtCompilerOptions options) throws MdaException {
+		return compile(new IFile[] { file }, monitor, options)[0].getModule();
 	}
 	
     public QvtCompilationResult[] compile(IFile[] files, IProgressMonitor monitor) throws MdaException {
+		return compile(files, monitor, null);
+	}
+	
+    public QvtCompilationResult[] compile(IFile[] files, IProgressMonitor monitor, QvtCompilerOptions options) throws MdaException {
 		EclipseFile[] sources = new EclipseFile[files.length];
 		for (int i = 0; i < sources.length; i++) {
 			sources[i] = new EclipseFile(files[i]);
 		}
 		// TODO: remove this reset as soon as timestamps are finished
-		reset();
-        QvtCompilerOptions options = new QvtCompilerOptions();
-        options.setGenerateCompletionData(false);
+		reset(options);
+		if (options == null) {
+	        options = new QvtCompilerOptions();
+	        options.setGenerateCompletionData(false);
+		}
 		return myCompiler.compile(sources, options, monitor);
 	}
 	
@@ -82,8 +93,12 @@ public class QvtEngine {
         return myImportResolver;
     }
 	
-	public void reset() { // TODO: QvtException
-        myCompiler = new QvtCompiler(myImportResolver);
+	private void reset(QvtCompilerOptions options) { // TODO: QvtException
+	    if ((options == null) || options.isWorkspaceModelResolutionEnabled()) {
+	        myCompiler = new QvtCompiler(myImportResolver);
+	    } else {
+	        myCompiler = new QvtCompiler(myImportResolver, new MetamodelRegistryProvider());
+	    }
 	}
 	
 	private static Map<IProject, QvtEngine> ourEnginesMap = new HashMap<IProject, QvtEngine>();

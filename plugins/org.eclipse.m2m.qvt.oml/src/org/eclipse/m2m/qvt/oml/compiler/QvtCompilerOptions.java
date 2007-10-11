@@ -9,6 +9,7 @@ public class QvtCompilerOptions {
     private boolean isReportErrors = true;
     private boolean isShowAnnotations = true;
     private boolean isGenerateCompletionData = true;
+    private boolean isWorkspaceModelResolutionEnabled = true;
     
     public boolean isReportErrors() {
         return isReportErrors;
@@ -32,5 +33,13 @@ public class QvtCompilerOptions {
 
     public void setShowAnnotations(boolean showAnnotations) {
         isShowAnnotations = showAnnotations;
+    }
+
+    public boolean isWorkspaceModelResolutionEnabled() {
+        return isWorkspaceModelResolutionEnabled;
+    }
+
+    public void setWorkspaceModelResolutionEnabled(boolean workspaceModelResolutionEnabled) {
+        isWorkspaceModelResolutionEnabled = workspaceModelResolutionEnabled;
     }
 }
