@@ -35,7 +35,7 @@ public class WorkspaceQvtModule extends QvtModule {
 	public CompiledModule getModule() throws MdaException {
         if(myModule == null) {
             QvtEngine engine = QvtEngine.getInstance(myTransformationFile); 
-            CompiledModule module = engine.compile(myTransformationFile, null);
+            CompiledModule module = engine.compile(myTransformationFile, null, getQvtCompilerOptions());
             
             checkModuleErrors(module);
             

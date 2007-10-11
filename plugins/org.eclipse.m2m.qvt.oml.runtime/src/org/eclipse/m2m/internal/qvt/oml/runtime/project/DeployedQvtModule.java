@@ -14,13 +14,13 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
 import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
+import org.eclipse.m2m.qvt.oml.common.io.eclipse.MetamodelRegistryProvider;
 import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.qvt.oml.compiler.CompilerMessages;
 import org.eclipse.m2m.qvt.oml.compiler.IImportResolver;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
-import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.osgi.util.NLS;
 
 public class DeployedQvtModule extends QvtModule {
@@ -37,11 +37,7 @@ public class DeployedQvtModule extends QvtModule {
     }
 	
 	protected IMetamodelRegistryProvider creatMetamodelRegistryProvider() {
-		return new IMetamodelRegistryProvider() {
-    		public MetamodelRegistry getRegistry(IRepositoryContext resource) {
-    			return MetamodelRegistry.getInstance();
-    		}
-    	};
+		return new MetamodelRegistryProvider();
 	}
 	
     @Override
@@ -55,8 +51,11 @@ public class DeployedQvtModule extends QvtModule {
         	
             QvtCompiler qvtCompiler = new QvtCompiler(importResolver, creatMetamodelRegistryProvider());
 
-            QvtCompilerOptions options = new QvtCompilerOptions();
-            options.setGenerateCompletionData(false);
+            QvtCompilerOptions options = getQvtCompilerOptions();
+            if (options == null) {
+                options = new QvtCompilerOptions();
+                options.setGenerateCompletionData(false);
+            }
             CompiledModule module = qvtCompiler.compile(srcFile, options, null).getModule();
             
             checkModuleErrors(module);

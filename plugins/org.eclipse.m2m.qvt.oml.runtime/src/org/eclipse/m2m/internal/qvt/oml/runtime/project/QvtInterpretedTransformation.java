@@ -43,6 +43,7 @@ import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.common.launch.SafeRunner;
 import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.qvt.oml.library.IContext;
 import org.eclipse.ocl.EvaluationVisitor;
@@ -99,6 +100,10 @@ public class QvtInterpretedTransformation implements QvtTransformation {
     
     public EObject loadInput(URI inputObjectURI) throws MdaException {
     	return EmfUtil.loadModel(inputObjectURI, myModule.getCompiler().getResourceSet());
+    }
+    
+    public void setQvtCompilerOptions(QvtCompilerOptions options) {
+    	myModule.setQvtCompilerOptions(options);
     }
     
 	public Out run(In in) throws MdaException {
