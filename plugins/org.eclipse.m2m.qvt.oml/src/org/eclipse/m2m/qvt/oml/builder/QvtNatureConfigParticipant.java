@@ -12,7 +12,6 @@
 package org.eclipse.m2m.qvt.oml.builder;
 
 import org.eclipse.core.resources.IProjectDescription;
-import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.m2m.internal.qvt.oml.common.nature.TransformationNatureConfigParticipant;
 import org.eclipse.m2m.qvt.oml.common.project.NatureUtils;
 
@@ -22,15 +21,13 @@ import org.eclipse.m2m.qvt.oml.common.project.NatureUtils;
  */
 public class QvtNatureConfigParticipant implements TransformationNatureConfigParticipant {
 	
-	private final String JET_BUILDER_ID = "org.eclipse.emf.codegen.JETBuilder";//$NON-NLS-1$
-	
 	public QvtNatureConfigParticipant() {
 	}
 	
 	public void configure(IProjectDescription projectDesc) {	
 		NatureUtils.addBuilders(projectDesc,
 				new String[] { QvtBuilder.ID } ,
-				new String[] { JavaCore.BUILDER_ID, JET_BUILDER_ID });
+				new String[] { } );
 	}
 	
 	public void deconfigure(IProjectDescription projectDesc) {
