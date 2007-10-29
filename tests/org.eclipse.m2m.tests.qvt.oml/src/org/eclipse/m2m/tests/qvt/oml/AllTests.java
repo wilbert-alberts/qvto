@@ -61,6 +61,8 @@ public class AllTests {
         suite.addTestSuite(TestQvtResourceFactory.class);
 //        suite.addTestSuite(TestTraceFileForMyUml.class);
 //        suite.addTestSuite(TestTreeContentProvider.class);
+        
+        suite.addTestSuite(TestOCLSemantics.class);
 		//$JUnit-END$
 		return suite;
 	}
