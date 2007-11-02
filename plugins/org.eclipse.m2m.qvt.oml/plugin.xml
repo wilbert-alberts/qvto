@@ -2,7 +2,6 @@
 <?eclipse version="3.0"?>
 <plugin>
 
-   <extension-point id="nativeExtension" name="%nativeExtension" schema="schema/nativeExtension.exsd"/>
    <extension-point id="sourceGenAdapter" name="%sourceGenAdapter" schema="schema/sourceGenAdapter.exsd"/>
    <extension-point id="importResolverFactory" name="mportResolverFactory" schema="schema/importResolverFactory.exsd"/>
     
