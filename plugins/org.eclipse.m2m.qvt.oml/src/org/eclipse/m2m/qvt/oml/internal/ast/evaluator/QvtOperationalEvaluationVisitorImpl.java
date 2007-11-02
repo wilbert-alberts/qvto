@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -36,6 +37,7 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.m2m.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.qvt.oml.ast.environment.IVirtualOperationTable;
 import org.eclipse.m2m.qvt.oml.ast.environment.ModelParameterExtent;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtEvaluationResult;
@@ -101,9 +103,13 @@ import org.eclipse.m2m.qvt.oml.trace.TraceFactory;
 import org.eclipse.m2m.qvt.oml.trace.TraceRecord;
 import org.eclipse.m2m.qvt.oml.trace.VarParameterValue;
 import org.eclipse.ocl.Environment;
+import org.eclipse.ocl.EnvironmentFactory;
 import org.eclipse.ocl.EvaluationEnvironment;
+import org.eclipse.ocl.EvaluationVisitor;
+import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
+import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.CollectionKind;
 import org.eclipse.ocl.expressions.EnumLiteralExp;
@@ -120,6 +126,7 @@ import org.eclipse.ocl.util.Bag;
 import org.eclipse.ocl.util.CollectionUtil;
 import org.eclipse.ocl.util.Tuple;
 import org.eclipse.ocl.utilities.PredefinedType;
+import org.eclipse.ocl.utilities.UMLReflection;
 import org.eclipse.osgi.util.NLS;
 
 public class QvtOperationalEvaluationVisitorImpl
@@ -133,7 +140,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 
         myEvalEnv = evalEnv;
     }
-
+    
 	@Override
 	public EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> getEvaluationEnvironment() {
 		return myEvalEnv;
@@ -865,6 +872,107 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         }
     }
 
+
+    
+    @SuppressWarnings("unchecked")
+	@Override
+    protected Object call(EOperation operation, OCLExpression<EClassifier> body, Object target, Object[] args) {
+    	if(target instanceof EObject) {
+    		EObject eTarget = (EObject) target;
+    		if(OCLAnnotationSupport.isDynamicInstance(eTarget)) {
+    			if(operation.eClass() != eTarget.eClass()) {
+    				// check if not overriden for a sub-class 
+	    			EOperation actualOperation = getOCLAnnotationSupport().resolveDynamic(operation, eTarget);
+	    			if(actualOperation != null && actualOperation != operation) {
+	    				OCLExpression<EClassifier> actualOperBody = getOperationBody(actualOperation);
+	    				
+	    				if(actualOperBody != null) {
+	    					Environment myEnv = getEnvironment();
+	    					EnvironmentFactory factory = myEnv.getFactory();
+	    			    	// create a nested evaluation environment for this operation call
+	    			    	EvaluationEnvironment nested = factory.createEvaluationEnvironment(getEvaluationEnvironment());	    			    	
+	    			    	// bind "self"
+	    			    	nested.add(Environment.SELF_VARIABLE_NAME, target);	    			    	
+	    			    	// add the parameter bindings to the local variables
+	    			    	if (args.length > 0) {
+	    			    		int i = 0;
+	    			    		UMLReflection<?, ?, EOperation, ?, ?, EParameter, ?, ?, ?, ?> uml = myEnv.getUMLReflection();
+	    			    		for (EParameter param : uml.getParameters(operation)) { 
+	    			    			nested.add(uml.getName(param), args[i]);
+	    			    		}
+	    			    	}
+	    			    	
+	    			    	EvaluationVisitor visitor = factory.createEvaluationVisitor(myEnv, nested, getExtentMap());
+	    			    	if(visitor instanceof QvtOperationalEvaluationVisitorImpl) {
+	    			    		// ensure shared instance of oclAnnotationSupport to avoid repeated OCL parsing	    			    		
+	    			    		((QvtOperationalEvaluationVisitorImpl)visitor).oclAnnotationSupport = getOCLAnnotationSupport();
+	    			    	}
+
+	    			    	return visitor.visitExpression(actualOperBody);
+	    				}
+	    			}
+    			}
+    		}
+    	}
+    	
+    	return super.call(operation, body, target, args);
+    }
+    
+    @SuppressWarnings("unchecked")
+	@Override
+	protected Object navigate(EStructuralFeature property, OCLExpression<EClassifier> derivation, Object target) {
+		Environment myEnv = getEnvironment(); 
+		EnvironmentFactory factory = myEnv.getFactory();
+    	// create a nested evaluation environment for this property call
+    	EvaluationEnvironment nested = factory.createEvaluationEnvironment(getEvaluationEnvironment());    	
+    	// bind "self"
+    	nested.add(Environment.SELF_VARIABLE_NAME, target);
+    	
+    	EvaluationVisitor visitor = factory.createEvaluationVisitor(myEnv, nested, getExtentMap());
+    	if(visitor instanceof QvtOperationalEvaluationVisitorImpl) {
+    		// ensure shared instance of oclAnnotationSupport to avoid repeated OCL parsing
+    		((QvtOperationalEvaluationVisitorImpl)visitor).oclAnnotationSupport = getOCLAnnotationSupport();
+    	}
+
+    	return visitor.visitExpression(derivation);
+    }    
+
+    @Override
+    protected OCLExpression<EClassifier> getPropertyBody(EStructuralFeature property) {    	
+    	if(OCLAnnotationSupport.isDynamicClassFeature(property)) {
+    		return getOCLAnnotationSupport().getDerivedProperty(property);
+    	}
+    	
+    	return super.getPropertyBody(property);
+    }
+        
+	@Override
+	protected OCLExpression<EClassifier> getOperationBody(EOperation operation) {
+		if(OCLAnnotationSupport.isDynamicClassOperation(operation)) {			
+			return getOCLAnnotationSupport().getBody(operation);
+		}
+		
+		return super.getOperationBody(operation);
+	}
+    
+	private OCLAnnotationSupport getOCLAnnotationSupport() {
+		if(oclAnnotationSupport == null) {
+			oclAnnotationSupport = new OCLAnnotationSupport();		
+			
+			oclAnnotationSupport.setErrorHandler(new OCLAnnotationSupport.ParseErrorHandler() {
+				org.eclipse.ocl.ecore.OCLExpression invalidBodyExpr = EcoreFactory.eINSTANCE.createInvalidLiteralExp();
+				
+				public org.eclipse.ocl.ecore.OCLExpression handleError(ParserException parserException, EModelElement contextElement) {
+					QvtPlugin.log(QvtPlugin.createErrorStatus("Failed to parse OCL annotation :" + 
+							getUMLReflection().getQualifiedName(contextElement) , parserException));
+
+					return invalidBodyExpr;
+				}
+			});
+		}
+		return oclAnnotationSupport;
+	}
+	
     protected QvtOperationalEnv getOperationalEnv() {
         return (QvtOperationalEnv) getEnvironment();
     }
@@ -1054,4 +1162,6 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
     private ImperativeOperation myEntryPoint;
     private Module myRootModule; 
     private EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> myEvalEnv;
+    
+    private OCLAnnotationSupport oclAnnotationSupport; 
 }

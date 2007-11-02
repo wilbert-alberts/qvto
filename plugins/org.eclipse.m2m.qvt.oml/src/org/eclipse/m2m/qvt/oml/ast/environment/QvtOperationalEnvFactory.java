@@ -48,6 +48,18 @@ public class QvtOperationalEnvFactory extends EcoreEnvironmentFactory {
 		return env;
 	}
 	
+	@Override
+	public EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> createEvaluationEnvironment(
+			EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> parent) {
+
+		if(parent instanceof QvtOperationalEvaluationEnv) {
+			QvtOperationalEvaluationEnv qvtParentEnv = (QvtOperationalEvaluationEnv) parent;
+			return new QvtOperationalEvaluationEnv(qvtParentEnv.getContext(), qvtParentEnv);
+		}
+
+		return super.createEvaluationEnvironment(parent);
+	}
+	
 	public QvtOperationalEvaluationEnv createEvaluationEnvironment(IContext context, QvtOperationalEvaluationEnv parent) {
 		return new QvtOperationalEvaluationEnv(context, parent);
 	}
