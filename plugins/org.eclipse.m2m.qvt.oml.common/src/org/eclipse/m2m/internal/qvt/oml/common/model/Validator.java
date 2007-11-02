@@ -9,12 +9,11 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.internal.qvt.oml.common.model.validators;
+package org.eclipse.m2m.internal.qvt.oml.common.model;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.m2m.internal.qvt.oml.common.model.ValidatableFeature;
 
 
 /**

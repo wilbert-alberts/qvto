@@ -16,7 +16,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.m2m.internal.qvt.oml.common.model.validators.Validator;
 
 
 /**
