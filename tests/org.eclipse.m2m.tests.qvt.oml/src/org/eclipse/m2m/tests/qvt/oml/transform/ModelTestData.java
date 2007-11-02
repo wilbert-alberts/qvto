@@ -14,17 +14,33 @@ package org.eclipse.m2m.tests.qvt.oml.transform;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import junit.framework.AssertionFailedError;
+import junit.framework.TestCase;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.m2m.qvt.oml.common.MDAConstants;
+import org.eclipse.m2m.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.qvt.oml.emf.util.urimap.MModelURIMapFactory;
+import org.eclipse.m2m.qvt.oml.emf.util.urimap.MappingContainer;
+import org.eclipse.m2m.qvt.oml.emf.util.urimap.MetamodelURIMappingHelper;
+import org.eclipse.m2m.qvt.oml.emf.util.urimap.URIMapping;
 import org.eclipse.m2m.qvt.oml.library.Context;
 import org.eclipse.m2m.qvt.oml.library.IContext;
 import org.eclipse.m2m.qvt.oml.library.QvtConfiguration;
@@ -34,14 +50,16 @@ import org.eclipse.m2m.tests.qvt.oml.api.framework.comparator.edit.TreeEdit;
 import org.eclipse.m2m.tests.qvt.oml.api.framework.comparator.emf.EmfObjectComparatorTreeNode;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 
-
-import org.eclipse.m2m.qvt.oml.common.MDAConstants;
-import org.eclipse.m2m.qvt.oml.common.io.FileUtil;
-
 public abstract class ModelTestData {
     public ModelTestData(String name, IContext context) {
         myName = name;
         myContext = context;
+    }
+    
+    public ModelTestData includeMetamodelFile(String relativePath) {
+    	URI relativeURI = URI.createURI(relativePath);
+    	ecoreFileMetamodels.add(relativeURI);
+    	return this;
     }
     
     public String getName() {
@@ -49,7 +67,12 @@ public abstract class ModelTestData {
     }
     
     public void compareWithExpected(EObject out, IProject project, int index) {
-        EObject expected = EmfUtil.loadModel(getExpected(project).get(index));
+    	ResourceSet sharedRsSet = out.eResource().getResourceSet();
+        EObject expected = EmfUtil.loadModel(getExpected(project).get(index), sharedRsSet);
+        TestCase.assertNotSame("Actual output and expected output must not be the same instances", out, expected); //$NON-NLS-1$
+        TestCase.assertFalse("Actual output and expected output must be at distinct location", //$NON-NLS-1$ 
+        		out.eResource().getURI().toString().equals(expected.eResource().getURI().toString())); 
+        
         assertEquals(myName + ":", expected, out); //$NON-NLS-1$
     }
     
@@ -87,7 +110,42 @@ public abstract class ModelTestData {
     abstract public List<URI> getIn(IProject project); 
     abstract public List<URI> getExpected(IProject project); 
     
-    public void prepare(TestProject project) throws Exception {
+    public void prepare(TestProject project) throws Exception {    	
+    	Resource res = MetamodelURIMappingHelper.createMappingResource(project.getProject());
+    	MappingContainer container = MetamodelURIMappingHelper.createNewMappings(res);
+    	
+    	for (URI ecoreFileURI : ecoreFileMetamodels) {        	        	
+        	IPath ecoreFilePath = project.getProject().getFullPath().append("models").append(myName).append(ecoreFileURI.toString()); //$NON-NLS-1$
+        	URI absoluteURI = URI.createPlatformResourceURI(ecoreFilePath.toString(), true);        	
+        	
+        	EPackage metamodelPackage = null;
+        	Resource ecoreResource = null;
+        	try {
+        		ecoreResource = new ResourceSetImpl().getResource(absoluteURI, true);
+        	} catch (WrappedException e) {
+        		TestCase.fail("Failed to load metamodel EPackage. " + e.getMessage()); //$NON-NLS-1$
+			}
+        	
+        	if(!ecoreResource.getContents().isEmpty()) {
+        		EObject obj = ecoreResource.getContents().get(0);
+        		if(obj instanceof EPackage) {
+        			metamodelPackage = (EPackage) obj;
+        		}
+        	}
+        	
+        	if(metamodelPackage == null) {
+        		TestCase.fail("No metamodel EPackage available in " + absoluteURI); //$NON-NLS-1$
+        	}
+        	
+        	URIMapping mapping = MModelURIMapFactory.eINSTANCE.createURIMapping();        	
+        	mapping.setTargetURI(absoluteURI.toString());
+        	mapping.setSourceURI(metamodelPackage.getNsURI());
+        	
+        	container.getMapping().add(mapping);			
+		}
+    	
+		res.save(Collections.emptyMap());
+		project.getProject().refreshLocal(IResource.DEPTH_INFINITE, null);
     }
     
     protected File getDestFolder(IProject project) {
@@ -153,7 +211,7 @@ public abstract class ModelTestData {
     
     private final String myName;
     private final IContext myContext;
-    
+    private final List<URI> ecoreFileMetamodels = new ArrayList<URI>();
     
     public static final String ENCODING = "UTF-8"; //$NON-NLS-1$
 }

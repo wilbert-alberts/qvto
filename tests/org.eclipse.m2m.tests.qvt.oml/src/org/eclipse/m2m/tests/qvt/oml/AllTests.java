@@ -62,6 +62,7 @@ public class AllTests {
 //        suite.addTestSuite(TestTreeContentProvider.class);
         
         suite.addTestSuite(TestOCLSemantics.class);
+        suite.addTestSuite(TestOCLAnnotationSupport.class);        
 		//$JUnit-END$
 		return suite;
 	}
