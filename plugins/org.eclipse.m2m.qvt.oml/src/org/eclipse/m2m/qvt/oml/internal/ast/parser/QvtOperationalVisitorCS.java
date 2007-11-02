@@ -106,7 +106,6 @@ import org.eclipse.m2m.qvt.oml.internal.cst.adapters.CSTBindingUtil;
 import org.eclipse.m2m.qvt.oml.internal.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorCallExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorVariableInitializationCS;
-import org.eclipse.m2m.qvt.oml.library.QvtLibraryRegistry;
 import org.eclipse.m2m.qvt.oml.ocl.emf.OclEmfPlugin;
 import org.eclipse.m2m.qvt.oml.ocl.emf.transformations.LibraryCreationException;
 import org.eclipse.ocl.Environment;
@@ -672,10 +671,6 @@ public class QvtOperationalVisitorCS
 			String libId = QvtOperationalParserUtil.getStringRepresentation(impPath, "."); //$NON-NLS-1$
 
 			org.eclipse.m2m.qvt.oml.ocl.emf.transformations.Library lib = OclEmfPlugin.getDefault().getLibrariesRegistry().getLibrary(libId);
-			if (lib == null) {
-				lib = QvtLibraryRegistry.getInstance().getQvtLibrary(libId);
-			}
-			            
 			if (lib == null) {
 				env.reportError(NLS.bind(ValidationMessages.NoLibrary, new Object[] {libId}),
 						impPath);
