@@ -19,14 +19,10 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.StreamHandler;
 
-import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.m2m.qvt.oml.internal.ocl.mapping.NameMappingRegistryImpl;
-import org.eclipse.m2m.qvt.oml.ocl.mapping.NameMappingRegistry;
-import org.eclipse.m2m.qvt.oml.ocl.nativeOperations.NativeExtensionConfigurationReader;
 import org.osgi.framework.BundleContext;
 
 
@@ -34,14 +30,10 @@ public class OclPlugin extends Plugin {
     
     private static final String LOGLEVEL_OPTION = "/loglevel"; //$NON-NLS-1$
     private static OclPlugin ourInstance;
-    private NameMappingRegistry myNameMappingsRegistry;
 
     public OclPlugin() {
         ourInstance = this;
         
-        String gdmPluginId = "org.eclipse.m2m.qvt.oml.ocl.emf"; //$NON-NLS-1$
-        IConfigurationElement[] extensions = Platform.getExtensionRegistry().getConfigurationElementsFor(gdmPluginId, NATIVE_EXTENSION);
-        myNativeExtensionConfigurationReader = new NativeExtensionConfigurationReader(extensions);
     }
 
     @Override
@@ -62,17 +54,6 @@ public class OclPlugin extends Plugin {
         return ourInstance;
     }
     
-    public NameMappingRegistry getNameMappingRegistry() {
-        if (myNameMappingsRegistry == null) {
-            myNameMappingsRegistry = new NameMappingRegistryImpl();
-        }
-        return myNameMappingsRegistry;
-    }
-    
-    public NativeExtensionConfigurationReader getNativeExtensionConfigurationReader() {
-        return myNativeExtensionConfigurationReader;
-    }
-
     private Level getLogLevel(String level, Level def) {
         if (level == null || level.trim().equals("")) { //$NON-NLS-1$
             return def;
@@ -114,7 +95,4 @@ public class OclPlugin extends Plugin {
         }
     }
     
-    private final NativeExtensionConfigurationReader myNativeExtensionConfigurationReader;
-    
-    private static final String NATIVE_EXTENSION = "nativeExtension"; //$NON-NLS-1$
 }

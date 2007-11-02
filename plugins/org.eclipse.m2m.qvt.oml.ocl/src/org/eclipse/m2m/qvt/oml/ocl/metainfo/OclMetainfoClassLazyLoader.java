@@ -34,40 +34,6 @@ public class OclMetainfoClassLazyLoader implements OclMetainfo.LazyLoader {
         myMetainfoClass = metainfoClass;
     }
     
-    public void loadImportedMetainfos(List<OclMetainfo> metainfos) {
-        Set<Class> importedMetainfoClasses = getImportedMetainfoClasses(myMetainfoClass);
-        for (Class metainfoClass : importedMetainfoClasses) {
-            metainfos.add(buildImportedMetainfo(metainfoClass));
-        }
-    }
-
-    public void loadMetamodels(List<OclMetainfoMetamodel> metamodels) {
-        try {
-            Field metamodelsField = myMetainfoClass.getField(OclReflectiveMetainfoConstants.METAMODELS_NAME);
-            if (!Modifier.isStatic(metamodelsField.getModifiers())) {
-                Logger.logError("Field '" + OclReflectiveMetainfoConstants.METAMODELS_NAME + "' must be static");  //$NON-NLS-1$//$NON-NLS-2$
-                return;
-            }
-            if (metamodelsField.getType() != String[].class) {
-                Logger.logError("Field '" + OclReflectiveMetainfoConstants.METAMODELS_NAME + "' must be of type 'String[]'");  //$NON-NLS-1$//$NON-NLS-2$
-                return;
-            }
-            
-            String[] names;
-            try {
-                names = (String[]) metamodelsField.get(null);
-            } catch (Exception e) {
-                Logger.logError("Failed to retrieve field value '" + OclReflectiveMetainfoConstants.METAMODELS_NAME + "'", e);  //$NON-NLS-1$//$NON-NLS-2$
-                return;
-            }
-            for (int i = 0; i < names.length; i++) {
-                metamodels.add(new OclMetainfoMetamodel(names[i]));
-            }
-        } catch (NoSuchFieldException e) {
-            Logger.logWarning("Field '" + OclReflectiveMetainfoConstants.METAMODELS_NAME + "' not found - no metamodels imported", e);  //$NON-NLS-1$//$NON-NLS-2$
-        }            
-    }
-
     public void loadOperations(List<OclMetainfoOperation> operations) {
         Method[] methods = myMetainfoClass.getMethods();
         for (int i = 0; i < methods.length; i++) {

@@ -8,11 +8,7 @@ Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ocl
 Eclipse-LazyStart: true
-Export-Package: org.eclipse.m2m.qvt.oml.internal.ocl.mapping;x-internal:=true,
- org.eclipse.m2m.qvt.oml.ocl,
+Export-Package: org.eclipse.m2m.qvt.oml.ocl,
  org.eclipse.m2m.qvt.oml.ocl.completion,
- org.eclipse.m2m.qvt.oml.ocl.mapping,
- org.eclipse.m2m.qvt.oml.ocl.metainfo,
- org.eclipse.m2m.qvt.oml.ocl.nativeOperations,
- org.eclipse.m2m.qvt.oml.ocl.preferences
+ org.eclipse.m2m.qvt.oml.ocl.metainfo
 Bundle-Activator: org.eclipse.m2m.qvt.oml.ocl.OclPlugin
