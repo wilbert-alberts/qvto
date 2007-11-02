@@ -11,7 +11,6 @@ Export-Package: org.eclipse.m2m.internal.qvt.oml.runtime,
  org.eclipse.m2m.internal.qvt.oml.runtime.launch,
  org.eclipse.m2m.internal.qvt.oml.runtime.project,
  org.eclipse.m2m.internal.qvt.oml.runtime.project.config,
- org.eclipse.m2m.internal.qvt.oml.runtime.project.metainfo;x-internal:=true,
  org.eclipse.m2m.internal.qvt.oml.runtime.util;x-internal:=true
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
