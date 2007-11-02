@@ -51,7 +51,6 @@ public class AllTests {
         suite.addTest(TransformManyModelTests.interpreterSuite());
         
         suite.addTestSuite(TestQvtBuilder.class);
-        suite.addTestSuite(TestStringParser.class);
         suite.addTestSuite(TestMdaBuilder.class);        
         suite.addTestSuite(TestSamples.class);
         suite.addTestSuite(TestGraphWalker.class);
