@@ -33,7 +33,6 @@ import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.m2m.qvt.oml.editor.ui.completion.QvtCompletionProcessor;
 import org.eclipse.m2m.qvt.oml.editor.ui.hovers.QvtTextHover;
 import org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks.QvtHyperlinkDetector;
-import org.eclipse.swt.graphics.RGB;
 
 
 public class QvtConfiguration extends SourceViewerConfiguration {

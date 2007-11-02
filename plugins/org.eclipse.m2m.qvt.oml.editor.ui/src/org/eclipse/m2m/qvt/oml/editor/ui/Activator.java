@@ -29,7 +29,7 @@ public class Activator extends AbstractUIPlugin {
 	public static final String CUSTOM_TEMPLATES_KEY = "QVTTemplates"; //$NON-NLS-1$
 	
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.eclipse.m2m.qvt.oml.editor.ui";
+	public static final String PLUGIN_ID = "org.eclipse.m2m.qvt.oml.editor.ui"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;
