@@ -18,10 +18,6 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.eclipse.m2m.qvt.oml.common.ui.action.messages"; //$NON-NLS-1$
 
-	public static String ApplyTransformationWindowActionDelegate_message;
-
-	public static String ApplyTransformationWindowActionDelegate_title;
-	
 	public static String ActionDelegate_Failed;
 	
 	public static String format(String pattern, Object ... args) {
