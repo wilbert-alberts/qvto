@@ -55,7 +55,6 @@ import org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory;
 import org.eclipse.m2m.qvt.oml.internal.cst.ImportCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.LibraryImportCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
-import org.eclipse.m2m.qvt.oml.library.QvtLibraryCreator;
 import org.eclipse.m2m.qvt.oml.ocl.completion.CompletionData;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.internal.cst.PathNameCS;
@@ -294,9 +293,6 @@ public class QvtCompiler {
         Collections.addAll(allMessages, mma.getMessages());
         
         if (mma.getStringName() != null) {
-            // add new operations here as otherwise types instantiated during resolveTypeDecls() will not see them
-            new QvtLibraryCreator().registerNativeOperations();
-            
             PrintStream out = System.out;
             System.setOut(new PrintStream(new OutputStream() { @Override
 			public void write(int b) {} }));

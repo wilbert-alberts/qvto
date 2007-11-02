@@ -11,12 +11,9 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml;
 
-import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.m2m.qvt.oml.ocl.nativeOperations.NativeExtensionConfigurationReader;
 import org.osgi.framework.BundleContext;
 
 
@@ -27,22 +24,15 @@ public class QvtPlugin extends Plugin {
 	
 	public static final String ID = "org.eclipse.m2m.qvt.oml"; //$NON-NLS-1$
     
-	private static final String NATIVE_EXTENSION = "nativeExtension"; //$NON-NLS-1$	
-	
 	//The shared instance.
 	private static QvtPlugin plugin;
     
-    private final NativeExtensionConfigurationReader myNativeExtensionConfigurationReader;
-	
 	/**
 	 * The constructor.
 	 */
 	public QvtPlugin() {
 		super();
 		plugin = this;
-        
-        IConfigurationElement[] extensions = Platform.getExtensionRegistry().getConfigurationElementsFor(ID, NATIVE_EXTENSION);
-        myNativeExtensionConfigurationReader = new NativeExtensionConfigurationReader(extensions);
 	}
 
 	/**
@@ -84,8 +74,4 @@ public class QvtPlugin extends Plugin {
 		return new Status(IStatus.ERROR, QvtPlugin.ID, IStatus.ERROR, "internal error", e); //$NON-NLS-1$
 	}    
 	
-    
-    public NativeExtensionConfigurationReader getNativeExtensionConfigurationReader() {
-        return myNativeExtensionConfigurationReader;
-    }
 }
