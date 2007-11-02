@@ -26,7 +26,6 @@ import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ModelTypeCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ModulePropertyCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.RenameCS;
-import org.eclipse.m2m.qvt.oml.library.QvtLibraryRegistry;
 import org.eclipse.m2m.qvt.oml.ocl.emf.OclEmfPlugin;
 import org.eclipse.m2m.qvt.oml.ocl.emf.transformations.Library;
 import org.eclipse.m2m.qvt.oml.ocl.emf.transformations.LibraryCreationException;
@@ -212,9 +211,6 @@ public class QvtOutlineInput {
 			List<OutlineNode> result = new ArrayList<OutlineNode>();
 			String libId = getIdentity();
 			Library lib = OclEmfPlugin.getDefault().getLibrariesRegistry().getLibrary(libId);
-			if (lib == null) {
-				lib = QvtLibraryRegistry.getInstance().getQvtLibrary(libId);
-			}
 
 			if (lib != null) {
 				try {
