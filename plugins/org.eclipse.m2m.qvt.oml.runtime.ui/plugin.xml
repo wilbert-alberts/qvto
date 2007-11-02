@@ -2,74 +2,6 @@
 <?eclipse version="3.2"?>
 <plugin>
 
-   <!--extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            label="%applyTransformation.actionSet"
-            visible="false"
-            id="org.eclipse.m2m.qvt.oml.runtime.actions">
-         <menu
-               label="%menu.model"
-               id="org.eclipse.m2m.qvt.oml.ui.modelMenu">
-            <separator
-                  name="new">
-            </separator>
-            <separator
-                  name="open">
-            </separator>
-            <separator
-                  name="clipboard">
-            </separator>
-            <separator
-                  name="patterns">
-            </separator>
-            <separator
-                  name="audits">
-            </separator>
-            <separator
-                  name="diff">
-            </separator>
-            <separator
-                  name="integration">
-            </separator>
-            <separator
-                  name="default">
-            </separator>
-         </menu>
-         <menu
-               label="%applyTransformation"
-               path="org.eclipse.m2m.qvt.oml.ui.modelMenu/default"
-               id="org.eclipse.m2m.qvt.oml.common.applytransformation.menu">
-            <groupMarker name="group1"/>
-            <groupMarker name="group2"/>
-         </menu>
-         <menu
-               label="%qvtMenu"
-               path="org.eclipse.m2m.qvt.oml.ui.modelMenu/org.eclipse.m2m.qvt.oml.common.applytransformation.menu/group2"
-               id="org.eclipse.m2m.qvt.oml.applytransformation.menu">
-            <groupMarker name="group1"/>
-            <groupMarker name="group2"/>
-         </menu>
-
-         <action
-               class="org.eclipse.m2m.internal.qvt.oml.runtime.ui.actions.RunCompiledAction"
-               enablesFor="1"
-               icon="icons/qvt-compiled-transformation.gif"
-               id="org.eclipse.m2m.qvt.oml.internal.actions.ApplyCompiledAction"
-               label="%compiled"
-               menubarPath="org.eclipse.m2m.qvt.oml.ui.modelMenu/org.eclipse.m2m.qvt.oml.common.applytransformation.menu/group2">               
-         </action>
-         <action
-               class="org.eclipse.m2m.internal.qvt.oml.runtime.ui.actions.RunFromWorkspaceAction"
-               enablesFor="1"
-               icon="icons/pr-Model_to_model.gif"
-               id="org.eclipse.m2m.qvt.oml.internal.generator.newAction"
-               label="%fromWorkspace"
-               menubarPath="org.eclipse.m2m.qvt.oml.ui.modelMenu/org.eclipse.m2m.qvt.oml.common.applytransformation.menu/group1">               
-         </action>         
-      </actionSet>
-   </extension-->
-
    <extension
          point="org.eclipse.ui.actionSets">
       <actionSet
@@ -88,7 +20,7 @@
                label="%runTransformationShow"
                icon="icons/pr-Model_to_model.gif"
                tooltip="%runTransformationTooltip"
-               class="org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.RunInterpretedTransformationAction"
+               class="org.eclipse.m2m.internal.qvt.oml.runtime.ui.actions.RunInterpretedTransformationAction"
                menubarPath="org.eclipse.ui.run/qvtGroup"
                id="org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.RunInterpretedTransformationActionId">
             <enablement>

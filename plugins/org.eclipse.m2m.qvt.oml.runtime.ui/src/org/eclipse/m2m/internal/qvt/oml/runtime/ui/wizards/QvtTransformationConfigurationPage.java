@@ -22,8 +22,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.ui.wizards.AbstractCompositeWizar
 /**
  * @author abreslav
  */
-public class QvtTransformationConfigurationPage extends
-        AbstractCompositeWizardPage {
+public class QvtTransformationConfigurationPage extends AbstractCompositeWizardPage {
     public QvtTransformationConfigurationPage(String pageName,
             ApplyTransformationData data) {
         super(pageName);
