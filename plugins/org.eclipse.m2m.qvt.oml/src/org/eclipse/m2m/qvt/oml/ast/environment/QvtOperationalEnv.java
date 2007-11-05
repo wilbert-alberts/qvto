@@ -140,16 +140,16 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
         List<EPackage> metamodels = new ArrayList<EPackage>(1);
 		try {
 			MetamodelRegistry registry = getMetamodelRegistry();
-			IMetamodelDesc desc;
+			IMetamodelDesc[] desc;
 			if (path.isEmpty()) {
-				desc = registry.getMetamodelDesc(metamodelUri);
+				desc = new IMetamodelDesc[] { registry.getMetamodelDesc(metamodelUri) };
 			}
 			else {
 				desc = registry.getMetamodelDesc(path);
 			}
-	        EPackage[] models = (EPackage[])desc.getModels();
-	        Collections.addAll(metamodels, models);
-	        for (EPackage model : models) {
+
+			for(IMetamodelDesc nextDesc : desc) {
+	        	EPackage model = nextDesc.getModel();
 	            // register metamodel for EClassifier lookup
 	        	if (model.getNsURI() == null) {
 					while (true) {
@@ -159,6 +159,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 						model = model.getESuperPackage();
 					}
 	        	}
+	        	
+	        	metamodels.add(model);
 	            getEPackageRegistry().put(model.getNsURI(), model);
 	            break;
 /*

@@ -569,7 +569,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
             EPackage pack;
             if (packageRef.getUri() != null) {
             	IMetamodelDesc desc = myEnv.getMetamodelRegistry().getMetamodelDesc(packageRef.getUri());
-            	pack = (EPackage) desc.getModels()[0];
+            	pack = desc.getModel();
             }
             else {
             	ArrayList<String> packageName = new ArrayList<String>();
