@@ -63,12 +63,9 @@ public class MetamodelsNode extends ChooserNode {
             String metamodelId = metamodelIds[i];
             try {
                 IMetamodelDesc desc = registry.getMetamodelDesc(metamodelId);
-                EPackage[] descPackages = (EPackage[])desc.getModels();
-                for (int j = 0; j < descPackages.length; j++) {
-                    EPackage descPackage = descPackages[j];
-                    if(descPackage.getESuperPackage() == null) {
-                        nodes.add(descPackage);
-                    }
+                EPackage descPackage = desc.getModel();
+                if(descPackage.getESuperPackage() == null) {
+                    nodes.add(descPackage);
                 }
             } 
             catch (EmfException ignore) {
