@@ -117,14 +117,11 @@ public class EmfUtil {
 					URI trimmedURI = uri.trimFragment();
 					try {
 						IMetamodelDesc descriptor = MetamodelRegistry.getInstance().getMetamodelDesc(trimmedURI.toString());
-						Object model = descriptor.getModels()[0];
-						if (model instanceof EPackage) {
-							EPackage ePackage = (EPackage) model;
-							resource = ePackage.eResource();
-							if (resource == null) {
-								resource = new ResourceImpl(trimmedURI);
-								resource.getContents().add(ePackage);
-							}
+						EPackage ePackage = descriptor.getModel();
+						resource = ePackage.eResource();
+						if (resource == null) {
+							resource = new ResourceImpl(trimmedURI);
+							resource.getContents().add(ePackage);
 						}
 					} catch (EmfException e) {
 						// ignore

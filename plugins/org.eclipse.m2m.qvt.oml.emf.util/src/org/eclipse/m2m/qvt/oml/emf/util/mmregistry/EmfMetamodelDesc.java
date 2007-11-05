@@ -65,7 +65,7 @@ public class EmfMetamodelDesc implements IMetamodelDesc {
         return myNamespace;
     }
     
-    public Object[] getModels() {
+    public EPackage getModel() {
     	if (myPackage == null) {
     		try {
     			myPackage = myPackageDescriptor.getEPackage();
@@ -83,13 +83,13 @@ public class EmfMetamodelDesc implements IMetamodelDesc {
     			new XMIResourceImpl(URI.createURI("http://unresolvedEPackage")).getContents().add(myPackage); //$NON-NLS-1$
     		}
     	}
-        return new EPackage[] { myPackage };
+        return myPackage;
     }
     
     public IStatus getLoadStatus() {
     	if(myPackage == null) {
     		// cause metamodel packages to load
-    		getModels();
+    		getModel();
     	}
 		return status;
 	}

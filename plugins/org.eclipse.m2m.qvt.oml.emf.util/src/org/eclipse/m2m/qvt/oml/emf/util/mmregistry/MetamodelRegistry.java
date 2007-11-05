@@ -20,6 +20,7 @@ import java.util.Map;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.UniqueEList;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfException;
@@ -70,7 +71,7 @@ public class MetamodelRegistry {
 		// hack for #35157 
 		if(desc == null && id != null) {
             for(IMetamodelDesc d: myMetamodelDescs.values()) {
-            	EPackage pack = (EPackage) d.getModels()[0];
+            	EPackage pack = d.getModel();
             	if (pack == null) {
             		continue;
             	}
@@ -96,11 +97,11 @@ public class MetamodelRegistry {
         return desc;
 	}
 	
-	public IMetamodelDesc getMetamodelDesc(List<String> packageName) throws EmfException {
+	public IMetamodelDesc[] getMetamodelDesc(List<String> packageName) throws EmfException {
 		final List<EPackage> metamodels = new UniqueEList<EPackage>(1);
 		
         for (IMetamodelDesc d: myMetamodelDescs.values()) {
-        	EPackage pack = (EPackage) d.getModels()[0];
+        	EPackage pack = d.getModel();
         	if (pack.getESuperPackage() != null) {
         		continue;
         	}
@@ -115,18 +116,21 @@ public class MetamodelRegistry {
         			packageName, myMetamodelDescs.values()));
         }
         
-        return new IMetamodelDesc() {
+        IMetamodelDesc[] result = new IMetamodelDesc[metamodels.size()];
+        int pos = 0;
+        for (final EPackage nextMetamodel : metamodels) {
+        	result[pos++] = new IMetamodelDesc() {
 
 			public String getId() {
-				return null;
+				return nextMetamodel.getNsURI();
 			}
 
 			public IStatus getLoadStatus() {
-				return null;
+				return Status.OK_STATUS;
 			}
 
-			public Object[] getModels() {
-				return metamodels.toArray(new EPackage[metamodels.size()]);
+			public EPackage getModel() {
+				return nextMetamodel;
 			}
 
 			public String getNamespace() {
@@ -138,6 +142,9 @@ public class MetamodelRegistry {
 			}
         	
         };
+        }
+        
+        return result;
 	}
 	
 	private static List<IMetamodelProvider> getMetamodelProviders() {

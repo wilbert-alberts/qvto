@@ -12,10 +12,9 @@
 package org.eclipse.m2m.qvt.oml.emf.util.mmregistry;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.ecore.EPackage;
 
 /**
- * TODO - change to return a single package
- *    
  * @author pkobiakov 
  */
 public interface IMetamodelDesc {
@@ -26,18 +25,18 @@ public interface IMetamodelDesc {
     String getNamespace();
 
     /**
-     * Returns metamodel represented by this descriptor.
+     * Returns metamodel package represented by this descriptor.
      * <p>
-     * If the metamodel fails to load, metamodel package objects will
+     * If the metamodel fails to load, metamodel package object will
      * be added according to the <code>NULL object pattern</code>, having 
      * only matching <code>nsURI</code> but empty content. Corresponding error 
      * condition will be indicated by the descriptor {@link #getLoadStatus()}.
      * 
-     * @return EPackage[] for EMF
+     * @return EPackage object
      * 
      * @see #getLoadStatus()  
      */
-    Object[] getModels();
+    EPackage getModel();
     
     /**
      * Indicates the loading status of model represented by this descriptor.
@@ -46,14 +45,14 @@ public interface IMetamodelDesc {
      * 
      * @return the status object, which is <code>OK</code> if metamodel package has been loaded successfully.
      * 
-     * @see #getModels()
+     * @see #getModel()
      */
     IStatus getLoadStatus();
     
     /**
      * Indicates whether the metamodel for this descriptor has already been loaded.
      * 
-     * @return <true>If the metamodel was loaded by a previous call {@link #getModels()}}, <code>false</code> owtherwise.  
+     * @return <true>If the metamodel was loaded by a previous call {@link #getModel()}}, <code>false</code> owtherwise.  
      */
     boolean isLoaded();
 }
