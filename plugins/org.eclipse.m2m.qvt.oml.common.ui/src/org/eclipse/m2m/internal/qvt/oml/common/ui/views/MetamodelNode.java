@@ -80,7 +80,6 @@ class MetamodelNode extends BrowserNode {
 	}
 	
 	private static EPackage descriptorToEObject(IMetamodelDesc descriptor) {
-		Object[] metamodels = descriptor.getModels();
-		return metamodels.length > 0 && metamodels[0] instanceof EPackage ? (EPackage)metamodels[0] : null;
-	}				
+		return descriptor.getModel();
+	}
 }

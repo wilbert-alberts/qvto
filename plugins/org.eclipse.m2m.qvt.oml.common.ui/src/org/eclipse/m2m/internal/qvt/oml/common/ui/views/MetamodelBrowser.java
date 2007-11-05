@@ -499,26 +499,23 @@ public class MetamodelBrowser  implements IAdaptable {
         for (int i = 0; i < ids.length; i++) {
         	try {
                 IMetamodelDesc desc = MetamodelRegistry.getInstance().getMetamodelDesc(ids[i]);
-                EPackage[] packages = (EPackage[]) desc.getModels();
-                for (int j = 0; j < packages.length; j++) {
-                    EPackage pack = packages[j];
-                    if (pack != null) {
-                    	if(pack.getESuperPackage() == null) {
-                    		rootNodes.put(pack, desc);
-                    	} else {
-                    		// Note:
-                    		// check for empty packages not registered in global EPackage.Registry
-                    		// but created programmatically as containers, as EMF ignores packages with 
-                    		// empty content
-                    		EPackage parent = pack;                    		
-                    		while(parent.getESuperPackage() != null) {
-                    			parent = parent.getESuperPackage();
-                    		}
-                    		if(parent != pack && !rootNodes.containsKey(parent)) {                 			
-                    			rootNodes.put(parent, new DelegatingDesc(parent));
-                    		}
-                    	}
-                    }
+                EPackage pack = desc.getModel();
+                if (pack != null) {
+                	if(pack.getESuperPackage() == null) {
+                		rootNodes.put(pack, desc);
+                	} else {
+                		// Note:
+                		// check for empty packages not registered in global EPackage.Registry
+                		// but created programmatically as containers, as EMF ignores packages with 
+                		// empty content
+                		EPackage parent = pack;                    		
+                		while(parent.getESuperPackage() != null) {
+                			parent = parent.getESuperPackage();
+                		}
+                		if(parent != pack && !rootNodes.containsKey(parent)) {                 			
+                			rootNodes.put(parent, new DelegatingDesc(parent));
+                		}
+                	}
                 }
             } catch (EmfException ignore) {
     			CommonUIPlugin.getPlugin().log(ignore);            	
@@ -827,8 +824,8 @@ public class MetamodelBrowser  implements IAdaptable {
 			return Status.OK_STATUS;
 		}
 
-		public Object[] getModels() {
-			return new Object[] { ePackage };
+		public EPackage getModel() {
+			return ePackage;
 		}
 
 		public String getNamespace() {
