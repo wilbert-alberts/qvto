@@ -16,13 +16,10 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EModelElement;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
-import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfException;
@@ -32,8 +29,6 @@ import org.eclipse.m2m.qvt.oml.internal.cst.MappingDeclarationCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ModelTypeCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ModuleImportCS;
-import org.eclipse.m2m.qvt.oml.ocl.completion.CompletionData;
-import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.internal.cst.CSTNode;
 import org.eclipse.ocl.internal.cst.PathNameCS;
 import org.eclipse.ocl.internal.cst.StringLiteralExpCS;
@@ -66,7 +61,7 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 						String id = uriLiteral.getStringSymbol();
 						// strip quotations
 						id = id.substring(1, id.length() - 1);
-						EPackage ePackage = (EPackage)env.getMetamodelRegistry().getMetamodelDesc(id).getModels()[0];
+						EPackage ePackage = env.getMetamodelRegistry().getMetamodelDesc(id).getModel();
 						return new MetamodelElementHyperlink(HyperlinkUtil.createRegion(modelTypeCS), ePackage);
 					} catch (EmfException e) {
 						// do nothing, a metamodel may not have been resolved
