@@ -82,7 +82,7 @@ public class TestMetamodelRegistry extends TestCase {
         	.getRegistry(ctx).getMetamodelDesc(METAMODEL_ID);
         assertNotNull(metamodelDesc);
         
-        EPackage ePackage = (EPackage)metamodelDesc.getModels()[0];
+        EPackage ePackage = metamodelDesc.getModel();
         assertEquals(ePackage.eResource().getURI(), testEcoreFileURI);
     }
 
@@ -90,7 +90,7 @@ public class TestMetamodelRegistry extends TestCase {
 		String knownID = EcorePackage.eINSTANCE.getNsURI();
         IMetamodelDesc metamodelDesc = metamodelRegistry.getMetamodelDesc(knownID);
         assertNotNull(metamodelDesc);
-        assertSame(EcorePackage.eINSTANCE, metamodelDesc.getModels()[0]);
+        assertSame(EcorePackage.eINSTANCE, metamodelDesc.getModel());
     }
 	
 	private URI prepareTestMetamodel() throws IOException {
