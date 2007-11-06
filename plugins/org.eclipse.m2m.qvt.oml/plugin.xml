@@ -2,7 +2,6 @@
 <?eclipse version="3.0"?>
 <plugin>
 
-   <extension-point id="sourceGenAdapter" name="%sourceGenAdapter" schema="schema/sourceGenAdapter.exsd"/>
    <extension-point id="importResolverFactory" name="mportResolverFactory" schema="schema/importResolverFactory.exsd"/>
     
    <extension
@@ -22,12 +21,6 @@
                 <persistent value="true"/>
   </extension>
    
- <extension point="org.eclipse.m2m.qvt.oml.sourceGenAdapter">
-    <adapter 
-       uri = "http://www.eclipse.org/uml2/2.0.0/UML" 
-       class = "org.eclipse.m2m.qvt.oml.generator.Uml2GenAdapter" />
- </extension>
- 
  <extension point="org.eclipse.m2m.qvt.oml.common.transformNatureConfigParticipants">
     <configParticipant class="org.eclipse.m2m.qvt.oml.builder.QvtNatureConfigParticipant"/>
  </extension> 
