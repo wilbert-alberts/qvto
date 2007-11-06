@@ -15,12 +15,10 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -44,13 +42,9 @@ import org.eclipse.m2m.qvt.oml.ast.environment.QvtEvaluationResult;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalFileEnv;
-import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.common.Logger;
-import org.eclipse.m2m.qvt.oml.emf.util.EmfException;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
-import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.DependencyHelper;
-import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
 import org.eclipse.m2m.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.qvt.oml.expressions.BlockExp;
@@ -71,7 +65,6 @@ import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.qvt.oml.expressions.ObjectExp;
 import org.eclipse.m2m.qvt.oml.expressions.OperationBody;
-import org.eclipse.m2m.qvt.oml.expressions.PackageRef;
 import org.eclipse.m2m.qvt.oml.expressions.Property;
 import org.eclipse.m2m.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveExp;
@@ -84,7 +77,6 @@ import org.eclipse.m2m.qvt.oml.expressions.impl.ImperativeOperationImpl;
 import org.eclipse.m2m.qvt.oml.expressions.impl.OperationBodyImpl;
 import org.eclipse.m2m.qvt.oml.expressions.impl.PropertyImpl;
 import org.eclipse.m2m.qvt.oml.expressions.impl.RenameImpl;
-import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.InheritanceTree.IClassifierProvider;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.qvt.oml.library.EObjectEStructuralFeaturePair;
 import org.eclipse.m2m.qvt.oml.library.IContext;
@@ -557,48 +549,6 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 	}
     
     
-    private static class EmfClassifierProvider implements IClassifierProvider {
-
-    	public EmfClassifierProvider(QvtOperationalEnv env) {
-    		myEnv = env;
-        }
-
-        public EClassifier[] getAllClasses(PackageRef packageRef) throws EmfException {
-            Set<EClassifier> classes = new HashSet<EClassifier>();
-
-            EPackage pack;
-            if (packageRef.getUri() != null) {
-            	IMetamodelDesc desc = myEnv.getMetamodelRegistry().getMetamodelDesc(packageRef.getUri());
-            	pack = desc.getModel();
-            }
-            else {
-            	ArrayList<String> packageName = new ArrayList<String>();
-            	Collections.addAll(packageName, packageRef.getName().split(QvtOperationalTypesUtil.TYPE_NAME_SEPARATOR));
-            	pack = myEnv.lookupPackage(packageName);
-            }
-
-            List<EPackage> packs = new ArrayList<EPackage>();
-            packs.add(pack);
-            packs.addAll(Arrays.asList(DependencyHelper.getReferencedPackages(pack)));
-
-            for (Iterator<EPackage> packIt = packs.iterator(); packIt.hasNext();) {
-                EPackage p = (EPackage) packIt.next();
-                for (Iterator<EObject> contIt = p.eAllContents(); contIt.hasNext();) {
-                    Object obj = contIt.next();
-                    if (obj instanceof EClassifier == false) {
-                        continue;
-                    }
-                    classes.add((EClassifier) obj);
-                }
-            }
-
-            return classes.toArray(new EClassifier[classes.size()]);
-        }
-
-    	private final QvtOperationalEnv myEnv;
-    	
-    }
-
     private void initModuleProperties(Module module) {
         for (ModuleImport imp : module.getModuleImport()) {
             initModuleProperties(imp.getImportedModule());

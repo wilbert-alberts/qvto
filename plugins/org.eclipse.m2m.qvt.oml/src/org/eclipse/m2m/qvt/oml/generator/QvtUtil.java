@@ -22,11 +22,6 @@ public class QvtUtil {
 	    return module.getModule().getNsPrefix();
 	}
 
-	public static String getQualifiedModuleName(final CompiledModule module) {
-	    String packageName = getPackageName(module);
-	    return QvtUtil.getQualifiedName(packageName, module.getModule().getName());
-	}
-
 	public static String getQualifiedName(String packageName, String name) {
 	    String qName;
 	    if(packageName == null || packageName.length() == 0) {
