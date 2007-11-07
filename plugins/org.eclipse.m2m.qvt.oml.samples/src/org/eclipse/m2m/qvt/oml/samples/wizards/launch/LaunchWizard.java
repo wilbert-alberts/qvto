@@ -21,7 +21,6 @@ import org.eclipse.m2m.qvt.oml.samples.ui.SampleProject;
 import org.eclipse.m2m.qvt.oml.samples.ui.wizard.SamplesWizard;
 import org.eclipse.m2m.qvt.oml.samples.ui.wizard.SamplesWizardPage;
 import org.eclipse.m2m.qvt.oml.samples.wizards.Messages;
-import org.eclipse.m2m.qvt.oml.samples.wizards.PatchFilesAction.StringResolver;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -128,15 +127,4 @@ public class LaunchWizard extends SamplesWizard {
 		}
 	}
     
-    protected class ProjectNameResolver implements StringResolver {
-        private int myIndex;
-
-        public ProjectNameResolver(int index) {
-            myIndex = index;
-        }
-        
-        public String getString() {
-            return getProject(myIndex).getName();
-        }
-    }
 }
