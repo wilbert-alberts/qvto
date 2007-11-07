@@ -2,7 +2,7 @@
 <?eclipse version="3.0"?>
 <plugin>
 
-   <extension-point id="importResolverFactory" name="mportResolverFactory" schema="schema/importResolverFactory.exsd"/>
+   <extension-point id="importResolverFactory" name="importResolverFactory" schema="schema/importResolverFactory.exsd"/>
     
    <extension
          id="QvtBuilder"

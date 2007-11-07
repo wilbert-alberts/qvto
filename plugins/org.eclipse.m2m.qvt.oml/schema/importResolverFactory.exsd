@@ -3,10 +3,10 @@
 <schema targetNamespace="org.eclipse.m2m.qvt.oml">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.eclipse.m2m.qvt.oml" id="importResolverFactory" name="mportResolverFactory"/>
+         <meta.schema plugin="org.eclipse.m2m.qvt.oml" id="importResolverFactory" name="importResolverFactory"/>
       </appInfo>
       <documentation>
-         [Enter description of this extension point.]
+         Factory to instantiate IImportResolver instances used for lookup of script imports.
       </documentation>
    </annotation>
 
@@ -62,7 +62,7 @@
          <meta.section type="since"/>
       </appInfo>
       <documentation>
-         [Enter the first release in which this extension point appears.]
+         1.0.0
       </documentation>
    </annotation>
 
@@ -98,7 +98,7 @@
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-         
+         Copyright (c) 2007 Borland Software Corporation
       </documentation>
    </annotation>
 
