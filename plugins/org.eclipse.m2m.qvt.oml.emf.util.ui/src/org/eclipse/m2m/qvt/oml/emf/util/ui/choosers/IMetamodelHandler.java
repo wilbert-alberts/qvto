@@ -16,7 +16,4 @@ public interface IMetamodelHandler {
     ISourceChooser getSourceChooser();
     ISourceChooser getSourceAdaptableChooser();
     IDestinationChooser getSourceDestChooser();
-    IDestinationChooser getDestinationChooser();
-    String[] getRequiredNamespaces();
-	String getTitle();
 }

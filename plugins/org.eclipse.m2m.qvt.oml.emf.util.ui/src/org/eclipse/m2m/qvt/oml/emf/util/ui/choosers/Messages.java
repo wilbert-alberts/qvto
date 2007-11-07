@@ -26,8 +26,6 @@ public class Messages {
 
 	public static String EObjectResourceChooser_0;
 
-	public static String emfModel;
-
 	public static String format(String pattern, Object... args) {
 		try {
 			return MessageFormat.format(pattern, args);

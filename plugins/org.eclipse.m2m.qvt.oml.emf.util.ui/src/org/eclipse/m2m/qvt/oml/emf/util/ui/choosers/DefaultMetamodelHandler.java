@@ -29,15 +29,4 @@ public class DefaultMetamodelHandler implements IMetamodelHandler {
         return new ResourceSourceDestChooser();
     }
 
-    public IDestinationChooser getDestinationChooser() {
-        return new ResourceDestinationChooser();
-    }
-
-    public String[] getRequiredNamespaces() {
-        return new String[0];
-    }
-    
-    public String getTitle() {
-    	return Messages.emfModel;
-    }
 }
