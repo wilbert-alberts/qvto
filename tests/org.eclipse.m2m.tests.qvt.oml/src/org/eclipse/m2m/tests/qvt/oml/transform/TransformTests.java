@@ -28,24 +28,9 @@ import org.eclipse.m2m.tests.qvt.oml.transform.javaless.JavalessUtil;
  */
 public class TransformTests {
 	public static Test suite() {
-		//return javalessSuite();
 		return interpreterSuite();
-		//return projectSuite();
-//		return walkerSuite();
 	}
 	
-    public static TestSuite projectSuite() {
-        TestSuite suite = new TestSuite("QVT transform"); //$NON-NLS-1$
-        
-        ModelTestData[] datas = createTestData();
-        
-        for (ModelTestData data : datas) {
-            suite.addTest(new TestQvtProjectTransformation(data));
-        }
-        
-        return suite;
-    }
-    
     public static TestSuite interpreterSuite() {
     	TestSuite suite = new TestSuite("QVT interpreter"); //$NON-NLS-1$
 
@@ -88,8 +73,6 @@ public class TransformTests {
         
         return suite;
     }
-    
-    static ModelTestData STOP = new FileToFileData("STOP"); //$NON-NLS-1$
     
     public static ModelTestData[] createTestData() {
     	return new ModelTestData[] {

@@ -26,6 +26,7 @@ import org.eclipse.debug.ui.DebugUITools;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
+import org.eclipse.m2m.internal.qvt.oml.runtime.launch.InMemoryQvtLaunchConfigurationDelegate;
 import org.eclipse.m2m.qvt.oml.common.emf.ExtendedEmfUtil;
 import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
@@ -89,12 +90,12 @@ public class TestMdaBuilder extends TestCase {
     
     private static void launch(String transformationId, String inUriString, String outUriString) throws Exception {
         ILaunchManager manager = DebugPlugin.getDefault().getLaunchManager();
-        ILaunchConfigurationType type = manager.getLaunchConfigurationType("org.eclipse.m2m.qvt.oml.QvtCompiledTransfomation"); //$NON-NLS-1$
+        ILaunchConfigurationType type = manager.getLaunchConfigurationType(InMemoryQvtLaunchConfigurationDelegate.LAUNCH_CONFIGURATION_TYPE_ID);
         
         ILaunchConfigurationWorkingCopy workingCopy = type.newInstance(null, "_qvt_"); //$NON-NLS-1$
         workingCopy.setAttribute("org.eclipse.debug.ui.ATTR_LAUNCH_IN_BACKGROUND", false); //$NON-NLS-1$
         
-        workingCopy.setAttribute(IQvtLaunchConstants.TRANSFOMATION_ID, transformationId);
+        workingCopy.setAttribute(IQvtLaunchConstants.TRANSFORMATION_ID, transformationId);
         workingCopy.setAttribute(IQvtLaunchConstants.SOURCE_MODEL, inUriString);
         workingCopy.setAttribute(IQvtLaunchConstants.TARGET_MODEL, outUriString);
         
