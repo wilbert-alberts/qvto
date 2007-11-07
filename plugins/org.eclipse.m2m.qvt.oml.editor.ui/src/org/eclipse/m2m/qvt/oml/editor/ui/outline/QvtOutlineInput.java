@@ -16,8 +16,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.m2m.qvt.oml.common.Logger;
 import org.eclipse.m2m.qvt.oml.compiler.ParsedModuleCS;
+import org.eclipse.m2m.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.qvt.oml.internal.cst.ImportCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.LibraryImportCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingDeclarationCS;
