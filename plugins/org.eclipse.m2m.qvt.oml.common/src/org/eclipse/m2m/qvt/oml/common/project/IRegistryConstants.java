@@ -13,14 +13,11 @@ package org.eclipse.m2m.qvt.oml.common.project;
 
 public interface IRegistryConstants {
     public static final String TRANSFORMATION = "transformation"; //$NON-NLS-1$
-    public static final String LIBRARY = "library"; //$NON-NLS-1$
     public static final String ID = "id"; //$NON-NLS-1$
     public static final String INPUT = "input"; //$NON-NLS-1$
     public static final String METAMODEL = "metamodel"; //$NON-NLS-1$
     public static final String METACLASS = "metaclass"; //$NON-NLS-1$
     public static final String DELIM = "/"; //$NON-NLS-1$
     
-    public static final String CLASS_NAME = "className"; //$NON-NLS-1$
     public static final String FILE = "file"; //$NON-NLS-1$    
-    public static final String OUTPUT = "output"; //$NON-NLS-1$
 }

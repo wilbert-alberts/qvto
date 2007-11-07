@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.common.util;
+package org.eclipse.m2m.qvt.oml.common.project;
 
 public class Pair<A, B> {
     

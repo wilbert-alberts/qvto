@@ -12,19 +12,18 @@
 package org.eclipse.m2m.internal.qvt.oml.common.launch;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.m2m.qvt.oml.common.Logger;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
-import org.eclipse.m2m.qvt.oml.common.util.ProjectUtil;
+import org.eclipse.m2m.qvt.oml.emf.util.Logger;
 
 
 public class DeleteMdaMarkersListener implements IResourceChangeListener {
@@ -62,12 +61,21 @@ public class DeleteMdaMarkersListener implements IResourceChangeListener {
             Logger.getLogger().log(Logger.SEVERE, "Failed to traverse " + delta); //$NON-NLS-1$
         }
         
-        for(Iterator it = projects.iterator(); it.hasNext();) {
-            IProject project = (IProject) it.next();
+        for(IProject project : projects) {
             if(project.isOpen()) {
-                ProjectUtil.deleteMarkers(project, MDAConstants.QVTO_PROBLEM_MARKER);
+                deleteMarkers(project, MDAConstants.QVTO_PROBLEM_MARKER);
             }
         }
     }
-};
+
+    private void deleteMarkers(IProject project, String type) {
+        try {
+            project.deleteMarkers(type, false, IResource.DEPTH_ONE);
+        }
+        catch (CoreException e) {
+            Logger.getLogger().log(Logger.SEVERE, "Failed to delete markers on " + project, e); //$NON-NLS-1$
+        }
+    }
+
+}
 
