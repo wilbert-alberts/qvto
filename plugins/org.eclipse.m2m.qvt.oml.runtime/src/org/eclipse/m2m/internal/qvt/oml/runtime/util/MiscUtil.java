@@ -13,13 +13,10 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.util;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
-import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.common.io.CFileUtil;
 import org.eclipse.osgi.util.NLS;
@@ -30,14 +27,6 @@ import org.eclipse.osgi.util.NLS;
 public class MiscUtil {
 	private MiscUtil() {}
 
-    
-    public static IStatus makeWarningStatus(Exception e) {
-        return new Status(IStatus.WARNING, QvtRuntimePlugin.ID, IStatus.WARNING, NLS.bind(Messages.MiscUtil_WarnMessage, e.getMessage()), e);
-    }
-    
-    public static IStatus makeWarningStatus(String message, Exception e) {
-        return new Status(IStatus.WARNING, QvtRuntimePlugin.ID, IStatus.WARNING, message, e);
-    }
     
     public static IStatus makeErrorStatus(Exception e) {
         return new Status(IStatus.ERROR, QvtRuntimePlugin.ID, IStatus.ERROR, NLS.bind(Messages.MiscUtil_ErrorMessage, e.getMessage()), e);
@@ -51,11 +40,6 @@ public class MiscUtil {
 		return new Status(IStatus.ERROR, QvtRuntimePlugin.ID, IStatus.ERROR, message, null);
 	}	
 		
-	public static MdaException logException(Logger logger, MdaException e) {
-	    logger.log(Level.SEVERE, e.getMessage(), e);
-	    return e;
-	}
-	
 	public static String readStream(CFile file) throws IOException {
 	    StringBuffer contents = new StringBuffer();
 	    Reader reader = CFileUtil.getReader(file);
@@ -86,8 +70,4 @@ public class MiscUtil {
 		return line;
     }
 	
-	public static int getLineCount(CharSequence data) {
-		return getLineNumber(data, data.length());
-	}
-
 }

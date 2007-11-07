@@ -58,10 +58,6 @@ public class QvtLaunchUtil {
     	return targetUris;
 	}
 	
-    public static TargetUriData getTargetUriData(ILaunchConfiguration configuration) throws CoreException {
-    	return getTargetUriData(configuration, 0);
-    }
-    
     public static TargetUriData getTargetUriData(ILaunchConfiguration configuration, int index) throws CoreException {
     	TargetUriData.TargetType targetType = TargetUriData.TargetType.NEW_MODEL;
     	try {
@@ -77,10 +73,6 @@ public class QvtLaunchUtil {
     	
     	return new TargetUriData(targetType, uri, feature, clearContents);
     }
-    
-	public static void saveTargetUriData(ILaunchConfigurationWorkingCopy configuration, TargetUriData targetData) {
-		saveTargetUriData(configuration, targetData, 0);
-	}
     
     public static void saveTargetUriData(ILaunchConfigurationWorkingCopy configuration, TargetUriData targetData, int index) {
     	configuration.setAttribute(getIndexedName(IQvtLaunchConstants.TARGET_TYPE, index), targetData.getTargetType().toString()); 

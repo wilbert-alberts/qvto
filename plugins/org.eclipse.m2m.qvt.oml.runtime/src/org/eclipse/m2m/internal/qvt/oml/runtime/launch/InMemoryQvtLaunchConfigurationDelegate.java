@@ -32,18 +32,18 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalStdLibrary;
-import org.eclipse.m2m.qvt.oml.common.Logger;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.common.launch.EmptyDebugTarget;
 import org.eclipse.m2m.qvt.oml.common.launch.ShallowProcess;
 import org.eclipse.m2m.qvt.oml.common.launch.StreamsProxy;
+import org.eclipse.m2m.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.qvt.oml.library.Context;
 import org.eclipse.m2m.qvt.oml.library.IContext;
 
 
 public class InMemoryQvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelegateBase {
 	
-    public static final String LAUNCH_CONFIGURATION_TYPE_ID = "org.eclipse.m2m.qvt.oml.InMemoryQvtTransfomation"; //$NON-NLS-1$
+    public static final String LAUNCH_CONFIGURATION_TYPE_ID = "org.eclipse.m2m.qvt.oml.InMemoryQvtTransformation"; //$NON-NLS-1$
 	
     /**
      * A handler for transformation job-done-status can be registered, taking argument as 
@@ -56,7 +56,7 @@ public class InMemoryQvtLaunchConfigurationDelegate extends QvtLaunchConfigurati
     
 
 	public void launch(final ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {        
-        Object transObj = InMemoryLaunchUtils.getAttribute(configuration, IQvtLaunchConstants.TRANSFOMATION_ID);
+        Object transObj = InMemoryLaunchUtils.getAttribute(configuration, IQvtLaunchConstants.TRANSFORMATION_ID);
         if (transObj instanceof QvtTransformation == false) {
             throw new IllegalArgumentException("Invalid transformation " + transObj); //$NON-NLS-1$
         }

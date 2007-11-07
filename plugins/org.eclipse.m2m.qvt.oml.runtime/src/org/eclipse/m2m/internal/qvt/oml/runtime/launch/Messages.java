@@ -44,11 +44,6 @@ public class Messages extends NLS {
 	public static String QvtLaunchConfigurationDelegateBase_InplaceFailure;
 	public static String QvtLaunchConfigurationDelegateBase_FeatureSetFailure;
 	
-	//public static String QvtLaunchConfigurationDelegate_ErrorsInProject;
-	//public static String QvtLaunchConfigurationDelegate_ErrorsInQVTModule;
-	//public static String LaunchConfigurationDelegate_SearchingForErrors;
-	//public static String LaunchConfigurationDelegate_SearchingForErrorsIn;
-	
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

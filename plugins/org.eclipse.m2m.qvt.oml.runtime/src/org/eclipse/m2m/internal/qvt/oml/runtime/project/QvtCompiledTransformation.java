@@ -20,34 +20,28 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.QvtConfigurationProperty;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.common.project.CompiledTransformation;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
-import org.eclipse.osgi.util.NLS;
 
 public class QvtCompiledTransformation implements QvtTransformation, CompiledTransformation {
    
 	public static QvtCompiledTransformation createLibraryModule(String namespace, String id, String file) {
 		QvtCompiledTransformation result = new QvtCompiledTransformation(namespace, id, file);
-		result.isLibrary = true;
 		return result;
 	}
 	
 	public QvtCompiledTransformation(String namespace, String id, String file) {
         myNamespace = namespace;
         myId = id;
-        this.isLibrary = false; 
         this.transformationFilePath = file != null ? new Path(file) :
         	new Path(id.replace('.', '/') + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT);
     }
@@ -59,32 +53,8 @@ public class QvtCompiledTransformation implements QvtTransformation, CompiledTra
 		return qvtTransformationImpl;
 	}
 
-	/**
-	 * Indicates that this compiled transformation represents QVT library
-	 * module.
-	 * 
-	 * @return <code>true</code> if this transformation represents library
-	 *         module, <code>false</code> otherwise
-	 */
-	public boolean isLibrary() {
-		return isLibrary;
-	}
-	
     public String getModuleName() {
     	return transformationFilePath.removeFileExtension().lastSegment();
-    }
-
-    public IStatus canRun(EObject in) throws MdaException {
-		EClass inClass = getIn();
-        if (inClass == null || !inClass.isInstance(in)) {
-        	return new Status(IStatus.ERROR, QvtRuntimePlugin.ID, 0, 
-                NLS.bind(org.eclipse.m2m.internal.qvt.oml.runtime.launch.Messages.QvtValidator_IncompatibleInputTypes, 
-                        EmfUtil.getFullName(in.eClass()),
-                        EmfUtil.getFullName(inClass)                        
-                        ), 
-                null);
-        }
-        return Status.OK_STATUS;        
     }
 
     public TransformationRunner.Out run(TransformationRunner.In in) throws MdaException {
@@ -195,6 +165,5 @@ public class QvtCompiledTransformation implements QvtTransformation, CompiledTra
     private QvtTransformation qvtTransformationImpl;
 
     private IPath transformationFilePath;
-    
-    private boolean isLibrary;
+   
 }

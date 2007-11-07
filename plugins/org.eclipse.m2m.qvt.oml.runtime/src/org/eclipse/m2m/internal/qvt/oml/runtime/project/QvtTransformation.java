@@ -14,7 +14,6 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -75,7 +74,6 @@ public interface QvtTransformation extends Transformation {
     EClass getOut() throws MdaException;    
     List<TransformationParameter> getParameters() throws MdaException;
 
-    IStatus canRun(EObject in) throws MdaException;
     TransformationRunner.Out run(TransformationRunner.In in) throws MdaException;
     
     EObject loadInput(URI inputObjectURI) throws MdaException;

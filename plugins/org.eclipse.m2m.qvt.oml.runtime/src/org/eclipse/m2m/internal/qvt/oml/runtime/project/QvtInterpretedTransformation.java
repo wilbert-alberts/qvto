@@ -18,8 +18,6 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EClass;
@@ -31,7 +29,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner.In;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner.Out;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.QvtConfigurationProperty;
@@ -50,7 +47,6 @@ import org.eclipse.ocl.EvaluationVisitor;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
-import org.eclipse.osgi.util.NLS;
 
 public class QvtInterpretedTransformation implements QvtTransformation {
 
@@ -65,39 +61,6 @@ public class QvtInterpretedTransformation implements QvtTransformation {
     	myModule = qvtModule;
     }
 	
-	public boolean isOK() {
-		try {
-			return myModule.getModule().getErrors().length == 0;
-		} catch (MdaException e) {
-			return false;
-		}		
-	}
-	    
-    public IStatus canRun (EObject input) throws MdaException {
-		EClass inClass = myModule.getIn();
-        if (inClass == null) {
-            return new Status(IStatus.ERROR, QvtRuntimePlugin.ID, 0, Messages.QvtInterpretedTransformation_NotExecutable, null);
-        }
-
-        EObject in = null;
-        try {
-        	in = EmfUtil.resolveSource(input, inClass);
-        }
-        catch (WrappedException e) {
-        	throw new MdaException(e.getCause());
-        }
-        
-        if (inClass.isInstance(in)) {
-		    return new Status(IStatus.OK, QvtRuntimePlugin.ID, 0, "", null); //$NON-NLS-1$
-        } 
-		return new Status(IStatus.ERROR, QvtRuntimePlugin.ID, 0, 
-				NLS.bind(org.eclipse.m2m.internal.qvt.oml.runtime.launch.Messages.QvtValidator_IncompatibleInputTypes,
-                        EmfUtil.getFullName(in.eClass()),
-                        EmfUtil.getFullName(inClass)                        
-                        ), 
-                null);
-    }
-    
     public EObject loadInput(URI inputObjectURI) throws MdaException {
     	return EmfUtil.loadModel(inputObjectURI, myModule.getCompiler().getResourceSet());
     }

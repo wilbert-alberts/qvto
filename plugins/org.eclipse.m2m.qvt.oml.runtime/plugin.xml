@@ -2,18 +2,15 @@
 <?eclipse version="3.0"?>
 <plugin>
 
-     <extension-point id="qvtTransformation" name="%qvtTransformation" schema="schema/qvt-transformation.exsd"/>
-     <extension-point id="qvtTransformationImplFactory" name="%qvtTransformationImplFactory" schema="schema/qvtTransformationImplFactory.exsd"/>
+    <extension-point id="qvtTransformation" name="%qvtTransformation" schema="schema/qvt-transformation.exsd"/>
+    <extension-point id="qvtTransformationImplFactory" name="%qvtTransformationImplFactory" schema="schema/qvtTransformationImplFactory.exsd"/>
                  
-    
-  
-           
-  <extension
-        point="org.eclipse.m2m.qvt.oml.importResolverFactory">
-     <factory class="org.eclipse.m2m.internal.qvt.oml.runtime.project.EclipseImportResolverFactory"/>
-  </extension>
+
+    <extension point="org.eclipse.m2m.qvt.oml.importResolverFactory">
+        <factory class="org.eclipse.m2m.internal.qvt.oml.runtime.project.EclipseImportResolverFactory"/>
+    </extension>
    
-   <extension point="org.eclipse.debug.core.launchConfigurationTypes">
+    <extension point="org.eclipse.debug.core.launchConfigurationTypes">
 		<launchConfigurationType
 			name="%qvtInterpreter"
 			delegate="org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchConfigurationDelegate"
@@ -21,26 +18,11 @@
 			id="org.eclipse.m2m.qvt.oml.QvtTransformation">
 		</launchConfigurationType>
 
-		<!--
-		<launchConfigurationType
-			name="%qvtTransformation"
-			delegate="org.eclipse.m2m.internal.qvt.oml.runtime.launch.NonInterpretedQvtLaunchConfigurationDelegate"
-			modes="run"               
-			id="org.eclipse.m2m.qvt.oml.NonInterpretedQvtTransformation"/>
-		-->
-			
         <launchConfigurationType
-              category="org.eclipse.ui.externaltools.builder"
-              delegate="org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtCompiledLaunchConfigurationDelegate"
-              id="org.eclipse.m2m.qvt.oml.QvtCompiledTransfomation"
-              modes="run"
-              name="%qvtCompiledTransformation"/>
-              
-        <launchConfigurationType
-              delegate="org.eclipse.m2m.internal.qvt.oml.runtime.launch.InMemoryQvtLaunchConfigurationDelegate"
-              id="org.eclipse.m2m.qvt.oml.InMemoryQvtTransfomation"
-              modes="run"
               name="%qvtTransformation"
+              delegate="org.eclipse.m2m.internal.qvt.oml.runtime.launch.InMemoryQvtLaunchConfigurationDelegate"
+              modes="run"
+              id="org.eclipse.m2m.qvt.oml.InMemoryQvtTransformation"
               public="false"/>			
 	</extension> 
     
