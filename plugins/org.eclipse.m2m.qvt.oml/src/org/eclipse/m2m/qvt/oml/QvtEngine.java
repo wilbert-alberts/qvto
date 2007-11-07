@@ -89,10 +89,6 @@ public class QvtEngine {
 		return myCompiler;
 	}
     
-    public IImportResolver getImportResolver() {
-        return myImportResolver;
-    }
-	
 	private void reset(QvtCompilerOptions options) { // TODO: QvtException
 	    if ((options == null) || options.isWorkspaceModelResolutionEnabled()) {
 	        myCompiler = new QvtCompiler(myImportResolver);
