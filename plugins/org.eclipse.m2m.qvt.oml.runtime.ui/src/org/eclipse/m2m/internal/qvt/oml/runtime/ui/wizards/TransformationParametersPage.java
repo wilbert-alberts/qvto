@@ -36,10 +36,10 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.Transf
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch.Messages;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch.TransformationSignatureLaunchControl;
-import org.eclipse.m2m.qvt.oml.common.Logger;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
+import org.eclipse.m2m.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.qvt.oml.emf.util.StatusUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.osgi.util.NLS;

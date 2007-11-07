@@ -26,7 +26,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.window.Window;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessage;
-import org.eclipse.m2m.internal.qvt.oml.common.ui.controls.BrowseInterpretedTransfomationDialog;
+import org.eclipse.m2m.internal.qvt.oml.common.ui.controls.BrowseInterpretedTransformationDialog;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.controls.UniSelectTransformationControl;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.IUriGroup;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.MdaLaunchTab;
@@ -42,11 +42,11 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.QvtCompiledTransformationLabelProvider;
 import org.eclipse.m2m.qvt.oml.QvtEngine;
-import org.eclipse.m2m.qvt.oml.common.Logger;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.qvt.oml.emf.util.StatusUtil;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -104,7 +104,7 @@ public class QvtLauncherTab extends MdaLaunchTab {
                         return resource instanceof IFile && MDAConstants.QVTO_FILE_EXTENSION.equalsIgnoreCase(resource.getFileExtension());
                     }
             	};
-            	BrowseInterpretedTransfomationDialog.ISelectionListener selectionListener = new BrowseInterpretedTransfomationDialog.ISelectionListener() {
+            	BrowseInterpretedTransformationDialog.ISelectionListener selectionListener = new BrowseInterpretedTransformationDialog.ISelectionListener() {
 					public IStatus selectionChanged(URI selectedUri) {
 						String transfName = ""; //$NON-NLS-1$
 				        try {
@@ -125,7 +125,7 @@ public class QvtLauncherTab extends MdaLaunchTab {
 				        return TransformationControls.makeStatus(IStatus.OK, NLS.bind(Messages.QvtLauncherTab_TransformationSelected, transfName));
 					}
             	};
-            	BrowseInterpretedTransfomationDialog dialog = new BrowseInterpretedTransfomationDialog(getShell(), resourceFilter,
+            	BrowseInterpretedTransformationDialog dialog = new BrowseInterpretedTransformationDialog(getShell(), resourceFilter,
                 		new QvtCompiledTransformationLabelProvider(), QvtTransformationRegistry.getInstance(), 
                 		myQvtFile.getText(), selectionListener);
                 dialog.create();

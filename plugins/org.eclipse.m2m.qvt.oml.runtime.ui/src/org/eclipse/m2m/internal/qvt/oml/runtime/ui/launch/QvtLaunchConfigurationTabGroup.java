@@ -11,14 +11,11 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
-import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTabGroup;
 import org.eclipse.debug.ui.CommonTab;
 import org.eclipse.debug.ui.ILaunchConfigurationDialog;
 import org.eclipse.debug.ui.ILaunchConfigurationTab;
-import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.ITransformationMaker;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtModule;
@@ -48,15 +45,6 @@ public class QvtLaunchConfigurationTabGroup extends AbstractLaunchConfigurationT
 		final ILaunchConfigurationTab[] tabs = getTabs();
 		BusyIndicator.showWhile(Display.getCurrent(), new Runnable() {
 			public void run() {
-				try {
-					String id = config.getAttribute(IJavaLaunchConfigurationConstants.ATTR_SOURCE_PATH_PROVIDER, (String) null);
-					if (id == null && config instanceof ILaunchConfigurationWorkingCopy) {
-						ILaunchConfigurationWorkingCopy wc = (ILaunchConfigurationWorkingCopy) config;
-						wc.setAttribute(IJavaLaunchConfigurationConstants.ATTR_SOURCE_PATH_PROVIDER,
-							"org.eclipse.m2m.qvt.oml.launch.QvtSourcePathProvider"); //$NON-NLS-1$
-					}
-				} catch (CoreException e) {
-				}
 				for (int i = 0; i < tabs.length; i++) {
 					tabs[i].initializeFrom(config);
 				}

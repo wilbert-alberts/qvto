@@ -32,11 +32,11 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.QvtRuntimePluginImages;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.QvtRuntimeUIPlugin;
-import org.eclipse.m2m.qvt.oml.common.Logger;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.IMetamodelHandler;
 import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.MetamodelHandlerManager;
 import org.eclipse.osgi.util.NLS;
@@ -134,7 +134,7 @@ public class RunInterpretedTransformationWizard extends PersistedValuesWizard {
         
         workingCopy.setAttribute(IDebugUIConstants.ATTR_LAUNCH_IN_BACKGROUND, false); 
         
-        InMemoryLaunchUtils.setAttribute(workingCopy, IQvtLaunchConstants.TRANSFOMATION_ID, myTransformation);
+        InMemoryLaunchUtils.setAttribute(workingCopy, IQvtLaunchConstants.TRANSFORMATION_ID, myTransformation);
 
         myTransformationParametersPage.applyConfiguration(workingCopy);
         

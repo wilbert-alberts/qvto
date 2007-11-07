@@ -48,18 +48,6 @@
             class="org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch.QvtLaunchConfigurationTabGroup"
             id="org.eclipse.m2m.qvt.oml.internal.runtime.ui.launch.QvtLaunchConfigurationTabGroup">
         </launchConfigurationTabGroup>
-                
-        <launchConfigurationTabGroup
-            type="org.eclipse.m2m.qvt.oml.NonInterpretedQvtTransformation"
-            class="org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch.NonInterpretedQvtLaunchConfigurationTabGroup"
-            id="org.eclipse.m2m.qvt.oml.internal.runtime.ui.launch.NonInterpretedQvtLaunchConfigurationTabGroup">
-        </launchConfigurationTabGroup>
-        
-        <launchConfigurationTabGroup
-              class="org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch.QvtCompiledLaunchConfigurationTabGroup"
-              id="org.eclipse.m2m.qvt.oml.internal.launch.QvtCompiledLaunchConfigurationTabGroup"
-              type="org.eclipse.m2m.qvt.oml.QvtCompiledTransfomation">
-		</launchConfigurationTabGroup>
     </extension>    
 
    <extension point="org.eclipse.ui.editors">
@@ -83,15 +71,10 @@
 	 </extension>
 
     <extension point="org.eclipse.debug.ui.launchConfigurationTypeImages">        
-        <launchConfigurationTypeImage
-            icon="icons/pr-Model_to_model.gif"
-            configTypeID="org.eclipse.m2m.qvt.oml.QvtCompiledTransfomation"
-            id="org.eclipse.m2m.qvt.oml.QvtCompiledTransformationImage">
-        </launchConfigurationTypeImage>
         
         <launchConfigurationTypeImage
             icon="icons/pr-Model_to_model.gif"
-            configTypeID="org.eclipse.m2m.qvt.oml.InMemoryQvtTransfomation"            
+            configTypeID="org.eclipse.m2m.qvt.oml.InMemoryQvtTransformation"            
             id="org.eclipse.m2m.qvt.oml.QvtCompiledTransformationImage">
         </launchConfigurationTypeImage>        
 
@@ -101,11 +84,6 @@
             id="org.eclipse.m2m.qvt.oml.QvtTransformationImage">
         </launchConfigurationTypeImage>
 
-        <launchConfigurationTypeImage
-            icon="icons/pr-Model_to_model.gif"
-            configTypeID="org.eclipse.m2m.qvt.oml.NonInterpretedQvtTransformation"
-            id="org.eclipse.m2m.qvt.oml.NonInterpretedQvtTransformationImage">
-        </launchConfigurationTypeImage>        
     </extension>    
 
 </plugin>
