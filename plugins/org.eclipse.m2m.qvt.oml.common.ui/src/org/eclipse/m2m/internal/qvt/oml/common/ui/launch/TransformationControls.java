@@ -11,13 +11,10 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.common.ui.launch;
 
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.window.Window;
@@ -27,10 +24,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessageEx;
 import org.eclipse.m2m.qvt.oml.common.ui.IModelParameterInfo;
 import org.eclipse.m2m.qvt.oml.common.ui.IModelParameterInfo.Direction;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
-import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
@@ -48,59 +42,6 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 public class TransformationControls {
     private TransformationControls() {}
-    
-    public static Text createFolderGroup(final Composite parent, String name, final String helpId){
-        createLabel(parent,name, GRID);
-        final Text text = createText(parent, TEXT_GRID);
-        
-        Button browseWorkspaceButton = createButton(parent, Messages.BrowseButtonLabel);
-        browseWorkspaceButton.addSelectionListener(new SelectionAdapter(){
-            @Override
-			public void widgetSelected(SelectionEvent e) {
-                IContainer folder = WorkspaceUtils.getWorkspaceContainer(text.getText());
-                folder = (IContainer)browseWorkspace(
-                        ResourcesPlugin.getWorkspace().getRoot(),
-                        folder,
-                        new ViewerFilter(){
-                            @Override
-							public boolean select(Viewer viewer, Object parentElement, Object element) {
-                                return element instanceof IContainer;
-                            }
-                        },
-                        null, 
-                        parent.getShell(),
-                        Messages.BrowseFolderTitle,
-                        helpId);
-                
-                if(folder!=null){
-                    text.setText(folder.getFullPath().toString());
-                }
-            } 
-        });
-        
-        return text;
-    }
-    
-    public static SourceUriGroup createUriGroup(Composite parent, String name){
-        SourceUriGroup uriGroup = new SourceUriGroup(parent, name);
-        GridData data = new GridData(GridData.FILL_HORIZONTAL);
-        data.horizontalSpan = GRID;
-//        uriGroup.setLayoutData(data);
-        return uriGroup;
-    }
-    
-    public static TargetUriGroup createTargetUriGroup(Composite parent, ISourceUriGroup sourceGroup) {
-    	Group group = new Group(parent, SWT.NONE);
-    	group.setText(Messages.TransformationControls_TargetModel);
-    	group.setLayout(new FillLayout());
-
-    	GridData data = new GridData(GridData.FILL_HORIZONTAL);
-        data.horizontalSpan = GRID;
-        group.setLayoutData(data);
-    	
-    	TargetUriGroup uriGroup = new TargetUriGroup(group, sourceGroup); 
-        return uriGroup;
-    }
     
     public static IUriGroup createUriGroup(Composite parent, IModelParameterInfo paramInfo) {
     	Group group = new Group(parent, SWT.NONE);
@@ -216,20 +157,6 @@ public class TransformationControls {
         }
         
         return null;
-    }
-    
-    public static class FileValidator implements ISelectionStatusValidator {
-        public IStatus validate(Object[] selection) {
-            if (selection != null && selection.length > 0 && selection[0] instanceof IFile){
-                return makeStatus(IStatus.OK);
-            }
-            
-            return makeStatus(IStatus.ERROR);
-        }
-    }
-    
-    public static IStatus makeStatus(int code){
-        return makeStatus(code,""); //$NON-NLS-1$
     }
     
     public static IStatus makeStatus(int code,String message){

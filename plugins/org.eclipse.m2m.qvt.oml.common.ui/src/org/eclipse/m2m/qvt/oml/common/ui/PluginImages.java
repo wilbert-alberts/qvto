@@ -17,7 +17,7 @@ import java.util.HashMap;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
-import org.eclipse.m2m.qvt.oml.common.Logger;
+import org.eclipse.m2m.qvt.oml.emf.util.Logger;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 

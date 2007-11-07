@@ -26,18 +26,18 @@ import org.eclipse.ui.dialogs.SelectionStatusDialog;
 /**
  * @author sboyko
  */
-public class BrowseInterpretedTransfomationDialog extends SelectionStatusDialog {
+public class BrowseInterpretedTransformationDialog extends SelectionStatusDialog {
 
 	public static interface ISelectionListener {
         IStatus selectionChanged(URI selectedUri);
     }
 
-    public BrowseInterpretedTransfomationDialog(Shell shell, UniSelectTransformationControl.IResourceFilter resourceFilter,
+    public BrowseInterpretedTransformationDialog(Shell shell, UniSelectTransformationControl.IResourceFilter resourceFilter,
     		ILabelProvider labelProvider, TransformationRegistry registry, String selectedTransId, ISelectionListener selectionListener) {
         super(shell);
 
-		setTitle(Messages.BrowseInterpretedTransfomationDialog_Title);
-		setMessage(Messages.BrowseInterpretedTransfomationDialog_Description);
+		setTitle(Messages.BrowseInterpretedTransformationDialog_Title);
+		setMessage(Messages.BrowseInterpretedTransformationDialog_Description);
 
 		setShellStyle(getShellStyle() | SWT.RESIZE);
 		setStatusLineAboveButtons(true);

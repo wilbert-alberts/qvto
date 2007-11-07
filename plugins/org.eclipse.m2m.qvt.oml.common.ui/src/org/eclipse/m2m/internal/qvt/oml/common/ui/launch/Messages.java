@@ -25,10 +25,6 @@ public class Messages extends NLS {
     public static String BrowseButtonLabel;
     public static String BrowseFolderTitle;
     
-    public static String TargetUriSelector_Model;
-    public static String TargetUriSelector_NewModel;
-    public static String TargetUriSelector_ExistingModel;
-    public static String TargetUriSelector_Inplace;
     public static String TargetUriSelector_Uri;
     public static String TargetUriSelector_Browse;
     public static String TargetUriSelector_Feature;
@@ -36,8 +32,6 @@ public class Messages extends NLS {
     public static String TargetUriSelector_ClearContents;
     
     public static String ReferenceSelectionDialog_Title;
-    
-    public static String TransformationControls_TargetModel;
     
     public static String UniSelectTransformationControl_CurrentSelection;
     public static String UniSelectTransformationControl_DeployedTransformations;

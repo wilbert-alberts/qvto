@@ -23,8 +23,8 @@ public class Messages extends NLS {
     public static String OpenClassifierDialog_queryLabel;
     public static String OpenClassifierDialog_resultsLabel;
     
-    public static String BrowseInterpretedTransfomationDialog_Title;
-    public static String BrowseInterpretedTransfomationDialog_Description;
+    public static String BrowseInterpretedTransformationDialog_Title;
+    public static String BrowseInterpretedTransformationDialog_Description;
     
     static {
         // initialize resource bundle

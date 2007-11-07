@@ -20,8 +20,6 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -98,19 +96,6 @@ public abstract class MdaLaunchTab extends AbstractLaunchConfigurationTab {
         
         return window.getActivePage();
     }
-    
-    protected final ModifyListener MODIFY_LISTENER = new ModifyListener() {
-        public void modifyText(ModifyEvent e) {
-            myModified = true;
-            updateLaunchConfigurationDialog();
-        }
-    };
-    
-    protected final ISourceUriGroup.IModifyListener SOURCE_URI_LISTENER = new ISourceUriGroup.IModifyListener() {
-		public void modified() {
-            updateLaunchConfigurationDialog();
-		}
-    };
     
     public boolean isModified() {
         return myModified;
