@@ -29,24 +29,18 @@
       <import plugin="org.eclipse.core.runtime"/>
       <import plugin="org.eclipse.core.resources"/>
       <import plugin="org.eclipse.emf.ecore.xmi"/>
+      <import plugin="org.eclipse.ocl.ecore"/>
       <import plugin="org.eclipse.emf.codegen.ecore.ui"/>
       <import plugin="org.eclipse.ui.editors"/>
       <import plugin="org.eclipse.core.filesystem"/>
       <import plugin="org.eclipse.debug.core"/>
       <import plugin="org.eclipse.jdt.core"/>
-      <import plugin="org.eclipse.jdt.launching"/>
       <import plugin="org.eclipse.pde.core"/>
-      <import plugin="org.eclipse.emf.ecore.edit"/>
       <import plugin="org.eclipse.ui.ide"/>
-      <import plugin="org.eclipse.jdt.ui"/>
-      <import plugin="org.eclipse.pde.ui"/>
       <import plugin="org.eclipse.debug.ui"/>
-      <import plugin="org.eclipse.ui.externaltools"/>
       <import plugin="org.eclipse.emf.edit.ui"/>
-      <import plugin="org.eclipse.jface.text"/>
-      <import plugin="org.eclipse.ui.workbench.texteditor"/>
-      <import plugin="org.eclipse.ocl.ecore"/>
       <import plugin="org.eclipse.core.expressions"/>
+      <import plugin="org.eclipse.emf.ecore"/>
    </requires>
 
    <plugin
