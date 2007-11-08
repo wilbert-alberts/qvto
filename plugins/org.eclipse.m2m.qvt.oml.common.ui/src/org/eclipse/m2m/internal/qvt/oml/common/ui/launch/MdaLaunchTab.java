@@ -14,11 +14,10 @@ package org.eclipse.m2m.internal.qvt.oml.common.ui.launch;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
-import org.eclipse.jdt.ui.ISharedImages;
-import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.m2m.internal.qvt.oml.common.ui.CommonPluginImages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -57,7 +56,7 @@ public abstract class MdaLaunchTab extends AbstractLaunchConfigurationTab {
 
     @Override
 	public Image getImage() {
-        return JavaUI.getSharedImages().getImage(ISharedImages.IMG_OBJS_PACKAGE);
+        return CommonPluginImages.getInstance().getImage(CommonPluginImages.TRANSFORMATION);
     }
     
     public static IFile getFileContext() {

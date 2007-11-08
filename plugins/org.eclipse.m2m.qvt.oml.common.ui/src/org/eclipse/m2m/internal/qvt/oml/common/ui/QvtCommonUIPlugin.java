@@ -20,7 +20,7 @@ import org.osgi.framework.BundleContext;
 public class QvtCommonUIPlugin extends Plugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.eclipse.m2m.qvt.oml.common.ui";
+	public static final String PLUGIN_ID = "org.eclipse.m2m.qvt.oml.common.ui"; //$NON-NLS-1$
 
 	// The shared instance
 	private static QvtCommonUIPlugin plugin;
