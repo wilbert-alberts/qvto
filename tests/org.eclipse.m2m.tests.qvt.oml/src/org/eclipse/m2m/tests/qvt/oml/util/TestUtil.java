@@ -47,6 +47,9 @@ import org.osgi.framework.Bundle;
  * @author vrepeshko
  */
 public class TestUtil extends Assert {
+	
+	public static final String BUNDLE = "org.eclipse.m2m.tests.qvt.oml"; //$NON-NLS-1$
+
 	private TestUtil() {}
 	
 	public static void turnOffAutoBuilding() throws CoreException {
@@ -196,5 +199,4 @@ public class TestUtil extends Assert {
         testProject.addWorkspaceProject(project);
     }    
 	
-	private static final String BUNDLE = "org.eclipse.m2m.tests.qvt.oml"; //$NON-NLS-1$
 }
