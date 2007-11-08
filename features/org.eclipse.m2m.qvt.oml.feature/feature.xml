@@ -26,33 +26,39 @@
    </url>
 
    <requires>
-      <import plugin="org.eclipse.ui"/>
       <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.debug.ui"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.common"/>
-      <import plugin="org.eclipse.core.resources"/>
-      <import plugin="org.eclipse.emf.ecore"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.ocl.emf"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.emf.util"/>
       <import plugin="org.eclipse.ocl"/>
+      <import plugin="org.eclipse.emf.ecore"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.emf.util"/>
       <import plugin="org.eclipse.ocl.ecore"/>
-      <import plugin="org.eclipse.debug.core"/>
-      <import plugin="org.eclipse.jdt.core"/>
-      <import plugin="org.eclipse.emf.ecore.xmi"/>
-      <import plugin="org.eclipse.ui.externaltools"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.emf.util.ui"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.ocl.common"/>
-      <import plugin="org.eclipse.emf.common.ui"/>
-      <import plugin="org.eclipse.pde.ui"/>
-      <import plugin="org.eclipse.ui.ide"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.common.ui"/>
-      <import plugin="org.eclipse.emf.ecore.edit"/>
-      <import plugin="org.eclipse.emf.edit.ui"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.common"/>
       <import plugin="net.sourceforge.lpg.lpgjavaruntime"/>
    </requires>
 
    <plugin
-         id="org.eclipse.m2m.qvt.oml.project"
+         id="org.eclipse.m2m.qvt.oml.ocl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.m2m.qvt.oml.ocl.common"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.m2m.qvt.oml.ocl.emf"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.m2m.qvt.oml.ocl.emf.libraries"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -60,20 +66,6 @@
 
    <plugin
          id="org.eclipse.m2m.qvt.oml"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2m.qvt.oml.runtime"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2m.qvt.oml.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
