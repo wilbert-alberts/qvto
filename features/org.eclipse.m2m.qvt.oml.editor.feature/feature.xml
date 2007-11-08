@@ -34,6 +34,7 @@
       <import plugin="org.eclipse.m2m.qvt.oml"/>
       <import plugin="org.eclipse.m2m.qvt.oml.ui"/>
       <import plugin="org.eclipse.m2m.qvt.oml.emf.util"/>
+      <import plugin="net.sourceforge.lpg.lpgjavaruntime"/>
    </requires>
 
    <plugin
