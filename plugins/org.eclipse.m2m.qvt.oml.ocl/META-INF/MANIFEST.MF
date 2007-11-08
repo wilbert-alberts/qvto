@@ -9,6 +9,5 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ocl
 Eclipse-LazyStart: true
 Export-Package: org.eclipse.m2m.qvt.oml.ocl,
- org.eclipse.m2m.qvt.oml.ocl.completion,
  org.eclipse.m2m.qvt.oml.ocl.metainfo
 Bundle-Activator: org.eclipse.m2m.qvt.oml.ocl.OclPlugin
