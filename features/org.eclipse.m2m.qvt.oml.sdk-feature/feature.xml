@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.m2m.qvt.oml.sdk"
+      label="%featureName"
+      version="1.0.0.qualifier"
+      provider-name="%providerName"
+      image="eclipse_update_120.jpg">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <url>
+      <update label="%updateSiteName" url="http://altd.borland.com/update/main"/>
+      <discovery label="%updateSiteName" url="http://altd.borland.com/update/main"/>
+   </url>
+
+   <includes
+         id="org.eclipse.m2m.qvt.oml.common"
+         version="0.0.0"/>
+         
+   <includes
+         id="org.eclipse.m2m.qvt.oml"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.m2m.qvt.oml.runtime"
+         version="0.0.0"/>
+         
+   <includes
+         id="org.eclipse.m2m.qvt.oml.editor"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.m2m.qvt.oml.samples"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.m2m.qvt.oml.common.source"
+         version="0.0.0"
+         name="Operational QVT Developer Resources"/>
+   <includes
+         id="org.eclipse.m2m.qvt.oml.source"
+         version="0.0.0"
+         name="Operational QVT Developer Resources"/>
+   <includes
+         id="org.eclipse.m2m.qvt.oml.runtime.source"
+         version="0.0.0"
+         name="Operational QVT Developer Resources"/>
+   <includes
+         id="org.eclipse.m2m.qvt.oml.editor.source"
+         version="0.0.0"
+         name="Operational QVT Developer Resources"/>
+</feature>
