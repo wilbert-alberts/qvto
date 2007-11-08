@@ -8,13 +8,11 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui.ide,
- org.eclipse.xsd,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.emf.edit.ui,
  org.eclipse.debug.core,
- org.eclipse.m2m.qvt.oml.common,
- org.eclipse.m2m.qvt.oml.emf.util
+ org.eclipse.m2m.qvt.oml.common
 Export-Package: org.eclipse.m2m.qvt.oml.samples,
  org.eclipse.m2m.qvt.oml.samples.ui,
  org.eclipse.m2m.qvt.oml.samples.ui.wizard,
