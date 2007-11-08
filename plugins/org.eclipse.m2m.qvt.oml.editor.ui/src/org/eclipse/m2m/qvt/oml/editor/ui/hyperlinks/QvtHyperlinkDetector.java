@@ -13,7 +13,6 @@ package org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks;
 
 import java.util.List;
 
-import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
@@ -23,10 +22,7 @@ import org.eclipse.m2m.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.qvt.oml.editor.ui.QvtDocumentProvider;
 import org.eclipse.m2m.qvt.oml.editor.ui.QvtEditor;
 import org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks.IHyperlinkDetectorHelper.IDetectionContext;
-import org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage;
-import org.eclipse.m2m.qvt.oml.ocl.completion.CompletionData;
 import org.eclipse.ocl.internal.cst.CSTNode;
-import org.eclipse.ocl.internal.cst.OCLExpressionCS;
 
 
 /**
@@ -39,7 +35,6 @@ public class QvtHyperlinkDetector implements IHyperlinkDetector {
 		myEditor = editor;
 		myHelpers = new IHyperlinkDetectorHelper[] {
 				new ImportHyperlinkDetector(),
-				new ImperativeOperationHyperlinkDetector(),
 				new PathNameHyperlinkDetector(),
 				new ObjectPropertyHyperlinkDetector(),
 				new VariableHyperlinkDetector(),
@@ -56,14 +51,10 @@ public class QvtHyperlinkDetector implements IHyperlinkDetector {
 		if (compiledModule == null) {
 			return null;
 		}
-		final CompletionData completionData = documentProvider.getCompletionData();
-		if (completionData == null) {
-			return null;
-		}
 
 		List<CSTNode> elements = CSTHelper.selectTargetedElements(compiledModule.getSyntaxElement().getModuleCS(), region);
 		
-		Context context = new Context(documentProvider.getCompiledModule(), completionData, region);		
+		Context context = new Context(documentProvider.getCompiledModule(), region);		
 		
 		for (CSTNode element : elements) {
 			for (IHyperlinkDetectorHelper helper : myHelpers) {
@@ -94,23 +85,16 @@ public class QvtHyperlinkDetector implements IHyperlinkDetector {
 	private static class Context implements IDetectionContext {
 
 		final CompiledModule compiledModule;
-		final CompletionData completionData;
 		final IRegion region;
 		CSTNode syntaxElement;
 		
-		public Context(CompiledModule module, CompletionData completionData, IRegion region) {
+		public Context(CompiledModule module, IRegion region) {
 			this.compiledModule = module;
-			this.completionData = completionData;
 			this.region = region;
 		}		
 
 		public CompiledModule getModule() {
 			return compiledModule;
-		}
-		
-		
-		public CompletionData getCompletionData() {			
-			return completionData;
 		}
 		
 		public IRegion getRegion() {			

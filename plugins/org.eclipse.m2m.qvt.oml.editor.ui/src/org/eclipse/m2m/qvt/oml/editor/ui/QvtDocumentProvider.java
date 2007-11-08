@@ -14,7 +14,6 @@ package org.eclipse.m2m.qvt.oml.editor.ui;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
-import org.eclipse.m2m.qvt.oml.ocl.completion.CompletionData;
 import org.eclipse.ui.editors.text.TextFileDocumentProvider;
 import org.eclipse.ui.texteditor.ResourceMarkerAnnotationModel;
 
@@ -29,19 +28,10 @@ public class QvtDocumentProvider extends TextFileDocumentProvider {
         return myCompiledModule;
     }
 
-    public void setCompletionData(final CompletionData completionData) {
-        myCompletionData = completionData;
-    }
-    
-    public CompletionData getCompletionData() {
-        return myCompletionData;
-    }
-    
     @Override
 	protected IAnnotationModel createAnnotationModel(IFile file) {
     	return new ResourceMarkerAnnotationModel(file);
     }
     
     private CompiledModule myCompiledModule;
-    private CompletionData myCompletionData = CompletionData.EMPTY;
 }

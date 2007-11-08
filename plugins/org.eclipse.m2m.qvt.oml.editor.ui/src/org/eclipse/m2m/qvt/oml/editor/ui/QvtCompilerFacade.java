@@ -42,7 +42,6 @@ import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilationResult;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.emf.util.Logger;
-import org.eclipse.m2m.qvt.oml.ocl.completion.CompletionData;
 import org.eclipse.ui.part.FileEditorInput;
 
 /**
@@ -103,11 +102,9 @@ public class QvtCompilerFacade {
                 
                 if (result != null) {
                     documentProvider.setMappingModule(result.getModule());
-                    documentProvider.setCompletionData(result.getCompletionData());
                 }
             } catch (MdaException e) {
                 documentProvider.setMappingModule(result != null ? result.getModule() : null);
-                documentProvider.setCompletionData(CompletionData.EMPTY);
                 Logger.getLogger().log(Logger.SEVERE, "Error during compiling document", e); //$NON-NLS-1$
             }
             
