@@ -39,7 +39,7 @@ public class MiscUtil {
 	public static IStatus makeErrorStatus(String message) {
 		return new Status(IStatus.ERROR, QvtRuntimePlugin.ID, IStatus.ERROR, message, null);
 	}	
-		
+	
 	public static String readStream(CFile file) throws IOException {
 	    StringBuffer contents = new StringBuffer();
 	    Reader reader = CFileUtil.getReader(file);

@@ -13,14 +13,10 @@ Export-Package: org.eclipse.m2m.internal.qvt.oml.runtime,
  org.eclipse.m2m.internal.qvt.oml.runtime.project.config,
  org.eclipse.m2m.internal.qvt.oml.runtime.util;x-internal:=true
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.core.resources,
  org.eclipse.debug.core,
- org.eclipse.jdt.core,
  org.eclipse.emf.ecore.xmi,
- org.eclipse.ui.externaltools,
  org.eclipse.m2m.qvt.oml,
- org.eclipse.m2m.qvt.oml.emf.util,
  org.eclipse.m2m.qvt.oml.common,
- org.eclipse.m2m.qvt.oml.emf.util.ui,
- org.eclipse.m2m.qvt.oml.ocl.common
+ org.eclipse.m2m.qvt.oml.emf.util,
+ org.eclipse.m2m.qvt.oml.emf.util.ui
 Eclipse-LazyStart: true
