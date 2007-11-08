@@ -12,23 +12,17 @@
 package org.eclipse.m2m.qvt.oml.compiler;
 
 import org.eclipse.m2m.qvt.oml.QvtMessage;
-import org.eclipse.m2m.qvt.oml.ocl.completion.CompletionData;
 
 
 public class QvtCompilationResult {
-    QvtCompilationResult(final CompiledModule module, final CompletionData data) {
+    QvtCompilationResult(final CompiledModule module) {
         myModule = module;
-        myData = data;
     }
     
     public CompiledModule getModule() {
         return myModule;
     }
     
-    public CompletionData getCompletionData() {
-        return myData;
-    }
-
     public QvtMessage[] getErrors() {
         return myModule.getErrors();
     }
@@ -42,5 +36,4 @@ public class QvtCompilationResult {
     }
     
     private final CompiledModule myModule;
-    private final CompletionData myData;
 }

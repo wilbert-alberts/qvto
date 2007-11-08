@@ -55,7 +55,6 @@ import org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory;
 import org.eclipse.m2m.qvt.oml.internal.cst.ImportCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.LibraryImportCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
-import org.eclipse.m2m.qvt.oml.ocl.completion.CompletionData;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.internal.cst.PathNameCS;
 import org.eclipse.osgi.util.NLS;
@@ -316,7 +315,7 @@ public class QvtCompiler {
         
         CompiledModule compModule = new CompiledModule(module, mma, mma.getSource(), allMessages);
 
-        result = new QvtCompilationResult(compModule, CompletionData.EMPTY);
+        result = new QvtCompilationResult(compModule);
                 
         return result;
     }    

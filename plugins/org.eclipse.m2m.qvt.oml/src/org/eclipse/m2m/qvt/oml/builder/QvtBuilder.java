@@ -43,7 +43,6 @@ import org.eclipse.m2m.qvt.oml.compiler.QvtCompilationResult;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.qvt.oml.emf.util.urimap.MetamodelURIMappingHelper;
-import org.eclipse.ui.texteditor.MarkerUtilities;
 
 
 
@@ -221,10 +220,10 @@ public class QvtBuilder extends IncrementalProjectBuilder {
     }
         
     private void createQvtMarker(IFile curFile, QvtMessage e) {
-        Map<String, Integer> attributes = new HashMap<String, Integer>();
-        MarkerUtilities.setCharStart(attributes, e.getOffset());
-        MarkerUtilities.setCharEnd(attributes, e.getOffset() + e.getLength());
-        MarkerUtilities.setMessage(attributes, e.getMessage());
+        Map<String, Object> attributes = new HashMap<String, Object>();
+        attributes.put(IMarker.CHAR_START, new Integer(e.getOffset()));
+        attributes.put(IMarker.CHAR_END, new Integer(e.getOffset() + e.getLength()));
+        attributes.put(IMarker.MESSAGE, e.getMessage());
         attributes.put(IMarker.SEVERITY, new Integer(e.getSeverity()));
         try {
             IMarker marker = curFile.createMarker(QvtCompiler.PROBLEM_MARKER);
