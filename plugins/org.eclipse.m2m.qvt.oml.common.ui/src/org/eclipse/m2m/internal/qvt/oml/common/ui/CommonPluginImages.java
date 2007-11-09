@@ -23,8 +23,9 @@ public class CommonPluginImages extends PluginImages {
     }
     
     
-    public static final String ERROR_DECORATOR = "error-co"; //$NON-NLS-1$    
-
+    public static final String WARNING_CO = "warning-co"; //$NON-NLS-1$
+    public static final String ERROR_CO = "error-co"; //$NON-NLS-1$
+    
     public static final String REGISTRY = "registry"; //$NON-NLS-1$
     public static final String TRANSFORMATION = "pr-Model_to_model"; //$NON-NLS-1$
     
@@ -42,7 +43,8 @@ public class CommonPluginImages extends PluginImages {
     
     @Override
 	protected void declareImages() {
-        declareRegistryImage(ERROR_DECORATOR, "icons/error-co.gif"); //$NON-NLS-1$
+        declareRegistryImage(WARNING_CO, "icons/warning-co.gif"); //$NON-NLS-1$
+        declareRegistryImage(ERROR_CO, "icons/error-co.gif"); //$NON-NLS-1$
         declareRegistryImage(REGISTRY, "icons/registry.gif"); //$NON-NLS-1$
         declareRegistryImage(TRANSFORMATION, "icons/pr-Model_to_model.gif"); //$NON-NLS-1$        
         declareRegistryImage(METAMODELS, "icons/metamodels.gif"); //$NON-NLS-1$        
