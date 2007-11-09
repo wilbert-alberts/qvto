@@ -166,7 +166,7 @@ public abstract class TestTransformation extends TestCase {
     }
     
     public static void saveTraceData(Trace trace, CFile qvtFile) throws MdaException {
-        TraceSerializer.saveTraceModel(trace, getTraceFile(qvtFile));
+        new TraceSerializer(trace).saveTraceModel(getTraceFile(qvtFile));
     }
     
     public static EObject saveLoad(IFile transformation, EObject out) throws Exception {
