@@ -72,13 +72,9 @@ public class OperationHyperlinkDetector implements IHyperlinkDetectorHelper {
 	
 	public static MappingMethodCS resolveMappingOperationDecl(SimpleNameCS nameCS) {
 		EOperation operation = resolveOperationDecl(nameCS);
-		if(operation != null) {
-			// handle specially operations defined in a QVT module
-			ImperativeOperation imperativeOperation = ASTBindingHelper.resolveEnvOperationBinding(operation);
-			if(imperativeOperation != null) {
-				CSTNode resultCS = ASTBindingHelper.resolveCSTNode(imperativeOperation);
-				return (resultCS instanceof MappingMethodCS) ? (MappingMethodCS) resultCS : null;
-			}
+		if(operation instanceof ImperativeOperation) {
+			CSTNode resultCS = ASTBindingHelper.resolveCSTNode((ImperativeOperation) operation);
+			return (resultCS instanceof MappingMethodCS) ? (MappingMethodCS) resultCS : null;
 		}
 		return null;
 	}
