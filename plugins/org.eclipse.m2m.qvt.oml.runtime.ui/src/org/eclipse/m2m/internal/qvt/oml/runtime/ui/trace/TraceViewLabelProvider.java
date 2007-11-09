@@ -108,7 +108,7 @@ public class TraceViewLabelProvider extends EMFLabelProvider {
             Object object = ((Node) element).getObject();
             Image img = myLabelProvider.getImage(object);
             if (isContainedByTrace(object)) {
-            	return getDecoratedImage(img, CommonPluginImages.ERROR_DECORATOR);
+            	return getDecoratedImage(img, CommonPluginImages.WARNING_CO);
             }
             return img;
         }
@@ -119,7 +119,7 @@ public class TraceViewLabelProvider extends EMFLabelProvider {
 		if (varParamV.getValue() != null && varParamV.getValue().getModelElement() != null) {
 			EObject modelElement = varParamV.getValue().getModelElement();
             if (isContainedByTrace(modelElement)) {
-            	return getDecoratedImage(baseImage, CommonPluginImages.ERROR_DECORATOR);
+            	return getDecoratedImage(baseImage, CommonPluginImages.WARNING_CO);
             }
 		}
         return baseImage;
