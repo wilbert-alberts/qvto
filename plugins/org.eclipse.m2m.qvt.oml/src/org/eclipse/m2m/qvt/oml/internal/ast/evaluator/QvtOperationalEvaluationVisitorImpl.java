@@ -420,13 +420,6 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
                 return callResult.myResult;
             }
         }
-        else if (!evalResult.getUnboundedObjects().isEmpty()) {
-//        	throw new RuntimeException(NLS.bind(
-//                    EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_UnboundedObjects, module.getName()));
-        	// NOTE: unbound objects are saved into trace file
-			Logger.getLogger().log(Logger.SEVERE, NLS.bind(
-					EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_UnboundedObjects, module.getName()));
-        }
         
         return evalResult;
     }

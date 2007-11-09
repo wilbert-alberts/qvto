@@ -21,7 +21,6 @@ public class EvaluationMessages extends NLS {
     
 	public static String ExtendedOclEvaluatorVisitorImpl_InvalidObjectExpType;
     public static String ExtendedOclEvaluatorVisitorImpl_ModuleNotExecutable;  
-    public static String ExtendedOclEvaluatorVisitorImpl_UnboundedObjects;  
     
     static {
         // initialize resource bundle
