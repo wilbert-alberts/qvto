@@ -48,7 +48,7 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 		
 		CollisionStatus(EOperation operation, int kind) {
 			if(kind != ALREADY_DEFINED && kind != VIRTUAL_METHOD_RETURNTYPE) {
-				throw new IllegalArgumentException("illegal collision kind");
+				throw new IllegalArgumentException("illegal collision kind"); //$NON-NLS-1$
 			}
 			
 			fKind = kind;

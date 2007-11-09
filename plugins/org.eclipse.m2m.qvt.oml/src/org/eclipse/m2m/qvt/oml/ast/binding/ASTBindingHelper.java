@@ -18,11 +18,8 @@ import java.util.List;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
-import org.eclipse.m2m.qvt.oml.internal.cst.MappingMethodCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
@@ -31,22 +28,6 @@ import org.eclipse.ocl.utilities.ASTNode;
 
 @SuppressWarnings("restriction")
 public class ASTBindingHelper {
-	
-	public static void createEnvDefined2ImperativeOperationBinding(MappingMethodCS cstMethod, ImperativeOperation astImperativeOperation, EOperation envDefineOperation, Environment env) {
-		ASTAdapter astAdapter = new ImperativeOperationASTAdapter(cstMethod, astImperativeOperation, envDefineOperation, (EcoreEnvironment)env);
-		astImperativeOperation.eAdapters().add(astAdapter);	
-		cstMethod.eAdapters().add(astAdapter);
-		envDefineOperation.eAdapters().add(astAdapter);
-	}
-	
-	public static ImperativeOperation resolveEnvOperationBinding(EOperation envDefinedOperation) {
-		List<ImperativeOperationASTAdapter> adapters = getASTBindings(envDefinedOperation, ImperativeOperationASTAdapter.class);
-		if(!adapters.isEmpty()) {
-			ImperativeOperationASTAdapter operationASTAdapter = (ImperativeOperationASTAdapter) adapters.get(0);
-			return (ImperativeOperation)operationASTAdapter.getASTNode();
-		}
-		return null;
-	}
 	
 	public static void createModuleBinding(MappingModuleCS cstModule, Module astModule, EcoreEnvironment env, CFile moduleFile) {
 		ASTAdapter astAdapter = new ModuleASTAdapter(cstModule, astModule, env, moduleFile);
@@ -213,23 +194,4 @@ public class ASTBindingHelper {
 		}
 	}	
 	
-	private static class ImperativeOperationASTAdapter extends ASTAdapter {
-		private EOperation fEnvDefEOperation;
-		
-		ImperativeOperationASTAdapter(MappingMethodCS cstMethod, 
-				ImperativeOperation astImperativeOperation, 
-				EOperation envDefineOperation, EcoreEnvironment env) {
-						
-			super(cstMethod, astImperativeOperation, env);
-						
-			if(envDefineOperation == null) {
-				throw new IllegalArgumentException();
-			}
-			this.fEnvDefEOperation = envDefineOperation;
-		}
-		
-		public EOperation getEnvDefinedOperation() {
-			return fEnvDefEOperation;
-		}
-	}
 }
