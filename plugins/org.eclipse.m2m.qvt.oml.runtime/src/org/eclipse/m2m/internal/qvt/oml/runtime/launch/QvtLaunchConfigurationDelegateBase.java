@@ -201,7 +201,9 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         if(traceFileName != null && out.getTrace() != null) {
             IFile traceFile = WorkspaceUtils.getWorkspaceFile(traceFileName);
             if(traceFile != null) {
-                TraceSerializer.saveTraceModel(out.getTrace(), new EclipseFile(traceFile));
+            	TraceSerializer traceSerializer = new TraceSerializer(out.getTrace());
+            	traceSerializer.saveTraceModel(new EclipseFile(traceFile));
+            	traceSerializer.markUnboundObjects(traceFile);
             }
         }
         
