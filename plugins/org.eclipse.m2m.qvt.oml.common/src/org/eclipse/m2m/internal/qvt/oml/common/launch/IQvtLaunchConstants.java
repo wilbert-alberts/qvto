@@ -15,9 +15,8 @@ package org.eclipse.m2m.internal.qvt.oml.common.launch;
 public interface IQvtLaunchConstants {
 	String PREFIX = "org.eclipse.m2m.qvt.oml.interpreter.";  //$NON-NLS-1$
 	
-    String TRANSFORMATION_ID = PREFIX + "transformationId"; //$NON-NLS-1$
+    String TRANSFORMATION   = PREFIX + "transformationId"; //$NON-NLS-1$
 	String MODULE           = PREFIX + "module"; //$NON-NLS-1$
-	String SOURCE_MODEL     = PREFIX + "sourceModel"; //$NON-NLS-1$
 	String TARGET_MODEL     = PREFIX + "targetModel"; //$NON-NLS-1$
     String TRACE_FILE       = PREFIX + "traceFile"; //$NON-NLS-1$
     String USE_TRACE_FILE   = PREFIX + "useTraceFile"; //$NON-NLS-1$

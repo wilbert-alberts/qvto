@@ -15,12 +15,9 @@ import java.text.MessageFormat;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import org.eclipse.core.resources.IResourceChangeEvent;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.m2m.internal.qvt.oml.common.launch.DeleteMdaMarkersListener;
 import org.osgi.framework.BundleContext;
 
 
@@ -53,8 +50,6 @@ public class CommonPlugin extends Plugin {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
-
-        ResourcesPlugin.getWorkspace().addResourceChangeListener(new DeleteMdaMarkersListener(), IResourceChangeEvent.PRE_BUILD);
 	}
 
 	/**

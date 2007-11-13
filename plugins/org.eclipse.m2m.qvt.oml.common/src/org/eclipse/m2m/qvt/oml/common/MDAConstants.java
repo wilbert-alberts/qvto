@@ -13,8 +13,6 @@ package org.eclipse.m2m.qvt.oml.common;
 
 public interface MDAConstants {
 
-	public static final String QVTO_PROBLEM_MARKER = "org.eclipse.m2m.qvt.oml.common.mdaProblem"; //$NON-NLS-1$
-	
 	public static final String QVTO_TRANSFORMATION_CONTEXTID = "org.eclipse.m2m.qvt.oml._transformation"; //$NON-NLS-1$
 
 	public static final String QVTO_FILE_EXTENSION = "qvto"; //$NON-NLS-1$
