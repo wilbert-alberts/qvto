@@ -26,10 +26,10 @@ import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ModelTypeCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ModulePropertyCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.RenameCS;
-import org.eclipse.m2m.qvt.oml.ocl.emf.OclEmfPlugin;
-import org.eclipse.m2m.qvt.oml.ocl.emf.transformations.Library;
-import org.eclipse.m2m.qvt.oml.ocl.emf.transformations.LibraryCreationException;
-import org.eclipse.m2m.qvt.oml.ocl.emf.transformations.LibraryOperation;
+import org.eclipse.m2m.qvt.oml.ocl.OclQvtoPlugin;
+import org.eclipse.m2m.qvt.oml.ocl.transformations.Library;
+import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryCreationException;
+import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryOperation;
 import org.eclipse.ocl.internal.cst.CSTNode;
 import org.eclipse.ocl.internal.cst.PathNameCS;
 
@@ -210,7 +210,7 @@ public class QvtOutlineInput {
 		public List<OutlineNode> getChildren() {
 			List<OutlineNode> result = new ArrayList<OutlineNode>();
 			String libId = getIdentity();
-			Library lib = OclEmfPlugin.getDefault().getLibrariesRegistry().getLibrary(libId);
+			Library lib = OclQvtoPlugin.getDefault().getLibrariesRegistry().getLibrary(libId);
 
 			if (lib != null) {
 				try {
