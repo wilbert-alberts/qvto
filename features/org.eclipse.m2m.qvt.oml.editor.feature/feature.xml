@@ -28,13 +28,13 @@
       <import plugin="org.eclipse.ui.workbench.texteditor"/>
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.jdt.ui"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.ocl.emf"/>
       <import plugin="org.eclipse.m2m.qvt.oml.common"/>
       <import plugin="org.eclipse.m2m.qvt.oml.common.ui"/>
       <import plugin="org.eclipse.m2m.qvt.oml"/>
       <import plugin="org.eclipse.m2m.qvt.oml.ui"/>
       <import plugin="org.eclipse.m2m.qvt.oml.emf.util"/>
       <import plugin="net.sourceforge.lpg.lpgjavaruntime"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.ocl"/>
    </requires>
 
    <plugin
