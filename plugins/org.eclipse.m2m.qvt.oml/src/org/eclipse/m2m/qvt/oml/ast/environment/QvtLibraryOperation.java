@@ -20,8 +20,8 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.ValidationMessages;
-import org.eclipse.m2m.qvt.oml.ocl.emf.transformations.LibraryCreationException;
-import org.eclipse.m2m.qvt.oml.ocl.emf.transformations.LibraryOperation;
+import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryCreationException;
+import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryOperation;
 import org.eclipse.ocl.OCLInput;
 import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.ecore.Constraint;
@@ -31,7 +31,6 @@ import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.helper.ConstraintKind;
 import org.eclipse.ocl.types.AnyType;
 import org.eclipse.ocl.utilities.ExpressionInOCL;
-import org.eclipse.ocl.utilities.PredefinedType;
 
 /**
  * @author sboyko

@@ -116,7 +116,7 @@ public class QvtOperationalParserUtil {
 		return ""; //$NON-NLS-1$
 	}
 
-	public static Set<String> getLibMetamodels(org.eclipse.m2m.qvt.oml.ocl.emf.transformations.Library lib) {
+	public static Set<String> getLibMetamodels(org.eclipse.m2m.qvt.oml.ocl.transformations.Library lib) {
         LinkedHashSet<String> metamodels = new LinkedHashSet<String>();
         metamodels.addAll(Arrays.asList(lib.getInMetamodels()));
         metamodels.addAll(Arrays.asList(lib.getOutMetamodels()));

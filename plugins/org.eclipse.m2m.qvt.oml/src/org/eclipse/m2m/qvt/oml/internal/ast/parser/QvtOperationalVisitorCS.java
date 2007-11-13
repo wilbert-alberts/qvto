@@ -106,8 +106,8 @@ import org.eclipse.m2m.qvt.oml.internal.cst.adapters.CSTBindingUtil;
 import org.eclipse.m2m.qvt.oml.internal.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorCallExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorVariableInitializationCS;
-import org.eclipse.m2m.qvt.oml.ocl.emf.OclEmfPlugin;
-import org.eclipse.m2m.qvt.oml.ocl.emf.transformations.LibraryCreationException;
+import org.eclipse.m2m.qvt.oml.ocl.OclQvtoPlugin;
+import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryCreationException;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.SemanticException;
 import org.eclipse.ocl.ecore.CallOperationAction;
@@ -670,7 +670,7 @@ public class QvtOperationalVisitorCS
 			PathNameCS impPath = libImport.getPathNameCS();
 			String libId = QvtOperationalParserUtil.getStringRepresentation(impPath, "."); //$NON-NLS-1$
 
-			org.eclipse.m2m.qvt.oml.ocl.emf.transformations.Library lib = OclEmfPlugin.getDefault().getLibrariesRegistry().getLibrary(libId);
+			org.eclipse.m2m.qvt.oml.ocl.transformations.Library lib = OclQvtoPlugin.getDefault().getLibrariesRegistry().getLibrary(libId);
 			if (lib == null) {
 				env.reportError(NLS.bind(ValidationMessages.NoLibrary, new Object[] {libId}),
 						impPath);

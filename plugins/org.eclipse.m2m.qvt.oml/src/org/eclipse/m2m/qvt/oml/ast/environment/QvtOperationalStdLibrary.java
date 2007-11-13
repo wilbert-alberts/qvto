@@ -30,7 +30,7 @@ import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.qvt.oml.library.IContext;
-import org.eclipse.m2m.qvt.oml.ocl.emf.transformations.LibraryOperation;
+import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryOperation;
 import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.expressions.ExpressionsFactory;
 import org.eclipse.ocl.expressions.Variable;
