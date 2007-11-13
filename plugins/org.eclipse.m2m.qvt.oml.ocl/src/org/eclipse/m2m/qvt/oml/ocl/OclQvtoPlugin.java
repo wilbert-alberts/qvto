@@ -19,21 +19,23 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.StreamHandler;
 
+import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.m2m.qvt.oml.internal.ocl.transformations.LibrariesRegistryImpl;
+import org.eclipse.m2m.qvt.oml.ocl.transformations.LibrariesRegistry;
 import org.osgi.framework.BundleContext;
 
 
-public class OclPlugin extends Plugin {
+public class OclQvtoPlugin extends Plugin {
     
-    private static final String LOGLEVEL_OPTION = "/loglevel"; //$NON-NLS-1$
-    private static OclPlugin ourInstance;
-
-    public OclPlugin() {
+    public OclQvtoPlugin() {
         ourInstance = this;
         
+        IConfigurationElement[] configElements = Platform.getExtensionRegistry().getConfigurationElementsFor(SCHEMA_ID, TRANSFORMATION_EP);
+        myLibrariesRegistry = new LibrariesRegistryImpl(configElements);
     }
 
     @Override
@@ -50,8 +52,12 @@ public class OclPlugin extends Plugin {
         ourInstance = null;
     }
     
-    public static OclPlugin getDefault() {
+    public static OclQvtoPlugin getDefault() {
         return ourInstance;
+    }
+    
+    public LibrariesRegistry getLibrariesRegistry() {
+        return myLibrariesRegistry;
     }
     
     private Level getLogLevel(String level, Level def) {
@@ -94,5 +100,15 @@ public class OclPlugin extends Plugin {
         public void close() throws SecurityException {
         }
     }
+    
+    private static final String LOGLEVEL_OPTION = "/loglevel"; //$NON-NLS-1$
+
+    private static final String TRANSFORMATION_EP = "libraries"; //$NON-NLS-1$
+
+    private final String SCHEMA_ID = "org.eclipse.m2m.qvt.oml.ocl.emf"; //$NON-NLS-1$
+    
+    private static OclQvtoPlugin ourInstance;
+
+    private final LibrariesRegistry myLibrariesRegistry;
     
 }
