@@ -95,9 +95,10 @@ public class TestMdaBuilder extends TestCase {
         ILaunchConfigurationWorkingCopy workingCopy = type.newInstance(null, "_qvt_"); //$NON-NLS-1$
         workingCopy.setAttribute("org.eclipse.debug.ui.ATTR_LAUNCH_IN_BACKGROUND", false); //$NON-NLS-1$
         
-        workingCopy.setAttribute(IQvtLaunchConstants.TRANSFORMATION_ID, transformationId);
-        workingCopy.setAttribute(IQvtLaunchConstants.SOURCE_MODEL, inUriString);
-        workingCopy.setAttribute(IQvtLaunchConstants.TARGET_MODEL, outUriString);
+        workingCopy.setAttribute(IQvtLaunchConstants.TRANSFORMATION, transformationId);
+        workingCopy.setAttribute(IQvtLaunchConstants.ELEM_COUNT, 2);
+        workingCopy.setAttribute(IQvtLaunchConstants.TARGET_MODEL+"1", inUriString); //$NON-NLS-1$
+        workingCopy.setAttribute(IQvtLaunchConstants.TARGET_MODEL+"2", outUriString); //$NON-NLS-1$
         
         DebugUITools.launch(workingCopy, ILaunchManager.RUN_MODE);        
     }
