@@ -9,6 +9,5 @@
       </handler>
    </extension>
    
-   <extension-point id="projectNode" name="%projectNode" schema="schema/project-node.exsd"/>
    <extension-point id="metamodelImages" name="%metamodelImages" schema="schema/metamodelImages.exsd"/>
 </plugin>
