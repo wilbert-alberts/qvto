@@ -13,5 +13,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.debug.ui,
  org.eclipse.m2m.qvt.oml.common,
+ org.eclipse.m2m.qvt.oml.emf.util,
  org.eclipse.m2m.qvt.oml
 Eclipse-LazyStart: true

@@ -2,6 +2,12 @@
 <?eclipse version="3.0"?>
 <plugin>
    
+   <extension-point id="transformNatureConfigParticipants" name="%transformNatureConfigParticipants" schema="schema/transformNatureConfigParticipants.exsd"/>
+   
+   <extension point="org.eclipse.m2m.qvt.oml.project.transformNatureConfigParticipants">
+      <configParticipant class="org.eclipse.m2m.qvt.oml.project.nature.QvtNatureConfigParticipant"/>
+   </extension> 
+ 
    <extension
          id="TransformationNature"
          name="%transformationNature"
@@ -12,10 +18,6 @@
       <builder id="org.eclipse.m2m.qvt.oml.QvtBuilder"/>
    </extension>
 
-   <extension point="org.eclipse.m2m.qvt.oml.common.transformNatureConfigParticipants">
-      <configParticipant class="org.eclipse.m2m.qvt.oml.project.nature.QvtNatureConfigParticipant"/>
-   </extension> 
- 
    <extension point="org.eclipse.ui.ide.projectNatureImages">
  		<image
  			id="org.eclipse.m2m.qvt.oml.project.TransformationNatureImage"
