@@ -201,9 +201,9 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
                     leftOclCollection = CollectionUtil.including(leftOclCollection, exprValue);
                 }
 
-                env.replace(ownerName, leftOclCollection);
+                replaceInEnv(ownerName, leftOclCollection, variableType);
             } else {
-                env.replace(ownerName, exprValue);
+            	replaceInEnv(ownerName, exprValue, variableType);
             }
         } else {
             Object ownerObj = (ownerName == null ?
@@ -254,11 +254,12 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
             VarParameter param = (VarParameter) nextParam;
             Object arg = argIt.next();
 
-            env.add(param.getName(), arg);
+            addToEnv(param.getName(), arg, param.getEType());
         }
 
-        if (!isNullOrVoidType(imperativeOperation.getContext())) {
-            env.add(Environment.SELF_VARIABLE_NAME, env.getOperationSelf());
+        VarParameter context = imperativeOperation.getContext();
+        if (!isNullOrVoidType(context)) {
+            addToEnv(Environment.SELF_VARIABLE_NAME, env.getOperationSelf(), context.getEType());
         }
 
 
@@ -469,7 +470,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 
     public Object visitVariableInitExp(VariableInitExp variableInitExp) {
         Object varValue = variableInitExp.getValue().accept(this);
-        getEvaluationEnvironment().add(variableInitExp.getName(), varValue);
+        addToEnv(variableInitExp.getName(), varValue, variableInitExp.getType());
         return varValue;
     }
 
@@ -923,7 +924,35 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
     protected QvtOperationalEvaluationEnv getOperationalEvaluationEnv() {
         return (QvtOperationalEvaluationEnv) getEvaluationEnvironment();
     }
-
+    
+	/**
+	 * Adds the given variable value into evaluation environment.
+	 * 
+	 * @param varName
+	 *            the name of the variable
+	 * @param value
+	 *            the value of the variable
+	 * @param declaredType
+	 *            the type of the variable (optional) or <code>null</code>
+	 */    
+	protected void addToEnv(String varName, Object value, EClassifier declaredType) {
+		getOperationalEvaluationEnv().add(varName, value);
+	}
+	
+	/**
+	 * Replaces the given variable value in evaluation environment.
+	 * 
+	 * @param varName
+	 *            the name of the variable to replace
+	 * @param value
+	 *            the new value of the variable
+	 * @param declaredType
+	 *            the type of the variable (optional) or <code>null</code>
+	 */
+	protected void replaceInEnv(String varName, Object value, EClassifier declaredType) {
+		getOperationalEvaluationEnv().replace(varName, value);
+	}
+	
     private Object getRuntimeValue(final String name) {
         return getEvaluationEnvironment().getValueOf(name);
     }

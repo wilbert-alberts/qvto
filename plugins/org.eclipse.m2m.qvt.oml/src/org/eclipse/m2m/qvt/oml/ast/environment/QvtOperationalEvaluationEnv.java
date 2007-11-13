@@ -70,7 +70,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			myMapImportedExtents = Collections.emptyMap();
 		}
 	}
-
+	
 	public void popObjectExpOwner() {
 		myObjectExpOwnerStack.pop();
 	}
@@ -159,7 +159,46 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         		return getParent().getValueOf(name);
         	}
         }
+        
+        if(result instanceof TypedBinding) {
+        	return ((TypedBinding)result).value;
+        }
+
         return result;
+    }
+
+	/**
+	 * Gets the type bound to the variable of the given name.
+	 * 
+	 * @param the
+	 *            name of the variable
+	 * @return the type the referenced variable previously bound by
+	 *         {@link #add(String, Object, EClassifier)} or <code>null</code>
+	 *         if none is available.
+	 * @see #add(String, Object, EClassifier)
+	 */
+    public EClassifier getTypeOf(String name) {
+        Object result = myBindings.get(name);
+        
+        if(result instanceof TypedBinding) {
+        	return ((TypedBinding)result).type;
+        }
+        
+        return null;
+    }	
+	
+    /**
+	 * Test whether the give object is OclInvalid retrieved from this
+	 * environment.
+	 * 
+	 * @param value
+	 *            the object to test
+	 * @return <code>true</code> if the passed object is
+	 *         <code>OclInvalid</code> from this environment;
+	 *         <code>false</code> otherwise
+	 */
+    public boolean isOclInvalid(Object value) {
+    	return getInvalidResult() == value;
     }
 
     /**
@@ -173,6 +212,25 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	@Override
     public void replace(String name, Object value) {
     	myBindings.put(name, value);
+    }
+
+    /**
+	 * Replaces the current value of the supplied name with the supplied value
+	 * and type.
+	 * 
+	 * @param name
+	 *            the name
+	 * @param declaredType
+	 *            the type of the value known at declaration time
+	 * @param value
+	 *            the new value
+	 */
+    public void replace(String name, Object value, EClassifier declaredType) {
+    	if(declaredType != null) {
+    		replace(name, new TypedBinding(value, declaredType));
+    	} else {
+			replace(name, value);
+		}
     }
 
     /**
@@ -193,6 +251,24 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
             throw new IllegalArgumentException(message);
         }
         myBindings.put(name, value);
+    }
+	
+    /**
+     * Adds the supplied name and typed value binding to the environment
+     * 
+     * @param name
+     *            the name to add
+	 * @param declaredType
+	 *            the type of the value known at declaration time            
+     * @param value
+     *            the associated binding
+     */	
+    public void add(String name, Object value, EClassifier declaredType) {
+    	if(declaredType != null) {
+    		add(name, new TypedBinding(value, declaredType));
+    	} else {
+    		add(name, value);
+    	}
     }
 
     /**
@@ -527,7 +603,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         return env;
     }
     
-    
+        
 	private final Stack<Object> myObjectExpOwnerStack;
 	private final List<Object> myOperationArgs;
 	private Object myOperationSelf;
@@ -537,4 +613,14 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	private Map<ModelParameter, ModelParameter> myMapImportedExtents;
 	private static final ModelParameter UNBOUND_MODEL_EXTENT = null;
 	
+	
+	private static class TypedBinding {
+		final Object value;
+		final EClassifier type;
+		
+		private TypedBinding(Object value, EClassifier type) {
+			this.value = value;
+			this.type = type;
+		}
+	}
 }
