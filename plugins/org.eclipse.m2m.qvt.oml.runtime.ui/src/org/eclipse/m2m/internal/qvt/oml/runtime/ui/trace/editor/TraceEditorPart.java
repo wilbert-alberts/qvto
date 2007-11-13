@@ -12,6 +12,7 @@
 package org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.editor;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -25,12 +26,13 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.ide.IGotoMarker;
 import org.eclipse.ui.part.EditorPart;
 
 /**
  * @author aigdalov
  */
-public class TraceEditorPart extends EditorPart {
+public class TraceEditorPart extends EditorPart implements IGotoMarker {
     private final TraceWorkbenchPart myTraceWorkbenchPart = new TraceWorkbenchPart(this);
 	private Trace myTrace;
     
@@ -80,7 +82,11 @@ public class TraceEditorPart extends EditorPart {
 	public TreeViewer getViewer() {
 		return myTraceWorkbenchPart.getViewer();
 	}
-    
+
+	public void gotoMarker(IMarker marker) {
+		System.err.println();
+	}
+	
     private Trace initTrace(IFile file) throws PartInitException {
         EObject eObject = ExtendedEmfUtil.loadModel(new EclipseFile(file));
         if(!(eObject instanceof Trace)) {
@@ -88,4 +94,5 @@ public class TraceEditorPart extends EditorPart {
         }
         return (Trace) eObject;
     }
+
 }

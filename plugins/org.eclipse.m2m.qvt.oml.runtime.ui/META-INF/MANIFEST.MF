@@ -7,6 +7,7 @@ Bundle-Activator: org.eclipse.m2m.internal.qvt.oml.runtime.ui.QvtRuntimeUIPlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui.externaltools,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.debug.ui,
  org.eclipse.ui.ide,

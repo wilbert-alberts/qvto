@@ -134,7 +134,7 @@ public class RunInterpretedTransformationWizard extends PersistedValuesWizard {
         
         workingCopy.setAttribute(IDebugUIConstants.ATTR_LAUNCH_IN_BACKGROUND, false); 
         
-        InMemoryLaunchUtils.setAttribute(workingCopy, IQvtLaunchConstants.TRANSFORMATION_ID, myTransformation);
+        InMemoryLaunchUtils.setAttribute(workingCopy, IQvtLaunchConstants.TRANSFORMATION, myTransformation);
 
         myTransformationParametersPage.applyConfiguration(workingCopy);
         

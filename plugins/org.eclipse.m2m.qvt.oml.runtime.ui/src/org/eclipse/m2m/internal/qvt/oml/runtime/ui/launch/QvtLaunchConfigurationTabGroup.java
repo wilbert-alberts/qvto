@@ -52,7 +52,7 @@ public class QvtLaunchConfigurationTabGroup extends AbstractLaunchConfigurationT
 		});
 	}
 	
-    private final ITransformationMaker TRANSFORMATION_MAKER = new ITransformationMaker() {
+    protected final ITransformationMaker TRANSFORMATION_MAKER = new ITransformationMaker() {
 		public QvtTransformation makeTransformation(String name) throws MdaException {
 			QvtModule qvtModule = TransformationUtil.getQvtModule(EmfUtil.makeUri(name));
             return new QvtInterpretedTransformation(qvtModule);

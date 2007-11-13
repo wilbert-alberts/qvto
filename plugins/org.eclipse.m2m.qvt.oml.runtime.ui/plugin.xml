@@ -48,6 +48,12 @@
             class="org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch.QvtLaunchConfigurationTabGroup"
             id="org.eclipse.m2m.qvt.oml.internal.runtime.ui.launch.QvtLaunchConfigurationTabGroup">
         </launchConfigurationTabGroup>
+        
+        <launchConfigurationTabGroup
+            type="org.eclipse.m2m.qvt.oml.QvtBuilderTransformation"
+            class="org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch.QvtBuilderLaunchConfigurationTabGroup"
+            id="org.eclipse.m2m.qvt.oml.internal.runtime.ui.launch.QvtBuilderLaunchConfigurationTabGroup">
+        </launchConfigurationTabGroup>
     </extension>    
 
    <extension point="org.eclipse.ui.editors">
@@ -71,11 +77,16 @@
 	 </extension>
 
     <extension point="org.eclipse.debug.ui.launchConfigurationTypeImages">        
+        <launchConfigurationTypeImage
+            icon="icons/launch_config.gif"
+            configTypeID="org.eclipse.m2m.qvt.oml.QvtBuilderTransformation"
+            id="org.eclipse.m2m.qvt.oml.QvtBuilderTransformationImage">
+        </launchConfigurationTypeImage>
         
         <launchConfigurationTypeImage
             icon="icons/pr-Model_to_model.gif"
             configTypeID="org.eclipse.m2m.qvt.oml.InMemoryQvtTransformation"            
-            id="org.eclipse.m2m.qvt.oml.QvtCompiledTransformationImage">
+            id="org.eclipse.m2m.qvt.oml.QvtInMemoryTransformationImage">
         </launchConfigurationTypeImage>        
 
         <launchConfigurationTypeImage
