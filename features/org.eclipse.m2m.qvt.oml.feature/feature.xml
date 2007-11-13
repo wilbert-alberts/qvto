@@ -27,31 +27,16 @@
 
    <requires>
       <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.ocl"/>
       <import plugin="org.eclipse.emf.ecore"/>
+      <import plugin="org.eclipse.ocl"/>
       <import plugin="org.eclipse.m2m.qvt.oml.emf.util"/>
       <import plugin="org.eclipse.ocl.ecore"/>
       <import plugin="org.eclipse.core.resources"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.common"/>
       <import plugin="net.sourceforge.lpg.lpgjavaruntime"/>
    </requires>
 
    <plugin
          id="org.eclipse.m2m.qvt.oml.ocl"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2m.qvt.oml.ocl.common"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2m.qvt.oml.ocl.emf"
          download-size="0"
          install-size="0"
          version="0.0.0"
