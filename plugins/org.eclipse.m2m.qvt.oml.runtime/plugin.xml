@@ -10,6 +10,13 @@
         <factory class="org.eclipse.m2m.internal.qvt.oml.runtime.project.EclipseImportResolverFactory"/>
     </extension>
    
+	<extension point="org.eclipse.core.resources.markers"
+		id="qvtBuilderMarker" name="%qvtBuilderTransformation">
+		<super type="org.eclipse.core.resources.problemmarker"/>
+		<super type="org.eclipse.core.resources.textmarker"/>
+		<persistent value="true"/>
+	</extension>
+   
     <extension point="org.eclipse.debug.core.launchConfigurationTypes">
 		<launchConfigurationType
 			name="%qvtInterpreter"
@@ -17,6 +24,13 @@
 			modes="run"               
 			id="org.eclipse.m2m.qvt.oml.QvtTransformation">
 		</launchConfigurationType>
+
+        <launchConfigurationType
+              category="org.eclipse.ui.externaltools.builder"
+              delegate="org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtBuilderLaunchConfigurationDelegate"
+              id="org.eclipse.m2m.qvt.oml.QvtBuilderTransformation"
+              modes="run"
+              name="%qvtBuilderTransformation"/>
 
         <launchConfigurationType
               name="%qvtTransformation"

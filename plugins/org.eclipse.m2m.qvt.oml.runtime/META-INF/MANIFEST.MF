@@ -13,6 +13,7 @@ Export-Package: org.eclipse.m2m.internal.qvt.oml.runtime,
  org.eclipse.m2m.internal.qvt.oml.runtime.project.config,
  org.eclipse.m2m.internal.qvt.oml.runtime.util;x-internal:=true
 Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui.externaltools,
  org.eclipse.debug.core,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.m2m.qvt.oml,

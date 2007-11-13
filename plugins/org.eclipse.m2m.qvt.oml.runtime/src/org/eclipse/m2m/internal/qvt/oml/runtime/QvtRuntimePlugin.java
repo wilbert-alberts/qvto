@@ -11,7 +11,10 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime;
 
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.m2m.internal.qvt.oml.runtime.launch.DeleteBuilderMarkersListener;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -35,6 +38,8 @@ public class QvtRuntimePlugin extends Plugin {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+
+        ResourcesPlugin.getWorkspace().addResourceChangeListener(new DeleteBuilderMarkersListener(), IResourceChangeEvent.PRE_BUILD);
 	}
 
 	/**

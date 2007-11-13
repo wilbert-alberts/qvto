@@ -56,7 +56,7 @@ public class InMemoryQvtLaunchConfigurationDelegate extends QvtLaunchConfigurati
     
 
 	public void launch(final ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {        
-        Object transObj = InMemoryLaunchUtils.getAttribute(configuration, IQvtLaunchConstants.TRANSFORMATION_ID);
+        Object transObj = InMemoryLaunchUtils.getAttribute(configuration, IQvtLaunchConstants.TRANSFORMATION);
         if (transObj instanceof QvtTransformation == false) {
             throw new IllegalArgumentException("Invalid transformation " + transObj); //$NON-NLS-1$
         }
