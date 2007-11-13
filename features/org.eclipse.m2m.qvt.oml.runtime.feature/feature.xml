@@ -44,6 +44,7 @@
       <import plugin="org.eclipse.m2m.qvt.oml.emf.util.ui"/>
       <import plugin="org.eclipse.emf.edit.ui"/>
       <import plugin="org.eclipse.emf.edit"/>
+      <import plugin="org.eclipse.ui.externaltools"/>
    </requires>
 
    <plugin
