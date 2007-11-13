@@ -32,5 +32,4 @@ Require-Bundle: org.junit,
  org.eclipse.m2m.qvt.oml.emf.util,
  org.eclipse.m2m.qvt.oml.runtime,
  org.eclipse.m2m.qvt.oml.samples,
- org.eclipse.m2m.qvt.oml.ocl.common,
  org.eclipse.m2m.qvt.oml.editor.ui
