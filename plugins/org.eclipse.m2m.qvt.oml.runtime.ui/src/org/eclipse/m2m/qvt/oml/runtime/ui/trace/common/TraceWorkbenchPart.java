@@ -13,6 +13,9 @@ package org.eclipse.m2m.qvt.oml.runtime.ui.trace.common;
 
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.TraceViewContentProvider;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.TraceViewLabelProvider;
@@ -60,6 +63,19 @@ public class TraceWorkbenchPart {
     
     public void setInput(Trace trace) {
 		myTraceViewer.setInput(trace);
+	}
+	
+    public void setSelection(Object objToSelect) {
+    	for (int i = 0; i < 100; ++i) {
+	    	ISelection selection = myTraceViewer.getSelection();
+	    	if (selection instanceof IStructuredSelection
+	    			&& ((IStructuredSelection) selection).getFirstElement() != null) {
+	    		if (((IStructuredSelection) selection).getFirstElement().equals(objToSelect)) {
+	    			return;
+	    		}	    		
+	    	}
+			myTraceViewer.setSelection(new StructuredSelection(objToSelect));
+    	}
 	}
 	
 	public TreeViewer getViewer() {

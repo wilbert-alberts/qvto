@@ -13,11 +13,15 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.editor;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.presentation.EObjectNode;
 import org.eclipse.m2m.qvt.oml.common.emf.ExtendedEmfUtil;
 import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
+import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.qvt.oml.runtime.ui.trace.common.TraceWorkbenchPart;
 import org.eclipse.m2m.qvt.oml.trace.Trace;
 import org.eclipse.osgi.util.NLS;
@@ -84,7 +88,18 @@ public class TraceEditorPart extends EditorPart implements IGotoMarker {
 	}
 
 	public void gotoMarker(IMarker marker) {
-		System.err.println();
+		try {
+			if (marker.getType().equals(QvtCompiler.PROBLEM_MARKER)) {
+				String uriAttribute = marker.getAttribute(EValidator.URI_ATTRIBUTE, null);
+				if (uriAttribute != null) {
+					EObject eObject = myTrace.eResource().getEObject(uriAttribute);
+					if (eObject != null) {
+						myTraceWorkbenchPart.setSelection(new EObjectNode(eObject.eContainer(), eObject));
+					}
+				}
+			}
+		} catch (CoreException e) {
+		}
 	}
 	
     private Trace initTrace(IFile file) throws PartInitException {
