@@ -21,6 +21,9 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.presentation.EObjectNod
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.presentation.Node;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.presentation.NodeContentProvider;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.presentation.StringNode;
+import org.eclipse.m2m.qvt.oml.trace.EMappingContext;
+import org.eclipse.m2m.qvt.oml.trace.EMappingParameters;
+import org.eclipse.m2m.qvt.oml.trace.EMappingResults;
 import org.eclipse.m2m.qvt.oml.trace.ETuplePartValue;
 import org.eclipse.m2m.qvt.oml.trace.EValue;
 import org.eclipse.m2m.qvt.oml.trace.Trace;
@@ -37,10 +40,39 @@ public class TraceViewContentProvider implements ITreeContentProvider {
 
     public Object getParent(Object element) {
         if (element instanceof Node) {
-            return myNodeContentProvider.getParent(element);
+            Object parent = myNodeContentProvider.getParent(element);
+            if (parent instanceof EValue) {
+            	if (((EValue) parent).eContainer() instanceof EValue) {
+            		return parent;
+            	}
+            	else {
+            		return getParent(parent);
+            	}
+            }
+            return parent;
         }
-        EObject eObject = (EObject) element;
-        return eObject.eContainer();
+        EObject container = ((EObject) element).eContainer();
+        if (container instanceof EMappingParameters) {
+        	return getParent(container);
+        }
+        if (container instanceof EMappingContext) {
+        	return getParent(container);
+        }
+        if (container instanceof EMappingResults) {
+        	return getParent(container);
+        }
+        if (container instanceof ETuplePartValue) {
+        	return getParent(container);
+        }
+        if (container instanceof EValue) {
+        	if (container.eContainer() instanceof EValue) {
+        		return container;
+        	}
+        	else {
+        		return getParent(container);
+        	}
+        }
+        return container;
     }
 
     public boolean hasChildren(Object element) {
