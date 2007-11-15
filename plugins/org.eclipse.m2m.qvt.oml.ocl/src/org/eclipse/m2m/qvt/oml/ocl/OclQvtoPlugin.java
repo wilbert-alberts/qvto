@@ -105,7 +105,7 @@ public class OclQvtoPlugin extends Plugin {
 
     private static final String TRANSFORMATION_EP = "libraries"; //$NON-NLS-1$
 
-    private final String SCHEMA_ID = "org.eclipse.m2m.qvt.oml.ocl.emf"; //$NON-NLS-1$
+    private final String SCHEMA_ID = "org.eclipse.m2m.qvt.oml.ocl"; //$NON-NLS-1$
     
     private static OclQvtoPlugin ourInstance;
 
