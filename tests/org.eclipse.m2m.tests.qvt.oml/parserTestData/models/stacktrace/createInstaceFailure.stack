@@ -1,0 +1,6 @@
+org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtRuntimeException: java.lang.IllegalArgumentException: Cannot instantiate type EClassifier
+	at EClass.mapCreateInstaceFailure3(stacktrace.qvto:33)
+	at EClassifier.mapCreateInstaceFailure2(stacktrace.qvto:23)
+	at EClassifier.mapCreateInstaceFailure(stacktrace.qvto:17)
+	at stacktrace.main(stacktrace.qvto:43)
+	at stacktrace.<init>(stacktrace.qvto:39)
