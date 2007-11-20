@@ -10,6 +10,7 @@ public class QvtCompilerOptions {
     private boolean isShowAnnotations = true;
     private boolean isGenerateCompletionData = true;
     private boolean isWorkspaceModelResolutionEnabled = true;
+    private boolean isSourceLineNumbersEnabled = true;    
     
     public boolean isReportErrors() {
         return isReportErrors;
@@ -42,4 +43,18 @@ public class QvtCompilerOptions {
     public void setWorkspaceModelResolutionEnabled(boolean workspaceModelResolutionEnabled) {
         isWorkspaceModelResolutionEnabled = workspaceModelResolutionEnabled;
     }
+
+    /**
+	* Sets a flag, whether the line numbers from the source should be available in runtime.
+	*/    
+    public void setSourceLineNumbersEnabled(boolean isEnableSourceLineNumbers) {
+		this.isSourceLineNumbersEnabled = isEnableSourceLineNumbers;
+	}
+    
+    /**
+	* Inidicates whether line numbers from the source should be available in runtime.
+	*/
+    public boolean isSourceLineNumbersEnabled() {
+		return isSourceLineNumbersEnabled;
+	}
 }
