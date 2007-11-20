@@ -69,6 +69,7 @@ public class QvtReconcilingStrategy implements IReconcilingStrategy, IReconcilin
         final ArrayList<Position> positions = new ArrayList<Position>();
         QvtCompilerOptions options = new QvtCompilerOptions();
         options.setShowAnnotations(QvtCompilerFacade.isEditingInQvtSourceContainer(myEditor));
+        options.setSourceLineNumbersEnabled(false);
         
         QvtCompilationResult compilationResult = null;
         try {

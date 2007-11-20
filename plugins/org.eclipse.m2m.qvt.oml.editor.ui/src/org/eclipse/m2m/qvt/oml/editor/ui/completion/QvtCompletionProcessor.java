@@ -135,6 +135,8 @@ public class QvtCompletionProcessor implements IContentAssistProcessor {
                 QvtCompilerOptions options = new QvtCompilerOptions();
                 options.setReportErrors(false);
                 options.setShowAnnotations(false);
+                options.setSourceLineNumbersEnabled(false);
+                
                 QvtCompilerFacade.getInstance().compile(myEditor, document, options, null);
             	isDocumentChanged = false;
             }
