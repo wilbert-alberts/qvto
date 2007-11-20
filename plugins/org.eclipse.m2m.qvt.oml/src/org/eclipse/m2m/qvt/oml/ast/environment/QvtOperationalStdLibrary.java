@@ -270,6 +270,20 @@ public class QvtOperationalStdLibrary {
 		return null;
 	}
 	
+	/**
+	 * Gets the print writer for a logger associated with the given context.
+	 * 
+	 * @return the print writer object or <code>null</code> if no logger is
+	 *         available.
+	 */
+	public static PrintWriter getLogger(IContext context) {
+		Object loggerObject = context.get(QvtOperationalStdLibrary.OUT_PRINT_WRITER);
+		if(loggerObject instanceof PrintWriter == false) {
+			return null;
+		}
+		
+		return (PrintWriter) loggerObject;
+	}
 	
 	private EOperation buildOperation(QvtOperationalEnv env, EClassifier contextType, EClassifier returnType,
 			String opName, EClassifier... paramTypes) {

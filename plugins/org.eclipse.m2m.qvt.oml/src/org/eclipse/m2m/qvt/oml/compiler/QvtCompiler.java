@@ -55,6 +55,8 @@ import org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory;
 import org.eclipse.m2m.qvt.oml.internal.cst.ImportCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.LibraryImportCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.adapters.CSTBindingUtil;
+import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLexer;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.internal.cst.PathNameCS;
 import org.eclipse.osgi.util.NLS;
@@ -134,6 +136,14 @@ public class QvtCompiler {
         
         return resultList.toArray(new QvtCompilationResult[resultList.size()]);
     }
+	
+	private void addSourceLineNumberInfo(ParsedModuleCS parsedModuleCS, Module moduleAST) {
+		QvtOpLexer lexer = CSTBindingUtil.getQvtOpLexer(parsedModuleCS.getModuleCS());
+		if(lexer != null) {
+			String fileName = parsedModuleCS.getSource().getName();
+			ASTBindingHelper.createModuleSourceBinding(moduleAST, fileName, new String(lexer.getInputChars()));
+		}
+	}
     
     private void checkRemoveCycles(ParsedModuleCS module, Map<ParsedModuleCS, List<ParsedModuleCS>> removedCycles) {
     	for (;;) {
@@ -311,6 +321,10 @@ public class QvtCompiler {
         if (module == null) {
             module = createModule(mma.getModuleCS(), options, env, mma);
             module.setName(""); //$NON-NLS-1$
+        }
+        
+        if(options.isSourceLineNumbersEnabled()) {
+        	addSourceLineNumberInfo(mma, module);        	
         }
         
         CompiledModule compModule = new CompiledModule(module, mma, mma.getSource(), allMessages);

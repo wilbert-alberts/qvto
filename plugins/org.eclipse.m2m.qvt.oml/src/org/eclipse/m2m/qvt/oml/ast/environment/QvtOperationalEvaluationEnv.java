@@ -603,7 +603,34 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         return env;
     }
     
-        
+    public void setCurrentASTOffset(int currentASTOffset) {
+    	this.myCurrentASTOffset = currentASTOffset;
+	}
+    
+    public int getCurrentASTOffset() {
+		return myCurrentASTOffset;
+	}
+    
+    /**
+     * Sets the operation being currently executed.
+     */
+    public void setOperation(EOperation myOperation) {
+		this.myOperation = myOperation;
+	}
+
+    /**
+	 * Gets the operation being currently executed.
+	 * 
+	 * @return the operation of <code>null</code> if no operation context is
+	 *         available
+	 */    
+    public EOperation getOperation() {
+		return myOperation;
+	}
+    
+    private EOperation myOperation;
+    private int myCurrentASTOffset = -1;
+    
 	private final Stack<Object> myObjectExpOwnerStack;
 	private final List<Object> myOperationArgs;
 	private Object myOperationSelf;

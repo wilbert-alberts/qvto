@@ -11,10 +11,12 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.internal.ast.evaluator;
 
+import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -42,6 +44,7 @@ import org.eclipse.m2m.qvt.oml.ast.environment.QvtEvaluationResult;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalFileEnv;
+import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalStdLibrary;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.Logger;
@@ -117,6 +120,7 @@ import org.eclipse.ocl.types.VoidType;
 import org.eclipse.ocl.util.Bag;
 import org.eclipse.ocl.util.CollectionUtil;
 import org.eclipse.ocl.util.Tuple;
+import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.PredefinedType;
 import org.eclipse.ocl.utilities.UMLReflection;
 import org.eclipse.osgi.util.NLS;
@@ -132,7 +136,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 
         myEvalEnv = evalEnv;
     }
-    
+        
 	@Override
 	public EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> getEvaluationEnvironment() {
 		return myEvalEnv;
@@ -300,6 +304,16 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 
     @Override
     public Object visitOperationCallExp(OperationCallExp<EClassifier, EOperation> operationCallExp) {
+    	// set IP of the current stack (represented by the top operation env)
+    	// to the this operation call in order to refeflect this call position 
+    	// in possible QVT stack, in case an exception is thrown 
+        setCurrentEnvInstructionPointer(operationCallExp);
+        Object result = doVisitOperationCallExp(operationCallExp);    	        
+        setCurrentEnvInstructionPointer(null);
+        return result;
+    }    
+    
+    protected Object doVisitOperationCallExp(OperationCallExp<EClassifier, EOperation> operationCallExp) {
         EOperation referredOperation = operationCallExp.getReferredOperation();
         if (QvtOperationalUtil.isImperativeOperation(referredOperation)) {
             Object source = operationCallExp.getSource().accept(this);
@@ -337,6 +351,9 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         try {
         	result = super.visitOperationCallExp(operationCallExp);
         }
+        catch (QvtRuntimeException e) {
+        	throw e;
+		}
         catch (RuntimeException ex) {
             Logger.getLogger().log(Logger.WARNING, "QvtEvaluator: failed to evaluate oclOperationCall", ex);//$NON-NLS-1$
         	result = getOclInvalid();
@@ -385,6 +402,24 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
     }
 
     public Object visitModule(Module module) {
+		try {
+			return doVisitModule(module);
+		} 
+		catch (QvtRuntimeException e) {
+			PrintWriter printWriter = QvtOperationalStdLibrary.getLogger(getContext());
+			if(printWriter == null) {
+				printWriter = new PrintWriter(System.err);
+			}
+			
+			e.printQvtStackTrace(printWriter);
+			
+			QvtRuntimeException ee = new QvtRuntimeException(e.getMessage(), e.getCause());
+			ee.setStackQvtTrace(e.getQvtStackTrace());
+			throw ee;
+		}
+    }
+    
+    public Object doVisitModule(Module module) {
         if (myEntryPoint == null) {
             myEntryPoint = (ImperativeOperation) module.getEntry();
         }
@@ -403,6 +438,8 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         initAllModuleDefaultInstances(module, getOperationalEvaluationEnv());
 
         initModuleProperties(module);
+        setCurrentEnvInstructionPointer(myEntryPoint); // initialize IP to the main entry header
+
         getOperationalEvaluationEnv().createModuleParameterExtents(module);
         
         List<Object> entryArgs = makeEntryArgs(myEntryPoint, module);
@@ -550,9 +587,13 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 
         QvtOperationalEvaluationEnv env = getOperationalEvaluationEnv();
         for (Property prop : module.getConfigProperty()) {
+        	setCurrentEnvInstructionPointer(prop);
+        	
             Object propValue = ((PropertyImpl) prop).accept(this);
             EObject moduleInstance = getModuleDefaultInstance(module, env);
-            env.callSetter(moduleInstance, module.getEStructuralFeature(prop.getName()), propValue, isUndefined(propValue), true);            
+            env.callSetter(moduleInstance, module.getEStructuralFeature(prop.getName()), propValue, isUndefined(propValue), true);
+            
+        	setCurrentEnvInstructionPointer(null);
         }
         
         for (Rename rename : module.getOwnedRenaming()) {
@@ -591,7 +632,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         if (isUndefined(result)) { // if nothing was assigned to the result in the init section
             VarParameter type = (mappingOperation.getResult().isEmpty() ? null : mappingOperation.getResult().get(0));
             if (type != null && false == type.getEType() instanceof VoidType) {
-                result = env.createInstance(type.getEType(), ((MappingParameter) type).getExtent());
+                result = createInstance(type.getEType(), ((MappingParameter) type).getExtent());
                 env.replace(Environment.RESULT_VARIABLE_NAME, result);
             }
         }
@@ -791,6 +832,8 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
     	public Object myResult;
     	public QvtOperationalEvaluationEnv myEvalEnv;
     }
+
+    
     private OperationCallResult executeImperativeOperation(ImperativeOperation method, Object source, List<Object> args) {
         QvtOperationalEvaluationEnv oldEvalEnv = getOperationalEvaluationEnv();
         // create a nested evaluation environment for this operation call
@@ -799,24 +842,40 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         // No need now to pass properties as variables, as they are accessed as module features
         //addModuleProperties(nestedEnv, (Module)method.eContainer());
 
+        nestedEnv.setOperation(method);
+        
         nestedEnv.getOperationArgs().addAll(args);
         if (!isUndefined(source)) {
             nestedEnv.setOperationSelf(source);
         }
         setEvaluationEnvironment(nestedEnv);
+        
+        // set IP initially to the method header
+        setCurrentEnvInstructionPointer(method); 
 
+        OperationCallResult callResult = null;
         try {
         	Object result = ((ImperativeOperationImpl) method).accept(this);
-        	OperationCallResult callResult = new OperationCallResult();
+        	callResult = new OperationCallResult();
         	callResult.myResult = result;
         	callResult.myEvalEnv = nestedEnv;
-        	return callResult;
+        }
+        catch (StackOverflowError e) {
+        	throwQvtException(new QvtStackOverFlowError(e));
         } finally {
         	setEvaluationEnvironment(oldEvalEnv);
         }
+        
+    	return callResult;
     }
 
+    protected final void throwQvtException(QvtRuntimeException exception) throws QvtRuntimeException {
+		throwQvtException(exception, null);
+    }
 
+    protected final void throwQvtException(QvtRuntimeException exception, ASTNode causingASTNode) throws QvtRuntimeException {
+		QvtRuntimeException.doThrow(exception, createStackInfoProvider(getOperationalEvaluationEnv(), causingASTNode));
+    }
     
     @SuppressWarnings("unchecked")
 	@Override
@@ -969,7 +1028,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
             final Object instance[] = new Object[] { null };
             //            runSafe(new IRunnable() {
             //                public void run() throws Exception {
-            instance[0] = getOperationalEvaluationEnv().createInstance(objectExp.getType(), objectExp.getReferredObject());
+            instance[0] = createInstance(objectExp.getType(), objectExp.getReferredObject());
             //                }
             //            });
 
@@ -1129,11 +1188,54 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
     	}
     	return property;
     }
-        
+    
+    private QvtRuntimeException.StackInfoProvider createStackInfoProvider(final QvtOperationalEvaluationEnv topStackEnv, final ASTNode causingASTNode) {    	    	
+    	return new QvtRuntimeException.StackInfoProvider() {    		
+    		private List<StackTraceElement> elements;
+    		
+    		public List<StackTraceElement> getStackTraceElements() {
+    			if(elements == null) {
+    		    	int offset = (causingASTNode != null) ? causingASTNode.getStartPosition() : topStackEnv.getCurrentASTOffset();
+    		    	if(offset < 0) {
+    		    		offset = -1;
+    		    	}
+    				
+    				elements = new QvtStackTraceBuilder(topStackEnv, getOperationalEnv().getUMLReflection(), myRootModule, offset).buildStackTrace();
+    				return Collections.unmodifiableList(elements);
+    			}
+    			
+    			return Collections.emptyList();
+    		}
+    	};
+    }
+
+    /**
+	* Wraps the environment's creatInstance() and transforms failures to QVT exception
+	*/    
+	private EObject createInstance(EClassifier type, ModelParameter extent) throws QvtRuntimeException {
+		EObject newInstance = null;
+		try {
+			newInstance = getOperationalEvaluationEnv().createInstance(type, extent);
+		} catch (IllegalArgumentException e) {
+			throwQvtException(new QvtRuntimeException(e));
+		}
+		
+		return newInstance;
+	}    
+   
+    private void setCurrentEnvInstructionPointer(ASTNode node) {
+    	if(node != null) {
+    		getOperationalEvaluationEnv().setCurrentASTOffset(node.getStartPosition());
+    	} else {
+    		getOperationalEvaluationEnv().setCurrentASTOffset(-1);
+    	}
+    }
+    
     // allow to redefine "entry" point
     private ImperativeOperation myEntryPoint;
     private Module myRootModule; 
     private EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> myEvalEnv;
     
-    private OCLAnnotationSupport oclAnnotationSupport; 
+    private OCLAnnotationSupport oclAnnotationSupport;
+    
 }

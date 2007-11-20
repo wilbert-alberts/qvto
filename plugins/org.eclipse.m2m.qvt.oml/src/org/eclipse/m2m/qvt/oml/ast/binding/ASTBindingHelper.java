@@ -18,7 +18,10 @@ import java.util.List;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
+import org.eclipse.m2m.qvt.oml.common.util.LineNumberProvider;
+import org.eclipse.m2m.qvt.oml.common.util.StringLineNumberProvider;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.ocl.Environment;
@@ -29,6 +32,14 @@ import org.eclipse.ocl.utilities.ASTNode;
 @SuppressWarnings("restriction")
 public class ASTBindingHelper {
 	
+	public static void createModuleSourceBinding(EObject target, String fileName, String contents) {
+		target.eAdapters().add(new ModuleSourceAdapter(fileName, contents));
+	}
+				
+	public static IModuleSourceInfo getModuleSourceBinding(Module astModule) {
+		return (IModuleSourceInfo)EcoreUtil.getExistingAdapter(astModule, ModuleSourceAdapter.class);
+	}
+		
 	public static void createModuleBinding(MappingModuleCS cstModule, Module astModule, EcoreEnvironment env, CFile moduleFile) {
 		ASTAdapter astAdapter = new ModuleASTAdapter(cstModule, astModule, env, moduleFile);
 		astModule.eAdapters().add(astAdapter);	
@@ -193,5 +204,38 @@ public class ASTBindingHelper {
 			return file;
 		}
 	}	
-	
+
+	private static class ModuleSourceAdapter extends AdapterImpl implements IModuleSourceInfo {
+		private String fFileName;
+		private String fContents;
+		private LineNumberProvider lineNumberProvider;
+		
+		protected ModuleSourceAdapter(String fileName, String contents) {
+			if(fileName == null || contents == null) {
+				throw new IllegalArgumentException();
+			}
+			fFileName = fileName;
+			fContents = contents;
+		}
+		
+		public String getFileName() {
+			return fFileName;
+		}
+		
+		public String getContents() {
+			return fContents;
+		}
+		
+		public LineNumberProvider getLineNumberProvider() {
+			if(lineNumberProvider == null) {
+				lineNumberProvider = new StringLineNumberProvider(fContents);
+			}
+			return lineNumberProvider;
+		}
+		
+		@Override
+		public boolean isAdapterForType(Object type) {
+			return type == ModuleSourceAdapter.class;
+		}
+	}	
 }
