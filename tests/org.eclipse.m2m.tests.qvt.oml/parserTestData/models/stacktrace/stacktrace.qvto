@@ -1,0 +1,46 @@
+
+import models.stacktrace.auxtransf;
+
+modeltype ecore uses 'http://www.eclipse.org/emf/2002/Ecore';
+
+	
+transformation stacktrace(in inModel : ecore, out outModel : ecore); 
+ 
+configuration property testcase : String;
+
+
+--property x : OclAny = object EClass {}.map mapCreateInstaceFailureFromAux();
+
+ 
+mapping EClassifier::mapCreateInstaceFailure() : EClass {
+	init {
+		self.mapCreateInstaceFailure2();
+	}	
+} 
+
+mapping EClassifier::mapCreateInstaceFailure2() : EClassifier {
+	init {  
+		self.mapCreateInstaceFailure3();
+	}
+}
+ 
+mapping EClassifier::mapCreateInstaceFailure3() : EClassifier {
+	init {  
+		result := object EClass {}; 
+	}
+}
+
+mapping EClass::mapCreateInstaceFailure3() : EClassifier {
+	init {  
+		result := null; -- cheat the compiler like we have assigned a concrete result;
+	}
+}
+
+main() {
+	var res : OclAny := if(testcase = 'stackOverFlow') then 
+		causeStackOverFlow()
+	else if (testcase = 'createInstaceFailure') then
+			object EClass {}.map mapCreateInstaceFailure()
+		endif
+	endif;	
+}

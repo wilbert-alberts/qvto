@@ -40,6 +40,8 @@ public class TransformTests {
             suite.addTest(new TestQvtInterpreter(data));
         }
 
+    	suite.addTestSuite(TestStackTrace.class);
+
         return suite;
     }
     
