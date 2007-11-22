@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
@@ -339,7 +340,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	        	EObject argument = (EObject) getOperationArgs().get(argIndex);
 	        	
 	        	while (true) {
-	        		if (argument.eClass().eContainer() == expMetamodel) {
+	        		if (EcoreUtil.getRootContainer(argument.eClass()) == expMetamodel) {
 	        			modelExtents.put(modelParam, new ModelParameterExtent(argument, metamodels));
 	        			break;
 	        		}
@@ -357,7 +358,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         Map<ModelParameter, ModelParameter> mapImportedExtents = createImportedExtentMap(module, module);
         setModelParameterExtents(modelExtents, mapImportedExtents);
 	}
-
+    
 	private Map<ModelParameter, ModelParameter> createImportedExtentMap(Module rootModule, Module importedModule) {
 		Map<ModelParameter, ModelParameter> mapImportedExtents = new HashMap<ModelParameter, ModelParameter>();
 		for (ModuleImport moduleImport : importedModule.getModuleImport()) {
