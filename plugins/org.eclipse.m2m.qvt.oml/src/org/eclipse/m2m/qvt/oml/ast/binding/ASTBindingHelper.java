@@ -46,23 +46,21 @@ public class ASTBindingHelper {
 		cstModule.eAdapters().add(astAdapter);		
 	}
 	
-	public static CFile resolveModuleFile(MappingModuleCS cstModule) {
-		List<ModuleASTAdapter> adapters = getASTBindings(cstModule, ModuleASTAdapter.class);
-		if (!adapters.isEmpty()) {
-			ModuleASTAdapter moduleAdapter = (ModuleASTAdapter) adapters.get(0);
-			return moduleAdapter.getModuleFile();			
-		}
-		return null;
-	}
+    public static CFile resolveModuleFile(EObject cstModule) {
+        ModuleASTAdapter moduleASTAdapter = getModuleASTAdapter(cstModule);
+        if (moduleASTAdapter != null) {
+            return moduleASTAdapter.getModuleFile();           
+        }
+        return null;
+    }
 
-	public static CFile resolveModuleFile(Module astModule) {
-		List<ModuleASTAdapter> adapters = getASTBindings(astModule, ModuleASTAdapter.class);
-		if (!adapters.isEmpty()) {
-			ModuleASTAdapter moduleAdapter = (ModuleASTAdapter) adapters.get(0);
-			return moduleAdapter.getModuleFile();			
-		}
-		return null;
-	}
+    public static EcoreEnvironment resolveEnvironment(MappingModuleCS cstModule) {
+        ModuleASTAdapter moduleASTAdapter = getModuleASTAdapter(cstModule);
+        if (moduleASTAdapter != null) {
+            return moduleASTAdapter.getEnvironment();           
+        }
+        return null;
+    }
 
 	public static void createCST2ASTBinding(CSTNode cstNode, ASTNode astNode) {
 		createCST2ASTBinding(cstNode, astNode, null);
@@ -139,6 +137,15 @@ public class ASTBindingHelper {
 			}
 		}
 		return null;
+	}
+	
+	private static ModuleASTAdapter getModuleASTAdapter(EObject target) {
+        List<ModuleASTAdapter> adapters = getASTBindings(target, ModuleASTAdapter.class);
+        if (!adapters.isEmpty()) {
+            ModuleASTAdapter moduleAdapter = (ModuleASTAdapter) adapters.get(0);
+            return moduleAdapter;
+        }
+        return null;
 	}
 	
 	static List<ASTAdapter> getASTBindings(EObject target) {

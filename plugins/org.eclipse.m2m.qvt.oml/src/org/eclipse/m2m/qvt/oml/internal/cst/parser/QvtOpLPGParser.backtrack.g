@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.20 2007/10/03 16:34:50 aigdalov Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.21 2007/11/26 12:41:20 aigdalov Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -425,7 +425,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.20 2007/10/03 16:34:50 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.21 2007/11/26 12:41:20 aigdalov Exp $
  */
 	./
 $End
@@ -2085,8 +2085,9 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	
-	variableInitializationCS ::= var IDENTIFIER ':' typeCS ':=' oclExpressionCS
+	variableInitializationCS -> variableInitializationCSCorrect
+
+	variableInitializationCSCorrect ::= var IDENTIFIER ':' typeCS ':=' oclExpressionCS
 		/.$BeginJava
 					CSTNode result = createVariableInitializationCS(
 							getIToken($getToken(2)),
@@ -2108,7 +2109,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	variableInitializationCS ::= var IDENTIFIER ':=' oclExpressionCS
+	variableInitializationCSCorrect ::= var IDENTIFIER ':=' oclExpressionCS
 		/.$BeginJava
 					CSTNode result = createVariableInitializationCS(
 							getIToken($getToken(2)),

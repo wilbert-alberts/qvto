@@ -13,7 +13,6 @@ package org.eclipse.m2m.qvt.oml.ast.parser;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,24 +25,18 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.qvt.oml.QvtMessage;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnvFactory;
-import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalFileEnv;
-import org.eclipse.m2m.qvt.oml.common.launch.SafeRunner;
-import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.qvt.oml.compiler.CompilerMessages;
 import org.eclipse.m2m.qvt.oml.compiler.ParsedModuleCS;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
-import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtOperationalEvaluationVisitorImpl;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalVisitorCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.adapters.CSTBindingUtil;
 import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParser;
 import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLexer;
-import org.eclipse.m2m.qvt.oml.library.IContext;
 import org.eclipse.ocl.OCLInput;
 import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.SemanticException;
@@ -57,12 +50,12 @@ public class QvtOperationalParser {
 
 	public MappingModuleCS parse(final Reader is, final String name) {
 		MappingModuleCS result = null;
-		QvtOpLexer lexer = new QvtOpLexer();
+		myLexer = new QvtOpLexer();
 		myEnv = new QvtOperationalEnvFactory().createEnvironment(null, null, null);
 		try {
-			lexer.initialize(new OCLInput(is).getContent(), name);
-			RunnableQVTParser parser = new RunnableQVTParser(lexer);
-			lexer.lexer(parser);
+		    myLexer.initialize(new OCLInput(is).getContent(), name);
+			RunnableQVTParser parser = new RunnableQVTParser(myLexer);
+			myLexer.lexer(parser);
 	
 			result = (MappingModuleCS) parser.runParser(100);	
 		}
@@ -79,8 +72,6 @@ public class QvtOperationalParser {
 			}
 		}
 		
-		CSTBindingUtil.bindQvtOpLexer(result, lexer);
-		
 		return result;
 	}
 
@@ -92,8 +83,11 @@ public class QvtOperationalParser {
 		try {
 			OCLLexer oclLexer = new OCLLexer();
 			oclLexer.initialize(new OCLInput(moduleCS.getSource().getContents()).getContent(), moduleCS.getSource().getName());
-			QvtOperationalVisitorCS visitor = new QvtOperationalVisitorCS(oclLexer, myEnv, options);
-			module = visitor.visitMappingModule(moduleCS, myEnv);
+			QvtOperationalVisitorCS visitor = options.getQvtOperationalVisitorCS();
+			if (visitor == null) {
+	            visitor = new QvtOperationalVisitorCS(oclLexer, myEnv, options);
+			}
+			module = visitor.visitMappingModule(moduleCS, myEnv, compiler);
 		} catch (SemanticException e) {
 			getErrorsList().add(new QvtMessage(e.getLocalizedMessage(), 0, 0));
 		} catch (ParserException e) {
@@ -180,6 +174,10 @@ public class QvtOperationalParser {
 		return myEnv;
 	}
 	
-	private QvtOperationalFileEnv myEnv;
-
+    public QvtOpLexer getLexer() {
+        return myLexer;
+    }
+	
+    private QvtOperationalFileEnv myEnv;
+    private QvtOpLexer myLexer;
 }

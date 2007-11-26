@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerKernel;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtOperationalEvaluationVisitorImpl;
 import org.eclipse.m2m.qvt.oml.library.IContext;
 import org.eclipse.ocl.Environment;
@@ -36,14 +36,14 @@ import org.eclipse.ocl.ecore.SendSignalAction;
 
 public class QvtOperationalEnvFactory extends EcoreEnvironmentFactory {
 
-	public QvtOperationalFileEnv createEnvironment(final QvtOperationalEnv parent, final CFile file, final QvtCompiler compiler) {
-		QvtOperationalFileEnv env = new QvtOperationalFileEnv(parent, file, compiler);
+	public QvtOperationalFileEnv createEnvironment(final QvtOperationalEnv parent, final CFile file, final QvtCompilerKernel kernel) {
+		QvtOperationalFileEnv env = new QvtOperationalFileEnv(parent, file, kernel);
 		env.setFactory(this);
 		return env;
 	}
 	
-	public QvtOperationalEnv createEnvironment(final QvtOperationalEnv parent, final QvtCompiler compiler) {
-		QvtOperationalEnv env = new QvtOperationalEnv(parent, compiler);
+	public QvtOperationalEnv createEnvironment(final QvtOperationalEnv parent) {
+		QvtOperationalEnv env = new QvtOperationalEnv(parent);
 		env.setFactory(this);
 		return env;
 	}

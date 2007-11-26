@@ -18,8 +18,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.common.io.CResourceRepositoryContext;
-import org.eclipse.m2m.qvt.oml.compiler.ParsedModuleCS;
-import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerKernel;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
@@ -36,16 +35,22 @@ public class QvtOperationalFileEnv extends QvtOperationalEnv {
 
     public static final String THIS_VAR_QNAME_SUFFIX = "." + THIS; //$NON-NLS-1$
 	
+    private final QvtCompilerKernel myKernel;
 	
-	protected QvtOperationalFileEnv(final QvtOperationalEnv parent, final CFile file, final QvtCompiler compiler) {
-		super(parent, compiler, new EPackageRegistryImpl());
-		myFile = file;		
+	protected QvtOperationalFileEnv(final QvtOperationalEnv parent, final CFile file, final QvtCompilerKernel kernel) {
+		super(parent, new EPackageRegistryImpl());
+		myFile = file;
+        myKernel = kernel;
 	}
+
+    public QvtCompilerKernel getKernel() {
+        return myKernel;
+    }
 
 	@Override
 	public MetamodelRegistry getMetamodelRegistry() {
 		
-		MetamodelRegistry registry = getCompiler()
+		MetamodelRegistry registry = getKernel()
 			.getMetamodelRegistryProvider().getRegistry(new CResourceRepositoryContext(myFile));
 		
 		if(registry != null) {
@@ -54,21 +59,25 @@ public class QvtOperationalFileEnv extends QvtOperationalEnv {
 		return super.getMetamodelRegistry();
 	}
 	
-	public String getUnitName() {
+	public CFile getFile() {
+        return myFile;
+    }
+
+    public String getUnitName() {
         return myFile.getUnitName();
 	}
 
 	public String getExpectedPackageName() {
-		return getCompiler().getExpectedPackageName(myFile.getParent());
+		return getKernel().getExpectedPackageName(myFile.getParent());
 	}
 	
     public Module getModule(MappingModuleCS mmas) {
-        return getCompiler().getModule(mmas);
+        return getKernel().getModule(mmas);
     }
     
     public Module createModule(MappingModuleCS mmas, QvtCompilerOptions options,
-    		EcoreEnvironment env, ParsedModuleCS parsedModuleCS) {
-        Module module = getCompiler().createModule(mmas, options, env, parsedModuleCS);
+    		EcoreEnvironment env, CFile cFile) {
+        Module module = getKernel().createModule(mmas, options, env, cFile);
         
 		Variable<EClassifier, EParameter> thisVar = ExpressionsFactory.eINSTANCE.createVariable();
 		String prefix = QvtOperationalParserUtil.getMappingModuleSimpleName(mmas.getHeaderCS());

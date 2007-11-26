@@ -35,6 +35,7 @@ import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalFileEnv;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.compiler.ParsedModuleCS;
+import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.EmfMmUtil;
 import org.eclipse.m2m.qvt.oml.expressions.AltExp;
@@ -102,7 +103,6 @@ import org.eclipse.m2m.qvt.oml.internal.cst.TransformationHeaderCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.TypeSpecCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.VariableInitializationCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.WhileExpCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.adapters.CSTBindingUtil;
 import org.eclipse.m2m.qvt.oml.internal.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorCallExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorVariableInitializationCS;
@@ -163,8 +163,12 @@ public class QvtOperationalVisitorCS
 		super(lexStream, environment);
         myCompilerOptions = options;
 	}
+	
+	public QvtCompilerOptions getCompilerOptions() {
+        return myCompilerOptions;
+    }
 
-	@Override
+    @Override
 	protected EClassifier tupleTypeCS(TupleTypeCS tupleTypeCS, Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) throws SemanticException {
 		EClassifier type = null;
 		try {			
@@ -634,14 +638,13 @@ public class QvtOperationalVisitorCS
 		return result;
 	}
 
-	public Module visitMappingModule(ParsedModuleCS parsedModuleCS, QvtOperationalFileEnv env) throws SemanticException {
+	public Module visitMappingModule(ParsedModuleCS parsedModuleCS, QvtOperationalFileEnv env, QvtCompiler compiler) throws SemanticException {
 		MappingModuleCS moduleCS = parsedModuleCS.getModuleCS();
-        CSTBindingUtil.bindQvtOperationalEnv(moduleCS, env);
         Module module = env.getModule(moduleCS);
         if (module != null) {
             return module;
         }        
-		module = env.createModule(moduleCS, myCompilerOptions, env, parsedModuleCS);
+		module = env.createModule(moduleCS, myCompilerOptions, env, parsedModuleCS.getSource());
 		module.setStartPosition(moduleCS.getStartOffset());
 		module.setEndPosition(moduleCS.getEndOffset());
 
@@ -727,7 +730,7 @@ public class QvtOperationalVisitorCS
 
 		for (ParsedModuleCS importedModuleCS : parsedModuleCS.getParsedImports()) {
 			// Check for duplicate imports is handled by QvtCompiler
-			Module importedModule = env.getCompiler().analyse(importedModuleCS, myCompilerOptions).getModule().getModule();
+			Module importedModule = compiler.analyse(importedModuleCS, myCompilerOptions).getModule().getModule();
 			if (importedModule == null) {
 				continue;
 			}
@@ -832,7 +835,7 @@ public class QvtOperationalVisitorCS
 		return module;
 	}
 
-	private void visitTransformationHeaderCS(TransformationHeaderCS headerCS,
+	protected void visitTransformationHeaderCS(TransformationHeaderCS headerCS,
 			QvtOperationalFileEnv env, Module module) {
 		if (!headerCS.getQualifiers().isEmpty()) {
 			env.reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_transfQualifiersNotSupported,
@@ -897,7 +900,7 @@ public class QvtOperationalVisitorCS
 		}
 	}
 
-	private ModelType visitModelTypeCS(ModelTypeCS modelTypeCS, QvtOperationalFileEnv env,
+	protected ModelType visitModelTypeCS(ModelTypeCS modelTypeCS, QvtOperationalFileEnv env,
 			Module module) throws SemanticException {
 		if (modelTypeCS == null) {
 			return null;
@@ -1067,7 +1070,7 @@ public class QvtOperationalVisitorCS
 		return metamodels;		
 	}
 
-	private Rename visitRenameCS(RenameCS renameCS, QvtOperationalFileEnv env) throws SemanticException {
+	protected Rename visitRenameCS(RenameCS renameCS, QvtOperationalFileEnv env) throws SemanticException {
 		EClassifier type = visitTypeCS(renameCS.getTypeCS(), null, env);
 		if (type == null) {
 			return null;
@@ -1125,7 +1128,7 @@ public class QvtOperationalVisitorCS
 		return statements;
 	}
 
-	private void visitMappingMethodCS(MappingMethodCS methodCS, QvtOperationalEnv env, ImperativeOperation declaredOperation)
+	protected void visitMappingMethodCS(MappingMethodCS methodCS, QvtOperationalEnv env, ImperativeOperation declaredOperation)
 			throws SemanticException {
 		if (methodCS instanceof MappingRuleCS) {
 			visitMappingRuleCS((MappingRuleCS) methodCS, env, (MappingOperation)declaredOperation);
@@ -1135,7 +1138,7 @@ public class QvtOperationalVisitorCS
 		}
 	}
 
-	private ImperativeOperation visitMappingRuleCS(MappingRuleCS methodCS, QvtOperationalEnv env, final MappingOperation operation)
+	private void visitMappingRuleCS(MappingRuleCS methodCS, QvtOperationalEnv env, MappingOperation operation)
 			throws SemanticException {
 		env.registerMappingOperation(operation);
 		operation.setEndPosition(methodCS.getEndOffset());
@@ -1147,7 +1150,6 @@ public class QvtOperationalVisitorCS
 
 		VarParameter operationResult = (operation.getResult().isEmpty() ? null : operation.getResult().get(0));
 		QvtOperationalEnv newEnv = env.createOperationEnvironment(operation.getContext());
-		CSTBindingUtil.bindQvtOperationalEnv(methodCS, newEnv);
 		
         if(myCompilerOptions.isGenerateCompletionData()) {          
             ASTBindingHelper.createCST2ASTBinding(methodCS, operation, newEnv);
@@ -1224,11 +1226,9 @@ public class QvtOperationalVisitorCS
 		}
 
 		checkAbstractOutParamsInitialized(operation.getResult(), methodCS, env);
-
-		return operation;
 	}
 
-	private ImperativeOperation visitMappingQueryCS(MappingQueryCS methodCS, QvtOperationalEnv env, final Helper helper)
+	private void visitMappingQueryCS(MappingQueryCS methodCS, QvtOperationalEnv env, Helper helper)
 			throws SemanticException {
 		helper.setEndPosition(methodCS.getEndOffset());
 
@@ -1238,10 +1238,13 @@ public class QvtOperationalVisitorCS
 		}
 
 		QvtOperationalEnv newEnv = env.createOperationEnvironment(helper.getContext());
-        CSTBindingUtil.bindQvtOperationalEnv(methodCS, newEnv);
 		newEnv.defineOperationParameters(helper);
 
-		List<OCLExpression<EClassifier>> expressions = new ArrayList<OCLExpression<EClassifier>>();
+        if(myCompilerOptions.isGenerateCompletionData()) {          
+            ASTBindingHelper.createCST2ASTBinding(methodCS, helper, newEnv);
+        }
+
+        List<OCLExpression<EClassifier>> expressions = new ArrayList<OCLExpression<EClassifier>>();
 		for (OCLExpressionCS exprCS : methodCS.getExpressions()) {
 			if (exprCS == null) {
 				continue;
@@ -1271,11 +1274,9 @@ public class QvtOperationalVisitorCS
 			        QvtOperationalTypesUtil.getTypeFullName(helperType), QvtOperationalTypesUtil.getTypeFullName(returnType) }),
 					methodCS.getMappingDeclarationCS());
 		}
-
-		return helper;
 	}
 
-	private boolean visitMappingDeclarationCS(MappingDeclarationCS mappingDeclarationCS, QvtOperationalEnv env,
+	protected boolean visitMappingDeclarationCS(MappingDeclarationCS mappingDeclarationCS, QvtOperationalEnv env,
 			ImperativeOperation operation) throws SemanticException {
 		if (mappingDeclarationCS == null) {
 			return false;
@@ -1651,7 +1652,7 @@ public class QvtOperationalVisitorCS
 		return prop;
 	}
 
-	private Property visitModulePropertyCS(ModulePropertyCS propCS, QvtOperationalFileEnv env)
+	protected Property visitModulePropertyCS(ModulePropertyCS propCS, QvtOperationalFileEnv env)
 			throws SemanticException {
 		
 		Property result = null;		

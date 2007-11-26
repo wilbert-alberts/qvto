@@ -508,7 +508,7 @@ public class QvtOperationalParserUtil {
 	}
 	
 	private static boolean isOclVoid(final EModelElement context, final QvtOperationalEnv env) {
-		QvtOperationalEnv realEnv = (env == null ? env.getFactory().createEnvironment(null, null) : env);
+		QvtOperationalEnv realEnv = (env == null ? env.getFactory().createEnvironment(null) : env);
 		if (context == realEnv.getOCLStandardLibrary().getOclVoid()) {
 			return true;
 		}

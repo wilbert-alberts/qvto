@@ -45,7 +45,7 @@ public class QvtOperationalUtil {
 	}
 	
     public static boolean isAssignableToFrom(EClassifier to, EClassifier from) {
-        QvtOperationalEnv env = new QvtOperationalEnvFactory().createEnvironment(null, null);
+        QvtOperationalEnv env = new QvtOperationalEnvFactory().createEnvironment(null);
         return isAssignableToFrom(env, to, from);
     }
     
@@ -128,7 +128,7 @@ public class QvtOperationalUtil {
 	}
 
     
-	private static final Object ourOclInvalid = new QvtOperationalEnvFactory().createEnvironment(null, null).getOCLStandardLibrary().getOclInvalid();
-	private static final EClassifier ourOclVoid = new QvtOperationalEnvFactory().createEnvironment(null, null).getOCLStandardLibrary().getOclVoid();
+	private static final Object ourOclInvalid = new QvtOperationalEnvFactory().createEnvironment(null).getOCLStandardLibrary().getOclInvalid();
+	private static final EClassifier ourOclVoid = new QvtOperationalEnvFactory().createEnvironment(null).getOCLStandardLibrary().getOclVoid();
 
 }
