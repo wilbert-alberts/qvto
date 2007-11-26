@@ -27,6 +27,8 @@ Eclipse-LazyStart: true
 Export-Package: org.eclipse.m2m.qvt.oml.editor.ui,
  org.eclipse.m2m.qvt.oml.editor.ui.completion,
  org.eclipse.m2m.qvt.oml.editor.ui.completion.collectorregistry,
+ org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser,
  org.eclipse.m2m.qvt.oml.editor.ui.hovers,
  org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks,
  org.eclipse.m2m.qvt.oml.editor.ui.outline
+ 

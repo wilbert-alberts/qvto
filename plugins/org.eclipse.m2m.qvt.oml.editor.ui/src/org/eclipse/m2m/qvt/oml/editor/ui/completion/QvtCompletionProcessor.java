@@ -5,19 +5,10 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 
-import lpg.lpgjavaruntime.IToken;
-import lpg.lpgjavaruntime.PrsStream;
-
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.bindings.TriggerSequence;
 import org.eclipse.jface.bindings.keys.KeySequence;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.DocumentEvent;
-import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.contentassist.ContentAssistEvent;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
@@ -27,20 +18,10 @@ import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 import org.eclipse.jface.text.source.ISourceViewer;
-import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
-import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
-import org.eclipse.m2m.qvt.oml.compiler.ParsedModuleCS;
-import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
-import org.eclipse.m2m.qvt.oml.editor.ui.Activator;
-import org.eclipse.m2m.qvt.oml.editor.ui.QvtCompilerFacade;
-import org.eclipse.m2m.qvt.oml.editor.ui.QvtDocumentProvider;
 import org.eclipse.m2m.qvt.oml.editor.ui.QvtEditor;
 import org.eclipse.m2m.qvt.oml.editor.ui.completion.collectorregistry.CategoryDescriptor;
 import org.eclipse.m2m.qvt.oml.editor.ui.completion.collectorregistry.CollectorDescriptor;
 import org.eclipse.m2m.qvt.oml.editor.ui.completion.collectorregistry.CollectorRegistry;
-import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.adapters.CSTBindingUtil;
-import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLexer;
 import org.eclipse.ocl.internal.cst.CSTNode;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.PlatformUI;
@@ -63,18 +44,7 @@ public class QvtCompletionProcessor implements IContentAssistProcessor {
     private int myCategoryIndex = INITIAL_CATEGORY_INDEX;
 
     private final QvtEditor myEditor;
-    private String myError;
-    private boolean isDocumentChanged = true;
     private int myOffset = -1;
-    
-    private final IDocumentListener myDocumentListener = new IDocumentListener() {
-		public void documentAboutToBeChanged(DocumentEvent event) {
-		}
-
-		public void documentChanged(DocumentEvent event) {
-			isDocumentChanged = true;
-		}
-    };
     
     public QvtCompletionProcessor(final QvtEditor editor, final ISourceViewer sourceViewer, ContentAssistant contentAssistant) {
         myEditor = editor;
@@ -127,62 +97,36 @@ public class QvtCompletionProcessor implements IContentAssistProcessor {
 
     public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer,
             int offset) {
-        myError = null;
         try {
-            IDocument document = viewer.getDocument();
-            document.addDocumentListener(myDocumentListener);
-            if (isDocumentChanged) {
-                QvtCompilerOptions options = new QvtCompilerOptions();
-                options.setReportErrors(false);
-                options.setShowAnnotations(false);
-                options.setSourceLineNumbersEnabled(false);
-                
-                QvtCompilerFacade.getInstance().compile(myEditor, document, options, null);
-            	isDocumentChanged = false;
-            }
-            QvtDocumentProvider documentProvider = (QvtDocumentProvider) myEditor.getDocumentProvider();
-            CompiledModule compiledModule = documentProvider.getCompiledModule();
-            ParsedModuleCS syntaxElement = compiledModule.getSyntaxElement();
-            MappingModuleCS moduleCS = syntaxElement.getModuleCS();
-            CSTNode cstNode = CSTTraverseUtil.findCSTNode(moduleCS, offset);
-            QvtOpLexer qvtOpLexer = CSTTraverseUtil.getQvtOpLexer(cstNode);
-            PrsStream prsStream = qvtOpLexer.getPrsStream();
-            IToken[] tokens = getLeftTokenAndCurrentToken(document, prsStream, offset);
-            QvtOperationalEnv env = CSTBindingUtil.getQvtOperationalEnv(cstNode);
-            QvtCompletionData data = new QvtCompletionData(myEditor, viewer, offset, tokens[0],
-            		tokens[1], cstNode, env, moduleCS, qvtOpLexer, prsStream, compiledModule);
+            QvtCompletionData data = new QvtCompletionData(myEditor, viewer, offset);
             if (!data.isValid()) {
-            	return disableNextCodeCompletionPage();
+                return disableNextCodeCompletionPage();
             }
             if ((myCategoryIndex == INITIAL_CATEGORY_INDEX) 
-            		|| (myOffset == offset)) { // Ctrl + Space pressed again
+                    || (myOffset == offset)) { // Ctrl + Space pressed again
                 int categoryIndex = updateCategoryIndex(data);
                 if (categoryIndex == NO_CATEGORY_INDEX) {
-                	return disableNextCodeCompletionPage();
+                    return disableNextCodeCompletionPage();
                 }
                 CategoryDescriptor nextCategory = getNextCategory();
                 if (nextCategory == null) {
-                	disableNextCodeCompletionPage();
+                    disableNextCodeCompletionPage();
                 } else {
-                	myContentAssistant.setStatusLineVisible(true);
-                	myContentAssistant.setStatusMessage(NLS.bind(Messages.QvtCompletionProcessor_PressCtrlSpace,
-                			nextCategory.getLabel()));
+                    myContentAssistant.setStatusLineVisible(true);
+                    myContentAssistant.setStatusMessage(NLS.bind(Messages.QvtCompletionProcessor_PressCtrlSpace,
+                            nextCategory.getLabel()));
                 }
             }
             Collection<ICompletionProposal> proposals = new LinkedHashSet<ICompletionProposal>();
             for (CollectorDescriptor collectorDescriptor : CollectorRegistry.getCollectors(getCurrentCategory().getId())) {
-            	ICollector collector = collectorDescriptor.getCollector();
-            	if (collector.isApplicable(data)) {
+                ICollector collector = collectorDescriptor.getCollector();
+                if (collector.isApplicable(data)) {
                     collector.addPropoposals(proposals, data);
-            	}
+                }
             }
             return proposals.toArray(new ICompletionProposal[proposals.size()]);
-        } catch (BadLocationException e) {
-            myError = NLS.bind(Messages.QvtCompletionProcessor_ErrorMessage, e.getLocalizedMessage());
-            Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), myError, e));
-            return disableNextCodeCompletionPage();
         } finally {
-        	myOffset = offset;
+            myOffset = offset;
         }
     }
 
@@ -190,35 +134,6 @@ public class QvtCompletionProcessor implements IContentAssistProcessor {
     	myContentAssistant.setStatusLineVisible(false);
     	return null;
 	}
-
-	private IToken[] getLeftTokenAndCurrentToken(IDocument document, PrsStream prsStream, int offset) throws BadLocationException {
-        IToken left = null;
-        IToken current = null;
-
-        if ((offset == 0) || (prsStream.getTokens().isEmpty())) {
-            return new IToken[] {left, current};
-        }
-
-        // We might be at the end of some identifier
-        char previousChar = document.getChar(offset - 1);
-        if (Character.isJavaIdentifierPart(previousChar)) { 
-            int tokenIndex = prsStream.getTokenIndexAtCharacter(offset - 1);
-            // getTokenIndexAtCharacter() may produce wrong results on first tokens
-            left = (tokenIndex == 1) ? null : prsStream.getTokenAt(tokenIndex - 1);
-            current = prsStream.getTokenAt(tokenIndex);
-        } else {
-            int tokenIndex = prsStream.getTokenIndexAtCharacter(offset);
-            int leftTokenIndex = (tokenIndex <= 0)  ? -tokenIndex : tokenIndex - 1;
-            if (leftTokenIndex != 0) {
-                left = prsStream.getTokenAt(leftTokenIndex);
-            }
-            if (prsStream.getTokens().size() >= leftTokenIndex + 2) {
-                IToken next = prsStream.getTokenAt(leftTokenIndex + 1);
-                current = (next.getStartOffset() < offset) ? next : null;
-            }
-        }
-        return new IToken[] {left, current};
-    }
     
     private int updateCategoryIndex(QvtCompletionData data) {
     	if (myCategoryIndex == INITIAL_CATEGORY_INDEX) { /* -1 */
@@ -314,6 +229,6 @@ public class QvtCompletionProcessor implements IContentAssistProcessor {
     }
 
     public String getErrorMessage() {
-        return myError;
+        return null;
     }
 }
