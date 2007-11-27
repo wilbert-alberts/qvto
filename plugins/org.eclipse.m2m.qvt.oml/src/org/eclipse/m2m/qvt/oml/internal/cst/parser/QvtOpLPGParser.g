@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.1 2007/07/29 19:50:55 radvorak Exp $
+-- * $Id: QvtOpLPGParser.g,v 1.2 2007/11/27 20:33:22 radvorak Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -291,7 +291,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.1 2007/07/29 19:50:55 radvorak Exp $
+ * $Id: QvtOpLPGParser.g,v 1.2 2007/11/27 20:33:22 radvorak Exp $
  */
 	./
 $End

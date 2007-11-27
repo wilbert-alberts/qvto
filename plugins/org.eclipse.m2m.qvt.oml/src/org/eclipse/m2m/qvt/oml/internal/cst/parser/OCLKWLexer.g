@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: OCLKWLexer.g,v 1.1 2007/07/29 19:50:55 radvorak Exp $
+-- * $Id: OCLKWLexer.g,v 1.2 2007/11/27 20:33:22 radvorak Exp $
 -- */
 --
 -- The OCL KeyWord Lexer
@@ -51,7 +51,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: OCLKWLexer.g,v 1.1 2007/07/29 19:50:55 radvorak Exp $
+ * $Id: OCLKWLexer.g,v 1.2 2007/11/27 20:33:22 radvorak Exp $
  */
 	./
 $End

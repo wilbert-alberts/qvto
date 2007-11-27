@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLexer.g,v 1.2 2007/11/27 15:43:20 radvorak Exp $
+-- * $Id: QvtOpLexer.g,v 1.3 2007/11/27 20:33:22 radvorak Exp $
 -- */
 --
 -- The QVT Lexer
@@ -77,7 +77,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLexer.g,v 1.2 2007/11/27 15:43:20 radvorak Exp $
+ * $Id: QvtOpLexer.g,v 1.3 2007/11/27 20:33:22 radvorak Exp $
  */
 	./
 $End

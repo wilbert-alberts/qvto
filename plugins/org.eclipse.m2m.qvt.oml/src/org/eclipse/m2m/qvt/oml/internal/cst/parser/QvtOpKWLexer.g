@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpKWLexer.g,v 1.5 2007/09/17 10:17:37 aigdalov Exp $
+-- * $Id: QvtOpKWLexer.g,v 1.6 2007/11/27 20:33:22 radvorak Exp $
 -- */
 --
 -- The QVT KeyWord Lexer
@@ -76,7 +76,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpKWLexer.g,v 1.5 2007/09/17 10:17:37 aigdalov Exp $
+ * $Id: QvtOpKWLexer.g,v 1.6 2007/11/27 20:33:22 radvorak Exp $
  */
 	./
 $End
