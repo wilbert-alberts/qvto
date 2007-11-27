@@ -34,9 +34,9 @@ import org.eclipse.m2m.qvt.oml.internal.cst.ModulePropertyCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ParameterDeclarationCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.RenameCS;
 import org.eclipse.m2m.qvt.oml.ui.QvtPluginImages;
-import org.eclipse.ocl.internal.cst.PathNameCS;
-import org.eclipse.ocl.internal.cst.StringLiteralExpCS;
-import org.eclipse.ocl.internal.cst.TypeCS;
+import org.eclipse.ocl.cst.PathNameCS;
+import org.eclipse.ocl.cst.StringLiteralExpCS;
+import org.eclipse.ocl.cst.TypeCS;
 import org.eclipse.ocl.types.VoidType;
 import org.eclipse.swt.graphics.Image;
 

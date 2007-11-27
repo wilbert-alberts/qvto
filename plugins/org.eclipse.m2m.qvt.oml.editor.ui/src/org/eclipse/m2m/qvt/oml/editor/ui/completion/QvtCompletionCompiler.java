@@ -27,8 +27,8 @@ import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLexer;
 import org.eclipse.ocl.OCLInput;
 import org.eclipse.ocl.ParserException;
-import org.eclipse.ocl.internal.cst.CSTNode;
-import org.eclipse.ocl.internal.parser.OCLLexer;
+import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.parser.OCLLexer;
 
 /**
  * @author aigdalov
@@ -54,7 +54,7 @@ public class QvtCompletionCompiler extends QvtCompiler {
             return cFileData.getLexer();
         }
         Reader reader = getCFileReader(cFile);
-        QvtOpLexer lexer = new QvtOpLexer();
+        QvtOpLexer lexer = new QvtOpLexer(myEnvironment);
         cFileData.setLexer(lexer);
         try {
             lexer.initialize(new OCLInput(reader).getContent(), cFile.getName());
@@ -82,7 +82,7 @@ public class QvtCompletionCompiler extends QvtCompiler {
             options.setShowAnnotations(false);
             options.setSourceLineNumbersEnabled(false);
 
-            OCLLexer oclLexer = new OCLLexer();
+            OCLLexer oclLexer = new OCLLexer(myEnvironment);
             try {
                 oclLexer.initialize(new OCLInput("").getContent(), myData.getCFile().getName()); //$NON-NLS-1$
 

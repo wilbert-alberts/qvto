@@ -22,7 +22,7 @@ import org.eclipse.m2m.qvt.oml.editor.ui.QvtEditor;
 import org.eclipse.m2m.qvt.oml.editor.ui.completion.collectorregistry.CategoryDescriptor;
 import org.eclipse.m2m.qvt.oml.editor.ui.completion.collectorregistry.CollectorDescriptor;
 import org.eclipse.m2m.qvt.oml.editor.ui.completion.collectorregistry.CollectorRegistry;
-import org.eclipse.ocl.internal.cst.CSTNode;
+import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.keys.IBindingService;

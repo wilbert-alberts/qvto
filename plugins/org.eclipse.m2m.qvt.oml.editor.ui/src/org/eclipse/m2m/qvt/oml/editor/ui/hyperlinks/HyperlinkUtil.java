@@ -13,8 +13,8 @@ package org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks;
 
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Region;
-import org.eclipse.ocl.internal.cst.CSTNode;
-import org.eclipse.ocl.internal.cst.SimpleNameCS;
+import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.utilities.ASTNode;
 
 

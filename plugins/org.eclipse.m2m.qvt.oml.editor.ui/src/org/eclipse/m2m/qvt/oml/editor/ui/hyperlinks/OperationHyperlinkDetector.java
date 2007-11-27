@@ -22,10 +22,10 @@ import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingDeclarationCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingMethodCS;
 import org.eclipse.ocl.ecore.OperationCallExp;
-import org.eclipse.ocl.internal.cst.CSTNode;
-import org.eclipse.ocl.internal.cst.OperationCallExpCS;
-import org.eclipse.ocl.internal.cst.SimpleNameCS;
-import org.eclipse.ocl.internal.cst.TypeCS;
+import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.cst.OperationCallExpCS;
+import org.eclipse.ocl.cst.SimpleNameCS;
+import org.eclipse.ocl.cst.TypeCS;
 import org.eclipse.ocl.utilities.ASTNode;
 
 

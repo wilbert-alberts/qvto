@@ -29,10 +29,10 @@ import org.eclipse.m2m.qvt.oml.internal.cst.MappingDeclarationCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ModelTypeCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ModuleImportCS;
-import org.eclipse.ocl.internal.cst.CSTNode;
-import org.eclipse.ocl.internal.cst.PathNameCS;
-import org.eclipse.ocl.internal.cst.StringLiteralExpCS;
-import org.eclipse.ocl.internal.cst.TypeCS;
+import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.cst.PathNameCS;
+import org.eclipse.ocl.cst.StringLiteralExpCS;
+import org.eclipse.ocl.cst.TypeCS;
 
 
 /**

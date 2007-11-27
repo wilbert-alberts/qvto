@@ -16,7 +16,7 @@ import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.m2m.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks.OperationHyperlinkDetector;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
-import org.eclipse.ocl.internal.cst.SimpleNameCS;
+import org.eclipse.ocl.cst.SimpleNameCS;
 
 public class OperationCallInfoProvider implements IElementInfoProvider {
 

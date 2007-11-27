@@ -19,7 +19,7 @@ import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.ocl.internal.cst.CSTNode;
+import org.eclipse.ocl.cst.CSTNode;
 
 
 

@@ -9,6 +9,8 @@ import lpg.lpgjavaruntime.PrsStream;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
+import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnvFactory;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.editor.ui.Activator;
@@ -19,11 +21,10 @@ import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLexer;
 import org.eclipse.ocl.OCLInput;
 import org.eclipse.ocl.ParserException;
-import org.eclipse.ocl.SemanticException;
+import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.expressions.OCLExpression;
-import org.eclipse.ocl.internal.cst.CSTNode;
-import org.eclipse.ocl.internal.cst.OCLExpressionCS;
-import org.eclipse.ocl.internal.parser.OCLLexer;
+import org.eclipse.ocl.parser.OCLLexer;
 
 /**
  * @author aigdalov
@@ -160,7 +161,7 @@ public class LightweightParserUtil {
 
     public static final OCLExpression<EClassifier> getOclExpression(OCLExpressionCS oclExpressionCS, QvtCompletionData data) {
         if (oclExpressionCS != null) {
-            OCLLexer oclLexer = new OCLLexer();
+            OCLLexer oclLexer = new OCLLexer(data.getEnvironment());
             try {
                 oclLexer.initialize(new OCLInput("").getContent(), data.getCFile().getName()); //$NON-NLS-1$
                 QvtCompilerOptions options = new QvtCompilerOptions();
@@ -168,11 +169,8 @@ public class LightweightParserUtil {
                 options.setShowAnnotations(false);
                 options.setSourceLineNumbersEnabled(false);
                 QvtOperationalVisitorCS visitor = new QvtOperationalVisitorCS(oclLexer, data.getEnvironment(), options);
-                try {
-                    return visitor.oclExpressionCS(oclExpressionCS, data.getEnvironment());
-                } catch (SemanticException e) {
-                    Activator.log(e);
-                }
+
+                return visitor.oclExpressionCS(oclExpressionCS, data.getEnvironment());
             } catch (ParserException e) {
                 Activator.log(e);
             }
@@ -221,7 +219,8 @@ public class LightweightParserUtil {
     
     public static final CSTNode parse(String script, CFile cFile, ParserTypeEnum parserType) {
         try {
-            QvtOpLexer lexer = new QvtOpLexer();
+        	QvtOperationalEnv env = new QvtOperationalEnvFactory().createEnvironment(null, null, null);
+            QvtOpLexer lexer = new QvtOpLexer(env);
             lexer.initialize(new OCLInput(script).getContent(), cFile.getName());
             PrsStream parser = null;
             switch (parserType) {

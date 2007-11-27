@@ -12,7 +12,7 @@ import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalVisitorCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingMethodCS;
 import org.eclipse.ocl.SemanticException;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
-import org.eclipse.ocl.internal.parser.OCLLexer;
+import org.eclipse.ocl.parser.OCLLexer;
 import org.eclipse.ocl.utilities.ASTNode;
 
 /**

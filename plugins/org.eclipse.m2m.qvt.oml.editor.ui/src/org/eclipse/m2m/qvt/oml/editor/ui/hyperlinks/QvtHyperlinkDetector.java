@@ -22,7 +22,7 @@ import org.eclipse.m2m.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.qvt.oml.editor.ui.QvtDocumentProvider;
 import org.eclipse.m2m.qvt.oml.editor.ui.QvtEditor;
 import org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks.IHyperlinkDetectorHelper.IDetectionContext;
-import org.eclipse.ocl.internal.cst.CSTNode;
+import org.eclipse.ocl.cst.CSTNode;
 
 
 /**

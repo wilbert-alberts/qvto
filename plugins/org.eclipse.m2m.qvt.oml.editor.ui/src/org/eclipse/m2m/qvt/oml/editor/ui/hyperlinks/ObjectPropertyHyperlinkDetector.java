@@ -24,10 +24,10 @@ import org.eclipse.m2m.qvt.oml.internal.cst.PatternPropertyExpCS;
 import org.eclipse.ocl.ecore.VariableExp;
 import org.eclipse.ocl.expressions.PropertyCallExp;
 import org.eclipse.ocl.expressions.Variable;
-import org.eclipse.ocl.internal.cst.CSTNode;
-import org.eclipse.ocl.internal.cst.FeatureCallExpCS;
-import org.eclipse.ocl.internal.cst.SimpleNameCS;
-import org.eclipse.ocl.internal.cst.VariableExpCS;
+import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.cst.FeatureCallExpCS;
+import org.eclipse.ocl.cst.SimpleNameCS;
+import org.eclipse.ocl.cst.VariableExpCS;
 import org.eclipse.ocl.utilities.ASTNode;
 
 

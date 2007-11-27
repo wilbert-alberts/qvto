@@ -19,8 +19,8 @@ import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.qvt.oml.internal.cst.ModuleImportCS;
-import org.eclipse.ocl.internal.cst.CSTNode;
-import org.eclipse.ocl.internal.cst.PathNameCS;
+import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.cst.PathNameCS;
 
 /**
  * @author vrepeshko

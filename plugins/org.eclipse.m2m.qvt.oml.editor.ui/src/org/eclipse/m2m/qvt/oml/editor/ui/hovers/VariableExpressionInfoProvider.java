@@ -13,17 +13,15 @@ package org.eclipse.m2m.qvt.oml.editor.ui.hovers;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks.VariableHyperlinkDetector;
 import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
+import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.expressions.Variable;
-import org.eclipse.ocl.internal.cst.CSTNode;
-import org.eclipse.ocl.internal.cst.SimpleNameCS;
 import org.eclipse.ocl.utilities.ASTNode;
 
 

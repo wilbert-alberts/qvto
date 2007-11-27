@@ -14,7 +14,7 @@ package org.eclipse.m2m.qvt.oml.editor.ui.outline;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.ocl.internal.cst.CSTNode;
+import org.eclipse.ocl.cst.CSTNode;
 
 
 public class OutlineNode {

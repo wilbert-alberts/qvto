@@ -29,7 +29,7 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.qvt.oml.editor.ui.QvtDocumentProvider;
-import org.eclipse.ocl.internal.cst.CSTNode;
+import org.eclipse.ocl.cst.CSTNode;
 
 
 public class QvtTextHover implements ITextHover {

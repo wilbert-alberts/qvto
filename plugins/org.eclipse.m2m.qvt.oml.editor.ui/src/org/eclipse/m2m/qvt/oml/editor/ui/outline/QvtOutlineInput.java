@@ -30,8 +30,8 @@ import org.eclipse.m2m.qvt.oml.ocl.OclQvtoPlugin;
 import org.eclipse.m2m.qvt.oml.ocl.transformations.Library;
 import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryCreationException;
 import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryOperation;
-import org.eclipse.ocl.internal.cst.CSTNode;
-import org.eclipse.ocl.internal.cst.PathNameCS;
+import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.cst.PathNameCS;
 
 public class QvtOutlineInput {
 

@@ -29,7 +29,7 @@ import org.eclipse.m2m.qvt.oml.compiler.QvtCompilationResult;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingMethodCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
-import org.eclipse.ocl.internal.cst.CSTNode;
+import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.swt.widgets.Display;
 
 

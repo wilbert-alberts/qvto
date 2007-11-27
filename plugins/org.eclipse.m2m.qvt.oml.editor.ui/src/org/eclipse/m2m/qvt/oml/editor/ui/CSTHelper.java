@@ -21,7 +21,7 @@ import org.eclipse.jface.text.IRegion;
 import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
-import org.eclipse.ocl.internal.cst.CSTNode;
+import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.utilities.ASTNode;
 
 public class CSTHelper {
