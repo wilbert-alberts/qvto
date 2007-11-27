@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.21 2007/11/26 12:41:19 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.22 2007/11/27 15:43:20 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.21 2007/11/26 12:41:19 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.22 2007/11/27 15:43:20 radvorak Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -38,58 +38,58 @@ package org.eclipse.m2m.qvt.oml.internal.cst.parser;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.ocl.internal.cst.BooleanLiteralExpCS;
-import org.eclipse.ocl.internal.cst.CSTFactory;
-import org.eclipse.ocl.internal.cst.CSTNode;
-import org.eclipse.ocl.internal.cst.CallExpCS;
-import org.eclipse.ocl.internal.cst.ClassifierContextDeclCS;
-import org.eclipse.ocl.internal.cst.CollectionLiteralExpCS;
-import org.eclipse.ocl.internal.cst.CollectionLiteralPartCS;
-import org.eclipse.ocl.internal.cst.CollectionRangeCS;
-import org.eclipse.ocl.internal.cst.CollectionTypeCS;
-import org.eclipse.ocl.internal.cst.CollectionTypeIdentifierEnum;
-import org.eclipse.ocl.internal.cst.DefCS;
-import org.eclipse.ocl.internal.cst.DefExpressionCS;
-import org.eclipse.ocl.internal.cst.DerValueCS;
-import org.eclipse.ocl.internal.cst.DotOrArrowEnum;
-import org.eclipse.ocl.internal.cst.EnumLiteralExpCS;
-import org.eclipse.ocl.internal.cst.FeatureCallExpCS;
-import org.eclipse.ocl.internal.cst.IfExpCS;
-import org.eclipse.ocl.internal.cst.InitOrDerValueCS;
-import org.eclipse.ocl.internal.cst.InitValueCS;
-import org.eclipse.ocl.internal.cst.IntegerLiteralExpCS;
-import org.eclipse.ocl.internal.cst.InvCS;
-import org.eclipse.ocl.internal.cst.InvOrDefCS;
-import org.eclipse.ocl.internal.cst.InvalidLiteralExpCS;
-import org.eclipse.ocl.internal.cst.IsMarkedPreCS;
-import org.eclipse.ocl.internal.cst.IterateExpCS;
-import org.eclipse.ocl.internal.cst.IteratorExpCS;
-import org.eclipse.ocl.internal.cst.LetExpCS;
-import org.eclipse.ocl.internal.cst.MessageExpCS;
-import org.eclipse.ocl.internal.cst.MessageExpKind;
-import org.eclipse.ocl.internal.cst.NullLiteralExpCS;
-import org.eclipse.ocl.internal.cst.OCLExpressionCS;
-import org.eclipse.ocl.internal.cst.OCLMessageArgCS;
-import org.eclipse.ocl.internal.cst.OperationCS;
-import org.eclipse.ocl.internal.cst.OperationCallExpCS;
-import org.eclipse.ocl.internal.cst.OperationContextDeclCS;
-import org.eclipse.ocl.internal.cst.PackageDeclarationCS;
-import org.eclipse.ocl.internal.cst.PathNameCS;
-import org.eclipse.ocl.internal.cst.PrePostOrBodyDeclCS;
-import org.eclipse.ocl.internal.cst.PrePostOrBodyEnum;
-import org.eclipse.ocl.internal.cst.PrimitiveTypeCS;
-import org.eclipse.ocl.internal.cst.PropertyContextCS;
-import org.eclipse.ocl.internal.cst.RealLiteralExpCS;
-import org.eclipse.ocl.internal.cst.SimpleNameCS;
-import org.eclipse.ocl.internal.cst.SimpleTypeEnum;
-import org.eclipse.ocl.internal.cst.StateExpCS;
-import org.eclipse.ocl.internal.cst.StringLiteralExpCS;
-import org.eclipse.ocl.internal.cst.TupleLiteralExpCS;
-import org.eclipse.ocl.internal.cst.TupleTypeCS;
-import org.eclipse.ocl.internal.cst.TypeCS;
-import org.eclipse.ocl.internal.cst.UnlimitedNaturalLiteralExpCS;
-import org.eclipse.ocl.internal.cst.VariableCS;
-import org.eclipse.ocl.internal.cst.VariableExpCS;
+import org.eclipse.ocl.cst.BooleanLiteralExpCS;
+import org.eclipse.ocl.cst.CSTFactory;
+import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.cst.CallExpCS;
+import org.eclipse.ocl.cst.ClassifierContextDeclCS;
+import org.eclipse.ocl.cst.CollectionLiteralExpCS;
+import org.eclipse.ocl.cst.CollectionLiteralPartCS;
+import org.eclipse.ocl.cst.CollectionRangeCS;
+import org.eclipse.ocl.cst.CollectionTypeCS;
+import org.eclipse.ocl.cst.CollectionTypeIdentifierEnum;
+import org.eclipse.ocl.cst.DefCS;
+import org.eclipse.ocl.cst.DefExpressionCS;
+import org.eclipse.ocl.cst.DerValueCS;
+import org.eclipse.ocl.cst.DotOrArrowEnum;
+import org.eclipse.ocl.cst.EnumLiteralExpCS;
+import org.eclipse.ocl.cst.FeatureCallExpCS;
+import org.eclipse.ocl.cst.IfExpCS;
+import org.eclipse.ocl.cst.InitOrDerValueCS;
+import org.eclipse.ocl.cst.InitValueCS;
+import org.eclipse.ocl.cst.IntegerLiteralExpCS;
+import org.eclipse.ocl.cst.InvCS;
+import org.eclipse.ocl.cst.InvOrDefCS;
+import org.eclipse.ocl.cst.InvalidLiteralExpCS;
+import org.eclipse.ocl.cst.IsMarkedPreCS;
+import org.eclipse.ocl.cst.IterateExpCS;
+import org.eclipse.ocl.cst.IteratorExpCS;
+import org.eclipse.ocl.cst.LetExpCS;
+import org.eclipse.ocl.cst.MessageExpCS;
+import org.eclipse.ocl.cst.MessageExpKind;
+import org.eclipse.ocl.cst.NullLiteralExpCS;
+import org.eclipse.ocl.cst.OCLExpressionCS;
+import org.eclipse.ocl.cst.OCLMessageArgCS;
+import org.eclipse.ocl.cst.OperationCS;
+import org.eclipse.ocl.cst.OperationCallExpCS;
+import org.eclipse.ocl.cst.OperationContextDeclCS;
+import org.eclipse.ocl.cst.PackageDeclarationCS;
+import org.eclipse.ocl.cst.PathNameCS;
+import org.eclipse.ocl.cst.PrePostOrBodyDeclCS;
+import org.eclipse.ocl.cst.PrePostOrBodyEnum;
+import org.eclipse.ocl.cst.PrimitiveTypeCS;
+import org.eclipse.ocl.cst.PropertyContextCS;
+import org.eclipse.ocl.cst.RealLiteralExpCS;
+import org.eclipse.ocl.cst.SimpleNameCS;
+import org.eclipse.ocl.cst.SimpleTypeEnum;
+import org.eclipse.ocl.cst.StateExpCS;
+import org.eclipse.ocl.cst.StringLiteralExpCS;
+import org.eclipse.ocl.cst.TupleLiteralExpCS;
+import org.eclipse.ocl.cst.TupleTypeCS;
+import org.eclipse.ocl.cst.TypeCS;
+import org.eclipse.ocl.cst.UnlimitedNaturalLiteralExpCS;
+import org.eclipse.ocl.cst.VariableCS;
+import org.eclipse.ocl.cst.VariableExpCS;
 import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.util.OCLStandardLibraryUtil;
 import org.eclipse.ocl.utilities.PredefinedType;
@@ -110,6 +110,8 @@ import lpg.lpgjavaruntime.RuleAction;
 import lpg.lpgjavaruntime.UndefinedEofSymbolException;
 import lpg.lpgjavaruntime.UnimplementedTerminalsException;
 
+import org.eclipse.ocl.lpg.AbstractLexer;
+import org.eclipse.ocl.parser.AbstractOCLParser;		
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -119,10 +121,10 @@ import java.util.HashMap;
 import java.util.Map;
 import lpg.lpgjavaruntime.Token;
 import lpg.lpgjavaruntime.BacktrackingParser;
-import lpg.lpgjavaruntime.NotBacktrackParseTableException;
+import lpg.lpgjavaruntime.NotBacktrackParseTableException;	
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.m2m.qvt.oml.QvtPlugin;
+import org.eclipse.m2m.qvt.oml.QvtPlugin;	
 import org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ConfigPropertyCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindCS;
@@ -168,13 +170,13 @@ import org.eclipse.m2m.qvt.oml.internal.cst.TransformationRefineCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.TransformationHeaderCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.TypeSpecCS;
 
-public class QvtOpLPGParser extends PrsStream implements RuleAction {
+	public class QvtOpLPGParser extends AbstractOCLParser implements RuleAction {
 	protected static ParseTable prs = new QvtOpLPGParserprs();
 	private BacktrackingParser dtParser;
 	private static Map<Integer, String> ruleTexts;
 
-	public QvtOpLPGParser(LexStream lexStream) {
-		super(lexStream);
+	public QvtOpLPGParser(AbstractLexer lexer) {
+		super(lexer);
 
 		try {
 			super.remapTerminalSymbols(orderedTerminalSymbols(), QvtOpLPGParserprs.EOFT_SYMBOL);
@@ -205,19 +207,21 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 	public int getEOFTokenKind() { return QvtOpLPGParserprs.EOFT_SYMBOL; }
 	public PrsStream getParseStream() { return this; }
 
-	protected EObject parser() throws ParserException {
-		return parser(null, 0);
+	protected CSTNode parser() throws ParserException {
+		return parseTokensToCST(null, 0);
 	}
 		
-	protected EObject parser(Monitor monitor) throws ParserException {
-		return parser(monitor, 0);
+	protected CSTNode parser(Monitor monitor) throws ParserException {
+		return parseTokensToCST(monitor, 0);
 	}
 		
-	protected EObject parser(int error_repair_count) throws ParserException {
-		return parser(null, error_repair_count);
+	protected CSTNode parser(int error_repair_count) throws ParserException {
+		return parseTokensToCST(null, error_repair_count);
 	}
 		
-	protected EObject parser(Monitor monitor, int error_repair_count) throws ParserException {
+	@SuppressWarnings("nls")
+	@Override
+	public CSTNode parseTokensToCST(Monitor monitor, int error_repair_count) {
 		ParseTable prsTable = new QvtOpLPGParserprs();
 
 		try {
@@ -232,7 +236,7 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 
 		try {
 		    workaroundEOFErrors();
-			return (EObject) dtParser.parse(error_repair_count);
+			return (CSTNode) dtParser.parse(error_repair_count);
 		}
 		catch (BadParseException e) {
 			OnParseError(e);
@@ -431,13 +435,7 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 		result.getArguments().add(stateExpCS);
 		return result;
 	}
-	
-	private StateExpCS createStateExpCS(PathNameCS pathName) {
-		StateExpCS result = CSTFactory.eINSTANCE.createStateExpCS();
-		result.getSequenceOfNames().addAll(pathName.getSequenceOfNames());
-		return result;
-	}
-
+		
 	protected VariableExpCS createVariableExpCS(
 			SimpleNameCS simpleNameCS,
 			EList arguments,
@@ -491,21 +489,6 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 		}
 	
 		return result;
-	}
-
-	private PathNameCS createPathNameCS(String pathName) {
-		PathNameCS result = CSTFactory.eINSTANCE.createPathNameCS();
-		result.getSequenceOfNames().add(unquote(pathName));
-		return result;
-	}
-	
-	private PathNameCS extendPathNameCS(PathNameCS path, String name) {
-		path.getSequenceOfNames().add(unquote(name));
-		return path;
-	}
-
-	private PathNameCS createPathNameCS() {
-		return CSTFactory.eINSTANCE.createPathNameCS();
 	}
 
 	protected EnumLiteralExpCS createEnumLiteralExpCS(

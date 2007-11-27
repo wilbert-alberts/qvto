@@ -21,7 +21,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage;
 import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum;
 
-import org.eclipse.ocl.internal.cst.impl.CSTNodeImpl;
+import org.eclipse.ocl.cst.impl.CSTNodeImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -38,144 +38,144 @@ import org.eclipse.ocl.internal.cst.impl.CSTNodeImpl;
  */
 public class DirectionKindCSImpl extends CSTNodeImpl implements DirectionKindCS {
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
     /**
-     * The default value of the '{@link #getDirectionKind() <em>Direction Kind</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getDirectionKind() <em>Direction Kind</em>}' attribute.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getDirectionKind()
-     * @generated
-     * @ordered
-     */
+	 * @see #getDirectionKind()
+	 * @generated
+	 * @ordered
+	 */
 	protected static final DirectionKindEnum DIRECTION_KIND_EDEFAULT = DirectionKindEnum.IN;
 
 	/**
-     * The cached value of the '{@link #getDirectionKind() <em>Direction Kind</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getDirectionKind() <em>Direction Kind</em>}' attribute.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getDirectionKind()
-     * @generated
-     * @ordered
-     */
+	 * @see #getDirectionKind()
+	 * @generated
+	 * @ordered
+	 */
 	protected DirectionKindEnum directionKind = DIRECTION_KIND_EDEFAULT;
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	protected DirectionKindCSImpl() {
-        super();
-    }
+		super();
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	protected EClass eStaticClass() {
-        return CSTPackage.Literals.DIRECTION_KIND_CS;
-    }
+		return CSTPackage.Literals.DIRECTION_KIND_CS;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public DirectionKindEnum getDirectionKind() {
-        return directionKind;
-    }
+		return directionKind;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public void setDirectionKind(DirectionKindEnum newDirectionKind) {
-        DirectionKindEnum oldDirectionKind = directionKind;
-        directionKind = newDirectionKind == null ? DIRECTION_KIND_EDEFAULT : newDirectionKind;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.DIRECTION_KIND_CS__DIRECTION_KIND, oldDirectionKind, directionKind));
-    }
+		DirectionKindEnum oldDirectionKind = directionKind;
+		directionKind = newDirectionKind == null ? DIRECTION_KIND_EDEFAULT : newDirectionKind;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.DIRECTION_KIND_CS__DIRECTION_KIND, oldDirectionKind, directionKind));
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case CSTPackage.DIRECTION_KIND_CS__DIRECTION_KIND:
-                return getDirectionKind();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case CSTPackage.DIRECTION_KIND_CS__DIRECTION_KIND:
+				return getDirectionKind();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case CSTPackage.DIRECTION_KIND_CS__DIRECTION_KIND:
-                setDirectionKind((DirectionKindEnum)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case CSTPackage.DIRECTION_KIND_CS__DIRECTION_KIND:
+				setDirectionKind((DirectionKindEnum)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public void eUnset(int featureID) {
-        switch (featureID) {
-            case CSTPackage.DIRECTION_KIND_CS__DIRECTION_KIND:
-                setDirectionKind(DIRECTION_KIND_EDEFAULT);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case CSTPackage.DIRECTION_KIND_CS__DIRECTION_KIND:
+				setDirectionKind(DIRECTION_KIND_EDEFAULT);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case CSTPackage.DIRECTION_KIND_CS__DIRECTION_KIND:
-                return directionKind != DIRECTION_KIND_EDEFAULT;
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case CSTPackage.DIRECTION_KIND_CS__DIRECTION_KIND:
+				return directionKind != DIRECTION_KIND_EDEFAULT;
+		}
+		return super.eIsSet(featureID);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public String toString() {
-        if (eIsProxy()) return super.toString();
+		if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (directionKind: "); //$NON-NLS-1$
-        result.append(directionKind);
-        result.append(')');
-        return result.toString();
-    }
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (directionKind: "); //$NON-NLS-1$
+		result.append(directionKind);
+		result.append(')');
+		return result.toString();
+	}
 
 } //DirectionKindCSImpl

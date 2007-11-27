@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: OCLLPGParser.g,v 1.1 2007/07/29 19:50:55 radvorak Exp $
+-- * $Id: OCLLPGParser.g,v 1.2 2007/11/27 15:43:20 radvorak Exp $
 -- */
 --
 -- The OCL Parser
@@ -38,7 +38,8 @@ $Define
 
 	-- Definition of macros used in the parser template
 	--
-	$prs_stream_class /.PrsStream./
+	$prs_stream_class /.AbstractOCLParser./
+	$lex_stream_class /.AbstractLexer./
 	$action_class /.$file_prefix./
 
 	-- package namespace of the LPG Runtime API
@@ -89,6 +90,7 @@ $Define
 	
 	$BeginActions
 	/.
+		@SuppressWarnings("unchecked")
 		public void ruleAction(int ruleNumber)
 		{
 			switch (ruleNumber) {
@@ -116,11 +118,12 @@ $Define
 	-- modified to include throwing exceptions
 	$parserCore
 	/.
-	public class $action_class extends PrsStream implements RuleAction$additional_interfaces {
+	public class $action_class extends $prs_stream_class implements RuleAction$additional_interfaces
+	{
 		protected static ParseTable prs = new $prs_type();
 		private DeterministicParser dtParser;
 
-		public $action_class(LexStream lexStream) {
+		public $action_class($lex_stream_class lexer) {
 			super(lexStream);
 
 			try {
@@ -209,7 +212,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: OCLLPGParser.g,v 1.1 2007/07/29 19:50:55 radvorak Exp $
+ * $Id: OCLLPGParser.g,v 1.2 2007/11/27 15:43:20 radvorak Exp $
  */
 	./
 $End
@@ -219,58 +222,58 @@ $Globals
 	import org.eclipse.emf.common.util.BasicEList;
 	import org.eclipse.emf.common.util.EList;
 	import org.eclipse.emf.ecore.EObject;
-	import org.eclipse.ocl.internal.cst.BooleanLiteralExpCS;
-	import org.eclipse.ocl.internal.cst.CSTFactory;
-	import org.eclipse.ocl.internal.cst.CSTNode;
-	import org.eclipse.ocl.internal.cst.CallExpCS;
-	import org.eclipse.ocl.internal.cst.ClassifierContextDeclCS;
-	import org.eclipse.ocl.internal.cst.CollectionLiteralExpCS;
-	import org.eclipse.ocl.internal.cst.CollectionLiteralPartCS;
-	import org.eclipse.ocl.internal.cst.CollectionRangeCS;
-	import org.eclipse.ocl.internal.cst.CollectionTypeCS;
-	import org.eclipse.ocl.internal.cst.CollectionTypeIdentifierEnum;
-	import org.eclipse.ocl.internal.cst.DefCS;
-	import org.eclipse.ocl.internal.cst.DefExpressionCS;
-	import org.eclipse.ocl.internal.cst.DerValueCS;
-	import org.eclipse.ocl.internal.cst.DotOrArrowEnum;
-	import org.eclipse.ocl.internal.cst.EnumLiteralExpCS;
-	import org.eclipse.ocl.internal.cst.FeatureCallExpCS;
-	import org.eclipse.ocl.internal.cst.IfExpCS;
-	import org.eclipse.ocl.internal.cst.InitOrDerValueCS;
-	import org.eclipse.ocl.internal.cst.InitValueCS;
-	import org.eclipse.ocl.internal.cst.IntegerLiteralExpCS;
-	import org.eclipse.ocl.internal.cst.InvCS;
-	import org.eclipse.ocl.internal.cst.InvOrDefCS;
-	import org.eclipse.ocl.internal.cst.InvalidLiteralExpCS;
-	import org.eclipse.ocl.internal.cst.IsMarkedPreCS;
-	import org.eclipse.ocl.internal.cst.IterateExpCS;
-	import org.eclipse.ocl.internal.cst.IteratorExpCS;
-	import org.eclipse.ocl.internal.cst.LetExpCS;
-	import org.eclipse.ocl.internal.cst.MessageExpCS;
-	import org.eclipse.ocl.internal.cst.MessageExpKind;
-	import org.eclipse.ocl.internal.cst.NullLiteralExpCS;
-	import org.eclipse.ocl.internal.cst.OCLExpressionCS;
-	import org.eclipse.ocl.internal.cst.OCLMessageArgCS;
-	import org.eclipse.ocl.internal.cst.OperationCS;
-	import org.eclipse.ocl.internal.cst.OperationCallExpCS;
-	import org.eclipse.ocl.internal.cst.OperationContextDeclCS;
-	import org.eclipse.ocl.internal.cst.PackageDeclarationCS;
-	import org.eclipse.ocl.internal.cst.PathNameCS;
-	import org.eclipse.ocl.internal.cst.PrePostOrBodyDeclCS;
-	import org.eclipse.ocl.internal.cst.PrePostOrBodyEnum;
-	import org.eclipse.ocl.internal.cst.PrimitiveTypeCS;
-	import org.eclipse.ocl.internal.cst.PropertyContextCS;
-	import org.eclipse.ocl.internal.cst.RealLiteralExpCS;
-	import org.eclipse.ocl.internal.cst.SimpleNameCS;
-	import org.eclipse.ocl.internal.cst.SimpleTypeEnum;
-	import org.eclipse.ocl.internal.cst.StateExpCS;
-	import org.eclipse.ocl.internal.cst.StringLiteralExpCS;
-	import org.eclipse.ocl.internal.cst.TupleLiteralExpCS;
-	import org.eclipse.ocl.internal.cst.TupleTypeCS;
-	import org.eclipse.ocl.internal.cst.TypeCS;
-	import org.eclipse.ocl.internal.cst.UnlimitedNaturalLiteralExpCS;
-	import org.eclipse.ocl.internal.cst.VariableCS;
-	import org.eclipse.ocl.internal.cst.VariableExpCS;
+	import org.eclipse.ocl.cst.BooleanLiteralExpCS;
+	import org.eclipse.ocl.cst.CSTFactory;
+	import org.eclipse.ocl.cst.CSTNode;
+	import org.eclipse.ocl.cst.CallExpCS;
+	import org.eclipse.ocl.cst.ClassifierContextDeclCS;
+	import org.eclipse.ocl.cst.CollectionLiteralExpCS;
+	import org.eclipse.ocl.cst.CollectionLiteralPartCS;
+	import org.eclipse.ocl.cst.CollectionRangeCS;
+	import org.eclipse.ocl.cst.CollectionTypeCS;
+	import org.eclipse.ocl.cst.CollectionTypeIdentifierEnum;
+	import org.eclipse.ocl.cst.DefCS;
+	import org.eclipse.ocl.cst.DefExpressionCS;
+	import org.eclipse.ocl.cst.DerValueCS;
+	import org.eclipse.ocl.cst.DotOrArrowEnum;
+	import org.eclipse.ocl.cst.EnumLiteralExpCS;
+	import org.eclipse.ocl.cst.FeatureCallExpCS;
+	import org.eclipse.ocl.cst.IfExpCS;
+	import org.eclipse.ocl.cst.InitOrDerValueCS;
+	import org.eclipse.ocl.cst.InitValueCS;
+	import org.eclipse.ocl.cst.IntegerLiteralExpCS;
+	import org.eclipse.ocl.cst.InvCS;
+	import org.eclipse.ocl.cst.InvOrDefCS;
+	import org.eclipse.ocl.cst.InvalidLiteralExpCS;
+	import org.eclipse.ocl.cst.IsMarkedPreCS;
+	import org.eclipse.ocl.cst.IterateExpCS;
+	import org.eclipse.ocl.cst.IteratorExpCS;
+	import org.eclipse.ocl.cst.LetExpCS;
+	import org.eclipse.ocl.cst.MessageExpCS;
+	import org.eclipse.ocl.cst.MessageExpKind;
+	import org.eclipse.ocl.cst.NullLiteralExpCS;
+	import org.eclipse.ocl.cst.OCLExpressionCS;
+	import org.eclipse.ocl.cst.OCLMessageArgCS;
+	import org.eclipse.ocl.cst.OperationCS;
+	import org.eclipse.ocl.cst.OperationCallExpCS;
+	import org.eclipse.ocl.cst.OperationContextDeclCS;
+	import org.eclipse.ocl.cst.PackageDeclarationCS;
+	import org.eclipse.ocl.cst.PathNameCS;
+	import org.eclipse.ocl.cst.PrePostOrBodyDeclCS;
+	import org.eclipse.ocl.cst.PrePostOrBodyEnum;
+	import org.eclipse.ocl.cst.PrimitiveTypeCS;
+	import org.eclipse.ocl.cst.PropertyContextCS;
+	import org.eclipse.ocl.cst.RealLiteralExpCS;
+	import org.eclipse.ocl.cst.SimpleNameCS;
+	import org.eclipse.ocl.cst.SimpleTypeEnum;
+	import org.eclipse.ocl.cst.StateExpCS;
+	import org.eclipse.ocl.cst.StringLiteralExpCS;
+	import org.eclipse.ocl.cst.TupleLiteralExpCS;
+	import org.eclipse.ocl.cst.TupleTypeCS;
+	import org.eclipse.ocl.cst.TypeCS;
+	import org.eclipse.ocl.cst.UnlimitedNaturalLiteralExpCS;
+	import org.eclipse.ocl.cst.VariableCS;
+	import org.eclipse.ocl.cst.VariableExpCS;
 	import org.eclipse.ocl.ParserException;
 	import org.eclipse.ocl.util.OCLStandardLibraryUtil;
 	import org.eclipse.ocl.utilities.PredefinedType;
@@ -614,13 +617,7 @@ $Headers
 			result.getArguments().add(stateExpCS);
 			return result;
 		}
-		
-		private StateExpCS createStateExpCS(PathNameCS pathName) {
-			StateExpCS result = CSTFactory.eINSTANCE.createStateExpCS();
-			result.getSequenceOfNames().addAll(pathName.getSequenceOfNames());
-			return result;
-		}
-	
+			
 		protected VariableExpCS createVariableExpCS(
 				SimpleNameCS simpleNameCS,
 				EList arguments,
@@ -675,22 +672,7 @@ $Headers
 		
 			return result;
 		}
-	
-		private PathNameCS createPathNameCS(String pathName) {
-			PathNameCS result = CSTFactory.eINSTANCE.createPathNameCS();
-			result.getSequenceOfNames().add(unquote(pathName));
-			return result;
-		}
-		
-		private PathNameCS extendPathNameCS(PathNameCS path, String name) {
-			path.getSequenceOfNames().add(unquote(name));
-			return path;
-		}
-	
-		private PathNameCS createPathNameCS() {
-			return CSTFactory.eINSTANCE.createPathNameCS();
-		}
-	
+
 		protected EnumLiteralExpCS createEnumLiteralExpCS(
 				PathNameCS pathNameCS,
 				SimpleNameCS simpleNameCS) {

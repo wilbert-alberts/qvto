@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLexer.g,v 1.1 2007/07/29 19:50:55 radvorak Exp $
+-- * $Id: QvtOpLexer.g,v 1.2 2007/11/27 15:43:20 radvorak Exp $
 -- */
 --
 -- The QVT Lexer
@@ -59,11 +59,6 @@ $End
 $Headers
 	/.
 		*/
-		public QvtOpLexer(char[] chars) {
-			this(chars, org.eclipse.m2m.qvt.oml.common.MDAConstants.QVTO_LAUNCH_CONFIGURATION_NAME, ECLIPSE_TAB_VALUE);
-			kwLexer = new QvtOpKWLexer(getInputChars(), TK_IDENTIFIER);
-		}
-
 	./
 $End
 
@@ -82,7 +77,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLexer.g,v 1.1 2007/07/29 19:50:55 radvorak Exp $
+ * $Id: QvtOpLexer.g,v 1.2 2007/11/27 15:43:20 radvorak Exp $
  */
 	./
 $End

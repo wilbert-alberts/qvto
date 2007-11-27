@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ErrorCallExpCSImpl.java,v 1.4 2007/09/20 10:14:06 aigdalov Exp $
+ * $Id: ErrorCallExpCSImpl.java,v 1.5 2007/11/27 15:43:21 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.temp.impl;
 
@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorCallExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.TempPackage;
 
-import org.eclipse.ocl.internal.cst.impl.CallExpCSImpl;
+import org.eclipse.ocl.cst.impl.CallExpCSImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,29 +33,29 @@ import org.eclipse.ocl.internal.cst.impl.CallExpCSImpl;
  */
 public class ErrorCallExpCSImpl extends CallExpCSImpl implements ErrorCallExpCS {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ErrorCallExpCSImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return TempPackage.Literals.ERROR_CALL_EXP_CS;
-    }
+		return TempPackage.Literals.ERROR_CALL_EXP_CS;
+	}
 
 } //ErrorCallExpCSImpl

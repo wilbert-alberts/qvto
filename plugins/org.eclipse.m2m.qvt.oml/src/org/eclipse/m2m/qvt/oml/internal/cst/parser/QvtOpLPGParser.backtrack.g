@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.21 2007/11/26 12:41:20 aigdalov Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.22 2007/11/27 15:43:20 radvorak Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -29,7 +29,7 @@
 %options package=org.eclipse.m2m.qvt.oml.internal.cst.parser
 --%options template=dtParserTemplateD.g
 %options import_terminals=QvtOpLexer.g
-%options ast_type=EObject
+%options ast_type=CSTNode
 %options programming_language=java
 %options action=("*.java", "/.", "./")
 %options ParseTable=lpg.lpgjavaruntime.ParseTable
@@ -194,13 +194,13 @@ $Define
 	-- modified to include throwing exceptions
 	$parserCore
 	/.
-	public class $action_class extends PrsStream implements RuleAction$additional_interfaces {
+		public class $action_class extends $prs_stream_class implements RuleAction$additional_interfaces {
 		protected static ParseTable prs = new $prs_type();
 		private BacktrackingParser dtParser;
 		private static Map<Integer, String> ruleTexts;
 
-		public $action_class(LexStream lexStream) {
-			super(lexStream);
+		public $action_class($lex_stream_class lexer) {
+			super(lexer);
 
 			try {
 				super.remapTerminalSymbols(orderedTerminalSymbols(), $prs_type.EOFT_SYMBOL);
@@ -232,18 +232,20 @@ $Define
 		public PrsStream getParseStream() { return this; }
 
 		protected $ast_type parser() throws ParserException {
-			return parser(null, 0);
+			return parseTokensToCST(null, 0);
 		}
 			
 		protected $ast_type parser(Monitor monitor) throws ParserException {
-			return parser(monitor, 0);
+			return parseTokensToCST(monitor, 0);
 		}
 			
 		protected $ast_type parser(int error_repair_count) throws ParserException {
-			return parser(null, error_repair_count);
+			return parseTokensToCST(null, error_repair_count);
 		}
 			
-		protected $ast_type parser(Monitor monitor, int error_repair_count) throws ParserException {
+		@SuppressWarnings("nls")
+		@Override
+		public $ast_type parseTokensToCST(Monitor monitor, int error_repair_count) {
 			ParseTable prsTable = new $prs_type();
 
 			try {
@@ -296,6 +298,8 @@ $End
 
 $Globals
 	/.
+	import org.eclipse.ocl.lpg.AbstractLexer;
+	import org.eclipse.ocl.parser.AbstractOCLParser;		
 	import java.io.BufferedReader;
 	import java.io.IOException;
 	import java.io.InputStream;
@@ -305,10 +309,10 @@ $Globals
 	import java.util.Map;
 	import lpg.lpgjavaruntime.Token;
 	import lpg.lpgjavaruntime.BacktrackingParser;
-	import lpg.lpgjavaruntime.NotBacktrackParseTableException;
+	import lpg.lpgjavaruntime.NotBacktrackParseTableException;	
 	import org.eclipse.core.runtime.FileLocator;
 	import org.eclipse.core.runtime.Path;
-	import org.eclipse.m2m.qvt.oml.QvtPlugin;
+	import org.eclipse.m2m.qvt.oml.QvtPlugin;	
 	import org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.ConfigPropertyCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindCS;
@@ -425,7 +429,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.21 2007/11/26 12:41:20 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.22 2007/11/27 15:43:20 radvorak Exp $
  */
 	./
 $End

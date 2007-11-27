@@ -6,35 +6,7 @@ $Headers
 	-- [cwd] Template provided by LPG defines a constructor that uses an Option
 	--       class that does not exist in LPG Runtime.  Deleted this constructor
 	
-    /.
-        //
-        // The Lexer contains an array of characters as the input stream to be parsed.
-        // There are methods to retrieve and classify characters.
-        // The lexparser "token" is implemented simply as the index of the next character in the array.
-        // The Lexer extends the abstract class LpgLexStream with an implementation of the abstract
-        // method getKind.  The template defines the Lexer class and the lexer() method.
-        // A driver creates the action class, "Lexer", passing an Option object to the constructor.
-        //
-        $kw_lexer_class kwLexer;
-        boolean printTokens;
-        private final static int ECLIPSE_TAB_VALUE = 4;
-
-        public int [] getKeywordKinds() { return kwLexer.getKeywordKinds(); }
-
-        public $action_type(String filename) throws java.io.IOException
-        {
-            this(filename, ECLIPSE_TAB_VALUE);
-            this.kwLexer = new $kw_lexer_class(getInputChars(), $_IDENTIFIER);
-        }
-
-        public void initialize(char [] content, String filename)
-        {
-            super.initialize(content, filename);
-            if (this.kwLexer == null)
-                 this.kwLexer = new $kw_lexer_class(getInputChars(), $_IDENTIFIER);
-            else this.kwLexer.setInputChars(getInputChars());
-        }
-        
+    /.        
         final void makeToken(int kind)
         {
             int startOffset = getLeftSpan(),
@@ -209,7 +181,7 @@ $Headers
             Char_EOF              // for '\uffff' or 65535 
         };
                 
-        public final int getKind(int i)  // Classify character at ith location
+        @Override public final int getKind(int i)  // Classify character at ith location
         {
             char c = (i >= getStreamLength() ? '\uffff' : getCharValue(i));
             return (c < 128)? // ASCII Character

@@ -55,15 +55,19 @@ import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryCreationException;
 import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryOperation;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.EnvironmentFactory;
+import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.ExpressionsFactory;
 import org.eclipse.ocl.expressions.Variable;
-import org.eclipse.ocl.internal.cst.CSTNode;
-import org.eclipse.ocl.internal.cst.SimpleNameCS;
+import org.eclipse.ocl.lpg.AbstractParser;
+import org.eclipse.ocl.lpg.AbstractProblemHandler;
+import org.eclipse.ocl.lpg.ProblemHandler;
 import org.eclipse.ocl.util.TypeUtil;
+import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
 import org.eclipse.osgi.util.NLS;
@@ -313,6 +317,14 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		reportWarning(bind, node.getStartOffset(), node.getEndOffset());
 	}
 
+	public boolean hasErrors() {
+		return myErrorsList != null && myErrorsList.isEmpty() == false;
+	}
+	
+	public boolean hasWarnings() {
+		return myWarningsList != null && myWarningsList.isEmpty() == false;
+	}	
+		
 	public List<QvtMessage> getErrorsList() {
 		return myErrorsList;
 	}
@@ -320,6 +332,17 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	public List<QvtMessage> getWarningsList() {
 		return myWarningsList;
 	}
+	
+	public List<QvtMessage> getAllProblemMessages() {
+		if(hasErrors() || hasWarnings()) {
+			List<QvtMessage> result = new ArrayList<QvtMessage>();
+			result.addAll(getErrorsList());
+			result.addAll(getWarningsList());			
+			return result;
+		}
+		
+		return Collections.emptyList();
+	}	
 	
 	public void registerModelParameters(Module module) {
 		List<Variable<EClassifier, EParameter>> modelParameters = new ArrayList<Variable<EClassifier,EParameter>>(module.getModelParameter().size());
@@ -696,6 +719,23 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	    	((QvtOperationalEnv)getParent()).resolveResolveInExpInMappings();
 	    }
 	}
+	
+	@Override
+	protected ProblemHandler createDefaultProblemHandler(AbstractParser parser) {
+		return new AbstractProblemHandler(parser) {
+			@Override
+			public void handleProblem(Severity problemSeverity, Phase processingPhase, String problemMessage,					
+					String processingContext, int startOffset, int endOffset) {
+				
+				if(problemSeverity == Severity.INFO || problemSeverity == Severity.OK || problemSeverity == Severity.WARNING) {
+					reportWarning(problemMessage, startOffset, endOffset);
+				} else {
+					reportError(problemMessage, startOffset, endOffset);					
+				}
+			}
+		};
+	}
+	
 
 	private boolean isMayBelongToExtent(EClassifier myType) {
 		return myType != null 
@@ -749,6 +789,9 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
         }
     };
     
+    /*
+     * @FIXME - why duplicating this ??? 
+     */
     protected final class QvtVariableEntry {
         private final String myName;
         private final Variable<EClassifier, EParameter> myVariable;
@@ -772,4 +815,32 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
             return isExplicit;
         }
     }
+    
+	@Override
+	public void analyzerError(String problemMessage, String problemContext, Object problemObject) {
+		CSTNode cstNode = getASTMapping(problemObject);
+		int startOffset = cstNode != null ? cstNode.getStartOffset() : -1;
+		int endOffset = cstNode != null ? cstNode.getEndOffset() : -1;
+		
+		if(cstNode == null && problemObject instanceof ASTNode) {
+			ASTNode astNode = (ASTNode) problemObject;
+			startOffset = astNode.getStartPosition();
+			endOffset = astNode .getEndPosition();
+		}
+		
+		analyzerError(problemMessage, problemContext, startOffset, endOffset);
+	}
+	
+	@Override
+	public void initASTMapping(Object astNode, CSTNode cstNode) {	
+		if(astNode instanceof ASTNode) {
+			ASTNode castNode = (ASTNode) astNode;
+			if(castNode.getEndPosition() < 0) {
+				castNode.setStartPosition(cstNode.getStartOffset());
+				castNode.setEndPosition(cstNode.getEndOffset());				
+			}
+		}
+		super.initASTMapping(astNode, cstNode);
+	}
+    
 }

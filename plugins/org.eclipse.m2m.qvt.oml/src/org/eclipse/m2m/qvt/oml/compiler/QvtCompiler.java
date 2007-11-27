@@ -54,7 +54,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.ImportCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.LibraryImportCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLexer;
-import org.eclipse.ocl.internal.cst.PathNameCS;
+import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.osgi.util.NLS;
 
 
@@ -196,8 +196,7 @@ public class QvtCompiler {
         }
 
         result = new ParsedModuleCS(moduleCS, source, qvtParser.getLexer());
-        result.addMessages(qvtParser.getErrorsList());
-        result.addMessages(qvtParser.getWarningsList());
+        result.addMessages(qvtParser.getAllProblemMessages());
         
         mySyntaxModules.put(source, result);
     	parseImportedModules(result);
@@ -315,9 +314,7 @@ public class QvtCompiler {
                 module = parser.analyze(mma, this, env, options);
                 myModule2EnvMap.put(mma, parser.getEnvironment());                
                 
-                allMessages.addAll(parser.getWarningsList());
-                allMessages.addAll(parser.getErrorsList());
-                
+                allMessages.addAll(parser.getAllProblemMessages());
             } finally {
                 System.setOut(out);
             }

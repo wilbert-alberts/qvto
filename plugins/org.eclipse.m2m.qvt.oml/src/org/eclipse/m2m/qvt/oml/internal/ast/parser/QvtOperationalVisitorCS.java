@@ -110,11 +110,34 @@ import org.eclipse.m2m.qvt.oml.ocl.OclQvtoPlugin;
 import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryCreationException;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.SemanticException;
+import org.eclipse.ocl.cst.CSTFactory;
+import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.cst.CallExpCS;
+import org.eclipse.ocl.cst.CollectionTypeCS;
+import org.eclipse.ocl.cst.DotOrArrowEnum;
+import org.eclipse.ocl.cst.FeatureCallExpCS;
+import org.eclipse.ocl.cst.IfExpCS;
+import org.eclipse.ocl.cst.LiteralExpCS;
+import org.eclipse.ocl.cst.NullLiteralExpCS;
+import org.eclipse.ocl.cst.OCLExpressionCS;
+import org.eclipse.ocl.cst.OperationCallExpCS;
+import org.eclipse.ocl.cst.PathNameCS;
+import org.eclipse.ocl.cst.PrimitiveTypeCS;
+import org.eclipse.ocl.cst.SimpleNameCS;
+import org.eclipse.ocl.cst.SimpleTypeEnum;
+import org.eclipse.ocl.cst.StringLiteralExpCS;
+import org.eclipse.ocl.cst.TupleTypeCS;
+import org.eclipse.ocl.cst.TypeCS;
+import org.eclipse.ocl.cst.VariableCS;
+import org.eclipse.ocl.cst.VariableExpCS;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.ecore.StringLiteralExp;
+import org.eclipse.ocl.expressions.AssociationClassCallExp;
+import org.eclipse.ocl.expressions.CollectionKind;
+import org.eclipse.ocl.expressions.FeatureCallExp;
 import org.eclipse.ocl.expressions.IfExp;
 import org.eclipse.ocl.expressions.IteratorExp;
 import org.eclipse.ocl.expressions.OCLExpression;
@@ -123,26 +146,9 @@ import org.eclipse.ocl.expressions.PropertyCallExp;
 import org.eclipse.ocl.expressions.TypeExp;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.expressions.VariableExp;
-import org.eclipse.ocl.internal.cst.CSTFactory;
-import org.eclipse.ocl.internal.cst.CSTNode;
-import org.eclipse.ocl.internal.cst.CallExpCS;
-import org.eclipse.ocl.internal.cst.CollectionTypeCS;
-import org.eclipse.ocl.internal.cst.DotOrArrowEnum;
-import org.eclipse.ocl.internal.cst.FeatureCallExpCS;
-import org.eclipse.ocl.internal.cst.IfExpCS;
-import org.eclipse.ocl.internal.cst.LiteralExpCS;
-import org.eclipse.ocl.internal.cst.OCLExpressionCS;
-import org.eclipse.ocl.internal.cst.OperationCallExpCS;
-import org.eclipse.ocl.internal.cst.PathNameCS;
-import org.eclipse.ocl.internal.cst.SimpleNameCS;
-import org.eclipse.ocl.internal.cst.StringLiteralExpCS;
-import org.eclipse.ocl.internal.cst.TupleTypeCS;
-import org.eclipse.ocl.internal.cst.TypeCS;
-import org.eclipse.ocl.internal.cst.VariableCS;
-import org.eclipse.ocl.internal.cst.VariableExpCS;
 import org.eclipse.ocl.internal.l10n.OCLMessages;
-import org.eclipse.ocl.internal.parser.OCLLexer;
-import org.eclipse.ocl.internal.parser.OCLParser;
+import org.eclipse.ocl.parser.OCLAnalyzer;
+import org.eclipse.ocl.parser.OCLLexer;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.types.TypeType;
 import org.eclipse.ocl.types.VoidType;
@@ -151,8 +157,8 @@ import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.osgi.util.NLS;
 
 public class QvtOperationalVisitorCS
-		extends
-		OCLParser<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> {
+		extends OCLAnalyzer<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, 
+							CallOperationAction, SendSignalAction, Constraint, EClass, EObject> { 	// FIXME - changed in M3.4 migration
 
     private final Set<String> myLoadedLibraries = new HashSet<String>(1);
     private final QvtCompilerOptions myCompilerOptions;
@@ -160,7 +166,7 @@ public class QvtOperationalVisitorCS
 	public QvtOperationalVisitorCS(
 			OCLLexer lexStream,
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> environment, QvtCompilerOptions options) {
-		super(lexStream, environment);
+		super(environment);
         myCompilerOptions = options;
 	}
 	
@@ -168,8 +174,8 @@ public class QvtOperationalVisitorCS
         return myCompilerOptions;
     }
 
-    @Override
-	protected EClassifier tupleTypeCS(TupleTypeCS tupleTypeCS, Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) throws SemanticException {
+	@Override
+	protected EClassifier tupleTypeCS(TupleTypeCS tupleTypeCS, Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		EClassifier type = null;
 		try {			
 			type = super.tupleTypeCS(tupleTypeCS, env);
@@ -183,8 +189,14 @@ public class QvtOperationalVisitorCS
 	}
 	
 	@Override
-	protected EClassifier typeCS(TypeCS typeCS, Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env)throws SemanticException {
+	protected EClassifier typeCS(TypeCS typeCS, Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		EClassifier type = super.typeCS(typeCS, env);
+		if(type == getOclVoid() && (typeCS instanceof PrimitiveTypeCS == false)) {
+			// FIXME - workaround for migration to OCL 1.2 => non primitive type but
+			// resolved as OclVoid in super impl. indicates actually a type unresolved by the env.
+			return null;
+		}
+		
 		// MDT OCL does not check for nested type whether they are resolved
 		// do it here if element type is null
 		if(type instanceof CollectionType && typeCS instanceof CollectionTypeCS) {
@@ -202,23 +214,39 @@ public class QvtOperationalVisitorCS
 		return type;
 	}
 	
-	private EClassifier visitTypeCS(TypeCS typeCS, DirectionKind directionKind, QvtOperationalEnv env) throws SemanticException {
+	private EClassifier visitTypeCS(TypeCS typeCS, DirectionKind directionKind, QvtOperationalEnv env) {
 		EClassifier type = typeCS(typeCS, env);
 		if (type == null) {
-			env.reportError(NLS.bind(ValidationMessages.UnknownClassifierType, new Object[] {
+			// FIXME - M3.4 not needed, already reported above in #typeCS(typeCS, env); 
+			/*env.reportError(NLS.bind(ValidationMessages.UnknownClassifierType, new Object[] {
 					QvtOperationalParserUtil.getStringRepresentation(typeCS)}),
-					typeCS);
+					typeCS); */	
 		}
 		return type;
 	}
+	
+	@Override
+	protected Variable<EClassifier, EParameter> lookupImplicitSourceForOperation(
+			CSTNode cstNode,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
+			List<OCLExpression<EClassifier>> args, String operationName) {
+
+		 Variable<EClassifier, EParameter> source = super.lookupImplicitSourceForOperation(cstNode, env, args, operationName);
+		 if(source == null) {
+				source = ( org.eclipse.ocl.expressions.Variable<EClassifier, EParameter>)EcoreFactory.eINSTANCE.createVariable();
+				initASTMapping(env, source, cstNode);
+		 }
+		 return source;
+	}
 
 	private EClassifier visitTypeCSInModelType(TypeSpecCS typeSpecCS, ModelType modelType,
-			QvtOperationalEnv env) throws SemanticException {
+			QvtOperationalEnv env) {
 		EClassifier type = typeCS(typeSpecCS.getTypeCS(), env);
 		if (type == null) {
-			env.reportError(NLS.bind(ValidationMessages.UnknownClassifierType, new Object[] {
+			// FIXME - M3.4 not needed, already reported above in #typeCS(typeCS, env); 
+			/*env.reportError(NLS.bind(ValidationMessages.UnknownClassifierType, new Object[] {
 					QvtOperationalParserUtil.getStringRepresentation(typeSpecCS.getTypeCS())}),
-					typeSpecCS.getTypeCS());
+					typeSpecCS.getTypeCS());*/
 		}
 		return type;
 	}
@@ -228,7 +256,7 @@ public class QvtOperationalVisitorCS
 		public ModelParameter myExtent;
 	}
 	private TypeSpecPair visitTypeSpecCS(TypeSpecCS typeSpecCS, DirectionKind directionKind,
-			QvtOperationalEnv env) throws SemanticException {
+			QvtOperationalEnv env)  {
 		TypeSpecPair result = new TypeSpecPair();
 		
 		if (typeSpecCS.getSimpleNameCS() != null) {
@@ -255,12 +283,15 @@ public class QvtOperationalVisitorCS
 	@Override
 	protected IfExp<EClassifier> ifExpCS(
 			IfExpCS ifExpCS,
-			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env)
-			throws SemanticException {
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		boolean isElseMissed = false;
 		if (ifExpCS.getElseExpression() == null) {
 			isElseMissed = true;
-			ifExpCS.setElseExpression(createNullLiteralExpCS("null")); //$NON-NLS-1$
+			// FIXME - !!!!! What a strange hack found during migration to OCL 1.2
+			NullLiteralExpCS nullCS = CSTFactory.eINSTANCE.createNullLiteralExpCS();
+			nullCS.setSymbol("null"); //$NON-NLS-1$
+			//
+			ifExpCS.setElseExpression(nullCS); //$NON-NLS-1$
 		}
 		IfExp<EClassifier> ifExp = super.ifExpCS(ifExpCS, env);
 		
@@ -280,7 +311,7 @@ public class QvtOperationalVisitorCS
 	public OCLExpression<EClassifier> oclExpressionCS(
 			OCLExpressionCS oclExpressionCS,
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env)
-			throws SemanticException {
+			 {
 		if (oclExpressionCS instanceof BlockExpCS) {
 			return visitBlockExpCS((BlockExpCS) oclExpressionCS, (QvtOperationalEnv) env);
 		}
@@ -332,9 +363,6 @@ public class QvtOperationalVisitorCS
 				expr = super.oclExpressionCS(oclExpressionCS, env);
 			}
 		}
-		catch (SemanticException ex) {
-			((QvtOperationalEnv) env).reportError(ex.getLocalizedMessage(), oclExpressionCS);
-		}
 		catch (NullPointerException ex) {
 			((QvtOperationalEnv) env).reportError(ValidationMessages.QvtOperationalVisitorCS_oclParseNPE, oclExpressionCS);
 		}
@@ -344,8 +372,7 @@ public class QvtOperationalVisitorCS
     @Override
     protected OCLExpression<EClassifier> literalExpCS(
             LiteralExpCS literalExpCS,
-            Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env)
-            throws SemanticException {
+            Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
         OCLExpression<EClassifier> literalExp = super.literalExpCS(literalExpCS, env);
         // AST binding 
         if(myCompilerOptions.isGenerateCompletionData()) {
@@ -358,7 +385,7 @@ public class QvtOperationalVisitorCS
     @Override
     protected Variable<EClassifier, EParameter> variableDeclarationCS(VariableCS variableDeclarationCS,
             Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
-            boolean addToEnvironment) throws SemanticException {
+            boolean addToEnvironment) {
         Variable<EClassifier, EParameter> varDecl = super.variableDeclarationCS(variableDeclarationCS, env, addToEnvironment);
         if ((varDecl.getType() == null) && (varDecl.getInitExpression() != null)) {
             varDecl.setType(varDecl.getInitExpression().getType());
@@ -375,7 +402,7 @@ public class QvtOperationalVisitorCS
     @Override
     protected OCLExpression<EClassifier> propertyCallExpCS(CallExpCS propertyCallExpCS, 
             Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env)
-            throws SemanticException {
+             {
         if (propertyCallExpCS instanceof ErrorCallExpCS) {
             OCLExpressionCS sourceExpCS = propertyCallExpCS.getSource();
             if (sourceExpCS != null) {
@@ -401,9 +428,9 @@ public class QvtOperationalVisitorCS
     protected OCLExpression<EClassifier> simpleNameCS(
     		SimpleNameCS simpleNameCS,
     		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
-    		OCLExpression<EClassifier> source) throws SemanticException {
+    		OCLExpression<EClassifier> source) {
     	
-    	OCLExpression<EClassifier> result = super.simpleNameCS(simpleNameCS, env, source);
+    	OCLExpression<EClassifier> result = fixed_1_2_simpleNameCSsimpleNameCS(simpleNameCS, env, source); // super.simpleNameCS(simpleNameCS, env, source);
 
         // AST binding    	
         if(myCompilerOptions.isGenerateCompletionData()) {    	
@@ -417,8 +444,7 @@ public class QvtOperationalVisitorCS
     @Override
     protected OCLExpression<EClassifier> variableExpCS(
             VariableExpCS variableExpCS,
-            Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env)
-            throws SemanticException {
+            Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
         OCLExpression<EClassifier> result = super.variableExpCS(variableExpCS, env);
 
         // AST binding      
@@ -429,8 +455,7 @@ public class QvtOperationalVisitorCS
         return result;
     }
 
-    private OCLExpression<EClassifier> visitOclExpressionCS(OCLExpressionCS expressionCS, QvtOperationalEnv env)
-			throws SemanticException {
+    private OCLExpression<EClassifier> visitOclExpressionCS(OCLExpressionCS expressionCS, QvtOperationalEnv env) {
 		OCLExpression<EClassifier> result = oclExpressionCS(expressionCS, env);
 		if (expressionCS instanceof OperationCallExpCS && result instanceof OperationCallExp) {
 			validateOperationCall((OperationCallExpCS) expressionCS,
@@ -458,8 +483,7 @@ public class QvtOperationalVisitorCS
 		return result;
 	}
 
-    private OCLExpression<EClassifier> visitBlockExpCS(BlockExpCS expressionCS, QvtOperationalEnv env)
-    		throws SemanticException {
+    private OCLExpression<EClassifier> visitBlockExpCS(BlockExpCS expressionCS, QvtOperationalEnv env) {
 		BlockExp result = ExpressionsFactory.eINSTANCE.createBlockExp();
 		result.setStartPosition(expressionCS.getStartOffset());
 		result.setEndPosition(expressionCS.getEndOffset());
@@ -475,8 +499,7 @@ public class QvtOperationalVisitorCS
 		return result;
     }
 
-    private OCLExpression<EClassifier> visitSwitchExpCS(SwitchExpCS switchExpCS, QvtOperationalEnv env)
-            throws SemanticException {
+    private OCLExpression<EClassifier> visitSwitchExpCS(SwitchExpCS switchExpCS, QvtOperationalEnv env) {
         SwitchExp switchExp = ExpressionsFactory.eINSTANCE.createSwitchExp();
         switchExp.setStartPosition(switchExpCS.getStartOffset());
         switchExp.setEndPosition(switchExpCS.getEndOffset());
@@ -494,8 +517,7 @@ public class QvtOperationalVisitorCS
         return switchExp;
     }
 
-	private OCLExpression<EClassifier> visitSwitchAltExpCS(SwitchAltExpCS altExpCS, QvtOperationalEnv env) 
-	        throws SemanticException {
+	private OCLExpression<EClassifier> visitSwitchAltExpCS(SwitchAltExpCS altExpCS, QvtOperationalEnv env) {
 	    AltExp altExp = ExpressionsFactory.eINSTANCE.createAltExp();
 	    altExp.setStartPosition(altExpCS.getStartOffset());
 	    altExp.setEndPosition(altExpCS.getEndOffset());
@@ -507,8 +529,7 @@ public class QvtOperationalVisitorCS
 	    return altExp;
     }
 
-    private OCLExpression<EClassifier> visitWhileExpCS(WhileExpCS expressionCS, QvtOperationalEnv env)
-			throws SemanticException {
+    private OCLExpression<EClassifier> visitWhileExpCS(WhileExpCS expressionCS, QvtOperationalEnv env) {
 		WhileExp result = ExpressionsFactory.eINSTANCE.createWhileExp();
 		result.setStartPosition(expressionCS.getStartOffset());
 		result.setEndPosition(expressionCS.getEndOffset());
@@ -530,7 +551,7 @@ public class QvtOperationalVisitorCS
 		return result;
 	}
 
-	private ObjectExp visitOutExpCS(OutExpCS outExpCS, QvtOperationalEnv env) throws SemanticException {
+	private ObjectExp visitOutExpCS(OutExpCS outExpCS, QvtOperationalEnv env) {
 		TypeSpecCS typeSpecCS = getOutExpCSType(outExpCS);
 		if (typeSpecCS == null) {
 			env.reportError(ValidationMessages.missingTypeError, outExpCS);
@@ -587,8 +608,7 @@ public class QvtOperationalVisitorCS
 		return objectExp;
 	}
 
-	private AssignExp visitPatternPropertyExpCS(PatternPropertyExpCS propCS, QvtOperationalEnv env)
-			throws SemanticException {
+	private AssignExp visitPatternPropertyExpCS(PatternPropertyExpCS propCS, QvtOperationalEnv env) {
 		OCLExpression<EClassifier> propertyValue = visitOclExpressionCS(propCS.getOclExpressionCS(), env);
 		if (propertyValue == null) {
 			return null;
@@ -1138,7 +1158,7 @@ public class QvtOperationalVisitorCS
 		}
 	}
 
-	private void visitMappingRuleCS(MappingRuleCS methodCS, QvtOperationalEnv env, MappingOperation operation)
+	private ImperativeOperation visitMappingRuleCS(MappingRuleCS methodCS, QvtOperationalEnv env, final MappingOperation operation)
 			throws SemanticException {
 		env.registerMappingOperation(operation);
 		operation.setEndPosition(methodCS.getEndOffset());
@@ -1226,6 +1246,8 @@ public class QvtOperationalVisitorCS
 		}
 
 		checkAbstractOutParamsInitialized(operation.getResult(), methodCS, env);
+
+		return operation;
 	}
 
 	private void visitMappingQueryCS(MappingQueryCS methodCS, QvtOperationalEnv env, Helper helper)
@@ -1370,8 +1392,7 @@ public class QvtOperationalVisitorCS
 		return true;
 	}
 
-	private OCLExpression<EClassifier> visitAssignStatementCS(AssignStatementCS expressionCS, QvtOperationalEnv env)
-			throws SemanticException {
+	private OCLExpression<EClassifier> visitAssignStatementCS(AssignStatementCS expressionCS, QvtOperationalEnv env) {
 	    OCLExpressionCS lValueCS = expressionCS.getLValueCS();
 	    oclExpressionCS(lValueCS, env);
 	    PathNameCS pathNameCS = extractQualifiedName(lValueCS);
@@ -1514,8 +1535,7 @@ public class QvtOperationalVisitorCS
 		return varParam;
 	}
 
-	private OCLExpression<EClassifier> visitVariableInitializationCS(VariableInitializationCS varInitCS,
-			QvtOperationalEnv env) throws SemanticException {
+	private OCLExpression<EClassifier> visitVariableInitializationCS(VariableInitializationCS varInitCS, QvtOperationalEnv env) {
         if (varInitCS instanceof ErrorVariableInitializationCS) {
             VariableInitExp result = ExpressionsFactory.eINSTANCE.createVariableInitExp();
             result.setStartPosition(varInitCS.getStartOffset());
@@ -1602,8 +1622,7 @@ public class QvtOperationalVisitorCS
 		return body;
 	}
 
-	private OCLExpression<EClassifier> visitExpressionStatementCS(ExpressionStatementCS expressionCS,
-			QvtOperationalEnv env) throws SemanticException {
+	private OCLExpression<EClassifier> visitExpressionStatementCS(ExpressionStatementCS expressionCS, QvtOperationalEnv env) {
 		return visitOclExpressionCS(expressionCS.getOclExpressionCS(), env);
 	}
 
@@ -1670,8 +1689,7 @@ public class QvtOperationalVisitorCS
 		return result;
 	}
 
-    private OCLExpression<EClassifier> visitResolveExpCS(ResolveExpCS resolveExpCS, QvtOperationalEnv env)
-            throws SemanticException {
+    private OCLExpression<EClassifier> visitResolveExpCS(ResolveExpCS resolveExpCS, QvtOperationalEnv env) {
         ResolveExp resolveExp = populateResolveExp(resolveExpCS, env, ExpressionsFactory.eINSTANCE.createResolveExp());
         if (resolveExp.getSource() == null) {
             env.reportError(NLS.bind(ValidationMessages.ResolveExpMustHaveASource, new Object[] { }), resolveExpCS);
@@ -1679,8 +1697,7 @@ public class QvtOperationalVisitorCS
         return resolveExp;
     }
     
-    private OCLExpression<EClassifier> visitResolveInExpCS(
-            ResolveInExpCS resolveInExpCS, QvtOperationalEnv env) throws SemanticException {
+    private OCLExpression<EClassifier> visitResolveInExpCS(ResolveInExpCS resolveInExpCS, QvtOperationalEnv env) {
         ResolveInExp resolveInExp = ExpressionsFactory.eINSTANCE.createResolveInExp();
         TypeCS contextTypeCS = resolveInExpCS.getInMappingType();
         EClassifier eClassifier = (contextTypeCS == null) ? null : visitTypeCS(contextTypeCS, null, env); // mapping context type
@@ -1712,7 +1729,7 @@ public class QvtOperationalVisitorCS
         return populateResolveExp(resolveInExpCS, env, resolveInExp);
     }
     
-    private ResolveExp populateResolveExp(ResolveExpCS resolveExpCS, QvtOperationalEnv env, ResolveExp resolveExp) throws SemanticException {
+    private ResolveExp populateResolveExp(ResolveExpCS resolveExpCS, QvtOperationalEnv env, ResolveExp resolveExp) {
         // AST binding
         if(myCompilerOptions.isGenerateCompletionData()) {      
             ASTBindingHelper.createCST2ASTBinding(resolveExpCS, resolveExp, env);
@@ -1814,9 +1831,7 @@ public class QvtOperationalVisitorCS
 		return null;
 	}
 
-	private void validateOperationCall(OperationCallExpCS opCallCS,
-			OperationCallExp<EClassifier, EOperation> operationCallExp, QvtOperationalEnv env)
-			throws SemanticException {
+	private void validateOperationCall(OperationCallExpCS opCallCS, OperationCallExp<EClassifier, EOperation> operationCallExp, QvtOperationalEnv env) {
 		if (QvtOperationalParserUtil.isTypeCast(operationCallExp.getReferredOperation())) {
 			if (operationCallExp.getSource() != null && operationCallExp.getArgument().size() == 1) {
 				EClassifier sourceType = operationCallExp.getSource().getType();
@@ -2025,8 +2040,7 @@ public class QvtOperationalVisitorCS
 		return true;
 	}
 
-	private boolean validateInitializedValueCS(VariableInitializationCS varInitCS, VariableInitExp result,
-			QvtOperationalEnv env) throws SemanticException {
+	private boolean validateInitializedValueCS(VariableInitializationCS varInitCS, VariableInitExp result, QvtOperationalEnv env) {
 		result.setName(varInitCS.getSimpleNameCS().getValue());
 
 		EClassifier type;
@@ -2063,4 +2077,212 @@ public class QvtOperationalVisitorCS
 		}
 		return null;
 	}
+	
+	
+	/**
+	 * SimpleNameCS
+	 * FIXME - OCL 1.2 migration workaround
+	 * @param simpleNameCS the <code>SimpleNameCS</code> <code>CSTNode</code>
+	 * @param env the OCL environment
+	 * @param source the source of the <code>SimpleNameCS</code>
+	 * @return the parsed <code>OCLExpression</code>
+	 * @throws TerminateException 
+	 */
+	protected OCLExpression<EClassifier> fixed_1_2_simpleNameCSsimpleNameCS(
+    		SimpleNameCS simpleNameCS,
+    		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
+    		OCLExpression<EClassifier> source) {
+
+		OCLExpression<EClassifier> astNode;
+
+		String simpleName = null;
+		
+		astNode = null;
+		EStructuralFeature property = null;
+		EClassifier classifier = null;
+		PropertyCallExp<EClassifier, EStructuralFeature> propertyCall = null;
+		EClassifier assocClass = null;
+		AssociationClassCallExp<EClassifier, EStructuralFeature> acref = null;
+		Variable<EClassifier, EParameter> vdcl = null;
+
+		/* A name can be a variable defined by a Variable declaration, the special
+		  variable "self", an attribute or a reference to another object.
+		  If the source is not null, then the last token was a "." or "->"
+		  The source is used to establish the navigation.
+		  If no type is provided, then either the name is a the use of a variable,
+		  or there is an implicit variable declaration (self or an iterator)
+		  that is the source.		  		   
+		 */
+		switch (simpleNameCS.getType().getValue()) {
+			case SimpleTypeEnum.SELF:
+			case SimpleTypeEnum.KEYWORD:
+			case SimpleTypeEnum.IDENTIFIER:
+				simpleName = simpleNameCS.getValue();
+				break;
+			case SimpleTypeEnum.INTEGER:
+			case SimpleTypeEnum.STRING:
+			case SimpleTypeEnum.REAL:
+			case SimpleTypeEnum.BOOLEAN:
+			case SimpleTypeEnum.OCL_ANY:
+			case SimpleTypeEnum.OCL_VOID:
+			case SimpleTypeEnum.INVALID:
+			case SimpleTypeEnum.OCL_MESSAGE:
+				// if we have a source, then this is a feature call
+				if (source == null) {
+					classifier = primitiveTypeCS(simpleNameCS.getType(), env);
+					simpleName = uml.getName(classifier);
+				}
+				break;
+		}
+
+					
+		/*
+		 * The source may be a collection type (for example, in self.children.name, children
+		 * may be a set.)_  In this case, we have to get the element type of children, so
+		 * that the attribute name can be found.
+		 * The source type can also be a tuple type. In this case, we need to get the 
+		 * EClass of the tuple.
+		 * 
+		 */ 
+		EClassifier sourceElementType = null;
+		if (source != null) {
+			sourceElementType = source.getType();
+			if (sourceElementType instanceof CollectionType) {
+				@SuppressWarnings("unchecked")
+				CollectionType<EClassifier, EOperation> ct = (CollectionType<EClassifier, EOperation>) sourceElementType;
+				
+				sourceElementType = ct.getElementType();
+			} 
+		}
+		
+		List<String> names = new java.util.ArrayList<String>();
+		names.add(simpleName);
+		
+		// if we have a source, then this is a feature call
+		if ((classifier == null) && (source == null)) {
+			classifier = lookupClassifier(simpleNameCS, env, names);
+		}
+		
+		if (classifier != null) {
+			/* Variable is a classifier. Classifiers are used in
+			 * allInstances, isKindOf, isTypeOf, asTypeOf operations
+			 */
+			
+			TypeExp<EClassifier> texp = typeCS(simpleNameCS, env, classifier);
+			astNode = texp;	 		
+		} else if (source == null && (vdcl = env.lookup(simpleName)) != null)  { 
+			// Either a use of a declared variable or self
+
+			TRACE("variableExpCS", "Variable Expression: " + simpleName);//$NON-NLS-2$//$NON-NLS-1$
+			
+			VariableExp<EClassifier, EParameter> vexp = oclFactory.createVariableExp();	
+			initASTMapping(env, vexp, simpleNameCS);
+			vexp.setReferredVariable(vdcl);
+			vexp.setName(vdcl.getName());
+			vexp.setType(vdcl.getType());
+			astNode = vexp;
+		} else if ((property = lookupProperty(simpleNameCS, env, sourceElementType, simpleName)) != null) {
+			
+			TRACE("variableExpCS", "Property: " + simpleName);//$NON-NLS-2$//$NON-NLS-1$
+			propertyCall = oclFactory.createPropertyCallExp();
+			initASTMapping(env, propertyCall, simpleNameCS);
+			propertyCall.setReferredProperty(property);
+			propertyCall.setType(
+					TypeUtil.getPropertyType(env, sourceElementType, property));
+			if (source != null) {
+				propertyCall.setSource(source);
+			} else {
+				VariableExp<EClassifier, EParameter> src = oclFactory.createVariableExp();
+				initASTMapping(env, src, simpleNameCS);
+				Variable<EClassifier, EParameter> implicitSource =
+					env.lookupImplicitSourceForProperty(simpleName);
+				src.setType(implicitSource.getType());
+				src.setReferredVariable(implicitSource);
+				src.setName(implicitSource.getName());
+				propertyCall.setSource(src);
+			}
+
+			initPropertyPositions(propertyCall, simpleNameCS);
+			astNode = propertyCall;
+						
+		} else if ((assocClass = lookupAssociationClassReference(simpleNameCS, env, sourceElementType, simpleName)) != null) {
+			TRACE("variableExpCS", "Association class: " + simpleName);//$NON-NLS-2$//$NON-NLS-1$
+			acref = oclFactory.createAssociationClassCallExp();
+			initASTMapping(env, acref, simpleNameCS);
+			acref.setReferredAssociationClass(assocClass);
+			
+			if (source != null) {
+				acref.setSource(source);
+			} else {
+				VariableExp<EClassifier, EParameter> src = oclFactory.createVariableExp();
+				initASTMapping(env, src, simpleNameCS);
+				Variable<EClassifier, EParameter> implicitSource =
+					env.lookupImplicitSourceForAssociationClass(simpleName);
+				src.setType(implicitSource.getType());
+				src.setReferredVariable(implicitSource);
+				src.setName(implicitSource.getName());
+				acref.setSource(src);
+			}
+			
+			// infer the navigation source and type of the association class
+			//   call expression from the association class end that is
+			//   implicitly navigated (in case it is not explicit as a qualifier)
+			EClassifier acrefType = null;
+			EClassifier sourceType = getElementType(acref.getSource().getType());
+			List<EStructuralFeature> ends = uml.getMemberEnds(assocClass);
+			List<EStructuralFeature> available = uml.getAttributes(sourceType);
+			
+			for (EStructuralFeature end : ends) {
+				if (available.contains(end)) {
+					// this is the navigation source
+					acref.setNavigationSource(end);
+					
+					CollectionKind kind = getCollectionKind(uml.getOCLType(end));
+					if (kind != null) {
+						acrefType = getCollectionType(env, kind, assocClass);
+					} else {
+						acrefType = assocClass;
+					}
+				}
+			}
+			
+			if (acrefType == null) {
+				// for non-navigable association classes, assume set type
+				acrefType = getSetType(simpleNameCS, env, assocClass);
+			}
+			acref.setType(acrefType);
+
+			initPropertyPositions(acref, simpleNameCS);
+			astNode = acref;
+		} else {
+			if ((source != null) && (vdcl = env.lookup(simpleName)) != null) {
+				String message = OCLMessages.bind(
+						OCLMessages.VarInNavExp_ERROR_,
+						simpleName);
+					ERROR(simpleNameCS, "variableExpCS", message);//$NON-NLS-1$
+			} else {
+				String message = OCLMessages.bind(
+						OCLMessages.UnrecognizedVar_ERROR_,
+						simpleName);
+					ERROR(simpleNameCS, "variableExpCS", message);//$NON-NLS-1$
+			}
+			
+			return createDummyInvalidLiteralExp();
+		}
+		
+		/*
+		 * If the source type is a collection, then need there is an implicit COLLECT operator.
+		 * Note that this rule is not called after "->".
+		 */
+		if ((source != null) && source.getType() instanceof CollectionType) {
+			astNode = createImplicitCollect(
+				source,
+				(FeatureCallExp<EClassifier>) astNode,
+				env,
+				simpleNameCS);
+		}
+
+		return astNode;
+	}
+	
 }

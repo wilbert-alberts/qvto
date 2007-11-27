@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TransformationHeaderCSImpl.java,v 1.4 2007/09/20 10:14:03 aigdalov Exp $
+ * $Id: TransformationHeaderCSImpl.java,v 1.5 2007/11/27 15:43:19 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.impl;
 
@@ -36,10 +36,10 @@ import org.eclipse.m2m.qvt.oml.internal.cst.ParameterDeclarationCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.TransformationHeaderCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.TransformationRefineCS;
 
-import org.eclipse.ocl.internal.cst.PathNameCS;
-import org.eclipse.ocl.internal.cst.StringLiteralExpCS;
+import org.eclipse.ocl.cst.PathNameCS;
+import org.eclipse.ocl.cst.StringLiteralExpCS;
 
-import org.eclipse.ocl.internal.cst.impl.CSTNodeImpl;
+import org.eclipse.ocl.cst.impl.CSTNodeImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -60,325 +60,325 @@ import org.eclipse.ocl.internal.cst.impl.CSTNodeImpl;
  */
 public class TransformationHeaderCSImpl extends CSTNodeImpl implements TransformationHeaderCS {
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 	/**
-     * The cached value of the '{@link #getQualifiers() <em>Qualifiers</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getQualifiers() <em>Qualifiers</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getQualifiers()
-     * @generated
-     * @ordered
-     */
+	 * @see #getQualifiers()
+	 * @generated
+	 * @ordered
+	 */
 	protected EList<StringLiteralExpCS> qualifiers;
 
 	/**
-     * The cached value of the '{@link #getPathNameCS() <em>Path Name CS</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getPathNameCS() <em>Path Name CS</em>}' containment reference.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getPathNameCS()
-     * @generated
-     * @ordered
-     */
+	 * @see #getPathNameCS()
+	 * @generated
+	 * @ordered
+	 */
 	protected PathNameCS pathNameCS;
 
 	/**
-     * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getParameters()
-     * @generated
-     * @ordered
-     */
+	 * @see #getParameters()
+	 * @generated
+	 * @ordered
+	 */
 	protected EList<ParameterDeclarationCS> parameters;
 
 	/**
-     * The cached value of the '{@link #getModuleUsages() <em>Module Usages</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getModuleUsages() <em>Module Usages</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getModuleUsages()
-     * @generated
-     * @ordered
-     */
+	 * @see #getModuleUsages()
+	 * @generated
+	 * @ordered
+	 */
 	protected EList<ModuleUsageCS> moduleUsages;
 
 	/**
-     * The cached value of the '{@link #getTransformationRefineCS() <em>Transformation Refine CS</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getTransformationRefineCS() <em>Transformation Refine CS</em>}' containment reference.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getTransformationRefineCS()
-     * @generated
-     * @ordered
-     */
+	 * @see #getTransformationRefineCS()
+	 * @generated
+	 * @ordered
+	 */
 	protected TransformationRefineCS transformationRefineCS;
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	protected TransformationHeaderCSImpl() {
-        super();
-    }
+		super();
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	protected EClass eStaticClass() {
-        return CSTPackage.Literals.TRANSFORMATION_HEADER_CS;
-    }
+		return CSTPackage.Literals.TRANSFORMATION_HEADER_CS;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public EList<StringLiteralExpCS> getQualifiers() {
-        if (qualifiers == null) {
-            qualifiers = new EObjectContainmentEList<StringLiteralExpCS>(StringLiteralExpCS.class, this, CSTPackage.TRANSFORMATION_HEADER_CS__QUALIFIERS);
-        }
-        return qualifiers;
-    }
+		if (qualifiers == null) {
+			qualifiers = new EObjectContainmentEList<StringLiteralExpCS>(StringLiteralExpCS.class, this, CSTPackage.TRANSFORMATION_HEADER_CS__QUALIFIERS);
+		}
+		return qualifiers;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public PathNameCS getPathNameCS() {
-        return pathNameCS;
-    }
+		return pathNameCS;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public NotificationChain basicSetPathNameCS(PathNameCS newPathNameCS, NotificationChain msgs) {
-        PathNameCS oldPathNameCS = pathNameCS;
-        pathNameCS = newPathNameCS;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.TRANSFORMATION_HEADER_CS__PATH_NAME_CS, oldPathNameCS, newPathNameCS);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
+		PathNameCS oldPathNameCS = pathNameCS;
+		pathNameCS = newPathNameCS;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.TRANSFORMATION_HEADER_CS__PATH_NAME_CS, oldPathNameCS, newPathNameCS);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public void setPathNameCS(PathNameCS newPathNameCS) {
-        if (newPathNameCS != pathNameCS) {
-            NotificationChain msgs = null;
-            if (pathNameCS != null)
-                msgs = ((InternalEObject)pathNameCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.TRANSFORMATION_HEADER_CS__PATH_NAME_CS, null, msgs);
-            if (newPathNameCS != null)
-                msgs = ((InternalEObject)newPathNameCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.TRANSFORMATION_HEADER_CS__PATH_NAME_CS, null, msgs);
-            msgs = basicSetPathNameCS(newPathNameCS, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.TRANSFORMATION_HEADER_CS__PATH_NAME_CS, newPathNameCS, newPathNameCS));
-    }
+		if (newPathNameCS != pathNameCS) {
+			NotificationChain msgs = null;
+			if (pathNameCS != null)
+				msgs = ((InternalEObject)pathNameCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.TRANSFORMATION_HEADER_CS__PATH_NAME_CS, null, msgs);
+			if (newPathNameCS != null)
+				msgs = ((InternalEObject)newPathNameCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.TRANSFORMATION_HEADER_CS__PATH_NAME_CS, null, msgs);
+			msgs = basicSetPathNameCS(newPathNameCS, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.TRANSFORMATION_HEADER_CS__PATH_NAME_CS, newPathNameCS, newPathNameCS));
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public EList<ParameterDeclarationCS> getParameters() {
-        if (parameters == null) {
-            parameters = new EObjectContainmentEList<ParameterDeclarationCS>(ParameterDeclarationCS.class, this, CSTPackage.TRANSFORMATION_HEADER_CS__PARAMETERS);
-        }
-        return parameters;
-    }
+		if (parameters == null) {
+			parameters = new EObjectContainmentEList<ParameterDeclarationCS>(ParameterDeclarationCS.class, this, CSTPackage.TRANSFORMATION_HEADER_CS__PARAMETERS);
+		}
+		return parameters;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public EList<ModuleUsageCS> getModuleUsages() {
-        if (moduleUsages == null) {
-            moduleUsages = new EObjectContainmentEList<ModuleUsageCS>(ModuleUsageCS.class, this, CSTPackage.TRANSFORMATION_HEADER_CS__MODULE_USAGES);
-        }
-        return moduleUsages;
-    }
+		if (moduleUsages == null) {
+			moduleUsages = new EObjectContainmentEList<ModuleUsageCS>(ModuleUsageCS.class, this, CSTPackage.TRANSFORMATION_HEADER_CS__MODULE_USAGES);
+		}
+		return moduleUsages;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public TransformationRefineCS getTransformationRefineCS() {
-        return transformationRefineCS;
-    }
+		return transformationRefineCS;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public NotificationChain basicSetTransformationRefineCS(TransformationRefineCS newTransformationRefineCS, NotificationChain msgs) {
-        TransformationRefineCS oldTransformationRefineCS = transformationRefineCS;
-        transformationRefineCS = newTransformationRefineCS;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.TRANSFORMATION_HEADER_CS__TRANSFORMATION_REFINE_CS, oldTransformationRefineCS, newTransformationRefineCS);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
+		TransformationRefineCS oldTransformationRefineCS = transformationRefineCS;
+		transformationRefineCS = newTransformationRefineCS;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.TRANSFORMATION_HEADER_CS__TRANSFORMATION_REFINE_CS, oldTransformationRefineCS, newTransformationRefineCS);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public void setTransformationRefineCS(TransformationRefineCS newTransformationRefineCS) {
-        if (newTransformationRefineCS != transformationRefineCS) {
-            NotificationChain msgs = null;
-            if (transformationRefineCS != null)
-                msgs = ((InternalEObject)transformationRefineCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.TRANSFORMATION_HEADER_CS__TRANSFORMATION_REFINE_CS, null, msgs);
-            if (newTransformationRefineCS != null)
-                msgs = ((InternalEObject)newTransformationRefineCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.TRANSFORMATION_HEADER_CS__TRANSFORMATION_REFINE_CS, null, msgs);
-            msgs = basicSetTransformationRefineCS(newTransformationRefineCS, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.TRANSFORMATION_HEADER_CS__TRANSFORMATION_REFINE_CS, newTransformationRefineCS, newTransformationRefineCS));
-    }
+		if (newTransformationRefineCS != transformationRefineCS) {
+			NotificationChain msgs = null;
+			if (transformationRefineCS != null)
+				msgs = ((InternalEObject)transformationRefineCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.TRANSFORMATION_HEADER_CS__TRANSFORMATION_REFINE_CS, null, msgs);
+			if (newTransformationRefineCS != null)
+				msgs = ((InternalEObject)newTransformationRefineCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.TRANSFORMATION_HEADER_CS__TRANSFORMATION_REFINE_CS, null, msgs);
+			msgs = basicSetTransformationRefineCS(newTransformationRefineCS, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.TRANSFORMATION_HEADER_CS__TRANSFORMATION_REFINE_CS, newTransformationRefineCS, newTransformationRefineCS));
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case CSTPackage.TRANSFORMATION_HEADER_CS__QUALIFIERS:
-                return ((InternalEList<?>)getQualifiers()).basicRemove(otherEnd, msgs);
-            case CSTPackage.TRANSFORMATION_HEADER_CS__PATH_NAME_CS:
-                return basicSetPathNameCS(null, msgs);
-            case CSTPackage.TRANSFORMATION_HEADER_CS__PARAMETERS:
-                return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
-            case CSTPackage.TRANSFORMATION_HEADER_CS__MODULE_USAGES:
-                return ((InternalEList<?>)getModuleUsages()).basicRemove(otherEnd, msgs);
-            case CSTPackage.TRANSFORMATION_HEADER_CS__TRANSFORMATION_REFINE_CS:
-                return basicSetTransformationRefineCS(null, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case CSTPackage.TRANSFORMATION_HEADER_CS__QUALIFIERS:
+				return ((InternalEList<?>)getQualifiers()).basicRemove(otherEnd, msgs);
+			case CSTPackage.TRANSFORMATION_HEADER_CS__PATH_NAME_CS:
+				return basicSetPathNameCS(null, msgs);
+			case CSTPackage.TRANSFORMATION_HEADER_CS__PARAMETERS:
+				return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
+			case CSTPackage.TRANSFORMATION_HEADER_CS__MODULE_USAGES:
+				return ((InternalEList<?>)getModuleUsages()).basicRemove(otherEnd, msgs);
+			case CSTPackage.TRANSFORMATION_HEADER_CS__TRANSFORMATION_REFINE_CS:
+				return basicSetTransformationRefineCS(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case CSTPackage.TRANSFORMATION_HEADER_CS__QUALIFIERS:
-                return getQualifiers();
-            case CSTPackage.TRANSFORMATION_HEADER_CS__PATH_NAME_CS:
-                return getPathNameCS();
-            case CSTPackage.TRANSFORMATION_HEADER_CS__PARAMETERS:
-                return getParameters();
-            case CSTPackage.TRANSFORMATION_HEADER_CS__MODULE_USAGES:
-                return getModuleUsages();
-            case CSTPackage.TRANSFORMATION_HEADER_CS__TRANSFORMATION_REFINE_CS:
-                return getTransformationRefineCS();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case CSTPackage.TRANSFORMATION_HEADER_CS__QUALIFIERS:
+				return getQualifiers();
+			case CSTPackage.TRANSFORMATION_HEADER_CS__PATH_NAME_CS:
+				return getPathNameCS();
+			case CSTPackage.TRANSFORMATION_HEADER_CS__PARAMETERS:
+				return getParameters();
+			case CSTPackage.TRANSFORMATION_HEADER_CS__MODULE_USAGES:
+				return getModuleUsages();
+			case CSTPackage.TRANSFORMATION_HEADER_CS__TRANSFORMATION_REFINE_CS:
+				return getTransformationRefineCS();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case CSTPackage.TRANSFORMATION_HEADER_CS__QUALIFIERS:
-                getQualifiers().clear();
-                getQualifiers().addAll((Collection<? extends StringLiteralExpCS>)newValue);
-                return;
-            case CSTPackage.TRANSFORMATION_HEADER_CS__PATH_NAME_CS:
-                setPathNameCS((PathNameCS)newValue);
-                return;
-            case CSTPackage.TRANSFORMATION_HEADER_CS__PARAMETERS:
-                getParameters().clear();
-                getParameters().addAll((Collection<? extends ParameterDeclarationCS>)newValue);
-                return;
-            case CSTPackage.TRANSFORMATION_HEADER_CS__MODULE_USAGES:
-                getModuleUsages().clear();
-                getModuleUsages().addAll((Collection<? extends ModuleUsageCS>)newValue);
-                return;
-            case CSTPackage.TRANSFORMATION_HEADER_CS__TRANSFORMATION_REFINE_CS:
-                setTransformationRefineCS((TransformationRefineCS)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case CSTPackage.TRANSFORMATION_HEADER_CS__QUALIFIERS:
+				getQualifiers().clear();
+				getQualifiers().addAll((Collection<? extends StringLiteralExpCS>)newValue);
+				return;
+			case CSTPackage.TRANSFORMATION_HEADER_CS__PATH_NAME_CS:
+				setPathNameCS((PathNameCS)newValue);
+				return;
+			case CSTPackage.TRANSFORMATION_HEADER_CS__PARAMETERS:
+				getParameters().clear();
+				getParameters().addAll((Collection<? extends ParameterDeclarationCS>)newValue);
+				return;
+			case CSTPackage.TRANSFORMATION_HEADER_CS__MODULE_USAGES:
+				getModuleUsages().clear();
+				getModuleUsages().addAll((Collection<? extends ModuleUsageCS>)newValue);
+				return;
+			case CSTPackage.TRANSFORMATION_HEADER_CS__TRANSFORMATION_REFINE_CS:
+				setTransformationRefineCS((TransformationRefineCS)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public void eUnset(int featureID) {
-        switch (featureID) {
-            case CSTPackage.TRANSFORMATION_HEADER_CS__QUALIFIERS:
-                getQualifiers().clear();
-                return;
-            case CSTPackage.TRANSFORMATION_HEADER_CS__PATH_NAME_CS:
-                setPathNameCS((PathNameCS)null);
-                return;
-            case CSTPackage.TRANSFORMATION_HEADER_CS__PARAMETERS:
-                getParameters().clear();
-                return;
-            case CSTPackage.TRANSFORMATION_HEADER_CS__MODULE_USAGES:
-                getModuleUsages().clear();
-                return;
-            case CSTPackage.TRANSFORMATION_HEADER_CS__TRANSFORMATION_REFINE_CS:
-                setTransformationRefineCS((TransformationRefineCS)null);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case CSTPackage.TRANSFORMATION_HEADER_CS__QUALIFIERS:
+				getQualifiers().clear();
+				return;
+			case CSTPackage.TRANSFORMATION_HEADER_CS__PATH_NAME_CS:
+				setPathNameCS((PathNameCS)null);
+				return;
+			case CSTPackage.TRANSFORMATION_HEADER_CS__PARAMETERS:
+				getParameters().clear();
+				return;
+			case CSTPackage.TRANSFORMATION_HEADER_CS__MODULE_USAGES:
+				getModuleUsages().clear();
+				return;
+			case CSTPackage.TRANSFORMATION_HEADER_CS__TRANSFORMATION_REFINE_CS:
+				setTransformationRefineCS((TransformationRefineCS)null);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case CSTPackage.TRANSFORMATION_HEADER_CS__QUALIFIERS:
-                return qualifiers != null && !qualifiers.isEmpty();
-            case CSTPackage.TRANSFORMATION_HEADER_CS__PATH_NAME_CS:
-                return pathNameCS != null;
-            case CSTPackage.TRANSFORMATION_HEADER_CS__PARAMETERS:
-                return parameters != null && !parameters.isEmpty();
-            case CSTPackage.TRANSFORMATION_HEADER_CS__MODULE_USAGES:
-                return moduleUsages != null && !moduleUsages.isEmpty();
-            case CSTPackage.TRANSFORMATION_HEADER_CS__TRANSFORMATION_REFINE_CS:
-                return transformationRefineCS != null;
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case CSTPackage.TRANSFORMATION_HEADER_CS__QUALIFIERS:
+				return qualifiers != null && !qualifiers.isEmpty();
+			case CSTPackage.TRANSFORMATION_HEADER_CS__PATH_NAME_CS:
+				return pathNameCS != null;
+			case CSTPackage.TRANSFORMATION_HEADER_CS__PARAMETERS:
+				return parameters != null && !parameters.isEmpty();
+			case CSTPackage.TRANSFORMATION_HEADER_CS__MODULE_USAGES:
+				return moduleUsages != null && !moduleUsages.isEmpty();
+			case CSTPackage.TRANSFORMATION_HEADER_CS__TRANSFORMATION_REFINE_CS:
+				return transformationRefineCS != null;
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //TransformationHeaderCSImpl

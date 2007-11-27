@@ -26,9 +26,9 @@ import org.eclipse.m2m.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.qvt.oml.internal.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.ocl.Environment;
+import org.eclipse.ocl.cst.PathNameCS;
+import org.eclipse.ocl.cst.TypeCS;
 import org.eclipse.ocl.ecore.Constraint;
-import org.eclipse.ocl.internal.cst.PathNameCS;
-import org.eclipse.ocl.internal.cst.TypeCS;
 import org.eclipse.ocl.types.PrimitiveType;
 
 public class QvtOperationalUtil {

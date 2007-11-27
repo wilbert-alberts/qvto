@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: OCLLexer.g,v 1.1 2007/07/29 19:50:55 radvorak Exp $
+-- * $Id: OCLLexer.g,v 1.2 2007/11/27 15:43:20 radvorak Exp $
 -- */
 --
 -- The OCL Lexer
@@ -34,7 +34,7 @@ $Define
 	-- Definition of macros used in the template
 	--
 	$action_class /.$file_prefix./
-	$prs_stream_class /.PrsStream./
+	--$prs_stream_class /.PrsStream./
 	$eof_token /.$_EOF_TOKEN./
  
 	--
@@ -60,7 +60,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: OCLLexer.g,v 1.1 2007/07/29 19:50:55 radvorak Exp $
+ * $Id: OCLLexer.g,v 1.2 2007/11/27 15:43:20 radvorak Exp $
  */
 	./
 $End

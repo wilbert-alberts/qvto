@@ -12,7 +12,7 @@
 package org.eclipse.m2m.qvt.oml;
 
 import org.eclipse.core.resources.IMarker;
-import org.eclipse.ocl.internal.cst.CSTNode;
+import org.eclipse.ocl.cst.CSTNode;
 
 
 /**

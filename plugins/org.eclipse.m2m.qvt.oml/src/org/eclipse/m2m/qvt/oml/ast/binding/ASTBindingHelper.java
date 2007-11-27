@@ -26,7 +26,7 @@ import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
-import org.eclipse.ocl.internal.cst.CSTNode;
+import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.utilities.ASTNode;
 
 @SuppressWarnings("restriction")

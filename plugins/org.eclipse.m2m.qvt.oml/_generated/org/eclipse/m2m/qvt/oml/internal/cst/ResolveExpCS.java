@@ -11,13 +11,13 @@
  * 
  * 
  *
- * $Id: ResolveExpCS.java,v 1.4 2007/09/20 10:14:05 aigdalov Exp $
+ * $Id: ResolveExpCS.java,v 1.5 2007/11/27 15:43:21 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst;
 
-import org.eclipse.ocl.internal.cst.CallExpCS;
-import org.eclipse.ocl.internal.cst.OCLExpressionCS;
-import org.eclipse.ocl.internal.cst.VariableCS;
+import org.eclipse.ocl.cst.CallExpCS;
+import org.eclipse.ocl.cst.OCLExpressionCS;
+import org.eclipse.ocl.cst.VariableCS;
 
 /**
  * <!-- begin-user-doc -->
@@ -41,140 +41,140 @@ import org.eclipse.ocl.internal.cst.VariableCS;
  */
 public interface ResolveExpCS extends CallExpCS {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
     /**
-     * Returns the value of the '<em><b>One</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>One</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>One</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>One</em>' attribute.
-     * @see #setOne(boolean)
-     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getResolveExpCS_One()
-     * @model required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>One</em>' attribute.
+	 * @see #setOne(boolean)
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getResolveExpCS_One()
+	 * @model required="true"
+	 * @generated
+	 */
     boolean isOne();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS#isOne <em>One</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS#isOne <em>One</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>One</em>' attribute.
-     * @see #isOne()
-     * @generated
-     */
+	 * @param value the new value of the '<em>One</em>' attribute.
+	 * @see #isOne()
+	 * @generated
+	 */
     void setOne(boolean value);
 
     /**
-     * Returns the value of the '<em><b>Is Inverse</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Is Inverse</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Is Inverse</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Is Inverse</em>' attribute.
-     * @see #setIsInverse(boolean)
-     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getResolveExpCS_IsInverse()
-     * @model required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Is Inverse</em>' attribute.
+	 * @see #setIsInverse(boolean)
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getResolveExpCS_IsInverse()
+	 * @model required="true"
+	 * @generated
+	 */
     boolean isIsInverse();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS#isIsInverse <em>Is Inverse</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS#isIsInverse <em>Is Inverse</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Is Inverse</em>' attribute.
-     * @see #isIsInverse()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Is Inverse</em>' attribute.
+	 * @see #isIsInverse()
+	 * @generated
+	 */
     void setIsInverse(boolean value);
 
     /**
-     * Returns the value of the '<em><b>Is Deferred</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Is Deferred</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Is Deferred</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Is Deferred</em>' attribute.
-     * @see #setIsDeferred(boolean)
-     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getResolveExpCS_IsDeferred()
-     * @model required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Is Deferred</em>' attribute.
+	 * @see #setIsDeferred(boolean)
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getResolveExpCS_IsDeferred()
+	 * @model required="true"
+	 * @generated
+	 */
     boolean isIsDeferred();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS#isIsDeferred <em>Is Deferred</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS#isIsDeferred <em>Is Deferred</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Is Deferred</em>' attribute.
-     * @see #isIsDeferred()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Is Deferred</em>' attribute.
+	 * @see #isIsDeferred()
+	 * @generated
+	 */
     void setIsDeferred(boolean value);
 
     /**
-     * Returns the value of the '<em><b>Target</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Target</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Target</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Target</em>' containment reference.
-     * @see #setTarget(VariableCS)
-     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getResolveExpCS_Target()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Target</em>' containment reference.
+	 * @see #setTarget(VariableCS)
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getResolveExpCS_Target()
+	 * @model containment="true"
+	 * @generated
+	 */
     VariableCS getTarget();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS#getTarget <em>Target</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS#getTarget <em>Target</em>}' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Target</em>' containment reference.
-     * @see #getTarget()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Target</em>' containment reference.
+	 * @see #getTarget()
+	 * @generated
+	 */
     void setTarget(VariableCS value);
 
     /**
-     * Returns the value of the '<em><b>Condition</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Condition</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Condition</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Condition</em>' containment reference.
-     * @see #setCondition(OCLExpressionCS)
-     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getResolveExpCS_Condition()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Condition</em>' containment reference.
+	 * @see #setCondition(OCLExpressionCS)
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getResolveExpCS_Condition()
+	 * @model containment="true"
+	 * @generated
+	 */
     OCLExpressionCS getCondition();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS#getCondition <em>Condition</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS#getCondition <em>Condition</em>}' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Condition</em>' containment reference.
-     * @see #getCondition()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Condition</em>' containment reference.
+	 * @see #getCondition()
+	 * @generated
+	 */
     void setCondition(OCLExpressionCS value);
 
 } // ResolveExpCS

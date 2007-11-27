@@ -22,7 +22,7 @@ import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLexer;
-import org.eclipse.ocl.internal.cst.PathNameCS;
+import org.eclipse.ocl.cst.PathNameCS;
 
 public class ParsedModuleCS {
 	private final QvtOpLexer myLexer;

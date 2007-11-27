@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexer.java,v 1.21 2007/11/26 12:41:19 aigdalov Exp $
+* $Id: QvtOpLexer.java,v 1.22 2007/11/27 15:43:20 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,50 +29,106 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexer.java,v 1.21 2007/11/26 12:41:19 aigdalov Exp $
+* $Id: QvtOpLexer.java,v 1.22 2007/11/27 15:43:20 radvorak Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
 
 import lpg.lpgjavaruntime.*;
+import org.eclipse.ocl.lpg.AbstractLexer;
+import org.eclipse.ocl.lpg.AbstractParser;
+import org.eclipse.ocl.lpg.BasicEnvironment;
 
 import java.io.IOException;
 import java.io.Reader;
 
-public class QvtOpLexer extends LpgLexStream implements QvtOpLPGParsersym, QvtOpLexersym, RuleAction
+@SuppressWarnings("nls")
+public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtOpLexersym, RuleAction
 {
     private static ParseTable prs = new QvtOpLexerprs();
-    private PrsStream prsStream;
+    //
+    // The Lexer contains an array of characters as the input stream to be parsed.
+    // There are methods to retrieve and classify characters.
+    // The lexparser "token" is implemented simply as the index of the next character in the array.
+    // The Lexer extends the abstract class LpgLexStream with an implementation of the abstract
+    // method getKind.  The template defines the Lexer class and the lexer() method.
+    // A driver creates the action class, "Lexer", passing an Option object to the constructor.
+    //
+    protected QvtOpKWLexer kwLexer;
+    protected boolean printTokens;
+    private PrsStream parser;
     private LexParser lexParser = new LexParser(this, prs, this);
+    
+    private final BasicEnvironment oclEnvironment;
 
-    public PrsStream getPrsStream() { return prsStream; }
-    public int getToken(int i) { return lexParser.getToken(i); }
+    public QvtOpLexer(BasicEnvironment environment) {
+        super(environment);
+        oclEnvironment = environment;
+    }
+    
+    @SuppressWarnings("nls")
+	public QvtOpLexer(BasicEnvironment environment, char[] chars) {
+		this(environment, chars, "QVTO", ECLIPSE_TAB_VALUE);
+		kwLexer = new QvtOpKWLexer(getInputChars(), TK_IDENTIFIER);
+	}
+
+    public QvtOpLexer(BasicEnvironment environment, char[] input_chars, String filename, int tab)  {
+        super(environment, input_chars, filename, tab);
+        oclEnvironment = environment;
+    }
+    
+	public BasicEnvironment getOCLEnvironment() {
+    	return oclEnvironment;
+    }
+
+    public int [] getKeywordKinds() { return kwLexer.getKeywordKinds(); }
+    public int getLeftSpan() { return lexParser.getFirstToken(); }
+    public PrsStream getParser() { return parser; }
     public int getRhsFirstTokenIndex(int i) { return lexParser.getFirstToken(i); }
     public int getRhsLastTokenIndex(int i) { return lexParser.getLastToken(i); }
-
-    public int getLeftSpan() { return lexParser.getFirstToken(); }
     public int getRightSpan() { return lexParser.getLastToken(); }
+    @Override public int getToken(int i) { return lexParser.getToken(i); }
 
-    public QvtOpLexer(String filename, int tab) throws java.io.IOException 
+    @Override
+    public void initialize(char [] content, String filename)
     {
-        super(filename, tab);
+        super.initialize(content, filename);
+        if (kwLexer == null)
+             kwLexer = new QvtOpKWLexer(getInputChars(), TK_IDENTIFIER);
+        else
+             kwLexer.setInputChars(getInputChars());
     }
 
-    public QvtOpLexer(char[] input_chars, String filename, int tab)
-    {
-        super(input_chars, filename, tab);
-    }
-
-    public QvtOpLexer(char[] input_chars, String filename)
-    {
-        this(input_chars, filename, 1);
-    }
-
-    public QvtOpLexer() {}
-
+    @Override
     public String[] orderedExportedSymbols() { return QvtOpLPGParsersym.orderedTerminalSymbols; }
     public LexStream getLexStream() { return (LexStream) this; }
 
+    
+    @Override
+    public void setInputChars(char[] inputChars) {
+		super.setInputChars(inputChars);
+		kwLexer = new QvtOpKWLexer(getInputChars(), TK_IDENTIFIER);
+	}
+    
+    @Override
+    public void lexToTokens(Monitor monitor, AbstractParser parser)
+    {
+        if (getInputChars() == null)
+            throw new NullPointerException("LexStream was not initialized");
+
+        this.parser = parser;
+
+        parser.makeToken(0, 0, 0); // Token list must start with a bad token
+            
+        lexParser.parseCharacters(monitor);  // Lex the input characters
+            
+        int i = getStreamIndex();
+        parser.makeToken(i, i, TK_EOF_TOKEN); // and end with the end of file token
+        parser.setStreamLength(parser.getSize());
+            
+        return;
+    }
+    
     public void lexer(PrsStream prsStream)
     {
         lexer(null, prsStream);
@@ -83,7 +139,7 @@ public class QvtOpLexer extends LpgLexStream implements QvtOpLPGParsersym, QvtOp
         if (getInputChars() == null)
             throw new NullPointerException("LexStream was not initialized");
 
-        this.prsStream = prsStream;
+        this.parser = prsStream;
 
         prsStream.makeToken(0, 0, 0); // Token list must start with a bad token
             
@@ -94,34 +150,6 @@ public class QvtOpLexer extends LpgLexStream implements QvtOpLPGParsersym, QvtOp
         prsStream.setStreamLength(prsStream.getSize());
             
         return;
-    }
-
-    //
-    // The Lexer contains an array of characters as the input stream to be parsed.
-    // There are methods to retrieve and classify characters.
-    // The lexparser "token" is implemented simply as the index of the next character in the array.
-    // The Lexer extends the abstract class LpgLexStream with an implementation of the abstract
-    // method getKind.  The template defines the Lexer class and the lexer() method.
-    // A driver creates the action class, "Lexer", passing an Option object to the constructor.
-    //
-    QvtOpKWLexer kwLexer;
-    boolean printTokens;
-    private final static int ECLIPSE_TAB_VALUE = 4;
-
-    public int [] getKeywordKinds() { return kwLexer.getKeywordKinds(); }
-
-    public QvtOpLexer(String filename) throws java.io.IOException
-    {
-        this(filename, ECLIPSE_TAB_VALUE);
-        this.kwLexer = new QvtOpKWLexer(getInputChars(), TK_IDENTIFIER);
-    }
-
-    public void initialize(char [] content, String filename)
-    {
-        super.initialize(content, filename);
-        if (this.kwLexer == null)
-             this.kwLexer = new QvtOpKWLexer(getInputChars(), TK_IDENTIFIER);
-        else this.kwLexer.setInputChars(getInputChars());
     }
     
     final void makeToken(int kind)
@@ -298,7 +326,7 @@ public class QvtOpLexer extends LpgLexStream implements QvtOpLPGParsersym, QvtOp
         Char_EOF              // for '\uffff' or 65535 
     };
             
-    public final int getKind(int i)  // Classify character at ith location
+    @Override public final int getKind(int i)  // Classify character at ith location
     {
         char c = (i >= getStreamLength() ? '\uffff' : getCharValue(i));
         return (c < 128)? // ASCII Character
@@ -311,34 +339,6 @@ public class QvtOpLexer extends LpgLexStream implements QvtOpLPGParsersym, QvtOp
     }
 
 	/*
-
-    //
-    // The Lexer contains an array of characters as the input stream to be parsed.
-    // There are methods to retrieve and classify characters.
-    // The lexparser "token" is implemented simply as the index of the next character in the array.
-    // The Lexer extends the abstract class LpgLexStream with an implementation of the abstract
-    // method getKind.  The template defines the Lexer class and the lexer() method.
-    // A driver creates the action class, "Lexer", passing an Option object to the constructor.
-    //
-    QvtOpKWLexer kwLexer;
-    boolean printTokens;
-    private final static int ECLIPSE_TAB_VALUE = 4;
-
-    public int [] getKeywordKinds() { return kwLexer.getKeywordKinds(); }
-
-    public QvtOpLexer(String filename) throws java.io.IOException
-    {
-        this(filename, ECLIPSE_TAB_VALUE);
-        this.kwLexer = new QvtOpKWLexer(getInputChars(), TK_IDENTIFIER);
-    }
-
-    public void initialize(char [] content, String filename)
-    {
-        super.initialize(content, filename);
-        if (this.kwLexer == null)
-             this.kwLexer = new QvtOpKWLexer(getInputChars(), TK_IDENTIFIER);
-        else this.kwLexer.setInputChars(getInputChars());
-    }
     
     final void makeToken(int kind)
     {
@@ -514,7 +514,7 @@ public class QvtOpLexer extends LpgLexStream implements QvtOpLPGParsersym, QvtOp
         Char_EOF              // for '\uffff' or 65535 
     };
             
-    public final int getKind(int i)  // Classify character at ith location
+    @Override public final int getKind(int i)  // Classify character at ith location
     {
         char c = (i >= getStreamLength() ? '\uffff' : getCharValue(i));
         return (c < 128)? // ASCII Character
@@ -548,11 +548,6 @@ public class QvtOpLexer extends LpgLexStream implements QvtOpLPGParsersym, QvtOp
 	}
 
 	*/
-	public QvtOpLexer(char[] chars) {
-		this(chars, org.eclipse.m2m.qvt.oml.common.MDAConstants.QVTO_LAUNCH_CONFIGURATION_NAME, ECLIPSE_TAB_VALUE);
-		kwLexer = new QvtOpKWLexer(getInputChars(), TK_IDENTIFIER);
-	}
-
 
     public void ruleAction( int ruleNumber)
     {
