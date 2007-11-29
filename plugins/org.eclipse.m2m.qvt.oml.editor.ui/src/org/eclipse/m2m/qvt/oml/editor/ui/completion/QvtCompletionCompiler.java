@@ -13,17 +13,18 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnvFactory;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalFileEnv;
-import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalParser;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.common.io.CFileUtil;
 import org.eclipse.m2m.qvt.oml.compiler.IImportResolver;
+import org.eclipse.m2m.qvt.oml.compiler.ParsedModuleCS;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.editor.ui.Activator;
 import org.eclipse.m2m.qvt.oml.editor.ui.completion.keywordhandler.IKeywordHandler;
 import org.eclipse.m2m.qvt.oml.editor.ui.completion.keywordhandler.KeywordHandlerRegistry;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParser;
 import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLexer;
 import org.eclipse.ocl.OCLInput;
 import org.eclipse.ocl.ParserException;
@@ -54,7 +55,8 @@ public class QvtCompletionCompiler extends QvtCompiler {
             return cFileData.getLexer();
         }
         Reader reader = getCFileReader(cFile);
-        QvtOpLexer lexer = new QvtOpLexer(myEnvironment);
+        
+        QvtOpLexer lexer = new QvtOpLexer(new QvtOperationalEnvFactory().createEnvironment(null, cFile, getKernel()));
         cFileData.setLexer(lexer);
         try {
             lexer.initialize(new OCLInput(reader).getContent(), cFile.getName());
@@ -105,9 +107,13 @@ public class QvtCompletionCompiler extends QvtCompiler {
     }
 
     @Override
-    protected MappingModuleCS parseInternal(CFile source,
-            QvtOperationalParser qvtParser) throws IOException {
-        return compile(source).getMappingModuleCS();
+    protected ParsedModuleCS parseInternal(CFile source) throws IOException {
+    	CFileData cFileData = compile(source);
+    	// FIXME - 
+    	// wrapping the used QVT lexer with its environment within the QvtOpLPGParser 
+    	// in order to stick with the contract of the super class
+    	QvtOpLPGParser qvtParser = new QvtOpLPGParser(cFileData.getLexer());
+    	return new ParsedModuleCS(cFileData.getMappingModuleCS(), source, qvtParser);
     }
     
     
