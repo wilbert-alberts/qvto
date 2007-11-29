@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: OCLKWLexer.g,v 1.2 2007/11/27 20:33:22 radvorak Exp $
+-- * $Id: OCLKWLexer.g,v 1.3 2007/11/29 15:28:16 radvorak Exp $
 -- */
 --
 -- The OCL KeyWord Lexer
@@ -21,7 +21,7 @@
 %Options slr
 %Options fp=OCLKWLexer,prefix=Char_
 %options noserialize
-%options package=org.eclipse.mdt.uml2.ocl.internal.parser
+%options package=org.eclipse.ocl.parser
 %options template=KeywordTemplateD.g
 %options export_terminals=("OCLParsersym.java", "TK_")
 
@@ -51,7 +51,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: OCLKWLexer.g,v 1.2 2007/11/27 20:33:22 radvorak Exp $
+ * $Id: OCLKWLexer.g,v 1.3 2007/11/29 15:28:16 radvorak Exp $
  */
 	./
 $End

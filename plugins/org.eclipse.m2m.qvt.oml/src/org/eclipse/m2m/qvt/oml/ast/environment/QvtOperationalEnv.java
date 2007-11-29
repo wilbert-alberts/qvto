@@ -286,8 +286,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			return;
 		}
 		QvtOperationalEnv parent = this;
-		while (parent.getParent() != null) {
-			parent = (QvtOperationalEnv) parent.getParent();
+		while (parent.getInternalParent() != null) {
+			parent = (QvtOperationalEnv) parent.getInternalParent();
 		}
 		parent.myErrorsList.add(new QvtMessage(message, QvtMessage.SEVERITY_ERROR, startOffset, endOffset-startOffset+1));
 		
@@ -300,8 +300,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			return;
 		}
 		QvtOperationalEnv parent = this;
-		while (parent.getParent() != null) {
-			parent = (QvtOperationalEnv) parent.getParent();
+		while (parent.getInternalParent() != null) {
+			parent = (QvtOperationalEnv) parent.getInternalParent();
 		}
 		parent.myWarningsList.add(new QvtMessage(message, QvtMessage.SEVERITY_WARNING, startOffset, endOffset-startOffset+1));
 
@@ -310,11 +310,15 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	}
 
 	public void reportError(String message, CSTNode node) {
-		reportError(message, node.getStartOffset(), node.getEndOffset());
+		int startOffset = (node != null) ? node.getStartOffset() : 0;
+		int endOffset = (node != null) ? node.getEndOffset() : 0;
+		reportError(message, startOffset, endOffset);
 	}
 
-	public void reportWarning(String bind, CSTNode node) {
-		reportWarning(bind, node.getStartOffset(), node.getEndOffset());
+	public void reportWarning(String message, CSTNode node) {
+		int startOffset = (node != null) ? node.getStartOffset() : 0;
+		int endOffset = (node != null) ? node.getEndOffset() : 0;
+		reportWarning(message, startOffset, endOffset);
 	}
 
 	public boolean hasErrors() {

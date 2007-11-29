@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpKWLexer.java,v 1.22 2007/11/27 15:43:20 radvorak Exp $
+* $Id: QvtOpKWLexer.java,v 1.23 2007/11/29 15:28:16 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,12 +29,11 @@
 *
 * </copyright>
 *
-* $Id: QvtOpKWLexer.java,v 1.22 2007/11/27 15:43:20 radvorak Exp $
+* $Id: QvtOpKWLexer.java,v 1.23 2007/11/29 15:28:16 radvorak Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
 
-import lpg.lpgjavaruntime.*;
 
 
 public class QvtOpKWLexer extends QvtOpKWLexerprs implements QvtOpLPGParsersym

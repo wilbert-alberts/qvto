@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.Iterator;
@@ -67,7 +66,6 @@ public class QvtCompiler {
 
     private final Map<CFile, ParsedModuleCS> mySyntaxModules;
     private final Map<ParsedModuleCS, QvtCompilationResult> myCompilationResults;
-    private Map<ParsedModuleCS, QvtOperationalEnv> myModule2EnvMap = new HashMap<ParsedModuleCS, QvtOperationalEnv>(5);
     private ImportCompiler importCompiler;
     
     private final QvtCompilerKernel myKernel;
@@ -139,7 +137,7 @@ public class QvtCompiler {
     }
 	
 	private void addSourceLineNumberInfo(ParsedModuleCS parsedModuleCS, Module moduleAST) {
-		QvtOpLexer lexer = parsedModuleCS.getLexer();
+		QvtOpLexer lexer = parsedModuleCS.getParser().getLexer();
 		if (lexer != null) {
 			String fileName = parsedModuleCS.getSource().getName();
 			ASTBindingHelper.createModuleSourceBinding(moduleAST, fileName, new String(lexer.getInputChars()));
@@ -158,11 +156,11 @@ public class QvtCompiler {
     		
     		String fromIdentifier = from.getStringName(); 
     		String toIdentifier = to.getStringName(); 
-    		from.addMessage(new QvtMessage(NLS.bind(CompilerMessages.cyclicImportError, toIdentifier,
-    				fromIdentifier), from.getModuleCS().getHeaderCS().getPathNameCS()));
+    		from.getEnvironment().reportError(NLS.bind(CompilerMessages.cyclicImportError, 
+    				toIdentifier, fromIdentifier), from.getModuleCS().getHeaderCS().getPathNameCS());
     		if (to != from) {
-    			to.addMessage(new QvtMessage(NLS.bind(CompilerMessages.cyclicImportError, fromIdentifier,
-    					toIdentifier), to.getModuleCS().getHeaderCS().getPathNameCS()));
+    			to.getEnvironment().reportError(NLS.bind(CompilerMessages.cyclicImportError, 
+    					fromIdentifier, toIdentifier), to.getModuleCS().getHeaderCS().getPathNameCS());
     		}
     		
     		boolean removed = false;
@@ -187,16 +185,9 @@ public class QvtCompiler {
     	if (result != null) {
         	return result;
         }
-
-        QvtOperationalParser qvtParser = new QvtOperationalParser();
-        MappingModuleCS moduleCS = parseInternal(source, qvtParser);
-
-        if (moduleCS == null) {
-        	moduleCS = CSTFactory.eINSTANCE.createMappingModuleCS();
-        }
-
-        result = new ParsedModuleCS(moduleCS, source, qvtParser.getLexer());
-        result.addMessages(qvtParser.getAllProblemMessages());
+ 
+        result = parseInternal(source);
+        assert result != null;
         
         mySyntaxModules.put(source, result);
     	parseImportedModules(result);
@@ -204,10 +195,18 @@ public class QvtCompiler {
         return result;
     }
 
-    protected MappingModuleCS parseInternal(CFile source, QvtOperationalParser qvtParser) throws IOException {
+    protected ParsedModuleCS parseInternal(CFile source) throws IOException {
         Reader is = CFileUtil.getReader(source);
-        try {
-            return qvtParser.parse(is, source.getName());
+        try {        	
+        	QvtOperationalFileEnv env = new QvtOperationalEnvFactory().createEnvironment(null, source, myKernel);
+        	QvtOperationalParser qvtParser = new QvtOperationalParser();
+        	MappingModuleCS moduleCS = qvtParser.parse(is, source.getName(), env);
+            
+        	if (moduleCS == null) {
+            	moduleCS = CSTFactory.eINSTANCE.createMappingModuleCS();
+            }
+        	
+        	return new ParsedModuleCS(moduleCS, source, qvtParser.getParser());
         } finally {
             try { 
                 is.close(); 
@@ -225,19 +224,19 @@ public class QvtCompiler {
 			}
 			PathNameCS importQName = importCS.getPathNameCS();
             if (importQName == null) {
-                module.addMessage(new QvtMessage(CompilerMessages.emptyImport));
+                module.getEnvironment().reportError(CompilerMessages.emptyImport, 0, 0);
                 continue;
             }
 
             String importString = QvtOperationalParserUtil.getStringRepresentation(importQName, "."); //$NON-NLS-1$
         	if (importedModules.contains(importString)) {
-        		module.addMessage(new QvtMessage(NLS.bind(CompilerMessages.moduleAlreadyImported, importString),
-        				QvtMessage.SEVERITY_WARNING, importQName));
+        		module.getEnvironment().reportWarning(NLS.bind(CompilerMessages.moduleAlreadyImported, 
+        				importString), importQName);
         	} else {
             	ParsedModuleCS impResult = getImportedModule(module.getSource(), importString);
                 if (impResult == null) {
-                	module.addMessage(new QvtMessage(NLS.bind(CompilerMessages.importedModuleNotFound,
-                			importString), importQName)); //$NON-NLS-1$
+                	module.getEnvironment().reportError(NLS.bind(CompilerMessages.importedModuleNotFound,
+                			importString), importQName);
                 } else {                	
 //                	if (importCS instanceof ModuleImportCS) {
 //                		((ModuleImportCS) importCS).setParsedModule(impResult);
@@ -256,14 +255,16 @@ public class QvtCompiler {
         }
 
         List<CompiledModule> compiledImports = importCompiler.compileImports(mma);            	
-        
-    	QvtOperationalFileEnv moduleEnv = new QvtOperationalEnvFactory().createEnvironment(null, mma.getSource(), myKernel);
+
+        // Note: we can cast this safely as we created this env and assigned it to the parsed module
+        assert mma.getEnvironment() instanceof QvtOperationalFileEnv;
+    	QvtOperationalFileEnv moduleEnv = (QvtOperationalFileEnv)mma.getEnvironment();
     	// setup import environments
-    	for (ParsedModuleCS parsedImport : mma.getParsedImports()) {
-    		if(myModule2EnvMap.containsKey(parsedImport)) {
-    			QvtOperationalEnv importEnv = myModule2EnvMap.get(parsedImport);    			
-    			moduleEnv.addSibling(importEnv);
-    		}    		
+    	for (ParsedModuleCS parsedImport : mma.getParsedImports()) { 
+			QvtOperationalEnv importEnv = parsedImport.getEnvironment();
+    		assert importEnv != null;
+    		
+    		moduleEnv.addSibling(importEnv);    		
     	}
     	
     	result = analyse(mma, options, moduleEnv);
@@ -302,25 +303,21 @@ public class QvtCompiler {
         QvtCompilationResult result = null;
         
         Module module = null;
-        List<QvtMessage> allMessages = new ArrayList<QvtMessage>();
-        Collections.addAll(allMessages, mma.getMessages());
-        
+        // FIXME - review this strange condition based on name nullity
         if (mma.getStringName() != null) {
             PrintStream out = System.out;
             System.setOut(new PrintStream(new OutputStream() { @Override
 			public void write(int b) {} }));
             try {
                 QvtOperationalParser parser = new QvtOperationalParser();
-                module = parser.analyze(mma, this, env, options);
-                myModule2EnvMap.put(mma, parser.getEnvironment());                
-                
-                allMessages.addAll(parser.getAllProblemMessages());
+                module = parser.analyze(mma, this, env, options);                                
             } finally {
                 System.setOut(out);
             }
         }
         
         if (module == null) {
+        	// FIXME - review this strange name initialization
             module = myKernel.createModule(mma.getModuleCS(), options, env, mma.getSource());
             module.setName(""); //$NON-NLS-1$
         }
@@ -328,9 +325,8 @@ public class QvtCompiler {
         if(options.isSourceLineNumbersEnabled()) {
         	addSourceLineNumberInfo(mma, module);        	
         }
-        
-        CompiledModule compModule = new CompiledModule(module, mma, mma.getSource(), allMessages);
 
+        CompiledModule compModule = new CompiledModule(module, mma, mma.getSource(), env.getAllProblemMessages());
         result = new QvtCompilationResult(compModule);
                 
         return result;
@@ -427,7 +423,6 @@ public class QvtCompiler {
     private void afterCompileCleanup() {
         this.importCompiler = null;
         
-    	myModule2EnvMap.clear();
     	myCompilationResults.clear();
     	mySyntaxModules.clear();
     }

@@ -104,6 +104,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.TypeSpecCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.VariableInitializationCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.WhileExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.adapters.ModelTypeMetamodelsAdapter;
+import org.eclipse.m2m.qvt.oml.internal.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorCallExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorVariableInitializationCS;
 import org.eclipse.m2m.qvt.oml.ocl.OclQvtoPlugin;
@@ -147,8 +148,9 @@ import org.eclipse.ocl.expressions.TypeExp;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.expressions.VariableExp;
 import org.eclipse.ocl.internal.l10n.OCLMessages;
-import org.eclipse.ocl.parser.OCLAnalyzer;
+import org.eclipse.ocl.parser.AbstractOCLAnalyzer;
 import org.eclipse.ocl.parser.OCLLexer;
+import org.eclipse.ocl.parser.OCLParser;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.types.TypeType;
 import org.eclipse.ocl.types.VoidType;
@@ -157,7 +159,7 @@ import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.osgi.util.NLS;
 
 public class QvtOperationalVisitorCS
-		extends OCLAnalyzer<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, 
+		extends AbstractOCLAnalyzer<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, 
 							CallOperationAction, SendSignalAction, Constraint, EClass, EObject> { 	// FIXME - changed in M3.4 migration
 
     private final Set<String> myLoadedLibraries = new HashSet<String>(1);
@@ -166,8 +168,13 @@ public class QvtOperationalVisitorCS
 	public QvtOperationalVisitorCS(
 			OCLLexer lexStream,
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> environment, QvtCompilerOptions options) {
-		super(environment);
+		super(new OCLParser(lexStream));
         myCompilerOptions = options;
+	}
+	
+	public QvtOperationalVisitorCS(AbstractQVTParser parser, QvtCompilerOptions options) {
+		super(parser);		
+		myCompilerOptions = options;
 	}
 	
 	public QvtCompilerOptions getCompilerOptions() {

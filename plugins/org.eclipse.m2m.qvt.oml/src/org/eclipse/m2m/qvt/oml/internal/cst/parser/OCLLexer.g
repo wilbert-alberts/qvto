@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: OCLLexer.g,v 1.3 2007/11/27 20:33:22 radvorak Exp $
+-- * $Id: OCLLexer.g,v 1.4 2007/11/29 15:28:16 radvorak Exp $
 -- */
 --
 -- The OCL Lexer
@@ -23,7 +23,7 @@
 %options fp=OCLLexer,prefix=Char_
 %options single-productions
 %options noserialize
-%options package=org.eclipse.mdt.uml2.ocl.internal.parser
+%options package=org.eclipse.ocl.parser
 %options template=LexerTemplateD.g
 %options filter=OCLKWLexer.g
 %options export_terminals=("OCLParsersym.java", "TK_")
@@ -34,7 +34,6 @@ $Define
 	-- Definition of macros used in the template
 	--
 	$action_class /.$file_prefix./
-	--$prs_stream_class /.PrsStream./
 	$eof_token /.$_EOF_TOKEN./
  
 	--
@@ -60,15 +59,8 @@ $Notice
  *
  * </copyright>
  *
- * $Id: OCLLexer.g,v 1.3 2007/11/27 20:33:22 radvorak Exp $
+ * $Id: OCLLexer.g,v 1.4 2007/11/29 15:28:16 radvorak Exp $
  */
-	./
-$End
-
-$Globals
-	/.
-	import java.io.IOException;
-	import java.io.Reader;
 	./
 $End
 

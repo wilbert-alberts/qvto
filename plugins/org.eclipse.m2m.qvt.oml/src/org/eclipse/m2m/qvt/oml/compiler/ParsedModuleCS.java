@@ -11,32 +11,37 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.compiler;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.eclipse.m2m.qvt.oml.QvtMessage;
+import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLexer;
+import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParser;
 import org.eclipse.ocl.cst.PathNameCS;
 
 public class ParsedModuleCS {
-	private final QvtOpLexer myLexer;
-    private final List<QvtMessage> myMessages;
+
+	private final QvtOpLPGParser myParser;	
     private final CFile mySource;
     private final MappingModuleCS myModuleCS; 
     private final Map<PathNameCS, ParsedModuleCS> myResolvedImports;
 
-	public ParsedModuleCS(MappingModuleCS moduleCS, CFile source, QvtOpLexer lexer) {
+	public ParsedModuleCS(MappingModuleCS moduleCS, CFile source, QvtOpLPGParser parser) {
+		if(moduleCS == null || source == null || parser == null) {
+			throw new IllegalArgumentException();
+		}
+		
+		if(parser.getEnvironment() == null) {
+			throw new IllegalArgumentException("Parser without environment"); //$NON-NLS-1$
+		}
+		
 		mySource = source;
 		myModuleCS = moduleCS;
-        myLexer = lexer;
+        myParser = parser;
         
-		myMessages = new ArrayList<QvtMessage>();
 		myResolvedImports = new LinkedHashMap<PathNameCS, ParsedModuleCS>();
 	}
 
@@ -48,10 +53,14 @@ public class ParsedModuleCS {
 		return myModuleCS;
 	}
 	
-	public QvtOpLexer getLexer() {
-        return myLexer;
-    }
-
+	public QvtOperationalEnv getEnvironment() {
+		return myParser.getEnvironment();
+	}
+	
+	public QvtOpLPGParser getParser() {
+		return myParser;
+	}
+			
     public Collection<ParsedModuleCS> getParsedImports() {
 		return myResolvedImports.values();
 	}
@@ -72,15 +81,8 @@ public class ParsedModuleCS {
 				myModuleCS.getHeaderCS().getPathNameCS(), "."); //$NON-NLS-1$
 	}
 	
-	public void addMessage(QvtMessage m) {
-		myMessages.add(m);
-	}
-	
-	public void addMessages(List<QvtMessage> messages) {
-		myMessages.addAll(messages);
-	}
-	
-	public QvtMessage[] getMessages() {
-		return (QvtMessage[])myMessages.toArray(new QvtMessage[myMessages.size()]);
+	@Override
+	public String toString() {	
+		return "Parsed module: " + mySource.getName(); //$NON-NLS-1$
 	}
 }

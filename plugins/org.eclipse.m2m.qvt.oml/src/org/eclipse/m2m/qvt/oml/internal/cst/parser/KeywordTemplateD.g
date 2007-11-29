@@ -52,11 +52,6 @@ $Define
     $EndJava /.$EndAction./
 $End
 
-$Globals
-    /.import lpg.lpgjavaruntime.*;
-    ./
-$End
-
 $Headers
     /.
     public class $action_type extends $prs_type implements $exp_type

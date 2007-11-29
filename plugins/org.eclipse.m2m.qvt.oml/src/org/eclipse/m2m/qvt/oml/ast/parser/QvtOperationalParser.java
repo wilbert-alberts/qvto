@@ -11,17 +11,12 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.ast.parser;
 
-import java.io.IOException;
 import java.io.Reader;
-import java.util.Collections;
-import java.util.List;
 
 import lpg.lpgjavaruntime.BadParseException;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.m2m.qvt.oml.QvtMessage;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
-import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnvFactory;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalFileEnv;
 import org.eclipse.m2m.qvt.oml.compiler.CompilerMessages;
 import org.eclipse.m2m.qvt.oml.compiler.ParsedModuleCS;
@@ -37,36 +32,33 @@ import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLexer;
 import org.eclipse.ocl.OCLInput;
 import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.SemanticException;
-import org.eclipse.ocl.lpg.AbstractLexer;
-import org.eclipse.ocl.parser.OCLLexer;
 import org.eclipse.osgi.util.NLS;
 
 public class QvtOperationalParser {
 	
 	public QvtOperationalParser() {
 	}
-
-	public MappingModuleCS parse(final Reader is, final String name) {
+	
+	public MappingModuleCS parse(final Reader is, final String name, QvtOperationalEnv env) {
 		MappingModuleCS result = null;
 
-		myEnv = new QvtOperationalEnvFactory().createEnvironment(null, null, null);
-		myLexer = new QvtOpLexer(myEnv);
-		try {
-		    myLexer.initialize(new OCLInput(is).getContent(), name);
-			RunnableQVTParser parser = new RunnableQVTParser(myLexer);
-			myLexer.lexToTokens(parser);
+		QvtOpLexer lexer = new QvtOpLexer(env);
+		myParser = new RunnableQVTParser(lexer);		
+		try {			
+		    lexer.initialize(new OCLInput(is).getContent(), name);
+			lexer.lexToTokens(myParser);
 	
-			result = (MappingModuleCS) parser.runParser(100);	
+			result = (MappingModuleCS) myParser.runParser(100);	
 		}
 		catch (ParserException ex) {
-			myEnv.reportError(ex.getLocalizedMessage(), 0, 0);
+			env.reportError(ex.getLocalizedMessage(), 0, 0);
 		}
 
 		if (result == null) {
 			result = CSTFactory.eINSTANCE.createMappingModuleCS();
 			
-			if (!myEnv.hasErrors()) {
-				myEnv.reportError(NLS.bind(
+			if (!env.hasErrors()) {
+				env.reportError(NLS.bind(
 						CompilerMessages.moduleTransformationExpected, new Object[] { name }),0, 0);
 			}
 		}
@@ -77,35 +69,23 @@ public class QvtOperationalParser {
 	public Module analyze(final ParsedModuleCS moduleCS, final QvtCompiler compiler, QvtOperationalFileEnv env, QvtCompilerOptions options) {
 		Module module = null;
 	
-		myEnv = env;
-		myEnv.setErrorRecordFlag(options.isReportErrors());
+		env.setErrorRecordFlag(options.isReportErrors());
 		try {
-			OCLLexer oclLexer = new OCLLexer(myEnv);
-			oclLexer.initialize(new OCLInput(moduleCS.getSource().getContents()).getContent(), moduleCS.getSource().getName());
 			QvtOperationalVisitorCS visitor = options.getQvtOperationalVisitorCS();
 			if (visitor == null) {
-	            visitor = new QvtOperationalVisitorCS(oclLexer, myEnv, options);
+	            visitor = new QvtOperationalVisitorCS(moduleCS.getParser(), options);
 			}
-			module = visitor.visitMappingModule(moduleCS, myEnv, compiler);
+			module = visitor.visitMappingModule(moduleCS, env, compiler);
 		} catch (SemanticException e) {
-			myEnv.reportError(e.getLocalizedMessage(), 0, 0);
-		} catch (ParserException e) {
-			myEnv.reportError(e.getLocalizedMessage(), 0, 0);
-		} catch (IOException e) {
-			myEnv.reportError(e.getLocalizedMessage(), 0, 0);
+			env.reportError(e.getLocalizedMessage(), 0, 0);
 		}
 		
 		return module;
 	}
 		
 	
-	public List<QvtMessage> getAllProblemMessages() {
-		return myEnv != null ? myEnv.getAllProblemMessages() : Collections.<QvtMessage>emptyList();
-	}
-	
-	
 	private class RunnableQVTParser extends QvtOpLPGParser {
-		public RunnableQVTParser(AbstractLexer lexStream) {
+		public RunnableQVTParser(QvtOpLexer lexStream) {
 			super(lexStream);
 		}
 		
@@ -179,18 +159,10 @@ public class QvtOperationalParser {
 			return result.toString();
 		}		
 	}
-
-	/**
-	* TODO - Exposed temporarily, may be removed as soon as data completion gets supported
-	*/
-	public QvtOperationalEnv getEnvironment() {
-		return myEnv;
+	    
+    public QvtOpLPGParser getParser() {
+		return myParser;
 	}
 	
-    public QvtOpLexer getLexer() {
-        return myLexer;
-    }
-	
-    private QvtOperationalFileEnv myEnv;
-    private QvtOpLexer myLexer;
+    private RunnableQVTParser myParser;
 }

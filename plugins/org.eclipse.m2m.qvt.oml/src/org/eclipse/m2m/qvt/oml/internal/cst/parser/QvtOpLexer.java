@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexer.java,v 1.22 2007/11/27 15:43:20 radvorak Exp $
+* $Id: QvtOpLexer.java,v 1.23 2007/11/29 15:28:16 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexer.java,v 1.22 2007/11/27 15:43:20 radvorak Exp $
+* $Id: QvtOpLexer.java,v 1.23 2007/11/29 15:28:16 radvorak Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -38,9 +38,6 @@ import lpg.lpgjavaruntime.*;
 import org.eclipse.ocl.lpg.AbstractLexer;
 import org.eclipse.ocl.lpg.AbstractParser;
 import org.eclipse.ocl.lpg.BasicEnvironment;
-
-import java.io.IOException;
-import java.io.Reader;
 
 @SuppressWarnings("nls")
 public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtOpLexersym, RuleAction
