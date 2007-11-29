@@ -1,0 +1,51 @@
+%options escape=$
+%options la=2
+%options table=java
+%options fp=LightweightParser,prefix=TK_
+%options error-maps
+%options scopes
+%options margin=4
+%options noserialize
+%options package=org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser
+--%options template=dtParserTemplateD.g
+%options import_terminals=QvtOpLexer.g
+%options ast_type=EObject
+%options programming_language=java
+%options action=("*.java", "/.", "./")
+%options ParseTable=lpg.lpgjavaruntime.ParseTable
+
+$Start
+    QvtLwGoal
+$End
+
+$Import
+	QvtOpLPGParser.backtrack.g
+
+$DropRules
+
+	mappingQueryCS ::= query mappingDeclarationCS '{' expressionListOpt '}'  
+
+$Globals
+	/.
+	import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParserprs;
+	import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParsersym;
+	./
+$End
+
+
+$Rules
+	QvtLwGoal -> oclExpressionCS
+
+	QvtLwGoal -> QVTgoal
+
+	mappingQueryCS ::= query mappingDeclarationCS '{' statementListOpt '}'  
+		/.$BeginJava
+					CSTNode result = createMappingQueryCS(
+							(MappingDeclarationCS)$getSym(2),
+							(EList)$getSym(4)
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
+					$setResult(result);
+		  $EndJava
+		./
+$End
