@@ -19,17 +19,17 @@ import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParser;
+import org.eclipse.m2m.qvt.oml.internal.cst.parser.AbstractQVTParser;
 import org.eclipse.ocl.cst.PathNameCS;
 
 public class ParsedModuleCS {
 
-	private final QvtOpLPGParser myParser;	
+	private final AbstractQVTParser myParser;	
     private final CFile mySource;
     private final MappingModuleCS myModuleCS; 
     private final Map<PathNameCS, ParsedModuleCS> myResolvedImports;
 
-	public ParsedModuleCS(MappingModuleCS moduleCS, CFile source, QvtOpLPGParser parser) {
+	public ParsedModuleCS(MappingModuleCS moduleCS, CFile source, AbstractQVTParser parser) {
 		if(moduleCS == null || source == null || parser == null) {
 			throw new IllegalArgumentException();
 		}
@@ -57,7 +57,7 @@ public class ParsedModuleCS {
 		return myParser.getEnvironment();
 	}
 	
-	public QvtOpLPGParser getParser() {
+	public AbstractQVTParser getParser() {
 		return myParser;
 	}
 			

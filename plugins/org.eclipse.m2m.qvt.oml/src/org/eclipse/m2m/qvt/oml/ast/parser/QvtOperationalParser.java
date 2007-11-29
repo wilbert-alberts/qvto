@@ -26,6 +26,7 @@ import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalVisitorCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParser;
 import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLexer;
@@ -160,7 +161,7 @@ public class QvtOperationalParser {
 		}		
 	}
 	    
-    public QvtOpLPGParser getParser() {
+    public AbstractQVTParser getParser() {
 		return myParser;
 	}
 	
