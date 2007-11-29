@@ -44,20 +44,16 @@ import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalParser;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.common.io.CFileUtil;
-import org.eclipse.m2m.qvt.oml.common.io.CFolder;
 import org.eclipse.m2m.qvt.oml.common.io.eclipse.WorkspaceMetamodelRegistryProvider;
 import org.eclipse.m2m.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
-import org.eclipse.m2m.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory;
 import org.eclipse.m2m.qvt.oml.internal.cst.ImportCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.LibraryImportCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.adapters.CSTBindingUtil;
 import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLexer;
-import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.internal.cst.PathNameCS;
 import org.eclipse.osgi.util.NLS;
 
@@ -69,13 +65,18 @@ public class QvtCompiler {
 
     public static final String PROBLEM_MARKER = "org.eclipse.m2m.qvt.oml.qvtProblem"; //$NON-NLS-1$
 
-	public QvtCompiler(IImportResolver importResolver, IMetamodelRegistryProvider metamodelRegistryProvider) {
+    private final Map<CFile, ParsedModuleCS> mySyntaxModules;
+    private final Map<ParsedModuleCS, QvtCompilationResult> myCompilationResults;
+    private Map<ParsedModuleCS, QvtOperationalEnv> myModule2EnvMap = new HashMap<ParsedModuleCS, QvtOperationalEnv>(5);
+    private ImportCompiler importCompiler;
+    
+    private final QvtCompilerKernel myKernel;
+    private final ResourceSet resourceSet;    
+
+    public QvtCompiler(IImportResolver importResolver, IMetamodelRegistryProvider metamodelRegistryProvider) {
 	    mySyntaxModules = new LinkedHashMap<CFile, ParsedModuleCS>();
 	    myCompilationResults = new IdentityHashMap<ParsedModuleCS, QvtCompilationResult>();
-        mySyntaxToSemanticMap = new HashMap<MappingModuleCS, Module>();
-        myImportResolver = importResolver;
-        
-        this.metamodelRegistryProvider = metamodelRegistryProvider;
+        myKernel = new QvtCompilerKernel(importResolver, metamodelRegistryProvider);
         this.resourceSet = (metamodelRegistryProvider instanceof WorkspaceMetamodelRegistryProvider) ?
         		((WorkspaceMetamodelRegistryProvider) metamodelRegistryProvider).getResolutionResourceSet() : 
         			new ResourceSetImpl();
@@ -85,8 +86,8 @@ public class QvtCompiler {
 		this(importResolver, new WorkspaceMetamodelRegistryProvider());
     }	
 	
-	public IMetamodelRegistryProvider getMetamodelRegistryProvider() {
-		return metamodelRegistryProvider;
+	public QvtCompilerKernel getKernel() {
+		return myKernel;
 	}
 	
 	public ResourceSet getResourceSet() {
@@ -138,8 +139,8 @@ public class QvtCompiler {
     }
 	
 	private void addSourceLineNumberInfo(ParsedModuleCS parsedModuleCS, Module moduleAST) {
-		QvtOpLexer lexer = CSTBindingUtil.getQvtOpLexer(parsedModuleCS.getModuleCS());
-		if(lexer != null) {
+		QvtOpLexer lexer = parsedModuleCS.getLexer();
+		if (lexer != null) {
 			String fileName = parsedModuleCS.getSource().getName();
 			ASTBindingHelper.createModuleSourceBinding(moduleAST, fileName, new String(lexer.getInputChars()));
 		}
@@ -187,23 +188,14 @@ public class QvtCompiler {
         	return result;
         }
 
-        Reader is = CFileUtil.getReader(source);
         QvtOperationalParser qvtParser = new QvtOperationalParser();
-        MappingModuleCS moduleCS = null;
-        try {
-        	moduleCS = qvtParser.parse(is, source.getName());
-        } finally {
-            try { 
-            	is.close(); 
-            } catch (IOException e) {
-            }
-        }
+        MappingModuleCS moduleCS = parseInternal(source, qvtParser);
 
         if (moduleCS == null) {
         	moduleCS = CSTFactory.eINSTANCE.createMappingModuleCS();
         }
 
-        result = new ParsedModuleCS(moduleCS, source);
+        result = new ParsedModuleCS(moduleCS, source, qvtParser.getLexer());
         result.addMessages(qvtParser.getErrorsList());
         result.addMessages(qvtParser.getWarningsList());
         
@@ -211,6 +203,19 @@ public class QvtCompiler {
     	parseImportedModules(result);
 
         return result;
+    }
+
+    protected MappingModuleCS parseInternal(CFile source, QvtOperationalParser qvtParser) throws IOException {
+        Reader is = CFileUtil.getReader(source);
+        try {
+            return qvtParser.parse(is, source.getName());
+        } finally {
+            try { 
+                is.close(); 
+            } catch (IOException e) {
+                Logger.getLogger().log(Logger.SEVERE, "Failed to close " + source, e); //$NON-NLS-1$
+            }
+        }
     }
     
     private void parseImportedModules(ParsedModuleCS module) {
@@ -253,7 +258,7 @@ public class QvtCompiler {
 
         List<CompiledModule> compiledImports = importCompiler.compileImports(mma);            	
         
-    	QvtOperationalFileEnv moduleEnv = new QvtOperationalEnvFactory().createEnvironment(null, mma.getSource(), this);
+    	QvtOperationalFileEnv moduleEnv = new QvtOperationalEnvFactory().createEnvironment(null, mma.getSource(), myKernel);
     	// setup import environments
     	for (ParsedModuleCS parsedImport : mma.getParsedImports()) {
     		if(myModule2EnvMap.containsKey(parsedImport)) {
@@ -319,7 +324,7 @@ public class QvtCompiler {
         }
         
         if (module == null) {
-            module = createModule(mma.getModuleCS(), options, env, mma);
+            module = myKernel.createModule(mma.getModuleCS(), options, env, mma.getSource());
             module.setName(""); //$NON-NLS-1$
         }
         
@@ -335,7 +340,7 @@ public class QvtCompiler {
     }    
     
     private ParsedModuleCS getImportedModule(final CFile source, final String qualifiedName) {
-    	CFile importSource = myImportResolver.resolveImport(qualifiedName);
+    	CFile importSource = myKernel.getImportResolver().resolveImport(qualifiedName);
 //    	if (importSource == null) {
 //    		importSource = new IOImportResolver(source).resolveImport(qualifiedName);
 //    	}
@@ -351,34 +356,10 @@ public class QvtCompiler {
         }
     }
     
-    public String getExpectedPackageName(CFolder folder) {
-        String packageName = myImportResolver.getPackageName(folder);
-        return packageName;
-    }
-
     public boolean isClass(EClassifier oclType) {
 		return oclType instanceof EClass;
 	}
 		
-    public Module getModule(MappingModuleCS mmas) {
-        return mySyntaxToSemanticMap.get(mmas);
-    }
-    
-    public Module createModule(MappingModuleCS mmas, QvtCompilerOptions options, 
-    		EcoreEnvironment env, ParsedModuleCS parsedModuleCS) {
-		Module module = ExpressionsFactory.eINSTANCE.createModule();
-        mySyntaxToSemanticMap.put(mmas, module);
-
-        // AST binding
-        if(options.isGenerateCompletionData()) {
-        	ASTBindingHelper.createModuleBinding(mmas, module, env, parsedModuleCS.getSource());
-        }
-		//		
-        
-        return module;
-    } 
-    
-    
     private class ImportCompiler {
     	private final Map<ParsedModuleCS, List<ParsedModuleCS>> myRemovedCycles;    	
     	private final QvtCompilerOptions myCompilerOptions;    	
@@ -453,15 +434,4 @@ public class QvtCompiler {
     	myCompilationResults.clear();
     	mySyntaxModules.clear();
     }
-    
-    private final Map<MappingModuleCS, Module> mySyntaxToSemanticMap;
-    
-    private final Map<CFile, ParsedModuleCS> mySyntaxModules;
-    private final Map<ParsedModuleCS, QvtCompilationResult> myCompilationResults;
-    private Map<ParsedModuleCS, QvtOperationalEnv> myModule2EnvMap = new HashMap<ParsedModuleCS, QvtOperationalEnv>(5);
-    private ImportCompiler importCompiler;
-    
-	private final IImportResolver myImportResolver;
-	private final IMetamodelRegistryProvider metamodelRegistryProvider;
-	private final ResourceSet resourceSet;    
 }

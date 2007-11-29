@@ -34,7 +34,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.qvt.oml.QvtMessage;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
-import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfException;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
@@ -87,13 +86,12 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
      */
     private List<QvtVariableEntry> myNamedElements = new java.util.ArrayList<QvtVariableEntry>();
 	
-	protected QvtOperationalEnv(QvtOperationalEnv parent, QvtCompiler compiler, EPackage.Registry eRegistry) {
+	protected QvtOperationalEnv(QvtOperationalEnv parent, EPackage.Registry eRegistry) {
 		// Set our own package registry to be populated by imported metamodels
 		super(eRegistry);
 		setParent(parent);
 		myRootEnvironment = parent != null ? parent.myRootEnvironment : null;
 
-		myCompiler = compiler;
 		myWarningsList = new ArrayList<QvtMessage>(2);
 		myErrorsList = new ArrayList<QvtMessage>(2);
 		myErrorRecordFlag = true;
@@ -104,8 +102,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		myModelTypeRegistry = parent != null ? parent.myModelTypeRegistry : new LinkedHashMap<String, ModelType>(1);
 	}
 	
-	protected QvtOperationalEnv(QvtOperationalEnv parent, QvtCompiler compiler) {
-		this(parent, compiler, parent != null ? parent.getEPackageRegistry() : new EPackageRegistryImpl());
+	protected QvtOperationalEnv(QvtOperationalEnv parent) {
+		this(parent, parent != null ? parent.getEPackageRegistry() : new EPackageRegistryImpl());
 	}
 	
 	/**
@@ -323,10 +321,6 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		return myWarningsList;
 	}
 	
-	public QvtCompiler getCompiler() {
-		return myCompiler;
-	}
-
 	public void registerModelParameters(Module module) {
 		List<Variable<EClassifier, EParameter>> modelParameters = new ArrayList<Variable<EClassifier,EParameter>>(module.getModelParameter().size());
 		for (ModelParameter modelParam : module.getModelParameter()) {
@@ -632,7 +626,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	}
 	
 	public QvtOperationalEnv createOperationEnvironment(VarParameter context) {
-		QvtOperationalEnv newEnvironment = new QvtOperationalEnv(this, myCompiler);
+		QvtOperationalEnv newEnvironment = new QvtOperationalEnv(this);
 
 		if(context.getEType() != getModuleContextType()) {
 			// define self implicit source only in case if context-less operations
@@ -726,7 +720,6 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	
 	protected final QvtOperationalEnv myRootEnvironment;
 	
-	private final QvtCompiler myCompiler;
 	private final List<QvtMessage> myWarningsList;
 	private final List<QvtMessage> myErrorsList;
 	private boolean myErrorRecordFlag;

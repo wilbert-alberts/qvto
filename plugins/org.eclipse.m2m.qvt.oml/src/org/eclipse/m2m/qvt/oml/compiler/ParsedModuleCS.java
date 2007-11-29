@@ -21,13 +21,21 @@ import org.eclipse.m2m.qvt.oml.QvtMessage;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLexer;
 import org.eclipse.ocl.internal.cst.PathNameCS;
 
 public class ParsedModuleCS {
-	
-	public ParsedModuleCS(MappingModuleCS moduleCS, CFile source) {
+	private final QvtOpLexer myLexer;
+    private final List<QvtMessage> myMessages;
+    private final CFile mySource;
+    private final MappingModuleCS myModuleCS; 
+    private final Map<PathNameCS, ParsedModuleCS> myResolvedImports;
+
+	public ParsedModuleCS(MappingModuleCS moduleCS, CFile source, QvtOpLexer lexer) {
 		mySource = source;
 		myModuleCS = moduleCS;
+        myLexer = lexer;
+        
 		myMessages = new ArrayList<QvtMessage>();
 		myResolvedImports = new LinkedHashMap<PathNameCS, ParsedModuleCS>();
 	}
@@ -40,7 +48,11 @@ public class ParsedModuleCS {
 		return myModuleCS;
 	}
 	
-	public Collection<ParsedModuleCS> getParsedImports() {
+	public QvtOpLexer getLexer() {
+        return myLexer;
+    }
+
+    public Collection<ParsedModuleCS> getParsedImports() {
 		return myResolvedImports.values();
 	}
 
@@ -71,10 +83,4 @@ public class ParsedModuleCS {
 	public QvtMessage[] getMessages() {
 		return (QvtMessage[])myMessages.toArray(new QvtMessage[myMessages.size()]);
 	}
-
-	private final List<QvtMessage> myMessages;
-	private final CFile mySource;
-	private final MappingModuleCS myModuleCS; 
-	private final Map<PathNameCS, ParsedModuleCS> myResolvedImports;
-
 }

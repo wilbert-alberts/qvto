@@ -132,7 +132,7 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 		QvtOperationalEvaluationEnv evaluationEnv = factory.createEvaluationEnvironment(context, null);
 		evaluationEnv.getOperationArgs().addAll(args);
 		
-		QvtOperationalFileEnv rootEnv = factory.createEnvironment(null, module.getSource(), compiler);
+		QvtOperationalFileEnv rootEnv = factory.createEnvironment(null, module.getSource(), compiler.getKernel());
 
 		EvaluationVisitor<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject>		
 			evaluator = factory.createEvaluationVisitor(rootEnv, evaluationEnv, null);
