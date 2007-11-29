@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.1 2007/11/26 12:41:27 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.2 2007/11/29 16:21:12 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.1 2007/11/26 12:41:27 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.2 2007/11/29 16:21:12 radvorak Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser;
@@ -76,10 +76,8 @@ public interface LightweightParsersym {
       TK_inv = 136,
       TK_pre = 137,
       TK_post = 138,
-      TK_context = 139,
-      TK_package = 140,
-      TK_endpackage = 141,
-      TK_def = 142,
+      TK_endpackage = 139,
+      TK_def = 140,
       TK_if = 69,
       TK_then = 129,
       TK_else = 119,
@@ -97,8 +95,8 @@ public interface LightweightParsersym {
       TK_derive = 30,
       TK_init = 21,
       TK_null = 53,
-      TK_attr = 143,
-      TK_oper = 144,
+      TK_attr = 141,
+      TK_oper = 142,
       TK_Set = 6,
       TK_Bag = 7,
       TK_Sequence = 8,
@@ -176,10 +174,10 @@ public interface LightweightParsersym {
       TK_this = 52,
       TK_switch = 74,
       TK_rename = 106,
-      TK_EOF_TOKEN = 91,
       TK_IDENTIFIER = 3,
+      TK_ERROR_TOKEN = 2,
       TK_INTEGER_RANGE_START = 123,
-      TK_ERROR_TOKEN = 2;
+      TK_EOF_TOKEN = 91;
 
       public final static String orderedTerminalSymbols[] = {
                  "",
@@ -321,8 +319,6 @@ public interface LightweightParsersym {
                  "inv",
                  "pre",
                  "post",
-                 "context",
-                 "package",
                  "endpackage",
                  "def",
                  "attr",

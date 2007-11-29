@@ -8,8 +8,7 @@
 %options noserialize
 %options package=org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser
 --%options template=dtParserTemplateD.g
-%options import_terminals=QvtOpLexer.g
-%options ast_type=EObject
+%options ast_type=CSTNode
 %options programming_language=java
 %options action=("*.java", "/.", "./")
 %options ParseTable=lpg.lpgjavaruntime.ParseTable
@@ -29,6 +28,8 @@ $Globals
 	/.
 	import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParserprs;
 	import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParsersym;
+	import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLexer;	
+	import org.eclipse.m2m.qvt.oml.internal.cst.parser.AbstractQVTParser;	
 	./
 $End
 

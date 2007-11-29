@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lpg.lpgjavaruntime.IToken;
-import lpg.lpgjavaruntime.LexStream;
 import lpg.lpgjavaruntime.PrsStream;
 
 import org.eclipse.emf.ecore.EClassifier;
@@ -291,22 +290,22 @@ public class LightweightParserUtil {
     
     
     private static class RunnableLightweightParser extends LightweightParser implements ILightweightParser {
-        public RunnableLightweightParser(LexStream lexStream) {
+        public RunnableLightweightParser(QvtOpLexer lexStream) {
             super(lexStream);
         }
         
-        public EObject runParser() throws ParserException {
-            return parser(null, 10);
+        public CSTNode runParser() throws ParserException {
+            return parser(10);
         }
     }
 
     private static class RunnableLightweightTypeParser extends LightweightTypeParser implements ILightweightParser {
-        public RunnableLightweightTypeParser(LexStream lexStream) {
+        public RunnableLightweightTypeParser(QvtOpLexer lexStream) {
             super(lexStream);
         }
         
-        public EObject runParser() throws ParserException {
-            return parser(null, 10);
+        public CSTNode runParser() throws ParserException {
+            return parser(10);
         }
     }
 }
