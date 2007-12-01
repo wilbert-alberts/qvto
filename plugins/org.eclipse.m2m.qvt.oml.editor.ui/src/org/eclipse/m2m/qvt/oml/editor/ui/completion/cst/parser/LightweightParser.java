@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.3 2007/11/29 16:21:12 radvorak Exp $
+* $Id: LightweightParser.java,v 1.4 2007/12/01 23:33:56 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.3 2007/11/29 16:21:12 radvorak Exp $
+* $Id: LightweightParser.java,v 1.4 2007/12/01 23:33:56 radvorak Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser;
@@ -74,6 +74,7 @@ import java.util.Map;
 import lpg.lpgjavaruntime.Token;
 import lpg.lpgjavaruntime.BacktrackingParser;
 import lpg.lpgjavaruntime.NotBacktrackParseTableException;
+import org.eclipse.m2m.qvt.oml.internal.cst.LogExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingBodyCS;
@@ -4904,9 +4905,91 @@ import org.eclipse.m2m.qvt.oml.internal.cst.parser.AbstractQVTParser;
 			}
 	 
 			//
-			// Rule 515:  mappingQueryCS ::= query mappingDeclarationCS { statementListOpt }
+			// Rule 514:  logWhenExp ::= when oclExpressionCS
 			//
-			case 515: {
+			case 514: {
+				
+			OCLExpressionCS condition = (OCLExpressionCS) dtParser.getSym(2);
+			dtParser.setSym1(condition);
+      		  break;
+			}
+     
+			//
+			// Rule 516:  logWhenExpOpt ::= $Empty
+			//
+			case 516:
+				dtParser.setSym1(null);
+				break;
+ 
+			//
+			// Rule 517:  logExpCS ::= log ( argumentsCSopt ) logWhenExpOpt
+			//
+			case 517: {
+				
+			OCLExpressionCS condition = (OCLExpressionCS) dtParser.getSym(5);
+			CSTNode result = createLogExpCS((EList<OCLExpressionCS>)dtParser.getSym(3), condition);
+			if(condition != null) {
+				setOffsets(result, getIToken(dtParser.getToken(1)), condition);
+			} else {
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(4)));
+			}
+			dtParser.setSym1(result);
+      		  break;
+			}
+     
+			//
+			// Rule 519:  severityKindCS ::= simpleNameCS
+			//
+			case 519: {
+				
+			dtParser.setSym1(dtParser.getSym(1));
+	  		  break;
+			}
+	 
+			//
+			// Rule 521:  severityKindCSOpt ::= $Empty
+			//
+			case 521:
+				dtParser.setSym1(null);
+				break;
+ 
+			//
+			// Rule 522:  assertWithLogExp ::= with logExpCS
+			//
+			case 522: {
+				
+			LogExpCS logExp = (LogExpCS) dtParser.getSym(2);
+			setOffsets(logExp, getIToken(dtParser.getToken(2)), logExp);
+			dtParser.setSym1(logExp);
+      		  break;
+			}
+     
+			//
+			// Rule 524:  assertWithLogExpOpt ::= $Empty
+			//
+			case 524:
+				dtParser.setSym1(null);
+				break;
+ 
+			//
+			// Rule 525:  assertExpCS ::= assert severityKindCSOpt oclExpressionCS assertWithLogExpOpt
+			//
+			case 525: {
+				
+			LogExpCS logExpCS = (LogExpCS)dtParser.getSym(4);
+			OCLExpressionCS condition = (OCLExpressionCS)dtParser.getSym(3);
+			CSTNode result = createAssertExpCS(condition, (SimpleNameCS)dtParser.getSym(2), logExpCS);
+	
+			CSTNode end = logExpCS != null ? logExpCS : condition; 
+			setOffsets(result, getIToken(dtParser.getToken(1)), end);
+			dtParser.setSym1(result);
+      		  break;
+			}
+     
+			//
+			// Rule 528:  mappingQueryCS ::= query mappingDeclarationCS { statementListOpt }
+			//
+			case 528: {
 				
 				CSTNode result = createMappingQueryCS(
 						(MappingDeclarationCS)dtParser.getSym(2),
