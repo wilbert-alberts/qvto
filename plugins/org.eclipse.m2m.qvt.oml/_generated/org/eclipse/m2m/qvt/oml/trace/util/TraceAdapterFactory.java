@@ -15,15 +15,20 @@ import java.util.Map;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
-import org.eclipse.m2m.qvt.oml.trace.*;
+import org.eclipse.m2m.qvt.oml.trace.EMappingContext;
+import org.eclipse.m2m.qvt.oml.trace.EMappingOperation;
+import org.eclipse.m2m.qvt.oml.trace.EMappingParameters;
+import org.eclipse.m2m.qvt.oml.trace.EMappingResults;
+import org.eclipse.m2m.qvt.oml.trace.ETuplePartValue;
+import org.eclipse.m2m.qvt.oml.trace.EValue;
+import org.eclipse.m2m.qvt.oml.trace.Trace;
+import org.eclipse.m2m.qvt.oml.trace.TracePackage;
+import org.eclipse.m2m.qvt.oml.trace.TraceRecord;
+import org.eclipse.m2m.qvt.oml.trace.VarParameterValue;
 
 /**
  * <!-- begin-user-doc -->

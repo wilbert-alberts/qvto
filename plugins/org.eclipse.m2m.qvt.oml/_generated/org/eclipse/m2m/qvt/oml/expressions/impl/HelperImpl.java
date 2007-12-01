@@ -38,153 +38,153 @@ import org.eclipse.ocl.utilities.Visitor;
  */
 public class HelperImpl extends ImperativeOperationImpl implements Helper {
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
     /**
-     * The default value of the '{@link #isIsQuery() <em>Is Query</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #isIsQuery() <em>Is Query</em>}' attribute.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #isIsQuery()
-     * @generated
-     * @ordered
-     */
+	 * @see #isIsQuery()
+	 * @generated
+	 * @ordered
+	 */
 	protected static final boolean IS_QUERY_EDEFAULT = false;
 
 	/**
-     * The flag representing the value of the '{@link #isIsQuery() <em>Is Query</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The flag representing the value of the '{@link #isIsQuery() <em>Is Query</em>}' attribute.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #isIsQuery()
-     * @generated
-     * @ordered
-     */
+	 * @see #isIsQuery()
+	 * @generated
+	 * @ordered
+	 */
 	protected static final int IS_QUERY_EFLAG = 1 << 11;
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	protected HelperImpl() {
-        super();
-    }
+		super();
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	protected EClass eStaticClass() {
-        return ExpressionsPackage.Literals.HELPER;
-    }
+		return ExpressionsPackage.Literals.HELPER;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public boolean isIsQuery() {
-        return (eFlags & IS_QUERY_EFLAG) != 0;
-    }
+		return (eFlags & IS_QUERY_EFLAG) != 0;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public void setIsQuery(boolean newIsQuery) {
-        boolean oldIsQuery = (eFlags & IS_QUERY_EFLAG) != 0;
-        if (newIsQuery) eFlags |= IS_QUERY_EFLAG; else eFlags &= ~IS_QUERY_EFLAG;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.HELPER__IS_QUERY, oldIsQuery, newIsQuery));
-    }
+		boolean oldIsQuery = (eFlags & IS_QUERY_EFLAG) != 0;
+		if (newIsQuery) eFlags |= IS_QUERY_EFLAG; else eFlags &= ~IS_QUERY_EFLAG;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.HELPER__IS_QUERY, oldIsQuery, newIsQuery));
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
-        return ((ExtendedVisitor<T, ?, ?, ?, ?>) v).visitHelper(this);
-    }
+		return ((ExtendedVisitor<T, ?, ?, ?, ?>) v).visitHelper(this);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case ExpressionsPackage.HELPER__IS_QUERY:
-                return isIsQuery() ? Boolean.TRUE : Boolean.FALSE;
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case ExpressionsPackage.HELPER__IS_QUERY:
+				return isIsQuery() ? Boolean.TRUE : Boolean.FALSE;
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case ExpressionsPackage.HELPER__IS_QUERY:
-                setIsQuery(((Boolean)newValue).booleanValue());
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case ExpressionsPackage.HELPER__IS_QUERY:
+				setIsQuery(((Boolean)newValue).booleanValue());
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public void eUnset(int featureID) {
-        switch (featureID) {
-            case ExpressionsPackage.HELPER__IS_QUERY:
-                setIsQuery(IS_QUERY_EDEFAULT);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case ExpressionsPackage.HELPER__IS_QUERY:
+				setIsQuery(IS_QUERY_EDEFAULT);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case ExpressionsPackage.HELPER__IS_QUERY:
-                return ((eFlags & IS_QUERY_EFLAG) != 0) != IS_QUERY_EDEFAULT;
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case ExpressionsPackage.HELPER__IS_QUERY:
+				return ((eFlags & IS_QUERY_EFLAG) != 0) != IS_QUERY_EDEFAULT;
+		}
+		return super.eIsSet(featureID);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public String toString() {
-        if (eIsProxy()) return super.toString();
+		if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (isQuery: "); //$NON-NLS-1$
-        result.append((eFlags & IS_QUERY_EFLAG) != 0);
-        result.append(')');
-        return result.toString();
-    }
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (isQuery: "); //$NON-NLS-1$
+		result.append((eFlags & IS_QUERY_EFLAG) != 0);
+		result.append(')');
+		return result.toString();
+	}
 
 } //HelperImpl

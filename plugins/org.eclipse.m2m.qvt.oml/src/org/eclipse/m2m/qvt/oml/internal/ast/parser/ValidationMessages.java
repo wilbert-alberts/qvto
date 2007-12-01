@@ -21,7 +21,11 @@ public final class ValidationMessages extends NLS {
 		// Do not instantiate
 	}
 
-    public static String mappingOperationExpected;
+    public static String BooleanTypeAssertConditionError;
+	public static String LogExpBooleanTypeConditionError;
+	public static String LogLevelNumberArgumentError;
+	public static String mappingOperationExpected;
+	public static String MissingMessageLogExpArgumentError;
 	public static String QvtOperationalParserUtil_inoutParamAssignmentError;
     public static String QvtOperationalVisitorCS_AbstractTypesNotInitialized;
     public static String QvtOperationalVisitorCS_ResolveInMappingNotFound;
@@ -50,6 +54,9 @@ public final class ValidationMessages extends NLS {
     public static String QvtOperationalVisitorCS_mapKeywordNotUsed;
     
 	public static String readOnlyPropertyModificationError;
+	public static String StringTypeMessageLogArgumentError;
+	public static String UknownSeverityKindError;
+	public static String UnsupportedLogExpArgumentError;
 	public static String useMapKeywordWarning;
 	public static String incorrectCastWarning;
 	public static String lateResolveWarning;

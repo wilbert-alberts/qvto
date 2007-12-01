@@ -15,9 +15,50 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-
-import org.eclipse.m2m.qvt.oml.internal.cst.*;
-
+import org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.BlockExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage;
+import org.eclipse.m2m.qvt.oml.internal.cst.ConfigPropertyCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ElementWithBody;
+import org.eclipse.m2m.qvt.oml.internal.cst.ExpressionStatementCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ImportCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.LibraryCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.LibraryImportCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.LocalPropertyCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.LogExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingBodyCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingCallExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingDeclarationCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingEndCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingInitCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingMethodCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingQueryCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingRuleCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingSectionCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ModelTypeCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ModuleImportCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ModuleKindCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ModulePropertyCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ModuleRefCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ModuleUsageCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.OutExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.PackageRefCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ParameterDeclarationCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.PatternPropertyExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.RenameCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ResolveInExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.StatementCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.SwitchAltExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.SwitchExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.TransformationHeaderCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.TransformationRefineCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.TypeSpecCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.VariableInitializationCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.WhileExpCS;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CallExpCS;
 import org.eclipse.ocl.cst.FeatureCallExpCS;
@@ -424,6 +465,25 @@ public class CSTSwitch<T> {
 				TypeSpecCS typeSpecCS = (TypeSpecCS)theEObject;
 				T result = caseTypeSpecCS(typeSpecCS);
 				if (result == null) result = caseCSTNode(typeSpecCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.LOG_EXP_CS: {
+				LogExpCS logExpCS = (LogExpCS)theEObject;
+				T result = caseLogExpCS(logExpCS);
+				if (result == null) result = caseOperationCallExpCS(logExpCS);
+				if (result == null) result = caseFeatureCallExpCS(logExpCS);
+				if (result == null) result = caseCallExpCS(logExpCS);
+				if (result == null) result = caseOCLExpressionCS(logExpCS);
+				if (result == null) result = caseCSTNode(logExpCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.ASSERT_EXP_CS: {
+				AssertExpCS assertExpCS = (AssertExpCS)theEObject;
+				T result = caseAssertExpCS(assertExpCS);
+				if (result == null) result = caseOCLExpressionCS(assertExpCS);
+				if (result == null) result = caseCSTNode(assertExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -1043,6 +1103,36 @@ public class CSTSwitch<T> {
 	 * @generated
 	 */
 	public T caseTypeSpecCS(TypeSpecCS object) {
+		return null;
+	}
+
+				/**
+	 * Returns the result of interpreting the object as an instance of '<em>Log Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Log Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseLogExpCS(LogExpCS object) {
+		return null;
+	}
+
+				/**
+	 * Returns the result of interpreting the object as an instance of '<em>Assert Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Assert Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAssertExpCS(AssertExpCS object) {
 		return null;
 	}
 

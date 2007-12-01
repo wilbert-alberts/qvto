@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackage.java,v 1.5 2007/11/27 15:43:21 radvorak Exp $
+ * $Id: CSTPackage.java,v 1.6 2007/12/01 23:33:05 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst;
 
@@ -2737,6 +2737,161 @@ public interface CSTPackage extends EPackage {
 	int TYPE_SPEC_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 2;
 
 				/**
+	 * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.impl.LogExpCSImpl <em>Log Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.LogExpCSImpl
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.CSTPackageImpl#getLogExpCS()
+	 * @generated
+	 */
+	int LOG_EXP_CS = 41;
+
+				/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOG_EXP_CS__START_OFFSET = org.eclipse.ocl.cst.CSTPackage.OPERATION_CALL_EXP_CS__START_OFFSET;
+
+				/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOG_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.OPERATION_CALL_EXP_CS__END_OFFSET;
+
+				/**
+	 * The feature id for the '<em><b>Source</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOG_EXP_CS__SOURCE = org.eclipse.ocl.cst.CSTPackage.OPERATION_CALL_EXP_CS__SOURCE;
+
+				/**
+	 * The feature id for the '<em><b>Accessor</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOG_EXP_CS__ACCESSOR = org.eclipse.ocl.cst.CSTPackage.OPERATION_CALL_EXP_CS__ACCESSOR;
+
+				/**
+	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOG_EXP_CS__SIMPLE_NAME_CS = org.eclipse.ocl.cst.CSTPackage.OPERATION_CALL_EXP_CS__SIMPLE_NAME_CS;
+
+				/**
+	 * The feature id for the '<em><b>Arguments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOG_EXP_CS__ARGUMENTS = org.eclipse.ocl.cst.CSTPackage.OPERATION_CALL_EXP_CS__ARGUMENTS;
+
+				/**
+	 * The feature id for the '<em><b>Is Marked Pre CS</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOG_EXP_CS__IS_MARKED_PRE_CS = org.eclipse.ocl.cst.CSTPackage.OPERATION_CALL_EXP_CS__IS_MARKED_PRE_CS;
+
+				/**
+	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOG_EXP_CS__CONDITION = org.eclipse.ocl.cst.CSTPackage.OPERATION_CALL_EXP_CS_FEATURE_COUNT + 0;
+
+				/**
+	 * The number of structural features of the '<em>Log Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOG_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.OPERATION_CALL_EXP_CS_FEATURE_COUNT + 1;
+
+				/**
+	 * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.impl.AssertExpCSImpl <em>Assert Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.AssertExpCSImpl
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.CSTPackageImpl#getAssertExpCS()
+	 * @generated
+	 */
+	int ASSERT_EXP_CS = 42;
+
+				/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSERT_EXP_CS__START_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_OFFSET;
+
+				/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSERT_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_OFFSET;
+
+				/**
+	 * The feature id for the '<em><b>Assertion</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSERT_EXP_CS__ASSERTION = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 0;
+
+				/**
+	 * The feature id for the '<em><b>Log</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSERT_EXP_CS__LOG = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 1;
+
+				/**
+	 * The feature id for the '<em><b>Severity</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSERT_EXP_CS__SEVERITY = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 2;
+
+				/**
+	 * The number of structural features of the '<em>Assert Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSERT_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 3;
+
+				/**
 	 * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum <em>Direction Kind Enum</em>}' enum.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2744,7 +2899,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.CSTPackageImpl#getDirectionKindEnum()
 	 * @generated
 	 */
-    int DIRECTION_KIND_ENUM = 41;
+    int DIRECTION_KIND_ENUM = 43;
 
 
     /**
@@ -2755,7 +2910,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.CSTPackageImpl#getModuleKindEnum()
 	 * @generated
 	 */
-	int MODULE_KIND_ENUM = 42;
+	int MODULE_KIND_ENUM = 44;
 
 				/**
 	 * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.ImportKindEnum <em>Import Kind Enum</em>}' enum.
@@ -2765,7 +2920,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.CSTPackageImpl#getImportKindEnum()
 	 * @generated
 	 */
-	int IMPORT_KIND_ENUM = 43;
+	int IMPORT_KIND_ENUM = 45;
 
 
 				/**
@@ -4136,6 +4291,70 @@ public interface CSTPackage extends EPackage {
 	EReference getTypeSpecCS_SimpleNameCS();
 
 				/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.internal.cst.LogExpCS <em>Log Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Log Exp CS</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.LogExpCS
+	 * @generated
+	 */
+	EClass getLogExpCS();
+
+				/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.qvt.oml.internal.cst.LogExpCS#getCondition <em>Condition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Condition</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.LogExpCS#getCondition()
+	 * @see #getLogExpCS()
+	 * @generated
+	 */
+	EReference getLogExpCS_Condition();
+
+				/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS <em>Assert Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Assert Exp CS</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS
+	 * @generated
+	 */
+	EClass getAssertExpCS();
+
+				/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS#getAssertion <em>Assertion</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Assertion</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS#getAssertion()
+	 * @see #getAssertExpCS()
+	 * @generated
+	 */
+	EReference getAssertExpCS_Assertion();
+
+				/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS#getLog <em>Log</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Log</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS#getLog()
+	 * @see #getAssertExpCS()
+	 * @generated
+	 */
+	EReference getAssertExpCS_Log();
+
+				/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS#getSeverity <em>Severity</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Severity</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS#getSeverity()
+	 * @see #getAssertExpCS()
+	 * @generated
+	 */
+	EReference getAssertExpCS_Severity();
+
+				/**
 	 * Returns the meta object for enum '{@link org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum <em>Direction Kind Enum</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -5292,6 +5511,58 @@ public interface CSTPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TYPE_SPEC_CS__SIMPLE_NAME_CS = eINSTANCE.getTypeSpecCS_SimpleNameCS();
+
+								/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.impl.LogExpCSImpl <em>Log Exp CS</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.LogExpCSImpl
+		 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.CSTPackageImpl#getLogExpCS()
+		 * @generated
+		 */
+		EClass LOG_EXP_CS = eINSTANCE.getLogExpCS();
+
+								/**
+		 * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference LOG_EXP_CS__CONDITION = eINSTANCE.getLogExpCS_Condition();
+
+								/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.impl.AssertExpCSImpl <em>Assert Exp CS</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.AssertExpCSImpl
+		 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.CSTPackageImpl#getAssertExpCS()
+		 * @generated
+		 */
+		EClass ASSERT_EXP_CS = eINSTANCE.getAssertExpCS();
+
+								/**
+		 * The meta object literal for the '<em><b>Assertion</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ASSERT_EXP_CS__ASSERTION = eINSTANCE.getAssertExpCS_Assertion();
+
+								/**
+		 * The meta object literal for the '<em><b>Log</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ASSERT_EXP_CS__LOG = eINSTANCE.getAssertExpCS_Log();
+
+								/**
+		 * The meta object literal for the '<em><b>Severity</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ASSERT_EXP_CS__SEVERITY = eINSTANCE.getAssertExpCS_Severity();
 
 								/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum <em>Direction Kind Enum</em>}' enum.

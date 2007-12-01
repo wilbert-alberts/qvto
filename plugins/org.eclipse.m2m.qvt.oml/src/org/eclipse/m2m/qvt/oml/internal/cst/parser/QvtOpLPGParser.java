@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.23 2007/11/29 15:28:16 radvorak Exp $
+* $Id: QvtOpLPGParser.java,v 1.24 2007/12/01 23:33:04 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.23 2007/11/29 15:28:16 radvorak Exp $
+* $Id: QvtOpLPGParser.java,v 1.24 2007/12/01 23:33:04 radvorak Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -74,6 +74,7 @@ import java.util.Map;
 import lpg.lpgjavaruntime.Token;
 import lpg.lpgjavaruntime.BacktrackingParser;
 import lpg.lpgjavaruntime.NotBacktrackParseTableException;
+import org.eclipse.m2m.qvt.oml.internal.cst.LogExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingBodyCS;
@@ -4911,7 +4912,89 @@ import org.eclipse.m2m.qvt.oml.internal.cst.TypeSpecCS;
 				dtParser.setSym1(result);
 	  		  break;
 			}
+	 
+			//
+			// Rule 515:  logWhenExp ::= when oclExpressionCS
+			//
+			case 515: {
+				
+			OCLExpressionCS condition = (OCLExpressionCS) dtParser.getSym(2);
+			dtParser.setSym1(condition);
+      		  break;
+			}
+     
+			//
+			// Rule 517:  logWhenExpOpt ::= $Empty
+			//
+			case 517:
+				dtParser.setSym1(null);
+				break;
+ 
+			//
+			// Rule 518:  logExpCS ::= log ( argumentsCSopt ) logWhenExpOpt
+			//
+			case 518: {
+				
+			OCLExpressionCS condition = (OCLExpressionCS) dtParser.getSym(5);
+			CSTNode result = createLogExpCS((EList<OCLExpressionCS>)dtParser.getSym(3), condition);
+			if(condition != null) {
+				setOffsets(result, getIToken(dtParser.getToken(1)), condition);
+			} else {
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(4)));
+			}
+			dtParser.setSym1(result);
+      		  break;
+			}
+     
+			//
+			// Rule 520:  severityKindCS ::= simpleNameCS
+			//
+			case 520: {
+				
+			dtParser.setSym1(dtParser.getSym(1));
+	  		  break;
+			}
+	 
+			//
+			// Rule 522:  severityKindCSOpt ::= $Empty
+			//
+			case 522:
+				dtParser.setSym1(null);
+				break;
+ 
+			//
+			// Rule 523:  assertWithLogExp ::= with logExpCS
+			//
+			case 523: {
+				
+			LogExpCS logExp = (LogExpCS) dtParser.getSym(2);
+			setOffsets(logExp, getIToken(dtParser.getToken(2)), logExp);
+			dtParser.setSym1(logExp);
+      		  break;
+			}
+     
+			//
+			// Rule 525:  assertWithLogExpOpt ::= $Empty
+			//
+			case 525:
+				dtParser.setSym1(null);
+				break;
+ 
+			//
+			// Rule 526:  assertExpCS ::= assert severityKindCSOpt oclExpressionCS assertWithLogExpOpt
+			//
+			case 526: {
+				
+			LogExpCS logExpCS = (LogExpCS)dtParser.getSym(4);
+			OCLExpressionCS condition = (OCLExpressionCS)dtParser.getSym(3);
+			CSTNode result = createAssertExpCS(condition, (SimpleNameCS)dtParser.getSym(2), logExpCS);
 	
+			CSTNode end = logExpCS != null ? logExpCS : condition; 
+			setOffsets(result, getIToken(dtParser.getToken(1)), end);
+			dtParser.setSym1(result);
+      		  break;
+			}
+    
 	
 			default:
 				break;

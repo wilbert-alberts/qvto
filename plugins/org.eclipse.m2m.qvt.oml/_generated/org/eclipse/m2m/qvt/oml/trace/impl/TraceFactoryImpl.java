@@ -2,26 +2,32 @@
  * <copyright>
  * </copyright>
  *
- * $Id: TraceFactoryImpl.java,v 1.2 2007/09/25 12:57:18 aigdalov Exp $
+ * $Id: TraceFactoryImpl.java,v 1.3 2007/12/01 23:33:05 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.trace.impl;
 
 import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
 import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
-
-import org.eclipse.m2m.qvt.oml.trace.*;
+import org.eclipse.m2m.qvt.oml.trace.EDirectionKind;
+import org.eclipse.m2m.qvt.oml.trace.EMappingContext;
+import org.eclipse.m2m.qvt.oml.trace.EMappingOperation;
+import org.eclipse.m2m.qvt.oml.trace.EMappingParameters;
+import org.eclipse.m2m.qvt.oml.trace.EMappingResults;
+import org.eclipse.m2m.qvt.oml.trace.ETuplePartValue;
+import org.eclipse.m2m.qvt.oml.trace.EValue;
+import org.eclipse.m2m.qvt.oml.trace.Trace;
+import org.eclipse.m2m.qvt.oml.trace.TraceFactory;
+import org.eclipse.m2m.qvt.oml.trace.TracePackage;
+import org.eclipse.m2m.qvt.oml.trace.TraceRecord;
+import org.eclipse.m2m.qvt.oml.trace.VarParameterValue;
 
 /**
  * <!-- begin-user-doc -->

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.5 2007/11/27 15:43:19 radvorak Exp $
+ * $Id: CSTPackageImpl.java,v 1.6 2007/12/01 23:33:03 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.impl;
 
@@ -20,9 +20,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
+import org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.BlockExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory;
@@ -37,6 +36,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.ImportKindEnum;
 import org.eclipse.m2m.qvt.oml.internal.cst.LibraryCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.LibraryImportCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.LocalPropertyCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.LogExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingBodyCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingCallExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingDeclarationCS;
@@ -69,9 +69,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.TransformationRefineCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.TypeSpecCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.VariableInitializationCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.WhileExpCS;
-
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.TempPackage;
-
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.impl.TempPackageImpl;
 
 /**
@@ -374,6 +372,20 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * @generated
 	 */
 	private EClass typeSpecCSEClass = null;
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass logExpCSEClass = null;
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass assertExpCSEClass = null;
 
 				/**
 	 * <!-- begin-user-doc -->
@@ -1626,6 +1638,60 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
 				/**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getLogExpCS() {
+		return logExpCSEClass;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getLogExpCS_Condition() {
+		return (EReference)logExpCSEClass.getEStructuralFeatures().get(0);
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getAssertExpCS() {
+		return assertExpCSEClass;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getAssertExpCS_Assertion() {
+		return (EReference)assertExpCSEClass.getEStructuralFeatures().get(0);
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getAssertExpCS_Log() {
+		return (EReference)assertExpCSEClass.getEStructuralFeatures().get(1);
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getAssertExpCS_Severity() {
+		return (EReference)assertExpCSEClass.getEStructuralFeatures().get(2);
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -1848,6 +1914,14 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(typeSpecCSEClass, TYPE_SPEC_CS__TYPE_CS);
 		createEReference(typeSpecCSEClass, TYPE_SPEC_CS__SIMPLE_NAME_CS);
 
+		logExpCSEClass = createEClass(LOG_EXP_CS);
+		createEReference(logExpCSEClass, LOG_EXP_CS__CONDITION);
+
+		assertExpCSEClass = createEClass(ASSERT_EXP_CS);
+		createEReference(assertExpCSEClass, ASSERT_EXP_CS__ASSERTION);
+		createEReference(assertExpCSEClass, ASSERT_EXP_CS__LOG);
+		createEReference(assertExpCSEClass, ASSERT_EXP_CS__SEVERITY);
+
 		// Create enums
 		directionKindEnumEEnum = createEEnum(DIRECTION_KIND_ENUM);
 		moduleKindEnumEEnum = createEEnum(MODULE_KIND_ENUM);
@@ -1932,6 +2006,8 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		moduleUsageCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		transformationRefineCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		typeSpecCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
+		logExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOperationCallExpCS());
+		assertExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(mappingModuleCSEClass, MappingModuleCS.class, "MappingModuleCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -2102,6 +2178,14 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEClass(typeSpecCSEClass, TypeSpecCS.class, "TypeSpecCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getTypeSpecCS_TypeCS(), theCSTPackage_1.getTypeCS(), null, "typeCS", null, 1, 1, TypeSpecCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getTypeSpecCS_SimpleNameCS(), theCSTPackage_1.getSimpleNameCS(), null, "simpleNameCS", null, 0, 1, TypeSpecCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(logExpCSEClass, LogExpCS.class, "LogExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getLogExpCS_Condition(), theCSTPackage_1.getOCLExpressionCS(), null, "condition", null, 0, 1, LogExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(assertExpCSEClass, AssertExpCS.class, "AssertExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getAssertExpCS_Assertion(), theCSTPackage_1.getOCLExpressionCS(), null, "assertion", null, 1, 1, AssertExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getAssertExpCS_Log(), this.getLogExpCS(), null, "log", null, 0, 1, AssertExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getAssertExpCS_Severity(), theCSTPackage_1.getSimpleNameCS(), null, "severity", null, 0, 1, AssertExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Initialize enums and add enum literals
 		initEEnum(directionKindEnumEEnum, DirectionKindEnum.class, "DirectionKindEnum"); //$NON-NLS-1$

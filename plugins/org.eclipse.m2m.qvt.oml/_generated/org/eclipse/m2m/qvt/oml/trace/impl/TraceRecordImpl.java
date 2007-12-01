@@ -2,21 +2,16 @@
  * <copyright>
  * </copyright>
  *
- * $Id: TraceRecordImpl.java,v 1.2 2007/09/25 12:57:18 aigdalov Exp $
+ * $Id: TraceRecordImpl.java,v 1.3 2007/12/01 23:33:05 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.trace.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
-import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
-
 import org.eclipse.m2m.qvt.oml.trace.EMappingContext;
 import org.eclipse.m2m.qvt.oml.trace.EMappingOperation;
 import org.eclipse.m2m.qvt.oml.trace.EMappingParameters;

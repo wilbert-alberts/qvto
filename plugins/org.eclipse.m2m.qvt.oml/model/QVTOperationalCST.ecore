@@ -274,6 +274,19 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
           containment="true"/>
     </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="LogExpCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OperationCallExpCS">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="AssertExpCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="assertion" lowerBound="1"
+          eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="log" eType="#//cst/LogExpCS"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="severity" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
+          containment="true"/>
+    </eClassifiers>
     <eSubpackages name="temp" nsURI="http://www.eclipse.org/QVT2/1.0.0/Operational/cst/temp"
         nsPrefix="qvtoperational.cst.temp">
       <eClassifiers xsi:type="ecore:EClass" name="ErrorCallExpCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CallExpCS"/>

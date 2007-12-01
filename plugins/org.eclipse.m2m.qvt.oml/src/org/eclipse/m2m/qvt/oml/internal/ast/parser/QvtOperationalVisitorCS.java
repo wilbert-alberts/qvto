@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.m2m.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalFileEnv;
@@ -39,6 +40,7 @@ import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.EmfMmUtil;
 import org.eclipse.m2m.qvt.oml.expressions.AltExp;
+import org.eclipse.m2m.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
@@ -48,6 +50,7 @@ import org.eclipse.m2m.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.expressions.Library;
 import org.eclipse.m2m.qvt.oml.expressions.LocalProperty;
+import org.eclipse.m2m.qvt.oml.expressions.LogExp;
 import org.eclipse.m2m.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.qvt.oml.expressions.MappingCallExp;
 import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
@@ -63,6 +66,7 @@ import org.eclipse.m2m.qvt.oml.expressions.Property;
 import org.eclipse.m2m.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveInExp;
+import org.eclipse.m2m.qvt.oml.expressions.SeverityKind;
 import org.eclipse.m2m.qvt.oml.expressions.SwitchExp;
 import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.expressions.VariableInitExp;
@@ -70,6 +74,7 @@ import org.eclipse.m2m.qvt.oml.expressions.WhileExp;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.GraphWalker;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.GraphWalker.NodeProvider;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.GraphWalker.VertexProcessor;
+import org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.BlockExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ConfigPropertyCS;
@@ -78,6 +83,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.ImportCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.LibraryCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.LibraryImportCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.LocalPropertyCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.LogExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingBodyCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingCallExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingDeclarationCS;
@@ -180,6 +186,14 @@ public class QvtOperationalVisitorCS
 	public QvtCompilerOptions getCompilerOptions() {
         return myCompilerOptions;
     }
+	
+    @Override
+    protected void initStartEndPositions(ASTNode astNode, CSTNode cstNode) {
+        // FIXME - temp workaround after OCL 1.2 migration    	
+    	astNode.setStartPosition(cstNode.getStartOffset());
+    	astNode.setEndPosition(cstNode.getEndOffset());
+    }
+	
 
 	@Override
 	protected EClassifier tupleTypeCS(TupleTypeCS tupleTypeCS, Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
@@ -349,6 +363,12 @@ public class QvtOperationalVisitorCS
         if (oclExpressionCS instanceof ResolveExpCS) {
             return visitResolveExpCS((ResolveExpCS) oclExpressionCS, (QvtOperationalEnv) env);
         }
+        if(oclExpressionCS instanceof LogExpCS) {
+        	return logExp((LogExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+        }
+        if(oclExpressionCS instanceof AssertExpCS) {
+        	return assertExp((AssertExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+        }
 
 		OCLExpression<EClassifier> expr = null;
 		try {
@@ -371,6 +391,7 @@ public class QvtOperationalVisitorCS
 			}
 		}
 		catch (NullPointerException ex) {
+			QvtPlugin.log(ex);
 			((QvtOperationalEnv) env).reportError(ValidationMessages.QvtOperationalVisitorCS_oclParseNPE, oclExpressionCS);
 		}
 		return expr;
@@ -388,6 +409,117 @@ public class QvtOperationalVisitorCS
         //
         return literalExp;
     }
+        
+    protected AssertExp assertExp(AssertExpCS assertExpCS, QvtOperationalEnv env) {
+    	AssertExp assertAST = ExpressionsFactory.eINSTANCE.createAssertExp();
+    	assertAST.setStartPosition(assertExpCS.getStartOffset());
+    	assertAST.setEndPosition(assertExpCS.getEndOffset());
+    	
+    	if(getCompilerOptions().isSourceLineNumbersEnabled()) {
+ 			int startOffset = assertAST.getStartPosition();
+ 			if(startOffset < getLexer().getInputChars().length) {
+     			assertAST.setLine(getLexer().getLineNumberOfCharAt(assertAST.getStartPosition()));    				
+ 			}
+     	}
+    	
+    	if(assertExpCS.getAssertion() != null) {
+    		assertAST.setAssertion(oclExpressionCS(assertExpCS.getAssertion(), env));
+    	}
+    	
+    	if(assertExpCS.getSeverity() != null) {
+    		String severityCSVal = assertExpCS.getSeverity().getValue();
+    		if(severityCSVal != null) {
+    			SeverityKind actualSeverity = SeverityKind.get(severityCSVal);
+    			if(actualSeverity != null) {
+    				assertAST.setSeverity(actualSeverity);
+    			} else {
+    				CSTNode errorNode = assertExpCS.getSeverity();
+    				env.reportError(NLS.bind(ValidationMessages.UknownSeverityKindError, severityCSVal), errorNode);
+    			}
+    		}
+    	}
+    	
+    	if(assertExpCS.getLog() != null) {
+    		assertAST.setLog(logExp(assertExpCS.getLog(), env));
+    	}    	    	
+
+    	validateAssertExp(assertAST, env);    	
+    	return assertAST;
+    }
+    
+    private void validateAssertExp(AssertExp assertExp, QvtOperationalEnv env) {
+    	EClassifier boolType = env.getOCLStandardLibrary().getBoolean();
+    	if(assertExp.getAssertion() == null || assertExp.getAssertion().getType() != boolType) {
+    		ASTNode errNode = assertExp.getAssertion() != null ? assertExp.getAssertion() : assertExp;
+    		env.reportError(ValidationMessages.BooleanTypeAssertConditionError, 
+    				errNode.getStartPosition(), errNode.getEndPosition());
+    	}
+    	
+    	LogExp logExp = assertExp.getLog();
+    	if(logExp != null) {
+    		validateLogExp(logExp, env);    		
+    	}
+    }        
+    
+    private void validateLogExp(LogExp logExp, QvtOperationalEnv env) {
+    	EList<OCLExpression<EClassifier>> allArgs = logExp.getArgument();
+    	if(allArgs.isEmpty()) {
+    		env.reportError(ValidationMessages.MissingMessageLogExpArgumentError, logExp.getStartPosition(), logExp.getEndPosition());
+    	}
+    	
+    	int pos = 1;
+    	for (OCLExpression<EClassifier> arg : allArgs) {
+    		switch (pos) {
+			case 1:
+				EClassifier stringType = env.getOCLStandardLibrary().getString();
+				if(stringType != arg.getType()) {
+					env.reportError(ValidationMessages.StringTypeMessageLogArgumentError, arg.getStartPosition(), arg.getEndPosition());
+				}
+				break;
+			case 2:
+				// anything accepted here
+				break;				
+			case 3:
+				EClassifier intType = env.getOCLStandardLibrary().getInteger();
+				if(intType != arg.getType()) {
+					env.reportError(ValidationMessages.LogLevelNumberArgumentError, arg.getStartPosition(), arg.getEndPosition());
+				}
+				
+				break;				
+
+			default:
+				env.reportError(NLS.bind(ValidationMessages.UnsupportedLogExpArgumentError, pos), arg.getStartPosition(), arg.getEndPosition());				
+			}
+    		pos++;
+		}
+    	
+    	OCLExpression<EClassifier> condition = logExp.getCondition();
+    	if(condition != null && condition.getType() != env.getOCLStandardLibrary().getBoolean()) {    		
+    		env.reportError(ValidationMessages.LogExpBooleanTypeConditionError, 
+    				condition.getStartPosition(), condition.getEndPosition());
+    	}
+    }
+        
+    protected LogExp logExp(LogExpCS logExpCS, QvtOperationalEnv env) {    	
+    	LogExp logAST = ExpressionsFactory.eINSTANCE.createLogExp();
+    	logAST.setStartPosition(logExpCS.getStartOffset());
+    	logAST.setEndPosition(logExpCS.getEndOffset());
+    	
+    	logAST.setName("log"); //$NON-NLS-1$
+    	for (OCLExpressionCS argCS : logExpCS.getArguments() ) {
+			OCLExpression<EClassifier> arg = this.oclExpressionCS(argCS, env);
+			if(arg != null) {
+				logAST.getArgument().add(arg);
+			}
+		}
+    	
+    	if(logExpCS.getCondition() != null) {
+    		logAST.setCondition(oclExpressionCS(logExpCS.getCondition(), env));
+    	}
+    	
+    	validateLogExp(logAST, env);   	
+    	return logAST;
+	}
 
     @Override
     protected Variable<EClassifier, EParameter> variableDeclarationCS(VariableCS variableDeclarationCS,
@@ -2155,7 +2287,7 @@ public class QvtOperationalVisitorCS
 		if (source != null) {
 			sourceElementType = source.getType();
 			if (sourceElementType instanceof CollectionType) {
-				@SuppressWarnings("unchecked")
+				@SuppressWarnings("unchecked") //$NON-NLS-1$
 				CollectionType<EClassifier, EOperation> ct = (CollectionType<EClassifier, EOperation>) sourceElementType;
 				
 				sourceElementType = ct.getElementType();
@@ -2290,6 +2422,5 @@ public class QvtOperationalVisitorCS
 		}
 
 		return astNode;
-	}
-	
+	}	
 }

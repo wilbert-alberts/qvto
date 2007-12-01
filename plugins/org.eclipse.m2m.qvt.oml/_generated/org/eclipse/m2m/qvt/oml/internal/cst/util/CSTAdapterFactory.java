@@ -13,13 +13,52 @@ package org.eclipse.m2m.qvt.oml.internal.cst.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
-
-import org.eclipse.m2m.qvt.oml.internal.cst.*;
-
+import org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.BlockExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage;
+import org.eclipse.m2m.qvt.oml.internal.cst.ConfigPropertyCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ElementWithBody;
+import org.eclipse.m2m.qvt.oml.internal.cst.ExpressionStatementCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ImportCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.LibraryCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.LibraryImportCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.LocalPropertyCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.LogExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingBodyCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingCallExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingDeclarationCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingEndCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingInitCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingMethodCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingQueryCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingRuleCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingSectionCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ModelTypeCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ModuleImportCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ModuleKindCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ModulePropertyCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ModuleRefCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ModuleUsageCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.OutExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.PackageRefCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ParameterDeclarationCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.PatternPropertyExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.RenameCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ResolveInExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.StatementCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.SwitchAltExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.SwitchExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.TransformationHeaderCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.TransformationRefineCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.TypeSpecCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.VariableInitializationCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.WhileExpCS;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CallExpCS;
 import org.eclipse.ocl.cst.FeatureCallExpCS;
@@ -251,6 +290,14 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseTypeSpecCS(TypeSpecCS object) {
 				return createTypeSpecCSAdapter();
+			}
+			@Override
+			public Adapter caseLogExpCS(LogExpCS object) {
+				return createLogExpCSAdapter();
+			}
+			@Override
+			public Adapter caseAssertExpCS(AssertExpCS object) {
+				return createAssertExpCSAdapter();
 			}
 			@Override
 			public Adapter caseCSTNode(CSTNode object) {
@@ -863,6 +910,34 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTypeSpecCSAdapter() {
+		return null;
+	}
+
+				/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.internal.cst.LogExpCS <em>Log Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.LogExpCS
+	 * @generated
+	 */
+	public Adapter createLogExpCSAdapter() {
+		return null;
+	}
+
+				/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS <em>Assert Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS
+	 * @generated
+	 */
+	public Adapter createAssertExpCSAdapter() {
 		return null;
 	}
 

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactory.java,v 1.5 2007/11/27 15:43:21 radvorak Exp $
+ * $Id: CSTFactory.java,v 1.6 2007/12/01 23:33:05 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst;
 
@@ -355,6 +355,24 @@ public interface CSTFactory extends EFactory {
 	 * @generated
 	 */
 	TypeSpecCS createTypeSpecCS();
+
+				/**
+	 * Returns a new object of class '<em>Log Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Log Exp CS</em>'.
+	 * @generated
+	 */
+	LogExpCS createLogExpCS();
+
+				/**
+	 * Returns a new object of class '<em>Assert Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Assert Exp CS</em>'.
+	 * @generated
+	 */
+	AssertExpCS createAssertExpCS();
 
 				/**
 	 * Returns the package supported by this factory.

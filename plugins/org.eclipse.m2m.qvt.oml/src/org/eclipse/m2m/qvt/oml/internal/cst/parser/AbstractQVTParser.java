@@ -16,6 +16,7 @@ import lpg.lpgjavaruntime.IToken;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
+import org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.BlockExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ConfigPropertyCS;
@@ -28,6 +29,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.ImportKindEnum;
 import org.eclipse.m2m.qvt.oml.internal.cst.LibraryCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.LibraryImportCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.LocalPropertyCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.LogExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingBodyCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingCallExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingDeclarationCS;
@@ -482,6 +484,25 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		result.getBodyExpressions().addAll(expressions);
 		return result;
 	}
+	
+	protected final CSTNode createLogExpCS(EList<OCLExpressionCS> args, OCLExpressionCS condition) {
+		LogExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createLogExpCS();
+		String name = getTokenKindName(QvtOpLPGParsersym.TK_log);
+		result.setSimpleNameCS(createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, name));
+
+		result.getArguments().addAll(args);		
+		result.setCondition(condition);		
+		return result;
+	}
+	
+	protected final CSTNode createAssertExpCS(OCLExpressionCS assertCondition, SimpleNameCS severityIdentifier, LogExpCS logExpCS) {
+		AssertExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createAssertExpCS();
+		result.setAssertion(assertCondition);
+		result.setSeverity(severityIdentifier);
+		result.setLog(logExpCS);
+		return result;
+	}
+	
 
 	protected final CSTNode createSwitchExpCS(EList<SwitchAltExpCS> altExps, OCLExpressionCS elseExp) {
 		SwitchExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createSwitchExpCS();

@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: MappingParameterImpl.java,v 1.2 2007/09/17 10:17:38 aigdalov Exp $
+ * $Id: MappingParameterImpl.java,v 1.3 2007/12/01 23:33:03 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.expressions.impl;
 
@@ -39,136 +39,136 @@ import org.eclipse.m2m.qvt.oml.expressions.ModelParameter;
  */
 public class MappingParameterImpl extends VarParameterImpl implements MappingParameter {
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
 	/**
-     * The cached value of the '{@link #getExtent() <em>Extent</em>}' reference.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getExtent() <em>Extent</em>}' reference.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getExtent()
-     * @generated
-     * @ordered
-     */
+	 * @see #getExtent()
+	 * @generated
+	 * @ordered
+	 */
 	protected ModelParameter extent;
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	protected MappingParameterImpl() {
-        super();
-    }
+		super();
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	protected EClass eStaticClass() {
-        return ExpressionsPackage.Literals.MAPPING_PARAMETER;
-    }
+		return ExpressionsPackage.Literals.MAPPING_PARAMETER;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public ModelParameter getExtent() {
-        if (extent != null && extent.eIsProxy()) {
-            InternalEObject oldExtent = (InternalEObject)extent;
-            extent = (ModelParameter)eResolveProxy(oldExtent);
-            if (extent != oldExtent) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ExpressionsPackage.MAPPING_PARAMETER__EXTENT, oldExtent, extent));
-            }
-        }
-        return extent;
-    }
+		if (extent != null && extent.eIsProxy()) {
+			InternalEObject oldExtent = (InternalEObject)extent;
+			extent = (ModelParameter)eResolveProxy(oldExtent);
+			if (extent != oldExtent) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ExpressionsPackage.MAPPING_PARAMETER__EXTENT, oldExtent, extent));
+			}
+		}
+		return extent;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public ModelParameter basicGetExtent() {
-        return extent;
-    }
+		return extent;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public void setExtent(ModelParameter newExtent) {
-        ModelParameter oldExtent = extent;
-        extent = newExtent;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.MAPPING_PARAMETER__EXTENT, oldExtent, extent));
-    }
+		ModelParameter oldExtent = extent;
+		extent = newExtent;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.MAPPING_PARAMETER__EXTENT, oldExtent, extent));
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case ExpressionsPackage.MAPPING_PARAMETER__EXTENT:
-                if (resolve) return getExtent();
-                return basicGetExtent();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case ExpressionsPackage.MAPPING_PARAMETER__EXTENT:
+				if (resolve) return getExtent();
+				return basicGetExtent();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case ExpressionsPackage.MAPPING_PARAMETER__EXTENT:
-                setExtent((ModelParameter)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case ExpressionsPackage.MAPPING_PARAMETER__EXTENT:
+				setExtent((ModelParameter)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public void eUnset(int featureID) {
-        switch (featureID) {
-            case ExpressionsPackage.MAPPING_PARAMETER__EXTENT:
-                setExtent((ModelParameter)null);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case ExpressionsPackage.MAPPING_PARAMETER__EXTENT:
+				setExtent((ModelParameter)null);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case ExpressionsPackage.MAPPING_PARAMETER__EXTENT:
-                return extent != null;
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case ExpressionsPackage.MAPPING_PARAMETER__EXTENT:
+				return extent != null;
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //MappingParameterImpl

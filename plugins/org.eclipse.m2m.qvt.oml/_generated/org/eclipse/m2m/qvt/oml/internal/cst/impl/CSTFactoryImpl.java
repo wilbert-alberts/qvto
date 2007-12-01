@@ -15,12 +15,50 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
-import org.eclipse.m2m.qvt.oml.internal.cst.*;
+import org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.BlockExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory;
+import org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage;
+import org.eclipse.m2m.qvt.oml.internal.cst.ConfigPropertyCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum;
+import org.eclipse.m2m.qvt.oml.internal.cst.ExpressionStatementCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ImportKindEnum;
+import org.eclipse.m2m.qvt.oml.internal.cst.LibraryCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.LibraryImportCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.LocalPropertyCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.LogExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingBodyCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingCallExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingDeclarationCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingEndCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingInitCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingQueryCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingRuleCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ModelTypeCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ModuleImportCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ModuleKindCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ModuleKindEnum;
+import org.eclipse.m2m.qvt.oml.internal.cst.ModuleRefCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ModuleUsageCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.OutExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.PackageRefCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ParameterDeclarationCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.PatternPropertyExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.RenameCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ResolveInExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.SwitchAltExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.SwitchExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.TransformationHeaderCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.TransformationRefineCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.TypeSpecCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.VariableInitializationCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.WhileExpCS;
 
 /**
  * <!-- begin-user-doc -->
@@ -108,6 +146,8 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 			case CSTPackage.MODULE_USAGE_CS: return createModuleUsageCS();
 			case CSTPackage.TRANSFORMATION_REFINE_CS: return createTransformationRefineCS();
 			case CSTPackage.TYPE_SPEC_CS: return createTypeSpecCS();
+			case CSTPackage.LOG_EXP_CS: return createLogExpCS();
+			case CSTPackage.ASSERT_EXP_CS: return createAssertExpCS();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -499,6 +539,26 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	public TypeSpecCS createTypeSpecCS() {
 		TypeSpecCSImpl typeSpecCS = new TypeSpecCSImpl();
 		return typeSpecCS;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public LogExpCS createLogExpCS() {
+		LogExpCSImpl logExpCS = new LogExpCSImpl();
+		return logExpCS;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public AssertExpCS createAssertExpCS() {
+		AssertExpCSImpl assertExpCS = new AssertExpCSImpl();
+		return assertExpCS;
 	}
 
 				/**
