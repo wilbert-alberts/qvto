@@ -19,8 +19,12 @@ public class EvaluationMessages extends NLS {
     private EvaluationMessages() {
     }
     
+	public static String AssertFailedMessage;
 	public static String ExtendedOclEvaluatorVisitorImpl_InvalidObjectExpType;
-    public static String ExtendedOclEvaluatorVisitorImpl_ModuleNotExecutable;  
+    public static String ExtendedOclEvaluatorVisitorImpl_ModuleNotExecutable;
+	public static String FatalAssertionFailed;
+	public static String TerminatingExecution;
+	public static String UknownSourceLabel;  
     
     static {
         // initialize resource bundle

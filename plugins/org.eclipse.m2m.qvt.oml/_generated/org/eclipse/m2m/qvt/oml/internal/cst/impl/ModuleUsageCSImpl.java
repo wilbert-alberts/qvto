@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ModuleUsageCSImpl.java,v 1.4 2007/09/20 10:14:02 aigdalov Exp $
+ * $Id: ModuleUsageCSImpl.java,v 1.4.2.1 2007/12/02 22:33:55 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.impl;
 
@@ -55,257 +55,257 @@ import org.eclipse.ocl.internal.cst.impl.CSTNodeImpl;
  */
 public class ModuleUsageCSImpl extends CSTNodeImpl implements ModuleUsageCS {
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 	/**
-     * The default value of the '{@link #getImportKind() <em>Import Kind</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getImportKind() <em>Import Kind</em>}' attribute.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getImportKind()
-     * @generated
-     * @ordered
-     */
+	 * @see #getImportKind()
+	 * @generated
+	 * @ordered
+	 */
 	protected static final ImportKindEnum IMPORT_KIND_EDEFAULT = ImportKindEnum.EXTENSION;
 
 	/**
-     * The cached value of the '{@link #getImportKind() <em>Import Kind</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getImportKind() <em>Import Kind</em>}' attribute.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getImportKind()
-     * @generated
-     * @ordered
-     */
+	 * @see #getImportKind()
+	 * @generated
+	 * @ordered
+	 */
 	protected ImportKindEnum importKind = IMPORT_KIND_EDEFAULT;
 
 	/**
-     * The cached value of the '{@link #getModuleKindCS() <em>Module Kind CS</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getModuleKindCS() <em>Module Kind CS</em>}' containment reference.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getModuleKindCS()
-     * @generated
-     * @ordered
-     */
+	 * @see #getModuleKindCS()
+	 * @generated
+	 * @ordered
+	 */
 	protected ModuleKindCS moduleKindCS;
 
 	/**
-     * The cached value of the '{@link #getModuleRefs() <em>Module Refs</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getModuleRefs() <em>Module Refs</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getModuleRefs()
-     * @generated
-     * @ordered
-     */
+	 * @see #getModuleRefs()
+	 * @generated
+	 * @ordered
+	 */
 	protected EList<ModuleRefCS> moduleRefs;
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	protected ModuleUsageCSImpl() {
-        super();
-    }
+		super();
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	protected EClass eStaticClass() {
-        return CSTPackage.Literals.MODULE_USAGE_CS;
-    }
+		return CSTPackage.Literals.MODULE_USAGE_CS;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public ImportKindEnum getImportKind() {
-        return importKind;
-    }
+		return importKind;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public void setImportKind(ImportKindEnum newImportKind) {
-        ImportKindEnum oldImportKind = importKind;
-        importKind = newImportKind == null ? IMPORT_KIND_EDEFAULT : newImportKind;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.MODULE_USAGE_CS__IMPORT_KIND, oldImportKind, importKind));
-    }
+		ImportKindEnum oldImportKind = importKind;
+		importKind = newImportKind == null ? IMPORT_KIND_EDEFAULT : newImportKind;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.MODULE_USAGE_CS__IMPORT_KIND, oldImportKind, importKind));
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public ModuleKindCS getModuleKindCS() {
-        return moduleKindCS;
-    }
+		return moduleKindCS;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public NotificationChain basicSetModuleKindCS(ModuleKindCS newModuleKindCS, NotificationChain msgs) {
-        ModuleKindCS oldModuleKindCS = moduleKindCS;
-        moduleKindCS = newModuleKindCS;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.MODULE_USAGE_CS__MODULE_KIND_CS, oldModuleKindCS, newModuleKindCS);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
+		ModuleKindCS oldModuleKindCS = moduleKindCS;
+		moduleKindCS = newModuleKindCS;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.MODULE_USAGE_CS__MODULE_KIND_CS, oldModuleKindCS, newModuleKindCS);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public void setModuleKindCS(ModuleKindCS newModuleKindCS) {
-        if (newModuleKindCS != moduleKindCS) {
-            NotificationChain msgs = null;
-            if (moduleKindCS != null)
-                msgs = ((InternalEObject)moduleKindCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.MODULE_USAGE_CS__MODULE_KIND_CS, null, msgs);
-            if (newModuleKindCS != null)
-                msgs = ((InternalEObject)newModuleKindCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.MODULE_USAGE_CS__MODULE_KIND_CS, null, msgs);
-            msgs = basicSetModuleKindCS(newModuleKindCS, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.MODULE_USAGE_CS__MODULE_KIND_CS, newModuleKindCS, newModuleKindCS));
-    }
+		if (newModuleKindCS != moduleKindCS) {
+			NotificationChain msgs = null;
+			if (moduleKindCS != null)
+				msgs = ((InternalEObject)moduleKindCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.MODULE_USAGE_CS__MODULE_KIND_CS, null, msgs);
+			if (newModuleKindCS != null)
+				msgs = ((InternalEObject)newModuleKindCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.MODULE_USAGE_CS__MODULE_KIND_CS, null, msgs);
+			msgs = basicSetModuleKindCS(newModuleKindCS, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.MODULE_USAGE_CS__MODULE_KIND_CS, newModuleKindCS, newModuleKindCS));
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public EList<ModuleRefCS> getModuleRefs() {
-        if (moduleRefs == null) {
-            moduleRefs = new EObjectContainmentEList<ModuleRefCS>(ModuleRefCS.class, this, CSTPackage.MODULE_USAGE_CS__MODULE_REFS);
-        }
-        return moduleRefs;
-    }
+		if (moduleRefs == null) {
+			moduleRefs = new EObjectContainmentEList<ModuleRefCS>(ModuleRefCS.class, this, CSTPackage.MODULE_USAGE_CS__MODULE_REFS);
+		}
+		return moduleRefs;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case CSTPackage.MODULE_USAGE_CS__MODULE_KIND_CS:
-                return basicSetModuleKindCS(null, msgs);
-            case CSTPackage.MODULE_USAGE_CS__MODULE_REFS:
-                return ((InternalEList<?>)getModuleRefs()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case CSTPackage.MODULE_USAGE_CS__MODULE_KIND_CS:
+				return basicSetModuleKindCS(null, msgs);
+			case CSTPackage.MODULE_USAGE_CS__MODULE_REFS:
+				return ((InternalEList<?>)getModuleRefs()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case CSTPackage.MODULE_USAGE_CS__IMPORT_KIND:
-                return getImportKind();
-            case CSTPackage.MODULE_USAGE_CS__MODULE_KIND_CS:
-                return getModuleKindCS();
-            case CSTPackage.MODULE_USAGE_CS__MODULE_REFS:
-                return getModuleRefs();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case CSTPackage.MODULE_USAGE_CS__IMPORT_KIND:
+				return getImportKind();
+			case CSTPackage.MODULE_USAGE_CS__MODULE_KIND_CS:
+				return getModuleKindCS();
+			case CSTPackage.MODULE_USAGE_CS__MODULE_REFS:
+				return getModuleRefs();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case CSTPackage.MODULE_USAGE_CS__IMPORT_KIND:
-                setImportKind((ImportKindEnum)newValue);
-                return;
-            case CSTPackage.MODULE_USAGE_CS__MODULE_KIND_CS:
-                setModuleKindCS((ModuleKindCS)newValue);
-                return;
-            case CSTPackage.MODULE_USAGE_CS__MODULE_REFS:
-                getModuleRefs().clear();
-                getModuleRefs().addAll((Collection<? extends ModuleRefCS>)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case CSTPackage.MODULE_USAGE_CS__IMPORT_KIND:
+				setImportKind((ImportKindEnum)newValue);
+				return;
+			case CSTPackage.MODULE_USAGE_CS__MODULE_KIND_CS:
+				setModuleKindCS((ModuleKindCS)newValue);
+				return;
+			case CSTPackage.MODULE_USAGE_CS__MODULE_REFS:
+				getModuleRefs().clear();
+				getModuleRefs().addAll((Collection<? extends ModuleRefCS>)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public void eUnset(int featureID) {
-        switch (featureID) {
-            case CSTPackage.MODULE_USAGE_CS__IMPORT_KIND:
-                setImportKind(IMPORT_KIND_EDEFAULT);
-                return;
-            case CSTPackage.MODULE_USAGE_CS__MODULE_KIND_CS:
-                setModuleKindCS((ModuleKindCS)null);
-                return;
-            case CSTPackage.MODULE_USAGE_CS__MODULE_REFS:
-                getModuleRefs().clear();
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case CSTPackage.MODULE_USAGE_CS__IMPORT_KIND:
+				setImportKind(IMPORT_KIND_EDEFAULT);
+				return;
+			case CSTPackage.MODULE_USAGE_CS__MODULE_KIND_CS:
+				setModuleKindCS((ModuleKindCS)null);
+				return;
+			case CSTPackage.MODULE_USAGE_CS__MODULE_REFS:
+				getModuleRefs().clear();
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case CSTPackage.MODULE_USAGE_CS__IMPORT_KIND:
-                return importKind != IMPORT_KIND_EDEFAULT;
-            case CSTPackage.MODULE_USAGE_CS__MODULE_KIND_CS:
-                return moduleKindCS != null;
-            case CSTPackage.MODULE_USAGE_CS__MODULE_REFS:
-                return moduleRefs != null && !moduleRefs.isEmpty();
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case CSTPackage.MODULE_USAGE_CS__IMPORT_KIND:
+				return importKind != IMPORT_KIND_EDEFAULT;
+			case CSTPackage.MODULE_USAGE_CS__MODULE_KIND_CS:
+				return moduleKindCS != null;
+			case CSTPackage.MODULE_USAGE_CS__MODULE_REFS:
+				return moduleRefs != null && !moduleRefs.isEmpty();
+		}
+		return super.eIsSet(featureID);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public String toString() {
-        if (eIsProxy()) return super.toString();
+		if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (importKind: "); //$NON-NLS-1$
-        result.append(importKind);
-        result.append(')');
-        return result.toString();
-    }
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (importKind: "); //$NON-NLS-1$
+		result.append(importKind);
+		result.append(')');
+		return result.toString();
+	}
 
 } //ModuleUsageCSImpl

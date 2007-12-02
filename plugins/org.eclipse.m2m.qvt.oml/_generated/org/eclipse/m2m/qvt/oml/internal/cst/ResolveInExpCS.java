@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ResolveInExpCS.java,v 1.4 2007/09/20 10:14:05 aigdalov Exp $
+ * $Id: ResolveInExpCS.java,v 1.4.2.1 2007/12/02 22:33:59 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst;
 
@@ -36,63 +36,63 @@ import org.eclipse.ocl.internal.cst.TypeCS;
  */
 public interface ResolveInExpCS extends ResolveExpCS {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
     /**
-     * Returns the value of the '<em><b>In Mapping Type</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>In Mapping Type</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>In Mapping Type</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>In Mapping Type</em>' containment reference.
-     * @see #setInMappingType(TypeCS)
-     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getResolveInExpCS_InMappingType()
-     * @model containment="true" required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>In Mapping Type</em>' containment reference.
+	 * @see #setInMappingType(TypeCS)
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getResolveInExpCS_InMappingType()
+	 * @model containment="true" required="true"
+	 * @generated
+	 */
     TypeCS getInMappingType();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.ResolveInExpCS#getInMappingType <em>In Mapping Type</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.ResolveInExpCS#getInMappingType <em>In Mapping Type</em>}' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>In Mapping Type</em>' containment reference.
-     * @see #getInMappingType()
-     * @generated
-     */
+	 * @param value the new value of the '<em>In Mapping Type</em>' containment reference.
+	 * @see #getInMappingType()
+	 * @generated
+	 */
     void setInMappingType(TypeCS value);
 
     /**
-     * Returns the value of the '<em><b>In Mapping Name</b></em>' attribute.
-     * The default value is <code>""</code>.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>In Mapping Name</b></em>' attribute.
+	 * The default value is <code>""</code>.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>In Mapping Name</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>In Mapping Name</em>' attribute.
-     * @see #setInMappingName(String)
-     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getResolveInExpCS_InMappingName()
-     * @model default="" required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>In Mapping Name</em>' attribute.
+	 * @see #setInMappingName(String)
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getResolveInExpCS_InMappingName()
+	 * @model default="" required="true"
+	 * @generated
+	 */
     String getInMappingName();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.ResolveInExpCS#getInMappingName <em>In Mapping Name</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.ResolveInExpCS#getInMappingName <em>In Mapping Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>In Mapping Name</em>' attribute.
-     * @see #getInMappingName()
-     * @generated
-     */
+	 * @param value the new value of the '<em>In Mapping Name</em>' attribute.
+	 * @see #getInMappingName()
+	 * @generated
+	 */
     void setInMappingName(String value);
 
 } // ResolveInExpCS

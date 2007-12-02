@@ -49,6 +49,7 @@ import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.qvt.oml.expressions.AltExp;
+import org.eclipse.m2m.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.qvt.oml.expressions.ConfigProperty;
@@ -58,6 +59,7 @@ import org.eclipse.m2m.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.expressions.Library;
 import org.eclipse.m2m.qvt.oml.expressions.LocalProperty;
+import org.eclipse.m2m.qvt.oml.expressions.LogExp;
 import org.eclipse.m2m.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.qvt.oml.expressions.MappingCallExp;
 import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
@@ -72,6 +74,7 @@ import org.eclipse.m2m.qvt.oml.expressions.Property;
 import org.eclipse.m2m.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveInExp;
+import org.eclipse.m2m.qvt.oml.expressions.SeverityKind;
 import org.eclipse.m2m.qvt.oml.expressions.SwitchExp;
 import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.expressions.VariableInitExp;
@@ -412,10 +415,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 			}
 			
 			e.printQvtStackTrace(printWriter);
-			
-			QvtRuntimeException ee = new QvtRuntimeException(e.getMessage(), e.getCause());
-			ee.setStackQvtTrace(e.getQvtStackTrace());
-			throw ee;
+			throw e;
 		}
     }
     
@@ -579,6 +579,84 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 		return null;
 	}
     
+	public Object visitLogExp(LogExp logExp) {
+		PrintWriter logger = QvtOperationalStdLibrary.getLogger(getContext());
+		if(logger != null) {
+			if(doVisitLogExp(logExp, logger)) {
+				logger.println();
+			}
+		}
+		return null;
+	}
+	
+	private boolean doVisitLogExp(LogExp logExp, PrintWriter logger) {
+		if(logExp.getCondition() != null && 
+			!Boolean.TRUE.equals(logExp.getCondition().accept(this))) {
+			return false;
+		}
+		
+		EList<OCLExpression<EClassifier>> args = logExp.getArgument();
+		if(args.size() > 2) {
+			Object level = args.get(2).accept(this);
+			logger.print("Level " + level + " - "); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+		
+		Object message = args.get(0).accept(this);
+		logger.print(message);
+
+		if(args.size() > 1) {
+			Object element = args.get(1).accept(this);
+			logger.print(", data: "); //$NON-NLS-1$
+			logger.print(String.valueOf(element));
+		}
+		
+		return true;
+	}
+	
+	public Object visitAssertExp(AssertExp assertExp) {
+		if(assertExp.getAssertion() != null && 
+				!Boolean.TRUE.equals(assertExp.getAssertion().accept(this))) {
+			setCurrentEnvInstructionPointer(assertExp);			
+		
+			PrintWriter logger = QvtOperationalStdLibrary.getLogger(getContext());
+			if(logger != null) {
+				EObject parent = assertExp;				
+				while(parent != null && !(parent instanceof Module)) {
+					parent = parent.eContainer();
+				}
+				
+				String source = EvaluationMessages.UknownSourceLabel;				
+				if(parent != null) {
+					String moduleName = ((Module)parent).getName();
+					if(moduleName != null) {
+						source = moduleName;
+					}
+				}
+				
+				StringBuilder locationBuf = new StringBuilder(source);
+				if(assertExp.getLine() >= 0) {
+					locationBuf.append(':').append(assertExp.getLine());
+				}
+				String message = NLS.bind(EvaluationMessages.AssertFailedMessage, assertExp.getSeverity(), locationBuf.toString());
+				logger.print(message);
+				if(assertExp.getLog() != null) {
+					logger.print(" : "); //$NON-NLS-1$
+					doVisitLogExp(assertExp.getLog(), logger);
+				}
+				
+				logger.println();
+				if(SeverityKind.FATAL.equals(assertExp.getSeverity())) {
+					logger.println(EvaluationMessages.TerminatingExecution);
+				}
+			}
+			
+			if(SeverityKind.FATAL.equals(assertExp.getSeverity())) {				
+				throwQvtException(new QvtAssertionFailed(EvaluationMessages.FatalAssertionFailed));
+			}
+		}
+		
+		return null;
+	}
     
     private void initModuleProperties(Module module) {
         for (ModuleImport imp : module.getModuleImport()) {
@@ -772,7 +850,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         return varParameterValue;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") //$NON-NLS-1$
     private EValue createEValue(Object oclObject) {
         EValue value = TraceFactory.eINSTANCE.createEValue();
         value.setOclObject(oclObject);
@@ -877,7 +955,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 		QvtRuntimeException.doThrow(exception, createStackInfoProvider(getOperationalEvaluationEnv(), causingASTNode));
     }
     
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") //$NON-NLS-1$
 	@Override
     protected Object call(EOperation operation, OCLExpression<EClassifier> body, Object target, Object[] args) {
     	if(target instanceof EObject) {
@@ -921,7 +999,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
     	return super.call(operation, body, target, args);
     }
     
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") //$NON-NLS-1$
 	@Override
 	protected Object navigate(EStructuralFeature property, OCLExpression<EClassifier> derivation, Object target) {
 		Environment myEnv = getEnvironment(); 
@@ -966,7 +1044,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 				org.eclipse.ocl.ecore.OCLExpression invalidBodyExpr = EcoreFactory.eINSTANCE.createInvalidLiteralExp();
 				
 				public org.eclipse.ocl.ecore.OCLExpression handleError(ParserException parserException, EModelElement contextElement) {
-					QvtPlugin.log(QvtPlugin.createErrorStatus("Failed to parse OCL annotation :" + 
+					QvtPlugin.log(QvtPlugin.createErrorStatus("Failed to parse OCL annotation :" +  //$NON-NLS-1$
 							getUMLReflection().getQualifiedName(contextElement) , parserException));
 
 					return invalidBodyExpr;

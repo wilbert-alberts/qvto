@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.20.2.1 2007/11/29 11:37:02 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.20.2.2 2007/12/02 22:34:02 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.20.2.1 2007/11/29 11:37:02 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.20.2.2 2007/12/02 22:34:02 radvorak Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -123,6 +123,8 @@ import lpg.lpgjavaruntime.NotBacktrackParseTableException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.m2m.qvt.oml.QvtPlugin;
+import org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.LogExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ConfigPropertyCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindCS;
@@ -1259,6 +1261,24 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 		result.setPathNameCS(pathNameCS);
 		return result;
 	}
+	
+	protected final CSTNode createLogExpCS(EList<OCLExpressionCS> args, OCLExpressionCS condition) {
+		LogExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createLogExpCS();
+		String name = getTokenKindName(QvtOpLPGParsersym.TK_log);
+		result.setSimpleNameCS(createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, name));
+
+		result.getArguments().addAll(args);		
+		result.setCondition(condition);		
+		return result;
+	}
+    
+    protected final CSTNode createAssertExpCS(OCLExpressionCS assertCondition, SimpleNameCS severityIdentifier, LogExpCS logExpCS) {
+		AssertExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createAssertExpCS();
+		result.setAssertion(assertCondition);
+		result.setSeverity(severityIdentifier);
+		result.setLog(logExpCS);
+		return result;
+	}		
 	
 	private void diagnozeErrorToken(int token_index) {
 		IToken token = getIToken(token_index);
@@ -5974,7 +5994,89 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 				dtParser.setSym1(result);
 	  		  break;
 			}
+	 
+			//
+			// Rule 517:  logWhenExp ::= when oclExpressionCS
+			//
+			case 517: {
+				
+			OCLExpressionCS condition = (OCLExpressionCS) dtParser.getSym(2);
+			dtParser.setSym1(condition);
+      		  break;
+			}
+     
+			//
+			// Rule 519:  logWhenExpOpt ::= $Empty
+			//
+			case 519:
+				dtParser.setSym1(null);
+				break;
+ 
+			//
+			// Rule 520:  logExpCS ::= log ( argumentsCSopt ) logWhenExpOpt
+			//
+			case 520: {
+				
+			OCLExpressionCS condition = (OCLExpressionCS) dtParser.getSym(5);
+			CSTNode result = createLogExpCS((EList<OCLExpressionCS>)dtParser.getSym(3), condition);
+			if(condition != null) {
+				setOffsets(result, getIToken(dtParser.getToken(1)), condition);
+			} else {
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(4)));
+			}
+			dtParser.setSym1(result);
+      		  break;
+			}
+     
+			//
+			// Rule 522:  severityKindCS ::= simpleNameCS
+			//
+			case 522: {
+				
+			dtParser.setSym1(dtParser.getSym(1));
+	  		  break;
+			}
+	 
+			//
+			// Rule 524:  severityKindCSOpt ::= $Empty
+			//
+			case 524:
+				dtParser.setSym1(null);
+				break;
+ 
+			//
+			// Rule 525:  assertWithLogExp ::= with logExpCS
+			//
+			case 525: {
+				
+			LogExpCS logExp = (LogExpCS) dtParser.getSym(2);
+			setOffsets(logExp, getIToken(dtParser.getToken(2)), logExp);
+			dtParser.setSym1(logExp);
+      		  break;
+			}
+     
+			//
+			// Rule 527:  assertWithLogExpOpt ::= $Empty
+			//
+			case 527:
+				dtParser.setSym1(null);
+				break;
+ 
+			//
+			// Rule 528:  assertExpCS ::= assert severityKindCSOpt oclExpressionCS assertWithLogExpOpt
+			//
+			case 528: {
+				
+			LogExpCS logExpCS = (LogExpCS)dtParser.getSym(4);
+			OCLExpressionCS condition = (OCLExpressionCS)dtParser.getSym(3);
+			CSTNode result = createAssertExpCS(condition, (SimpleNameCS)dtParser.getSym(2), logExpCS);
 	
+			CSTNode end = logExpCS != null ? logExpCS : condition; 
+			setOffsets(result, getIToken(dtParser.getToken(1)), end);
+			dtParser.setSym1(result);
+      		  break;
+			}
+    
 	
 			default:
 				break;

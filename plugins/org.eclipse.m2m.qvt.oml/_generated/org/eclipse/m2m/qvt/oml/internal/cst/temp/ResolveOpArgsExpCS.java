@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ResolveOpArgsExpCS.java,v 1.4 2007/09/20 10:14:08 aigdalov Exp $
+ * $Id: ResolveOpArgsExpCS.java,v 1.4.2.1 2007/12/02 22:34:04 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.temp;
 
@@ -38,62 +38,62 @@ import org.eclipse.ocl.internal.cst.VariableCS;
  */
 public interface ResolveOpArgsExpCS extends CSTNode {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
     /**
-     * Returns the value of the '<em><b>Target</b></em>' reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Target</b></em>' reference.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Target</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Target</em>' reference.
-     * @see #setTarget(VariableCS)
-     * @see org.eclipse.m2m.qvt.oml.internal.cst.temp.TempPackage#getResolveOpArgsExpCS_Target()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>Target</em>' reference.
+	 * @see #setTarget(VariableCS)
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.temp.TempPackage#getResolveOpArgsExpCS_Target()
+	 * @model
+	 * @generated
+	 */
     VariableCS getTarget();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.temp.ResolveOpArgsExpCS#getTarget <em>Target</em>}' reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.temp.ResolveOpArgsExpCS#getTarget <em>Target</em>}' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Target</em>' reference.
-     * @see #getTarget()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Target</em>' reference.
+	 * @see #getTarget()
+	 * @generated
+	 */
     void setTarget(VariableCS value);
 
     /**
-     * Returns the value of the '<em><b>Condition</b></em>' reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Condition</b></em>' reference.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Condition</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Condition</em>' reference.
-     * @see #setCondition(OCLExpressionCS)
-     * @see org.eclipse.m2m.qvt.oml.internal.cst.temp.TempPackage#getResolveOpArgsExpCS_Condition()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>Condition</em>' reference.
+	 * @see #setCondition(OCLExpressionCS)
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.temp.TempPackage#getResolveOpArgsExpCS_Condition()
+	 * @model
+	 * @generated
+	 */
     OCLExpressionCS getCondition();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.temp.ResolveOpArgsExpCS#getCondition <em>Condition</em>}' reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.temp.ResolveOpArgsExpCS#getCondition <em>Condition</em>}' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Condition</em>' reference.
-     * @see #getCondition()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Condition</em>' reference.
+	 * @see #getCondition()
+	 * @generated
+	 */
     void setCondition(OCLExpressionCS value);
 
 } // ResolveOpArgsExpCS

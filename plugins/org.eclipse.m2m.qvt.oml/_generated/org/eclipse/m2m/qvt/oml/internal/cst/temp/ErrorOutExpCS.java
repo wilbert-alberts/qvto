@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ErrorOutExpCS.java,v 1.3 2007/09/20 10:14:08 aigdalov Exp $
+ * $Id: ErrorOutExpCS.java,v 1.3.2.1 2007/12/02 22:34:05 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.temp;
 
@@ -29,10 +29,10 @@ import org.eclipse.m2m.qvt.oml.internal.cst.OutExpCS;
  */
 public interface ErrorOutExpCS extends OutExpCS, ErrorCSTNode {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 } // ErrorOutExpCS

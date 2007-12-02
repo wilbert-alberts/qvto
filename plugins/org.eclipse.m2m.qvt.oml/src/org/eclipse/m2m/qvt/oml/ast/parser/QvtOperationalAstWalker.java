@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.qvt.oml.expressions.AltExp;
+import org.eclipse.m2m.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.qvt.oml.expressions.ConfigProperty;
@@ -30,6 +31,7 @@ import org.eclipse.m2m.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.expressions.Library;
 import org.eclipse.m2m.qvt.oml.expressions.LocalProperty;
+import org.eclipse.m2m.qvt.oml.expressions.LogExp;
 import org.eclipse.m2m.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.qvt.oml.expressions.MappingCallExp;
 import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
@@ -444,6 +446,30 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
         for (OCLExpression<EClassifier> exp : modelType.getAdditionalCondition()) {
             doProcess(exp, modelType);
         }
+		return null;
+	}
+	
+	public Object visitLogExp(LogExp logExp) {
+		for (OCLExpression<EClassifier> arg : logExp.getArgument()) {
+			doProcess(arg, logExp);
+		}
+		
+		if(logExp.getCondition() != null) {
+			doProcess(logExp.getCondition(), logExp);
+		}
+		
+		return null;
+	}
+	
+	public Object visitAssertExp(AssertExp assertExp) {
+		if(assertExp.getAssertion() != null) {
+			doProcess(assertExp.getAssertion(), assertExp);
+		}
+		
+		if(assertExp.getLog() != null) {
+			doProcess(assertExp.getLog(), assertExp);
+		}
+		
 		return null;
 	}
     

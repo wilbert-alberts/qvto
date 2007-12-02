@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: PackageRefCS.java,v 1.4 2007/09/20 10:14:05 aigdalov Exp $
+ * $Id: PackageRefCS.java,v 1.4.2.1 2007/12/02 22:33:59 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst;
 
@@ -38,62 +38,62 @@ import org.eclipse.ocl.internal.cst.StringLiteralExpCS;
  */
 public interface PackageRefCS extends CSTNode {
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 	/**
-     * Returns the value of the '<em><b>Path Name CS</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Path Name CS</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Path Name CS</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Path Name CS</em>' containment reference.
-     * @see #setPathNameCS(PathNameCS)
-     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getPackageRefCS_PathNameCS()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Path Name CS</em>' containment reference.
+	 * @see #setPathNameCS(PathNameCS)
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getPackageRefCS_PathNameCS()
+	 * @model containment="true"
+	 * @generated
+	 */
 	PathNameCS getPathNameCS();
 
 	/**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.PackageRefCS#getPathNameCS <em>Path Name CS</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.PackageRefCS#getPathNameCS <em>Path Name CS</em>}' containment reference.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Path Name CS</em>' containment reference.
-     * @see #getPathNameCS()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Path Name CS</em>' containment reference.
+	 * @see #getPathNameCS()
+	 * @generated
+	 */
 	void setPathNameCS(PathNameCS value);
 
 	/**
-     * Returns the value of the '<em><b>Uri CS</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Uri CS</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Uri CS</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Uri CS</em>' containment reference.
-     * @see #setUriCS(StringLiteralExpCS)
-     * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getPackageRefCS_UriCS()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Uri CS</em>' containment reference.
+	 * @see #setUriCS(StringLiteralExpCS)
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getPackageRefCS_UriCS()
+	 * @model containment="true"
+	 * @generated
+	 */
 	StringLiteralExpCS getUriCS();
 
 	/**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.PackageRefCS#getUriCS <em>Uri CS</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.internal.cst.PackageRefCS#getUriCS <em>Uri CS</em>}' containment reference.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Uri CS</em>' containment reference.
-     * @see #getUriCS()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Uri CS</em>' containment reference.
+	 * @see #getUriCS()
+	 * @generated
+	 */
 	void setUriCS(StringLiteralExpCS value);
 
 } // PackageRefCS

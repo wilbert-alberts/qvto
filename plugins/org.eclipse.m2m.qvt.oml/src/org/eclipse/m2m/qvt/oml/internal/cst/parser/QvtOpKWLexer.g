@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpKWLexer.g,v 1.5 2007/09/17 10:17:37 aigdalov Exp $
+-- * $Id: QvtOpKWLexer.g,v 1.5.2.1 2007/12/02 22:34:03 radvorak Exp $
 -- */
 --
 -- The QVT KeyWord Lexer
@@ -76,7 +76,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpKWLexer.g,v 1.5 2007/09/17 10:17:37 aigdalov Exp $
+ * $Id: QvtOpKWLexer.g,v 1.5.2.1 2007/12/02 22:34:03 radvorak Exp $
  */
 	./
 $End
@@ -100,6 +100,9 @@ $Export
 	map
 	xmap
 	late
+	log
+	assert
+	with
 	resolve
 	resolveone
 	resolveIn
@@ -246,7 +249,25 @@ $Rules
 			$setResult($_late);
 		  $EndAction
 		./
+
+		| l o g
+		/.$BeginAction
+			$setResult($_log);
+		  $EndAction
+		./
 		
+		| a s s e r t
+		/.$BeginAction
+			$setResult($_assert);
+		  $EndAction
+		./
+
+		| w i t h
+		/.$BeginAction
+			$setResult($_with);
+		  $EndAction
+		./
+
 		| r e s o l v e
 		/.$BeginAction
 			$setResult($_resolve);
