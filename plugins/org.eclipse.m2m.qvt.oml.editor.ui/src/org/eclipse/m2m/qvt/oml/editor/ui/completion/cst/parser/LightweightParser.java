@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.2.2.2 2007/11/29 12:18:31 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.2.2.3 2007/12/02 21:25:47 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.2.2.2 2007/11/29 12:18:31 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.2.2.3 2007/12/02 21:25:47 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser;
@@ -5974,6 +5974,36 @@ public class LightweightParser extends PrsStream implements RuleAction {
 						(EList)dtParser.getSym(4)
 					);
 				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(5)));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 518:  mappingRuleCS ::= entryDeclarationCS ;
+			//
+			case 518: {
+				
+				MappingQueryCS result = createMappingQueryCS(
+						(MappingDeclarationCS)dtParser.getSym(1),
+						ourEmptyEList
+					);
+				setOffsets(result, (CSTNode)dtParser.getSym(1), getIToken(dtParser.getToken(2)));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 519:  entryDeclarationCS ::= main qvtErrorToken
+			//
+			case 519: {
+				
+				CSTNode result = createMappingDeclarationCS(
+						null,
+						createScopedNameCS(null, getTokenText(dtParser.getToken(1))),
+						ourEmptyEList,
+						null
+					);
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(1)));
 				dtParser.setSym1(result);
 	  		  break;
 			}
