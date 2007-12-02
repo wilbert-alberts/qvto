@@ -32,7 +32,9 @@ import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalStdLibrary;
 import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtAssertionFailed;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtRuntimeException;
+import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtStackOverFlowError;
 import org.eclipse.m2m.qvt.oml.library.Context;
 import org.eclipse.m2m.qvt.oml.library.IContext;
 import org.eclipse.m2m.qvt.oml.library.QvtConfiguration;
@@ -40,18 +42,41 @@ import org.eclipse.m2m.qvt.oml.library.QvtConfiguration;
 public class TestStackTrace extends TestTransformation {
 
 	private boolean fEnableLineNumbers = true;
+	private StringWriter fLogger = new StringWriter();
 	
 	public TestStackTrace() {
 		super(new FileToFileData("stacktrace"));
 	}
-    
+
+	public void testLogExpUsage() throws Exception {
+		String testcase = "testLogExpUsage"; //$NON-NLS-1$
+		runQvtModuleTestCase(testcase);
+		assertLogMatch(testcase);
+	}
+	
+	public void testAssertionFailed() throws Exception {
+		String testcase = "assertionFailed"; //$NON-NLS-1$
+		QvtRuntimeException e = runQvtModuleTestCase(testcase);						
+		assertValidQVTRuntimeException(e);
+		assertEquals(QvtAssertionFailed.class, e.getClass());
+		
+		StringWriter strWriter = new StringWriter();
+		e.printQvtStackTrace(new PrintWriter(strWriter));
+
+		String dumpedContents = loadExpectedStackDump(testcase);
+		assertEquals(dumpedContents.toString(), strWriter.getBuffer().toString());
+		
+		assertLogMatch(testcase);		
+	}	
+	
 	public void testStackOverFlow() throws Exception {
 		QvtRuntimeException e = runQvtModuleTestCase("stackOverFlow");				
 		
 		assertValidQVTRuntimeException(e);
+		assertEquals(QvtStackOverFlowError.class, e.getClass());		
 		assertEquals(StackOverflowError.class, e.getCause().getClass());
 		
-		int elementCount = 10;
+		int elementCount = 10;	
 		for (StackTraceElement element : e.getQvtStackTrace()) {
 			if(--elementCount == 0) {
 				break;
@@ -76,7 +101,7 @@ public class TestStackTrace extends TestTransformation {
 		e.printQvtStackTrace(new PrintWriter(strWriter));
 				
 		String dumpedContents = loadExpectedStackDump(testCase);
-		assertEquals(dumpedContents.toString(), strWriter.getBuffer().toString());
+		assertEquals(dumpedContents.toString(), strWriter.getBuffer().toString());		
 	}
 
 	public void testUknownSourceStackTrace() throws Exception {
@@ -108,14 +133,31 @@ public class TestStackTrace extends TestTransformation {
 			return e;			
 		}
 		
-		fail("Expected QVT runtime exception"); //$NON-NLS-1$
 		return null;
 	}
 	
-	
+
 	private String loadExpectedStackDump(String testCase) throws IOException {
+		return loadExpectedDump(testCase + ".stack"); //$NON-NLS-1$
+	}
+	
+	private void assertLogMatch(String testCase) throws Exception {
+		String expectedContents = loadExpectedLogDump(testCase);
+		assertFalse("Non-empty log expected", expectedContents.length() == 0); //$NON-NLS-1$
+		
+		String logContents = fLogger != null ? fLogger.getBuffer().toString() : ""; //$NON-NLS-1$
+		assertFalse("Non-empty log expected", logContents.length() == 0); //$NON-NLS-1$
+		
+		assertEquals(expectedContents, logContents);
+	}
+	
+	private String loadExpectedLogDump(String testCase) throws IOException {
+		return loadExpectedDump(testCase + ".log"); //$NON-NLS-1$
+	}
+	
+	private String loadExpectedDump(String fileName) throws IOException {
 		File parentFolder = getData().getTransformation(getTestProject().getProject()).getParentFile();
-		FileReader freader = new FileReader(new File(parentFolder, testCase + ".stack")); //$NON-NLS-1$
+		FileReader freader = new FileReader(new File(parentFolder, fileName));
 		
 		CharBuffer buf = CharBuffer.allocate(1024);
 		StringBuilder result = new StringBuilder();
@@ -144,7 +186,7 @@ public class TestStackTrace extends TestTransformation {
 	        	transf.setQvtCompilerOptions(options);
 	        	
 	        	// avoid messy System.err printouts
-	        	qvtContext.put(QvtOperationalStdLibrary.OUT_PRINT_WRITER, new PrintWriter(new StringWriter()));
+	        	qvtContext.put(QvtOperationalStdLibrary.OUT_PRINT_WRITER, new PrintWriter(fLogger));
 	            
 	        	List<EObject> inputs = new ArrayList<EObject>(inUris.size());
 	        	for (URI uri : inUris) {

@@ -12,3 +12,21 @@ mapping EClassifier::mapCreateInstaceFailureFromAux() : EClassifier@outModel {
 	}
 }
 
+mapping EClassifier::mapWithAssertionFailedFromAux() : EClassifier@outModel {
+	init {
+		assert fatal 100 < 0 with log('Testing fatal assert in mapWithAssertionFailedFromAux()');
+	}
+}
+
+query populateLogData() :OclAny {
+	log('message');
+	log('ignored message') when false;
+	log('confirmed message') when true;
+	
+	log('message with data', 2.344545);
+	log('confirmed message with data', 2.344545) when true;	
+	log('ignored message with data', 2.344545) when false;	
+	log('message with data and level', 2.344545, 4);
+	
+	null	
+}
