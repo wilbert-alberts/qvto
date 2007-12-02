@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.2.2.3 2007/12/02 21:25:47 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.2.2.4 2007/12/02 22:31:50 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.2.2.3 2007/12/02 21:25:47 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.2.2.4 2007/12/02 22:31:50 radvorak Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser;
@@ -123,6 +123,8 @@ import lpg.lpgjavaruntime.NotBacktrackParseTableException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.m2m.qvt.oml.QvtPlugin;
+import org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.LogExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ConfigPropertyCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindCS;
@@ -1262,6 +1264,24 @@ public class LightweightParser extends PrsStream implements RuleAction {
 		result.setPathNameCS(pathNameCS);
 		return result;
 	}
+	
+	protected final CSTNode createLogExpCS(EList<OCLExpressionCS> args, OCLExpressionCS condition) {
+		LogExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createLogExpCS();
+		String name = getTokenKindName(QvtOpLPGParsersym.TK_log);
+		result.setSimpleNameCS(createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, name));
+
+		result.getArguments().addAll(args);		
+		result.setCondition(condition);		
+		return result;
+	}
+    
+    protected final CSTNode createAssertExpCS(OCLExpressionCS assertCondition, SimpleNameCS severityIdentifier, LogExpCS logExpCS) {
+		AssertExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createAssertExpCS();
+		result.setAssertion(assertCondition);
+		result.setSeverity(severityIdentifier);
+		result.setLog(logExpCS);
+		return result;
+	}		
 	
 	private void diagnozeErrorToken(int token_index) {
 		IToken token = getIToken(token_index);
@@ -5965,9 +5985,91 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 517:  mappingQueryCS ::= query mappingDeclarationCS { statementListOpt }
+			// Rule 516:  logWhenExp ::= when oclExpressionCS
 			//
-			case 517: {
+			case 516: {
+				
+			OCLExpressionCS condition = (OCLExpressionCS) dtParser.getSym(2);
+			dtParser.setSym1(condition);
+      		  break;
+			}
+     
+			//
+			// Rule 518:  logWhenExpOpt ::= $Empty
+			//
+			case 518:
+				dtParser.setSym1(null);
+				break;
+ 
+			//
+			// Rule 519:  logExpCS ::= log ( argumentsCSopt ) logWhenExpOpt
+			//
+			case 519: {
+				
+			OCLExpressionCS condition = (OCLExpressionCS) dtParser.getSym(5);
+			CSTNode result = createLogExpCS((EList<OCLExpressionCS>)dtParser.getSym(3), condition);
+			if(condition != null) {
+				setOffsets(result, getIToken(dtParser.getToken(1)), condition);
+			} else {
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(4)));
+			}
+			dtParser.setSym1(result);
+      		  break;
+			}
+     
+			//
+			// Rule 521:  severityKindCS ::= simpleNameCS
+			//
+			case 521: {
+				
+			dtParser.setSym1(dtParser.getSym(1));
+	  		  break;
+			}
+	 
+			//
+			// Rule 523:  severityKindCSOpt ::= $Empty
+			//
+			case 523:
+				dtParser.setSym1(null);
+				break;
+ 
+			//
+			// Rule 524:  assertWithLogExp ::= with logExpCS
+			//
+			case 524: {
+				
+			LogExpCS logExp = (LogExpCS) dtParser.getSym(2);
+			setOffsets(logExp, getIToken(dtParser.getToken(2)), logExp);
+			dtParser.setSym1(logExp);
+      		  break;
+			}
+     
+			//
+			// Rule 526:  assertWithLogExpOpt ::= $Empty
+			//
+			case 526:
+				dtParser.setSym1(null);
+				break;
+ 
+			//
+			// Rule 527:  assertExpCS ::= assert severityKindCSOpt oclExpressionCS assertWithLogExpOpt
+			//
+			case 527: {
+				
+			LogExpCS logExpCS = (LogExpCS)dtParser.getSym(4);
+			OCLExpressionCS condition = (OCLExpressionCS)dtParser.getSym(3);
+			CSTNode result = createAssertExpCS(condition, (SimpleNameCS)dtParser.getSym(2), logExpCS);
+	
+			CSTNode end = logExpCS != null ? logExpCS : condition; 
+			setOffsets(result, getIToken(dtParser.getToken(1)), end);
+			dtParser.setSym1(result);
+      		  break;
+			}
+     
+			//
+			// Rule 530:  mappingQueryCS ::= query mappingDeclarationCS { statementListOpt }
+			//
+			case 530: {
 				
 				CSTNode result = createMappingQueryCS(
 						(MappingDeclarationCS)dtParser.getSym(2),
@@ -5979,9 +6081,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 518:  mappingRuleCS ::= entryDeclarationCS ;
+			// Rule 531:  mappingRuleCS ::= entryDeclarationCS ;
 			//
-			case 518: {
+			case 531: {
 				
 				MappingQueryCS result = createMappingQueryCS(
 						(MappingDeclarationCS)dtParser.getSym(1),
@@ -5993,9 +6095,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 519:  entryDeclarationCS ::= main qvtErrorToken
+			// Rule 532:  entryDeclarationCS ::= main qvtErrorToken
 			//
-			case 519: {
+			case 532: {
 				
 				CSTNode result = createMappingDeclarationCS(
 						null,
