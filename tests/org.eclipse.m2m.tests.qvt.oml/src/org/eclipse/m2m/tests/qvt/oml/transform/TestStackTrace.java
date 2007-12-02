@@ -143,10 +143,10 @@ public class TestStackTrace extends TestTransformation {
 	
 	private void assertLogMatch(String testCase) throws Exception {
 		String expectedContents = loadExpectedLogDump(testCase);
-		assertFalse("Non-empty log expected", expectedContents.isEmpty()); //$NON-NLS-1$
+		assertFalse("Non-empty log expected", expectedContents.length() == 0); //$NON-NLS-1$
 		
 		String logContents = fLogger != null ? fLogger.getBuffer().toString() : ""; //$NON-NLS-1$
-		assertFalse("Non-empty log expected", logContents.isEmpty()); //$NON-NLS-1$
+		assertFalse("Non-empty log expected", logContents.length() == 0); //$NON-NLS-1$
 		
 		assertEquals(expectedContents, logContents);
 	}
