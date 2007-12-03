@@ -70,10 +70,10 @@ public class QvtOperationalEnvFactory extends EcoreEnvironmentFactory {
 			EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> evalEnv,
 			Map<? extends EClass, ? extends Set<? extends EObject>> extentMap) {
 		
-		if(!(env instanceof QvtOperationalEnv)) {
+		if((env instanceof QvtOperationalEnv == false) || (evalEnv instanceof QvtOperationalEvaluationEnv == false)) {
 			return super.createEvaluationVisitor(env, evalEnv, extentMap);
 		}
 		
-		return new QvtOperationalEvaluationVisitorImpl((QvtOperationalEnv)env, evalEnv);
+		return QvtOperationalEvaluationVisitorImpl.createVisitor((QvtOperationalEnv)env, (QvtOperationalEvaluationEnv)evalEnv);
 	}
 }

@@ -10,7 +10,7 @@ import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveInExp;
-import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtOperationalEvaluationVisitorImpl;
+import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtOperationalEvaluationVisitor;
 import org.eclipse.m2m.qvt.oml.trace.EMappingResults;
 import org.eclipse.m2m.qvt.oml.trace.Trace;
 import org.eclipse.m2m.qvt.oml.trace.TraceRecord;
@@ -23,7 +23,7 @@ import org.eclipse.ocl.util.CollectionUtil;
  */
 
 public class QvtResolveUtil {
-    public static final Object resolveNow(ResolveExp resolveExp, QvtOperationalEvaluationVisitorImpl visitor, QvtOperationalEvaluationEnv env) {
+    public static final Object resolveNow(ResolveExp resolveExp, QvtOperationalEvaluationVisitor visitor, QvtOperationalEvaluationEnv env) {
         OCLExpression<EClassifier> source = resolveExp.getSource();
         if (source != null) {
             Trace trace = visitor.getContext().getTrace();
@@ -38,7 +38,7 @@ public class QvtResolveUtil {
         return null;
     }
 
-    public static final Object resolveInNow(ResolveInExp resolveInExp, QvtOperationalEvaluationVisitorImpl visitor, QvtOperationalEvaluationEnv env) {
+    public static final Object resolveInNow(ResolveInExp resolveInExp, QvtOperationalEvaluationVisitor visitor, QvtOperationalEvaluationEnv env) {
         OCLExpression<EClassifier> source = resolveInExp.getSource();
         List<TraceRecord> selectedTraceRecords = new ArrayList<TraceRecord>();
         Trace trace = visitor.getContext().getTrace();
@@ -72,7 +72,7 @@ public class QvtResolveUtil {
         return searchByTypeAndCondition(resolveInExp, selectedTraceRecords, visitor, env);
     }
     
-    private static Object searchByTypeAndCondition(ResolveExp resolveExp, List<TraceRecord> traceRecords, QvtOperationalEvaluationVisitorImpl visitor, QvtOperationalEvaluationEnv env) {
+    private static Object searchByTypeAndCondition(ResolveExp resolveExp, List<TraceRecord> traceRecords, QvtOperationalEvaluationVisitor visitor, QvtOperationalEvaluationEnv env) {
         if (resolveExp.isOne()) {
             for (TraceRecord traceRecord : traceRecords) {
                 EMappingResults results = traceRecord.getResult();
@@ -125,7 +125,7 @@ public class QvtResolveUtil {
         return resolveExp.isIsInverse() ? trace.getTargetToTraceRecordMap() : trace.getSourceToTraceRecordMap();
     }
     
-    private static boolean checkTypeAndCondition(ResolveExp resolveExp, Object resolveCandidate, QvtOperationalEvaluationVisitorImpl visitor,
+    private static boolean checkTypeAndCondition(ResolveExp resolveExp, Object resolveCandidate, QvtOperationalEvaluationVisitor visitor,
             QvtOperationalEvaluationEnv env) {
         if ((resolveExp.getTarget() != null) && (resolveExp.getTarget().getType() != null)) {
             EClassifier type = resolveExp.getTarget().getType();

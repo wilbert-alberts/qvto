@@ -34,6 +34,11 @@ public class QvtRuntimeException extends RuntimeException {
 	
 	private List<StackTraceElement> fStackTrace;
 	
+
+	public QvtRuntimeException() {
+		super();
+	}
+	
 	
 	public QvtRuntimeException(String message) {
 		super(message);

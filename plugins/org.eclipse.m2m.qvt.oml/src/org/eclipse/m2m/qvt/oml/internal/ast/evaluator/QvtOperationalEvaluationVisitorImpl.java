@@ -53,7 +53,6 @@ import org.eclipse.m2m.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
-import org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.expressions.Library;
@@ -130,21 +129,24 @@ import org.eclipse.osgi.util.NLS;
 public class QvtOperationalEvaluationVisitorImpl
 	extends EvaluationVisitorImpl<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter,
 EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject>
-implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalAction, Constraint> {
+implements QvtOperationalEvaluationVisitor {
 
-    public QvtOperationalEvaluationVisitorImpl(QvtOperationalEnv env,
-            EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> evalEnv) {
+    public QvtOperationalEvaluationVisitorImpl(QvtOperationalEnv env, QvtOperationalEvaluationEnv evalEnv) {
         super(env, evalEnv, evalEnv.createExtentMap(null));
 
         myEvalEnv = evalEnv;
+    }    
+    
+    public static QvtOperationalEvaluationVisitor createVisitor(QvtOperationalEnv env, QvtOperationalEvaluationEnv evalEnv) {
+    	return new QvtOperationalEvaluationVisitorImpl(env, evalEnv).createInterruptibleVisitor();
     }
-        
+            
 	@Override
 	public EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> getEvaluationEnvironment() {
 		return myEvalEnv;
 	}
 	
-	public void setEvaluationEnvironment(EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> evalEnv) {
+	public void setOperationalEvaluationEnv(QvtOperationalEvaluationEnv evalEnv) {
 		myEvalEnv = evalEnv;
     }
 
@@ -179,7 +181,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         
         Object exprValue = null;
         for (OCLExpression<EClassifier> exp : assignExp.getValue()) {
-            exprValue = exp.accept(this);
+            exprValue = exp.accept(getVisitor());
         }
 
         QvtOperationalEvaluationEnv env = getOperationalEvaluationEnv();
@@ -279,12 +281,12 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
     }
 
     public Object visitLocalProperty(LocalProperty localProperty) {
-        return localProperty.getExpression().accept(this);
+        return localProperty.getExpression().accept(getVisitor());
     }
 
     public Object visitMappingBody(MappingBody mappingBody) {
         for (OCLExpression<EClassifier> initExp : mappingBody.getInitSection()) {
-            initExp.accept(this);
+            initExp.accept(getVisitor());
         }
 
         Object result = createOrGetResult((MappingOperation) mappingBody.getOperation());
@@ -296,7 +298,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 
         // TODO investigate possibility to modify result
         for (OCLExpression<EClassifier> endExp : mappingBody.getEndSection()) {
-            endExp.accept(this);
+            endExp.accept(getVisitor());
         }
 
         return result;
@@ -320,7 +322,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
     protected Object doVisitOperationCallExp(OperationCallExp<EClassifier, EOperation> operationCallExp) {
         EOperation referredOperation = operationCallExp.getReferredOperation();
         if (QvtOperationalUtil.isImperativeOperation(referredOperation)) {
-            Object source = operationCallExp.getSource().accept(this);
+            Object source = operationCallExp.getSource().accept(getVisitor());
             List<Object> args = makeArgs(operationCallExp);
 
             ImperativeOperation method = null;
@@ -386,7 +388,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         OCLExpression<EClassifier> guard = (mappingOperation.getWhen().isEmpty() ? null : mappingOperation
                 .getWhen().get(0));
         if (guard != null) {
-            Object guardValue = guard.accept(this);
+            Object guardValue = guard.accept(getVisitor());
             if (false == guardValue instanceof Boolean
                     || !Boolean.TRUE.equals(guardValue)) {
                 return null;
@@ -402,7 +404,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
             return traceRecord.getResult().getResult().get(0).getValue().getOclObject(); // TODO : change it in case of multiple results
         }
 
-        return ((OperationBodyImpl) mappingOperation.getBody()).accept(this);
+        return ((OperationBodyImpl) mappingOperation.getBody()).accept(getVisitor());
     }
 
     public Object visitModule(Module module) {
@@ -479,7 +481,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 
         getOperationalEvaluationEnv().pushObjectExpOwner(owner);
         for (OCLExpression<EClassifier> exp : objectExp.getContent()) {
-            exp.accept(this);
+            exp.accept(getVisitor());
         }
         getOperationalEvaluationEnv().popObjectExpOwner();
 
@@ -489,7 +491,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
     public Object visitOperationBody(OperationBody operationBody) {
         Object result = null;
         for (OCLExpression<EClassifier> exp : operationBody.getContent()) {
-            result = exp.accept(this);
+            result = exp.accept(getVisitor());
         }
         return result;
     }
@@ -514,50 +516,50 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
     }
 
     public Object visitVariableInitExp(VariableInitExp variableInitExp) {
-        Object varValue = variableInitExp.getValue().accept(this);
+        Object varValue = variableInitExp.getValue().accept(getVisitor());
         addToEnv(variableInitExp.getName(), varValue, variableInitExp.getType());
         return varValue;
     }
 
     public Object visitBlockExp(BlockExp blockExp) {
         for (OCLExpression<EClassifier> exp : blockExp.getBody()) {
-            exp.accept(this);
+            exp.accept(getVisitor());
         }
         return null;
     }
     
     public Object visitWhileExp(WhileExp whileExp) {
         while (true) {
-            Object condition = whileExp.getCondition().accept(this);
+            Object condition = whileExp.getCondition().accept(getVisitor());
             if (Boolean.TRUE.equals(condition)) {
                 for (OCLExpression<EClassifier> exp : whileExp.getBody()) {
-                    exp.accept(this);
+                    exp.accept(getVisitor());
                 }
             } else {
                 break;
             }
         }
 
-        return whileExp.getResult().accept(this);
+        return whileExp.getResult().accept(getVisitor());
     }
     
     public Object visitSwitchAltExp(AltExp switchAltExp) {
-       Object condition = switchAltExp.getCondition().accept(this);
+       Object condition = switchAltExp.getCondition().accept(getVisitor());
        if (Boolean.TRUE.equals(condition)) {
-           switchAltExp.getBody().accept(this);
+           switchAltExp.getBody().accept(getVisitor());
        }
        return condition;
     }
 
     public Object visitSwitchExp(SwitchExp switchExp) {
         for (AltExp altExp : switchExp.getAlternativePart()) {
-            if (Boolean.TRUE.equals(altExp.accept(this))) {
+            if (Boolean.TRUE.equals(altExp.accept(getVisitor()))) {
                 return null;
             }
         }
         OCLExpression<EClassifier> elsePart = switchExp.getElsePart();
         if (elsePart != null) {
-            elsePart.accept(this);
+            elsePart.accept(getVisitor());
             return null;
         }
         return null;
@@ -599,21 +601,21 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 	
 	private boolean doVisitLogExp(LogExp logExp, PrintWriter logger) {
 		if(logExp.getCondition() != null && 
-			!Boolean.TRUE.equals(logExp.getCondition().accept(this))) {
+			!Boolean.TRUE.equals(logExp.getCondition().accept(getVisitor()))) {
 			return false;
 		}
 		
 		EList<OCLExpression<EClassifier>> args = logExp.getArgument();
 		if(args.size() > 2) {
-			Object level = args.get(2).accept(this);
+			Object level = args.get(2).accept(getVisitor());
 			logger.print("Level " + level + " - "); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		
-		Object message = args.get(0).accept(this);
+		Object message = args.get(0).accept(getVisitor());
 		logger.print(message);
 
 		if(args.size() > 1) {
-			Object element = args.get(1).accept(this);
+			Object element = args.get(1).accept(getVisitor());
 			logger.print(", data: "); //$NON-NLS-1$
 			logger.print(String.valueOf(element));
 		}
@@ -623,7 +625,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 	
 	public Object visitAssertExp(AssertExp assertExp) {
 		if(assertExp.getAssertion() != null && 
-				!Boolean.TRUE.equals(assertExp.getAssertion().accept(this))) {
+				!Boolean.TRUE.equals(assertExp.getAssertion().accept(getVisitor()))) {
 			setCurrentEnvInstructionPointer(assertExp);			
 		
 			PrintWriter logger = QvtOperationalStdLibrary.getLogger(getContext());
@@ -675,7 +677,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         for (Property prop : module.getConfigProperty()) {
         	setCurrentEnvInstructionPointer(prop);
         	
-            Object propValue = ((PropertyImpl) prop).accept(this);
+            Object propValue = ((PropertyImpl) prop).accept(getVisitor());
             EObject moduleInstance = getModuleDefaultInstance(module, env);
             env.callSetter(moduleInstance, module.getEStructuralFeature(prop.getName()), propValue, isUndefined(propValue), true);
             
@@ -683,7 +685,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         }
         
         for (Rename rename : module.getOwnedRenaming()) {
-            ((RenameImpl) rename).accept(this);
+            ((RenameImpl) rename).accept(getVisitor());
         }
     }
     
@@ -934,14 +936,14 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         if (!isUndefined(source)) {
             nestedEnv.setOperationSelf(source);
         }
-        setEvaluationEnvironment(nestedEnv);
+        setOperationalEvaluationEnv(nestedEnv);
         
         // set IP initially to the method header
         setCurrentEnvInstructionPointer(method); 
 
         OperationCallResult callResult = null;
         try {
-        	Object result = ((ImperativeOperationImpl) method).accept(this);
+        	Object result = ((ImperativeOperationImpl) method).accept(getVisitor());
         	callResult = new OperationCallResult();
         	callResult.myResult = result;
         	callResult.myEvalEnv = nestedEnv;
@@ -961,7 +963,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         	}
         }
         finally {
-        	setEvaluationEnvironment(oldEvalEnv);
+        	setOperationalEvaluationEnv(oldEvalEnv);
         }
         
     	return callResult;
@@ -1078,7 +1080,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         return (QvtOperationalEnv) getEnvironment();
     }
 
-    protected QvtOperationalEvaluationEnv getOperationalEvaluationEnv() {
+    public QvtOperationalEvaluationEnv getOperationalEvaluationEnv() {
         return (QvtOperationalEvaluationEnv) getEvaluationEnvironment();
     }
     
@@ -1160,7 +1162,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
     private List<Object> makeArgs(OperationCallExp<EClassifier, EOperation> operationCallExp) {
         List<Object> argValues = new ArrayList<Object>();
         for (OCLExpression<EClassifier> arg : operationCallExp.getArgument()) {
-            Object value = arg.accept(this);
+            Object value = arg.accept(getVisitor());
             argValues.add(value);
         }
 
@@ -1267,10 +1269,40 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
    		return getOperationalEvaluationEnv().setCurrentASTOffset(pos);
     }
     
+    private QvtOperationalEvaluationVisitor createInterruptibleVisitor() {
+    	final EvaluationMonitor monitor = (EvaluationMonitor)getContext().getProperties().get(EvaluationContextProperties.MONITOR);
+    	
+    	return new QvtGenericEvaluationVisitor.Any(this) {
+
+    		public QvtOperationalEvaluationEnv getOperationalEvaluationEnv() {
+    			return QvtOperationalEvaluationVisitorImpl.this.getOperationalEvaluationEnv();
+    		}
+    		
+    		public void setOperationalEvaluationEnv(QvtOperationalEvaluationEnv evalEnv) {
+    			QvtOperationalEvaluationVisitorImpl.this.setOperationalEvaluationEnv(evalEnv);
+    		}
+    		
+    		public IContext getContext() {
+    			return QvtOperationalEvaluationVisitorImpl.this.getContext();
+    		}
+    		
+    		@Override
+    		protected void genericVisitAny(Object object) {
+    			if(monitor != null && monitor.isCanceled()) {
+    				if(object instanceof ASTNode) {
+    					throwQvtException(new QvtInterruptedExecutionException(), (ASTNode)object);
+    				} else {
+    					throwQvtException(new QvtInterruptedExecutionException());
+    				}
+    			}
+    		}    		
+    	};
+    }
+        
     // allow to redefine "entry" point
     private ImperativeOperation myEntryPoint;
-    private Module myRootModule; 
-    private EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> myEvalEnv;
+    private Module myRootModule;
+    private QvtOperationalEvaluationEnv myEvalEnv;
     
     private OCLAnnotationSupport oclAnnotationSupport;
     
