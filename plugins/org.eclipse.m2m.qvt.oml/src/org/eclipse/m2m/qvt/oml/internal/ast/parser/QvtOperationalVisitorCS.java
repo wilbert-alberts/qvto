@@ -351,6 +351,9 @@ public class QvtOperationalVisitorCS
 		catch (NullPointerException ex) {
 			((QvtOperationalEnv) env).reportError(ValidationMessages.QvtOperationalVisitorCS_oclParseNPE, oclExpressionCS);
 		}
+		catch (RuntimeException ex) {
+			((QvtOperationalEnv) env).reportError(ValidationMessages.QvtOperationalVisitorCS_oclParseNPE, oclExpressionCS);
+		}
 		return expr;
 	}
 	
