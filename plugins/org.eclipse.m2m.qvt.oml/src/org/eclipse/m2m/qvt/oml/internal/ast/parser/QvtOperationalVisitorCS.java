@@ -394,6 +394,10 @@ public class QvtOperationalVisitorCS
 			QvtPlugin.log(ex);
 			((QvtOperationalEnv) env).reportError(ValidationMessages.QvtOperationalVisitorCS_oclParseNPE, oclExpressionCS);
 		}
+		catch (RuntimeException ex) {
+			//QvtPlugin.log(ex);
+			((QvtOperationalEnv) env).reportError(ValidationMessages.QvtOperationalVisitorCS_oclParseNPE, oclExpressionCS);
+		}
 		return expr;
 	}
 	

@@ -456,13 +456,25 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		return myModelTypeRegistry.get(path.get(0));
 	}
 	
+	// TODO This stub fixes stack overflow in recurrent calls. Should be fixed in OCL
+	private final Set<String> myLookupOperationNames = new HashSet<String>(1);
 	@Override
 	public Variable<EClassifier, EParameter> lookupImplicitSourceForOperation(
 			String name, List<? extends TypedElement<EClassifier>> args) {
+		if (myLookupOperationNames.contains(name)) {
+			return null;
+		}
 		// propagate implict source lookup to parent, allowing to reach the module-wide 'this'
-		Variable<EClassifier, EParameter> result = super.lookupImplicitSourceForOperation(name, args);
-		if(result == null && getParent() != null) {
-			result = getParent().lookupImplicitSourceForOperation(name, args);
+		Variable<EClassifier, EParameter> result = null;
+		try {
+			myLookupOperationNames.add(name);
+			result = super.lookupImplicitSourceForOperation(name, args);
+			if(result == null && getParent() != null) {
+				result = getParent().lookupImplicitSourceForOperation(name, args);
+			}
+		}
+		finally {
+			myLookupOperationNames.remove(name);
 		}
 		return result;
 	}
