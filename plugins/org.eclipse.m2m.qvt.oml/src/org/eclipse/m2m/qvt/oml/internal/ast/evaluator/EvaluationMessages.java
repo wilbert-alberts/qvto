@@ -22,7 +22,8 @@ public class EvaluationMessages extends NLS {
 	public static String AssertFailedMessage;
 	public static String ExtendedOclEvaluatorVisitorImpl_InvalidObjectExpType;
     public static String ExtendedOclEvaluatorVisitorImpl_ModuleNotExecutable;
-	public static String FatalAssertionFailed;
+    public static String ExtendedOclEvaluatorVisitorImpl_ReadOnlyInputModel;
+    public static String FatalAssertionFailed;
 	public static String TerminatingExecution;
 	public static String UknownSourceLabel;  
     
