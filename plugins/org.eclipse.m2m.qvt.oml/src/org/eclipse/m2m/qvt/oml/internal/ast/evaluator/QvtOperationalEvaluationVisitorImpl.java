@@ -14,7 +14,6 @@ package org.eclipse.m2m.qvt.oml.internal.ast.evaluator;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -158,7 +157,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
     }
 
     public Object visitAssignExp(final AssignExp assignExp) {
-        // TODO: modify the following code for more complex lvalues
+        // TODO: modify the following code for more complex l-values
         if (assignExp.getValue().size() == 1) {
             OCLExpression<EClassifier> expression = assignExp.getValue().get(0);
             if (expression instanceof ResolveExp) {
@@ -216,6 +215,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
             Object ownerObj = (ownerName == null ?
                     env.peekObjectExpOwner() : getRuntimeValue(ownerName));
             if (ownerObj instanceof EObject) {
+                int oldIpPos = setCurrentEnvInstructionPointer(assignExp);
                 final EObject owner = (EObject) ownerObj;
                 //	            runSafe(new IRunnable() {
                 //	                public void run() throws Exception {
@@ -225,6 +225,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
                         exprValue, isUndefined(exprValue), assignExp.isIsReset());
                 //	                }
                 //	            });
+                setCurrentEnvInstructionPointer(oldIpPos);
             }
         }
 
@@ -310,9 +311,9 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
     	// set IP of the current stack (represented by the top operation env)
     	// to the this operation call in order to refeflect this call position 
     	// in possible QVT stack, in case an exception is thrown 
-        setCurrentEnvInstructionPointer(operationCallExp);
+        int oldIpPos = setCurrentEnvInstructionPointer(operationCallExp);
         Object result = doVisitOperationCallExp(operationCallExp);    	        
-        setCurrentEnvInstructionPointer(null);
+        setCurrentEnvInstructionPointer(oldIpPos);
         return result;
     }    
     
@@ -440,23 +441,30 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         initModuleProperties(module);
         setCurrentEnvInstructionPointer(myEntryPoint); // initialize IP to the main entry header
 
-        getOperationalEvaluationEnv().createModuleParameterExtents(module);
-        
-        List<Object> entryArgs = makeEntryArgs(myEntryPoint, module);
-        OperationCallResult callResult = executeImperativeOperation(myEntryPoint, null, entryArgs);
-        
-        getContext().processDeferredTasks();
-
-		ResourceSet outResourceSet = EmfUtil.getOutputResourceSet();
-        QvtEvaluationResult evalResult = callResult.myEvalEnv.createEvaluationResult(myEntryPoint, outResourceSet);
-        if (evalResult.getModelExtents().isEmpty()) {
-            if (callResult.myResult instanceof EObject) {
-                // compatibility reason
-            	ModelParameterExtent modelParameter = new ModelParameterExtent((EObject) callResult.myResult);
-                evalResult.getModelExtents().add(modelParameter.getModelExtent(outResourceSet));
-            } else {
-                return callResult.myResult;
-            }
+        QvtOperationalEvaluationEnv evaluationEnv = getOperationalEvaluationEnv();
+        QvtEvaluationResult evalResult = null;
+        try {
+	        evaluationEnv.createModuleParameterExtents(module);
+	        
+	        List<Object> entryArgs = makeEntryArgs(myEntryPoint, module);
+	        OperationCallResult callResult = executeImperativeOperation(myEntryPoint, null, entryArgs);
+	        
+	        getContext().processDeferredTasks();
+	
+			ResourceSet outResourceSet = EmfUtil.getOutputResourceSet();
+	        evalResult = callResult.myEvalEnv.createEvaluationResult(myEntryPoint, outResourceSet);
+	        if (evalResult.getModelExtents().isEmpty()) {
+	            if (callResult.myResult instanceof EObject) {
+	                // compatibility reason
+	            	ModelParameterExtent modelParameter = new ModelParameterExtent((EObject) callResult.myResult);
+	                evalResult.getModelExtents().add(modelParameter.getModelExtent(outResourceSet));
+	            } else {
+	                return callResult.myResult;
+	            }
+	        }
+        }
+        finally {
+        	evaluationEnv.dispose();
         }
         
         return evalResult;
@@ -675,7 +683,7 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         }
         
         for (Rename rename : module.getOwnedRenaming()) {
-            Object value = ((RenameImpl) rename).accept(this);
+            ((RenameImpl) rename).accept(this);
         }
     }
     
@@ -940,7 +948,19 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
         }
         catch (StackOverflowError e) {
         	throwQvtException(new QvtStackOverFlowError(e));
-        } finally {
+        }
+        catch (QvtRuntimeException e) {
+       		throw e;
+        }
+        catch (RuntimeException e) {
+        	if (e.getLocalizedMessage() != null) {
+        		throwQvtException(new QvtRuntimeException(e.getLocalizedMessage()));
+        	}
+        	else {
+        		throwQvtException(new QvtRuntimeException(e));
+        	}
+        }
+        finally {
         	setEvaluationEnvironment(oldEvalEnv);
         }
         
@@ -1183,72 +1203,6 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 		return args;
 	}
 
-    private ImperativeOperation getVirtualMethod(EOperation ctxOp, Object context, List<Object> args) {
-        List<EClassifier> assignableClasses = new ArrayList<EClassifier>();
-        try {
-        	EClassifier ctxOwner = getOperationalEnv().getUMLReflection().getOwningClassifier(ctxOp);
-            EClassifier[] derivedClasses = new EClassifier[0];//myInheritanceTree.getSortedDerivedClasses(ctxOwner);
-            assignableClasses.addAll(Arrays.asList(derivedClasses));
-            //assignableClasses.add(ctxOwner);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        for (EClassifier cls : assignableClasses) {
-            EClassifier derived = cls;
-//          if (!QvtOperationalParserUtil.isAssignableElementToFrom(dynamicType, derived)) {
-//              continue;
-//          }
-            if (!derived.isInstance(context) && derived != getOperationalEnv().getOCLStandardLibrary().getOclAny()) {
-                continue;
-            }
-
-            Module specificModule = QvtOperationalParserUtil.getOutermostDefiningModule(myRootModule, ctxOp, derived, getOperationalEnv());
-            if (specificModule == null) {
-                continue;
-            }
-
-            if (!isApplicable(getOperationalEnv(), ctxOp, context, args)) {
-                continue;
-            }
-
-    		ImperativeOperation method = QvtOperationalParserUtil.findMappingMethod(specificModule, ctxOp, derived, getOperationalEnv());
-            if (method == null) {
-                throw new RuntimeException("Failed to find " + ctxOp + " in " + specificModule); //$NON-NLS-1$ //$NON-NLS-2$
-            }
-
-            return method;
-        }
-
-        throw new RuntimeException("Failed to find virtual method " + ctxOp); //$NON-NLS-1$
-    }
-
-    private boolean isApplicable(QvtOperationalEnv env, EOperation op, Object context, List<Object> args) {
-    	EClassifier formalType = env.getUMLReflection().getOwningClassifier(op);
-        if (getOperationalEnv().getOCLStandardLibrary().getOclAny() != formalType && !oclIsKindOf(context, formalType)) {
-            return false;
-        }
-
-        if (args.size() != op.getEParameters().size()) {
-            return false;
-        }
-
-        Iterator<Object> argIt = args.iterator();
-        for (EParameter param : op.getEParameters()) {
-            Object arg = argIt.next();
-            EClassifier type = getUMLReflection().getOCLType(param.getEType());
-
-            if (arg == getOclInvalid()) {
-                return true;
-            }
-            if (!oclIsKindOf(arg, type)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-    
     private EStructuralFeature getRenamedProperty(EStructuralFeature property) {
     	EAnnotation annotation = property.getEAnnotation(Environment.OCL_NAMESPACE_URI);
     	if (annotation != null) {
@@ -1301,12 +1255,16 @@ implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalActio
 		return newInstance;
 	}    
    
-    private void setCurrentEnvInstructionPointer(ASTNode node) {
+    private int setCurrentEnvInstructionPointer(ASTNode node) {
     	if(node != null) {
-    		getOperationalEvaluationEnv().setCurrentASTOffset(node.getStartPosition());
+    		return getOperationalEvaluationEnv().setCurrentASTOffset(node.getStartPosition());
     	} else {
-    		getOperationalEvaluationEnv().setCurrentASTOffset(-1);
+    		return getOperationalEvaluationEnv().setCurrentASTOffset(-1);
     	}
+    }
+
+    private int setCurrentEnvInstructionPointer(int pos) {
+   		return getOperationalEvaluationEnv().setCurrentASTOffset(pos);
     }
     
     // allow to redefine "entry" point

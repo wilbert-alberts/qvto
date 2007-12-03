@@ -41,6 +41,7 @@ import org.eclipse.m2m.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
+import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtChangeRecorder;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.ValidationMessages;
 import org.eclipse.m2m.qvt.oml.internal.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.m2m.qvt.oml.library.IContext;
@@ -316,6 +317,13 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		}
 		return super.isKindOf(object, classifier);
 	}
+	
+	public void dispose() {
+		for (QvtChangeRecorder qvtChangeRecorder : myChangeRecorders) {
+			qvtChangeRecorder.dispose();
+		}
+		myChangeRecorders.clear();
+	}
 
     public void createModuleParameterExtents(Module module) {        
         Map<ModelParameter, ModelParameterExtent> modelExtents = new LinkedHashMap<ModelParameter, ModelParameterExtent>(module.getModelParameter().size());
@@ -342,6 +350,11 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	        	while (true) {
 	        		if (EcoreUtil.getRootContainer(argument.eClass()) == expMetamodel) {
 	        			modelExtents.put(modelParam, new ModelParameterExtent(argument, metamodels));
+	                	if (modelParam.getKind() == DirectionKind.IN) {
+	                		QvtChangeRecorder qvtChangeRecorder = new QvtChangeRecorder(modelParam);
+	                		qvtChangeRecorder.beginRecording(Collections.singletonList(argument));
+	                		myChangeRecorders.add(qvtChangeRecorder);
+	                	}
 	        			break;
 	        		}
 	        		if (argument.eContainer() == null) {
@@ -604,8 +617,10 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         return env;
     }
     
-    public void setCurrentASTOffset(int currentASTOffset) {
+    public int setCurrentASTOffset(int currentASTOffset) {
+    	int prevValue = this.myCurrentASTOffset;
     	this.myCurrentASTOffset = currentASTOffset;
+    	return prevValue;
 	}
     
     public int getCurrentASTOffset() {
@@ -637,6 +652,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	private Object myOperationSelf;
 	private final IContext myContext;
     private final Map<String, Object> myBindings;
+    private final List<QvtChangeRecorder> myChangeRecorders = new ArrayList<QvtChangeRecorder>(2);
 	private Map<ModelParameter, ModelParameterExtent> myModelExtents;
 	private Map<ModelParameter, ModelParameter> myMapImportedExtents;
 	private static final ModelParameter UNBOUND_MODEL_EXTENT = null;
