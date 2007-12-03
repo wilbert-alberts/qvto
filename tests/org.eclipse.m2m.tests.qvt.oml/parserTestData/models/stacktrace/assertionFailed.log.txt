@@ -1,0 +1,8 @@
+ASSERT [warning] failed at (stacktrace:45)
+ASSERT [error] failed at (stacktrace:47) : Test error message, data: assertionFailed
+ASSERT [fatal] failed at (UknownSource:17) : Testing fatal assert in mapWithAssertionFailedFromAux()
+Terminating execution...
+org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtAssertionFailed: Fatal assertion failed
+	at EClassifier.mapWithAssertionFailedFromAux(auxtransf.qvto:17)
+	at stacktrace.main(stacktrace.qvto:48)
+	at stacktrace.<init>(stacktrace.qvto:39)

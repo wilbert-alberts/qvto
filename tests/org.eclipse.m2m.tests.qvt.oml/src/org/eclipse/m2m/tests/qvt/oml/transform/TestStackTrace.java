@@ -152,7 +152,7 @@ public class TestStackTrace extends TestTransformation {
 	}
 	
 	private String loadExpectedLogDump(String testCase) throws IOException {
-		return loadExpectedDump(testCase + ".log"); //$NON-NLS-1$
+		return loadExpectedDump(testCase + ".log.txt"); //$NON-NLS-1$
 	}
 	
 	private String loadExpectedDump(String fileName) throws IOException {
