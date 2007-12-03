@@ -440,14 +440,15 @@ implements QvtOperationalEvaluationVisitor {
 
         initAllModuleDefaultInstances(module, getOperationalEvaluationEnv());
 
-        initModuleProperties(module);
-        setCurrentEnvInstructionPointer(myEntryPoint); // initialize IP to the main entry header
-
         QvtOperationalEvaluationEnv evaluationEnv = getOperationalEvaluationEnv();
         QvtEvaluationResult evalResult = null;
         try {
 	        evaluationEnv.createModuleParameterExtents(module);
-	        
+	        // Note: called after model parameters initialized, as mapping call during property 
+	        // intialisation will cause NPE
+	        initModuleProperties(module);
+	        setCurrentEnvInstructionPointer(myEntryPoint); // initialize IP to the main entry header
+
 	        List<Object> entryArgs = makeEntryArgs(myEntryPoint, module);
 	        OperationCallResult callResult = executeImperativeOperation(myEntryPoint, null, entryArgs);
 	        
