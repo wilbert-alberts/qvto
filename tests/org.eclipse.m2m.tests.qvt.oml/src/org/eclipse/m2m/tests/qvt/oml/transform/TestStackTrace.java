@@ -48,6 +48,21 @@ public class TestStackTrace extends TestTransformation {
 		super(new FileToFileData("stacktrace"));
 	}
 
+	
+	public void testMappingCallInProperty() throws Exception {
+		String testCase = "mappingCallInProperty"; //$NON-NLS-1$
+		QvtRuntimeException e = runQvtModuleTestCase(testCase);
+		assertValidQVTRuntimeException(e);
+
+		
+		StringWriter strWriter = new StringWriter();
+		e.printQvtStackTrace(new PrintWriter(strWriter));
+				
+		String dumpedContents = loadExpectedStackDump(testCase);
+		assertEquals(dumpedContents.toString(), strWriter.getBuffer().toString());
+	}
+	
+	
 	public void testLogExpUsage() throws Exception {
 		String testcase = "testLogExpUsage"; //$NON-NLS-1$
 		runQvtModuleTestCase(testcase);

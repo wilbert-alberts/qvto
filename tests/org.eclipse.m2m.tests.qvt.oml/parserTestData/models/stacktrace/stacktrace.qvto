@@ -9,7 +9,7 @@ transformation stacktrace(in inModel : ecore, out outModel : ecore);
 configuration property testcase : String;
 
 
---property x : OclAny = object EClass {}.map mapCreateInstaceFailureFromAux();
+property aProp : EClassifier = if testcase = 'mappingCallInProperty' then object EClass {}.map mapCreateInstaceFailureFromAux() else null endif;
 
  
 mapping EClassifier::mapCreateInstaceFailure() : EClass {
@@ -46,10 +46,16 @@ main() {
 					assert error true;
 					assert error false with log('Test error message', testcase);
 					object EClass {}.map mapWithAssertionFailedFromAux()
-				} else if (testcase = 'testLogExpUsage') then 
-						populateLogData()
-					endif
+				} 
+				else if (testcase = 'testLogExpUsage') then 
+							populateLogData()
+						else if (testcase = 'mappingCallInProperty') then
+							null -- see aProp initialisation
+						endif							
+				endif 
 			endif 
 		endif
 	endif;	
 }
+
+
