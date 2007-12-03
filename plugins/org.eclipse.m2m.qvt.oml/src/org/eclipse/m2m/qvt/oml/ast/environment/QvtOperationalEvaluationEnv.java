@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
@@ -40,6 +41,7 @@ import org.eclipse.m2m.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
+import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtChangeRecorder;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.ValidationMessages;
 import org.eclipse.m2m.qvt.oml.internal.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.m2m.qvt.oml.library.IContext;
@@ -315,6 +317,13 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		}
 		return super.isKindOf(object, classifier);
 	}
+	
+	public void dispose() {
+		for (QvtChangeRecorder qvtChangeRecorder : myChangeRecorders) {
+			qvtChangeRecorder.dispose();
+		}
+		myChangeRecorders.clear();
+	}
 
     public void createModuleParameterExtents(Module module) {        
         Map<ModelParameter, ModelParameterExtent> modelExtents = new LinkedHashMap<ModelParameter, ModelParameterExtent>(module.getModelParameter().size());
@@ -339,8 +348,13 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	        	EObject argument = (EObject) getOperationArgs().get(argIndex);
 	        	
 	        	while (true) {
-	        		if (argument.eClass().eContainer() == expMetamodel) {
+	        		if (EcoreUtil.getRootContainer(argument.eClass()) == expMetamodel) {
 	        			modelExtents.put(modelParam, new ModelParameterExtent(argument, metamodels));
+	                	if (modelParam.getKind() == DirectionKind.IN) {
+	                		QvtChangeRecorder qvtChangeRecorder = new QvtChangeRecorder(modelParam);
+	                		qvtChangeRecorder.beginRecording(Collections.singletonList(argument));
+	                		myChangeRecorders.add(qvtChangeRecorder);
+	                	}
 	        			break;
 	        		}
 	        		if (argument.eContainer() == null) {
@@ -357,7 +371,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         Map<ModelParameter, ModelParameter> mapImportedExtents = createImportedExtentMap(module, module);
         setModelParameterExtents(modelExtents, mapImportedExtents);
 	}
-
+    
 	private Map<ModelParameter, ModelParameter> createImportedExtentMap(Module rootModule, Module importedModule) {
 		Map<ModelParameter, ModelParameter> mapImportedExtents = new HashMap<ModelParameter, ModelParameter>();
 		for (ModuleImport moduleImport : importedModule.getModuleImport()) {
@@ -603,8 +617,10 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         return env;
     }
     
-    public void setCurrentASTOffset(int currentASTOffset) {
+    public int setCurrentASTOffset(int currentASTOffset) {
+    	int prevValue = this.myCurrentASTOffset;
     	this.myCurrentASTOffset = currentASTOffset;
+    	return prevValue;
 	}
     
     public int getCurrentASTOffset() {
@@ -636,6 +652,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	private Object myOperationSelf;
 	private final IContext myContext;
     private final Map<String, Object> myBindings;
+    private final List<QvtChangeRecorder> myChangeRecorders = new ArrayList<QvtChangeRecorder>(2);
 	private Map<ModelParameter, ModelParameterExtent> myModelExtents;
 	private Map<ModelParameter, ModelParameter> myMapImportedExtents;
 	private static final ModelParameter UNBOUND_MODEL_EXTENT = null;
