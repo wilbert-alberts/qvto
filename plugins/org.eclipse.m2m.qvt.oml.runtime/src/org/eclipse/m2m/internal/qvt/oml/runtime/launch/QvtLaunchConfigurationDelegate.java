@@ -41,7 +41,7 @@ public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelega
 	}
 	
 	// FIXME - do refactoring of this area 
-	public void launch(final ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {
+	public void launch(final ILaunchConfiguration configuration, String mode, final ILaunch launch, IProgressMonitor monitor) throws CoreException {
         
 		try {
             final QvtTransformation qvtTransformation = new QvtInterpretedTransformation(getQvtModule(configuration));
@@ -68,15 +68,17 @@ public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelega
             
             r = getSafeRunnable(qvtTransformation, r);       
             final ShallowProcess process = new ShallowProcess(launch, r) {
+            	boolean isTerminated = false;
             	@Override
-            	public void terminate() throws DebugException {
+            	public void terminate() throws DebugException {            		
             		execMonitor.cancel();
-            		super.terminate();
+            		isTerminated = true;	            		
+            		super.terminate();            		
             	}
 
             	@Override
             	public boolean isTerminated() {            	
-            		return execMonitor.isCanceled();
+            		return isTerminated;
             	}
             	
             	@Override
@@ -92,11 +94,16 @@ public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelega
                     try {
 						process.run();
 					} catch (Exception e) {
-						if(e instanceof QvtRuntimeException) {
-							((QvtRuntimeException)e).printQvtStackTrace(new PrintWriter(System.err));
-						} else {
-							QvtPlugin.log(e);
+						if(e instanceof QvtRuntimeException == false) {
+							// QVT runtime exception are legal QVT transformation level errors
+							QvtPlugin.log(e);							
 						}
+					}
+					
+					try {
+						launch.terminate();
+					} catch (DebugException e) {
+						QvtPlugin.log(e);
 					}
             	}
             }, "QVT Run");
