@@ -20,10 +20,6 @@ $End
 $Import
 	QvtOpLPGParser.backtrack.g
 
-$DropRules
-
-	mappingQueryCS ::= query mappingDeclarationCS '{' expressionListOpt '}'  
-
 $Globals
 	/.
 	import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParserprs;
@@ -36,17 +32,6 @@ $Rules
 	QvtLwGoal -> oclExpressionCS
 
 	QvtLwGoal -> QVTgoal
-
-	mappingQueryCS ::= query mappingDeclarationCS '{' statementListOpt '}'  
-		/.$BeginJava
-					CSTNode result = createMappingQueryCS(
-							(MappingDeclarationCS)$getSym(2),
-							(EList)$getSym(4)
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
-					$setResult(result);
-		  $EndJava
-		./
 
 	mappingRuleCS ::= entryDeclarationCS ';'
 		/.$BeginJava
