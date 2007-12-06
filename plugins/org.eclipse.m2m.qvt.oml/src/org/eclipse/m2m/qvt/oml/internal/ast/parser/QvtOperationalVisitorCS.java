@@ -1391,15 +1391,17 @@ public class QvtOperationalVisitorCS
 		helper.setBody(body);
 
 		EClassifier returnType = (helper.getResult().isEmpty() ? null : helper.getResult().get(0).getEType());
-		EClassifier helperType = (body.getContent().size() == 1 ? body.getContent().get(0).getType() : null);
+		EClassifier helperType = body.getContent().isEmpty() == false ? body.getContent().get(body.getContent().size() - 1).getType() : null;
 		if (QvtOperationalEnv.MAIN.equals(helper.getName()) 
 				&& (returnType == null || returnType == env.getOCLStandardLibrary().getOclVoid())) {
 			// OK
 		}
 		else  if (helperType != null && !QvtOperationalParserUtil.isAssignableToFrom(env, returnType, helperType)) {
 			env.reportError(NLS.bind(ValidationMessages.bodyTypeNotCompatibleWithReturnTypeError, new Object[] {
-			        QvtOperationalTypesUtil.getTypeFullName(helperType), QvtOperationalTypesUtil.getTypeFullName(returnType) }),
-					methodCS.getMappingDeclarationCS());
+			        QvtOperationalTypesUtil.getTypeFullName(helperType), 
+			        QvtOperationalTypesUtil.getTypeFullName(returnType) 
+				}), 
+				methodCS.getMappingDeclarationCS());
 		}
 	}
 

@@ -11,7 +11,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.20.2.2 2007/12/02 22:34:02 radvorak Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.20.2.3 2007/12/06 23:05:51 radvorak Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -429,7 +429,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.20.2.2 2007/12/02 22:34:02 radvorak Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.20.2.3 2007/12/06 23:05:51 radvorak Exp $
  */
 	./
 $End
@@ -1770,7 +1770,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	mappingQueryCS ::= query mappingDeclarationCS '{' expressionListOpt '}'  
+	mappingQueryCS ::= query mappingDeclarationCS '{' statementListOpt '}'  
 		/.$BeginJava
 					CSTNode result = createMappingQueryCS(
 							(MappingDeclarationCS)$getSym(2),
@@ -2099,6 +2099,16 @@ $Rules
 	statementCS -> assignStatementCS
 	statementCS -> variableInitializationCS
 	statementCS ::= oclExpressionCS
+		/.$BeginJava
+					CSTNode result = createExpressionStatementCS(
+							(OCLExpressionCS)$getSym(1)
+						);
+					setOffsets(result, (CSTNode)$getSym(1));
+					$setResult(result);
+		  $EndJava
+		./
+		
+	statementCS ::= primaryOCLExpressionCS 
 		/.$BeginJava
 					CSTNode result = createExpressionStatementCS(
 							(OCLExpressionCS)$getSym(1)
@@ -3228,7 +3238,8 @@ $Rules
 		  $EndJava
 		./
 	-- log expression call
-	oclExpCS -> logExpCS
+	primaryOCLExpressionCS -> logExpCS
+	
 		
 	logWhenExp ::= when oclExpressionCS
         /.$BeginJava
@@ -3244,7 +3255,7 @@ $Rules
 	logExpCS ::= log '(' argumentsCSopt ')' logWhenExpOpt
         /.$BeginJava
 				OCLExpressionCS condition = (OCLExpressionCS) dtParser.getSym(5);
-				CSTNode result = createLogExpCS((EList<OCLExpressionCS>)dtParser.getSym(3), condition);
+				LogExpCS result = (LogExpCS)createLogExpCS((EList<OCLExpressionCS>)dtParser.getSym(3), condition);
 				if(condition != null) {
 					setOffsets(result, getIToken(dtParser.getToken(1)), condition);
 				} else {
@@ -3254,8 +3265,8 @@ $Rules
           $EndJava
         ./
 
-	-- assertion support
-	oclExpCS -> assertExpCS
+	-- assertion support	
+	primaryOCLExpressionCS -> assertExpCS
 
 	severityKindCS ::= simpleNameCS
 		/.$BeginJava
@@ -3281,11 +3292,11 @@ $Rules
 	assertWithLogExpOpt ::= $empty
 	/.$NullAction./
 		        
-	assertExpCS ::= assert severityKindCSOpt oclExpressionCS assertWithLogExpOpt
+	assertExpCS ::= assert severityKindCSOpt '(' oclExpressionCS ')' assertWithLogExpOpt
         /.$BeginJava
-				LogExpCS logExpCS = (LogExpCS)dtParser.getSym(4);
-				OCLExpressionCS condition = (OCLExpressionCS)dtParser.getSym(3);
-				CSTNode result = createAssertExpCS(condition, (SimpleNameCS)dtParser.getSym(2), logExpCS);
+				LogExpCS logExpCS = (LogExpCS)dtParser.getSym(6);
+				OCLExpressionCS condition = (OCLExpressionCS)dtParser.getSym(4);
+				AssertExpCS result = (AssertExpCS)createAssertExpCS(condition, (SimpleNameCS)dtParser.getSym(2), logExpCS);
 		
 				CSTNode end = logExpCS != null ? logExpCS : condition; 
 				setOffsets(result, getIToken(dtParser.getToken(1)), end);
