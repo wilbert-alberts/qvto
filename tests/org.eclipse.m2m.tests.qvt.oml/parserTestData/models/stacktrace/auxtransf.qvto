@@ -14,7 +14,7 @@ mapping EClassifier::mapCreateInstaceFailureFromAux() : EClassifier@outModel {
 
 mapping EClassifier::mapWithAssertionFailedFromAux() : EClassifier@outModel {
 	init {
-		assert fatal 100 < 0 with log('Testing fatal assert in mapWithAssertionFailedFromAux()');
+		assert fatal (100 < 0) with log('Testing fatal assert in mapWithAssertionFailedFromAux()');
 	}
 }
 
