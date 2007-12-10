@@ -49,7 +49,7 @@ public class ParserTests {
         new TestData("opersignatureparamclash", 1), //$NON-NLS-1$    	
         new TestData("collectreturntype", 0), //$NON-NLS-1$
         new TestData("nocollectoncollection", 0), //$NON-NLS-1$
-        	// Commented out, due to migration to OCL 1.2, TODO - clarify the current error reporting with MDT, seems to be incorrect
+        	///Commented out, due to migration to OCL 1.2, TODO - clarify the current error reporting with MDT, seems to be incorrect
         	// new TestData("nonstaticcallinstaticcontext", 1), //$NON-NLS-1$
         new TestData("virtrettypemismatch", 1), //$NON-NLS-1$
         new TestData("missinglibmmimport", 1), //$NON-NLS-1$
