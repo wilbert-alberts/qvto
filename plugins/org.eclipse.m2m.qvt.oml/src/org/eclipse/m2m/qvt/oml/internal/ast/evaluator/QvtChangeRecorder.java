@@ -29,8 +29,17 @@ public class QvtChangeRecorder extends ChangeRecorder {
 	@Override
 	public void notifyChanged(Notification notification) {
 		if (notification.getOldValue() != this) {
-			throw new RuntimeException(NLS.bind(EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_ReadOnlyInputModel,
+			switch(notification.getEventType()) {
+			case Notification.SET:
+			case Notification.UNSET:
+			case Notification.ADD:
+			case Notification.REMOVE:
+			case Notification.ADD_MANY:
+			case Notification.REMOVE_MANY:
+			case Notification.MOVE:				
+				throw new RuntimeException(NLS.bind(EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_ReadOnlyInputModel,
 					myModelParam.getName() + " : " + QvtOperationalTypesUtil.getTypeFullName(myModelParam.getEType()))); //$NON-NLS-1$
+			}
 		}
 		//super.notifyChanged(notification);
 	}
