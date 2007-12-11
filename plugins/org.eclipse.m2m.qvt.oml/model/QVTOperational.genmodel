@@ -7,7 +7,7 @@
     editorPluginClass="org.eclipse.m2m.qvt.oml.editor.presentation.QVTOperationalEditorPlugin"
     nonNLSMarkers="true" testSuiteClass="org.eclipse.m2m.qvt.oml.tests.QVTOperationalAllTests"
     booleanFlagsField="eFlags" booleanFlagsReservedBits="8" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="5.0" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.ocl/model/OCL.genmodel#//ocl">
+    complianceLevel="5.0" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore platform:/plugin/org.eclipse.ocl/model/OCL.genmodel#//ocl">
   <foreignModel>QVTOperational.ecore</foreignModel>
   <genPackages prefix="QVTOperational" basePackage="org.eclipse.m2m.qvt.oml" disposableProviderFactory="true"
       ecorePackage="QVTOperational.ecore#/">
