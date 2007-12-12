@@ -50,6 +50,7 @@ public class LightweightParserUtil {
         QvtOpLPGParsersym.TK_if, QvtOpLPGParsersym.TK_then, QvtOpLPGParsersym.TK_else,
         QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_LBRACKET, QvtOpLPGParsersym.TK_LPAREN,
         QvtOpLPGParsersym.TK_in,
+        QvtOpLPGParsersym.TK_when,
     };
     
     public static final int[] OCLEXPRESSION_END_TOKENS = {
@@ -62,7 +63,7 @@ public class LightweightParserUtil {
     };
     
     public static final int[] OCLEXPRESSION_MANDATORY_TERMINATION_TOKENS = {
-        QvtOpLPGParsersym.TK_mapping, QvtOpLPGParsersym.TK_query,
+        QvtOpLPGParsersym.TK_mapping, QvtOpLPGParsersym.TK_query, QvtOpLPGParsersym.TK_main,
         QvtOpLPGParsersym.TK_init, QvtOpLPGParsersym.TK_end,
         QvtOpLPGParsersym.TK_transformation, QvtOpLPGParsersym.TK_modeltype,
         QvtOpLPGParsersym.TK_uses, QvtOpLPGParsersym.TK_metamodel,
@@ -243,7 +244,7 @@ public class LightweightParserUtil {
         return getOclExpressionCS(tokens, data, parserType);
     }
 
-    private static final IToken[] extractOclExpressionCSTokens(IToken trailingToken, QvtCompletionData data) {
+    public static final IToken[] extractOclExpressionCSTokens(IToken trailingToken, QvtCompletionData data) {
         List<IToken> tokens = new ArrayList<IToken>();
         PrsStream prsStream = data.getPrsStream();
         int mode = BRACING_PAIRS.length;
