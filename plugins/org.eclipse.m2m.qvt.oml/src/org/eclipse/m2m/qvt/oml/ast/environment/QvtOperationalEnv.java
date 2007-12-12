@@ -682,7 +682,6 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
                 myMappingsMap.put(key, sameNameAndContextOperations);
             }
             sameNameAndContextOperations.add(operation);
-	        myMappingsMap.put(key, sameNameAndContextOperations);
 	    }
 	}
 	
@@ -699,10 +698,12 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	        for (Map.Entry<ResolveInExp, MappingsMapKey> entry : myResolveInExps.entrySet()) {
 	            MappingsMapKey mappingsMapKey = entry.getValue();
 	            List<MappingOperation> sameNameAndContextOperations = myMappingsMap.get(mappingsMapKey);
-	            for (MappingOperation mappingOperation : sameNameAndContextOperations) {
-	                ResolveInExp resolveInExp = entry.getKey();
-	                resolveInExp.getInMappings().add(mappingOperation);
-                }
+	            if (sameNameAndContextOperations != null) {
+	                for (MappingOperation mappingOperation : sameNameAndContextOperations) {
+	                    ResolveInExp resolveInExp = entry.getKey();
+	                    resolveInExp.getInMappings().add(mappingOperation);
+	                }
+	            }
 	        }
 	    } else {
 	    	((QvtOperationalEnv)getParent()).resolveResolveInExpInMappings();
