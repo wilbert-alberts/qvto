@@ -287,8 +287,18 @@ public class QvtCompletionData {
     public IToken getParentImperativeOperation() {
         if (myParentImperativeOperation == null) {
             myParentImperativeOperation = getParentBracingExpression(new int[] {QvtOpLPGParsersym.TK_mapping,
-                    QvtOpLPGParsersym.TK_query},
+                    QvtOpLPGParsersym.TK_query, QvtOpLPGParsersym.TK_main},
                     QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, Integer.MAX_VALUE, null, null);
+            if (myParentImperativeOperation != null) {
+                if (QvtCompletionData.isKindOf(myParentImperativeOperation, QvtOpLPGParsersym.TK_main)) {
+                    IToken previousToken = LightweightParserUtil.getPreviousToken(myParentImperativeOperation);
+                    if ((previousToken != null)
+                            && QvtCompletionData.isKindOf(previousToken, 
+                                    QvtOpLPGParsersym.TK_mapping, QvtOpLPGParsersym.TK_query)) {
+                        myParentImperativeOperation = previousToken;
+                    }
+                }
+            }
         }
         return myParentImperativeOperation;
     }
