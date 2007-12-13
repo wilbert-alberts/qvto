@@ -23,7 +23,6 @@ public class ImperativeOperationHandler implements IKeywordHandler {
             if (tokens != null) {
                 String mappingText = '\n' + LightweightParserUtil.getText(tokens); 
                 if (keyword == data.getParentImperativeOperation()) {
-                    String tag = QvtCompletionData.isKindOf(keyword, QvtOpLPGParsersym.TK_query) ? "var" : "init"; //$NON-NLS-1$ //$NON-NLS-2$
                     String variables = myScopedVariablesExtractor.extractVariables(tokens[tokens.length - 1], data);
                     String wrappedVars = variables;
                     if (QvtCompletionData.isKindOf(keyword, QvtOpLPGParsersym.TK_mapping)) {

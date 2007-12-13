@@ -12,14 +12,18 @@ import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParsersym;
  * Created on Nov 21, 2007
  */
 public class ScopedVariablesExtractor {
+    private static final int NOT_A_TOKEN = -1;
+    
     // starting from ')'
     public String extractVariables(IToken startToken, QvtCompletionData data) {
         Scope scope = new Scope(null);
         IToken currentToken = startToken;
+        if (!QvtCompletionData.isKindOf(data.getParentImperativeOperation(), QvtOpLPGParsersym.TK_main)) {
         while ((currentToken = getNextToken(currentToken, data)) != null) {
             if (QvtCompletionData.isKindOf(currentToken, QvtOpLPGParsersym.TK_LBRACE)) {
                 break;
             }
+        }
         }
         if (currentToken != null) {
             while ((currentToken = getNextToken(currentToken, data)) != null) {
@@ -61,8 +65,8 @@ public class ScopedVariablesExtractor {
                 if (nextToken == null) {
                     break;
                 }
-                Result extractVarVariableResult = extractVariable(nextToken, data, varScope, 
-                        QvtOpLPGParsersym.TK_RESET_ASSIGN, QvtOpLPGParsersym.TK_SEMICOLON, QvtOpLPGParsersym.TK_RBRACE);
+                Result extractVarVariableResult = extractVariable(nextToken, null, data, varScope, 
+                        QvtOpLPGParsersym.TK_RESET_ASSIGN, NOT_A_TOKEN, QvtOpLPGParsersym.TK_SEMICOLON, QvtOpLPGParsersym.TK_RBRACE);
                 if (extractVarVariableResult.getScope() != varScope) {
                     return extractVarVariableResult;
                 }
@@ -98,7 +102,7 @@ public class ScopedVariablesExtractor {
 
     // starting from 'let'
     private Result analyseLetExpression(IToken startToken, QvtCompletionData data, Scope scope) {
-        return analyseLetLikeExpression(startToken, data, scope, QvtOpLPGParsersym.TK_in,
+        return analyseLetLikeExpression(startToken, null, data, scope, QvtOpLPGParsersym.TK_in, NOT_A_TOKEN,
                 QvtOpLPGParsersym.TK_COMMA, QvtOpLPGParsersym.TK_in);
     }
     
@@ -111,8 +115,9 @@ public class ScopedVariablesExtractor {
         if  (!QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_LPAREN)) {
             return null;
         }
-        Result letLikeExpressionResult = analyseLetLikeExpression(nextToken, data, scope, QvtOpLPGParsersym.TK_BAR,
-                QvtOpLPGParsersym.TK_COMMA, QvtOpLPGParsersym.TK_SEMICOLON, QvtOpLPGParsersym.TK_BAR);
+        Result letLikeExpressionResult = analyseLetLikeExpression(nextToken, startToken, data, scope,
+                QvtOpLPGParsersym.TK_BAR, NOT_A_TOKEN, QvtOpLPGParsersym.TK_COMMA,
+                QvtOpLPGParsersym.TK_SEMICOLON, QvtOpLPGParsersym.TK_BAR);
         if (letLikeExpressionResult.getScope() != scope) {
             return letLikeExpressionResult;
         }
@@ -145,13 +150,14 @@ public class ScopedVariablesExtractor {
         if (nextToken == null) {
             return null;
         }
-        Result letLikeExpressionResult = analyseLetLikeExpression(nextToken, data, scope, QvtOpLPGParsersym.TK_BAR, QvtOpLPGParsersym.TK_BAR);
+        Result letLikeExpressionResult = analyseLetLikeExpression(nextToken, null, data, scope,
+                QvtOpLPGParsersym.TK_BAR, QvtOpLPGParsersym.TK_RPAREN, QvtOpLPGParsersym.TK_BAR);
         if (letLikeExpressionResult.getScope() != scope) {
             return letLikeExpressionResult;
         }
         nextToken = getNextToken(letLikeExpressionResult.getEndToken(), data);
         if (nextToken == null) {
-            return new Result(startToken, letLikeExpressionResult.getEndToken(), null, new Scope(null));
+            return new Result(startToken, letLikeExpressionResult.getEndToken(), null, new Scope(scope));
         }
         if  (!QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_RPAREN)) {
             return new Result(startToken, letLikeExpressionResult.getEndToken(), null, scope);
@@ -160,16 +166,19 @@ public class ScopedVariablesExtractor {
     }
 
     // starting from 'let'-like token
-    private Result analyseLetLikeExpression(IToken startToken, QvtCompletionData data, Scope scope, 
-            int varDeclTerminator, int... delimiters) {
+    private Result analyseLetLikeExpression(IToken startToken, IToken iteratorExpressionStart, 
+            QvtCompletionData data, Scope scope, int varDeclTerminator, int unexpectedTerminator, int... delimiters) {
         Scope letLikeScope = new Scope(scope);
         IToken nextToken = startToken;
         IToken lastKnownGoodToken = startToken;
         do {
             nextToken = getNextToken(nextToken, data);
             if (nextToken != null) {
-                Result variableResult = extractVariable(nextToken, data, letLikeScope,
-                        QvtOpLPGParsersym.TK_EQUAL, delimiters);
+                Result variableResult = extractVariable(nextToken, iteratorExpressionStart,
+                        data, letLikeScope, QvtOpLPGParsersym.TK_EQUAL, unexpectedTerminator, delimiters);
+                if (variableResult == null) {
+                    return new Result(startToken, lastKnownGoodToken, null, scope);
+                }
                 if (variableResult.getScope() != letLikeScope) {
                     return variableResult;
                 } else {
@@ -194,15 +203,34 @@ public class ScopedVariablesExtractor {
     }
     
     // starting from 'IDENTIFIER'
-    private Result extractVariable(IToken startToken, QvtCompletionData data, Scope scope, int initializer, int... delimiters) {
+    private Result extractVariable(IToken startToken, IToken iteratorExpressionStart, QvtCompletionData data,
+            Scope scope, int initializer, int  unexpectedTerminator, int... delimiters) {
+        boolean isTypeDefined = false;
         IToken currentToken = startToken;
         IToken nextToken;
         while ((nextToken = getNextToken(currentToken, data)) != null) {
+            if (QvtCompletionData.isKindOf(nextToken, unexpectedTerminator)) {
+                return null;
+            }
+            if (QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_COLON)) {
+                isTypeDefined = true;
+            }
             if (QvtCompletionData.isKindOf(nextToken, delimiters)) {
+                if (isTypeDefined) {
                 return new Result(startToken, currentToken,
                         "var " + LightweightParserUtil.getText(startToken, currentToken) + ';', scope); //$NON-NLS-1$
             }
+                // Implicit types may be in iterator-variables of iterating expressions
+                String deducedType = deduceImplicitCollectionElementType(iteratorExpressionStart, data);
+                if (deducedType == null) {
+                    return new Result(startToken, currentToken, "", scope); //$NON-NLS-1$ 
+                }
+                String varText = "var " + LightweightParserUtil.getText(startToken, currentToken) //$NON-NLS-1$
+                    + " := " + deducedType + ';'; //$NON-NLS-1$
+                return new Result(startToken, currentToken, varText, scope); //$NON-NLS-1$ 
+            }
             if (QvtCompletionData.isKindOf(currentToken, initializer)) {
+                isTypeDefined = true;
                 Result oclExpressionResult = extractOclExpression(nextToken, data, scope);
                 if (oclExpressionResult.getScope() != scope) {
                     return oclExpressionResult;
@@ -219,6 +247,22 @@ public class ScopedVariablesExtractor {
         return new Result(startToken, currentToken, null, new Scope(scope));
     }
 
+    private String deduceImplicitCollectionElementType(IToken iteratorExpressionStart, QvtCompletionData data) {
+        if (iteratorExpressionStart == null) {
+            return null;
+        }
+        IToken accessorToken = LightweightParserUtil.getPreviousToken(iteratorExpressionStart);
+        if ((accessorToken != null) && QvtCompletionData.isKindOf(accessorToken, 
+                QvtOpLPGParsersym.TK_DOT, QvtOpLPGParsersym.TK_ARROW)) {
+            IToken[] oclExpressionCSTokens = LightweightParserUtil.extractOclExpressionCSTokens(accessorToken, data);
+            if (oclExpressionCSTokens != null) {
+                String collectionType = LightweightParserUtil.getText(oclExpressionCSTokens);
+                return collectionType + "->any(true)"; //$NON-NLS-1$
+            }
+        }
+        return null;
+    }
+
     // starting from the first token of the OCL expression
     private Result extractOclExpression(IToken startToken, QvtCompletionData data, Scope scope) {
         IToken currentToken = startToken;
@@ -231,16 +275,17 @@ public class ScopedVariablesExtractor {
                 if (innerScopeResult.getScope() != scope) {
                     return innerScopeResult;
                 }
-                nextToken = innerScopeResult.getEndToken();
+                currentToken = innerScopeResult.getEndToken();
+                nextToken = getNextToken(currentToken, data);
+                if (nextToken == null) {
+                    return new Result(startToken, currentToken, null, new Scope(scope));
+                }
             } else {
                 int bracingPairKind = LightweightParserUtil.getBracingPairKind(currentToken, true);
                 if (depth == 0) {
                     if (bracingPairKind >= 0) {
                         bracingMode = bracingPairKind;
                         depth++;
-                    }
-                    if (QvtCompletionData.isKindOf(nextToken, LightweightParserUtil.OCLEXPRESSION_END_TOKENS)) {
-                        return new Result(startToken, currentToken, LightweightParserUtil.getText(startToken, currentToken), scope);
                     }
                 } else {
                     if (bracingPairKind == bracingMode) {
@@ -251,6 +296,9 @@ public class ScopedVariablesExtractor {
                         }
                     }
                 }
+            }
+            if ((depth == 0) && QvtCompletionData.isKindOf(nextToken, LightweightParserUtil.OCLEXPRESSION_END_TOKENS)) {
+                return new Result(startToken, currentToken, LightweightParserUtil.getText(startToken, currentToken), scope);
             }
             currentToken = nextToken;
         }

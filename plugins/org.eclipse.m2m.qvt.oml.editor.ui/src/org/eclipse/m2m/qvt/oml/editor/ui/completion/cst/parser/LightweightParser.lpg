@@ -34,4 +34,29 @@ $Rules
 	QvtLwGoal -> oclExpressionCS
 
 	QvtLwGoal -> QVTgoal
+
+	mappingRuleCS ::= entryDeclarationCS ';'
+		/.$BeginJava
+					MappingQueryCS result = createMappingQueryCS(
+							(MappingDeclarationCS)$getSym(1),
+							$EMPTY_ELIST
+						);
+					setOffsets(result, (CSTNode)$getSym(1), getIToken($getToken(2)));
+					$setResult(result);
+		  $EndJava
+		./
+	entryDeclarationCS ::= main qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createMappingDeclarationCS(
+							null,
+							createScopedNameCS(null, getTokenText($getToken(1))),
+							$EMPTY_ELIST,
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+
+
 $End
