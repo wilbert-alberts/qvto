@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.20.2.3 2007/12/06 23:05:50 radvorak Exp $
+* $Id: QvtOpLPGParser.java,v 1.20.2.4 2007/12/13 11:29:05 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.20.2.3 2007/12/06 23:05:50 radvorak Exp $
+* $Id: QvtOpLPGParser.java,v 1.20.2.4 2007/12/13 11:29:05 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -5964,7 +5964,6 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 							getTokenText(dtParser.getToken(1))
 						);
 				setOffsets(simpleNameCS, getIToken(dtParser.getToken(1)));
-				Object[] iterContents = (Object[])dtParser.getSym(3);
 				CSTNode result = createIteratorExpCS(
 						simpleNameCS,
 						null,

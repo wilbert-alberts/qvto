@@ -762,6 +762,12 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
         }
     };
     
+    /*
+     * The constructor of VariableEntry (which was duplicated in the code below) in AbstractEnvironment  
+     * is package visible and something like that must be created in QvtOperationalEnv.
+     * The whole construction (QvtVariableEntry, addedVariable, removedVariable and myNamedElements) 
+     * is necessary for lookup for implicit source in ResolveExps.
+     */
     protected final class QvtVariableEntry {
         private final String myName;
         private final Variable<EClassifier, EParameter> myVariable;
