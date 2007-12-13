@@ -709,7 +709,6 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
                 myMappingsMap.put(key, sameNameAndContextOperations);
             }
             sameNameAndContextOperations.add(operation);
-	        myMappingsMap.put(key, sameNameAndContextOperations);
 	    }
 	}
 	
@@ -726,10 +725,12 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	        for (Map.Entry<ResolveInExp, MappingsMapKey> entry : myResolveInExps.entrySet()) {
 	            MappingsMapKey mappingsMapKey = entry.getValue();
 	            List<MappingOperation> sameNameAndContextOperations = myMappingsMap.get(mappingsMapKey);
-	            for (MappingOperation mappingOperation : sameNameAndContextOperations) {
-	                ResolveInExp resolveInExp = entry.getKey();
-	                resolveInExp.getInMappings().add(mappingOperation);
-                }
+	            if (sameNameAndContextOperations != null) {
+	                for (MappingOperation mappingOperation : sameNameAndContextOperations) {
+	                    ResolveInExp resolveInExp = entry.getKey();
+	                    resolveInExp.getInMappings().add(mappingOperation);
+	                }
+	            }
 	        }
 	    } else {
 	    	((QvtOperationalEnv)getParent()).resolveResolveInExpInMappings();
@@ -806,7 +807,10 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
     };
     
     /*
-     * @FIXME - why duplicating this ??? 
+     * The constructor of VariableEntry (which was duplicated in the code below) in AbstractEnvironment  
+     * is package visible and something like that must be created in QvtOperationalEnv.
+     * The whole construction (QvtVariableEntry, addedVariable, removedVariable and myNamedElements) 
+     * is necessary for lookup for implicit source in ResolveExps.
      */
     protected final class QvtVariableEntry {
         private final String myName;
