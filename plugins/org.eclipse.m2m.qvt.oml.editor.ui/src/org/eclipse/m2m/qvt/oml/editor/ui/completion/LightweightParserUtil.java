@@ -63,7 +63,7 @@ public class LightweightParserUtil {
     };
     
     public static final int[] OCLEXPRESSION_MANDATORY_TERMINATION_TOKENS = {
-        QvtOpLPGParsersym.TK_mapping, QvtOpLPGParsersym.TK_query, QvtOpLPGParsersym.TK_main,
+        QvtOpLPGParsersym.TK_mapping, QvtOpLPGParsersym.TK_query,
         QvtOpLPGParsersym.TK_init, QvtOpLPGParsersym.TK_end,
         QvtOpLPGParsersym.TK_transformation, QvtOpLPGParsersym.TK_modeltype,
         QvtOpLPGParsersym.TK_uses, QvtOpLPGParsersym.TK_metamodel,
