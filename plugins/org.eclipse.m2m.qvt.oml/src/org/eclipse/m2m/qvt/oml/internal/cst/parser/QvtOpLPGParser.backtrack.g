@@ -11,7 +11,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.20.2.4 2007/12/13 11:29:06 aigdalov Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.20.2.5 2007/12/14 13:09:14 aigdalov Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -429,7 +429,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.20.2.4 2007/12/13 11:29:06 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.20.2.5 2007/12/14 13:09:14 aigdalov Exp $
  */
 	./
 $End
@@ -1827,6 +1827,20 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
+
+	entryDeclarationCS ::= main qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createMappingDeclarationCS(
+							null,
+							createScopedNameCS(null, getTokenText($getToken(1))),
+							$EMPTY_ELIST,
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+
 
 	mappingDeclarationCS ::= directionKindOpt scopedNameCS '(' parameterListOpt ')' ':' typeSpecCS
 		/.$BeginJava
