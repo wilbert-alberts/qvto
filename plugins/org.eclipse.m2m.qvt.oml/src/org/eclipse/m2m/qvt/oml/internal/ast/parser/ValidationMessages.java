@@ -22,6 +22,7 @@ public final class ValidationMessages extends NLS {
 	}
 
     public static String BooleanTypeAssertConditionError;
+	public static String lateResolveNotUsedInDeferredAssignment;
 	public static String LogExpBooleanTypeConditionError;
 	public static String LogLevelNumberArgumentError;
 	public static String mappingOperationExpected;

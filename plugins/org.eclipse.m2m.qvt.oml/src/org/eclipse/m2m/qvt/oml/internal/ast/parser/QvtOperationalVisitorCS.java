@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -113,6 +114,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.WhileExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorCallExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorVariableInitializationCS;
+import org.eclipse.m2m.qvt.oml.library.QvtResolveUtil;
 import org.eclipse.m2m.qvt.oml.ocl.OclQvtoPlugin;
 import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryCreationException;
 import org.eclipse.ocl.Environment;
@@ -163,6 +165,12 @@ public class QvtOperationalVisitorCS
 
     private final Set<String> myLoadedLibraries = new HashSet<String>(1);
     private final QvtCompilerOptions myCompilerOptions;
+	/* TODO - 
+	 * Groups all late resolve expression encountered during CST analysis for later validation.
+	 * At the moment when resolve expression is visited it has not its container connect yet, which
+	 * required for validation. Should be replaced by introducing a validation visitor.
+	 */
+    private List<ResolveExp> myLateResolveExps;
     
 	public QvtOperationalVisitorCS(
 			OCLLexer lexStream,
@@ -282,9 +290,18 @@ public class QvtOperationalVisitorCS
 		
 		return ifExp;
 	}
+	
+	/**
+	 * Produces AST Node from the given CST and performs validation on it.
+	 */
+	public OCLExpression<EClassifier> analyzeExpressionCS(OCLExpressionCS oclExpressionCS, QvtOperationalEnv env) throws SemanticException {
+		OCLExpression<EClassifier> result = oclExpressionCS(oclExpressionCS, env);	
+		validate(env);		
+		return result;
+	}
 
 	@Override
-	public OCLExpression<EClassifier> oclExpressionCS(
+	protected OCLExpression<EClassifier> oclExpressionCS(
 			OCLExpressionCS oclExpressionCS,
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env)
 			throws SemanticException {
@@ -959,6 +976,8 @@ public class QvtOperationalVisitorCS
 		
 		module.setEntry(QvtOperationalParserUtil.getMainMethod(module));
 
+		validate(env);
+		
 		return module;
 	}
 
@@ -1808,6 +1827,18 @@ public class QvtOperationalVisitorCS
         return resolveExp;
     }
     
+    private void validateResolveExp(ResolveExp  resolveExp, QvtOperationalEnv env) {
+    	EObject resolveContainer = resolveExp.eContainer();
+    	
+    	if(resolveExp.isIsDeferred()) {    	
+    		if(!QvtResolveUtil.isSuppportedAsDeferredAssigned(resolveExp)) {
+    			int startPos = (resolveExp.getSource() != null) ? resolveExp.getSource().getEndPosition() : resolveExp.getStartPosition(); 
+    			env.reportWarning(ValidationMessages.lateResolveNotUsedInDeferredAssignment, startPos, resolveExp.getEndPosition());
+    		}
+		}
+    }
+
+
     private OCLExpression<EClassifier> visitResolveInExpCS(
             ResolveInExpCS resolveInExpCS, QvtOperationalEnv env) throws SemanticException {
         ResolveInExp resolveInExp = ExpressionsFactory.eINSTANCE.createResolveInExp();
@@ -1920,6 +1951,10 @@ public class QvtOperationalVisitorCS
         }
         resolveExp.setStartPosition(resolveExpCS.getStartOffset());
         resolveExp.setEndPosition(resolveExpCS.getEndOffset());
+        
+    	if(resolveExpCS.isIsDeferred()) {
+    		addLateResolve(resolveExp);
+    	}
         
         return resolveExp;
     }
@@ -2196,4 +2231,23 @@ public class QvtOperationalVisitorCS
 	private LexStream getLexer() {
 		return getLexStream();
 	}
+	
+	private void addLateResolve(ResolveExp resolve) {
+		assert resolve.isIsDeferred();
+		if(myLateResolveExps == null) {
+			myLateResolveExps = new LinkedList<ResolveExp>();
+		}
+		myLateResolveExps.add(resolve);
+	}
+	
+	private List<ResolveExp> getAllLateResolves() {
+		return myLateResolveExps != null ? myLateResolveExps : Collections.<ResolveExp>emptyList();
+	}
+
+	private void validate(QvtOperationalEnv env) {
+		for (ResolveExp lateResolve : getAllLateResolves()) {
+			validateResolveExp(lateResolve, env);
+		}
+	}
+	
 }

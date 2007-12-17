@@ -93,7 +93,11 @@ public class Context implements IContext {
     
     public void processDeferredTasks() {
     	if (myDeferredTasks != null) {
-    	    for (Runnable task : myDeferredTasks) {
+    		// make me re-entrant in case of errorenous call to #addDeferredTask() 
+    		// from running the task => concurrent modification exception
+    		// This error condition should be handled elsewhere
+    		List<Runnable> tasksCopy = new ArrayList<Runnable>(myDeferredTasks);
+    	    for (Runnable task : tasksCopy) {
                 task.run();
             }
     	}
