@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2007 Borland Software Corporation
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     Borland Software Corporation - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.editor.ui.completion;
 
 import java.util.ArrayList;
@@ -170,7 +181,7 @@ public class LightweightParserUtil {
                 options.setSourceLineNumbersEnabled(false);
                 QvtOperationalVisitorCS visitor = new QvtOperationalVisitorCS(oclLexer, data.getEnvironment(), options);
                 try {
-                    return visitor.oclExpressionCS(oclExpressionCS, data.getEnvironment());
+                    return visitor.analyzeExpressionCS(oclExpressionCS, data.getEnvironment());
                 } catch (SemanticException e) {
                     Activator.log(e);
                 }
