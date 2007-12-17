@@ -170,7 +170,7 @@ public class LightweightParserUtil {
                 options.setSourceLineNumbersEnabled(false);
                 QvtOperationalVisitorCS visitor = new QvtOperationalVisitorCS(oclLexer, data.getEnvironment(), options);
 
-                return visitor.oclExpressionCS(oclExpressionCS, data.getEnvironment());
+				return visitor.analyzeExpressionCS(oclExpressionCS, data.getEnvironment());
             } catch (ParserException e) {
                 Activator.log(e);
             }
