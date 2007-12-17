@@ -2480,4 +2480,5 @@ public class QvtOperationalVisitorCS
 
 		return astNode;
 	}	
+
 }
