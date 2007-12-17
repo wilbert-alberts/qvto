@@ -1,12 +1,29 @@
+/*******************************************************************************
+ * Copyright (c) 2007 Borland Software Corporation
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     Borland Software Corporation - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.library;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveInExp;
@@ -16,29 +33,251 @@ import org.eclipse.m2m.qvt.oml.trace.Trace;
 import org.eclipse.m2m.qvt.oml.trace.TraceRecord;
 import org.eclipse.m2m.qvt.oml.trace.VarParameterValue;
 import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.expressions.OperationCallExp;
+import org.eclipse.ocl.expressions.PropertyCallExp;
+import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.util.CollectionUtil;
+import org.eclipse.ocl.utilities.PredefinedType;
 
 /**
  * @author aigdalov
  */
 
 public class QvtResolveUtil {
+	/**
+	 * A helper interface to hold the source object for late resolve call which
+	 * is to be called on during deferred assignment execution.
+	 * <p>
+	 * Note: The motivation for this interface is the need to distinguish
+	 * between not- passing a source object of a source resulting in
+	 * <code>null</code> during evaluation.
+	 */
+	interface SavedSourceObjectHolder {
+		/**
+		 * @return the source object of <code>null</code>
+		 */
+		Object getSourceObj();
+		/**
+		 * Indicates whether the source object is used in the end of the
+		 * transformation as source of late resolve calls.
+		 */
+		boolean isInDeferredExecution();
+	}
+	
+	private QvtResolveUtil() {
+		super();
+	}
+	
+	/**
+	 * Indicates whether the given assignment has late resolved right value and
+	 * is to be executed as deferred assignment.
+	 * 
+	 * @param resolveExp
+	 *            the resolve expression to analyze
+	 * @return <code>true</code> if the assignment is to receive a future
+	 *         value from late resolve; <code>false</code> otherwise
+	 */
+	public static boolean hasDeferredRightSideValue(AssignExp assignExp) {
+		if(assignExp.getValue().isEmpty()) {
+			return false;
+		}
+
+		OCLExpression<EClassifier> rightValue = assignExp.getValue().get(0);
+		if(rightValue instanceof ResolveExp && ((ResolveExp)rightValue).isIsDeferred()) {
+			return true;
+		}
+		
+		if(rightValue instanceof OperationCallExp) {
+			OperationCallExp<EClassifier, EOperation> operCall = (OperationCallExp<EClassifier, EOperation>) rightValue;
+			return isLateResolveResultConversion(operCall);
+		}
+		return false;
+	}	
+
+	/**
+	 * Indicates whether the given resolve expression can be used in conjunction
+	 * with deferred assignment.
+	 * <p>
+	 * Note: The late resolve call result is assigned at deferred time if is assigned
+	 * to a property directly or by calling a single <code>->as...</code> collection type
+	 * conversion method.
+	 *  
+	 * @param resolveExp
+	 *            the resolve expression to analyze.
+	 * @return <code>true</code> if there is a supported deferred assignment
+	 *         to receive the future value; <code>false</code> otherwise.
+	 * @see #getDeferredAssignmentFor(ResolveExp)
+	 */
+	@SuppressWarnings("unchecked")	
+	public static boolean isSuppportedAsDeferredAssigned(ResolveExp  resolveExp) {
+		return getDeferredAssignmentFor(resolveExp) != null;
+	}
+	
+	/**
+	 * Gets deferred assignment used with the given resolve expression which is
+	 * to be executed in the end of the transformation.
+	 * 
+	 * @param resolveExp
+	 *            a resolve expression
+	 * @return the assignment receiving the late resolve result, if the resolve
+	 *         expression is deferred and its result is assigned to it directly
+	 *         or by using a collection type conversion. Otherwise,
+	 *         <code>null</code> is returned.
+	 */
+	@SuppressWarnings("unchecked")
+	public static AssignExp getDeferredAssignmentFor(ResolveExp resolveExp) {
+		if(!resolveExp.isIsDeferred()) {
+			return null;
+		}
+		
+    	EObject resolveContainer = resolveExp.eContainer();
+		if(resolveContainer instanceof AssignExp) {
+			AssignExp assignExp = (AssignExp) resolveContainer;
+			if(assignExp.getLeft() instanceof PropertyCallExp) {
+				return assignExp;
+			}
+		} else if(resolveContainer instanceof OperationCallExp) {
+			OperationCallExp<EClassifier, EOperation> operCall = (OperationCallExp<EClassifier, EOperation>) resolveContainer;
+			if(!isLateResolveResultConversion(operCall)) {
+				return null;
+			}
+			// lookup the closest outer assignment node
+			EObject parent = operCall.eContainer();
+			while(parent != null) {
+				 if(parent instanceof AssignExp) {
+					 AssignExp assignExp = (AssignExp)parent;							 
+					 if(assignExp.getValue().indexOf(operCall) >= 0) {
+						 return assignExp;
+					 }
+				 }
+				 parent = parent.eContainer();
+			}
+		} 
+
+		return null;		
+	}	
+	
+	/**
+	 * Indicate whether a operation call expression is supported collection
+	 * type conversion for late resolve results. 
+	 */	
+	private static boolean isLateResolveResultConversion(OperationCallExp<EClassifier, EOperation> operCall) {
+		if(operCall.getSource() instanceof ResolveExp) {
+			ResolveExp resolveExp = (ResolveExp) operCall.getSource();
+			if(!resolveExp.isIsDeferred()) {
+				return false;
+			}
+
+			return isCollectionConversionCall(operCall) && resolveExp.getType() instanceof CollectionType;			
+		}
+		return false;
+	}
+	    
+	/**
+	 * Indicate whether a operation call expression is collection type conversion. 
+	 */
+	private static boolean isCollectionConversionCall(OperationCallExp<EClassifier, EOperation> operCall) {
+		switch(operCall.getOperationCode()) {
+		case PredefinedType.AS_BAG :
+		case PredefinedType.AS_SEQUENCE :
+		case PredefinedType.AS_SET :
+		case PredefinedType.AS_ORDERED_SET :
+			return true;
+		}
+		
+		return false;
+	}
+	
+    @SuppressWarnings("unchecked")
+	private static Object coerceResultValue(ResolveExp resolveExp, Object resolveRawResult) {
+    	// always return non-null if collection type is expected
+    	if(resolveRawResult == null) {
+    		resolveRawResult = CollectionUtil.createNewSequence();
+    	}
+    	
+    	if (resolveExp.isIsDeferred() && resolveExp.eContainer() instanceof OperationCallExp) {
+			OperationCallExp opCallExp = (OperationCallExp) resolveExp.eContainer();
+			if(opCallExp.getSource() == resolveExp) {
+				// supported collection conversion operation call on the result of late resolve					
+				switch (opCallExp.getOperationCode()) {
+				case PredefinedType.AS_SET:
+					return CollectionUtil.asSet((Collection<?>) resolveRawResult);
+				case PredefinedType.AS_BAG:
+					return CollectionUtil.asBag((Collection<?>) resolveRawResult);
+				case PredefinedType.AS_ORDERED_SET:
+					return CollectionUtil.asOrderedSet((Collection<?>) resolveRawResult);
+				case PredefinedType.AS_SEQUENCE:
+					return CollectionUtil.asSequence((Collection<?>) resolveRawResult);
+				}
+			}
+		}
+
+    	return resolveRawResult;
+	}
+    
     public static final Object resolveNow(ResolveExp resolveExp, QvtOperationalEvaluationVisitor visitor, QvtOperationalEvaluationEnv env) {
+    	return resolveNow(resolveExp, visitor, env, null);
+    }
+	
+    public static final Object resolveInNow(ResolveInExp resolveInExp, QvtOperationalEvaluationVisitor visitor, QvtOperationalEvaluationEnv env) {
+    	return resolveInNow(resolveInExp, visitor, env, null);
+    }
+    
+    /**
+	 * Resolves resolve expression using the given evaluation visitor and
+	 * environment.
+	 * 
+	 * @param resolveExp
+	 *            the resolve expression to resolve
+	 * @param visitor
+	 *            the visitor to perform evaluation
+	 * @param env
+	 *            environment for condition or eventual source object evaluation
+	 * @param savedSrcObj
+	 *            the source object evaluated and saved for late resolve
+	 *            execution or <code>null</code> if the source is to be
+	 *            evaluated by this method
+	 * @return resolved object or collection of objects
+	 */
+    static final Object resolveNow(ResolveExp resolveExp, QvtOperationalEvaluationVisitor visitor, QvtOperationalEvaluationEnv env, SavedSourceObjectHolder savedSrcObj) {
         OCLExpression<EClassifier> source = resolveExp.getSource();
         if (source != null) {
             Trace trace = visitor.getContext().getTrace();
             EMap<Object, EList<TraceRecord>> map = chooseKeyToTraceRecordMap(resolveExp, trace);
-            Object sourceEval = source.accept(visitor);
-            EList<TraceRecord> traceRecords = map.get(sourceEval);
+            Object sourceEval = (savedSrcObj == null) ? source.accept(visitor) : savedSrcObj.getSourceObj();
+            List<TraceRecord> traceRecords = lookupTraceRecordsBySource(sourceEval, source.getType(), map);
             if (traceRecords == null) {
                 return createEmptyCollectionOrNull(resolveExp);
             }
-            return searchByTypeAndCondition(resolveExp, traceRecords, visitor, env);
+            Object result = searchByTypeAndCondition(resolveExp, traceRecords, visitor, env);
+            if(savedSrcObj != null && savedSrcObj.isInDeferredExecution() && resolveExp.isIsDeferred()) {
+            	// Note: executing immediately but at deferred execution time, this is possible for instance if late resolve is called from with a condition 
+            	result = coerceResultValue(resolveExp, result);
+            }
+            return result;
+            
         }
         return null;
     }
 
-    public static final Object resolveInNow(ResolveInExp resolveInExp, QvtOperationalEvaluationVisitor visitor, QvtOperationalEvaluationEnv env) {
+    /**
+	 * Resolves resolveIn expression using the given evaluation visitor and
+	 * environment.
+	 * 
+	 * @param resolveInExp
+	 *            the resolve expression to resolve
+	 * @param visitor
+	 *            the visitor to perform evaluation
+	 * @param env
+	 *            environment for condition or eventual source object evaluation
+	 * @param savedSrcObj
+	 *            the source object evaluated and saved for late resolve
+	 *            execution or <code>null</code> if the source is to be
+	 *            evaluated by this method
+	 * 
+	 * @return resolved object or collection of objects
+	 */
+    static final Object resolveInNow(ResolveInExp resolveInExp, QvtOperationalEvaluationVisitor visitor, QvtOperationalEvaluationEnv env, SavedSourceObjectHolder savedSrcObj) {
         OCLExpression<EClassifier> source = resolveInExp.getSource();
         List<TraceRecord> selectedTraceRecords = new ArrayList<TraceRecord>();
         Trace trace = visitor.getContext().getTrace();
@@ -56,10 +295,11 @@ public class QvtResolveUtil {
             selectedTraceRecords.addAll(traceRecords);
         } else {
             EMap<Object, EList<TraceRecord>> map = chooseKeyToTraceRecordMap(resolveInExp, trace);
-            Object sourceEval = source.accept(visitor);
-            EList<TraceRecord> traceRecords = map.get(sourceEval);
-            if (traceRecords == null) {
-                return createEmptyCollectionOrNull(resolveInExp);
+            Object sourceEval = (savedSrcObj == null) ? source.accept(visitor) : savedSrcObj.getSourceObj();
+
+            List<TraceRecord> traceRecords = lookupTraceRecordsBySource(sourceEval, source.getType(), map);
+            if (traceRecords.isEmpty()) {
+            	return createEmptyCollectionOrNull(resolveInExp);
             }
             for (TraceRecord traceRecord : traceRecords) {
                 for (MappingOperation inMapping : resolveInExp.getInMappings()) {
@@ -69,9 +309,36 @@ public class QvtResolveUtil {
                 }
             }
         }
-        return searchByTypeAndCondition(resolveInExp, selectedTraceRecords, visitor, env);
+        Object result = searchByTypeAndCondition(resolveInExp, selectedTraceRecords, visitor, env);
+        if(savedSrcObj != null && savedSrcObj.isInDeferredExecution() && resolveInExp.isIsDeferred()) {
+        	// Note: executing immediately but at deferred execution time, this is possible for instance if late resolve is called from with a condition 
+        	result = coerceResultValue(resolveInExp, result);
+        }
+        return result;
     }
     
+    private static List<TraceRecord> lookupTraceRecordsBySource(Object source, EClassifier declaredSourceType, EMap<Object, EList<TraceRecord>> source2RecordMap) {
+    	List<TraceRecord> result = null;
+    	// Remark: Should be removed as soon as implict collect is support on resolve too
+        if(declaredSourceType instanceof CollectionType && source instanceof Collection) {
+        	Collection<?> srcCol = (Collection<?>)source;
+        	for (Object nextSrc : srcCol) {
+        		EList<TraceRecord> nextPart = source2RecordMap.get(nextSrc);
+
+        		if(nextPart != null) {
+            		if(result == null) {
+            			result = new BasicEList<TraceRecord>();
+            		}        			
+        			result.addAll(nextPart);
+        		}
+			}	            	
+        } else {
+        	result = source2RecordMap.get(source);
+        }
+        
+        return (result != null) ? Collections.unmodifiableList(result) : Collections.<TraceRecord>emptyList();
+    }
+    	
     private static Object searchByTypeAndCondition(ResolveExp resolveExp, List<TraceRecord> traceRecords, QvtOperationalEvaluationVisitor visitor, QvtOperationalEvaluationEnv env) {
         if (resolveExp.isOne()) {
             for (TraceRecord traceRecord : traceRecords) {

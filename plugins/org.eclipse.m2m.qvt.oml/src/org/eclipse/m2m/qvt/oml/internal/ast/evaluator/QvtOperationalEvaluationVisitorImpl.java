@@ -159,31 +159,32 @@ implements QvtOperationalEvaluationVisitor {
     }
 
     public Object visitAssignExp(final AssignExp assignExp) {
+    	boolean isDeferred = false;    	
         // TODO: modify the following code for more complex l-values
         if (assignExp.getValue().size() == 1) {
-            OCLExpression<EClassifier> expression = assignExp.getValue().get(0);
-            if (expression instanceof ResolveExp) {
-                ResolveExp resolveExp = (ResolveExp) expression;
-                if (resolveExp.isIsDeferred()) {
-                    String ownerName = assignExp.getLeft().getName();
-                    if (assignExp.getLeft() instanceof PropertyCallExp) {
-                        Object ownerObj = (ownerName == null ?
-                                getOperationalEvaluationEnv().peekObjectExpOwner() : getRuntimeValue(ownerName));
-                        if (ownerObj instanceof EObject) {
-                            PropertyCallExp<EClassifier, EStructuralFeature> lvalueExp = (PropertyCallExp<EClassifier, EStructuralFeature>) assignExp.getLeft();
-                            EStructuralFeature referredProperty = getRenamedProperty(lvalueExp.getReferredProperty());
-                            getContext().setLastAssignmentLvalueEval(new EObjectEStructuralFeaturePair((EObject) ownerObj, referredProperty));
-                        }
-                    }
-                }
-            }
+        	isDeferred = QvtResolveUtil.hasDeferredRightSideValue(assignExp);
+            if(isDeferred) {
+            	String ownerName = assignExp.getLeft().getName();        	
+                Object ownerObj = (ownerName == null ? getOperationalEvaluationEnv().peekObjectExpOwner() : getRuntimeValue(ownerName));
+                if (ownerObj instanceof EObject) {
+                    PropertyCallExp<EClassifier, EStructuralFeature> lvalueExp = (PropertyCallExp<EClassifier, EStructuralFeature>) assignExp.getLeft();
+                    EStructuralFeature referredProperty = getRenamedProperty(lvalueExp.getReferredProperty());
+                    getContext().setLastAssignmentLvalueEval(new EObjectEStructuralFeaturePair((EObject) ownerObj, referredProperty));
+                }        	
+            }        	
         }
-        
+                
         Object exprValue = null;
         for (OCLExpression<EClassifier> exp : assignExp.getValue()) {
             exprValue = exp.accept(getVisitor());
         }
 
+        if(isDeferred) {
+        	// the source of resolve calls has been evaluated above -> assignment of the left value is not executed now 
+        	// but at deferred time in the end of the transformation
+        	return null;
+        }        
+        
         QvtOperationalEvaluationEnv env = getOperationalEvaluationEnv();
 
         String ownerName = assignExp.getLeft().getName();
@@ -423,6 +424,7 @@ implements QvtOperationalEvaluationVisitor {
     }
     
     public Object doVisitModule(Module module) {
+    	isInTerminatingState = false;
         if (myEntryPoint == null) {
             myEntryPoint = (ImperativeOperation) module.getEntry();
         }
@@ -452,6 +454,7 @@ implements QvtOperationalEvaluationVisitor {
 	        List<Object> entryArgs = makeEntryArgs(myEntryPoint, module);
 	        OperationCallResult callResult = executeImperativeOperation(myEntryPoint, null, entryArgs);
 	        
+	        isInTerminatingState = true;
 	        getContext().processDeferredTasks();
 	
 			ResourceSet outResourceSet = EmfUtil.getOutputResourceSet();
@@ -569,8 +572,8 @@ implements QvtOperationalEvaluationVisitor {
     /* resolve expressions family */
 
     public Object visitResolveExp(ResolveExp resolveExp) {
-        if (resolveExp.isIsDeferred()) {
-            LateResolveTask lateResolveTask = new LateResolveTask(resolveExp, getContext().getLastAssignmentLvalueEval(), this, getOperationalEvaluationEnv());
+    	if (resolveExp.isIsDeferred() && !isInTerminatingState) {    	
+            LateResolveTask lateResolveTask = new LateResolveTask(resolveExp, getContext().getLastAssignmentLvalueEval(), getQVTVisitor(), getOperationalEvaluationEnv());
             lateResolveTask.schedule();
             return null;
         }
@@ -578,11 +581,11 @@ implements QvtOperationalEvaluationVisitor {
     }
     
     public Object visitResolveInExp(ResolveInExp resolveInExp) {
-        if (resolveInExp.isIsDeferred()) {
-            LateResolveInTask lateResolveInTask = new LateResolveInTask(resolveInExp, getContext().getLastAssignmentLvalueEval(), this, getOperationalEvaluationEnv());
+        if (resolveInExp.isIsDeferred() && !isInTerminatingState) {        	
+            LateResolveInTask lateResolveInTask = new LateResolveInTask(resolveInExp, getContext().getLastAssignmentLvalueEval(), getQVTVisitor(), getOperationalEvaluationEnv());
             lateResolveInTask.schedule();
             return null;
-        }
+        }        
         return QvtResolveUtil.resolveInNow(resolveInExp, this, getOperationalEvaluationEnv());
     }
     
@@ -1299,6 +1302,14 @@ implements QvtOperationalEvaluationVisitor {
     		}    		
     	};
     }
+    
+    /**
+     * Performs cast on the result of {@link #getVisitor()}; 
+     * @see #getVisitor()
+     */
+    protected QvtOperationalEvaluationVisitor getQVTVisitor() {
+    	return (QvtOperationalEvaluationVisitor)getVisitor();
+    }
         
     // allow to redefine "entry" point
     private ImperativeOperation myEntryPoint;
@@ -1306,5 +1317,6 @@ implements QvtOperationalEvaluationVisitor {
     private QvtOperationalEvaluationEnv myEvalEnv;
     
     private OCLAnnotationSupport oclAnnotationSupport;
+    private boolean isInTerminatingState = false;
     
 }
