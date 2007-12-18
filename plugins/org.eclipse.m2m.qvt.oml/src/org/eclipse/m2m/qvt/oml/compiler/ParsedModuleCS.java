@@ -22,6 +22,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.parser.AbstractQVTParser;
 import org.eclipse.ocl.cst.PathNameCS;
 
+
 public class ParsedModuleCS {
 
 	private final AbstractQVTParser myParser;	

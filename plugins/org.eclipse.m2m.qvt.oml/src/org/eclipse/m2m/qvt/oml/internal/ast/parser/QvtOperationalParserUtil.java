@@ -67,6 +67,7 @@ import org.eclipse.ocl.utilities.PredefinedType;
 import org.eclipse.ocl.utilities.UMLReflection;
 import org.eclipse.osgi.util.NLS;
 
+
 public class QvtOperationalParserUtil {
 	
 	private static final String NAMESPACE_SEPARATOR = "."; //$NON-NLS-1$
