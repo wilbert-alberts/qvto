@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.27 2007/12/14 13:22:22 aigdalov Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.28 2007/12/18 10:08:39 radvorak Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -351,7 +351,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.27 2007/12/14 13:22:22 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.28 2007/12/18 10:08:39 radvorak Exp $
  */
 	./
 $End
