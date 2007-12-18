@@ -72,6 +72,7 @@ import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
 import org.eclipse.osgi.util.NLS;
 
+
 public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 
 	public static final String THIS = "this"; //$NON-NLS-1$	

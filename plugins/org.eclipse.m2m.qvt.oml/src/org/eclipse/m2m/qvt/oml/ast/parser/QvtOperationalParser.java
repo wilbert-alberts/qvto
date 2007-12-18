@@ -35,6 +35,7 @@ import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.SemanticException;
 import org.eclipse.osgi.util.NLS;
 
+
 public class QvtOperationalParser {
 	
 	public QvtOperationalParser() {
