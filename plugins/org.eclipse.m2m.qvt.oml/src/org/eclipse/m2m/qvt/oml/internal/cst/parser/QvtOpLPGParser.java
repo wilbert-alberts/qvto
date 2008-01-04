@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.20.2.5 2007/12/14 13:09:11 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.20.2.6 2008/01/04 01:06:26 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.20.2.5 2007/12/14 13:09:11 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.20.2.6 2008/01/04 01:06:26 radvorak Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -1116,7 +1116,7 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 		if (sym.getSequenceOfNames().size() > 0) {
 			String lastSegment = sym.getSequenceOfNames().get(sym.getSequenceOfNames().size()-1);
 			SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, lastSegment);
-			nameCS.setStartOffset(sym.getEndOffset()-lastSegment.length());
+			nameCS.setStartOffset(sym.getEndOffset() - lastSegment.length() + 1);
 			nameCS.setEndOffset(sym.getEndOffset());
 			result.setSimpleNameCS(nameCS);
 		}		

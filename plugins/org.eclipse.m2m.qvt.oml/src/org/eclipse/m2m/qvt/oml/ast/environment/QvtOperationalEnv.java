@@ -62,7 +62,6 @@ import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.ExpressionsFactory;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.internal.cst.CSTNode;
-import org.eclipse.ocl.internal.cst.SimpleNameCS;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
@@ -346,8 +345,12 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		}
 	}
 	
-	public ModelParameter lookupModelParameter(SimpleNameCS nameCS, DirectionKind directionKind) {
-		List<String> validExtents = new ArrayList<String>(1);
+
+	public ModelParameter lookupModelParameter(String name, DirectionKind directionKind) {
+		if(name == null) {
+			return null;
+		}
+		
 		for (Variable<EClassifier, EParameter> var : myModelParameters) {
 			ModelParameter modelParam = (ModelParameter) var.getRepresentedParameter();
 			if (directionKind == DirectionKind.OUT) {
@@ -355,20 +358,45 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 					continue;
 				}
 			}
-			if (modelParam.getName().length() == 0) {
-				continue;
-			}
-			if (modelParam.getName().equals(nameCS.getValue())) {
-				return modelParam;
-			}
-			else {
-				validExtents.add(modelParam.getName());
+
+			String nextParamName = modelParam.getName();
+			if (nextParamName != null) {
+				if (nextParamName.equals(name)) {
+					return modelParam;
+				}
 			}
 		}
-        reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentWrongName,
-                new Object[] { nameCS.getValue(), validExtents }), nameCS);
+		
 		return null;
 	}    
+	
+	/**
+	 * Get names of all available extents of given direction kind in this
+	 * environments.
+	 * 
+	 * @param directionKind
+	 *            filtering condition to be satisfied by returned extents or
+	 *            <code>null</code> if all kinds are acceptable
+	 * @return list of corresponding model parameter names
+	 */
+	public List<String> getAllExtentNames(DirectionKind directionKind) {
+		List<String> result = new ArrayList<String>(myModelParameters.size());
+		for (Variable<EClassifier, EParameter> var : myModelParameters) {
+			ModelParameter modelParam = (ModelParameter) var.getRepresentedParameter();
+			if (directionKind == DirectionKind.OUT) {
+				if (modelParam.getKind() == DirectionKind.IN) {
+					continue;
+				}
+			}
+
+			String nextParam = modelParam.getName();
+			if(nextParam != null && nextParam.length() > 0) {
+				result.add(nextParam);
+			}
+		}
+		
+		return Collections.unmodifiableList(result);
+	}
 	
 	public ModelParameter resolveModelParameter(EClassifier type, DirectionKind directionKind) {
 		if (!isMayBelongToExtent(type)) {
