@@ -11,9 +11,13 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.editor.ui.hovers;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
-import org.eclipse.m2m.qvt.oml.expressions.AssignExp;
-import org.eclipse.ocl.expressions.PropertyCallExp;
+import org.eclipse.m2m.qvt.oml.editor.ui.CSTHelper;
+import org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks.ObjectPropertyHyperlinkDetector;
+import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.ecore.EcoreEnvironment;
 
 
 /**
@@ -22,13 +26,16 @@ import org.eclipse.ocl.expressions.PropertyCallExp;
 public class PatternPropertyExpressionInfoProvider implements
 		IElementInfoProvider {
 
-	public String getElementInfo(final Object element, ITextViewer textViewer) {
-		if (element instanceof AssignExp) {
-			AssignExp patternPropertyExp = (AssignExp) element;
-			if (patternPropertyExp.getLeft() instanceof PropertyCallExp) {
-				//return NameUtil.buildPropertyName(((PropertyCallExp<EClassifier, EParameter>) patternPropertyExp.getLeft()).getReferredProperty(), null);
+	public String getElementInfo(final Object element, ITextViewer textViewer, IRegion region) {
+		if (element instanceof CSTNode) {
+			CSTNode syntaxElement = (CSTNode) element;
+			EStructuralFeature feature = ObjectPropertyHyperlinkDetector.findDefinition(syntaxElement);
+			if(feature != null) {
+				EcoreEnvironment env = CSTHelper.getEnvironment(syntaxElement);
+				return SignatureUtil.getPropertySignature(feature, env);				
 			}
 		}
+		
 		return null;
 	}
 

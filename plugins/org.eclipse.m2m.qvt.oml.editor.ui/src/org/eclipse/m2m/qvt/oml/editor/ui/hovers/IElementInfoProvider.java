@@ -11,11 +11,12 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.editor.ui.hovers;
 
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
 
 /**
  * @author vrepeshko
  */
 public interface IElementInfoProvider {
-	String getElementInfo(Object element, ITextViewer textViewer);
+	String getElementInfo(Object element, ITextViewer textViewer, IRegion region);
 }

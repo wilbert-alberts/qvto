@@ -13,6 +13,7 @@ package org.eclipse.m2m.qvt.oml.editor.ui.hovers;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.qvt.oml.editor.ui.CSTHelper;
@@ -35,7 +36,7 @@ public class VariableExpressionInfoProvider implements IElementInfoProvider {
 		super();
 	}
 
-	public String getElementInfo(final Object element, ITextViewer textViewer) {
+	public String getElementInfo(final Object element, ITextViewer textViewer, IRegion region) {
 		if (element instanceof SimpleNameCS) {
 			SimpleNameCS nameCS = (SimpleNameCS) element;
 			CSTNode nodeCS = VariableHyperlinkDetector.resolveVariableDeclaration(nameCS);

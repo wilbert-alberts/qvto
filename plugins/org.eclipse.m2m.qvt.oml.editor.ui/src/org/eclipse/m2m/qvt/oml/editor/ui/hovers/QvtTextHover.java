@@ -27,6 +27,7 @@ import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.qvt.oml.editor.ui.Activator;
 import org.eclipse.m2m.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.qvt.oml.editor.ui.QvtDocumentProvider;
 import org.eclipse.ocl.cst.CSTNode;
@@ -43,7 +44,11 @@ public class QvtTextHover implements ITextHover {
         		new OperationCallInfoProvider(),
         		new PropertyCallInfoProvider(),
         		new VariableExpressionInfoProvider(),
-        		new PatternPropertyExpressionInfoProvider()
+        		new PatternPropertyExpressionInfoProvider(),
+        		new PathNameInfoProvider(),
+        		new ModuleImportInfoProvider(),
+        		new ResolveInMappingInfoProvider(),
+        		new ModelTypeInfoProvider()
         };
     }
 
@@ -63,7 +68,11 @@ public class QvtTextHover implements ITextHover {
         	CSTNode rootCS = myDocumentProvider.getCompiledModule().getSyntaxElement().getModuleCS();
         	List<CSTNode> elements = CSTHelper.selectTargetedElements(rootCS, hoverRegion);
         	if(!elements.isEmpty()) {
-        		return getElementsInfo(elements, textViewer);
+        		try {
+        			return getElementsInfo(elements, textViewer, hoverRegion);
+				} catch (Exception e) {
+					Activator.log(e);
+				}
         	}
         }
        
@@ -101,12 +110,12 @@ public class QvtTextHover implements ITextHover {
     }
 
     
-    private String getElementsInfo(final List<CSTNode> elements, ITextViewer textViewer) {
+    private String getElementsInfo(final List<CSTNode> elements, ITextViewer textViewer, IRegion hoverRegion) {
     	for (CSTNode nextElement : elements) {
         	for (int i = 0; i < myElementInfoProviders.length; i++) {
     			IElementInfoProvider provider = myElementInfoProviders[i];
     			try {
-    				String info = provider.getElementInfo(nextElement, textViewer);
+    				String info = provider.getElementInfo(nextElement, textViewer, hoverRegion);
     				if (info != null && info.length() > 0) {
     					return info;
     				}

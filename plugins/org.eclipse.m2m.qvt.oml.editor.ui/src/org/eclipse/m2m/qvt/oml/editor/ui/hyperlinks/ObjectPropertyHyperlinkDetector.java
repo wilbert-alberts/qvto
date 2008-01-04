@@ -12,89 +12,112 @@
 package org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks;
 
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
+import org.eclipse.m2m.qvt.oml.common.io.CFile;
+import org.eclipse.m2m.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.qvt.oml.expressions.AssignExp;
+import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.expressions.Property;
 import org.eclipse.m2m.qvt.oml.internal.cst.ModulePropertyCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.PatternPropertyExpCS;
-import org.eclipse.ocl.ecore.VariableExp;
-import org.eclipse.ocl.expressions.PropertyCallExp;
-import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.FeatureCallExpCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.VariableExpCS;
+import org.eclipse.ocl.ecore.TupleType;
+import org.eclipse.ocl.expressions.PropertyCallExp;
 import org.eclipse.ocl.utilities.ASTNode;
 
 
 @SuppressWarnings("restriction")
 public class ObjectPropertyHyperlinkDetector implements IHyperlinkDetectorHelper {
 	
+	@SuppressWarnings("unchecked")
 	public IHyperlink detectHyperlink(IDetectionContext context) {
-
 		CSTNode syntaxElement = context.getSyntaxElement();
-		if (syntaxElement instanceof SimpleNameCS) {
-			SimpleNameCS nameCS = (SimpleNameCS)context.getSyntaxElement();			
+		EStructuralFeature referredFeature = findDefinition(syntaxElement);
 			
-			if(syntaxElement.eContainer() instanceof PatternPropertyExpCS) {
-				ASTNode astNode = ASTBindingHelper.resolveASTNode((PatternPropertyExpCS)syntaxElement.eContainer());			
-				if(astNode instanceof AssignExp) {
-					AssignExp assignExp  = (AssignExp) astNode;
-					PropertyCallExp<EClassifier, EParameter> pcall = (PropertyCallExp<EClassifier, EParameter>)assignExp.getLeft();
-					return new MetamodelElementHyperlink(HyperlinkUtil.createRegion(nameCS), (EStructuralFeature)pcall.getReferredProperty());				
+		if(referredFeature != null) {			
+			Property prop = getASTProperty(referredFeature);
+			if(prop != null) {
+				ModulePropertyCS propertyCS = ASTBindingHelper.resolveCSTNode(prop, ModulePropertyCS.class);
+				if(propertyCS != null) {
+					CFile sourceFile = CSTHelper.getSourceFile(propertyCS);
+					CSTNode destNodeCS = (propertyCS.getSimpleNameCS() != null) ? propertyCS.getSimpleNameCS() : propertyCS;
+					IRegion destRegion = HyperlinkUtil.createRegion(destNodeCS);						
+					return new QvtFileHyperlink(HyperlinkUtil.createRegion(syntaxElement), sourceFile, destRegion, destRegion);	
 				}
-			} 
-			else if(syntaxElement.eContainer() instanceof FeatureCallExpCS) {				
-				FeatureCallExpCS featureCallExpCS = (FeatureCallExpCS) syntaxElement.eContainer();
-				ASTNode featureASTNode = ASTBindingHelper.resolveASTNode(featureCallExpCS);
-				
-				if(featureASTNode instanceof PropertyCallExp) {
-					PropertyCallExp<EClassifier, EStructuralFeature> propertyCallExp = (PropertyCallExp<EClassifier, EStructuralFeature>)featureASTNode;
-					EStructuralFeature feature = propertyCallExp.getReferredProperty();
-					return new MetamodelElementHyperlink(HyperlinkUtil.createRegion(nameCS), feature);		
-					
-				}
-			} 
-			else if(syntaxElement.eContainer() instanceof VariableExpCS) {
-				ASTNode astVarExpNode = ASTBindingHelper.resolveASTNode(nameCS);
-				if(astVarExpNode != null) {
-					// property call
-					if(astVarExpNode instanceof PropertyCallExp) {
-						PropertyCallExp<EClassifier, EStructuralFeature> pcall = (PropertyCallExp<EClassifier, EStructuralFeature>) astVarExpNode;
-						return new MetamodelElementHyperlink(HyperlinkUtil.createRegion(nameCS), (EStructuralFeature)pcall.getReferredProperty());
-					}
-					
-					if(astVarExpNode instanceof VariableExp) {
-						VariableExp variableExp = (VariableExp) astVarExpNode;
-						Variable<EClassifier, EParameter> var = variableExp.getReferredVariable();
-
-						if(var == null || var.getRepresentedParameter() == null) {
-							return null;
-						}
-
-						EParameter param = var.getRepresentedParameter();
-						// resolve module owned property
-						if(param instanceof Property) {
-							Property moduleProperty = (Property) param;
-							CSTNode propertNodeCS = ASTBindingHelper.resolveCSTNode(moduleProperty);
-							if(propertNodeCS instanceof ModulePropertyCS) {
-								ModulePropertyCS modulePropertyCS = (ModulePropertyCS) propertNodeCS;
-								CSTNode destNodeCST = modulePropertyCS.getSimpleNameCS() != null ? modulePropertyCS.getSimpleNameCS() : propertNodeCS; 
-								IRegion declRegion = HyperlinkUtil.createRegion(destNodeCST);
-								return new QvtFileHyperlink(HyperlinkUtil.createRegion(nameCS), 
-										context.getModule().getSource(), declRegion, declRegion);
-								
-							}
-						}
-					}
-				}				
-			}			
+			}
+			
+			return new MetamodelElementHyperlink(HyperlinkUtil.createRegion(syntaxElement), referredFeature);
 		}
 		
-		return null;		
+		return null;
+	}	
+	
+	public static EStructuralFeature findDefinition(CSTNode syntaxElement) {
+		if (syntaxElement instanceof SimpleNameCS) {
+			EStructuralFeature result = findDefinition((SimpleNameCS) syntaxElement);
+			if(result instanceof TupleType) {
+				return null;
+			}				
+			
+			return result;
+		}
+		
+		return null;
+	}
+
+	
+	private static Property getASTProperty(EStructuralFeature feature) {
+		if(feature.eContainer() instanceof Module) {
+			Module module = (Module)feature.eContainer();
+			for (Property prop : module.getConfigProperty()) {
+				String featureName = feature.getName(); 				
+				if(featureName != null && featureName.equals(prop.getName())) {
+					return prop;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static EStructuralFeature findDefinition(SimpleNameCS nameCS) {
+		if(nameCS.eContainer() instanceof PatternPropertyExpCS) {
+			ASTNode astNode = ASTBindingHelper.resolveASTNode((PatternPropertyExpCS)nameCS.eContainer());			
+			if(astNode instanceof AssignExp) {
+				AssignExp assignExp  = (AssignExp) astNode;
+				PropertyCallExp<EClassifier, EStructuralFeature> pcall = (PropertyCallExp<EClassifier, EStructuralFeature>)assignExp.getLeft();
+				if(pcall instanceof PropertyCallExp) {
+					return pcall.getReferredProperty();
+				}				
+			}
+		} 
+		else if(nameCS.eContainer() instanceof FeatureCallExpCS) {				
+			FeatureCallExpCS featureCallExpCS = (FeatureCallExpCS) nameCS.eContainer();
+			ASTNode featureASTNode = ASTBindingHelper.resolveASTNode(featureCallExpCS);
+			
+			if(featureASTNode instanceof PropertyCallExp) {
+				PropertyCallExp<EClassifier, EStructuralFeature> propertyCallExp = (PropertyCallExp<EClassifier, EStructuralFeature>)featureASTNode;
+				return propertyCallExp.getReferredProperty();												
+			}
+		} 
+		else if(nameCS.eContainer() instanceof VariableExpCS) {
+			ASTNode astVarExpNode = ASTBindingHelper.resolveASTNode(nameCS);
+			if(astVarExpNode != null) {
+				// property call
+				if(astVarExpNode instanceof PropertyCallExp) {
+					PropertyCallExp<EClassifier, EStructuralFeature> pcall = (PropertyCallExp<EClassifier, EStructuralFeature>) astVarExpNode;
+					return pcall.getReferredProperty();
+				}
+			}
+		} 			
+		
+		return null;	
 	}
 }

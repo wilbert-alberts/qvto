@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.editor.ui.hovers;
 
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.ocl.cst.SimpleNameCS;
@@ -23,7 +24,7 @@ import org.eclipse.ocl.utilities.ASTNode;
  */
 public class PropertyCallInfoProvider implements IElementInfoProvider {
 
-	public String getElementInfo(final Object element, ITextViewer textViewer) {
+	public String getElementInfo(final Object element, ITextViewer textViewer, IRegion region) {
 		if (false == element instanceof SimpleNameCS) {
 			return null;
 		}

@@ -11,28 +11,30 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.editor.ui.hovers;
 
-import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.m2m.qvt.oml.editor.ui.CSTHelper;
-import org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks.OperationHyperlinkDetector;
+import org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks.ModelTypeHyperlinkDetector;
+import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
-import org.eclipse.ocl.cst.SimpleNameCS;
 
-public class OperationCallInfoProvider implements IElementInfoProvider {
+
+public class ModelTypeInfoProvider implements IElementInfoProvider {
 
 	public String getElementInfo(final Object element, ITextViewer textViewer, IRegion region) {
-		if (element instanceof SimpleNameCS) {
-			SimpleNameCS nameCS = (SimpleNameCS)element;
-			EOperation operation = OperationHyperlinkDetector.resolveOperationDecl(nameCS);
+		if (element instanceof CSTNode) {
+			CSTNode syntaxElement = (CSTNode) element;
+			EPackage ePackage = ModelTypeHyperlinkDetector.findReferencedPackageDefinition(syntaxElement);
 			
-			if(operation != null) {
-				EcoreEnvironment env = CSTHelper.getEnvironment(nameCS);
+			if(ePackage != null) {
+				EcoreEnvironment env = CSTHelper.getEnvironment(syntaxElement);				
 				if(env != null) {
-					return SignatureUtil.getOperationSignature(env, operation);
+					return SignatureUtil.getPackageSignature(env, ePackage);
 				}
 			}
 		}
+		
 		return null;
 	}
 }

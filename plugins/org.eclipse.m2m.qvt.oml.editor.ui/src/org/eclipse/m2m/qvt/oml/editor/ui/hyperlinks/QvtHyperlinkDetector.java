@@ -18,6 +18,7 @@ import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.jface.text.hyperlink.IHyperlinkDetector;
 import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.qvt.oml.editor.ui.Activator;
 import org.eclipse.m2m.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.qvt.oml.editor.ui.QvtDocumentProvider;
 import org.eclipse.m2m.qvt.oml.editor.ui.QvtEditor;
@@ -35,10 +36,12 @@ public class QvtHyperlinkDetector implements IHyperlinkDetector {
 		myEditor = editor;
 		myHelpers = new IHyperlinkDetectorHelper[] {
 				new ImportHyperlinkDetector(),
+				new ModelTypeHyperlinkDetector(),
 				new PathNameHyperlinkDetector(),
 				new ObjectPropertyHyperlinkDetector(),
 				new VariableHyperlinkDetector(),
-				new OperationHyperlinkDetector()				
+				new OperationHyperlinkDetector(),
+				new ResolveInHyperlinkDetector()
 		};
 	}
 
@@ -54,15 +57,18 @@ public class QvtHyperlinkDetector implements IHyperlinkDetector {
 
 		List<CSTNode> elements = CSTHelper.selectTargetedElements(compiledModule.getSyntaxElement().getModuleCS(), region);
 		
-		Context context = new Context(documentProvider.getCompiledModule(), region);		
+		Context context = new Context(documentProvider.getCompiledModule(), region, textViewer);		
 		
 		for (CSTNode element : elements) {
 			for (IHyperlinkDetectorHelper helper : myHelpers) {
 				context.syntaxElement = element;
-				
-				IHyperlink hyperlink = helper.detectHyperlink(context);
-				if (hyperlink != null) {
-					return new IHyperlink[] { hyperlink };
+				try {
+					IHyperlink hyperlink = helper.detectHyperlink(context);
+					if (hyperlink != null) {
+						return new IHyperlink[] { hyperlink };
+					}
+				} catch (Exception e) {
+					Activator.log(e);
 				}
 			}
 		}
@@ -86,11 +92,13 @@ public class QvtHyperlinkDetector implements IHyperlinkDetector {
 
 		final CompiledModule compiledModule;
 		final IRegion region;
+		final ITextViewer textViewer;
 		CSTNode syntaxElement;
 		
-		public Context(CompiledModule module, IRegion region) {
+		public Context(CompiledModule module, IRegion region, ITextViewer textViewer) {
 			this.compiledModule = module;
 			this.region = region;
+			this.textViewer = textViewer;
 		}		
 
 		public CompiledModule getModule() {
@@ -103,6 +111,10 @@ public class QvtHyperlinkDetector implements IHyperlinkDetector {
 		
 		public CSTNode getSyntaxElement() {			
 			return syntaxElement;
+		}
+		
+		public ITextViewer geTextViewer() {		
+			return textViewer;
 		}
 	};
 }
