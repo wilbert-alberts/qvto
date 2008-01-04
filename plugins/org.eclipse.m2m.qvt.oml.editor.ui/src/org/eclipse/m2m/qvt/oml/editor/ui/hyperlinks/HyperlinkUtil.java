@@ -14,7 +14,6 @@ package org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Region;
 import org.eclipse.ocl.internal.cst.CSTNode;
-import org.eclipse.ocl.internal.cst.SimpleNameCS;
 import org.eclipse.ocl.utilities.ASTNode;
 
 
@@ -40,4 +39,16 @@ public class HyperlinkUtil {
 	public static IRegion createRegion(CSTNode element) {
 		return new Region(element.getStartOffset(), element.getEndOffset() - element.getStartOffset() + 1);
 	}
+	
+	public static boolean isNodeContainingOffset(CSTNode node, int offset) {
+		if(isValidElement(node)) {
+			return isOffsetInRange(offset, node.getStartOffset(), node.getEndOffset());
+		}
+		return false;
+	}
+	
+	public static boolean isOffsetInRange(int offset, int startOffset, int endOffset) {
+		return startOffset <= offset && endOffset >= offset;
+	}
+	
 }

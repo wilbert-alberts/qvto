@@ -290,7 +290,10 @@ public class QvtEditor extends TextEditor {
         if (s == null) {
             return;
         }
-        
+        if(s.getShell() == null || s.getShell().getDisplay() == null) {
+        	// NPE check
+        	return;
+        }
         s.getShell().getDisplay().syncExec(new Runnable() {
             public void run() {
             	if (myTreeViewer != null && !myTreeViewer.getControl().isDisposed()) {

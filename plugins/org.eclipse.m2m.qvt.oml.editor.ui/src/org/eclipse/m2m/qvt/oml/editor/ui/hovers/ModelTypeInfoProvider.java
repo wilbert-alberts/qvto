@@ -11,31 +11,30 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.editor.ui.hovers;
 
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
-import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
-import org.eclipse.ocl.ecore.PropertyCallExp;
-import org.eclipse.ocl.internal.cst.SimpleNameCS;
-import org.eclipse.ocl.utilities.ASTNode;
+import org.eclipse.m2m.qvt.oml.editor.ui.CSTHelper;
+import org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks.ModelTypeHyperlinkDetector;
+import org.eclipse.ocl.ecore.EcoreEnvironment;
+import org.eclipse.ocl.internal.cst.CSTNode;
 
 
-/**
- * @author vrepeshko
- */
-public class PropertyCallInfoProvider implements IElementInfoProvider {
+public class ModelTypeInfoProvider implements IElementInfoProvider {
 
 	public String getElementInfo(final Object element, ITextViewer textViewer, IRegion region) {
-		if (false == element instanceof SimpleNameCS) {
-			return null;
+		if (element instanceof CSTNode) {
+			CSTNode syntaxElement = (CSTNode) element;
+			EPackage ePackage = ModelTypeHyperlinkDetector.findReferencedPackageDefinition(syntaxElement);
+			
+			if(ePackage != null) {
+				EcoreEnvironment env = CSTHelper.getEnvironment(syntaxElement);				
+				if(env != null) {
+					return SignatureUtil.getPackageSignature(env, ePackage);
+				}
+			}
 		}
-		SimpleNameCS nameCS = (SimpleNameCS) element; 
-		ASTNode nodeAS = ASTBindingHelper.resolveASTNode(nameCS);
-		if (element instanceof PropertyCallExp) {
-			PropertyCallExp propertyCallExp = (PropertyCallExp) element;
-			String propertyName = propertyCallExp.getName(); //NameUtil.buildPropertyName(propertyCallExp.getReferredProperty(), null);
-			return propertyName;
-		}
+		
 		return null;
 	}
-
 }

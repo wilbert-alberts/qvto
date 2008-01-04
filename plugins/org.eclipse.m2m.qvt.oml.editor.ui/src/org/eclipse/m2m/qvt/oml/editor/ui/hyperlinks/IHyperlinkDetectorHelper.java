@@ -12,6 +12,7 @@
 package org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks;
 
 import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
 import org.eclipse.ocl.internal.cst.CSTNode;
@@ -31,5 +32,7 @@ public interface IHyperlinkDetectorHelper {
 		CSTNode getSyntaxElement();
 		
 		IRegion getRegion();
+		
+		ITextViewer geTextViewer();
 	}
 }

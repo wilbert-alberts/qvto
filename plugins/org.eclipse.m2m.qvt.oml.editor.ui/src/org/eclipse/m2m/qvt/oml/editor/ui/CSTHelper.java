@@ -19,6 +19,7 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
+import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.internal.cst.CSTNode;
@@ -70,6 +71,15 @@ public class CSTHelper {
 		}
 		
 		return (MappingModuleCS) parent;
+	}
+	
+	public static CFile getSourceFile(CSTNode nodeCS) {
+		MappingModuleCS moduleCST = getModule(nodeCS);
+		if(moduleCST == null) {
+			return null;
+		}
+		
+		return ASTBindingHelper.resolveModuleFile(moduleCST);
 	}
 	
 	public static EcoreEnvironment getEnvironment(CSTNode nodeCS) {

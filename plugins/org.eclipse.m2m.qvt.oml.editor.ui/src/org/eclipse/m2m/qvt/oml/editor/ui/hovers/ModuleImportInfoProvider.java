@@ -11,21 +11,24 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.editor.ui.hovers;
 
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
-import org.eclipse.m2m.qvt.oml.editor.ui.QvtDocumentProvider;
+import org.eclipse.m2m.qvt.oml.common.io.CFile;
+import org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks.ImportHyperlinkDetector;
+import org.eclipse.ocl.internal.cst.CSTNode;
 
 
-public abstract class AbstractInfoProvider implements IElementInfoProvider {
+public class ModuleImportInfoProvider implements IElementInfoProvider {
 
-	private QvtDocumentProvider fDocumentProvider;
-	
-	protected AbstractInfoProvider(QvtDocumentProvider documentProvider) {		
-		this.fDocumentProvider = documentProvider;
-	}
+	public String getElementInfo(final Object element, ITextViewer textViewer, IRegion region) {
+		if (element instanceof CSTNode) {
+			CSTNode syntaxElement = (CSTNode) element;
+			CFile cUnitFile = ImportHyperlinkDetector.findDefinition(syntaxElement);
+			if(cUnitFile != null) {
+				return cUnitFile.getFullPath();
+			}
+		}
 		
-	protected QvtDocumentProvider getDocumentProvider() {
-		return fDocumentProvider;
+		return null;
 	}
-		
-	public abstract String getElementInfo(final Object element, ITextViewer textViewer);
 }

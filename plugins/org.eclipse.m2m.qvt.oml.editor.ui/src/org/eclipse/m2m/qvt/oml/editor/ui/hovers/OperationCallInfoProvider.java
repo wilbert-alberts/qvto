@@ -12,6 +12,7 @@
 package org.eclipse.m2m.qvt.oml.editor.ui.hovers;
 
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.m2m.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks.OperationHyperlinkDetector;
@@ -20,7 +21,7 @@ import org.eclipse.ocl.internal.cst.SimpleNameCS;
 
 public class OperationCallInfoProvider implements IElementInfoProvider {
 
-	public String getElementInfo(final Object element, ITextViewer textViewer) {
+	public String getElementInfo(final Object element, ITextViewer textViewer, IRegion region) {
 		if (element instanceof SimpleNameCS) {
 			SimpleNameCS nameCS = (SimpleNameCS)element;
 			EOperation operation = OperationHyperlinkDetector.resolveOperationDecl(nameCS);

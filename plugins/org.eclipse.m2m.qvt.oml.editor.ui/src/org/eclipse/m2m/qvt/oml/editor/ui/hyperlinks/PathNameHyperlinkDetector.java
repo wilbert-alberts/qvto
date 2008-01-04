@@ -11,28 +11,27 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EModelElement;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
+import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
+import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.editor.ui.CSTHelper;
-import org.eclipse.m2m.qvt.oml.emf.util.EmfException;
 import org.eclipse.m2m.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.qvt.oml.expressions.PackageRef;
-import org.eclipse.m2m.qvt.oml.internal.cst.MappingDeclarationCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ModelTypeCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.ModuleImportCS;
+import org.eclipse.ocl.ecore.EnumLiteralExp;
 import org.eclipse.ocl.internal.cst.CSTNode;
+import org.eclipse.ocl.internal.cst.EnumLiteralExpCS;
 import org.eclipse.ocl.internal.cst.PathNameCS;
-import org.eclipse.ocl.internal.cst.StringLiteralExpCS;
-import org.eclipse.ocl.internal.cst.TypeCS;
+import org.eclipse.ocl.utilities.ASTNode;
 
 
 /**
@@ -41,86 +40,103 @@ import org.eclipse.ocl.internal.cst.TypeCS;
 @SuppressWarnings("restriction")
 public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 
+	private static class EModelElementRef {
+		final EModelElement element;
+		final IRegion sourceLinkRegion;
+		
+		private EModelElementRef(EModelElement element, IRegion sourceLinkRegion) {
+			this.element = element;
+			this.sourceLinkRegion = sourceLinkRegion;
+		}		
+	}
+	
 	public IHyperlink detectHyperlink(IDetectionContext context) {		
-		PathNameCS pathNameCS = null;
-				
-		if (context.getSyntaxElement() instanceof ModelTypeCS && context.getSyntaxElement().eContainer() instanceof MappingModuleCS) {
-			MappingModuleCS moduleCS = (MappingModuleCS) context.getSyntaxElement().eContainer();
-			for (ModelTypeCS modelTypeCS : moduleCS.getMetamodels()) {
-				if(modelTypeCS != context.getSyntaxElement() || modelTypeCS.getPackageRefs().isEmpty()) {
-					continue;
-				}
-				// we have detected metamodel import
-				QvtOperationalEnv env = getEnv(context.getSyntaxElement());
-				if(env != null) {
-					try {
-						StringLiteralExpCS uriLiteral = modelTypeCS.getPackageRefs().get(0).getUriCS();
-						if(uriLiteral == null) {
-							return null;
+		CSTNode syntaxElement = context.getSyntaxElement();		
+		EModelElementRef elementRef = findReferencedMetamodelElement(syntaxElement, context.getRegion());
+		
+		if(elementRef != null) {
+			EModelElement element = elementRef.element;
+			if(element instanceof ASTNode) {
+				ASTNode elementAST = (ASTNode) element;
+				CSTNode cstNode = ASTBindingHelper.resolveCSTNode(elementAST, CSTNode.class);
+				if(cstNode != null) {
+					CFile file = CSTHelper.getSourceFile(cstNode);
+					if(file != null) {
+						if(cstNode instanceof ModelTypeCS) {
+							// TODO - use QVT model Switch to get destination region specific to various CST							
+							cstNode = ((ModelTypeCS) cstNode).getIdentifierCS();  
 						}
-						String id = uriLiteral.getStringSymbol();
-						// strip quotations
-						id = id.substring(1, id.length() - 1);
-						EPackage ePackage = env.getMetamodelRegistry().getMetamodelDesc(id).getModel();
-						return new MetamodelElementHyperlink(HyperlinkUtil.createRegion(modelTypeCS), ePackage);
-					} catch (EmfException e) {
-						// do nothing, a metamodel may not have been resolved
+						IRegion destReg = HyperlinkUtil.createRegion(cstNode);
+						return new QvtFileHyperlink(elementRef.sourceLinkRegion, file, destReg, destReg);
+					}
+				}
+			} 
+			
+			return new MetamodelElementHyperlink(elementRef.sourceLinkRegion, elementRef.element);			
+		}
+
+		return null;
+	}
+	
+	public static EModelElement findReferencedElementDefinition(CSTNode syntaxElement, IRegion region) {
+		EModelElementRef ref = findReferencedMetamodelElement(syntaxElement, region);
+		return (ref != null) ? ref.element : null;
+	}
+	
+	private static EModelElementRef findReferencedMetamodelElement(CSTNode syntaxElement, IRegion region) {
+		PathNameCS pathNameCS = null;
+		if (syntaxElement instanceof PathNameCS) {
+			pathNameCS = (PathNameCS) syntaxElement;
+			
+			if(pathNameCS.getSequenceOfNames().size() > 0) {
+				int startOffset = pathNameCS.getStartOffset();
+				int firstElementLength = pathNameCS.getSequenceOfNames().get(0).length();
+				
+				if(HyperlinkUtil.isOffsetInRange(region.getOffset(), startOffset, startOffset + firstElementLength)) {				
+					QvtOperationalEnv env = getEnv(pathNameCS);
+					if(env != null) {
+						ModelType modeltype = env.getModelType(pathNameCS.getSequenceOfNames());						
+						if(modeltype != null) {
+							IRegion linkReg = new Region(pathNameCS.getStartOffset(), firstElementLength);
+							return new EModelElementRef(modeltype, linkReg);
+						}
 					}
 				}
 			}
-		}		
-		
-		if (context.getSyntaxElement() instanceof PathNameCS) {
-			pathNameCS = (PathNameCS) context.getSyntaxElement();
-			return findHyperLink(pathNameCS, context);
-
-		} else if (context.getSyntaxElement() instanceof ModuleImportCS) {			
-			ModuleImportCS importCS = (ModuleImportCS) context.getSyntaxElement(); 
-			if(importCS.getPathNameCS() != null) {
-				return findHyperLink(pathNameCS, context);
-			}
 			
-//		} else if (element instanceof PathNameExpCS) {
-//			pathNameAS = ((PathNameExpCS) element).getPathName();
-		} else if (context.getSyntaxElement() instanceof MappingDeclarationCS) {
-			TypeCS contextType = ((MappingDeclarationCS) context.getSyntaxElement()).getContextType();
-			if (contextType instanceof PathNameCS) {
-				pathNameCS = (PathNameCS) contextType;
+			return findPathNameReferencedElement(pathNameCS, region);
+		} 
+		else if(syntaxElement instanceof EnumLiteralExpCS) {
+			EnumLiteralExpCS enumExpCS = (EnumLiteralExpCS) syntaxElement;
+			EnumLiteralExp enumExpAST = ASTBindingHelper.resolveASTNode(enumExpCS, EnumLiteralExp.class);
+			if(enumExpAST != null && enumExpAST.getReferredEnumLiteral() != null) {
+				EEnumLiteral enumLit = enumExpAST.getReferredEnumLiteral();
+				CSTNode linkCS = enumExpCS.getSimpleNameCS();
+				if(linkCS == null) {
+					linkCS = enumExpCS;
+				}
+
+				return new EModelElementRef(enumLit, HyperlinkUtil.createRegion(linkCS));
 			}
 		}
-		if (!HyperlinkUtil.isValidElement(pathNameCS)) {
-			return null;
-		}
-//		Environment environment = (Environment) data.getSyntaxToEnvironmentMap().get(analyzer.getSyntaxRoot());
-//		if (environment == null) {
-//			return null;
-//		}
-//		ModelElement modelElement = environment.lookupPathName(pathNameAS);
-//		EModelElement metamodelElement = null;
-//		if (modelElement instanceof OclModelElementTypeImpl) {
-//			metamodelElement = ((OclModelElementTypeImpl) modelElement).getEClassifier();
-//		} else if (modelElement instanceof EnumerationImpl) {
-//			metamodelElement = ((EnumerationImpl) modelElement).getEEnum();
-//		} else if (modelElement instanceof EnumLiteralImpl) {
-//			metamodelElement = ((EnumLiteralImpl) modelElement).getEEnumLiteral();
-//		}
-//		if (metamodelElement == null) {
-//			return null;
-//		}
-//		return new MetamodelElementHyperlink(HyperlinkUtil.createRegion(pathNameAS), metamodelElement);
+		
 		return null;
 	}
-
-	private IHyperlink findHyperLink(PathNameCS pathName, IDetectionContext context) {
+	
+	private static EModelElementRef findPathNameReferencedElement(PathNameCS pathName, IRegion region) {
+		if(pathName.getSequenceOfNames().isEmpty()) {
+			return null;
+		}
+		
 		QvtOperationalEnv env = getEnv(pathName);
 		if(env != null) {
-			List<String> names = new ArrayList<String>(5);
-			IRegion linkRegion = findElementInPathName(pathName, context.getRegion(), names);
-			boolean isPackageReferred = names.size() < pathName.getSequenceOfNames().size();
+			List<String> namesToLookup = new LinkedList<String>();
+			IRegion linkRegion = findElementInPathName(pathName, region, namesToLookup);
 			
-			EModelElement element = (isPackageReferred) ? env.lookupPackage(names) : env.lookupClassifier(names);
+			boolean isPackageReferred = namesToLookup.size() < pathName.getSequenceOfNames().size();			
+			EModelElement element = (isPackageReferred) ? env.lookupPackage(namesToLookup) : env.lookupClassifier(namesToLookup);
 			if(element == null) {
-				ModelType modelType = env.getModelType(names);
+				ModelType modelType = env.getModelType(namesToLookup);
 				if(modelType != null) {
 					EList<PackageRef> metamodels = modelType.getMetamodel();
 					if(!metamodels.isEmpty()) {
@@ -129,15 +145,17 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 					}
 				}
 			}
+
 			if(element != null) {
-				return new MetamodelElementHyperlink(linkRegion, element);
+				return new EModelElementRef(element, linkRegion);
 			}
 		}
 		
 		return null;
 	}
 	
-	private IRegion findElementInPathName(PathNameCS pathNameCS, IRegion region, List<String> pathToLookup) {
+	
+	private static IRegion findElementInPathName(PathNameCS pathNameCS, IRegion selectedRegion, List<String> pathToLookup) {
 		int startOffset = pathNameCS.getStartOffset();
 		int endOffset = startOffset;		
 		
@@ -150,8 +168,8 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 			}
 			endOffset = startOffset + segment.length();
 
-			if(region.getOffset() >= startOffset && region.getOffset() <= endOffset && 
-				region.getLength() <= endOffset - startOffset) {
+			if(selectedRegion.getOffset() >= startOffset && selectedRegion.getOffset() <= endOffset && 
+				selectedRegion.getLength() <= endOffset - startOffset) {
 				return new Region(startOffset, endOffset - startOffset);
 			}
 			
@@ -160,7 +178,7 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 		return HyperlinkUtil.createRegion(pathNameCS);
 	}
 	
-	private QvtOperationalEnv getEnv(CSTNode node) {
+	private static QvtOperationalEnv getEnv(CSTNode node) {
 		return (QvtOperationalEnv)CSTHelper.getEnvironment(node);
 	}	
 }

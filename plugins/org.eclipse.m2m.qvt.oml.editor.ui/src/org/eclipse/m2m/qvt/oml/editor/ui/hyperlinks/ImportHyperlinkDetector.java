@@ -29,7 +29,27 @@ public class ImportHyperlinkDetector implements IHyperlinkDetectorHelper {
 
 	public IHyperlink detectHyperlink(IDetectionContext context) {
 		CSTNode syntaxElement = context.getSyntaxElement();
-		ModuleImportCS moduleImportCS = null;
+		
+		CFile sourceFile = findDefinition(syntaxElement);
+		if(sourceFile != null) {			
+			IRegion destRegion = new Region(0, 0); // point to the beginning
+
+			ModuleImportCS importCS = getModuleImport(syntaxElement);
+			CSTNode linkNodeCS = (importCS != null) ? importCS.getPathNameCS() : null;
+			if(linkNodeCS == null) {
+				linkNodeCS = syntaxElement;
+			}
+			
+			IRegion hlinkReg = HyperlinkUtil.createRegion(linkNodeCS);			
+			
+			return new QvtFileHyperlink(hlinkReg, sourceFile, destRegion, destRegion);
+		}
+		
+		return null;
+	}
+	
+	public static CFile findDefinition(CSTNode syntaxElement) {		
+		ModuleImportCS moduleImportCS = getModuleImport(syntaxElement);
 		
 		if ((syntaxElement instanceof ModuleImportCS)) {
 			moduleImportCS = (ModuleImportCS) syntaxElement;
@@ -40,14 +60,21 @@ public class ImportHyperlinkDetector implements IHyperlinkDetectorHelper {
 		if(moduleImportCS != null) {
 			ModuleImport moduleImportAST = ASTBindingHelper.resolveASTNode(moduleImportCS, ModuleImport.class);
 			if(moduleImportAST != null && moduleImportAST.getImportedModule() != null) {
-				CFile sourceFile = ASTBindingHelper.resolveModuleFile(moduleImportAST.getImportedModule());
-				if(sourceFile != null) {
-					IRegion destRegion = new Region(0, 0);
-					return new QvtFileHyperlink(HyperlinkUtil.createRegion(moduleImportCS.getPathNameCS()), sourceFile, destRegion, destRegion);
-				}
+				return ASTBindingHelper.resolveModuleFile(moduleImportAST.getImportedModule());
 			}
 		}
 		
 		return null;
 	}
+
+	private static ModuleImportCS getModuleImport(CSTNode syntaxElement) {
+		ModuleImportCS importCS = null;		
+		if ((syntaxElement instanceof ModuleImportCS)) {
+			importCS = (ModuleImportCS) syntaxElement;
+		} else if(syntaxElement instanceof PathNameCS && syntaxElement.eContainer() instanceof ModuleImportCS) {
+			importCS = (ModuleImportCS) syntaxElement.eContainer();
+		}
+		return importCS;
+	}
+	
 }
