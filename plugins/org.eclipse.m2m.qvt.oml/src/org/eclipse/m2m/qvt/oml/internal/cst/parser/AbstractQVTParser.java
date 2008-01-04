@@ -418,7 +418,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 				if (sym.getSequenceOfNames().size() > 0) {
 					String lastSegment = sym.getSequenceOfNames().get(sym.getSequenceOfNames().size()-1);
 					SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, lastSegment);
-					nameCS.setStartOffset(sym.getEndOffset()-lastSegment.length());
+					nameCS.setStartOffset(sym.getEndOffset()-lastSegment.length() + 1);
 					nameCS.setEndOffset(sym.getEndOffset());
 					result.setSimpleNameCS(nameCS);
 				}		

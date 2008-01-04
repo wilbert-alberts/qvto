@@ -285,12 +285,23 @@ public class QvtOperationalVisitorCS
 		public EClassifier myType;
 		public ModelParameter myExtent;
 	}
+
+	private ModelParameter lookupModelParameter(SimpleNameCS nameCS, DirectionKind directionKind, QvtOperationalEnv env) {
+		ModelParameter modelParam = env.lookupModelParameter(nameCS.getValue(), directionKind);
+		if(modelParam == null) {		
+			env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentWrongName,
+					new Object[] { nameCS.getValue(), env.getAllExtentNames(directionKind) }), nameCS);
+		}
+		
+		return modelParam;
+	}	
+	
 	private TypeSpecPair visitTypeSpecCS(TypeSpecCS typeSpecCS, DirectionKind directionKind,
 			QvtOperationalEnv env)  {
 		TypeSpecPair result = new TypeSpecPair();
 		
 		if (typeSpecCS.getSimpleNameCS() != null) {
-			result.myExtent = env.lookupModelParameter(typeSpecCS.getSimpleNameCS(), directionKind);
+			result.myExtent = lookupModelParameter(typeSpecCS.getSimpleNameCS(), directionKind, env);
 			if (result.myExtent != null && result.myExtent.getEType() instanceof ModelType) {
 				result.myType = visitTypeCSInModelType(typeSpecCS, (ModelType) result.myExtent.getEType(), env);
 				return result;
@@ -1068,6 +1079,10 @@ public class QvtOperationalVisitorCS
 			paramNames.add(varParam.getName());
 			
 	        module.getModelParameter().add(varParam);
+			
+	        if(myCompilerOptions.isGenerateCompletionData()) {
+				ASTBindingHelper.createCST2ASTBinding(paramCS, varParam);
+			}	        
 		}
 		env.registerModelParameters(module);
 		
@@ -1080,7 +1095,7 @@ public class QvtOperationalVisitorCS
 					new Object[] { }), 
 					headerCS.getModuleUsages().get(0).getStartOffset(),
 					headerCS.getModuleUsages().get(headerCS.getModuleUsages().size()-1).getEndOffset());
-		}
+		}		
 	}
 
 	protected ModelType visitModelTypeCS(ModelTypeCS modelTypeCS, QvtOperationalFileEnv env,
@@ -1089,6 +1104,10 @@ public class QvtOperationalVisitorCS
 			return null;
 		}
 		ModelType modelType = ExpressionsFactory.eINSTANCE.createModelType();
+		if(myCompilerOptions.isGenerateCompletionData()) {
+			ASTBindingHelper.createCST2ASTBinding(modelTypeCS, modelType);
+		}
+		
 		modelType.setStartPosition(modelTypeCS.getStartOffset());
 		modelType.setEndPosition(modelTypeCS.getEndOffset());
 		modelType.setName(modelTypeCS.getIdentifierCS().getValue());
