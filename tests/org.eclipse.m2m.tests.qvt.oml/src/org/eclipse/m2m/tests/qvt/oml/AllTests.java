@@ -20,6 +20,7 @@ package org.eclipse.m2m.tests.qvt.oml;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.eclipse.m2m.tests.qvt.oml.editor.AllEditorTests;
 import org.eclipse.m2m.tests.qvt.oml.emf.AllEmfTests;
 import org.eclipse.m2m.tests.qvt.oml.traces.TestTraceFile;
 import org.eclipse.m2m.tests.qvt.oml.transform.TransformManyModelTests;
@@ -39,6 +40,7 @@ public class AllTests {
 	public static Test suite() {
 		TestSuite suite = new TestSuite("Tests for org.eclipse.m2m.tests.qvt.oml"); //$NON-NLS-1$
 		//$JUnit-BEGIN$
+		suite.addTest(AllEditorTests.suite());
 		suite.addTest(AllEmfTests.suite());
 		suite.addTestSuite(TestMetamodelRegistry.class);
         suite.addTestSuite(TestLaunchConfiguration.class);
@@ -62,7 +64,8 @@ public class AllTests {
 //        suite.addTestSuite(TestTreeContentProvider.class);
         
         suite.addTestSuite(TestOCLSemantics.class);
-        suite.addTestSuite(TestOCLAnnotationSupport.class);        
+        suite.addTestSuite(TestOCLAnnotationSupport.class);     
+        suite.addTest(AllEditorTests.suite());
 		//$JUnit-END$
 		return suite;
 	}
