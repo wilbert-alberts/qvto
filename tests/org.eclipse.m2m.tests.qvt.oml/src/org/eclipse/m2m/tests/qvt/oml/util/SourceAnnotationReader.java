@@ -162,7 +162,7 @@ public class SourceAnnotationReader {
 			public void startElement (String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		    	AnnotationData data = new AnnotationData(qName, regionInfo);
 		    	for(int i = 0; i < attributes.getLength(); i++) {
-		    		data.addAttr(attributes.getLocalName(i), attributes.getValue(i));
+		    		data.addAttr(attributes.getQName(i), attributes.getValue(i));
 		    	}
 		    	SourceAnnotationReader.this.fAnnotations.add(data);
 		    }
