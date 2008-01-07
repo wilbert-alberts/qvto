@@ -11,7 +11,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.20.2.5 2007/12/14 13:09:14 aigdalov Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.20.2.6 2008/01/07 11:03:37 radvorak Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -429,7 +429,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.20.2.5 2007/12/14 13:09:14 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.20.2.6 2008/01/07 11:03:37 radvorak Exp $
  */
 	./
 $End
@@ -739,7 +739,7 @@ $Headers
 			if (sym.getSequenceOfNames().size() > 0) {
 				String lastSegment = sym.getSequenceOfNames().get(sym.getSequenceOfNames().size()-1);
 				SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, lastSegment);
-				nameCS.setStartOffset(sym.getEndOffset()-lastSegment.length());
+				nameCS.setStartOffset(sym.getEndOffset()-lastSegment.length() + 1);
 				nameCS.setEndOffset(sym.getEndOffset());
 				result.setSimpleNameCS(nameCS);
 			}		
