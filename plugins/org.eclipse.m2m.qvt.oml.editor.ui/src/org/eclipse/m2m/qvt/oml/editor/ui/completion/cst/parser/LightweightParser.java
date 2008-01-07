@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.2.2.6 2007/12/14 13:09:20 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.2.2.7 2008/01/07 11:03:26 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.2.2.6 2007/12/14 13:09:20 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.2.2.7 2008/01/07 11:03:26 radvorak Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser;
@@ -1119,7 +1119,7 @@ public class LightweightParser extends PrsStream implements RuleAction {
 		if (sym.getSequenceOfNames().size() > 0) {
 			String lastSegment = sym.getSequenceOfNames().get(sym.getSequenceOfNames().size()-1);
 			SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, lastSegment);
-			nameCS.setStartOffset(sym.getEndOffset()-lastSegment.length());
+			nameCS.setStartOffset(sym.getEndOffset()-lastSegment.length() + 1);
 			nameCS.setEndOffset(sym.getEndOffset());
 			result.setSimpleNameCS(nameCS);
 		}		

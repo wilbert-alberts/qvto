@@ -72,7 +72,7 @@ public class ObjectPropertyHyperlinkDetector implements IHyperlinkDetectorHelper
 	}
 
 	
-	private static Property getASTProperty(EStructuralFeature feature) {
+	public static Property getASTProperty(EStructuralFeature feature) {
 		if(feature.eContainer() instanceof Module) {
 			Module module = (Module)feature.eContainer();
 			for (Property prop : module.getConfigProperty()) {
