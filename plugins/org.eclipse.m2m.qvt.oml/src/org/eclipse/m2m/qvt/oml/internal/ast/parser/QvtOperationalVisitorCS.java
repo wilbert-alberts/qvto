@@ -11,6 +11,7 @@
 package org.eclipse.m2m.qvt.oml.internal.ast.parser;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -613,8 +614,34 @@ public class QvtOperationalVisitorCS
 		return result;
 	}
 
-    private OCLExpression<EClassifier> visitBlockExpCS(BlockExpCS expressionCS, QvtOperationalEnv env)
+    private OCLExpression<EClassifier> visitBlockExpCS(BlockExpCS expressionCS, QvtOperationalEnv env) throws SemanticException {
+    	Collection<Variable<EClassifier, EParameter>> beginScopeVars = null;
+    	if(expressionCS.eContainer() instanceof ImperativeOperation == false) {  
+    		// variables defined in the scope of operation handled by environment scope		
+    		beginScopeVars = env.getVariables();
+    	}
+    	
+    	try {
+    		return doVisitBlockExpCS(expressionCS, env);
+    	} 
+    	finally {
+    		if(beginScopeVars != null) {
+    			// remove variables of this scope when leaving it
+    			Collection<Variable<EClassifier, EParameter>> endScopeVars = env.getVariables();
+    			for (Variable<EClassifier, EParameter> nextVar : endScopeVars) {
+    				// remove those new in the scope
+    				if(!beginScopeVars.contains(nextVar)) {
+    					env.deleteElement(nextVar.getName());
+    				}
+    			}
+    		}
+    	}
+    }
+    
+    private OCLExpression<EClassifier> doVisitBlockExpCS(BlockExpCS expressionCS, QvtOperationalEnv env)
     		throws SemanticException {
+    	Collection<Variable<EClassifier, EParameter>> vars = env.getVariables();
+    	
 		BlockExp result = ExpressionsFactory.eINSTANCE.createBlockExp();
 		result.setStartPosition(expressionCS.getStartOffset());
 		result.setEndPosition(expressionCS.getEndOffset());
@@ -626,7 +653,7 @@ public class QvtOperationalVisitorCS
     				result.getBody().add(bodyExp);
 			}
 		}
-
+		
 		return result;
     }
 
@@ -1696,24 +1723,23 @@ public class QvtOperationalVisitorCS
         else if (varInitCS.eContainer().eContainer() instanceof MappingMethodCS) {
         	mappingMethod = (MappingMethodCS) varInitCS.eContainer().eContainer();
         }
-        if (mappingMethod == null) {
-        	return null;
+        if (mappingMethod != null) {
+			MappingDeclarationCS mappingDeclCS = mappingMethod.getMappingDeclarationCS();
+			DirectionKind contextDirection = DirectionKind.IN;
+			if (mappingDeclCS.getDirectionKindCS() != null) {
+				contextDirection = (DirectionKind) ExpressionsFactory.eINSTANCE.createFromString(
+						ExpressionsPackage.eINSTANCE.getDirectionKind(), mappingDeclCS.getDirectionKindCS()
+								.getDirectionKind().getLiteral());
+			}
+			EClassifier contextType = mappingDeclCS.getContextType() != null ? visitTypeCS(
+					mappingDeclCS.getContextType(), contextDirection, env) : env.getOCLStandardLibrary().getOclVoid();
+			EClassifier returnType = mappingDeclCS.getReturnType() != null ? visitTypeSpecCS(
+					mappingDeclCS.getReturnType(), DirectionKind.OUT, env).myType : env.getOCLStandardLibrary().getOclVoid();
+			if (!QvtOperationalParserUtil.validateNameClashing(varInitCS.getSimpleNameCS().getValue(), returnType,
+					contextType, env, varInitCS)) {
+				return null;
+			}
         }
-		MappingDeclarationCS mappingDeclCS = mappingMethod.getMappingDeclarationCS();
-		DirectionKind contextDirection = DirectionKind.IN;
-		if (mappingDeclCS.getDirectionKindCS() != null) {
-			contextDirection = (DirectionKind) ExpressionsFactory.eINSTANCE.createFromString(
-					ExpressionsPackage.eINSTANCE.getDirectionKind(), mappingDeclCS.getDirectionKindCS()
-							.getDirectionKind().getLiteral());
-		}
-		EClassifier contextType = mappingDeclCS.getContextType() != null ? visitTypeCS(
-				mappingDeclCS.getContextType(), contextDirection, env) : env.getOCLStandardLibrary().getOclVoid();
-		EClassifier returnType = mappingDeclCS.getReturnType() != null ? visitTypeSpecCS(
-				mappingDeclCS.getReturnType(), DirectionKind.OUT, env).myType : env.getOCLStandardLibrary().getOclVoid();
-		if (!QvtOperationalParserUtil.validateNameClashing(varInitCS.getSimpleNameCS().getValue(), returnType,
-				contextType, env, varInitCS)) {
-			return null;
-		}
 
 		VariableInitExp result = ExpressionsFactory.eINSTANCE.createVariableInitExp();
 		result.setStartPosition(varInitCS.getStartOffset());

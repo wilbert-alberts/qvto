@@ -637,6 +637,9 @@ implements QvtOperationalEvaluationVisitor {
 				EObject parent = assertExp;				
 				while(parent != null && !(parent instanceof Module)) {
 					parent = parent.eContainer();
+					if(parent instanceof ImperativeOperation) {
+						parent = QvtOperationalParserUtil.getOwningModule((ImperativeOperation) parent);
+					}
 				}
 				
 				String source = EvaluationMessages.UknownSourceLabel;				
