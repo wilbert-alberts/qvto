@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml;
 
+import junit.extensions.TestDecorator;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -32,19 +33,37 @@ public class ParserTests {
             myDir = dir; 
             myErrCount = errCount; 
             myWarnings = warnings; 
+            usesSourceAnnotations = false;
         } 
         
         public String getDir() { return myDir; }
         public int getErrCount() { return myErrCount; }
         public String[] getWarnings() { return myWarnings; }
         
+        public boolean usesSourceAnnotations() {
+        	return usesSourceAnnotations;
+		}
+        
         private final String myDir;
         private final int myErrCount;
         private final String[] myWarnings;
+        private boolean usesSourceAnnotations;
+
+        /**
+         * Creates that should be check for match of compilation problems with expected problem 
+         * annotation in the test QVT sources 
+         */
+        public static TestData createSourceChecked(String dir, int errCount) {
+        	TestData data = new TestData(dir, errCount);
+        	data.usesSourceAnnotations = true; 
+        	return data;
+        }
     }
     
+    
     static TestData[] ourData = new TestData[] {
-        //new TestData("orderedsetdoesnotconformtoset", 1), //$NON-NLS-1$    	
+        //new TestData("orderedsetdoesnotconformtoset", 1), //$NON-NLS-1$
+    	TestData.createSourceChecked("varscope", 10), //$NON-NLS-1$    	
     	new TestData("assert_log", 0), //$NON-NLS-1$    	
         new TestData("opersignatureparamclash", 1), //$NON-NLS-1$    	
         new TestData("collectreturntype", 0), //$NON-NLS-1$

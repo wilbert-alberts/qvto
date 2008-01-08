@@ -40,6 +40,7 @@ import org.eclipse.m2m.qvt.oml.compiler.QvtCompilationResult;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.tests.qvt.oml.ParserTests.TestData;
+import org.eclipse.m2m.tests.qvt.oml.util.ProblemSourceAnnotationHelper;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 
 /**
@@ -109,6 +110,12 @@ public class TestQvtParser extends TestCase {
 	            }
 	            fail(MessageFormat.format("Expected warning {0} not found!", new Object[] {expectedWarning})); //$NON-NLS-1$
 	        }
+		}
+
+		if(myData.usesSourceAnnotations()) {
+			for (QvtCompilationResult compilationResult : compiled) {
+				ProblemSourceAnnotationHelper.assertCompilationProblemMatchExpectedAnnotations(compilationResult.getModule(), myData.getErrCount());
+			}
 		}
 	}
 	

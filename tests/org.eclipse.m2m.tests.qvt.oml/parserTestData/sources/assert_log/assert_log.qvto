@@ -92,9 +92,6 @@ query EClass::fooQuery() : String {
 }   
 
 query EClass::fooQuery2() : String {
-	var LEVEL : Integer := 1;
-	var model :EClass := null;	
-	
 	if 10 > 100 then {
 		var LEVEL : Integer := 1;
 		var model :EClass := null;	

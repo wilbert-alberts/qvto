@@ -21,6 +21,7 @@ import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.IAnnotationHover;
 import org.eclipse.m2m.qvt.oml.QvtMessage;
 import org.eclipse.m2m.qvt.oml.editor.ui.IQvtAnnotationTypes;
+import org.eclipse.m2m.tests.qvt.oml.util.ProblemSourceAnnotationHelper;
 import org.eclipse.m2m.tests.qvt.oml.util.SourceAnnotationReader.AnnotationData;
 
 public class TestQvtProblemAnnotations extends AbstractTestQvtEditorSupport {
