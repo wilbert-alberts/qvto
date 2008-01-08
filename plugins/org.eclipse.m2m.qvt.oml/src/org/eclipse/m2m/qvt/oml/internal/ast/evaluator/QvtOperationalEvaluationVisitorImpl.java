@@ -521,7 +521,9 @@ implements QvtOperationalEvaluationVisitor {
 
     public Object visitVariableInitExp(VariableInitExp variableInitExp) {
         Object varValue = variableInitExp.getValue().accept(getVisitor());
-        addToEnv(variableInitExp.getName(), varValue, variableInitExp.getType());
+        // use replace to override variable from sibling scopes, as the lowest granularity
+        // of environments is per imperative operation
+        replaceInEnv(variableInitExp.getName(), varValue, variableInitExp.getType());
         return varValue;
     }
 
