@@ -36,8 +36,12 @@ public class SourceAnnotationReader {
 	private List<AnnotationData> fAnnotations;
 	private SAXParser fParser;
 	private StringLineNumberProvider fLineNumberProvider;	
-		
+	
 	public SourceAnnotationReader(String sourceCode) {
+		this(sourceCode, true);
+	}
+	
+	public SourceAnnotationReader(String sourceCode, boolean trimAnnotationFromSource) {
 		fSource = sourceCode;
 		fcommentTags = new ArrayList<CommentTag>();
 		fAnnotations = new ArrayList<AnnotationData>();
@@ -48,7 +52,9 @@ public class SourceAnnotationReader {
 		} 
 		
 		parse();
-		makeSourceAdjustments();
+		if(trimAnnotationFromSource){
+			makeSourceAdjustments();
+		}
 		
 		fLineNumberProvider = new StringLineNumberProvider(fSource);
 	}
