@@ -521,7 +521,7 @@ implements QvtOperationalEvaluationVisitor {
 
     public Object visitVariableInitExp(VariableInitExp variableInitExp) {
         Object varValue = variableInitExp.getValue().accept(getVisitor());
-        addToEnv(variableInitExp.getName(), varValue, variableInitExp.getType());
+        replaceInEnv(variableInitExp.getName(), varValue, variableInitExp.getType());
         return varValue;
     }
 
