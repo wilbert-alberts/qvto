@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.ValidationMessages;
@@ -55,13 +56,14 @@ public class QvtLibraryOperation {
         String fakeOperation = getFakeOperation(libOp);
         ExpressionInOCL<EClassifier, EParameter> exprInOcl = parseConstraintUnvalidated(fakeOperation, parseEnv, libOp);
         
-        if (exprInOcl.getParameterVariable() == null) {
-            throw new LibraryCreationException(MessageFormat.format(
-                    ValidationMessages.LibOperationAnalyser_OperationParsingError,
-                    fakeOperation));
-        }
         myParamTypes = new ArrayList<EClassifier>(exprInOcl.getParameterVariable().size());
         for (Variable<EClassifier, EParameter> param : exprInOcl.getParameterVariable()) {
+        	if(param.getType() == null) {
+        		throw new LibraryCreationException(MessageFormat.format(
+        				ValidationMessages.LibOperationAnalyser_OperationParsingError,
+        				fakeOperation));
+        	}
+        	
         	myParamTypes.add(param.getType());
         }
         

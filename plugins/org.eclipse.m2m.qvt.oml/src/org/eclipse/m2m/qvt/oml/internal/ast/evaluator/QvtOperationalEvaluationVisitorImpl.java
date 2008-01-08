@@ -126,7 +126,6 @@ import org.eclipse.ocl.utilities.PredefinedType;
 import org.eclipse.ocl.utilities.UMLReflection;
 import org.eclipse.osgi.util.NLS;
 
-
 public class QvtOperationalEvaluationVisitorImpl
 	extends EvaluationVisitorImpl<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter,
 EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject>
@@ -454,9 +453,9 @@ implements QvtOperationalEvaluationVisitor {
 
 	        List<Object> entryArgs = makeEntryArgs(myEntryPoint, module);
 	        OperationCallResult callResult = executeImperativeOperation(myEntryPoint, null, entryArgs);
-	        
+	        	        
 	        isInTerminatingState = true;
-	        getContext().processDeferredTasks();
+	        getContext().processDeferredTasks();	        
 	
 			ResourceSet outResourceSet = EmfUtil.getOutputResourceSet();
 	        evalResult = callResult.myEvalEnv.createEvaluationResult(myEntryPoint, outResourceSet);
@@ -638,6 +637,9 @@ implements QvtOperationalEvaluationVisitor {
 				EObject parent = assertExp;				
 				while(parent != null && !(parent instanceof Module)) {
 					parent = parent.eContainer();
+					if(parent instanceof ImperativeOperation) {
+						parent = QvtOperationalParserUtil.getOwningModule((ImperativeOperation) parent);
+					}
 				}
 				
 				String source = EvaluationMessages.UknownSourceLabel;				

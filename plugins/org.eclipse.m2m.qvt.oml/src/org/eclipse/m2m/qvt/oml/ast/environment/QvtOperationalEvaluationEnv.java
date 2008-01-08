@@ -504,6 +504,10 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	@SuppressWarnings("unchecked")
 	public void callSetter(EObject owner, EStructuralFeature eStructuralFeature, Object exprValue,
 			boolean valueIsUndefined, boolean isReset) {
+		if(getInvalidResult() == owner) {
+			// call performed on OclInvalid, can not continue
+			return;
+		}
         Class<?> expectedType = eStructuralFeature.getEType().getInstanceClass();
 
         if (isMany(owner, eStructuralFeature))  {
