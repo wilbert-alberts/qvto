@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.common.util.BasicEList;
@@ -112,6 +113,7 @@ import org.eclipse.ocl.expressions.EnumLiteralExp;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.PropertyCallExp;
+import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.internal.OCLPlugin;
 import org.eclipse.ocl.internal.evaluation.EvaluationVisitorImpl;
 import org.eclipse.ocl.internal.l10n.OCLMessages;
@@ -526,25 +528,52 @@ implements QvtOperationalEvaluationVisitor {
     }
 
     public Object visitBlockExp(BlockExp blockExp) {
+    	List<String> scopeVars = null;
+    	boolean isInImperativeOper = blockExp.eContainer() instanceof ImperativeOperation;
+    	
         for (OCLExpression<EClassifier> exp : blockExp.getBody()) {
+        	if((exp instanceof VariableInitExp) && !isInImperativeOper) {
+        		if(scopeVars == null) {
+        			scopeVars = new LinkedList<String>();
+        		}
+        		VariableInitExp varInitExp = (VariableInitExp) exp;
+        		scopeVars.add(varInitExp.getName());
+        	}
+        	
             exp.accept(getVisitor());
         }
+        
+        if(scopeVars != null) {
+			EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> evalEnv = getEvaluationEnvironment();        	
+        	for (String varName : scopeVars) {        		
+				evalEnv.remove(varName);
+			}
+        }
+        
         return null;
     }
     
     public Object visitWhileExp(WhileExp whileExp) {
+    	Variable<EClassifier, EParameter> resultVar = whileExp.getResultVar();
+		if(resultVar != null) {
+    		resultVar.accept(getVisitor());
+    	}
         while (true) {
             Object condition = whileExp.getCondition().accept(getVisitor());
             if (Boolean.TRUE.equals(condition)) {
-                for (OCLExpression<EClassifier> exp : whileExp.getBody()) {
-                    exp.accept(getVisitor());
-                }
+            	whileExp.getBody().accept(getVisitor());
             } else {
                 break;
             }
         }
 
-        return whileExp.getResult().accept(getVisitor());
+        if(resultVar != null) {
+        	return getEvaluationEnvironment().remove(resultVar.getName());
+        } else if(whileExp.getResult() != null) {
+        	return whileExp.getResult().accept(getVisitor());
+        }
+        
+        return null;
     }
     
     public Object visitSwitchAltExp(AltExp switchAltExp) {

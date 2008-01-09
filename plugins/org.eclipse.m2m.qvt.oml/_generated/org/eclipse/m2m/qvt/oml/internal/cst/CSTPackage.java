@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackage.java,v 1.4.2.1 2007/12/02 22:33:57 radvorak Exp $
+ * $Id: CSTPackage.java,v 1.4.2.2 2008/01/09 21:50:07 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst;
 
@@ -1723,15 +1723,15 @@ public interface CSTPackage extends EPackage {
     int WHILE_EXP_CS__END_OFFSET = org.eclipse.ocl.internal.cst.CSTPackage.OCL_EXPRESSION_CS__END_OFFSET;
 
     /**
-	 * The feature id for the '<em><b>Body Expressions</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Body</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int WHILE_EXP_CS__BODY_EXPRESSIONS = org.eclipse.ocl.internal.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 0;
+	int WHILE_EXP_CS__BODY = org.eclipse.ocl.internal.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 0;
 
-    /**
+				/**
 	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1750,13 +1750,22 @@ public interface CSTPackage extends EPackage {
     int WHILE_EXP_CS__RESULT = org.eclipse.ocl.internal.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 2;
 
     /**
+	 * The feature id for the '<em><b>Result Var</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WHILE_EXP_CS__RESULT_VAR = org.eclipse.ocl.internal.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 3;
+
+				/**
 	 * The number of structural features of the '<em>While Exp CS</em>' class.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int WHILE_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.internal.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 3;
+    int WHILE_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.internal.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 4;
 
     /**
 	 * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.impl.SwitchExpCSImpl <em>Switch Exp CS</em>}' class.
@@ -3712,17 +3721,17 @@ public interface CSTPackage extends EPackage {
     EClass getWhileExpCS();
 
     /**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.qvt.oml.internal.cst.WhileExpCS#getBodyExpressions <em>Body Expressions</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.qvt.oml.internal.cst.WhileExpCS#getBody <em>Body</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Body Expressions</em>'.
-	 * @see org.eclipse.m2m.qvt.oml.internal.cst.WhileExpCS#getBodyExpressions()
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Body</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.WhileExpCS#getBody()
 	 * @see #getWhileExpCS()
 	 * @generated
 	 */
-    EReference getWhileExpCS_BodyExpressions();
+	EReference getWhileExpCS_Body();
 
-    /**
+				/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.qvt.oml.internal.cst.WhileExpCS#getCondition <em>Condition</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3745,6 +3754,17 @@ public interface CSTPackage extends EPackage {
     EReference getWhileExpCS_Result();
 
     /**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.qvt.oml.internal.cst.WhileExpCS#getResultVar <em>Result Var</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Result Var</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.WhileExpCS#getResultVar()
+	 * @see #getWhileExpCS()
+	 * @generated
+	 */
+	EReference getWhileExpCS_ResultVar();
+
+				/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.internal.cst.SwitchExpCS <em>Switch Exp CS</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -5051,14 +5071,14 @@ public interface CSTPackage extends EPackage {
         EClass WHILE_EXP_CS = eINSTANCE.getWhileExpCS();
 
         /**
-		 * The meta object literal for the '<em><b>Body Expressions</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Body</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-        EReference WHILE_EXP_CS__BODY_EXPRESSIONS = eINSTANCE.getWhileExpCS_BodyExpressions();
+		EReference WHILE_EXP_CS__BODY = eINSTANCE.getWhileExpCS_Body();
 
-        /**
+								/**
 		 * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -5075,6 +5095,14 @@ public interface CSTPackage extends EPackage {
         EReference WHILE_EXP_CS__RESULT = eINSTANCE.getWhileExpCS_Result();
 
         /**
+		 * The meta object literal for the '<em><b>Result Var</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WHILE_EXP_CS__RESULT_VAR = eINSTANCE.getWhileExpCS_ResultVar();
+
+								/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.impl.SwitchExpCSImpl <em>Switch Exp CS</em>}' class.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->

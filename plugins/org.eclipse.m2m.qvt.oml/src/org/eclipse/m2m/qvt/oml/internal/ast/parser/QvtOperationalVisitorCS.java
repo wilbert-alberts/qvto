@@ -74,6 +74,7 @@ import org.eclipse.m2m.qvt.oml.expressions.SwitchExp;
 import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.expressions.VariableInitExp;
 import org.eclipse.m2m.qvt.oml.expressions.WhileExp;
+import org.eclipse.m2m.qvt.oml.internal.ast.WrappedOCLSemanticException;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.GraphWalker;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.GraphWalker.NodeProvider;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.GraphWalker.VertexProcessor;
@@ -515,9 +516,25 @@ public class QvtOperationalVisitorCS
     protected Variable<EClassifier, EParameter> variableDeclarationCS(VariableCS variableDeclarationCS,
             Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
             boolean addToEnvironment) throws SemanticException {
-        Variable<EClassifier, EParameter> varDecl = super.variableDeclarationCS(variableDeclarationCS, env, addToEnvironment);
-        if ((varDecl.getType() == null) && (varDecl.getInitExpression() != null)) {
-            varDecl.setType(varDecl.getInitExpression().getType());
+        Variable<EClassifier, EParameter> varDecl = null;
+        try {
+        	varDecl = super.variableDeclarationCS(variableDeclarationCS, env, addToEnvironment);
+        } catch (SemanticException e) {
+        	// bind to specific location and propagate
+			throwWrappedSemanticException(e, variableDeclarationCS);
+		}
+
+        if ((varDecl.getType() == null)) {
+        	TypeCS typeCS = variableDeclarationCS.getTypeCS();
+			if(typeCS != null) {
+	        	// type not resolved during AST creation but was specified in CST			
+				String message = NLS.bind(ValidationMessages.UnknownClassifierType, QvtOperationalParserUtil.getStringRepresentation(typeCS));
+        		((QvtOperationalEnv)env).reportError(message, typeCS);
+        	}
+        	
+        	if(varDecl.getInitExpression() != null) {
+        		varDecl.setType(varDecl.getInitExpression().getType());
+        	}
         }
         
         // AST binding 
@@ -626,7 +643,11 @@ public class QvtOperationalVisitorCS
     	} 
     	finally {
     		if(beginScopeVars != null) {
-    			// remove variables of this scope when leaving it
+    			// remove variables of this scope when leaving it, only successfully added variables into env
+    			// in this block scope will be removed, so we can not remove outer scope 
+    			// existing variables. 
+    			// Note: nested block scopes have done their clean-up already so we remove
+    			// only our stuff
     			Collection<Variable<EClassifier, EParameter>> endScopeVars = env.getVariables();
     			for (Variable<EClassifier, EParameter> nextVar : endScopeVars) {
     				// remove those new in the scope
@@ -694,21 +715,64 @@ public class QvtOperationalVisitorCS
 		WhileExp result = ExpressionsFactory.eINSTANCE.createWhileExp();
 		result.setStartPosition(expressionCS.getStartOffset());
 		result.setEndPosition(expressionCS.getEndOffset());
-
-		OCLExpression<EClassifier> resExp = visitOclExpressionCS(expressionCS.getResult(), env);
-		result.setType(resExp.getType());
-		result.setResult(resExp);
-
-		OCLExpression<EClassifier> condExp = visitOclExpressionCS(expressionCS.getCondition(), env);
-		result.setCondition(condExp);
-
-		for (OCLExpressionCS oclExpCS : expressionCS.getBodyExpressions()) {
-			OCLExpression<EClassifier> bodyExp = visitOclExpressionCS(oclExpCS, env);
-			if (bodyExp != null) {
-    				result.getBody().add(bodyExp);
-			}
+		
+		String resultVarName = null;
+		if(expressionCS.getResultVar() != null) {
+			VariableCS varCS = expressionCS.getResultVar();
+			Variable<EClassifier, EParameter> var = null;
+			try {
+				var = variableDeclarationCS(varCS, env, true);
+				resultVarName = varCS.getName();			
+				result.setResultVar(var);
+				result.setType(var.getType());							
+			} catch (SemanticException e) {
+				// report an error and continue like no result var declared => will not be resolve in whileExp
+				// This is done to allow farther source contents parsing as here we are safely done
+				env.reportError(e.getMessage(), varCS);
+			}			
+		} else if(expressionCS.getResult() != null) {
+			// report usage of legacy while
+			env.reportWarning(ValidationMessages.QvtOperationalVisitorCS_deprecatedWhileExp, expressionCS);
+			OCLExpression<EClassifier> resExp = visitOclExpressionCS(expressionCS.getResult(), env);
+			result.setType(resExp.getType());
+			result.setResult(resExp);
+		} else {
+			result.setType(env.getOCLStandardLibrary().getOclVoid());
 		}
 
+		OCLExpression<EClassifier> condExp = visitOclExpressionCS(expressionCS.getCondition(), env);
+		result.setCondition(condExp);		
+		if(condExp != null) {
+			EClassifier condType = condExp.getType();
+			if(env.getOCLStandardLibrary().getBoolean() != condExp.getType()) {
+				if(condType == null) {
+					condType = env.getOCLStandardLibrary().getOclVoid();
+				}
+				String message = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_booleanTypeExpressionExpected, env.getUMLReflection().getName(condType));
+				if(expressionCS.getResult() == null) {
+					env.reportError(message, expressionCS.getCondition());
+				} else {
+					// warn for legacy code to keep compilable, as it was not reported at all
+					env.reportWarning(message, expressionCS.getCondition());
+				}
+			}
+		}
+		
+		List<OCLExpressionCS> bodyCS = result.getBody() instanceof BlockExpCS ? ((BlockExpCS)result.getBody()).getBodyExpressions() : Collections.<OCLExpressionCS>singletonList(expressionCS.getBody());
+		BlockExp body = ExpressionsFactory.eINSTANCE.createBlockExp();
+		for (OCLExpressionCS oclExpCS : bodyCS) {
+			OCLExpression<EClassifier> bodyExp = visitOclExpressionCS(oclExpCS, env);
+			if (bodyExp != null) {
+    				body.getBody().add(bodyExp);
+			}
+		}
+		
+		result.setBody(body);
+
+		if(resultVarName != null) {
+			env.deleteElement(resultVarName);
+		}
+		
 		return result;
 	}
 
@@ -2295,4 +2359,14 @@ public class QvtOperationalVisitorCS
 		}
 	}
 	
+	/**
+	 * Propagate OCL SemanticException with a more specific context information	
+	 */
+	private static void throwWrappedSemanticException(SemanticException originalException, CSTNode causingNode) throws SemanticException {
+		if(causingNode == null) {
+			throw originalException;
+		}
+		
+		throw new WrappedOCLSemanticException(originalException, causingNode.getStartOffset(), causingNode.getEndOffset() - causingNode.getStartOffset() + 1);
+	}
 }

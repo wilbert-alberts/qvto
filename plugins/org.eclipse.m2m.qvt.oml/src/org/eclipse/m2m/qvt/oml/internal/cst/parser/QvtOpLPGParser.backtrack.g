@@ -11,7 +11,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.20.2.6 2008/01/07 11:03:37 radvorak Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.20.2.7 2008/01/09 21:50:04 radvorak Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -429,7 +429,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.20.2.6 2008/01/07 11:03:37 radvorak Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.20.2.7 2008/01/09 21:50:04 radvorak Exp $
  */
 	./
 $End
@@ -796,13 +796,25 @@ $Headers
 			return result;
 		}
 		
-		protected CSTNode createWhileExpCS(OCLExpressionCS cond, OCLExpressionCS res, EList expressions) {
+		protected CSTNode createLegacyWhileExpCS(OCLExpressionCS cond, OCLExpressionCS res, EList expressions) {
 			WhileExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createWhileExpCS();
 			result.setCondition(cond);
 			result.setResult(res);
-			result.getBodyExpressions().addAll(expressions);
+			BlockExpCS body = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createBlockExpCS();
+			body.getBodyExpressions().addAll(expressions);
+			result.setBody(body);
 			return result;
 		}
+		
+		protected CSTNode createWhileExpCS(VariableCS resultVar, OCLExpressionCS cond, EList expressions) {
+			WhileExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createWhileExpCS();
+			result.setCondition(cond);
+			result.setResultVar(resultVar);
+			BlockExpCS body = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createBlockExpCS();
+			body.getBodyExpressions().addAll(expressions);
+			result.setBody(body);
+			return result;
+		}		
 
 		protected CSTNode createSwitchExpCS(EList<SwitchAltExpCS> altExps, OCLExpressionCS elseExp) {
 			SwitchExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createSwitchExpCS();
@@ -2661,9 +2673,9 @@ $Rules
 
     -- Resolve family ends here
 
-	whileExpCS ::= while '(' oclExpressionCS ';' oclExpressionCS ')' '{' statementListOpt '}'
+	legacyWhileExpCS ::= while '(' oclExpressionCS ';' oclExpressionCS ')' '{' statementListOpt '}'
 		/.$BeginJava
-					CSTNode result = createWhileExpCS(
+					CSTNode result = createLegacyWhileExpCS(
 							(OCLExpressionCS)$getSym(3),
 							(OCLExpressionCS)$getSym(5),
 							(EList)$getSym(8)
@@ -2673,12 +2685,48 @@ $Rules
 		  $EndJava
 		./
 
+	declaratorCS ::= IDENTIFIER ':' typeCS ':=' oclExpressionCS
+		/.$BeginJava
+					CSTNode result = createVariableCS(
+							getTokenText($getToken(1)),
+							(TypeCS)$getSym(3),
+							(OCLExpressionCS)$getSym(5)
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(5));
+					$setResult(result);
+		  $EndJava
+		./
+
+	whileExpCS ::= while '(' declaratorCS ';' oclExpressionCS ')' '{' statementListOpt '}'
+		/.$BeginJava
+					CSTNode result = createWhileExpCS(
+							(VariableCS)$getSym(3),
+							(OCLExpressionCS)$getSym(5),
+							(EList<OCLExpressionCS>)$getSym(8)
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(9)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	whileExpCS ::= while '(' oclExpressionCS ')' '{' statementListOpt '}'
+		/.$BeginJava
+					CSTNode result = createWhileExpCS(
+							null,
+							(OCLExpressionCS)$getSym(3),
+							(EList<OCLExpressionCS>)$getSym(6)
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(9)));
+					$setResult(result);
+		  $EndJava
+		./
 
 	-- operation call and expression extension in QVT
 	featureCallExpCS -> featureMappingCallExpCS
 	oclExpCS -> mappingCallExpCS
 
-	oclExpCS -> whileExpCS 
+	oclExpCS -> whileExpCS
+	oclExpCS -> legacyWhileExpCS
 	oclExpCS -> outExpCS 
 	
 	oclExpCS -> ifExpCS

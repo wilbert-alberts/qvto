@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.4.2.1 2007/12/02 22:33:56 radvorak Exp $
+ * $Id: CSTPackageImpl.java,v 1.4.2.2 2008/01/09 21:50:07 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.impl;
 
@@ -1156,14 +1156,14 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
     /**
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public EReference getWhileExpCS_BodyExpressions() {
+	public EReference getWhileExpCS_Body() {
 		return (EReference)whileExpCSEClass.getEStructuralFeatures().get(0);
 	}
 
-    /**
+				/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
@@ -1182,6 +1182,15 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	}
 
     /**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getWhileExpCS_ResultVar() {
+		return (EReference)whileExpCSEClass.getEStructuralFeatures().get(3);
+	}
+
+				/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
@@ -1848,9 +1857,10 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEAttribute(mappingCallExpCSEClass, MAPPING_CALL_EXP_CS__STRICT);
 
 		whileExpCSEClass = createEClass(WHILE_EXP_CS);
-		createEReference(whileExpCSEClass, WHILE_EXP_CS__BODY_EXPRESSIONS);
+		createEReference(whileExpCSEClass, WHILE_EXP_CS__BODY);
 		createEReference(whileExpCSEClass, WHILE_EXP_CS__CONDITION);
 		createEReference(whileExpCSEClass, WHILE_EXP_CS__RESULT);
+		createEReference(whileExpCSEClass, WHILE_EXP_CS__RESULT_VAR);
 
 		switchExpCSEClass = createEClass(SWITCH_EXP_CS);
 		createEReference(switchExpCSEClass, SWITCH_EXP_CS__ALTERNATIVE_PART);
@@ -2113,9 +2123,10 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEAttribute(getMappingCallExpCS_Strict(), ecorePackage.getEBoolean(), "strict", null, 0, 1, MappingCallExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(whileExpCSEClass, WhileExpCS.class, "WhileExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getWhileExpCS_BodyExpressions(), theCSTPackage_1.getOCLExpressionCS(), null, "bodyExpressions", null, 0, -1, WhileExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getWhileExpCS_Body(), theCSTPackage_1.getOCLExpressionCS(), null, "body", null, 1, 1, WhileExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getWhileExpCS_Condition(), theCSTPackage_1.getOCLExpressionCS(), null, "condition", null, 0, 1, WhileExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getWhileExpCS_Result(), theCSTPackage_1.getOCLExpressionCS(), null, "result", null, 0, 1, WhileExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getWhileExpCS_ResultVar(), theCSTPackage_1.getVariableCS(), null, "resultVar", null, 0, 1, WhileExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(switchExpCSEClass, SwitchExpCS.class, "SwitchExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getSwitchExpCS_AlternativePart(), this.getSwitchAltExpCS(), null, "alternativePart", null, 1, -1, SwitchExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

@@ -31,6 +31,7 @@ import org.eclipse.m2m.qvt.oml.compiler.ParsedModuleCS;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
+import org.eclipse.m2m.qvt.oml.internal.ast.WrappedOCLSemanticException;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalVisitorCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
@@ -88,6 +89,8 @@ public class QvtOperationalParser {
 	            visitor = new QvtOperationalVisitorCS(oclLexer, myEnv, options);
 			}
 			module = visitor.visitMappingModule(moduleCS, myEnv, compiler);
+		} catch (WrappedOCLSemanticException e) {
+			getErrorsList().add(new QvtMessage(e.getLocalizedMessage(), e.getLocationOffset(), e.getLocationLength()));
 		} catch (SemanticException e) {
 			getErrorsList().add(new QvtMessage(e.getLocalizedMessage(), 0, 0));
 		} catch (ParserException e) {

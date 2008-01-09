@@ -931,6 +931,15 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getWhileExp_ResultVar() {
+		return (EReference)whileExpEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -1340,6 +1349,7 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		createEReference(whileExpEClass, WHILE_EXP__CONDITION);
 		createEReference(whileExpEClass, WHILE_EXP__BODY);
 		createEReference(whileExpEClass, WHILE_EXP__RESULT);
+		createEReference(whileExpEClass, WHILE_EXP__RESULT_VAR);
 
 		switchExpEClass = createEClass(SWITCH_EXP);
 		createEReference(switchExpEClass, SWITCH_EXP__ALTERNATIVE_PART);
@@ -2157,11 +2167,17 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		g1 = createEGenericType(theExpressionsPackage_1.getOCLExpression());
 		g2 = createEGenericType(theEcorePackage.getEClassifier());
 		g1.getETypeArguments().add(g2);
-		initEReference(getWhileExp_Body(), g1, null, "body", null, 0, -1, WhileExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getWhileExp_Body(), g1, null, "body", null, 1, 1, WhileExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(theExpressionsPackage_1.getOCLExpression());
 		g2 = createEGenericType(theEcorePackage.getEClassifier());
 		g1.getETypeArguments().add(g2);
 		initEReference(getWhileExp_Result(), g1, null, "result", null, 0, 1, WhileExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(theExpressionsPackage_1.getVariable());
+		g2 = createEGenericType(theEcorePackage.getEClassifier());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(theEcorePackage.getEParameter());
+		g1.getETypeArguments().add(g2);
+		initEReference(getWhileExp_ResultVar(), g1, null, "resultVar", null, 0, 1, WhileExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		op = addEOperation(whileExpEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "T"); //$NON-NLS-1$
