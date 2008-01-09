@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.2.2.7 2008/01/07 11:03:26 radvorak Exp $
+* $Id: LightweightParser.java,v 1.2.2.8 2008/01/09 21:50:39 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.2.2.7 2008/01/07 11:03:26 radvorak Exp $
+* $Id: LightweightParser.java,v 1.2.2.8 2008/01/09 21:50:39 radvorak Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser;
@@ -1176,13 +1176,25 @@ public class LightweightParser extends PrsStream implements RuleAction {
 		return result;
 	}
 	
-	protected CSTNode createWhileExpCS(OCLExpressionCS cond, OCLExpressionCS res, EList expressions) {
+	protected CSTNode createLegacyWhileExpCS(OCLExpressionCS cond, OCLExpressionCS res, EList expressions) {
 		WhileExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createWhileExpCS();
 		result.setCondition(cond);
 		result.setResult(res);
-		result.getBodyExpressions().addAll(expressions);
+		BlockExpCS body = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createBlockExpCS();
+		body.getBodyExpressions().addAll(expressions);
+		result.setBody(body);
 		return result;
 	}
+	
+	protected CSTNode createWhileExpCS(VariableCS resultVar, OCLExpressionCS cond, EList expressions) {
+		WhileExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createWhileExpCS();
+		result.setCondition(cond);
+		result.setResultVar(resultVar);
+		BlockExpCS body = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createBlockExpCS();
+		body.getBodyExpressions().addAll(expressions);
+		result.setBody(body);
+		return result;
+	}		
 
 	protected CSTNode createSwitchExpCS(EList<SwitchAltExpCS> altExps, OCLExpressionCS elseExp) {
 		SwitchExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createSwitchExpCS();
@@ -5322,11 +5334,11 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 441:  whileExpCS ::= while ( oclExpressionCS ; oclExpressionCS ) { statementListOpt }
+			// Rule 441:  legacyWhileExpCS ::= while ( oclExpressionCS ; oclExpressionCS ) { statementListOpt }
 			//
 			case 441: {
 				
-				CSTNode result = createWhileExpCS(
+				CSTNode result = createLegacyWhileExpCS(
 						(OCLExpressionCS)dtParser.getSym(3),
 						(OCLExpressionCS)dtParser.getSym(5),
 						(EList)dtParser.getSym(8)
@@ -5337,9 +5349,54 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 447:  letExpSubCS3 ::= variableCS2
+			// Rule 442:  declaratorCS ::= IDENTIFIER : typeCS := oclExpressionCS
 			//
-			case 447: {
+			case 442: {
+				
+				CSTNode result = createVariableCS(
+						getTokenText(dtParser.getToken(1)),
+						(TypeCS)dtParser.getSym(3),
+						(OCLExpressionCS)dtParser.getSym(5)
+					);
+				setOffsets(result, getIToken(dtParser.getToken(1)), (CSTNode)dtParser.getSym(5));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 443:  whileExpCS ::= while ( declaratorCS ; oclExpressionCS ) { statementListOpt }
+			//
+			case 443: {
+				
+				CSTNode result = createWhileExpCS(
+						(VariableCS)dtParser.getSym(3),
+						(OCLExpressionCS)dtParser.getSym(5),
+						(EList<OCLExpressionCS>)dtParser.getSym(8)
+					);
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(9)));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 444:  whileExpCS ::= while ( oclExpressionCS ) { statementListOpt }
+			//
+			case 444: {
+				
+				CSTNode result = createWhileExpCS(
+						null,
+						(OCLExpressionCS)dtParser.getSym(3),
+						(EList<OCLExpressionCS>)dtParser.getSym(6)
+					);
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(9)));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 451:  letExpSubCS3 ::= variableCS2
+			//
+			case 451: {
 				
 				EList result = new BasicEList();
 				result.add(dtParser.getSym(1));
@@ -5348,9 +5405,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 448:  letExpSubCS3 ::= letExpSubCS3 , variableCS2
+			// Rule 452:  letExpSubCS3 ::= letExpSubCS3 , variableCS2
 			//
-			case 448: {
+			case 452: {
 				
 				EList result = (EList)dtParser.getSym(1);
 				result.add(dtParser.getSym(3));
@@ -5359,9 +5416,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 449:  letExpCS ::= let letExpSubCS3 in oclExpressionCS
+			// Rule 453:  letExpCS ::= let letExpSubCS3 in oclExpressionCS
 			//
-			case 449: {
+			case 453: {
 				
 				EList variables = (EList)dtParser.getSym(2);
 				CSTNode result = createLetExpCS(
@@ -5374,9 +5431,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 450:  letExpCS ::= let letExpSubCS3 in qvtErrorToken
+			// Rule 454:  letExpCS ::= let letExpSubCS3 in qvtErrorToken
 			//
-			case 450: {
+			case 454: {
 				
 				EList variables = (EList)dtParser.getSym(2);
 				CSTNode result = createLetExpCS(
@@ -5389,14 +5446,14 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 451:  simpleNameCS ::= this
+			// Rule 455:  simpleNameCS ::= this
 			//
-			case 451:
+			case 455:
  
 			//
-			// Rule 452:  simpleNameCS ::= result
+			// Rule 456:  simpleNameCS ::= result
 			//
-			case 452: {
+			case 456: {
 				
 				CSTNode result = createSimpleNameCS(
 						SimpleTypeEnum.IDENTIFIER_LITERAL,
@@ -5408,9 +5465,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 453:  modelTypeExpCS ::= modeltype IDENTIFIER complianceKindCSOpt uses packageRefList modelTypeWhereCSOpt ;
+			// Rule 457:  modelTypeExpCS ::= modeltype IDENTIFIER complianceKindCSOpt uses packageRefList modelTypeWhereCSOpt ;
 			//
-			case 453: {
+			case 457: {
 				
 				EList whereList = (EList)dtParser.getSym(6);
 				EList packageRefList = (EList)dtParser.getSym(5);
@@ -5433,9 +5490,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 454:  modelTypeExpCS ::= modeltype qvtErrorToken
+			// Rule 458:  modelTypeExpCS ::= modeltype qvtErrorToken
 			//
-			case 454: {
+			case 458: {
 				
 				ModelTypeCS result = createModelTypeCS(
 						new Token(0, 0, 0),
@@ -5449,9 +5506,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 455:  complianceKindCSOpt ::= $Empty
+			// Rule 459:  complianceKindCSOpt ::= $Empty
 			//
-			case 455: {
+			case 459: {
 				
 				CSTNode result = createStringLiteralExpCS("''");
 				setOffsets(result, getIToken(dtParser.getToken(1)));
@@ -5460,9 +5517,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 457:  packageRefList ::= packageRefCS
+			// Rule 461:  packageRefList ::= packageRefCS
 			//
-			case 457: {
+			case 461: {
 				
 				EList result = new BasicEList();
 				result.add(dtParser.getSym(1));
@@ -5471,9 +5528,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 458:  packageRefList ::= packageRefList , packageRefCS
+			// Rule 462:  packageRefList ::= packageRefList , packageRefCS
 			//
-			case 458: {
+			case 462: {
 				
 				EList result = (EList)dtParser.getSym(1);
 				result.add(dtParser.getSym(3));
@@ -5482,9 +5539,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 459:  packageRefCS ::= pathNameCS
+			// Rule 463:  packageRefCS ::= pathNameCS
 			//
-			case 459: {
+			case 463: {
 				
 				CSTNode result = createPackageRefCS(
 						(PathNameCS)dtParser.getSym(1),
@@ -5496,9 +5553,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 460:  packageRefCS ::= pathNameCS ( qvtStringLiteralExpCS )
+			// Rule 464:  packageRefCS ::= pathNameCS ( qvtStringLiteralExpCS )
 			//
-			case 460: {
+			case 464: {
 				
 				CSTNode result = createPackageRefCS(
 						(PathNameCS)dtParser.getSym(1),
@@ -5510,9 +5567,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 461:  packageRefCS ::= qvtStringLiteralExpCS
+			// Rule 465:  packageRefCS ::= qvtStringLiteralExpCS
 			//
-			case 461: {
+			case 465: {
 				
 				CSTNode result = createPackageRefCS(
 						null,
@@ -5524,9 +5581,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 463:  qvtStringLiteralExpCS ::= QUOTE_STRING_LITERAL
+			// Rule 467:  qvtStringLiteralExpCS ::= QUOTE_STRING_LITERAL
 			//
-			case 463: {
+			case 467: {
 				
 				CSTNode result = createStringLiteralExpCS("'" + unquote(getTokenText(dtParser.getToken(1))) + "'"); //$NON-NLS-1$ //$NON-NLS-2$
 				setOffsets(result, getIToken(dtParser.getToken(1)));
@@ -5535,16 +5592,16 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 464:  modelTypeWhereCSOpt ::= $Empty
+			// Rule 468:  modelTypeWhereCSOpt ::= $Empty
 			//
-			case 464:
+			case 468:
 				dtParser.setSym1(new BasicEList());
 				break;
  
 			//
-			// Rule 465:  modelTypeWhereCSOpt ::= where { statementListOpt }
+			// Rule 469:  modelTypeWhereCSOpt ::= where { statementListOpt }
 			//
-			case 465: {
+			case 469: {
 				
 				EList result = (EList)dtParser.getSym(3);
 				dtParser.setSym1(result);
@@ -5552,18 +5609,18 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 468:  qvtErrorToken ::= ERROR_TOKEN
+			// Rule 472:  qvtErrorToken ::= ERROR_TOKEN
 			//
-			case 468: {
+			case 472: {
 				
 				diagnozeErrorToken(dtParser.getToken(1));
 	  		  break;
 			}
 	 
 			//
-			// Rule 469:  iterContents ::= variableCS | qvtErrorToken
+			// Rule 473:  iterContents ::= variableCS | qvtErrorToken
 			//
-			case 469: {
+			case 473: {
 				
 				CSTNode fakeCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, ""); //$NON-NLS-1$
 				setOffsets(fakeCS, getIToken(dtParser.getToken(3)));
@@ -5576,9 +5633,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 470:  callExpCS ::= . qvtErrorToken
+			// Rule 474:  callExpCS ::= . qvtErrorToken
 			//
-			case 470: {
+			case 474: {
 				
 				CallExpCS result = TempFactory.eINSTANCE.createErrorCallExpCS();
 	 			result.setAccessor(DotOrArrowEnum.DOT_LITERAL);
@@ -5588,9 +5645,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 471:  callExpCS ::= -> qvtErrorToken
+			// Rule 475:  callExpCS ::= -> qvtErrorToken
 			//
-			case 471: {
+			case 475: {
 				
 				CallExpCS result = TempFactory.eINSTANCE.createErrorCallExpCS();
 	 			result.setAccessor(DotOrArrowEnum.ARROW_LITERAL);
@@ -5600,16 +5657,16 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 472:  argumentsCS ::= qvtErrorToken
+			// Rule 476:  argumentsCS ::= qvtErrorToken
 			//
-			case 472:
+			case 476:
 				dtParser.setSym1(new BasicEList());
 				break;
  
 			//
-			// Rule 475:  ifExpBodyCS ::= { statementListOpt }
+			// Rule 479:  ifExpBodyCS ::= { statementListOpt }
 			//
-			case 475: {
+			case 479: {
 				
 				EList bodyList = (EList) dtParser.getSym(2);
 				CSTNode result = createBlockExpCS(
@@ -5626,9 +5683,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 476:  ifExpCS ::= if oclExpressionCS then ifExpBodyCS else ifExpBodyCS endif
+			// Rule 480:  ifExpCS ::= if oclExpressionCS then ifExpBodyCS else ifExpBodyCS endif
 			//
-			case 476: {
+			case 480: {
 				
 				CSTNode result = createIfExpCS(
 						(OCLExpressionCS)dtParser.getSym(2),
@@ -5641,9 +5698,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 477:  ifExpCS ::= if oclExpressionCS then ifExpBodyCS endif
+			// Rule 481:  ifExpCS ::= if oclExpressionCS then ifExpBodyCS endif
 			//
-			case 477: {
+			case 481: {
 				
 				CSTNode result = createIfExpCS(
 						(OCLExpressionCS)dtParser.getSym(2),
@@ -5656,9 +5713,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 478:  ifExpCS ::= if oclExpressionCS then ifExpBodyCS else ifExpBodyCS qvtErrorToken
+			// Rule 482:  ifExpCS ::= if oclExpressionCS then ifExpBodyCS else ifExpBodyCS qvtErrorToken
 			//
-			case 478: {
+			case 482: {
 				
 				CSTNode result = createIfExpCS(
 						(OCLExpressionCS)dtParser.getSym(2),
@@ -5671,9 +5728,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 479:  ifExpCS ::= if oclExpressionCS then ifExpBodyCS else qvtErrorToken
+			// Rule 483:  ifExpCS ::= if oclExpressionCS then ifExpBodyCS else qvtErrorToken
 			//
-			case 479: {
+			case 483: {
 				
 				CSTNode result = createIfExpCS(
 						(OCLExpressionCS)dtParser.getSym(2),
@@ -5686,9 +5743,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 480:  ifExpCS ::= if oclExpressionCS then ifExpBodyCS qvtErrorToken
+			// Rule 484:  ifExpCS ::= if oclExpressionCS then ifExpBodyCS qvtErrorToken
 			//
-			case 480: {
+			case 484: {
 				
 				CSTNode result = createIfExpCS(
 						(OCLExpressionCS)dtParser.getSym(2),
@@ -5701,9 +5758,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 481:  ifExpCS ::= if oclExpressionCS then qvtErrorToken
+			// Rule 485:  ifExpCS ::= if oclExpressionCS then qvtErrorToken
 			//
-			case 481: {
+			case 485: {
 				
 				CSTNode result = createIfExpCS(
 						(OCLExpressionCS)dtParser.getSym(2),
@@ -5716,9 +5773,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 482:  ifExpCS ::= if oclExpressionCS qvtErrorToken
+			// Rule 486:  ifExpCS ::= if oclExpressionCS qvtErrorToken
 			//
-			case 482: {
+			case 486: {
 				
 				CSTNode result = createIfExpCS(
 						(OCLExpressionCS)dtParser.getSym(2),
@@ -5731,9 +5788,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 483:  ifExpCS ::= if qvtErrorToken
+			// Rule 487:  ifExpCS ::= if qvtErrorToken
 			//
-			case 483: {
+			case 487: {
 				
 				CSTNode result = createIfExpCS(
 						null,
@@ -5746,9 +5803,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 485:  switchExpCS ::= switch switchBodyExpCS
+			// Rule 489:  switchExpCS ::= switch switchBodyExpCS
 			//
-			case 485: {
+			case 489: {
 				
 				Object[] switchBody = (Object[]) dtParser.getSym(2);
 
@@ -5766,9 +5823,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 486:  switchExpCS ::= switch qvtErrorToken
+			// Rule 490:  switchExpCS ::= switch qvtErrorToken
 			//
-			case 486: {
+			case 490: {
 				
 				CSTNode result = createSwitchExpCS(
 						new BasicEList(),
@@ -5780,9 +5837,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 487:  switchBodyExpCS ::= { switchAltExpCSList switchElseExpCSOpt }
+			// Rule 491:  switchBodyExpCS ::= { switchAltExpCSList switchElseExpCSOpt }
 			//
-			case 487: {
+			case 491: {
 				
 				Object[] result = new Object[] {dtParser.getSym(2), dtParser.getSym(3), getIToken(dtParser.getToken(4))};
 				dtParser.setSym1(result);
@@ -5790,9 +5847,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 488:  switchBodyExpCS ::= { switchAltExpCSList switchElseExpCSOpt qvtErrorToken
+			// Rule 492:  switchBodyExpCS ::= { switchAltExpCSList switchElseExpCSOpt qvtErrorToken
 			//
-			case 488: {
+			case 492: {
 				
 				Object[] result = new Object[] {dtParser.getSym(2), dtParser.getSym(3), dtParser.getSym(3)};
 				dtParser.setSym1(result);
@@ -5800,9 +5857,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 489:  switchBodyExpCS ::= { qvtErrorToken
+			// Rule 493:  switchBodyExpCS ::= { qvtErrorToken
 			//
-			case 489: {
+			case 493: {
 				
 				Object[] result = new Object[] {new BasicEList(), null, getIToken(dtParser.getToken(1))};
 				dtParser.setSym1(result);
@@ -5810,9 +5867,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 490:  switchAltExpCSList ::= switchAltExpCS
+			// Rule 494:  switchAltExpCSList ::= switchAltExpCS
 			//
-			case 490: {
+			case 494: {
 				
 				EList result = new BasicEList();
 				result.add(dtParser.getSym(1));
@@ -5821,9 +5878,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 491:  switchAltExpCSList ::= switchAltExpCSList switchAltExpCS
+			// Rule 495:  switchAltExpCSList ::= switchAltExpCSList switchAltExpCS
 			//
-			case 491: {
+			case 495: {
 				
 				EList result = (EList)dtParser.getSym(1);
 				result.add(dtParser.getSym(2));
@@ -5832,9 +5889,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 492:  switchAltExpCS ::= ( oclExpressionCS ) ? statementCS ;
+			// Rule 496:  switchAltExpCS ::= ( oclExpressionCS ) ? statementCS ;
 			//
-			case 492: {
+			case 496: {
 				
 				CSTNode result = createSwitchAltExpCS(
 						(OCLExpressionCS) dtParser.getSym(2),
@@ -5846,9 +5903,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 493:  switchAltExpCS ::= ( oclExpressionCS ) ? statementCS qvtErrorToken
+			// Rule 497:  switchAltExpCS ::= ( oclExpressionCS ) ? statementCS qvtErrorToken
 			//
-			case 493: {
+			case 497: {
 				
 				CSTNode result = createSwitchAltExpCS(
 						(OCLExpressionCS) dtParser.getSym(2),
@@ -5860,9 +5917,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 494:  switchAltExpCS ::= ( oclExpressionCS ) qvtErrorToken
+			// Rule 498:  switchAltExpCS ::= ( oclExpressionCS ) qvtErrorToken
 			//
-			case 494: {
+			case 498: {
 				
 				CSTNode result = createSwitchAltExpCS(
 						(OCLExpressionCS) dtParser.getSym(2),
@@ -5874,9 +5931,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 495:  switchAltExpCS ::= ( qvtErrorToken
+			// Rule 499:  switchAltExpCS ::= ( qvtErrorToken
 			//
-			case 495: {
+			case 499: {
 				
 				CSTNode result = createSwitchAltExpCS(
 						null,
@@ -5888,43 +5945,43 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 496:  switchElseExpCSOpt ::= $Empty
+			// Rule 500:  switchElseExpCSOpt ::= $Empty
 			//
-			case 496:
+			case 500:
 				dtParser.setSym1(null);
 				break;
  
 			//
-			// Rule 498:  switchElseExpCS ::= else ? statementCS ;
+			// Rule 502:  switchElseExpCS ::= else ? statementCS ;
 			//
-			case 498: {
+			case 502: {
 				
 				dtParser.setSym1((CSTNode)dtParser.getSym(3));
 	  		  break;
 			}
 	 
 			//
-			// Rule 499:  switchElseExpCS ::= else ? statementCS qvtErrorToken
+			// Rule 503:  switchElseExpCS ::= else ? statementCS qvtErrorToken
 			//
-			case 499: {
+			case 503: {
 				
 				dtParser.setSym1((CSTNode)dtParser.getSym(3));
 	  		  break;
 			}
 	 
 			//
-			// Rule 500:  switchElseExpCS ::= else qvtErrorToken
+			// Rule 504:  switchElseExpCS ::= else qvtErrorToken
 			//
-			case 500: {
+			case 504: {
 				
 				dtParser.setSym1(null);
 	  		  break;
 			}
 	 
 			//
-			// Rule 512:  iteratorExpCS ::= iteratorExpCSToken ( iterContents )
+			// Rule 516:  iteratorExpCS ::= iteratorExpCSToken ( iterContents )
 			//
-			case 512: {
+			case 516: {
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 							SimpleTypeEnum.KEYWORD_LITERAL,
@@ -5944,9 +6001,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 513:  iteratorExpCS ::= iteratorExpCSToken ( iterContents qvtErrorToken
+			// Rule 517:  iteratorExpCS ::= iteratorExpCSToken ( iterContents qvtErrorToken
 			//
-			case 513: {
+			case 517: {
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 							SimpleTypeEnum.KEYWORD_LITERAL,
@@ -5974,9 +6031,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 514:  iteratorExpCS ::= iteratorExpCSToken ( qvtErrorToken
+			// Rule 518:  iteratorExpCS ::= iteratorExpCSToken ( qvtErrorToken
 			//
-			case 514: {
+			case 518: {
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 							SimpleTypeEnum.KEYWORD_LITERAL,
@@ -5995,19 +6052,19 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 515:  operationCallExpCS ::= oclAsType isMarkedPreCS ( typeCS )
+			// Rule 519:  operationCallExpCS ::= oclAsType isMarkedPreCS ( typeCS )
 			//
-			case 515:
+			case 519:
  
 			//
-			// Rule 516:  operationCallExpCS ::= oclIsKindOf isMarkedPreCS ( typeCS )
+			// Rule 520:  operationCallExpCS ::= oclIsKindOf isMarkedPreCS ( typeCS )
 			//
-			case 516:
+			case 520:
  
 			//
-			// Rule 517:  operationCallExpCS ::= oclIsTypeOf isMarkedPreCS ( typeCS )
+			// Rule 521:  operationCallExpCS ::= oclIsTypeOf isMarkedPreCS ( typeCS )
 			//
-			case 517: {
+			case 521: {
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 							SimpleTypeEnum.IDENTIFIER_LITERAL,
@@ -6027,9 +6084,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
 	 
 			//
-			// Rule 519:  logWhenExp ::= when oclExpressionCS
+			// Rule 523:  logWhenExp ::= when oclExpressionCS
 			//
-			case 519: {
+			case 523: {
 				
 			OCLExpressionCS condition = (OCLExpressionCS) dtParser.getSym(2);
 			dtParser.setSym1(condition);
@@ -6037,16 +6094,16 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
      
 			//
-			// Rule 521:  logWhenExpOpt ::= $Empty
+			// Rule 525:  logWhenExpOpt ::= $Empty
 			//
-			case 521:
+			case 525:
 				dtParser.setSym1(null);
 				break;
  
 			//
-			// Rule 522:  logExpCS ::= log ( argumentsCSopt ) logWhenExpOpt
+			// Rule 526:  logExpCS ::= log ( argumentsCSopt ) logWhenExpOpt
 			//
-			case 522: {
+			case 526: {
 				
 			OCLExpressionCS condition = (OCLExpressionCS) dtParser.getSym(5);
 			LogExpCS result = (LogExpCS)createLogExpCS((EList<OCLExpressionCS>)dtParser.getSym(3), condition);
@@ -6060,25 +6117,25 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
      
 			//
-			// Rule 524:  severityKindCS ::= simpleNameCS
+			// Rule 528:  severityKindCS ::= simpleNameCS
 			//
-			case 524: {
+			case 528: {
 				
 			dtParser.setSym1(dtParser.getSym(1));
 	  		  break;
 			}
 	 
 			//
-			// Rule 526:  severityKindCSOpt ::= $Empty
+			// Rule 530:  severityKindCSOpt ::= $Empty
 			//
-			case 526:
+			case 530:
 				dtParser.setSym1(null);
 				break;
  
 			//
-			// Rule 527:  assertWithLogExp ::= with logExpCS
+			// Rule 531:  assertWithLogExp ::= with logExpCS
 			//
-			case 527: {
+			case 531: {
 				
 			LogExpCS logExp = (LogExpCS) dtParser.getSym(2);
 			setOffsets(logExp, getIToken(dtParser.getToken(2)), logExp);
@@ -6087,16 +6144,16 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
      
 			//
-			// Rule 529:  assertWithLogExpOpt ::= $Empty
+			// Rule 533:  assertWithLogExpOpt ::= $Empty
 			//
-			case 529:
+			case 533:
 				dtParser.setSym1(null);
 				break;
  
 			//
-			// Rule 530:  assertExpCS ::= assert severityKindCSOpt ( oclExpressionCS ) assertWithLogExpOpt
+			// Rule 534:  assertExpCS ::= assert severityKindCSOpt ( oclExpressionCS ) assertWithLogExpOpt
 			//
-			case 530: {
+			case 534: {
 				
 			LogExpCS logExpCS = (LogExpCS)dtParser.getSym(6);
 			OCLExpressionCS condition = (OCLExpressionCS)dtParser.getSym(4);
@@ -6109,9 +6166,9 @@ public class LightweightParser extends PrsStream implements RuleAction {
 			}
      
 			//
-			// Rule 533:  mappingRuleCS ::= entryDeclarationCS ;
+			// Rule 537:  mappingRuleCS ::= entryDeclarationCS ;
 			//
-			case 533: {
+			case 537: {
 				
 				MappingQueryCS result = createMappingQueryCS(
 						(MappingDeclarationCS)dtParser.getSym(1),
