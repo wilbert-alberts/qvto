@@ -21,8 +21,13 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.UniqueEList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfException;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtilPlugin;
 import org.eclipse.m2m.qvt.oml.emf.util.Logger;
@@ -87,6 +92,26 @@ public class MetamodelRegistry {
             		myMetamodelDescs.put(id, desc);
             		break;
             	}
+            }
+        }
+        
+        if (desc == null) {
+            // Unregistered metamodels, e.g. available via "platform:/resource" or "platform:/plugin"
+            try {
+                URI uri = URI.createURI(id);  
+                ResourceSet rs = new ResourceSetImpl();
+                Resource resource = rs.getResource(uri, true);
+                if (resource != null) {
+                    EObject metamodel = resource.getContents().get(0);
+                    if (metamodel instanceof EPackage) {
+                        desc = new EmfMetamodelDesc((EPackage) metamodel, id, null);
+//                      TODO: registration in the map must be done
+//                      in case the changes of resource are listened out for  
+//                        myMetamodelDescs.put(id, desc);
+                    }
+                }
+            } catch (Exception e) {
+                throw new EmfException(e);
             }
         }
         
