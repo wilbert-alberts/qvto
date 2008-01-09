@@ -80,6 +80,7 @@ public class TransformTests {
     
     public static ModelTestData[] createTestData() {
     	return new ModelTestData[] {
+    	new FileToFileData("_while"), //$NON-NLS-1$
     	new FileToFileData("bug214718"), //$NON-NLS-1$        
     	new FileToFileData("oclannotation", "in.ecore", "expected.xmi").includeMetamodelFile("metamodel.ecore"), //$NON-NLS-1$    			
     	new FileToFileData("importedvirtuals"), //$NON-NLS-1$    	

@@ -1,0 +1,64 @@
+library _while;
+
+query testVarScope(in par1 : Integer) : OclAny {
+	var localInt : Integer := 0;
+	while(/*<error>*/localInt : Integer := 0/*</error>*/; localInt <> 0) {  }; -- local available in condition
+
+	-- result vars declared in sibling while scopes are not clashing	
+	while(i : Integer := 0; i > 0) { 
+		i := 1 + i;
+		var zzzz: Integer:=0; 
+	};
+	while(i : Integer := 0; i > 0) { 
+		i := 1 + i;
+		var zzzz: Integer:=0;
+	};
+
+	-- clash with outer scope
+	var i : Integer := 0; -- Note: not in clash with 'i' declarator in above while expressions
+	while(/*<error>*/i : Integer := 0/*</error>*/; i > 0) { i := 1 + i; };
+	
+	-- clash with param
+	while(/*<error>*/par1 : Integer := 0/*</error>*/; i > 0) { i := par1 + i; };
+	
+	while(i > 0) { 		
+		var inWhileInt : Integer := 0; -- see usage out of scope to check clash
+		/*<error>*/var inWhileInt : Integer := 0/*</error>*/;
+		var x : Integer := null;
+	};
+	
+	var inWhileInt : Integer := 0; -- gone from it while scope
+	
+	-- legal access to all scope
+	while(false) {
+		var z:Integer := inWhileInt + localInt + par1;
+	};
+	
+	-- test result Var
+	/*<error>*/var _invalidResult : Integer := while(r : String:=10; false) {}/*</error>*/;
+	var _result : String := while(r : String:=10; false) {};
+}
+
+query testWhileHeader() : OclAny {	
+	-- test legacy while deprecation warn
+	/*<warn>*/while(true; true) {}/*</warn>*/;
+
+	-- test condition only variant
+	while(true) {};	
+	while(/*<error>*/'sd'/*</error>*/) {}; -- boolean type expected 
+	
+	-- test while with result declarator
+	while(i : Integer:=0; i < 10) {
+	};
+
+	while(i : Integer:=0; /*<error>*/100/*</error>*/) {
+	};
+
+	while(ii : /*<error>*/XXInteger/*</error>*/:=0; true) {
+	};
+	
+	while(ii : /*<error>*/XXInteger/*</error>*/:=0; /*<error>*/'true'/*</error>*/) {
+	};
+
+	null;
+}

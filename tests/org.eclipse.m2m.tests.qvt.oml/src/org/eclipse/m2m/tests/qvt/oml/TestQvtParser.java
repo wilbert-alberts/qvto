@@ -114,7 +114,7 @@ public class TestQvtParser extends TestCase {
 
 		if(myData.usesSourceAnnotations()) {
 			for (QvtCompilationResult compilationResult : compiled) {
-				ProblemSourceAnnotationHelper.assertCompilationProblemMatchExpectedAnnotations(compilationResult.getModule(), myData.getErrCount());
+				ProblemSourceAnnotationHelper.assertCompilationProblemMatchExpectedAnnotations(compilationResult.getModule(), myData.getAllProblemsCount());
 			}
 		}
 	}
