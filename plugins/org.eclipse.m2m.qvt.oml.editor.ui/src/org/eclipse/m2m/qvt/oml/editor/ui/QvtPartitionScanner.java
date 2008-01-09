@@ -32,10 +32,12 @@ public class QvtPartitionScanner extends RuleBasedPartitionScanner {
         IToken qvtComment = new Token(QVT_COMMENT);
         IToken qvtString = new Token(QVT_STRING);
 
-        IPredicateRule[] rules = new IPredicateRule[3];
-        rules[0] = new MultiLineRule("/*", "*/", qvtComment, (char) 0, true); //$NON-NLS-1$ //$NON-NLS-2$
-        rules[1] = new EndOfLineRule("--", qvtComment); //$NON-NLS-1$
-        rules[2] = new MultiLineRule("'", "'", qvtString, ESCAPE_CHAR, true); //$NON-NLS-1$ //$NON-NLS-2$
+        IPredicateRule[] rules = new IPredicateRule[] {
+            new MultiLineRule("/*", "*/", qvtComment, (char) 0, true), //$NON-NLS-1$ //$NON-NLS-2$
+            new EndOfLineRule("--", qvtComment), //$NON-NLS-1$
+            new MultiLineRule("'", "'", qvtString, ESCAPE_CHAR, true), //$NON-NLS-1$ //$NON-NLS-2$
+            new MultiLineRule("\"", "\"", qvtString, ESCAPE_CHAR, true) //$NON-NLS-1$ //$NON-NLS-2$
+        };
         setPredicateRules(rules);
     }   
 }
