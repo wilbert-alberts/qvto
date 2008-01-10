@@ -31,7 +31,6 @@ import org.eclipse.ocl.cst.TypeCS;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.types.PrimitiveType;
 
-
 public class QvtOperationalUtil {
 
 	private QvtOperationalUtil() {

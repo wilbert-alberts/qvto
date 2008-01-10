@@ -668,7 +668,11 @@ public class QvtOperationalVisitorCS
     	} 
     	finally {
     		if(beginScopeVars != null) {
-    			// remove variables of this scope when leaving it
+    			// remove variables of this scope when leaving it, only successfully added variables into env
+    			// in this block scope will be removed, so we can not remove outer scope 
+    			// existing variables. 
+    			// Note: nested block scopes have done their clean-up already so we remove
+    			// only our stuff
     			Collection<Variable<EClassifier, EParameter>> endScopeVars = env.getVariables();
     			for (Variable<EClassifier, EParameter> nextVar : endScopeVars) {
     				// remove those new in the scope
@@ -730,21 +734,66 @@ public class QvtOperationalVisitorCS
 		WhileExp result = ExpressionsFactory.eINSTANCE.createWhileExp();
 		result.setStartPosition(expressionCS.getStartOffset());
 		result.setEndPosition(expressionCS.getEndOffset());
+		
+		String resultVarName = null;
+		if(expressionCS.getResultVar() != null) {
+			VariableCS varCS = expressionCS.getResultVar();
+			Variable<EClassifier, EParameter> var = null;
 
-		OCLExpression<EClassifier> resExp = visitOclExpressionCS(expressionCS.getResult(), env);
-		result.setType(resExp.getType());
-		result.setResult(resExp);
-
-		OCLExpression<EClassifier> condExp = visitOclExpressionCS(expressionCS.getCondition(), env);
-		result.setCondition(condExp);
-
-		for (OCLExpressionCS oclExpCS : expressionCS.getBodyExpressions()) {
-			OCLExpression<EClassifier> bodyExp = visitOclExpressionCS(oclExpCS, env);
-			if (bodyExp != null) {
-    				result.getBody().add(bodyExp);
+			Variable prevVar = env.lookup(varCS.getName());			
+			var = variableDeclarationCS(varCS, env, true);
+			if(prevVar != null) {
+				env.addElement(varCS.getName(), prevVar, true);
+			} else {
+				resultVarName = varCS.getName();				
 			}
+			
+			
+			result.setResultVar(var);
+			result.setType(var.getType());							
+		} else if(expressionCS.getResult() != null) {
+			// report usage of legacy while
+			env.reportWarning(ValidationMessages.QvtOperationalVisitorCS_deprecatedWhileExp, expressionCS);
+			OCLExpression<EClassifier> resExp = visitOclExpressionCS(expressionCS.getResult(), env);
+			result.setType(resExp.getType());
+			result.setResult(resExp);
+		} else {
+			result.setType(env.getOCLStandardLibrary().getOclVoid());
 		}
 
+		OCLExpression<EClassifier> condExp = visitOclExpressionCS(expressionCS.getCondition(), env);
+		result.setCondition(condExp);		
+		if(condExp != null) {
+			EClassifier condType = condExp.getType();
+			if(env.getOCLStandardLibrary().getBoolean() != condExp.getType()) {
+				if(condType == null) {
+					condType = env.getOCLStandardLibrary().getOclVoid();
+				}
+				String message = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_booleanTypeExpressionExpected, env.getUMLReflection().getName(condType));
+				if(expressionCS.getResult() == null) {
+					env.reportError(message, expressionCS.getCondition());
+				} else {
+					// warn for legacy code to keep compilable, as it was not reported at all
+					env.reportWarning(message, expressionCS.getCondition());
+				}
+			}
+		}
+		
+		List<OCLExpressionCS> bodyCS = result.getBody() instanceof BlockExpCS ? ((BlockExpCS)result.getBody()).getBodyExpressions() : Collections.<OCLExpressionCS>singletonList(expressionCS.getBody());
+		BlockExp body = ExpressionsFactory.eINSTANCE.createBlockExp();
+		for (OCLExpressionCS oclExpCS : bodyCS) {
+			OCLExpression<EClassifier> bodyExp = visitOclExpressionCS(oclExpCS, env);
+			if (bodyExp != null) {
+    				body.getBody().add(bodyExp);
+			}
+		}
+		
+		result.setBody(body);
+
+		if(resultVarName != null) {
+			env.deleteElement(resultVarName);
+		}
+		
 		return result;
 	}
 
@@ -2524,5 +2573,4 @@ public class QvtOperationalVisitorCS
 
 		return astNode;
 	}	
-
 }

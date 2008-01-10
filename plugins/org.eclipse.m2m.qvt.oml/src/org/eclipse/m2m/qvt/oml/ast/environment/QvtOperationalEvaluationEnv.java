@@ -283,7 +283,12 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
      */
 	@Override
     public Object remove(String name) {
-        return myBindings.remove(name);
+        Object result = myBindings.remove(name);
+        if(result instanceof TypedBinding) {
+        	return ((TypedBinding)result).value;
+        }
+
+        return result;
     }
 
     /**

@@ -11,12 +11,10 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.expressions;
 
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClassifier;
-
+import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.ocl.expressions.OCLExpression;
-
+import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -30,6 +28,7 @@ import org.eclipse.ocl.utilities.Visitor;
  *   <li>{@link org.eclipse.m2m.qvt.oml.expressions.WhileExp#getCondition <em>Condition</em>}</li>
  *   <li>{@link org.eclipse.m2m.qvt.oml.expressions.WhileExp#getBody <em>Body</em>}</li>
  *   <li>{@link org.eclipse.m2m.qvt.oml.expressions.WhileExp#getResult <em>Result</em>}</li>
+ *   <li>{@link org.eclipse.m2m.qvt.oml.expressions.WhileExp#getResultVar <em>Result Var</em>}</li>
  * </ul>
  * </p>
  *
@@ -72,20 +71,30 @@ public interface WhileExp extends ImperativeExpression {
 	void setCondition(OCLExpression<EClassifier> value);
 
 	/**
-	 * Returns the value of the '<em><b>Body</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.expressions.OCLExpression}&lt;org.eclipse.emf.ecore.EClassifier>.
+	 * Returns the value of the '<em><b>Body</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Body</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Body</em>' containment reference list.
+	 * @return the value of the '<em>Body</em>' containment reference.
+	 * @see #setBody(OCLExpression)
 	 * @see org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage#getWhileExp_Body()
-	 * @model containment="true"
+	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	EList<OCLExpression<EClassifier>> getBody();
+	OCLExpression<EClassifier> getBody();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.expressions.WhileExp#getBody <em>Body</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Body</em>' containment reference.
+	 * @see #getBody()
+	 * @generated
+	 */
+	void setBody(OCLExpression<EClassifier> value);
 
 	/**
 	 * Returns the value of the '<em><b>Result</b></em>' containment reference.
@@ -112,6 +121,32 @@ public interface WhileExp extends ImperativeExpression {
 	 * @generated
 	 */
 	void setResult(OCLExpression<EClassifier> value);
+
+	/**
+	 * Returns the value of the '<em><b>Result Var</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Result Var</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Result Var</em>' containment reference.
+	 * @see #setResultVar(Variable)
+	 * @see org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage#getWhileExp_ResultVar()
+	 * @model containment="true"
+	 * @generated
+	 */
+	Variable<EClassifier, EParameter> getResultVar();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.expressions.WhileExp#getResultVar <em>Result Var</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Result Var</em>' containment reference.
+	 * @see #getResultVar()
+	 * @generated
+	 */
+	void setResultVar(Variable<EClassifier, EParameter> value);
 
 	/**
 	 * <!-- begin-user-doc -->

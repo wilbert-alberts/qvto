@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.26 2007/12/14 13:22:22 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.27 2008/01/10 17:04:22 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.26 2007/12/14 13:22:22 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.27 2008/01/10 17:04:22 radvorak Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -70,7 +70,7 @@ public interface QvtOpLPGParsersym {
       TK_QUESTIONMARK = 111,
       TK_QUOTE_STRING_LITERAL = 130,
       TK_ADD_ASSIGN = 120,
-      TK_RESET_ASSIGN = 106,
+      TK_RESET_ASSIGN = 103,
       TK_AT_SIGN = 134,
       TK_self = 45,
       TK_inv = 139,
@@ -90,7 +90,7 @@ public interface QvtOpLPGParsersym {
       TK_not = 54,
       TK_implies = 132,
       TK_let = 75,
-      TK_in = 92,
+      TK_in = 94,
       TK_true = 70,
       TK_false = 71,
       TK_body = 29,
@@ -137,7 +137,7 @@ public interface QvtOpLPGParsersym {
       TK_OclInvalid = 72,
       TK_end = 123,
       TK_while = 73,
-      TK_out = 103,
+      TK_out = 104,
       TK_object = 64,
       TK_transformation = 112,
       TK_import = 113,
@@ -145,16 +145,16 @@ public interface QvtOpLPGParsersym {
       TK_metamodel = 108,
       TK_mapping = 96,
       TK_query = 97,
-      TK_inout = 104,
+      TK_inout = 105,
       TK_when = 133,
-      TK_var = 93,
+      TK_var = 92,
       TK_configuration = 101,
       TK_property = 98,
       TK_map = 62,
       TK_xmap = 63,
       TK_late = 65,
-      TK_log = 91,
-      TK_assert = 94,
+      TK_log = 90,
+      TK_assert = 93,
       TK_with = 135,
       TK_resolve = 76,
       TK_resolveone = 77,
@@ -175,10 +175,10 @@ public interface QvtOpLPGParsersym {
       TK_abstract = 117,
       TK_static = 118,
       TK_result = 49,
-      TK_main = 90,
+      TK_main = 91,
       TK_this = 50,
       TK_switch = 74,
-      TK_rename = 105,
+      TK_rename = 106,
       TK_EOF_TOKEN = 95,
       TK_IDENTIFIER = 3,
       TK_INTEGER_RANGE_START = 125,
@@ -275,11 +275,11 @@ public interface QvtOpLPGParsersym {
                  "COMMA",
                  "COLONCOLON",
                  "COLON",
-                 "main",
                  "log",
-                 "in",
+                 "main",
                  "var",
                  "assert",
+                 "in",
                  "EOF_TOKEN",
                  "mapping",
                  "query",
@@ -288,10 +288,10 @@ public interface QvtOpLPGParsersym {
                  "DOT",
                  "configuration",
                  "ATPRE",
+                 "RESET_ASSIGN",
                  "out",
                  "inout",
                  "rename",
-                 "RESET_ASSIGN",
                  "library",
                  "metamodel",
                  "modeltype",

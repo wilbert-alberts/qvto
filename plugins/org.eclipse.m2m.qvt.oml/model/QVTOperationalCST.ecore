@@ -149,12 +149,14 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="strict" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="WhileExpCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="bodyExpressions" upperBound="-1"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="body" lowerBound="1"
           eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="result" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="resultVar" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/VariableCS"
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="SwitchExpCS" eSuperTypes="#//cst/StatementCS">

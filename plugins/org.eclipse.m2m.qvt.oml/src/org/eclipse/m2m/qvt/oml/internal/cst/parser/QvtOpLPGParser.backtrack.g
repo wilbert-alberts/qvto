@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.28 2007/12/18 10:08:39 radvorak Exp $ 
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.29 2008/01/10 17:04:22 radvorak Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -351,7 +351,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.28 2007/12/18 10:08:39 radvorak Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.29 2008/01/10 17:04:22 radvorak Exp $
  */
 	./
 $End
@@ -2115,9 +2115,9 @@ $Rules
 
     -- Resolve family ends here
 
-	whileExpCS ::= while '(' oclExpressionCS ';' oclExpressionCS ')' '{' statementListOpt '}'
+	legacyWhileExpCS ::= while '(' oclExpressionCS ';' oclExpressionCS ')' '{' statementListOpt '}'
 		/.$BeginJava
-					CSTNode result = createWhileExpCS(
+					CSTNode result = createLegacyWhileExpCS(
 							(OCLExpressionCS)$getSym(3),
 							(OCLExpressionCS)$getSym(5),
 							(EList)$getSym(8)
@@ -2127,12 +2127,48 @@ $Rules
 		  $EndJava
 		./
 
+	declaratorCS ::= IDENTIFIER ':' typeCS ':=' oclExpressionCS
+		/.$BeginJava
+					CSTNode result = createVariableCS(
+							getTokenText($getToken(1)),
+							(TypeCS)$getSym(3),
+							(OCLExpressionCS)$getSym(5)
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(5));
+					$setResult(result);
+		  $EndJava
+		./
+
+	whileExpCS ::= while '(' declaratorCS ';' oclExpressionCS ')' '{' statementListOpt '}'
+		/.$BeginJava
+					CSTNode result = createWhileExpCS(
+							(VariableCS)$getSym(3),
+							(OCLExpressionCS)$getSym(5),
+							(EList<OCLExpressionCS>)$getSym(8)
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(9)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	whileExpCS ::= while '(' oclExpressionCS ')' '{' statementListOpt '}'
+		/.$BeginJava
+					CSTNode result = createWhileExpCS(
+							null,
+							(OCLExpressionCS)$getSym(3),
+							(EList<OCLExpressionCS>)$getSym(6)
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(9)));
+					$setResult(result);
+		  $EndJava
+		./
 
 	-- operation call and expression extension in QVT
 	featureCallExpCS -> featureMappingCallExpCS
 	oclExpCS -> mappingCallExpCS
 
-	oclExpCS -> whileExpCS 
+	oclExpCS -> whileExpCS
+	oclExpCS -> legacyWhileExpCS
 	oclExpCS -> outExpCS 
 	
 	oclExpCS -> ifExpCS

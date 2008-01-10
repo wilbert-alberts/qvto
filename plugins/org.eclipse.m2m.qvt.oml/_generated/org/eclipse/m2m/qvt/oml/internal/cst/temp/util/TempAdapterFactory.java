@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempAdapterFactory.java,v 1.7 2007/12/01 23:33:05 radvorak Exp $
+ * $Id: TempAdapterFactory.java,v 1.8 2008/01/10 17:04:23 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.temp.util;
 
@@ -90,7 +90,7 @@ public class TempAdapterFactory extends AdapterFactoryImpl {
 	}
 
     /**
-	 * The switch the delegates to the <code>createXXX</code> methods.
+	 * The switch that delegates to the <code>createXXX</code> methods.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated

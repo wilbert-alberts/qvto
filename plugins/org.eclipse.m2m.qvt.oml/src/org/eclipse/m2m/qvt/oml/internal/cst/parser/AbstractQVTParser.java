@@ -477,13 +477,25 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 
-	protected final CSTNode createWhileExpCS(OCLExpressionCS cond, OCLExpressionCS res, EList<OCLExpressionCS> expressions) {
+	protected CSTNode createLegacyWhileExpCS(OCLExpressionCS cond, OCLExpressionCS res, EList<OCLExpressionCS> expressions) {
 		WhileExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createWhileExpCS();
 		result.setCondition(cond);
 		result.setResult(res);
-		result.getBodyExpressions().addAll(expressions);
+		BlockExpCS body = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createBlockExpCS();
+		body.getBodyExpressions().addAll(expressions);
+		result.setBody(body);
 		return result;
 	}
+	
+	protected CSTNode createWhileExpCS(VariableCS resultVar, OCLExpressionCS cond, EList<OCLExpressionCS> expressions) {
+		WhileExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createWhileExpCS();
+		result.setCondition(cond);
+		result.setResultVar(resultVar);
+		BlockExpCS body = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createBlockExpCS();
+		body.getBodyExpressions().addAll(expressions);
+		result.setBody(body);
+		return result;
+	}		
 	
 	protected final CSTNode createLogExpCS(EList<OCLExpressionCS> args, OCLExpressionCS condition) {
 		LogExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createLogExpCS();

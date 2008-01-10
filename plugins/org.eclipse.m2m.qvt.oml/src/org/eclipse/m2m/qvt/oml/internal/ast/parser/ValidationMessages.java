@@ -29,6 +29,8 @@ public final class ValidationMessages extends NLS {
 	public static String MissingMessageLogExpArgumentError;
 	public static String QvtOperationalParserUtil_inoutParamAssignmentError;
     public static String QvtOperationalVisitorCS_AbstractTypesNotInitialized;
+	public static String QvtOperationalVisitorCS_booleanTypeExpressionExpected;
+	public static String QvtOperationalVisitorCS_deprecatedWhileExp;
     public static String QvtOperationalVisitorCS_ResolveInMappingNotFound;
     public static String QvtOperationalVisitorCS_ResolveInSeveralMappingsFound;
     public static String QvtOperationalVisitorCS_unsupportedMetamodelComplianceKind;

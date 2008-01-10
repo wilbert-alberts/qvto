@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
-
 import org.eclipse.ocl.utilities.UtilitiesPackage;
 
 /**
@@ -2969,7 +2968,7 @@ public interface ExpressionsPackage extends EPackage {
 	int WHILE_EXP__CONDITION = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Body</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Body</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -2987,13 +2986,22 @@ public interface ExpressionsPackage extends EPackage {
 	int WHILE_EXP__RESULT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Result Var</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WHILE_EXP__RESULT_VAR = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>While Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WHILE_EXP_FEATURE_COUNT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 3;
+	int WHILE_EXP_FEATURE_COUNT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.expressions.impl.SwitchExpImpl <em>Switch Exp</em>}' class.
@@ -4647,10 +4655,10 @@ public interface ExpressionsPackage extends EPackage {
 	EReference getWhileExp_Condition();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.qvt.oml.expressions.WhileExp#getBody <em>Body</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.qvt.oml.expressions.WhileExp#getBody <em>Body</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Body</em>'.
+	 * @return the meta object for the containment reference '<em>Body</em>'.
 	 * @see org.eclipse.m2m.qvt.oml.expressions.WhileExp#getBody()
 	 * @see #getWhileExp()
 	 * @generated
@@ -4667,6 +4675,17 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getWhileExp_Result();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.qvt.oml.expressions.WhileExp#getResultVar <em>Result Var</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Result Var</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.expressions.WhileExp#getResultVar()
+	 * @see #getWhileExp()
+	 * @generated
+	 */
+	EReference getWhileExp_ResultVar();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.expressions.SwitchExp <em>Switch Exp</em>}'.
@@ -5534,7 +5553,7 @@ public interface ExpressionsPackage extends EPackage {
 		EReference WHILE_EXP__CONDITION = eINSTANCE.getWhileExp_Condition();
 
 		/**
-		 * The meta object literal for the '<em><b>Body</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Body</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -5548,6 +5567,14 @@ public interface ExpressionsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference WHILE_EXP__RESULT = eINSTANCE.getWhileExp_Result();
+
+		/**
+		 * The meta object literal for the '<em><b>Result Var</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WHILE_EXP__RESULT_VAR = eINSTANCE.getWhileExp_ResultVar();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.expressions.impl.SwitchExpImpl <em>Switch Exp</em>}' class.

@@ -11,28 +11,18 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.expressions.impl;
 
-import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.qvt.oml.expressions.WhileExp;
-
 import org.eclipse.ocl.expressions.OCLExpression;
-
+import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -45,6 +35,7 @@ import org.eclipse.ocl.utilities.Visitor;
  *   <li>{@link org.eclipse.m2m.qvt.oml.expressions.impl.WhileExpImpl#getCondition <em>Condition</em>}</li>
  *   <li>{@link org.eclipse.m2m.qvt.oml.expressions.impl.WhileExpImpl#getBody <em>Body</em>}</li>
  *   <li>{@link org.eclipse.m2m.qvt.oml.expressions.impl.WhileExpImpl#getResult <em>Result</em>}</li>
+ *   <li>{@link org.eclipse.m2m.qvt.oml.expressions.impl.WhileExpImpl#getResultVar <em>Result Var</em>}</li>
  * </ul>
  * </p>
  *
@@ -69,14 +60,14 @@ public class WhileExpImpl extends ImperativeExpressionImpl implements WhileExp {
 	protected OCLExpression<EClassifier> condition;
 
 	/**
-	 * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference list.
+	 * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getBody()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<OCLExpression<EClassifier>> body;
+	protected OCLExpression<EClassifier> body;
 
 	/**
 	 * The cached value of the '{@link #getResult() <em>Result</em>}' containment reference.
@@ -87,6 +78,16 @@ public class WhileExpImpl extends ImperativeExpressionImpl implements WhileExp {
 	 * @ordered
 	 */
 	protected OCLExpression<EClassifier> result;
+
+	/**
+	 * The cached value of the '{@link #getResultVar() <em>Result Var</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getResultVar()
+	 * @generated
+	 * @ordered
+	 */
+	protected Variable<EClassifier, EParameter> resultVar;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -155,11 +156,42 @@ public class WhileExpImpl extends ImperativeExpressionImpl implements WhileExp {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<OCLExpression<EClassifier>> getBody() {
-		if (body == null) {
-			body = new EObjectContainmentEList<OCLExpression<EClassifier>>(OCLExpression.class, this, ExpressionsPackage.WHILE_EXP__BODY);
-		}
+	public OCLExpression<EClassifier> getBody() {
 		return body;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetBody(OCLExpression<EClassifier> newBody, NotificationChain msgs) {
+		OCLExpression<EClassifier> oldBody = body;
+		body = newBody;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpressionsPackage.WHILE_EXP__BODY, oldBody, newBody);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBody(OCLExpression<EClassifier> newBody) {
+		if (newBody != body) {
+			NotificationChain msgs = null;
+			if (body != null)
+				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.WHILE_EXP__BODY, null, msgs);
+			if (newBody != null)
+				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.WHILE_EXP__BODY, null, msgs);
+			msgs = basicSetBody(newBody, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.WHILE_EXP__BODY, newBody, newBody));
 	}
 
 	/**
@@ -210,6 +242,49 @@ public class WhileExpImpl extends ImperativeExpressionImpl implements WhileExp {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Variable<EClassifier, EParameter> getResultVar() {
+		return resultVar;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetResultVar(Variable<EClassifier, EParameter> newResultVar, NotificationChain msgs) {
+		Variable<EClassifier, EParameter> oldResultVar = resultVar;
+		resultVar = newResultVar;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpressionsPackage.WHILE_EXP__RESULT_VAR, oldResultVar, newResultVar);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setResultVar(Variable<EClassifier, EParameter> newResultVar) {
+		if (newResultVar != resultVar) {
+			NotificationChain msgs = null;
+			if (resultVar != null)
+				msgs = ((InternalEObject)resultVar).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.WHILE_EXP__RESULT_VAR, null, msgs);
+			if (newResultVar != null)
+				msgs = ((InternalEObject)newResultVar).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.WHILE_EXP__RESULT_VAR, null, msgs);
+			msgs = basicSetResultVar(newResultVar, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.WHILE_EXP__RESULT_VAR, newResultVar, newResultVar));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
 		return ((ExtendedVisitor<T, ?, ?, ?, ?>) v).visitWhileExp(this);
 	}
@@ -225,9 +300,11 @@ public class WhileExpImpl extends ImperativeExpressionImpl implements WhileExp {
 			case ExpressionsPackage.WHILE_EXP__CONDITION:
 				return basicSetCondition(null, msgs);
 			case ExpressionsPackage.WHILE_EXP__BODY:
-				return ((InternalEList<?>)getBody()).basicRemove(otherEnd, msgs);
+				return basicSetBody(null, msgs);
 			case ExpressionsPackage.WHILE_EXP__RESULT:
 				return basicSetResult(null, msgs);
+			case ExpressionsPackage.WHILE_EXP__RESULT_VAR:
+				return basicSetResultVar(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -246,6 +323,8 @@ public class WhileExpImpl extends ImperativeExpressionImpl implements WhileExp {
 				return getBody();
 			case ExpressionsPackage.WHILE_EXP__RESULT:
 				return getResult();
+			case ExpressionsPackage.WHILE_EXP__RESULT_VAR:
+				return getResultVar();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -263,11 +342,13 @@ public class WhileExpImpl extends ImperativeExpressionImpl implements WhileExp {
 				setCondition((OCLExpression<EClassifier>)newValue);
 				return;
 			case ExpressionsPackage.WHILE_EXP__BODY:
-				getBody().clear();
-				getBody().addAll((Collection<? extends OCLExpression<EClassifier>>)newValue);
+				setBody((OCLExpression<EClassifier>)newValue);
 				return;
 			case ExpressionsPackage.WHILE_EXP__RESULT:
 				setResult((OCLExpression<EClassifier>)newValue);
+				return;
+			case ExpressionsPackage.WHILE_EXP__RESULT_VAR:
+				setResultVar((Variable<EClassifier, EParameter>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -285,10 +366,13 @@ public class WhileExpImpl extends ImperativeExpressionImpl implements WhileExp {
 				setCondition((OCLExpression<EClassifier>)null);
 				return;
 			case ExpressionsPackage.WHILE_EXP__BODY:
-				getBody().clear();
+				setBody((OCLExpression<EClassifier>)null);
 				return;
 			case ExpressionsPackage.WHILE_EXP__RESULT:
 				setResult((OCLExpression<EClassifier>)null);
+				return;
+			case ExpressionsPackage.WHILE_EXP__RESULT_VAR:
+				setResultVar((Variable<EClassifier, EParameter>)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -305,9 +389,11 @@ public class WhileExpImpl extends ImperativeExpressionImpl implements WhileExp {
 			case ExpressionsPackage.WHILE_EXP__CONDITION:
 				return condition != null;
 			case ExpressionsPackage.WHILE_EXP__BODY:
-				return body != null && !body.isEmpty();
+				return body != null;
 			case ExpressionsPackage.WHILE_EXP__RESULT:
 				return result != null;
+			case ExpressionsPackage.WHILE_EXP__RESULT_VAR:
+				return resultVar != null;
 		}
 		return super.eIsSet(featureID);
 	}

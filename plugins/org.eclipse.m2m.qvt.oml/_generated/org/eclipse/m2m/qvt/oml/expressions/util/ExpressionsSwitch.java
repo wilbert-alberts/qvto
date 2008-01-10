@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.ETypedElement;
+import org.eclipse.m2m.qvt.oml.expressions.*;
 import org.eclipse.m2m.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.qvt.oml.expressions.AssignExp;
