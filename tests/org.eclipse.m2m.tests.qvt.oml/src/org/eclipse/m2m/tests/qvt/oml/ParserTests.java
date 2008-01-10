@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml;
 
-import junit.extensions.TestDecorator;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -28,17 +27,27 @@ public class ParserTests {
     }
     
     public static class TestData {
-        public TestData(String dir, int errCount) { this(dir, errCount, new String[0]); } 
+        public TestData(String dir, int errCount) { this(dir, errCount, new String[0]); }
+        
+        public TestData(String dir, int errCount, int warnCount) {
+        	this(dir, errCount, new String[0]);
+        	this.myWarnCount = warnCount; 
+        }
         public TestData(String dir, int errCount, String... warnings) { 
             myDir = dir; 
             myErrCount = errCount; 
-            myWarnings = warnings; 
+            myWarnings = warnings;
+            myWarnCount = warnings.length;
             usesSourceAnnotations = false;
         } 
         
         public String getDir() { return myDir; }
         public int getErrCount() { return myErrCount; }
         public String[] getWarnings() { return myWarnings; }
+        
+        public int getAllProblemsCount() {
+			return myErrCount + myWarnCount;
+		}
         
         public boolean usesSourceAnnotations() {
         	return usesSourceAnnotations;
@@ -47,14 +56,15 @@ public class ParserTests {
         private final String myDir;
         private final int myErrCount;
         private final String[] myWarnings;
+        private int myWarnCount;
         private boolean usesSourceAnnotations;
 
         /**
          * Creates that should be check for match of compilation problems with expected problem 
          * annotation in the test QVT sources 
          */
-        public static TestData createSourceChecked(String dir, int errCount) {
-        	TestData data = new TestData(dir, errCount);
+        public static TestData createSourceChecked(String dir, int errCount, int warnCount) {
+        	TestData data = new TestData(dir, errCount, warnCount);
         	data.usesSourceAnnotations = true; 
         	return data;
         }
@@ -63,7 +73,8 @@ public class ParserTests {
     
     static TestData[] ourData = new TestData[] {
         //new TestData("orderedsetdoesnotconformtoset", 1), //$NON-NLS-1$
-    	TestData.createSourceChecked("varscope", 10), //$NON-NLS-1$    	
+    	TestData.createSourceChecked("varscope", 10, 0), //$NON-NLS-1$    	
+    	TestData.createSourceChecked("_while", 10, 1), //$NON-NLS-1$
     	new TestData("assert_log", 0), //$NON-NLS-1$    	
         new TestData("opersignatureparamclash", 1), //$NON-NLS-1$    	
         new TestData("collectreturntype", 0), //$NON-NLS-1$

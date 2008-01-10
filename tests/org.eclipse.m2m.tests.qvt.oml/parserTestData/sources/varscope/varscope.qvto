@@ -51,7 +51,7 @@ query variableScopeCheck() : Integer {
 		-- there is no conlict with then block expression
 		var ib : Boolean := i <> null;
 		
-		while(true; true) { 
+		while(true) { 
 			/*<error>*/var i : Integer := 10/*</error>*/;
 			
 			/*<error>*/var ib : Boolean := i <> null/*</error>*/; -- conflict with else block
