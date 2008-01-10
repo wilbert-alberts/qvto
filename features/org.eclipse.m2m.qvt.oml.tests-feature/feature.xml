@@ -21,13 +21,13 @@
          id="org.eclipse.m2m.tests.qvt.oml"                                                                                                                  
          download-size="0"                                                                                                                                   
          install-size="0"                                                                                                                                    
-         version="1.0.0.v20071214-0231"                                                                                                                      
+         version="0.0.0"                                                                                                                      
          unpack="false"/>                                                                                                                                    
                                                                                                                                                              
    <plugin                                                                                                                                                   
          id="org.eclipse.m2m.qvt.oml.tests.source"                                                                                                           
          download-size="0"                                                                                                                                   
          install-size="0"                                                                                                                                    
-         version="1.0.0.v20071214-0231"/>                                                                                                                    
+         version="0.0.0"/>                                                                                                                    
                                                                                                                                                              
 </feature>
