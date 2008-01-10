@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.5 2007/12/14 13:22:27 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.6 2008/01/10 17:04:29 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.5 2007/12/14 13:22:27 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.6 2008/01/10 17:04:29 radvorak Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser;
@@ -53,24 +53,24 @@ public interface LightweightTypeParsersym {
       TK_LPAREN = 1,
       TK_RPAREN = 4,
       TK_LBRACE = 86,
-      TK_RBRACE = 85,
+      TK_RBRACE = 84,
       TK_LBRACKET = 98,
-      TK_RBRACKET = 94,
+      TK_RBRACKET = 96,
       TK_ARROW = 104,
-      TK_BAR = 89,
-      TK_COMMA = 84,
-      TK_COLON = 90,
+      TK_BAR = 90,
+      TK_COMMA = 85,
+      TK_COLON = 89,
       TK_COLONCOLON = 87,
       TK_SEMICOLON = 88,
       TK_DOT = 105,
       TK_DOTDOT = 106,
-      TK_ATPRE = 91,
+      TK_ATPRE = 92,
       TK_CARET = 107,
       TK_CARETCARET = 108,
-      TK_QUESTIONMARK = 95,
+      TK_QUESTIONMARK = 97,
       TK_QUOTE_STRING_LITERAL = 116,
       TK_ADD_ASSIGN = 99,
-      TK_RESET_ASSIGN = 92,
+      TK_RESET_ASSIGN = 93,
       TK_AT_SIGN = 111,
       TK_self = 27,
       TK_inv = 117,
@@ -145,14 +145,14 @@ public interface LightweightTypeParsersym {
       TK_query = 131,
       TK_inout = 132,
       TK_when = 112,
-      TK_var = 96,
+      TK_var = 94,
       TK_configuration = 133,
       TK_property = 134,
       TK_map = 61,
       TK_xmap = 62,
       TK_late = 63,
-      TK_log = 93,
-      TK_assert = 97,
+      TK_log = 91,
+      TK_assert = 95,
       TK_with = 113,
       TK_resolve = 76,
       TK_resolveone = 77,
@@ -267,20 +267,20 @@ public interface LightweightTypeParsersym {
                  "invresolveone",
                  "invresolveIn",
                  "invresolveoneIn",
-                 "COMMA",
                  "RBRACE",
+                 "COMMA",
                  "LBRACE",
                  "COLONCOLON",
                  "SEMICOLON",
-                 "BAR",
                  "COLON",
+                 "BAR",
+                 "log",
                  "ATPRE",
                  "RESET_ASSIGN",
-                 "log",
-                 "RBRACKET",
-                 "QUESTIONMARK",
                  "var",
                  "assert",
+                 "RBRACKET",
+                 "QUESTIONMARK",
                  "LBRACKET",
                  "ADD_ASSIGN",
                  "else",
