@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.20.2.7 2008/01/09 21:50:04 radvorak Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.20.2.8 2008/01/11 23:19:36 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.20.2.7 2008/01/09 21:50:04 radvorak Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.20.2.8 2008/01/11 23:19:36 radvorak Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -53,7 +53,7 @@ public interface QvtOpLPGParsersym {
       TK_LPAREN = 1,
       TK_RPAREN = 4,
       TK_LBRACE = 86,
-      TK_RBRACE = 84,
+      TK_RBRACE = 85,
       TK_LBRACKET = 119,
       TK_RBRACKET = 110,
       TK_ARROW = 126,
@@ -61,7 +61,7 @@ public interface QvtOpLPGParsersym {
       TK_COMMA = 87,
       TK_COLON = 89,
       TK_COLONCOLON = 88,
-      TK_SEMICOLON = 85,
+      TK_SEMICOLON = 84,
       TK_DOT = 100,
       TK_DOTDOT = 127,
       TK_ATPRE = 102,
@@ -90,7 +90,7 @@ public interface QvtOpLPGParsersym {
       TK_not = 54,
       TK_implies = 132,
       TK_let = 75,
-      TK_in = 94,
+      TK_in = 91,
       TK_true = 70,
       TK_false = 71,
       TK_body = 29,
@@ -143,18 +143,18 @@ public interface QvtOpLPGParsersym {
       TK_import = 113,
       TK_library = 107,
       TK_metamodel = 108,
-      TK_mapping = 96,
-      TK_query = 97,
+      TK_mapping = 94,
+      TK_query = 95,
       TK_inout = 105,
       TK_when = 133,
-      TK_var = 92,
+      TK_var = 96,
       TK_configuration = 101,
-      TK_property = 98,
+      TK_property = 97,
       TK_map = 62,
       TK_xmap = 63,
       TK_late = 65,
-      TK_log = 90,
-      TK_assert = 93,
+      TK_log = 92,
+      TK_assert = 98,
       TK_with = 135,
       TK_resolve = 76,
       TK_resolveone = 77,
@@ -175,11 +175,11 @@ public interface QvtOpLPGParsersym {
       TK_abstract = 117,
       TK_static = 118,
       TK_result = 49,
-      TK_main = 91,
+      TK_main = 90,
       TK_this = 50,
       TK_switch = 74,
       TK_rename = 106,
-      TK_EOF_TOKEN = 95,
+      TK_EOF_TOKEN = 93,
       TK_IDENTIFIER = 3,
       TK_INTEGER_RANGE_START = 125,
       TK_ERROR_TOKEN = 2;
@@ -269,21 +269,21 @@ public interface QvtOpLPGParsersym {
                  "invresolveone",
                  "invresolveIn",
                  "invresolveoneIn",
-                 "RBRACE",
                  "SEMICOLON",
+                 "RBRACE",
                  "LBRACE",
                  "COMMA",
                  "COLONCOLON",
                  "COLON",
-                 "log",
                  "main",
-                 "var",
-                 "assert",
                  "in",
+                 "log",
                  "EOF_TOKEN",
                  "mapping",
                  "query",
+                 "var",
                  "property",
+                 "assert",
                  "BAR",
                  "DOT",
                  "configuration",
