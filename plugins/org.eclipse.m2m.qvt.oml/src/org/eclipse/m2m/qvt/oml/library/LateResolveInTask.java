@@ -13,6 +13,7 @@ package org.eclipse.m2m.qvt.oml.library;
 
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveInExp;
+import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.DeferredAssignmentListener;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtOperationalEvaluationVisitor;
 
 /**
@@ -21,8 +22,8 @@ import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtOperationalEvaluationVi
 
 public class LateResolveInTask extends AbstractLateResolveTask {
     public LateResolveInTask(ResolveInExp resolveInExp, EObjectEStructuralFeaturePair lvalue, QvtOperationalEvaluationVisitor visitor,
-            QvtOperationalEvaluationEnv evalEnv) {
-        super(resolveInExp, lvalue, visitor, evalEnv);
+            QvtOperationalEvaluationEnv evalEnv, DeferredAssignmentListener deferredListener) {
+        super(resolveInExp, lvalue, visitor, evalEnv, deferredListener);
     }
 
     @Override

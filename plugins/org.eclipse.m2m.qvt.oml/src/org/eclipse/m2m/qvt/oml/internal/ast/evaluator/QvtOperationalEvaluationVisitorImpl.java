@@ -131,7 +131,7 @@ import org.eclipse.osgi.util.NLS;
 public class QvtOperationalEvaluationVisitorImpl
 	extends EvaluationVisitorImpl<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter,
 EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject>
-implements QvtOperationalEvaluationVisitor {
+implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 
     public QvtOperationalEvaluationVisitorImpl(QvtOperationalEnv env, QvtOperationalEvaluationEnv evalEnv) {
         super(env, evalEnv, evalEnv.createExtentMap(null));
@@ -158,6 +158,10 @@ implements QvtOperationalEvaluationVisitor {
 
     public void setEntryPoint(ImperativeOperation operation) {
         myEntryPoint = operation;		
+    }
+    
+    public void notifyAfterDeferredAssign(final AssignExp assignExp, Object leftValue) {
+    	// do nothing special here, subclasses may customize
     }
 
     public Object visitAssignExp(final AssignExp assignExp) {
@@ -457,7 +461,7 @@ implements QvtOperationalEvaluationVisitor {
 	        OperationCallResult callResult = executeImperativeOperation(myEntryPoint, null, entryArgs);
 	        	        
 	        isInTerminatingState = true;
-	        getContext().processDeferredTasks();	        
+	        processDeferredTasks();	        
 	
 			ResourceSet outResourceSet = EmfUtil.getOutputResourceSet();
 	        evalResult = callResult.myEvalEnv.createEvaluationResult(myEntryPoint, outResourceSet);
@@ -477,6 +481,10 @@ implements QvtOperationalEvaluationVisitor {
         
         return evalResult;
     }
+
+	protected void processDeferredTasks() {
+		getContext().processDeferredTasks();
+	}
 
 	public Object visitModuleImport(ModuleImport moduleImport) {
         return null;
@@ -604,7 +612,7 @@ implements QvtOperationalEvaluationVisitor {
 
     public Object visitResolveExp(ResolveExp resolveExp) {
     	if (resolveExp.isIsDeferred() && !isInTerminatingState) {    	
-            LateResolveTask lateResolveTask = new LateResolveTask(resolveExp, getContext().getLastAssignmentLvalueEval(), getQVTVisitor(), getOperationalEvaluationEnv());
+            LateResolveTask lateResolveTask = new LateResolveTask(resolveExp, getContext().getLastAssignmentLvalueEval(), getQVTVisitor(), getOperationalEvaluationEnv(), this);
             lateResolveTask.schedule();
             return null;
         }
@@ -613,7 +621,7 @@ implements QvtOperationalEvaluationVisitor {
     
     public Object visitResolveInExp(ResolveInExp resolveInExp) {
         if (resolveInExp.isIsDeferred() && !isInTerminatingState) {        	
-            LateResolveInTask lateResolveInTask = new LateResolveInTask(resolveInExp, getContext().getLastAssignmentLvalueEval(), getQVTVisitor(), getOperationalEvaluationEnv());
+            LateResolveInTask lateResolveInTask = new LateResolveInTask(resolveInExp, getContext().getLastAssignmentLvalueEval(), getQVTVisitor(), getOperationalEvaluationEnv(), this);
             lateResolveInTask.schedule();
             return null;
         }        
@@ -1343,6 +1351,13 @@ implements QvtOperationalEvaluationVisitor {
      */
     protected QvtOperationalEvaluationVisitor getQVTVisitor() {
     	return (QvtOperationalEvaluationVisitor)getVisitor();
+    }
+    
+    /**
+     * Note: may be <code>null</code> in case only a code snippet is to be evaluated 
+     */
+    protected ImperativeOperation getMainEntry() {
+    	return myEntryPoint;
     }
         
     // allow to redefine "entry" point
