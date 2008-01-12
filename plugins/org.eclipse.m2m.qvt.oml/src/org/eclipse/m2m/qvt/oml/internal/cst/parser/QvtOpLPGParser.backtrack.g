@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.29 2008/01/10 17:04:22 radvorak Exp $ 
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.30 2008/01/12 00:15:49 radvorak Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -256,6 +256,7 @@ $Globals
 	import lpg.lpgjavaruntime.NotBacktrackParseTableException;
 	import org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS;	
 	import org.eclipse.m2m.qvt.oml.internal.cst.LogExpCS;
+	import org.eclipse.m2m.qvt.oml.internal.cst.BlockExpCS;	
 	import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum;
 	import org.eclipse.m2m.qvt.oml.internal.cst.MappingBodyCS;
@@ -351,7 +352,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.29 2008/01/10 17:04:22 radvorak Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.30 2008/01/12 00:15:49 radvorak Exp $
  */
 	./
 $End
@@ -2115,14 +2116,16 @@ $Rules
 
     -- Resolve family ends here
 
-	legacyWhileExpCS ::= while '(' oclExpressionCS ';' oclExpressionCS ')' '{' statementListOpt '}'
+	whileBodyCS -> blockExpCS
+
+	legacyWhileExpCS ::= while '(' oclExpressionCS ';' oclExpressionCS ')' whileBodyCS
 		/.$BeginJava
 					CSTNode result = createLegacyWhileExpCS(
 							(OCLExpressionCS)$getSym(3),
 							(OCLExpressionCS)$getSym(5),
-							(EList)$getSym(8)
+							(BlockExpCS)$getSym(7)
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(9)));
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(7));
 					$setResult(result);
 		  $EndJava
 		./
@@ -2139,26 +2142,26 @@ $Rules
 		  $EndJava
 		./
 
-	whileExpCS ::= while '(' declaratorCS ';' oclExpressionCS ')' '{' statementListOpt '}'
+	whileExpCS ::= while '(' declaratorCS ';' oclExpressionCS ')' whileBodyCS
 		/.$BeginJava
 					CSTNode result = createWhileExpCS(
 							(VariableCS)$getSym(3),
 							(OCLExpressionCS)$getSym(5),
-							(EList<OCLExpressionCS>)$getSym(8)
+							(BlockExpCS)$getSym(7)
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(9)));
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(7));
 					$setResult(result);
 		  $EndJava
 		./
 
-	whileExpCS ::= while '(' oclExpressionCS ')' '{' statementListOpt '}'
+	whileExpCS ::= while '(' oclExpressionCS ')' whileBodyCS
 		/.$BeginJava
 					CSTNode result = createWhileExpCS(
 							null,
 							(OCLExpressionCS)$getSym(3),
-							(EList<OCLExpressionCS>)$getSym(6)
+							(BlockExpCS)$getSym(5)
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(9)));
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(5));
 					$setResult(result);
 		  $EndJava
 		./
@@ -2380,21 +2383,7 @@ $Rules
 	argumentsCS -> argumentsCS ',' qvtErrorToken
 	
 	ifExpBodyCS -> oclExpressionCS
-	ifExpBodyCS ::= '{' statementListOpt '}'
-		/.$BeginJava
-					EList bodyList = (EList) $getSym(2);
-					CSTNode result = createBlockExpCS(
-							bodyList
-						);
-					if (bodyList.isEmpty()) {
-						setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
-					}
-					else {
-						setOffsets(result, (CSTNode) bodyList.get(0), (CSTNode) bodyList.get(bodyList.size()-1));
-					}
-					$setResult(result);
-		  $EndJava
-		./
+	ifExpBodyCS -> blockExpCS
 
 	ifExpCS ::= if oclExpressionCS then ifExpBodyCS else ifExpBodyCS endif
 		/.$BeginJava
@@ -2805,6 +2794,19 @@ $Rules
 				setOffsets(result, getIToken(dtParser.getToken(1)), end);
 				$setResult(result);
           $EndJava
-        ./ 	
+        ./
+
+	blockExpCS ::= '{' statementListOpt '}'
+		/.$BeginJava
+				EList bodyList = (EList) dtParser.getSym(2);
+				CSTNode result = createBlockExpCS(
+					bodyList
+				);
+				
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(3)));
+				$setResult(result);
+          $EndJava
+		./
+
 $End
 
