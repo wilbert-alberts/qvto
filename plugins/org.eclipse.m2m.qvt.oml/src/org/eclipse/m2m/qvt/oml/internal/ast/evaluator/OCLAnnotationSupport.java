@@ -90,7 +90,7 @@ public class OCLAnnotationSupport {
     }
     
     public OCLExpression getBody(EOperation operation) {
-    	return getOCLExpression(operation, operation.getEContainingClass(), BODY);
+    	return getOCLExpression(operation, operation, BODY);
     }
     	
 	public EOperation resolveDynamic(EOperation compiledOperation, EObject targetInstance) {
