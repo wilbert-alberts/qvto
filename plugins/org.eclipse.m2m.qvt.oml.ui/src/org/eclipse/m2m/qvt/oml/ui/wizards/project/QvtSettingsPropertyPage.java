@@ -13,6 +13,7 @@ package org.eclipse.m2m.qvt.oml.ui.wizards.project;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.m2m.qvt.oml.builder.QvtBuilder;
 import org.eclipse.m2m.qvt.oml.common.project.NatureUtils;
@@ -94,9 +95,11 @@ public class QvtSettingsPropertyPage extends PropertyPage {
         if(element instanceof IProject) {
             IProject project = (IProject)element;            
             return isQvtProject(project) ? project : null; 
-        } else {
-            return null;
+        } else if(element instanceof IAdaptable) {
+        	IAdaptable adaptable = (IAdaptable) element;
+            return (IProject)adaptable.getAdapter(IProject.class);
         }
+        return null;
     }
 
     private static boolean isQvtProject(IProject project) {
