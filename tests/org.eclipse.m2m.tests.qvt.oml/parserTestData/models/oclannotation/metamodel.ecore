@@ -36,7 +36,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="SubFoo" eSuperTypes="#//Foo">
     <eOperations name="testOper" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.eclipse.org/2007/OCL">
-        <details key="body" value="'SubFoo::testOper(SubFoo)'.concat('-').concat(fullName) &#xD;&#xA;-- checks also for derived property access within operation body"/>
+        <details key="body" value="'SubFoo::testOper(SubFoo)'.concat('-').concat(fullName).concat('; par1=').concat(par1.firstName)&#xD;&#xA;-- checks also for derived property access within operation body"/>
       </eAnnotations>
       <eParameters name="par1" eType="#//SubFoo"/>
     </eOperations>
@@ -54,13 +54,16 @@
         <details key="derive" value="firstName.concat(' ').concat(lastName)"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="values" unique="false"
-        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="values" upperBound="-1"
+        eType="#//TestValue" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Root">
     <eStructuralFeatures xsi:type="ecore:EReference" name="foos" upperBound="-1" eType="#//SuperFoo"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="results" upperBound="-1"
         eType="#//TestResult" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TestValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>
