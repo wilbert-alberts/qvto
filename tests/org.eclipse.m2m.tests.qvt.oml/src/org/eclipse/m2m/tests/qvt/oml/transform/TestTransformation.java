@@ -114,9 +114,9 @@ public abstract class TestTransformation extends TestCase {
             
             int index = 0;
             for (EObject out : transfResult) {
-            	if (data.getExpected(project).size() >= index) {
-            		break;
-            	}
+//            	if (data.getExpected(project).size() >= index) {
+//           		break;
+//            	}
 	            // for xhtml, as otherwise result contains more elements then the expected one from disk
 	            out = saveLoad(transformation, out);
 	            

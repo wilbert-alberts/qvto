@@ -1,7 +1,7 @@
 modeltype ecore uses 'http://www.eclipse.org/emf/2002/Ecore';
 modeltype Test uses Test('m2m.qvto.ocl.annotation');
 	 
-transformation OclAnnotation(in inModel : ecore, out outModel : Test); 
+transformation oclannotation(in inModel : ecore, out outModel : Test); 
 
 main() {
 
@@ -28,10 +28,18 @@ main() {
 		results += object TestResult {
 			name := 'derivedPropertyAccess';
 			values += Sequence {
-				foo.fullName,
-				subFoo.oclAsType(Foo).fullName,
-				subFoo.fullName,				
-				subFoo.testOperResultProperty				
+				object TestValue{
+					value := foo.fullName;
+				},	
+				object TestValue{
+					value := subFoo.oclAsType(Foo).fullName;
+				},	
+				object TestValue{
+					value := subFoo.fullName;
+				},					
+				object TestValue{
+					value := subFoo.testOperResultProperty;
+				}				
 			} 
 		};
 
@@ -39,34 +47,56 @@ main() {
 			name := 'SuperFoo::bodyOperationAccess';
 			
 			values += Sequence {
-				superFoo.testOper(''),				
-				superFoo.testOper(subFoo)	
-			} 			
+				object TestValue{
+					value := superFoo.testOper('');
+				},
+				object TestValue{
+					value := superFoo.testOper(subFoo);
+				}	
+			}		
 		};
 		
 		results += object TestResult {
 			name := 'Foo::bodyOperationAccess';
 			
 			values += Sequence {
-				foo.oclAsType(SuperFoo).testOper(subFoo),		
-				foo.testOper(subFoo),
-				
-				foo.oclAsType(SuperFoo).testOper(''),	
-				foo.testOper('')			
+				object TestValue{
+					value := foo.oclAsType(SuperFoo).testOper(subFoo);
+				},
+				object TestValue{
+					value := foo.testOper(subFoo);
+				},				
+				object TestValue{
+					value := foo.oclAsType(SuperFoo).testOper('');
+				},	
+				object TestValue{
+					value := foo.testOper('');
+				}
 			} 			
 		};		
 	
 		results += object TestResult {
 			name := 'SubFoo::bodyOperationAccess';
 			values += Sequence {
-				subFoo.oclAsType(SuperFoo).testOper(subFoo),
-				subFoo.oclAsType(Foo).testOper(subFoo),	
-				subFoo.testOper(subFoo),
-
-				subFoo.oclAsType(SuperFoo).testOper(''),
-				subFoo.oclAsType(Foo).testOper(''),	
-				subFoo.testOper('')		
+				object TestValue{
+					value := subFoo.oclAsType(SuperFoo).testOper(subFoo);
+				},
+				object TestValue{
+					value := subFoo.oclAsType(Foo).testOper(subFoo);
+				},	
+				object TestValue{
+					value := subFoo.testOper(subFoo);
+				},
+				object TestValue{
+					value := subFoo.oclAsType(SuperFoo).testOper('');
+				},
+				object TestValue{
+					value := subFoo.oclAsType(Foo).testOper('');
+				},	
+				object TestValue{
+					value := subFoo.testOper('');
+				}		
 			} 
 		};
-	}	
+	};
 }

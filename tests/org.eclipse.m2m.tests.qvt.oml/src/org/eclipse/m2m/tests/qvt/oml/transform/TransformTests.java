@@ -231,6 +231,7 @@ public class TransformTests {
     	"importedvirtuals", "imports_transformations", "imports", "virt", "full", "fqntraces", // TODO import other files //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
     	"assigntonullowner", "resolveall", // reference not in required format: eSuperTypes = "#//NEW_Class1" insteand of "//@eClassifiers.0" //$NON-NLS-1$ //$NON-NLS-2$
     	"egetcodegen", // java method can't be called//$NON-NLS-1$
-    	"bug214718" // platform protocol URI metamodel reference //$NON-NLS-1$
+    	"bug214718", // platform protocol URI metamodel reference //$NON-NLS-1$
+    	"_while"
     }));
 }
