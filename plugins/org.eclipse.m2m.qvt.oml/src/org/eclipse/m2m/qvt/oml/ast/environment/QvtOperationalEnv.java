@@ -250,18 +250,15 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
     }
 
     @Override
-    protected void removedVariable(String name,
-            Variable<EClassifier, EParameter> variable, boolean isExplicit) {
+    public void deleteElement(String name) {
         for (Iterator<QvtVariableEntry> iter = myNamedElements.iterator(); iter.hasNext();) {
             QvtVariableEntry elem = iter.next();
             
             if (elem.getName().equals(name)) {
                 iter.remove();
-                
-                removedVariable(name, elem.getVariable(), elem.isExplicit);
             }
         }
-        super.removedVariable(name, variable, isExplicit);
+        super.deleteElement(name);
     }
 
     public Variable<EClassifier, EParameter> lookupImplicitSource() {
