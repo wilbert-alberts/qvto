@@ -3,20 +3,23 @@ modeltype ecore uses "http://www.eclipse.org/emf/2002/Ecore";
 transformation _while(in model : ecore, out modelOut : ecore);
 
 main() {
-
-	object EClass {
+	var p:= object EPackage {
+		name:='pack';
+	};
+	
+	p.eClassifiers += object EClass {
 		name := 'aName';
 		name := while(false) {
 			10;		
 		};
 	};
 	
-	object EClass {
+	p.eClassifiers += object EClass {
 		name:= while(s : String := 'nameFromWhile1'; false) {
 		} 
 	};
 	
-	object EClass {
+	p.eClassifiers += object EClass {
 		name:= while(s : String := ''; s.size() = 0) {
 			s := 'nameFromWhile2';
 		}; 
@@ -41,7 +44,7 @@ main() {
 		} endif;
 	};
 	
-	object EClass {
+	p.eClassifiers += object EClass {
 		name := strResult;
 	};
 
@@ -54,7 +57,7 @@ main() {
 		n := 'r2';
 	};
 	
-	object EClass {
+	p.eClassifiers += object EClass { 
 		name := r1 + '_' + r2;
-	}
+	};
 }
