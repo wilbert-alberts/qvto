@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.2.2.9 2008/01/11 23:19:06 radvorak Exp $
+* $Id: LightweightParser.java,v 1.2.2.10 2008/01/16 09:23:38 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.2.2.9 2008/01/11 23:19:06 radvorak Exp $
+* $Id: LightweightParser.java,v 1.2.2.10 2008/01/16 09:23:38 radvorak Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser;
@@ -1166,6 +1166,12 @@ public class LightweightParser extends PrsStream implements RuleAction {
 	        resolveExpCS.setTarget(resolveOpArgsExpCS.getTarget());
 	        resolveExpCS.setCondition(resolveOpArgsExpCS.getCondition());
 	    }
+	    
+	    SimpleNameCS operCodeSimpleName = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, opCodeText);
+	    operCodeSimpleName.setStartOffset(opCode.getStartOffset());
+	    operCodeSimpleName.setEndOffset(opCode.getEndOffset());
+	    resolveExpCS.setSimpleNameCS(operCodeSimpleName);		    
+	    
 	    return resolveExpCS;
 	}
 
