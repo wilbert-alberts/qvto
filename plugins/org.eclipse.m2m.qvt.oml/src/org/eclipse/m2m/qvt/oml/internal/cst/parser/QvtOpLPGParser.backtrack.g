@@ -11,7 +11,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.20.2.8 2008/01/11 23:19:36 radvorak Exp $
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.20.2.9 2008/01/16 09:23:32 radvorak Exp $
 -- */
 --
 -- The QVT Operational Parser
@@ -429,7 +429,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.20.2.8 2008/01/11 23:19:36 radvorak Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.20.2.9 2008/01/16 09:23:32 radvorak Exp $
  */
 	./
 $End
@@ -786,6 +786,12 @@ $Headers
 		        resolveExpCS.setTarget(resolveOpArgsExpCS.getTarget());
 		        resolveExpCS.setCondition(resolveOpArgsExpCS.getCondition());
 		    }
+		    
+		    SimpleNameCS operCodeSimpleName = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, opCodeText);
+		    operCodeSimpleName.setStartOffset(opCode.getStartOffset());
+		    operCodeSimpleName.setEndOffset(opCode.getEndOffset());
+		    resolveExpCS.setSimpleNameCS(operCodeSimpleName);		    
+		    
 		    return resolveExpCS;
 		}
 

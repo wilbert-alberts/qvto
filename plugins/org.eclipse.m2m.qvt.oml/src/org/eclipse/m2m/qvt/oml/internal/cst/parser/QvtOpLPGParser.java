@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.20.2.9 2008/01/11 23:19:35 radvorak Exp $
+* $Id: QvtOpLPGParser.java,v 1.20.2.10 2008/01/16 09:23:31 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.20.2.9 2008/01/11 23:19:35 radvorak Exp $
+* $Id: QvtOpLPGParser.java,v 1.20.2.10 2008/01/16 09:23:31 radvorak Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -1163,6 +1163,12 @@ public class QvtOpLPGParser extends PrsStream implements RuleAction {
 	        resolveExpCS.setTarget(resolveOpArgsExpCS.getTarget());
 	        resolveExpCS.setCondition(resolveOpArgsExpCS.getCondition());
 	    }
+	    
+	    SimpleNameCS operCodeSimpleName = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, opCodeText);
+	    operCodeSimpleName.setStartOffset(opCode.getStartOffset());
+	    operCodeSimpleName.setEndOffset(opCode.getEndOffset());
+	    resolveExpCS.setSimpleNameCS(operCodeSimpleName);		    
+	    
 	    return resolveExpCS;
 	}
 
