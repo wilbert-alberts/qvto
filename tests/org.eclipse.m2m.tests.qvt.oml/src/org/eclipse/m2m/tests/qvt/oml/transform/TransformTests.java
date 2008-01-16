@@ -43,6 +43,7 @@ public class TransformTests {
         }
 
     	suite.addTestSuite(TestStackTrace.class);
+    	suite.addTestSuite(TestInvalidConfigProperty.class);
 
         return suite;
     }
