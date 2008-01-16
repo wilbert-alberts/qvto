@@ -1,0 +1,144 @@
+import implicitSrcImport;
+
+modeltype ecore uses "http://www.eclipse.org/emf/2002/Ecore";
+
+transformation implicitSrcDeprec(in model : ecore, out modelOut : ecore);
+
+property localProp : String = 'str';
+
+
+mapping inout ecore::EClass::myMappingInOut() {
+	init { 
+		Bag{ 'aString' }->any(/*<warn>*/_abstract/*</warn>*/);   			  
+			
+		var isKindOf := self.oclIsKindOf(OclAny);
+		-- TODO - uncomment when OclVoid is not used for module implicit source		
+		-- <warn>oclIsKindOf</warn>(OclAny);		
+		
+		var fCount := /*<warn>*/getFeatureCount/*</warn>*/();		
+		fCount := self.getFeatureCount();
+		
+		map /*<warn>*/myMapping/*</warn>*/();
+		map /*<warn>*/myMappingInOut/*</warn>*/();		
+		self.map myMapping();
+		
+		var strVal := localProp;
+		strVal := this.localProp;
+			
+		var isAbs := self._abstract;
+		isAbs := /*<warn>*/_abstract/*</warn>*/ and false;
+	}
+
+	end {
+		Bag{ 'aString' }->any(/*<warn>*/_abstract/*</warn>*/);
+		Bag{ }->any(self._abstract);		
+		Bag{ object EClass{} }->any(_abstract);		
+		Bag{ object EClass{} }->any(self._abstract);
+		
+		Bag{ 'aString' }->any(/*<warn>*/getFeatureCount/*</warn>*/() > 0);
+		Bag{ object EClass {} }->any(getFeatureCount() > 0);
+		Bag{ object EClass {} }->any(self.getFeatureCount() > 0);		
+	}	
+}
+
+
+mapping ecore::EClass::myMapping() : ecore::EPackage {
+	init {
+		-- TODO - uncomment when OclVoid is not used for module implicit source
+		-- var isKindOf := warn oclIsKindOf /warn(OclAny);
+		var isKindOf := self.oclIsKindOf(OclAny);
+		
+		var strVal := localProp;
+		var isAbs := self._abstract;
+		isAbs := /*<warn>*/_abstract/*</warn>*/;
+		
+		var fCount := /*<warn>*/getFeatureCount/*</warn>*/();		
+		fCount := self.getFeatureCount();
+		
+		map /*<warn>*/myMapping/*</warn>*/();
+		self.map myMapping();
+				
+		object EPackage {
+			name := /*<warn>*/name/*</warn>*/;
+			name := self.name;
+			name := map /*<warn>*/importedMyMapping/*</warn>*/().name;
+		};
+	}
+
+	name := /*<warn>*/name/*</warn>*/.substring(1,1);
+	name := self.name;
+	name := localProp;
+	name := this.localProp;
+	name := importedModuleProp;
+	name := importedNonContextualMapping(self).name;
+
+	name := map /*<warn>*/importedMyMapping/*</warn>*/().name;
+	name := self.map importedMyMapping().name;
+	
+	end {
+		/*<warn>*/resolve/*</warn>*/(e : EClass | e._abstract and 
+				/*<warn>*/_abstract/*</warn>*/ <> null or self._abstract);
+		self.resolve();
+		Bag{ self }->any(resolve());	
+			
+		/*<warn>*/resolveIn/*</warn>*/(nonContextualMapping, e : EPackage | e <> null 
+				and /*<warn>*/_abstract/*</warn>*/ <> null);
+	
+		self.resolveoneIn(nonContextualMapping, e : EPackage | e <> null);		
+		Bag{ self }->any(resolveoneIn(nonContextualMapping, e:EPackage | true));				
+		
+		Bag{ }->any(/*<warn>*/_abstract/*</warn>*/);
+		Bag{ object EClass{} }->any(_abstract);
+		Bag{ }->any(self._abstract);
+		
+		Bag{ 'aString' }->any(/*<warn>*/getFeatureCount/*</warn>*/() > 0);
+		Bag{ object EClass {} }->any(getFeatureCount() > 0);
+		Bag{ object EClass {} }->any(self.getFeatureCount() > 0);		
+	}	 
+}  
+
+mapping nonContextualMapping(in par : EClass) : EPackage {
+	init {
+		par.resolve(EClass);
+		/*<error>*/resolve(EClass)/*</error>*/;
+		resolveIn(nonContextualMapping, EClass);
+		
+		var isKindOf := this.oclIsKindOf(OclAny);
+		-- TODO - uncomment when OclVoid is not used for module implicit source		
+		-- isKindOf := warn oclIsKindOf /warn(OclAny); 
+		
+		var p:EPackage := map nonContextualMapping(par);
+		p := this.map nonContextualMapping(par);
+		
+		var strVal := localProp;
+		strVal := this.localProp;		
+
+		Bag{ par }->any(_abstract);
+		Bag{ par }->any(getFeatureCount() > 0);
+		
+		Bag{ }->any(oclIsKindOf(String)); -- implicit source from collection iterator
+		Bag{ }->any(nonContextualMapping(par) <> null); -- implicit source from collection iterator fails-> module is selected		
+	}
+}
+ 
+main() {	
+		var isKindOf := this.oclIsKindOf(OclAny);
+		-- TODO - uncomment when OclVoid is not used for module implicit source		
+		-- isKindOf := warn oclIsKindOf /warn(OclAny); 
+				
+		var eClass: EClass := null;
+		var p:EPackage := map nonContextualMapping(eClass);
+		p := this.map nonContextualMapping(eClass);
+		p := eClass.map importedMyMapping();
+
+		eClass.resolve(EClass);
+		/*<error>*/resolve(EClass)/*</error>*/;
+		resolveIn(nonContextualMapping, EClass);
+
+		
+		var strVal := localProp;
+		strVal := this.localProp;		
+		
+		Bag{ }->any(oclIsKindOf(String)); -- implicit source from collection iterator
+		Bag{ }->any(nonContextualMapping(eClass) <> null); -- implicit source from collection iterator fails-> module is selected
+}
