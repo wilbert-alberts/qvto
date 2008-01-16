@@ -73,6 +73,39 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		}
 	}
 	
+	@Override
+	public Map<EClass, Set<EObject>> createExtentMap(Object object) {
+    	return new HashMap<EClass, Set<EObject>>() {    		
+    		private static final long serialVersionUID = -4634238504663823715L;
+
+    		@Override
+    		public Set<EObject> get(Object key) {
+    			if(key instanceof EClass) {
+    				return collectInstances((EClass) key);
+    			}
+    			return Collections.emptySet();
+    		}
+    		
+			Set<EObject> collectInstances(EClass context) {
+    			HashSet<EObject> result = new HashSet<EObject>();    			
+    			Map<ModelParameter, ModelParameterExtent> modelExtents = QvtOperationalEvaluationEnv.this.myModelExtents;
+    			if(modelExtents == null) {
+    				return result;
+    			}
+    			
+				Collection<ModelParameterExtent> extents = modelExtents.values();
+    			for (ModelParameterExtent nextExtent : extents) {
+					for (Object nextObj : nextExtent.getAllObjects()) {
+						if(nextObj instanceof EObject && isKindOf(nextObj, context)) {
+							result.add((EObject)nextObj);
+						}
+					}
+				}
+    			return result;
+    		}
+    	};
+	}
+	
 	public void popObjectExpOwner() {
 		myObjectExpOwnerStack.pop();
 	}

@@ -615,11 +615,28 @@ public class QvtOperationalVisitorCS
     }
     
     @Override
+    protected OCLExpression<EClassifier> operationCallExpCS(
+    		OperationCallExpCS operationCallExpCS,
+    		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+    	OCLExpression<EClassifier> result = super.operationCallExpCS(operationCallExpCS, env);
+    	
+    	if(result instanceof OperationCallExp) {
+    		DeprecatedImplicitSourceCallHelper.validateCallExp(operationCallExpCS, (OperationCallExp<EClassifier, EOperation>)result, (QvtOperationalEnv)env);
+    	}
+    	
+    	return result;
+    }
+
+	@Override
     protected OCLExpression<EClassifier> variableExpCS(
             VariableExpCS variableExpCS,
             Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
         OCLExpression<EClassifier> result = super.variableExpCS(variableExpCS, env);
-
+        
+        if(result instanceof PropertyCallExp) {
+        	DeprecatedImplicitSourceCallHelper.validateCallExp(variableExpCS, (PropertyCallExp<EClassifier, ?>)result, (QvtOperationalEnv)env);
+        }
+        
         // AST binding      
         if(myCompilerOptions.isGenerateCompletionData()) {      
             ASTBindingHelper.createCST2ASTBinding(variableExpCS, result);
@@ -825,8 +842,8 @@ public class QvtOperationalVisitorCS
 		}
 		EObject rootEObj = EcoreUtil.getRootContainer(outExpCS);
 		Module module = null;
-		if (env.getParent() instanceof QvtOperationalFileEnv && rootEObj instanceof MappingModuleCS) {
-			module = ((QvtOperationalFileEnv) env.getParent()).getModule((MappingModuleCS) rootEObj);
+		if (env.getInternalParent() instanceof QvtOperationalFileEnv && rootEObj instanceof MappingModuleCS) {
+			module = ((QvtOperationalFileEnv) env.getInternalParent()).getModule((MappingModuleCS) rootEObj);
 		}
 		if (objectExp.getReferredObject() == null && module != null && !module.getModelParameter().isEmpty()) {
 			env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentFailToInfer,
@@ -1951,12 +1968,13 @@ public class QvtOperationalVisitorCS
         if (resolveExp.getSource() == null) {
             env.reportError(NLS.bind(ValidationMessages.ResolveExpMustHaveASource, new Object[] { }), resolveExpCS);
         }
+        
+        DeprecatedImplicitSourceCallHelper.validateCallExp(resolveExpCS, resolveExp, env);
+        
         return resolveExp;
     }
     
     private void validateResolveExp(ResolveExp  resolveExp, QvtOperationalEnv env) {
-    	EObject resolveContainer = resolveExp.eContainer();
-    	
     	if(resolveExp.isIsDeferred()) {    	
     		if(!QvtResolveUtil.isSuppportedAsDeferredAssigned(resolveExp)) {
     			int startPos = (resolveExp.getSource() != null) ? resolveExp.getSource().getEndPosition() : resolveExp.getStartPosition(); 
@@ -1972,7 +1990,7 @@ public class QvtOperationalVisitorCS
         eClassifier = eClassifier != null ? eClassifier : env.getModuleContextType();
         List<EOperation> rawMappingOperations = env.lookupMappingOperations(eClassifier, resolveInExpCS.getInMappingName());
         List<EOperation> mappingOperations = new ArrayList<EOperation>();
-        EClassifier resolvedContextType = TypeUtil.resolveType(env, eClassifier);
+        
         for (EOperation operation : rawMappingOperations) {
             EClassifier owner = env.getUMLReflection().getOwningClassifier(operation);
             if (((contextTypeCS == null) && (owner == null))
@@ -1994,7 +2012,10 @@ public class QvtOperationalVisitorCS
                 env.registerResolveInExp(resolveInExp, eClassifier, resolveInExpCS.getInMappingName());
             }
         }
-        return populateResolveExp(resolveInExpCS, env, resolveInExp);
+        
+        ResolveExp result = populateResolveExp(resolveInExpCS, env, resolveInExp);
+        DeprecatedImplicitSourceCallHelper.validateCallExp(resolveInExpCS, result, env);
+        return result;
     }
     
     private ResolveExp populateResolveExp(ResolveExpCS resolveExpCS, QvtOperationalEnv env, ResolveExp resolveExp) {

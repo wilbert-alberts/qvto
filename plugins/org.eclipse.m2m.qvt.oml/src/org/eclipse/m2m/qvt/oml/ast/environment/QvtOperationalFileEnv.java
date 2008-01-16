@@ -29,6 +29,8 @@ import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.expressions.ExpressionsFactory;
 import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.lpg.ProblemHandler;
+import org.eclipse.ocl.options.ProblemOption;
 import org.eclipse.osgi.util.NLS;
 
 public class QvtOperationalFileEnv extends QvtOperationalEnv {
@@ -41,6 +43,10 @@ public class QvtOperationalFileEnv extends QvtOperationalEnv {
 		super(parent, new EPackageRegistryImpl());
 		myFile = file;
         myKernel = kernel;
+
+        // Eliminate parsing warning on "" occurrences, used in model types URIs, etc.
+        // TODO - solve in QVT grammar
+        setOption(ProblemOption.ELEMENT_NAME_QUOTE_ESCAPE, ProblemHandler.Severity.OK);
 	}
 
     public QvtCompilerKernel getKernel() {

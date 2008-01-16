@@ -467,6 +467,12 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 			        resolveExpCS.setTarget(resolveOpArgsExpCS.getTarget());
 			        resolveExpCS.setCondition(resolveOpArgsExpCS.getCondition());
 			    }
+			    
+			    SimpleNameCS operCodeSimpleName = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, opCodeText);
+			    operCodeSimpleName.setStartOffset(opCode.getStartOffset());
+			    operCodeSimpleName.setEndOffset(opCode.getEndOffset());
+			    resolveExpCS.setSimpleNameCS(operCodeSimpleName);		    
+			    
 			    return resolveExpCS;
 			}
 
