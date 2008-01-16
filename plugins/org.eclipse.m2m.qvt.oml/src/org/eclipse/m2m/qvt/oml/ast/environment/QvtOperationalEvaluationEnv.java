@@ -23,7 +23,6 @@ import java.util.Stack;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -42,16 +41,13 @@ import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtChangeRecorder;
-import org.eclipse.m2m.qvt.oml.internal.ast.parser.ValidationMessages;
 import org.eclipse.m2m.qvt.oml.internal.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.m2m.qvt.oml.library.IContext;
 import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.ecore.EcoreEvaluationEnvironment;
 import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.types.AnyType;
-import org.eclipse.ocl.types.PrimitiveType;
 import org.eclipse.ocl.util.Tuple;
-import org.eclipse.osgi.util.NLS;
 
 
 public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
@@ -614,36 +610,6 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			return true;
 		}
 		return !type.isPrimitive();
-	}
-
-	public Object createFromString(final EClassifier type, final String stringValue) {
-        if (!QvtOperationalUtil.isCreateFromStringSupported(type) || stringValue == null) {
-            return QvtOperationalUtil.getOclInvalid();
-        }
-        // QVT primitive type
-        if (type instanceof PrimitiveType && PrimitiveType.INTEGER_NAME.equals(((PrimitiveType) type).getName())) {
-            return new Integer(stringValue);
-        } 
-        if (type instanceof PrimitiveType && PrimitiveType.STRING_NAME.equals(((PrimitiveType) type).getName())) {
-            return new String(stringValue);
-        } 
-        if (type instanceof PrimitiveType && PrimitiveType.REAL_NAME.equals(((PrimitiveType) type).getName())) {
-            return new Double(stringValue);
-        } 
-        if (type instanceof PrimitiveType && PrimitiveType.BOOLEAN_NAME.equals(((PrimitiveType) type).getName())) {
-            return new Boolean(stringValue);
-        } 
-        // Enumeration
-        if (type instanceof EDataType) {
-            Object value = type.getEPackage().getEFactoryInstance().createFromString((EDataType) type, stringValue);
-            if (value == null) {
-                throw new IllegalArgumentException(NLS.bind(ValidationMessages.Evaluation_CannotCreateFromString,
-                		type.getName(), stringValue));
-            }
-            return value;
-        }
-        throw new IllegalStateException("Class + " + type.getClass().getName() + //$NON-NLS-1$
-        		" is not handled and not excluded in isCreateFromStringSupported"); //$NON-NLS-1$
 	}
 
     private QvtOperationalStdLibrary getQVTStandartLibrary() {

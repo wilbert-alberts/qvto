@@ -28,6 +28,7 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
@@ -118,6 +119,7 @@ import org.eclipse.ocl.internal.OCLPlugin;
 import org.eclipse.ocl.internal.evaluation.EvaluationVisitorImpl;
 import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.types.CollectionType;
+import org.eclipse.ocl.types.PrimitiveType;
 import org.eclipse.ocl.types.TupleType;
 import org.eclipse.ocl.types.VoidType;
 import org.eclipse.ocl.util.Bag;
@@ -243,7 +245,13 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 
     public Object visitConfigProperty(ConfigProperty configProperty) {
         String stringValue = getOperationalEvaluationEnv().getConfigurationProperty(configProperty.getName());
-        return getOperationalEvaluationEnv().createFromString(configProperty.getEType(), stringValue);
+        Object value = createFromString(configProperty.getEType(), stringValue);
+        if(value == getOclInvalid()) {
+        	// we failed to parse the value
+        	throwQvtException(new QvtRuntimeException(NLS.bind(EvaluationMessages.QvtOperationalEvaluationVisitorImpl_invalidConfigPropertyValue, configProperty.getName(), stringValue)));
+        }
+        
+        return value;
     }
 
     public Object visitHelper(Helper helper) {
@@ -1357,6 +1365,48 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     protected ImperativeOperation getMainEntry() {
     	return myEntryPoint;
     }
+    
+	private Object createFromString(final EClassifier type, final String stringValue) {
+		if(stringValue == null) {
+			return null;
+		}
+		
+        if (!QvtOperationalUtil.isCreateFromStringSupported(type)) {
+            return getOclInvalid();
+        }
+        
+        // QVT primitive type
+        try {
+	        if (type instanceof PrimitiveType && PrimitiveType.INTEGER_NAME.equals(((PrimitiveType) type).getName())) {
+	            return new Integer(stringValue);
+	        } 
+	        if (type instanceof PrimitiveType && PrimitiveType.REAL_NAME.equals(((PrimitiveType) type).getName())) {
+	            return new Double(stringValue);
+	        }
+        } catch (NumberFormatException e) {
+        	return getOclInvalid();
+		}
+        
+        if (type instanceof PrimitiveType && PrimitiveType.STRING_NAME.equals(((PrimitiveType) type).getName())) {
+            return new String(stringValue);
+        } 
+        
+        if (type instanceof PrimitiveType && PrimitiveType.BOOLEAN_NAME.equals(((PrimitiveType) type).getName())) {
+            return Boolean.valueOf(stringValue);
+        } 
+        // Enumeration
+        if (type instanceof EDataType) {
+        	if(type.getEPackage() != null && type.getEPackage().getEFactoryInstance() != null) {
+	            Object value = type.getEPackage().getEFactoryInstance().createFromString((EDataType) type, stringValue);
+	            if (value != null) {
+	            	return value;
+	            }
+			}
+        }
+        
+        return getOclInvalid();
+	}
+    
         
     // allow to redefine "entry" point
     private ImperativeOperation myEntryPoint;
