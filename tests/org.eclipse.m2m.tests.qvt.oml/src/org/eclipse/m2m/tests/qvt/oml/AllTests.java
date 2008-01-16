@@ -65,7 +65,7 @@ public class AllTests {
         
         suite.addTestSuite(TestOCLSemantics.class);
         suite.addTestSuite(TestOCLAnnotationSupport.class);     
-        suite.addTest(AllEditorTests.suite());
+
 		//$JUnit-END$
 		return suite;
 	}
