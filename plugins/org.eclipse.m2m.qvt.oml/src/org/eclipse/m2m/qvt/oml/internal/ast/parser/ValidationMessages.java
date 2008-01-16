@@ -111,7 +111,6 @@ public final class ValidationMessages extends NLS {
 	public static String SemanticUtil_17;
 	
 	public static String Local_properties_are_not_allowed_in_libraries;
-	public static String Evaluation_CannotCreateFromString;
 
     public static String LibOperationAnalyser_ParametersOsReturnTypeNotFound;
     public static String LibOperationAnalyser_OperationParsingError;
