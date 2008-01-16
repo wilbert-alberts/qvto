@@ -75,6 +75,7 @@ public class ParserTests {
         //new TestData("orderedsetdoesnotconformtoset", 1), //$NON-NLS-1$
     	TestData.createSourceChecked("varscope", 10, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("_while", 10, 1), //$NON-NLS-1$
+    	TestData.createSourceChecked("implicitSrcDeprec", 2, 20), //$NON-NLS-1$    	
     	new TestData("assert_log", 0), //$NON-NLS-1$    	
         new TestData("opersignatureparamclash", 1), //$NON-NLS-1$    	
         new TestData("collectreturntype", 0), //$NON-NLS-1$
