@@ -192,22 +192,24 @@ public class QvtResolveUtil {
 	private static Object coerceResultValue(ResolveExp resolveExp, Object resolveRawResult) {
     	// always return non-null if collection type is expected
     	if(resolveRawResult == null) {
-    		resolveRawResult = CollectionUtil.createNewSequence();
+    		resolveRawResult = createEmptyCollectionOrNull(resolveExp);
     	}
     	
     	if (resolveExp.isIsDeferred() && resolveExp.eContainer() instanceof OperationCallExp) {
 			OperationCallExp opCallExp = (OperationCallExp) resolveExp.eContainer();
 			if(opCallExp.getSource() == resolveExp) {
-				// supported collection conversion operation call on the result of late resolve					
+				Collection<?> resultCollection = (resolveRawResult instanceof Collection) ? 
+						(Collection<?>) resolveRawResult : Collections.singletonList(resolveRawResult); 
+				// supported collection conversion operation call on the result of late resolve
 				switch (opCallExp.getOperationCode()) {
 				case PredefinedType.AS_SET:
-					return CollectionUtil.asSet((Collection<?>) resolveRawResult);
+					return CollectionUtil.asSet((Collection<?>) resultCollection);
 				case PredefinedType.AS_BAG:
-					return CollectionUtil.asBag((Collection<?>) resolveRawResult);
+					return CollectionUtil.asBag((Collection<?>) resultCollection);
 				case PredefinedType.AS_ORDERED_SET:
-					return CollectionUtil.asOrderedSet((Collection<?>) resolveRawResult);
+					return CollectionUtil.asOrderedSet((Collection<?>) resultCollection);
 				case PredefinedType.AS_SEQUENCE:
-					return CollectionUtil.asSequence((Collection<?>) resolveRawResult);
+					return CollectionUtil.asSequence((Collection<?>) resultCollection);
 				}
 			}
 		}
