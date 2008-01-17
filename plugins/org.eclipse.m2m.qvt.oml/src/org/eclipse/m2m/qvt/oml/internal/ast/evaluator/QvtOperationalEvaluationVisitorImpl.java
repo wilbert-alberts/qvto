@@ -166,6 +166,15 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     	// do nothing special here, subclasses may customize
     }
 
+	@Override
+	public Object visitExpression(OCLExpression<EClassifier> expression) {
+		// Override the super implementation as we need our supported exception to be propagated
+		// but super type catches it
+		// TODO - needs to be secured in a general contract from MDT OCL as any place at OCL might
+		// decide to perform the catch
+		return expression.accept(getVisitor());
+	}
+    
     public Object visitAssignExp(final AssignExp assignExp) {
     	boolean isDeferred = false;    	
         // TODO: modify the following code for more complex l-values
@@ -376,6 +385,9 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         	throw e;
 		}
         catch (RuntimeException ex) {
+        	if(canBePropagated(ex)) {
+        		throw ex;
+        	}
             Logger.getLogger().log(Logger.WARNING, "QvtEvaluator: failed to evaluate oclOperationCall", ex);//$NON-NLS-1$
         	result = getOclInvalid();
         }
@@ -1007,6 +1019,9 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
        		throw e;
         }
         catch (RuntimeException e) {
+        	if(canBePropagated(e)) {
+        		throw e;
+        	}
         	if (e.getLocalizedMessage() != null) {
         		throwQvtException(new QvtRuntimeException(e.getLocalizedMessage()));
         	}
@@ -1021,6 +1036,14 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     	return callResult;
     }
 
+    /**
+     * Subclasses may indicate whether the given runtime exception caught is known and 
+     * should be propagated. 
+     */
+    protected boolean canBePropagated(RuntimeException exception) {
+    	return false;
+    }
+    
     protected final void throwQvtException(QvtRuntimeException exception) throws QvtRuntimeException {
 		throwQvtException(exception, null);
     }
