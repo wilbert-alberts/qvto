@@ -139,7 +139,9 @@ public class EmfUtil {
 		if (inputType == null) {
 			return in;
 		}
-        if (EmfUtil.isDynamic(in) && inputType.eResource().getResourceSet() != in.eResource().getResourceSet()) {
+        if (EmfUtil.isDynamic(in) 
+        		&& inputType.eResource().getResourceSet() != in.eResource().getResourceSet()
+        		&& inputType.eResource().getResourceSet() != null) {
        		return inputType.eResource().getResourceSet().getEObject(EcoreUtil.getURI(in), true);
         }
         return in;
