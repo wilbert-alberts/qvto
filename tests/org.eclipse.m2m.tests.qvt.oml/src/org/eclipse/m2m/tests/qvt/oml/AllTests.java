@@ -25,6 +25,7 @@ import org.eclipse.m2m.tests.qvt.oml.emf.AllEmfTests;
 import org.eclipse.m2m.tests.qvt.oml.traces.TestTraceFile;
 import org.eclipse.m2m.tests.qvt.oml.transform.TransformManyModelTests;
 import org.eclipse.m2m.tests.qvt.oml.transform.TransformTests;
+import org.eclipse.m2m.tests.qvt.oml.transform.api.QvtoTransfHelperTests;
 
 
 /**
@@ -51,6 +52,7 @@ public class AllTests {
         suite.addTest(TransformTests.javalessSuite());
         suite.addTest(TransformTests.walkerSuite());
         suite.addTest(TransformManyModelTests.interpreterSuite());
+        suite.addTest(QvtoTransfHelperTests.suite());
         
         suite.addTestSuite(TestQvtBuilder.class);
         suite.addTestSuite(TestMdaBuilder.class);        
