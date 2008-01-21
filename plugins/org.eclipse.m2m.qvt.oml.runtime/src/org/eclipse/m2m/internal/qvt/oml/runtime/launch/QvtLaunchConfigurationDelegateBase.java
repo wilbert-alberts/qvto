@@ -12,6 +12,8 @@
 package org.eclipse.m2m.internal.qvt.oml.runtime.launch;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -39,6 +41,7 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
+import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalStdLibrary;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.qvt.oml.common.launch.BaseProcess;
@@ -145,9 +148,17 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
     }
 
     public static void doLaunch(QvtTransformation transformation, List<EObject> inObjs, IConfiguration configuration,
-    		List<Resource> outExtents, List<EObject> outMainParams, List<Trace> outTraces) throws MdaException {
+    		List<Resource> outExtents, List<EObject> outMainParams, List<Trace> outTraces, List<String> outConsole) throws MdaException {
+
+        IStatus status = QvtValidator.validateTransformation(transformation, inObjs);                    
+        if (status.getSeverity() > IStatus.WARNING) {
+        	throw new MdaException(status.getMessage());
+        }      	
+    	
     	Context context = new Context(configuration);    	
     	try {
+    		final StringWriter consoleLogger = new StringWriter();
+            context.put(QvtOperationalStdLibrary.OUT_PRINT_WRITER, new PrintWriter(consoleLogger));
 	        context.launch();
 	    	
 	        TransformationRunner.In in = new TransformationRunner.In(inObjs.toArray(new EObject[inObjs.size()]), context);
@@ -167,6 +178,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
 	        if (out.getTrace() != null) {
 	        	outTraces.add(out.getTrace());
 	        }
+	        outConsole.add(consoleLogger.getBuffer().toString());
     	}
     	finally {
     		context.release();

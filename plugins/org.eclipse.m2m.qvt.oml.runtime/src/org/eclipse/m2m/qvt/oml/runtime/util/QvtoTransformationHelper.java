@@ -48,8 +48,6 @@ import org.eclipse.m2m.qvt.oml.library.IConfiguration;
 import org.eclipse.m2m.qvt.oml.trace.Trace;
 import org.eclipse.osgi.util.NLS;
 
-import org.eclipse.m2m.qvt.oml.runtime.util.Messages;
-
 /**
  * @author sboyko
  */
@@ -76,6 +74,12 @@ public class QvtoTransformationHelper {
 		 * @return Instance of transformation trace. May return 'null'.
 		 */
 		Trace getTrace();
+
+		/**
+		 * 
+		 * @return Console output produced by transformation.
+		 */
+		String getConsoleOutput();
 	}
 	
 	/**
@@ -100,7 +104,8 @@ public class QvtoTransformationHelper {
         try {
         	final List<Resource> outExtents = new ArrayList<Resource>();
         	final List<EObject> outMainParams = new ArrayList<EObject>();
-        	final List<Trace> outTraces = new ArrayList<Trace>();
+        	final List<Trace> outTraces = new ArrayList<Trace>(1);
+        	final List<String> outConsole = new ArrayList<String>(1);
         	final QvtInterpretedTransformation transf = new QvtInterpretedTransformation(TransformationUtil.getQvtModule(myTransfUri));
         	
         	QvtCompilerOptions options = new QvtCompilerOptions();
@@ -111,7 +116,7 @@ public class QvtoTransformationHelper {
             ShallowProcess.IRunnable r = new ShallowProcess.IRunnable() {
                 public void run() throws Exception {
             		QvtLaunchConfigurationDelegateBase.doLaunch(transf, inObjects, getConfiguration(inConfigProperties),
-            				outExtents, outMainParams, outTraces);
+            				outExtents, outMainParams, outTraces, outConsole);
                 }
 
 				private IConfiguration getConfiguration(final Map<String, Object> inConfigProperties) {
@@ -137,6 +142,10 @@ public class QvtoTransformationHelper {
 
 				public Trace getTrace() {
 					return outTraces.isEmpty() ? null : outTraces.get(0);
+				}
+				
+				public String getConsoleOutput() {
+					return outConsole.isEmpty() ? "" : outConsole.get(0); //$NON-NLS-1$
 				}
             };
         } 

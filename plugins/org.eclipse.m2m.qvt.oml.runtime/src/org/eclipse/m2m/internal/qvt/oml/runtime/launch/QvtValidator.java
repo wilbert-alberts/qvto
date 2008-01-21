@@ -70,6 +70,38 @@ public class QvtValidator {
         return result;
 	}
 	
+	public static IStatus validateTransformation(QvtTransformation transformation, List<EObject> inObjs) throws MdaException {
+        IStatus result = StatusUtil.makeOkStatus();
+        Iterator<EObject> itrInObjs = inObjs.iterator();
+		for (TransformationParameter transfParam : transformation.getParameters()) {
+			if (transfParam.getDirectionKind() == DirectionKind.IN
+					|| transfParam.getDirectionKind() == DirectionKind.INOUT) {
+				if (!itrInObjs.hasNext()) {
+		            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_MissedInputTransfParam,
+		            		transfParam.getName()));
+				}
+
+				IStatus nextStatus = validateTransformationParameterIn(transfParam, itrInObjs.next());
+	            if (nextStatus.getSeverity() > result.getSeverity()) {
+	        		result = nextStatus;
+	        	}
+			}
+		}
+
+		StringBuffer superfluousParams = new StringBuffer();
+		while (itrInObjs.hasNext()) {
+			if (superfluousParams.length() > 0) {
+				superfluousParams.append(", "); //$NON-NLS-1$
+			}
+			superfluousParams.append(EmfUtil.getFullName(itrInObjs.next().eClass()));
+		}
+		if (superfluousParams.length() > 0) {
+			return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_SuperfluousInputTransfParam, superfluousParams.toString()));
+		}
+
+        return result;
+	}
+	
 	public static IStatus validateTransformationParameter(TransformationParameter transfParam, TargetUriData targetData) {
 		if (transfParam.getDirectionKind() == DirectionKind.IN) {
 			return validateTransformationParameterIn(transfParam, targetData);
@@ -161,6 +193,36 @@ public class QvtValidator {
 	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, targetData.getUriString(), transfParam.getName()));
 	        }
 	        
+	        if (EcoreUtil.getRootContainer(in.eClass()) != metamodel) {
+	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputMetamodels, 
+	            		EmfUtil.getFullName(in.eClass()),
+	            		EmfUtil.getMetamodelName(metamodel)
+	            		));
+	        }
+		}
+		
+		return StatusUtil.makeOkStatus();
+	}
+
+	private static IStatus validateTransformationParameterIn(TransformationParameter transfParam, EObject in) {
+		if (transfParam.getMetamodels().isEmpty()) {
+            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_EmptyInputTransfParam,
+            		transfParam.getName()));
+		}
+
+		if (transfParam.getEntryType() != null) {
+			EClassifier classifier = transfParam.getEntryType();
+
+	    	if (!EmfUtil.isAssignableFrom(classifier, in.eClass()) || !classifier.isInstance(in)) {
+	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputTypes, 
+	            		EmfUtil.getFullName(in.eClass()),
+	            		EmfUtil.getFullName(classifier)
+	            		));
+	    	}
+		}
+		else {
+			EPackage metamodel = transfParam.getMetamodels().get(0);
+
 	        if (EcoreUtil.getRootContainer(in.eClass()) != metamodel) {
 	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputMetamodels, 
 	            		EmfUtil.getFullName(in.eClass()),

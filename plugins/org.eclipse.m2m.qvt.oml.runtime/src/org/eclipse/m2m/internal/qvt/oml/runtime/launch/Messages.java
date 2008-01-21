@@ -28,6 +28,8 @@ public class Messages extends NLS {
 	public static String QvtValidator_InvalidFeature;
 	public static String QvtValidator_IncompatibleInputTypes;
 	public static String QvtValidator_EmptyInputTransfParam;
+	public static String QvtValidator_MissedInputTransfParam;
+	public static String QvtValidator_SuperfluousInputTransfParam;
 	public static String QvtValidator_IncompatibleInputMetamodels;
 	public static String QvtValidator_DestinationReadonly;
 	public static String QvtValidator_DestinationExistsNonEObject;
