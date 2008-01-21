@@ -1,0 +1,23 @@
+modeltype UML uses "http://www.eclipse.org/uml2/2.1.0/UML";
+modeltype ECORE uses "http://www.eclipse.org/emf/2002/Ecore";
+modeltype RDB uses 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/rdb';
+
+transformation exec2(in model1 : ECORE, in model2 : ECORE, out uml : UML, out rdb : RDB);
+
+main(out uPackage : Package, out table : Table) {
+
+	uPackage := object Package {name := 'uml1'};
+	uPackage.packagedElement := model1.objects()->select(c|c.oclIsKindOf(EClass))
+		->collect(c|c.oclAsType(EClass).toClass())->asSet();
+
+	var umlPackage2 := object Package {name := 'uml2'};
+	umlPackage2.packagedElement += model2.objects()->select(c|c.oclIsKindOf(EClass))
+		->collect(c|c.oclAsType(EClass).toClass())->asSet();
+		
+	table := object Table {name := 'table'};
+	table.columns += object TableColumn { name := 'col' };
+}
+
+mapping EClass::toClass() : Class { 
+	name := self.name + '_Cls1';
+}
