@@ -21,6 +21,14 @@
             file="parserTestData/models/abstractresult/abstractresult.qvto"
             id="parserTestData.models.abstractresult.abstractresult">
       </transformation>
+      <transformation
+            file="apiTestData/exec1/exec1.qvto"
+            id="apiTestData.exec1.exec1">
+      </transformation>
+      <transformation
+            file="apiTestData/exec3/exec3.qvto"
+            id="apiTestData.exec3.exec3">
+      </transformation>
    </extension>
-   
+
 </plugin>
