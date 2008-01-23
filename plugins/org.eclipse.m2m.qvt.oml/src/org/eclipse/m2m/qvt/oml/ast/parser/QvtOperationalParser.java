@@ -23,6 +23,7 @@ import org.eclipse.m2m.qvt.oml.compiler.ParsedModuleCS;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
+import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalValidationVisitor;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalVisitorCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
@@ -80,6 +81,11 @@ public class QvtOperationalParser {
 			module = visitor.visitMappingModule(moduleCS, env, compiler);
 		} catch (SemanticException e) {
 			env.reportError(e.getLocalizedMessage(), 0, 0);
+		}
+		
+		if (module != null && options.isReportErrors()) {
+			QvtOperationalValidationVisitor validation = new QvtOperationalValidationVisitor(env);
+			validation.visitModule(module);
 		}
 		
 		return module;

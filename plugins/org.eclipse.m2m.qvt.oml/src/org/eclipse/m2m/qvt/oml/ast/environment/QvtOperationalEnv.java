@@ -692,6 +692,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	
 	public QvtOperationalEnv createOperationEnvironment(VarParameter context) {
 		QvtOperationalEnv newEnvironment = new QvtOperationalEnv(this);
+		newEnvironment.setASTNodeToCSTNodeMap(getASTNodeToCSTNodeMap());
 
 		if(context.getEType() != getModuleContextType()) {
 			// define self implicit source only in case if context-less operations
