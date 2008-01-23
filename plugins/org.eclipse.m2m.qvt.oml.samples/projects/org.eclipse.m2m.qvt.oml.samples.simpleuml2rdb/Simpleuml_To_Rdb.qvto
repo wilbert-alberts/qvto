@@ -136,7 +136,7 @@ query UML::Class::generalizations2columns(targetClass : UML::Class) : OrderedSet
 
 
 query UML::Package::getSubpackages() : OrderedSet(UML::Package) {
-	ownedElements->select(oclIsTypeOf(UML::Package))->collect(oclAsType(UML::Package))->asOrderedSet()
+	self.ownedElements->select(oclIsTypeOf(UML::Package))->collect(oclAsType(UML::Package))->asOrderedSet()
 }
 
 query UML::Type::asDataType() : UML::DataType {
@@ -144,39 +144,39 @@ query UML::Type::asDataType() : UML::DataType {
 }
 
 query UML::Property::isPrimaryKey() : Boolean {
-	stereotype->includes('primaryKey')
+	self.stereotype->includes('primaryKey')
 }
 
 query UML::Property::isIdentifying() : Boolean {
-	stereotype->includes('identifying')
+	self.stereotype->includes('identifying')
 }
 
 query UML::Property::isPrimitive() : Boolean {
-	type.oclIsKindOf(UML::PrimitiveType)
+	self.type.oclIsKindOf(UML::PrimitiveType)
 }
 
 query UML::Property::isEnumeration() : Boolean {
-	type.oclIsKindOf(UML::Enumeration)
+	self.type.oclIsKindOf(UML::Enumeration)
 }
 
 query UML::Property::isRelationship() : Boolean {
-	type.oclIsKindOf(UML::DataType) and type.isPersistent()
+	self.type.oclIsKindOf(UML::DataType) and self.type.isPersistent()
 }
 
 query UML::Property::isAssosiation() : Boolean {
-	type.oclIsKindOf(UML::DataType) and not type.isPersistent()
+	self.type.oclIsKindOf(UML::DataType) and not self.type.isPersistent()
 }
 
 query RDB::Table::getPrimaryKeyColumns() : OrderedSet(RDB::TableColumn) {
-	columns->select(isPrimaryKey)
+	self.columns->select(isPrimaryKey)
 }
 
 query UML::ModelElement::isPersistent() : Boolean {
-	stereotype->includes('persistent')
+	self.stereotype->includes('persistent')
 }
 
 query UML::Package::hasPersistentClasses() : Boolean {
-	ownedElements->exists(
+	self.ownedElements->exists(
 		let c : UML::Class = oclAsType(UML::Class) in 
 			c.oclIsUndefined() implies c.isPersistent())
 }
