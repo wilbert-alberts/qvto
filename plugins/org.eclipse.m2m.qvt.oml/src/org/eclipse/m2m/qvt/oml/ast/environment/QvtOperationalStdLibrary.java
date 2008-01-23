@@ -44,7 +44,7 @@ import org.eclipse.ocl.utilities.TypedElement;
 public class QvtOperationalStdLibrary {
 	
 	public static final String OUT_PRINT_WRITER = "@out_print_writer"; //$NON-NLS-1$
-	public static final String QVT_STDLIB_DUMP_OPERATION = "dump"; //$NON-NLS-1$
+    public static final String QVT_STDLIB_DUMP_OPERATION = "dump"; //$NON-NLS-1$
 	public static final String QVT_STDLIB_TOSTRING_OPERATION = "toString"; //$NON-NLS-1$
 
 	public static final String QVT_STDLIB_OBJECTS_OPERATION = "objects"; //$NON-NLS-1$
@@ -61,7 +61,7 @@ public class QvtOperationalStdLibrary {
 		return ExpressionsPackage.Literals.MODEL_TYPE;
 	}
 	
-	public void defineStandartOperations(QvtOperationalEnv env) {
+	public void defineStandardOperations(QvtOperationalEnv env) {
 		OCLStandardLibrary<EClassifier> oclStdLib = env.getOCLStandardLibrary();
 		
 		// Spec 8.4.3 : shorthand for 'concat' operation
@@ -71,8 +71,8 @@ public class QvtOperationalStdLibrary {
 //		defineOperation(env, oclStdLib.getOclAny(), oclStdLib.getSet(),
 //				PredefinedType.ALL_INSTANCES_NAME, oclStdLib.getOclType());
 
-		defineOperation(env, oclStdLib.getOclVoid(), oclStdLib.getOclVoid(),
-				QVT_STDLIB_DUMP_OPERATION, oclStdLib.getOclAny());
+        defineOperation(env, oclStdLib.getOclVoid(), oclStdLib.getOclVoid(),
+                QVT_STDLIB_DUMP_OPERATION, oclStdLib.getOclAny());
 		defineOperation(env, oclStdLib.getOclAny(), oclStdLib.getOclVoid(),
 				QVT_STDLIB_DUMP_OPERATION);
 

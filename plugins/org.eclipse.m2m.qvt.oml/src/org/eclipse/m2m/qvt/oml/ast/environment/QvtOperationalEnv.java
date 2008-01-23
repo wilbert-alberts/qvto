@@ -100,7 +100,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		myErrorsList = new ArrayList<QvtMessage>(2);
 		myErrorRecordFlag = true;
 
-		defineStandartOperations();
+		defineStandardOperations();
 
 		ePackageRegistry = eRegistry;		
 		myModelTypeRegistry = parent != null ? parent.myModelTypeRegistry : new LinkedHashMap<String, ModelType>(1);
@@ -128,7 +128,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		return MetamodelRegistry.getInstance();
 	}
 
-	public QvtOperationalStdLibrary getQVTStandartLibrary() {
+	public QvtOperationalStdLibrary getQVTStandardLibrary() {
 		return QvtOperationalStdLibrary.INSTANCE;
 	}
 	
@@ -182,7 +182,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		for (LibraryOperation libOp : lib.getLibraryOperations()) {
 	        QvtLibraryOperation qvtLibOp = new QvtLibraryOperation(this, libOp);
 
-	        getQVTStandartLibrary().defineOperation(this, libOp,
+	        getQVTStandardLibrary().defineOperation(this, libOp,
 	        		qvtLibOp.getContextType(), qvtLibOp.getReturnType(),
 	        		libOp.getName(), qvtLibOp.getParamTypes());	        
 		}
@@ -202,7 +202,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	@Override
 	public EOperation lookupOperation(EClassifier owner, String name,
 			List<? extends TypedElement<EClassifier>> args) {
-		getQVTStandartLibrary().lookupOperation(this, owner, name, args);
+		getQVTStandardLibrary().lookupOperation(this, owner, name, args);
 		
 		// first try to lookup imperative operation with param's exact matching  
         UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> uml = getUMLReflection();
@@ -355,7 +355,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	        } else {
                 Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
                 var.setName(modelParam.getName());
-                var.setType(getQVTStandartLibrary().getModelType());
+                var.setType(getQVTStandardLibrary().getModelType());
                 var.setRepresentedParameter(modelParam);
                 modelParameters.add(var);
 	        }
@@ -786,8 +786,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			&& getOCLStandardLibrary().getOclInvalid() != myType;
 	}
 	
-	private void defineStandartOperations() {
-		getQVTStandartLibrary().defineStandartOperations(this);
+	private void defineStandardOperations() {
+		getQVTStandardLibrary().defineStandardOperations(this);
 	}
 
 	private EOperation addOperation(EClassifier owner, EOperation operation, boolean fake) {

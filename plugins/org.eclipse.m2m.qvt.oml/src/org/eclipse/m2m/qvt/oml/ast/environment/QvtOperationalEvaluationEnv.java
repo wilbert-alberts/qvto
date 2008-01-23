@@ -136,7 +136,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	
 	@Override
 	public boolean overrides(EOperation operation, int opcode) {
-		if (getQVTStandartLibrary().overrides(operation, opcode)) {
+		if (getQVTStandardLibrary().overrides(operation, opcode)) {
 			return true;
 		}
 		return super.overrides(operation, opcode);
@@ -145,8 +145,8 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	@Override
 	public Object callOperation(EOperation operation, int opcode, Object source, Object[] args)
 			throws IllegalArgumentException {
-		if (getQVTStandartLibrary().overrides(operation, opcode)) {
-			return getQVTStandartLibrary().callOperation(this, myContext, operation, opcode, source, args);
+		if (getQVTStandardLibrary().overrides(operation, opcode)) {
+			return getQVTStandardLibrary().callOperation(this, myContext, operation, opcode, source, args);
 		}
 		return super.callOperation(operation, opcode, source, args);
 	}
@@ -612,7 +612,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		return !type.isPrimitive();
 	}
 
-    private QvtOperationalStdLibrary getQVTStandartLibrary() {
+    private QvtOperationalStdLibrary getQVTStandardLibrary() {
 		return QvtOperationalStdLibrary.INSTANCE;
 	}
     
