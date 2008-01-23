@@ -9,89 +9,90 @@ property localProp : String = 'str';
 
 mapping inout ecore::EClass::myMappingInOut() {
 	init { 
-		Bag{ 'aString' }->any(/*<warn>*/_abstract/*</warn>*/);   			  
+		Bag{ 'aString' }->any(/*<error>*/_abstract/*</error>*/);   			  
 			
 		var isKindOf := self.oclIsKindOf(OclAny);
 		-- TODO - uncomment when OclVoid is not used for module implicit source		
-		-- <warn>oclIsKindOf</warn>(OclAny);		
+		-- /*<error>*/oclIsKindOf/*</error>*/(OclAny);		
 		
-		var fCount := /*<warn>*/getFeatureCount/*</warn>*/();		
-		fCount := self.getFeatureCount();
+		var fCount := /*<error>*/getFeatureCount()/*</error>*/;		
+		/*<error>*/fCount/*</error>*/ := self.getFeatureCount();
 		
-		map /*<warn>*/myMapping/*</warn>*/();
-		map /*<warn>*/myMappingInOut/*</warn>*/();		
+		/*<error>*/map myMapping()/*</error>*/;
+		/*<error>*/map myMappingInOut()/*</error>*/;		
 		self.map myMapping();
 		
 		var strVal := localProp;
 		strVal := this.localProp;
 			
 		var isAbs := self._abstract;
-		isAbs := /*<warn>*/_abstract/*</warn>*/ and false;
+		isAbs := /*<error>*/_abstract/*</error>*/;
 	}
 
 	end {
-		Bag{ 'aString' }->any(/*<warn>*/_abstract/*</warn>*/);
+		Bag{ 'aString' }->any(/*<error>*/_abstract/*</error>*/);
 		Bag{ }->any(self._abstract);		
 		Bag{ object EClass{} }->any(_abstract);		
 		Bag{ object EClass{} }->any(self._abstract);
 		
-		Bag{ 'aString' }->any(/*<warn>*/getFeatureCount/*</warn>*/() > 0);
+		Bag{ 'aString' }->any(/*<error>*/getFeatureCount()/*</error>*/);
 		Bag{ object EClass {} }->any(getFeatureCount() > 0);
 		Bag{ object EClass {} }->any(self.getFeatureCount() > 0);		
 	}	
 }
 
-
+mapping ecore::EClass::importedMyMapping1() : ecore::EPackage {
+	init {
+	}	 
+}
 mapping ecore::EClass::myMapping() : ecore::EPackage {
 	init {
 		-- TODO - uncomment when OclVoid is not used for module implicit source
-		-- var isKindOf := warn oclIsKindOf /warn(OclAny);
+		-- var isKindOf := error oclIsKindOf /error(OclAny);
 		var isKindOf := self.oclIsKindOf(OclAny);
 		
 		var strVal := localProp;
 		var isAbs := self._abstract;
-		isAbs := /*<warn>*/_abstract/*</warn>*/;
+		isAbs := /*<error>*/_abstract/*</error>*/;
 		
-		var fCount := /*<warn>*/getFeatureCount/*</warn>*/();		
-		fCount := self.getFeatureCount();
+		var fCount := /*<error>*/getFeatureCount()/*</error>*/;		
+		/*<error>*/fCount/*</error>*/ := self.getFeatureCount();
 		
-		map /*<warn>*/myMapping/*</warn>*/();
 		self.map myMapping();
 				
 		object EPackage {
-			name := /*<warn>*/name/*</warn>*/;
+			name := /*<error>*/name/*</error>*/;
 			name := self.name;
-			name := map /*<warn>*/importedMyMapping/*</warn>*/().name;
+			name := /*<error>*/map importedMyMapping()/*</error>*/;
 		};
 	}
 
-	name := /*<warn>*/name/*</warn>*/.substring(1,1);
+	name := /*<error>*/name/*</error>*/;
 	name := self.name;
 	name := localProp;
 	name := this.localProp;
 	name := importedModuleProp;
 	name := importedNonContextualMapping(self).name;
 
-	name := map /*<warn>*/importedMyMapping/*</warn>*/().name;
+	name := /*<error>*/map importedMyMapping()/*</error>*/;
 	name := self.map importedMyMapping().name;
 	
 	end {
-		/*<warn>*/resolve/*</warn>*/(e : EClass | e._abstract and 
-				/*<warn>*/_abstract/*</warn>*/ <> null or self._abstract);
+		/*<error>*/resolve()/*</error>*/;
 		self.resolve();
 		Bag{ self }->any(resolve());	
 			
-		/*<warn>*/resolveIn/*</warn>*/(nonContextualMapping, e : EPackage | e <> null 
-				and /*<warn>*/_abstract/*</warn>*/ <> null);
+		resolveIn(nonContextualMapping, e : EPackage | e <> null 
+				and /*<error>*/_abstract/*</error>*/ <> null);
 	
 		self.resolveoneIn(nonContextualMapping, e : EPackage | e <> null);		
 		Bag{ self }->any(resolveoneIn(nonContextualMapping, e:EPackage | true));				
 		
-		Bag{ }->any(/*<warn>*/_abstract/*</warn>*/);
+		Bag{ }->any(/*<error>*/_abstract/*</error>*/);
 		Bag{ object EClass{} }->any(_abstract);
 		Bag{ }->any(self._abstract);
 		
-		Bag{ 'aString' }->any(/*<warn>*/getFeatureCount/*</warn>*/() > 0);
+		Bag{ 'aString' }->any(/*<error>*/getFeatureCount()/*</error>*/);
 		Bag{ object EClass {} }->any(getFeatureCount() > 0);
 		Bag{ object EClass {} }->any(self.getFeatureCount() > 0);		
 	}	 
@@ -105,7 +106,7 @@ mapping nonContextualMapping(in par : EClass) : EPackage {
 		
 		var isKindOf := this.oclIsKindOf(OclAny);
 		-- TODO - uncomment when OclVoid is not used for module implicit source		
-		-- isKindOf := warn oclIsKindOf /warn(OclAny); 
+		-- isKindOf := error oclIsKindOf /error(OclAny); 
 		
 		var p:EPackage := map nonContextualMapping(par);
 		p := this.map nonContextualMapping(par);
@@ -124,7 +125,7 @@ mapping nonContextualMapping(in par : EClass) : EPackage {
 main() {	
 		var isKindOf := this.oclIsKindOf(OclAny);
 		-- TODO - uncomment when OclVoid is not used for module implicit source		
-		-- isKindOf := warn oclIsKindOf /warn(OclAny); 
+		-- isKindOf := error oclIsKindOf /error(OclAny); 
 				
 		var eClass: EClass := null;
 		var p:EPackage := map nonContextualMapping(eClass);

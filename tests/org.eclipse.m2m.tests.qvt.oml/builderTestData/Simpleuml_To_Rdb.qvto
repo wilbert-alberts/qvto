@@ -109,48 +109,48 @@ query generalizations2columns(in cls: simpleuml::Class) : OrderedSet(rdb::TableC
 }
 
 query simpleuml::Package::getSubpackages() : OrderedSet(simpleuml::Package) {
-	ownedElements->collect(oclAsType(simpleuml::Package))->asOrderedSet()
+	self.ownedElements->collect(oclAsType(simpleuml::Package))->asOrderedSet()
 }
 
 query simpleuml::Type::asDataType() : simpleuml::DataType {
-	oclAsType(simpleuml::DataType)
+	self.oclAsType(simpleuml::DataType)
 }
 
 query simpleuml::Property::isPrimaryKey() : Boolean {
-	stereotype->includes('primaryKey')
+	self.stereotype->includes('primaryKey')
 }
 
 query simpleuml::Property::isIdentifying() : Boolean {
-	stereotype->includes('identifying')
+	self.stereotype->includes('identifying')
 }
 
 query simpleuml::Property::isPrimitive() : Boolean {
-	type.oclIsKindOf(simpleuml::PrimitiveType)
+	self.type.oclIsKindOf(simpleuml::PrimitiveType)
 }
 
 query simpleuml::Property::isEnumeration() : Boolean {
-	type.oclIsKindOf(simpleuml::Enumeration)
+	self.type.oclIsKindOf(simpleuml::Enumeration)
 }
 
 query simpleuml::Property::isRelationship() : Boolean {
-	type.oclIsKindOf(simpleuml::DataType) and type.isPersistent()
+	self.type.oclIsKindOf(simpleuml::DataType) and self.type.isPersistent()
 }
 
 query simpleuml::Property::isAssosiation() : Boolean {
-	type.oclIsKindOf(simpleuml::DataType) and not type.isPersistent()
+	self.type.oclIsKindOf(simpleuml::DataType) and not self.type.isPersistent()
 }
 
 query rdb::Table::getPrimaryKeyColumns() : OrderedSet(rdb::TableColumn) {
-	columns->select(isPrimaryKey)
+	self.columns->select(isPrimaryKey)
 }
 
 query simpleuml::ModelElement::isPersistent() : Boolean {
-	stereotype->includes('persistent')
+	self.stereotype->includes('persistent')
 }
 
 query simpleuml::Package::hasPersistentClasses() : Boolean {
 --	ownedElements->exists(e | e.oclIsKindOf(simpleuml::Class) 
 --		and e.oclAsType(simpleuml::Class).isPersistent())
-	ownedElements->select(oclIsKindOf(simpleuml::Class))->
+	self.ownedElements->select(oclIsKindOf(simpleuml::Class))->
 		select(c | c.oclAsType(simpleuml::Class).isPersistent())->size() > 0
 }

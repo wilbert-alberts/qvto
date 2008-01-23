@@ -22,19 +22,19 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 }
 
 mapping ecore::EPackage::toEClass() : ecore::EClass {
-	name := name;
-	eStructuralFeatures += eSubpackages.toAttribute();
+	name := self.name;
+	eStructuralFeatures += self.eSubpackages.toAttribute();
 }
 
 mapping ecore::EPackage::toAttribute() : ecore::EAttribute {
-	name := name;
+	name := self.name;
 }
 
 query ecore::ENamedElement::hash() : Integer {
 	if self.oclIsKindOf(ecore::EClass) then
-	  name.substring(2, 2).toInt() + 100
+	  self.name.substring(2, 2).toInt() + 100
 	 else 
-	 	name.substring(2, 2).toInt()
+	 	self.name.substring(2, 2).toInt()
 	 endif;
 }
 

@@ -13,5 +13,5 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 
 mapping Ecore::EPackage::toEPackage() : ecore::EPackage {
 	-- call a custom defined operation on OclAny in imported lib	
-	name := name + self.anyConcatStrings('String1','String2');
+	name := self.name + self.anyConcatStrings('String1','String2');
 }
