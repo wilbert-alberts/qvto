@@ -84,8 +84,10 @@ public class QvtOperationalParser {
 		}
 		
 		if (module != null && options.isReportErrors()) {
+			env.setCheckForDuplicateErrors(true);
 			QvtOperationalValidationVisitor validation = new QvtOperationalValidationVisitor(env);
 			validation.visitModule(module);
+			env.setCheckForDuplicateErrors(false);
 		}
 		
 		return module;

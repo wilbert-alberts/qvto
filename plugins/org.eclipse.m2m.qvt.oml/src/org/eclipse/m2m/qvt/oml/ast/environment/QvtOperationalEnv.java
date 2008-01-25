@@ -99,6 +99,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		myWarningsList = new ArrayList<QvtMessage>(2);
 		myErrorsList = new ArrayList<QvtMessage>(2);
 		myErrorRecordFlag = true;
+		myCheckForDuplicateErrors = false;
 
 		defineStandardOperations();
 
@@ -286,7 +287,20 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		while (parent.getInternalParent() != null) {
 			parent = (QvtOperationalEnv) parent.getInternalParent();
 		}
-		parent.myErrorsList.add(new QvtMessage(message, QvtMessage.SEVERITY_ERROR, startOffset, endOffset-startOffset+1));
+		
+		boolean foundSameLocation = false;
+		int msgLength = endOffset-startOffset+1;
+		if (myCheckForDuplicateErrors) {
+			for (QvtMessage msg : parent.myErrorsList) {
+				if (msg.getOffset() == startOffset && msg.getLength() == msgLength) {
+					foundSameLocation = true;
+					break;
+				}
+			}
+		}
+		if (!foundSameLocation) {
+			parent.myErrorsList.add(new QvtMessage(message, QvtMessage.SEVERITY_ERROR, startOffset, msgLength));
+		}
 		
 		// TODO #199408  Use traces in QVTParser instead of System.xxx output facilities
 		//System.err.println("Error: " + message + ", Pos: " + startOffset + "-" + endOffset);
@@ -725,6 +739,10 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		myErrorRecordFlag = isRecordError;
 	}
 	
+	public void setCheckForDuplicateErrors(boolean checkForDuplicateErrors) {
+		myCheckForDuplicateErrors = checkForDuplicateErrors;
+	}
+	
 	public void registerMappingOperation(MappingOperation operation) {
 	    if (getParent() != null) {
 	        ((QvtOperationalEnv) getParent()).registerMappingOperation(operation);
@@ -811,6 +829,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	private final List<QvtMessage> myWarningsList;
 	private final List<QvtMessage> myErrorsList;
 	private boolean myErrorRecordFlag;
+	private boolean myCheckForDuplicateErrors;
 
 	private Map<String, ModelType> myModelTypeRegistry;
 	private List<Variable<EClassifier, EParameter>> myModelParameters = Collections.emptyList();
