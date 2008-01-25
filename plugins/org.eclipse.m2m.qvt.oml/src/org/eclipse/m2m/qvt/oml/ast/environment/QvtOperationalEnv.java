@@ -771,6 +771,10 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			public void handleProblem(Severity problemSeverity, Phase processingPhase, String problemMessage,					
 					String processingContext, int startOffset, int endOffset) {
 				
+				if (startOffset == -1 && endOffset == -1) {
+					// spam filter
+					return;
+				}
 				if(problemSeverity == Severity.INFO || problemSeverity == Severity.OK || problemSeverity == Severity.WARNING) {
 					reportWarning(problemMessage, startOffset, endOffset);
 				} else {
