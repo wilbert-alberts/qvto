@@ -64,7 +64,7 @@ public class ModelParameterExtent {
 		List<EObject> objects = new ArrayList<EObject>();
 		objects.addAll(myInitialEObjects);
 		for (EObject eObj : myAdditionalEObjects) {
-			if (false == eObj.eContainer() instanceof EObject) {
+			if (eObj.eContainer() == null) {
 				objects.add(eObj);
 			}
 		}
@@ -94,7 +94,7 @@ public class ModelParameterExtent {
 			extent.getContents().addAll(myInitialEObjects);
 		}
 		for (EObject eObj : myAdditionalEObjects) {
-			if(eObj.eContainer() == null) {
+			if (eObj.eContainer() == null) {
 				extent.getContents().add(eObj);
 			}
 		}
