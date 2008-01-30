@@ -70,10 +70,11 @@ public class EmfUtil {
         if (resource == null || resource.getContents().isEmpty()) {
         	return null;
         }
-        ResourceEObject resourceEObj = ModelparamFactory.eINSTANCE.createResourceEObject();
-        for (EObject eObj : resource.getContents()) {
-        	resourceEObj.getChildren().add(eObj);
+        if (resource.getContents().size() == 1) {
+        	return resource.getContents().get(0);
         }
+        ResourceEObject resourceEObj = ModelparamFactory.eINSTANCE.createResourceEObject();
+        resourceEObj.getChildren().addAll(resource.getContents());
 		return resourceEObj;
     }
     
