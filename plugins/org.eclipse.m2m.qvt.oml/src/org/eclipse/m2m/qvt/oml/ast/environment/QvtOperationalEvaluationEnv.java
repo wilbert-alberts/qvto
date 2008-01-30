@@ -31,8 +31,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.m2m.qvt.oml.emf.util.modelparam.ResourceEObject;
 import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.expressions.MappingParameter;
@@ -374,6 +374,9 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
                 throw new IllegalArgumentException("Missed argument for model parameter: " + modelParam.getName()); //$NON-NLS-1$
         	}
 
+        	/*
+        	 * See: https://bugs.eclipse.org/bugs/show_bug.cgi?id=216903 (QVT run configuration should consider all objects in selected model)
+        	 * 
         	if (metamodels.isEmpty()) {
         		modelExtents.put(modelParam, new ModelParameterExtent(metamodels));
         	}
@@ -397,6 +400,17 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	        		}
 	        		argument = argument.eContainer();
 	        	}	        	
+        	}
+        	*/
+
+        	Object argument = getOperationArgs().get(argIndex);
+        	List<EObject> argValues = argument instanceof ResourceEObject ? ((ResourceEObject) argument).getChildren() 
+        			: Collections.singletonList((EObject) argument);
+			modelExtents.put(modelParam, new ModelParameterExtent(argValues, metamodels));
+        	if (modelParam.getKind() == DirectionKind.IN) {
+        		QvtChangeRecorder qvtChangeRecorder = new QvtChangeRecorder(modelParam);
+        		qvtChangeRecorder.beginRecording(argValues);
+        		myChangeRecorders.add(qvtChangeRecorder);
         	}
         	
         	argIndex++;

@@ -209,10 +209,7 @@ public class QvtOperationalStdLibrary {
 				&& args.length == 0
 				) {			
 			Set<Object> instances = new LinkedHashSet<Object>();
-	        List<Object> objects = ((ModelParameterExtent) source).getAllObjects();
-			for (Object obj : objects) {
-				instances.add(obj);
-			}
+			instances.addAll(((ModelParameterExtent) source).getAllObjects());
 			return instances;
 		}
 
@@ -221,13 +218,7 @@ public class QvtOperationalStdLibrary {
 				&& args.length == 0
 				) {			
 			Set<Object> instances = new LinkedHashSet<Object>();
-	        List<Object> objects = ((ModelParameterExtent) source).getAllObjects();
-			for (Object obj : objects) {
-				if (obj instanceof EObject &&
-						false == ((EObject) obj).eContainer() instanceof EObject) {
-					instances.add(obj);
-				}
-			}
+			instances.addAll(((ModelParameterExtent) source).getRootObjects());
 			return instances;
 		}
 
