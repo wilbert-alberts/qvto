@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.emf.util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -32,6 +33,8 @@ import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
+import org.eclipse.m2m.qvt.oml.emf.util.modelparam.ModelparamFactory;
+import org.eclipse.m2m.qvt.oml.emf.util.modelparam.ResourceEObject;
 import org.eclipse.osgi.util.NLS;
 
 
@@ -67,7 +70,11 @@ public class EmfUtil {
         if (resource == null || resource.getContents().isEmpty()) {
         	return null;
         }
-		return (EObject) resource.getContents().get(0);
+        ResourceEObject resourceEObj = ModelparamFactory.eINSTANCE.createResourceEObject();
+        for (EObject eObj : resource.getContents()) {
+        	resourceEObj.getChildren().add(eObj);
+        }
+		return resourceEObj;
     }
     
     public static EObject getEObject(Resource res, URI uri) {
@@ -135,7 +142,21 @@ public class EmfUtil {
 		return resourceSet;
 	}
     
+	public static EObject resolveSource(ResourceEObject in, EObject inputType) {
+		List<EObject> resolved = new ArrayList<EObject>(in.getChildren().size());
+		for (EObject eObj : in.getChildren()) {
+			resolved.add(resolveSource(eObj, inputType));
+		}
+		in.getChildren().clear();
+		in.getChildren().addAll(resolved);
+		return in;
+    }
+
 	public static EObject resolveSource(EObject in, EObject inputType) {
+		if (in instanceof ResourceEObject) {
+			return resolveSource((ResourceEObject) in, inputType);
+		}
+		
 		if (inputType == null) {
 			return in;
 		}

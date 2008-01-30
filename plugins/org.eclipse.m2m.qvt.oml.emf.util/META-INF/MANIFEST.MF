@@ -13,4 +13,5 @@ Require-Bundle: org.eclipse.core.runtime,
 Eclipse-LazyStart: true
 Export-Package: org.eclipse.m2m.qvt.oml.emf.util,
  org.eclipse.m2m.qvt.oml.emf.util.mmregistry,
- org.eclipse.m2m.qvt.oml.emf.util.urimap
+ org.eclipse.m2m.qvt.oml.emf.util.urimap,
+ org.eclipse.m2m.qvt.oml.emf.util.modelparam
