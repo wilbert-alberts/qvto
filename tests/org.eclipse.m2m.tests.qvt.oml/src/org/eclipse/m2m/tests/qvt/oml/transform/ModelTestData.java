@@ -37,6 +37,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.qvt.oml.emf.util.modelparam.ResourceEObject;
 import org.eclipse.m2m.qvt.oml.emf.util.urimap.MModelURIMapFactory;
 import org.eclipse.m2m.qvt.oml.emf.util.urimap.MappingContainer;
 import org.eclipse.m2m.qvt.oml.emf.util.urimap.MetamodelURIMappingHelper;
@@ -69,6 +70,9 @@ public abstract class ModelTestData {
     public void compareWithExpected(EObject out, IProject project, int index) {
     	ResourceSet sharedRsSet = out.eResource().getResourceSet();
         EObject expected = EmfUtil.loadModel(getExpected(project).get(index), sharedRsSet);
+        if (expected instanceof ResourceEObject) {
+        	expected = ((ResourceEObject) expected).getChildren().get(0);
+        }
         TestCase.assertNotSame("Actual output and expected output must not be the same instances", out, expected); //$NON-NLS-1$
         TestCase.assertFalse("Actual output and expected output must be at distinct location", //$NON-NLS-1$ 
         		out.eResource().getURI().toString().equals(expected.eResource().getURI().toString())); 
