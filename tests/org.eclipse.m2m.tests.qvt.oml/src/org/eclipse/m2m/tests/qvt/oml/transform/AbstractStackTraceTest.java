@@ -123,7 +123,7 @@ public abstract class AbstractStackTraceTest extends TestTransformation {
 	            
 	        	List<EObject> inputs = new ArrayList<EObject>(inUris.size());
 	        	for (URI uri : inUris) {
-	        		EObject in = EmfUtil.loadModel(uri);
+	        		EObject in = transf.loadInput(uri);
 	        		inputs.add(in);
 	        	}
 	            TransformationRunner.In input = new TransformationRunner.In(inputs.toArray(new EObject[inputs.size()]), qvtContext);
