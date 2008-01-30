@@ -193,12 +193,16 @@ public class QvtValidator {
 	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, targetData.getUriString(), transfParam.getName()));
 	        }
 	        
+        	/*
+        	 * See: https://bugs.eclipse.org/bugs/show_bug.cgi?id=216903 (QVT run configuration should consider all objects in selected model)
+        	 * 
 	        if (EcoreUtil.getRootContainer(in.eClass()) != metamodel) {
 	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputMetamodels, 
 	            		EmfUtil.getFullName(in.eClass()),
 	            		EmfUtil.getMetamodelName(metamodel)
 	            		));
 	        }
+	        */
 		}
 		
 		return StatusUtil.makeOkStatus();

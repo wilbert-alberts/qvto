@@ -13,6 +13,7 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -31,6 +32,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner.In;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner.Out;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.QvtConfigurationProperty;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtEvaluationResult;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnvFactory;
@@ -71,11 +74,29 @@ public class QvtInterpretedTransformation implements QvtTransformation {
     
 	public Out run(In in) throws MdaException {
         CompiledModule module = myModule.getModule();
-        
-        List<Object> inputs = new ArrayList<Object>(1);
+
+        Iterator<TransformationParameter> itrParam = getParameters().iterator();
+        List<Object> inputs = new ArrayList<Object>(in.getSources().length);
         for (EObject inObject : in.getSources()) {
+        	TransformationParameter transfParam = null;
+        	while (itrParam.hasNext()) {
+        		transfParam = itrParam.next();
+        		if (transfParam.getDirectionKind() != DirectionKind.OUT) {
+        			break;
+        		}
+        		transfParam = null;
+        	}
+        	EObject mmClass = myModule.getIn();
+        	if (transfParam != null) {
+        		if (transfParam.getEntryType() != null) {
+        			mmClass = transfParam.getEntryType();
+        		}
+        		else if (!transfParam.getMetamodels().isEmpty()) {
+        			mmClass = transfParam.getMetamodels().get(0);
+        		}
+        	}
             try {
-            	EObject input = EmfUtil.resolveSource(inObject, myModule.getIn());
+            	EObject input = EmfUtil.resolveSource(inObject, mmClass);
             	inputs.add(input);
             }
             catch (WrappedException e) {
