@@ -78,22 +78,6 @@ public class EmfUtil {
 		return resourceEObj;
     }
     
-    public static EObject getEObject(Resource res, URI uri) {
-		String fragment = uri.fragment();
-        if(fragment != null && fragment.length() > 0) {
-            return res.getEObject(fragment);
-        }
-        else {
-            List contents = res.getContents();
-            if(contents.isEmpty()) {
-                return null;
-            }
-            else {
-                return (EObject)contents.get(0);
-            }
-        }
-    }
-    
     public static EObject safeLoadModel(URI uri) {
     	return safeLoadModel(uri, getDefaultLoadOptions());
     }
