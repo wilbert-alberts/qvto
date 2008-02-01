@@ -289,6 +289,8 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="severity" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
           containment="true"/>
     </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ImperativeLoopExpCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/LoopExpCS #//cst/StatementCS"/>
+    <eClassifiers xsi:type="ecore:EClass" name="ImperativeIterateExpCS" eSuperTypes="#//cst/ImperativeLoopExpCS"/>
     <eSubpackages name="temp" nsURI="http://www.eclipse.org/QVT2/1.0.0/Operational/cst/temp"
         nsPrefix="qvtoperational.cst.temp">
       <eClassifiers xsi:type="ecore:EClass" name="ErrorCallExpCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CallExpCS"/>

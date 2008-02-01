@@ -35,103 +35,103 @@ import org.eclipse.ocl.utilities.Visitor;
  */
 public interface VarParameter extends EParameter, VisitableASTNode {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
     /**
-	 * Returns the value of the '<em><b>Ctx Owner</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation#getContext <em>Context</em>}'.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Ctx Owner</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation#getContext <em>Context</em>}'.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Ctx Owner</em>' container reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Ctx Owner</em>' container reference.
-	 * @see #setCtxOwner(ImperativeOperation)
-	 * @see org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage#getVarParameter_CtxOwner()
-	 * @see org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation#getContext
-	 * @model opposite="context"
-	 * @generated
-	 */
+     * @return the value of the '<em>Ctx Owner</em>' container reference.
+     * @see #setCtxOwner(ImperativeOperation)
+     * @see org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage#getVarParameter_CtxOwner()
+     * @see org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation#getContext
+     * @model opposite="context"
+     * @generated
+     */
 	ImperativeOperation getCtxOwner();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.expressions.VarParameter#getCtxOwner <em>Ctx Owner</em>}' container reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.expressions.VarParameter#getCtxOwner <em>Ctx Owner</em>}' container reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Ctx Owner</em>' container reference.
-	 * @see #getCtxOwner()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Ctx Owner</em>' container reference.
+     * @see #getCtxOwner()
+     * @generated
+     */
 	void setCtxOwner(ImperativeOperation value);
 
 	/**
-	 * Returns the value of the '<em><b>Res Owner</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation#getResult <em>Result</em>}'.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Res Owner</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation#getResult <em>Result</em>}'.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Res Owner</em>' container reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Res Owner</em>' container reference.
-	 * @see #setResOwner(ImperativeOperation)
-	 * @see org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage#getVarParameter_ResOwner()
-	 * @see org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation#getResult
-	 * @model opposite="result"
-	 * @generated
-	 */
+     * @return the value of the '<em>Res Owner</em>' container reference.
+     * @see #setResOwner(ImperativeOperation)
+     * @see org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage#getVarParameter_ResOwner()
+     * @see org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation#getResult
+     * @model opposite="result"
+     * @generated
+     */
 	ImperativeOperation getResOwner();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.expressions.VarParameter#getResOwner <em>Res Owner</em>}' container reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.expressions.VarParameter#getResOwner <em>Res Owner</em>}' container reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Res Owner</em>' container reference.
-	 * @see #getResOwner()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Res Owner</em>' container reference.
+     * @see #getResOwner()
+     * @generated
+     */
 	void setResOwner(ImperativeOperation value);
 
 	/**
-	 * Returns the value of the '<em><b>Kind</b></em>' attribute.
-	 * The literals are from the enumeration {@link org.eclipse.m2m.qvt.oml.expressions.DirectionKind}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Kind</b></em>' attribute.
+     * The literals are from the enumeration {@link org.eclipse.m2m.qvt.oml.expressions.DirectionKind}.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Kind</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Kind</em>' attribute.
-	 * @see org.eclipse.m2m.qvt.oml.expressions.DirectionKind
-	 * @see #setKind(DirectionKind)
-	 * @see org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage#getVarParameter_Kind()
-	 * @model
-	 * @generated
-	 */
+     * @return the value of the '<em>Kind</em>' attribute.
+     * @see org.eclipse.m2m.qvt.oml.expressions.DirectionKind
+     * @see #setKind(DirectionKind)
+     * @see org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage#getVarParameter_Kind()
+     * @model
+     * @generated
+     */
 	DirectionKind getKind();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.expressions.VarParameter#getKind <em>Kind</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.expressions.VarParameter#getKind <em>Kind</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Kind</em>' attribute.
-	 * @see org.eclipse.m2m.qvt.oml.expressions.DirectionKind
-	 * @see #getKind()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Kind</em>' attribute.
+     * @see org.eclipse.m2m.qvt.oml.expressions.DirectionKind
+     * @see #getKind()
+     * @generated
+     */
 	void setKind(DirectionKind value);
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((<%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%><T, ?, ?, ?, ?>) v).visitVarParameter(this);'"
-	 * @generated
-	 */
+     * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((<%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%><T, ?, ?, ?, ?>) v).visitVarParameter(this);'"
+     * @generated
+     */
 	<T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v);
 
 } // VarParameter

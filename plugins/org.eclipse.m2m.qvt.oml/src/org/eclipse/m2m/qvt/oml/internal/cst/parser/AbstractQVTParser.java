@@ -24,6 +24,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum;
 import org.eclipse.m2m.qvt.oml.internal.cst.ElementWithBody;
 import org.eclipse.m2m.qvt.oml.internal.cst.ExpressionStatementCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ImperativeIterateExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ImportCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ImportKindEnum;
 import org.eclipse.m2m.qvt.oml.internal.cst.LibraryCS;
@@ -68,6 +69,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.TempFactory;
 import org.eclipse.ocl.cst.CSTFactory;
 import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.cst.IteratorExpCS;
 import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
@@ -597,7 +599,29 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 				result.setTransformationRefineCS(transfRefineCS);
 				result.setPathNameCS(pathNameCS);
 				return result;
-			}
+	}
+	
+    protected ImperativeIterateExpCS createImperativeIterateExpCS(
+            SimpleNameCS simpleNameCS,
+            EList<VariableCS> iterators,
+            VariableCS target,
+            OCLExpressionCS oclExpressionCS) {
+        ImperativeIterateExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createImperativeIterateExpCS();
+        result.setSimpleNameCS(simpleNameCS);
+        if (iterators != null) {
+            if (iterators.size() > 0) {
+                result.setVariable1(iterators.get(0));
+                if (iterators.size() > 1) {
+                    result.setVariable1(iterators.get(1));
+                }
+            }
+        }
+        if (target != null) {
+            result.setVariable2(target);
+        }
+        result.setBody(oclExpressionCS);
+        return result;
+    }
 
 	protected final int getEndOffset(IToken token, EList<?>... listOpt) {
 		int offset = token.getEndOffset();

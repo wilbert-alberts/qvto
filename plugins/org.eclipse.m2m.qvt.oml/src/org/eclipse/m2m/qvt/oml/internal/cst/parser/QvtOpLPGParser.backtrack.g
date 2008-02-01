@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.30 2008/01/12 00:15:49 radvorak Exp $ 
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.31 2008/02/01 10:56:01 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -72,6 +72,9 @@ $DropRules
 	iteratorExpCS ::= collectNested '(' iterContents ')'
 	iteratorExpCS ::= sortedBy '(' iterContents ')'
 	iteratorExpCS ::= closure '(' iterContents ')'
+
+	-- Dropped due to 13.2 (OCL spec) and 6.4 (QVT spec). This rule conflicts with imperative iterator shorthands
+	attrOrNavCallExpCS ::= simpleNameCS '[' argumentsCS ']' isMarkedPreCS
 
 $DropSymbols
 	
@@ -286,6 +289,7 @@ $Terminals
 	ADD_ASSIGN    ::= '+='
 	RESET_ASSIGN  ::= ':='
 	AT_SIGN       ::= '@'
+	EXCLAMATION_MARK ::= '!'
 	
 $End
 
@@ -332,8 +336,14 @@ $KeyWords
 	result
 	main
 	this
-	switch
-	
+	switch	
+	xselect         
+	xcollect        
+	selectOne       
+	collectOne      
+	collectselect   
+	collectselectOne
+
 	rename
 $End
 
@@ -352,7 +362,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.30 2008/01/12 00:15:49 radvorak Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.31 2008/02/01 10:56:01 aigdalov Exp $
  */
 	./
 $End
@@ -2808,5 +2818,110 @@ $Rules
           $EndJava
 		./
 
+	-- imperative iterators
+
+	loopExpCS -> imperativeIterateExpCS
+
+	imperativeIteratorExpCSToken -> xselect
+	imperativeIteratorExpCSToken -> xcollect
+	imperativeIteratorExpCSToken -> selectOne
+	imperativeIteratorExpCSToken -> collectOne
+	imperativeIteratorExpCSToken -> collectselect
+	imperativeIteratorExpCSToken -> collectselectOne
+
+	imperativeIterateExpCS ::= imperativeIteratorExpCSToken '(' imperativeIterContents ')'
+		/.$BeginJava
+					SimpleNameCS simpleNameCS = createSimpleNameCS(
+								SimpleTypeEnum.KEYWORD_LITERAL,
+								getTokenText($getToken(1))
+							);
+					setOffsets(simpleNameCS, getIToken($getToken(1)));
+					Object[] iterContents = (Object[])$getSym(3);
+					CSTNode result = createImperativeIterateExpCS(
+							simpleNameCS,
+							(EList<VariableCS>)iterContents[0],
+							(VariableCS)iterContents[1],
+							(OCLExpressionCS)iterContents[2]
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	imperativeIterateExpCS ::= imperativeIteratorExpCSToken qvtErrorToken
+		/.$BeginJava
+					SimpleNameCS simpleNameCS = createSimpleNameCS(
+								SimpleTypeEnum.KEYWORD_LITERAL,
+								getTokenText($getToken(1))
+							);
+					setOffsets(simpleNameCS, getIToken($getToken(1)));
+					CSTNode result = createImperativeIterateExpCS(
+							simpleNameCS,
+							null,
+							null,
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+		
+
+	imperativeIterContents ::= oclExpressionCS
+		/.$BeginJava
+					$setResult(new Object[] {
+							null,
+							null,
+							$getSym(1)
+						});
+		  $EndJava
+		./
+	
+	imperativeIterContents ::= variableListCS '|' oclExpressionCS
+		/.$BeginJava
+					$setResult(new Object[] {
+							$getSym(1),
+							null,
+							$getSym(3)
+						});
+		  $EndJava
+		./
+
+
+	imperativeIterContents ::= variableListCS ';' variableCS '|' oclExpressionCS
+		/.$BeginJava
+					$setResult(new Object[] {
+							$getSym(1),
+							$getSym(3),
+							$getSym(5)
+						});
+		  $EndJava
+		./
+
+	-- imperative iterators shorthand notation
+
+	exclamationOpt ::= $empty
+	        /.$NullAction./
+	exclamationOpt -> '!'
+
+	declarator_vsep ::= IDENTIFIER '|'
+        	/.$BeginJava
+                	    $setResult(getIToken($getToken(1)));
+	          $EndJava
+        	./
+
+	declarator_vsepOpt ::= $empty
+	        /.$NullAction./
+	declarator_vsepOpt -> declarator_vsep
+
+	callExpCS ::= '->' featureCallExpCS exclamationOpt '[' declarator_vsepOpt oclExpressionCS ']'
+	        /.$NullAction./
+
+	--xselectShorthand ::= oclExpCS '[' oclExpressionCS ']'
+	--        /.$NullAction./
+	
+	--oclExpCS -> xselectShorthand
+
 $End
 
+	

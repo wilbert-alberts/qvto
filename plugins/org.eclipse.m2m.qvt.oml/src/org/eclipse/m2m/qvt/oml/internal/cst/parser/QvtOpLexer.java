@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexer.java,v 1.28 2008/01/12 00:15:49 radvorak Exp $
+* $Id: QvtOpLexer.java,v 1.29 2008/02/01 10:56:07 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexer.java,v 1.28 2008/01/12 00:15:49 radvorak Exp $
+* $Id: QvtOpLexer.java,v 1.29 2008/02/01 10:56:07 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -900,6 +900,14 @@ public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtO
             //
             case 329: { 
 				makeToken(TK_AT_SIGN);
+	            break;
+            }
+	 
+            //
+            // Rule 330:  Token ::= !
+            //
+            case 330: { 
+				makeToken(TK_EXCLAMATION_MARK);
 	            break;
             }
 	

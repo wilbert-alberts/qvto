@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ModelTypeImpl.java,v 1.3 2007/12/01 23:33:03 radvorak Exp $
+ * $Id: ModelTypeImpl.java,v 1.4 2008/02/01 10:55:58 aigdalov Exp $
  */
 package org.eclipse.m2m.qvt.oml.expressions.impl;
 
@@ -62,396 +62,396 @@ import org.eclipse.ocl.utilities.Visitor;
  */
 public class ModelTypeImpl extends EClassImpl implements ModelType {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
 	/**
-	 * The default value of the '{@link #getStartPosition() <em>Start Position</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getStartPosition() <em>Start Position</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getStartPosition()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getStartPosition()
+     * @generated
+     * @ordered
+     */
 	protected static final int START_POSITION_EDEFAULT = -1;
 
 	/**
-	 * The cached value of the '{@link #getStartPosition() <em>Start Position</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getStartPosition() <em>Start Position</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getStartPosition()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getStartPosition()
+     * @generated
+     * @ordered
+     */
 	protected int startPosition = START_POSITION_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getEndPosition() <em>End Position</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getEndPosition() <em>End Position</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getEndPosition()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getEndPosition()
+     * @generated
+     * @ordered
+     */
 	protected static final int END_POSITION_EDEFAULT = -1;
 
 	/**
-	 * The cached value of the '{@link #getEndPosition() <em>End Position</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getEndPosition() <em>End Position</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getEndPosition()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getEndPosition()
+     * @generated
+     * @ordered
+     */
 	protected int endPosition = END_POSITION_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getMetamodel() <em>Metamodel</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getMetamodel() <em>Metamodel</em>}' containment reference list.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getMetamodel()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getMetamodel()
+     * @generated
+     * @ordered
+     */
 	protected EList<PackageRef> metamodel;
 
 	/**
-	 * The cached value of the '{@link #getAdditionalCondition() <em>Additional Condition</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getAdditionalCondition() <em>Additional Condition</em>}' containment reference list.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getAdditionalCondition()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getAdditionalCondition()
+     * @generated
+     * @ordered
+     */
 	protected EList<OCLExpression<EClassifier>> additionalCondition;
 
 	/**
-	 * The default value of the '{@link #getConformanceKind() <em>Conformance Kind</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getConformanceKind() <em>Conformance Kind</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getConformanceKind()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getConformanceKind()
+     * @generated
+     * @ordered
+     */
 	protected static final String CONFORMANCE_KIND_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getConformanceKind() <em>Conformance Kind</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getConformanceKind() <em>Conformance Kind</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getConformanceKind()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getConformanceKind()
+     * @generated
+     * @ordered
+     */
 	protected String conformanceKind = CONFORMANCE_KIND_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected ModelTypeImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EClass eStaticClass() {
-		return ExpressionsPackage.Literals.MODEL_TYPE;
-	}
+        return ExpressionsPackage.Literals.MODEL_TYPE;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public int getStartPosition() {
-		return startPosition;
-	}
+        return startPosition;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setStartPosition(int newStartPosition) {
-		int oldStartPosition = startPosition;
-		startPosition = newStartPosition;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.MODEL_TYPE__START_POSITION, oldStartPosition, startPosition));
-	}
+        int oldStartPosition = startPosition;
+        startPosition = newStartPosition;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.MODEL_TYPE__START_POSITION, oldStartPosition, startPosition));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public int getEndPosition() {
-		return endPosition;
-	}
+        return endPosition;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setEndPosition(int newEndPosition) {
-		int oldEndPosition = endPosition;
-		endPosition = newEndPosition;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.MODEL_TYPE__END_POSITION, oldEndPosition, endPosition));
-	}
+        int oldEndPosition = endPosition;
+        endPosition = newEndPosition;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.MODEL_TYPE__END_POSITION, oldEndPosition, endPosition));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public EList<PackageRef> getMetamodel() {
-		if (metamodel == null) {
-			metamodel = new EObjectContainmentEList<PackageRef>(PackageRef.class, this, ExpressionsPackage.MODEL_TYPE__METAMODEL);
-		}
-		return metamodel;
-	}
+        if (metamodel == null) {
+            metamodel = new EObjectContainmentEList<PackageRef>(PackageRef.class, this, ExpressionsPackage.MODEL_TYPE__METAMODEL);
+        }
+        return metamodel;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public EList<OCLExpression<EClassifier>> getAdditionalCondition() {
-		if (additionalCondition == null) {
-			additionalCondition = new EObjectContainmentEList<OCLExpression<EClassifier>>(OCLExpression.class, this, ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION);
-		}
-		return additionalCondition;
-	}
+        if (additionalCondition == null) {
+            additionalCondition = new EObjectContainmentEList<OCLExpression<EClassifier>>(OCLExpression.class, this, ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION);
+        }
+        return additionalCondition;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public String getConformanceKind() {
-		return conformanceKind;
-	}
+        return conformanceKind;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setConformanceKind(String newConformanceKind) {
-		String oldConformanceKind = conformanceKind;
-		conformanceKind = newConformanceKind;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.MODEL_TYPE__CONFORMANCE_KIND, oldConformanceKind, conformanceKind));
-	}
+        String oldConformanceKind = conformanceKind;
+        conformanceKind = newConformanceKind;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.MODEL_TYPE__CONFORMANCE_KIND, oldConformanceKind, conformanceKind));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
-		return ((ExtendedVisitor<T, ?, ?, ?, ?>) v).visitModelType(this);
-	}
+        return ((ExtendedVisitor<T, ?, ?, ?, ?>) v).visitModelType(this);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case ExpressionsPackage.MODEL_TYPE__METAMODEL:
-				return ((InternalEList<?>)getMetamodel()).basicRemove(otherEnd, msgs);
-			case ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION:
-				return ((InternalEList<?>)getAdditionalCondition()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case ExpressionsPackage.MODEL_TYPE__METAMODEL:
+                return ((InternalEList<?>)getMetamodel()).basicRemove(otherEnd, msgs);
+            case ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION:
+                return ((InternalEList<?>)getAdditionalCondition()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case ExpressionsPackage.MODEL_TYPE__START_POSITION:
-				return new Integer(getStartPosition());
-			case ExpressionsPackage.MODEL_TYPE__END_POSITION:
-				return new Integer(getEndPosition());
-			case ExpressionsPackage.MODEL_TYPE__METAMODEL:
-				return getMetamodel();
-			case ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION:
-				return getAdditionalCondition();
-			case ExpressionsPackage.MODEL_TYPE__CONFORMANCE_KIND:
-				return getConformanceKind();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case ExpressionsPackage.MODEL_TYPE__START_POSITION:
+                return new Integer(getStartPosition());
+            case ExpressionsPackage.MODEL_TYPE__END_POSITION:
+                return new Integer(getEndPosition());
+            case ExpressionsPackage.MODEL_TYPE__METAMODEL:
+                return getMetamodel();
+            case ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION:
+                return getAdditionalCondition();
+            case ExpressionsPackage.MODEL_TYPE__CONFORMANCE_KIND:
+                return getConformanceKind();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case ExpressionsPackage.MODEL_TYPE__START_POSITION:
-				setStartPosition(((Integer)newValue).intValue());
-				return;
-			case ExpressionsPackage.MODEL_TYPE__END_POSITION:
-				setEndPosition(((Integer)newValue).intValue());
-				return;
-			case ExpressionsPackage.MODEL_TYPE__METAMODEL:
-				getMetamodel().clear();
-				getMetamodel().addAll((Collection<? extends PackageRef>)newValue);
-				return;
-			case ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION:
-				getAdditionalCondition().clear();
-				getAdditionalCondition().addAll((Collection<? extends OCLExpression<EClassifier>>)newValue);
-				return;
-			case ExpressionsPackage.MODEL_TYPE__CONFORMANCE_KIND:
-				setConformanceKind((String)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case ExpressionsPackage.MODEL_TYPE__START_POSITION:
+                setStartPosition(((Integer)newValue).intValue());
+                return;
+            case ExpressionsPackage.MODEL_TYPE__END_POSITION:
+                setEndPosition(((Integer)newValue).intValue());
+                return;
+            case ExpressionsPackage.MODEL_TYPE__METAMODEL:
+                getMetamodel().clear();
+                getMetamodel().addAll((Collection<? extends PackageRef>)newValue);
+                return;
+            case ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION:
+                getAdditionalCondition().clear();
+                getAdditionalCondition().addAll((Collection<? extends OCLExpression<EClassifier>>)newValue);
+                return;
+            case ExpressionsPackage.MODEL_TYPE__CONFORMANCE_KIND:
+                setConformanceKind((String)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case ExpressionsPackage.MODEL_TYPE__START_POSITION:
-				setStartPosition(START_POSITION_EDEFAULT);
-				return;
-			case ExpressionsPackage.MODEL_TYPE__END_POSITION:
-				setEndPosition(END_POSITION_EDEFAULT);
-				return;
-			case ExpressionsPackage.MODEL_TYPE__METAMODEL:
-				getMetamodel().clear();
-				return;
-			case ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION:
-				getAdditionalCondition().clear();
-				return;
-			case ExpressionsPackage.MODEL_TYPE__CONFORMANCE_KIND:
-				setConformanceKind(CONFORMANCE_KIND_EDEFAULT);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case ExpressionsPackage.MODEL_TYPE__START_POSITION:
+                setStartPosition(START_POSITION_EDEFAULT);
+                return;
+            case ExpressionsPackage.MODEL_TYPE__END_POSITION:
+                setEndPosition(END_POSITION_EDEFAULT);
+                return;
+            case ExpressionsPackage.MODEL_TYPE__METAMODEL:
+                getMetamodel().clear();
+                return;
+            case ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION:
+                getAdditionalCondition().clear();
+                return;
+            case ExpressionsPackage.MODEL_TYPE__CONFORMANCE_KIND:
+                setConformanceKind(CONFORMANCE_KIND_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case ExpressionsPackage.MODEL_TYPE__START_POSITION:
-				return startPosition != START_POSITION_EDEFAULT;
-			case ExpressionsPackage.MODEL_TYPE__END_POSITION:
-				return endPosition != END_POSITION_EDEFAULT;
-			case ExpressionsPackage.MODEL_TYPE__METAMODEL:
-				return metamodel != null && !metamodel.isEmpty();
-			case ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION:
-				return additionalCondition != null && !additionalCondition.isEmpty();
-			case ExpressionsPackage.MODEL_TYPE__CONFORMANCE_KIND:
-				return CONFORMANCE_KIND_EDEFAULT == null ? conformanceKind != null : !CONFORMANCE_KIND_EDEFAULT.equals(conformanceKind);
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case ExpressionsPackage.MODEL_TYPE__START_POSITION:
+                return startPosition != START_POSITION_EDEFAULT;
+            case ExpressionsPackage.MODEL_TYPE__END_POSITION:
+                return endPosition != END_POSITION_EDEFAULT;
+            case ExpressionsPackage.MODEL_TYPE__METAMODEL:
+                return metamodel != null && !metamodel.isEmpty();
+            case ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION:
+                return additionalCondition != null && !additionalCondition.isEmpty();
+            case ExpressionsPackage.MODEL_TYPE__CONFORMANCE_KIND:
+                return CONFORMANCE_KIND_EDEFAULT == null ? conformanceKind != null : !CONFORMANCE_KIND_EDEFAULT.equals(conformanceKind);
+        }
+        return super.eIsSet(featureID);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
-		if (baseClass == Visitable.class) {
-			switch (derivedFeatureID) {
-				default: return -1;
-			}
-		}
-		if (baseClass == ASTNode.class) {
-			switch (derivedFeatureID) {
-				case ExpressionsPackage.MODEL_TYPE__START_POSITION: return UtilitiesPackage.AST_NODE__START_POSITION;
-				case ExpressionsPackage.MODEL_TYPE__END_POSITION: return UtilitiesPackage.AST_NODE__END_POSITION;
-				default: return -1;
-			}
-		}
-		if (baseClass == VisitableASTNode.class) {
-			switch (derivedFeatureID) {
-				default: return -1;
-			}
-		}
-		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-	}
+        if (baseClass == Visitable.class) {
+            switch (derivedFeatureID) {
+                default: return -1;
+            }
+        }
+        if (baseClass == ASTNode.class) {
+            switch (derivedFeatureID) {
+                case ExpressionsPackage.MODEL_TYPE__START_POSITION: return UtilitiesPackage.AST_NODE__START_POSITION;
+                case ExpressionsPackage.MODEL_TYPE__END_POSITION: return UtilitiesPackage.AST_NODE__END_POSITION;
+                default: return -1;
+            }
+        }
+        if (baseClass == VisitableASTNode.class) {
+            switch (derivedFeatureID) {
+                default: return -1;
+            }
+        }
+        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
-		if (baseClass == Visitable.class) {
-			switch (baseFeatureID) {
-				default: return -1;
-			}
-		}
-		if (baseClass == ASTNode.class) {
-			switch (baseFeatureID) {
-				case UtilitiesPackage.AST_NODE__START_POSITION: return ExpressionsPackage.MODEL_TYPE__START_POSITION;
-				case UtilitiesPackage.AST_NODE__END_POSITION: return ExpressionsPackage.MODEL_TYPE__END_POSITION;
-				default: return -1;
-			}
-		}
-		if (baseClass == VisitableASTNode.class) {
-			switch (baseFeatureID) {
-				default: return -1;
-			}
-		}
-		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
-	}
+        if (baseClass == Visitable.class) {
+            switch (baseFeatureID) {
+                default: return -1;
+            }
+        }
+        if (baseClass == ASTNode.class) {
+            switch (baseFeatureID) {
+                case UtilitiesPackage.AST_NODE__START_POSITION: return ExpressionsPackage.MODEL_TYPE__START_POSITION;
+                case UtilitiesPackage.AST_NODE__END_POSITION: return ExpressionsPackage.MODEL_TYPE__END_POSITION;
+                default: return -1;
+            }
+        }
+        if (baseClass == VisitableASTNode.class) {
+            switch (baseFeatureID) {
+                default: return -1;
+            }
+        }
+        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (startPosition: "); //$NON-NLS-1$
-		result.append(startPosition);
-		result.append(", endPosition: "); //$NON-NLS-1$
-		result.append(endPosition);
-		result.append(", conformanceKind: "); //$NON-NLS-1$
-		result.append(conformanceKind);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (startPosition: "); //$NON-NLS-1$
+        result.append(startPosition);
+        result.append(", endPosition: "); //$NON-NLS-1$
+        result.append(endPosition);
+        result.append(", conformanceKind: "); //$NON-NLS-1$
+        result.append(conformanceKind);
+        result.append(')');
+        return result.toString();
+    }
 
 } //ModelTypeImpl

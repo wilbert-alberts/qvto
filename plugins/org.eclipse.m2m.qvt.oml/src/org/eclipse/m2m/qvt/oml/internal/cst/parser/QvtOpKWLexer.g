@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpKWLexer.g,v 1.8 2007/12/18 10:08:39 radvorak Exp $ 
+-- * $Id: QvtOpKWLexer.g,v 1.9 2008/02/01 10:56:07 aigdalov Exp $ 
 -- */
 --
 -- The QVT KeyWord Lexer
@@ -76,7 +76,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpKWLexer.g,v 1.8 2007/12/18 10:08:39 radvorak Exp $
+ * $Id: QvtOpKWLexer.g,v 1.9 2008/02/01 10:56:07 aigdalov Exp $
  */
 	./
 $End
@@ -125,7 +125,13 @@ $Export
 	main
 	this
 	switch
-	
+	xselect         
+	xcollect        
+	selectOne       
+	collectOne      
+	collectselect   
+	collectselectOne
+
 	rename
 $End
 
@@ -397,6 +403,42 @@ $Rules
 		| s w i t c h
 		/.$BeginAction
 			$setResult($_switch);
+		  $EndAction
+		./
+		
+		| x s e l e c t
+		/.$BeginAction
+			$setResult($_xselect);
+		  $EndAction
+		./
+		
+		| x c o l l e c t
+		/.$BeginAction
+			$setResult($_xcollect);
+		  $EndAction
+		./
+		
+		| s e l e c t O n e
+		/.$BeginAction
+			$setResult($_selectOne);
+		  $EndAction
+		./
+		
+		| c o l l e c t O n e
+		/.$BeginAction
+			$setResult($_collectOne);
+		  $EndAction
+		./
+		
+		| c o l l e c t s e l e c t
+		/.$BeginAction
+			$setResult($_collectselect);
+		  $EndAction
+		./
+		
+		| c o l l e c t s e l e c t O n e
+		/.$BeginAction
+			$setResult($_collectselectOne);
 		  $EndAction
 		./
 		

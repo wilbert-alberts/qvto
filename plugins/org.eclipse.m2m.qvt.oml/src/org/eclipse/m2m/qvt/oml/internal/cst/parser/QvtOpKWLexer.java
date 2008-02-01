@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpKWLexer.java,v 1.28 2008/01/12 00:15:49 radvorak Exp $
+* $Id: QvtOpKWLexer.java,v 1.29 2008/02/01 10:56:07 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpKWLexer.java,v 1.28 2008/01/12 00:15:49 radvorak Exp $
+* $Id: QvtOpKWLexer.java,v 1.29 2008/02/01 10:56:07 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -39,7 +39,7 @@ package org.eclipse.m2m.qvt.oml.internal.cst.parser;
 public class QvtOpKWLexer extends QvtOpKWLexerprs implements QvtOpLPGParsersym
 {
     private char[] inputChars;
-    private final int keywordKind[] = new int[97 + 1];
+    private final int keywordKind[] = new int[103 + 1];
 
     public int[] getKeywordKinds() { return keywordKind; }
 
@@ -715,6 +715,42 @@ public class QvtOpKWLexer extends QvtOpKWLexerprs implements QvtOpLPGParsersym
         // Rule 97:  QVTKeyWord ::= s w i t c h
         //
 		keywordKind[97] = (TK_switch);
+	  
+	
+        //
+        // Rule 98:  QVTKeyWord ::= x s e l e c t
+        //
+		keywordKind[98] = (TK_xselect);
+	  
+	
+        //
+        // Rule 99:  QVTKeyWord ::= x c o l l e c t
+        //
+		keywordKind[99] = (TK_xcollect);
+	  
+	
+        //
+        // Rule 100:  QVTKeyWord ::= s e l e c t O n e
+        //
+		keywordKind[100] = (TK_selectOne);
+	  
+	
+        //
+        // Rule 101:  QVTKeyWord ::= c o l l e c t O n e
+        //
+		keywordKind[101] = (TK_collectOne);
+	  
+	
+        //
+        // Rule 102:  QVTKeyWord ::= c o l l e c t s e l e c t
+        //
+		keywordKind[102] = (TK_collectselect);
+	  
+	
+        //
+        // Rule 103:  QVTKeyWord ::= c o l l e c t s e l e c t O n e
+        //
+		keywordKind[103] = (TK_collectselectOne);
 	  
 	
 

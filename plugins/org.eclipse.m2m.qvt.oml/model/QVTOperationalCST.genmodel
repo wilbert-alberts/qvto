@@ -146,12 +146,12 @@
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/MappingCallExpCS/strict"/>
       </genClasses>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/WhileExpCS">
-        <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/WhileExpCS/bodyExpressions"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/WhileExpCS/body"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/WhileExpCS/condition"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/WhileExpCS/result"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/WhileExpCS/resultVar"/>
       </genClasses>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/SwitchExpCS">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/SwitchExpCS/alternativePart"/>
@@ -222,6 +222,16 @@
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/TypeSpecCS/typeCS"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/TypeSpecCS/simpleNameCS"/>
       </genClasses>
+      <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/LogExpCS">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/LogExpCS/condition"/>
+      </genClasses>
+      <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/AssertExpCS">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/AssertExpCS/assertion"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/AssertExpCS/log"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/AssertExpCS/severity"/>
+      </genClasses>
+      <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/ImperativeLoopExpCS"/>
+      <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/ImperativeIterateExpCS"/>
       <nestedGenPackages prefix="Temp" basePackage="org.eclipse.m2m.qvt.oml.internal.cst"
           disposableProviderFactory="true" ecorePackage="QVTOperationalCST.ecore#//cst/temp">
         <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/temp/ErrorCallExpCS"/>

@@ -267,7 +267,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
         super.deleteElement(name);
     }
 
-    public Variable<EClassifier, EParameter> lookupImplicitSource() {
+    public Variable<EClassifier, EParameter> lookupAnyImplicitSource() {
         for (int i = myNamedElements.size() - 1; i >= 0; i--) {
             QvtVariableEntry element = myNamedElements.get(i);
             Variable<EClassifier, EParameter> vdcl = element.getVariable();
@@ -276,7 +276,19 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
                 return vdcl;
             }
         }
+        if (getInternalParent() instanceof QvtOperationalEnv) {
+            QvtOperationalEnv parentEnv = (QvtOperationalEnv) getInternalParent();
+            return parentEnv.lookupAnyImplicitSource();
+        }
         return null;
+    }
+    
+    public Variable<EClassifier, EParameter> lookupImplicitSourceForResolveExp() {
+        Variable<EClassifier,EParameter> implicitSource = lookupAnyImplicitSource();
+        if ((implicitSource != null) && (implicitSource.getType() == getModuleContextType())) {
+            return null;
+        }
+        return implicitSource;
     }
     
 	public void reportError(String message, int startOffset, int endOffset) {
@@ -714,7 +726,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			var.setName(Environment.SELF_VARIABLE_NAME);
 			var.setType(context.getEType());
 			var.setRepresentedParameter(context);
-			newEnvironment.addElement(var.getName(), var, false);
+			newEnvironment.addElement(var.getName(), var, true);
 		}		
 		if (context != getOCLStandardLibrary().getOclVoid()) {
 			Variable<EClassifier, EParameter> mainVar = ExpressionsFactory.eINSTANCE.createVariable();
@@ -912,5 +924,4 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		}
 		super.initASTMapping(astNode, cstNode);
 	}
-    
 }

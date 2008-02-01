@@ -25,6 +25,8 @@ import org.eclipse.m2m.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.qvt.oml.expressions.Helper;
+import org.eclipse.m2m.qvt.oml.expressions.ImperativeIterateExp;
+import org.eclipse.m2m.qvt.oml.expressions.ImperativeLoopExp;
 import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.expressions.Library;
 import org.eclipse.m2m.qvt.oml.expressions.LocalProperty;
@@ -409,5 +411,13 @@ abstract class QvtGenericEvaluationVisitor
 	
 	public Object visitLogExp(LogExp logExp) {
 		return getQVTDelegate().visitLogExp(logExp);
-	}	
+	}
+	
+    public Object visitImperativeLoopExp(ImperativeLoopExp imperativeLoopExp) {
+        return getQVTDelegate().visitImperativeLoopExp(imperativeLoopExp);
+    }
+
+    public Object visitImperativeIterateExp(ImperativeIterateExp imperativeIterateExp) {
+        return getQVTDelegate().visitImperativeIterateExp(imperativeIterateExp);
+    }
 }

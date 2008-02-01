@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLexer.g,v 1.3 2007/11/27 20:33:22 radvorak Exp $
+-- * $Id: QvtOpLexer.g,v 1.4 2008/02/01 10:56:07 aigdalov Exp $
 -- */
 --
 -- The QVT Lexer
@@ -77,7 +77,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLexer.g,v 1.3 2007/11/27 20:33:22 radvorak Exp $
+ * $Id: QvtOpLexer.g,v 1.4 2008/02/01 10:56:07 aigdalov Exp $
  */
 	./
 $End
@@ -88,6 +88,7 @@ $Export
 	ADD_ASSIGN
 	RESET_ASSIGN
 	AT_SIGN
+	EXCLAMATION_MARK
 	
 $End
 
@@ -114,6 +115,12 @@ $Rules
 	Token ::= '@'
 		/.$BeginAction
 					makeToken($_AT_SIGN);
+		  $EndAction
+		./
+
+	Token ::= '!'
+		/.$BeginAction
+					makeToken($_EXCLAMATION_MARK);
 		  $EndAction
 		./
 

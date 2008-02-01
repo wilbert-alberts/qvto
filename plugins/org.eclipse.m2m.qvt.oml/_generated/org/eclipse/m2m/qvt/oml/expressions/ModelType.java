@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ModelType.java,v 1.3 2007/12/01 23:33:04 radvorak Exp $
+ * $Id: ModelType.java,v 1.4 2008/02/01 10:56:01 aigdalov Exp $
  */
 package org.eclipse.m2m.qvt.oml.expressions;
 
@@ -42,76 +42,76 @@ import org.eclipse.ocl.utilities.Visitor;
  */
 public interface ModelType extends EClass, VisitableASTNode {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
 	/**
-	 * Returns the value of the '<em><b>Metamodel</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.m2m.qvt.oml.expressions.PackageRef}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Metamodel</b></em>' containment reference list.
+     * The list contents are of type {@link org.eclipse.m2m.qvt.oml.expressions.PackageRef}.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Metamodel</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Metamodel</em>' containment reference list.
-	 * @see org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage#getModelType_Metamodel()
-	 * @model containment="true" required="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Metamodel</em>' containment reference list.
+     * @see org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage#getModelType_Metamodel()
+     * @model containment="true" required="true"
+     * @generated
+     */
 	EList<PackageRef> getMetamodel();
 
 	/**
-	 * Returns the value of the '<em><b>Additional Condition</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.expressions.OCLExpression}&lt;org.eclipse.emf.ecore.EClassifier>.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Additional Condition</b></em>' containment reference list.
+     * The list contents are of type {@link org.eclipse.ocl.expressions.OCLExpression}&lt;org.eclipse.emf.ecore.EClassifier>.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Additional Condition</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Additional Condition</em>' containment reference list.
-	 * @see org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage#getModelType_AdditionalCondition()
-	 * @model containment="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Additional Condition</em>' containment reference list.
+     * @see org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage#getModelType_AdditionalCondition()
+     * @model containment="true"
+     * @generated
+     */
 	EList<OCLExpression<EClassifier>> getAdditionalCondition();
 
 	/**
-	 * Returns the value of the '<em><b>Conformance Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Conformance Kind</b></em>' attribute.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Conformance Kind</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Conformance Kind</em>' attribute.
-	 * @see #setConformanceKind(String)
-	 * @see org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage#getModelType_ConformanceKind()
-	 * @model
-	 * @generated
-	 */
+     * @return the value of the '<em>Conformance Kind</em>' attribute.
+     * @see #setConformanceKind(String)
+     * @see org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage#getModelType_ConformanceKind()
+     * @model
+     * @generated
+     */
 	String getConformanceKind();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.expressions.ModelType#getConformanceKind <em>Conformance Kind</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.expressions.ModelType#getConformanceKind <em>Conformance Kind</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Conformance Kind</em>' attribute.
-	 * @see #getConformanceKind()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Conformance Kind</em>' attribute.
+     * @see #getConformanceKind()
+     * @generated
+     */
 	void setConformanceKind(String value);
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((<%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%><T, ?, ?, ?, ?>) v).visitModelType(this);'"
-	 * @generated
-	 */
+     * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((<%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%><T, ?, ?, ?, ?>) v).visitModelType(this);'"
+     * @generated
+     */
 	<T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v);
 
 } // ModelType

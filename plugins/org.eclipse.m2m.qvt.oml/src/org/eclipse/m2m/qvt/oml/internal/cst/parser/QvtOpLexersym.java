@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexersym.java,v 1.28 2008/01/12 00:15:49 radvorak Exp $
+* $Id: QvtOpLexersym.java,v 1.29 2008/02/01 10:56:07 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexersym.java,v 1.28 2008/01/12 00:15:49 radvorak Exp $
+* $Id: QvtOpLexersym.java,v 1.29 2008/02/01 10:56:07 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -39,7 +39,7 @@ public interface QvtOpLexersym {
       Char_CtlCharNotWS = 103,
       Char_LF = 98,
       Char_CR = 99,
-      Char_HT = 91,
+      Char_HT = 92,
       Char_FF = 100,
       Char_a = 16,
       Char_b = 17,
@@ -108,11 +108,11 @@ public interface QvtOpLexersym {
       Char_Space = 72,
       Char_DoubleQuote = 78,
       Char_SingleQuote = 66,
-      Char_Percent = 92,
+      Char_Percent = 93,
       Char_VerticalBar = 79,
-      Char_Exclamation = 93,
-      Char_AtSign = 80,
-      Char_BackQuote = 81,
+      Char_Exclamation = 80,
+      Char_AtSign = 81,
+      Char_BackQuote = 82,
       Char_Acute = 101,
       Char_Tilde = 94,
       Char_Sharp = 95,
@@ -120,14 +120,14 @@ public interface QvtOpLexersym {
       Char_Ampersand = 96,
       Char_Caret = 74,
       Char_Colon = 75,
-      Char_SemiColon = 82,
+      Char_SemiColon = 83,
       Char_BackSlash = 97,
-      Char_LeftBrace = 83,
-      Char_RightBrace = 84,
-      Char_LeftBracket = 85,
-      Char_RightBracket = 86,
-      Char_QuestionMark = 87,
-      Char_Comma = 88,
+      Char_LeftBrace = 84,
+      Char_RightBrace = 85,
+      Char_LeftBracket = 86,
+      Char_RightBracket = 87,
+      Char_QuestionMark = 88,
+      Char_Comma = 89,
       Char_Dot = 67,
       Char_LessThan = 76,
       Char_GreaterThan = 68,
@@ -135,8 +135,8 @@ public interface QvtOpLexersym {
       Char_Minus = 69,
       Char_Slash = 77,
       Char_Star = 71,
-      Char_LeftParen = 89,
-      Char_RightParen = 90,
+      Char_LeftParen = 90,
+      Char_RightParen = 91,
       Char_Equal = 12,
       Char_EOF = 102;
 
@@ -221,6 +221,7 @@ public interface QvtOpLexersym {
                  "Slash",
                  "DoubleQuote",
                  "VerticalBar",
+                 "Exclamation",
                  "AtSign",
                  "BackQuote",
                  "SemiColon",
@@ -234,7 +235,6 @@ public interface QvtOpLexersym {
                  "RightParen",
                  "HT",
                  "Percent",
-                 "Exclamation",
                  "Tilde",
                  "Sharp",
                  "Ampersand",

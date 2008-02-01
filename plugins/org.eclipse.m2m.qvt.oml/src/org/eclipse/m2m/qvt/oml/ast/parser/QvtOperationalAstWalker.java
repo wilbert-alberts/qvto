@@ -28,6 +28,8 @@ import org.eclipse.m2m.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.qvt.oml.expressions.Helper;
+import org.eclipse.m2m.qvt.oml.expressions.ImperativeIterateExp;
+import org.eclipse.m2m.qvt.oml.expressions.ImperativeLoopExp;
 import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.expressions.Library;
 import org.eclipse.m2m.qvt.oml.expressions.LocalProperty;
@@ -172,7 +174,7 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
         for (Rename rename : module.getOwnedRenaming()) {
             doProcess(rename, module);
         }
-        
+
         // Remark: using QvtOperationalParserUtil.getOwnedOperations() operation instead of direct
         // access to EClass::getEOperations(), as contextual mappings are in owned by the module type 
         // as it is understood by MDT OCL and would produce wrong behavior in operations lookup
@@ -227,7 +229,7 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
         return null;
     }
 
-    
+
     public Object visitBlockExp(BlockExp blockExp) {
         for (OCLExpression<EClassifier> exp : blockExp.getBody()) {
             doProcess(exp, blockExp);
@@ -237,19 +239,19 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
 
 
     public Object visitWhileExp(WhileExp whileExp) {
-    	doProcess(whileExp.getBody(), whileExp);
+        doProcess(whileExp.getBody(), whileExp);
 
-    	if (whileExp.getCondition() != null) {
+        if (whileExp.getCondition() != null) {
             doProcess(whileExp.getCondition(), whileExp);
         }
         if (whileExp.getResult() != null) {
             doProcess(whileExp.getResult(), whileExp);
         }
-        
+
         if (whileExp.getResultVar() != null) {
             doProcess(whileExp.getResult(), whileExp);
         }
-        
+
         return null;
     }
 
@@ -419,7 +421,7 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
     public Object visitVariable(Variable<EClassifier, EParameter> variable) {
         return null;
     }
-    
+
 
     public Object visitVariableExp(VariableExp<EClassifier, EParameter> variableExp) {
         Variable<EClassifier, EParameter> referredVariable = variableExp.getReferredVariable();
@@ -430,12 +432,7 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
     }
 
     public Object visitResolveExp(ResolveExp resolveExp) {
-        if (resolveExp.getSource() != null) {
-            doProcess(resolveExp.getSource(), resolveExp);
-        }
-        if (resolveExp.getCondition() != null) {
-            doProcess(resolveExp.getCondition(), resolveExp);
-        }
+        doProcess(resolveExp.getCondition(), resolveExp);
         return null;
     }
 
@@ -446,37 +443,37 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
         return visitResolveExp(resolveInExp);
     }
 
-	public Object visitModelType(ModelType modelType) {
+    public Object visitModelType(ModelType modelType) {
         for (OCLExpression<EClassifier> exp : modelType.getAdditionalCondition()) {
             doProcess(exp, modelType);
         }
-		return null;
-	}
-	
-	public Object visitLogExp(LogExp logExp) {
-		for (OCLExpression<EClassifier> arg : logExp.getArgument()) {
-			doProcess(arg, logExp);
-		}
-		
-		if(logExp.getCondition() != null) {
-			doProcess(logExp.getCondition(), logExp);
-		}
-		
-		return null;
-	}
-	
-	public Object visitAssertExp(AssertExp assertExp) {
-		if(assertExp.getAssertion() != null) {
-			doProcess(assertExp.getAssertion(), assertExp);
-		}
-		
-		if(assertExp.getLog() != null) {
-			doProcess(assertExp.getLog(), assertExp);
-		}
-		
-		return null;
-	}
-    
+        return null;
+    }
+
+    public Object visitLogExp(LogExp logExp) {
+        for (OCLExpression<EClassifier> arg : logExp.getArgument()) {
+            doProcess(arg, logExp);
+        }
+
+        if(logExp.getCondition() != null) {
+            doProcess(logExp.getCondition(), logExp);
+        }
+
+        return null;
+    }
+
+    public Object visitAssertExp(AssertExp assertExp) {
+        if(assertExp.getAssertion() != null) {
+            doProcess(assertExp.getAssertion(), assertExp);
+        }
+
+        if(assertExp.getLog() != null) {
+            doProcess(assertExp.getLog(), assertExp);
+        }
+
+        return null;
+    }
+
     private void doProcess(Visitable e, Visitable parent) {
         if(e != null && !myProcessed.contains(e)) {
             myNodeProcessor.process(e, parent);
@@ -487,7 +484,7 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
 
     private final NodeProcessor myNodeProcessor;
     private final Set<Visitable> myProcessed;
-    
+
     public Object visitSwitchAltExp(AltExp switchAltExp) {
         doProcess(switchAltExp.getCondition(), switchAltExp);
         doProcess(switchAltExp.getBody(), switchAltExp);
@@ -504,5 +501,14 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
         doProcess(switchExp.getElsePart(), switchExp);
         return null;
     }
+    
+    public Object visitImperativeLoopExp(ImperativeLoopExp imperativeLoopExp) {
+        doProcess(imperativeLoopExp.getCondition(), imperativeLoopExp);
+        doProcess(imperativeLoopExp.getBody(), imperativeLoopExp);
+        return null;
+    }
 
+    public Object visitImperativeIterateExp(ImperativeIterateExp imperativeIterateExp) {
+        return visitImperativeLoopExp(imperativeIterateExp);
+    }
 }

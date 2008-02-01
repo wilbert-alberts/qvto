@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ModelParameter.java,v 1.3 2007/12/01 23:33:04 radvorak Exp $
+ * $Id: ModelParameter.java,v 1.4 2008/02/01 10:56:01 aigdalov Exp $
  */
 package org.eclipse.m2m.qvt.oml.expressions;
 
@@ -26,10 +26,10 @@ package org.eclipse.m2m.qvt.oml.expressions;
  */
 public interface ModelParameter extends VarParameter {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
 } // ModelParameter
