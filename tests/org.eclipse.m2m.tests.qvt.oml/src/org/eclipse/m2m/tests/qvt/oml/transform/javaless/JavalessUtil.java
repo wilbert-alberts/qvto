@@ -50,8 +50,8 @@ public class JavalessUtil {
     public static String changeTransformationName(String content, String oldName, String newName) {
     	//TODO: more accurate
     	return content.replaceFirst(
-    			"\\s*transformation\\s+(.*?)\\s*;",  //$NON-NLS-1$
-    			"\ntransformation " + newName + ";\n"); //$NON-NLS-1$ //$NON-NLS-2$ 
+    			"\\s*transformation\\s+" + oldName,  //$NON-NLS-1$
+    			"\ntransformation " + newName); //$NON-NLS-1$ 
     }
     
     private static boolean isEcoreFile(String fname) {
