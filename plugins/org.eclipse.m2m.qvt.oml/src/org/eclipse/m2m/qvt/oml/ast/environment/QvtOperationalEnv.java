@@ -50,9 +50,6 @@ import org.eclipse.m2m.qvt.oml.internal.ast.parser.MappingsMapKey;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.ValidationMessages;
 import org.eclipse.m2m.qvt.oml.internal.cst.adapters.ModelTypeMetamodelsAdapter;
-import org.eclipse.m2m.qvt.oml.ocl.transformations.Library;
-import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryCreationException;
-import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryOperation;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.EnvironmentFactory;
 import org.eclipse.ocl.cst.CSTNode;
@@ -101,7 +98,10 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		myErrorRecordFlag = true;
 		myCheckForDuplicateErrors = false;
 
-		defineStandardOperations();
+		if(parent == null) {
+			// define std only in the root environment
+			defineStandardOperations();
+		}
 
 		ePackageRegistry = eRegistry;		
 		myModelTypeRegistry = parent != null ? parent.myModelTypeRegistry : new LinkedHashMap<String, ModelType>(1);
@@ -109,6 +109,14 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	
 	protected QvtOperationalEnv(QvtOperationalEnv parent) {
 		this(parent, parent != null ? parent.getEPackageRegistry() : new EPackageRegistryImpl());
+	}
+	
+    public List<Module> getJavaLibs() {
+    	if(getInternalParent() instanceof QvtOperationalEnv) {
+    		return ((QvtOperationalEnv)getInternalParent()).getJavaLibs();
+    	}
+
+    	return Collections.<Module>emptyList();
 	}
 	
 	/**
@@ -123,8 +131,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
     }
 
 	public MetamodelRegistry getMetamodelRegistry() {
-		if(getParent() instanceof QvtOperationalEnv) {
-			return ((QvtOperationalEnv)getParent()).getMetamodelRegistry();
+		if(getInternalParent() instanceof QvtOperationalEnv) {
+			return ((QvtOperationalEnv)getInternalParent()).getMetamodelRegistry();
 		}
 		return MetamodelRegistry.getInstance();
 	}
@@ -179,16 +187,6 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		return metamodels;
 	}
 	
-	public void registerLibrary(Library lib) throws LibraryCreationException {
-		for (LibraryOperation libOp : lib.getLibraryOperations()) {
-	        QvtLibraryOperation qvtLibOp = new QvtLibraryOperation(this, libOp);
-
-	        getQVTStandardLibrary().defineOperation(this, libOp,
-	        		qvtLibOp.getContextType(), qvtLibOp.getReturnType(),
-	        		libOp.getName(), qvtLibOp.getParamTypes());	        
-		}
-	}
-
 	@Override
 	public QvtOperationalEnvFactory getFactory() {
 		return myFactory;
@@ -215,7 +213,12 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	        }
 	        
 	        for (int i = 0, n = params.size(); i < n; ++i) {
-				EClassifier argType = args.get(i).getType();
+	        	TypedElement<EClassifier> argVal = args.get(i);
+	        	if(argVal == null) {
+	        		// may have not been parsed successfully
+	        		continue;
+	        	}
+				EClassifier argType = argVal.getType();
 				EClassifier popType = uml.getOCLType(params.get(i));
 	            
 	            if (!QvtOperationalParserUtil.isTypeEquals(this, argType, popType)) {
@@ -521,8 +524,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		try {
 			myLookupOperationNames.add(name);
 			result = super.lookupImplicitSourceForOperation(name, args);
-			if(result == null && getParent() != null) {
-				result = getParent().lookupImplicitSourceForOperation(name, args);
+			if(result == null && getInternalParent() != null) {
+				result = getInternalParent().lookupImplicitSourceForOperation(name, args);
 			}
 		}
 		finally {
@@ -543,8 +546,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		try {
 			myLookupPropertyNames.add(name);
 			implicitSource = super.lookupImplicitSourceForProperty(name);
-			if(implicitSource == null && getParent() != null) {
-				implicitSource = getParent().lookupImplicitSourceForProperty(name);
+			if(implicitSource == null && getInternalParent() != null) {
+				implicitSource = getInternalParent().lookupImplicitSourceForProperty(name);
 			}			
 		}
 		finally {
@@ -664,9 +667,9 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
     
 	public EOperation defineImperativeOperation(ImperativeOperation operation, boolean isMappingOperation,
 			boolean isCheckDuplicates) {
-		EClassifier contextType = operation.getContext().getEType();
-		if (contextType == null) {
-			contextType = getModuleContextType();
+		EClassifier ownerType = QvtOperationalParserUtil.getContextualType(operation);
+		if (ownerType == null) {
+			ownerType = getModuleContextType();
 		}
 		
 		Constraint constraint = EcoreFactory.eINSTANCE.createConstraint();
@@ -674,14 +677,14 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 				QvtOperationalEnv.MAPPING_OPERATION_STEREOTYPE : QvtOperationalEnv.IMPERATIVE_OPERATION_STEREOTYPE);
 
 		EOperation newOperation = operation;
-		EOperation addOperation = addOperation(contextType, newOperation, isCheckDuplicates);
+		EOperation addOperation = addOperation(ownerType, newOperation, isCheckDuplicates);
 		
 		if (isCheckDuplicates) {
-			CollisionStatus collidingOperStatus = findCollidingOperation(contextType, newOperation);
+			CollisionStatus collidingOperStatus = findCollidingOperation(ownerType, newOperation);
 			if(collidingOperStatus != null) {
 				if(collidingOperStatus.getCollisionKind() == CollisionStatus.ALREADY_DEFINED) {
 					reportError(NLS.bind(ValidationMessages.SemanticUtil_0, new Object[] {
-									operation.getName(), contextType.getName() }),
+									operation.getName(), ownerType.getName() }),
 									operation.getStartPosition(), operation.getEndPosition());
 				} 
 				else if(collidingOperStatus.getCollisionKind() == CollisionStatus.VIRTUAL_METHOD_RETURNTYPE) {
@@ -697,7 +700,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	
 	@Override
 	public EClass getModuleContextType() {
-		return getParent() instanceof QvtOperationalEnv ? ((QvtOperationalEnv)getParent()).getModuleContextType() : null;
+		return getInternalParent() instanceof QvtOperationalEnv ? ((QvtOperationalEnv)getInternalParent()).getModuleContextType() : null;
 	}	
 		
 	public void defineOperationParameters(ImperativeOperation operation) {
@@ -716,24 +719,22 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		}
 	}
 	
-	public QvtOperationalEnv createOperationEnvironment(VarParameter context) {
+	public QvtOperationalEnv createOperationEnvironment(ImperativeOperation operation) {
 		QvtOperationalEnv newEnvironment = new QvtOperationalEnv(this);
 		newEnvironment.setASTNodeToCSTNodeMap(getASTNodeToCSTNodeMap());
-
-		if(context.getEType() != getModuleContextType()) {
-			// define self implicit source only in case if context-less operations
-			Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
-			var.setName(Environment.SELF_VARIABLE_NAME);
-			var.setType(context.getEType());
-			var.setRepresentedParameter(context);
-			newEnvironment.addElement(var.getName(), var, true);
-		}		
-		if (context != getOCLStandardLibrary().getOclVoid()) {
-			Variable<EClassifier, EParameter> mainVar = ExpressionsFactory.eINSTANCE.createVariable();
-			mainVar.setName(getOCLStandardLibrary().getOclVoid().getName());
-			mainVar.setType(getOCLStandardLibrary().getOclVoid());
-			newEnvironment.addElement(mainVar.getName(), mainVar, false);
+		
+		if(QvtOperationalParserUtil.isContextual(operation)) {
+			VarParameter context = operation.getContext();
+			if(context.getEType() != getModuleContextType()) {
+				// define self implicit source only in case if contextual operations
+				Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
+				var.setName(Environment.SELF_VARIABLE_NAME);
+				var.setType(context.getEType());
+				var.setRepresentedParameter(context);
+				newEnvironment.addElement(var.getName(), var, false);
+			}
 		}
+
 		newEnvironment.registerModelParametersImpl(myModelParameters);
 		return newEnvironment;
 	}
@@ -756,10 +757,15 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	}
 	
 	public void registerMappingOperation(MappingOperation operation) {
-	    if (getParent() != null) {
-	        ((QvtOperationalEnv) getParent()).registerMappingOperation(operation);
+	    if (getInternalParent() != null) {
+	        ((QvtOperationalEnv) getInternalParent()).registerMappingOperation(operation);
 	    } else {
-            MappingsMapKey key = new MappingsMapKey(operation.getContext().getEType(), operation.getName());
+			EClassifier ownerType = QvtOperationalParserUtil.getContextualType(operation);
+			if (ownerType == null) {
+				ownerType = getModuleContextType();
+			}
+	    	
+            MappingsMapKey key = new MappingsMapKey(ownerType, operation.getName());
             List<MappingOperation> sameNameAndContextOperations = myMappingsMap.get(key);
             if (sameNameAndContextOperations == null) {
                 sameNameAndContextOperations = new ArrayList<MappingOperation>();
@@ -770,15 +776,15 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	}
 	
 	public void registerResolveInExp(ResolveInExp resolveInExp, EClassifier referredMappingContextType, String mappingName) {
-        if (getParent() != null) {
-            ((QvtOperationalEnv) getParent()).registerResolveInExp(resolveInExp, referredMappingContextType, mappingName);
+        if (getInternalParent() != null) {
+            ((QvtOperationalEnv) getInternalParent()).registerResolveInExp(resolveInExp, referredMappingContextType, mappingName);
         } else {
             myResolveInExps.put(resolveInExp, new MappingsMapKey(referredMappingContextType, mappingName));
         }
 	}
 	
 	public void resolveResolveInExpInMappings() {
-	    if (getParent() == null) {
+	    if (getInternalParent() == null) {
 	        for (Map.Entry<ResolveInExp, MappingsMapKey> entry : myResolveInExps.entrySet()) {
 	            MappingsMapKey mappingsMapKey = entry.getValue();
 	            List<MappingOperation> sameNameAndContextOperations = myMappingsMap.get(mappingsMapKey);
@@ -790,7 +796,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	            }
 	        }
 	    } else {
-	    	((QvtOperationalEnv)getParent()).resolveResolveInExpInMappings();
+	    	((QvtOperationalEnv)getInternalParent()).resolveResolveInExpInMappings();
 	    }
 	}
 	
@@ -826,10 +832,10 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	}
 
 	private EOperation addOperation(EClassifier owner, EOperation operation, boolean fake) {
-		if (getParent() instanceof QvtOperationalEnv) {
+		if (getInternalParent() instanceof QvtOperationalEnv) {
 			// propagate additional operations as high as possible so that they
 			//    will be accessible to all child environments of the root
-			return ((QvtOperationalEnv) getParent()).addOperation(owner, operation, fake);
+			return ((QvtOperationalEnv) getInternalParent()).addOperation(owner, operation, fake);
 		} else {
 			return getTypeResolver().resolveAdditionalOperation(owner, operation);
 		}

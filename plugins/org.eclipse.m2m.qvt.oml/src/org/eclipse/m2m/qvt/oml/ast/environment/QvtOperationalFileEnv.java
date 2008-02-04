@@ -11,6 +11,10 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.ast.environment;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
@@ -26,6 +30,9 @@ import org.eclipse.m2m.qvt.oml.expressions.Property;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.ValidationMessages;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
+import org.eclipse.m2m.qvt.oml.ocl.transformations.Library;
+import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryCreationException;
+import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryOperation;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.expressions.ExpressionsFactory;
 import org.eclipse.ocl.expressions.Variable;
@@ -138,6 +145,40 @@ public class QvtOperationalFileEnv extends QvtOperationalEnv {
     	return  "Env:" + myFile.getFullPath(); //$NON-NLS-1$
     }
     
+    @Override
+	public List<Module> getJavaLibs() {
+    	return myLibs == null ? Collections.<Module>emptyList() : Collections.unmodifiableList(myLibs);
+	}
+    
+	public void registerLibrary(Library lib) throws LibraryCreationException {
+		if(myLibs == null) {
+			myLibs = new LinkedList<Module>();
+		}
+			 
+		Module libModule = org.eclipse.m2m.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModule();
+		libModule.setName(lib.getId());
+		myLibs.add(libModule);
+		
+		Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
+		var.setName(libModule.getName() + ".this");
+		var.setType(libModule);
+		this.addElement(var.getName(), var, false);
+		
+		for (LibraryOperation libOp : lib.getLibraryOperations()) {
+	        QvtLibraryOperation qvtLibOp = new QvtLibraryOperation(this, libOp);
+	        EClassifier ctxType = qvtLibOp.getContextType();
+	        
+	        if(ctxType  == getOCLStandardLibrary().getOclVoid()) {
+	        	ctxType = libModule;
+	        }
+	
+	        getQVTStandardLibrary().defineOperation(this, libOp,
+	        		ctxType, qvtLibOp.getReturnType(),
+	        		libOp.getName(), qvtLibOp.getParamTypes());	        
+		}
+	}
+
 	private final CFile myFile;
 	private String myQualifiedThisName;
+	private List<Module> myLibs;
 }

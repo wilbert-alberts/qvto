@@ -29,6 +29,7 @@ import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage;
+import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.library.IContext;
 import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryOperation;
 import org.eclipse.ocl.ecore.EcoreFactory;
@@ -43,6 +44,7 @@ import org.eclipse.ocl.utilities.TypedElement;
 
 public class QvtOperationalStdLibrary {
 	
+	public static final String QVT_STDLIB_MODULE_NAME = "Stdlib"; //$NON-NLS-1$
 	public static final String OUT_PRINT_WRITER = "@out_print_writer"; //$NON-NLS-1$
     public static final String QVT_STDLIB_DUMP_OPERATION = "dump"; //$NON-NLS-1$
 	public static final String QVT_STDLIB_TOSTRING_OPERATION = "toString"; //$NON-NLS-1$
@@ -55,6 +57,9 @@ public class QvtOperationalStdLibrary {
 	
 	private QvtOperationalStdLibrary() {
 		myDefinedOperations = new HashMap<EOperation, LibraryOperation>();
+		
+		myQvtStdlibModule = org.eclipse.m2m.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModule();
+		myQvtStdlibModule.setName(QVT_STDLIB_MODULE_NAME); //$NON-NLS-1$
 	}
 	
 	public EClassifier getModelType() {
@@ -64,6 +69,13 @@ public class QvtOperationalStdLibrary {
 	public void defineStandardOperations(QvtOperationalEnv env) {
 		OCLStandardLibrary<EClassifier> oclStdLib = env.getOCLStandardLibrary();
 		
+		if(env.getInternalParent() == null) {
+	        Variable<EClassifier, EParameter> variable = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();
+	        variable.setName(myQvtStdlibModule.getName() + QvtOperationalFileEnv.THIS_VAR_QNAME_SUFFIX); 
+	        variable.setType(myQvtStdlibModule);
+			env.addElement(variable.getName(), variable, false);
+		}
+
 		// Spec 8.4.3 : shorthand for 'concat' operation
 		defineOperation(env, oclStdLib.getString(), oclStdLib.getString(),
 				PredefinedType.PLUS_NAME, oclStdLib.getString());
@@ -71,14 +83,14 @@ public class QvtOperationalStdLibrary {
 //		defineOperation(env, oclStdLib.getOclAny(), oclStdLib.getSet(),
 //				PredefinedType.ALL_INSTANCES_NAME, oclStdLib.getOclType());
 
-        defineOperation(env, oclStdLib.getOclVoid(), oclStdLib.getOclVoid(),
+		defineOperation(env, myQvtStdlibModule, oclStdLib.getOclVoid(),
                 QVT_STDLIB_DUMP_OPERATION, oclStdLib.getOclAny());
 		defineOperation(env, oclStdLib.getOclAny(), oclStdLib.getOclVoid(),
 				QVT_STDLIB_DUMP_OPERATION);
 
 		EClassifier genericCollectionType = TypeUtil.resolveType(env,
 				(EClassifier) env.getOCLFactory().createCollectionType(oclStdLib.getT2()));
-		defineOperation(env, oclStdLib.getOclVoid(), oclStdLib.getOclVoid(),
+		defineOperation(env, myQvtStdlibModule, oclStdLib.getOclVoid(),
 				QVT_STDLIB_DUMP_OPERATION, genericCollectionType);
 
 		defineOperation(env, oclStdLib.getInteger(), oclStdLib.getString(),
@@ -87,12 +99,13 @@ public class QvtOperationalStdLibrary {
 				QVT_STDLIB_TOSTRING_OPERATION);
 		
 		// Operations on models (spec 8.3.5)
-		defineOperation(env, getModelType(), oclStdLib.getSet(),
+		EClassifier setOfOclAny = TypeUtil.resolveSetType(env, oclStdLib.getOclAny());
+		defineOperation(env, getModelType(), setOfOclAny,
 				QVT_STDLIB_OBJECTS_OPERATION);
-		defineOperation(env, getModelType(), oclStdLib.getSet(),
+		defineOperation(env, getModelType(), setOfOclAny,
 				QVT_STDLIB_ROOTOBJECTS_OPERATION);
-//		defineOperation(env, getModelType(), oclStdLib.getSet(),
-//				QVT_STDLIB_OBJECTSOFTYPE_OPERATION, oclStdLib.getOclType());
+		defineOperation(env, getModelType(), setOfOclAny,
+				QVT_STDLIB_OBJECTSOFTYPE_OPERATION, oclStdLib.getOclType());
 	}
 
 	public EOperation defineOperation(QvtOperationalEnv env, LibraryOperation libraryOp, EClassifier contextType,
@@ -251,7 +264,22 @@ public class QvtOperationalStdLibrary {
                 return null;
             }
 
-            Object result = libOp.run(source, args, new Object[0], returnClass);
+            // reset OclInvalid to 'null'
+        	Object[] callArgs = null;            
+            if(args != null) {
+	            for (int i = 0; i < args.length; i++) {
+	            	if(evalEnv.isOclInvalid(args[i])) {
+	            		if(callArgs == null) {
+	            			callArgs = new Object[args.length];
+	            			System.arraycopy(args, 0, callArgs, 0, args.length);
+	            		}
+	            		callArgs[i] = null;
+	            	}
+	    		}
+	            callArgs = (callArgs == null) ? args : callArgs;
+            }
+
+            Object result = libOp.run(source, callArgs, new Object[0], returnClass);
             if (result == null) {
                 return QvtOperationalUtil.getOclInvalid();
             }
@@ -303,6 +331,10 @@ public class QvtOperationalStdLibrary {
         }
     }
     
+    public Module getStdLibModule() {
+		return myQvtStdlibModule;
+	}
+    
     private static boolean areEqual(EOperation op1, EOperation op2) {
         if (!op1.getName().equals(op2.getName())) {
             return false;
@@ -349,4 +381,5 @@ public class QvtOperationalStdLibrary {
 	
 	
 	private final Map<EOperation, LibraryOperation> myDefinedOperations;
+	private final Module myQvtStdlibModule;	
 }

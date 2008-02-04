@@ -129,6 +129,7 @@ import org.eclipse.ocl.cst.CollectionTypeCS;
 import org.eclipse.ocl.cst.DotOrArrowEnum;
 import org.eclipse.ocl.cst.FeatureCallExpCS;
 import org.eclipse.ocl.cst.IfExpCS;
+import org.eclipse.ocl.cst.IteratorExpCS;
 import org.eclipse.ocl.cst.LiteralExpCS;
 import org.eclipse.ocl.cst.NullLiteralExpCS;
 import org.eclipse.ocl.cst.OCLExpressionCS;
@@ -599,7 +600,7 @@ public class QvtOperationalVisitorCS
         if(result != null) {
             // AST binding    
             if(myCompilerOptions.isGenerateCompletionData()) {          
-                ASTBindingHelper.createCST2ASTBinding(propertyCallExpCS, result, env);
+            	creatPropertyCallASTBinding(propertyCallExpCS, result, env);
             }
         }
         return result;
@@ -1194,7 +1195,7 @@ public class QvtOperationalVisitorCS
 				EOperation imperativeOp = env.defineImperativeOperation(operation, methodCS instanceof MappingRuleCS, true);
 				if(imperativeOp != null) {
 					methodMap.put(methodCS, (ImperativeOperation)imperativeOp);
-					if(operation.getContext().getEType() != module) {
+					if(QvtOperationalParserUtil.isContextual(operation)) {
 						QvtOperationalParserUtil.addOwnedOperations(module, operation);
 					}
 				}
@@ -1210,7 +1211,7 @@ public class QvtOperationalVisitorCS
 				ASTBindingHelper.createCST2ASTBinding(methodCS, imperativeOp, env);
 			} 
 
-			if(imperativeOp.getContext().getEType() == module) {
+			if(!QvtOperationalParserUtil.isContextual(imperativeOp)) {
 				module.getEOperations().add(imperativeOp);
 			}
 			
@@ -1560,13 +1561,13 @@ public class QvtOperationalVisitorCS
 		env.registerMappingOperation(operation);
 		operation.setEndPosition(methodCS.getEndOffset());
 
-		if (operation.getContext().getKind() == DirectionKind.OUT) {
+		if (QvtOperationalParserUtil.isContextual(operation) && operation.getContext().getKind() == DirectionKind.OUT) {
 			env.reportError(ValidationMessages.ContextParamMustBeInOrInout, methodCS.getMappingDeclarationCS()
 					.getDirectionKindCS());
 		}
 
 		VarParameter operationResult = (operation.getResult().isEmpty() ? null : operation.getResult().get(0));
-		QvtOperationalEnv newEnv = env.createOperationEnvironment(operation.getContext());
+		QvtOperationalEnv newEnv = env.createOperationEnvironment(operation);
 		
         if(myCompilerOptions.isGenerateCompletionData()) {          
             ASTBindingHelper.createCST2ASTBinding(methodCS, operation, newEnv);
@@ -1651,12 +1652,12 @@ public class QvtOperationalVisitorCS
 			throws SemanticException {
 		helper.setEndPosition(methodCS.getEndOffset());
 
-		if (helper.getContext().getKind() != DirectionKind.IN) {
+		if (QvtOperationalParserUtil.isContextual(helper) && helper.getContext().getKind() != DirectionKind.IN) {
 			env.reportError(ValidationMessages.ContextParamMustBeIn, methodCS.getMappingDeclarationCS()
 					.getSimpleNameCS());
 		}
 
-		QvtOperationalEnv newEnv = env.createOperationEnvironment(helper.getContext());
+		QvtOperationalEnv newEnv = env.createOperationEnvironment(helper);
 		newEnv.defineOperationParameters(helper);
 
         if(myCompilerOptions.isGenerateCompletionData()) {          
@@ -1749,16 +1750,6 @@ public class QvtOperationalVisitorCS
 			params.add(param);
 		}
 
-		MappingParameter varContext = ExpressionsFactory.eINSTANCE.createMappingParameter();
-		if (mappingDeclarationCS.getContextType() != null) {
-			varContext.setStartPosition(mappingDeclarationCS.getContextType().getStartOffset());
-			varContext.setEndPosition(mappingDeclarationCS.getContextType().getEndOffset());
-		}
-		varContext.setEType(contextType);
-		varContext.setKind(contextDirection);
-		if (varContext.getExtent() == null) {
-			varContext.setExtent(env.resolveModelParameter(contextType, varContext.getKind()));
-		}
 
 		MappingParameter varResult = ExpressionsFactory.eINSTANCE.createMappingParameter();
 		varResult.setEType(returnTypeSpec.myType);
@@ -1775,7 +1766,21 @@ public class QvtOperationalVisitorCS
 		operation.setStartPosition(mappingDeclarationCS.getStartOffset());
 		operation.setEndPosition(mappingDeclarationCS.getEndOffset());
 		operation.setName(mappingDeclarationCS.getSimpleNameCS().getValue());
+			
+		if (mappingDeclarationCS.getContextType() != null) {
+			MappingParameter varContext = ExpressionsFactory.eINSTANCE.createMappingParameter();			
+			varContext.setStartPosition(mappingDeclarationCS.getContextType().getStartOffset());
+			varContext.setEndPosition(mappingDeclarationCS.getContextType().getEndOffset());
+			
+			varContext.setEType(contextType);
+			varContext.setKind(contextDirection);
+			if (varContext.getExtent() == null) {
+				varContext.setExtent(env.resolveModelParameter(contextType, varContext.getKind()));
+			}
+		
 		operation.setContext(varContext);
+		}
+		
 		operation.getEParameters().addAll(params);
 		operation.getResult().add(varResult);
 		operation.setIsBlackbox(mappingDeclarationCS.isBlackBox());
@@ -2815,4 +2820,26 @@ public class QvtOperationalVisitorCS
 
 		return astNode;
 	}	
+
+	private static void creatPropertyCallASTBinding(
+			CallExpCS propertyCallExpCS,
+			OCLExpression<EClassifier> result,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+		ASTNode boundAST = result;
+		CSTNode boundCST = propertyCallExpCS;            	
+		if(result instanceof IteratorExp) {
+			IteratorExp<EClassifier, EParameter> itExpAST = (IteratorExp<EClassifier, EParameter>) result;
+			if(propertyCallExpCS instanceof IteratorExpCS) {
+				IteratorExpCS itExpCST = (IteratorExpCS) propertyCallExpCS;
+				if(itExpCST.getBody() != null) {
+					boundCST = itExpCST.getBody();
+				}
+			}            		
+			if(itExpAST.getBody() instanceof FeatureCallExp) {
+				boundAST = (FeatureCallExp<EClassifier>) itExpAST.getBody();
+			}
+		}
+		ASTBindingHelper.createCST2ASTBinding(boundCST, boundAST, env);
+	}
+
 }

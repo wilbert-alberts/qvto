@@ -23,7 +23,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
@@ -45,7 +44,6 @@ import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.GraphWalker;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.GraphWalker.NodeProvider;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.GraphWalker.VertexProcessor;
 import org.eclipse.m2m.qvt.oml.internal.cst.TransformationHeaderCS;
-import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CollectionTypeCS;
 import org.eclipse.ocl.cst.PathNameCS;
@@ -77,6 +75,15 @@ public class QvtOperationalParserUtil {
 	private static final String MODULE_OWNED_OPERATION_URI =	QVT_NAMESPACE_URI + "/operation"; //$NON-NLS-1$;	
 
 	private QvtOperationalParserUtil() {
+	}
+
+	public static EClassifier getContextualType(ImperativeOperation operation) {
+		VarParameter context = operation.getContext();
+		return context != null ? context.getEType() : null;		
+	}
+	
+	public static boolean isContextual(ImperativeOperation operation) {
+		return getContextualType(operation) != null;
 	}
 
 	public static String getStringRepresentation(PathNameCS pathName, String pathSeparator) {
@@ -508,18 +515,6 @@ public class QvtOperationalParserUtil {
 		return context instanceof EClass;
 	}
 	
-	private static boolean isOclVoid(final EModelElement context, final QvtOperationalEnv env) {
-		QvtOperationalEnv realEnv = (env == null ? env.getFactory().createEnvironment(null) : env);
-		if (context == realEnv.getOCLStandardLibrary().getOclVoid()) {
-			return true;
-		}
-		EAnnotation ann = context.getEAnnotation(Environment.OCL_NAMESPACE_URI);
-		if (ann != null && ann.getReferences().contains(realEnv.getOCLStandardLibrary().getOclVoid())) {
-			return true;
-		}
-		return false;
-	}
-
 	public static boolean isTypeEquals(QvtOperationalEnv env, EClassifier type, EClassifier otherType) {
 		return isAssignableToFrom(env, type, otherType) && isAssignableToFrom(env, otherType, type);
 	}
@@ -543,7 +538,11 @@ public class QvtOperationalParserUtil {
             }
         }
         
-        return isTypeEquals(env, imperativeOp.getContext().getEType(), context);
+        EClassifier contextType = getContextualType(imperativeOp);
+        if(contextType == null) {
+        	return contextType == context;
+        }
+        return isTypeEquals(env, contextType, context);
 	}
 
 	public static Module getOutermostDefiningModule(final Module module, final EOperation ctxOp,

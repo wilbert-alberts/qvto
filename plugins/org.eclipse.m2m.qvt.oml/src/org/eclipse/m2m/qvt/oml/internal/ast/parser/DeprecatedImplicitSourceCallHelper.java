@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalFileEnv;
-import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CallExpCS;
@@ -107,10 +106,8 @@ class DeprecatedImplicitSourceCallHelper {
 	}
 
 	private static boolean isModuleOperation(EOperation operation, QvtOperationalEnv env) {
-		if(operation instanceof ImperativeOperation) {
-			return env.getUMLReflection().getOwningClassifier(operation) instanceof Module; 
-		}
-		return false;
+		EClassifier owningClassifier = env.getUMLReflection().getOwningClassifier(operation);
+		return owningClassifier instanceof Module;
 	}
 
 	private static boolean isModuleProperty(EStructuralFeature feature, QvtOperationalEnv env) {
