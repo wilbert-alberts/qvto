@@ -140,7 +140,10 @@ public class EmfUtil {
 			return in;
 		}
         if (EmfUtil.isDynamic(in) && inputType.eResource().getResourceSet() != in.eResource().getResourceSet()) {
-       		return inputType.eResource().getResourceSet().getEObject(EcoreUtil.getURI(in), true);
+        	ResourceSet rset = inputType.eResource().getResourceSet();
+        	if(rset != null) {
+        		return rset.getEObject(EcoreUtil.getURI(in), true);
+        	}
         }
         return in;
     }
