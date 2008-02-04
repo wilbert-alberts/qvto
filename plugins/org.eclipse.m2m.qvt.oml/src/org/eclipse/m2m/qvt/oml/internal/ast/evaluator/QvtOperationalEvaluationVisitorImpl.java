@@ -219,7 +219,15 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
                 }
 
                 if (exprValue instanceof Collection) {
-                    leftOclCollection = CollectionUtil.union(leftOclCollection, (Collection<?>) exprValue);
+                	if(getCollectionKind(leftOclCollection) == CollectionKind.ORDERED_SET_LITERAL) {
+                    	// can't use CollectionUtil.union(), the result type is not OrderedSet                		
+                		LinkedHashSet<Object> values = new LinkedHashSet<Object>();
+                		values.addAll(leftOclCollection);
+                		values.addAll((Collection<Object>)exprValue);
+                		leftOclCollection = CollectionUtil.createNewCollection(((CollectionType)variableType).getKind(), values);
+                	} else {
+                		leftOclCollection = CollectionUtil.union(leftOclCollection, (Collection<?>) exprValue);
+                	}
                 } else if (getCollectionKind(leftOclCollection) == CollectionKind.ORDERED_SET_LITERAL
                         || getCollectionKind(leftOclCollection) == CollectionKind.SEQUENCE_LITERAL) {
                     leftOclCollection = CollectionUtil.append(leftOclCollection, exprValue);
@@ -291,9 +299,9 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
             addToEnv(param.getName(), arg, param.getEType());
         }
 
-        VarParameter context = imperativeOperation.getContext();
-        if (!isNullOrVoidType(context)) {
-            addToEnv(Environment.SELF_VARIABLE_NAME, env.getOperationSelf(), context.getEType());
+        EClassifier contextType = QvtOperationalParserUtil.getContextualType(imperativeOperation);
+        if (contextType != null) {
+            addToEnv(Environment.SELF_VARIABLE_NAME, env.getOperationSelf(), contextType);
         }
 
 
@@ -803,7 +811,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 
         traceCheckCycle:
             for (TraceRecord traceRecord : traceRecords) {
-                if (!isNullOrVoidType(mappingOperation.getContext())) {
+                if (QvtOperationalParserUtil.isContextual(mappingOperation)) {
                     if (traceRecord.getContext().getContext() == null) {
                         continue;
                     }
@@ -862,9 +870,10 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 
         EMappingContext eMappingContext = TraceFactory.eINSTANCE.createEMappingContext();
         traceRecord.setContext(eMappingContext);
-        if(!isNullOrVoidType(mappingOperation.getContext())) {
-            VarParameterValue contextVPV = createVarParameterValue(mappingOperation,
-                    mappingOperation.getContext().getKind(), mappingOperation.getContext().getEType(), Environment.SELF_VARIABLE_NAME);
+        if(QvtOperationalParserUtil.isContextual(mappingOperation)) {
+            VarParameter operContext = mappingOperation.getContext();
+			VarParameterValue contextVPV = createVarParameterValue(mappingOperation,
+                    operContext.getKind(), operContext.getEType(), Environment.SELF_VARIABLE_NAME);
             eMappingContext.setContext(contextVPV);
             EList<TraceRecord> contextMappings = createOrGetListElementFromMap(trace.getSourceToTraceRecordMap(), contextVPV.getValue().getOclObject());
             contextMappings.add(traceRecord);
@@ -1214,15 +1223,16 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     }
 
     private static CollectionKind getCollectionKind(Collection<?> collection) {
-        if (collection instanceof HashSet) {
-            return CollectionKind.SET_LITERAL;
-        }
         if (collection instanceof ArrayList) {
             return CollectionKind.SEQUENCE_LITERAL;
         }
         if (collection instanceof LinkedHashSet) {
             return CollectionKind.ORDERED_SET_LITERAL;
         }
+        // Remark: check Set after Ordered set
+        if (collection instanceof HashSet) {
+            return CollectionKind.SET_LITERAL;
+        }        
         if (collection instanceof Bag) {
             return CollectionKind.BAG_LITERAL;
         }

@@ -107,10 +107,8 @@ class DeprecatedImplicitSourceCallHelper {
 	}
 
 	private static boolean isModuleOperation(EOperation operation, QvtOperationalEnv env) {
-		if(operation instanceof ImperativeOperation) {
-			return env.getUMLReflection().getOwningClassifier(operation) instanceof Module; 
-		}
-		return false;
+		EClassifier owningClassifier = env.getUMLReflection().getOwningClassifier(operation);
+		return owningClassifier instanceof Module;
 	}
 
 	private static boolean isModuleProperty(EStructuralFeature feature, QvtOperationalEnv env) {

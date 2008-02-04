@@ -47,6 +47,8 @@ import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.ecore.EcoreEvaluationEnvironment;
 import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.types.AnyType;
+import org.eclipse.ocl.types.CollectionType;
+import org.eclipse.ocl.util.CollectionUtil;
 import org.eclipse.ocl.util.Tuple;
 
 
@@ -164,9 +166,15 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
             if(resolvedProperty == null) { 
             	return null;
             }
+		} else if(property.getEType() instanceof CollectionType && target instanceof EObject) {
+			// module property of direct OCL collection type => override the super impl which coerce the result value 
+			// and takes only the first element and returns from navigate call
+            EObject eTarget = (EObject) target;
+            if (eTarget.eClass().getEAllStructuralFeatures().contains(property)) {
+                return eTarget.eGet(property, true);
+            }
 		}
-		//
-		
+
 		return super.navigateProperty(resolvedProperty, qualifiers, target);
 	}
 	
@@ -544,6 +552,32 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		}
         Class<?> expectedType = eStructuralFeature.getEType().getInstanceClass();
 
+        if(eStructuralFeature.getEType() instanceof CollectionType) {
+        	// OCL collection type used directly, set in module properties
+        	Collection<Object> currentValues = (Collection<Object>) owner.eGet(eStructuralFeature);        	
+    		if(currentValues == null) {
+            	CollectionType<EClassifier, EOperation> collectionType = (CollectionType<EClassifier, EOperation>) eStructuralFeature.getEType();    			
+    			currentValues = CollectionUtil.createNewCollection(collectionType.getKind());
+    			owner.eSet(eStructuralFeature, currentValues);        			
+    		}
+
+        	if(isReset) {
+        		currentValues.clear();
+        	}
+        	if(exprValue instanceof Collection) {
+        		Collection<Object> newVal = (Collection<Object>) exprValue;
+        		for (Object nextElement : newVal) {
+        			if(nextElement != getInvalidResult() && nextElement != null) {
+        				currentValues.add(nextElement);
+        			}
+				}
+        	} else if(exprValue != getInvalidResult() && exprValue != null) {
+        		currentValues.add(exprValue);
+        	}
+        	
+        	return;
+        }
+        
         if (isMany(owner, eStructuralFeature))  {
 			List<Object> featureValues = (List<Object>) owner.eGet(eStructuralFeature);
 			if (isReset) {

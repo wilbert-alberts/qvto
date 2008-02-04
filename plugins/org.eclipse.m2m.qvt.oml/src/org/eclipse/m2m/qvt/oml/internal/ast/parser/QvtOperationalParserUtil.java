@@ -77,6 +77,15 @@ public class QvtOperationalParserUtil {
 
 	private QvtOperationalParserUtil() {
 	}
+	
+	public static EClassifier getContextualType(ImperativeOperation operation) {
+		VarParameter context = operation.getContext();
+		return context != null ? context.getEType() : null;		
+	}
+	
+	public static boolean isContextual(ImperativeOperation operation) {
+		return getContextualType(operation) != null;
+	}
 
 	public static String getStringRepresentation(PathNameCS pathName, String pathSeparator) {
 		StringBuffer buffer = null;
@@ -542,7 +551,11 @@ public class QvtOperationalParserUtil {
             }
         }
         
-        return isTypeEquals(env, imperativeOp.getContext().getEType(), context);
+        EClassifier contextType = getContextualType(imperativeOp);
+        if(contextType == null) {
+        	return contextType == context;
+        }
+        return isTypeEquals(env, contextType, context);
 	}
 
 	public static Module getOutermostDefiningModule(final Module module, final EOperation ctxOp,
