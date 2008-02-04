@@ -3,6 +3,8 @@ metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 
 mapping main(inout model: ecore::EPackage): ecore::EPackage {
 	init {
+		checkOrderSetQuery();
+		
 		var resultName := 'WRONG';
 		resultName := 'OK';
 	}
@@ -34,4 +36,16 @@ mapping main(inout model: ecore::EPackage): ecore::EPackage {
 		};
 		result.eClassifiers += c4;
     }
+}
+
+query checkOrderSetQuery() : Boolean {
+	-- respect the element order in OrderSet
+	var v : OrderedSet(Integer) := OrderedSet {};   
+	v += 1;
+	v += 2;
+	v += 3;		
+	assert fatal (v->at(1) = 1);
+	assert fatal (v->at(2) = 2);
+	assert fatal (v->at(3) = 3);
+	true;
 }
