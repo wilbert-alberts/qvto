@@ -86,13 +86,17 @@ public abstract class AbstractTestQvtEditorSupport extends TestCase {
 			editor = (QvtEditor) textEditor;
 			QvtDocumentProvider qvtDocProvider = getQVTDocumentProvider(editor);
 			// wait until the currently open editor gets reconciled to produce the QVT AST
-			while(qvtDocProvider.getCompiledModule() == null) {
+			final int maxCount = 100;
+			int counter = 0;
+			while(qvtDocProvider.getCompiledModule() == null && counter++ < maxCount) {
 				try {				
 					Thread.sleep(50);
 				} catch (InterruptedException e) {
 					fail("Should never be interrupted"); //$NON-NLS-1$
 				}
 			}
+			
+			assertNotNull("Failed to open QVT Editor", qvtDocProvider.getCompiledModule()); //$NON-NLS-1$
 			
 		} catch (PartInitException e) {
 			fail("Failed to open QVTEditor. " + e); //$NON-NLS-1$

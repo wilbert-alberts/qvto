@@ -1,0 +1,30 @@
+modeltype ecore uses "http://www.eclipse.org/emf/2002/Ecore";
+
+transformation bug_214938(in inEcore : ecore, out outEcore : ecore);
+
+mapping main(in inPackage : ecore::EPackage) {
+	init {
+		object ecore::EPackage {
+			name := inPackage.getName();
+			eSubpackages += inPackage.map mapToSubPackage();
+		}
+	}
+}
+
+query ecore::EPackage::getName() : String {
+	if not oclAsType(ecore::EPackage).oclIsUndefined()
+		then oclAsType(ecore::EPackage).name
+		else 'Error-1'
+	endif
+}
+
+query ecore::EPackage::getName2() : String {
+	if oclIsTypeOf(ecore::EPackage)
+		then oclAsType(ecore::EPackage).name
+		else 'Error-2'
+	endif
+}
+
+mapping ecore::EPackage::mapToSubPackage() : ecore::EPackage {
+	name := getName2()
+}
