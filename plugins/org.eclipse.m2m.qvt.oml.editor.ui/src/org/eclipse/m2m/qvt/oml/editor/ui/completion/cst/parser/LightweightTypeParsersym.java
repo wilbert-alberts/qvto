@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.8 2008/02/01 10:55:23 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.9 2008/02/05 22:49:51 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.8 2008/02/01 10:55:23 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.9 2008/02/05 22:49:51 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser;
@@ -51,11 +51,11 @@ public interface LightweightTypeParsersym {
       TK_LESS_EQUAL = 26,
       TK_NOT_EQUAL = 15,
       TK_LPAREN = 1,
-      TK_RPAREN = 4,
+      TK_RPAREN = 3,
       TK_LBRACE = 85,
       TK_RBRACE = 86,
-      TK_LBRACKET = 93,
-      TK_RBRACKET = 94,
+      TK_LBRACKET = 92,
+      TK_RBRACKET = 96,
       TK_ARROW = 104,
       TK_BAR = 88,
       TK_COMMA = 84,
@@ -64,10 +64,10 @@ public interface LightweightTypeParsersym {
       TK_SEMICOLON = 87,
       TK_DOT = 105,
       TK_DOTDOT = 106,
-      TK_ATPRE = 92,
+      TK_ATPRE = 93,
       TK_CARET = 107,
       TK_CARETCARET = 108,
-      TK_QUESTIONMARK = 95,
+      TK_QUESTIONMARK = 94,
       TK_QUOTE_STRING_LITERAL = 123,
       TK_ADD_ASSIGN = 97,
       TK_RESET_ASSIGN = 91,
@@ -152,7 +152,7 @@ public interface LightweightTypeParsersym {
       TK_map = 61,
       TK_xmap = 62,
       TK_late = 63,
-      TK_log = 96,
+      TK_log = 95,
       TK_assert = 102,
       TK_with = 114,
       TK_resolve = 76,
@@ -185,7 +185,7 @@ public interface LightweightTypeParsersym {
       TK_collectselectOne = 121,
       TK_rename = 152,
       TK_IDENTIFIER = 2,
-      TK_ERROR_TOKEN = 3,
+      TK_ERROR_TOKEN = 4,
       TK_INTEGER_RANGE_START = 103,
       TK_EOF_TOKEN = 122;
 
@@ -193,8 +193,8 @@ public interface LightweightTypeParsersym {
                  "",
                  "LPAREN",
                  "IDENTIFIER",
-                 "ERROR_TOKEN",
                  "RPAREN",
+                 "ERROR_TOKEN",
                  "EQUAL",
                  "String",
                  "Integer",
@@ -282,11 +282,11 @@ public interface LightweightTypeParsersym {
                  "COLONCOLON",
                  "COLON",
                  "RESET_ASSIGN",
-                 "ATPRE",
                  "LBRACKET",
-                 "RBRACKET",
+                 "ATPRE",
                  "QUESTIONMARK",
                  "log",
+                 "RBRACKET",
                  "ADD_ASSIGN",
                  "else",
                  "endif",

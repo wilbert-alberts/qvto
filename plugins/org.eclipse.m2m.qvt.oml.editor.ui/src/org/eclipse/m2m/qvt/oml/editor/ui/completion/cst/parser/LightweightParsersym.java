@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.8 2008/02/01 10:55:23 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.9 2008/02/05 22:49:51 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.8 2008/02/01 10:55:23 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.9 2008/02/05 22:49:51 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser;
@@ -54,8 +54,8 @@ public interface LightweightParsersym {
       TK_RPAREN = 4,
       TK_LBRACE = 86,
       TK_RBRACE = 85,
-      TK_LBRACKET = 114,
-      TK_RBRACKET = 115,
+      TK_LBRACKET = 113,
+      TK_RBRACKET = 120,
       TK_ARROW = 126,
       TK_BAR = 91,
       TK_COMMA = 87,
@@ -64,10 +64,10 @@ public interface LightweightParsersym {
       TK_SEMICOLON = 84,
       TK_DOT = 100,
       TK_DOTDOT = 127,
-      TK_ATPRE = 109,
+      TK_ATPRE = 114,
       TK_CARET = 128,
       TK_CARETCARET = 129,
-      TK_QUESTIONMARK = 116,
+      TK_QUESTIONMARK = 115,
       TK_QUOTE_STRING_LITERAL = 130,
       TK_ADD_ASSIGN = 121,
       TK_RESET_ASSIGN = 102,
@@ -134,12 +134,12 @@ public interface LightweightParsersym {
       TK_Invalid = 18,
       TK_OclMessage = 19,
       TK_OclInvalid = 72,
-      TK_end = 117,
+      TK_end = 116,
       TK_while = 73,
       TK_out = 103,
       TK_object = 64,
-      TK_transformation = 110,
-      TK_import = 118,
+      TK_transformation = 109,
+      TK_import = 117,
       TK_library = 104,
       TK_metamodel = 105,
       TK_mapping = 95,
@@ -168,11 +168,11 @@ public interface LightweightParsersym {
       TK_where = 138,
       TK_refines = 124,
       TK_enforcing = 139,
-      TK_access = 119,
-      TK_extends = 120,
-      TK_blackbox = 111,
-      TK_abstract = 112,
-      TK_static = 113,
+      TK_access = 118,
+      TK_extends = 119,
+      TK_blackbox = 110,
+      TK_abstract = 111,
+      TK_static = 112,
       TK_result = 49,
       TK_main = 90,
       TK_this = 50,
@@ -299,18 +299,18 @@ public interface LightweightParsersym {
                  "inout",
                  "modeltype",
                  "rename",
-                 "ATPRE",
                  "transformation",
                  "blackbox",
                  "abstract",
                  "static",
                  "LBRACKET",
-                 "RBRACKET",
+                 "ATPRE",
                  "QUESTIONMARK",
                  "end",
                  "import",
                  "access",
                  "extends",
+                 "RBRACKET",
                  "ADD_ASSIGN",
                  "else",
                  "endif",
