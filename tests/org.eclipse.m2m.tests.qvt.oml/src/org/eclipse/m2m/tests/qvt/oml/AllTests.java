@@ -41,13 +41,13 @@ public class AllTests {
 	public static Test suite() {
 		TestSuite suite = new TestSuite("Tests for org.eclipse.m2m.tests.qvt.oml"); //$NON-NLS-1$
 		//$JUnit-BEGIN$
-//		suite.addTest(AllEditorTests.suite());
-//		suite.addTest(AllEmfTests.suite());
-//		suite.addTestSuite(TestMetamodelRegistry.class);
-//        suite.addTestSuite(TestLaunchConfiguration.class);
-//        suite.addTest(ParserTests.suite());
-//
-////        suite.addTest(TransformTests.projectSuite());
+		suite.addTest(AllEditorTests.suite());
+		suite.addTest(AllEmfTests.suite());
+		suite.addTestSuite(TestMetamodelRegistry.class);
+        suite.addTestSuite(TestLaunchConfiguration.class);
+        suite.addTest(ParserTests.suite());
+
+//        suite.addTest(TransformTests.projectSuite());
         suite.addTest(TransformTests.interpreterSuite());
         suite.addTest(TransformTests.javalessSuite());
         suite.addTest(TransformTests.walkerSuite());
