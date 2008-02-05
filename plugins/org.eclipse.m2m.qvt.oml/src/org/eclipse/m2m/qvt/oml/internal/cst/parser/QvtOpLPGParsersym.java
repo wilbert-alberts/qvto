@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.29 2008/02/01 10:56:02 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.30 2008/02/05 22:50:05 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.29 2008/02/01 10:56:02 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.30 2008/02/05 22:50:05 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -54,8 +54,8 @@ public interface QvtOpLPGParsersym {
       TK_RPAREN = 4,
       TK_LBRACE = 86,
       TK_RBRACE = 85,
-      TK_LBRACKET = 110,
-      TK_RBRACKET = 111,
+      TK_LBRACKET = 109,
+      TK_RBRACKET = 120,
       TK_ARROW = 126,
       TK_BAR = 91,
       TK_COMMA = 87,
@@ -64,10 +64,10 @@ public interface QvtOpLPGParsersym {
       TK_SEMICOLON = 84,
       TK_DOT = 100,
       TK_DOTDOT = 127,
-      TK_ATPRE = 106,
+      TK_ATPRE = 110,
       TK_CARET = 128,
       TK_CARETCARET = 129,
-      TK_QUESTIONMARK = 112,
+      TK_QUESTIONMARK = 111,
       TK_QUOTE_STRING_LITERAL = 130,
       TK_ADD_ASSIGN = 121,
       TK_RESET_ASSIGN = 102,
@@ -136,14 +136,14 @@ public interface QvtOpLPGParsersym {
       TK_Invalid = 18,
       TK_OclMessage = 19,
       TK_OclInvalid = 72,
-      TK_end = 113,
+      TK_end = 112,
       TK_while = 73,
       TK_out = 103,
       TK_object = 64,
-      TK_transformation = 114,
-      TK_import = 115,
-      TK_library = 107,
-      TK_metamodel = 108,
+      TK_transformation = 113,
+      TK_import = 114,
+      TK_library = 106,
+      TK_metamodel = 107,
       TK_mapping = 95,
       TK_query = 96,
       TK_inout = 104,
@@ -165,16 +165,16 @@ public interface QvtOpLPGParsersym {
       TK_invresolveone = 81,
       TK_invresolveIn = 82,
       TK_invresolveoneIn = 83,
-      TK_modeltype = 109,
+      TK_modeltype = 108,
       TK_uses = 137,
       TK_where = 138,
       TK_refines = 124,
       TK_enforcing = 139,
-      TK_access = 116,
-      TK_extends = 117,
-      TK_blackbox = 118,
-      TK_abstract = 119,
-      TK_static = 120,
+      TK_access = 115,
+      TK_extends = 116,
+      TK_blackbox = 117,
+      TK_abstract = 118,
+      TK_static = 119,
       TK_result = 49,
       TK_main = 90,
       TK_this = 50,
@@ -298,12 +298,11 @@ public interface QvtOpLPGParsersym {
                  "out",
                  "inout",
                  "rename",
-                 "ATPRE",
                  "library",
                  "metamodel",
                  "modeltype",
                  "LBRACKET",
-                 "RBRACKET",
+                 "ATPRE",
                  "QUESTIONMARK",
                  "end",
                  "transformation",
@@ -313,6 +312,7 @@ public interface QvtOpLPGParsersym {
                  "blackbox",
                  "abstract",
                  "static",
+                 "RBRACKET",
                  "ADD_ASSIGN",
                  "else",
                  "endif",

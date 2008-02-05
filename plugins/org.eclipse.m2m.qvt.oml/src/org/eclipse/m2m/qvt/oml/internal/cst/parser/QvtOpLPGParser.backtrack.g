@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.31 2008/02/01 10:56:01 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.32 2008/02/05 22:50:05 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -75,6 +75,8 @@ $DropRules
 
 	-- Dropped due to 13.2 (OCL spec) and 6.4 (QVT spec). This rule conflicts with imperative iterator shorthands
 	attrOrNavCallExpCS ::= simpleNameCS '[' argumentsCS ']' isMarkedPreCS
+	variableExpCS ::= simpleNameCS '[' argumentsCS ']' isMarkedPreCS
+	variableExpCS ::= keywordAsIdentifier1 '[' argumentsCS ']' isMarkedPreCS
 
 $DropSymbols
 	
@@ -362,7 +364,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.31 2008/02/01 10:56:01 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.32 2008/02/05 22:50:05 aigdalov Exp $
  */
 	./
 $End
@@ -2917,11 +2919,26 @@ $Rules
 	callExpCS ::= '->' featureCallExpCS exclamationOpt '[' declarator_vsepOpt oclExpressionCS ']'
 	        /.$NullAction./
 
-	--xselectShorthand ::= oclExpCS '[' oclExpressionCS ']'
-	--        /.$NullAction./
+	-- xselect shorthand
+	oclExpCS ::= oclExpCS '[' oclExpressionCS ']'
+		/.$BeginJava
+					SimpleNameCS simpleNameCS = createSimpleNameCS(
+								SimpleTypeEnum.KEYWORD_LITERAL,
+								"xselect" //$NON-NLS-1$
+							);
+					setOffsets(simpleNameCS, getIToken($getToken(2)), getIToken($getToken(4)));
+					CallExpCS result = createImperativeIterateExpCS(
+							simpleNameCS,
+							$EMPTY_ELIST,
+							null,
+							(OCLExpressionCS) $getSym(3)
+						);
+					result.setSource((OCLExpressionCS)$getSym(1));
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
+					$setResult(result);
+		  $EndJava
+		./
 	
-	--oclExpCS -> xselectShorthand
-
 $End
 
 	

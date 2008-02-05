@@ -87,6 +87,7 @@ import org.eclipse.m2m.qvt.oml.expressions.impl.PropertyImpl;
 import org.eclipse.m2m.qvt.oml.expressions.impl.RenameImpl;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.iterators.QvtIterationTemplate;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.iterators.QvtIterationTemplateXCollect;
+import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.iterators.QvtIterationTemplateXSelect;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.qvt.oml.library.EObjectEStructuralFeaturePair;
 import org.eclipse.m2m.qvt.oml.library.IContext;
@@ -125,6 +126,7 @@ import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.types.BagType;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.types.PrimitiveType;
+import org.eclipse.ocl.types.SequenceType;
 import org.eclipse.ocl.types.SetType;
 import org.eclipse.ocl.types.TupleType;
 import org.eclipse.ocl.types.VoidType;
@@ -767,6 +769,8 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
             
             if ("xcollect".equals(imperativeIterateExp.getName())) { //$NON-NLS-1$
                 return evaluateXCollectIterator(imperativeIterateExp, sourceCollection);
+            } else if ("xselect".equals(imperativeIterateExp.getName())) { //$NON-NLS-1$
+                return evaluateXSelectIterator(imperativeIterateExp, sourceCollection);
             }
                 
         }
@@ -775,6 +779,51 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         throw new UnsupportedOperationException(message);
     }
     
+    private Object evaluateXSelectIterator(ImperativeIterateExp ie, Collection<?> coll) {
+
+        // get the list of ocl iterators
+        List<Variable<EClassifier, EParameter>> iterators = ie.getIterator();
+        //      int numIters = iterators.size();
+
+        // get the body expression
+        OCLExpression<EClassifier> body = ie.getBody();
+
+        // get initial result value based on the source type
+        @SuppressWarnings("unchecked")
+        CollectionType<EClassifier, EOperation> collType = (CollectionType<EClassifier, EOperation>) ie.getSource().getType();
+        
+        Object initResultVal = null;
+        if (collType instanceof SetType) {
+            // Set
+            initResultVal = CollectionUtil.createNewSet();
+        } else if (collType instanceof BagType) {
+            // Bag
+            initResultVal = CollectionUtil.createNewBag();
+        } else if (collType instanceof SequenceType) {
+            // Sequence
+            initResultVal = CollectionUtil.createNewSequence();
+        } else {
+            // OrderedSet
+            initResultVal = CollectionUtil.createNewOrderedSet();
+        }
+
+        // get an iteration template to evaluate the iterator
+        QvtIterationTemplate<?, EClassifier, EOperation, ?, ?, EParameter, ?, ?, ?, ?, ?, ?> is =
+            QvtIterationTemplateXSelect.getInstance(getVisitor());
+
+        // generate a name for the result variable and add it to the environment
+        String resultName = generateName();
+        getEvaluationEnvironment().add(resultName, initResultVal);
+
+        // evaluate
+        Object result = is.evaluate(coll, iterators, ie.getCondition(), body, resultName);
+
+        // remove result name from environment
+        getEvaluationEnvironment().remove(resultName);
+
+        return result;
+    }
+
     private Object evaluateXCollectIterator(ImperativeIterateExp ie, Collection<?> coll) {
 
         // get the list of ocl iterators
@@ -806,7 +855,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         getEvaluationEnvironment().add(resultName, initResultVal);
 
         // evaluate
-        Object result = is.evaluate(coll, iterators, body, resultName);
+        Object result = is.evaluate(coll, iterators, ie.getCondition(), body, resultName);
 
         // remove result name from environment
         getEvaluationEnvironment().remove(resultName);

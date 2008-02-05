@@ -600,7 +600,7 @@ public class QvtOperationalVisitorCS
         if(result != null) {
             // AST binding    
             if(myCompilerOptions.isGenerateCompletionData()) {          
-            	creatPropertyCallASTBinding(propertyCallExpCS, result, env);
+            	createPropertyCallASTBinding(propertyCallExpCS, result, env);
             }
         }
         return result;
@@ -2246,7 +2246,6 @@ public class QvtOperationalVisitorCS
         OCLExpression<EClassifier> expr = null;
         List<Variable<EClassifier, EParameter>> iterators = null;
     
-        
         if (imperativeIterateExpCS.getVariable1() != null) {
             vdcl = variableDeclarationCS(imperativeIterateExpCS.getVariable1(), env, true);
                 
@@ -2279,9 +2278,7 @@ public class QvtOperationalVisitorCS
                 }
                 iterators.add(vdcl1);
             }
-
         } else  {
-
             astNode = ExpressionsFactory.eINSTANCE.createImperativeIterateExp();
             initASTMapping(env, astNode, imperativeIterateExpCS);
             astNode.setName(name);
@@ -2300,18 +2297,29 @@ public class QvtOperationalVisitorCS
     
         TRACE("imperativeIterateExpCS: ", name);//$NON-NLS-1$
         
-        if (name.equals("forAll") || name.equals("exists") || name.equals("one") || name.equals("isUnique")) {//$NON-NLS-4$//$NON-NLS-3$//$NON-NLS-2$//$NON-NLS-1$
-            astNode.setType(env.getOCLStandardLibrary().getBoolean());
-        } else if (name.equals("select") || name.equals("reject") ) {//$NON-NLS-2$//$NON-NLS-1$
-            astNode.setType(source.getType());
-        } else if (name.equals("collect")) {//$NON-NLS-1$
-            // The result type for collect must be flattened
-            EClassifier elementType = expr.getType();
-            while (elementType instanceof CollectionType) {
-                @SuppressWarnings("unchecked")
-                CollectionType<EClassifier, EOperation> ct = (CollectionType<EClassifier, EOperation>) elementType;
-                elementType = ct.getElementType();
+        if (name.equals("xselect")) {//$NON-NLS-1$
+            if (expr instanceof TypeExp<?>) {
+                TypeExp<EClassifier> typedCondition = (TypeExp<EClassifier>) expr;
+                if (source.getType() instanceof CollectionType) {
+                    @SuppressWarnings("unchecked")
+                    CollectionType<EClassifier, EOperation> sourceCollectionType = (CollectionType<EClassifier, EOperation>) source.getType();
+                    EClassifier rawTypeType = TypeUtil.resolveType(env, typedCondition.getType());
+                    if (rawTypeType instanceof TypeType) {
+                        @SuppressWarnings("unchecked")
+                        TypeType<EClassifier, EOperation> typeType = (TypeType<EClassifier, EOperation>) rawTypeType;
+                        EClassifier resultElementType = typeType.getReferredType();
+                        EClassifier resultCollectionType = getCollectionType(env, sourceCollectionType.getKind(), resultElementType);
+                        astNode.setType(resultCollectionType);
+                    }
+                }
+            } else if (expr.getType() == getBoolean()) {
+                astNode.setType(source.getType());
+            } else {
+                env.reportError(ValidationMessages.QvtOperationalVisitorCS_WrongImperativeIteratorConditionType, exprCS);
             }
+            astNode.setCondition(expr);
+        } else if (name.equals("xcollect")) {//$NON-NLS-1$
+            EClassifier elementType = expr.getType();
             if (source.getType() instanceof SequenceType || 
                             source.getType() instanceof OrderedSetType) {
                 astNode.setType(getSequenceType(exprCS, env, elementType));
@@ -2320,7 +2328,6 @@ public class QvtOperationalVisitorCS
             }
         }
                 
-        astNode.setBody(expr);
         astNode.setSource(source);
         
         env.deleteElement(vdcl.getName());
@@ -2821,7 +2828,7 @@ public class QvtOperationalVisitorCS
 		return astNode;
 	}	
 
-	private static void creatPropertyCallASTBinding(
+	private static void createPropertyCallASTBinding(
 			CallExpCS propertyCallExpCS,
 			OCLExpression<EClassifier> result,
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {

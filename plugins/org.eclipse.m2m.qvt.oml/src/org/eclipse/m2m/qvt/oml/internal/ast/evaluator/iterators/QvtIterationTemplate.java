@@ -26,7 +26,7 @@ import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 
-public class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
+public abstract class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
     private EvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> evalVisitor;
     private EvaluationEnvironment<C, O, P, CLS, E> env;
     private boolean done = false;
@@ -38,14 +38,7 @@ public class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
         this.env = v.getEvaluationEnvironment();
     }
 
-    public static <PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
-    QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> getInstance(
-            EvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> v) {
-        return new QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>(v);
-    }
-
-    public EvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
-    getEvaluationVisitor() {
+    public EvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> getEvaluationVisitor() {
         return evalVisitor;
     }
 
@@ -63,6 +56,7 @@ public class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 
     public Object evaluate(Collection<?> coll, 
             List<Variable<C, PM>> iterators,
+            OCLExpression<C> condition, 
             OCLExpression<C> body, 
             String resultName) {
         
@@ -77,11 +71,14 @@ public class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
             initializeIterators(iterators, javaIters, coll);
 
             while (true) {
+                // evaluate the condition of the expression in this environment
+                Object conditionVal = (condition == null) ? null : evalVisitor.visitExpression(condition);
+
                 // evaluate the body of the expression in this environment
-                Object bodyVal = evalVisitor.visitExpression(body);
+                Object bodyVal = (body == null) ? null : evalVisitor.visitExpression(body);
 
                 // get the new result value
-                Object resultVal = evaluateResult(iterators, resultName, bodyVal);
+                Object resultVal = evaluateResult(iterators, resultName, conditionVal, bodyVal);
 
                 // set the result variable in the environment with the result value
                 env.replace(resultName, resultVal);
@@ -163,10 +160,7 @@ public class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
     }
 
     // override this method for different iterator behaviors
-    protected Object evaluateResult(
-            List<Variable<C, PM>> iterators, String resultName, Object bodyVal) {
-        return bodyVal;
-    }
+    protected abstract Object evaluateResult(List<Variable<C, PM>> iterators, String resultName, Object conditionVal, Object bodyVal);
 
     protected OCLStandardLibrary<C> getOCLStandardLibrary() {
         return evalVisitor.getEnvironment().getOCLStandardLibrary();

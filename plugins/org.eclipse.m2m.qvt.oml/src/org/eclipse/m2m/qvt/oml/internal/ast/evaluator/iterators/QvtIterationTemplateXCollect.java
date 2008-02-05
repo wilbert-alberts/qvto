@@ -35,7 +35,7 @@ extends QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
     }
 
     @Override
-    protected Object evaluateResult(List<Variable<C, PM>> iterators, String resultName, Object bodyVal) {
+    protected Object evaluateResult(List<Variable<C, PM>> iterators, String resultName, Object condition, Object bodyVal) {
         EvaluationEnvironment<C, O, P, CLS, E> env = getEvalEnvironment();
 
         @SuppressWarnings("unchecked")
