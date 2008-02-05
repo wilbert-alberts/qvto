@@ -81,6 +81,7 @@ public class TransformTests {
 
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {
+                new FileToFileData("bug2437"), //$NON-NLS-1$                
     			new FileToFileData("bug_214938"), //$NON-NLS-1$    			
 		    	new FileToFileData("moduleProperty"), //$NON-NLS-1$    			
                 new FileToFileData("simplestXCollectShorthand"), //$NON-NLS-1$                
