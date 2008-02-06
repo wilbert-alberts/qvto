@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexersym.java,v 1.30 2008/02/05 22:50:05 aigdalov Exp $
+* $Id: QvtOpLexersym.java,v 1.31 2008/02/06 15:25:51 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexersym.java,v 1.30 2008/02/05 22:50:05 aigdalov Exp $
+* $Id: QvtOpLexersym.java,v 1.31 2008/02/06 15:25:51 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -45,7 +45,7 @@ public interface QvtOpLexersym {
       Char_b = 17,
       Char_c = 18,
       Char_d = 19,
-      Char_e = 11,
+      Char_e = 12,
       Char_f = 20,
       Char_g = 21,
       Char_h = 22,
@@ -137,7 +137,7 @@ public interface QvtOpLexersym {
       Char_Star = 71,
       Char_LeftParen = 90,
       Char_RightParen = 91,
-      Char_Equal = 12,
+      Char_Equal = 11,
       Char_EOF = 102;
 
       public final static String orderedTerminalSymbols[] = {
@@ -152,8 +152,8 @@ public interface QvtOpLexersym {
                  "7",
                  "8",
                  "9",
-                 "e",
                  "Equal",
+                 "e",
                  "E",
                  "p",
                  "r",

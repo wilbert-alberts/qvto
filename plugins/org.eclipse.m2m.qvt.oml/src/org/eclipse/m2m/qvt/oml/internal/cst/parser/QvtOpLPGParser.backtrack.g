@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.32 2008/02/05 22:50:05 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.33 2008/02/06 15:25:52 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -292,6 +292,7 @@ $Terminals
 	RESET_ASSIGN  ::= ':='
 	AT_SIGN       ::= '@'
 	EXCLAMATION_MARK ::= '!'
+	NOT_EQUAL_EXEQ   ::= '!='
 	
 $End
 
@@ -364,7 +365,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.32 2008/02/05 22:50:05 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.33 2008/02/06 15:25:52 aigdalov Exp $
  */
 	./
 $End
@@ -2935,6 +2936,28 @@ $Rules
 						);
 					result.setSource((OCLExpressionCS)$getSym(1));
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
+					$setResult(result);
+		  $EndJava
+		./
+
+       -- '!=' - a synonym of '<>'
+	equalityExpCS ::= equalityExpCS '!=' relationalExpCS
+		/.$NewCase./
+	equalityWithLet ::= equalityExpCS '!=' relationalWithLet
+		/.$BeginJava
+					SimpleNameCS simpleNameCS = createSimpleNameCS(
+								SimpleTypeEnum.STRING_LITERAL,
+								OCLStandardLibraryUtil.getOperationName(PredefinedType.NOT_EQUAL)
+							);
+					setOffsets(simpleNameCS, getIToken($getToken(2)));
+					EList args = new BasicEList();
+					args.add($getSym(3));
+					CSTNode result = createOperationCallExpCS(
+							(OCLExpressionCS)$getSym(1),
+							simpleNameCS,
+							args
+						);
+					setOffsets(result, (CSTNode)$getSym(1), (CSTNode)$getSym(3));
 					$setResult(result);
 		  $EndJava
 		./

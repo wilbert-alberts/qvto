@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.30 2008/02/05 22:50:05 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.31 2008/02/06 15:25:51 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.30 2008/02/05 22:50:05 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.31 2008/02/06 15:25:51 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -5132,6 +5132,33 @@ import org.eclipse.m2m.qvt.oml.internal.cst.TypeSpecCS;
 					);
 				result.setSource((OCLExpressionCS)dtParser.getSym(1));
 				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(4)));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 551:  equalityExpCS ::= equalityExpCS != relationalExpCS
+			//
+			case 551:
+ 
+			//
+			// Rule 552:  equalityWithLet ::= equalityExpCS != relationalWithLet
+			//
+			case 552: {
+				
+				SimpleNameCS simpleNameCS = createSimpleNameCS(
+							SimpleTypeEnum.STRING_LITERAL,
+							OCLStandardLibraryUtil.getOperationName(PredefinedType.NOT_EQUAL)
+						);
+				setOffsets(simpleNameCS, getIToken(dtParser.getToken(2)));
+				EList args = new BasicEList();
+				args.add(dtParser.getSym(3));
+				CSTNode result = createOperationCallExpCS(
+						(OCLExpressionCS)dtParser.getSym(1),
+						simpleNameCS,
+						args
+					);
+				setOffsets(result, (CSTNode)dtParser.getSym(1), (CSTNode)dtParser.getSym(3));
 				dtParser.setSym1(result);
 	  		  break;
 			}

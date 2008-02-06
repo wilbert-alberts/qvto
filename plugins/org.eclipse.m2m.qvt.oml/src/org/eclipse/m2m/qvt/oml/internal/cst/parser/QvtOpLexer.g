@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLexer.g,v 1.4 2008/02/01 10:56:07 aigdalov Exp $
+-- * $Id: QvtOpLexer.g,v 1.5 2008/02/06 15:25:51 aigdalov Exp $
 -- */
 --
 -- The QVT Lexer
@@ -77,7 +77,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLexer.g,v 1.4 2008/02/01 10:56:07 aigdalov Exp $
+ * $Id: QvtOpLexer.g,v 1.5 2008/02/06 15:25:51 aigdalov Exp $
  */
 	./
 $End
@@ -89,6 +89,7 @@ $Export
 	RESET_ASSIGN
 	AT_SIGN
 	EXCLAMATION_MARK
+	NOT_EQUAL_EXEQ
 	
 $End
 
@@ -123,6 +124,13 @@ $Rules
 					makeToken($_EXCLAMATION_MARK);
 		  $EndAction
 		./
+
+	Token ::= '!' '='
+		/.$BeginAction
+					makeToken($_NOT_EQUAL_EXEQ);
+		  $EndAction
+		./
+
 
 	NotSQ -> HT
 	NotSQ -> LF
