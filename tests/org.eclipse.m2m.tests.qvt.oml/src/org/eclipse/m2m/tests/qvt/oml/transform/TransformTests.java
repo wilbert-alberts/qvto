@@ -81,7 +81,7 @@ public class TransformTests {
 
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {
-                new FileToFileData("bug2437"), //$NON-NLS-1$                
+                new FileToFileData("bug2732"), //$NON-NLS-1$                
     			new FileToFileData("bug_214938"), //$NON-NLS-1$    			
 		    	new FileToFileData("moduleProperty"), //$NON-NLS-1$    			
                 new FileToFileData("simplestXCollectShorthand"), //$NON-NLS-1$                
@@ -235,7 +235,7 @@ public class TransformTests {
 
     private static final Set<String> JAVALESS_EXCLUDES = new HashSet<String>(Arrays.asList(new String[] {
             "primtypesecore", // uses getDataTypeInstance() defined on ecore //$NON-NLS-1$
-            "importedvirtuals", "imports_transformations", "imports", "virt", "full", "fqntraces", // TODO import other files //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+            "importedvirtuals", "imports_transformations", "imports", "virt", "full", "fqntraces", // TODO import other files //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
             "assigntonullowner", "resolveall", // reference not in required format: eSuperTypes = "#//NEW_Class1" insteand of "//@eClassifiers.0" //$NON-NLS-1$ //$NON-NLS-2$
             "egetcodegen", // java method can't be called//$NON-NLS-1$
             "bug214718", // platform protocol URI metamodel reference //$NON-NLS-1$

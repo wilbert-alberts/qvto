@@ -73,7 +73,8 @@ public class ParserTests {
     
     static TestData[] ourData = new TestData[] {
         //new TestData("orderedsetdoesnotconformtoset", 1), //$NON-NLS-1$
-    	TestData.createSourceChecked("varscope", 10, 0), //$NON-NLS-1$    	
+        TestData.createSourceChecked("bug2732_wrongcondition", 1, 1), //$NON-NLS-1$      
+        TestData.createSourceChecked("varscope", 10, 0), //$NON-NLS-1$      
     	TestData.createSourceChecked("_while", 10, 1), //$NON-NLS-1$
 //    	TestData.createSourceChecked("implicitSrcDeprec", 2, 20), //$NON-NLS-1$    	
     	new TestData("assert_log", 0), //$NON-NLS-1$    	
