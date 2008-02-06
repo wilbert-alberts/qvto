@@ -47,7 +47,7 @@ public class LightweightParserUtil {
     
     public static final int[] OCLEXPRESSION_START_TOKENS = {
         QvtOpLPGParsersym.TK_RESET_ASSIGN, QvtOpLPGParsersym.TK_ADD_ASSIGN,
-        QvtOpLPGParsersym.TK_EQUAL, QvtOpLPGParsersym.TK_NOT_EQUAL,
+        QvtOpLPGParsersym.TK_EQUAL, QvtOpLPGParsersym.TK_NOT_EQUAL, QvtOpLPGParsersym.TK_NOT_EQUAL_EXEQ,
         QvtOpLPGParsersym.TK_GREATER, QvtOpLPGParsersym.TK_LESS,
         QvtOpLPGParsersym.TK_GREATER_EQUAL, QvtOpLPGParsersym.TK_LESS_EQUAL,
         QvtOpLPGParsersym.TK_and, QvtOpLPGParsersym.TK_or,

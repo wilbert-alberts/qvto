@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.10 2008/02/05 22:49:51 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.11 2008/02/06 15:26:02 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.10 2008/02/05 22:49:51 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.11 2008/02/06 15:26:02 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser;
@@ -5142,9 +5142,36 @@ import org.eclipse.m2m.qvt.oml.internal.cst.parser.AbstractQVTParser;
 			}
 	 
 			//
-			// Rule 553:  mappingRuleCS ::= entryDeclarationCS ;
+			// Rule 551:  equalityExpCS ::= equalityExpCS != relationalExpCS
 			//
-			case 553: {
+			case 551:
+ 
+			//
+			// Rule 552:  equalityWithLet ::= equalityExpCS != relationalWithLet
+			//
+			case 552: {
+				
+				SimpleNameCS simpleNameCS = createSimpleNameCS(
+							SimpleTypeEnum.STRING_LITERAL,
+							OCLStandardLibraryUtil.getOperationName(PredefinedType.NOT_EQUAL)
+						);
+				setOffsets(simpleNameCS, getIToken(dtParser.getToken(2)));
+				EList args = new BasicEList();
+				args.add(dtParser.getSym(3));
+				CSTNode result = createOperationCallExpCS(
+						(OCLExpressionCS)dtParser.getSym(1),
+						simpleNameCS,
+						args
+					);
+				setOffsets(result, (CSTNode)dtParser.getSym(1), (CSTNode)dtParser.getSym(3));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 555:  mappingRuleCS ::= entryDeclarationCS ;
+			//
+			case 555: {
 				
 				MappingQueryCS result = createMappingQueryCS(
 						(MappingDeclarationCS)dtParser.getSym(1),
