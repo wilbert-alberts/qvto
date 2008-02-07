@@ -11,11 +11,18 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.ui.wizards.project;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.wizard.IWizardPage;
+import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -56,6 +63,23 @@ public class NewQVTProjectCreationPage extends WizardNewProjectCreationPage {
 	protected boolean validatePage() {
     	boolean result = super.validatePage();
     	
+    	if(result && getProjectHandle() != null) {
+    		IPath wsLocation = getProjectHandle().getWorkspace().getRoot().getLocation();
+    		if(wsLocation != null) {
+    			IPath projectLocation = wsLocation.append(getProjectHandle().getName());
+        		File projectFile = Path.fromOSString(projectLocation.toOSString()).toFile();
+        		if(projectFile.exists()) {        			
+            		try {
+						projectFile = projectFile.getCanonicalFile();
+					} catch (IOException e) {
+						QVTUIPlugin.log(e);
+					}        			
+        			String errMessage = NLS.bind("Project ''{0}'' already exists in the workspace", projectFile.getName());
+        			setErrorMessage(errMessage);
+        			return false;
+        		}        		
+    		}
+    	}
     	if(result) {
     		if(!validateQvtSourceContainer()) {
 	    		return false;
