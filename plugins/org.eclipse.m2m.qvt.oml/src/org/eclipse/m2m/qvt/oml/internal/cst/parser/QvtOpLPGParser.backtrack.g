@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.33 2008/02/06 15:25:52 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.34 2008/02/07 15:54:06 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -365,7 +365,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.33 2008/02/06 15:25:52 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.34 2008/02/07 15:54:06 aigdalov Exp $
  */
 	./
 $End
@@ -2873,7 +2873,7 @@ $Rules
 	imperativeIterContents ::= oclExpressionCS
 		/.$BeginJava
 					$setResult(new Object[] {
-							null,
+							$EMPTY_ELIST,
 							null,
 							$getSym(1)
 						});
@@ -2909,7 +2909,13 @@ $Rules
 
 	declarator_vsep ::= IDENTIFIER '|'
         	/.$BeginJava
-                	    $setResult(getIToken($getToken(1)));
+			CSTNode result = createVariableCS(
+						getTokenText($getToken(1)),
+                                                null,
+						null
+						);
+                        setOffsets(result, getIToken($getToken(1)));
+                        $setResult(getIToken($getToken(1)));
 	          $EndJava
         	./
 
@@ -2917,30 +2923,75 @@ $Rules
 	        /.$NullAction./
 	declarator_vsepOpt -> declarator_vsep
 
-	callExpCS ::= '->' featureCallExpCS exclamationOpt '[' declarator_vsepOpt oclExpressionCS ']'
+	condExpOpt ::= $empty
 	        /.$NullAction./
 
+	callExpCS ::= '->' featureCallExpCS exclamationOpt '[' declarator_vsepOpt oclExpressionCS ']'
+		/.$BeginJava
+					SimpleNameCS simpleNameCS = createSimpleNameCS(
+								SimpleTypeEnum.KEYWORD_LITERAL,
+								"collectselect" //$NON-NLS-1$
+							);
+					setOffsets(simpleNameCS, getIToken($getToken(4)), getIToken($getToken(7)));
+					VariableCS variableCS = (VariableCS) $getSym(5);
+					variableCS.setInitExpression((OCLExpressionCS) $getSym(2)); // TODO: iterator must be used here
+					CSTNode result = createImperativeIterateExpCS(
+							simpleNameCS,
+							$EMPTY_ELIST,
+							variableCS,
+							(OCLExpressionCS) $getSym(6)
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
+					$setResult(result);
+		  $EndJava
+		./
+
 	-- xselect shorthand
-	oclExpCS ::= oclExpCS '[' oclExpressionCS ']'
+	oclExpCS ::= oclExpCS exclamationOpt '[' oclExpressionCS ']'
 		/.$BeginJava
 					SimpleNameCS simpleNameCS = createSimpleNameCS(
 								SimpleTypeEnum.KEYWORD_LITERAL,
 								"xselect" //$NON-NLS-1$
 							);
-					setOffsets(simpleNameCS, getIToken($getToken(2)), getIToken($getToken(4)));
+					setOffsets(simpleNameCS, getIToken($getToken(3)), getIToken($getToken(5)));
 					CallExpCS result = createImperativeIterateExpCS(
 							simpleNameCS,
 							$EMPTY_ELIST,
 							null,
-							(OCLExpressionCS) $getSym(3)
+							(OCLExpressionCS) $getSym(4)
 						);
 					result.setSource((OCLExpressionCS)$getSym(1));
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
 					$setResult(result);
 		  $EndJava
 		./
 
-       -- '!=' - a synonym of '<>'
+	dotArrowExpCS ::= dotArrowExpCS '.' featureCallExpCS exclamationOpt '[' oclExpressionCS ']'
+		/.$BeginJava
+					CallExpCS callExpCS = (CallExpCS)$getSym(3);
+					callExpCS.setSource((OCLExpressionCS)$getSym(1));
+					callExpCS.setAccessor(DotOrArrowEnum.DOT_LITERAL);
+					setOffsets(callExpCS, (CSTNode)$getSym(1), callExpCS);
+
+
+					SimpleNameCS simpleNameCS = createSimpleNameCS(
+								SimpleTypeEnum.KEYWORD_LITERAL,
+								"xselect" //$NON-NLS-1$
+							);
+					setOffsets(simpleNameCS, getIToken($getToken(5)), getIToken($getToken(7)));
+					CallExpCS result = createImperativeIterateExpCS(
+							simpleNameCS,
+							$EMPTY_ELIST,
+							null,
+							(OCLExpressionCS) $getSym(6)
+						);
+					result.setSource(callExpCS);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
+					$setResult(result);
+		  $EndJava
+		./
+
+        -- '!=' - a synonym of '<>'
 	equalityExpCS ::= equalityExpCS '!=' relationalExpCS
 		/.$NewCase./
 	equalityWithLet ::= equalityExpCS '!=' relationalWithLet
