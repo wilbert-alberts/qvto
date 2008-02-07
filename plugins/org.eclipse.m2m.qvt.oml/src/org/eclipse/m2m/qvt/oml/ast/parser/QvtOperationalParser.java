@@ -32,6 +32,7 @@ import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.internal.ast.WrappedOCLSemanticException;
+import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalValidationVisitor;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalVisitorCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
@@ -81,6 +82,14 @@ public class QvtOperationalParser {
 	
 		myEnv = env;
 		myEnv.setErrorRecordFlag(options.isReportErrors());
+		
+		// In order to validate resulted QVT Module we need AST->Environment bindings.
+		// These bindings are needed for the case when given QVT module import another one.
+		// In that case we mix OCL operations from different environments.
+		if (options.isReportErrors()) {
+			options.setGenerateCompletionData(true);
+		}
+		
 		try {
 			OCLLexer oclLexer = new OCLLexer();
 			oclLexer.initialize(new OCLInput(moduleCS.getSource().getContents()).getContent(), moduleCS.getSource().getName());
@@ -97,6 +106,11 @@ public class QvtOperationalParser {
 			getErrorsList().add(new QvtMessage(e.getLocalizedMessage(), 0, 0));
 		} catch (IOException e) {
 			getErrorsList().add(new QvtMessage(e.getLocalizedMessage(), 0, 0));
+		}
+		
+		if (module != null && options.isReportErrors()) {
+			QvtOperationalValidationVisitor validation = new QvtOperationalValidationVisitor(env);
+			validation.visitModule(module);
 		}
 		
 		return module;
