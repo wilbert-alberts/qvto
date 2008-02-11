@@ -731,7 +731,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 				var.setName(Environment.SELF_VARIABLE_NAME);
 				var.setType(context.getEType());
 				var.setRepresentedParameter(context);
-				newEnvironment.addElement(var.getName(), var, false);
+				newEnvironment.addElement(var.getName(), var, true);
 			}
 		}
 
