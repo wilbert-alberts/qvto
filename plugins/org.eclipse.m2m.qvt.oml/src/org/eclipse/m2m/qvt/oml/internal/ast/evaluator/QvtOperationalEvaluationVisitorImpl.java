@@ -86,6 +86,7 @@ import org.eclipse.m2m.qvt.oml.expressions.impl.OperationBodyImpl;
 import org.eclipse.m2m.qvt.oml.expressions.impl.PropertyImpl;
 import org.eclipse.m2m.qvt.oml.expressions.impl.RenameImpl;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.iterators.QvtIterationTemplate;
+import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.iterators.QvtIterationTemplateCollectSelect;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.iterators.QvtIterationTemplateXCollect;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.iterators.QvtIterationTemplateXSelect;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalParserUtil;
@@ -771,14 +772,54 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
                 return evaluateXCollectIterator(imperativeIterateExp, sourceCollection);
             } else if ("xselect".equals(imperativeIterateExp.getName())) { //$NON-NLS-1$
                 return evaluateXSelectIterator(imperativeIterateExp, sourceCollection);
+            } else if ("collectselect".equals(imperativeIterateExp.getName())) { //$NON-NLS-1$
+                return evaluateCollectSelectIterator(imperativeIterateExp, sourceCollection);
             }
-                
         }
         
         String message = OCLMessages.bind(OCLMessages.IteratorNotImpl_ERROR_, imperativeIterateExp.getName());
         throw new UnsupportedOperationException(message);
     }
     
+    private Object evaluateCollectSelectIterator(ImperativeIterateExp ie, Collection<?> coll) {
+
+        // get the list of ocl iterators
+        List<Variable<EClassifier, EParameter>> iterators = ie.getIterator();
+        //      int numIters = iterators.size();
+
+        // get the body expression
+        OCLExpression<EClassifier> body = ie.getBody();
+
+        // get initial result value based on the source type
+        @SuppressWarnings("unchecked")
+        CollectionType<EClassifier, EOperation> collType = (CollectionType<EClassifier, EOperation>) ie.getSource().getType();
+        
+        Object initResultVal = null;
+        if (collType instanceof SetType || collType instanceof BagType) {
+            // collection on a Bag or a Set yields a Bag
+            initResultVal = CollectionUtil.createNewBag();
+        } else {
+            // Sequence or Ordered Set yields a Sequence
+            initResultVal = CollectionUtil.createNewSequence();
+        }
+
+        // get an iteration template to evaluate the iterator
+        QvtIterationTemplate<?, EClassifier, EOperation, ?, ?, EParameter, ?, ?, ?, ?, ?, ?> is =
+            QvtIterationTemplateCollectSelect.getInstance(getVisitor());
+
+        // generate a name for the result variable and add it to the environment
+        String resultName = generateName();
+        getEvaluationEnvironment().add(resultName, initResultVal);
+
+        // evaluate
+        Object result = is.evaluate(coll, iterators, ie.getTarget(), ie.getCondition(), body, resultName);
+
+        // remove result name from environment
+        getEvaluationEnvironment().remove(resultName);
+
+        return result;
+    }
+
     private Object evaluateXSelectIterator(ImperativeIterateExp ie, Collection<?> coll) {
 
         // get the list of ocl iterators
@@ -816,7 +857,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         getEvaluationEnvironment().add(resultName, initResultVal);
 
         // evaluate
-        Object result = is.evaluate(coll, iterators, ie.getCondition(), body, resultName);
+        Object result = is.evaluate(coll, iterators, ie.getTarget(), ie.getCondition(), body, resultName);
 
         // remove result name from environment
         getEvaluationEnvironment().remove(resultName);
@@ -855,7 +896,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         getEvaluationEnvironment().add(resultName, initResultVal);
 
         // evaluate
-        Object result = is.evaluate(coll, iterators, ie.getCondition(), body, resultName);
+        Object result = is.evaluate(coll, iterators, ie.getTarget(), ie.getCondition(), body, resultName);
 
         // remove result name from environment
         getEvaluationEnvironment().remove(resultName);

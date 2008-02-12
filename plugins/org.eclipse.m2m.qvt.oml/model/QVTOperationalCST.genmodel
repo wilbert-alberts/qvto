@@ -230,8 +230,12 @@
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/AssertExpCS/log"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/AssertExpCS/severity"/>
       </genClasses>
-      <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/ImperativeLoopExpCS"/>
-      <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/ImperativeIterateExpCS"/>
+      <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/ImperativeLoopExpCS">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ImperativeLoopExpCS/condition"/>
+      </genClasses>
+      <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/ImperativeIterateExpCS">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ImperativeIterateExpCS/target"/>
+      </genClasses>
       <nestedGenPackages prefix="Temp" basePackage="org.eclipse.m2m.qvt.oml.internal.cst"
           disposableProviderFactory="true" ecorePackage="QVTOperationalCST.ecore#//cst/temp">
         <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/temp/ErrorCallExpCS"/>

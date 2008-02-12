@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnvFactory;
+import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
@@ -29,7 +30,9 @@ import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.TypeCS;
 import org.eclipse.ocl.ecore.Constraint;
+import org.eclipse.ocl.types.InvalidType;
 import org.eclipse.ocl.types.PrimitiveType;
+import org.eclipse.ocl.types.VoidType;
 
 public class QvtOperationalUtil {
 
@@ -126,7 +129,43 @@ public class QvtOperationalUtil {
 		return ModelTypeMetamodelsAdapter.getMetamodels(param.getEType()).equals(
 				ModelTypeMetamodelsAdapter.getMetamodels(importedParam.getEType()));
 	}
+	
+    public static final Boolean oclIsKindOf(Object value, EClassifier type, QvtOperationalEvaluationEnv env) {
+        // regardless of the source value, if the type is undefined, then so
+        //    is oclIsTypeOf
+        if (type == null) {
+            return null;
+        }
+        
+        // OclVoid and Invalid conform to all classifiers but their instances
+        // aren't actually useful as any type but their own.  So, check for
+        // exact type match in these cases
+        if (isUndefined(value)) {
+            return oclIsTypeOf(value, type, env);
+        }
 
+        return Boolean.valueOf(env.isKindOf(value, type));
+    }
+
+    public static final Boolean oclIsTypeOf(Object value, EClassifier type, QvtOperationalEvaluationEnv env) {
+        // regardless of the source value, if the type is undefined, then so
+        //    is oclIsTypeOf
+        if (type == null) {
+            return null;
+        }
+        
+        // the type of null is OclVoid
+        if (value == null) {
+            return Boolean.valueOf(type instanceof VoidType);
+        }
+        
+        // the type of OclInvalid is Invalid
+        if (value == getOclInvalid()) {
+            return Boolean.valueOf(type instanceof InvalidType);
+        }
+
+        return Boolean.valueOf(env.isTypeOf(value, type));
+	}
     
 	private static final Object ourOclInvalid = new QvtOperationalEnvFactory().createEnvironment(null).getOCLStandardLibrary().getOclInvalid();
 	private static final EClassifier ourOclVoid = new QvtOperationalEnvFactory().createEnvironment(null).getOCLStandardLibrary().getOclVoid();

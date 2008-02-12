@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackage.java,v 1.8 2008/02/01 10:56:00 aigdalov Exp $
+ * $Id: CSTPackage.java,v 1.9 2008/02/12 14:59:47 aigdalov Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst;
 
@@ -2983,13 +2983,22 @@ public interface CSTPackage extends EPackage {
     int IMPERATIVE_LOOP_EXP_CS__BODY = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__BODY;
 
                 /**
+     * The feature id for the '<em><b>Condition</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IMPERATIVE_LOOP_EXP_CS__CONDITION = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS_FEATURE_COUNT + 0;
+
+                /**
      * The number of structural features of the '<em>Imperative Loop Exp CS</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int IMPERATIVE_LOOP_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS_FEATURE_COUNT + 0;
+    int IMPERATIVE_LOOP_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS_FEATURE_COUNT + 1;
 
                 /**
      * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.impl.ImperativeIterateExpCSImpl <em>Imperative Iterate Exp CS</em>}' class.
@@ -3074,13 +3083,31 @@ public interface CSTPackage extends EPackage {
     int IMPERATIVE_ITERATE_EXP_CS__BODY = IMPERATIVE_LOOP_EXP_CS__BODY;
 
                 /**
+     * The feature id for the '<em><b>Condition</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IMPERATIVE_ITERATE_EXP_CS__CONDITION = IMPERATIVE_LOOP_EXP_CS__CONDITION;
+
+                /**
+     * The feature id for the '<em><b>Target</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IMPERATIVE_ITERATE_EXP_CS__TARGET = IMPERATIVE_LOOP_EXP_CS_FEATURE_COUNT + 0;
+
+                /**
      * The number of structural features of the '<em>Imperative Iterate Exp CS</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int IMPERATIVE_ITERATE_EXP_CS_FEATURE_COUNT = IMPERATIVE_LOOP_EXP_CS_FEATURE_COUNT + 0;
+    int IMPERATIVE_ITERATE_EXP_CS_FEATURE_COUNT = IMPERATIVE_LOOP_EXP_CS_FEATURE_COUNT + 1;
 
                 /**
      * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum <em>Direction Kind Enum</em>}' enum.
@@ -4567,6 +4594,17 @@ public interface CSTPackage extends EPackage {
     EClass getImperativeLoopExpCS();
 
                 /**
+     * Returns the meta object for the containment reference '{@link org.eclipse.m2m.qvt.oml.internal.cst.ImperativeLoopExpCS#getCondition <em>Condition</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Condition</em>'.
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.ImperativeLoopExpCS#getCondition()
+     * @see #getImperativeLoopExpCS()
+     * @generated
+     */
+    EReference getImperativeLoopExpCS_Condition();
+
+                /**
      * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.internal.cst.ImperativeIterateExpCS <em>Imperative Iterate Exp CS</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4575,6 +4613,17 @@ public interface CSTPackage extends EPackage {
      * @generated
      */
     EClass getImperativeIterateExpCS();
+
+                /**
+     * Returns the meta object for the containment reference '{@link org.eclipse.m2m.qvt.oml.internal.cst.ImperativeIterateExpCS#getTarget <em>Target</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Target</em>'.
+     * @see org.eclipse.m2m.qvt.oml.internal.cst.ImperativeIterateExpCS#getTarget()
+     * @see #getImperativeIterateExpCS()
+     * @generated
+     */
+    EReference getImperativeIterateExpCS_Target();
 
                 /**
      * Returns the meta object for enum '{@link org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum <em>Direction Kind Enum</em>}'.
@@ -5805,6 +5854,14 @@ public interface CSTPackage extends EPackage {
         EClass IMPERATIVE_LOOP_EXP_CS = eINSTANCE.getImperativeLoopExpCS();
 
                                 /**
+         * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference IMPERATIVE_LOOP_EXP_CS__CONDITION = eINSTANCE.getImperativeLoopExpCS_Condition();
+
+                                /**
          * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.impl.ImperativeIterateExpCSImpl <em>Imperative Iterate Exp CS</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -5813,6 +5870,14 @@ public interface CSTPackage extends EPackage {
          * @generated
          */
         EClass IMPERATIVE_ITERATE_EXP_CS = eINSTANCE.getImperativeIterateExpCS();
+
+                                /**
+         * The meta object literal for the '<em><b>Target</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference IMPERATIVE_ITERATE_EXP_CS__TARGET = eINSTANCE.getImperativeIterateExpCS_Target();
 
                                 /**
          * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum <em>Direction Kind Enum</em>}' enum.

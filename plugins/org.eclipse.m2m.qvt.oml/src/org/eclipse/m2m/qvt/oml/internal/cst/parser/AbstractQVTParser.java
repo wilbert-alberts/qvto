@@ -69,7 +69,6 @@ import org.eclipse.m2m.qvt.oml.internal.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.TempFactory;
 import org.eclipse.ocl.cst.CSTFactory;
 import org.eclipse.ocl.cst.CSTNode;
-import org.eclipse.ocl.cst.IteratorExpCS;
 import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
@@ -605,21 +604,21 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
             SimpleNameCS simpleNameCS,
             EList<VariableCS> iterators,
             VariableCS target,
-            OCLExpressionCS oclExpressionCS) {
+            OCLExpressionCS body,
+            OCLExpressionCS condition) {
         ImperativeIterateExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createImperativeIterateExpCS();
         result.setSimpleNameCS(simpleNameCS);
-        if (iterators != null) {
-            if (iterators.size() > 0) {
-                result.setVariable1(iterators.get(0));
-                if (iterators.size() > 1) {
-                    result.setVariable1(iterators.get(1));
-                }
+        if (iterators.size() > 0) {
+            result.setVariable1(iterators.get(0));
+            if (iterators.size() > 1) {
+                result.setVariable2(iterators.get(1));
             }
         }
         if (target != null) {
-            result.setVariable2(target);
+            result.setTarget(target);
         }
-        result.setBody(oclExpressionCS);
+        result.setBody(body);
+        result.setCondition(condition);
         return result;
     }
 

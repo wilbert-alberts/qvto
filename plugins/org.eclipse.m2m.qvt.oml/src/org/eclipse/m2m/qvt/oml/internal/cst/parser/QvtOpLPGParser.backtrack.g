@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.34 2008/02/07 15:54:06 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.35 2008/02/12 14:59:46 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -365,7 +365,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.34 2008/02/07 15:54:06 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.35 2008/02/12 14:59:46 aigdalov Exp $
  */
 	./
 $End
@@ -2844,6 +2844,7 @@ $Rules
 							simpleNameCS,
 							(EList<VariableCS>)iterContents[0],
 							(VariableCS)iterContents[1],
+							null,
 							(OCLExpressionCS)iterContents[2]
 						);
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
@@ -2860,6 +2861,7 @@ $Rules
 					setOffsets(simpleNameCS, getIToken($getToken(1)));
 					CSTNode result = createImperativeIterateExpCS(
 							simpleNameCS,
+							$EMPTY_ELIST,
 							null,
 							null,
 							null
@@ -2907,6 +2909,8 @@ $Rules
 	        /.$NullAction./
 	exclamationOpt -> '!'
 
+	
+	-- collectselect shorthand
 	declarator_vsep ::= IDENTIFIER '|'
         	/.$BeginJava
 			CSTNode result = createVariableCS(
@@ -2915,7 +2919,7 @@ $Rules
 						null
 						);
                         setOffsets(result, getIToken($getToken(1)));
-                        $setResult(getIToken($getToken(1)));
+                        $setResult(result);
 	          $EndJava
         	./
 
@@ -2928,21 +2932,21 @@ $Rules
 
 	callExpCS ::= '->' featureCallExpCS exclamationOpt '[' declarator_vsepOpt oclExpressionCS ']'
 		/.$BeginJava
-					SimpleNameCS simpleNameCS = createSimpleNameCS(
-								SimpleTypeEnum.KEYWORD_LITERAL,
-								"collectselect" //$NON-NLS-1$
-							);
-					setOffsets(simpleNameCS, getIToken($getToken(4)), getIToken($getToken(7)));
-					VariableCS variableCS = (VariableCS) $getSym(5);
-					variableCS.setInitExpression((OCLExpressionCS) $getSym(2)); // TODO: iterator must be used here
-					CSTNode result = createImperativeIterateExpCS(
-							simpleNameCS,
-							$EMPTY_ELIST,
-							variableCS,
-							(OCLExpressionCS) $getSym(6)
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
-					$setResult(result);
+			SimpleNameCS simpleNameCS = createSimpleNameCS(
+					SimpleTypeEnum.KEYWORD_LITERAL,
+					"collectselect" //$NON-NLS-1$
+					);
+			setOffsets(simpleNameCS, getIToken($getToken(4)), getIToken($getToken(7)));
+			VariableCS variableCS = (VariableCS) $getSym(5);
+			CSTNode result = createImperativeIterateExpCS(
+						simpleNameCS,
+						$EMPTY_ELIST,
+						variableCS,
+						(OCLExpressionCS) $getSym(2),
+						(OCLExpressionCS) $getSym(6)
+					);
+			setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
+			$setResult(result);
 		  $EndJava
 		./
 
@@ -2957,6 +2961,7 @@ $Rules
 					CallExpCS result = createImperativeIterateExpCS(
 							simpleNameCS,
 							$EMPTY_ELIST,
+							null,
 							null,
 							(OCLExpressionCS) $getSym(4)
 						);
@@ -2982,6 +2987,7 @@ $Rules
 					CallExpCS result = createImperativeIterateExpCS(
 							simpleNameCS,
 							$EMPTY_ELIST,
+							null,
 							null,
 							(OCLExpressionCS) $getSym(6)
 						);

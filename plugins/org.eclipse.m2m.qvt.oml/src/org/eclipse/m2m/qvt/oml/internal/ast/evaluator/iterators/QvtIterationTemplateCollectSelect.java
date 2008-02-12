@@ -24,45 +24,49 @@ import org.eclipse.ocl.expressions.Variable;
  * @author aigdalov
  * Created on Jan 31, 2008
  */
-public class QvtIterationTemplateXSelect<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
+public class QvtIterationTemplateCollectSelect<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 extends QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
-    private QvtIterationTemplateXSelect(EvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> v) {
+    private QvtIterationTemplateCollectSelect(EvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> v) {
         super(v);
     }
 
     public static<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
     QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> getInstance(
             EvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> v) {
-        return new QvtIterationTemplateXSelect<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>(v);
+        return new QvtIterationTemplateCollectSelect<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>(v);
     }
 
     @Override
-    protected Object evaluateResult(List<Variable<C, PM>> iterators, String resultName, Object condition, Object body) {
+    protected Object evaluateResult(List<Variable<C, PM>> iterators, String resultName, Object condition, Object bodyVal) {
         @SuppressWarnings("unchecked")
         QvtOperationalEvaluationEnv env = (QvtOperationalEvaluationEnv) getEvalEnvironment();
-        
-        // should be exactly one iterator
-        String iterName = iterators.get(0).getName();
-        Object currObj = env.getValueOf(iterName);
-        
+
         @SuppressWarnings("unchecked")
-        Collection<Object> resultVal = (Collection<Object>) env.getValueOf(resultName);
-        
-        if (currObj != null) {
-            if (condition instanceof Boolean) {
-                if ((Boolean) condition) {
-                    resultVal.add(currObj);
-                }
-            } else if (condition instanceof EClassifier){
-                if (QvtOperationalUtil.oclIsKindOf(currObj, (EClassifier) condition, env)) {
-                    resultVal.add(currObj);
-                }
-            } else {
-                setDone(true);
-                return getOclInvalid();
+        Collection<Object> currVal = (Collection<Object>) env.getValueOf(resultName);
+
+        if (condition instanceof Boolean) {
+            if (!(Boolean) condition) {
+                return currVal;
             }
+        } else if (condition instanceof EClassifier){
+            if (!QvtOperationalUtil.oclIsKindOf(bodyVal, (EClassifier) condition, env)) {
+                return currVal;
+            }
+        } else {
+            setDone(true);
+            return getOclInvalid();
         }
-       
-        return resultVal;
+        
+        // If the body result is invalid then the entire expression's value
+        // is invalid, because OCL does not permit OclInvalid in a collection
+        if (bodyVal == getOclInvalid()) {
+            setDone(true);
+            return bodyVal;
+        }
+
+        if (bodyVal != null) { // nulls are not added to the collection
+            currVal.add(bodyVal);
+        }
+        return currVal;
     }
 }

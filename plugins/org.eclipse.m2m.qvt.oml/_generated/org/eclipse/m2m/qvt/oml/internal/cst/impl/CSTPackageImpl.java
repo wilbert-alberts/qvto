@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.8 2008/02/01 10:55:59 aigdalov Exp $
+ * $Id: CSTPackageImpl.java,v 1.9 2008/02/12 14:59:47 aigdalov Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.impl;
 
@@ -1729,8 +1729,26 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EReference getImperativeLoopExpCS_Condition() {
+        return (EReference)imperativeLoopExpCSEClass.getEStructuralFeatures().get(0);
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getImperativeIterateExpCS() {
         return imperativeIterateExpCSEClass;
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getImperativeIterateExpCS_Target() {
+        return (EReference)imperativeIterateExpCSEClass.getEStructuralFeatures().get(0);
     }
 
                 /**
@@ -1967,8 +1985,10 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
         createEReference(assertExpCSEClass, ASSERT_EXP_CS__SEVERITY);
 
         imperativeLoopExpCSEClass = createEClass(IMPERATIVE_LOOP_EXP_CS);
+        createEReference(imperativeLoopExpCSEClass, IMPERATIVE_LOOP_EXP_CS__CONDITION);
 
         imperativeIterateExpCSEClass = createEClass(IMPERATIVE_ITERATE_EXP_CS);
+        createEReference(imperativeIterateExpCSEClass, IMPERATIVE_ITERATE_EXP_CS__TARGET);
 
         // Create enums
         directionKindEnumEEnum = createEEnum(DIRECTION_KIND_ENUM);
@@ -2240,8 +2260,10 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
         initEReference(getAssertExpCS_Severity(), theCSTPackage_1.getSimpleNameCS(), null, "severity", null, 0, 1, AssertExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
         initEClass(imperativeLoopExpCSEClass, ImperativeLoopExpCS.class, "ImperativeLoopExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getImperativeLoopExpCS_Condition(), theCSTPackage_1.getOCLExpressionCS(), null, "condition", null, 1, 1, ImperativeLoopExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
         initEClass(imperativeIterateExpCSEClass, ImperativeIterateExpCS.class, "ImperativeIterateExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getImperativeIterateExpCS_Target(), theCSTPackage_1.getVariableCS(), null, "target", null, 0, 1, ImperativeIterateExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
         // Initialize enums and add enum literals
         initEEnum(directionKindEnumEEnum, DirectionKindEnum.class, "DirectionKindEnum"); //$NON-NLS-1$

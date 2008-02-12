@@ -20,6 +20,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.EvaluationVisitor;
 import org.eclipse.ocl.expressions.OCLExpression;
@@ -27,23 +29,23 @@ import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 
 public abstract class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
-    private EvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> evalVisitor;
-    private EvaluationEnvironment<C, O, P, CLS, E> env;
+    private EvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> myEvalVisitor;
+    private EvaluationEnvironment<C, O, P, CLS, E> myEvalEnv;
     private boolean done = false;
 
     // singleton
     protected QvtIterationTemplate(EvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> v) {
 
-        this.evalVisitor = v;
-        this.env = v.getEvaluationEnvironment();
+        myEvalVisitor = v;
+        myEvalEnv = v.getEvaluationEnvironment();
     }
 
     public EvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> getEvaluationVisitor() {
-        return evalVisitor;
+        return myEvalVisitor;
     }
 
     public EvaluationEnvironment<C, O, P, CLS, E> getEvalEnvironment() {
-        return env;
+        return myEvalEnv;
     }
 
     public final void setDone(boolean done) {
@@ -56,13 +58,14 @@ public abstract class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT,
 
     public Object evaluate(Collection<?> coll, 
             List<Variable<C, PM>> iterators,
+            Variable<EClassifier, EParameter> target,
             OCLExpression<C> condition, 
             OCLExpression<C> body, 
             String resultName) {
         
         // if the collection is empty, then nothing to do
             if (coll.isEmpty())
-                return env.getValueOf(resultName);
+                return myEvalEnv.getValueOf(resultName);
 
         // construct an array of java iterators, one for each
             // ocl iterator in the expression
@@ -71,17 +74,19 @@ public abstract class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT,
             initializeIterators(iterators, javaIters, coll);
 
             while (true) {
-                // evaluate the condition of the expression in this environment
-                Object conditionVal = (condition == null) ? null : evalVisitor.visitExpression(condition);
-
                 // evaluate the body of the expression in this environment
-                Object bodyVal = (body == null) ? null : evalVisitor.visitExpression(body);
+                Object bodyVal = (body == null) ? null : myEvalVisitor.visitExpression(body);
+
+                advanceTarget(target, bodyVal);
+
+                // evaluate the condition of the expression in this environment
+                Object conditionVal = (condition == null) ? null : myEvalVisitor.visitExpression(condition);
 
                 // get the new result value
                 Object resultVal = evaluateResult(iterators, resultName, conditionVal, bodyVal);
 
                 // set the result variable in the environment with the result value
-                env.replace(resultName, resultVal);
+                myEvalEnv.replace(resultName, resultVal);
 
                 // find the next unfinished iterator
                 int curr = getNextUnfinishedIterator(javaIters);
@@ -93,7 +98,7 @@ public abstract class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT,
                     removeIterators(iterators);
 
                     // return the result value
-                    return env.getValueOf(resultName);
+                    return myEvalEnv.getValueOf(resultName);
                 }
 
                 // more iteration to go:
@@ -111,9 +116,9 @@ public abstract class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT,
         for (int i = 0, n = javaIters.length; i < n; i++) {
             javaIters[i] = c.iterator();
             Variable<C, PM> iterDecl = iterators.get(i);
-            String iterName = (String) iterDecl.accept(evalVisitor);
+            String iterName = (String) iterDecl.accept(myEvalVisitor);
             Object value = javaIters[i].next();
-            env.replace(iterName, value);
+            myEvalEnv.replace(iterName, value);
         }
     }
 
@@ -140,7 +145,7 @@ public abstract class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT,
             if (i != curr)
                 javaIters[i] = c.iterator();
             Object value = javaIters[i].next();
-            env.replace(iterName, value);
+            myEvalEnv.replace(iterName, value);
         }
     }
 
@@ -149,7 +154,7 @@ public abstract class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT,
         for (int i = 0, n = iterators.size(); i < n; i++) {
             Variable<C, PM> iterDecl = iterators.get(i);
             String iterName = iterDecl.getName();
-            env.remove(iterName);
+            myEvalEnv.remove(iterName);
         }
     }
 
@@ -158,12 +163,19 @@ public abstract class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT,
             return false;
         return curr < numIters;
     }
+    
+    protected void advanceTarget(Variable<EClassifier, EParameter> target, Object bodyVal) {
+        if (target != null) {
+            String varName = target.getName();
+            myEvalEnv.replace(varName, bodyVal);
+        }
+    }
 
     // override this method for different iterator behaviors
     protected abstract Object evaluateResult(List<Variable<C, PM>> iterators, String resultName, Object conditionVal, Object bodyVal);
 
     protected OCLStandardLibrary<C> getOCLStandardLibrary() {
-        return evalVisitor.getEnvironment().getOCLStandardLibrary();
+        return myEvalVisitor.getEnvironment().getOCLStandardLibrary();
     }
 
     protected Object getOclInvalid() {
