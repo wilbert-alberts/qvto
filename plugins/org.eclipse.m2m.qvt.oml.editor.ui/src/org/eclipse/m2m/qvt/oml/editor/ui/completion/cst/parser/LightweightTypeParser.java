@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.12 2008/02/07 15:54:13 aigdalov Exp $
+* $Id: LightweightTypeParser.java,v 1.13 2008/02/12 14:59:36 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.12 2008/02/07 15:54:13 aigdalov Exp $
+* $Id: LightweightTypeParser.java,v 1.13 2008/02/12 14:59:36 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser;
@@ -5022,6 +5022,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.parser.AbstractQVTParser;
 						simpleNameCS,
 						(EList<VariableCS>)iterContents[0],
 						(VariableCS)iterContents[1],
+						null,
 						(OCLExpressionCS)iterContents[2]
 					);
 				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(4)));
@@ -5041,6 +5042,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.parser.AbstractQVTParser;
 				setOffsets(simpleNameCS, getIToken(dtParser.getToken(1)));
 				CSTNode result = createImperativeIterateExpCS(
 						simpleNameCS,
+						ourEmptyEList,
 						null,
 						null,
 						null
@@ -5107,7 +5109,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.parser.AbstractQVTParser;
 					null
 					);
                     setOffsets(result, getIToken(dtParser.getToken(1)));
-                    dtParser.setSym1(getIToken(dtParser.getToken(1)));
+                    dtParser.setSym1(result);
           		  break;
 			}
     	 
@@ -5130,21 +5132,21 @@ import org.eclipse.m2m.qvt.oml.internal.cst.parser.AbstractQVTParser;
 			//
 			case 550: {
 				
-				SimpleNameCS simpleNameCS = createSimpleNameCS(
-							SimpleTypeEnum.KEYWORD_LITERAL,
-							"collectselect" //$NON-NLS-1$
-						);
-				setOffsets(simpleNameCS, getIToken(dtParser.getToken(4)), getIToken(dtParser.getToken(7)));
-				VariableCS variableCS = (VariableCS) dtParser.getSym(5);
-				variableCS.setInitExpression((OCLExpressionCS) dtParser.getSym(2)); // TODO: iterator must be used here
-				CSTNode result = createImperativeIterateExpCS(
-						simpleNameCS,
-						ourEmptyEList,
-						variableCS,
-						(OCLExpressionCS) dtParser.getSym(6)
-					);
-				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(7)));
-				dtParser.setSym1(result);
+		SimpleNameCS simpleNameCS = createSimpleNameCS(
+				SimpleTypeEnum.KEYWORD_LITERAL,
+				"collectselect" //$NON-NLS-1$
+				);
+		setOffsets(simpleNameCS, getIToken(dtParser.getToken(4)), getIToken(dtParser.getToken(7)));
+		VariableCS variableCS = (VariableCS) dtParser.getSym(5);
+		CSTNode result = createImperativeIterateExpCS(
+					simpleNameCS,
+					ourEmptyEList,
+					variableCS,
+					(OCLExpressionCS) dtParser.getSym(2),
+					(OCLExpressionCS) dtParser.getSym(6)
+				);
+		setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(7)));
+		dtParser.setSym1(result);
 	  		  break;
 			}
 	 
@@ -5161,6 +5163,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.parser.AbstractQVTParser;
 				CallExpCS result = createImperativeIterateExpCS(
 						simpleNameCS,
 						ourEmptyEList,
+						null,
 						null,
 						(OCLExpressionCS) dtParser.getSym(4)
 					);
@@ -5189,6 +5192,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.parser.AbstractQVTParser;
 				CallExpCS result = createImperativeIterateExpCS(
 						simpleNameCS,
 						ourEmptyEList,
+						null,
 						null,
 						(OCLExpressionCS) dtParser.getSym(6)
 					);
