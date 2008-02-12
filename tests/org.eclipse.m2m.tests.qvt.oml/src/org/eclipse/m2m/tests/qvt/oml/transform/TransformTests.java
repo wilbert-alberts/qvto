@@ -81,6 +81,7 @@ public class TransformTests {
 
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {
+                new FileToFileData("bug2787"), //$NON-NLS-1$                
                 new FileToFileData("bug2741"), //$NON-NLS-1$                
                 new FileToFileData("bug2732"), //$NON-NLS-1$                
     			new FileToFileData("bug_214938"), //$NON-NLS-1$    			
@@ -240,6 +241,7 @@ public class TransformTests {
             "assigntonullowner", "resolveall", // reference not in required format: eSuperTypes = "#//NEW_Class1" insteand of "//@eClassifiers.0" //$NON-NLS-1$ //$NON-NLS-2$
             "egetcodegen", // java method can't be called//$NON-NLS-1$
             "bug214718", // platform protocol URI metamodel reference //$NON-NLS-1$
-            "_while", "oclAllInstances", "bug216317", "simplestXCollectShorthand" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            "_while", "oclAllInstances", "bug216317", "simplestXCollectShorthand", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            "bug2787", // uses getEClassifier() defined on ecore //$NON-NLS-1$
     }));
 }
