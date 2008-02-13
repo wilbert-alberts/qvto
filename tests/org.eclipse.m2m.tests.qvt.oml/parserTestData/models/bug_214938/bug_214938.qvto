@@ -12,19 +12,19 @@ mapping main(in inPackage : ecore::EPackage) {
 }
 
 query ecore::EPackage::getName() : String {
-	if not oclAsType(ecore::EPackage).oclIsUndefined()
-		then oclAsType(ecore::EPackage).name
+	if not self.oclAsType(ecore::EPackage).oclIsUndefined()
+		then self.oclAsType(ecore::EPackage).name
 		else 'Error-1'
 	endif
 }
 
 query ecore::EPackage::getName2() : String {
-	if oclIsTypeOf(ecore::EPackage)
-		then oclAsType(ecore::EPackage).name
+	if self.oclIsTypeOf(ecore::EPackage)
+		then self.oclAsType(ecore::EPackage).name
 		else 'Error-2'
 	endif
 }
 
 mapping ecore::EPackage::mapToSubPackage() : ecore::EPackage {
-	name := getName2()
+	name := self.getName2()
 }
