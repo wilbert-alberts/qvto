@@ -288,7 +288,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
     
     public Variable<EClassifier, EParameter> lookupImplicitSourceForResolveExp() {
         Variable<EClassifier,EParameter> implicitSource = lookupAnyImplicitSource();
-        if ((implicitSource != null) && (implicitSource.getType() == getModuleContextType())) {
+        if ((implicitSource != null) && (implicitSource.getType() == getModuleContextType() || 
+        		SELF_VARIABLE_NAME.equals(implicitSource.getName()) )) {
             return null;
         }
         return implicitSource;
@@ -524,13 +525,20 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		try {
 			myLookupOperationNames.add(name);
 			result = super.lookupImplicitSourceForOperation(name, args);
-			if(result == null && getInternalParent() != null) {
+			Variable<EClassifier, EParameter> tentativeResult = result;
+			// check if implicit source results in self variable, try lookup for implicit this as a higher precedence
+			// Remark: validation should report the problem about call on 'self' using implicit source			
+			if((result == null || SELF_VARIABLE_NAME.equals(result.getName())) && getInternalParent() != null) {
 				result = getInternalParent().lookupImplicitSourceForOperation(name, args);
+				if(tentativeResult != null && result == null) {
+					result = tentativeResult;
+				}
 			}
 		}
 		finally {
 			myLookupOperationNames.remove(name);
 		}
+		
 		return result;
 	}
 	
@@ -546,8 +554,14 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		try {
 			myLookupPropertyNames.add(name);
 			implicitSource = super.lookupImplicitSourceForProperty(name);
-			if(implicitSource == null && getInternalParent() != null) {
+			Variable<EClassifier, EParameter> tentativeResult = implicitSource;
+			// check if implicit source results in self variable, try lookup for implicit this as a higher precedence
+			// Remark: validation should report the problem about call on 'self' using implicit source
+			if((implicitSource == null || SELF_VARIABLE_NAME.equals(implicitSource.getName())) && getInternalParent() != null) {
 				implicitSource = getInternalParent().lookupImplicitSourceForProperty(name);
+				if(tentativeResult != null && implicitSource == null) {
+					implicitSource = tentativeResult;
+				}
 			}			
 		}
 		finally {
@@ -731,7 +745,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 				var.setName(Environment.SELF_VARIABLE_NAME);
 				var.setType(context.getEType());
 				var.setRepresentedParameter(context);
-				newEnvironment.addElement(var.getName(), var, true);
+				newEnvironment.addElement(var.getName(), var, false);
 			}
 		}
 

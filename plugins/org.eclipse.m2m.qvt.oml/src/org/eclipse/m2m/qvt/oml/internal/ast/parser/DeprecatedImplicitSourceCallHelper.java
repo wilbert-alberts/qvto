@@ -30,6 +30,9 @@ import org.eclipse.ocl.expressions.VariableExp;
 
 /**
  * Used to perform validation checks on obsolete usage of calls on implicit source object.
+ * TODO -
+ *  1) Perform appropriate renamings, to get rid of being a deprecation issue, but a normal validation.
+ * 	2) Move me to the central QVT validator class
  */
 class DeprecatedImplicitSourceCallHelper {
 
@@ -77,7 +80,7 @@ class DeprecatedImplicitSourceCallHelper {
 					if(refVar != null && refVar.getName() != null) {
 						String refVarName = refVar.getName();
 						if(QvtOperationalEnv.SELF_VARIABLE_NAME.equals(refVarName)) {
-							env.reportWarning(ValidationMessages.DeprecatedImplicitSourceCall_contextualImplicitCall, causeNode);
+							env.reportError(ValidationMessages.DeprecatedImplicitSourceCall_contextualImplicitCall, causeNode);
 						} 
 						else if(refVarName != null && refVarName.endsWith(QvtOperationalFileEnv.THIS_VAR_QNAME_SUFFIX)) {
 							if(resultAST instanceof OperationCallExp) {
