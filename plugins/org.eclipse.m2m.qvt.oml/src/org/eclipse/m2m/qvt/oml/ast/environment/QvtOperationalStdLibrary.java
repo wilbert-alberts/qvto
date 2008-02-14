@@ -59,7 +59,7 @@ public class QvtOperationalStdLibrary {
 		myDefinedOperations = new HashMap<EOperation, LibraryOperation>();
 		
 		myQvtStdlibModule = org.eclipse.m2m.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModule();
-		myQvtStdlibModule.setName(QVT_STDLIB_MODULE_NAME); //$NON-NLS-1$
+		myQvtStdlibModule.setName(QVT_STDLIB_MODULE_NAME);
 	}
 	
 	public EClassifier getModelType() {

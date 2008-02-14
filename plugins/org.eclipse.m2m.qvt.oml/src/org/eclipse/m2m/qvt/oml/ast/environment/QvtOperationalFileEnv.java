@@ -160,7 +160,7 @@ public class QvtOperationalFileEnv extends QvtOperationalEnv {
 		myLibs.add(libModule);
 		
 		Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
-		var.setName(libModule.getName() + ".this");
+		var.setName(libModule.getName() + THIS_VAR_QNAME_SUFFIX);
 		var.setType(libModule);
 		this.addElement(var.getName(), var, false);
 		
