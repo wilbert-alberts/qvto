@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.35 2008/02/12 14:59:46 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.36 2008/02/15 11:56:29 radvorak Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -312,6 +312,7 @@ $KeyWords
 	var
 	configuration
 	property
+	population
 	map
 	xmap
 	late
@@ -365,7 +366,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.35 2008/02/12 14:59:46 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.36 2008/02/15 11:56:29 radvorak Exp $
  */
 	./
 $End
@@ -1736,12 +1737,23 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
+
+	mappingBodyOpt ::= population '{' expressionListOpt '}'
+		/.$BeginJava
+				MappingBodyCS result = createMappingBodyCS(
+						(EList<OCLExpressionCS>)dtParser.getSym(3),
+						false, true
+					);
+				setOffsets(result, getIToken(dtParser.getToken(2)), getIToken(dtParser.getToken(4)));
+				dtParser.setSym1(result);
+		  $EndJava
+		./
 		
 	mappingBodyOpt ::= outExpCS
 		/.$BeginJava
 					MappingBodyCS result = createMappingBodyCS(
-							(OutExpCS)$getSym(1),
-							false
+							(OutExpCS)dtParser.getSym(1),
+							false, false
 						);
 					setOffsets(result, (CSTNode)$getSym(1));
 					$setResult(result);
@@ -1750,7 +1762,7 @@ $Rules
 	mappingBodyOpt ::= patternPropertyOrAdditionList
 		/.$BeginJava
 					EList props = (EList)$getSym(1);
-					OutExpCS outExp = createOutExpCS(props, null, getIToken($getToken(1)).getStartOffset(), getIToken($getToken(1)).getEndOffset());
+					OutExpCS outExp = createOutExpCS(props, getIToken($getToken(1)).getStartOffset(), getIToken($getToken(1)).getEndOffset());
 					if (!props.isEmpty()) {
 						CSTNode head = (CSTNode) props.get(0);
 						CSTNode tail = (CSTNode) props.get(props.size()-1);
@@ -1758,7 +1770,7 @@ $Rules
 					}
 					MappingBodyCS result = createMappingBodyCS(
 							outExp,
-							true
+							true, false
 						);
 					setOffsets(result, outExp);
 					$setResult(result);
@@ -1851,24 +1863,47 @@ $Rules
 		/.$NullAction./
 	typeSpecCSOpt -> typeSpecCS
 
-	outExpCS ::= object typeSpecCSOpt '{' patternPropertyOrAdditionList '}' 
+	objectDeclCS ::= typeSpecCS
 		/.$BeginJava
-					CSTNode result = createOutExpCS(
+					CSTNode result = createOutExpCS(null, (TypeSpecCS)$getSym(1));
+					$setResult(result);
+		  $EndJava
+		./
+
+	objectIdentifierCS -> result
+	objectIdentifierCS -> self
+	objectIdentifierCS -> IDENTIFIER	
+	
+	objectDeclCS ::= objectIdentifierCS ':' typeSpecCSOpt
+		/.$BeginJava
+				SimpleNameCS varName = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, getTokenText(dtParser.getToken(1)));
+				setOffsets(varName, getIToken(dtParser.getToken(1)));
+				CSTNode result = createOutExpCS(varName,(TypeSpecCS)dtParser.getSym(3));					
+				$setResult(result);
+		  $EndJava
+		./
+	
+	outExpCS ::= object objectDeclCS '{' patternPropertyOrAdditionList '}' 
+		/.$BeginJava
+					CSTNode result = setupOutExpCS(
+							(OutExpCS)$getSym(2),					
 							(EList)$getSym(4),
-							(TypeSpecCS)$getSym(2),
+							// passing body positions
 							getIToken($getToken(3)).getEndOffset(),
 							getIToken($getToken(5)).getStartOffset()
-						);
+						); 
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
 					$setResult(result);
 		  $EndJava
 		./
-	outExpCS ::= object typeSpecCSOpt '{' patternPropertyOrAdditionList qvtErrorToken
+	outExpCS ::= object objectDeclCS '{' patternPropertyOrAdditionList qvtErrorToken
 		/.$BeginJava
+					OutExpCS outExpCS = ((OutExpCS)dtParser.getSym(2));
 					EList<CSTNode> patternPropertyOrAdditionList = (EList<CSTNode>)$getSym(4);
 					CSTNode result = createErrorOutExpCS(
-							(EList)$getSym(4),
-							(TypeSpecCS)$getSym(2),
+							outExpCS.getSimpleNameCS(),						
+							outExpCS.getTypeSpecCS(),
+							(EList)dtParser.getSym(4),						
 							getIToken($getToken(3)).getEndOffset(),
 							getIToken($getToken(5)).getStartOffset(),
 							getIToken($getToken(1)).getStartOffset(),
@@ -1883,21 +1918,22 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	outExpCS ::= object typeSpecCSOpt qvtErrorToken
+	outExpCS ::= object objectDeclCS qvtErrorToken
 		/.$BeginJava
-		                        TypeSpecCS typeSpecCS = (TypeSpecCS)$getSym(2);  
+					OutExpCS objectDeclCS = ((OutExpCS)dtParser.getSym(2));  
 					CSTNode result = createErrorOutExpCS(
+							objectDeclCS.getSimpleNameCS(),						
+							objectDeclCS.getTypeSpecCS(),
 							$EMPTY_ELIST,
-							typeSpecCS,
 							getIToken($getToken(1)).getEndOffset(),
 							getIToken($getToken(1)).getStartOffset(),
 							getIToken($getToken(1)).getStartOffset(),
 							getIToken($getToken(3)).getStartOffset()
 						);
-					if (typeSpecCS  == null) {
+					if (objectDeclCS  == null) {
 					    setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
 					} else {
-					    setOffsets(result, getIToken($getToken(1)), typeSpecCS);
+					    setOffsets(result, getIToken($getToken(1)), objectDeclCS);
 					}
 					$setResult(result);
 		  $EndJava

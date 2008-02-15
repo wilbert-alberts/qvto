@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: LogExp.java,v 1.2 2008/02/01 10:56:00 aigdalov Exp $
+ * $Id: LogExp.java,v 1.3 2008/02/15 11:56:27 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.expressions;
 
@@ -37,36 +37,36 @@ import org.eclipse.ocl.expressions.OperationCallExp;
  */
 public interface LogExp extends OperationCallExp<EClassifier, EOperation> {
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
 	/**
-     * Returns the value of the '<em><b>Condition</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Condition</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Condition</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Condition</em>' containment reference.
-     * @see #setCondition(OCLExpression)
-     * @see org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage#getLogExp_Condition()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Condition</em>' containment reference.
+	 * @see #setCondition(OCLExpression)
+	 * @see org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage#getLogExp_Condition()
+	 * @model containment="true"
+	 * @generated
+	 */
 	OCLExpression<EClassifier> getCondition();
 
 	/**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.expressions.LogExp#getCondition <em>Condition</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.expressions.LogExp#getCondition <em>Condition</em>}' containment reference.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Condition</em>' containment reference.
-     * @see #getCondition()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Condition</em>' containment reference.
+	 * @see #getCondition()
+	 * @generated
+	 */
 	void setCondition(OCLExpression<EClassifier> value);
 
 } // LogExp

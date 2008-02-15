@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ModuleKindCSImpl.java,v 1.6 2008/02/01 10:55:59 aigdalov Exp $
+ * $Id: ModuleKindCSImpl.java,v 1.7 2008/02/15 11:56:26 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.impl;
 
@@ -42,144 +42,144 @@ import org.eclipse.ocl.cst.impl.CSTNodeImpl;
  */
 public class ModuleKindCSImpl extends CSTNodeImpl implements ModuleKindCS {
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 	/**
-     * The default value of the '{@link #getModuleKind() <em>Module Kind</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getModuleKind() <em>Module Kind</em>}' attribute.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getModuleKind()
-     * @generated
-     * @ordered
-     */
+	 * @see #getModuleKind()
+	 * @generated
+	 * @ordered
+	 */
 	protected static final ModuleKindEnum MODULE_KIND_EDEFAULT = ModuleKindEnum.TRANSFORMATION;
 
 	/**
-     * The cached value of the '{@link #getModuleKind() <em>Module Kind</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getModuleKind() <em>Module Kind</em>}' attribute.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getModuleKind()
-     * @generated
-     * @ordered
-     */
+	 * @see #getModuleKind()
+	 * @generated
+	 * @ordered
+	 */
 	protected ModuleKindEnum moduleKind = MODULE_KIND_EDEFAULT;
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	protected ModuleKindCSImpl() {
-        super();
-    }
+		super();
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	protected EClass eStaticClass() {
-        return CSTPackage.Literals.MODULE_KIND_CS;
-    }
+		return CSTPackage.Literals.MODULE_KIND_CS;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public ModuleKindEnum getModuleKind() {
-        return moduleKind;
-    }
+		return moduleKind;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public void setModuleKind(ModuleKindEnum newModuleKind) {
-        ModuleKindEnum oldModuleKind = moduleKind;
-        moduleKind = newModuleKind == null ? MODULE_KIND_EDEFAULT : newModuleKind;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.MODULE_KIND_CS__MODULE_KIND, oldModuleKind, moduleKind));
-    }
+		ModuleKindEnum oldModuleKind = moduleKind;
+		moduleKind = newModuleKind == null ? MODULE_KIND_EDEFAULT : newModuleKind;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.MODULE_KIND_CS__MODULE_KIND, oldModuleKind, moduleKind));
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case CSTPackage.MODULE_KIND_CS__MODULE_KIND:
-                return getModuleKind();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case CSTPackage.MODULE_KIND_CS__MODULE_KIND:
+				return getModuleKind();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case CSTPackage.MODULE_KIND_CS__MODULE_KIND:
-                setModuleKind((ModuleKindEnum)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case CSTPackage.MODULE_KIND_CS__MODULE_KIND:
+				setModuleKind((ModuleKindEnum)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public void eUnset(int featureID) {
-        switch (featureID) {
-            case CSTPackage.MODULE_KIND_CS__MODULE_KIND:
-                setModuleKind(MODULE_KIND_EDEFAULT);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case CSTPackage.MODULE_KIND_CS__MODULE_KIND:
+				setModuleKind(MODULE_KIND_EDEFAULT);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case CSTPackage.MODULE_KIND_CS__MODULE_KIND:
-                return moduleKind != MODULE_KIND_EDEFAULT;
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case CSTPackage.MODULE_KIND_CS__MODULE_KIND:
+				return moduleKind != MODULE_KIND_EDEFAULT;
+		}
+		return super.eIsSet(featureID);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public String toString() {
-        if (eIsProxy()) return super.toString();
+		if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (moduleKind: "); //$NON-NLS-1$
-        result.append(moduleKind);
-        result.append(')');
-        return result.toString();
-    }
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (moduleKind: "); //$NON-NLS-1$
+		result.append(moduleKind);
+		result.append(')');
+		return result.toString();
+	}
 
 } //ModuleKindCSImpl

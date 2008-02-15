@@ -610,4 +610,47 @@ public class QvtOperationalParserUtil {
 		}
 	};
 
+	
+	/**
+	 * Null-safe variant of {@link UMLReflection#getQualifiedName(Object)}
+	 * operation.
+	 * 
+	 * @param type
+	 *            a classifier that may be <code>null</code>
+	 * @param defaultValue
+	 *            the default value if a non-null can not be derived
+	 * @return the name, or <code>defaultValue</code> if a non-null can not be
+	 *         derived
+	 */	
+	public static String safeGetQualifiedName(QvtOperationalEnv env, EClassifier type, String defaultValue) {
+		if(type == null) {
+			return defaultValue;
+		}
+		
+		String result = defaultValue;
+		if(type.getEPackage() == null) {
+			result = env.getUMLReflection().getName(type);
+		}
+		else {
+			try {
+				result = env.getUMLReflection().getQualifiedName(type);
+			} catch(RuntimeException e) {
+				result = env.getUMLReflection().getName(type);
+			}
+		}
+
+		return result != null ? result : defaultValue;
+	}
+	
+	/**
+	 * Null-safe variant of {@link UMLReflection#getQualifiedName(Object)}
+	 * operation.
+	 * 
+	 * @param type
+	 *            a classifier that may be <code>null</code>
+	 * @return the name, or empty string if a non-null can not be derived
+	 */		
+	public static String safeGetQualifiedName(QvtOperationalEnv env, EClassifier type) {
+		return safeGetQualifiedName(env, type, ""); //$NON-NLS-1$
+	}
 }

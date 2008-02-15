@@ -45,6 +45,7 @@ import org.eclipse.m2m.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.qvt.oml.expressions.BlockExp;
+import org.eclipse.m2m.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage;
@@ -81,6 +82,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.BlockExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ConfigPropertyCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum;
 import org.eclipse.m2m.qvt.oml.internal.cst.ExpressionStatementCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ImperativeIterateExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ImportCS;
@@ -168,9 +170,9 @@ import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.types.OrderedSetType;
 import org.eclipse.ocl.types.SequenceType;
 import org.eclipse.ocl.types.TypeType;
-import org.eclipse.ocl.types.VoidType;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.ASTNode;
+import org.eclipse.ocl.utilities.UMLReflection;
 import org.eclipse.osgi.util.NLS;
 
 
@@ -382,7 +384,7 @@ public class QvtOperationalVisitorCS
 			return visitOutExpCS((OutExpCS) oclExpressionCS, (QvtOperationalEnv) env);
 		}
 		if (oclExpressionCS instanceof PatternPropertyExpCS) {
-			return visitPatternPropertyExpCS((PatternPropertyExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+			return visitPatternPropertyExpCS((PatternPropertyExpCS) oclExpressionCS, null, (QvtOperationalEnv) env);
 		}
 		if (oclExpressionCS instanceof AssignStatementCS) {
 			return visitAssignStatementCS((AssignStatementCS) oclExpressionCS, (QvtOperationalEnv) env);
@@ -661,7 +663,7 @@ public class QvtOperationalVisitorCS
         EClassifier operationSourceType = ownerType;
         if (isArrowAccessToCollection(operationCallExpCS, source)
                 && (lookupOperation(operationCallExpCS, env, ownerType, operName, args) == null)) {
-            @SuppressWarnings("unchecked")
+            @SuppressWarnings("unchecked") //$NON-NLS-1$
             CollectionType<EClassifier, EOperation> sourceType = (CollectionType<EClassifier, EOperation>) ownerType;
             operationSourceType = sourceType.getElementType();
         }
@@ -685,7 +687,7 @@ public class QvtOperationalVisitorCS
             QvtOperationalEnv env,
             CSTNode cstNode) {
         
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings("unchecked") //$NON-NLS-1$
         EClassifier sourceElementType = ((CollectionType<EClassifier, EOperation>) source.getType())
             .getElementType();
         
@@ -940,45 +942,151 @@ public class QvtOperationalVisitorCS
 		return result;
 	}
 
-	private ObjectExp visitOutExpCS(OutExpCS outExpCS, QvtOperationalEnv env) {
-		TypeSpecCS typeSpecCS = getOutExpCSType(outExpCS);
-		if (typeSpecCS == null) {
-			env.reportError(ValidationMessages.missingTypeError, outExpCS);
-			return null;
+    private static MappingBodyCS findOwningMappingBodyCS(OutExpCS outExpCS) {
+    	EObject eContainer = outExpCS.eContainer();
+		if(eContainer instanceof MappingBodyCS) {
+			return (MappingBodyCS)eContainer;
 		}
+		return null;
+    }
+    
+    private static MappingDeclarationCS findOwningMappingDeclarationCS(OutExpCS outExpCS) {
+    	EObject eContainer = outExpCS.eContainer();
+		if(eContainer instanceof MappingBodyCS &&
+    		eContainer.eContainer() instanceof MappingRuleCS) {
+    		MappingRuleCS mappingCS = (MappingRuleCS)eContainer.eContainer();
+    		return mappingCS.getMappingDeclarationCS();
+    	}
+    	return null;
+    }
 
-		TypeSpecPair objectTypeSpec = visitTypeSpecCS(typeSpecCS, DirectionKind.OUT, env);
-		if (false == objectTypeSpec.myType instanceof EClass) {
-			env.reportError(NLS.bind(ValidationMessages.nonModelTypeError,
-					new Object[] { QvtOperationalUtil.getStringRepresentation(typeSpecCS.getTypeCS()) }),
-					typeSpecCS.getTypeCS());
+    private ObjectExp visitOutExpCS(OutExpCS outExpCS, QvtOperationalEnv env) {
+		MappingDeclarationCS topLevelInMapping = findOwningMappingDeclarationCS(outExpCS);		
+		if(topLevelInMapping != null && topLevelInMapping.getReturnType() == null && topLevelInMapping.getContextType() == null) {
 			return null;
 		}
+		
+		TypeSpecCS typeSpecCS = getOutExpCSType(outExpCS);
 
 		ObjectExp objectExp = ExpressionsFactory.eINSTANCE.createObjectExp();
 		objectExp.setStartPosition(outExpCS.getStartOffset());
 		objectExp.setEndPosition(outExpCS.getEndOffset());
-		if (outExpCS.getSimpleNameCS() != null) {
-			objectExp.setName(outExpCS.getSimpleNameCS().getValue());
+		
+		if(typeSpecCS != null) {
+			TypeSpecPair objectTypeSpec = visitTypeSpecCS(typeSpecCS, DirectionKind.OUT, env);
+			
+			objectExp.setType(objectTypeSpec.myType);
+			if(objectTypeSpec.myType instanceof EClass) {
+				// skip DataTypes as the instantiatedClass property expects Class
+				// let's make AST validation to complain on missing class.
+				// Note: Still can be derived from the referred object if specified explicitly
+				objectExp.setInstantiatedClass((EClass)objectTypeSpec.myType);
+			}
+			objectExp.setExtent(objectTypeSpec.myExtent);
+			
+		} else if(topLevelInMapping != null) {
+			// TODO - support multiple result parameters, for now take the first as the grammar does not allow this yet
+			boolean isContextInOut = topLevelInMapping.getDirectionKindCS() != null ? 
+					topLevelInMapping.getDirectionKindCS().getDirectionKind() == DirectionKindEnum.INOUT : false;
+			
+			EClassifier objectTypeCS = null;			
+			ModelParameter extent = null;
+			TypeSpecCS resultTypeSpecCS = topLevelInMapping.getReturnType();			
+			if(resultTypeSpecCS == null) {
+				if(isContextInOut && topLevelInMapping.getContextType() != null) {
+					objectTypeCS = visitTypeCS(topLevelInMapping.getContextType(), DirectionKind.INOUT, env);
+				}
+			} else {
+				TypeSpecPair resultTypeSpecPair = visitTypeSpecCS(resultTypeSpecCS, DirectionKind.OUT, env);
+				if(resultTypeSpecPair != null) {
+					extent = resultTypeSpecPair.myExtent;
+				}
+			}
+			
+			objectExp.setExtent(extent);
+			objectExp.setType(objectTypeCS);			
+			if(objectTypeCS instanceof EClass) {				
+				objectExp.setInstantiatedClass((EClass)objectTypeCS);
+			}				
 		}
-		objectExp.setType(objectTypeSpec.myType);
-		objectExp.setReferredObject(objectTypeSpec.myExtent);
-		if (objectExp.getReferredObject() == null) {
-			objectExp.setReferredObject(env.resolveModelParameter(objectTypeSpec.myType, DirectionKind.OUT));
+
+		if(outExpCS.getSimpleNameCS() != null) {
+			// a referred object has been explicitly specified
+			String varName = outExpCS.getSimpleNameCS().getValue();
+			Variable<EClassifier, EParameter> referredObject  = varName != null ? env.lookup(varName) : null;
+			if(referredObject == null) {
+				// variable not resolved
+				env.reportError(NLS.bind(ValidationMessages.unresolvedNameError, varName), outExpCS.getSimpleNameCS());
+			} else {
+				// TODO - implicit variables should follow multiplicity [1] referredObject and should always be created
+				// for now, only explicit variables are recorded
+				objectExp.setName(varName);
+				objectExp.setReferredObject(referredObject);
+			}
+		} else if(topLevelInMapping != null) {
+			// Note - for now, only too implicitly resolved variables are supported, 'result' and 'self', no synthesized implicit vars yet
+			MappingBodyCS bodyCS = findOwningMappingBodyCS(outExpCS);
+			boolean isImplicitObjExp = bodyCS != null ? bodyCS.isHasImplicitObjectExp() : false;
+			if(isImplicitObjExp) {
+				if(topLevelInMapping.getReturnType() != null) {
+					objectExp.setName(Environment.RESULT_VARIABLE_NAME);
+					objectExp.setReferredObject(env.lookup(Environment.RESULT_VARIABLE_NAME));
+				} else {
+					objectExp.setName(Environment.SELF_VARIABLE_NAME);
+					objectExp.setReferredObject(env.lookup(Environment.SELF_VARIABLE_NAME));
+				}
+			}
 		}
+		
+		if(objectExp.getReferredObject() != null && objectExp.getType() == null) {
+			objectExp.setType(objectExp.getReferredObject().getType());
+		}		
+
+		// try to derive extent from referred variable, if not retrieved from explicit TypeSpec yet
+		if (objectExp.getExtent() == null) {
+			Variable<EClassifier, EParameter> referredObject  = objectExp.getReferredObject();
+			if(referredObject != null) {
+				if(referredObject.getRepresentedParameter() instanceof MappingParameter) {			
+					MappingParameter mappingPar = (MappingParameter) referredObject.getRepresentedParameter();
+					objectExp.setExtent(mappingPar.getExtent());
+				} 
+			} 
+			if (objectExp.getExtent() == null && objectExp.getType() != null) {
+				objectExp.setExtent(env.resolveModelParameter(objectExp.getType(), DirectionKind.OUT));								
+			}
+		}
+						
 		EObject rootEObj = EcoreUtil.getRootContainer(outExpCS);
 		Module module = null;
 		if (env.getInternalParent() instanceof QvtOperationalFileEnv && rootEObj instanceof MappingModuleCS) {
-			module = ((QvtOperationalFileEnv) env.getInternalParent()).getModule((MappingModuleCS) rootEObj);
+			module = ((QvtOperationalFileEnv) env.getInternalParent()).getModule((MappingModuleCS) rootEObj);			
 		}
-		if (objectExp.getReferredObject() == null && module != null && !module.getModelParameter().isEmpty()) {
-			env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentFailToInfer,
-					QvtOperationalTypesUtil.getTypeFullName(objectExp.getType())),
-					typeSpecCS);
+		
+		if (objectExp.getExtent() == null && module != null && !module.getModelParameter().isEmpty()) {
+			boolean isInvalidForExtentResolve = objectExp.getReferredObject() == null && objectExp.getType() == null;
+			if(!isInvalidForExtentResolve) {
+				env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentFailToInfer,
+						QvtOperationalTypesUtil.getTypeFullName(objectExp.getType())),
+						typeSpecCS != null ? typeSpecCS : outExpCS);
+			}
 		}
-
+		
+		if(topLevelInMapping != null && outExpCS.getSimpleNameCS() == null) {
+			MappingBodyCS bodyCS = outExpCS.eContainer() instanceof MappingBodyCS ? (MappingBodyCS)outExpCS.eContainer() : null;
+			if(bodyCS != null && !bodyCS.isHasImplicitObjectExp()) {
+				env.reportError(ValidationMessages.QvtOperationalVisitorCS_userVariableForReferredObject, outExpCS);
+			}
+		}
+			
 		for (OCLExpressionCS expCS : outExpCS.getExpressions()) {
-			OCLExpression<EClassifier> exp = visitOclExpressionCS(expCS, env);
+			OCLExpression<EClassifier> exp = null;
+			if(expCS instanceof PatternPropertyExpCS) {
+				PatternPropertyExpCS propertyExpCS = (PatternPropertyExpCS) expCS;
+				exp = visitPatternPropertyExpCS(propertyExpCS, objectExp, env);
+			} else {
+				exp = visitOclExpressionCS(expCS, env);
+			}
+			
 			if (exp == null) {
 				continue;
 			}
@@ -986,18 +1094,26 @@ public class QvtOperationalVisitorCS
 			if (exp instanceof AssignExp == false) {
 				env.reportError(ValidationMessages.propertyAssignmentExpectedError, expCS);
 			} else {
-				objectExp.getContent().add(exp);
+				ConstructorBody body = objectExp.getBody();
+				if(body == null) {
+					body = ExpressionsFactory.eINSTANCE.createConstructorBody();
+					body.setStartPosition(outExpCS.getStartOffset());
+					body.setEndPosition(outExpCS.getEndOffset());
+					objectExp.setBody(body);
+				}
+				body.getContent().add(exp);
 			}
 		}
 
-        if(myCompilerOptions.isGenerateCompletionData()) {          
+        if(myCompilerOptions.isGenerateCompletionData()) {
             ASTBindingHelper.createCST2ASTBinding(outExpCS, objectExp, env);
         }
 		
+        validateObjectExp(objectExp, outExpCS, env);
 		return objectExp;
 	}
 
-	private AssignExp visitPatternPropertyExpCS(PatternPropertyExpCS propCS, QvtOperationalEnv env) {
+	private AssignExp visitPatternPropertyExpCS(PatternPropertyExpCS propCS, ObjectExp owner, QvtOperationalEnv env) {
 		OCLExpression<EClassifier> propertyValue = visitOclExpressionCS(propCS.getOclExpressionCS(), env);
 		if (propertyValue == null) {
 			return null;
@@ -1012,19 +1128,33 @@ public class QvtOperationalVisitorCS
 		result.setIsReset(!propCS.isIncremental());
 
 		EClassifier outType = null;
-		EObject eParent = propCS.eContainer();
-		if (eParent instanceof OutExpCS) {
-			OutExpCS outExpCS = (OutExpCS) eParent;
-			TypeSpecCS typeSpecCS = getOutExpCSType(outExpCS);
-			outType = visitTypeSpecCS(typeSpecCS, DirectionKind.OUT, env).myType;
+		if(owner == null) { 
+			EObject eParent = propCS.eContainer();
+			if (eParent instanceof OutExpCS) {
+				OutExpCS outExpCS = (OutExpCS) eParent;
+				TypeSpecCS typeSpecCS = getOutExpCSType(outExpCS);
+				if(typeSpecCS != null) {
+					outType = visitTypeSpecCS(typeSpecCS, DirectionKind.OUT, env).myType;
+				} else {
+					if ((outExpCS.eContainer() instanceof MappingBodyCS)
+							&& (outExpCS.eContainer().eContainer() instanceof MappingRuleCS)) {
+						MappingRuleCS mappingRuleCS = (MappingRuleCS) outExpCS.eContainer().eContainer();
+						outType = visitTypeCS(mappingRuleCS.getMappingDeclarationCS().getContextType(), DirectionKind.INOUT, env);
+					}
+				}
+			}
+		} else {
+			outType = owner.getType();
 		}
 
 		SimpleNameCS variableName = propCS.getSimpleNameCS();
 		String name = variableName.getValue();
-		EStructuralFeature property = env.lookupProperty(outType, name);
+		EStructuralFeature property = (outType != null) ? env.lookupProperty(outType, name) : null;
 		if (property == null) {
-			env.reportError(NLS.bind(ValidationMessages.noPropertyInTypeError, name, QvtOperationalTypesUtil
-					.getTypeFullName(outType)), variableName);
+			if(outType != null) {
+				env.reportError(NLS.bind(ValidationMessages.noPropertyInTypeError, name, QvtOperationalTypesUtil
+						.getTypeFullName(outType)), variableName);
+			}
 		} else if (!property.isChangeable()) {
 			env.reportError(NLS.bind(ValidationMessages.ReadOnlyProperty, name), variableName);
 		} else {
@@ -1574,7 +1704,7 @@ public class QvtOperationalVisitorCS
             ASTBindingHelper.createCST2ASTBinding(methodCS, operation, newEnv);
         }
         
-		if (operationResult != null && !(operationResult instanceof VoidType)) {
+		if (operationResult != null) {
 			Variable<EClassifier, EParameter> var = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();
 			var.setName(Environment.RESULT_VARIABLE_NAME);
 			var.setType(operationResult.getEType());
@@ -1604,30 +1734,27 @@ public class QvtOperationalVisitorCS
 		}
 
 		MappingBody body = null;
-		if (operationResult.getEType() instanceof VoidType) {
-			MappingBodyCS mappingBodyCS = methodCS.getMappingBodyCS();
-			if (!isEmptyBodyCS(mappingBodyCS)) {
-				newEnv.reportError(ValidationMessages.MappingWithoutResultMustNotHaveBody, mappingBodyCS);
-			}
-			else {
-				body = ExpressionsFactory.eINSTANCE.createMappingBody();
-				body.setStartPosition(mappingBodyCS == null ? methodCS.getStartOffset() : mappingBodyCS.getStartOffset());
-				body.setEndPosition(mappingBodyCS == null ? methodCS.getEndOffset() : mappingBodyCS.getEndOffset());
-			}
-		} else if (methodCS.getMappingBodyCS() != null) {
-			body = visitMappingBodyCS(methodCS.getMappingBodyCS(), newEnv);
+		MappingBodyCS mappingBodyCS = methodCS.getMappingBodyCS();
+		if (mappingBodyCS != null) {
+			body = visitMappingBodyCS(mappingBodyCS, newEnv);
 			if (body != null) {
-				EClassifier returnType = operationResult.getEType();
+				EClassifier returnType = operation.getEType();
 				EClassifier bodyType = (body.getContent().size() == 1
 						&& body.getContent().get(0) instanceof ObjectExp ? body.getContent().get(0).getType()
 						: null);
-                // TODO : Rewrite this when reimplementing ObjectExp
-				if (bodyType != null && methodCS.getMappingInitCS() == null && !QvtOperationalParserUtil.isAssignableToFrom(env, bodyType, returnType)) {
+                // TODO : Rewrite this when re-implementing ObjectExp
+				if (bodyType != null && !QvtOperationalParserUtil.isAssignableToFrom(env, bodyType, returnType)) {
+					/* checked by validation
 					newEnv.reportError(NLS.bind(ValidationMessages.bodyTypeNotCompatibleWithReturnTypeError,
 							new Object[] { QvtOperationalTypesUtil.getTypeFullName(bodyType), QvtOperationalTypesUtil.getTypeFullName(returnType) }),
-							methodCS.getMappingDeclarationCS());
+						methodCS.getMappingDeclarationCS());
+						*/
 				}
 			}
+		} else {
+			body = ExpressionsFactory.eINSTANCE.createMappingBody();
+			body.setStartPosition(mappingBodyCS == null ? methodCS.getStartOffset() : mappingBodyCS.getStartOffset());			
+			body.setEndPosition(mappingBodyCS == null ? methodCS.getEndOffset() : mappingBodyCS.getEndOffset());			
 		}
 
 		List<OCLExpression<EClassifier>> ends = Collections.emptyList();
@@ -1753,6 +1880,7 @@ public class QvtOperationalVisitorCS
 
 
 		MappingParameter varResult = ExpressionsFactory.eINSTANCE.createMappingParameter();
+		varResult.setName(Environment.RESULT_VARIABLE_NAME);
 		varResult.setEType(returnTypeSpec.myType);
 		varResult.setExtent(returnTypeSpec.myExtent);
 		varResult.setKind(DirectionKind.OUT);
@@ -1783,10 +1911,12 @@ public class QvtOperationalVisitorCS
 		}
 		
 		operation.getEParameters().addAll(params);
-		operation.getResult().add(varResult);
+		if(mappingDeclarationCS.getReturnType() != null) {
+			operation.getResult().add(varResult);
+		}
 		operation.setIsBlackbox(mappingDeclarationCS.isBlackBox());
 		
-		if (operation.getResult().size() == 1) {
+		if (operation.getResult().size() <= 1) {
 			operation.setEType(returnTypeSpec.myType);
 		}
 		else {
@@ -1994,15 +2124,15 @@ public class QvtOperationalVisitorCS
 		
 		return result;
 	}
-
+		
 	private MappingBody visitMappingBodyCS(MappingBodyCS mappingBodyCS, QvtOperationalEnv env)
 			throws SemanticException {
-		OutExpCS outExpCS = mappingBodyCS.getOutExpCS();
-		if (outExpCS == null) {
+
+		if (AbstractQVTParser.collectOutExpList(mappingBodyCS).isEmpty()) {
 			env.reportError(ValidationMessages.objectExpressionExpectedError, mappingBodyCS);
 			return null;
 		}
-
+		
 //      [aigdalov]: Since the returnType feature is contained in the MappingDeclarationCS
 //		type the operations below set the MappingDeclarationCS.returnType to null
 //		Cloning the TypeCS object is also unwanted since we'll get problems with
@@ -2012,18 +2142,122 @@ public class QvtOperationalVisitorCS
 //			outExpCS.setTypeCS(methodCS.getMappingDeclarationCS().getReturnType());
 //		}
 
-		ObjectExp objectExp = visitOutExpCS(outExpCS, env);
-		if (objectExp == null) {
-			return null;
-		}
-		objectExp.setName(Environment.RESULT_VARIABLE_NAME);
-
 		MappingBody body = ExpressionsFactory.eINSTANCE.createMappingBody();
 		body.setStartPosition(mappingBodyCS.getStartOffset());
 		body.setEndPosition(mappingBodyCS.getEndOffset());
-		body.getContent().add(objectExp);
+		
+		for (OCLExpressionCS nextExpCS : mappingBodyCS.getContent()) {
+			if(nextExpCS instanceof OutExpCS) {
+				ObjectExp objectExp = visitOutExpCS((OutExpCS)nextExpCS, env);
+				if(objectExp != null) {					
+					body.getContent().add(objectExp);
+				}
 
+				if(!mappingBodyCS.isHasPopulationSection() && !mappingBodyCS.isHasImplicitObjectExp()) {
+					// Note: multiple results not supported yet, so prohibit any object expression 
+					// without an enclosing explicit population section
+					env.reportError(ValidationMessages.QvtOperationalVisitorCS_useImplicitObjectExpOrPopulationSection,  nextExpCS);		
+				}
+			} else {
+				env.reportError(ValidationMessages.QvtOperationalVisitorCS_missingObjectExpInPopulationSection, nextExpCS);
+			}
+		}
+		
 		return body;
+	}
+
+	private int getStartOffset(ASTNode astNode, CSTNode cstNodeOpt) {
+		if(cstNodeOpt != null) {
+			return cstNodeOpt.getStartOffset();
+		}
+		return astNode.getStartPosition();
+	}
+	
+	private int getEndOffset(ASTNode astNode, CSTNode cstNodeOpt) {
+		if(cstNodeOpt != null) {
+			return cstNodeOpt.getEndOffset();
+		}
+		return astNode.getEndPosition();
+	}	
+	
+	private void validateObjectExp(ObjectExp objectExp, OutExpCS objectExpCS, QvtOperationalEnv env) {
+		EClass derivedInstantiatedClass = objectExp.getInstantiatedClass();		
+		Variable<EClassifier, EParameter> referredObject  = objectExp.getReferredObject();
+		if(derivedInstantiatedClass == null && (referredObject != null && referredObject.getType() instanceof EClass)) {
+			derivedInstantiatedClass = (EClass)referredObject.getType();
+		}
+		
+		if(derivedInstantiatedClass == null) {
+			CSTNode problemCS = null;
+			if(objectExpCS != null) {
+				MappingBodyCS bodyCS = findOwningMappingBodyCS(objectExpCS);
+				if(bodyCS != null && bodyCS.isHasImplicitObjectExp()) {
+					MappingDeclarationCS mappingDeclCS = findOwningMappingDeclarationCS(objectExpCS);
+					problemCS = mappingDeclCS != null ? mappingDeclCS.getReturnType() : null;
+				}
+				if(problemCS == null) {
+					problemCS = objectExpCS.getSimpleNameCS() != null ? objectExpCS.getSimpleNameCS() : objectExpCS;
+				}
+			}
+
+			int startOffs = getStartOffset(objectExp, problemCS);
+			int endOffs = getEndOffset(objectExp, problemCS);
+			if(referredObject != null)	{ 
+				if(referredObject.getType() != null) { 
+					// we failed to figure out the class but type is available, let's report it's classifier only 
+					env.reportError(NLS.bind(ValidationMessages.nonModelTypeError,
+							QvtOperationalParserUtil.safeGetQualifiedName(env, referredObject.getType())), startOffs, endOffs);
+				}
+			}
+		}
+				 
+		// check for the type conformance only if instantiatedClass class was explicitly set
+		if(referredObject != null) {
+			if(objectExp.getType() != null) {				
+				CSTNode problemCS = null;
+				if(objectExpCS != null) {
+					problemCS = objectExpCS.getSimpleNameCS();
+					if(problemCS == null) {
+						problemCS = objectExpCS.getTypeSpecCS() != null ? objectExpCS.getTypeSpecCS() : objectExpCS;						
+					}
+				}
+				
+				EClassifier referredType = referredObject.getType();
+				EClassifier actualType = objectExp.getType();
+				// Note : invalid AST might have type node missing, so just check, a problem would be reported by variable validation
+				if(referredType != null && (TypeUtil.getRelationship(env, actualType, referredType) & UMLReflection.SAME_TYPE) == 0) {				
+					String actualTypeName = QvtOperationalParserUtil.safeGetQualifiedName(env, actualType);
+					String referredTypeName = QvtOperationalParserUtil.safeGetQualifiedName(env, referredType);
+					String errorMessage = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_instatiatedTypeDoesNotConformToReferredType,  
+							actualTypeName, referredTypeName);
+	
+					env.reportError(errorMessage, getStartOffset(objectExp, problemCS), getEndOffset(objectExp, problemCS));
+				}
+				
+				if(referredObject.getRepresentedParameter() instanceof MappingParameter) {
+					MappingParameter mappingPar = (MappingParameter) referredObject.getRepresentedParameter();
+					if(mappingPar.getKind() == DirectionKind.IN) {
+						env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_canNotModifyINParameter, referredObject.getName()), problemCS);
+					}
+				}
+			}
+		} else if(derivedInstantiatedClass != null && (derivedInstantiatedClass.isAbstract() || derivedInstantiatedClass.isInterface())) {			
+			// always creates a new instance, ensure non-abstract type. 
+			String typeName = QvtOperationalParserUtil.safeGetQualifiedName(env, derivedInstantiatedClass);
+			env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_canNotInstantiateAbstractType, typeName), objectExpCS);
+		}
+		
+		// CST availability only related checks
+		if(objectExpCS != null) {
+			if(objectExpCS.getTypeSpecCS() != null) {
+				// parsed from concrete syntax, checkout the classifier of the ObjectExp 
+				if(objectExp.getType() != null && objectExp.getType() instanceof EClass == false) {
+					// we failed to figure out the class but type is available, let's report it's classifier only 
+					env.reportError(NLS.bind(ValidationMessages.nonModelTypeError,
+							QvtOperationalParserUtil.safeGetQualifiedName(env, objectExp.getType())), objectExpCS.getTypeSpecCS());					
+				}
+			}
+		}
 	}
 
 	private OCLExpression<EClassifier> visitExpressionStatementCS(ExpressionStatementCS expressionCS, QvtOperationalEnv env) {
@@ -2256,7 +2490,7 @@ public class QvtOperationalVisitorCS
             if (vdcl.getType() == null) {
                 EClassifier sourceType = source.getType();
                 if (sourceType instanceof CollectionType) {
-                    @SuppressWarnings("unchecked")
+                    @SuppressWarnings("unchecked") //$NON-NLS-1$
                     CollectionType<EClassifier, EOperation> ct = (CollectionType<EClassifier, EOperation>) sourceType;
                     
                     vdcl.setType(ct.getElementType());
@@ -2270,7 +2504,7 @@ public class QvtOperationalVisitorCS
                 if (vdcl1.getType() == null) {
                     EClassifier sourceType = source.getType();
                     if (sourceType instanceof CollectionType) {
-                        @SuppressWarnings("unchecked")
+                        @SuppressWarnings("unchecked") //$NON-NLS-1$
                         CollectionType<EClassifier, EOperation> ct = (CollectionType<EClassifier, EOperation>) sourceType;
                         
                         vdcl1.setType(ct.getElementType());
@@ -2284,7 +2518,7 @@ public class QvtOperationalVisitorCS
             astNode.setName(name);
             iterators = astNode.getIterator();  
             // Synthesize the iterator expression.
-            @SuppressWarnings("unchecked")
+            @SuppressWarnings("unchecked") //$NON-NLS-1$
             CollectionType<EClassifier, EOperation> ct = (CollectionType<EClassifier, EOperation>) source.getType();
             vdcl = genVariableDeclaration(imperativeIterateExpCS, "visitImperativeIterateExp", env, null, //$NON-NLS-1$
                 ct.getElementType(),
@@ -2300,11 +2534,11 @@ public class QvtOperationalVisitorCS
             if (conditionExp instanceof TypeExp<?>) {
                 TypeExp<EClassifier> typedCondition = (TypeExp<EClassifier>) conditionExp;
                 if (source.getType() instanceof CollectionType) {
-                    @SuppressWarnings("unchecked")
+                    @SuppressWarnings("unchecked") //$NON-NLS-1$
                     CollectionType<EClassifier, EOperation> sourceCollectionType = (CollectionType<EClassifier, EOperation>) source.getType();
                     EClassifier rawTypeType = TypeUtil.resolveType(env, typedCondition.getType());
                     if (rawTypeType instanceof TypeType) {
-                        @SuppressWarnings("unchecked")
+                        @SuppressWarnings("unchecked") //$NON-NLS-1$
                         TypeType<EClassifier, EOperation> typeType = (TypeType<EClassifier, EOperation>) rawTypeType;
                         EClassifier resultElementType = typeType.getReferredType();
                         EClassifier resultCollectionType = getCollectionType(env, sourceCollectionType.getKind(), resultElementType);
@@ -2567,10 +2801,16 @@ public class QvtOperationalVisitorCS
 		if (mappingBodyCS == null) {
 			return true;
 		}
-		OutExpCS outExpression = mappingBodyCS.getOutExpCS();
-		if (outExpression == null) {
+
+		List<OutExpCS> outExpList = AbstractQVTParser.collectOutExpList(mappingBodyCS);
+		if (outExpList.isEmpty()) {
 			return true;
 		}
+		
+		if(outExpList.size() > 1) {
+			return false;
+		}
+		OutExpCS outExpression = outExpList.get(0);		
 		if (outExpression.getTypeSpecCS() == null && outExpression.getExpressions().isEmpty()
 				&& outExpression.getStartOffset() == outExpression.getBodyStartLocation()) {
 			return true;
@@ -2635,10 +2875,14 @@ public class QvtOperationalVisitorCS
 		if (outExpCS.getTypeSpecCS() != null) {
 			return outExpCS.getTypeSpecCS();
 		}
+		
 		if ((outExpCS.eContainer() instanceof MappingBodyCS)
 				&& (outExpCS.eContainer().eContainer() instanceof MappingRuleCS)) {
-			MappingRuleCS mappingRuleCS = (MappingRuleCS) outExpCS.eContainer().eContainer();
-			return mappingRuleCS.getMappingDeclarationCS().getReturnType();
+			MappingBodyCS bodyCS = (MappingBodyCS)outExpCS.eContainer();
+			if(bodyCS.isHasImplicitObjectExp()) {
+				MappingRuleCS mappingRuleCS = (MappingRuleCS) bodyCS.eContainer();
+				return mappingRuleCS.getMappingDeclarationCS().getReturnType();
+			}
 		}
 		return null;
 	}

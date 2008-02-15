@@ -314,7 +314,15 @@
           <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
         </eGenericType>
       </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="variable" upperBound="-1"
+          containment="true">
+        <eGenericType eClassifier="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCL.ecore#//expressions/Variable">
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EParameter"/>
+        </eGenericType>
+      </eStructuralFeatures>
     </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ConstructorBody" eSuperTypes="#//expressions/OperationBody"/>
     <eClassifiers xsi:type="ecore:EClass" name="MappingOperation" eSuperTypes="#//expressions/ImperativeOperation">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -550,7 +558,7 @@
         </eGenericType>
       </eStructuralFeatures>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="ObjectExp" eSuperTypes="#//expressions/ImperativeExpression">
+    <eClassifiers xsi:type="ecore:EClass" name="ObjectExp" eSuperTypes="#//expressions/InstantiationExp">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="body" value="return ((&lt;%org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitObjectExp(this);"/>
@@ -575,14 +583,14 @@
           <eGenericType eTypeParameter="#//expressions/ObjectExp/accept/U"/>
         </eParameters>
       </eOperations>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="content" upperBound="-1"
-          containment="true">
-        <eGenericType eClassifier="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//expressions/ConstructorBody"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="referredObject" lowerBound="1">
+        <eGenericType eClassifier="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCL.ecore#//expressions/Variable">
           <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EParameter"/>
         </eGenericType>
       </eStructuralFeatures>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="referredObject" lowerBound="1"
-          eType="#//expressions/ModelParameter"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="WhileExp" eSuperTypes="#//expressions/ImperativeExpression">
       <eOperations name="accept">
@@ -1049,6 +1057,17 @@
           <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EParameter"/>
         </eGenericType>
       </eStructuralFeatures>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="InstantiationExp" eSuperTypes="#//expressions/ImperativeExpression">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="argument" upperBound="-1">
+        <eGenericType eClassifier="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
+          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="extent" lowerBound="1"
+          eType="#//expressions/ModelParameter"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="instantiatedClass" lowerBound="1"
+          eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
     </eClassifiers>
   </eSubpackages>
 </ecore:EPackage>

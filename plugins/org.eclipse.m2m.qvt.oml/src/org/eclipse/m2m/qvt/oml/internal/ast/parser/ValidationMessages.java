@@ -32,7 +32,11 @@ public final class ValidationMessages extends NLS {
 	public static String QvtOperationalParserUtil_inoutParamAssignmentError;
     public static String QvtOperationalVisitorCS_AbstractTypesNotInitialized;
 	public static String QvtOperationalVisitorCS_booleanTypeExpressionExpected;
+	public static String QvtOperationalVisitorCS_canNotInstantiateAbstractType;
+	public static String QvtOperationalVisitorCS_canNotModifyINParameter;
 	public static String QvtOperationalVisitorCS_deprecatedWhileExp;
+	public static String QvtOperationalVisitorCS_instatiatedTypeDoesNotConformToReferredType;
+	public static String QvtOperationalVisitorCS_missingObjectExpInPopulationSection;
     public static String QvtOperationalVisitorCS_ResolveInMappingNotFound;
     public static String QvtOperationalVisitorCS_ResolveInSeveralMappingsFound;
     public static String QvtOperationalVisitorCS_unsupportedMetamodelComplianceKind;
@@ -58,6 +62,8 @@ public final class ValidationMessages extends NLS {
     public static String QvtOperationalVisitorCS_ifExpWithoutElseAssignment;
     public static String QvtOperationalVisitorCS_incompatibleTransfSignature;
     public static String QvtOperationalVisitorCS_mapKeywordNotUsed;
+	public static String QvtOperationalVisitorCS_useImplicitObjectExpOrPopulationSection;
+	public static String QvtOperationalVisitorCS_userVariableForReferredObject;
     public static String QvtOperationalVisitorCS_WrongImperativeIteratorConditionType;
     
 	public static String readOnlyPropertyModificationError;

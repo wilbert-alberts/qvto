@@ -327,14 +327,23 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     }
 
     public Object visitMappingBody(MappingBody mappingBody) {
+		boolean hasResultVar = ! mappingBody.getOperation().getResult().isEmpty();
+		if(hasResultVar) {
+			getOperationalEvaluationEnv().add(QvtOperationalEnv.RESULT_VARIABLE_NAME, null);
+		}
+    	
         for (OCLExpression<EClassifier> initExp : mappingBody.getInitSection()) {
             initExp.accept(getVisitor());
         }
 
-        Object result = createOrGetResult((MappingOperation) mappingBody.getOperation());
+        Object result = null;
+
+		if(hasResultVar) {
+			result = createOrGetResult((MappingOperation) mappingBody.getOperation());
+		}
 
         Object bodyResult = visitOperationBody(mappingBody);
-        if (bodyResult != null) {
+        if (hasResultVar && bodyResult != null) {
             result = bodyResult;
         }
 
@@ -532,9 +541,14 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         Object owner = getOutOwner(objectExp);
 
         getOperationalEvaluationEnv().pushObjectExpOwner(owner);
-        for (OCLExpression<EClassifier> exp : objectExp.getContent()) {
-            exp.accept(getVisitor());
-        }
+
+    	if(objectExp.getBody() != null) {
+    		EList<OCLExpression<EClassifier>> contents = objectExp.getBody().getContent();        
+	        for (OCLExpression<EClassifier> exp : contents) {
+	            exp.accept(getVisitor());
+	        }
+    	}
+    	
         getOperationalEvaluationEnv().popObjectExpOwner();
 
         return owner;
@@ -1377,14 +1391,10 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
                                 objectExp.getName(), owner, objectExp.getType() }));
             }
         } else {
-            final Object instance[] = new Object[] { null };
-            //            runSafe(new IRunnable() {
-            //                public void run() throws Exception {
-            instance[0] = createInstance(objectExp.getType(), objectExp.getReferredObject());
-            //                }
-            //            });
-
-            owner = instance[0];
+        	owner = createInstance(objectExp.getType(), objectExp.getExtent());
+        	if(objectExp.getName() != null) {
+        		getOperationalEvaluationEnv().replace(objectExp.getName(), owner);
+        	}
         }
 
         return owner;
@@ -1499,7 +1509,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     /**
 	* Wraps the environment's creatInstance() and transforms failures to QVT exception
 	*/    
-	private EObject createInstance(EClassifier type, ModelParameter extent) throws QvtRuntimeException {
+	protected EObject createInstance(EClassifier type, ModelParameter extent) throws QvtRuntimeException {
 		EObject newInstance = null;
 		try {
 			newInstance = getOperationalEvaluationEnv().createInstance(type, extent);

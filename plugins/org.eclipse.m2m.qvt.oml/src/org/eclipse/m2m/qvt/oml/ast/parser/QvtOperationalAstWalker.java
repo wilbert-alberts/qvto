@@ -194,9 +194,12 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
 
 
     public Object visitObjectExp(ObjectExp objectExp) {
-        for (OCLExpression<EClassifier> exp : objectExp.getContent()) {
-            doProcess(exp, objectExp);
-        }
+    	if(objectExp.getBody() != null) {
+    		EList<OCLExpression<EClassifier>> contents = objectExp.getBody().getContent();
+	        for (OCLExpression<EClassifier> exp : contents) {
+	            doProcess(exp, objectExp);
+	        }
+    	}
         return null;
     }
 

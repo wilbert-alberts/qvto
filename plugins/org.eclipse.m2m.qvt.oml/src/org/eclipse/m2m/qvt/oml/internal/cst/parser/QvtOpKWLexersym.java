@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpKWLexersym.java,v 1.33 2008/02/12 14:59:46 aigdalov Exp $
+* $Id: QvtOpKWLexersym.java,v 1.34 2008/02/15 11:56:29 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpKWLexersym.java,v 1.33 2008/02/12 14:59:46 aigdalov Exp $
+* $Id: QvtOpKWLexersym.java,v 1.34 2008/02/15 11:56:29 radvorak Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -45,17 +45,17 @@ public interface QvtOpKWLexersym {
       Char_f = 13,
       Char_g = 17,
       Char_h = 22,
-      Char_i = 6,
+      Char_i = 5,
       Char_j = 31,
       Char_k = 33,
       Char_l = 4,
       Char_m = 18,
       Char_n = 3,
-      Char_o = 7,
+      Char_o = 6,
       Char_p = 14,
       Char_q = 23,
       Char_r = 9,
-      Char_s = 5,
+      Char_s = 7,
       Char_t = 2,
       Char_u = 12,
       Char_v = 19,
@@ -97,9 +97,9 @@ public interface QvtOpKWLexersym {
                  "t",
                  "n",
                  "l",
-                 "s",
                  "i",
                  "o",
+                 "s",
                  "a",
                  "r",
                  "c",

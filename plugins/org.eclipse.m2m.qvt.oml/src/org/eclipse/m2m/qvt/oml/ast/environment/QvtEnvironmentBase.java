@@ -248,8 +248,8 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 	
 	
 	private boolean isOneOfParents(EcoreEnvironment env) {
-		for (EcoreEnvironment parent = (EcoreEnvironment)env.getParent(); parent != null; 
-			parent = (EcoreEnvironment)parent.getParent()) {
+		for (EcoreEnvironment parent = (EcoreEnvironment)env.getInternalParent(); parent != null; 
+			parent = (EcoreEnvironment)parent.getInternalParent()) {
 			if(parent == env) {
 				return true;
 			}

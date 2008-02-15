@@ -9,25 +9,25 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ModelParameterImpl.java,v 1.5 2008/02/15 11:56:25 radvorak Exp $
+ * $Id: ConstructorBodyImpl.java,v 1.1 2008/02/15 11:56:26 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.m2m.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage;
-import org.eclipse.m2m.qvt.oml.expressions.ModelParameter;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Model Parameter</b></em>'.
+ * An implementation of the model object '<em><b>Constructor Body</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * </p>
  *
  * @generated
  */
-public class ModelParameterImpl extends VarParameterImpl implements ModelParameter {
+public class ConstructorBodyImpl extends OperationBodyImpl implements ConstructorBody {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -40,7 +40,7 @@ public class ModelParameterImpl extends VarParameterImpl implements ModelParamet
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ModelParameterImpl() {
+	protected ConstructorBodyImpl() {
 		super();
 	}
 
@@ -51,7 +51,7 @@ public class ModelParameterImpl extends VarParameterImpl implements ModelParamet
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ExpressionsPackage.Literals.MODEL_PARAMETER;
+		return ExpressionsPackage.Literals.CONSTRUCTOR_BODY;
 	}
 
-} //ModelParameterImpl
+} //ConstructorBodyImpl

@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpKWLexer.g,v 1.9 2008/02/01 10:56:07 aigdalov Exp $ 
+-- * $Id: QvtOpKWLexer.g,v 1.10 2008/02/15 11:56:31 radvorak Exp $ 
 -- */
 --
 -- The QVT KeyWord Lexer
@@ -76,7 +76,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpKWLexer.g,v 1.9 2008/02/01 10:56:07 aigdalov Exp $
+ * $Id: QvtOpKWLexer.g,v 1.10 2008/02/15 11:56:31 radvorak Exp $
  */
 	./
 $End
@@ -97,6 +97,7 @@ $Export
 	var
 	configuration
 	property
+	population	
 	map
 	xmap
 	late
@@ -229,6 +230,12 @@ $Rules
 		| c o n f i g u r a t i o n
 		/.$BeginAction
 			$setResult($_configuration);
+		  $EndAction
+		./
+		
+		| p o p u l a  t i o n		
+		/.$BeginAction
+			$setResult($_population);
 		  $EndAction
 		./
 		

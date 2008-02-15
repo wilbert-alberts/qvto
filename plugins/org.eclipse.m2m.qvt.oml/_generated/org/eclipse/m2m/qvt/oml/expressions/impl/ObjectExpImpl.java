@@ -20,9 +20,11 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.m2m.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -31,6 +33,7 @@ import org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.qvt.oml.expressions.ObjectExp;
 
+import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.expressions.OCLExpression;
 
 import org.eclipse.ocl.utilities.Visitor;
@@ -42,201 +45,231 @@ import org.eclipse.ocl.utilities.Visitor;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.m2m.qvt.oml.expressions.impl.ObjectExpImpl#getContent <em>Content</em>}</li>
+ *   <li>{@link org.eclipse.m2m.qvt.oml.expressions.impl.ObjectExpImpl#getBody <em>Body</em>}</li>
  *   <li>{@link org.eclipse.m2m.qvt.oml.expressions.impl.ObjectExpImpl#getReferredObject <em>Referred Object</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ObjectExpImpl extends ImperativeExpressionImpl implements ObjectExp {
+public class ObjectExpImpl extends InstantiationExpImpl implements ObjectExp {
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
     /**
-     * The cached value of the '{@link #getContent() <em>Content</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getContent()
-     * @generated
-     * @ordered
-     */
-	protected EList<OCLExpression<EClassifier>> content;
+	 * @see #getBody()
+	 * @generated
+	 * @ordered
+	 */
+	protected ConstructorBody body;
+				/**
+	 * The cached value of the '{@link #getReferredObject() <em>Referred Object</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getReferredObject()
+	 * @generated
+	 * @ordered
+	 */
+	protected Variable<EClassifier, EParameter> referredObject;
 
 	/**
-     * The cached value of the '{@link #getReferredObject() <em>Referred Object</em>}' reference.
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getReferredObject()
-     * @generated
-     * @ordered
-     */
-	protected ModelParameter referredObject;
-
-	/**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	protected ObjectExpImpl() {
-        super();
-    }
+		super();
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	protected EClass eStaticClass() {
-        return ExpressionsPackage.Literals.OBJECT_EXP;
-    }
+		return ExpressionsPackage.Literals.OBJECT_EXP;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public EList<OCLExpression<EClassifier>> getContent() {
-        if (content == null) {
-            content = new EObjectContainmentEList<OCLExpression<EClassifier>>(OCLExpression.class, this, ExpressionsPackage.OBJECT_EXP__CONTENT);
-        }
-        return content;
-    }
+	 * @generated
+	 */
+	public ConstructorBody getBody() {
+		return body;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public ModelParameter getReferredObject() {
-        if (referredObject != null && referredObject.eIsProxy()) {
-            InternalEObject oldReferredObject = (InternalEObject)referredObject;
-            referredObject = (ModelParameter)eResolveProxy(oldReferredObject);
-            if (referredObject != oldReferredObject) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ExpressionsPackage.OBJECT_EXP__REFERRED_OBJECT, oldReferredObject, referredObject));
-            }
-        }
-        return referredObject;
-    }
+	 * @generated
+	 */
+	public NotificationChain basicSetBody(ConstructorBody newBody, NotificationChain msgs) {
+		ConstructorBody oldBody = body;
+		body = newBody;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpressionsPackage.OBJECT_EXP__BODY, oldBody, newBody);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public ModelParameter basicGetReferredObject() {
-        return referredObject;
-    }
+	 * @generated
+	 */
+	public void setBody(ConstructorBody newBody) {
+		if (newBody != body) {
+			NotificationChain msgs = null;
+			if (body != null)
+				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.OBJECT_EXP__BODY, null, msgs);
+			if (newBody != null)
+				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.OBJECT_EXP__BODY, null, msgs);
+			msgs = basicSetBody(newBody, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.OBJECT_EXP__BODY, newBody, newBody));
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public void setReferredObject(ModelParameter newReferredObject) {
-        ModelParameter oldReferredObject = referredObject;
-        referredObject = newReferredObject;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.OBJECT_EXP__REFERRED_OBJECT, oldReferredObject, referredObject));
-    }
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	public Variable<EClassifier, EParameter> getReferredObject() {
+		if (referredObject != null && referredObject.eIsProxy()) {
+			InternalEObject oldReferredObject = (InternalEObject)referredObject;
+			referredObject = (Variable<EClassifier, EParameter>)eResolveProxy(oldReferredObject);
+			if (referredObject != oldReferredObject) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ExpressionsPackage.OBJECT_EXP__REFERRED_OBJECT, oldReferredObject, referredObject));
+			}
+		}
+		return referredObject;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
+	public Variable<EClassifier, EParameter> basicGetReferredObject() {
+		return referredObject;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setReferredObject(Variable<EClassifier, EParameter> newReferredObject) {
+		Variable<EClassifier, EParameter> oldReferredObject = referredObject;
+		referredObject = newReferredObject;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.OBJECT_EXP__REFERRED_OBJECT, oldReferredObject, referredObject));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
-        return ((ExtendedVisitor<T, ?, ?, ?, ?>) v).visitObjectExp(this);
-    }
+		return ((ExtendedVisitor<T, ?, ?, ?, ?>) v).visitObjectExp(this);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case ExpressionsPackage.OBJECT_EXP__CONTENT:
-                return ((InternalEList<?>)getContent()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case ExpressionsPackage.OBJECT_EXP__BODY:
+				return basicSetBody(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case ExpressionsPackage.OBJECT_EXP__CONTENT:
-                return getContent();
-            case ExpressionsPackage.OBJECT_EXP__REFERRED_OBJECT:
-                if (resolve) return getReferredObject();
-                return basicGetReferredObject();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case ExpressionsPackage.OBJECT_EXP__BODY:
+				return getBody();
+			case ExpressionsPackage.OBJECT_EXP__REFERRED_OBJECT:
+				if (resolve) return getReferredObject();
+				return basicGetReferredObject();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case ExpressionsPackage.OBJECT_EXP__CONTENT:
-                getContent().clear();
-                getContent().addAll((Collection<? extends OCLExpression<EClassifier>>)newValue);
-                return;
-            case ExpressionsPackage.OBJECT_EXP__REFERRED_OBJECT:
-                setReferredObject((ModelParameter)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case ExpressionsPackage.OBJECT_EXP__BODY:
+				setBody((ConstructorBody)newValue);
+				return;
+			case ExpressionsPackage.OBJECT_EXP__REFERRED_OBJECT:
+				setReferredObject((Variable<EClassifier, EParameter>)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public void eUnset(int featureID) {
-        switch (featureID) {
-            case ExpressionsPackage.OBJECT_EXP__CONTENT:
-                getContent().clear();
-                return;
-            case ExpressionsPackage.OBJECT_EXP__REFERRED_OBJECT:
-                setReferredObject((ModelParameter)null);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case ExpressionsPackage.OBJECT_EXP__BODY:
+				setBody((ConstructorBody)null);
+				return;
+			case ExpressionsPackage.OBJECT_EXP__REFERRED_OBJECT:
+				setReferredObject((Variable<EClassifier, EParameter>)null);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case ExpressionsPackage.OBJECT_EXP__CONTENT:
-                return content != null && !content.isEmpty();
-            case ExpressionsPackage.OBJECT_EXP__REFERRED_OBJECT:
-                return referredObject != null;
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case ExpressionsPackage.OBJECT_EXP__BODY:
+				return body != null;
+			case ExpressionsPackage.OBJECT_EXP__REFERRED_OBJECT:
+				return referredObject != null;
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //ObjectExpImpl

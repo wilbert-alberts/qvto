@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: SwitchExpCSImpl.java,v 1.3 2008/02/01 10:55:58 aigdalov Exp $
+ * $Id: SwitchExpCSImpl.java,v 1.4 2008/02/15 11:56:26 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.impl;
 
@@ -52,190 +52,190 @@ import org.eclipse.ocl.cst.OCLExpressionCS;
  */
 public class SwitchExpCSImpl extends StatementCSImpl implements SwitchExpCS {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
     /**
-     * The cached value of the '{@link #getAlternativePart() <em>Alternative Part</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getAlternativePart() <em>Alternative Part</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getAlternativePart()
-     * @generated
-     * @ordered
-     */
+	 * @see #getAlternativePart()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<SwitchAltExpCS> alternativePart;
 
     /**
-     * The cached value of the '{@link #getElsePart() <em>Else Part</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getElsePart() <em>Else Part</em>}' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getElsePart()
-     * @generated
-     * @ordered
-     */
+	 * @see #getElsePart()
+	 * @generated
+	 * @ordered
+	 */
     protected OCLExpressionCS elsePart;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected SwitchExpCSImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return CSTPackage.Literals.SWITCH_EXP_CS;
-    }
+		return CSTPackage.Literals.SWITCH_EXP_CS;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<SwitchAltExpCS> getAlternativePart() {
-        if (alternativePart == null) {
-            alternativePart = new EObjectContainmentEList<SwitchAltExpCS>(SwitchAltExpCS.class, this, CSTPackage.SWITCH_EXP_CS__ALTERNATIVE_PART);
-        }
-        return alternativePart;
-    }
+		if (alternativePart == null) {
+			alternativePart = new EObjectContainmentEList<SwitchAltExpCS>(SwitchAltExpCS.class, this, CSTPackage.SWITCH_EXP_CS__ALTERNATIVE_PART);
+		}
+		return alternativePart;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public OCLExpressionCS getElsePart() {
-        return elsePart;
-    }
+		return elsePart;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public NotificationChain basicSetElsePart(OCLExpressionCS newElsePart, NotificationChain msgs) {
-        OCLExpressionCS oldElsePart = elsePart;
-        elsePart = newElsePart;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.SWITCH_EXP_CS__ELSE_PART, oldElsePart, newElsePart);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
+		OCLExpressionCS oldElsePart = elsePart;
+		elsePart = newElsePart;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.SWITCH_EXP_CS__ELSE_PART, oldElsePart, newElsePart);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setElsePart(OCLExpressionCS newElsePart) {
-        if (newElsePart != elsePart) {
-            NotificationChain msgs = null;
-            if (elsePart != null)
-                msgs = ((InternalEObject)elsePart).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.SWITCH_EXP_CS__ELSE_PART, null, msgs);
-            if (newElsePart != null)
-                msgs = ((InternalEObject)newElsePart).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.SWITCH_EXP_CS__ELSE_PART, null, msgs);
-            msgs = basicSetElsePart(newElsePart, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.SWITCH_EXP_CS__ELSE_PART, newElsePart, newElsePart));
-    }
+		if (newElsePart != elsePart) {
+			NotificationChain msgs = null;
+			if (elsePart != null)
+				msgs = ((InternalEObject)elsePart).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.SWITCH_EXP_CS__ELSE_PART, null, msgs);
+			if (newElsePart != null)
+				msgs = ((InternalEObject)newElsePart).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.SWITCH_EXP_CS__ELSE_PART, null, msgs);
+			msgs = basicSetElsePart(newElsePart, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.SWITCH_EXP_CS__ELSE_PART, newElsePart, newElsePart));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case CSTPackage.SWITCH_EXP_CS__ALTERNATIVE_PART:
-                return ((InternalEList<?>)getAlternativePart()).basicRemove(otherEnd, msgs);
-            case CSTPackage.SWITCH_EXP_CS__ELSE_PART:
-                return basicSetElsePart(null, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case CSTPackage.SWITCH_EXP_CS__ALTERNATIVE_PART:
+				return ((InternalEList<?>)getAlternativePart()).basicRemove(otherEnd, msgs);
+			case CSTPackage.SWITCH_EXP_CS__ELSE_PART:
+				return basicSetElsePart(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case CSTPackage.SWITCH_EXP_CS__ALTERNATIVE_PART:
-                return getAlternativePart();
-            case CSTPackage.SWITCH_EXP_CS__ELSE_PART:
-                return getElsePart();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case CSTPackage.SWITCH_EXP_CS__ALTERNATIVE_PART:
+				return getAlternativePart();
+			case CSTPackage.SWITCH_EXP_CS__ELSE_PART:
+				return getElsePart();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case CSTPackage.SWITCH_EXP_CS__ALTERNATIVE_PART:
-                getAlternativePart().clear();
-                getAlternativePart().addAll((Collection<? extends SwitchAltExpCS>)newValue);
-                return;
-            case CSTPackage.SWITCH_EXP_CS__ELSE_PART:
-                setElsePart((OCLExpressionCS)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case CSTPackage.SWITCH_EXP_CS__ALTERNATIVE_PART:
+				getAlternativePart().clear();
+				getAlternativePart().addAll((Collection<? extends SwitchAltExpCS>)newValue);
+				return;
+			case CSTPackage.SWITCH_EXP_CS__ELSE_PART:
+				setElsePart((OCLExpressionCS)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case CSTPackage.SWITCH_EXP_CS__ALTERNATIVE_PART:
-                getAlternativePart().clear();
-                return;
-            case CSTPackage.SWITCH_EXP_CS__ELSE_PART:
-                setElsePart((OCLExpressionCS)null);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case CSTPackage.SWITCH_EXP_CS__ALTERNATIVE_PART:
+				getAlternativePart().clear();
+				return;
+			case CSTPackage.SWITCH_EXP_CS__ELSE_PART:
+				setElsePart((OCLExpressionCS)null);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case CSTPackage.SWITCH_EXP_CS__ALTERNATIVE_PART:
-                return alternativePart != null && !alternativePart.isEmpty();
-            case CSTPackage.SWITCH_EXP_CS__ELSE_PART:
-                return elsePart != null;
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case CSTPackage.SWITCH_EXP_CS__ALTERNATIVE_PART:
+				return alternativePart != null && !alternativePart.isEmpty();
+			case CSTPackage.SWITCH_EXP_CS__ELSE_PART:
+				return elsePart != null;
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //SwitchExpCSImpl
