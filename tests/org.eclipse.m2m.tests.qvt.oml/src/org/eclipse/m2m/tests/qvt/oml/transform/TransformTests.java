@@ -233,6 +233,7 @@ public class TransformTests {
                 new FileToFileData("bug204126_6"), //$NON-NLS-1$        
                 new FileToFileData("bug204126_7"), //$NON-NLS-1$        
                 new FileToFileData("bug205303_1"), //$NON-NLS-1$        
+                new FileToFileData("bug219075_1"), //$NON-NLS-1$        
                 //        new MyUmlToMyUmlData("eobjectmodelopcall", "eobjectmodelopcallsource", "eobjectmodelopcalldest"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 // */        
         };
