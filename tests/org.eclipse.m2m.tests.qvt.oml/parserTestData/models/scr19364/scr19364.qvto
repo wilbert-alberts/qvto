@@ -5,8 +5,6 @@ mapping main(pack: ecore::EPackage): ecore::EPackage {
     init {
         var foo := dump(1);
     }
-    object {
         name := 'foo';
         eClassifiers += object ecore::EClass { name := 'tag'; };
-    }
 }

@@ -2,6 +2,4 @@ transformation emptyout;
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 
 mapping main(pack: ecore::EPackage): ecore::EPackage {
-    object {
-    }
 }

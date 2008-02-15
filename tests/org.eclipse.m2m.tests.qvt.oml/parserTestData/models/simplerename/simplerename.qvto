@@ -5,8 +5,6 @@ rename ecore::EPackage.newName = 'name';
 rename ecore::EPackage.classes = 'eClassifiers';
 
 mapping main(model: ecore::EPackage): ecore::EPackage {
-    object ecore::EPackage {
         newName := 'foo' + model.newName;
         classes += object ecore::EClass { name := 'cls'; };
-    }
 }

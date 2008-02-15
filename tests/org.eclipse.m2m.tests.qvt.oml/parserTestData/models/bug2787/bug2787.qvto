@@ -16,7 +16,8 @@ mapping main(in model : EPackage) : EPackage {
         var ca := d->name[res | res != 'qq'];
         var cb := d->name[String];
     }  
-    object EPackage {
+    population {
+    object result : EPackage {
     	eSubpackages += object EPackage {
     		name := 'c_pack';
     		nsURI := c->at(1);
@@ -36,6 +37,7 @@ mapping main(in model : EPackage) : EPackage {
     		name := 'dc_pack';
     		eClassifiers += d;
     	};
+    }
     }
     end {
     	result.nsURI := result.eSubpackages->name[res | res = 'dc_pack']->any(true).toUpper();

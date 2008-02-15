@@ -7,11 +7,9 @@ query main(pack: ecore::EPackage): ecore::EPackage {
 }
 
 mapping impl(pack: ecore::EPackage): ecore::EPackage {
-    object {
         name := pack.name;
         eClassifiers := pack.eClassifiers->collect(c|decorate(c))->asOrderedSet();
         eClassifiers += pack.eClassifiers->collect(c|decorate(c.oclAsType(ecore::EClass)))->asOrderedSet();
-    }
 }
 
 mapping decorate(cls : ecore::EClassifier): ecore::EClassifier {

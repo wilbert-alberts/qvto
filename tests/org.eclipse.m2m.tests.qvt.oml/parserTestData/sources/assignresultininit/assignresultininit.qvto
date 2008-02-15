@@ -5,7 +5,5 @@ mapping patch(): ecore::EPackage {
     init {
         result := object ecore::EPackage { name := 'foo'; }
     }
-    object {
         name := 'bar';
-	}
 }

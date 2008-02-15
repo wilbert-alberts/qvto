@@ -8,13 +8,9 @@ mapping main(in model: uml::together::Model): uml::together::Model {
 	init {
 		var links := model.getIncomingLinks();
 	}
-    object {
         ownedMembers := model.ownedMembers->collect(c|makeElem(c))->asOrderedSet();
-    }	
 }
 
 mapping makeElem(in elem: uml::kernel::NamedElement): uml20::usecases::UseCase {
-	object { 
 		name := elem.name; 
-	}
 }

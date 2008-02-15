@@ -4,10 +4,8 @@ metamodel 'http://www.borland.com/together/uml';
 metamodel 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';
 
 mapping main(in model: uml::together::Model) : ecore::EPackage {
-	object {
 		name := 'foo';
 		eSubpackages := packs(model);
-	}
 }
 
 query packs(in pack: uml::kernel::packages::Package) : OrderedSet(ecore::EPackage) {
@@ -16,7 +14,5 @@ query packs(in pack: uml::kernel::packages::Package) : OrderedSet(ecore::EPackag
 }
 
 mapping pack(pack: uml::kernel::packages::Package) : ecore::EPackage {
-    object {
 	    name := pack.name;
-    }
 }

@@ -2,32 +2,22 @@ transformation virtscr20707;
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 
 mapping main(pack: ecore::EPackage): ecore::EPackage {
-	object {
 		name := 'foo';
 		eClassifiers += pack.eClassifiers->collect(c | c.makeClassifier());
-	}
 }
 
 mapping ecore::ENamedElement::makeClassifier(): ecore::EClass {
-	object ecore::EClass {
 		name := 'NE:' + self.name;
-	}
 }
 
 mapping ecore::EClassifier::makeClassifier(): ecore::EClass {
-	object ecore::EClass {
 		name := 'CLASSIFIER:' + self.name;
-	}
 }
 
 mapping ecore::EClass::makeClassifier(): ecore::EClass {
-	object ecore::EClass {
 		name := 'CLASS:' + self.name;
-	}
 }
 
 mapping ecore::EDataType::makeClassifier(): ecore::EClass {
-	object ecore::EClass {
 		name := 'DT:' + self.name;
-	}
 }

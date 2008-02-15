@@ -5,9 +5,7 @@ mapping main(pack: ecore::EPackage): ecore::EPackage {
     init {
         var newPack := object ecore::EPackage { name := pack.name; };
     }
-    object {
         name := 'foo';
-    }
 }
 
 query main2(pack: ecore::EPackage): ecore::EPackage {

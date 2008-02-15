@@ -9,7 +9,6 @@ mapping main(in model: ecore::EPackage): uml::together::Model {
 		var treal := root.getPrimitiveType(uml::kernel::PrimitiveTypeEnum::REAL);
 	}
 	
-    object {
     	ownedMembers += object uml20::classes::Class {
     		name := 'Employee';
 			attributes += object uml20::kernel::Property {
@@ -22,5 +21,4 @@ mapping main(in model: ecore::EPackage): uml::together::Model {
 			};    		
 
     	};
-    }
 }

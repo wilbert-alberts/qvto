@@ -6,9 +6,7 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 	init {
 		result := model.toEcorePackage();
 	}
-    object {
     	name := 'OK';
-    }
 }
 
 mapping ecore::EPackage::toEcorePackage(): ecore::EPackage {
@@ -22,8 +20,6 @@ mapping ecore::EClass::toEcoreClass(): ecore::EClass {
 		result := self.resolveoneIn(ecore::EClass::toEcoreClass, ecore::EClass);
 	}
 	
-	object {
 		name := self.name;
 		eSuperTypes += self.eSuperTypes.oclAsType(ecore::EClass).toEcoreClass();
-	}
 }

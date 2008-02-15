@@ -6,7 +6,5 @@ mapping patch(inout pack: ecore::EPackage): ecore::EPackage {
         pack.name := foo;
         var foo := 'bar';
     }
-    object ecore::EPackage {
         name := 'foo';
-    }
 }

@@ -1,6 +1,8 @@
 transformation scr20469;
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 
-mapping main(in model: ecore::EPackage): ecore::EPackage {    
-    object ecore::ENamedElement {    	name := 'foo';    }
+mapping main(in model: ecore::EPackage): ecore::EPackage {
+	population {    
+    	object result :  { name := 'foo'; }
+    }
 }

@@ -9,7 +9,5 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 		var s := 'abc';
 		var newName := s.substring(1, s.indexOf('bc'))
 	}
-    object {
     	name := newName;
-    }
 }

@@ -16,6 +16,4 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 		
 		result := pack;
 	}
-	object {
-	}
 }

@@ -6,7 +6,6 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 	init {
 		var cl := model.allInstances(ecore::EPackage)->including(model).toEClass();
 	}
-    object {
     	name := 'all';
     	eAnnotations += object ecore::EAnnotation {
     	          
@@ -18,7 +17,6 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
     		source := 'resolveAllByRule(''toAttribute'', ecore::EAttribute)';
     	};
     	eClassifiers += cl;
-    }
 }
 
 mapping ecore::EPackage::toEClass() : ecore::EClass {

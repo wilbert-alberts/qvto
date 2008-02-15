@@ -6,15 +6,11 @@ mapping main(pack: ecore::EPackage): ecore::EPackage {
        var res := pack.makePack();
        var nam := getTargetName(pack);
    }
-   object {
        name := res.name.concat(nam);
-   }
 }
 
 mapping ecore::EPackage::makePack(): ecore::EPackage {
-	object {
 		name := 'foo';
-	}
 }
 
 query getTargetName(pack: ecore::EPackage): String {

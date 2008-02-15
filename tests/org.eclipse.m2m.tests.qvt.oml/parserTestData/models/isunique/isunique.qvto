@@ -6,7 +6,6 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 	init {
 		var u := model.eClassifiers->isUnique(name);
 	}
-    object {
-    	name := if u.not() then 'WRONG' else 'OK' endif
-    }
+
+    name := if u.not() then 'WRONG' else 'OK' endif
 }

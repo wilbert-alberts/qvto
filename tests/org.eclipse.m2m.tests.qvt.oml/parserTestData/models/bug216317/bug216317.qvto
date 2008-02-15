@@ -14,11 +14,9 @@ mapping EPackage::myMapping() : EPackage {
 			name := 'temp';
 		}.map mySubmapping();		
 	}
-	object { 
 		name := 'BBB' + resolveoneIn(EPackage::mySubmapping, EPackage).name;
 		nsURI := if self.resolveoneIn(EPackage::mySubmapping, EPackage).oclIsUndefined()
 					then 'right' else 'wrong' endif;
-	}
 }
 
 mapping EPackage::mySubmapping() : EPackage {

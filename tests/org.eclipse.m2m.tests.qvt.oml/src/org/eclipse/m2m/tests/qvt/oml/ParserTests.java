@@ -104,8 +104,8 @@ public class ParserTests {
         new TestData("missingvariablereference", 1), //$NON-NLS-1$
         new TestData("optionalout", 0), //$NON-NLS-1$
         new TestData("abstractout", 1), //$NON-NLS-1$
-        new TestData("nonassignableout", 1), //$NON-NLS-1$
-        new TestData("wrongout", 2), //$NON-NLS-1$
+        new TestData("nonassignableout", 2), //$NON-NLS-1$
+        TestData.createSourceChecked("wrongout", 3, 0), //$NON-NLS-1$
         new TestData("outininitvar", 0), //$NON-NLS-1$
         new TestData("modifyfeature", 0), //$NON-NLS-1$
         new TestData("missingout", 1), //$NON-NLS-1$
@@ -114,12 +114,12 @@ public class ParserTests {
         new TestData("modifyparam", 0), //$NON-NLS-1$
         new TestData("wrongparamnameinout", 4), //$NON-NLS-1$
         new TestData("modifyfeatureininiterror", 4), //$NON-NLS-1$
-        new TestData("voidout", 1), //$NON-NLS-1$
+        TestData.createSourceChecked("voidout", 2, 0), //$NON-NLS-1$
         new TestData("modifyinparam", 1), //$NON-NLS-1$
         new TestData("modifyresult", 0), //$NON-NLS-1$
         new TestData("wrongorderininit", 1), //$NON-NLS-1$
         new TestData("duplicateinitvariable", 1), //$NON-NLS-1$
-        new TestData("nestedouterror", 1), //$NON-NLS-1$
+        TestData.createSourceChecked("missingObjectType", 2, 0), // replaced former 'nestedouterror'
         new TestData("emptyinit", 0), //$NON-NLS-1$
         new TestData("assignresultininit", 0), //$NON-NLS-1$
         new TestData("assign_inoutParam", 2), //$NON-NLS-1$

@@ -2,7 +2,5 @@ transformation missingvariablereference;
 metamodel 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';
 
 mapping base(): simpleuml::DataType {
-    object simpleuml::DataType {
        name := foo;
-    }
 }

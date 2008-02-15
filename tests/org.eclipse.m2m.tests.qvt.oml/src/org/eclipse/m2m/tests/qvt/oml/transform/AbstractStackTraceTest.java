@@ -32,7 +32,6 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransforma
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalStdLibrary;
 import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
-import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.qvt.oml.library.Context;
 import org.eclipse.m2m.qvt.oml.library.IContext;

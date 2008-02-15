@@ -8,10 +8,8 @@ mapping main(pack: ecore::EPackage): ecore::EPackage {
 		var i := 1;		
 		var t := s.substring(i, 1);
 	}
-    object {
         name := 'foo';
         eClassifiers += foo(classes, 1);
-    }
 }
 
 query foo(o: OrderedSet(ecore::EClass), i: Integer): ecore::EClass {

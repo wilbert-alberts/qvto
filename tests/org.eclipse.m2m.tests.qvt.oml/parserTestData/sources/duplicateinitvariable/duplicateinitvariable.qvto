@@ -6,7 +6,7 @@ mapping base(): ecore::EPackage {
         var foo := 'bar';
         var foo := 'abc';
     }
-    object ecore::EPackage {
+
         name := foo;
-    }
+
 }

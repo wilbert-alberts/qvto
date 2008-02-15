@@ -6,22 +6,16 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 		var tmp := model.createEClass();
 		model.createEClass(20);
 	}
-    object {
     	name := 'a';
     	eClassifiers := resolveIn(ecore::ENamedElement::createEClass, ecore::EClass)->asOrderedSet();
-    }
 }
 
 mapping ecore::ENamedElement::createEClass() : ecore::EClass {
-	object {
 		name := 'mapped1' + self.name;
-	}
 }
 
 mapping ecore::ENamedElement::createEClass(in i : Integer) : ecore::EClass {
-	object {
 		  name := 'mapped2' + self.name;
-	}
 	end {
 		switch {
 			(i = 1) ? result.name := result.name + 'switch1';

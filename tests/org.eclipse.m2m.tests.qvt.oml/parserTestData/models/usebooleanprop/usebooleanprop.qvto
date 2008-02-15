@@ -9,7 +9,5 @@ mapping main(model: simpleuml::Model): ecore::EPackage {
 		    _abstract := false;
 		};
 	}
-    object {
         name := if c._abstract then 'abstract' else 'concrete' endif;
-    }
 }

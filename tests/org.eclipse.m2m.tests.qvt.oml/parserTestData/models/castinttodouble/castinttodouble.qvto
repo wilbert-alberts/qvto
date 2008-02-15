@@ -9,7 +9,5 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 		var newName := '' + one_.toString() + '-' + two.toString() + '-' + three.toString();
 		var foo := dump(newName);
 	}
-    object {
     	name := newName;
-     }
 }

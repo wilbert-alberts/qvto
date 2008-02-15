@@ -5,7 +5,7 @@ mapping patch(inout pack: ecore::EPackage): ecore::EPackage {
    init {
 	   pack.eClassifiers += object ecore::EClass { name := 'tag'; }
    } 
-   object ecore::EPackage {
+
        name := 'fpp';
-   }
+
 }

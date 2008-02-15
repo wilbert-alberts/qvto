@@ -3,7 +3,5 @@ transformation simple;
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 
 mapping main(model: ecore::EPackage): ecore::EPackage {
-    object ecore::EPackage {
-        name := 'foo'
-    }
+	name := 'foo'
 }

@@ -81,6 +81,9 @@ public class TransformTests {
 
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {
+        		new FileToFileData("populationSection"), //$NON-NLS-1$
+        		new FileToFileData("inoutMapping"), //$NON-NLS-1$
+        		new FileToFileData("objectExp"), //$NON-NLS-1$        		
                 new FileToFileData("bug2787"), //$NON-NLS-1$                
                 new FileToFileData("bug2741"), //$NON-NLS-1$                
                 new FileToFileData("bug2732"), //$NON-NLS-1$                

@@ -8,13 +8,9 @@ mapping main(in model: uml::together::Model): uml::together::Model {
 	init {
 	    var allClasses: Sequence(uml14::kernel::classes::Class) := model.ownedMembers->select(c|c.oclIsKindOf(uml14::kernel::classes::Class))->asSequence()->oclAsType(Sequence(uml14::kernel::classes::Class));
 	}
-    object {
     	ownedMembers := allClasses->collect(c|make20Class(c))->asOrderedSet();
-    }
 }
 
 mapping make20Class(in c: uml14::kernel::classes::Class): uml20::classes::Class {
-	object {
 	    name := c.name + '20';
-	}
 }

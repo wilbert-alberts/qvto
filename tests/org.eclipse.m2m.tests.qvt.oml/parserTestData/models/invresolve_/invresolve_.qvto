@@ -10,14 +10,10 @@ mapping ecore::EPackage::main1(): ecore::EPackage {
    init {
        result := self.makePack();
    }
-   object {
-   }
 }
 
 mapping ecore::EPackage::makePack(): ecore::EPackage {
-	object {
 		name := 'foo';
-	}
 }
 
 mapping inout ecore::EPackage::patchName(): ecore::EPackage {
@@ -25,7 +21,5 @@ mapping inout ecore::EPackage::patchName(): ecore::EPackage {
         var origPack: ecore::EPackage := self.invresolve(ecore::EPackage)->first();
         self.name := self.name.concat(origPack.name);
 		result := self;
-	}
-	object {
 	}
 }

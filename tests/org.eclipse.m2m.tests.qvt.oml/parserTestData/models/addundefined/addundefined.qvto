@@ -3,7 +3,6 @@ transformation addundefined;
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 
 mapping main(in model: ecore::EPackage): ecore::EPackage {
-    object {
     	name := 'arithmetic with undefined';
     	eClassifiers += test(1.0 + OclInvalid, 0);
     	eClassifiers += test(1.0 - OclInvalid, 1);
@@ -32,7 +31,6 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
     	eClassifiers += test(1 <= OclInvalid, 23);
     	eClassifiers += test(1 >= OclInvalid, 24);
     	eClassifiers += test(1 <> OclInvalid, 25);
-    }
 } 
 
 mapping test(in value : OclAny, inout fakeIndex : Integer) : ecore::EClass {

@@ -9,7 +9,5 @@ property b : Integer = a + 1;
 property c : Integer = b + 1 + bb;
 
 mapping main(in model: ecore::EPackage): ecore::EPackage {
-    object {
     	name := '' + c.toString();
-    }
 } 

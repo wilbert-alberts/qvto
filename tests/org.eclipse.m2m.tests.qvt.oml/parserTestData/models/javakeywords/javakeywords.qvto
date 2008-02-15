@@ -9,12 +9,8 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 		var class := 'class';    	
 		var _extends := class;
     }
-    object {
     	implements := 'foo';
-    }
 }
 
 mapping class(in model: ecore::EPackage): ecore::EPackage {
-    object {
-    }
 }

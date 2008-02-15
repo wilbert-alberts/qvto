@@ -8,7 +8,6 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 	init {
 		var treal := getDataTypeInstance('http://www.eclipse.org/emf/2002/Ecore', 'EFloat');
 	}
-    object {
     	eClassifiers += object ecore::EClass {
     		name := 'Employer';
     		eStructuralFeatures += object ecore::EAttribute {
@@ -18,5 +17,4 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
     	};
 
     	name := 'pack';
-    }
 }

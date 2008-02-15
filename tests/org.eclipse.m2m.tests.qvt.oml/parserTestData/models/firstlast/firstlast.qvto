@@ -13,7 +13,5 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 		var b4 := set->select(false)->last().oclIsUndefined();						
 		var ok := b1 and b2 and b3 and b4;	
 	}
-    object {
     	name := if ok then 'OK' else 'FAILURE' endif;
-    }
 }

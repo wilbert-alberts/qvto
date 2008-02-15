@@ -3,7 +3,6 @@ transformation mapkeyword;
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 
 mapping main(in model: ecore::EPackage): ecore::EPackage {
-	object {
 		name := model.name;
 		eSubpackages += model.foo('1');
 		eSubpackages += model.map foo('2');
@@ -11,7 +10,6 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 		eSubpackages += bar('1');
 		eSubpackages += map bar('2');
 		eSubpackages += xmap bar('3');
-    }
 }
 
 mapping ecore::EPackage::foo(in suffix : String) : ecore::EPackage {

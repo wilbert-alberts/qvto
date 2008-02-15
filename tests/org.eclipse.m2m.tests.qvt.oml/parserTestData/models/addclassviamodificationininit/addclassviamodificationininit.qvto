@@ -6,9 +6,7 @@ mapping main(pack: ecore::EPackage): ecore::EPackage {
         var newPack := object ecore::EPackage { name := pack.name; };
         result := patch(newPack);
     }
-    object {
         name := newPack.name;
-    }
 }
 
 mapping patch(inout pack: ecore::EPackage): ecore::EPackage {
@@ -16,7 +14,6 @@ mapping patch(inout pack: ecore::EPackage): ecore::EPackage {
 	   pack.eClassifiers += object ecore::EClass { name := 'tag'; };
        result := pack;
    } 
-   object {
-       name := 'patched';
-   }
+   
+   name := 'patched';
 }

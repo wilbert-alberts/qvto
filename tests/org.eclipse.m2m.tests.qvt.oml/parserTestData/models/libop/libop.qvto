@@ -13,7 +13,5 @@ mapping main(in model: uml::together::Model): ecore::EPackage {
     		firstClass.getIncomingLinks()->size() + 
     		firstClass.associations->size();
     }
-    object {
     	name := '' + links;
-    }
 }

@@ -2,10 +2,8 @@ transformation scr18739;
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 
 mapping main(pack: ecore::EPackage): ecore::EPackage {
-    object {
         name := 'foo';
         eClassifiers += object ecore::EClass { name := 'tag'; };
-    }
 }
 
 query abc(in c: ecore::EChar): String {

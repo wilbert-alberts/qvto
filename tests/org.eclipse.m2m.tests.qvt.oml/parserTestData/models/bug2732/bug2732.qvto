@@ -16,7 +16,6 @@ mapping main(in model : EPackage) : EPackage {
         var e3 := c[name = 'a'];  
         var e4 : Sequence(EDataType) := d[EDataType]; 
     }  
-    object {
     	name := 'root';
     	eSubpackages += object EPackage {
     		name := 'dc_pack';
@@ -35,5 +34,4 @@ mapping main(in model : EPackage) : EPackage {
     		eClassifiers += e4;
     	};
     	eClassifiers += e1;
-    }
 }

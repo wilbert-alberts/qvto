@@ -12,7 +12,6 @@ mapping main(in model: uml::together::Model): xhtml::DocumentRoot {
 	init {
 		var allPackages : Sequence(uml::kernel::packages::Package) := allPackages(model)->excluding(model);
 	}
-	object {
 		html := object xhtml::HtmlType {
 			head := object xhtml::HeadType {
 				title := object xhtml::TitleType {
@@ -35,7 +34,6 @@ mapping main(in model: uml::together::Model): xhtml::DocumentRoot {
 				_div += allPackages->collect(p | package2div(p));
 			}
 		}
-	}
 }
 
 mapping package2row(in pack: uml::kernel::packages::Package) : xhtml::TrType {

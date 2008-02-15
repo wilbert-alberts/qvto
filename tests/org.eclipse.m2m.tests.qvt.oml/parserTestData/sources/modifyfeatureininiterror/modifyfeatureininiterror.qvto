@@ -5,7 +5,7 @@ mapping impl(pack: ecore::EPackage): ecore::EPackage {
     init {
         pack.eClassifiers1 += object ecore::EClass1 {};
     }
-    object ecore::EPackage {
+
         name := 'foo';
-    }
+
 }

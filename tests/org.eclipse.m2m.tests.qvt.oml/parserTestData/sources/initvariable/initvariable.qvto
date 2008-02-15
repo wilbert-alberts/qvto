@@ -5,6 +5,4 @@ mapping base(t: simpleuml::Generalization): simpleuml::DataType {
     init {
         var foo := t.name;
     }
-    object simpleuml::DataType {
-    }
 }

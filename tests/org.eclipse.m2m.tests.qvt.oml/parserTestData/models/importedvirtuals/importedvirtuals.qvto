@@ -89,7 +89,8 @@ query EClass::x(in x: Set(ENamedElement)) {
 }
 
 query virtQuery() : EClassifier {
-	object EClassifier {
+	assert fatal (false) with log('never get called');
+	object EClass {
 		
 	}	
 }

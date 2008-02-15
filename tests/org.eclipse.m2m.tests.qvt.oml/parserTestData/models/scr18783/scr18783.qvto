@@ -2,12 +2,10 @@ transformation scr18783;
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 
 mapping main(in model: ecore::EPackage): ecore::EPackage {
-    object {
 	    eSubpackages += object ecore::EPackage {
 	    	name:= (object ecore::EPackage{}).foo() 
 	    };
     	name := (object ecore::EPackage{}).zoo();
-    }
 }
 
 query ecore::EPackage::foo(): String {

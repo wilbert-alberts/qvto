@@ -7,6 +7,4 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
         var global := ecore::EPackage.allInstances();
         var local := model.allInstances(ecore::EPackage);
     }
-    object ecore::EPackage {
-    }
 }

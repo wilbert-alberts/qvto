@@ -5,8 +5,6 @@ mapping main(pack: ecore::EPackage): ecore::EPackage {
     init {
         var cls := object ecore::EClass { name := 'tag'; };
     }
-    object {
-        name := 'foo';
-        eClassifiers += OrderedSet {cls};
-    }
+    name := 'foo';
+    eClassifiers += OrderedSet {cls};
 }

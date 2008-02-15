@@ -24,7 +24,5 @@ mapping patch(inout pac:ecore::EPackage, in sz : Integer): ecore::EPackage {
         pac.eClassifiers := classifiers->excluding(firstElem)->asOrderedSet();
     }
     
-    object {
         name := pac.name;
-    }
 }

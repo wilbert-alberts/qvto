@@ -8,8 +8,6 @@ mapping main(in inmodel: simpleuml::Model): simpleuml::Model {
 }
     
 mapping Pack_To_Pack(pack: simpleuml::Package):simpleuml::Package {
-   object {
        name:=pack.name;
        ownedElements:=pack.ownedElements->collect(pack1|Pack_To_Pack(pack1.oclAsType(simpleuml::Package)))->asOrderedSet();
-   }
 }

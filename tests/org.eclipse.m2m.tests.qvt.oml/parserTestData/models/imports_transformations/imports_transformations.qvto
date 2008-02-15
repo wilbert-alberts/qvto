@@ -9,9 +9,7 @@ mapping main(in model: Ecore::EPackage): Ecore::EPackage {
 	init{  
 		var classes:= model.allInstances(Ecore::EClass);
 	}
-    object {
     	eClassifiers += classes->collect(c|c2c(c));
-	}
 }   
     
 mapping c2c(in clz : Ecore::EClass) : Ecore::EClass {

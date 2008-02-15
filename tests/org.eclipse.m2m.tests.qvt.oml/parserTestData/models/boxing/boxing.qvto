@@ -12,7 +12,6 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 		var f1 := 1.0;
 		var f2 := f1 + ratio + bar() + 1;
 	}
-    object {
     	name := model.name;
     	eClassifiers += object ecore::EClass {
     		name := 'Model';
@@ -22,7 +21,6 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
     			upperBound := i2;
     		}
     	}
-    }
 }
 
 query getLowerBound() : Integer {	

@@ -6,9 +6,7 @@ mapping main(pack: ecore::EPackage): ecore::EPackage {
         result := object ecore::EPackage { name := pack.name; };
         var foo := patch(result);
     }
-    object {
         name := pack.name;    
-    }
 }
 
 query patch(inout pack: ecore::EPackage): OclVoid {

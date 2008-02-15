@@ -10,7 +10,6 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 		src.createClass2(); -- imported 
 		src.createClass('dummy'); -- importer
 	}
-    object {
 		eSubpackages += object ecore::EPackage {
 			name := 'importer';
 			eClassifiers += src.resolveIn(ecore::EAnnotation::createClass, ecore::EClass)->any(true);
@@ -19,7 +18,6 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 			name := 'imported';
 			eClassifiers += src.resolveIn(ecore::EAnnotation::createClass2, ecore::EClass)->any(true);
 		};
-	}
 }   
     
 mapping ecore::EAnnotation::createClass(in dummy : String) : ecore::EClass {

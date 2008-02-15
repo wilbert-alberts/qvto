@@ -5,9 +5,7 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 	init{
 		var q:= object ecore::EClass{}.map1().name;
 	}
-    object {
        name := q;
-    }
 }
 
 mapping ecore::EClass::map1(): ecore::EPackage 

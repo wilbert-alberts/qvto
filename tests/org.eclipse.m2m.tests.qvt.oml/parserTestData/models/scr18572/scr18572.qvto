@@ -4,9 +4,7 @@ transformation scr18572;
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 
 mapping main(pack: ecore::EPackage): ecore::EPackage {
-    object {
         name := 'foo';
-    }
 }
 
 mapping boooooool(in cl: ecore::EClass): ecore::EPackage
@@ -16,6 +14,4 @@ when {
 	cl.eAttributes->notEmpty() and cl._abstract
 }
 {
-    object {
-    }
 }

@@ -15,22 +15,16 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 	    	i := i + 1;
     	};
 	}
-    object {
     	name := 'result';
     	eClassifiers += selectionSort(resAll);
-    }
 }
 
 mapping ecore::ENamedElement::createEClass1() : ecore::EClass {
-	object {
 		name := 'mapped1' + self.name;
-	}
 }
 
 mapping ecore::ENamedElement::createEClass2() : ecore::EClass {
-	object {
 		name := 'mapped2' + self.name;
-	}
 }
 
 query selectionSort(in ar: OrderedSet(ecore::EClass)): OrderedSet(ecore::EClass) {

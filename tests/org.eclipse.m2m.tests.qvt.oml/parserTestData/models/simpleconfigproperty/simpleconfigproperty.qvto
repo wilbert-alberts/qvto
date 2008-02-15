@@ -4,7 +4,5 @@ metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 configuration property FOO : String;
 
 mapping main(model: ecore::EPackage): ecore::EPackage {
-    object ecore::EPackage {
         name := FOO;
-    }
 }

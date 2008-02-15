@@ -5,7 +5,7 @@ mapping patch(in pack: ecore::EPackage): ecore::EPackage {
    init {
 	   pack.name := 'patched';
    } 
-   object ecore::EPackage {
+
        name := 'foo';
-   }
+
 }
