@@ -846,24 +846,46 @@ public class QvtOperationalVisitorCS
     }
     
     private OCLExpression<EClassifier> visitSwitchExpCS(SwitchExpCS switchExpCS, QvtOperationalEnv env) {
-        SwitchExp switchExp = ExpressionsFactory.eINSTANCE.createSwitchExp();
-        switchExp.setStartPosition(switchExpCS.getStartOffset());
-        switchExp.setEndPosition(switchExpCS.getEndOffset());
-        
-        if (switchExpCS.getAlternativePart() != null) {
-            for (SwitchAltExpCS altExpCS : switchExpCS.getAlternativePart()) {
-                OCLExpression<EClassifier> altExp = visitSwitchAltExpCS(altExpCS, env);
-                switchExp.getAlternativePart().add((AltExp) altExp);
-            }
-        }
-        if (switchExpCS.getElsePart() != null) {
-            OCLExpression<EClassifier> elsePart = visitOclExpressionCS(switchExpCS.getElsePart(), env);
-            switchExp.setElsePart(elsePart);
-        }
-        return switchExp;
+		SwitchExp switchExp = ExpressionsFactory.eINSTANCE.createSwitchExp();
+		switchExp.setStartPosition(switchExpCS.getStartOffset());
+		switchExp.setEndPosition(switchExpCS.getEndOffset());
+		
+		List<EClassifier> allPartTypes = new ArrayList<EClassifier>();
+		if (switchExpCS.getAlternativePart() != null) {
+		    for (SwitchAltExpCS altExpCS : switchExpCS.getAlternativePart()) {
+		    	AltExp altExp = visitSwitchAltExpCS(altExpCS, env);
+		        switchExp.getAlternativePart().add((AltExp) altExp);
+		        allPartTypes.add(altExp.getBody() != null ? altExp.getBody().getType() : null);
+		    }
+		}
+		if (switchExpCS.getElsePart() != null) {
+		    OCLExpression<EClassifier> elsePart = visitOclExpressionCS(switchExpCS.getElsePart(), env);
+		    switchExp.setElsePart(elsePart);
+		    allPartTypes.add(elsePart.getType());
+		}
+		
+		if (allPartTypes.isEmpty()) {
+		    switchExp.setType(getOclVoid());
+		}
+		else if (allPartTypes.size() == 1) {
+		    switchExp.setType(allPartTypes.get(0));
+		}
+		else {
+			EClassifier type = null;
+			for (int i = 0; i+1 < allPartTypes.size(); ++i) {
+				type = TypeUtil.commonSuperType(switchExpCS, env,
+						allPartTypes.get(i), allPartTypes.get(i+1));
+				if (type == null) {
+					break;
+				}
+			}
+			switchExp.setType(type == null ? getOclVoid() : type);
+		}
+		
+		return switchExp;
     }
 
-	private OCLExpression<EClassifier> visitSwitchAltExpCS(SwitchAltExpCS altExpCS, QvtOperationalEnv env) {
+	private AltExp visitSwitchAltExpCS(SwitchAltExpCS altExpCS, QvtOperationalEnv env) {
 	    AltExp altExp = ExpressionsFactory.eINSTANCE.createAltExp();
 	    altExp.setStartPosition(altExpCS.getStartOffset());
 	    altExp.setEndPosition(altExpCS.getEndOffset());
@@ -2578,6 +2600,32 @@ public class QvtOperationalVisitorCS
                 OCLExpression<EClassifier> conditionExp = oclExpressionCS(conditionCS, env);
                 astNode.setBody(bodyExp);
                 astNode.setCondition(conditionExp);
+                env.deleteElement(targetVdcl.getName());
+            }
+        } else if (name.equals("xcollect")) { //$NON-NLS-1$
+            if (imperativeIterateExpCS.getBody() != null) {
+                // This is the case with collectselect shorthand
+                // list->prop[res| res.startswith("_")];
+                // equivalent to
+                // list->collectselect(i;res= i.prop | not res.startswith("_"))
+                OCLExpression<EClassifier> bodyExp = oclExpressionCS(imperativeIterateExpCS.getBody(), env);
+                setXCollectLikeReturnType(astNode, bodyExp.getType(), source, env);
+                Variable<EClassifier, EParameter> targetVdcl;
+                if (imperativeIterateExpCS.getTarget() == null) {
+                    targetVdcl = genVariableDeclaration(imperativeIterateExpCS, "visitImperativeIterateExp", env, null, //$NON-NLS-1$
+                            bodyExp.getType(), bodyExp, false, true, false);
+                } else {
+                    targetVdcl = variableDeclarationCS(imperativeIterateExpCS.getTarget(), env, true);
+                    targetVdcl.setType(bodyExp.getType());
+                    targetVdcl.setInitExpression(bodyExp);
+                }
+                astNode.setTarget(targetVdcl);
+                OCLExpressionCS conditionCS = imperativeIterateExpCS.getCondition();
+                if (conditionCS != null) {
+	                OCLExpression<EClassifier> conditionExp = oclExpressionCS(conditionCS, env);
+	                astNode.setCondition(conditionExp);
+                }
+                astNode.setBody(bodyExp);
                 env.deleteElement(targetVdcl.getName());
             }
         }

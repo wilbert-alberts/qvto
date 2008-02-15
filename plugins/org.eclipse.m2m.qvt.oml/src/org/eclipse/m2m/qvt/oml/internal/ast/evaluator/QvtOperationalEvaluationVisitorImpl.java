@@ -636,24 +636,34 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         return null;
     }
     
+    private static class SwitchAltExpResult {
+    	public Object myCondition;
+    	public Object myResult;
+    }
     public Object visitSwitchAltExp(AltExp switchAltExp) {
-       Object condition = switchAltExp.getCondition().accept(getVisitor());
-       if (Boolean.TRUE.equals(condition)) {
-           switchAltExp.getBody().accept(getVisitor());
-       }
-       return condition;
+		SwitchAltExpResult result = new SwitchAltExpResult();
+		result.myCondition = switchAltExp.getCondition().accept(getVisitor());
+		if (Boolean.TRUE.equals(result.myCondition)) {
+			result.myResult = switchAltExp.getBody().accept(getVisitor());
+		}
+		return result;
     }
 
     public Object visitSwitchExp(SwitchExp switchExp) {
         for (AltExp altExp : switchExp.getAlternativePart()) {
-            if (Boolean.TRUE.equals(altExp.accept(getVisitor()))) {
+        	Object altResult = altExp.accept(getVisitor());
+        	if (altResult instanceof SwitchAltExpResult) {
+            	if (Boolean.TRUE.equals(((SwitchAltExpResult) altResult).myCondition)) {
+                    return ((SwitchAltExpResult) altResult).myResult;
+                }
+        	}
+        	else if (Boolean.TRUE.equals(altResult)) {
                 return null;
             }
         }
         OCLExpression<EClassifier> elsePart = switchExp.getElsePart();
         if (elsePart != null) {
-            elsePart.accept(getVisitor());
-            return null;
+            return elsePart.accept(getVisitor());
         }
         return null;
     }

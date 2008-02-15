@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.36 2008/02/15 11:56:29 radvorak Exp $ 
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.37 2008/02/15 15:46:24 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -366,7 +366,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.36 2008/02/15 11:56:29 radvorak Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.37 2008/02/15 15:46:24 sboyko Exp $
  */
 	./
 $End
@@ -2179,7 +2179,18 @@ $Rules
 		  $EndJava
 		./
 
-	declaratorCS ::= IDENTIFIER ':' typeCS ':=' oclExpressionCS
+	whileDeclaratorCS ::= IDENTIFIER ':' typeCS
+		/.$BeginJava
+					CSTNode result = createVariableCS(
+							getTokenText($getToken(1)),
+							(TypeCS)$getSym(3),
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(3));
+					$setResult(result);
+		  $EndJava
+		./
+	whileDeclaratorCS ::= IDENTIFIER ':' typeCS '=' oclExpressionCS
 		/.$BeginJava
 					CSTNode result = createVariableCS(
 							getTokenText($getToken(1)),
@@ -2191,7 +2202,31 @@ $Rules
 		  $EndJava
 		./
 
-	whileExpCS ::= while '(' declaratorCS ';' oclExpressionCS ')' whileBodyCS
+	whileDeclaratorCS ::= IDENTIFIER ':' typeCS ':=' oclExpressionCS
+		/.$BeginJava
+					CSTNode result = createVariableCS(
+							getTokenText($getToken(1)),
+							(TypeCS)$getSym(3),
+							(OCLExpressionCS)$getSym(5)
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(5));
+					$setResult(result);
+		  $EndJava
+		./
+		
+	whileDeclaratorCS ::= IDENTIFIER ':=' oclExpressionCS
+		/.$BeginJava
+					CSTNode result = createVariableCS(
+							getTokenText($getToken(1)),
+							null,
+							(OCLExpressionCS)$getSym(3)
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(3));
+					$setResult(result);
+		  $EndJava
+		./
+		
+	whileExpCS ::= while '(' whileDeclaratorCS ';' oclExpressionCS ')' whileBodyCS
 		/.$BeginJava
 					CSTNode result = createWhileExpCS(
 							(VariableCS)$getSym(3),
@@ -2534,6 +2569,7 @@ $Rules
 	----- switch -----
 
 	oclExpCS -> switchExpCS
+	loopExpCS -> iterateSwitchExpCS
 
 	switchExpCS ::= switch switchBodyExpCS
 		/.$BeginJava
@@ -2548,6 +2584,61 @@ $Rules
 					} else { // In case of errors in switchBody
 						setOffsets(result, getIToken($getToken(1)), (CSTNode) switchBody[2]);
 					}
+					$setResult(result);
+		  $EndJava
+		./
+
+	switchDeclaratorCS -> whileDeclaratorCS
+
+	switchDeclaratorCS ::= IDENTIFIER
+		/.$BeginJava
+					CSTNode result = createVariableCS(
+							getTokenText($getToken(1)),
+							null,
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	switchDeclaratorCS ::= IDENTIFIER '=' oclExpressionCS
+		/.$BeginJava
+					CSTNode result = createVariableCS(
+							getTokenText($getToken(1)),
+							null,
+							(OCLExpressionCS)$getSym(3)
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(3));
+					$setResult(result);
+		  $EndJava
+		./
+
+	iterateSwitchExpCS ::= switch '(' switchDeclaratorCS ')' switchBodyExpCS
+		/.$BeginJava
+					Object[] switchBody = (Object[]) $getSym(5);
+
+					OCLExpressionCS switchExpCS = (OCLExpressionCS) createSwitchExpCS(
+							(EList<SwitchAltExpCS>) switchBody[0],
+							(OCLExpressionCS) switchBody[1]							
+						);
+					if (switchBody[2] instanceof IToken) { // In case of correct and incorrect syntax
+						setOffsets(switchExpCS, getIToken($getToken(1)), (IToken) switchBody[2]);
+					} else { // In case of errors in switchBody
+						setOffsets(switchExpCS, getIToken($getToken(1)), (CSTNode) switchBody[2]);
+					}
+
+					EList<VariableCS> iterators = new BasicEList<VariableCS>();
+					iterators.add((VariableCS) $getSym(3));
+					CSTNode result = createImperativeIterateExpCS(
+							createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, "xcollect"), //$NON-NLS-1$
+							iterators,
+							null,
+							switchExpCS,
+							createBooleanLiteralExpCS("true") //$NON-NLS-1$
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
+					
 					$setResult(result);
 		  $EndJava
 		./
