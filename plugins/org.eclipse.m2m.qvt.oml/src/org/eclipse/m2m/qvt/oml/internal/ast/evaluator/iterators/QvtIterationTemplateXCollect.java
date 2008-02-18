@@ -11,11 +11,11 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.internal.ast.evaluator.iterators;
 
-import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.ocl.EvaluationEnvironment;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.ocl.EvaluationVisitor;
+import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.Variable;
 
 /**
@@ -35,22 +35,10 @@ extends QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
     }
 
     @Override
-    protected Object evaluateResult(List<Variable<C, PM>> iterators, String resultName, Object condition, Object bodyVal) {
-        EvaluationEnvironment<C, O, P, CLS, E> env = getEvalEnvironment();
-
-        @SuppressWarnings("unchecked")
-        Collection<Object> currVal = (Collection<Object>) env.getValueOf(resultName);
-
-        // If the body result is invalid then the entire expression's value
-        // is invalid, because OCL does not permit OclInvalid in a collection
-        if (bodyVal == getOclInvalid()) {
-            setDone(true);
-            return bodyVal;
+    protected Object evaluateResult(List<Variable<C, PM>> iterators, String resultName, OCLExpression<EClassifier> condition, Object bodyVal, boolean isOne) {
+        if (bodyVal == null) {
+            return getEvalEnvironment().getValueOf(resultName);
         }
-
-        if (bodyVal != null) { // nulls are not added to the collection
-            currVal.add(bodyVal);
-        }
-        return currVal;
+        return returnCheckedEvaluationResult(bodyVal, isOne, resultName);
     }
 }

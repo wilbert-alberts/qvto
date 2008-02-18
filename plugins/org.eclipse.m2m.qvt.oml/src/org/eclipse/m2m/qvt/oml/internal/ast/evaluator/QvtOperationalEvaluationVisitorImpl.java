@@ -86,7 +86,6 @@ import org.eclipse.m2m.qvt.oml.expressions.impl.ImperativeOperationImpl;
 import org.eclipse.m2m.qvt.oml.expressions.impl.OperationBodyImpl;
 import org.eclipse.m2m.qvt.oml.expressions.impl.PropertyImpl;
 import org.eclipse.m2m.qvt.oml.expressions.impl.RenameImpl;
-import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.iterators.QvtIterationTemplate;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.iterators.QvtIterationTemplateCollectSelect;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.iterators.QvtIterationTemplateXCollect;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.iterators.QvtIterationTemplateXSelect;
@@ -128,7 +127,6 @@ import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.types.BagType;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.types.PrimitiveType;
-import org.eclipse.ocl.types.SequenceType;
 import org.eclipse.ocl.types.SetType;
 import org.eclipse.ocl.types.TupleType;
 import org.eclipse.ocl.types.VoidType;
@@ -812,144 +810,65 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
                 return getOclInvalid();
             }
             
-            Collection<?> sourceCollection = (Collection<?>) sourceValue;
+            // get initial result value based on the source type
+            @SuppressWarnings("unchecked")
+            CollectionType<EClassifier, EOperation> collType = (CollectionType<EClassifier, EOperation>) imperativeIterateExp.getSource().getType();
             
-            if ("xcollect".equals(imperativeIterateExp.getName())) { //$NON-NLS-1$
-                return evaluateXCollectIterator(imperativeIterateExp, sourceCollection);
-            } else if ("xselect".equals(imperativeIterateExp.getName())) { //$NON-NLS-1$
-                return evaluateXSelectIterator(imperativeIterateExp, sourceCollection);
-            } else if ("collectselect".equals(imperativeIterateExp.getName())) { //$NON-NLS-1$
-                return evaluateCollectSelectIterator(imperativeIterateExp, sourceCollection);
+            Object initResultVal = null;
+            if (imperativeIterateExp.getName().equals("xselect")) { //$NON-NLS-1$
+                initResultVal = CollectionUtil.createNewCollection(collType.getKind());
+            } else if (imperativeIterateExp.getName().equals("xcollect")  //$NON-NLS-1$
+                    || imperativeIterateExp.getName().equals("collectselect")) { //$NON-NLS-1$
+                initResultVal = ((collType instanceof SetType) || (collType instanceof BagType)) ?
+                        CollectionUtil.createNewBag() : CollectionUtil.createNewSequence();
             }
+
+            // generate a name for the result variable and add it to the environment
+            String resultName = generateName();
+            getEvaluationEnvironment().add(resultName, initResultVal);
+
+            Collection<?> sourceCollection = (Collection<?>) sourceValue;
+            // get the list of ocl iterators
+            List<Variable<EClassifier, EParameter>> iterators = imperativeIterateExp.getIterator();
+            // get the target expression
+            Variable<EClassifier, EParameter> target = imperativeIterateExp.getTarget();
+            // get the condition expression
+            OCLExpression<EClassifier> condition = imperativeIterateExp.getCondition();
+            // get the body expression
+            OCLExpression<EClassifier> body = imperativeIterateExp.getBody();
+
+            // evaluate
+            Object result = null;
+            if ("xcollect".equals(imperativeIterateExp.getName())) { //$NON-NLS-1$
+                result = QvtIterationTemplateXCollect.getInstance(getVisitor()).evaluate(
+                        sourceCollection, iterators, target, condition, body, resultName, false);
+            } else if ("xselect".equals(imperativeIterateExp.getName())) { //$NON-NLS-1$
+                result = QvtIterationTemplateXSelect.getInstance(getVisitor()).evaluate(
+                        sourceCollection, iterators, target, condition, body, resultName, false);
+            } else if ("collectselect".equals(imperativeIterateExp.getName())) { //$NON-NLS-1$
+                result = QvtIterationTemplateCollectSelect.getInstance(getVisitor()).evaluate(
+                        sourceCollection, iterators, target, condition, body, resultName, false);
+            } else if ("collectOne".equals(imperativeIterateExp.getName())) { //$NON-NLS-1$
+                result = QvtIterationTemplateXCollect.getInstance(getVisitor()).evaluate(
+                        sourceCollection, iterators, target, condition, body, resultName, true);
+            } else if ("selectOne".equals(imperativeIterateExp.getName())) { //$NON-NLS-1$
+                result = QvtIterationTemplateXSelect.getInstance(getVisitor()).evaluate(
+                        sourceCollection, iterators, target, condition, body, resultName, true);
+            } else if ("collectselectOne".equals(imperativeIterateExp.getName())) { //$NON-NLS-1$
+                result = QvtIterationTemplateCollectSelect.getInstance(getVisitor()).evaluate(
+                        sourceCollection, iterators, target, condition, body, resultName, true);
+            }
+
+            // remove result name from environment
+            getEvaluationEnvironment().remove(resultName);
+
+            return result;
         }
         
         String message = OCLMessages.bind(OCLMessages.IteratorNotImpl_ERROR_, imperativeIterateExp.getName());
         throw new UnsupportedOperationException(message);
     }
-    
-    private Object evaluateCollectSelectIterator(ImperativeIterateExp ie, Collection<?> coll) {
 
-        // get the list of ocl iterators
-        List<Variable<EClassifier, EParameter>> iterators = ie.getIterator();
-        //      int numIters = iterators.size();
-
-        // get the body expression
-        OCLExpression<EClassifier> body = ie.getBody();
-
-        // get initial result value based on the source type
-        @SuppressWarnings("unchecked")
-        CollectionType<EClassifier, EOperation> collType = (CollectionType<EClassifier, EOperation>) ie.getSource().getType();
-        
-        Object initResultVal = null;
-        if (collType instanceof SetType || collType instanceof BagType) {
-            // collection on a Bag or a Set yields a Bag
-            initResultVal = CollectionUtil.createNewBag();
-        } else {
-            // Sequence or Ordered Set yields a Sequence
-            initResultVal = CollectionUtil.createNewSequence();
-        }
-
-        // get an iteration template to evaluate the iterator
-        QvtIterationTemplate<?, EClassifier, EOperation, ?, ?, EParameter, ?, ?, ?, ?, ?, ?> is =
-            QvtIterationTemplateCollectSelect.getInstance(getVisitor());
-
-        // generate a name for the result variable and add it to the environment
-        String resultName = generateName();
-        getEvaluationEnvironment().add(resultName, initResultVal);
-
-        // evaluate
-        Object result = is.evaluate(coll, iterators, ie.getTarget(), ie.getCondition(), body, resultName);
-
-        // remove result name from environment
-        getEvaluationEnvironment().remove(resultName);
-
-        return result;
-    }
-
-    private Object evaluateXSelectIterator(ImperativeIterateExp ie, Collection<?> coll) {
-
-        // get the list of ocl iterators
-        List<Variable<EClassifier, EParameter>> iterators = ie.getIterator();
-        //      int numIters = iterators.size();
-
-        // get the body expression
-        OCLExpression<EClassifier> body = ie.getBody();
-
-        // get initial result value based on the source type
-        @SuppressWarnings("unchecked")
-        CollectionType<EClassifier, EOperation> collType = (CollectionType<EClassifier, EOperation>) ie.getSource().getType();
-        
-        Object initResultVal = null;
-        if (collType instanceof SetType) {
-            // Set
-            initResultVal = CollectionUtil.createNewSet();
-        } else if (collType instanceof BagType) {
-            // Bag
-            initResultVal = CollectionUtil.createNewBag();
-        } else if (collType instanceof SequenceType) {
-            // Sequence
-            initResultVal = CollectionUtil.createNewSequence();
-        } else {
-            // OrderedSet
-            initResultVal = CollectionUtil.createNewOrderedSet();
-        }
-
-        // get an iteration template to evaluate the iterator
-        QvtIterationTemplate<?, EClassifier, EOperation, ?, ?, EParameter, ?, ?, ?, ?, ?, ?> is =
-            QvtIterationTemplateXSelect.getInstance(getVisitor());
-
-        // generate a name for the result variable and add it to the environment
-        String resultName = generateName();
-        getEvaluationEnvironment().add(resultName, initResultVal);
-
-        // evaluate
-        Object result = is.evaluate(coll, iterators, ie.getTarget(), ie.getCondition(), body, resultName);
-
-        // remove result name from environment
-        getEvaluationEnvironment().remove(resultName);
-
-        return result;
-    }
-
-    private Object evaluateXCollectIterator(ImperativeIterateExp ie, Collection<?> coll) {
-
-        // get the list of ocl iterators
-        List<Variable<EClassifier, EParameter>> iterators = ie.getIterator();
-        //      int numIters = iterators.size();
-
-        // get the body expression
-        OCLExpression<EClassifier> body = ie.getBody();
-
-        // get initial result value based on the source type
-        @SuppressWarnings("unchecked")
-        CollectionType<EClassifier, EOperation> collType = (CollectionType<EClassifier, EOperation>) ie.getSource().getType();
-        
-        Object initResultVal = null;
-        if (collType instanceof SetType || collType instanceof BagType) {
-            // collection on a Bag or a Set yields a Bag
-            initResultVal = CollectionUtil.createNewBag();
-        } else {
-            // Sequence or Ordered Set yields a Sequence
-            initResultVal = CollectionUtil.createNewSequence();
-        }
-
-        // get an iteration template to evaluate the iterator
-        QvtIterationTemplate<?, EClassifier, EOperation, ?, ?, EParameter, ?, ?, ?, ?, ?, ?> is =
-            QvtIterationTemplateXCollect.getInstance(getVisitor());
-
-        // generate a name for the result variable and add it to the environment
-        String resultName = generateName();
-        getEvaluationEnvironment().add(resultName, initResultVal);
-
-        // evaluate
-        Object result = is.evaluate(coll, iterators, ie.getTarget(), ie.getCondition(), body, resultName);
-
-        // remove result name from environment
-        getEvaluationEnvironment().remove(resultName);
-
-        return result;
-    }
-    
     private static synchronized String generateName() {
         return "__qvtresult__" + tempCounter++;//$NON-NLS-1$
     }

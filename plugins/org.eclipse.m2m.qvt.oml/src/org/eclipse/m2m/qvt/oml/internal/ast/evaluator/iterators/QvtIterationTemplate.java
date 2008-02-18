@@ -22,6 +22,8 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.EvaluationVisitor;
 import org.eclipse.ocl.expressions.OCLExpression;
@@ -61,7 +63,8 @@ public abstract class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT,
             Variable<EClassifier, EParameter> target,
             OCLExpression<C> condition, 
             OCLExpression<C> body, 
-            String resultName) {
+            String resultName,
+            boolean isOne) {
         
         // if the collection is empty, then nothing to do
             if (coll.isEmpty())
@@ -79,11 +82,9 @@ public abstract class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT,
 
                 advanceTarget(target, bodyVal);
 
-                // evaluate the condition of the expression in this environment
-                Object conditionVal = (condition == null) ? null : myEvalVisitor.visitExpression(condition);
-
                 // get the new result value
-                Object resultVal = evaluateResult(iterators, resultName, conditionVal, bodyVal);
+                @SuppressWarnings("unchecked")
+                Object resultVal = evaluateResult(iterators, resultName, (OCLExpression<EClassifier>) condition, bodyVal, isOne);
 
                 // set the result variable in the environment with the result value
                 myEvalEnv.replace(resultName, resultVal);
@@ -96,7 +97,10 @@ public abstract class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT,
 
                     // remove the iterators from the environment
                     removeIterators(iterators);
-
+                    
+                    // remove the iterators from the environment
+                    removeTarget(target);
+                    
                     // return the result value
                     return myEvalEnv.getValueOf(resultName);
                 }
@@ -171,8 +175,15 @@ public abstract class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT,
         }
     }
 
+    protected void removeTarget(Variable<EClassifier, EParameter> target) {
+        if (target != null) {
+            String varName = target.getName();
+            myEvalEnv.remove(varName);
+        }
+    }
+
     // override this method for different iterator behaviors
-    protected abstract Object evaluateResult(List<Variable<C, PM>> iterators, String resultName, Object conditionVal, Object bodyVal);
+    protected abstract Object evaluateResult(List<Variable<C, PM>> iterators, String resultName, OCLExpression<EClassifier> conditionExp, Object bodyVal, boolean isOne);
 
     protected OCLStandardLibrary<C> getOCLStandardLibrary() {
         return myEvalVisitor.getEnvironment().getOCLStandardLibrary();
@@ -180,5 +191,37 @@ public abstract class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT,
 
     protected Object getOclInvalid() {
         return getOCLStandardLibrary().getOclInvalid();
+    }
+    
+    protected Boolean isConditionOk(OCLExpression<EClassifier> conditionExp, Object bodyVal) {
+        // evaluate the condition of the expression in this environment
+        Object conditionVal = conditionExp.accept(myEvalVisitor);
+        if (conditionVal instanceof Boolean) {
+            return (Boolean) conditionVal;
+        } else if (conditionVal instanceof EClassifier){
+            @SuppressWarnings("unchecked")
+            QvtOperationalEvaluationEnv env = (QvtOperationalEvaluationEnv) getEvalEnvironment();
+            return QvtOperationalUtil.oclIsKindOf(bodyVal, (EClassifier) conditionVal, env);
+        } else {
+            setDone(true);
+            return null;
+        }
+    }
+    
+    protected Object returnCheckedEvaluationResult(Object addedElement, boolean isOne, String resultName) {
+        // If the body result is invalid then the entire expression's value
+        // is invalid, because OCL does not permit OclInvalid in a collection
+        if (addedElement == getOclInvalid()) {
+            setDone(true);
+            return getOclInvalid();
+        }
+        if (isOne) {
+            setDone(true);
+            return addedElement;
+        }
+        @SuppressWarnings("unchecked")
+        Collection<Object> resultingCollection = (Collection<Object>) getEvalEnvironment().getValueOf(resultName);
+        resultingCollection.add(addedElement);
+        return resultingCollection;
     }
 }

@@ -11,13 +11,11 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.internal.ast.evaluator.iterators;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEvaluationEnv;
-import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.ocl.EvaluationVisitor;
+import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.Variable;
 
 /**
@@ -37,32 +35,21 @@ extends QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
     }
 
     @Override
-    protected Object evaluateResult(List<Variable<C, PM>> iterators, String resultName, Object condition, Object body) {
-        @SuppressWarnings("unchecked")
-        QvtOperationalEvaluationEnv env = (QvtOperationalEvaluationEnv) getEvalEnvironment();
-        
+    protected Object evaluateResult(List<Variable<C, PM>> iterators, String resultName, OCLExpression<EClassifier> condition, Object body, boolean isOne) {
         // should be exactly one iterator
         String iterName = iterators.get(0).getName();
-        Object currObj = env.getValueOf(iterName);
+        Object currObj = getEvalEnvironment().getValueOf(iterName);
         
-        @SuppressWarnings("unchecked")
-        Collection<Object> resultVal = (Collection<Object>) env.getValueOf(resultName);
-        
-        if (currObj != null) {
-            if (condition instanceof Boolean) {
-                if ((Boolean) condition) {
-                    resultVal.add(currObj);
-                }
-            } else if (condition instanceof EClassifier){
-                if (QvtOperationalUtil.oclIsKindOf(currObj, (EClassifier) condition, env)) {
-                    resultVal.add(currObj);
-                }
-            } else {
-                setDone(true);
-                return getOclInvalid();
-            }
+        if (currObj == null) {
+            return getEvalEnvironment().getValueOf(resultName);
         }
-       
-        return resultVal;
+        Boolean conditionOk = isConditionOk(condition, currObj);
+        if (conditionOk == null) {
+            return getOclInvalid();
+        }
+        if (!conditionOk) {
+            return getEvalEnvironment().getValueOf(resultName);
+        }
+        return returnCheckedEvaluationResult(currObj, isOne, resultName);
     }
 }

@@ -11,13 +11,11 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.internal.ast.evaluator.iterators;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEvaluationEnv;
-import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.ocl.EvaluationVisitor;
+import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.Variable;
 
 /**
@@ -37,36 +35,17 @@ extends QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
     }
 
     @Override
-    protected Object evaluateResult(List<Variable<C, PM>> iterators, String resultName, Object condition, Object bodyVal) {
-        @SuppressWarnings("unchecked")
-        QvtOperationalEvaluationEnv env = (QvtOperationalEvaluationEnv) getEvalEnvironment();
-
-        @SuppressWarnings("unchecked")
-        Collection<Object> currVal = (Collection<Object>) env.getValueOf(resultName);
-
-        if (condition instanceof Boolean) {
-            if (!(Boolean) condition) {
-                return currVal;
-            }
-        } else if (condition instanceof EClassifier){
-            if (!QvtOperationalUtil.oclIsKindOf(bodyVal, (EClassifier) condition, env)) {
-                return currVal;
-            }
-        } else {
-            setDone(true);
+    protected Object evaluateResult(List<Variable<C, PM>> iterators, String resultName, OCLExpression<EClassifier> condition, Object bodyVal, boolean isOne) {
+        if (bodyVal == null) {
+            return getEvalEnvironment().getValueOf(resultName);
+        }
+        Boolean conditionOk = isConditionOk(condition, bodyVal);
+        if (conditionOk == null) {
             return getOclInvalid();
         }
-        
-        // If the body result is invalid then the entire expression's value
-        // is invalid, because OCL does not permit OclInvalid in a collection
-        if (bodyVal == getOclInvalid()) {
-            setDone(true);
-            return bodyVal;
+        if (!conditionOk) {
+            return getEvalEnvironment().getValueOf(resultName);
         }
-
-        if (bodyVal != null) { // nulls are not added to the collection
-            currVal.add(bodyVal);
-        }
-        return currVal;
+        return returnCheckedEvaluationResult(bodyVal, isOne, resultName);
     }
 }

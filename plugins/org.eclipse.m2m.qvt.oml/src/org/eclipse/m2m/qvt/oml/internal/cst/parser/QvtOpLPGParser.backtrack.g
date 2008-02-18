@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.38 2008/02/18 12:13:53 radvorak Exp $ 
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.39 2008/02/18 15:33:57 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -368,7 +368,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.38 2008/02/18 12:13:53 radvorak Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.39 2008/02/18 15:33:57 aigdalov Exp $
  */
 	./
 $End
@@ -3084,9 +3084,10 @@ $Rules
 
 	callExpCS ::= '->' featureCallExpCS exclamationOpt '[' declarator_vsepOpt oclExpressionCS ']'
 		/.$BeginJava
+		        String opCode = isTokenOfType(getIToken($getToken(3)), QvtOpLPGParsersym.TK_EXCLAMATION_MARK) ?  "collectselectOne" : "collectselect"; //$NON-NLS-1$ //$NON-NLS-2$ 
 			SimpleNameCS simpleNameCS = createSimpleNameCS(
 					SimpleTypeEnum.KEYWORD_LITERAL,
-					"collectselect" //$NON-NLS-1$
+					opCode
 					);
 			setOffsets(simpleNameCS, getIToken($getToken(4)), getIToken($getToken(7)));
 			VariableCS variableCS = (VariableCS) $getSym(5);
@@ -3105,9 +3106,10 @@ $Rules
 	-- xselect shorthand
 	oclExpCS ::= oclExpCS exclamationOpt '[' oclExpressionCS ']'
 		/.$BeginJava
+				        String opCode = isTokenOfType(getIToken($getToken(2)), QvtOpLPGParsersym.TK_EXCLAMATION_MARK) ?  "selectOne" : "xselect"; //$NON-NLS-1$ //$NON-NLS-2$ 
 					SimpleNameCS simpleNameCS = createSimpleNameCS(
 								SimpleTypeEnum.KEYWORD_LITERAL,
-								"xselect" //$NON-NLS-1$
+								opCode
 							);
 					setOffsets(simpleNameCS, getIToken($getToken(3)), getIToken($getToken(5)));
 					CallExpCS result = createImperativeIterateExpCS(
@@ -3131,9 +3133,10 @@ $Rules
 					setOffsets(callExpCS, (CSTNode)$getSym(1), callExpCS);
 
 
+				        String opCode = isTokenOfType(getIToken($getToken(4)), QvtOpLPGParsersym.TK_EXCLAMATION_MARK) ?  "selectOne" : "xselect"; //$NON-NLS-1$ //$NON-NLS-2$ 
 					SimpleNameCS simpleNameCS = createSimpleNameCS(
 								SimpleTypeEnum.KEYWORD_LITERAL,
-								"xselect" //$NON-NLS-1$
+								opCode
 							);
 					setOffsets(simpleNameCS, getIToken($getToken(5)), getIToken($getToken(7)));
 					CallExpCS result = createImperativeIterateExpCS(

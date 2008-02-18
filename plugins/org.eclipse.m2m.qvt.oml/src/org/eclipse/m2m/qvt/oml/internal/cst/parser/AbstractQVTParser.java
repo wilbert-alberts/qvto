@@ -683,5 +683,8 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		}
 		return offset;
 	}
-
+	
+	protected boolean isTokenOfType(IToken token, int kind) {
+	    return (token != null) && (token.getKind() == kind);
+	}
 }

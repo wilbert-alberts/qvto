@@ -168,9 +168,11 @@ import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.parser.AbstractOCLAnalyzer;
 import org.eclipse.ocl.parser.OCLLexer;
 import org.eclipse.ocl.parser.OCLParser;
+import org.eclipse.ocl.types.BagType;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.types.OrderedSetType;
 import org.eclipse.ocl.types.SequenceType;
+import org.eclipse.ocl.types.SetType;
 import org.eclipse.ocl.types.TypeType;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.ASTNode;
@@ -2515,17 +2517,22 @@ public class QvtOperationalVisitorCS
         return resolveExp;
     }
     
-    private ImperativeIterateExp visitImperativeIterateExp(ImperativeIterateExpCS imperativeIterateExpCS, QvtOperationalEnv env) {
-        ImperativeIterateExp astNode;
-        
+    private OCLExpression<EClassifier> visitImperativeIterateExp(ImperativeIterateExpCS imperativeIterateExpCS, QvtOperationalEnv env) {
         OCLExpression<EClassifier> source =
             getCollectionSourceExpression(imperativeIterateExpCS.getSource(), env);
+        if (!(source.getType() instanceof CollectionType)) {
+            return createDummyInvalidLiteralExp();
+        }
         String name = imperativeIterateExpCS.getSimpleNameCS().getValue();
 
         Variable<EClassifier, EParameter> vdcl = null;
         Variable<EClassifier, EParameter> vdcl1 = null;
         List<Variable<EClassifier, EParameter>> iterators = null;
     
+        ImperativeIterateExp astNode;
+        @SuppressWarnings("unchecked")
+        CollectionType<EClassifier, EOperation> sourceCollectionType = (CollectionType<EClassifier, EOperation>) source.getType();
+        
         if (imperativeIterateExpCS.getVariable1() != null) {
             vdcl = variableDeclarationCS(imperativeIterateExpCS.getVariable1(), env, true);
                 
@@ -2534,13 +2541,7 @@ public class QvtOperationalVisitorCS
             astNode.setName(name);
             iterators = astNode.getIterator();  
             if (vdcl.getType() == null) {
-                EClassifier sourceType = source.getType();
-                if (sourceType instanceof CollectionType) {
-                    @SuppressWarnings("unchecked") //$NON-NLS-1$
-                    CollectionType<EClassifier, EOperation> ct = (CollectionType<EClassifier, EOperation>) sourceType;
-                    
-                    vdcl.setType(ct.getElementType());
-                }
+                vdcl.setType(sourceCollectionType.getElementType());
             }
             iterators.add(vdcl);
             
@@ -2548,13 +2549,7 @@ public class QvtOperationalVisitorCS
                 vdcl1 = variableDeclarationCS(imperativeIterateExpCS.getVariable2(), env, true);
                 
                 if (vdcl1.getType() == null) {
-                    EClassifier sourceType = source.getType();
-                    if (sourceType instanceof CollectionType) {
-                        @SuppressWarnings("unchecked") //$NON-NLS-1$
-                        CollectionType<EClassifier, EOperation> ct = (CollectionType<EClassifier, EOperation>) sourceType;
-                        
-                        vdcl1.setType(ct.getElementType());
-                    }
+                    vdcl1.setType(sourceCollectionType.getElementType());
                 }
                 iterators.add(vdcl1);
             }
@@ -2564,96 +2559,76 @@ public class QvtOperationalVisitorCS
             astNode.setName(name);
             iterators = astNode.getIterator();  
             // Synthesize the iterator expression.
-            @SuppressWarnings("unchecked") //$NON-NLS-1$
-            CollectionType<EClassifier, EOperation> ct = (CollectionType<EClassifier, EOperation>) source.getType();
             vdcl = genVariableDeclaration(imperativeIterateExpCS, "visitImperativeIterateExp", env, null, //$NON-NLS-1$
-                ct.getElementType(),
-                null, false, true, false);
+                sourceCollectionType.getElementType(), null, false, true, false);
             iterators.add(vdcl);
         }
         
         TRACE("visitImperativeIterateExp: ", name);//$NON-NLS-1$
         
-        if (name.equals("xselect")) {//$NON-NLS-1$
-            OCLExpressionCS conditionCS = imperativeIterateExpCS.getCondition();
-            OCLExpression<EClassifier> conditionExp = oclExpressionCS(conditionCS, env);
-            if (conditionExp instanceof TypeExp<?>) {
-                TypeExp<EClassifier> typedCondition = (TypeExp<EClassifier>) conditionExp;
-                if (source.getType() instanceof CollectionType) {
-                    @SuppressWarnings("unchecked") //$NON-NLS-1$
-                    CollectionType<EClassifier, EOperation> sourceCollectionType = (CollectionType<EClassifier, EOperation>) source.getType();
-                    EClassifier rawTypeType = TypeUtil.resolveType(env, typedCondition.getType());
-                    if (rawTypeType instanceof TypeType) {
-                        @SuppressWarnings("unchecked") //$NON-NLS-1$
-                        TypeType<EClassifier, EOperation> typeType = (TypeType<EClassifier, EOperation>) rawTypeType;
-                        EClassifier resultElementType = typeType.getReferredType();
-                        EClassifier resultCollectionType = getCollectionType(env, sourceCollectionType.getKind(), resultElementType);
-                        astNode.setType(resultCollectionType);
-                    }
-                }
-            } else if (conditionExp.getType() == getBoolean()) {
-                astNode.setType(source.getType());
-            } else {
-                env.reportError(ValidationMessages.QvtOperationalVisitorCS_WrongImperativeIteratorConditionType, conditionCS);
-            }
-            astNode.setCondition(conditionExp);
-        } else if (name.equals("collectselect")) { //$NON-NLS-1$
+        EClassifier resultElementType = null;
+        OCLExpression<EClassifier> conditionExp = null;
+        if (name.equals("xselect") || name.equals("selectOne")) {//$NON-NLS-1$ //$NON-NLS-2$
+            resultElementType = sourceCollectionType.getElementType();
+        } else if (name.equals("collectselect") || name.equals("collectselectOne")
+                || name.equals("xcollect") || name.equals("collectOne")) { //$NON-NLS-1$ //$NON-NLS-2$
             if (imperativeIterateExpCS.getBody() != null) {
                 // This is the case with collectselect shorthand
                 // list->prop[res| res.startswith("_")];
                 // equivalent to
                 // list->collectselect(i;res= i.prop | not res.startswith("_"))
                 OCLExpression<EClassifier> bodyExp = oclExpressionCS(imperativeIterateExpCS.getBody(), env);
-                if (!isInnerMostIteratorFeature(vdcl, bodyExp)) {
+                astNode.setBody(bodyExp);
+                if (!isInnermostIteratorRelated(vdcl, bodyExp)) {
                     env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_FeatureNotFoundForType,
                             new Object[] {QvtOperationalTypesUtil.getTypeFullName(vdcl.getType())}),
                             imperativeIterateExpCS.getBody());
                 }
-                setXCollectLikeReturnType(astNode, bodyExp.getType(), source, env);
+                resultElementType = bodyExp.getType();
                 Variable<EClassifier, EParameter> targetVdcl;
                 if (imperativeIterateExpCS.getTarget() == null) {
                     targetVdcl = genVariableDeclaration(imperativeIterateExpCS, "visitImperativeIterateExp", env, null, //$NON-NLS-1$
-                            bodyExp.getType(), bodyExp, false, true, false);
+                            bodyExp.getType(), null, false, true, false);
                 } else {
                     targetVdcl = variableDeclarationCS(imperativeIterateExpCS.getTarget(), env, true);
                     targetVdcl.setType(bodyExp.getType());
-                    targetVdcl.setInitExpression(bodyExp);
                 }
                 astNode.setTarget(targetVdcl);
-                OCLExpressionCS conditionCS = imperativeIterateExpCS.getCondition();
-                OCLExpression<EClassifier> conditionExp = oclExpressionCS(conditionCS, env);
-                astNode.setBody(bodyExp);
-                astNode.setCondition(conditionExp);
-                env.deleteElement(targetVdcl.getName());
-            }
-        } else if (name.equals("xcollect")) { //$NON-NLS-1$
-            if (imperativeIterateExpCS.getBody() != null) {
-                // This is the case with collectselect shorthand
-                // list->prop[res| res.startswith("_")];
-                // equivalent to
-                // list->collectselect(i;res= i.prop | not res.startswith("_"))
-                OCLExpression<EClassifier> bodyExp = oclExpressionCS(imperativeIterateExpCS.getBody(), env);
-                setXCollectLikeReturnType(astNode, bodyExp.getType(), source, env);
-                Variable<EClassifier, EParameter> targetVdcl;
-                if (imperativeIterateExpCS.getTarget() == null) {
-                    targetVdcl = genVariableDeclaration(imperativeIterateExpCS, "visitImperativeIterateExp", env, null, //$NON-NLS-1$
-                            bodyExp.getType(), bodyExp, false, true, false);
-                } else {
-                    targetVdcl = variableDeclarationCS(imperativeIterateExpCS.getTarget(), env, true);
-                    targetVdcl.setType(bodyExp.getType());
-                    targetVdcl.setInitExpression(bodyExp);
-                }
-                astNode.setTarget(targetVdcl);
-                OCLExpressionCS conditionCS = imperativeIterateExpCS.getCondition();
-                if (conditionCS != null) {
-	                OCLExpression<EClassifier> conditionExp = oclExpressionCS(conditionCS, env);
-	                astNode.setCondition(conditionExp);
-                }
-                astNode.setBody(bodyExp);
-                env.deleteElement(targetVdcl.getName());
             }
         }
-                
+        if (imperativeIterateExpCS.getCondition() != null) {        
+            conditionExp = oclExpressionCS(imperativeIterateExpCS.getCondition(), env);
+            astNode.setCondition(conditionExp);
+            if (conditionExp instanceof TypeExp<?>) {
+                TypeExp<EClassifier> typedCondition = (TypeExp<EClassifier>) conditionExp;
+                EClassifier rawTypeType = TypeUtil.resolveType(env, typedCondition.getType());
+                if (rawTypeType instanceof TypeType) {
+                    @SuppressWarnings("unchecked")
+                    TypeType<EClassifier, EOperation> typeType = (TypeType<EClassifier, EOperation>) rawTypeType;
+                    resultElementType = typeType.getReferredType();
+                }
+            } else if ((conditionExp != null) && (conditionExp.getType() != getBoolean())) {
+                env.reportError(ValidationMessages.QvtOperationalVisitorCS_WrongImperativeIteratorConditionType, 
+                        conditionExp.getStartPosition(), conditionExp.getEndPosition());
+            }
+        }
+        
+        if (astNode.getTarget() != null) {
+            env.deleteElement(astNode.getTarget().getName());
+        }
+
+        if (name.equals("selectOne") || name.equals("collectOne") || name.equals("collectselectOne")) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            astNode.setType(resultElementType);        
+        } else if (name.equals("xselect")) { //$NON-NLS-1$
+            EClassifier resultCollectionType = getCollectionType(env, sourceCollectionType.getKind(), resultElementType);
+            astNode.setType(resultCollectionType);        
+        } else { // xcollect and collectselect
+            EClassifier resultCollectionType = ((sourceCollectionType instanceof SetType) || (sourceCollectionType instanceof BagType)) ?
+                    getCollectionType(env, CollectionKind.BAG_LITERAL, resultElementType)
+                    : getCollectionType(env, CollectionKind.SEQUENCE_LITERAL, resultElementType);
+            astNode.setType(resultCollectionType);        
+        }
+
         astNode.setSource(source);
         
         env.deleteElement(vdcl.getName());
@@ -2664,25 +2639,18 @@ public class QvtOperationalVisitorCS
         return astNode;
     }
     
-    private boolean isInnerMostIteratorFeature(Variable<EClassifier, EParameter> vdcl, OCLExpression<EClassifier> bodyExp) {
+    private boolean isInnermostIteratorRelated(Variable<EClassifier, EParameter> vdcl, OCLExpression<EClassifier> bodyExp) {
         if (bodyExp instanceof CallExp) {
             CallExp bodyCallExp = (CallExp) bodyExp;
             if (bodyCallExp.getSource() instanceof VariableExp) {
                 VariableExp<EClassifier, EParameter> sourceExp = (VariableExp<EClassifier, EParameter>) bodyCallExp.getSource();
                 return sourceExp.getReferredVariable() == vdcl;
             }
+            return false;
         }
-        return false;
+        return true; // might be switch exp, for example
     }
 
-    private void setXCollectLikeReturnType(ImperativeIterateExp astNode, EClassifier elementType, OCLExpression<EClassifier> source, QvtOperationalEnv env) {
-        if (source.getType() instanceof SequenceType || source.getType() instanceof OrderedSetType) {
-            astNode.setType(TypeUtil.resolveSequenceType(env, elementType));
-        } else {
-            astNode.setType(TypeUtil.resolveBagType(env, elementType));
-        }
-    }
-    
 	private MappingCallExp createMappingCallExp(MappingCallExpCS expressionCS, OCLExpression<EClassifier> result) {
 		if (result instanceof OperationCallExp) {
 			OperationCallExp<EClassifier, EOperation> operationCallExp = (OperationCallExp<EClassifier, EOperation>) result;
