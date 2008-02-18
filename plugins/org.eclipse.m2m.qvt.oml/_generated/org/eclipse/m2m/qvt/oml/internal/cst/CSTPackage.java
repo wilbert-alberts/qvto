@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackage.java,v 1.10 2008/02/15 11:56:28 radvorak Exp $
+ * $Id: CSTPackage.java,v 1.11 2008/02/18 12:13:54 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst;
 
@@ -909,13 +909,22 @@ public interface CSTPackage extends EPackage {
     int MAPPING_RULE_CS__MAPPING_END_CS = MAPPING_METHOD_CS_FEATURE_COUNT + 3;
 
     /**
+	 * The feature id for the '<em><b>Mapping Extension</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_RULE_CS__MAPPING_EXTENSION = MAPPING_METHOD_CS_FEATURE_COUNT + 4;
+
+				/**
 	 * The number of structural features of the '<em>Mapping Rule CS</em>' class.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int MAPPING_RULE_CS_FEATURE_COUNT = MAPPING_METHOD_CS_FEATURE_COUNT + 4;
+    int MAPPING_RULE_CS_FEATURE_COUNT = MAPPING_METHOD_CS_FEATURE_COUNT + 5;
 
     /**
 	 * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.impl.MappingQueryCSImpl <em>Mapping Query CS</em>}' class.
@@ -3119,6 +3128,107 @@ public interface CSTPackage extends EPackage {
     int IMPERATIVE_ITERATE_EXP_CS_FEATURE_COUNT = IMPERATIVE_LOOP_EXP_CS_FEATURE_COUNT + 1;
 
                 /**
+	 * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.impl.ReturnExpCSImpl <em>Return Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.ReturnExpCSImpl
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.CSTPackageImpl#getReturnExpCS()
+	 * @generated
+	 */
+	int RETURN_EXP_CS = 45;
+
+																/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RETURN_EXP_CS__START_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_OFFSET;
+
+																/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RETURN_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_OFFSET;
+
+																/**
+	 * The feature id for the '<em><b>Value</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RETURN_EXP_CS__VALUE = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 0;
+
+																/**
+	 * The number of structural features of the '<em>Return Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RETURN_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 1;
+
+																/**
+	 * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.impl.MappingExtensionCSImpl <em>Mapping Extension CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.MappingExtensionCSImpl
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.CSTPackageImpl#getMappingExtensionCS()
+	 * @generated
+	 */
+	int MAPPING_EXTENSION_CS = 46;
+
+																/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_EXTENSION_CS__START_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_OFFSET;
+
+																/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_EXTENSION_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
+
+																/**
+	 * The feature id for the '<em><b>Kind</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_EXTENSION_CS__KIND = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 0;
+
+																/**
+	 * The feature id for the '<em><b>Mapping Identifiers</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 1;
+
+																/**
+	 * The number of structural features of the '<em>Mapping Extension CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_EXTENSION_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 2;
+
+																/**
 	 * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum <em>Direction Kind Enum</em>}' enum.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3126,7 +3236,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.CSTPackageImpl#getDirectionKindEnum()
 	 * @generated
 	 */
-    int DIRECTION_KIND_ENUM = 45;
+    int DIRECTION_KIND_ENUM = 47;
 
 
     /**
@@ -3137,7 +3247,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.CSTPackageImpl#getModuleKindEnum()
 	 * @generated
 	 */
-	int MODULE_KIND_ENUM = 46;
+	int MODULE_KIND_ENUM = 48;
 
 				/**
 	 * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.ImportKindEnum <em>Import Kind Enum</em>}' enum.
@@ -3147,7 +3257,18 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.CSTPackageImpl#getImportKindEnum()
 	 * @generated
 	 */
-	int IMPORT_KIND_ENUM = 47;
+	int IMPORT_KIND_ENUM = 49;
+
+
+				/**
+	 * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionKindCS <em>Mapping Extension Kind CS</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionKindCS
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.CSTPackageImpl#getMappingExtensionKindCS()
+	 * @generated
+	 */
+	int MAPPING_EXTENSION_KIND_CS = 50;
 
 
 				/**
@@ -3600,6 +3721,17 @@ public interface CSTPackage extends EPackage {
     EReference getMappingRuleCS_MappingEndCS();
 
     /**
+	 * Returns the meta object for the reference list '{@link org.eclipse.m2m.qvt.oml.internal.cst.MappingRuleCS#getMappingExtension <em>Mapping Extension</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Mapping Extension</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.MappingRuleCS#getMappingExtension()
+	 * @see #getMappingRuleCS()
+	 * @generated
+	 */
+	EReference getMappingRuleCS_MappingExtension();
+
+				/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.internal.cst.MappingQueryCS <em>Mapping Query CS</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4646,6 +4778,59 @@ public interface CSTPackage extends EPackage {
     EReference getImperativeIterateExpCS_Target();
 
                 /**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.internal.cst.ReturnExpCS <em>Return Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Return Exp CS</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.ReturnExpCS
+	 * @generated
+	 */
+	EClass getReturnExpCS();
+
+																/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.qvt.oml.internal.cst.ReturnExpCS#getValue <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Value</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.ReturnExpCS#getValue()
+	 * @see #getReturnExpCS()
+	 * @generated
+	 */
+	EReference getReturnExpCS_Value();
+
+																/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionCS <em>Mapping Extension CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Mapping Extension CS</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionCS
+	 * @generated
+	 */
+	EClass getMappingExtensionCS();
+
+																/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionCS#getKind <em>Kind</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Kind</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionCS#getKind()
+	 * @see #getMappingExtensionCS()
+	 * @generated
+	 */
+	EAttribute getMappingExtensionCS_Kind();
+
+																/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionCS#getMappingIdentifiers <em>Mapping Identifiers</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Mapping Identifiers</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionCS#getMappingIdentifiers()
+	 * @see #getMappingExtensionCS()
+	 * @generated
+	 */
+	EReference getMappingExtensionCS_MappingIdentifiers();
+
+																/**
 	 * Returns the meta object for enum '{@link org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum <em>Direction Kind Enum</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4674,6 +4859,16 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 */
 	EEnum getImportKindEnum();
+
+				/**
+	 * Returns the meta object for enum '{@link org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionKindCS <em>Mapping Extension Kind CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Mapping Extension Kind CS</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionKindCS
+	 * @generated
+	 */
+	EEnum getMappingExtensionKindCS();
 
 				/**
 	 * Returns the factory that creates the instances of the model.
@@ -5060,6 +5255,14 @@ public interface CSTPackage extends EPackage {
         EReference MAPPING_RULE_CS__MAPPING_END_CS = eINSTANCE.getMappingRuleCS_MappingEndCS();
 
         /**
+		 * The meta object literal for the '<em><b>Mapping Extension</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MAPPING_RULE_CS__MAPPING_EXTENSION = eINSTANCE.getMappingRuleCS_MappingExtension();
+
+								/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.impl.MappingQueryCSImpl <em>Mapping Query CS</em>}' class.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -5908,6 +6111,50 @@ public interface CSTPackage extends EPackage {
         EReference IMPERATIVE_ITERATE_EXP_CS__TARGET = eINSTANCE.getImperativeIterateExpCS_Target();
 
                                 /**
+		 * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.impl.ReturnExpCSImpl <em>Return Exp CS</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.ReturnExpCSImpl
+		 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.CSTPackageImpl#getReturnExpCS()
+		 * @generated
+		 */
+		EClass RETURN_EXP_CS = eINSTANCE.getReturnExpCS();
+
+																																/**
+		 * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RETURN_EXP_CS__VALUE = eINSTANCE.getReturnExpCS_Value();
+
+																																/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.impl.MappingExtensionCSImpl <em>Mapping Extension CS</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.MappingExtensionCSImpl
+		 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.CSTPackageImpl#getMappingExtensionCS()
+		 * @generated
+		 */
+		EClass MAPPING_EXTENSION_CS = eINSTANCE.getMappingExtensionCS();
+
+																																/**
+		 * The meta object literal for the '<em><b>Kind</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MAPPING_EXTENSION_CS__KIND = eINSTANCE.getMappingExtensionCS_Kind();
+
+																																/**
+		 * The meta object literal for the '<em><b>Mapping Identifiers</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS = eINSTANCE.getMappingExtensionCS_MappingIdentifiers();
+
+																																/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum <em>Direction Kind Enum</em>}' enum.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -5936,6 +6183,16 @@ public interface CSTPackage extends EPackage {
 		 * @generated
 		 */
 		EEnum IMPORT_KIND_ENUM = eINSTANCE.getImportKindEnum();
+
+								/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionKindCS <em>Mapping Extension Kind CS</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionKindCS
+		 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.CSTPackageImpl#getMappingExtensionKindCS()
+		 * @generated
+		 */
+		EEnum MAPPING_EXTENSION_KIND_CS = eINSTANCE.getMappingExtensionKindCS();
 
     }
 

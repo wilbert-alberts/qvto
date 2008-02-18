@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactory.java,v 1.8 2008/02/15 11:56:28 radvorak Exp $
+ * $Id: CSTFactory.java,v 1.9 2008/02/18 12:13:54 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst;
 
@@ -393,6 +393,24 @@ public interface CSTFactory extends EFactory {
     ImperativeIterateExpCS createImperativeIterateExpCS();
 
                 /**
+	 * Returns a new object of class '<em>Return Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Return Exp CS</em>'.
+	 * @generated
+	 */
+	ReturnExpCS createReturnExpCS();
+
+																/**
+	 * Returns a new object of class '<em>Mapping Extension CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Mapping Extension CS</em>'.
+	 * @generated
+	 */
+	MappingExtensionCS createMappingExtensionCS();
+
+																/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

@@ -28,6 +28,9 @@ import org.eclipse.ocl.utilities.Visitor;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.m2m.qvt.oml.expressions.MappingOperation#getWhen <em>When</em>}</li>
+ *   <li>{@link org.eclipse.m2m.qvt.oml.expressions.MappingOperation#getInherited <em>Inherited</em>}</li>
+ *   <li>{@link org.eclipse.m2m.qvt.oml.expressions.MappingOperation#getMerged <em>Merged</em>}</li>
+ *   <li>{@link org.eclipse.m2m.qvt.oml.expressions.MappingOperation#getDisjunct <em>Disjunct</em>}</li>
  * </ul>
  * </p>
  *
@@ -58,6 +61,54 @@ public interface MappingOperation extends ImperativeOperation {
 	 * @generated
 	 */
 	EList<OCLExpression<EClassifier>> getWhen();
+
+	/**
+	 * Returns the value of the '<em><b>Inherited</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.m2m.qvt.oml.expressions.MappingOperation}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Inherited</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Inherited</em>' reference list.
+	 * @see org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage#getMappingOperation_Inherited()
+	 * @model
+	 * @generated
+	 */
+	EList<MappingOperation> getInherited();
+
+				/**
+	 * Returns the value of the '<em><b>Merged</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.m2m.qvt.oml.expressions.MappingOperation}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Merged</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Merged</em>' reference list.
+	 * @see org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage#getMappingOperation_Merged()
+	 * @model
+	 * @generated
+	 */
+	EList<MappingOperation> getMerged();
+
+				/**
+	 * Returns the value of the '<em><b>Disjunct</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.m2m.qvt.oml.expressions.MappingOperation}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Disjunct</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Disjunct</em>' reference list.
+	 * @see org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage#getMappingOperation_Disjunct()
+	 * @model
+	 * @generated
+	 */
+	EList<MappingOperation> getDisjunct();
 
 	/**
 	 * <!-- begin-user-doc -->

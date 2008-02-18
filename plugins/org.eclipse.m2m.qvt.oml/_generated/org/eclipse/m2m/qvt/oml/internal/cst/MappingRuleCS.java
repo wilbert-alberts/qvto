@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.internal.cst;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.ocl.cst.OCLExpressionCS;
 
 /**
@@ -25,6 +26,7 @@ import org.eclipse.ocl.cst.OCLExpressionCS;
  *   <li>{@link org.eclipse.m2m.qvt.oml.internal.cst.MappingRuleCS#getMappingInitCS <em>Mapping Init CS</em>}</li>
  *   <li>{@link org.eclipse.m2m.qvt.oml.internal.cst.MappingRuleCS#getMappingBodyCS <em>Mapping Body CS</em>}</li>
  *   <li>{@link org.eclipse.m2m.qvt.oml.internal.cst.MappingRuleCS#getMappingEndCS <em>Mapping End CS</em>}</li>
+ *   <li>{@link org.eclipse.m2m.qvt.oml.internal.cst.MappingRuleCS#getMappingExtension <em>Mapping Extension</em>}</li>
  * </ul>
  * </p>
  *
@@ -143,5 +145,21 @@ public interface MappingRuleCS extends MappingMethodCS {
 	 * @generated
 	 */
 	void setMappingEndCS(MappingEndCS value);
+
+	/**
+	 * Returns the value of the '<em><b>Mapping Extension</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionCS}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Mapping Extension</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Mapping Extension</em>' reference list.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getMappingRuleCS_MappingExtension()
+	 * @model
+	 * @generated
+	 */
+	EList<MappingExtensionCS> getMappingExtension();
 
 } // MappingRuleCS

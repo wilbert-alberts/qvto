@@ -59,6 +59,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.PatternPropertyExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.RenameCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ResolveInExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ReturnExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.StatementCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.SwitchAltExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.SwitchExpCS;
@@ -663,6 +664,12 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
         result.setBody(body);
         result.setCondition(condition);
         return result;
+    }
+    
+    protected ReturnExpCS createReturnExpCS(OCLExpressionCS value) {
+    	ReturnExpCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createReturnExpCS();
+    	result.setValue(value);
+    	return result;
     }
 
 	protected final int getEndOffset(IToken token, EList<?>... listOpt) {

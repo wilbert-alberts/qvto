@@ -261,4 +261,12 @@ public interface ExtendedVisitor<T, S, COA, SSA, CT> extends Visitor<T, EClassif
 	 */
     T visitImperativeIterateExp(ImperativeIterateExp imperativeIterateExp);
 
+																/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model returnExpRequired="true"
+	 * @generated
+	 */
+	T visitReturnExp(ReturnExp returnExp);
+
 } // ExtendedVisitor

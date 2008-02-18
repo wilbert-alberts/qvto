@@ -38,6 +38,7 @@ import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.qvt.oml.expressions.PackageRef;
 import org.eclipse.m2m.qvt.oml.expressions.Property;
+import org.eclipse.m2m.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.expressions.VariableInitExp;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.GraphWalker;
@@ -653,4 +654,17 @@ public class QvtOperationalParserUtil {
 	public static String safeGetQualifiedName(QvtOperationalEnv env, EClassifier type) {
 		return safeGetQualifiedName(env, type, ""); //$NON-NLS-1$
 	}
+	
+	public static <T> T findParentElement(ReturnExp returnExp, Class<T> type) {
+		T result = null;
+		EObject parent = returnExp.eContainer();
+		while(parent != null) {			
+			if(type.isInstance(parent)) {
+				result = (T) type.cast(parent);
+				break;
+			}
+			parent = parent.eContainer();
+		}
+		return result;
+	}	
 }

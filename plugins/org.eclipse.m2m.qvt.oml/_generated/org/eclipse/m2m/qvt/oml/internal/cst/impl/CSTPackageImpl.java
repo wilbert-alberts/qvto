@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.10 2008/02/15 11:56:26 radvorak Exp $
+ * $Id: CSTPackageImpl.java,v 1.11 2008/02/18 12:13:54 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.impl;
 
@@ -43,6 +43,8 @@ import org.eclipse.m2m.qvt.oml.internal.cst.MappingBodyCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingCallExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingDeclarationCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingEndCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionKindCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingInitCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingMethodCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
@@ -63,6 +65,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.PatternPropertyExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.RenameCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ResolveInExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ReturnExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.StatementCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.SwitchAltExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.SwitchExpCS;
@@ -405,6 +408,20 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
                 /**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass returnExpCSEClass = null;
+
+																/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass mappingExtensionCSEClass = null;
+
+																/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -423,6 +440,13 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * @generated
 	 */
 	private EEnum importKindEnumEEnum = null;
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum mappingExtensionKindCSEEnum = null;
 
 				/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -879,6 +903,15 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	}
 
     /**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getMappingRuleCS_MappingExtension() {
+		return (EReference)mappingRuleCSEClass.getEStructuralFeatures().get(4);
+	}
+
+				/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
@@ -1762,6 +1795,51 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
                 /**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getReturnExpCS() {
+		return returnExpCSEClass;
+	}
+
+																/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getReturnExpCS_Value() {
+		return (EReference)returnExpCSEClass.getEStructuralFeatures().get(0);
+	}
+
+																/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getMappingExtensionCS() {
+		return mappingExtensionCSEClass;
+	}
+
+																/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getMappingExtensionCS_Kind() {
+		return (EAttribute)mappingExtensionCSEClass.getEStructuralFeatures().get(0);
+	}
+
+																/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getMappingExtensionCS_MappingIdentifiers() {
+		return (EReference)mappingExtensionCSEClass.getEStructuralFeatures().get(1);
+	}
+
+																/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -1785,6 +1863,15 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 */
 	public EEnum getImportKindEnum() {
 		return importKindEnumEEnum;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getMappingExtensionKindCS() {
+		return mappingExtensionKindCSEEnum;
 	}
 
 				/**
@@ -1869,6 +1956,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(mappingRuleCSEClass, MAPPING_RULE_CS__MAPPING_INIT_CS);
 		createEReference(mappingRuleCSEClass, MAPPING_RULE_CS__MAPPING_BODY_CS);
 		createEReference(mappingRuleCSEClass, MAPPING_RULE_CS__MAPPING_END_CS);
+		createEReference(mappingRuleCSEClass, MAPPING_RULE_CS__MAPPING_EXTENSION);
 
 		mappingQueryCSEClass = createEClass(MAPPING_QUERY_CS);
 		createEReference(mappingQueryCSEClass, MAPPING_QUERY_CS__EXPRESSIONS);
@@ -2000,10 +2088,18 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		imperativeIterateExpCSEClass = createEClass(IMPERATIVE_ITERATE_EXP_CS);
 		createEReference(imperativeIterateExpCSEClass, IMPERATIVE_ITERATE_EXP_CS__TARGET);
 
+		returnExpCSEClass = createEClass(RETURN_EXP_CS);
+		createEReference(returnExpCSEClass, RETURN_EXP_CS__VALUE);
+
+		mappingExtensionCSEClass = createEClass(MAPPING_EXTENSION_CS);
+		createEAttribute(mappingExtensionCSEClass, MAPPING_EXTENSION_CS__KIND);
+		createEReference(mappingExtensionCSEClass, MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS);
+
 		// Create enums
 		directionKindEnumEEnum = createEEnum(DIRECTION_KIND_ENUM);
 		moduleKindEnumEEnum = createEEnum(MODULE_KIND_ENUM);
 		importKindEnumEEnum = createEEnum(IMPORT_KIND_ENUM);
+		mappingExtensionKindCSEEnum = createEEnum(MAPPING_EXTENSION_KIND_CS);
 	}
 
     /**
@@ -2089,6 +2185,8 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		imperativeLoopExpCSEClass.getESuperTypes().add(theCSTPackage_1.getLoopExpCS());
 		imperativeLoopExpCSEClass.getESuperTypes().add(this.getStatementCS());
 		imperativeIterateExpCSEClass.getESuperTypes().add(this.getImperativeLoopExpCS());
+		returnExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
+		mappingExtensionCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(mappingModuleCSEClass, MappingModuleCS.class, "MappingModuleCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -2145,6 +2243,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEReference(getMappingRuleCS_MappingInitCS(), this.getMappingInitCS(), null, "mappingInitCS", null, 0, 1, MappingRuleCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getMappingRuleCS_MappingBodyCS(), this.getMappingBodyCS(), null, "mappingBodyCS", null, 0, 1, MappingRuleCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getMappingRuleCS_MappingEndCS(), this.getMappingEndCS(), null, "mappingEndCS", null, 0, 1, MappingRuleCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getMappingRuleCS_MappingExtension(), this.getMappingExtensionCS(), null, "mappingExtension", null, 0, -1, MappingRuleCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(mappingQueryCSEClass, MappingQueryCS.class, "MappingQueryCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getMappingQueryCS_Expressions(), theCSTPackage_1.getOCLExpressionCS(), null, "expressions", null, 0, -1, MappingQueryCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -2276,6 +2375,13 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEClass(imperativeIterateExpCSEClass, ImperativeIterateExpCS.class, "ImperativeIterateExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getImperativeIterateExpCS_Target(), theCSTPackage_1.getVariableCS(), null, "target", null, 0, 1, ImperativeIterateExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
+		initEClass(returnExpCSEClass, ReturnExpCS.class, "ReturnExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getReturnExpCS_Value(), theCSTPackage_1.getOCLExpressionCS(), null, "value", null, 0, 1, ReturnExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(mappingExtensionCSEClass, MappingExtensionCS.class, "MappingExtensionCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getMappingExtensionCS_Kind(), this.getMappingExtensionKindCS(), "kind", "disjuncts", 0, 1, MappingExtensionCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEReference(getMappingExtensionCS_MappingIdentifiers(), theTempPackage.getScopedNameCS(), null, "mappingIdentifiers", null, 1, -1, MappingExtensionCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
 		// Initialize enums and add enum literals
 		initEEnum(directionKindEnumEEnum, DirectionKindEnum.class, "DirectionKindEnum"); //$NON-NLS-1$
 		addEEnumLiteral(directionKindEnumEEnum, DirectionKindEnum.IN);
@@ -2289,6 +2395,11 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEEnum(importKindEnumEEnum, ImportKindEnum.class, "ImportKindEnum"); //$NON-NLS-1$
 		addEEnumLiteral(importKindEnumEEnum, ImportKindEnum.EXTENSION);
 		addEEnumLiteral(importKindEnumEEnum, ImportKindEnum.ACCESS);
+
+		initEEnum(mappingExtensionKindCSEEnum, MappingExtensionKindCS.class, "MappingExtensionKindCS"); //$NON-NLS-1$
+		addEEnumLiteral(mappingExtensionKindCSEEnum, MappingExtensionKindCS.DISJUNCTS);
+		addEEnumLiteral(mappingExtensionKindCSEEnum, MappingExtensionKindCS.MERGES);
+		addEEnumLiteral(mappingExtensionKindCSEEnum, MappingExtensionKindCS.INHERITS);
 
 		// Create resource
 		createResource(eNS_URI);

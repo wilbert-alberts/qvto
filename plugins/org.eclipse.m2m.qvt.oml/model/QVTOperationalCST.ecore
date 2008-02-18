@@ -89,6 +89,8 @@
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="mappingEndCS" eType="#//cst/MappingEndCS"
           containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mappingExtension" upperBound="-1"
+          eType="#//cst/MappingExtensionCS"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="MappingQueryCS" eSuperTypes="#//cst/MappingMethodCS">
       <eStructuralFeatures xsi:type="ecore:EReference" name="expressions" upperBound="-1"
@@ -301,6 +303,21 @@
     <eClassifiers xsi:type="ecore:EClass" name="ImperativeIterateExpCS" eSuperTypes="#//cst/ImperativeLoopExpCS">
       <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/VariableCS"
           containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ReturnExpCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MappingExtensionCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="#//cst/MappingExtensionKindCS"
+          defaultValueLiteral="disjuncts"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mappingIdentifiers" lowerBound="1"
+          upperBound="-1" eType="#//cst/temp/ScopedNameCS"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="MappingExtensionKindCS">
+      <eLiterals name="disjuncts" value="1"/>
+      <eLiterals name="merges" value="2"/>
+      <eLiterals name="inherits" value="3"/>
     </eClassifiers>
     <eSubpackages name="temp" nsURI="http://www.eclipse.org/QVT2/1.0.0/Operational/cst/temp"
         nsPrefix="qvtoperational.cst.temp">

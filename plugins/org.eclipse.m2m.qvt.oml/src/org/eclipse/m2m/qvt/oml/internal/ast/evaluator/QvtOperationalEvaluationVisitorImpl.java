@@ -76,6 +76,7 @@ import org.eclipse.m2m.qvt.oml.expressions.Property;
 import org.eclipse.m2m.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveInExp;
+import org.eclipse.m2m.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.qvt.oml.expressions.SeverityKind;
 import org.eclipse.m2m.qvt.oml.expressions.SwitchExp;
 import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
@@ -554,6 +555,27 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         return owner;
     }
 
+    public Object visitReturnExp(ReturnExp returnExp) {
+    	Object value = null;
+    	OCLExpression<EClassifier> valueExp = returnExp.getValue();
+    	if(valueExp != null) {
+    		value = valueExp.accept(getVisitor());    		
+    	}
+    	
+		OperationBody body = QvtOperationalParserUtil.findParentElement(returnExp, OperationBody.class);
+		if(body != null) {
+			EList<OCLExpression<EClassifier>> content = body.getContent(); 
+			if(!content.isEmpty() && content.get(content.size() - 1) == returnExp) {
+				// return is the last expression in the body, simply return the value
+				return value;
+			}
+		}    	
+
+		// TODO - analyze more complex structured execution flow and
+		// avoid the cost of exception throwing 
+		throw new ReturnExpEvent(value, getOperationalEvaluationEnv());
+    }
+    
     public Object visitOperationBody(OperationBody operationBody) {
         Object result = null;
         for (OCLExpression<EClassifier> exp : operationBody.getContent()) {
@@ -1213,6 +1235,9 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         	callResult.myResult = result;
         	callResult.myEvalEnv = nestedEnv;
         }
+        catch (ReturnExpEvent e) {
+        	callResult = e.getResult();
+        }
         catch (StackOverflowError e) {
         	throwQvtException(new QvtStackOverFlowError(e));
         }
@@ -1628,6 +1653,26 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         return getOclInvalid();
 	}
     
+	/**
+	 * TODO - Avoid using this exception return expression to interrupt execution flow for 
+	 * immediate return from an operation.
+	 * Though, if the last statement in a body is return expression, no exception is thrown, we
+	 * should try to avoid this cost to be paid in general
+	 */
+	private static class ReturnExpEvent extends RuntimeException {
+		private static final long serialVersionUID = 2971434369853642555L;		
+		private final OperationCallResult fResult;
+		
+		ReturnExpEvent(Object returnValue, QvtOperationalEvaluationEnv evalEnv) {
+			fResult = new OperationCallResult();
+			fResult.myResult = returnValue;
+			fResult.myEvalEnv = evalEnv;
+		}
+		
+		public OperationCallResult getResult() {
+			return fResult;
+		}
+	}
         
     // allow to redefine "entry" point
     private ImperativeOperation myEntryPoint;

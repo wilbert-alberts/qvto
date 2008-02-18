@@ -512,6 +512,21 @@ public class CSTSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case CSTPackage.RETURN_EXP_CS: {
+				ReturnExpCS returnExpCS = (ReturnExpCS)theEObject;
+				T result = caseReturnExpCS(returnExpCS);
+				if (result == null) result = caseOCLExpressionCS(returnExpCS);
+				if (result == null) result = caseCSTNode(returnExpCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.MAPPING_EXTENSION_CS: {
+				MappingExtensionCS mappingExtensionCS = (MappingExtensionCS)theEObject;
+				T result = caseMappingExtensionCS(mappingExtensionCS);
+				if (result == null) result = caseCSTNode(mappingExtensionCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -1192,6 +1207,36 @@ public class CSTSwitch<T> {
 	}
 
                 /**
+	 * Returns the result of interpreting the object as an instance of '<em>Return Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Return Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseReturnExpCS(ReturnExpCS object) {
+		return null;
+	}
+
+																/**
+	 * Returns the result of interpreting the object as an instance of '<em>Mapping Extension CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Mapping Extension CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseMappingExtensionCS(MappingExtensionCS object) {
+		return null;
+	}
+
+																/**
 	 * Returns the result of interpreting the object as an instance of '<em>Node</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;

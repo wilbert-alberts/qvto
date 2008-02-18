@@ -2348,13 +2348,40 @@ public interface ExpressionsPackage extends EPackage {
 	int MAPPING_OPERATION__WHEN = IMPERATIVE_OPERATION_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Inherited</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_OPERATION__INHERITED = IMPERATIVE_OPERATION_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Merged</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_OPERATION__MERGED = IMPERATIVE_OPERATION_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Disjunct</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_OPERATION__DISJUNCT = IMPERATIVE_OPERATION_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>Mapping Operation</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_OPERATION_FEATURE_COUNT = IMPERATIVE_OPERATION_FEATURE_COUNT + 1;
+	int MAPPING_OPERATION_FEATURE_COUNT = IMPERATIVE_OPERATION_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.expressions.impl.HelperImpl <em>Helper</em>}' class.
@@ -4413,6 +4440,52 @@ public interface ExpressionsPackage extends EPackage {
     int IMPERATIVE_ITERATE_EXP_FEATURE_COUNT = IMPERATIVE_LOOP_EXP_FEATURE_COUNT + 1;
 
                 /**
+	 * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.expressions.impl.ReturnExpImpl <em>Return Exp</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.qvt.oml.expressions.impl.ReturnExpImpl
+	 * @see org.eclipse.m2m.qvt.oml.expressions.impl.ExpressionsPackageImpl#getReturnExp()
+	 * @generated
+	 */
+	int RETURN_EXP = 36;
+
+																/**
+	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RETURN_EXP__START_POSITION = IMPERATIVE_EXPRESSION__START_POSITION;
+
+																/**
+	 * The feature id for the '<em><b>End Position</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RETURN_EXP__END_POSITION = IMPERATIVE_EXPRESSION__END_POSITION;
+
+																/**
+	 * The feature id for the '<em><b>Value</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RETURN_EXP__VALUE = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 0;
+
+																/**
+	 * The number of structural features of the '<em>Return Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RETURN_EXP_FEATURE_COUNT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 1;
+
+																/**
 	 * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.expressions.DirectionKind <em>Direction Kind</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4420,7 +4493,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.qvt.oml.expressions.impl.ExpressionsPackageImpl#getDirectionKind()
 	 * @generated
 	 */
-	int DIRECTION_KIND = 36;
+	int DIRECTION_KIND = 37;
 
 
 	/**
@@ -4431,7 +4504,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.qvt.oml.expressions.impl.ExpressionsPackageImpl#getSeverityKind()
 	 * @generated
 	 */
-	int SEVERITY_KIND = 37;
+	int SEVERITY_KIND = 38;
 
 
 	/**
@@ -4816,6 +4889,39 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getMappingOperation_When();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.m2m.qvt.oml.expressions.MappingOperation#getInherited <em>Inherited</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Inherited</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.expressions.MappingOperation#getInherited()
+	 * @see #getMappingOperation()
+	 * @generated
+	 */
+	EReference getMappingOperation_Inherited();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.m2m.qvt.oml.expressions.MappingOperation#getMerged <em>Merged</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Merged</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.expressions.MappingOperation#getMerged()
+	 * @see #getMappingOperation()
+	 * @generated
+	 */
+	EReference getMappingOperation_Merged();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.m2m.qvt.oml.expressions.MappingOperation#getDisjunct <em>Disjunct</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Disjunct</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.expressions.MappingOperation#getDisjunct()
+	 * @see #getMappingOperation()
+	 * @generated
+	 */
+	EReference getMappingOperation_Disjunct();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.expressions.Helper <em>Helper</em>}'.
@@ -5499,6 +5605,27 @@ public interface ExpressionsPackage extends EPackage {
 	EReference getInstantiationExp_InstantiatedClass();
 
 																/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.expressions.ReturnExp <em>Return Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Return Exp</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.expressions.ReturnExp
+	 * @generated
+	 */
+	EClass getReturnExp();
+
+																/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.qvt.oml.expressions.ReturnExp#getValue <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Value</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.expressions.ReturnExp#getValue()
+	 * @see #getReturnExp()
+	 * @generated
+	 */
+	EReference getReturnExp_Value();
+
+																/**
 	 * Returns the meta object for enum '{@link org.eclipse.m2m.qvt.oml.expressions.DirectionKind <em>Direction Kind</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5853,6 +5980,30 @@ public interface ExpressionsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference MAPPING_OPERATION__WHEN = eINSTANCE.getMappingOperation_When();
+
+		/**
+		 * The meta object literal for the '<em><b>Inherited</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MAPPING_OPERATION__INHERITED = eINSTANCE.getMappingOperation_Inherited();
+
+		/**
+		 * The meta object literal for the '<em><b>Merged</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MAPPING_OPERATION__MERGED = eINSTANCE.getMappingOperation_Merged();
+
+		/**
+		 * The meta object literal for the '<em><b>Disjunct</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MAPPING_OPERATION__DISJUNCT = eINSTANCE.getMappingOperation_Disjunct();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.expressions.impl.HelperImpl <em>Helper</em>}' class.
@@ -6411,6 +6562,24 @@ public interface ExpressionsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference INSTANTIATION_EXP__INSTANTIATED_CLASS = eINSTANCE.getInstantiationExp_InstantiatedClass();
+
+																																/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.expressions.impl.ReturnExpImpl <em>Return Exp</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.qvt.oml.expressions.impl.ReturnExpImpl
+		 * @see org.eclipse.m2m.qvt.oml.expressions.impl.ExpressionsPackageImpl#getReturnExp()
+		 * @generated
+		 */
+		EClass RETURN_EXP = eINSTANCE.getReturnExp();
+
+																																/**
+		 * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RETURN_EXP__VALUE = eINSTANCE.getReturnExp_Value();
 
 																																/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.expressions.DirectionKind <em>Direction Kind</em>}' enum.

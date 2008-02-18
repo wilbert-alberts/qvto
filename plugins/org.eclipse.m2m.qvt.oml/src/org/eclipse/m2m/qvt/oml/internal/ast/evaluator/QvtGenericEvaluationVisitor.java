@@ -43,6 +43,7 @@ import org.eclipse.m2m.qvt.oml.expressions.Property;
 import org.eclipse.m2m.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveInExp;
+import org.eclipse.m2m.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.qvt.oml.expressions.SwitchExp;
 import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.expressions.VariableInitExp;
@@ -419,5 +420,9 @@ abstract class QvtGenericEvaluationVisitor
 
     public Object visitImperativeIterateExp(ImperativeIterateExp imperativeIterateExp) {
         return getQVTDelegate().visitImperativeIterateExp(imperativeIterateExp);
+    }
+    
+    public Object visitReturnExp(ReturnExp returnExp) {
+        return getQVTDelegate().visitReturnExp(returnExp);
     }
 }

@@ -46,6 +46,7 @@ import org.eclipse.m2m.qvt.oml.expressions.Property;
 import org.eclipse.m2m.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveInExp;
+import org.eclipse.m2m.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.qvt.oml.expressions.SwitchExp;
 import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.expressions.VariableInitExp;
@@ -139,7 +140,13 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
         return null;
     }
 
-
+    public Object visitReturnExp(ReturnExp returnExp) {
+    	if(returnExp.getValue() != null) {
+    		doProcess(returnExp.getValue(), returnExp);
+    	}
+    	return null;
+    }
+    
     public Object visitMappingBody(MappingBody mappingBody) {
         for (OCLExpression<EClassifier> exp : mappingBody.getInitSection()) {
             doProcess(exp, mappingBody);

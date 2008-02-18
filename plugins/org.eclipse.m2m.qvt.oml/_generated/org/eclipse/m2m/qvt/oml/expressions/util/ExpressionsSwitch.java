@@ -576,6 +576,17 @@ public class ExpressionsSwitch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ExpressionsPackage.RETURN_EXP: {
+				ReturnExp returnExp = (ReturnExp)theEObject;
+				T1 result = caseReturnExp(returnExp);
+				if (result == null) result = caseImperativeExpression(returnExp);
+				if (result == null) result = caseOCLExpression(returnExp);
+				if (result == null) result = caseTypedElement(returnExp);
+				if (result == null) result = caseVisitable(returnExp);
+				if (result == null) result = caseASTNode(returnExp);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -1117,6 +1128,21 @@ public class ExpressionsSwitch<T1> {
 	 * @generated
 	 */
 	public T1 caseInstantiationExp(InstantiationExp object) {
+		return null;
+	}
+
+																/**
+	 * Returns the result of interpreting the object as an instance of '<em>Return Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Return Exp</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseReturnExp(ReturnExp object) {
 		return null;
 	}
 

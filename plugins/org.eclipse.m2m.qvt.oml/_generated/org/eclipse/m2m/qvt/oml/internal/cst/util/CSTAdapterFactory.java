@@ -310,6 +310,14 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 				return createImperativeIterateExpCSAdapter();
 			}
 			@Override
+			public Adapter caseReturnExpCS(ReturnExpCS object) {
+				return createReturnExpCSAdapter();
+			}
+			@Override
+			public Adapter caseMappingExtensionCS(MappingExtensionCS object) {
+				return createMappingExtensionCSAdapter();
+			}
+			@Override
 			public Adapter caseCSTNode(CSTNode object) {
 				return createCSTNodeAdapter();
 			}
@@ -984,6 +992,34 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	}
 
                 /**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.internal.cst.ReturnExpCS <em>Return Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.ReturnExpCS
+	 * @generated
+	 */
+	public Adapter createReturnExpCSAdapter() {
+		return null;
+	}
+
+																/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionCS <em>Mapping Extension CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionCS
+	 * @generated
+	 */
+	public Adapter createMappingExtensionCSAdapter() {
+		return null;
+	}
+
+																/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.cst.CSTNode <em>Node</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;

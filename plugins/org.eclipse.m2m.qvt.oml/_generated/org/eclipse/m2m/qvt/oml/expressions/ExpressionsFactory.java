@@ -334,6 +334,15 @@ public interface ExpressionsFactory extends EFactory {
 	InstantiationExp createInstantiationExp();
 
 																/**
+	 * Returns a new object of class '<em>Return Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Return Exp</em>'.
+	 * @generated
+	 */
+	ReturnExp createReturnExp();
+
+																/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

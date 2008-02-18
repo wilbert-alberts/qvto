@@ -136,6 +136,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 			case ExpressionsPackage.IMPERATIVE_LOOP_EXP: return createImperativeLoopExp();
 			case ExpressionsPackage.IMPERATIVE_ITERATE_EXP: return createImperativeIterateExp();
 			case ExpressionsPackage.INSTANTIATION_EXP: return createInstantiationExp();
+			case ExpressionsPackage.RETURN_EXP: return createReturnExp();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -503,6 +504,16 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	public InstantiationExp createInstantiationExp() {
 		InstantiationExpImpl instantiationExp = new InstantiationExpImpl();
 		return instantiationExp;
+	}
+
+																/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ReturnExp createReturnExp() {
+		ReturnExpImpl returnExp = new ReturnExpImpl();
+		return returnExp;
 	}
 
 																/**

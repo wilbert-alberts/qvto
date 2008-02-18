@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.37 2008/02/15 15:46:24 sboyko Exp $ 
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.38 2008/02/18 12:13:53 radvorak Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -270,6 +270,7 @@ $Globals
 	import org.eclipse.m2m.qvt.oml.internal.cst.MappingInitCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.MappingQueryCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.OutExpCS;
+	import org.eclipse.m2m.qvt.oml.internal.cst.ReturnExpCS;	
 	import org.eclipse.m2m.qvt.oml.internal.cst.SwitchAltExpCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.ModelTypeCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.temp.ResolveOpArgsExpCS;
@@ -307,6 +308,7 @@ $KeyWords
 	metamodel
 	mapping
 	query
+	helper
 	inout
 	when
 	var
@@ -347,7 +349,7 @@ $KeyWords
 	collectOne      
 	collectselect   
 	collectselectOne
-
+	return
 	rename
 $End
 
@@ -366,7 +368,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.37 2008/02/15 15:46:24 sboyko Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.38 2008/02/18 12:13:53 radvorak Exp $
  */
 	./
 $End
@@ -1239,7 +1241,30 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	mappingQueryCS ::= query mappingDeclarationCS '{' statementListOpt '}'  
+	
+	statementCS -> returnExpCS 	
+	returnExpCS ::= return oclExpressionCSOpt
+		/.$BeginJava
+				ReturnExpCS returnExpCS = createReturnExpCS((OCLExpressionCS)dtParser.getSym(2));
+				CSTNode result = createExpressionStatementCS(returnExpCS);
+				if(returnExpCS.getValue() != null) {
+					setOffsets(result, getIToken(dtParser.getToken(1)), (CSTNode)dtParser.getSym(2));			
+				} else {
+					setOffsets(result, getIToken(dtParser.getToken(1)));
+				}
+				setOffsets(returnExpCS, result);
+				dtParser.setSym1(result);
+		  $EndJava
+		./
+	 
+	oclExpressionCSOpt -> oclExpressionCS 
+	oclExpressionCSOpt ::= $empty
+		/.$NullAction./
+		
+	helperKindCS -> helper		
+	helperKindCS -> query	
+		
+	mappingQueryCS ::= helperKindCS mappingDeclarationCS '{' statementListOpt '}'  
 		/.$BeginJava
 					CSTNode result = createMappingQueryCS(
 							(MappingDeclarationCS)$getSym(2),
@@ -1249,7 +1274,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	mappingQueryCS ::= query mappingDeclarationCS ';'  
+	mappingQueryCS ::= helperKindCS mappingDeclarationCS ';'  
 		/.$BeginJava
 					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(2);
 					CSTNode result = createMappingQueryCS(
@@ -1261,7 +1286,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	mappingQueryCS ::= query mappingDeclarationCS qvtErrorToken  
+	mappingQueryCS ::= helperKindCS mappingDeclarationCS qvtErrorToken  
 		/.$BeginJava
 					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(2);
 					CSTNode result = createMappingQueryCS(
@@ -1273,7 +1298,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	mappingQueryCS ::= query qvtErrorToken
+	mappingQueryCS ::= helperKindCS qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createMappingQueryCS(
 							null,

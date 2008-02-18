@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpKWLexer.g,v 1.10 2008/02/15 11:56:31 radvorak Exp $ 
+-- * $Id: QvtOpKWLexer.g,v 1.11 2008/02/18 12:13:53 radvorak Exp $ 
 -- */
 --
 -- The QVT KeyWord Lexer
@@ -76,7 +76,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpKWLexer.g,v 1.10 2008/02/15 11:56:31 radvorak Exp $
+ * $Id: QvtOpKWLexer.g,v 1.11 2008/02/18 12:13:53 radvorak Exp $
  */
 	./
 $End
@@ -92,6 +92,7 @@ $Export
 	metamodel
 	mapping
 	query
+	helper
 	inout
 	when
 	var
@@ -132,7 +133,7 @@ $Export
 	collectOne      
 	collectselect   
 	collectselectOne
-
+	return
 	rename
 $End
 
@@ -191,6 +192,12 @@ $Rules
 		  $EndAction
 		./
 		
+		| r e t u r n
+		/.$BeginAction
+			$setResult($_return);
+		  $EndAction
+		./		
+		
 		| r e n a m e
 		/.$BeginAction
 			$setResult($_rename);
@@ -208,6 +215,12 @@ $Rules
 			$setResult($_query);
 		  $EndAction
 		./
+		
+		| h e l p e r
+		/.$BeginAction
+			$setResult($_helper);
+		  $EndAction
+		./		
 		
 		| i n o u t
 		/.$BeginAction

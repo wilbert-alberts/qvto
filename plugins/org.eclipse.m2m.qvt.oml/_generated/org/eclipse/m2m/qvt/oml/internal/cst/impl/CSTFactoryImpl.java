@@ -151,6 +151,8 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 			case CSTPackage.ASSERT_EXP_CS: return createAssertExpCS();
 			case CSTPackage.IMPERATIVE_LOOP_EXP_CS: return createImperativeLoopExpCS();
 			case CSTPackage.IMPERATIVE_ITERATE_EXP_CS: return createImperativeIterateExpCS();
+			case CSTPackage.RETURN_EXP_CS: return createReturnExpCS();
+			case CSTPackage.MAPPING_EXTENSION_CS: return createMappingExtensionCS();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -170,6 +172,8 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 				return createModuleKindEnumFromString(eDataType, initialValue);
 			case CSTPackage.IMPORT_KIND_ENUM:
 				return createImportKindEnumFromString(eDataType, initialValue);
+			case CSTPackage.MAPPING_EXTENSION_KIND_CS:
+				return createMappingExtensionKindCSFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -189,6 +193,8 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 				return convertModuleKindEnumToString(eDataType, instanceValue);
 			case CSTPackage.IMPORT_KIND_ENUM:
 				return convertImportKindEnumToString(eDataType, instanceValue);
+			case CSTPackage.MAPPING_EXTENSION_KIND_CS:
+				return convertMappingExtensionKindCSToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -589,6 +595,26 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public ReturnExpCS createReturnExpCS() {
+		ReturnExpCSImpl returnExpCS = new ReturnExpCSImpl();
+		return returnExpCS;
+	}
+
+																/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public MappingExtensionCS createMappingExtensionCS() {
+		MappingExtensionCSImpl mappingExtensionCS = new MappingExtensionCSImpl();
+		return mappingExtensionCS;
+	}
+
+																/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public DirectionKindEnum createDirectionKindEnumFromString(EDataType eDataType, String initialValue) {
 		DirectionKindEnum result = DirectionKindEnum.get(initialValue);
 		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -641,6 +667,26 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	 * @generated
 	 */
 	public String convertImportKindEnumToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public MappingExtensionKindCS createMappingExtensionKindCSFromString(EDataType eDataType, String initialValue) {
+		MappingExtensionKindCS result = MappingExtensionKindCS.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertMappingExtensionKindCSToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 

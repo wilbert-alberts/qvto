@@ -70,6 +70,7 @@ import org.eclipse.m2m.qvt.oml.expressions.Property;
 import org.eclipse.m2m.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveInExp;
+import org.eclipse.m2m.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.qvt.oml.expressions.SeverityKind;
 import org.eclipse.m2m.qvt.oml.expressions.SwitchExp;
 import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
@@ -108,6 +109,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.PatternPropertyExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.RenameCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ResolveInExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.ReturnExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.StatementCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.SwitchAltExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.SwitchExpCS;
@@ -410,6 +412,10 @@ public class QvtOperationalVisitorCS
         
         if (oclExpressionCS instanceof ImperativeIterateExpCS) {
             return visitImperativeIterateExp((ImperativeIterateExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+        }
+        
+        if (oclExpressionCS instanceof ReturnExpCS) {
+        	return visitReturnExpCS((ReturnExpCS) oclExpressionCS, (QvtOperationalEnv) env);
         }
 
 		OCLExpression<EClassifier> expr = null;
@@ -1833,7 +1839,7 @@ public class QvtOperationalVisitorCS
 		helper.setIsQuery(true);
 		helper.setBody(body);
 
-		EClassifier returnType = (helper.getResult().isEmpty() ? null : helper.getResult().get(0).getEType());
+		EClassifier returnType = (helper.getResult().isEmpty() ? helper.getEType() : helper.getResult().get(0).getEType());
 		EClassifier helperType = body.getContent().isEmpty() == false ? body.getContent().get(body.getContent().size() - 1).getType() : null;
 		if (QvtOperationalEnv.MAIN.equals(helper.getName()) 
 				&& (returnType == null || returnType == env.getOCLStandardLibrary().getOclVoid())) {
@@ -2146,7 +2152,25 @@ public class QvtOperationalVisitorCS
 		
 		return result;
 	}
+			
+	private ReturnExp visitReturnExpCS(ReturnExpCS returnExpCS, QvtOperationalEnv env) {
+		ReturnExp result = ExpressionsFactory.eINSTANCE.createReturnExp();
+		initStartEndPositions(result, returnExpCS);
+		if(returnExpCS.getValue() != null) {
+			OCLExpression<EClassifier> value = oclExpressionCS(returnExpCS.getValue(), env);
+			result.setValue(value);
+			if(value != null) {
+				result.setType(value.getType());
+			}
+		}
 		
+		if(result.getType() == null) {
+			result.setType(env.getOCLStandardLibrary().getOclVoid());
+		}
+		
+		return result;
+	}
+	
 	private MappingBody visitMappingBodyCS(MappingBodyCS mappingBodyCS, QvtOperationalEnv env)
 			throws SemanticException {
 

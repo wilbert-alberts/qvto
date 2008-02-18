@@ -11,17 +11,21 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.internal.cst.impl;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingBodyCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingEndCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingInitCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingRuleCS;
 
@@ -38,6 +42,7 @@ import org.eclipse.ocl.cst.OCLExpressionCS;
  *   <li>{@link org.eclipse.m2m.qvt.oml.internal.cst.impl.MappingRuleCSImpl#getMappingInitCS <em>Mapping Init CS</em>}</li>
  *   <li>{@link org.eclipse.m2m.qvt.oml.internal.cst.impl.MappingRuleCSImpl#getMappingBodyCS <em>Mapping Body CS</em>}</li>
  *   <li>{@link org.eclipse.m2m.qvt.oml.internal.cst.impl.MappingRuleCSImpl#getMappingEndCS <em>Mapping End CS</em>}</li>
+ *   <li>{@link org.eclipse.m2m.qvt.oml.internal.cst.impl.MappingRuleCSImpl#getMappingExtension <em>Mapping Extension</em>}</li>
  * </ul>
  * </p>
  *
@@ -90,6 +95,16 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 	 * @ordered
 	 */
 	protected MappingEndCS mappingEndCS;
+
+	/**
+	 * The cached value of the '{@link #getMappingExtension() <em>Mapping Extension</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMappingExtension()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<MappingExtensionCS> mappingExtension;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -287,6 +302,18 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<MappingExtensionCS> getMappingExtension() {
+		if (mappingExtension == null) {
+			mappingExtension = new EObjectResolvingEList<MappingExtensionCS>(MappingExtensionCS.class, this, CSTPackage.MAPPING_RULE_CS__MAPPING_EXTENSION);
+		}
+		return mappingExtension;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -318,6 +345,8 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 				return getMappingBodyCS();
 			case CSTPackage.MAPPING_RULE_CS__MAPPING_END_CS:
 				return getMappingEndCS();
+			case CSTPackage.MAPPING_RULE_CS__MAPPING_EXTENSION:
+				return getMappingExtension();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -327,6 +356,7 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -341,6 +371,10 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 				return;
 			case CSTPackage.MAPPING_RULE_CS__MAPPING_END_CS:
 				setMappingEndCS((MappingEndCS)newValue);
+				return;
+			case CSTPackage.MAPPING_RULE_CS__MAPPING_EXTENSION:
+				getMappingExtension().clear();
+				getMappingExtension().addAll((Collection<? extends MappingExtensionCS>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -366,6 +400,9 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 			case CSTPackage.MAPPING_RULE_CS__MAPPING_END_CS:
 				setMappingEndCS((MappingEndCS)null);
 				return;
+			case CSTPackage.MAPPING_RULE_CS__MAPPING_EXTENSION:
+				getMappingExtension().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -386,6 +423,8 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 				return mappingBodyCS != null;
 			case CSTPackage.MAPPING_RULE_CS__MAPPING_END_CS:
 				return mappingEndCS != null;
+			case CSTPackage.MAPPING_RULE_CS__MAPPING_EXTENSION:
+				return mappingExtension != null && !mappingExtension.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

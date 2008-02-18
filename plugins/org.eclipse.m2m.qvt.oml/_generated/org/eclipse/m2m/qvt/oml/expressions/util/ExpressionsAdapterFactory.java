@@ -275,6 +275,10 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createInstantiationExpAdapter();
 			}
 			@Override
+			public Adapter caseReturnExp(ReturnExp object) {
+				return createReturnExpAdapter();
+			}
+			@Override
 			public Adapter caseEModelElement(EModelElement object) {
 				return createEModelElementAdapter();
 			}
@@ -867,6 +871,20 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createInstantiationExpAdapter() {
+		return null;
+	}
+
+																/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.expressions.ReturnExp <em>Return Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.qvt.oml.expressions.ReturnExp
+	 * @generated
+	 */
+	public Adapter createReturnExpAdapter() {
 		return null;
 	}
 
