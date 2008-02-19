@@ -12,15 +12,11 @@
 package org.eclipse.m2m.qvt.oml.internal.cst.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage;
 import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum;
-
 import org.eclipse.ocl.cst.impl.CSTNodeImpl;
 
 /**

@@ -12,19 +12,14 @@
 package org.eclipse.m2m.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.qvt.oml.expressions.MappingCallExp;
-
 import org.eclipse.ocl.expressions.impl.OperationCallExpImpl;
-
 import org.eclipse.ocl.utilities.Visitor;
 
 /**

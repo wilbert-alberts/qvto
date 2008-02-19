@@ -11,22 +11,17 @@
  * 
  * 
  *
- * $Id: ScopedNameCSImpl.java,v 1.7 2008/02/15 11:56:31 radvorak Exp $
+ * $Id: ScopedNameCSImpl.java,v 1.8 2008/02/19 00:01:25 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.temp.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.TempPackage;
-
 import org.eclipse.ocl.cst.TypeCS;
-
 import org.eclipse.ocl.cst.impl.CSTNodeImpl;
 
 /**

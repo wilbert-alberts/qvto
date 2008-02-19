@@ -9,17 +9,14 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: PackageRefImpl.java,v 1.5 2008/02/15 11:56:25 radvorak Exp $
+ * $Id: PackageRefImpl.java,v 1.6 2008/02/19 00:01:23 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.qvt.oml.expressions.PackageRef;
 

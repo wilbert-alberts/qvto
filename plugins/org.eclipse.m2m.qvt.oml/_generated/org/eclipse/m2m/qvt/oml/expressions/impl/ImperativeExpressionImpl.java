@@ -13,10 +13,8 @@ package org.eclipse.m2m.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.qvt.oml.expressions.ImperativeExpression;
-
 import org.eclipse.ocl.expressions.impl.OCLExpressionImpl;
 
 /**

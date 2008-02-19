@@ -9,14 +9,12 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: AltExp.java,v 1.4 2008/02/15 11:56:27 radvorak Exp $
+ * $Id: AltExp.java,v 1.5 2008/02/19 00:01:25 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.expressions;
 
 import org.eclipse.emf.ecore.EClassifier;
-
 import org.eclipse.ocl.expressions.OCLExpression;
-
 import org.eclipse.ocl.utilities.Visitor;
 
 /**

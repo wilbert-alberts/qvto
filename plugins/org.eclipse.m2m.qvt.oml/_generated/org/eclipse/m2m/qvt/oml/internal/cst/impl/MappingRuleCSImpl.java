@@ -12,15 +12,13 @@
 package org.eclipse.m2m.qvt.oml.internal.cst.impl;
 
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingBodyCS;
@@ -28,7 +26,6 @@ import org.eclipse.m2m.qvt.oml.internal.cst.MappingEndCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingInitCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingRuleCS;
-
 import org.eclipse.ocl.cst.OCLExpressionCS;
 
 /**

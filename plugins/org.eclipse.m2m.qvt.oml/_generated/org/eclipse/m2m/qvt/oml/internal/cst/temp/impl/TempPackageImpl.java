@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempPackageImpl.java,v 1.8 2008/02/15 11:56:31 radvorak Exp $
+ * $Id: TempPackageImpl.java,v 1.9 2008/02/19 00:01:25 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.temp.impl;
 
@@ -19,11 +19,8 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.m2m.qvt.oml.internal.cst.impl.CSTPackageImpl;
-
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorCSTNode;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorCallExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorOutExpCS;
@@ -32,7 +29,6 @@ import org.eclipse.m2m.qvt.oml.internal.cst.temp.ResolveOpArgsExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.TempFactory;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.TempPackage;
-
 import org.eclipse.ocl.cst.CSTPackage;
 
 /**

@@ -13,9 +13,7 @@ package org.eclipse.m2m.qvt.oml.expressions;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
-
 import org.eclipse.ocl.expressions.OperationCallExp;
-
 import org.eclipse.ocl.utilities.Visitor;
 
 /**

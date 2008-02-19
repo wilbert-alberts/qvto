@@ -9,17 +9,14 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: MappingParameterImpl.java,v 1.5 2008/02/15 11:56:26 radvorak Exp $
+ * $Id: MappingParameterImpl.java,v 1.6 2008/02/19 00:01:24 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.qvt.oml.expressions.MappingParameter;
 import org.eclipse.m2m.qvt.oml.expressions.ModelParameter;

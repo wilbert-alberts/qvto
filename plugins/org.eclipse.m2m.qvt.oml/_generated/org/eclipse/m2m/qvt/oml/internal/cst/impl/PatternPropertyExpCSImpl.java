@@ -13,18 +13,13 @@ package org.eclipse.m2m.qvt.oml.internal.cst.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage;
 import org.eclipse.m2m.qvt.oml.internal.cst.PatternPropertyExpCS;
-
 import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
-
 import org.eclipse.ocl.cst.impl.OCLExpressionCSImpl;
 
 /**

@@ -12,9 +12,7 @@
 package org.eclipse.m2m.qvt.oml.expressions;
 
 import org.eclipse.emf.ecore.EClassifier;
-
 import org.eclipse.ocl.expressions.OCLExpression;
-
 import org.eclipse.ocl.utilities.Visitor;
 
 /**

@@ -11,14 +11,12 @@
  * 
  * 
  *
- * $Id: ErrorVariableInitializationCSImpl.java,v 1.7 2008/02/15 11:56:31 radvorak Exp $
+ * $Id: ErrorVariableInitializationCSImpl.java,v 1.8 2008/02/19 00:01:25 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.temp.impl;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.m2m.qvt.oml.internal.cst.impl.VariableInitializationCSImpl;
-
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorVariableInitializationCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.TempPackage;
 

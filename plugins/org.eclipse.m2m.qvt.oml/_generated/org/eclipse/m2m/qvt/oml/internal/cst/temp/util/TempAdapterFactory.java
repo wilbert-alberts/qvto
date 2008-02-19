@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempAdapterFactory.java,v 1.10 2008/02/15 11:56:32 radvorak Exp $
+ * $Id: TempAdapterFactory.java,v 1.11 2008/02/19 00:01:25 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.temp.util;
 
@@ -23,7 +23,6 @@ import org.eclipse.m2m.qvt.oml.internal.cst.ElementWithBody;
 import org.eclipse.m2m.qvt.oml.internal.cst.OutExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.StatementCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.VariableInitializationCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.temp.*;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorCSTNode;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorCallExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorOutExpCS;

@@ -9,28 +9,22 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: InstantiationExpImpl.java,v 1.1 2008/02/15 11:56:25 radvorak Exp $
+ * $Id: InstantiationExpImpl.java,v 1.2 2008/02/19 00:01:23 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.expressions.impl;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.qvt.oml.expressions.ModelParameter;
-
 import org.eclipse.ocl.expressions.OCLExpression;
 
 /**

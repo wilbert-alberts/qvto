@@ -12,7 +12,6 @@
 package org.eclipse.m2m.qvt.oml.expressions;
 
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.ocl.utilities.Visitor;
 
 /**

@@ -11,20 +11,16 @@
  * 
  * 
  *
- * $Id: ModuleKindCSImpl.java,v 1.7 2008/02/15 11:56:26 radvorak Exp $
+ * $Id: ModuleKindCSImpl.java,v 1.8 2008/02/19 00:01:24 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage;
 import org.eclipse.m2m.qvt.oml.internal.cst.ModuleKindCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ModuleKindEnum;
-
 import org.eclipse.ocl.cst.impl.CSTNodeImpl;
 
 /**

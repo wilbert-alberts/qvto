@@ -12,11 +12,9 @@
 package org.eclipse.m2m.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.m2m.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor;
-
 import org.eclipse.ocl.utilities.Visitor;
 
 /**

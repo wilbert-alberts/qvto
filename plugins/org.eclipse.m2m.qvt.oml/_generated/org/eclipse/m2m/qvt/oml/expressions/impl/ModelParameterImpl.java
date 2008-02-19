@@ -9,12 +9,11 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ModelParameterImpl.java,v 1.5 2008/02/15 11:56:25 radvorak Exp $
+ * $Id: ModelParameterImpl.java,v 1.6 2008/02/19 00:01:24 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.qvt.oml.expressions.ModelParameter;
 

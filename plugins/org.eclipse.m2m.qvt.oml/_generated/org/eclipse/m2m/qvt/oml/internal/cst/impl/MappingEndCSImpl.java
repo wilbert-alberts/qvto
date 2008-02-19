@@ -12,7 +12,6 @@
 package org.eclipse.m2m.qvt.oml.internal.cst.impl;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingEndCS;
 

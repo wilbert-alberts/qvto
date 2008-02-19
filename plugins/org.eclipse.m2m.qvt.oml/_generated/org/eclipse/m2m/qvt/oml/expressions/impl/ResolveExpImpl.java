@@ -9,29 +9,23 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ResolveExpImpl.java,v 1.5 2008/02/15 11:56:25 radvorak Exp $
+ * $Id: ResolveExpImpl.java,v 1.6 2008/02/19 00:01:23 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.qvt.oml.expressions.ResolveExp;
-
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.Variable;
-
 import org.eclipse.ocl.expressions.impl.CallExpImpl;
-
 import org.eclipse.ocl.utilities.Visitor;
 
 /**

@@ -9,15 +9,13 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: InstantiationExp.java,v 1.1 2008/02/15 11:56:27 radvorak Exp $
+ * $Id: InstantiationExp.java,v 1.2 2008/02/19 00:01:25 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.expressions;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-
 import org.eclipse.ocl.expressions.OCLExpression;
 
 /**

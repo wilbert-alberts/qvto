@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: TracePackageImpl.java,v 1.2 2007/09/25 12:57:18 aigdalov Exp $
+ * $Id: TracePackageImpl.java,v 1.3 2008/02/19 00:01:23 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.trace.impl;
 
@@ -14,9 +14,7 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.m2m.qvt.oml.trace.EDirectionKind;
 import org.eclipse.m2m.qvt.oml.trace.EMappingContext;
 import org.eclipse.m2m.qvt.oml.trace.EMappingOperation;
@@ -29,11 +27,8 @@ import org.eclipse.m2m.qvt.oml.trace.TraceFactory;
 import org.eclipse.m2m.qvt.oml.trace.TracePackage;
 import org.eclipse.m2m.qvt.oml.trace.TraceRecord;
 import org.eclipse.m2m.qvt.oml.trace.VarParameterValue;
-
 import org.eclipse.ocl.expressions.ExpressionsPackage;
-
 import org.eclipse.ocl.types.TypesPackage;
-
 import org.eclipse.ocl.utilities.UtilitiesPackage;
 
 /**

@@ -9,12 +9,11 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ConstructorBodyImpl.java,v 1.1 2008/02/15 11:56:26 radvorak Exp $
+ * $Id: ConstructorBodyImpl.java,v 1.2 2008/02/19 00:01:23 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.m2m.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage;
 

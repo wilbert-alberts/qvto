@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ModelTypeCSImpl.java,v 1.7 2008/02/15 11:56:26 radvorak Exp $
+ * $Id: ModelTypeCSImpl.java,v 1.8 2008/02/19 00:01:24 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.impl;
 
@@ -19,26 +19,19 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage;
 import org.eclipse.m2m.qvt.oml.internal.cst.ElementWithBody;
 import org.eclipse.m2m.qvt.oml.internal.cst.ModelTypeCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.PackageRefCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.StatementCS;
-
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.StringLiteralExpCS;
-
 import org.eclipse.ocl.cst.impl.CSTNodeImpl;
 
 /**

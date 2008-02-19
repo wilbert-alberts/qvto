@@ -9,16 +9,13 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: SwitchExp.java,v 1.4 2008/02/15 11:56:27 radvorak Exp $
+ * $Id: SwitchExp.java,v 1.5 2008/02/19 00:01:25 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.expressions;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClassifier;
-
 import org.eclipse.ocl.expressions.OCLExpression;
-
 import org.eclipse.ocl.utilities.Visitor;
 
 /**

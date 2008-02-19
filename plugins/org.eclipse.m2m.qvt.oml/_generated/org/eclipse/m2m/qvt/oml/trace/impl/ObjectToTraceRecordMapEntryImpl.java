@@ -2,26 +2,21 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ObjectToTraceRecordMapEntryImpl.java,v 1.2 2007/09/25 12:57:18 aigdalov Exp $
+ * $Id: ObjectToTraceRecordMapEntryImpl.java,v 1.3 2008/02/19 00:01:23 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.trace.impl;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-
 import org.eclipse.m2m.qvt.oml.trace.TracePackage;
 import org.eclipse.m2m.qvt.oml.trace.TraceRecord;
 

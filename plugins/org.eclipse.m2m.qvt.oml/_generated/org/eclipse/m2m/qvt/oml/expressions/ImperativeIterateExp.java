@@ -9,13 +9,12 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ImperativeIterateExp.java,v 1.2 2008/02/15 11:56:27 radvorak Exp $
+ * $Id: ImperativeIterateExp.java,v 1.3 2008/02/19 00:01:25 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.expressions;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
-
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.utilities.Visitor;
 

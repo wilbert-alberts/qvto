@@ -9,14 +9,12 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ReturnExp.java,v 1.1 2008/02/18 12:13:54 radvorak Exp $
+ * $Id: ReturnExp.java,v 1.2 2008/02/19 00:01:25 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.expressions;
 
 import org.eclipse.emf.ecore.EClassifier;
-
 import org.eclipse.ocl.expressions.OCLExpression;
-
 import org.eclipse.ocl.utilities.Visitor;
 
 /**

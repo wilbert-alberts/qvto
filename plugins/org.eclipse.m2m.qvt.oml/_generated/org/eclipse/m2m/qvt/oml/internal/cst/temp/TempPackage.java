@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempPackage.java,v 1.8 2008/02/15 11:56:28 radvorak Exp $
+ * $Id: TempPackage.java,v 1.9 2008/02/19 00:01:25 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.temp;
 
@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.ocl.cst.CSTPackage;
 
 /**

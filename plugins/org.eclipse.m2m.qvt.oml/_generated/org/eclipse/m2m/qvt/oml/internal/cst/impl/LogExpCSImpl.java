@@ -11,23 +11,18 @@
  * 
  * 
  *
- * $Id: LogExpCSImpl.java,v 1.3 2008/02/15 11:56:27 radvorak Exp $
+ * $Id: LogExpCSImpl.java,v 1.4 2008/02/19 00:01:24 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage;
 import org.eclipse.m2m.qvt.oml.internal.cst.LogExpCS;
-
 import org.eclipse.ocl.cst.OCLExpressionCS;
-
 import org.eclipse.ocl.cst.impl.OperationCallExpCSImpl;
 
 /**

@@ -11,16 +11,14 @@
  * 
  * 
  *
- * $Id: ErrorOutExpCSImpl.java,v 1.6 2008/02/15 11:56:31 radvorak Exp $
+ * $Id: ErrorOutExpCSImpl.java,v 1.7 2008/02/19 00:01:25 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.temp.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.m2m.qvt.oml.internal.cst.impl.OutExpCSImpl;
-
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorCSTNode;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorOutExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.TempPackage;

@@ -9,23 +9,19 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ImperativeIterateExpImpl.java,v 1.2 2008/02/15 11:56:26 radvorak Exp $
+ * $Id: ImperativeIterateExpImpl.java,v 1.3 2008/02/19 00:01:23 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.qvt.oml.expressions.ImperativeIterateExp;
-
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.utilities.Visitor;
 

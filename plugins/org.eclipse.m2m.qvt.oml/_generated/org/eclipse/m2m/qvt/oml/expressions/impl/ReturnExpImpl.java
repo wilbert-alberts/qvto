@@ -9,25 +9,20 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ReturnExpImpl.java,v 1.1 2008/02/18 12:13:54 radvorak Exp $
+ * $Id: ReturnExpImpl.java,v 1.2 2008/02/19 00:01:23 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.qvt.oml.expressions.ReturnExp;
-
 import org.eclipse.ocl.expressions.OCLExpression;
-
 import org.eclipse.ocl.utilities.Visitor;
 
 /**

@@ -11,28 +11,21 @@
  * 
  * 
  *
- * $Id: MappingExtensionCSImpl.java,v 1.1 2008/02/18 12:13:54 radvorak Exp $
+ * $Id: MappingExtensionCSImpl.java,v 1.2 2008/02/19 00:01:24 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.impl;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-
 import org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionKindCS;
-
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ScopedNameCS;
-
 import org.eclipse.ocl.cst.impl.CSTNodeImpl;
 
 /**
