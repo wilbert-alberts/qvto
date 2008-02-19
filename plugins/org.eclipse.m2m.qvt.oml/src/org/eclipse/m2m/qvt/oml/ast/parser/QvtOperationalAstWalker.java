@@ -377,7 +377,10 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
         }
         EOperation referredOperation = callExp.getReferredOperation();
         if (referredOperation instanceof Visitable) {
-            doProcess((Visitable) referredOperation, callExp);
+        	// TODO -
+        	// Should not visit referenced operation, as thesemight com from different top container (Module)
+        	// Should strictly traverse on containment basis, no need to track processed nodes
+            //doProcess((Visitable) referredOperation, callExp);
         }
         return null;
     }
