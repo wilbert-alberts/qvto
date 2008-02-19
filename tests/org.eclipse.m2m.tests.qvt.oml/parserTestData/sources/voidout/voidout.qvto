@@ -8,5 +8,5 @@ mapping void(pack: ecore::EPackage): /*<error>*/OclVoid/*</error>*/ {
 }
 
 query void2(pack: ecore::EPackage): OclVoid {
-   null
+   return null
 }

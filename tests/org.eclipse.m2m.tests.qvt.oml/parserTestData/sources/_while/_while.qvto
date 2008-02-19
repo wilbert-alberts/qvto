@@ -37,6 +37,7 @@ query testVarScope(in par1 : Integer) : OclAny {
 	-- test result Var
 	/*<error>*/var _invalidResult : Integer := while(r : String:=10; false) {}/*</error>*/;
 	var _result : String := while(r : String:=10; false) {};
+	return _result
 }
 
 query testWhileHeader() : OclAny {	
@@ -60,5 +61,5 @@ query testWhileHeader() : OclAny {
 	while(ii : /*<error>*/XXInteger/*</error>*/:=0; /*<error>*/'true'/*</error>*/) {
 	};
 
-	null;
+	return null;
 }

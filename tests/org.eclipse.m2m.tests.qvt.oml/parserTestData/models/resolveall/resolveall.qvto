@@ -29,7 +29,7 @@ mapping ecore::EPackage::toAttribute() : ecore::EAttribute {
 }
 
 query ecore::ENamedElement::hash() : Integer {
-	if self.oclIsKindOf(ecore::EClass) then
+	return if self.oclIsKindOf(ecore::EClass) then
 	  self.name.substring(2, 2).toInt() + 100
 	 else 
 	 	self.name.substring(2, 2).toInt()
@@ -37,23 +37,23 @@ query ecore::ENamedElement::hash() : Integer {
 }
 
 query String::toInt() : Integer {
-	if self = '1' then
+	return if self = '1' then
 	  1
 	else if self = '2' then
 	  2
 	else if self = '3' then
 	  3
 	else 0
-	endif endif endif 	
+	endif endif endif;	
 }
 
 query min(in ar: OrderedSet(ecore::ENamedElement)): ecore::ENamedElement {
-	ar->iterate(a; min : ecore::ENamedElement = ar->at(1) | 
+	return ar->iterate(a; min : ecore::ENamedElement = ar->at(1) | 
 		if a.hash() < min.hash() then a else min endif); 	
 }
 	
 query selectionSort(in ar: OrderedSet(ecore::ENamedElement)): OrderedSet(ecore::ENamedElement) {
-	if ar->size() = 0 then OrderedSet{} 
+	return if ar->size() = 0 then OrderedSet{} 
 	else
 		let 
 			min = min(ar), 
@@ -61,5 +61,5 @@ query selectionSort(in ar: OrderedSet(ecore::ENamedElement)): OrderedSet(ecore::
 			res = min->asSequence()->union(selectionSort(rest)->asSequence())->asOrderedSet() 
 		in 
 			res
-	endif
+	endif;
 }

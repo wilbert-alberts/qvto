@@ -76,23 +76,23 @@ mapping EClassifier::xclass2Class(in arg : Collection(Integer)) : EClass {
 
 
 query EClassifier::x(in x: Set(EClassifier)) {
-	
+	return null;
 } 
  
 query EClass::x(in x: Set(EClassifier)) {
-	
+	return null;
 }
 
 
 query EClass::x(in x: Set(ENamedElement)) {
-	
+	return null;
 }
 
 query virtQuery() : EClassifier {
 	assert fatal (false) with log('never get called');
-	object EClass {
+	return object EClass {
 		
-	}	
+	};
 }
 
 

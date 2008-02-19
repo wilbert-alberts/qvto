@@ -1,5 +1,5 @@
 transformation util;
 
 query bar(): String {
-    'bar'
+   return 'bar'
 }

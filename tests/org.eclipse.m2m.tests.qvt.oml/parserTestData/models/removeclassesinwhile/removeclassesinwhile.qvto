@@ -4,7 +4,7 @@ metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 
 query main(model: ecore::EPackage): ecore::EPackage {
     while_expr(model);
-    model
+    return model;
 }
 
 query while_expr(model: ecore::EPackage): OclVoid {
@@ -14,7 +14,7 @@ query while_expr(model: ecore::EPackage): OclVoid {
         patch(model, model.eClassifiers->size());
     };
 
-    null
+    return null;
 }
 
 mapping patch(inout pac:ecore::EPackage, in sz : Integer): ecore::EPackage {

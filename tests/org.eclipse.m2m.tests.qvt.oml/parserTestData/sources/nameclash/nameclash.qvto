@@ -3,7 +3,7 @@ metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 
 query main(pack: ecore::EPackage): ecore::ENamedElement {
     pack.map clashVar();
-    map clashParam('foo')
+    return map clashParam('foo')
 }
 
 mapping clashParam(in name: String): ecore::EPackage {

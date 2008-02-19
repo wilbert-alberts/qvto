@@ -28,7 +28,7 @@ mapping ecore::ENamedElement::createEClass2() : ecore::EClass {
 }
 
 query selectionSort(in ar: OrderedSet(ecore::EClass)): OrderedSet(ecore::EClass) {
-	if ar->size() = 0 then OrderedSet{} 
+	return if ar->size() = 0 then OrderedSet{} 
 	else
 		let 
 			min = min(ar), 
@@ -36,7 +36,7 @@ query selectionSort(in ar: OrderedSet(ecore::EClass)): OrderedSet(ecore::EClass)
 			res = min->asSequence()->union(selectionSort(rest)->asSequence())->asOrderedSet() 
 		in 
 			res
-	endif
+	endif;
 }
 
 query min(in ar: OrderedSet(ecore::EClass)): ecore::EClass {

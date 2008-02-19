@@ -3,7 +3,7 @@ transformation invresolve_;
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 
 query main(pack: ecore::EPackage): ecore::EPackage {
-    pack.main1().patchName();
+    return pack.main1().patchName();
 }
 
 mapping ecore::EPackage::main1(): ecore::EPackage {

@@ -10,6 +10,7 @@ property allClasscounter: Integer = 0;
 	
 query failure(message : String) : OclAny {
 	assert fatal (false) with log('Error: ' + message);
+	return null;
 }
 
 

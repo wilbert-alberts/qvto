@@ -28,5 +28,5 @@ query populateLogData() :OclAny {
 	log('ignored message with data', 2.344545) when false;	
 	log('message with data and level', 2.344545, 4);
 	
-	null	
+	return null	
 }

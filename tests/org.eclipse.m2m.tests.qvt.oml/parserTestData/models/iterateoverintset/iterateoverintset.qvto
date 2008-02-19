@@ -6,5 +6,5 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 }
 
 query foo(): Integer {
-    Set{1,2,3}->iterate( i: Integer; sum: Integer = 0 | sum + i);  
+    return Set{1,2,3}->iterate( i: Integer; sum: Integer = 0 | sum + i);  
 }

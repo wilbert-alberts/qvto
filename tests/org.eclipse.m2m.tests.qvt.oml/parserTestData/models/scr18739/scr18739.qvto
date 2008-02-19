@@ -7,6 +7,6 @@ mapping main(pack: ecore::EPackage): ecore::EPackage {
 }
 
 query abc(in c: ecore::EChar): String {
-   'abc'
+   return 'abc';
 }
 

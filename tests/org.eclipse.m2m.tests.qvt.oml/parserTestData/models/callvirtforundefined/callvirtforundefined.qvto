@@ -10,5 +10,5 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 }
 
 query ecore::EPackage::virt(): String {
-	self.name;
+	return self.name;
 }

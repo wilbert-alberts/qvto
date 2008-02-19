@@ -6,5 +6,5 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 }
 
 query foo(i:Integer): String {
-   if i>1 then null else null endif
+   return if i>1 then null else null endif;
 }

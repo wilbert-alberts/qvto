@@ -5,5 +5,5 @@ property a = 'nsp';
 
 
 query getT1() : String {
-	t1
+	return t1;
 }

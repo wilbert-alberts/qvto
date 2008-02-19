@@ -16,7 +16,9 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import junit.framework.TestCase;
 
@@ -36,6 +38,7 @@ import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
+import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilationResult;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
@@ -113,8 +116,30 @@ public class TestQvtParser extends TestCase {
 		}
 
 		if(myData.usesSourceAnnotations()) {
+			Set<ProblemSourceAnnotationHelper> helpers = new HashSet<ProblemSourceAnnotationHelper>();	
 			for (QvtCompilationResult compilationResult : compiled) {
-				ProblemSourceAnnotationHelper.assertCompilationProblemMatchExpectedAnnotations(compilationResult.getModule(), myData.getAllProblemsCount());
+				doCompiledUnitCheck(compilationResult.getModule(), helpers);
+			}
+	
+			int expectedProblemCount = myData.getAllProblemsCount();
+			int foundProblemCount = 0;				
+			for (ProblemSourceAnnotationHelper nextHelper : helpers) {
+				foundProblemCount += nextHelper.getProblemsMap().size();
+			}
+
+			if (expectedProblemCount >= 0) {
+				TestCase.assertEquals(expectedProblemCount, foundProblemCount);
+			}			
+		}
+	}
+	
+	private void doCompiledUnitCheck(CompiledModule module,Set<ProblemSourceAnnotationHelper> annotationCollector) {
+		ProblemSourceAnnotationHelper helper = ProblemSourceAnnotationHelper
+				.assertCompilationProblemMatchExpectedAnnotations(module);
+		annotationCollector.add(helper);
+		for (CompiledModule importedModule : module.getCompiledImports()) {
+			if (!annotationCollector.contains(importedModule)) {
+				doCompiledUnitCheck(importedModule, annotationCollector);
 			}
 		}
 	}

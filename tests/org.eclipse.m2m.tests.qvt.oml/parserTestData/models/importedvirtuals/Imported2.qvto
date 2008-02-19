@@ -17,11 +17,11 @@ main(inout inoutModel : ecore::EPackage) {
  Tests that matching context-less query overrides imported ones
 */
 query checkImported2LocalQuery() : String {
-	localQuery();
+	return localQuery();
 }
 
 query localQuery() : String {
-	'Imported2::localQuery'
+	return 'Imported2::localQuery'
 }
 
 
@@ -30,28 +30,28 @@ query localQuery() : String {
  Test virtual operations defined fully here but accessed but importer
 */
 query ENamedElement::remoteVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
-	'ENamedElement::remoteVirtualQuery';
+	return 'ENamedElement::remoteVirtualQuery';
 }
 
 query EClass::remoteVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
-	'EClass::remoteVirtualQuery';
+	return 'EClass::remoteVirtualQuery';
 }
 
 query EClassifier::remoteVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
-	'EClassifier::remoteVirtualQuery';
+	return 'EClassifier::remoteVirtualQuery';
 }
 
 -- messup operation for remoteVirtual testing, ensuring exact signature match   
 query EClassifier::remoteVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Sequence(OclAny))) : String {
-	'please help!'
+	return 'please help!'
 }
 query EClass::remoteVirtualQuery(in arg1 : OclAny, in arg2 : Set(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
-	'error';
+	return 'error';
 }
 
 
 query getImported2LocalProperty() : String {
-	LOCAL_PROP;
+	return LOCAL_PROP;
 }
 
 
@@ -64,9 +64,9 @@ mapping EStructuralFeature::globalVirtualMapping(in arg1 : OclAny, in arg2 : Col
 
 
 query EModelElement::globalVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
-	'EModelElement::globalVirtualQuery';
+	return 'EModelElement::globalVirtualQuery';
 }
 
 query ETypedElement::globalVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
-	'ETypedElement::globalVirtualQuery';
+	return 'ETypedElement::globalVirtualQuery';
 }

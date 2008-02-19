@@ -1,5 +1,5 @@
 library b1;
 
 query foo_b1(): String {
-	'b1'
+	return 'b1'
 }

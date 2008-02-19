@@ -3,5 +3,5 @@ transformation Utils;
 property UTIL_NAME = 'util';
 
 query getUtilName(): String {
-    UTIL_NAME;
+    return UTIL_NAME;
 }

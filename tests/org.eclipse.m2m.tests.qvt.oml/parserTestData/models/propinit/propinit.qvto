@@ -11,5 +11,5 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 }
 
 query getName(name: String): String {
-	DEFAULT_NAME + '-' + getUtilName() + '-' + name;
+	return DEFAULT_NAME + '-' + getUtilName() + '-' + name;
 }

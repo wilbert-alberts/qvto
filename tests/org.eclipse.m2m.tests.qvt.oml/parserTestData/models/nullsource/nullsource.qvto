@@ -11,6 +11,6 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 	eSubpackages += object ecore::EPackage {name := invokemethodforundefined()};
 }
 
-query ecore::EPackage::invokemethodforundefined() : String {'1'}
-query invokemethodforundefined() : String {'2'}
+query ecore::EPackage::invokemethodforundefined() : String { return '1'; }
+query invokemethodforundefined() : String { return '2'; }
 

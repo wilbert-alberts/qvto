@@ -88,7 +88,7 @@ query EClass::fooQuery() : String {
 	
 	assert fatal (model.name <> '') with log('message') when false;	
  
-	'result';
+	return 'result';
 }   
 
 query EClass::fooQuery2() : String {
@@ -117,5 +117,5 @@ query EClass::fooQuery2() : String {
 		assert fatal (model.name <> '') with log('message') when false;	
  	} endif;
  
-	'result';
+	return 'result';
 }   

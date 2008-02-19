@@ -14,5 +14,5 @@ mapping ecore::EPackage::makePack(): ecore::EPackage {
 }
 
 query getTargetName(pack: ecore::EPackage): String {
-    pack.resolve(ecore::EPackage)->asSequence()->first().oclAsType(ecore::EPackage).name
+    return pack.resolve(ecore::EPackage)->asSequence()->first().oclAsType(ecore::EPackage).name;
 }

@@ -5,5 +5,5 @@ import models.imports_transformations.m3;
 modeltype Ecore uses 'http://www.eclipse.org/emf/2002/Ecore';
 
 query qq1(in e : ecore::ENamedElement) : String {
-	'name = ' + e.name
+	return 'name = ' + e.name
 }

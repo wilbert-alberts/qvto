@@ -3,5 +3,5 @@ metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 
 query void(pack: ecore::EPackage): OclVoid {
    dump(pack);
-   null
+   return null
 }

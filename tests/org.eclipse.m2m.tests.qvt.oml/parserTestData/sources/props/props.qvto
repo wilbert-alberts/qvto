@@ -6,5 +6,5 @@ property prop = Sequence {};
 configuration property PROP : String;
 
 query main(pack: ecore::EPackage): ecore::EPackage {
-    null
+    return null
 }

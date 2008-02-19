@@ -9,9 +9,9 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 }
 
 query ecore::EPackage::foo(): String {
-	'foo'
+	return 'foo';
 }
 
 query ecore::EPackage::zoo(): String {
-	'zoo'
+	return 'zoo';
 }

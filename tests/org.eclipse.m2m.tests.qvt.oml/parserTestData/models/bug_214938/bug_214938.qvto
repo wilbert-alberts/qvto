@@ -12,14 +12,14 @@ mapping main(in inPackage : ecore::EPackage) {
 }
 
 query ecore::EPackage::getName() : String {
-	if not self.oclAsType(ecore::EPackage).oclIsUndefined()
+	return if not self.oclAsType(ecore::EPackage).oclIsUndefined()
 		then self.oclAsType(ecore::EPackage).name
 		else 'Error-1'
 	endif
 }
 
 query ecore::EPackage::getName2() : String {
-	if self.oclIsTypeOf(ecore::EPackage)
+	return if self.oclIsTypeOf(ecore::EPackage)
 		then self.oclAsType(ecore::EPackage).name
 		else 'Error-2'
 	endif

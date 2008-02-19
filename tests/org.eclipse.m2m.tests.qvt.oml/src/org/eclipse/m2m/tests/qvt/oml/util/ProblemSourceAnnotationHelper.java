@@ -83,12 +83,10 @@ public class ProblemSourceAnnotationHelper {
 		}
 	}
 	
-	public static void assertCompilationProblemMatchExpectedAnnotations(CompiledModule compiledModule, int expectedProblemCount) throws AssertionFailedError {
+	public static ProblemSourceAnnotationHelper assertCompilationProblemMatchExpectedAnnotations(CompiledModule compiledModule) throws AssertionFailedError {
 		ProblemSourceAnnotationHelper problemSourceAnnotationHelper = ProblemSourceAnnotationHelper.create(compiledModule);
 		problemSourceAnnotationHelper.assertMarchingProblems(compiledModule.getMessages());
-		if(expectedProblemCount >= 0) {
-			TestCase.assertEquals(expectedProblemCount, problemSourceAnnotationHelper.getProblemsMap().size());
-		}
+		return problemSourceAnnotationHelper;
 	}
 	
 	public static ProblemSourceAnnotationHelper create(CompiledModule compiledModule) throws AssertionFailedError {

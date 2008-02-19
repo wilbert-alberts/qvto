@@ -2,5 +2,5 @@ transformation normalimport;
 import util;
 
 query foo(): String {
-    bar()
+    return bar()
 }

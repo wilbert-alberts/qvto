@@ -10,5 +10,5 @@ mapping main(pack: ecore::EPackage): ecore::EPackage {
 }
 
 query patch(inout pack: ecore::EPackage): OclVoid {
-   null
+   return null;
 }

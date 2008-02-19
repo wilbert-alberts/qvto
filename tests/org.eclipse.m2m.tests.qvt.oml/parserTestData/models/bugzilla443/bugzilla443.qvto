@@ -7,10 +7,10 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 }
 
 query String::toInt() : Integer {
-	1
+	return 1
 }
 
 query Integer::toZero() : String {
-	'Zero'
+	return 'Zero'
 }
 	

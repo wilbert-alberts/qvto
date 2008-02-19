@@ -62,7 +62,7 @@ query variableScopeCheck() : Integer {
 	}
 	endif;
 	
-	i; -- return
+	return i;
 }
 
 

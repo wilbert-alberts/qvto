@@ -3,5 +3,5 @@ library b2;
 import b1;
 
 query foo_b2(): String {
-	'b2->' + foo_b1();
+	return 'b2->' + foo_b1();
 }

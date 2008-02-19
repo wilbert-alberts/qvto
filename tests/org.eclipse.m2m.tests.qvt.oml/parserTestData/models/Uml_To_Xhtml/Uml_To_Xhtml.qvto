@@ -50,7 +50,7 @@ mapping package2row(in pack: uml::kernel::packages::Package) : xhtml::TrType {
 }
 
 query allPackages(root: uml::kernel::packages::Package) : Sequence(uml::kernel::packages::Package) {
-	root.nestedPackages->asSequence()->union(root.nestedPackages->collect(p | allPackages(p))->flatten()->asSequence())
+	return root.nestedPackages->asSequence()->union(root.nestedPackages->collect(p | allPackages(p))->flatten()->asSequence());
 
 }
 

@@ -25,9 +25,9 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 
 query getLowerBound() : Integer {	
     1;
-    0
+    return 0
 }
 
 query bar(): Real {
-	1
+	return 1
 }

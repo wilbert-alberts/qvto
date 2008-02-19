@@ -2,5 +2,5 @@ transformation selfimport;
 import selfimport;
 
 query foo(): String {
-    'foo'
+    return 'foo'
 }

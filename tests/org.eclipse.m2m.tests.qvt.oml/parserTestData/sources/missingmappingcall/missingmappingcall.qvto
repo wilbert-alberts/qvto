@@ -2,5 +2,5 @@ transformation missingmappingcall;
 metamodel 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';
 
 query base(): simpleuml::DataType {
-    miss()
+    return miss()
 }

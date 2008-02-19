@@ -165,13 +165,13 @@ mapping EAnnotation::fooMapping() : EParameter {
 }
 
 query EPackage::queryX() : String {
-	'value'
+	return 'value'
 }
 
 query queryX() : String {
-	'value'
+	return 'value'
 }
 
 query EPackage::queryY() : String {
-	''
+	return ''
 }
