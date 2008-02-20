@@ -2567,37 +2567,48 @@ public class QvtOperationalVisitorCS
         TRACE("visitImperativeIterateExp: ", name);//$NON-NLS-1$
         
         EClassifier resultElementType = null;
-        OCLExpression<EClassifier> conditionExp = null;
+
         if (name.equals("xselect") || name.equals("selectOne")) {//$NON-NLS-1$ //$NON-NLS-2$
             resultElementType = sourceCollectionType.getElementType();
-        } else if (name.equals("collectselect") || name.equals("collectselectOne")
-                || name.equals("xcollect") || name.equals("collectOne")) { //$NON-NLS-1$ //$NON-NLS-2$
+        } else {
+            // Body may be defined explicitly - then it is the collectselect(One) shorthand or xcollect/collectOne.
+            // It may be contained it the target variable - then it is the full notation of collectselect(One).
             if (imperativeIterateExpCS.getBody() != null) {
-                // This is the case with collectselect shorthand
-                // list->prop[res| res.startswith("_")];
-                // equivalent to
-                // list->collectselect(i;res= i.prop | not res.startswith("_"))
                 OCLExpression<EClassifier> bodyExp = oclExpressionCS(imperativeIterateExpCS.getBody(), env);
                 astNode.setBody(bodyExp);
-                if (!isInnermostIteratorRelated(vdcl, bodyExp)) {
-                    env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_FeatureNotFoundForType,
-                            new Object[] {QvtOperationalTypesUtil.getTypeFullName(vdcl.getType())}),
-                            imperativeIterateExpCS.getBody());
+                if (((imperativeIterateExpCS.getTarget() == null) || (imperativeIterateExpCS.getTarget().getInitExpression() == null))
+                        && (name.equals("collectselect") || name.equals("collectselectOne"))) { //$NON-NLS-1$ //$NON-NLS-2$
+                    // This is the case with collectselect(One) shorthand
+                    // list->prop[res| res.startswith("_")];
+                    // equivalent to
+                    // list->collectselect(i;res = i.prop | res.startswith("_"))
+                    if (!isInnermostIteratorRelated(vdcl, bodyExp)) {
+                        env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_FeatureNotFoundForType,
+                                new Object[] {QvtOperationalTypesUtil.getTypeFullName(vdcl.getType())}),
+                                imperativeIterateExpCS.getBody());
+                    }
+                    if (imperativeIterateExpCS.getTarget() == null) {
+                        Variable<EClassifier, EParameter> targetVdcl = genVariableDeclaration(imperativeIterateExpCS, "visitImperativeIterateExp", env, null, //$NON-NLS-1$
+                                bodyExp.getType(), null, false, true, false);
+                        astNode.setTarget(targetVdcl);
+                    }
                 }
-                resultElementType = bodyExp.getType();
-                Variable<EClassifier, EParameter> targetVdcl;
-                if (imperativeIterateExpCS.getTarget() == null) {
-                    targetVdcl = genVariableDeclaration(imperativeIterateExpCS, "visitImperativeIterateExp", env, null, //$NON-NLS-1$
-                            bodyExp.getType(), null, false, true, false);
-                } else {
-                    targetVdcl = variableDeclarationCS(imperativeIterateExpCS.getTarget(), env, true);
-                    targetVdcl.setType(bodyExp.getType());
+            } 
+            if (imperativeIterateExpCS.getTarget() != null) {
+                Variable<EClassifier, EParameter> targetVdcl = variableDeclarationCS(imperativeIterateExpCS.getTarget(), env, true);
+                if (targetVdcl.getInitExpression() != null) {
+                    astNode.setBody(targetVdcl.getInitExpression()); // the body is transferred from the target variable due to containment
                 }
                 astNode.setTarget(targetVdcl);
             }
+            resultElementType = astNode.getBody().getType();
+            if ((astNode.getTarget() != null) && (astNode.getTarget().getType() == null)) {
+                astNode.getTarget().setType(resultElementType);
+            }
         }
-        if (imperativeIterateExpCS.getCondition() != null) {        
-            conditionExp = oclExpressionCS(imperativeIterateExpCS.getCondition(), env);
+        
+        if (imperativeIterateExpCS.getCondition() != null) { 
+            OCLExpression<EClassifier> conditionExp = oclExpressionCS(imperativeIterateExpCS.getCondition(), env);
             astNode.setCondition(conditionExp);
             if (conditionExp instanceof TypeExp<?>) {
                 TypeExp<EClassifier> typedCondition = (TypeExp<EClassifier>) conditionExp;

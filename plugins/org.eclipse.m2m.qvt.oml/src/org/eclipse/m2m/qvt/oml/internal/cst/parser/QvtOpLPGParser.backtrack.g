@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.39 2008/02/18 15:33:57 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.40 2008/02/20 20:02:42 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -368,7 +368,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.39 2008/02/18 15:33:57 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.40 2008/02/20 20:02:42 aigdalov Exp $
  */
 	./
 $End
@@ -2660,7 +2660,7 @@ $Rules
 							iterators,
 							null,
 							switchExpCS,
-							createBooleanLiteralExpCS("true") //$NON-NLS-1$
+							null
 						);
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
 					
@@ -2977,27 +2977,47 @@ $Rules
 
 	loopExpCS -> imperativeIterateExpCS
 
-	imperativeIteratorExpCSToken -> xselect
-	imperativeIteratorExpCSToken -> xcollect
-	imperativeIteratorExpCSToken -> selectOne
-	imperativeIteratorExpCSToken -> collectOne
-	imperativeIteratorExpCSToken -> collectselect
-	imperativeIteratorExpCSToken -> collectselectOne
+        -- here x12 means full notation in the 1 and 2 forms, x3 - in the 3 form
+	-- <source> -> <collector-name> (<body_or_condition>) ;                              (1)
+	-- <source> -> <collector-name> (<iterator-list> | <body_or_condition>) ;            (2)
+	-- <source> -> <collector-name> (<iterator-list>; <target> = <body> | <condition>) ; (3)
 
-	imperativeIterateExpCS ::= imperativeIteratorExpCSToken '(' imperativeIterContents ')'
+	imperativeIteratorExpCSToken12 -> xselect
+	imperativeIteratorExpCSToken12 -> xcollect
+	imperativeIteratorExpCSToken12 -> selectOne
+	imperativeIteratorExpCSToken12 -> collectOne
+
+	imperativeIteratorExpCSToken3 -> collectselect
+	imperativeIteratorExpCSToken3 -> collectselectOne
+
+	imperativeIteratorExpCSToken -> imperativeIteratorExpCSToken12
+	imperativeIteratorExpCSToken -> imperativeIteratorExpCSToken3
+
+
+	imperativeIterateExpCS ::= imperativeIteratorExpCSToken12 '(' imperativeIterContents12 ')'
+		/.$NewCase./
+	imperativeIterateExpCS ::= imperativeIteratorExpCSToken3 '(' imperativeIterContents3 ')'
 		/.$BeginJava
+					String opCode = getTokenText($getToken(1));
 					SimpleNameCS simpleNameCS = createSimpleNameCS(
 								SimpleTypeEnum.KEYWORD_LITERAL,
-								getTokenText($getToken(1))
+								opCode
 							);
 					setOffsets(simpleNameCS, getIToken($getToken(1)));
-					Object[] iterContents = (Object[])$getSym(3);
+					Object[] iterContents = (Object[]) $getSym(3);
+					OCLExpressionCS bodyCS = null;
+					OCLExpressionCS conditionCS = null;
+					if ("xcollect".equals(opCode) || "collectOne".equals(opCode)) { //$NON-NLS-1$ //$NON-NLS-2$ 
+					    bodyCS = (OCLExpressionCS) iterContents[2];
+					} else {
+					    conditionCS = (OCLExpressionCS) iterContents[2];
+					}
 					CSTNode result = createImperativeIterateExpCS(
 							simpleNameCS,
 							(EList<VariableCS>)iterContents[0],
 							(VariableCS)iterContents[1],
-							null,
-							(OCLExpressionCS)iterContents[2]
+							bodyCS,
+							conditionCS
 						);
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
 					$setResult(result);
@@ -3024,7 +3044,7 @@ $Rules
 		./
 		
 
-	imperativeIterContents ::= oclExpressionCS
+	imperativeIterContents12 ::= oclExpressionCS
 		/.$BeginJava
 					$setResult(new Object[] {
 							$EMPTY_ELIST,
@@ -3034,7 +3054,7 @@ $Rules
 		  $EndJava
 		./
 	
-	imperativeIterContents ::= variableListCS '|' oclExpressionCS
+	imperativeIterContents12 ::= variableListCS '|' oclExpressionCS
 		/.$BeginJava
 					$setResult(new Object[] {
 							$getSym(1),
@@ -3045,7 +3065,7 @@ $Rules
 		./
 
 
-	imperativeIterContents ::= variableListCS ';' variableCS '|' oclExpressionCS
+	imperativeIterContents3 ::= variableListCS ';' variableCS2 '|' oclExpressionCS
 		/.$BeginJava
 					$setResult(new Object[] {
 							$getSym(1),
