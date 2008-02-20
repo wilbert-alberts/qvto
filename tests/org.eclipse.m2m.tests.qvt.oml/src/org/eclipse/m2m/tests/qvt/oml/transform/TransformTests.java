@@ -81,6 +81,11 @@ public class TransformTests {
 
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {
+                new FileToFileData("bug2437_1"), //$NON-NLS-1$                
+                new FileToFileData("bug2437_2"), //$NON-NLS-1$                
+                new FileToFileData("bug2437_3"), //$NON-NLS-1$                
+                new FileToFileData("bug2437_4"), //$NON-NLS-1$                
+                new FileToFileData("bug2437_5"), //$NON-NLS-1$                
                 new FileToFileData("bug2839"), //$NON-NLS-1$                
         		new FileToFileData("populationSection"), //$NON-NLS-1$
         		new FileToFileData("inoutMapping"), //$NON-NLS-1$
@@ -247,6 +252,6 @@ public class TransformTests {
             "egetcodegen", // java method can't be called//$NON-NLS-1$
             "bug214718", // platform protocol URI metamodel reference //$NON-NLS-1$
             "_while", "oclAllInstances", "bug216317", "simplestXCollectShorthand", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-            "bug2787", "bug2839" // uses getEClassifier() defined on ecore //$NON-NLS-1$ //$NON-NLS-2$
+            "bug2787", "bug2839", "bug2437_4", "bug2437_5" // uses getEClassifier() defined on ecore //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     }));
 }
