@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.15 2008/02/18 15:33:46 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.16 2008/02/20 20:04:17 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.15 2008/02/18 15:33:46 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.16 2008/02/20 20:04:17 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser;
@@ -52,13 +52,13 @@ public interface LightweightTypeParsersym {
       TK_NOT_EQUAL = 24,
       TK_LPAREN = 1,
       TK_RPAREN = 3,
-      TK_LBRACE = 84,
-      TK_RBRACE = 85,
+      TK_LBRACE = 85,
+      TK_RBRACE = 86,
       TK_LBRACKET = 92,
       TK_RBRACKET = 94,
       TK_ARROW = 107,
       TK_BAR = 88,
-      TK_COMMA = 86,
+      TK_COMMA = 84,
       TK_COLON = 89,
       TK_COLONCOLON = 90,
       TK_SEMICOLON = 87,
@@ -278,9 +278,9 @@ public interface LightweightTypeParsersym {
                  "invresolveone",
                  "invresolveIn",
                  "invresolveoneIn",
+                 "COMMA",
                  "LBRACE",
                  "RBRACE",
-                 "COMMA",
                  "SEMICOLON",
                  "BAR",
                  "COLON",
