@@ -290,7 +290,8 @@ public class QvtEditor extends TextEditor {
         if (s == null) {
             return;
         }
-        if(s.getShell() == null || s.getShell().isDisposed() || s.getShell().getDisplay() == null) {
+        if(s.getShell() == null || s.getShell().isDisposed() || s.getShell().getDisplay() == null ||
+        	s.getShell().getDisplay().isDisposed()) {
         	// NPE and disposed status check
         	return;
         }
