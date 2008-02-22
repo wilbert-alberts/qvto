@@ -92,7 +92,7 @@ public class ParserTests {
         TestData.createSourceChecked("impError", 3, 0), //$NON-NLS-1$        
         new TestData("assignereadonlyprop", 1), //$NON-NLS-1$
         new TestData("nonbooleanguard", 1), //$NON-NLS-1$
-        new TestData("sameparamname", 2), //$NON-NLS-1$
+        TestData.createSourceChecked("sameparamname", 2, 0), //$NON-NLS-1$
         new TestData("badtype", 1), //$NON-NLS-1$
         new TestData("simple", 0),   //$NON-NLS-1$
         new TestData("selfimport", 1), //$NON-NLS-1$

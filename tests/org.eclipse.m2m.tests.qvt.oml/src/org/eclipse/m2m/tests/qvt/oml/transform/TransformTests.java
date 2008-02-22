@@ -81,6 +81,9 @@ public class TransformTests {
 
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {
+        		new FileToFileData("mapDisjuncts"), //$NON-NLS-1$ 
+        		new FileToFileData("mapInherits"), //$NON-NLS-1$        		
+        		new FileToFileData("mapMerges"), //$NON-NLS-1$        
                 new FileToFileData("bug2437_1"), //$NON-NLS-1$                
                 new FileToFileData("bug2437_2"), //$NON-NLS-1$                
                 new FileToFileData("bug2437_3"), //$NON-NLS-1$                
