@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.internal.ast.parser;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
@@ -20,6 +21,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalAstWalker;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.qvt.oml.expressions.MappingCallExp;
 import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
@@ -28,8 +30,10 @@ import org.eclipse.m2m.qvt.oml.expressions.ReturnExp;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
+import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.parser.ValidationVisitor;
 import org.eclipse.ocl.util.TypeUtil;
+import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.UMLReflection;
 import org.eclipse.ocl.utilities.Visitable;
 import org.eclipse.ocl.utilities.Visitor;
@@ -136,5 +140,20 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 		return super.visitMappingOperation(operation);
 	}
 	
-	
+	@Override
+	public Object visitOperationBody(OperationBody operationBody) {
+		if(operationBody instanceof MappingBody == false) {
+			ImperativeOperation operation = operationBody.getOperation();
+			if(operation.getEType() == null || operation.getEType() == fEnv.getOCLStandardLibrary().getOclVoid()) {
+				return Boolean.TRUE;
+			}
+			EList<OCLExpression<EClassifier>> content = operationBody.getContent();
+			if(content.isEmpty() || content.get(content.size() - 1) instanceof ReturnExp == false) {
+				ASTNode problemTarget = operation;
+				String message = Messages.getString("QvtOperationalValidationVisitor.useReturnExpForOperationResult"); //$NON-NLS-1$
+				fEnv.reportWarning(message, problemTarget.getStartPosition(), operationBody.getStartPosition());
+			}
+		}
+		return super.visitOperationBody(operationBody);
+	}
 }
