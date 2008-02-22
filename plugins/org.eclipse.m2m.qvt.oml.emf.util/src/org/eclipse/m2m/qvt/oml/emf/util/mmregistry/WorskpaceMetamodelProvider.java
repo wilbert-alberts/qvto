@@ -55,9 +55,22 @@ public class WorskpaceMetamodelProvider implements IMetamodelProvider {
 				
 		EPackage.Descriptor ePackageDesc = new DescImpl(metamodelResourceURI, resSet);
 		IMetamodelDesc desc = new EmfMetamodelDesc(ePackageDesc, metamodelID, namespace);
-		metamodels.add(desc);
-		return desc;
+		return addMetamodelDesc(metamodelID, desc);
 	}
+
+    protected IMetamodelDesc addMetamodelDesc(String metamodelID, IMetamodelDesc desc) {
+        boolean isAlreadyDefined = false;
+		for (IMetamodelDesc metamodel : metamodels) {
+            if (metamodelID.equals(metamodel.getId())) {
+                isAlreadyDefined = true;
+                break;
+            }
+        }
+		if (!isAlreadyDefined) {
+	        metamodels.add(desc);
+		}
+		return desc;
+    }
 		
 	public IMetamodelDesc[] getMetamodels() {
 		return metamodels.toArray(new IMetamodelDesc[metamodels.size()]);
