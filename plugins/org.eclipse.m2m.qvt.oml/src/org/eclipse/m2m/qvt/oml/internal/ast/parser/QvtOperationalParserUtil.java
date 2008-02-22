@@ -13,6 +13,9 @@ package org.eclipse.m2m.qvt.oml.internal.ast.parser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -33,6 +36,7 @@ import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.expressions.LocalProperty;
+import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.expressions.ModuleImport;
@@ -44,7 +48,10 @@ import org.eclipse.m2m.qvt.oml.expressions.VariableInitExp;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.GraphWalker;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.GraphWalker.NodeProvider;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.GraphWalker.VertexProcessor;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingDeclarationCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingMethodCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.TransformationHeaderCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.temp.ScopedNameCS;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CollectionTypeCS;
 import org.eclipse.ocl.cst.PathNameCS;
@@ -72,6 +79,7 @@ public class QvtOperationalParserUtil {
 	private static final String NAMESPACE_SEPARATOR = "."; //$NON-NLS-1$
 	
 	private static final String QVT_NAMESPACE_URI = "http://www.eclipse.org/m2m/1.0.0/QVT"; //$NON-NLS-1$
+	private static final String QVT_IS_ABSTACT = "isAbstract"; //$NON-NLS-1$
 	private static final String OPERATION_OWNING_MODULE_URI = QVT_NAMESPACE_URI + "/module"; //$NON-NLS-1$
 	private static final String MODULE_OWNED_OPERATION_URI =	QVT_NAMESPACE_URI + "/operation"; //$NON-NLS-1$;	
 
@@ -87,6 +95,23 @@ public class QvtOperationalParserUtil {
 		return getContextualType(operation) != null;
 	}
 
+	public static String getMappingStringRepresentation(MappingMethodCS operationCS) {
+		MappingDeclarationCS mappingDeclarationCS = operationCS.getMappingDeclarationCS();
+		if(mappingDeclarationCS != null) {
+			StringBuilder buf = new StringBuilder();
+			if(mappingDeclarationCS.getContextType() != null) {
+				buf.append(QvtOperationalParserUtil.getStringRepresentation(mappingDeclarationCS.getContextType()));
+				buf.append(QvtOperationalTypesUtil.TYPE_NAME_SEPARATOR);
+			}
+			if(mappingDeclarationCS.getSimpleNameCS() != null) {				
+				buf.append(mappingDeclarationCS.getSimpleNameCS().getValue());
+			}
+			return buf.toString();
+		}
+		
+		return ""; //$NON-NLS-1$
+	}
+	
 	public static String getStringRepresentation(PathNameCS pathName, String pathSeparator) {
 		StringBuffer buffer = null;
 		for (Iterator<String> it = pathName.getSequenceOfNames().iterator(); it.hasNext();) {
@@ -101,6 +126,19 @@ public class QvtOperationalParserUtil {
 		return buffer == null ? "" : buffer.toString(); //$NON-NLS-1$
 	}
 
+	public static String getStringRepresentation(ScopedNameCS scopedNameCS) {
+		StringBuilder buf = new StringBuilder();
+		if(scopedNameCS.getTypeCS() != null) {
+			buf.append(getStringRepresentation(scopedNameCS.getTypeCS()));
+			buf.append(QvtOperationalTypesUtil.TYPE_NAME_SEPARATOR);
+		}
+		
+		if(scopedNameCS.getName() != null) {			
+			buf.append(scopedNameCS.getName());			
+		}
+		return buf.toString();
+	}
+	
 	public static String getStringRepresentation(TypeCS typeCS) {
 		if (typeCS instanceof PrimitiveTypeCS) {
 			return ((PrimitiveTypeCS) typeCS).getValue();
@@ -611,6 +649,24 @@ public class QvtOperationalParserUtil {
 		}
 	};
 
+	public static String safeGetMappingQualifiedName(QvtOperationalEnv env, MappingOperation mappingOperation) {
+		if(mappingOperation != null) {
+			StringBuilder buf = new StringBuilder();			
+			EClassifier ctxType = getContextualType(mappingOperation);
+			
+			if(ctxType != null) {
+				buf.append(safeGetQualifiedName(env, ctxType));
+				buf.append(QvtOperationalTypesUtil.TYPE_NAME_SEPARATOR);
+			}
+			
+			if(mappingOperation.getName() != null) {
+				buf.append(mappingOperation.getName());
+			}
+			
+			return buf.toString();			
+		}
+		return ""; //$NON-NLS-1$
+	}
 	
 	/**
 	 * Null-safe variant of {@link UMLReflection#getQualifiedName(Object)}
@@ -620,7 +676,7 @@ public class QvtOperationalParserUtil {
 	 *            a classifier that may be <code>null</code>
 	 * @param defaultValue
 	 *            the default value if a non-null can not be derived
-	 * @return the name, or <code>defaultValue</code> if a non-null can not be
+	 * @return the name, or <code>defaultValue</code> if a non-null name can not be
 	 *         derived
 	 */	
 	public static String safeGetQualifiedName(QvtOperationalEnv env, EClassifier type, String defaultValue) {
@@ -649,7 +705,7 @@ public class QvtOperationalParserUtil {
 	 * 
 	 * @param type
 	 *            a classifier that may be <code>null</code>
-	 * @return the name, or empty string if a non-null can not be derived
+	 * @return the name, or empty string if a non-null name can not be derived
 	 */		
 	public static String safeGetQualifiedName(QvtOperationalEnv env, EClassifier type) {
 		return safeGetQualifiedName(env, type, ""); //$NON-NLS-1$
@@ -666,5 +722,49 @@ public class QvtOperationalParserUtil {
 			parent = parent.eContainer();
 		}
 		return result;
-	}	
+	}
+	
+	public static void markAsAbstractMappingOperation(MappingOperation mappingOperation) {
+		EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
+		annotation.setSource(QVT_NAMESPACE_URI);
+		annotation.getDetails().put(QVT_IS_ABSTACT, Boolean.toString(true));
+		mappingOperation.getEAnnotations().add(annotation);
+	}
+	
+	public static boolean isAbstractMappingOperation(MappingOperation mappingOperation) {
+		EAnnotation annotation = mappingOperation.getEAnnotation(QVT_NAMESPACE_URI);
+		if(annotation != null) {
+			String value = annotation.getDetails().get(QVT_IS_ABSTACT);
+			return Boolean.valueOf(value);
+		}
+		return false;
+	}
+	
+	public static CSTNode getImperativeOperationProblemNode(MappingMethodCS methodCS) {
+		MappingDeclarationCS mappingDeclCS = methodCS.getMappingDeclarationCS();
+		if(mappingDeclCS != null) {
+			if(mappingDeclCS.getSimpleNameCS() != null) {
+				return mappingDeclCS.getSimpleNameCS();
+			}
+			
+			if(mappingDeclCS.getContextType() != null) {
+				return mappingDeclCS.getContextType();
+			}
+		}
+		return methodCS;
+	}
+	
+	public static <T> Collection<T> selectDuplicateQualifiers(List<T> elements) {
+		Set<T> result = null;
+		for (T nextQualifier : elements) {
+			if(Collections.frequency(elements, nextQualifier) > 1) {
+				if(result == null) {
+					result = new HashSet<T>(2);   
+				}
+				
+				result.add(nextQualifier);
+			}
+		} 
+		return (result != null) ? result : Collections.<T>emptySet();
+	}
 }

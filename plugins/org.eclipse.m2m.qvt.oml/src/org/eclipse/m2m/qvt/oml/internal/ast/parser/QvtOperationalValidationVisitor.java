@@ -19,7 +19,10 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalAstWalker;
+import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.expressions.MappingBody;
+import org.eclipse.m2m.qvt.oml.expressions.MappingCallExp;
+import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.qvt.oml.expressions.OperationBody;
 import org.eclipse.m2m.qvt.oml.expressions.ReturnExp;
 import org.eclipse.ocl.ecore.CallOperationAction;
@@ -67,6 +70,23 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 			EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> myOclValidationVisitor;
 		
 	}
+	
+	@Override
+	public Object visitMappingCallExp(MappingCallExp mappingCallExp) {
+		if(mappingCallExp.getReferredOperation() instanceof MappingOperation) {
+			MappingOperation mappingOperation = (MappingOperation) mappingCallExp.getReferredOperation();
+			
+			if(QvtOperationalUtil.hasAbstractOutputParamerter(mappingOperation) && 
+					QvtOperationalParserUtil.isAbstractMappingOperation(mappingOperation) &&
+					mappingOperation.getDisjunct().isEmpty()) {
+				String errMessage = NLS.bind(Messages.getString("QvtOperationalValidationVisitor.directCallToAbstractMappingDisallowed"), //$NON-NLS-1$
+						QvtOperationalParserUtil.safeGetMappingQualifiedName(fEnv, mappingOperation));
+				
+				fEnv.reportError(errMessage,  mappingCallExp.getStartPosition(), mappingCallExp.getEndPosition());
+			}
+		}
+		return super.visitMappingCallExp(mappingCallExp);
+	}
 
 	
 	@Override
@@ -108,4 +128,13 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 		
 		return super.visitReturnExp(returnExp);
 	}
+	
+	@Override
+	public Object visitMappingOperation(MappingOperation operation) {		
+		MappingExtensionHelper.validate(operation, fEnv);
+		
+		return super.visitMappingOperation(operation);
+	}
+	
+	
 }

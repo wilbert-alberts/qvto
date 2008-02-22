@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackage.java,v 1.11 2008/02/18 12:13:54 radvorak Exp $
+ * $Id: CSTPackage.java,v 1.12 2008/02/22 18:15:35 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst;
 
@@ -818,13 +818,22 @@ public interface CSTPackage extends EPackage {
     int MAPPING_METHOD_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
 
     /**
+	 * The feature id for the '<em><b>Qualifiers</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_METHOD_CS__QUALIFIERS = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 0;
+
+				/**
 	 * The feature id for the '<em><b>Mapping Declaration CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int MAPPING_METHOD_CS__MAPPING_DECLARATION_CS = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 0;
+    int MAPPING_METHOD_CS__MAPPING_DECLARATION_CS = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 1;
 
     /**
 	 * The number of structural features of the '<em>Mapping Method CS</em>' class.
@@ -833,7 +842,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-    int MAPPING_METHOD_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 1;
+    int MAPPING_METHOD_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 2;
 
     /**
 	 * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.impl.MappingRuleCSImpl <em>Mapping Rule CS</em>}' class.
@@ -864,6 +873,15 @@ public interface CSTPackage extends EPackage {
     int MAPPING_RULE_CS__END_OFFSET = MAPPING_METHOD_CS__END_OFFSET;
 
     /**
+	 * The feature id for the '<em><b>Qualifiers</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_RULE_CS__QUALIFIERS = MAPPING_METHOD_CS__QUALIFIERS;
+
+				/**
 	 * The feature id for the '<em><b>Mapping Declaration CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -955,6 +973,15 @@ public interface CSTPackage extends EPackage {
     int MAPPING_QUERY_CS__END_OFFSET = MAPPING_METHOD_CS__END_OFFSET;
 
     /**
+	 * The feature id for the '<em><b>Qualifiers</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_QUERY_CS__QUALIFIERS = MAPPING_METHOD_CS__QUALIFIERS;
+
+				/**
 	 * The feature id for the '<em><b>Mapping Declaration CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3272,6 +3299,17 @@ public interface CSTPackage extends EPackage {
 
 
 				/**
+	 * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.QualifierKindCS <em>Qualifier Kind CS</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.QualifierKindCS
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.CSTPackageImpl#getQualifierKindCS()
+	 * @generated
+	 */
+	int QUALIFIER_KIND_CS = 51;
+
+
+				/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS <em>Mapping Module CS</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3656,6 +3694,17 @@ public interface CSTPackage extends EPackage {
     EClass getMappingMethodCS();
 
     /**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.m2m.qvt.oml.internal.cst.MappingMethodCS#getQualifiers <em>Qualifiers</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Qualifiers</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.MappingMethodCS#getQualifiers()
+	 * @see #getMappingMethodCS()
+	 * @generated
+	 */
+	EAttribute getMappingMethodCS_Qualifiers();
+
+				/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.qvt.oml.internal.cst.MappingMethodCS#getMappingDeclarationCS <em>Mapping Declaration CS</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4871,6 +4920,16 @@ public interface CSTPackage extends EPackage {
 	EEnum getMappingExtensionKindCS();
 
 				/**
+	 * Returns the meta object for enum '{@link org.eclipse.m2m.qvt.oml.internal.cst.QualifierKindCS <em>Qualifier Kind CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Qualifier Kind CS</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.internal.cst.QualifierKindCS
+	 * @generated
+	 */
+	EEnum getQualifierKindCS();
+
+				/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -5205,6 +5264,14 @@ public interface CSTPackage extends EPackage {
         EClass MAPPING_METHOD_CS = eINSTANCE.getMappingMethodCS();
 
         /**
+		 * The meta object literal for the '<em><b>Qualifiers</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MAPPING_METHOD_CS__QUALIFIERS = eINSTANCE.getMappingMethodCS_Qualifiers();
+
+								/**
 		 * The meta object literal for the '<em><b>Mapping Declaration CS</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -6193,6 +6260,16 @@ public interface CSTPackage extends EPackage {
 		 * @generated
 		 */
 		EEnum MAPPING_EXTENSION_KIND_CS = eINSTANCE.getMappingExtensionKindCS();
+
+								/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.internal.cst.QualifierKindCS <em>Qualifier Kind CS</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.qvt.oml.internal.cst.QualifierKindCS
+		 * @see org.eclipse.m2m.qvt.oml.internal.cst.impl.CSTPackageImpl#getQualifierKindCS()
+		 * @generated
+		 */
+		EEnum QUALIFIER_KIND_CS = eINSTANCE.getQualifierKindCS();
 
     }
 

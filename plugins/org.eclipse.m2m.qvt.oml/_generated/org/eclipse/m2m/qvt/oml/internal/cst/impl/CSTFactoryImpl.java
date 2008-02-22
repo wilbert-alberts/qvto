@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.m2m.qvt.oml.internal.cst.*;
 import org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.BlockExpCS;
@@ -178,6 +179,8 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 				return createImportKindEnumFromString(eDataType, initialValue);
 			case CSTPackage.MAPPING_EXTENSION_KIND_CS:
 				return createMappingExtensionKindCSFromString(eDataType, initialValue);
+			case CSTPackage.QUALIFIER_KIND_CS:
+				return createQualifierKindCSFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -199,6 +202,8 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 				return convertImportKindEnumToString(eDataType, instanceValue);
 			case CSTPackage.MAPPING_EXTENSION_KIND_CS:
 				return convertMappingExtensionKindCSToString(eDataType, instanceValue);
+			case CSTPackage.QUALIFIER_KIND_CS:
+				return convertQualifierKindCSToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -691,6 +696,26 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	 * @generated
 	 */
 	public String convertMappingExtensionKindCSToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public QualifierKindCS createQualifierKindCSFromString(EDataType eDataType, String initialValue) {
+		QualifierKindCS result = QualifierKindCS.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertQualifierKindCSToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 

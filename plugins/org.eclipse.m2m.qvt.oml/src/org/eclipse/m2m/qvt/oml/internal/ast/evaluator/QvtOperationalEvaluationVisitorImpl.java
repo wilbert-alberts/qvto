@@ -283,7 +283,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     public Object visitHelper(Helper helper) {
         visitImperativeOperation(helper);
 
-        return visitOperationBody(helper.getBody());
+        return new OperationCallResult(visitOperationBody(helper.getBody()), getOperationalEvaluationEnv());
     }
 
     public Object visitImperativeOperation(ImperativeOperation imperativeOperation) {
@@ -324,11 +324,26 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     public Object visitLocalProperty(LocalProperty localProperty) {
         return localProperty.getExpression().accept(getVisitor());
     }
-
+    
+    protected boolean isWhenPreconditionSatisfied(MappingOperation mappingOperation) {
+    	if(mappingOperation.getWhen().isEmpty()) {
+    		return true;
+    	}
+    	for (OCLExpression<EClassifier> nextCond : mappingOperation.getWhen()) {
+    		if(!Boolean.TRUE.equals(nextCond.accept(getVisitor()))) {
+    			return false;
+    		}
+		}
+    	return true;
+    }
+    
     public Object visitMappingBody(MappingBody mappingBody) {
 		boolean hasResultVar = ! mappingBody.getOperation().getResult().isEmpty();
-		if(hasResultVar) {
-			getOperationalEvaluationEnv().add(QvtOperationalEnv.RESULT_VARIABLE_NAME, null);
+		QvtOperationalEvaluationEnv evalEnv = getOperationalEvaluationEnv();
+		
+		if(hasResultVar && evalEnv.getValueOf(QvtOperationalEnv.RESULT_VARIABLE_NAME) == null) {
+			// define 'result variable only if not done already by the reusing mapping caller 
+			evalEnv.replace(QvtOperationalEnv.RESULT_VARIABLE_NAME, null);
 		}
     	
         for (OCLExpression<EClassifier> initExp : mappingBody.getInitSection()) {
@@ -341,15 +356,31 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 			result = createOrGetResult((MappingOperation) mappingBody.getOperation());
 		}
 
+		MappingOperation currentMappingCalled = (MappingOperation) evalEnv.getOperation();
+		
+		// call inherited mappings
+		if(!currentMappingCalled.getInherited().isEmpty()) {
+			for (MappingOperation extendedMapping : currentMappingCalled.getInherited()) {
+				executeImperativeOperation(extendedMapping, evalEnv.getOperationSelf(), evalEnv.getOperationArgs(), true);				
+			}
+		}
+
         Object bodyResult = visitOperationBody(mappingBody);
         if (hasResultVar && bodyResult != null) {
-            result = bodyResult;
+            //result = bodyResult;
         }
 
         // TODO investigate possibility to modify result
         for (OCLExpression<EClassifier> endExp : mappingBody.getEndSection()) {
             endExp.accept(getVisitor());
         }
+        
+		// call merged mappings
+		if(!currentMappingCalled.getMerged().isEmpty()) {
+			for (MappingOperation extendedMapping : currentMappingCalled.getMerged()) {
+				executeImperativeOperation(extendedMapping, evalEnv.getOperationSelf(), evalEnv.getOperationArgs(), true);				
+			}
+		}
 
         return result;
     }
@@ -399,7 +430,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     		}
 
             if(method != null) {
-            	return executeImperativeOperation(method, source, args).myResult;
+            	return executeImperativeOperation(method, source, args, false).myResult;
             }
         }
 
@@ -435,29 +466,38 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         return el.getReferredEnumLiteral().getInstance();
     }
 
+    /**
+	 * @return result object or <code>null</code> in case that no result
+	 *         variable is declared and <code>OclInvalid</code> in case the
+	 *         precondition failed and the body was not executed.
+	 */
     public Object visitMappingOperation(MappingOperation mappingOperation) {
         visitImperativeOperation(mappingOperation);
 
-        OCLExpression<EClassifier> guard = (mappingOperation.getWhen().isEmpty() ? null : mappingOperation
-                .getWhen().get(0));
-        if (guard != null) {
-            Object guardValue = guard.accept(getVisitor());
-            if (false == guardValue instanceof Boolean
-                    || !Boolean.TRUE.equals(guardValue)) {
-                return null;
-            }
+        if (!isWhenPreconditionSatisfied(mappingOperation)) {
+        	// return Invalid, to indicate precondition failure to the caller. It is used instead of
+        	// of 'null' as it is a legal value for no result inout mapping, even
+        	// the precondition holds
+ 
+        	return new MappingCallResult(null, getOperationalEvaluationEnv(), MappingCallResult.PRECOND_FAILED);
         }
+        
+		if(!mappingOperation.getDisjunct().isEmpty()) {
+			return dispatchDisjuctMapping(mappingOperation);
+		}
 
         // check the traces whether the relation already holds
         TraceRecord traceRecord = getTrace(getContext().getTrace(), mappingOperation);
         if (traceRecord != null) {
             if (traceRecord.getResult().getResult().isEmpty()) {
-                return null;
+                return new MappingCallResult(null, getOperationalEvaluationEnv(), MappingCallResult.FETCHED_FROM_TRACE);
             }
-            return traceRecord.getResult().getResult().get(0).getValue().getOclObject(); // TODO : change it in case of multiple results
+            Object result = traceRecord.getResult().getResult().get(0).getValue().getOclObject(); // TODO : change it in case of multiple results
+            return new MappingCallResult(result, getOperationalEvaluationEnv(), MappingCallResult.FETCHED_FROM_TRACE);
         }
 
-        return ((OperationBodyImpl) mappingOperation.getBody()).accept(getVisitor());
+        return new MappingCallResult(((OperationBodyImpl) mappingOperation.getBody()).accept(getVisitor()),
+        				getOperationalEvaluationEnv(), MappingCallResult.BODY_EXECUTED);
     }
 
     public Object visitModule(Module module) {
@@ -504,7 +544,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 	        setCurrentEnvInstructionPointer(myEntryPoint); // initialize IP to the main entry header
 
 	        List<Object> entryArgs = makeEntryArgs(myEntryPoint, module);
-	        OperationCallResult callResult = executeImperativeOperation(myEntryPoint, null, entryArgs);
+	        OperationCallResult callResult = executeImperativeOperation(myEntryPoint, null, entryArgs, false);
 	        	        
 	        isInTerminatingState = true;
 	        processDeferredTasks();	        
@@ -1125,23 +1165,49 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     private static class OperationCallResult {
     	public Object myResult;
     	public QvtOperationalEvaluationEnv myEvalEnv;
+    	
+		OperationCallResult(Object myResult, QvtOperationalEvaluationEnv myEvalEnv) {
+			this.myResult = myResult;
+			this.myEvalEnv = myEvalEnv;
+		}
     }
-
     
-    private OperationCallResult executeImperativeOperation(ImperativeOperation method, Object source, List<Object> args) {
+    private static class MappingCallResult extends OperationCallResult {
+		static final int BODY_EXECUTED = 0;
+		static final int PRECOND_FAILED = 2;
+		static final int FETCHED_FROM_TRACE = 4;
+		static final int NO_DISJUCT_SELECTED = 8;		
+		
+		int myStatus;
+    	
+    	private MappingCallResult(Object myResult, QvtOperationalEvaluationEnv myEvalEnv, int status) {
+			super(myResult, myEvalEnv);
+			myStatus = status;
+		}
+    	boolean isBodyExecuted() { return myStatus == BODY_EXECUTED; }
+    	boolean isPreconditionFailed() { return (myStatus & PRECOND_FAILED) != 0; };
+    	boolean isFetchedFromTrace() { return (myStatus & FETCHED_FROM_TRACE) != 0; };
+    	boolean isNoDisjunctSelected() { return (myStatus & NO_DISJUCT_SELECTED) != 0; };    	
+    }
+    
+    private OperationCallResult executeImperativeOperation(ImperativeOperation method, Object source, List<Object> args, boolean isReusingMappingCall) {
+    	boolean isMapping = method instanceof MappingOperation;    	
         QvtOperationalEvaluationEnv oldEvalEnv = getOperationalEvaluationEnv();
         // create a nested evaluation environment for this operation call
         QvtOperationalEvaluationEnv nestedEnv = getOperationalEnv().getFactory().createEvaluationEnvironment(
         		oldEvalEnv.getContext(), oldEvalEnv);
-        // No need now to pass properties as variables, as they are accessed as module features
-        //addModuleProperties(nestedEnv, (Module)method.eContainer());
-
         nestedEnv.setOperation(method);
         
         nestedEnv.getOperationArgs().addAll(args);
         if (!isUndefined(source)) {
             nestedEnv.setOperationSelf(source);
         }
+        
+        if(isReusingMappingCall) {
+        	// let the reused mapping see the reusing caller's out/result parameters
+        	mapOperationOutAndResultParams(oldEvalEnv, nestedEnv);
+        }
+                        
         setOperationalEvaluationEnv(nestedEnv);
         
         // set IP initially to the method header
@@ -1149,10 +1215,11 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 
         OperationCallResult callResult = null;
         try {
-        	Object result = ((ImperativeOperationImpl) method).accept(getVisitor());
-        	callResult = new OperationCallResult();
-        	callResult.myResult = result;
-        	callResult.myEvalEnv = nestedEnv;
+        	Object result = ((ImperativeOperationImpl) method).accept(getVisitor());    	
+        	assert result instanceof OperationCallResult;
+        	assert !isMapping || result instanceof MappingCallResult;        	
+        	
+        	callResult = (OperationCallResult)result;
         }
         catch (ReturnExpEvent e) {
         	callResult = e.getResult();
@@ -1166,6 +1233,8 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         catch (RuntimeException e) {
         	if(canBePropagated(e)) {
         		throw e;
+        	} else {
+        		QvtPlugin.log(e);
         	}
         	if (e.getLocalizedMessage() != null) {
         		throwQvtException(new QvtRuntimeException(e.getLocalizedMessage()));
@@ -1175,18 +1244,96 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         	}
         }
         finally {
+            if(isMapping && isReusingMappingCall) {
+            	// reflect our output in the reusing mapping caller
+            	if(((MappingCallResult)callResult).isBodyExecuted()) {
+            		mapOperationOutAndResultParams(nestedEnv, oldEvalEnv);
+            	}
+            }        	
+
         	setOperationalEvaluationEnv(oldEvalEnv);
         }
         
     	return callResult;
     }
+        
+    private static void mapOperationOutAndResultParams(QvtOperationalEvaluationEnv sourceEnv, QvtOperationalEvaluationEnv targetEnv) {
+    	ImperativeOperation sourceOper = (ImperativeOperation)sourceEnv.getOperation();
+    	ImperativeOperation targetOper = (ImperativeOperation)targetEnv.getOperation();
+    	EList<? extends EParameter> sourceParams = sourceOper.getResult();
+    	EList<? extends EParameter> targetParams = targetOper.getResult();
+    	
+    	if(sourceParams.size() != targetParams.size()) {
+    		throw new IllegalArgumentException("Source/Target environment operations have incompatible signatures"); //$NON-NLS-1$
+    	}
+
+    	for (int i = 0; i < sourceParams.size(); i++) {
+    		Object parValue = sourceEnv.getValueOf(sourceParams.get(i).getName());
+    		targetEnv.replace(targetParams.get(i).getName(), parValue);    		
+		}
+
+    	sourceParams = sourceOper.getEParameters();
+    	targetParams = targetOper.getEParameters();
+    	if(sourceParams.size() != targetParams.size()) {
+    		throw new IllegalArgumentException("Source/Target environment operations have incompatible signatures"); //$NON-NLS-1$
+    	}
+    	
+    	for (int i = 0; i < sourceParams.size(); i++) {
+    		VarParameter sourceParam = (VarParameter) sourceParams.get(i);
+    		if(sourceParam.getKind() == DirectionKind.OUT) {
+    			Object parValue = sourceEnv.getValueOf(sourceParam.getName());
+    			targetEnv.replace(targetParams.get(i).getName(), parValue);
+    		}
+		}
+    }
+        
+    private MappingCallResult dispatchDisjuctMapping(MappingOperation method) {
+    	QvtOperationalEvaluationEnv evalEnv = getOperationalEvaluationEnv();
+    	Object source = evalEnv.getOperationSelf();
+    	List<Object> args = evalEnv.getOperationArgs();
+    	
+    	for (MappingOperation nextDisjunct : method.getDisjunct()) {
+    		EClassifier ctxType = QvtOperationalParserUtil.getContextualType(nextDisjunct);
+    		if(ctxType != null) {
+    			if(!evalEnv.isKindOf(source, nextDisjunct.getContext().getEType())) {
+    				continue;
+    			}
+    		} 
+
+    		EList<EParameter> params = nextDisjunct.getEParameters();
+    		if(params.size() != args.size()) {
+    			continue;
+    		}
+
+    		for (int i = 0; i < args.size(); i++) {
+    			Object nextArg = args.get(i);
+    			EClassifier nextParamType = params.get(i).getEType();    			
+    			if(!evalEnv.isKindOf(nextArg, nextParamType)) {
+    				continue;
+    			}
+			}
+
+    		MappingCallResult result = (MappingCallResult)executeImperativeOperation(nextDisjunct, source, args, false);
+    		if(!result.isPreconditionFailed()) {
+    			// precondition holds, mapping either executed, fetched from trace, or disjuncted
+    			result.myStatus = MappingCallResult.BODY_EXECUTED; // from disjuncting mapping consider as executed
+    			return result;
+    		}
+		}
+    	
+    	return new MappingCallResult(null, myEvalEnv, MappingCallResult.NO_DISJUCT_SELECTED);
+    }
+    
 
     /**
      * Subclasses may indicate whether the given runtime exception caught is known and 
      * should be propagated. 
      */
     protected boolean canBePropagated(RuntimeException exception) {
-    	return false;
+    	// Allow the return event to be propagated from Essential OCL expressions
+    	// The current m2m QVT concrete syntax does not allow this but in principal, 
+    	// the QVT specification does not prohibit this
+    	return exception instanceof ReturnExpEvent;
     }
     
     protected final void throwQvtException(QvtRuntimeException exception) throws QvtRuntimeException {
@@ -1583,9 +1730,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 		private final OperationCallResult fResult;
 		
 		ReturnExpEvent(Object returnValue, QvtOperationalEvaluationEnv evalEnv) {
-			fResult = new OperationCallResult();
-			fResult.myResult = returnValue;
-			fResult.myEvalEnv = evalEnv;
+			fResult = new OperationCallResult(returnValue, evalEnv);
 		}
 		
 		public OperationCallResult getResult() {

@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnvFactory;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEvaluationEnv;
@@ -24,6 +25,7 @@ import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.qvt.oml.expressions.ModelParameter;
+import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.qvt.oml.internal.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.ocl.Environment;
@@ -166,6 +168,32 @@ public class QvtOperationalUtil {
 
         return Boolean.valueOf(env.isTypeOf(value, type));
 	}
+    
+    public static boolean isAbstract(EClassifier eClassifier) {
+		if(eClassifier instanceof EClass) {    	
+			EClass eClass = (EClass)eClassifier;
+			return eClass.isAbstract() || eClass.isInterface();
+		}
+		return false;
+    }
+    
+    public static boolean hasAbstractOutputParamerter(ImperativeOperation operation) {
+    	for (VarParameter nextParam : operation.getResult()) {
+    		if(nextParam.getEType() != null && isAbstract(nextParam.getEType())) {
+   				return true;
+    		}
+		}
+    	
+    	for (EParameter eParam : operation.getEParameters()) {
+    		if(eParam instanceof VarParameter) {
+    			VarParameter varParam = (VarParameter) eParam;
+    			if(varParam.getEType() != null && isAbstract(varParam.getEType())) {
+    				return true;
+    			}
+    		}
+		}
+    	return false;
+    }
     
 	private static final Object ourOclInvalid = new QvtOperationalEnvFactory().createEnvironment(null).getOCLStandardLibrary().getOclInvalid();
 	private static final EClassifier ourOclVoid = new QvtOperationalEnvFactory().createEnvironment(null).getOCLStandardLibrary().getOclVoid();

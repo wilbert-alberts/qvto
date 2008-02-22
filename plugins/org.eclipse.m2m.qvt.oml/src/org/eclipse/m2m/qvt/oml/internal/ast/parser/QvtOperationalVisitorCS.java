@@ -94,6 +94,8 @@ import org.eclipse.m2m.qvt.oml.internal.cst.LogExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingBodyCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingCallExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingDeclarationCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionKindCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingInitCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingMethodCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
@@ -106,6 +108,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.OutExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.PackageRefCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ParameterDeclarationCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.PatternPropertyExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.QualifierKindCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.RenameCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ResolveInExpCS;
@@ -121,6 +124,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.m2m.qvt.oml.internal.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorCallExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.temp.ErrorVariableInitializationCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.qvt.oml.library.QvtResolveUtil;
 import org.eclipse.m2m.qvt.oml.ocl.OclQvtoPlugin;
 import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryCreationException;
@@ -1715,6 +1719,29 @@ public class QvtOperationalVisitorCS
 		else {
 			visitMappingQueryCS((MappingQueryCS) methodCS, env, (Helper)declaredOperation);
 		}
+
+		// process operation qualifiers
+		EList<QualifierKindCS> qualifiersCS = methodCS.getQualifiers();
+		
+		if(declaredOperation instanceof MappingOperation) {
+			for (QualifierKindCS nextQualifierCS : qualifiersCS) {
+				if(nextQualifierCS != QualifierKindCS.ABSTRACT) {
+					// only 'abstract' qualifier for mapping is currently supported 
+					String errMessage = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_unsupportedQualifierOnOperation, 
+							nextQualifierCS.getName(), QvtOperationalParserUtil.getMappingStringRepresentation(methodCS));
+					env.reportError(errMessage, QvtOperationalParserUtil.getImperativeOperationProblemNode(methodCS));
+				} else {
+					QvtOperationalParserUtil.markAsAbstractMappingOperation((MappingOperation) declaredOperation);
+				}
+			}
+		}
+		
+		Collection<QualifierKindCS> qualifierDups = QvtOperationalParserUtil.selectDuplicateQualifiers(qualifiersCS);
+		for(QualifierKindCS duplicate : qualifierDups) {
+			String errMessage = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_duplicateQualifierOnOperation, 
+					duplicate.getName(), QvtOperationalParserUtil.getMappingStringRepresentation(methodCS));			
+			env.reportError(errMessage, QvtOperationalParserUtil.getImperativeOperationProblemNode(methodCS));
+		}
 	}
 
 	private ImperativeOperation visitMappingRuleCS(MappingRuleCS methodCS, QvtOperationalEnv env, final MappingOperation operation)
@@ -1803,6 +1830,7 @@ public class QvtOperationalVisitorCS
 
 		checkAbstractOutParamsInitialized(operation.getResult(), methodCS, env);
 
+		processMappingExtensions(methodCS, operation, env);
 		return operation;
 	}
 
@@ -1855,7 +1883,98 @@ public class QvtOperationalVisitorCS
 				methodCS.getMappingDeclarationCS());
 		}
 	}
+	
+	/**
+	 * TODO - make a common resolution operation, reusable in for ResolveExp too. 
+	 */
+	private List<EOperation> resolveMappingOperationReference(ScopedNameCS identifierCS, QvtOperationalEnv env) {
+		List<EOperation> result = Collections.emptyList();
+		
+		TypeCS typeCS = identifierCS.getTypeCS();
+		EClassifier owningType = null;		
+		if(typeCS != null) {
+			owningType = visitTypeCS(typeCS, null, env);
+			if(owningType != null && identifierCS.getName() != null) {
+				result = env.lookupMappingOperations(owningType, identifierCS.getName());				
+			}
+		} else if(identifierCS.getName() != null) {	
+			// TODO - review why lookup does not return MappingOperation type collection
+			result = env.lookupMappingOperations(env.getModuleContextType(), identifierCS.getName());
+		}
+		// filter out inherited mappings
+		if(!result.isEmpty()) {
+			List<EOperation> ownerLocalOpers = new ArrayList<EOperation>(result.size());
+	        for (EOperation operation : result) {
+	            EClassifier owner = env.getUMLReflection().getOwningClassifier(operation);
+	            if ((typeCS == null && owner == null) || (TypeUtil.resolveType(env, owner) == owningType)) {
+	                ownerLocalOpers.add(operation);
+	            }	            
+	        }
+	        result = ownerLocalOpers;
+		} 
+		// validate the result
+		if(result.isEmpty()) {
+			if(owningType != null) {
+				// unresolved type reported above by visiTypeCS(...)
+				String errMessage = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_unresolvedMappingOperationReference,
+						QvtOperationalParserUtil.getStringRepresentation(identifierCS));
+				env.reportError(errMessage, identifierCS);
+			}
+		} else if(result.size() > 1) {
+			String errMessage = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ambiguousMappingOperationReference, 
+					QvtOperationalParserUtil.getStringRepresentation(identifierCS));
+			env.reportError(errMessage, identifierCS);			
+		}
+		
+		return result;
+	}
+	
+	private void processMappingExtensions(MappingRuleCS mappingCS, MappingOperation operation, QvtOperationalEnv env) {
+		if(!mappingCS.getMappingExtension().isEmpty()) {
+			for (MappingExtensionCS extensionCS : mappingCS.getMappingExtension()) {
+				MappingExtensionKindCS kind = extensionCS.getKind();
+				
+				for (ScopedNameCS identifierCS : extensionCS.getMappingIdentifiers()) {
+					List<EOperation> mappings = resolveMappingOperationReference(identifierCS, env);
+					if(mappings.isEmpty()) {
+						String errMessage = NLS.bind("Unresolved mapping operation ''{0}'' reference ''{1}''", //$NON-NLS-1$
+							kind.getName(), QvtOperationalParserUtil.getStringRepresentation(identifierCS));
+						env.reportError(errMessage, identifierCS);
+					} 
+					else if(mappings.size() > 1) {
+						String errMessage = NLS.bind("Ambiguous mapping operation reference ''{0}''. Multiple operations of different signatures defined.",  //$NON-NLS-1$
+								QvtOperationalParserUtil.getMappingStringRepresentation(mappingCS));
+						env.reportError(errMessage, identifierCS);						
+					} 
+					else {
+						boolean isAdded = false;
+						MappingOperation extendedMapping = (MappingOperation)mappings.get(0);
+						if(kind == MappingExtensionKindCS.INHERITS) {
+							isAdded = operation.getInherited().add(extendedMapping);
+							MappingExtensionHelper.bind2SourceElement(operation, identifierCS, kind);
+						} 
+						else if(kind == MappingExtensionKindCS.MERGES) {
+							isAdded = operation.getMerged().add(extendedMapping);
+							MappingExtensionHelper.bind2SourceElement(operation, identifierCS, kind);							
+						} 
+						else if(kind == MappingExtensionKindCS.DISJUNCTS) {
+							isAdded = operation.getDisjunct().add(extendedMapping);
+							MappingExtensionHelper.bind2SourceElement(operation, identifierCS, kind);							
+						}
 
+						if(!isAdded) {
+							// Note: duplicates checked here as the mapping AST is {unique, ordered}
+							env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_duplicateMappingRereferenceInExtensionKind, 
+								kind.getName(), QvtOperationalParserUtil.getStringRepresentation(identifierCS)), 
+								identifierCS);
+						}
+
+					}
+				}
+			}
+		}
+	}
+	
 	protected boolean visitMappingDeclarationCS(MappingDeclarationCS mappingDeclarationCS, QvtOperationalEnv env,
 			ImperativeOperation operation) throws SemanticException {
 		if (mappingDeclarationCS == null) {
@@ -2842,7 +2961,9 @@ public class QvtOperationalVisitorCS
                         // TODO: The check could be more accurate
                         return;
                     }
-                    env.reportError(ValidationMessages.QvtOperationalVisitorCS_AbstractTypesNotInitialized, methodCS);
+                    if(!methodCS.getQualifiers().contains(QualifierKindCS.ABSTRACT)) {
+                    	env.reportError(ValidationMessages.QvtOperationalVisitorCS_AbstractTypesNotInitialized, methodCS);
+                    }
                 }
             }
         }

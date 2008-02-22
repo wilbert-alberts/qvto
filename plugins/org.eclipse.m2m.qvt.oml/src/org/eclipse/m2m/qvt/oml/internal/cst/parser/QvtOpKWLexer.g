@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpKWLexer.g,v 1.11 2008/02/18 12:13:53 radvorak Exp $ 
+-- * $Id: QvtOpKWLexer.g,v 1.12 2008/02/22 18:15:33 radvorak Exp $ 
 -- */
 --
 -- The QVT KeyWord Lexer
@@ -76,7 +76,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpKWLexer.g,v 1.11 2008/02/18 12:13:53 radvorak Exp $
+ * $Id: QvtOpKWLexer.g,v 1.12 2008/02/22 18:15:33 radvorak Exp $
  */
 	./
 $End
@@ -135,6 +135,9 @@ $Export
 	collectselectOne
 	return
 	rename
+	disjuncts
+	merges
+	inherits	
 $End
 
 $Rules
@@ -192,6 +195,24 @@ $Rules
 		  $EndAction
 		./
 		
+		| d i s j u n c t s
+		/.$BeginAction
+			$setResult($_disjuncts);
+		  $EndAction
+		./
+		
+		| m e r g e s
+		/.$BeginAction
+			$setResult($_merges);
+		  $EndAction
+		./
+		
+		| i n h e r i t s
+		/.$BeginAction
+			$setResult($_inherits);
+		  $EndAction
+		./		
+
 		| r e t u r n
 		/.$BeginAction
 			$setResult($_return);
@@ -221,7 +242,13 @@ $Rules
 			$setResult($_helper);
 		  $EndAction
 		./		
-		
+
+		| h e l p e r
+		/.$BeginAction
+			$setResult($_helper);
+		  $EndAction
+		./		
+
 		| i n o u t
 		/.$BeginAction
 			$setResult($_inout);

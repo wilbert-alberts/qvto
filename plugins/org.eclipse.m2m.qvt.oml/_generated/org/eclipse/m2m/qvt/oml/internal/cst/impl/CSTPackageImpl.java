@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.11 2008/02/18 12:13:54 radvorak Exp $
+ * $Id: CSTPackageImpl.java,v 1.12 2008/02/22 18:15:34 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.impl;
 
@@ -62,6 +62,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.OutExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.PackageRefCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ParameterDeclarationCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.PatternPropertyExpCS;
+import org.eclipse.m2m.qvt.oml.internal.cst.QualifierKindCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.RenameCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ResolveExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.ResolveInExpCS;
@@ -447,6 +448,13 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * @generated
 	 */
 	private EEnum mappingExtensionKindCSEEnum = null;
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum qualifierKindCSEEnum = null;
 
 				/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -850,11 +858,20 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
     /**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getMappingMethodCS_Qualifiers() {
+		return (EAttribute)mappingMethodCSEClass.getEStructuralFeatures().get(0);
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
     public EReference getMappingMethodCS_MappingDeclarationCS() {
-		return (EReference)mappingMethodCSEClass.getEStructuralFeatures().get(0);
+		return (EReference)mappingMethodCSEClass.getEStructuralFeatures().get(1);
 	}
 
     /**
@@ -1876,6 +1893,15 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
 				/**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getQualifierKindCS() {
+		return qualifierKindCSEEnum;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -1949,6 +1975,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEAttribute(parameterDeclarationCSEClass, PARAMETER_DECLARATION_CS__DIRECTION_KIND);
 
 		mappingMethodCSEClass = createEClass(MAPPING_METHOD_CS);
+		createEAttribute(mappingMethodCSEClass, MAPPING_METHOD_CS__QUALIFIERS);
 		createEReference(mappingMethodCSEClass, MAPPING_METHOD_CS__MAPPING_DECLARATION_CS);
 
 		mappingRuleCSEClass = createEClass(MAPPING_RULE_CS);
@@ -2100,6 +2127,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		moduleKindEnumEEnum = createEEnum(MODULE_KIND_ENUM);
 		importKindEnumEEnum = createEEnum(IMPORT_KIND_ENUM);
 		mappingExtensionKindCSEEnum = createEEnum(MAPPING_EXTENSION_KIND_CS);
+		qualifierKindCSEEnum = createEEnum(QUALIFIER_KIND_CS);
 	}
 
     /**
@@ -2236,6 +2264,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEAttribute(getParameterDeclarationCS_DirectionKind(), this.getDirectionKindEnum(), "directionKind", null, 0, 1, ParameterDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(mappingMethodCSEClass, MappingMethodCS.class, "MappingMethodCS", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getMappingMethodCS_Qualifiers(), this.getQualifierKindCS(), "qualifiers", null, 0, -1, MappingMethodCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getMappingMethodCS_MappingDeclarationCS(), this.getMappingDeclarationCS(), null, "mappingDeclarationCS", null, 0, 1, MappingMethodCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(mappingRuleCSEClass, MappingRuleCS.class, "MappingRuleCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -2400,6 +2429,11 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		addEEnumLiteral(mappingExtensionKindCSEEnum, MappingExtensionKindCS.DISJUNCTS);
 		addEEnumLiteral(mappingExtensionKindCSEEnum, MappingExtensionKindCS.MERGES);
 		addEEnumLiteral(mappingExtensionKindCSEEnum, MappingExtensionKindCS.INHERITS);
+
+		initEEnum(qualifierKindCSEEnum, QualifierKindCS.class, "QualifierKindCS"); //$NON-NLS-1$
+		addEEnumLiteral(qualifierKindCSEEnum, QualifierKindCS.ABSTRACT);
+		addEEnumLiteral(qualifierKindCSEEnum, QualifierKindCS.BLACKBOX);
+		addEEnumLiteral(qualifierKindCSEEnum, QualifierKindCS.STATIC);
 
 		// Create resource
 		createResource(eNS_URI);

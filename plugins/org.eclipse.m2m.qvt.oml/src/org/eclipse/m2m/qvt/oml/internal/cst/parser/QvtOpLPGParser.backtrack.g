@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.40 2008/02/20 20:02:42 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.41 2008/02/22 18:15:33 radvorak Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -268,6 +268,8 @@ $Globals
 	import org.eclipse.m2m.qvt.oml.internal.cst.MappingDeclarationCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.MappingEndCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.MappingInitCS;
+	import org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionCS;	
+	import org.eclipse.m2m.qvt.oml.internal.cst.MappingRuleCS;	
 	import org.eclipse.m2m.qvt.oml.internal.cst.MappingQueryCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.OutExpCS;
 	import org.eclipse.m2m.qvt.oml.internal.cst.ReturnExpCS;	
@@ -351,6 +353,9 @@ $KeyWords
 	collectselectOne
 	return
 	rename
+	inherits
+	merges
+	disjuncts
 $End
 
 $Notice
@@ -368,7 +373,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.40 2008/02/20 20:02:42 aigdalov Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.41 2008/02/22 18:15:33 radvorak Exp $
  */
 	./
 $End
@@ -671,7 +676,7 @@ $Rules
 		/.$NewCase./
 	qualifierCS ::= static
 		/.$BeginJava
-					CSTNode result = createStringLiteralExpCS("'" + getTokenText($getToken(1)) + "'"); //$NON-NLS-1$ //$NON-NLS-2$
+					CSTNode result = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, getTokenText(dtParser.getToken(1)));
 					setOffsets(result, getIToken($getToken(1)));
 					$setResult(result);
 		  $EndJava
@@ -1171,34 +1176,103 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	mappingRuleCS ::= mapping mappingDeclarationCS mappingGuardOpt '{' mappingInitOpt mappingBodyOpt mappingEndOpt '}'  
+		
+	mappingRuleCS ::= qualifierListOpt mapping mappingDeclarationCS mappingExtraListCSOpt mappingGuardOpt '{' mappingInitOpt mappingBodyOpt mappingEndOpt '}'  
 		/.$BeginJava
-					MappingInitCS mappingInit = (MappingInitCS)$getSym(5);
-					MappingBodyCS mappingBody = (MappingBodyCS)$getSym(6);
-					MappingEndCS mappingEnd = (MappingEndCS)$getSym(7);
-					int bodyLeft = (mappingInit == null ?  getIToken($getToken(4)).getEndOffset() : mappingInit.getEndOffset());
-					int bodyRight = (mappingEnd == null ?  getIToken($getToken(8)).getEndOffset() : mappingEnd.getStartOffset());
-					int outBodyRight = (mappingEnd == null ?  getIToken($getToken(8)).getStartOffset() : mappingEnd.getStartOffset());
+					MappingInitCS mappingInit = (MappingInitCS)$getSym(7);
+					MappingBodyCS mappingBody = (MappingBodyCS)$getSym(8);
+					MappingEndCS mappingEnd = (MappingEndCS)$getSym(9);
+					int bodyLeft = (mappingInit == null ?  getIToken($getToken(6)).getEndOffset() : mappingInit.getEndOffset());
+					int bodyRight = (mappingEnd == null ?  getIToken($getToken(10)).getEndOffset() : mappingEnd.getStartOffset());
+					int outBodyRight = (mappingEnd == null ?  getIToken($getToken(10)).getStartOffset() : mappingEnd.getStartOffset());
 					if (mappingBody != null) {
 						bodyLeft = mappingBody.getStartOffset();
 						bodyRight = mappingBody.getEndOffset();
 					}
 
 					updateMappingBodyPositions(mappingBody, bodyLeft, bodyRight, bodyLeft, outBodyRight);
-					CSTNode result = createMappingRuleCS(
-							(MappingDeclarationCS)$getSym(2),
-							(OCLExpressionCS)$getSym(3),
+					MappingRuleCS result = createMappingRuleCS(
+							(MappingDeclarationCS)$getSym(3),
+							(OCLExpressionCS)$getSym(5),
 							mappingInit,
 							mappingBody,
 							mappingEnd
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(8)));
+						
+					EList<SimpleNameCS> qualifiers = (EList<SimpleNameCS>)dtParser.getSym(1);
+					if(!qualifiers.isEmpty()) {
+						result.getQualifiers().addAll(createQualifiersListCS(qualifiers));
+					}
+						
+					result.getMappingExtension().addAll(((EList<MappingExtensionCS>)dtParser.getSym(4)));
+					setOffsets(result, getIToken($getToken(2)), getIToken($getToken(9)));
 					$setResult(result);
 		  $EndJava
 		./
-	mappingRuleCS ::= mapping mappingDeclarationCS ';'  
+	
+	mappingExtraListCSOpt ::= $empty
+		/.$EmptyListAction./
+	mappingExtraListCSOpt -> mappingExtraListCS
+	mappingExtraListCS -> mappingExtensionCS
+						
+	mappingExtensionCS ::= mappingExtensionKeyCS scopedNameListCS mappingExtensionCS2
 		/.$BeginJava
-					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(2);
+				MappingExtensionCS result = createMappingExtension(getTokenText(dtParser.getToken(1)), (EList<ScopedNameCS>)dtParser.getSym(2));
+				EList<MappingExtensionCS> extensionList = (EList<MappingExtensionCS>)dtParser.getSym(3);  
+				extensionList.add(0, result);
+				
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(2)));
+				dtParser.setSym1(extensionList);
+		  $EndJava
+		./
+-- changing associativity to avoid conflicts with extensionKindCS with scopedNameCS
+-- to be eliminate during refactoring for ptc/07-07-07 grammar
+	mappingExtensionCS2 ::= mappingExtensionKeyCS scopedNameListCS mappingExtensionCS
+		/.$BeginJava
+				MappingExtensionCS result = createMappingExtension(getTokenText(dtParser.getToken(1)), (EList<ScopedNameCS>)dtParser.getSym(2));
+				EList<MappingExtensionCS> extensionList = (EList<MappingExtensionCS>)dtParser.getSym(3);  
+				extensionList.add(0, result);
+				
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(2)));
+				dtParser.setSym1(extensionList);
+		  $EndJava
+		./
+	mappingExtensionCS2 ::= mappingExtensionKeyCS scopedNameListCS
+		/.$BeginJava
+				MappingExtensionCS result = createMappingExtension(getTokenText(dtParser.getToken(1)), (EList<ScopedNameCS>)dtParser.getSym(2));
+				EList<MappingExtensionCS> extensionList = new BasicEList<MappingExtensionCS>();  
+				extensionList.add(result);
+				
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(2)));
+				dtParser.setSym1(extensionList);
+		  $EndJava
+		./
+		
+	mappingExtensionCS2 ::= $empty
+		/.$EmptyListAction./
+		
+	mappingExtensionKeyCS -> inherits	
+	mappingExtensionKeyCS -> merges	
+	mappingExtensionKeyCS -> disjuncts	
+			
+	scopedNameListCS ::= scopedNameCS
+		/.$BeginJava
+					EList result = new BasicEList();
+					result.add($getSym(1));
+					$setResult(result);
+		  $EndJava
+		./
+	scopedNameListCS ::= scopedNameListCS ',' scopedNameCS
+		/.$BeginJava
+					EList result = (EList)$getSym(1);
+					result.add($getSym(3));
+					$setResult(result);
+		  $EndJava
+		./
+
+	mappingRuleCS ::= qualifierListOpt mapping mappingDeclarationCS ';'  
+		/.$BeginJava
+					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(3);
 					CSTNode result = createMappingRuleCS(
 							mappingDecl,
 							null,
@@ -1207,13 +1281,13 @@ $Rules
 							null
 						);
 					mappingDecl.setBlackBox(true);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
 					$setResult(result);
 		  $EndJava
 		./
-	mappingRuleCS ::= mapping mappingDeclarationCS qvtErrorToken  
+	mappingRuleCS ::= qualifierListOpt mapping mappingDeclarationCS qvtErrorToken  
 		/.$BeginJava
-					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(2);
+					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(3);
 					CSTNode result = createMappingRuleCS(
 							mappingDecl,
 							null,
@@ -1226,7 +1300,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	mappingRuleCS ::= mapping qvtErrorToken
+	mappingRuleCS ::= qualifierListOpt mapping qvtErrorToken
 		/.$BeginJava
 					MappingDeclarationCS mappingDecl = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createMappingDeclarationCS();
 					mappingDecl.setSimpleNameCS(createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, "")); //$NON-NLS-1$
@@ -1237,7 +1311,7 @@ $Rules
 							null,
 							null
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(2)));
 					$setResult(result);
 		  $EndJava
 		./

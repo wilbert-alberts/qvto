@@ -77,6 +77,8 @@
       <eLiterals name="inout"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="MappingMethodCS" abstract="true" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="qualifiers" unique="false"
+          upperBound="-1" eType="#//cst/QualifierKindCS"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="mappingDeclarationCS"
           eType="#//cst/MappingDeclarationCS" containment="true"/>
     </eClassifiers>
@@ -318,6 +320,11 @@
       <eLiterals name="disjuncts" value="1"/>
       <eLiterals name="merges" value="2"/>
       <eLiterals name="inherits" value="3"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="QualifierKindCS">
+      <eLiterals name="abstract" value="1"/>
+      <eLiterals name="blackbox" value="2"/>
+      <eLiterals name="static" value="3"/>
     </eClassifiers>
     <eSubpackages name="temp" nsURI="http://www.eclipse.org/QVT2/1.0.0/Operational/cst/temp"
         nsPrefix="qvtoperational.cst.temp">
