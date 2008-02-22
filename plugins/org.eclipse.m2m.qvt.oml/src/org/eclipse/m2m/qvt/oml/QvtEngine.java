@@ -21,7 +21,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
-import org.eclipse.m2m.qvt.oml.common.io.eclipse.MetamodelRegistryProvider;
+import org.eclipse.m2m.qvt.oml.common.io.eclipse.InstanceBasedMetamodelRegistryProvider;
 import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.qvt.oml.compiler.IImportResolver;
 import org.eclipse.m2m.qvt.oml.compiler.IImportResolverFactory;
@@ -90,11 +90,7 @@ public class QvtEngine {
 	}
     
 	private void reset(QvtCompilerOptions options) { // TODO: QvtException
-	    if ((options == null) || options.isWorkspaceModelResolutionEnabled()) {
-	        myCompiler = new QvtCompiler(myImportResolver);
-	    } else {
-	        myCompiler = new QvtCompiler(myImportResolver, new MetamodelRegistryProvider());
-	    }
+        myCompiler = new QvtCompiler(myImportResolver, new InstanceBasedMetamodelRegistryProvider((options == null) ? null : options.getInObjects()));
 	}
 	
 	private static Map<IProject, QvtEngine> ourEnginesMap = new HashMap<IProject, QvtEngine>();

@@ -1,5 +1,16 @@
+/*******************************************************************************
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *   
+ * Contributors:
+ *     Borland Software Corporation - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.compiler;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalVisitorCS;
 
 /**
@@ -14,6 +25,7 @@ public class QvtCompilerOptions {
     private boolean isWorkspaceModelResolutionEnabled = true;
     private boolean isSourceLineNumbersEnabled = true;    
     private QvtOperationalVisitorCS myQvtOperationalVisitorCS = null;
+    private EObject[] myInObjects = null;
     
     public boolean isReportErrors() {
         return isReportErrors;
@@ -68,4 +80,12 @@ public class QvtCompilerOptions {
     public boolean isSourceLineNumbersEnabled() {
 		return isSourceLineNumbersEnabled;
 	}
+
+    public EObject[] getInObjects() {
+        return myInObjects;
+    }
+
+    public void setInObjects(EObject[] inObjects) {
+        myInObjects = inObjects;
+    }
 }
