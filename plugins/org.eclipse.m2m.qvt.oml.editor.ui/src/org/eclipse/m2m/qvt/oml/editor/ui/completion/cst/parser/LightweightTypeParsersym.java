@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.16 2008/02/20 20:04:17 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.17 2008/02/22 18:15:48 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.16 2008/02/20 20:04:17 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.17 2008/02/22 18:15:48 radvorak Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser;
@@ -188,6 +188,9 @@ public interface LightweightTypeParsersym {
       TK_collectselectOne = 123,
       TK_return = 105,
       TK_rename = 156,
+      TK_inherits = 157,
+      TK_merges = 158,
+      TK_disjuncts = 159,
       TK_IDENTIFIER = 2,
       TK_ERROR_TOKEN = 4,
       TK_INTEGER_RANGE_START = 106,
@@ -350,7 +353,10 @@ public interface LightweightTypeParsersym {
                  "blackbox",
                  "abstract",
                  "static",
-                 "rename"
+                 "rename",
+                 "inherits",
+                 "merges",
+                 "disjuncts"
              };
 
     public final static boolean isValidForParser = true;
