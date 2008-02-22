@@ -106,8 +106,12 @@ public class WorkspaceMetamodelRegistryProvider implements IMetamodelRegistryPro
 		return MetamodelRegistry.getInstance();
 	}
 	
+	protected WorskpaceMetamodelProvider createWorskpaceMetamodelProvider() {
+	    return new WorskpaceMetamodelProvider(resolutionRSet);
+	}
+	
 	private MetamodelRegistry createRegistry(MappingContainer mappings, String namespace) {
-		WorskpaceMetamodelProvider metamodelProvider = new WorskpaceMetamodelProvider(resolutionRSet);				
+		WorskpaceMetamodelProvider metamodelProvider = createWorskpaceMetamodelProvider();				
 		
 		for (URIMapping nextMapping : mappings.getMapping()) {
 			URI uri = null;
