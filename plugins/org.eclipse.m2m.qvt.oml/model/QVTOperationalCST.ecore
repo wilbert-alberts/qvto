@@ -92,7 +92,7 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="mappingEndCS" eType="#//cst/MappingEndCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="mappingExtension" upperBound="-1"
-          eType="#//cst/MappingExtensionCS"/>
+          eType="#//cst/MappingExtensionCS" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="MappingQueryCS" eSuperTypes="#//cst/MappingMethodCS">
       <eStructuralFeatures xsi:type="ecore:EReference" name="expressions" upperBound="-1"
@@ -314,7 +314,7 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="#//cst/MappingExtensionKindCS"
           defaultValueLiteral="disjuncts"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="mappingIdentifiers" lowerBound="1"
-          upperBound="-1" eType="#//cst/temp/ScopedNameCS"/>
+          upperBound="-1" eType="#//cst/temp/ScopedNameCS" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EEnum" name="MappingExtensionKindCS">
       <eLiterals name="disjuncts" value="1"/>
@@ -334,7 +334,8 @@
         <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="ScopedNameCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
-        <eStructuralFeatures xsi:type="ecore:EReference" name="typeCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="typeCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
+            containment="true"/>
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1"
             eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </eClassifiers>

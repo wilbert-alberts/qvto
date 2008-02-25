@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempPackage.java,v 1.9 2008/02/19 00:01:25 radvorak Exp $
+ * $Id: TempPackage.java,v 1.10 2008/02/25 09:54:42 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.temp;
 
@@ -224,7 +224,7 @@ public interface TempPackage extends EPackage {
     int SCOPED_NAME_CS__END_OFFSET = CSTPackage.CST_NODE__END_OFFSET;
 
     /**
-	 * The feature id for the '<em><b>Type CS</b></em>' reference.
+	 * The feature id for the '<em><b>Type CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
@@ -508,10 +508,10 @@ public interface TempPackage extends EPackage {
     EClass getScopedNameCS();
 
     /**
-	 * Returns the meta object for the reference '{@link org.eclipse.m2m.qvt.oml.internal.cst.temp.ScopedNameCS#getTypeCS <em>Type CS</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.qvt.oml.internal.cst.temp.ScopedNameCS#getTypeCS <em>Type CS</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Type CS</em>'.
+	 * @return the meta object for the containment reference '<em>Type CS</em>'.
 	 * @see org.eclipse.m2m.qvt.oml.internal.cst.temp.ScopedNameCS#getTypeCS()
 	 * @see #getScopedNameCS()
 	 * @generated
@@ -650,7 +650,7 @@ public interface TempPackage extends EPackage {
         EClass SCOPED_NAME_CS = eINSTANCE.getScopedNameCS();
 
         /**
-		 * The meta object literal for the '<em><b>Type CS</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Type CS</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
 		 * @generated

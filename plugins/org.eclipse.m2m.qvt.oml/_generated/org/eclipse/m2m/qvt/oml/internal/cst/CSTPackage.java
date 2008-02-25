@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackage.java,v 1.12 2008/02/22 18:15:35 radvorak Exp $
+ * $Id: CSTPackage.java,v 1.13 2008/02/25 09:54:42 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst;
 
@@ -927,7 +927,7 @@ public interface CSTPackage extends EPackage {
     int MAPPING_RULE_CS__MAPPING_END_CS = MAPPING_METHOD_CS_FEATURE_COUNT + 3;
 
     /**
-	 * The feature id for the '<em><b>Mapping Extension</b></em>' reference list.
+	 * The feature id for the '<em><b>Mapping Extension</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -3238,7 +3238,7 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_EXTENSION_CS__KIND = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 0;
 
 																/**
-	 * The feature id for the '<em><b>Mapping Identifiers</b></em>' reference list.
+	 * The feature id for the '<em><b>Mapping Identifiers</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -3770,10 +3770,10 @@ public interface CSTPackage extends EPackage {
     EReference getMappingRuleCS_MappingEndCS();
 
     /**
-	 * Returns the meta object for the reference list '{@link org.eclipse.m2m.qvt.oml.internal.cst.MappingRuleCS#getMappingExtension <em>Mapping Extension</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.qvt.oml.internal.cst.MappingRuleCS#getMappingExtension <em>Mapping Extension</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Mapping Extension</em>'.
+	 * @return the meta object for the containment reference list '<em>Mapping Extension</em>'.
 	 * @see org.eclipse.m2m.qvt.oml.internal.cst.MappingRuleCS#getMappingExtension()
 	 * @see #getMappingRuleCS()
 	 * @generated
@@ -4869,10 +4869,10 @@ public interface CSTPackage extends EPackage {
 	EAttribute getMappingExtensionCS_Kind();
 
 																/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionCS#getMappingIdentifiers <em>Mapping Identifiers</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionCS#getMappingIdentifiers <em>Mapping Identifiers</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Mapping Identifiers</em>'.
+	 * @return the meta object for the containment reference list '<em>Mapping Identifiers</em>'.
 	 * @see org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionCS#getMappingIdentifiers()
 	 * @see #getMappingExtensionCS()
 	 * @generated
@@ -5322,7 +5322,7 @@ public interface CSTPackage extends EPackage {
         EReference MAPPING_RULE_CS__MAPPING_END_CS = eINSTANCE.getMappingRuleCS_MappingEndCS();
 
         /**
-		 * The meta object literal for the '<em><b>Mapping Extension</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Mapping Extension</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -6214,7 +6214,7 @@ public interface CSTPackage extends EPackage {
 		EAttribute MAPPING_EXTENSION_CS__KIND = eINSTANCE.getMappingExtensionCS_Kind();
 
 																																/**
-		 * The meta object literal for the '<em><b>Mapping Identifiers</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Mapping Identifiers</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

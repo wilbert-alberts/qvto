@@ -19,6 +19,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingBodyCS;
@@ -94,7 +96,7 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 	protected MappingEndCS mappingEndCS;
 
 	/**
-	 * The cached value of the '{@link #getMappingExtension() <em>Mapping Extension</em>}' reference list.
+	 * The cached value of the '{@link #getMappingExtension() <em>Mapping Extension</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getMappingExtension()
@@ -301,7 +303,7 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 	 */
 	public EList<MappingExtensionCS> getMappingExtension() {
 		if (mappingExtension == null) {
-			mappingExtension = new EObjectResolvingEList<MappingExtensionCS>(MappingExtensionCS.class, this, CSTPackage.MAPPING_RULE_CS__MAPPING_EXTENSION);
+			mappingExtension = new EObjectContainmentEList<MappingExtensionCS>(MappingExtensionCS.class, this, CSTPackage.MAPPING_RULE_CS__MAPPING_EXTENSION);
 		}
 		return mappingExtension;
 	}
@@ -322,6 +324,8 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 				return basicSetMappingBodyCS(null, msgs);
 			case CSTPackage.MAPPING_RULE_CS__MAPPING_END_CS:
 				return basicSetMappingEndCS(null, msgs);
+			case CSTPackage.MAPPING_RULE_CS__MAPPING_EXTENSION:
+				return ((InternalEList<?>)getMappingExtension()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}

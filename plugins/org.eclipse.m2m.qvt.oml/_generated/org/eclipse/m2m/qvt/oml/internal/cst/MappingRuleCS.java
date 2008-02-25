@@ -147,7 +147,7 @@ public interface MappingRuleCS extends MappingMethodCS {
 	void setMappingEndCS(MappingEndCS value);
 
 	/**
-	 * Returns the value of the '<em><b>Mapping Extension</b></em>' reference list.
+	 * Returns the value of the '<em><b>Mapping Extension</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionCS}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -155,9 +155,9 @@ public interface MappingRuleCS extends MappingMethodCS {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Mapping Extension</em>' reference list.
+	 * @return the value of the '<em>Mapping Extension</em>' containment reference list.
 	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getMappingRuleCS_MappingExtension()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<MappingExtensionCS> getMappingExtension();

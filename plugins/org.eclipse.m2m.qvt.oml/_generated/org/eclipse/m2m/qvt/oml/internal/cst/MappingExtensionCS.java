@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingExtensionCS.java,v 1.2 2008/02/19 00:01:25 radvorak Exp $
+ * $Id: MappingExtensionCS.java,v 1.3 2008/02/25 09:54:42 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst;
 
@@ -75,7 +75,7 @@ public interface MappingExtensionCS extends CSTNode {
 	void setKind(MappingExtensionKindCS value);
 
 	/**
-	 * Returns the value of the '<em><b>Mapping Identifiers</b></em>' reference list.
+	 * Returns the value of the '<em><b>Mapping Identifiers</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.m2m.qvt.oml.internal.cst.temp.ScopedNameCS}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -83,9 +83,9 @@ public interface MappingExtensionCS extends CSTNode {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Mapping Identifiers</em>' reference list.
+	 * @return the value of the '<em>Mapping Identifiers</em>' containment reference list.
 	 * @see org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage#getMappingExtensionCS_MappingIdentifiers()
-	 * @model required="true"
+	 * @model containment="true" required="true"
 	 * @generated
 	 */
 	EList<ScopedNameCS> getMappingIdentifiers();

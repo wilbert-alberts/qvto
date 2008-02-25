@@ -1895,11 +1895,12 @@ public class QvtOperationalVisitorCS
 		if(typeCS != null) {
 			owningType = visitTypeCS(typeCS, null, env);
 			if(owningType != null && identifierCS.getName() != null) {
-				result = env.lookupMappingOperations(owningType, identifierCS.getName());				
+				result = env.lookupMappingOperations(TypeUtil.resolveType(env, owningType), identifierCS.getName());				
 			}
 		} else if(identifierCS.getName() != null) {	
 			// TODO - review why lookup does not return MappingOperation type collection
-			result = env.lookupMappingOperations(env.getModuleContextType(), identifierCS.getName());
+			owningType = env.getModuleContextType();
+			result = env.lookupMappingOperations(owningType, identifierCS.getName());
 		}
 		// filter out inherited mappings
 		if(!result.isEmpty()) {
@@ -1936,17 +1937,7 @@ public class QvtOperationalVisitorCS
 				
 				for (ScopedNameCS identifierCS : extensionCS.getMappingIdentifiers()) {
 					List<EOperation> mappings = resolveMappingOperationReference(identifierCS, env);
-					if(mappings.isEmpty()) {
-						String errMessage = NLS.bind("Unresolved mapping operation ''{0}'' reference ''{1}''", //$NON-NLS-1$
-							kind.getName(), QvtOperationalParserUtil.getStringRepresentation(identifierCS));
-						env.reportError(errMessage, identifierCS);
-					} 
-					else if(mappings.size() > 1) {
-						String errMessage = NLS.bind("Ambiguous mapping operation reference ''{0}''. Multiple operations of different signatures defined.",  //$NON-NLS-1$
-								QvtOperationalParserUtil.getMappingStringRepresentation(mappingCS));
-						env.reportError(errMessage, identifierCS);						
-					} 
-					else {
+					if(mappings.size() == 1) {
 						boolean isAdded = false;
 						MappingOperation extendedMapping = (MappingOperation)mappings.get(0);
 						if(kind == MappingExtensionKindCS.INHERITS) {
@@ -1969,6 +1960,9 @@ public class QvtOperationalVisitorCS
 								identifierCS);
 						}
 
+						if(getCompilerOptions().isGenerateCompletionData()) {
+							ASTBindingHelper.createCST2ASTBinding(identifierCS, extendedMapping);
+						}
 					}
 				}
 			}
@@ -3300,6 +3294,17 @@ public class QvtOperationalVisitorCS
 			if(itExpAST.getBody() instanceof FeatureCallExp) {
 				boundAST = (FeatureCallExp<EClassifier>) itExpAST.getBody();
 			}
+		} else if(result instanceof ImperativeIterateExp) {
+			ImperativeIterateExp impIterExpAST = (ImperativeIterateExp) result;
+			if(propertyCallExpCS instanceof ImperativeIterateExpCS) {
+				ImperativeIterateExpCS itExpCST = (ImperativeIterateExpCS) propertyCallExpCS;
+				if(itExpCST.getBody() != null) {
+					boundCST = itExpCST.getBody();
+				}
+			}
+			if(impIterExpAST.getBody() instanceof FeatureCallExp) {
+				boundAST = (FeatureCallExp<EClassifier>) impIterExpAST.getBody();
+			}			
 		}
 		ASTBindingHelper.createCST2ASTBinding(boundCST, boundAST, env);
 	}

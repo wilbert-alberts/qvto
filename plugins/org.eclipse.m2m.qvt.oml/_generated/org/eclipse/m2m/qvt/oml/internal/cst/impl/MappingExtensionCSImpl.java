@@ -11,16 +11,20 @@
  * 
  * 
  *
- * $Id: MappingExtensionCSImpl.java,v 1.2 2008/02/19 00:01:24 radvorak Exp $
+ * $Id: MappingExtensionCSImpl.java,v 1.3 2008/02/25 09:54:42 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.impl;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.m2m.qvt.oml.internal.cst.CSTPackage;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionCS;
@@ -71,7 +75,7 @@ public class MappingExtensionCSImpl extends CSTNodeImpl implements MappingExtens
 	protected MappingExtensionKindCS kind = KIND_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getMappingIdentifiers() <em>Mapping Identifiers</em>}' reference list.
+	 * The cached value of the '{@link #getMappingIdentifiers() <em>Mapping Identifiers</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getMappingIdentifiers()
@@ -127,9 +131,23 @@ public class MappingExtensionCSImpl extends CSTNodeImpl implements MappingExtens
 	 */
 	public EList<ScopedNameCS> getMappingIdentifiers() {
 		if (mappingIdentifiers == null) {
-			mappingIdentifiers = new EObjectResolvingEList<ScopedNameCS>(ScopedNameCS.class, this, CSTPackage.MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS);
+			mappingIdentifiers = new EObjectContainmentEList<ScopedNameCS>(ScopedNameCS.class, this, CSTPackage.MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS);
 		}
 		return mappingIdentifiers;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case CSTPackage.MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS:
+				return ((InternalEList<?>)getMappingIdentifiers()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**

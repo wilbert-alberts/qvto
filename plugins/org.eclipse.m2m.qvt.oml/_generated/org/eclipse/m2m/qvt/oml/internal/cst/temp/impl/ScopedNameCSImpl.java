@@ -11,11 +11,12 @@
  * 
  * 
  *
- * $Id: ScopedNameCSImpl.java,v 1.8 2008/02/19 00:01:25 radvorak Exp $
+ * $Id: ScopedNameCSImpl.java,v 1.9 2008/02/25 09:54:42 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.internal.cst.temp.impl;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -47,7 +48,7 @@ public class ScopedNameCSImpl extends CSTNodeImpl implements ScopedNameCS {
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
     /**
-	 * The cached value of the '{@link #getTypeCS() <em>Type CS</em>}' reference.
+	 * The cached value of the '{@link #getTypeCS() <em>Type CS</em>}' containment reference.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @see #getTypeCS()
@@ -101,36 +102,41 @@ public class ScopedNameCSImpl extends CSTNodeImpl implements ScopedNameCS {
 	 * @generated
 	 */
     public TypeCS getTypeCS() {
-		if (typeCS != null && typeCS.eIsProxy()) {
-			InternalEObject oldTypeCS = (InternalEObject)typeCS;
-			typeCS = (TypeCS)eResolveProxy(oldTypeCS);
-			if (typeCS != oldTypeCS) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TempPackage.SCOPED_NAME_CS__TYPE_CS, oldTypeCS, typeCS));
-			}
-		}
 		return typeCS;
 	}
 
     /**
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public TypeCS basicGetTypeCS() {
-		return typeCS;
+	public NotificationChain basicSetTypeCS(TypeCS newTypeCS, NotificationChain msgs) {
+		TypeCS oldTypeCS = typeCS;
+		typeCS = newTypeCS;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TempPackage.SCOPED_NAME_CS__TYPE_CS, oldTypeCS, newTypeCS);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
 	}
 
-    /**
+				/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
     public void setTypeCS(TypeCS newTypeCS) {
-		TypeCS oldTypeCS = typeCS;
-		typeCS = newTypeCS;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TempPackage.SCOPED_NAME_CS__TYPE_CS, oldTypeCS, typeCS));
+		if (newTypeCS != typeCS) {
+			NotificationChain msgs = null;
+			if (typeCS != null)
+				msgs = ((InternalEObject)typeCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TempPackage.SCOPED_NAME_CS__TYPE_CS, null, msgs);
+			if (newTypeCS != null)
+				msgs = ((InternalEObject)newTypeCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TempPackage.SCOPED_NAME_CS__TYPE_CS, null, msgs);
+			msgs = basicSetTypeCS(newTypeCS, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TempPackage.SCOPED_NAME_CS__TYPE_CS, newTypeCS, newTypeCS));
 	}
 
     /**
@@ -156,6 +162,20 @@ public class ScopedNameCSImpl extends CSTNodeImpl implements ScopedNameCS {
 
     /**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case TempPackage.SCOPED_NAME_CS__TYPE_CS:
+				return basicSetTypeCS(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -163,8 +183,7 @@ public class ScopedNameCSImpl extends CSTNodeImpl implements ScopedNameCS {
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case TempPackage.SCOPED_NAME_CS__TYPE_CS:
-				if (resolve) return getTypeCS();
-				return basicGetTypeCS();
+				return getTypeCS();
 			case TempPackage.SCOPED_NAME_CS__NAME:
 				return getName();
 		}
