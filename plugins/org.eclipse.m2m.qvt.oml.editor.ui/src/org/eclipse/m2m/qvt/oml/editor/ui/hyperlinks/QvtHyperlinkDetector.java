@@ -40,6 +40,7 @@ public class QvtHyperlinkDetector implements IHyperlinkDetector {
 				new PathNameHyperlinkDetector(),
 				new ObjectPropertyHyperlinkDetector(),
 				new VariableHyperlinkDetector(),
+				new ScopedIdentifierHyperLinkDetector(),
 				new OperationHyperlinkDetector(),
 				new ResolveInHyperlinkDetector()
 		};
