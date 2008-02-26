@@ -12,7 +12,6 @@
 package org.eclipse.m2m.qvt.oml;
 
 import org.eclipse.core.resources.IMarker;
-import org.eclipse.ocl.cst.CSTNode;
 
 
 /**
@@ -24,19 +23,15 @@ public class QvtMessage {
 	
 	public static final int SEVERITY_WARNING = IMarker.SEVERITY_WARNING;
 	
-	public QvtMessage(final String message, final int severity, final int offset, final int length) {
+	public QvtMessage(final String message, final int severity, final int offset, final int length, int lineNum) {
 		myMessage = message;
 		mySeverity = severity;
 		myPos = new TextPositionsImpl(offset, length);
+		this.myLineNum = lineNum;
 	}
-	public QvtMessage(final String message, final int severity, final CSTNode cstNode) {
-		this(message, severity, cstNode.getStartOffset(), cstNode.getEndOffset()-cstNode.getStartOffset()+1);
-	}
-	public QvtMessage(final String message, final CSTNode cstNode) {
-		this(message, SEVERITY_ERROR, cstNode);
-	}
+
 	public QvtMessage(final String message, final int offset, final int length) {
-		this(message, SEVERITY_ERROR, offset, length);
+		this(message, SEVERITY_ERROR, offset, length, -1);
 	}
 	
 	public QvtMessage(final String message) {
@@ -57,6 +52,10 @@ public class QvtMessage {
 	
 	public int getSeverity() {
 		return mySeverity;
+	}
+	
+	public int getLineNum() {
+		return myLineNum;
 	}
 	
 	@Override
@@ -146,6 +145,7 @@ public class QvtMessage {
 		private final int myLength;
 	}
 	
+	private final int myLineNum;
 	private final int mySeverity;
 	private final String myMessage;
 	private final TextPositionsImpl myPos;

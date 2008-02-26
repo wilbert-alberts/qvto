@@ -221,10 +221,13 @@ public class QvtBuilder extends IncrementalProjectBuilder {
         
     private void createQvtMarker(IFile curFile, QvtMessage e) {
         Map<String, Object> attributes = new HashMap<String, Object>();
-        attributes.put(IMarker.CHAR_START, new Integer(e.getOffset()));
-        attributes.put(IMarker.CHAR_END, new Integer(e.getOffset() + e.getLength()));
+        attributes.put(IMarker.CHAR_START, Integer.valueOf(e.getOffset()));
+        attributes.put(IMarker.CHAR_END, Integer.valueOf(e.getOffset() + e.getLength()));
         attributes.put(IMarker.MESSAGE, e.getMessage());
-        attributes.put(IMarker.SEVERITY, new Integer(e.getSeverity()));
+        attributes.put(IMarker.SEVERITY, Integer.valueOf(e.getSeverity()));
+        if (e.getLineNum() >= 0) {
+        	attributes.put(IMarker.LINE_NUMBER, Integer.valueOf(e.getLineNum()));
+        }
         try {
             IMarker marker = curFile.createMarker(QvtCompiler.PROBLEM_MARKER);
             marker.setAttributes(attributes);

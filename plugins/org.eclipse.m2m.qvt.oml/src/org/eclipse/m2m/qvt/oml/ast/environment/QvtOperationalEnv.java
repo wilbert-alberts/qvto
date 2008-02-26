@@ -59,6 +59,7 @@ import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.ExpressionsFactory;
 import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.lpg.AbstractLexer;
 import org.eclipse.ocl.lpg.AbstractParser;
 import org.eclipse.ocl.lpg.AbstractProblemHandler;
 import org.eclipse.ocl.lpg.ProblemHandler;
@@ -315,7 +316,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			}
 		}
 		if (!foundSameLocation) {
-			parent.myErrorsList.add(new QvtMessage(message, QvtMessage.SEVERITY_ERROR, startOffset, msgLength));
+			parent.myErrorsList.add(new QvtMessage(message, QvtMessage.SEVERITY_ERROR, startOffset, msgLength, getLineNum(parent, startOffset)));
 		}
 		
 		// TODO #199408  Use traces in QVTParser instead of System.xxx output facilities
@@ -330,12 +331,12 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		while (parent.getInternalParent() != null) {
 			parent = (QvtOperationalEnv) parent.getInternalParent();
 		}
-		parent.myWarningsList.add(new QvtMessage(message, QvtMessage.SEVERITY_WARNING, startOffset, endOffset-startOffset+1));
+		parent.myWarningsList.add(new QvtMessage(message, QvtMessage.SEVERITY_WARNING, startOffset, endOffset-startOffset+1, getLineNum(parent, startOffset)));
 
 		// TODO #199408  Use traces in QVTParser instead of System.xxx output facilities
 		//System.err.println("Warning: " + message + ", Pos: " + startOffset + "-" + endOffset);
 	}
-
+	
 	public void reportError(String message, CSTNode node) {
 		int startOffset = (node != null) ? node.getStartOffset() : 0;
 		int endOffset = (node != null) ? node.getEndOffset() : 0;
@@ -943,5 +944,26 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			}
 		}
 		super.initASTMapping(astNode, cstNode);
+	}
+
+	private static int getLineNum(QvtOperationalEnv env, int startOffset) {
+		if(startOffset < 0) {
+			return -1;
+		}
+		AbstractParser parser = env.getParser();
+		if(parser != null) {
+			AbstractLexer lexer = parser.getLexer();
+			if(lexer != null) {
+				if(startOffset <= lexer.getStreamLength()) {
+					try {
+						return lexer.getLineNumberOfCharAt(startOffset);	
+					} catch (RuntimeException e) {
+						// TODO - add trace
+						// do nothing, the line number just not available
+					}					
+				}
+			}
+		}
+		return -1;
 	}
 }

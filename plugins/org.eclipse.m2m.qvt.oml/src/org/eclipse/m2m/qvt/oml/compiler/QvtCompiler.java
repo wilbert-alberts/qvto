@@ -34,7 +34,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.m2m.qvt.oml.QvtMessage;
 import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnvFactory;
@@ -268,41 +267,28 @@ public class QvtCompiler {
     		moduleEnv.addSibling(importEnv);    		
     	}
     	
-    	result = analyse(mma, options, moduleEnv);
-    	result.getModule().getCompiledImports().addAll(compiledImports);
+    	Module module = analyse(mma, options, moduleEnv);
+
+    	for (ImportCS importCS : mma.getModuleCS().getImports()) { 
+			ParsedModuleCS parsedImportCS = mma.getParsedImport(importCS.getPathNameCS());
+			if (parsedImportCS != null && parsedImportCS.getEnvironment().hasErrors()) {
+				String errMessage = NLS.bind(CompilerMessages.importHasCompilationError, 
+						QvtOperationalParserUtil.getStringRepresentation(importCS.getPathNameCS()));
+				moduleEnv.reportError(errMessage, 
+						importCS.getStartOffset(), importCS.getEndOffset());
+			}
+    	}
+
+    	CompiledModule compiledModule = new CompiledModule(module, mma, mma.getSource(), moduleEnv.getAllProblemMessages());
+    	compiledModule.getCompiledImports().addAll(compiledImports);
+    	result = new QvtCompilationResult(compiledModule);
 
     	myCompilationResults.put(mma, result);    	
-
-    	for (ParsedModuleCS parsedImport : mma.getParsedImports()) {
-			QvtCompilationResult importCompilationResult = myCompilationResults.get(parsedImport);
-        	if (importCompilationResult != null && importCompilationResult.getErrors().length > 0) {
-	    		String importedModuleId = parsedImport.getStringName();
-	    		if(importedModuleId == null) {	    			
-	    			// this case is covered by syntax error report, 
-	    			continue;
-	    		}
-        		
-        		// find moduleImport syntax element
-        		ImportCS targetImportCS = null;
-        		for (ImportCS importCS : mma.getModuleCS().getImports()) {
-        			if (importedModuleId.equals(QvtOperationalParserUtil.getStringRepresentation(importCS.getPathNameCS(), "."))) { //$NON-NLS-1$
-        				targetImportCS = importCS;
-        				break;
-        			}
-				}
-        		if (targetImportCS != null) {
-        			result.getModule().addMessage(new QvtMessage(NLS.bind(CompilerMessages.importHasCompilationError, importedModuleId), targetImportCS));
-        		}
-        	}    		
-    	}
-    	
     	return result;
     }
     
-    private QvtCompilationResult analyse(final ParsedModuleCS mma, QvtCompilerOptions options,
+    private Module analyse(final ParsedModuleCS mma, QvtCompilerOptions options,
     		QvtOperationalFileEnv env) {
-        QvtCompilationResult result = null;
-        
         Module module = null;
         // FIXME - review this strange condition based on name nullity
         if (mma.getStringName() != null) {
@@ -327,10 +313,8 @@ public class QvtCompiler {
         	addSourceLineNumberInfo(mma, module);        	
         }
 
-        CompiledModule compModule = new CompiledModule(module, mma, mma.getSource(), env.getAllProblemMessages());
-        result = new QvtCompilationResult(compModule);
-                
-        return result;
+        
+        return module;
     }    
     
     private ParsedModuleCS getImportedModule(final CFile source, final String qualifiedName) {
