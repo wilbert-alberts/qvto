@@ -1264,20 +1264,6 @@ public class QvtOperationalVisitorCS
 				}
 			}
 
-			Set<String> libMetamodels = QvtOperationalParserUtil.getLibMetamodels(lib);
-			Set<EPackage> usedMetamodels = getUsedMetamodels(module);
-			Set<String> usedMetamodelUri = new HashSet<String>(usedMetamodels.size());
-			for (EPackage usedMetamodel : usedMetamodels) {
-				usedMetamodelUri.add(usedMetamodel.getNsURI());
-			}
-			if (!usedMetamodelUri.containsAll(libMetamodels)) {
-				LinkedHashSet<String> missingMetamodels = new LinkedHashSet<String>(libMetamodels);
-				missingMetamodels.removeAll(usedMetamodelUri);
-				env.reportError(NLS.bind(ValidationMessages.MissingMetamodelsRequiredByLibrary, new Object[] {
-						libId, missingMetamodels }), impPath);
-				continue;
-			}
-
 			if (!myLoadedLibraries.contains(libId)) {
 				try {
 					lib.loadOperations();
