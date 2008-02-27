@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.41 2008/02/22 18:15:33 radvorak Exp $ 
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.42 2008/02/27 14:29:58 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -344,7 +344,8 @@ $KeyWords
 	result
 	main
 	this
-	switch	
+	switch
+	case	
 	xselect         
 	xcollect        
 	selectOne       
@@ -373,7 +374,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.41 2008/02/22 18:15:33 radvorak Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.42 2008/02/27 14:29:58 sboyko Exp $
  */
 	./
 $End
@@ -2723,8 +2724,10 @@ $Rules
 						);
 					if (switchBody[2] instanceof IToken) { // In case of correct and incorrect syntax
 						setOffsets(switchExpCS, getIToken($getToken(1)), (IToken) switchBody[2]);
-					} else { // In case of errors in switchBody
+					} else if (switchBody[2] instanceof CSTNode) { // In case of errors in switchBody
 						setOffsets(switchExpCS, getIToken($getToken(1)), (CSTNode) switchBody[2]);
+					} else { // In case of errors in switchBody
+						setOffsets(switchExpCS, getIToken($getToken(1)), getIToken($getToken(4)));
 					}
 
 					EList<VariableCS> iterators = new BasicEList<VariableCS>();
@@ -2801,6 +2804,17 @@ $Rules
 		  $EndJava
 		./
 	
+	switchAltExpCS ::= case '(' oclExpressionCS ')' expressionStatementCS
+		/.$BeginJava
+					CSTNode result = createSwitchAltExpCS(
+							(OCLExpressionCS) $getSym(3),
+							(OCLExpressionCS) $getSym(5)
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
+					$setResult(result);
+		  $EndJava
+		./
+	
 	switchAltExpCS ::= '(' oclExpressionCS ')' '?' statementCS qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createSwitchAltExpCS(
@@ -2851,6 +2865,12 @@ $Rules
 	switchElseExpCS ::= else '?' statementCS ';'
 		/.$BeginJava
 					$setResult((CSTNode)$getSym(3));
+		  $EndJava
+		./
+
+	switchElseExpCS ::= else expressionStatementCS
+		/.$BeginJava
+					$setResult((CSTNode)$getSym(2));
 		  $EndJava
 		./
 
@@ -3046,6 +3066,10 @@ $Rules
 				$setResult(result);
           $EndJava
 		./
+
+	expressionStatementCS -> statementCS ';'
+	expressionStatementCS -> blockExpCS
+	expressionStatementCS -> blockExpCS ';'
 
 	-- imperative iterators
 

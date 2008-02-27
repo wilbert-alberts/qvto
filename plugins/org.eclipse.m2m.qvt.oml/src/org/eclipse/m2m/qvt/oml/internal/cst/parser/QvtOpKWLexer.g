@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpKWLexer.g,v 1.12 2008/02/22 18:15:33 radvorak Exp $ 
+-- * $Id: QvtOpKWLexer.g,v 1.13 2008/02/27 14:29:57 sboyko Exp $ 
 -- */
 --
 -- The QVT KeyWord Lexer
@@ -76,7 +76,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpKWLexer.g,v 1.12 2008/02/22 18:15:33 radvorak Exp $
+ * $Id: QvtOpKWLexer.g,v 1.13 2008/02/27 14:29:57 sboyko Exp $
  */
 	./
 $End
@@ -127,6 +127,7 @@ $Export
 	main
 	this
 	switch
+	case
 	xselect         
 	xcollect        
 	selectOne       
@@ -237,12 +238,6 @@ $Rules
 		  $EndAction
 		./
 		
-		| h e l p e r
-		/.$BeginAction
-			$setResult($_helper);
-		  $EndAction
-		./		
-
 		| h e l p e r
 		/.$BeginAction
 			$setResult($_helper);
@@ -450,6 +445,12 @@ $Rules
 		| s w i t c h
 		/.$BeginAction
 			$setResult($_switch);
+		  $EndAction
+		./
+		
+		| c a s e
+		/.$BeginAction
+			$setResult($_case);
 		  $EndAction
 		./
 		
