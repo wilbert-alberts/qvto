@@ -1,7 +1,5 @@
 @echo off
 
-set LPG_HOME=C:\Eclipse_DISTR\LPG\lpgdistribution-05-16-06\lpgdistribution\
-
 if not defined LPG_HOME goto no_home_var
 if not exist %LPG_HOME% goto home_dir_notFound
 
