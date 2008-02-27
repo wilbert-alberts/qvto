@@ -1244,7 +1244,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         	}
         }
         finally {
-            if(isMapping && isReusingMappingCall) {
+            if(isMapping && isReusingMappingCall && callResult != null) {
             	// reflect our output in the reusing mapping caller
             	if(((MappingCallResult)callResult).isBodyExecuted()) {
             		mapOperationOutAndResultParams(nestedEnv, oldEvalEnv);
