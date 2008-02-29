@@ -120,7 +120,7 @@ public class VariableHyperlinkDetector implements IHyperlinkDetectorHelper {
 				}
 			}
 		} else if(nameCS.eContainer() instanceof ParameterDeclarationCS) {
-			return (ParameterDeclarationCS) nameCS;
+			return (ParameterDeclarationCS) nameCS.eContainer();
 		} else if(nameCS.eContainer() instanceof TypeSpecCS) {
 			// model extent qualifier used with type
 			TypeSpecCS typeSpecCS = (TypeSpecCS) nameCS.eContainer();
