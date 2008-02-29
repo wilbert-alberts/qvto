@@ -35,7 +35,7 @@ public class ParsedModuleCS {
 			throw new IllegalArgumentException();
 		}
 		
-		if(parser.getEnvironment() == null) {
+		if(false == parser.getEnvironment() instanceof QvtOperationalEnv) {
 			throw new IllegalArgumentException("Parser without environment"); //$NON-NLS-1$
 		}
 		
@@ -55,7 +55,7 @@ public class ParsedModuleCS {
 	}
 	
 	public QvtOperationalEnv getEnvironment() {
-		return myParser.getEnvironment();
+		return (QvtOperationalEnv) myParser.getEnvironment();
 	}
 	
 	public AbstractQVTParser getParser() {

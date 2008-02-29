@@ -19,7 +19,6 @@ import lpg.lpgjavaruntime.IToken;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.AssignStatementCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.BlockExpCS;
@@ -107,11 +106,6 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		super(lexStream);
 	}
 	
-	@Override
-	public QvtOperationalEnv getEnvironment() {	
-		return (QvtOperationalEnv) super.getEnvironment();
-	}
-	 		
 	@Override
 	public QvtOpLexer getLexer() {
 		return (QvtOpLexer) super.getLexStream();
@@ -282,7 +276,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 					setOffsets(nameCS, tokenText);
 				}
 				else {
-					nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, "");
+					nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, ""); //$NON-NLS-1$
 				}
 				result.setSimpleNameCS(nameCS);
 				result.setTypeSpecCS(typeSpecCS);
@@ -590,7 +584,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 			EList<PackageRefCS> packageRefList, EList<StatementCS> whereList) {
 				ModelTypeCS result = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createModelTypeCS();
 				SimpleNameCS identifierCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL,
-							(identifier.getPrsStream() == null ? "" : identifier.toString()));
+							(identifier.getPrsStream() == null ? "" : identifier.toString())); //$NON-NLS-1$
 				identifierCS.setStartOffset(identifier.getStartOffset());
 				identifierCS.setEndOffset(identifier.getEndOffset());
 				result.setIdentifierCS(identifierCS);
