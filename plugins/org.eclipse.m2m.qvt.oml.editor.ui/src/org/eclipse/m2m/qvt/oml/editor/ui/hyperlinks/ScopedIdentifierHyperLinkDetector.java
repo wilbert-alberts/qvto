@@ -29,9 +29,22 @@ public class ScopedIdentifierHyperLinkDetector implements IHyperlinkDetectorHelp
 		
 		if(element instanceof ScopedNameCS) {
 			MappingOperation mapping = ASTBindingHelper.resolveASTNode(element, MappingOperation.class);
+			if(mapping == null) {
+				return null;
+			}
 			MappingRuleCS mappingCS = ASTBindingHelper.resolveCSTNode(mapping, MappingRuleCS.class);
-			
+			if(mappingCS == null) {
+				return null;
+			}
 			CSTNode node = mappingCS.getMappingDeclarationCS().getSimpleNameCS();
+			if(node == null) {
+				node = mappingCS.getMappingDeclarationCS();
+			}
+			
+			if(node == null) {
+				return null;
+			}
+			
 			IRegion destRegion = new Region(node.getStartOffset(), node.getEndOffset() - node.getStartOffset() + 1);
 			IRegion reg = new Region(element.getStartOffset(), element.getEndOffset() - element.getStartOffset() + 1);
 			
