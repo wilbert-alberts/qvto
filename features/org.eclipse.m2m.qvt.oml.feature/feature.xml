@@ -20,9 +20,8 @@
    </license>
 
    <url>
-      <discovery label="Internal Nightly Updates" url="http://kafka-builder.emea.borl.net:8080/updates/nightly-site.xml"/>
-      <discovery label="Internal Continuous Updates" url="http://kafka-builder.emea.borl.net:8080/updates/continuous-site.xml"/>
-      <discovery label="Internal Update Site" url="http://kafka-builder.emea.borl.net:8080/updates/site.xml"/>
+      <update label="%updateSiteName" url="http://altd.borland.com/update/main"/>
+      <discovery label="%updateSiteName" url="http://altd.borland.com/update/main"/>
    </url>
 
    <requires>
