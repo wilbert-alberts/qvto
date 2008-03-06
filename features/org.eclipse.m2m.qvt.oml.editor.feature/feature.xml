@@ -17,6 +17,11 @@
       %license
    </license>
 
+   <url>
+      <update label="%updateSiteName" url="http://altd.borland.com/update/main"/>
+      <discovery label="%updateSiteName" url="http://altd.borland.com/update/main"/>
+   </url>
+
    <requires>
       <import plugin="org.eclipse.core.runtime"/>
       <import plugin="org.eclipse.core.resources"/>
