@@ -117,6 +117,7 @@ import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.CollectionKind;
 import org.eclipse.ocl.expressions.EnumLiteralExp;
+import org.eclipse.ocl.expressions.IfExp;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.PropertyCallExp;
@@ -174,6 +175,21 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     public void notifyAfterDeferredAssign(final AssignExp assignExp, Object leftValue) {
     	// do nothing special here, subclasses may customize
     }
+    
+	@Override
+    public Object visitIfExp(IfExp<EClassifier> ie) {
+		// get condition
+		OCLExpression<EClassifier> condition = ie.getCondition();
+
+		// evaluate condition`
+		Object condRawVal = condition.accept(getVisitor());
+		Boolean condVal = (condRawVal != getOclInvalid()) ? (Boolean) condRawVal : Boolean.FALSE;
+
+		if (condVal != null && condVal.booleanValue()) {
+            return ie.getThenExpression().accept(getVisitor());
+        }
+		return ie.getElseExpression().accept(getVisitor());
+	}
 
 	@Override
 	public Object visitExpression(OCLExpression<EClassifier> expression) {
@@ -405,6 +421,10 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         if (QvtOperationalUtil.isImperativeOperation(referredOperation)) {
             Object source = operationCallExp.getSource().accept(getVisitor());
             List<Object> args = makeArgs(operationCallExp);
+            // does not make sense continue at all, call on null or invalid results in invalid 
+        	if(isUndefined(source)) {
+        		return getOclInvalid();
+        	}
 
             ImperativeOperation method = null;
             if (QvtOperationalParserUtil.isOverloadableMapping(referredOperation, getOperationalEnv())) {
