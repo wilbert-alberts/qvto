@@ -149,7 +149,9 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 		try {
 			return doFindCollidingOperation(ownerType, operation);
 		} finally {
-			fOperationsHolder.clear();
+			if(fOperationsHolder != null) {
+				fOperationsHolder.clear();
+			}
 		}
 	}
 	
