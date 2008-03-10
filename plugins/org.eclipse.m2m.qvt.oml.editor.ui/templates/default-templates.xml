@@ -4,9 +4,25 @@
     <template
           autoinsert="true"
           context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.mainMapping"
+          name="%code_template_mainMapping"
+          description="%code_template_mainMapping_desc">mapping main(in model : ${InputType}) : ${OutputType} {
+	${cursor}
+}</template>
+    <template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
           id="org.eclipse.m2m.qvt.oml.template.main"
           name="%code_template_main"
-          description="%code_template_main_desc">mapping main(in model : ${InputType}) : ${OutputType} {
+          description="%code_template_main_desc">main() {
+	${cursor}
+}</template>
+	<template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.mappingCtx"
+          name="%code_template_mappingCtx"
+          description="%code_template_mappingCtx_desc">mapping ${ContextType}::${name}() : ${OutputType} {
 	${cursor}
 }</template>
 	<template
@@ -14,9 +30,18 @@
           context="org.eclipse.m2m.qvt.oml.templates"
           id="org.eclipse.m2m.qvt.oml.template.mapping"
           name="%code_template_mapping"
-          description="%code_template_mapping_desc">mapping ${ContextType}::${name}() : ${OutputType} {
+          description="%code_template_mapping_desc">mapping ${name}(in ${par} : ${InputType}) : ${OutputType} {
 	${cursor}
 }</template>
+	<template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.mappingInplace"
+          name="%code_template_mappingInplace"
+          description="%code_template_mappingInplace_desc">mapping inout ${ContextType}::${name}() {
+	${cursor}
+}</template>
+
     <template
           autoinsert="true"
           context="org.eclipse.m2m.qvt.oml.templates"
@@ -65,7 +90,7 @@
           context="org.eclipse.m2m.qvt.oml.templates"
           id="org.eclipse.m2m.qvt.oml.template.modeltype"
           name="%code_template_modeltype"
-          description="%code_template_modeltype_desc">modeltype ${name} uses ${uri};
+          description="%code_template_modeltype_desc">modeltype ${name} "strict" uses ${uri};
 	</template>
 	
     <template
@@ -99,5 +124,75 @@
           name="%code_template_import_library"
           description="%code_template_import_library_desc">import library ${name};
 	</template>
+
+    <template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.assert"
+          name="%code_template_assert"
+          description="%code_template_assert_desc">assert ${levelOpt} (${condition});
+	</template>
+
+    <template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.assertLog"
+          name="%code_template_assertLog"
+          description="%code_template_assertLog_desc">assert ${level} (${condition}) with log('${message}');
+	</template>
+
+    <template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.log"
+          name="%code_template_log"
+          description="%code_template_log_desc">log('${message}', ${dataObj});
+	</template>
+
+    <template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.logWhen"
+          name="%code_template_logWhen"
+          description="%code_template_logWhen_desc">log('${message}', ${dataObj}) when ${condition};
+	</template>
+
+    <template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.while"
+          name="%code_template_while"
+          description="%code_template_while_desc">while(${condition}) {
+	${cursor}			
+};
+	</template>
+
+    <template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.whileWithResult"
+          name="%code_template_whileWithResult"
+          description="%code_template_whileWithResult_desc">while(${varName} : ${Type}; ${condition}) {
+	${cursor}
+};</template>
+
+    <template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.tupleType"
+          name="%code_template_tupleType"
+          description="%code_template_tupleType_desc">Tuple(${part1} : ${Type1}; ${part2} : ${Type2})
+	</template>
+
+    <template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.switch"
+          name="%code_template_switch"
+          description="%code_template_switch_desc">switch {
+	case (${condition1}) ${expression1};
+	case (${condition2}) ${expression2};
+	else ${expression3};
+};</template>
 
 </templates>
