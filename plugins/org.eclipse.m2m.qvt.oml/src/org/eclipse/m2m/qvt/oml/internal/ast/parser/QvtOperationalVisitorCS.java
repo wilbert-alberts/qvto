@@ -2941,8 +2941,17 @@ public class QvtOperationalVisitorCS
                         // TODO: The check could be more accurate
                         return;
                     }
-                    if(!methodCS.getQualifiers().contains(QualifierKindCS.ABSTRACT)) {
-                    	env.reportError(ValidationMessages.QvtOperationalVisitorCS_AbstractTypesNotInitialized, methodCS);
+                    if(!(methodCS.getQualifiers().contains(QualifierKindCS.ABSTRACT))) {
+                    	boolean hasDisjunct = false;
+                    	for (MappingExtensionCS extensionCS : methodCS.getMappingExtension()) {
+							if(extensionCS.getKind() == MappingExtensionKindCS.DISJUNCTS) {
+								hasDisjunct = true;
+								break;
+							}
+						}
+                    	if(!hasDisjunct) {
+                    		env.reportError(ValidationMessages.QvtOperationalVisitorCS_AbstractTypesNotInitialized, methodCS);
+                    	}
                     }
                 }
             }
