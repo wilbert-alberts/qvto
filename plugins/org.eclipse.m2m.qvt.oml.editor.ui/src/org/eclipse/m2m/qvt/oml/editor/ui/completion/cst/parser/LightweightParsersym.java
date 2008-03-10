@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.18 2008/02/29 13:58:54 sboyko Exp $
+* $Id: LightweightParsersym.java,v 1.19 2008/03/10 09:47:43 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.18 2008/02/29 13:58:54 sboyko Exp $
+* $Id: LightweightParsersym.java,v 1.19 2008/03/10 09:47:43 radvorak Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser;
@@ -56,20 +56,20 @@ public interface LightweightParsersym {
       TK_RBRACE = 85,
       TK_LBRACKET = 106,
       TK_RBRACKET = 117,
-      TK_ARROW = 134,
+      TK_ARROW = 135,
       TK_BAR = 91,
       TK_COMMA = 87,
       TK_COLON = 88,
       TK_COLONCOLON = 89,
       TK_SEMICOLON = 84,
       TK_DOT = 107,
-      TK_DOTDOT = 135,
+      TK_DOTDOT = 136,
       TK_ATPRE = 118,
-      TK_CARET = 136,
-      TK_CARETCARET = 137,
+      TK_CARET = 137,
+      TK_CARETCARET = 138,
       TK_QUESTIONMARK = 119,
-      TK_QUOTE_STRING_LITERAL = 138,
-      TK_ADD_ASSIGN = 125,
+      TK_QUOTE_STRING_LITERAL = 125,
+      TK_ADD_ASSIGN = 126,
       TK_RESET_ASSIGN = 101,
       TK_AT_SIGN = 142,
       TK_EXCLAMATION_MARK = 120,
@@ -82,8 +82,8 @@ public interface LightweightParsersym {
       TK_def = 158,
       TK_if = 70,
       TK_then = 139,
-      TK_else = 126,
-      TK_endif = 127,
+      TK_else = 127,
+      TK_endif = 128,
       TK_and = 47,
       TK_or = 48,
       TK_xor = 49,
@@ -147,7 +147,7 @@ public interface LightweightParsersym {
       TK_query = 103,
       TK_helper = 104,
       TK_inout = 112,
-      TK_when = 128,
+      TK_when = 129,
       TK_var = 97,
       TK_configuration = 108,
       TK_property = 105,
@@ -169,7 +169,7 @@ public interface LightweightParsersym {
       TK_modeltype = 113,
       TK_uses = 145,
       TK_where = 146,
-      TK_refines = 129,
+      TK_refines = 130,
       TK_enforcing = 147,
       TK_access = 123,
       TK_extends = 124,
@@ -189,12 +189,12 @@ public interface LightweightParsersym {
       TK_collectselectOne = 153,
       TK_return = 99,
       TK_rename = 114,
-      TK_inherits = 130,
-      TK_merges = 131,
-      TK_disjuncts = 132,
+      TK_inherits = 131,
+      TK_merges = 132,
+      TK_disjuncts = 133,
       TK_IDENTIFIER = 3,
       TK_ERROR_TOKEN = 2,
-      TK_INTEGER_RANGE_START = 133,
+      TK_INTEGER_RANGE_START = 134,
       TK_EOF_TOKEN = 96;
 
       public final static String orderedTerminalSymbols[] = {
@@ -323,6 +323,7 @@ public interface LightweightParsersym {
                  "import",
                  "access",
                  "extends",
+                 "QUOTE_STRING_LITERAL",
                  "ADD_ASSIGN",
                  "else",
                  "endif",
@@ -336,7 +337,6 @@ public interface LightweightParsersym {
                  "DOTDOT",
                  "CARET",
                  "CARETCARET",
-                 "QUOTE_STRING_LITERAL",
                  "then",
                  "implies",
                  "case",

@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParserprs.java,v 1.18 2008/02/29 13:58:54 sboyko Exp $
+* $Id: LightweightTypeParserprs.java,v 1.19 2008/03/10 09:47:43 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParserprs.java,v 1.18 2008/02/29 13:58:54 sboyko Exp $
+* $Id: LightweightTypeParserprs.java,v 1.19 2008/03/10 09:47:43 radvorak Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser;
@@ -745,8 +745,8 @@ public class LightweightTypeParserprs implements lpg.lpgjavaruntime.ParseTable, 
             118,11,11,11,11,11,12,12,91,15,
             72,31,85,85,85,85,32,32,76,15,
             15,15,15,15,119,119,36,36,4,4,
-            175,175,205,205,206,206,208,208,208,209,
-            209,207,207,170,170,51,100,91,91,54,
+            175,175,205,205,206,206,209,209,209,208,
+            208,207,207,170,170,51,100,91,91,54,
             54,86,86,33,33,33,33,33,33,33,
             33,15,97,34,121,121,121,120,34,87,
             87,87,122,122,88,88,88,88,88,123,
