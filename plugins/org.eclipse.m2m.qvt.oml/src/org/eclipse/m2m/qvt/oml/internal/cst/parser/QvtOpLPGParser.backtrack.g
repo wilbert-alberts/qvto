@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.backtrack.g,v 1.42 2008/02/27 14:29:58 sboyko Exp $ 
+-- * $Id: QvtOpLPGParser.backtrack.g,v 1.43 2008/03/10 09:47:53 radvorak Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -374,7 +374,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.backtrack.g,v 1.42 2008/02/27 14:29:58 sboyko Exp $
+ * $Id: QvtOpLPGParser.backtrack.g,v 1.43 2008/03/10 09:47:53 radvorak Exp $
  */
 	./
 $End
@@ -2456,7 +2456,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-    complianceKindCSOpt -> stringLiteralExpCS
+    complianceKindCSOpt -> qvtStringLiteralExpCS
     
 	packageRefList ::= packageRefCS
 		/.$BeginJava

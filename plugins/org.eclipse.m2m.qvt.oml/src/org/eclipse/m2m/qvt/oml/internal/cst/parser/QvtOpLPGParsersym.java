@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.40 2008/02/27 14:29:57 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.41 2008/03/10 09:47:53 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.40 2008/02/27 14:29:57 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.41 2008/03/10 09:47:53 radvorak Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -56,20 +56,20 @@ public interface QvtOpLPGParsersym {
       TK_RBRACE = 85,
       TK_LBRACKET = 106,
       TK_RBRACKET = 116,
-      TK_ARROW = 134,
+      TK_ARROW = 135,
       TK_BAR = 91,
       TK_COMMA = 87,
       TK_COLON = 88,
       TK_COLONCOLON = 89,
       TK_SEMICOLON = 84,
       TK_DOT = 107,
-      TK_DOTDOT = 135,
+      TK_DOTDOT = 136,
       TK_ATPRE = 117,
-      TK_CARET = 136,
-      TK_CARETCARET = 137,
+      TK_CARET = 137,
+      TK_CARETCARET = 138,
       TK_QUESTIONMARK = 118,
-      TK_QUOTE_STRING_LITERAL = 138,
-      TK_ADD_ASSIGN = 125,
+      TK_QUOTE_STRING_LITERAL = 125,
+      TK_ADD_ASSIGN = 126,
       TK_RESET_ASSIGN = 101,
       TK_AT_SIGN = 142,
       TK_EXCLAMATION_MARK = 119,
@@ -84,8 +84,8 @@ public interface QvtOpLPGParsersym {
       TK_def = 160,
       TK_if = 70,
       TK_then = 139,
-      TK_else = 126,
-      TK_endif = 127,
+      TK_else = 127,
+      TK_endif = 128,
       TK_and = 47,
       TK_or = 48,
       TK_xor = 49,
@@ -149,7 +149,7 @@ public interface QvtOpLPGParsersym {
       TK_query = 103,
       TK_helper = 104,
       TK_inout = 110,
-      TK_when = 128,
+      TK_when = 129,
       TK_var = 93,
       TK_configuration = 108,
       TK_property = 105,
@@ -171,7 +171,7 @@ public interface QvtOpLPGParsersym {
       TK_modeltype = 115,
       TK_uses = 145,
       TK_where = 146,
-      TK_refines = 129,
+      TK_refines = 130,
       TK_enforcing = 147,
       TK_access = 123,
       TK_extends = 124,
@@ -191,12 +191,12 @@ public interface QvtOpLPGParsersym {
       TK_collectselectOne = 153,
       TK_return = 98,
       TK_rename = 111,
-      TK_disjuncts = 130,
-      TK_merges = 131,
-      TK_inherits = 132,
+      TK_disjuncts = 131,
+      TK_merges = 132,
+      TK_inherits = 133,
       TK_EOF_TOKEN = 99,
       TK_IDENTIFIER = 3,
-      TK_INTEGER_RANGE_START = 133,
+      TK_INTEGER_RANGE_START = 134,
       TK_ERROR_TOKEN = 2;
 
       public final static String orderedTerminalSymbols[] = {
@@ -325,6 +325,7 @@ public interface QvtOpLPGParsersym {
                  "import",
                  "access",
                  "extends",
+                 "QUOTE_STRING_LITERAL",
                  "ADD_ASSIGN",
                  "else",
                  "endif",
@@ -338,7 +339,6 @@ public interface QvtOpLPGParsersym {
                  "DOTDOT",
                  "CARET",
                  "CARETCARET",
-                 "QUOTE_STRING_LITERAL",
                  "then",
                  "implies",
                  "case",
