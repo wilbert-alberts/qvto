@@ -1,7 +1,7 @@
 transformation mm_header1(in ecore1 : ECORE, in ecore2 : ECORE, out uml : UML, out rdb : RDB);
 
-modeltype UML uses "http://www.eclipse.org/uml2/2.1.0/UML";
-modeltype ECORE uses "http://www.eclipse.org/emf/2002/Ecore";
+modeltype UML "strict" uses "http://www.eclipse.org/uml2/2.1.0/UML";
+modeltype ECORE 'strict' uses "http://www.eclipse.org/emf/2002/Ecore";
 modeltype RDB uses 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/rdb';
 
 mapping main(in p1 : EPackage@ecore1, in p2 : EPackage@ecore1) {
