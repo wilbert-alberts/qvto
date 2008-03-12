@@ -15,21 +15,17 @@ Export-Package: org.eclipse.m2m.qvt.oml,
  org.eclipse.m2m.qvt.oml.expressions,
  org.eclipse.m2m.qvt.oml.internal.ast.evaluator,
  org.eclipse.m2m.qvt.oml.internal.ast.parser,
- org.eclipse.m2m.qvt.oml.internal.cst,
  org.eclipse.m2m.qvt.oml.internal.cst.adapters,
- org.eclipse.m2m.qvt.oml.internal.cst.parser,
- org.eclipse.m2m.qvt.oml.internal.cst.temp,
  org.eclipse.m2m.qvt.oml.library,
  org.eclipse.m2m.qvt.oml.trace,
  org.eclipse.m2m.qvt.oml.trace.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
- org.eclipse.emf.ecore;visibility:=reexport,
+ org.eclipse.emf.ecore,
  org.eclipse.emf.ecore.change,
  org.eclipse.m2m.qvt.oml.ocl,
  org.eclipse.m2m.qvt.oml.common,
  org.eclipse.m2m.qvt.oml.emf.util,
- org.eclipse.ocl;visibility:=reexport,
+ org.eclipse.m2m.qvt.oml.cst.parser;visibility:=reexport,
  org.eclipse.ocl.ecore;visibility:=reexport
-Import-Package: lpg.lpgjavaruntime;version="[1.0.0,1.2.0)"
 Eclipse-LazyStart: true
