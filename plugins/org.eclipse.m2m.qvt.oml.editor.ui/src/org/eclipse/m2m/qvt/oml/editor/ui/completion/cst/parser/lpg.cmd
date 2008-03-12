@@ -5,7 +5,7 @@ rem Run me using '/org.eclipse.m2m.qvt.oml.editor.ui/CompletionParser.launch'
 if not defined LPG_HOME goto no_home_var
 if not exist %LPG_HOME% goto home_dir_notFound
 
-set QVT_GRAMMAR=%WS_LOC%\org.eclipse.m2m.qvt.oml\src\org\eclipse\m2m\qvt\oml\internal\cst\parser
+set QVT_GRAMMAR=%WS_LOC%\org.eclipse.m2m.qvt.oml.cst.parser\cst
 set LPG_INCLUDE=%LPG_HOME%\include;.;%QVT_GRAMMAR%;
 
 %LPG_HOME%\lpgexe\lpg.exe -backtrack -list LightweightParser.lpg

@@ -18,7 +18,7 @@ $Start
 $End
 
 $Import
-	QvtOpLPGParser.backtrack.g
+	QvtOpLPGParser.g
 
 $Globals
 	/.
