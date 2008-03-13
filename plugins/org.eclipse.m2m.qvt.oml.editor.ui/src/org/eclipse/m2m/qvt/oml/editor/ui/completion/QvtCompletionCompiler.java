@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *   
+ * Contributors:
+ *     Borland Software Corporation - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.editor.ui.completion;
 
 import java.io.IOException;
@@ -23,6 +33,7 @@ import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.editor.ui.Activator;
 import org.eclipse.m2m.qvt.oml.editor.ui.completion.keywordhandler.IKeywordHandler;
 import org.eclipse.m2m.qvt.oml.editor.ui.completion.keywordhandler.KeywordHandlerRegistry;
+import org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParser;
 import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLexer;
@@ -113,7 +124,11 @@ public class QvtCompletionCompiler extends QvtCompiler {
     	// wrapping the used QVT lexer with its environment within the QvtOpLPGParser 
     	// in order to stick with the contract of the super class
     	QvtOpLPGParser qvtParser = new QvtOpLPGParser(cFileData.getLexer());
-    	return new ParsedModuleCS(cFileData.getMappingModuleCS(), source, qvtParser);
+    	MappingModuleCS mappingModuleCS = cFileData.getMappingModuleCS();
+    	if (mappingModuleCS == null) {
+    	    mappingModuleCS = CSTFactory.eINSTANCE.createMappingModuleCS();
+    	}
+        return new ParsedModuleCS(mappingModuleCS, source, qvtParser);
     }
     
     
