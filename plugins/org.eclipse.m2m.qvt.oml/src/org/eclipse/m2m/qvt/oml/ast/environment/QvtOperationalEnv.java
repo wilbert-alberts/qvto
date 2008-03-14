@@ -30,10 +30,15 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.qvt.oml.QvtMessage;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.m2m.qvt.oml.common.io.CFile;
+import org.eclipse.m2m.qvt.oml.common.resourcesetprovider.ResourceSetProviderRegistry;
+import org.eclipse.m2m.qvt.oml.common.resourcesetprovider.ResourceSetProviderRegistry.ResourceSetResourceSetProviderPair;
+import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfException;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
@@ -96,7 +101,6 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 
 		myWarningsList = new ArrayList<QvtMessage>(2);
 		myErrorsList = new ArrayList<QvtMessage>(2);
-		myErrorRecordFlag = true;
 		myCheckForDuplicateErrors = false;
 
 		if(parent == null) {
@@ -106,6 +110,9 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 
 		ePackageRegistry = eRegistry;		
 		myModelTypeRegistry = parent != null ? parent.myModelTypeRegistry : new LinkedHashMap<String, ModelType>(1);
+		if (parent != null) {
+		    myCompilerOptions = parent.myCompilerOptions;
+		}
 	}
 	
 	protected QvtOperationalEnv(QvtOperationalEnv parent) {
@@ -151,14 +158,44 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	public List<EPackage> registerMetamodel(String metamodelUri, List<String> path) {
         List<EPackage> metamodels = new ArrayList<EPackage>(1);
 		try {
-			MetamodelRegistry registry = getMetamodelRegistry();
-			IMetamodelDesc[] desc;
-			if (path.isEmpty()) {
-				desc = new IMetamodelDesc[] { registry.getMetamodelDesc(metamodelUri) };
-			}
-			else {
-				desc = registry.getMetamodelDesc(path);
-			}
+		    IMetamodelDesc[] desc = null;
+		    Internal<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env = this;
+		    while (env != null) {
+		        if (env instanceof QvtOperationalFileEnv) {
+		            QvtOperationalFileEnv fileEnv = (QvtOperationalFileEnv) env;
+		            ResourceSet resourceSet = fileEnv.getKernel().getMetamodelResourceSet();
+		            ResourceSetResourceSetProviderPair pair = null;
+		            if (resourceSet == null) {
+	                    CFile cFile = fileEnv.getFile();
+	                    pair = ResourceSetProviderRegistry.getResourceSetResourceSetProviderPair(cFile);
+	                    if (pair != null) {
+	                        resourceSet = pair.getResourceSet();
+	                    }
+		            }
+		            if (resourceSet != null) {
+		                IMetamodelDesc metamodelDesc = MetamodelRegistry.createUndeclaredMetamodel(metamodelUri, resourceSet);
+		                if (metamodelDesc != null) {
+	                        desc = new IMetamodelDesc[] { metamodelDesc };
+		                }
+		                if (pair != null) {
+		                    pair.getResourceSetProvider().dispose(resourceSet);
+		                }
+		            }
+                    break;
+		        }
+                env = env.getInternalParent();
+		    }
+		    
+		    if (desc == null) {
+	            MetamodelRegistry registry = getMetamodelRegistry();
+	            
+	            if (path.isEmpty()) {
+	                desc = new IMetamodelDesc[] { registry.getMetamodelDesc(metamodelUri) };
+	            }
+	            else {
+	                desc = registry.getMetamodelDesc(path);
+	            }
+		    }
 
 			for(IMetamodelDesc nextDesc : desc) {
 	        	EPackage model = nextDesc.getModel();
@@ -297,7 +334,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
     }
     
 	public void reportError(String message, int startOffset, int endOffset) {
-		if (!myErrorRecordFlag) {
+		if ((myCompilerOptions != null) && !myCompilerOptions.isReportErrors()) {
 			return;
 		}
 		QvtOperationalEnv parent = this;
@@ -324,7 +361,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	}
 
 	public void reportWarning(String message, int startOffset, int endOffset) {
-		if (!myErrorRecordFlag) {
+        if ((myCompilerOptions != null) && !myCompilerOptions.isReportErrors()) {
 			return;
 		}
 		QvtOperationalEnv parent = this;
@@ -763,8 +800,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		}
 	}
 
-	public void setErrorRecordFlag(boolean isRecordError) {
-		myErrorRecordFlag = isRecordError;
+	public void setQvtCompilerOptions(QvtCompilerOptions options) {
+	    myCompilerOptions = options;
 	}
 	
 	public void setCheckForDuplicateErrors(boolean checkForDuplicateErrors) {
@@ -861,8 +898,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	
 	private final List<QvtMessage> myWarningsList;
 	private final List<QvtMessage> myErrorsList;
-	private boolean myErrorRecordFlag;
 	private boolean myCheckForDuplicateErrors;
+	private QvtCompilerOptions myCompilerOptions;
 
 	private Map<String, ModelType> myModelTypeRegistry;
 	private List<Variable<EClassifier, EParameter>> myModelParameters = Collections.emptyList();

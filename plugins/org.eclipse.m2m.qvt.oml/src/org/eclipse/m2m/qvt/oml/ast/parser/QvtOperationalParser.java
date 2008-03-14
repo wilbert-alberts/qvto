@@ -72,7 +72,7 @@ public class QvtOperationalParser {
 	public Module analyze(final ParsedModuleCS moduleCS, final QvtCompiler compiler, QvtOperationalFileEnv env, QvtCompilerOptions options) {
 		Module module = null;
 	
-		env.setErrorRecordFlag(options.isReportErrors());
+		env.setQvtCompilerOptions(options);
 		try {
 			QvtOperationalVisitorCS visitor = options.getQvtOperationalVisitorCS();
 			if (visitor == null) {

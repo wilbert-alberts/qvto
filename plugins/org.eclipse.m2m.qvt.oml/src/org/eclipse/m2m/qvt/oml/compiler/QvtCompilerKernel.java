@@ -3,6 +3,7 @@ package org.eclipse.m2m.qvt.oml.compiler;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.common.io.CFolder;
@@ -20,6 +21,7 @@ public class QvtCompilerKernel {
     private final IImportResolver myImportResolver;
     private final IMetamodelRegistryProvider myMetamodelRegistryProvider;
     private final Map<MappingModuleCS, Module> mySyntaxToSemanticMap = new HashMap<MappingModuleCS, Module>();
+    private ResourceSet myMetamodelResourceSet;
     
     public QvtCompilerKernel(IImportResolver importResolver, IMetamodelRegistryProvider metamodelRegistryProvider) {
         myImportResolver = importResolver;
@@ -55,5 +57,13 @@ public class QvtCompilerKernel {
         //      
         
         return module;
-    } 
+    }
+    
+    public ResourceSet getMetamodelResourceSet() {
+        return myMetamodelResourceSet;
+    }
+
+    public void setMetamodelResourceSet(ResourceSet metamodelResourceSet) {
+        myMetamodelResourceSet = metamodelResourceSet;
+    }
 }

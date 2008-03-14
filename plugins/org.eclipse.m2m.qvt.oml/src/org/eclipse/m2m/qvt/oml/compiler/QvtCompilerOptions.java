@@ -1,5 +1,16 @@
+/*******************************************************************************
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *   
+ * Contributors:
+ *     Borland Software Corporation - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.compiler;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalVisitorCS;
 
 /**
@@ -11,9 +22,9 @@ public class QvtCompilerOptions {
     private boolean isReportErrors = true;
     private boolean isShowAnnotations = true;
     private boolean isGenerateCompletionData = true;
-    private boolean isWorkspaceModelResolutionEnabled = true;
     private boolean isSourceLineNumbersEnabled = true;    
     private QvtOperationalVisitorCS myQvtOperationalVisitorCS = null;
+    private ResourceSet myMetamodelResourceSet = null;
     
     public boolean isReportErrors() {
         return isReportErrors;
@@ -39,14 +50,6 @@ public class QvtCompilerOptions {
         isShowAnnotations = showAnnotations;
     }
 
-    public boolean isWorkspaceModelResolutionEnabled() {
-        return isWorkspaceModelResolutionEnabled;
-    }
-
-    public void setWorkspaceModelResolutionEnabled(boolean workspaceModelResolutionEnabled) {
-        isWorkspaceModelResolutionEnabled = workspaceModelResolutionEnabled;
-    }
-
     public QvtOperationalVisitorCS getQvtOperationalVisitorCS() {
         return myQvtOperationalVisitorCS;
     }
@@ -68,4 +71,12 @@ public class QvtCompilerOptions {
     public boolean isSourceLineNumbersEnabled() {
 		return isSourceLineNumbersEnabled;
 	}
+
+    public ResourceSet getMetamodelResourceSet() {
+        return myMetamodelResourceSet;
+    }
+
+    public void setMetamodelResourceSet(ResourceSet metamodelResourceSet) {
+        myMetamodelResourceSet = metamodelResourceSet;
+    }
 }
