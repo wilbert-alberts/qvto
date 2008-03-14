@@ -97,22 +97,7 @@ public class MetamodelRegistry {
         
         if (desc == null) {
             // Unregistered metamodels, e.g. available via "platform:/resource" or "platform:/plugin"
-            try {
-                URI uri = URI.createURI(id);  
-                ResourceSet rs = new ResourceSetImpl();
-                Resource resource = rs.getResource(uri, true);
-                if (resource != null) {
-                    EObject metamodel = resource.getContents().get(0);
-                    if (metamodel instanceof EPackage) {
-                        desc = new EmfMetamodelDesc((EPackage) metamodel, id, null);
-//                      TODO: registration in the map must be done
-//                      in case the changes of resource are listened out for  
-//                        myMetamodelDescs.put(id, desc);
-                    }
-                }
-            } catch (Exception e) {
-                throw new EmfException(e);
-            }
+            desc = MetamodelRegistry.createUndeclaredMetamodel(id, new ResourceSetImpl());
         }
         
         if (desc == null) {
@@ -121,6 +106,25 @@ public class MetamodelRegistry {
         
         return desc;
 	}
+
+    public static final IMetamodelDesc createUndeclaredMetamodel(String id, ResourceSet rs) throws EmfException {
+        try {
+            URI uri = URI.createURI(id);  
+            Resource resource = rs.getResource(uri, true);
+            if (resource != null) {
+                EObject metamodel = resource.getContents().get(0);
+                if (metamodel instanceof EPackage) {
+                    return new EmfMetamodelDesc((EPackage) metamodel, id, null);
+//                      TODO: registration in the map must be done
+//                      in case the changes of resource are listened out for  
+//                        myMetamodelDescs.put(id, desc);
+                }
+            }
+        } catch (Exception e) {
+            throw new EmfException(e);
+        }
+        return null;
+    }
 	
 	public IMetamodelDesc[] getMetamodelDesc(List<String> packageName) throws EmfException {
 		final List<EPackage> metamodels = new UniqueEList<EPackage>(1);
