@@ -45,7 +45,7 @@ public class ExecTransformationTestCase extends ApiTestCase {
 		for (URI uri : inputs) {
 			inObjects.add(EmfUtil.loadModel(uri));
 		}
-		TransfExecutionResult execResult = new QvtoTransformationHelper(scriptUri).executeTransformation(inObjects, Collections.<String, Object>emptyMap());
+		TransfExecutionResult execResult = new QvtoTransformationHelper(scriptUri).executeTransformation(inObjects, Collections.<String, Object>emptyMap(), null);
 		
 		assertNotNull("Non-null trace expected", execResult.getTrace()); //$NON-NLS-1$
 		
