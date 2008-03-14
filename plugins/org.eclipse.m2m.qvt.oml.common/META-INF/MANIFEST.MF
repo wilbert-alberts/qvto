@@ -15,6 +15,7 @@ Export-Package: org.eclipse.m2m.internal.qvt.oml.common,
  org.eclipse.m2m.qvt.oml.common.io.eclipse,
  org.eclipse.m2m.qvt.oml.common.launch,
  org.eclipse.m2m.qvt.oml.common.project,
+ org.eclipse.m2m.qvt.oml.common.resourcesetprovider,
  org.eclipse.m2m.qvt.oml.common.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
