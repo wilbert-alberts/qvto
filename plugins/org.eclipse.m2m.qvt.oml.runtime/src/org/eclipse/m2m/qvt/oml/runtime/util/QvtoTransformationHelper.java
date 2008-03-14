@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchConfigurationDelegateBase;
@@ -100,7 +101,7 @@ public class QvtoTransformationHelper {
 		this(EcoreUtil.getURI(module).trimFragment());
 	}
 	
-	public TransfExecutionResult executeTransformation(final List<EObject> inObjects, final Map<String, Object> inConfigProperties) throws CoreException {
+	public TransfExecutionResult executeTransformation(final List<EObject> inObjects, final Map<String, Object> inConfigProperties, ResourceSet metamodelResourceSet) throws CoreException {
         try {
         	final List<Resource> outExtents = new ArrayList<Resource>();
         	final List<EObject> outMainParams = new ArrayList<EObject>();
@@ -110,7 +111,7 @@ public class QvtoTransformationHelper {
         	
         	QvtCompilerOptions options = new QvtCompilerOptions();
         	options.setGenerateCompletionData(false);
-        	options.setWorkspaceModelResolutionEnabled(false);
+        	options.setMetamodelResourceSet(metamodelResourceSet);
         	transf.setQvtCompilerOptions(options);
         	
             ShallowProcess.IRunnable r = new ShallowProcess.IRunnable() {
