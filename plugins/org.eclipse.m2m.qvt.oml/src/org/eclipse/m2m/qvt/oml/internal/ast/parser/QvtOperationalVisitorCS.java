@@ -375,84 +375,83 @@ public class QvtOperationalVisitorCS
 	}
 
 	@Override
-	protected OCLExpression<EClassifier> oclExpressionCS(
-			OCLExpressionCS oclExpressionCS,
-			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env)
-			 {
-		if (oclExpressionCS instanceof BlockExpCS) {
-			return visitBlockExpCS((BlockExpCS) oclExpressionCS, (QvtOperationalEnv) env);
-		}
-        if (oclExpressionCS instanceof WhileExpCS) {
-            return visitWhileExpCS((WhileExpCS) oclExpressionCS, (QvtOperationalEnv) env);
-        }
-        if (oclExpressionCS instanceof SwitchExpCS) {
-            return visitSwitchExpCS((SwitchExpCS) oclExpressionCS, (QvtOperationalEnv) env);
-        }
-		if (oclExpressionCS instanceof OutExpCS) {
-			return visitOutExpCS((OutExpCS) oclExpressionCS, (QvtOperationalEnv) env);
-		}
-		if (oclExpressionCS instanceof PatternPropertyExpCS) {
-			return visitPatternPropertyExpCS((PatternPropertyExpCS) oclExpressionCS, null, (QvtOperationalEnv) env);
-		}
-		if (oclExpressionCS instanceof AssignStatementCS) {
-			return visitAssignStatementCS((AssignStatementCS) oclExpressionCS, (QvtOperationalEnv) env);
-		}
-		if (oclExpressionCS instanceof VariableInitializationCS) {
-			return visitVariableInitializationCS((VariableInitializationCS) oclExpressionCS, (QvtOperationalEnv) env);
-		}
-		if (oclExpressionCS instanceof ExpressionStatementCS) {
-			return visitExpressionStatementCS((ExpressionStatementCS) oclExpressionCS, (QvtOperationalEnv) env);
-		}
-        if (oclExpressionCS instanceof ResolveInExpCS) {
-            return visitResolveInExpCS((ResolveInExpCS) oclExpressionCS, (QvtOperationalEnv) env);
-        }
-        if (oclExpressionCS instanceof ResolveExpCS) {
-            return visitResolveExpCS((ResolveExpCS) oclExpressionCS, (QvtOperationalEnv) env);
-        }
-        if(oclExpressionCS instanceof LogExpCS) {
-        	return logExp((LogExpCS) oclExpressionCS, (QvtOperationalEnv) env);
-        }
-        if(oclExpressionCS instanceof AssertExpCS) {
-        	return assertExp((AssertExpCS) oclExpressionCS, (QvtOperationalEnv) env);
-        }
-        
-        if (oclExpressionCS instanceof ImperativeIterateExpCS) {
-            return visitImperativeIterateExp((ImperativeIterateExpCS) oclExpressionCS, (QvtOperationalEnv) env);
-        }
-        
-        if (oclExpressionCS instanceof ReturnExpCS) {
-        	return visitReturnExpCS((ReturnExpCS) oclExpressionCS, (QvtOperationalEnv) env);
-        }
+	protected OCLExpression<EClassifier> oclExpressionCS(OCLExpressionCS oclExpressionCS,
+	        Environment<EPackage, EClassifier, EOperation, EStructuralFeature, 
+	        EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction,
+	        Constraint, EClass, EObject> env) {
+	    try {
+	        if (oclExpressionCS instanceof BlockExpCS) {
+	            return visitBlockExpCS((BlockExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+	        }
+	        if (oclExpressionCS instanceof WhileExpCS) {
+	            return visitWhileExpCS((WhileExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+	        }
+	        if (oclExpressionCS instanceof SwitchExpCS) {
+	            return visitSwitchExpCS((SwitchExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+	        }
+	        if (oclExpressionCS instanceof OutExpCS) {
+	            return visitOutExpCS((OutExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+	        }
+	        if (oclExpressionCS instanceof PatternPropertyExpCS) {
+	            return visitPatternPropertyExpCS((PatternPropertyExpCS) oclExpressionCS, null, (QvtOperationalEnv) env);
+	        }
+	        if (oclExpressionCS instanceof AssignStatementCS) {
+	            return visitAssignStatementCS((AssignStatementCS) oclExpressionCS, (QvtOperationalEnv) env);
+	        }
+	        if (oclExpressionCS instanceof VariableInitializationCS) {
+	            return visitVariableInitializationCS((VariableInitializationCS) oclExpressionCS, (QvtOperationalEnv) env);
+	        }
+	        if (oclExpressionCS instanceof ExpressionStatementCS) {
+	            return visitExpressionStatementCS((ExpressionStatementCS) oclExpressionCS, (QvtOperationalEnv) env);
+	        }
+	        if (oclExpressionCS instanceof ResolveInExpCS) {
+	            return visitResolveInExpCS((ResolveInExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+	        }
+	        if (oclExpressionCS instanceof ResolveExpCS) {
+	            return visitResolveExpCS((ResolveExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+	        }
+	        if(oclExpressionCS instanceof LogExpCS) {
+	            return logExp((LogExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+	        }
+	        if(oclExpressionCS instanceof AssertExpCS) {
+	            return assertExp((AssertExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+	        }
 
-		OCLExpression<EClassifier> expr = null;
-		try {
-			if (oclExpressionCS instanceof TypeCS) {
-				EClassifier type = typeCS((TypeCS) oclExpressionCS, env);
-                if (type == null) {
-                	((QvtOperationalEnv) env).reportError(OCLMessages.bind(
-                            OCLMessages.UnrecognizedType_ERROR_,
-                            QvtOperationalUtil.getStringRepresentation((TypeCS) oclExpressionCS)), oclExpressionCS);
-                }
-                else {
-					TypeExp<EClassifier> typeExp = env.getOCLFactory().createTypeExp();
-					typeExp.setReferredType(type);
-					typeExp.setType(TypeUtil.resolveTypeType(env, type));
-					expr = typeExp;
-                }
-			}
-			else {
-				expr = super.oclExpressionCS(oclExpressionCS, env);
-			}
-		}
-		catch (NullPointerException ex) {
-			QvtPlugin.log(ex);
-			((QvtOperationalEnv) env).reportError(ValidationMessages.QvtOperationalVisitorCS_oclParseNPE, oclExpressionCS);
-		}
-		catch (RuntimeException ex) {
-			//QvtPlugin.log(ex);
-			((QvtOperationalEnv) env).reportError(ValidationMessages.QvtOperationalVisitorCS_oclParseNPE, oclExpressionCS);
-		}
-		return expr;
+	        if (oclExpressionCS instanceof ImperativeIterateExpCS) {
+	            return visitImperativeIterateExp((ImperativeIterateExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+	        }
+
+	        if (oclExpressionCS instanceof ReturnExpCS) {
+	            return visitReturnExpCS((ReturnExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+	        }
+
+	        if (oclExpressionCS instanceof TypeCS) {
+	            EClassifier type = typeCS((TypeCS) oclExpressionCS, env);
+	            if (type == null) {
+	                ((QvtOperationalEnv) env).reportError(OCLMessages.bind(
+	                        OCLMessages.UnrecognizedType_ERROR_,
+	                        QvtOperationalUtil.getStringRepresentation((TypeCS) oclExpressionCS)), oclExpressionCS);
+	            }
+	            else {
+	                TypeExp<EClassifier> typeExp = env.getOCLFactory().createTypeExp();
+	                typeExp.setReferredType(type);
+	                typeExp.setType(TypeUtil.resolveTypeType(env, type));
+	                return typeExp;
+	            }
+	        }
+	        else {
+	            return super.oclExpressionCS(oclExpressionCS, env);
+	        }
+	    }
+	    catch (NullPointerException ex) {
+	        QvtPlugin.log(ex);
+	        ((QvtOperationalEnv) env).reportError(ValidationMessages.QvtOperationalVisitorCS_oclParseNPE, oclExpressionCS);
+	    }
+	    catch (RuntimeException ex) {
+	        //QvtPlugin.log(ex);
+	        ((QvtOperationalEnv) env).reportError(ValidationMessages.QvtOperationalVisitorCS_oclParseNPE, oclExpressionCS);
+	    }
+	    return null;
 	}
 	
     @Override
@@ -2700,9 +2699,11 @@ public class QvtOperationalVisitorCS
                 }
                 astNode.setTarget(targetVdcl);
             }
-            resultElementType = astNode.getBody().getType();
-            if ((astNode.getTarget() != null) && (astNode.getTarget().getType() == null)) {
-                astNode.getTarget().setType(resultElementType);
+            if (astNode.getBody() != null) {
+                resultElementType = astNode.getBody().getType();
+                if ((astNode.getTarget() != null) && (astNode.getTarget().getType() == null)) {
+                    astNode.getTarget().setType(resultElementType);
+                }
             }
         }
         
