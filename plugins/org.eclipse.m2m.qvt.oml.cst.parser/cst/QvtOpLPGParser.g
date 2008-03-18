@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.1 2008/03/12 11:48:09 sboyko Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.2 2008/03/18 11:04:27 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -373,7 +373,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.1 2008/03/12 11:48:09 sboyko Exp $
+ * $Id: QvtOpLPGParser.g,v 1.2 2008/03/18 11:04:27 sboyko Exp $
  */
 	./
 $End
@@ -2934,14 +2934,12 @@ $Rules
 							(OCLExpressionCS)iterContents[2]
 						);
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(2)));
-					if ((iterContents != null) || (iterContents.length == 0)) {
-					        for (int i = iterContents.length - 1; i >= 0; i--) {
-					        	if (iterContents[i] instanceof CSTNode) {
-					        		setOffsets(result, getIToken($getToken(1)), (CSTNode) iterContents[i]);
-					        		break;
-					        	}
-					        }
-					}
+			        for (int i = iterContents.length - 1; i >= 0; i--) {
+			        	if (iterContents[i] instanceof CSTNode) {
+			        		setOffsets(result, getIToken($getToken(1)), (CSTNode) iterContents[i]);
+			        		break;
+			        	}
+			        }
 					$setResult(result);
 		  $EndJava
 		./

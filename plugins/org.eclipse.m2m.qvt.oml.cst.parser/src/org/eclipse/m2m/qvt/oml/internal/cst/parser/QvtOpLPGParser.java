@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.2 2008/03/12 14:09:11 sboyko Exp $
+* $Id: QvtOpLPGParser.java,v 1.3 2008/03/18 11:04:27 sboyko Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.2 2008/03/12 14:09:11 sboyko Exp $
+* $Id: QvtOpLPGParser.java,v 1.3 2008/03/18 11:04:27 sboyko Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.internal.cst.parser;
@@ -5124,14 +5124,12 @@ import org.eclipse.m2m.qvt.oml.internal.cst.TypeSpecCS;
 						(OCLExpressionCS)iterContents[2]
 					);
 				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(2)));
-				if ((iterContents != null) || (iterContents.length == 0)) {
-				        for (int i = iterContents.length - 1; i >= 0; i--) {
-				        	if (iterContents[i] instanceof CSTNode) {
-				        		setOffsets(result, getIToken(dtParser.getToken(1)), (CSTNode) iterContents[i]);
-				        		break;
-				        	}
-				        }
-				}
+		        for (int i = iterContents.length - 1; i >= 0; i--) {
+		        	if (iterContents[i] instanceof CSTNode) {
+		        		setOffsets(result, getIToken(dtParser.getToken(1)), (CSTNode) iterContents[i]);
+		        		break;
+		        	}
+		        }
 				dtParser.setSym1(result);
 	  		  break;
 			}
