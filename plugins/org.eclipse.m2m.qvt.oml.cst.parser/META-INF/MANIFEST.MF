@@ -11,4 +11,3 @@ Export-Package: org.eclipse.m2m.qvt.oml.internal.cst.parser,
 Require-Bundle: org.eclipse.ocl
 Import-Package: lpg.lpgjavaruntime;version="[1.0.0,1.2.0)"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
