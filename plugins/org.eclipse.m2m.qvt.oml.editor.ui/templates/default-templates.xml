@@ -4,6 +4,20 @@
     <template
           autoinsert="true"
           context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.transformation"
+          name="%code_template_transformation"
+          description="%code_template_transformation_desc">transformation ${name}();
+</template>
+    <template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.library"
+          name="%code_template_library"
+          description="%code_template_library_desc">library ${name};
+</template>
+    <template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
           id="org.eclipse.m2m.qvt.oml.template.mainMapping"
           name="%code_template_mainMapping"
           description="%code_template_mainMapping_desc">mapping main(in model : ${InputType}) : ${OutputType} {

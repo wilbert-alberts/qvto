@@ -136,7 +136,7 @@ public class QvtCompletionData {
     
     public boolean isValid() {
         return (myEditor != null) && (myViewer != null) 
-        && (myOffset >= 0) && (myLeftToken != null)
+        && (myOffset >= 0)
         && (myLexer != null) && (myPrsStream != null)
         && (myException == null);
     }

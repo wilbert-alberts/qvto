@@ -60,6 +60,9 @@ public class DocumentUtils {
 	 */
 	public static IRegion getLineInformationOfOffset(IDocument document, int offset) throws BadLocationException {
 		int p = (offset == document.getLength()) ? (offset - 1) : offset;
+        if (p < 0) {
+            p = 0;
+        }
 		IRegion info = document.getLineInformationOfOffset(p);
 		return info;
 	}
