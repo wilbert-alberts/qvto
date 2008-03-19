@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.21 2008/03/12 14:15:08 sboyko Exp $
+* $Id: LightweightParser.java,v 1.22 2008/03/19 16:21:30 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.21 2008/03/12 14:15:08 sboyko Exp $
+* $Id: LightweightParser.java,v 1.22 2008/03/19 16:21:30 aigdalov Exp $
 */
 
 package org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser;
@@ -5129,14 +5129,12 @@ import org.eclipse.m2m.qvt.oml.internal.cst.parser.AbstractQVTParser;
 						(OCLExpressionCS)iterContents[2]
 					);
 				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(2)));
-				if ((iterContents != null) || (iterContents.length == 0)) {
-				        for (int i = iterContents.length - 1; i >= 0; i--) {
-				        	if (iterContents[i] instanceof CSTNode) {
-				        		setOffsets(result, getIToken(dtParser.getToken(1)), (CSTNode) iterContents[i]);
-				        		break;
-				        	}
-				        }
-				}
+		        for (int i = iterContents.length - 1; i >= 0; i--) {
+		        	if (iterContents[i] instanceof CSTNode) {
+		        		setOffsets(result, getIToken(dtParser.getToken(1)), (CSTNode) iterContents[i]);
+		        		break;
+		        	}
+		        }
 				dtParser.setSym1(result);
 	  		  break;
 			}
