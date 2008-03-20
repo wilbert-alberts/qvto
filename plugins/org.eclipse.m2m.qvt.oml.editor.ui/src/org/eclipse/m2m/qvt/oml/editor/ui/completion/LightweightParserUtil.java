@@ -45,6 +45,13 @@ public class LightweightParserUtil {
         LIGHTWEIGHT_PARSER, LIGHTWEIGHT_TYPE_PARSER
     }
     
+    public static final int[] IMPERATIVE_OPERATION_TOKENS = {
+        QvtOpLPGParsersym.TK_mapping, 
+        QvtOpLPGParsersym.TK_helper,
+        QvtOpLPGParsersym.TK_query,
+        QvtOpLPGParsersym.TK_main
+    };
+    
     public static final int[] OCLEXPRESSION_START_TOKENS = {
         QvtOpLPGParsersym.TK_RESET_ASSIGN, QvtOpLPGParsersym.TK_ADD_ASSIGN,
         QvtOpLPGParsersym.TK_EQUAL, QvtOpLPGParsersym.TK_NOT_EQUAL, QvtOpLPGParsersym.TK_NOT_EQUAL_EXEQ,
@@ -73,13 +80,13 @@ public class LightweightParserUtil {
         QvtOpLPGParsersym.TK_in,
     };
     
-    public static final int[] OCLEXPRESSION_MANDATORY_TERMINATION_TOKENS = {
-        QvtOpLPGParsersym.TK_mapping, QvtOpLPGParsersym.TK_query,
-        QvtOpLPGParsersym.TK_init, QvtOpLPGParsersym.TK_end,
-        QvtOpLPGParsersym.TK_transformation, QvtOpLPGParsersym.TK_modeltype,
-        QvtOpLPGParsersym.TK_uses, QvtOpLPGParsersym.TK_metamodel,
-        QvtOpLPGParsersym.TK_import, QvtOpLPGParsersym.TK_library
-    };
+    public static final int[] OCLEXPRESSION_MANDATORY_TERMINATION_TOKENS = 
+        uniteIntArrays(IMPERATIVE_OPERATION_TOKENS, new int[] {
+                QvtOpLPGParsersym.TK_init, QvtOpLPGParsersym.TK_end,
+                QvtOpLPGParsersym.TK_transformation, QvtOpLPGParsersym.TK_modeltype,
+                QvtOpLPGParsersym.TK_uses, QvtOpLPGParsersym.TK_metamodel,
+                QvtOpLPGParsersym.TK_import, QvtOpLPGParsersym.TK_library
+        });
 
     public static final int[][] BRACING_PAIRS = {
         {QvtOpLPGParsersym.TK_if, QvtOpLPGParsersym.TK_endif},
@@ -119,6 +126,13 @@ public class LightweightParserUtil {
         QvtOpLPGParsersym.TK_sortedBy,
         QvtOpLPGParsersym.TK_closure
     };
+    
+    public static int[] uniteIntArrays(int[] array1, int[] array2) {
+        int[] result = new int[array1.length + array2.length];
+        System.arraycopy(array1, 0, result, 0, array1.length);
+        System.arraycopy(array2, 0, result, array1.length, array2.length);
+        return result;
+    }
     
     public static final IToken getNextToken(IToken token) {
         PrsStream prsStream = token.getPrsStream();

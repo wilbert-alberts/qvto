@@ -6,7 +6,6 @@ import lpg.lpgjavaruntime.PrsStream;
 import org.eclipse.m2m.qvt.oml.editor.ui.completion.CFileData;
 import org.eclipse.m2m.qvt.oml.editor.ui.completion.LightweightParserUtil;
 import org.eclipse.m2m.qvt.oml.editor.ui.completion.QvtCompletionData;
-import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParsersym;
 
 /**
  * @author aigdalov
@@ -15,8 +14,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParsersym;
 public class ScriptHeaderHandler implements IKeywordHandler {
     public String handle(IToken keyword, PrsStream prsStream, QvtCompletionData data, CFileData fileData) {
         if (keyword.getTokenIndex() == 0) {
-            IToken[] headerTokens = QvtCompletionData.extractTokens(keyword, QvtOpLPGParsersym.TK_main,
-                    QvtOpLPGParsersym.TK_mapping, QvtOpLPGParsersym.TK_query);
+            IToken[] headerTokens = QvtCompletionData.extractTokens(keyword, LightweightParserUtil.IMPERATIVE_OPERATION_TOKENS);
             if (headerTokens != null) {
                 return LightweightParserUtil.getText(headerTokens);
             }

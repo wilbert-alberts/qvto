@@ -17,8 +17,7 @@ public class ImperativeOperationHandler implements IKeywordHandler {
     private final ScopedVariablesExtractor myScopedVariablesExtractor = new ScopedVariablesExtractor();
     
     public String handle(IToken keyword, PrsStream prsStream, QvtCompletionData data, CFileData cFileData) {
-        if (QvtCompletionData.isKindOf(keyword, QvtOpLPGParsersym.TK_main,
-                QvtOpLPGParsersym.TK_mapping, QvtOpLPGParsersym.TK_query)) {
+        if (QvtCompletionData.isKindOf(keyword, LightweightParserUtil.IMPERATIVE_OPERATION_TOKENS)) {
             IToken[] tokens = QvtCompletionData.extractTokens(keyword, QvtCompletionData.MAPPING_DECLARATION_TRAILING_TOKEN_KINDS);
             if (tokens != null) {
                 String mappingText = '\n' + LightweightParserUtil.getText(tokens); 
