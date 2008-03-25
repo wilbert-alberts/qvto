@@ -131,7 +131,6 @@ public class StringLibrary {
 	        return TO_UPPER_CASE;
 	    }
 
-	    /*
 	    private static final String[] SPLIT_1 = new String[] {
 	    	STRING_CONTEXT,
 	    		"String", "Sequence(String)" };  //$NON-NLS-1$ //$NON-NLS-2$
@@ -147,7 +146,6 @@ public class StringLibrary {
 	    public static String[] split(String self, String regex, Integer limit) {
 	    	return SPLIT_2;
 	    }
-	    */
 	    
     }
 
