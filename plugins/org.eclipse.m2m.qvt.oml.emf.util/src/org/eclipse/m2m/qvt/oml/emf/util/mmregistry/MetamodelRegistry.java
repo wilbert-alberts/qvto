@@ -96,8 +96,11 @@ public class MetamodelRegistry {
         }
         
         if (desc == null) {
-            // Unregistered metamodels, e.g. available via "platform:/resource" or "platform:/plugin"
-            desc = MetamodelRegistry.createUndeclaredMetamodel(id, new ResourceSetImpl());
+            // Unregistered platform metamodels, e.g. available via "platform:/resource" or "platform:/plugin"
+            URI uri = URI.createURI(id);
+            if (uri.isPlatform()) {
+                desc = MetamodelRegistry.createUndeclaredMetamodel(uri, id, new ResourceSetImpl());
+            }
         }
         
         if (desc == null) {
@@ -108,8 +111,12 @@ public class MetamodelRegistry {
 	}
 
     public static final IMetamodelDesc createUndeclaredMetamodel(String id, ResourceSet rs) throws EmfException {
+        URI uri = URI.createURI(id);  
+        return createUndeclaredMetamodel(uri, id, rs);
+    }
+	
+    public static final IMetamodelDesc createUndeclaredMetamodel(URI uri, String id, ResourceSet rs) throws EmfException {
         try {
-            URI uri = URI.createURI(id);  
             Resource resource = rs.getResource(uri, true);
             if (resource != null) {
                 EObject metamodel = resource.getContents().get(0);
@@ -125,8 +132,8 @@ public class MetamodelRegistry {
         }
         return null;
     }
-	
-	public IMetamodelDesc[] getMetamodelDesc(List<String> packageName) throws EmfException {
+
+    public IMetamodelDesc[] getMetamodelDesc(List<String> packageName) throws EmfException {
 		final List<EPackage> metamodels = new UniqueEList<EPackage>(1);
 		
         for (IMetamodelDesc d: myMetamodelDescs.values()) {
