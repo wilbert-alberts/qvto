@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.ValidationMessages;
 import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryCreationException;
@@ -26,10 +27,10 @@ import org.eclipse.ocl.OCLInput;
 import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.OCL;
-import org.eclipse.ocl.ecore.internal.OCLStandardLibraryImpl;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.helper.ConstraintKind;
 import org.eclipse.ocl.types.AnyType;
+import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.utilities.ExpressionInOCL;
 
 /**
@@ -40,7 +41,8 @@ public class QvtLibraryOperation {
 	
 	public QvtLibraryOperation(QvtOperationalEnv env, LibraryOperation libOp) throws LibraryCreationException {
 		QvtOperationalEnv parseEnv = new QvtOperationalEnvFactory().createEnvironment(null);
-		parseEnv.getEPackageRegistry().put(OCLStandardLibraryImpl.stdlibPackage.getNsURI(), OCLStandardLibraryImpl.stdlibPackage);
+		EPackage oclStdlibPackage = env.getOCLStandardLibrary().getOclAny().getEPackage();
+		parseEnv.getEPackageRegistry().put(oclStdlibPackage.getNsURI(), oclStdlibPackage);
 		if (libOp.getLibrary().getInMetamodels() != null) {
 			for (String mm : libOp.getLibrary().getInMetamodels()) {
 				parseEnv.registerMetamodel(mm, Collections.<String>emptyList());
@@ -106,7 +108,8 @@ public class QvtLibraryOperation {
 		Constraint constraint = null;
 		
 		try {	 
-			EClassifier oclAny = OCLStandardLibraryImpl.INSTANCE.getOclAny();
+			OCLStandardLibrary<EClassifier> oclStdlib = env.getOCLStandardLibrary();
+			EClassifier oclAny = oclStdlib.getOclAny();
 			if(oclAny.getName().equals(libOp.getContext())) {
 				// Note: a workaround for OclAny context which is not 
 				// supported by the constraint parser, so OclAny instance is passed 
@@ -115,7 +118,7 @@ public class QvtLibraryOperation {
 				String trimmedText = startPos < text.length() ? text.substring(startPos) : text;
 				
 				OCL.Helper helper = ocl.createOCLHelper();
-				helper.setContext(OCLStandardLibraryImpl.INSTANCE.getOclAny());
+				helper.setContext(oclStdlib.getOclAny());
 				constraint = helper.createConstraint(ConstraintKind.DEFINITION, trimmedText);				
 			} else {
 				List<Constraint> constraints = ocl.parse(new OCLInput(text));
@@ -201,10 +204,8 @@ public class QvtLibraryOperation {
     private static final String Common_BRACKET_OPEN = "("; //$NON-NLS-1$
     private static final String Common_BRACKET_CLOSE = ")"; //$NON-NLS-1$
     private static final String Common_COMMA = ","; //$NON-NLS-1$
-    private static final String Common_DOT = "."; //$NON-NLS-1$
     private static final String Common_COLON = ":"; //$NON-NLS-1$
     private static final String Common_EQ = "="; //$NON-NLS-1$
-    private static final String Common_QUOTATION_MARK = "'"; //$NON-NLS-1$
     private static final String PARAMETER_PREFIX = "param_"; //$NON-NLS-1$
 	
 	private final EClassifier myContextType;

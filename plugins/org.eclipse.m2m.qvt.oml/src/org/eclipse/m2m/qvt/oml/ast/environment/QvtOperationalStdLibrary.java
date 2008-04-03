@@ -12,283 +12,200 @@
 package org.eclipse.m2m.qvt.oml.ast.environment;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalTypesUtil;
-import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
-import org.eclipse.m2m.qvt.oml.emf.util.Logger;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.m2m.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage;
+import org.eclipse.m2m.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
+import org.eclipse.m2m.qvt.oml.expressions.impl.ModuleImpl;
+import org.eclipse.m2m.qvt.oml.internal.stdlib.AbstractContextualOperations;
+import org.eclipse.m2m.qvt.oml.internal.stdlib.AbstractQVTStdlib;
+import org.eclipse.m2m.qvt.oml.internal.stdlib.ElementOperations;
+import org.eclipse.m2m.qvt.oml.internal.stdlib.IntegerOperations;
+import org.eclipse.m2m.qvt.oml.internal.stdlib.ModelOperations;
+import org.eclipse.m2m.qvt.oml.internal.stdlib.OclAnyOperations;
+import org.eclipse.m2m.qvt.oml.internal.stdlib.RealOperations;
+import org.eclipse.m2m.qvt.oml.internal.stdlib.StdlibModuleOperations;
+import org.eclipse.m2m.qvt.oml.internal.stdlib.StringOperations;
 import org.eclipse.m2m.qvt.oml.library.IContext;
-import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryOperation;
-import org.eclipse.ocl.ecore.EcoreFactory;
-import org.eclipse.ocl.expressions.ExpressionsFactory;
+import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.expressions.Variable;
-import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.types.TypeType;
-import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.PredefinedType;
 import org.eclipse.ocl.utilities.TypedElement;
 
 
-public class QvtOperationalStdLibrary {
+public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
+	// FIXME - replace this hack by a reasonable solution
+	public static final String OUT_PRINT_WRITER = "@out_print_writer"; //$NON-NLS-1$
 	
 	public static final String QVT_STDLIB_MODULE_NAME = "Stdlib"; //$NON-NLS-1$
-	public static final String OUT_PRINT_WRITER = "@out_print_writer"; //$NON-NLS-1$
-    public static final String QVT_STDLIB_DUMP_OPERATION = "dump"; //$NON-NLS-1$
-	public static final String QVT_STDLIB_TOSTRING_OPERATION = "toString"; //$NON-NLS-1$
+	
+	public static final QvtOperationalStdLibrary INSTANCE = createLibrary(); 
+	
+	private EClassifier ELEMENT;	
+	private EClass MODEL;
+	
+	private final Module fStdlibModule;
+	private final QvtOperationalEnv fEnv;
+	private final Map<String, EClassifier> fTypeAliasMap;
+	private final ModelOperations modelOperations;
+	private final OclAnyOperations anyOperations;
+	
 
-	public static final String QVT_STDLIB_OBJECTS_OPERATION = "objects"; //$NON-NLS-1$
-	public static final String QVT_STDLIB_ROOTOBJECTS_OPERATION = "rootObjects"; //$NON-NLS-1$
-	public static final String QVT_STDLIB_OBJECTSOFTYPE_OPERATION = "objectsOfType"; //$NON-NLS-1$
-	
-	public static final QvtOperationalStdLibrary INSTANCE = new QvtOperationalStdLibrary(); 
-	
-	private QvtOperationalStdLibrary() {
-		myDefinedOperations = new HashMap<EOperation, LibraryOperation>();
-		
-		myQvtStdlibModule = org.eclipse.m2m.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModule();
-		myQvtStdlibModule.setName(QVT_STDLIB_MODULE_NAME);
-	}
-	
-	public EClassifier getModelType() {
-		return ExpressionsPackage.Literals.MODEL_TYPE;
-	}
-	
-	public void defineStandardOperations(QvtOperationalEnv env) {
-		OCLStandardLibrary<EClassifier> oclStdLib = env.getOCLStandardLibrary();
-		
-		if(env.getInternalParent() == null) {
+	private QvtOperationalStdLibrary() {		
+		fStdlibModule = org.eclipse.m2m.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModule();
+		fStdlibModule.setName(QVT_STDLIB_MODULE_NAME);
+
+		fEnv = new QvtOperationalEnv(null) {
+			@Override
+			public EClass getModuleContextType() {			
+				return fStdlibModule;
+			}
+		};
+
+		if(fEnv.getInternalParent() == null) {
 	        Variable<EClassifier, EParameter> variable = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();
-	        variable.setName(myQvtStdlibModule.getName() + QvtOperationalFileEnv.THIS_VAR_QNAME_SUFFIX); 
-	        variable.setType(myQvtStdlibModule);
-			env.addElement(variable.getName(), variable, false);
+	        variable.setName(fStdlibModule.getName() + QvtOperationalFileEnv.THIS_VAR_QNAME_SUFFIX); 
+	        variable.setType(fStdlibModule);
+	        fEnv.addElement(variable.getName(), variable, false);
 		}
 
-		// Spec 8.4.3 : shorthand for 'concat' operation
-		defineOperation(env, oclStdLib.getString(), oclStdLib.getString(),
-				PredefinedType.PLUS_NAME, oclStdLib.getString());
-
-//		defineOperation(env, oclStdLib.getOclAny(), oclStdLib.getSet(),
-//				PredefinedType.ALL_INSTANCES_NAME, oclStdLib.getOclType());
-
-		defineOperation(env, myQvtStdlibModule, oclStdLib.getOclVoid(),
-                QVT_STDLIB_DUMP_OPERATION, oclStdLib.getOclAny());
-		defineOperation(env, oclStdLib.getOclAny(), oclStdLib.getOclVoid(),
-				QVT_STDLIB_DUMP_OPERATION);
-
-		EClassifier genericCollectionType = TypeUtil.resolveType(env,
-				(EClassifier) env.getOCLFactory().createCollectionType(oclStdLib.getT2()));
-		defineOperation(env, myQvtStdlibModule, oclStdLib.getOclVoid(),
-				QVT_STDLIB_DUMP_OPERATION, genericCollectionType);
-
-		defineOperation(env, oclStdLib.getInteger(), oclStdLib.getString(),
-				QVT_STDLIB_TOSTRING_OPERATION);
-		defineOperation(env, oclStdLib.getReal(), oclStdLib.getString(),
-				QVT_STDLIB_TOSTRING_OPERATION);
+		ELEMENT = createClass("Element", true); //$NON-NLS-1$
+		MODEL = createClass("Model", true); //$NON-NLS-1$
 		
-		// Operations on models (spec 8.3.5)
-		EClassifier setOfOclAny = TypeUtil.resolveSetType(env, oclStdLib.getOclAny());
-		defineOperation(env, getModelType(), setOfOclAny,
-				QVT_STDLIB_OBJECTS_OPERATION);
-		defineOperation(env, getModelType(), setOfOclAny,
-				QVT_STDLIB_ROOTOBJECTS_OPERATION);
-		defineOperation(env, getModelType(), setOfOclAny,
-				QVT_STDLIB_OBJECTSOFTYPE_OPERATION, oclStdLib.getOclType());
+		fTypeAliasMap = createTypeAliasMap(fEnv);		
+		
+		((ModuleImpl)fStdlibModule).freeze();
+
+		modelOperations = new ModelOperations(this);
+		anyOperations = new OclAnyOperations(this);		
+	}	
+	
+	protected void defineStandardOperations() {
+		define(new StringOperations(this));
+		define(modelOperations);
+		define(anyOperations);
+		define(new ElementOperations(this));
+		define(new StdlibModuleOperations(this));
+		define(new IntegerOperations(this));		
+		define(new RealOperations(this));
+	}
+		
+	@Override
+	public EcoreEnvironment getEnvironment() {
+		return fEnv;
+	}
+		
+	public List<EOperation> getOperations(EClassifier classifier) {
+		List<EOperation> result = fEnv.getAdditionalOperations(classifier);
+		return (result != null) ? result : Collections.<EOperation>emptyList();
 	}
 
-	public EOperation defineOperation(QvtOperationalEnv env, LibraryOperation libraryOp, EClassifier contextType,
-			EClassifier returnType, String opName, EClassifier... paramTypes) {
-		EOperation operation = buildOperation(env, contextType, returnType, opName, paramTypes);
-        synchronized (myDefinedOperations) {
-            if ((operation != null) && (resolveOperation(operation) == null)) {
-                myDefinedOperations.put(operation, libraryOp);
-            }
-        }
-		return operation;
+	public void importTo(QvtOperationalEnv env) {
+		env.addSibling(fEnv);
 	}
 	
-	public EOperation defineOperation(QvtOperationalEnv env, EClassifier contextType, EClassifier returnType,
-			String opName, EClassifier... paramTypes) {
-		return defineOperation(env, null, contextType, returnType, opName, paramTypes);
+    public Module getStdLibModule() {
+		return fStdlibModule;
+	}
+    
+    public boolean isStdLibClassifier(EClassifier classifier) {
+    	return classifier == getElementType() || classifier == fStdlibModule.getEClassifier(classifier.getName());
+    }
+    
+
+	public ModelType createModel(String name) {
+		ModelType modelType = ExpressionsFactory.eINSTANCE.createModelType();
+		modelType.setName(name);		
+		modelType.getESuperTypes().add(MODEL);
+		return modelType;		
 	}
 	
-	public EOperation lookupOperation(QvtOperationalEnv env, EClassifier owner, String name,
+	@Override
+	public EClass getModelClass() {	
+		return MODEL;
+	}
+	
+	@Override
+	public EClass getModuleType() {
+		return ExpressionsPackage.eINSTANCE.getModule();
+	}
+	
+	@Override
+	public EClassifier getElementType() {
+		return ELEMENT;
+	}
+	
+	@Override
+	public Module getLibaryModule() {
+		return fStdlibModule;
+	}
+
+	public EClassifier lookupClassifier(List<String> nameElements) {	
+		int size = nameElements.size();
+		if(size == 0 || size > 2) {
+			return null;
+		}
+		
+		if(size == 2 && !QVT_STDLIB_MODULE_NAME.equals(nameElements.get(0))) {
+			return null;
+		}
+		
+		String typeName = nameElements.get(size - 1);
+		EClassifier aliasedType = getTypeAlias(typeName);
+		return (aliasedType != null) ? aliasedType : fStdlibModule.getEClassifier(typeName);
+	}
+	
+	public EClassifier lookupPackage(List<String> nameElements) {	 
+		if(nameElements.size() == 1 && QVT_STDLIB_MODULE_NAME.equals(nameElements.get(0))) {
+			return fStdlibModule;
+		}
+		return null;
+	}
+					
+	/**
+	 * Note: Necessary until MDT OCL solves custom generic operations [#192907]  
+	 */
+	@SuppressWarnings("unchecked")
+	public EOperation resolveGenericOperationsIfNeeded(QvtOperationalEnv env, EClassifier owner, String name,
 			List<? extends TypedElement<EClassifier>> args) {
 		
 		// TODO waiting for resolution of OCL bug [#192907]
 		if (PredefinedType.ALL_INSTANCES_NAME.equals(name) && args.size() == 1) {
 			EClassifier resultType = args.get(0).getType();
 			if (resultType instanceof TypeType) {
-				resultType = ((TypeType<EClassifier, EOperation>) resultType).getReferredType();
+				TypeType<EClassifier, EOperation> typeType = (TypeType<EClassifier, EOperation>) resultType;
+				resultType = typeType.getReferredType();
 			}
-
-			return defineOperation(env, owner, createReturnType(env, resultType, true), name,
-					args.get(0).getType());
-		}
-		if (QVT_STDLIB_OBJECTSOFTYPE_OPERATION.equals(name) && args.size() == 1) {
+			if(resultType != null) {
+				return env.getTypeResolver().resolveAdditionalOperation(
+						owner, this.anyOperations.defineNonStdAllInstances(env, resultType));
+			}
+		} else if (ModelOperations.OBJECTS_OF_TYPE_NAME.equals(name) && args.size() == 1) {
 			EClassifier resultType = args.get(0).getType();
 			if (resultType instanceof TypeType) {
-				resultType = ((TypeType<EClassifier, EOperation>) resultType).getReferredType();
+				TypeType<EClassifier, EOperation> typeType = (TypeType<EClassifier, EOperation>) resultType;				
+				resultType = typeType.getReferredType();
 			}
-
-			return defineOperation(env, owner, createReturnType(env, resultType, true), name,
-					args.get(0).getType());
+			if(resultType != null) {
+				return env.getTypeResolver().resolveAdditionalOperation(
+						owner, this.modelOperations.defineGenericObjectsOfType(env, resultType));
+			}
 		}
 		
 		return null;
 	}
-	
-	private EClassifier createReturnType(QvtOperationalEnv env, EClassifier resultType, boolean isMany) {
-		if (isMany) {
-			EReference realResult = org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.createEReference();
-			realResult.setEType(resultType);
-			realResult.setUnique(true);
-			realResult.setOrdered(false);
-			realResult.setLowerBound(0);
-			realResult.setUpperBound(-1);
-			return env.getUMLReflection().getOCLType(realResult);
-		}
-		else {
-			return env.getUMLReflection().getOCLType(resultType);
-		}
-	}
-	
-	public boolean overrides(EOperation operation, int opcode) {
-		return resolveOperation(operation) != null;
-	}
-
-	public Object callOperation(QvtOperationalEvaluationEnv evalEnv, IContext context, EOperation operation,
-			int opcode, Object source, Object[] args) {
 		
-		if (PredefinedType.PLUS_NAME.equals(operation.getName())
-				&& source instanceof String
-				&& args.length == 1
-				) {
-			return ((String) source).concat(String.valueOf(args[0]));
-		}
-		
-		if (PredefinedType.ALL_INSTANCES_NAME.equals(operation.getName())
-				&& source instanceof EObject
-				&& args.length == 1
-				) {
-	        Set<Object> instances = new LinkedHashSet<Object>();	        
-	        for (Iterator<EObject> it = ((EObject) source).eAllContents(); it.hasNext(); ) {
-	            EObject contained = it.next();
-	            
-	            if (clsFilter.matches(contained, args[0])) {
-	                instances.add(contained);
-	            }
-	        }	        
-	        return instances;
-		}
-		
-		if (QVT_STDLIB_DUMP_OPERATION.equals(operation.getName())) {
-			PrintWriter printWriter = (PrintWriter) context.get(OUT_PRINT_WRITER);
-			Object toPrint = source;
-			if (args.length == 1) {
-				toPrint = args[0];
-			}
-			
-	        if (printWriter != null) {
-	        	printWriter.println(toPrint);
-	        } else {
-	        	System.out.println(toPrint);
-	        	System.out.flush();
-	        }
-	        return null;
-		}
-		
-		if (QVT_STDLIB_TOSTRING_OPERATION.equals(operation.getName())
-				&& (source instanceof Integer || source instanceof Double)
-				&& args.length == 0
-				) {
-			return String.valueOf(source);
-		}
-
-		if (QVT_STDLIB_OBJECTS_OPERATION.equals(operation.getName())
-				&& source instanceof ModelParameterExtent
-				&& args.length == 0
-				) {			
-			Set<Object> instances = new LinkedHashSet<Object>();
-			instances.addAll(((ModelParameterExtent) source).getAllObjects());
-			return instances;
-		}
-
-		if (QVT_STDLIB_ROOTOBJECTS_OPERATION.equals(operation.getName())
-				&& source instanceof ModelParameterExtent
-				&& args.length == 0
-				) {			
-			Set<Object> instances = new LinkedHashSet<Object>();
-			instances.addAll(((ModelParameterExtent) source).getRootObjects());
-			return instances;
-		}
-
-		if (QVT_STDLIB_OBJECTSOFTYPE_OPERATION.equals(operation.getName())
-				&& source instanceof ModelParameterExtent
-				&& args.length == 1
-				) {			
-	        Set<Object> instances = new LinkedHashSet<Object>();
-	        List<Object> objects = ((ModelParameterExtent) source).getAllObjects();
-			for (Object obj : objects) {
-	            if (clsFilter.matches(obj, args[0])) {
-	                instances.add(obj);
-	            }
-	        }	        
-	        return instances;
-		}
-		
-		LibraryOperation libOp = null;
-        synchronized (myDefinedOperations) {
-            EOperation resolvedOperation = resolveOperation(operation);
-            if (resolvedOperation != null) {
-               libOp = myDefinedOperations.get(resolvedOperation);
-            }
-        }
-        if (libOp != null) {
-            Class returnClass = operation.getEType() != null ? operation.getEType().getInstanceClass() : null;
-            if (returnClass == null) {
-                Logger.getLogger().log(Logger.SEVERE,
-                "Return type class was not resolved"); //$NON-NLS-1$
-                return null;
-            }
-
-            // reset OclInvalid to 'null'
-        	Object[] callArgs = null;            
-            if(args != null) {
-	            for (int i = 0; i < args.length; i++) {
-	            	if(evalEnv.isOclInvalid(args[i])) {
-	            		if(callArgs == null) {
-	            			callArgs = new Object[args.length];
-	            			System.arraycopy(args, 0, callArgs, 0, args.length);
-	            		}
-	            		callArgs[i] = null;
-	            	}
-	    		}
-	            callArgs = (callArgs == null) ? args : callArgs;
-            }
-
-            Object result = libOp.run(source, callArgs, new Object[0], returnClass);
-            if (result == null) {
-                return QvtOperationalUtil.getOclInvalid();
-            }
-            return result;
-        }
-
-		return null;
-	}
-	
 	/**
 	 * Gets the print writer for a logger associated with the given context.
 	 * 
@@ -303,83 +220,37 @@ public class QvtOperationalStdLibrary {
 		
 		return (PrintWriter) loggerObject;
 	}
+    
+	private void define(AbstractContextualOperations typeOperations) {
+		typeOperations.define(fEnv);
+	}	
 	
-	private EOperation buildOperation(QvtOperationalEnv env, EClassifier contextType, EClassifier returnType,
-			String opName, EClassifier... paramTypes) {
-		List<Variable<EClassifier, EParameter>> stringArgList = new ArrayList<Variable<EClassifier, EParameter>>();
-		for (EClassifier cls : paramTypes) {
-			Variable<EClassifier, EParameter> stringVariable = ExpressionsFactory.eINSTANCE.createVariable();
-			stringVariable.setName(cls.getName());
-			stringVariable.setType(cls);
-			stringArgList.add(stringVariable);
-		}
-		if (TypeUtil.findOperationMatching(env, contextType, opName, stringArgList) == null) {
-			return env.defineOperation(contextType, opName, returnType, stringArgList,
-					EcoreFactory.eINSTANCE.createConstraint());
-		}
-		return null;
+	private EClass createClass(String name, boolean isAbstract) {
+		assert fStdlibModule != null;
+		assert name != null;
+		
+		EClass result = EcoreFactory.eINSTANCE.createEClass();
+		result.setName(name);
+		result.isAbstract();
+		fStdlibModule.getEClassifiers().add(result);
+
+		return result;
+	}
+		
+	private static QvtOperationalStdLibrary createLibrary() {
+		QvtOperationalStdLibrary lib = new QvtOperationalStdLibrary();
+		lib.defineStandardOperations();
+		return lib;
+	}	
+	
+	private EClassifier getTypeAlias(String typeName) {
+		return fTypeAliasMap.get(typeName);
 	}
 
-    private EOperation resolveOperation(EOperation operation) {
-        synchronized (myDefinedOperations) {
-            for (EOperation definedOperation : myDefinedOperations.keySet()) {
-                if (areEqual(definedOperation, operation)) {
-                    return definedOperation;
-                }
-            }
-            return null;
-        }
-    }
-    
-    public Module getStdLibModule() {
-		return myQvtStdlibModule;
+	private static Map<String, EClassifier> createTypeAliasMap(QvtOperationalEnv env) {
+		Map<String, EClassifier> result = new HashMap<String, EClassifier>();
+		result.put("Any", env.getOCLStandardLibrary().getOclAny()); //$NON-NLS-1$
+		result.put("Void", env.getOCLStandardLibrary().getOclVoid()); //$NON-NLS-1$
+		return result;
 	}
-    
-    private static boolean areEqual(EOperation op1, EOperation op2) {
-        if (!op1.getName().equals(op2.getName())) {
-            return false;
-        }
-        List<EParameter> parameters1 = op1.getEParameters();
-        List<EParameter> parameters2 = op2.getEParameters();
-        if (parameters1.size() != parameters2.size()) {
-            return false;
-        }
-        
-        for (int i = 0; i < parameters1.size(); i++) {
-            EClassifier type = parameters1.get(i).getEType();
-            EClassifier otherType = parameters2.get(i).getEType();
-            if (!areEqualTypes(type, otherType)) {
-                return false;
-            }
-        }
-        
-        return areEqualTypes(op1.getEContainingClass(), op2.getEContainingClass());
-    }
-    
-    private static boolean areEqualTypes(EClassifier cl1, EClassifier cl2) {
-        String op1CtxtType = QvtOperationalTypesUtil.getTypeFullName(cl1);
-        String op2CtxtType = QvtOperationalTypesUtil.getTypeFullName(cl2);
-        return op1CtxtType.equals(op2CtxtType);
-    }
-    
-	
-    private static interface IFilter {
-    	boolean matches(Object obj, Object type);
-    }
-
-    private static final IFilter clsFilter = new IFilter() {
-		public boolean matches(Object obj, Object type) {
-	    	if (type instanceof EClassifier) {
-	    		EClassifier classifier = (EClassifier) type;
-	    		return classifier.isInstance(obj);
-	    	}
-	    	else {
-	    		return false;
-	    	}
-		}			
-	};
-	
-	
-	private final Map<EOperation, LibraryOperation> myDefinedOperations;
-	private final Module myQvtStdlibModule;	
 }

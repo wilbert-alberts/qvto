@@ -12,6 +12,7 @@
 package org.eclipse.m2m.qvt.oml.ast.environment;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -57,6 +58,7 @@ import org.eclipse.m2m.qvt.oml.internal.ast.parser.ValidationMessages;
 import org.eclipse.m2m.qvt.oml.internal.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.EnvironmentFactory;
+import org.eclipse.ocl.TypeResolver;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
@@ -97,7 +99,6 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		// Set our own package registry to be populated by imported metamodels
 		super(eRegistry);
 		setParent(parent);
-		myRootEnvironment = parent != null ? parent.myRootEnvironment : null;
 
 		myWarningsList = new ArrayList<QvtMessage>(2);
 		myErrorsList = new ArrayList<QvtMessage>(2);
@@ -105,7 +106,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 
 		if(parent == null) {
 			// define std only in the root environment
-			defineStandardOperations();
+			//defineStandardOperations();
 		}
 
 		ePackageRegistry = eRegistry;		
@@ -119,9 +120,31 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		this(parent, parent != null ? parent.getEPackageRegistry() : new EPackageRegistryImpl());
 	}
 	
-    public List<Module> getJavaLibs() {
+	@Override
+	public final TypeResolver<EClassifier, EOperation, EStructuralFeature> getTypeResolver() {
+		if(myTypeResolver == null) {
+			QvtOperationalEnv rootEnv = rootEnv();
+			if(rootEnv != null) {
+				myTypeResolver = rootEnv.getQVTTypeResolver();
+			} else {
+				myTypeResolver = new QvtTypeResolverImpl(this, super.getTypeResolver());
+			}
+		}
+		return myTypeResolver;
+	}	
+	
+	@Override
+	public UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
+		Internal<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent = getInternalParent();
+		if(parent != null) {
+			return parent.getUMLReflection();
+		}
+		return super.getUMLReflection();
+	}
+	
+    public List<Module> getNativeLibs() {
     	if(getInternalParent() instanceof QvtOperationalEnv) {
-    		return ((QvtOperationalEnv)getInternalParent()).getJavaLibs();
+    		return ((QvtOperationalEnv)getInternalParent()).getNativeLibs();
     	}
 
     	return Collections.<Module>emptyList();
@@ -239,7 +262,10 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	@Override
 	public EOperation lookupOperation(EClassifier owner, String name,
 			List<? extends TypedElement<EClassifier>> args) {
-		getQVTStandardLibrary().lookupOperation(this, owner, name, args);
+		EOperation o = getQVTStandardLibrary().resolveGenericOperationsIfNeeded(this, owner, name, args);
+		if(o != null) {
+			return o;
+		}
 		
 		// first try to lookup imperative operation with param's exact matching  
         UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> uml = getUMLReflection();
@@ -423,7 +449,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	        } else {
                 Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
                 var.setName(modelParam.getName());
-                var.setType(getQVTStandardLibrary().getModelType());
+                var.setType(modelParam.getEType());
                 var.setRepresentedParameter(modelParam);
                 modelParameters.add(var);
 	        }
@@ -495,11 +521,23 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		if (!isMayBelongToExtent(type)) {
 			return null;
 		}
+		return findModelParameter(type, directionKind, getModelParameters());
+	}
+
+	private List<ModelParameter> getModelParameters() {
+		List<ModelParameter> result = new ArrayList<ModelParameter>(myModelParameters.size());
+		for (Variable<EClassifier, EParameter> modelParamVar : myModelParameters) {
+			result.add((ModelParameter)modelParamVar.getRepresentedParameter());
+		}
+		return result;
+	}
+	
+	static ModelParameter findModelParameter(EClassifier type, DirectionKind directionKind, 
+			Collection<ModelParameter> modelParameters) {
 		EObject rootContainer = EcoreUtil.getRootContainer(type);
 		
 		// lookup explicit extent 
-		for (Variable<EClassifier, EParameter> var : myModelParameters) {
-			ModelParameter modelParam = (ModelParameter) var.getRepresentedParameter();
+		for (ModelParameter modelParam : modelParameters) {
 			if (directionKind == DirectionKind.OUT) {
 				if (modelParam.getKind() == DirectionKind.IN) {
 					continue;
@@ -512,8 +550,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		}
 		
 		// lookup implicit extent 
-		for (Variable<EClassifier, EParameter> var : myModelParameters) {
-			ModelParameter modelParam = (ModelParameter) var.getRepresentedParameter();
+		for (ModelParameter modelParam : modelParameters) {
 			if (directionKind == DirectionKind.OUT) {
 				if (modelParam.getKind() == DirectionKind.IN) {
 					continue;
@@ -652,7 +689,13 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		if (names.size() > 1) {
 			// Qualified type 
 			// It is possible to either qualify the type name with a model type or a package name
-
+			if(names.size() == 2) {
+				EClassifier stdType = QvtOperationalStdLibrary.INSTANCE.lookupClassifier(names);
+				if(stdType != null) {
+					return stdType;
+				}
+			}
+			
 			if (myModelTypeRegistry.containsKey(names.get(0))) {
 				EClassifier lookupClassifier = doLookupModeltypeClassifier(
 						myModelTypeRegistry.get(names.get(0)), names.subList(1, names.size()));
@@ -662,7 +705,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			}
 		}
 		
-		return super.lookupClassifier(names);
+		EClassifier result = super.lookupClassifier(names);
+		return (result != null) ? result : QvtOperationalStdLibrary.INSTANCE.lookupClassifier(names);
 	}
 	
 	@Override
@@ -678,6 +722,11 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
                     return lookupPackage;
                 }
             }
+        } else if(path.size() == 1) {
+        	EPackage stdPackage = QvtOperationalStdLibrary.INSTANCE.getStdLibModule();
+        	if(stdPackage.getName().equals(path.get(0))) {
+        		return stdPackage;
+        	}
         }
 
         return super.lookupPackage(path);
@@ -879,10 +928,6 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			&& getOCLStandardLibrary().getOclInvalid() != myType;
 	}
 	
-	private void defineStandardOperations() {
-		getQVTStandardLibrary().defineStandardOperations(this);
-	}
-
 	private EOperation addOperation(EClassifier owner, EOperation operation, boolean fake) {
 		if (getInternalParent() instanceof QvtOperationalEnv) {
 			// propagate additional operations as high as possible so that they
@@ -894,13 +939,12 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	}	
 
 	
-	protected final QvtOperationalEnv myRootEnvironment;
-	
 	private final List<QvtMessage> myWarningsList;
 	private final List<QvtMessage> myErrorsList;
 	private boolean myCheckForDuplicateErrors;
 	private QvtCompilerOptions myCompilerOptions;
 
+	private QvtTypeResolverImpl myTypeResolver;	
 	private Map<String, ModelType> myModelTypeRegistry;
 	private List<Variable<EClassifier, EParameter>> myModelParameters = Collections.emptyList();
 	
@@ -982,7 +1026,15 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		}
 		super.initASTMapping(astNode, cstNode);
 	}
-
+	
+	protected QvtOperationalEnv rootEnv() {
+		Environment.Internal base = this;
+		while(base.getInternalParent() instanceof QvtOperationalEnv) {
+			base = (QvtOperationalEnv) base.getInternalParent();			
+		}
+		return (base == this) ? null : (QvtOperationalEnv)base;
+	}
+	
 	private static int getLineNum(QvtOperationalEnv env, int startOffset) {
 		if(startOffset < 0) {
 			return -1;

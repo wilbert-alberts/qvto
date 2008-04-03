@@ -25,12 +25,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.modelparam.ResourceEObject;
 import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
@@ -41,7 +38,7 @@ import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtChangeRecorder;
-import org.eclipse.m2m.qvt.oml.internal.cst.adapters.ModelTypeMetamodelsAdapter;
+import org.eclipse.m2m.qvt.oml.internal.stdlib.CallHandler;
 import org.eclipse.m2m.qvt.oml.library.IContext;
 import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.ecore.EcoreEvaluationEnvironment;
@@ -69,6 +66,10 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			myModelExtents = Collections.emptyMap();
 			myMapImportedExtents = Collections.emptyMap();
 		}
+	}
+	
+	public Object getInvalid() {
+		return getInvalidResult();
 	}
 	
 	@Override
@@ -138,18 +139,22 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	
 	@Override
 	public boolean overrides(EOperation operation, int opcode) {
-		if (getQVTStandardLibrary().overrides(operation, opcode)) {
+		if (CallHandler.Access.hasHandler(operation)) {
 			return true;
-		}
+		} 
 		return super.overrides(operation, opcode);
 	}
 
 	@Override
-	public Object callOperation(EOperation operation, int opcode, Object source, Object[] args)
-			throws IllegalArgumentException {
-		if (getQVTStandardLibrary().overrides(operation, opcode)) {
-			return getQVTStandardLibrary().callOperation(this, myContext, operation, opcode, source, args);
+	public Object callOperation(EOperation operation, int opcode, Object source, Object[] args) throws IllegalArgumentException {
+		CallHandler callHandler = CallHandler.Access.getHandler(operation);
+		if(callHandler != null) {
+			if(source == null || source == getInvalidResult()) {
+				return getInvalidResult();
+			}
+			return callHandler.invoke(source, args, this, getContext());
 		}
+			
 		return super.callOperation(operation, opcode, source, args);
 	}
 
@@ -356,6 +361,9 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			// OclAny behaves as a supertype for all the types except for the OCL pre-defined collection types.
 			// OclAny is itself an instance of the metatype AnyType.
 			return false == object instanceof Collection;
+		} 
+		else if(classifier == QvtOperationalStdLibrary.INSTANCE.getElementType()) {
+			return classifier instanceof EClass;
 		}
 		return super.isKindOf(object, classifier);
 	}
@@ -369,12 +377,13 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 
     public void createModuleParameterExtents(Module module) {        
         Map<ModelParameter, ModelParameterExtent> modelExtents = new LinkedHashMap<ModelParameter, ModelParameterExtent>(module.getModelParameter().size());
-        modelExtents.put(UNBOUND_MODEL_EXTENT, new ModelParameterExtent(Collections.<EPackage>emptyList()));
+        modelExtents.put(UNBOUND_MODEL_EXTENT, new ModelParameterExtent());
         int argIndex = 0;
         for (ModelParameter modelParam : module.getModelParameter()) {
-        	List<EPackage> metamodels = ModelTypeMetamodelsAdapter.getMetamodels(modelParam.getEType());
         	if (modelParam.getKind() == DirectionKind.OUT) {
-        		modelExtents.put(modelParam, new ModelParameterExtent(metamodels));
+        		ModelParameterExtent outExtent = new ModelParameterExtent();
+        		outExtent.setModelParameter(modelParam);
+				modelExtents.put(modelParam, outExtent);
         		continue;
         	}
         	if (argIndex >= getOperationArgs().size()
@@ -414,7 +423,9 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         	Object argument = getOperationArgs().get(argIndex);
         	List<EObject> argValues = argument instanceof ResourceEObject ? ((ResourceEObject) argument).getChildren() 
         			: Collections.singletonList((EObject) argument);
-			modelExtents.put(modelParam, new ModelParameterExtent(argValues, metamodels));
+			ModelParameterExtent inOrInoutExtent = new ModelParameterExtent(argValues);
+			inOrInoutExtent.setModelParameter(modelParam);
+			modelExtents.put(modelParam, inOrInoutExtent);
         	if (modelParam.getKind() == DirectionKind.IN) {
         		QvtChangeRecorder qvtChangeRecorder = new QvtChangeRecorder(modelParam);
         		qvtChangeRecorder.beginRecording(argValues);
@@ -489,19 +500,19 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	 *   transformation. For non-changed 'inout' model parameter corresponding resource is empty.
 	 * @return ordered list of model extents
 	 */
-	public QvtEvaluationResult createEvaluationResult(ImperativeOperation entryPoint, ResourceSet outResourceSet) {
-		List<Resource> extents = new ArrayList<Resource>();
+	public QvtEvaluationResult createEvaluationResult(ImperativeOperation entryPoint) {
+		List<ModelExtentContents> extents = new ArrayList<ModelExtentContents>();
 		for (Map.Entry<ModelParameter, ModelParameterExtent> entry : myModelExtents.entrySet()) {
 			if (entry.getKey() != UNBOUND_MODEL_EXTENT 
 					&& entry.getKey().getKind() != DirectionKind.IN) {
-	        	extents.add(entry.getValue().getModelExtent(outResourceSet));
+	        	extents.add(entry.getValue().getContents());
 			}
 		}
 		
         List<Object> outParamValues = makeOutParamValues(entryPoint);
 		
 		return new QvtEvaluationResult(extents,
-				myModelExtents.get(UNBOUND_MODEL_EXTENT).getEObjectsInExtent(), outParamValues);
+				myModelExtents.get(UNBOUND_MODEL_EXTENT).getRootObjects(), outParamValues);
 	}
 	
 	private List<Object> makeOutParamValues(ImperativeOperation entryPoint) {
@@ -555,6 +566,20 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			myModelExtents.get(UNBOUND_MODEL_EXTENT).addObject(newObject);
 		}
 		return newObject;
+	}
+	
+	public ModelParameterExtent getDefaultInstantiationExtent(EClassifier type) {
+		List<ModelParameter> params = new ArrayList<ModelParameter>(myModelExtents.keySet().size());
+		for (ModelParameter modelParameter : myModelExtents.keySet()) {
+			if(modelParameter != UNBOUND_MODEL_EXTENT) {
+				params.add(modelParameter);
+			}
+		}
+		ModelParameter modelParameter = QvtOperationalEnv.findModelParameter(type, DirectionKind.OUT, params);
+		if(modelParameter != null) {
+			return myModelExtents.get(modelParameter);
+		}
+		return myModelExtents.get(UNBOUND_MODEL_EXTENT);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -612,7 +637,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         	owner.eUnset(eStructuralFeature);
         }
 	}
-	
+
 	private boolean isMany(EObject ownerObj, EStructuralFeature eStructuralFeature) {
 		if (eStructuralFeature.isMany()) {
 			return true;

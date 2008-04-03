@@ -15,7 +15,6 @@ package org.eclipse.m2m.qvt.oml.ast.environment;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 
 /**
  * @author sboyko
@@ -23,13 +22,13 @@ import org.eclipse.emf.ecore.resource.Resource;
  */
 public class QvtEvaluationResult {
 	
-	public QvtEvaluationResult(List<Resource> modelExtents, List<EObject> unboundedObjects, List<Object> outParamValues) {
+	public QvtEvaluationResult(List<ModelExtentContents> modelExtents, List<EObject> unboundedObjects, List<Object> outParamValues) {
 		myModelExtents = modelExtents;
 		myUnboundedObjects = unboundedObjects;
 		myOutParamValues = outParamValues;
 	}
 	
-	public List<Resource> getModelExtents() {
+	public List<ModelExtentContents> getModelExtents() {
 		return myModelExtents;
 	}
 	
@@ -41,7 +40,7 @@ public class QvtEvaluationResult {
 		return myOutParamValues;
 	}
 	
-	private final List<Resource> myModelExtents;
+	private final List<ModelExtentContents> myModelExtents;
 	private final List<EObject> myUnboundedObjects;
 	private final List<Object> myOutParamValues;
 

@@ -17,6 +17,10 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
@@ -30,14 +34,19 @@ import org.eclipse.m2m.qvt.oml.expressions.Property;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.qvt.oml.internal.ast.parser.ValidationMessages;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
+import org.eclipse.m2m.qvt.oml.internal.stdlib.LegacyNativeLibSupport;
+import org.eclipse.m2m.qvt.oml.internal.stdlib.QVTUMLReflection;
 import org.eclipse.m2m.qvt.oml.ocl.transformations.Library;
 import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryCreationException;
-import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryOperation;
+import org.eclipse.ocl.ecore.CallOperationAction;
+import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
+import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.ExpressionsFactory;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.lpg.ProblemHandler;
 import org.eclipse.ocl.options.ProblemOption;
+import org.eclipse.ocl.utilities.UMLReflection;
 import org.eclipse.osgi.util.NLS;
 
 public class QvtOperationalFileEnv extends QvtOperationalEnv {
@@ -45,6 +54,7 @@ public class QvtOperationalFileEnv extends QvtOperationalEnv {
     public static final String THIS_VAR_QNAME_SUFFIX = "." + THIS; //$NON-NLS-1$
 	
     private final QvtCompilerKernel myKernel;
+    private QVTUMLReflection myQvtUMLReflection;
 	
 	protected QvtOperationalFileEnv(final QvtOperationalEnv parent, final CFile file, final QvtCompilerKernel kernel) {
 		super(parent, new EPackageRegistryImpl());
@@ -54,8 +64,19 @@ public class QvtOperationalFileEnv extends QvtOperationalEnv {
         // Eliminate parsing warning on "" occurrences, used in model types URIs, etc.
         // TODO - solve in QVT grammar
         setOption(ProblemOption.ELEMENT_NAME_QUOTE_ESCAPE, ProblemHandler.Severity.OK);
+        
+    	QvtOperationalStdLibrary.INSTANCE.importTo(this);        
 	}
-
+	
+	@Override
+	public UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
+		if(myQvtUMLReflection == null) {
+			myQvtUMLReflection = new QVTUMLReflection(super.getUMLReflection(), QvtOperationalStdLibrary.INSTANCE);
+		}
+		
+		return myQvtUMLReflection;
+	}
+	
     public QvtCompilerKernel getKernel() {
         return myKernel;
     }
@@ -146,17 +167,16 @@ public class QvtOperationalFileEnv extends QvtOperationalEnv {
     }
     
     @Override
-	public List<Module> getJavaLibs() {
+	public List<Module> getNativeLibs() {
     	return myLibs == null ? Collections.<Module>emptyList() : Collections.unmodifiableList(myLibs);
-	}
+	} 
     
-	public void registerLibrary(Library lib) throws LibraryCreationException {
+	public Module defineNativeLibrary(Library lib) throws LibraryCreationException {
 		if(myLibs == null) {
 			myLibs = new LinkedList<Module>();
 		}
 			 
-		Module libModule = org.eclipse.m2m.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModule();
-		libModule.setName(lib.getId());
+		Module libModule = LegacyNativeLibSupport.INSTANCE.defineLibrary(this, lib);
 		myLibs.add(libModule);
 		
 		Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
@@ -164,18 +184,7 @@ public class QvtOperationalFileEnv extends QvtOperationalEnv {
 		var.setType(libModule);
 		this.addElement(var.getName(), var, false);
 		
-		for (LibraryOperation libOp : lib.getLibraryOperations()) {
-	        QvtLibraryOperation qvtLibOp = new QvtLibraryOperation(this, libOp);
-	        EClassifier ctxType = qvtLibOp.getContextType();
-	        
-	        if(ctxType  == getOCLStandardLibrary().getOclVoid()) {
-	        	ctxType = libModule;
-	        }
-	
-	        getQVTStandardLibrary().defineOperation(this, libOp,
-	        		ctxType, qvtLibOp.getReturnType(),
-	        		libOp.getName(), qvtLibOp.getParamTypes());	        
-		}
+		return libModule;
 	}
 
 	private final CFile myFile;

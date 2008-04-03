@@ -37,7 +37,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.qvt.oml.ast.environment.IVirtualOperationTable;
 import org.eclipse.m2m.qvt.oml.ast.environment.ModelParameterExtent;
@@ -47,7 +46,6 @@ import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalFileEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalStdLibrary;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
-import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.qvt.oml.expressions.AssertExp;
@@ -569,13 +567,12 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 	        isInTerminatingState = true;
 	        processDeferredTasks();	        
 	
-			ResourceSet outResourceSet = EmfUtil.getOutputResourceSet();
-	        evalResult = callResult.myEvalEnv.createEvaluationResult(myEntryPoint, outResourceSet);
+	        evalResult = callResult.myEvalEnv.createEvaluationResult(myEntryPoint);
 	        if (evalResult.getModelExtents().isEmpty()) {
 	            if (callResult.myResult instanceof EObject) {
 	                // compatibility reason
 	            	ModelParameterExtent modelParameter = new ModelParameterExtent((EObject) callResult.myResult);
-	                evalResult.getModelExtents().add(modelParameter.getModelExtent(outResourceSet));
+	                evalResult.getModelExtents().add(modelParameter.getContents());
 	            } else {
 	                return callResult.myResult;
 	            }

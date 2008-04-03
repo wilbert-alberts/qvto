@@ -25,11 +25,9 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
-import org.eclipse.ocl.TypeResolver;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.util.TypeUtil;
@@ -65,7 +63,6 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 	}	
 	
 	private List<QvtEnvironmentBase> siblings;
-	private QvtTypeResolverImpl typeResolver;
 	private Set<EOperation> fOperationsHolder;	
 
 	protected QvtEnvironmentBase(QvtEnvironmentBase parent) {
@@ -109,14 +106,6 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 		}
 		return result;
 		
-	}
-
-	@Override
-	public final TypeResolver<EClassifier, EOperation, EStructuralFeature> getTypeResolver() {
-		if(typeResolver == null) {
-			typeResolver = new QvtTypeResolverImpl(this, super.getTypeResolver());
-		}
-		return typeResolver;
 	}
 
 	public final QvtTypeResolverImpl getQVTTypeResolver() {

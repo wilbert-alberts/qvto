@@ -35,6 +35,7 @@ import org.eclipse.m2m.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalFileEnv;
+import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalStdLibrary;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.qvt.oml.compiler.ParsedModuleCS;
@@ -238,7 +239,14 @@ public class QvtOperationalVisitorCS
 	@Override
 	protected EClassifier typeCS(TypeCS typeCS, Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		EClassifier type = super.typeCS(typeCS, env);
-		if(type == getOclVoid() && (typeCS instanceof PrimitiveTypeCS == false)) {
+		if(type == getOclVoid() && typeCS instanceof PrimitiveTypeCS == false) { 
+			if(typeCS instanceof PathNameCS) {
+				// check whether Void synonym was used
+				PathNameCS pathNameCS = (PathNameCS) typeCS;
+				if(QvtOperationalStdLibrary.INSTANCE.lookupClassifier(pathNameCS.getSequenceOfNames()) == getOclVoid()) {
+					return type;
+				}
+			}
 			// FIXME - workaround for migration to OCL 1.2 => non primitive type but
 			// resolved as OclVoid in super impl. indicates actually a type unresolved by the env.
 			return null;
@@ -271,6 +279,8 @@ public class QvtOperationalVisitorCS
 		}
 		return type;
 	}
+	
+
 	
 	@Override
 	protected Variable<EClassifier, EParameter> lookupImplicitSourceForOperation(
@@ -1266,7 +1276,7 @@ public class QvtOperationalVisitorCS
 			if (!myLoadedLibraries.contains(libId)) {
 				try {
 					lib.loadOperations();
-					env.registerLibrary(lib);
+					env.defineNativeLibrary(lib);
 				} catch (LibraryCreationException e) {
 					env.reportError(NLS.bind(ValidationMessages.FailedToLoadLibrary, new Object[] { libId,
 							e.getMessage() }), impPath);
@@ -1469,14 +1479,16 @@ public class QvtOperationalVisitorCS
 		if (modelTypeCS == null) {
 			return null;
 		}
-		ModelType modelType = ExpressionsFactory.eINSTANCE.createModelType();
+
+		SimpleNameCS identifierCS = modelTypeCS.getIdentifierCS();
+		ModelType modelType = QvtOperationalStdLibrary.INSTANCE.createModel(identifierCS != null ? identifierCS.getValue() : null);
+
 		if(myCompilerOptions.isGenerateCompletionData()) {
 			ASTBindingHelper.createCST2ASTBinding(modelTypeCS, modelType);
 		}
 		
 		modelType.setStartPosition(modelTypeCS.getStartOffset());
 		modelType.setEndPosition(modelTypeCS.getEndOffset());
-		modelType.setName(modelTypeCS.getIdentifierCS().getValue());
 		
 		if (modelTypeCS.getComplianceKindCS() != null) {
 			String complianceKind = visitLiteralExpCS(modelTypeCS.getComplianceKindCS(), env);
@@ -2121,14 +2133,17 @@ public class QvtOperationalVisitorCS
 
 		OCLExpression<EClassifier> sourceExp;
 		if (leftProp == null) {
-			sourceExp = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariableExp();
-			sourceExp.setType(type);
-			sourceExp.setName(variable.getName());
+			VariableExp<EClassifier, EParameter> var = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariableExp();
+			var.setType(type);
+			var.setName(variable.getName());
+			var.setReferredVariable(variable);
+			sourceExp = var;			
 		}
 		else {
-			sourceExp = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createPropertyCallExp();
-			sourceExp.setName(variable.getName());
-			((PropertyCallExp<EClassifier, EStructuralFeature>) sourceExp).setReferredProperty(leftProp);
+			PropertyCallExp<EClassifier, EStructuralFeature> propCall = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createPropertyCallExp();
+			propCall.setName(variable.getName());			
+			propCall.setReferredProperty(leftProp);			
+			sourceExp = propCall;
 		}
 		result.setLeft(sourceExp);
 

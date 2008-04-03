@@ -546,12 +546,16 @@ public class ModuleImpl extends EClassImpl implements Module {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public EClassifier getEClassifier(String name) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		for (EClassifier nextClassifier : getEClassifiers()) {
+			String nextName = nextClassifier.getName();
+			if(name != null ? name.equals(nextName) : name == nextName) {
+				return nextClassifier;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -893,6 +897,29 @@ public class ModuleImpl extends EClassImpl implements Module {
 			}
 		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+	
+	/**
+	 * @generated NOT
+	 */
+	@Override
+	public void freeze() {		
+		super.freeze();
+		
+	    if (eClassifiers != null)
+	    {
+	      for (int i = 0, size = eClassifiers.size(); i < size; ++i)
+	      {
+	        freeze(eClassifiers.get(i));
+	      }
+	    }
+	    if (eSubpackages != null)
+	    {
+	      for (int i = 0, size = eSubpackages.size(); i < size; ++i)
+	      {
+	        freeze(eSubpackages.get(i));
+	      }
+	    }		
 	}
 
 	/**
