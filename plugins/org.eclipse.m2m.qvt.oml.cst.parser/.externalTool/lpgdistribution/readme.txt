@@ -6,7 +6,7 @@ Folder is placeholder for the:
 
 IBM LALR Parser Generator
 Version 1.00 (May 11 2006)
-Winodw version .exe size: 544768 bytes
+Size of the Window's version executable (lpg.exe): 544768 bytes
 
 
 
