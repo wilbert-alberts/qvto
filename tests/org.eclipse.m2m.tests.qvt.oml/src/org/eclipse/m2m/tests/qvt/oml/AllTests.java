@@ -54,8 +54,7 @@ public class AllTests {
         suite.addTest(TransformManyModelTests.interpreterSuite());
         suite.addTest(QvtoTransfHelperTests.suite());
         
-        suite.addTestSuite(TestQvtBuilder.class);
-        suite.addTestSuite(TestMdaBuilder.class);        
+        suite.addTestSuite(TestQvtBuilder.class);        
         suite.addTestSuite(TestSamples.class);
         suite.addTestSuite(TestGraphWalker.class);
         suite.addTestSuite(TestLaunchConfigs.class);

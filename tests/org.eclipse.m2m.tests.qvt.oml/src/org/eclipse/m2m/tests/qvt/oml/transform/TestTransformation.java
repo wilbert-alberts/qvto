@@ -12,6 +12,7 @@
 package org.eclipse.m2m.tests.qvt.oml.transform;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -27,8 +28,10 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TraceSerializer;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
+import org.eclipse.m2m.qvt.oml.ast.environment.ModelExtentContents;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.common.emf.ExtendedEmfUtil;
@@ -155,13 +158,7 @@ public abstract class TestTransformation extends TestCase {
         
         return ifile;
     }
-    
-    public static void saveModel(Resource extent, CFile qvtFile) throws MdaException {
-        String fileName = qvtFile.getUnitName() + "." + getExtensionForExtent(extent); //$NON-NLS-1$
-        CFile outFile = qvtFile.getParent().getFile(fileName);
-        ExtendedEmfUtil.saveModel(extent, outFile);
-    }
-    
+        
     public static CFile getTraceFile(CFile qvtFile) throws MdaException {
         String fileName = qvtFile.getUnitName() + MDAConstants.QVTO_TRACEFILE_EXTENSION_WITH_DOT;
         CFile traceFile = qvtFile.getParent().getFile(fileName);
@@ -180,14 +177,40 @@ public abstract class TestTransformation extends TestCase {
         return ExtendedEmfUtil.loadModel(new IOFile(file));
 //        return out;
     }
+
     
-    private static String getExtensionForExtent(Resource extent) {
-    	if (extent.getContents().isEmpty()) {
-    		return TransformationUtil.DEFAULT_RESULT_EXTENSION;
-    	}
-    	return getExtensionForEObject(extent.getContents().get(0));
+    public static void saveModel(ModelExtentContents extent, CFile qvtFile) throws MdaException {
+        String fileName = qvtFile.getUnitName() + "." + getExtensionForResult(extent); //$NON-NLS-1$
+        CFile outFile = qvtFile.getParent().getFile(fileName);
+
+    	URI uri;
+		try {
+			uri = URI.createURI(outFile.getFileStore().toURI().toString());
+		} catch (IOException e) {
+			throw new MdaException(e);
+		}
+		
+		Resource resource = EmfUtil.createResource(uri, new ResourceSetImpl());
+    	resource.getContents().addAll(extent.getAllRootElements());
+        ExtendedEmfUtil.saveModel(resource, outFile);
     }
 
+    public static String getExtensionForResult(ModelExtentContents extent) {
+    	EObject eObject = null;
+    	for (EObject nextObject : extent.getAllRootElements()) {
+			eObject = nextObject;
+			break;
+		}
+    	
+    	if(eObject == null || eObject.eClass() == null || eObject.eClass().getEPackage() == null) {
+            return "xmi"; //$NON-NLS-1$
+        }
+        
+        EPackage root = EmfUtil.getRootPackage(eObject.eClass().getEPackage());
+        return root.getName();
+    }
+    
+    
     private static String getExtensionForEObject(EObject eObject) {
     	EPackage ePackage = eObject.eClass().getEPackage();
     	if (ePackage == null) {

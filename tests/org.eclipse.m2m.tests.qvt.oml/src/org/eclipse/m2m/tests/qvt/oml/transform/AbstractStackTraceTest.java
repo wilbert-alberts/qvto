@@ -26,9 +26,9 @@ import java.util.Map;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
+import org.eclipse.m2m.qvt.oml.ast.environment.ModelExtentContents;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalStdLibrary;
 import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
@@ -129,19 +129,19 @@ public abstract class AbstractStackTraceTest extends TestTransformation {
 	            
 	            TransformationRunner.Out output = transf.run(input);
 	            
-	            List<Resource> extents = output.getExtents();
+	            List<ModelExtentContents> extents = output.getExtents();
 	            List<EObject> result = new ArrayList<EObject>();
-	            for (Resource outRes : extents) {
-	            	if (!outRes.getContents().isEmpty()) {
-	            		result.add(outRes.getContents().get(0));
+	            for (ModelExtentContents outExt : extents) {
+	            	if (!outExt.getAllRootElements().isEmpty()) {
+	            		result.add(outExt.getAllRootElements().get(0));
 	            	}
-	                saveModel(outRes, new EclipseFile(transformation));
+	                TestQvtInterpreter.saveModel(outExt, new EclipseFile(transformation));
 	            }
 	            saveTraceData(output.getTrace(), new EclipseFile(transformation));
 	            return result;
-	        }				
+	        }
 		};
-	}
+	}	
 
 	public AbstractStackTraceTest(ModelTestData data) {
 		super(data);

@@ -17,10 +17,10 @@ import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
+import org.eclipse.m2m.qvt.oml.ast.environment.ModelExtentContents;
 import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.qvt.oml.library.IContext;
@@ -49,13 +49,12 @@ public class TestQvtInterpreter extends TestTransformation {
             
             TransformationRunner.Out output = trans.run(input);
             
-            List<Resource> extents = output.getExtents();
-            List<EObject> result = new ArrayList<EObject>();;
-            for (Resource outRes : extents) {
-            	if (!outRes.getContents().isEmpty()) {
-            		result.add(outRes.getContents().get(0));
+            List<ModelExtentContents> extents = output.getExtents();
+            List<EObject> result = new ArrayList<EObject>();
+            for (ModelExtentContents outExtent : extents) {
+            	if (!outExtent.getAllRootElements().isEmpty()) {
+                    saveModel(outExtent, new EclipseFile(transformation));            		
             	}
-                saveModel(outRes, new EclipseFile(transformation));
             }
             saveTraceData(output.getTrace(), new EclipseFile(transformation));
             return result;
