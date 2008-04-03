@@ -25,7 +25,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
@@ -36,6 +35,7 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
 import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
+import org.eclipse.m2m.qvt.oml.ast.environment.ModelExtentContents;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.common.launch.ShallowProcess;
@@ -61,7 +61,7 @@ public class QvtoTransformationHelper {
 		 * @return List of resources (model extents) created for each 'inout' / 'out' model parameter. Extent contains root objects only.
 		 * <br>Model parameter comes from 'transformation' definition: <br> <code>transformation T(inout model1 : ecore, out model2 : uml);</code>
 		 */
-		List<Resource> getOutModelExtents();
+		List<ModelExtentContents> getOutModelExtents();
 		
 		/**
 		 * 
@@ -103,7 +103,7 @@ public class QvtoTransformationHelper {
 	
 	public TransfExecutionResult executeTransformation(final List<EObject> inObjects, final Map<String, Object> inConfigProperties, ResourceSet metamodelResourceSet) throws CoreException {
         try {
-        	final List<Resource> outExtents = new ArrayList<Resource>();
+        	final List<ModelExtentContents> outExtents = new ArrayList<ModelExtentContents>();
         	final List<EObject> outMainParams = new ArrayList<EObject>();
         	final List<Trace> outTraces = new ArrayList<Trace>(1);
         	final List<String> outConsole = new ArrayList<String>(1);
@@ -133,7 +133,7 @@ public class QvtoTransformationHelper {
             r.run();
             
             return new TransfExecutionResult() {
-				public List<Resource> getOutModelExtents() {
+				public List<ModelExtentContents> getOutModelExtents() {
 					return outExtents;
 				}
 

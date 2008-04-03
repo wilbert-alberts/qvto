@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TraceSerializer;
@@ -41,6 +42,7 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
+import org.eclipse.m2m.qvt.oml.ast.environment.ModelExtentContents;
 import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalStdLibrary;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
@@ -148,7 +150,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
     }
 
     public static void doLaunch(QvtTransformation transformation, List<EObject> inObjs, IConfiguration configuration,
-    		List<Resource> outExtents, List<EObject> outMainParams, List<Trace> outTraces, List<String> outConsole) throws MdaException {
+    		List<ModelExtentContents> outExtents, List<EObject> outMainParams, List<Trace> outTraces, List<String> outConsole) throws MdaException {
 
         IStatus status = QvtValidator.validateTransformation(transformation, inObjs);                    
         if (status.getSeverity() > IStatus.WARNING) {
@@ -192,12 +194,26 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         TransformationRunner.In in = new TransformationRunner.In(inObjs.toArray(new EObject[inObjs.size()]), context);
         TransformationRunner.Out out = transformation.run(in);
         
-        Iterator<Resource> itrExtent = out.getExtents().iterator();
+        ResourceSet resSet = null;
+        for (EObject inEObject : inObjs) {
+			if(inEObject.eResource() != null) {
+				resSet = inEObject.eResource().getResourceSet();
+				if(resSet != null) {
+					break;
+				}
+			}
+		}
+        
+        if(resSet == null) {
+        	resSet = EmfUtil.getOutputResourceSet();
+        }
+        
+        Iterator<ModelExtentContents> itrExtent = out.getExtents().iterator();
         for (TargetUriData outData : targetData) {
         	if (!itrExtent.hasNext()) {
         		throw new MdaException("Imcomplete transformation results"); //$NON-NLS-1$
         	}
-        	saveTransformationResult(itrExtent.next(), outData);
+        	saveTransformationResult(itrExtent.next(), outData, resSet);
         }
 
         List<URI> result = new ArrayList<URI>(out.getOutParamValues().size());
@@ -225,11 +241,14 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
     }
     
     @SuppressWarnings("unchecked")
-	private static void saveTransformationResult(Resource outExtent, TargetUriData targetData) throws MdaException {
+	private static void saveTransformationResult(ModelExtentContents extent, TargetUriData targetData, ResourceSet resSet) throws MdaException {    	
     	URI outUri = toUri(targetData.getUriString());
+    	
         switch(targetData.getTargetType()) {
         	case NEW_MODEL: {
         		try {
+        	    	Resource outExtent = EmfUtil.createResource(outUri, resSet);
+        			outExtent.getContents().addAll(extent.getAllRootElements());
         			EmfUtil.saveModel(outExtent, outUri, EmfUtil.DEFAULT_SAVE_OPTIONS);
         		}
         		catch(EmfException e) {
@@ -239,23 +258,23 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         	}
         	
         	case EXISTING_CONTAINER: {
-	        	EObject cont = EmfUtil.loadModel(outUri);
-	            if(cont == null) {
+	        	EObject container = EmfUtil.loadModel(outUri, resSet);
+	            if(container == null) {
 	                throw new MdaException("No object at " + outUri); //$NON-NLS-1$
 	            }
 	            
-		        EStructuralFeature feature = cont.eClass().getEStructuralFeature(targetData.getFeature());
+		        EStructuralFeature feature = container.eClass().getEStructuralFeature(targetData.getFeature());
 		        if(feature instanceof EReference == false) {
-	                throw new MdaException("Reference " + targetData.getFeature() + " not found in " + cont); //$NON-NLS-1$ //$NON-NLS-2$
+	                throw new MdaException("Reference " + targetData.getFeature() + " not found in " + container); //$NON-NLS-1$ //$NON-NLS-2$
 		        }
 
-        		for (EObject out : outExtent.getContents()) {
+        		for (EObject out : extent.getAllRootElements()) {
 			        EReference ref = (EReference)feature;
 			        if(!ref.isMany()) {
-			        	cont.eSet(ref, out);
+			        	container.eSet(ref, out);
 			        }
 			        else {
-			        	EList<EObject> value = (EList<EObject>) cont.eGet(feature);
+			        	EList<EObject> value = (EList<EObject>) container.eGet(feature);
 			        	if(targetData.isClearContents()) {
 			        		value.clear();
 			        	}
@@ -269,10 +288,9 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
 			        	}
 			        }
         		}
-        		outExtent.getContents().clear();
         		
 		        try {
-		        	saveResource(cont);
+		        	saveResource(container);
 		        }
 		        catch(IOException e) {
 		        	throw new MdaException(e.getMessage(), e);
@@ -306,5 +324,5 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         }
         
         return uri;
-    }
+    }    
 }

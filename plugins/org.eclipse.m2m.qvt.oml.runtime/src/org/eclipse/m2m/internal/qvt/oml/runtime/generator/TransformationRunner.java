@@ -17,7 +17,7 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.generator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.m2m.qvt.oml.ast.environment.ModelExtentContents;
 import org.eclipse.m2m.qvt.oml.library.IContext;
 import org.eclipse.m2m.qvt.oml.trace.Trace;
 
@@ -50,13 +50,13 @@ public interface TransformationRunner {
     
     public static class Out {
     	
-        public Out(List<Resource> modelExtents, List<Object> outParamValues, Trace trace) {
+        public Out(List<ModelExtentContents> modelExtents, List<Object> outParamValues, Trace trace) {
         	myModelExtents = modelExtents;
         	myOutParamValues = outParamValues;
             myTrace = trace;
         }
         
-        public List<Resource> getExtents() {
+        public List<ModelExtentContents> getExtents() {
             return myModelExtents;
         }
         
@@ -68,7 +68,7 @@ public interface TransformationRunner {
             return myTrace;
         }
         
-        private final List<Resource> myModelExtents;
+        private final List<ModelExtentContents> myModelExtents;
         private final List<Object> myOutParamValues;
         private final Trace myTrace;
     }
