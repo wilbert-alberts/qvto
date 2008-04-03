@@ -23,7 +23,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
@@ -31,6 +33,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
 import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.m2m.qvt.oml.emf.util.modelparam.ModelparamFactory;
@@ -173,7 +176,7 @@ public class EmfUtil {
 		return eObject instanceof EStructuralFeature.Internal.DynamicValueHolder;
 	}
 	
-    @SuppressWarnings("unchecked")
+
 	public static void saveModel(EObject eObject, URI uri, Map opts) throws EmfException {    
         ResourceSet resourceSet = getOutputResourceSet();
 
@@ -404,6 +407,38 @@ public class EmfUtil {
         EPackage root = EmfUtil.getRootPackage(cls.getEPackage());
         return root.getName();
     }
+
+	public static Resource createResource(URI uri, ResourceSet outResourceSet) {
+		Resource resource = outResourceSet.createResource(uri); //$NON-NLS-1$
+		if(resource != null) {
+			return resource;
+		}
+		
+		Object possibleFactory = Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().get(uri.fileExtension());
+		Resource.Factory factory = null;
+		if (possibleFactory instanceof Resource.Factory) {
+			factory = (Resource.Factory) possibleFactory;
+		}
+		if (possibleFactory instanceof Resource.Factory.Descriptor) {
+			factory = ((Resource.Factory.Descriptor) possibleFactory).createFactory();
+		}
+		
+		if(factory == null) {
+			factory = new XMIResourceFactoryImpl();			
+		}
+		
+		return factory.createResource(uri);
+	}    
+    
+	public static boolean isContainmentReference(EStructuralFeature feature) {
+		if (feature.eClass() == EcorePackage.eINSTANCE.getEReference()) {
+			EReference ref = (EReference) feature;
+			return ref.isContainment();			
+		}
+		
+		return false;
+	}
+	
     
     public static final Map DEFAULT_SAVE_OPTIONS = new HashMap();
     static {
