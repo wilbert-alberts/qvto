@@ -29,7 +29,6 @@ import org.eclipse.ocl.cst.TypeCS;
 import org.eclipse.ocl.utilities.ASTNode;
 
 
-@SuppressWarnings("restriction")
 public class OperationHyperlinkDetector implements IHyperlinkDetectorHelper {
 	
 	public IHyperlink detectHyperlink(IDetectionContext context) {

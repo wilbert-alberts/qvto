@@ -32,10 +32,8 @@ import org.eclipse.ocl.expressions.PropertyCallExp;
 import org.eclipse.ocl.utilities.ASTNode;
 
 
-@SuppressWarnings("restriction")
 public class ObjectPropertyHyperlinkDetector implements IHyperlinkDetectorHelper {
 	
-	@SuppressWarnings("unchecked")
 	public IHyperlink detectHyperlink(IDetectionContext context) {
 		CSTNode syntaxElement = context.getSyntaxElement();
 		EStructuralFeature referredFeature = findDefinition(syntaxElement);

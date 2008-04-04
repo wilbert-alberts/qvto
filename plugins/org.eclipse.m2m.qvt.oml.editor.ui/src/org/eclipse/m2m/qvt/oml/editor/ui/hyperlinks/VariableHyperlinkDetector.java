@@ -34,10 +34,8 @@ import org.eclipse.ocl.cst.VariableExpCS;
 import org.eclipse.ocl.utilities.ASTNode;
 
 
-@SuppressWarnings("restriction")
 public class VariableHyperlinkDetector implements IHyperlinkDetectorHelper {
 	
-	@SuppressWarnings("unchecked")
 	public IHyperlink detectHyperlink(IDetectionContext context) {
 		CSTNode syntaxElement = context.getSyntaxElement();
 		CSTNode targetCS = null;	

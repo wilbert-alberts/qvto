@@ -29,7 +29,6 @@ import org.eclipse.ocl.cst.TypeCS;
 /**
  * @author vrepeshko
  */
-@SuppressWarnings("restriction")
 public class ResolveInHyperlinkDetector implements IHyperlinkDetectorHelper {
 
 	public IHyperlink detectHyperlink(IDetectionContext context) {		

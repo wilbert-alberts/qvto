@@ -25,7 +25,6 @@ import org.eclipse.ocl.cst.StringLiteralExpCS;
 /**
  * @author vrepeshko
  */
-@SuppressWarnings("restriction")
 public class ModelTypeHyperlinkDetector implements IHyperlinkDetectorHelper {
 
 	public IHyperlink detectHyperlink(IDetectionContext context) {

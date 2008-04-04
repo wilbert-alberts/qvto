@@ -37,7 +37,6 @@ import org.eclipse.ocl.utilities.ASTNode;
 /**
  * @author vrepeshko
  */
-@SuppressWarnings("restriction")
 public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 
 	private static class EModelElementRef {

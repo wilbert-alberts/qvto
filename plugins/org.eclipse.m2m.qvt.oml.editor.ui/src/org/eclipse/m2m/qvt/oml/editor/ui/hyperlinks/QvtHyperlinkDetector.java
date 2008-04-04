@@ -29,7 +29,6 @@ import org.eclipse.ocl.cst.CSTNode;
 /**
  * @author vrepeshko
  */
-@SuppressWarnings("restriction")
 public class QvtHyperlinkDetector implements IHyperlinkDetector {
 
 	public QvtHyperlinkDetector(QvtEditor editor) {
