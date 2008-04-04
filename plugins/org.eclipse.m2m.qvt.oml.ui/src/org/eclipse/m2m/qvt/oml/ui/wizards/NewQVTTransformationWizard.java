@@ -15,7 +15,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.IWizardPage;
-import org.eclipse.m2m.qvt.oml.QvtNamesChecker;
+import org.eclipse.m2m.internal.qvt.oml.QvtNamesChecker;
 import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
 import org.eclipse.m2m.qvt.oml.ui.QvtPluginImages;
 

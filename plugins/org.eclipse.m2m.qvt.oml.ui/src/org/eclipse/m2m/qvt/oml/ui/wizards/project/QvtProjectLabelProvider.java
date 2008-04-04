@@ -18,7 +18,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.m2m.qvt.oml.builder.QvtBuilderConfig;
+import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.ui.QvtPluginImages;
 import org.eclipse.swt.graphics.Image;

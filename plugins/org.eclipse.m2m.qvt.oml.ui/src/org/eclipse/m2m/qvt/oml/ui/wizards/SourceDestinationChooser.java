@@ -31,7 +31,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.window.Window;
-import org.eclipse.m2m.qvt.oml.builder.QvtBuilderConfig;
+import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
 import org.eclipse.m2m.qvt.oml.project.QvtProjectUtil;
 import org.eclipse.m2m.qvt.oml.project.model.IQvtElement;
 import org.eclipse.m2m.qvt.oml.project.model.IQvtNamespace;

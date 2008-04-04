@@ -15,7 +15,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.m2m.qvt.oml.builder.QvtBuilder;
+import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilder;
 import org.eclipse.m2m.qvt.oml.common.project.NatureUtils;
 import org.eclipse.m2m.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.qvt.oml.ui.IStatusChangeListener;

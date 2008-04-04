@@ -21,7 +21,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.window.Window;
-import org.eclipse.m2m.qvt.oml.builder.QvtBuilderConfig;
+import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
 import org.eclipse.m2m.qvt.oml.ui.IStatusChangeListener;
 import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
 import org.eclipse.osgi.util.NLS;

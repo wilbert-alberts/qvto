@@ -37,7 +37,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardPage;
-import org.eclipse.m2m.qvt.oml.QvtNamesChecker;
+import org.eclipse.m2m.internal.qvt.oml.QvtNamesChecker;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.project.QvtProjectUtil;
 import org.eclipse.m2m.qvt.oml.project.model.IQvtCompilationUnit;
