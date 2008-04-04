@@ -13,10 +13,10 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.m2m.qvt.oml.QvtEngine;
+import org.eclipse.m2m.internal.qvt.oml.QvtEngine;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
-import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
-import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
 
 public class WorkspaceQvtModule extends QvtModule {
     

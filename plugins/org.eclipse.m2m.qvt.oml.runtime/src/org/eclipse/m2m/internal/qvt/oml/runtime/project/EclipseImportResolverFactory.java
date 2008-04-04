@@ -12,8 +12,8 @@
 package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.m2m.qvt.oml.compiler.IImportResolver;
-import org.eclipse.m2m.qvt.oml.compiler.IImportResolverFactory;
+import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
+import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolverFactory;
 
 
 public class EclipseImportResolverFactory implements IImportResolverFactory {

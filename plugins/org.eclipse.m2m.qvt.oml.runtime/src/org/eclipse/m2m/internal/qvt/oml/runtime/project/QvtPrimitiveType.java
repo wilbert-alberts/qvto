@@ -12,8 +12,8 @@
 package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.PrimitiveType;
-import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalUtil;
 
 
 public class QvtPrimitiveType extends PrimitiveType {

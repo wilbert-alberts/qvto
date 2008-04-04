@@ -13,7 +13,7 @@
 package org.eclipse.m2m.internal.qvt.oml.runtime.resource;
 
 import org.eclipse.emf.ecore.xmi.XMIException;
-import org.eclipse.m2m.qvt.oml.QvtMessage;
+import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 
 /**
  * @author sboyko

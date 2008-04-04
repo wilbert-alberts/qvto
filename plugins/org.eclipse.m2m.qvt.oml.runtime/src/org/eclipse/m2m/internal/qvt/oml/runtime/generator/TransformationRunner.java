@@ -17,8 +17,8 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.generator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.m2m.qvt.oml.ast.environment.ModelExtentContents;
-import org.eclipse.m2m.qvt.oml.library.IContext;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
+import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.qvt.oml.trace.Trace;
 
 

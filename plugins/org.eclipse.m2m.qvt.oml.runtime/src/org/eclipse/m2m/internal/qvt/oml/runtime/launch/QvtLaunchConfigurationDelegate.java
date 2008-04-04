@@ -22,18 +22,18 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
+import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.EvaluationContextProperties;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.EvaluationMonitor;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
+import org.eclipse.m2m.internal.qvt.oml.library.Context;
+import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
-import org.eclipse.m2m.qvt.oml.QvtPlugin;
-import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalStdLibrary;
 import org.eclipse.m2m.qvt.oml.common.launch.ShallowProcess;
 import org.eclipse.m2m.qvt.oml.common.launch.StreamsProxy;
-import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
-import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.EvaluationContextProperties;
-import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.EvaluationMonitor;
-import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtRuntimeException;
-import org.eclipse.m2m.qvt.oml.library.Context;
-import org.eclipse.m2m.qvt.oml.library.IContext;
 
 public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelegateBase {
 	
@@ -50,7 +50,7 @@ public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelega
             StreamsProxy streamsProxy = new StreamsProxy();
             final PrintWriter printWriter = new PrintWriter(streamsProxy.getOutputWriter());   
             ShallowProcess.IRunnable r = new ShallowProcess.IRunnable() {
-                @SuppressWarnings("unchecked")
+                
                 public void run() throws Exception { 
                     IStatus status = QvtLaunchConfigurationDelegateBase.validate(qvtTransformation, configuration);                    
                     if(status.getSeverity() > IStatus.WARNING) {

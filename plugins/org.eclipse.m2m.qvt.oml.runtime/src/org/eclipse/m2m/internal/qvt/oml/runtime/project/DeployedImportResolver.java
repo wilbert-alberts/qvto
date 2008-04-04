@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.common.io.CFolder;
@@ -29,7 +30,6 @@ import org.eclipse.m2m.qvt.oml.common.io.eclipse.BundleFile;
 import org.eclipse.m2m.qvt.oml.common.io.eclipse.BundleModuleRegistry;
 import org.eclipse.m2m.qvt.oml.common.project.IRegistryConstants;
 import org.eclipse.m2m.qvt.oml.common.project.TransformationRegistry;
-import org.eclipse.m2m.qvt.oml.compiler.IImportResolver;
 
 public class DeployedImportResolver implements IImportResolver {
 	
