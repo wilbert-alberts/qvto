@@ -29,7 +29,6 @@ import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.utilities.ASTNode;
 
-@SuppressWarnings("restriction")
 public class ASTBindingHelper {
 	
 	public static void createModuleSourceBinding(EObject target, String fileName, String contents) {

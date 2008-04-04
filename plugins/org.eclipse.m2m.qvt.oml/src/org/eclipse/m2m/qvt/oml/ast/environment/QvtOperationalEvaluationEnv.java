@@ -685,10 +685,6 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		return !type.isPrimitive();
 	}
 
-    private QvtOperationalStdLibrary getQVTStandardLibrary() {
-		return QvtOperationalStdLibrary.INSTANCE;
-	}
-    
     public QvtOperationalEvaluationEnv cloneEvaluationEnv() {
         QvtOperationalEvaluationEnv env = new QvtOperationalEvaluationEnv(getContext(), getParent());
         env.myObjectExpOwnerStack.addAll(myObjectExpOwnerStack);
