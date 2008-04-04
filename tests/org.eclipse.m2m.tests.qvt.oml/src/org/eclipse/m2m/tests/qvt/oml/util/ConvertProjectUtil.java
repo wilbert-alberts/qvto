@@ -32,7 +32,7 @@ import org.eclipse.pde.core.build.IBuildModelFactory;
 import org.eclipse.pde.core.plugin.IPlugin;
 import org.eclipse.pde.core.plugin.IPluginLibrary;
 import org.eclipse.pde.core.plugin.IPluginModel;
-import org.eclipse.pde.internal.ui.wizards.plugin.ClasspathComputer;
+
 
 
 public class ConvertProjectUtil {
@@ -67,7 +67,7 @@ public class ConvertProjectUtil {
         catch (MdaException e) {
             throw new CoreException(new Status(IStatus.ERROR, TestUtil.BUNDLE, 1, e.getMessage(), e));
         }
-        ClasspathComputer.setClasspath(project, model.model());
+        org.eclipse.pde.internal.core.ClasspathComputer.setClasspath(project, model.model());
     }
     
     private static void createManifestFile(IFile file, IProgressMonitor monitor) throws CoreException {
