@@ -126,8 +126,9 @@ public class ModelParameterExtent {
 	public ModelExtentContents getContents() {
 		purgeContents();		
 		List<EObject> initialObjects = new ArrayList<EObject>(myInitialEObjects);		
-		List<EObject> addedRootObjects = new ArrayList<EObject>(myAdditionalEObjects);
-		return new ExtentContents(initialObjects, addedRootObjects);
+		List<EObject> allRootObjects = new ArrayList<EObject>(myAdditionalEObjects);
+		allRootObjects.addAll(initialObjects);
+		return new ExtentContents(initialObjects, allRootObjects);
 	}
 		
 	public boolean removeElement(EObject element) {
