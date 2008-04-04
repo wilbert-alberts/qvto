@@ -19,7 +19,8 @@ public class StringNode extends Node {
         super(parent, object);
     }
     
-    public String getObject() {
+    @Override
+	public String getObject() {
         return (String) super.getObject();
     }
 }

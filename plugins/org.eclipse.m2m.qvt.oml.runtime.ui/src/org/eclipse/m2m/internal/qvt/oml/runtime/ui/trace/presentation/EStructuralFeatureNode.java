@@ -25,7 +25,8 @@ public class EStructuralFeatureNode extends Node {
         myEObject = eObject;
     }
     
-    public EStructuralFeature getObject() {
+    @Override
+	public EStructuralFeature getObject() {
         return (EStructuralFeature) super.getObject();
     }
 

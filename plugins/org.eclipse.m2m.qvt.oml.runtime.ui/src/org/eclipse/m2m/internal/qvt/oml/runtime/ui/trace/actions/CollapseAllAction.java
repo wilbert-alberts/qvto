@@ -32,7 +32,8 @@ public class CollapseAllAction extends Action {
     /* (non-Javadoc)
      * @see org.eclipse.jface.action.IAction#run()
      */
-    public void run() {
+    @Override
+	public void run() {
         myViewer.collapseAll();
     }
 

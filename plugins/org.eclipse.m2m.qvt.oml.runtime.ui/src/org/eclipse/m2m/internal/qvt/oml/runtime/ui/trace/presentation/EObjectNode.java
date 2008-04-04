@@ -21,7 +21,8 @@ public class EObjectNode extends Node {
         super(parent, object);
     }
     
-    public EObject getObject() {
+    @Override
+	public EObject getObject() {
         return (EObject) super.getObject();
     }
 }

@@ -145,6 +145,7 @@ public class RunInterpretedTransformationWizard extends PersistedValuesWizard {
         return workingCopy;
     }
 
+	@SuppressWarnings("unused")
 	private static Runnable createShowResultAction(final ApplyTransformationData data) {
 		if (!data.isOpenEditor()) {
 			return null;

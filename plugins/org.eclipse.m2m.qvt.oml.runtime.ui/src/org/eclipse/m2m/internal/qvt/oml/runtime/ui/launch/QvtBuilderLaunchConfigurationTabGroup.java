@@ -24,7 +24,8 @@ import org.eclipse.ui.externaltools.internal.launchConfigurations.ExternalToolsB
  */
 public class QvtBuilderLaunchConfigurationTabGroup extends QvtLaunchConfigurationTabGroup {
 
-    public void createTabs(ILaunchConfigurationDialog dialog, String mode) {
+    @Override
+	public void createTabs(ILaunchConfigurationDialog dialog, String mode) {
         ILaunchConfigurationTab[] tabs = new ILaunchConfigurationTab[] {
         		new QvtBuilderLauncherTab(TRANSFORMATION_MAKER),
         		new QvtTransformationConfigurationTab(TRANSFORMATION_MAKER),
