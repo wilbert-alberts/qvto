@@ -54,6 +54,21 @@ import org.eclipse.osgi.util.NLS;
  */
 public class QvtoTransformationHelper {
 
+	/**
+	 * This interface provides read-only access to the contents of a model extent.
+	 */
+	public interface ModelExtent {
+		/**
+		 * Gets the elements which were initially contained at the creation time of this extent.
+		 */
+		List<EObject> getInitialElements();
+		/**
+		 * Gets all the root objects of the current extent contents.
+		 * Note: The result may include the original objects if not removed or moved to container.
+		 */
+		List<EObject> getAllRootElements();
+	}	
+	
 	public static interface TransfExecutionResult {
 
 		/**
@@ -61,7 +76,7 @@ public class QvtoTransformationHelper {
 		 * @return List of resources (model extents) created for each 'inout' / 'out' model parameter. Extent contains root objects only.
 		 * <br>Model parameter comes from 'transformation' definition: <br> <code>transformation T(inout model1 : ecore, out model2 : uml);</code>
 		 */
-		List<ModelExtentContents> getOutModelExtents();
+		List<ModelExtent> getOutModelExtents();
 		
 		/**
 		 * 
@@ -132,9 +147,25 @@ public class QvtoTransformationHelper {
             r = QvtLaunchConfigurationDelegateBase.getSafeRunnable(transf, r);
             r.run();
             
+            final List<ModelExtent> extents = new ArrayList<ModelExtent>();
+            for (ModelExtentContents nextExtent : outExtents) {
+            	final ModelExtentContents internExtent = nextExtent;
+				
+            	ModelExtent modelExtent = new ModelExtent() {
+					public List<EObject> getAllRootElements() {					
+						return internExtent.getAllRootElements();
+					}
+					public List<EObject> getInitialElements() {						
+						return internExtent.getInitialElements();
+					}
+				};
+				
+				extents.add(modelExtent);
+			}
+            
             return new TransfExecutionResult() {
-				public List<ModelExtentContents> getOutModelExtents() {
-					return outExtents;
+				public List<ModelExtent> getOutModelExtents() {
+					return extents;
 				}
 
 				public List<EObject> getOutParameters() {
