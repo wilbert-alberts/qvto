@@ -15,10 +15,10 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
+import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.common.nature.TransformationNature;
 import org.eclipse.m2m.internal.qvt.oml.project.model.QvtProject;
-import org.eclipse.m2m.qvt.oml.QvtPlugin;
-import org.eclipse.m2m.qvt.oml.builder.QvtBuilderConfig;
 import org.eclipse.m2m.qvt.oml.project.model.IQvtProject;
 
 public class QvtProjectUtil {
