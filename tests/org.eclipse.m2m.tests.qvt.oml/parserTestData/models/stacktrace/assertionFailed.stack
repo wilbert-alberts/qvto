@@ -1,4 +1,4 @@
-org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtAssertionFailed: Fatal assertion failed
+org.eclipse.m2m.internal.qvt.oml.evaluator.QvtAssertionFailed: Fatal assertion failed
 	at EClassifier.mapWithAssertionFailedFromAux(auxtransf.qvto:17)
 	at stacktrace.main(stacktrace.qvto:48)
 	at stacktrace.<init>(stacktrace.qvto:39)

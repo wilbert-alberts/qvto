@@ -34,7 +34,7 @@ public class JavalessMetamodelProvider implements IMetamodelProvider {
 		};
 	}
 	
-	@SuppressWarnings("unchecked")
+	
 	public static EPackage registerMetamodel() {
 		EPackage pack = EPackage.Registry.INSTANCE.getEPackage(JAVALESS_METAMODEL_ID);
 		if(pack == null) {

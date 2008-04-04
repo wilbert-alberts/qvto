@@ -15,11 +15,11 @@ import java.util.Arrays;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.m2m.qvt.oml.QvtEngine;
-import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalAstWalker;
-import org.eclipse.m2m.qvt.oml.ast.parser.QvtOperationalAstWalker.StopException;
+import org.eclipse.m2m.internal.qvt.oml.QvtEngine;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalAstWalker;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalAstWalker.StopException;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.qvt.oml.common.MdaException;
-import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
 import org.eclipse.ocl.utilities.Visitable;
 
 public class TestQvtWalker extends TestTransformation {

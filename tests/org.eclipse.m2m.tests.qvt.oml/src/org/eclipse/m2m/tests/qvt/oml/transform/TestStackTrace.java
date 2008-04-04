@@ -14,9 +14,9 @@ package org.eclipse.m2m.tests.qvt.oml.transform;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtAssertionFailed;
-import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtRuntimeException;
-import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtStackOverFlowError;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtAssertionFailed;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtStackOverFlowError;
 
 public class TestStackTrace extends AbstractStackTraceTest {
 	

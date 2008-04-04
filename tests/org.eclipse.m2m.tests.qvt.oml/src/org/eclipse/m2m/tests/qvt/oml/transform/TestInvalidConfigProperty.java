@@ -16,7 +16,7 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.QvtRuntimeException;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 
 public class TestInvalidConfigProperty extends AbstractStackTraceTest {
 	

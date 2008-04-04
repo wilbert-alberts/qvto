@@ -69,7 +69,8 @@ public class QvtoTransfHelperTests {
             super(name, fromFiles, expectedFiles);
         }
 
-        protected File getDestFolder(IProject project) {
+        @Override
+		protected File getDestFolder(IProject project) {
             try {
                 return ApiTestData.getDestFolder(getName(), project);
             }

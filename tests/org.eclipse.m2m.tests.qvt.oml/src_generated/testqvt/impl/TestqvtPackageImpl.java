@@ -255,7 +255,7 @@ public class TestqvtPackageImpl extends EPackageImpl implements TestqvtPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
+
 	public void initializePackageContents() {
 		if (isInitialized) return;
 		isInitialized = true;

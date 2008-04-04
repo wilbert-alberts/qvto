@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.m2m.qvt.oml.internal.ast.evaluator.OCLAnnotationSupport;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.OCLAnnotationSupport;
 
 public class TestOCLAnnotationSupport extends TestCase {
 	

@@ -22,10 +22,10 @@ import junit.framework.TestCase;
 
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Position;
-import org.eclipse.m2m.qvt.oml.QvtMessage;
+import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.common.io.FileUtil;
-import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.tests.qvt.oml.util.SourceAnnotationReader.AnnotationData;
 
 
