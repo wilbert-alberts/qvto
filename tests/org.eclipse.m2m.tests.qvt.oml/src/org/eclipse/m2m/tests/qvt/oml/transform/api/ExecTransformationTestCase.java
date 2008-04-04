@@ -20,10 +20,10 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.m2m.qvt.oml.ast.environment.ModelExtentContents;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.qvt.oml.runtime.util.QvtoTransformationHelper;
+import org.eclipse.m2m.qvt.oml.runtime.util.QvtoTransformationHelper.ModelExtent;
 import org.eclipse.m2m.qvt.oml.runtime.util.QvtoTransformationHelper.TransfExecutionResult;
 import org.eclipse.m2m.tests.qvt.oml.transform.ModelTestData;
 
@@ -50,13 +50,13 @@ public class ExecTransformationTestCase extends ApiTestCase {
 		
 		assertNotNull("Non-null trace expected", execResult.getTrace()); //$NON-NLS-1$
 		
-		Iterator<ModelExtentContents> itrExt = execResult.getOutModelExtents().iterator();
+		Iterator<ModelExtent> itrExt = execResult.getOutModelExtents().iterator();
 		for (URI uri : getData().getExpected(getProject())) {
 			if (!itrExt.hasNext()) {
 				throw new Exception("Missed execution result model extent"); //$NON-NLS-1$
 			}
 			Resource loadResource = EmfUtil.loadResource(uri);
-			ModelExtentContents nextExtent = itrExt.next();
+			ModelExtent nextExtent = itrExt.next();
 			for (int i = 0; i < loadResource.getContents().size(); ++i) {
 				ModelTestData.assertEquals("Diff execution result", loadResource.getContents().get(i), nextExtent.getAllRootElements().get(i)); //$NON-NLS-1$
 			}
