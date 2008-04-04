@@ -31,7 +31,7 @@ public class Pair<A, B> {
         if (obj instanceof Pair<?, ?> == false) {
             return false;
         }
-        Pair p = (Pair) obj; 
+        Pair<?, ?> p = (Pair<?, ?>) obj; 
         return getFirst().equals(p.getFirst()) && getSecond().equals(p.getSecond());
     }
     
