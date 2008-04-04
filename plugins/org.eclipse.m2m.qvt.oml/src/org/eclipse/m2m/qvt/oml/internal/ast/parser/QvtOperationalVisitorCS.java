@@ -2198,6 +2198,9 @@ public class QvtOperationalVisitorCS
 		varParam.setKind(directionKind);
 		if (varParam.getExtent() == null) {
 			varParam.setExtent(env.resolveModelParameter(typeSpec.myType, directionKind));
+			if (varParam.getExtent() == null && directionKind == DirectionKind.OUT) {
+				env.reportError(ValidationMessages.OutParamWithoutExtent, paramCS);
+			}
 		}
 		
 		if (!isOutAllowed && varParam.getKind() == DirectionKind.OUT) {

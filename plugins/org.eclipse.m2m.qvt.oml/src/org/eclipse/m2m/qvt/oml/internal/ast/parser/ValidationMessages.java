@@ -115,6 +115,7 @@ public final class ValidationMessages extends NLS {
 	public static String ConfigPropertyTypeUnsupported;
 	public static String MappingWithoutResultMustNotHaveBody;
 	public static String OutParamsNotSupported;
+	public static String OutParamWithoutExtent;
 	public static String mappingGuardNotBooleanError;
 
 	public static String SemanticUtil_0;
