@@ -9,7 +9,7 @@
          name="%qvtBuilder"
          point="org.eclipse.core.resources.builders">
       <builder hasNature="true">
-         <run class="org.eclipse.m2m.qvt.oml.builder.QvtBuilder">
+         <run class="org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilder">
          </run>
       </builder>
    </extension>

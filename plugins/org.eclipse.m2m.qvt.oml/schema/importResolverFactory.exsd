@@ -50,7 +50,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="org.eclipse.m2m.qvt.oml.compiler.IImportResolverFactory"/>
+                  <meta.attribute kind="java" basedOn="org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolverFactory"/>
                </appInfo>
             </annotation>
          </attribute>

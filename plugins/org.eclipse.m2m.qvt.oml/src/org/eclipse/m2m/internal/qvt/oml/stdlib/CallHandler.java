@@ -1,0 +1,33 @@
+/*******************************************************************************
+ * Copyright (c) 2007 Borland Software Corporation
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     Borland Software Corporation - initial API and implementation
+ *******************************************************************************/
+
+package org.eclipse.m2m.internal.qvt.oml.stdlib;
+
+import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.internal.qvt.oml.library.IContext;
+
+
+public interface CallHandler {
+			
+	Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context);
+	
+	public static class Access {
+		public static CallHandler getHandler(EOperation operation) {
+			return CallHandlerAdapter.getDispatcher(operation);
+		}
+		
+		public static boolean hasHandler(EOperation operation) {
+			return getHandler(operation) != null;
+		}
+	}
+}

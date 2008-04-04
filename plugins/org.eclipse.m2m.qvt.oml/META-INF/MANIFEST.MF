@@ -3,20 +3,21 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.m2m.qvt.oml;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: org.eclipse.m2m.qvt.oml.QvtPlugin
+Bundle-Activator: org.eclipse.m2m.internal.qvt.oml.QvtPlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Export-Package: org.eclipse.m2m.qvt.oml,
- org.eclipse.m2m.qvt.oml.ast.binding,
- org.eclipse.m2m.qvt.oml.ast.environment,
- org.eclipse.m2m.qvt.oml.ast.parser,
- org.eclipse.m2m.qvt.oml.builder,
- org.eclipse.m2m.qvt.oml.compiler,
+Export-Package: org.eclipse.m2m.internal.qvt.oml,
+ org.eclipse.m2m.internal.qvt.oml.ast.binding,
+ org.eclipse.m2m.internal.qvt.oml.ast.env,
+ org.eclipse.m2m.internal.qvt.oml.ast.parser,
+ org.eclipse.m2m.internal.qvt.oml.builder,
+ org.eclipse.m2m.internal.qvt.oml.compiler,
+ org.eclipse.m2m.internal.qvt.oml.cst.adapters,
+ org.eclipse.m2m.internal.qvt.oml.evaluator,
+ org.eclipse.m2m.internal.qvt.oml.evaluator.iterators,
+ org.eclipse.m2m.internal.qvt.oml.library,
+ org.eclipse.m2m.internal.qvt.oml.stdlib,
  org.eclipse.m2m.qvt.oml.expressions,
- org.eclipse.m2m.qvt.oml.internal.ast.evaluator,
- org.eclipse.m2m.qvt.oml.internal.ast.parser,
- org.eclipse.m2m.qvt.oml.internal.cst.adapters,
- org.eclipse.m2m.qvt.oml.library,
  org.eclipse.m2m.qvt.oml.trace,
  org.eclipse.m2m.qvt.oml.trace.util
 Require-Bundle: org.eclipse.core.runtime,
