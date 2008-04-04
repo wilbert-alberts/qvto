@@ -3,9 +3,9 @@ package org.eclipse.m2m.qvt.oml.editor.ui.completion;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
+import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.qvt.oml.compiler.IImportResolver;
-import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.qvt.oml.internal.cst.ImportCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.LibraryImportCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;

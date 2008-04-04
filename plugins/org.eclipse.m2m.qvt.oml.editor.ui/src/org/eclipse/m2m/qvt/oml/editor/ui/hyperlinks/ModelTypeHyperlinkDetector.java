@@ -13,7 +13,7 @@ package org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
-import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.qvt.oml.emf.util.EmfException;
 import org.eclipse.m2m.qvt.oml.internal.cst.PackageRefCS;

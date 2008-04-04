@@ -13,7 +13,7 @@ package org.eclipse.m2m.qvt.oml.editor.ui;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.text.source.IAnnotationModel;
-import org.eclipse.m2m.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
 import org.eclipse.ui.editors.text.TextFileDocumentProvider;
 import org.eclipse.ui.texteditor.ResourceMarkerAnnotationModel;
 

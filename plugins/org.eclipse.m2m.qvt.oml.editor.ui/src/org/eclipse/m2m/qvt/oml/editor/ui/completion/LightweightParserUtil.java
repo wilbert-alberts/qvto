@@ -19,14 +19,14 @@ import lpg.lpgjavaruntime.PrsStream;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
-import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnvFactory;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalVisitorCS;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.editor.ui.Activator;
 import org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser.LightweightParser;
 import org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser.LightweightTypeParser;
-import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalVisitorCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLexer;
 import org.eclipse.ocl.OCLInput;

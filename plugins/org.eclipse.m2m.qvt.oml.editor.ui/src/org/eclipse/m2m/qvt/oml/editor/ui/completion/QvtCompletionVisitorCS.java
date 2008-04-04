@@ -10,15 +10,15 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.editor.ui.completion;
 
-import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
-import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalEnv;
-import org.eclipse.m2m.qvt.oml.ast.environment.QvtOperationalFileEnv;
-import org.eclipse.m2m.qvt.oml.compiler.ParsedModuleCS;
-import org.eclipse.m2m.qvt.oml.compiler.QvtCompiler;
-import org.eclipse.m2m.qvt.oml.compiler.QvtCompilerOptions;
+import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalVisitorCS;
+import org.eclipse.m2m.internal.qvt.oml.compiler.ParsedModuleCS;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
-import org.eclipse.m2m.qvt.oml.internal.ast.parser.QvtOperationalVisitorCS;
 import org.eclipse.m2m.qvt.oml.internal.cst.MappingMethodCS;
 import org.eclipse.ocl.SemanticException;
 import org.eclipse.ocl.ecore.EcoreEnvironment;

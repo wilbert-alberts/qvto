@@ -13,7 +13,7 @@ package org.eclipse.m2m.qvt.oml.editor.ui.hovers;
 
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
-import org.eclipse.m2m.qvt.oml.ast.binding.ASTBindingHelper;
+import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.ecore.PropertyCallExp;
 import org.eclipse.ocl.utilities.ASTNode;
