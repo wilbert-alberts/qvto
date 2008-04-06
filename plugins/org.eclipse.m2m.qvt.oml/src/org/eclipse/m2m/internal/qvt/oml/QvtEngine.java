@@ -18,15 +18,15 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
+import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
+import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolverFactory;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilationResult;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
-import org.eclipse.m2m.qvt.oml.common.MdaException;
-import org.eclipse.m2m.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
 
 
 /**

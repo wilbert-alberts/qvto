@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
-import org.eclipse.m2m.qvt.oml.common.io.CFile;
+import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
 
 public class CompiledModule {

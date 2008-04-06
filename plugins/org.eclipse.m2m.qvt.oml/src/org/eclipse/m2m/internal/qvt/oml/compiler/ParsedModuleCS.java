@@ -17,9 +17,9 @@ import java.util.Map;
 
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
-import org.eclipse.m2m.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.parser.AbstractQVTParser;
+import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.ocl.cst.PathNameCS;
 
 

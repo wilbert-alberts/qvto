@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.binding;
 
-import org.eclipse.m2m.qvt.oml.common.util.LineNumberProvider;
+import org.eclipse.m2m.internal.qvt.oml.common.util.LineNumberProvider;
 
 /**
  * Interface allows adapting of a compiled Module to its source information.

@@ -5,12 +5,12 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
-import org.eclipse.m2m.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.qvt.oml.common.io.CFolder;
-import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
+import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
+import org.eclipse.m2m.internal.qvt.oml.common.io.CFolder;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
 import org.eclipse.m2m.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.qvt.oml.expressions.Module;
-import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 
 /**

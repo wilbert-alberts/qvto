@@ -11,8 +11,8 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.compiler;
 
-import org.eclipse.m2m.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.qvt.oml.common.io.CFolder;
+import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
+import org.eclipse.m2m.internal.qvt.oml.common.io.CFolder;
 
 public interface IImportResolver {
 	CFile resolveImport(String importedUnitName);

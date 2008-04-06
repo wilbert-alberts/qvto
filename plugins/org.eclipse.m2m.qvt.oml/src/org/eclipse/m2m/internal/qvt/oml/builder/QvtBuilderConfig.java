@@ -26,9 +26,9 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.common.nature.TransformationNature;
-import org.eclipse.m2m.qvt.oml.common.project.NatureUtils;
-import org.eclipse.m2m.qvt.oml.common.project.ProjectDependencyHelper;
-import org.eclipse.m2m.qvt.oml.emf.util.Logger;
+import org.eclipse.m2m.internal.qvt.oml.common.project.NatureUtils;
+import org.eclipse.m2m.internal.qvt.oml.common.project.ProjectDependencyHelper;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.osgi.util.NLS;
 
 

@@ -6,9 +6,9 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.QvtEngine;
-import org.eclipse.m2m.qvt.oml.common.MdaException;
-import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
-import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
+import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
+import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 
 public class QvtCompilerFacade {
 	public static interface CompilationResult {
