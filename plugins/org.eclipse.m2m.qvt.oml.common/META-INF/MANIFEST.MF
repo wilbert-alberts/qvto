@@ -7,16 +7,14 @@ Bundle-Activator: org.eclipse.m2m.internal.qvt.oml.common.CommonPlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Export-Package: org.eclipse.m2m.internal.qvt.oml.common,
+ org.eclipse.m2m.internal.qvt.oml.common.emf,
+ org.eclipse.m2m.internal.qvt.oml.common.io,
+ org.eclipse.m2m.internal.qvt.oml.common.io.eclipse,
  org.eclipse.m2m.internal.qvt.oml.common.launch,
  org.eclipse.m2m.internal.qvt.oml.common.nature,
- org.eclipse.m2m.qvt.oml.common,
- org.eclipse.m2m.qvt.oml.common.emf,
- org.eclipse.m2m.qvt.oml.common.io,
- org.eclipse.m2m.qvt.oml.common.io.eclipse,
- org.eclipse.m2m.qvt.oml.common.launch,
- org.eclipse.m2m.qvt.oml.common.project,
- org.eclipse.m2m.qvt.oml.common.resourcesetprovider,
- org.eclipse.m2m.qvt.oml.common.util
+ org.eclipse.m2m.internal.qvt.oml.common.project,
+ org.eclipse.m2m.internal.qvt.oml.common.resourcesetprovider,
+ org.eclipse.m2m.internal.qvt.oml.common.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
  org.eclipse.core.filesystem;visibility:=reexport,
@@ -26,4 +24,4 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore,
  org.eclipse.m2m.qvt.oml.emf.util,
  org.eclipse.ui
-Eclipse-LazyStart: true
+Bundle-ActivationPolicy: lazy
