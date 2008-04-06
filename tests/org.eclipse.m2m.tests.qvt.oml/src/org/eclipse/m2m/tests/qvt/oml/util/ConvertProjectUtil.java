@@ -16,13 +16,10 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.m2m.qvt.oml.common.project.JavaProjectUtil;
 import org.eclipse.m2m.qvt.oml.common.project.PluginUtil;
 import org.eclipse.m2m.qvt.oml.common.project.PluginUtil.ModelHelper;
@@ -42,7 +39,7 @@ public class ConvertProjectUtil {
     public static void convertToPluginProject(IProject project, IProgressMonitor progressMonitor) throws CoreException {
         org.eclipse.m2m.qvt.oml.common.project.PluginUtil.addPluginNature(project);
         convertProject(project, progressMonitor);
-        updateBuildPath(project);
+//        updateBuildPath(project);
     }
 
     
@@ -59,16 +56,16 @@ public class ConvertProjectUtil {
         }
     }
 
-    private static void updateBuildPath(IProject project) throws CoreException {
-    	PluginUtil.ModelHelper<IPluginModel> model;
-        try {
-            model = PluginUtil.getModel(project);
-        } 
-        catch (MdaException e) {
-            throw new CoreException(new Status(IStatus.ERROR, TestUtil.BUNDLE, 1, e.getMessage(), e));
-        }
-        org.eclipse.pde.internal.core.ClasspathComputer.setClasspath(project, model.model());
-    }
+//    private static void updateBuildPath(IProject project) throws CoreException {
+//    	PluginUtil.ModelHelper<IPluginModel> model;
+//        try {
+//            model = PluginUtil.getModel(project);
+//        } 
+//        catch (MdaException e) {
+//            throw new CoreException(new Status(IStatus.ERROR, TestUtil.BUNDLE, 1, e.getMessage(), e));
+//        }
+//        org.eclipse.pde.internal.core.ClasspathComputer.setClasspath(project, model.model());
+//    }
     
     private static void createManifestFile(IFile file, IProgressMonitor monitor) throws CoreException {
         if(monitor == null) {
