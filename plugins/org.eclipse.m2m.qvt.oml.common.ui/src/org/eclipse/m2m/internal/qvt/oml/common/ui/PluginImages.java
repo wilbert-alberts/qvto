@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.common.ui;
+package org.eclipse.m2m.internal.qvt.oml.common.ui;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,7 +17,7 @@ import java.util.HashMap;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
-import org.eclipse.m2m.qvt.oml.emf.util.Logger;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 

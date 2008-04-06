@@ -18,7 +18,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 
 
 /**

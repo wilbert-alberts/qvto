@@ -13,7 +13,6 @@ package org.eclipse.m2m.internal.qvt.oml.common.ui;
 
 import java.net.URL;
 
-import org.eclipse.m2m.qvt.oml.common.ui.PluginImages;
 
 
 public class CommonPluginImages extends PluginImages {

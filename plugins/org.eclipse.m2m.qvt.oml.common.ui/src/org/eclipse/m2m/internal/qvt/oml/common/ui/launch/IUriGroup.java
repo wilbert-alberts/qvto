@@ -11,8 +11,8 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.common.ui.launch;
 
-import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
-import org.eclipse.m2m.qvt.oml.common.ui.IModelParameterInfo;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
+import org.eclipse.m2m.internal.qvt.oml.common.ui.IModelParameterInfo;
 import org.eclipse.swt.widgets.Shell;
 
 /**

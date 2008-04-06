@@ -22,8 +22,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.CommonPluginImages;
-import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
-import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.WorskpaceMetamodelProvider;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.WorskpaceMetamodelProvider;
 import org.eclipse.swt.graphics.Image;
 
 class ResourceModelNode extends MetamodelContainerNode {		

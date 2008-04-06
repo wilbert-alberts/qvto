@@ -12,12 +12,12 @@
 package org.eclipse.m2m.internal.qvt.oml.common.ui.launch;
 
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
-import org.eclipse.m2m.qvt.oml.common.ui.IModelParameterInfo;
-import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
-import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.IChooser;
-import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.IMetamodelHandler;
-import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.MetamodelHandlerManager;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
+import org.eclipse.m2m.internal.qvt.oml.common.ui.IModelParameterInfo;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.IChooser;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.IMetamodelHandler;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.MetamodelHandlerManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;

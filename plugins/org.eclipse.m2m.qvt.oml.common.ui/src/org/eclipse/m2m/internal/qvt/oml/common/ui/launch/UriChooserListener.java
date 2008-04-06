@@ -12,8 +12,8 @@
 package org.eclipse.m2m.internal.qvt.oml.common.ui.launch;
 
 import org.eclipse.jface.window.Window;
-import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.ChooserDialogAdapter;
-import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.IChooser;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.ChooserDialogAdapter;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.IChooser;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Shell;

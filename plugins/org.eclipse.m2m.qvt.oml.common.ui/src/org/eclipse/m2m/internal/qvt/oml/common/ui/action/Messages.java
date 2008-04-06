@@ -9,14 +9,14 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.common.ui.action;
+package org.eclipse.m2m.internal.qvt.oml.common.ui.action;
 
 import java.text.MessageFormat;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "org.eclipse.m2m.qvt.oml.common.ui.action.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.eclipse.m2m.internal.qvt.oml.common.ui.action.messages"; //$NON-NLS-1$
 
 	public static String ActionDelegate_Failed;
 	

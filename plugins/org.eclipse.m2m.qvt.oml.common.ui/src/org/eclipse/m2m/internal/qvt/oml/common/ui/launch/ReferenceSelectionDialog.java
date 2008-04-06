@@ -26,7 +26,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.m2m.qvt.oml.emf.util.ui.provider.EMFLabelProvider;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.provider.EMFLabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;

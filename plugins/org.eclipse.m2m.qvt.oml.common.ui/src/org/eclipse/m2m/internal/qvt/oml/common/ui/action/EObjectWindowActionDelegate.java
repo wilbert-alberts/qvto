@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.common.ui.action;
+package org.eclipse.m2m.internal.qvt.oml.common.ui.action;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IAdaptable;
@@ -17,7 +17,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 
 
 

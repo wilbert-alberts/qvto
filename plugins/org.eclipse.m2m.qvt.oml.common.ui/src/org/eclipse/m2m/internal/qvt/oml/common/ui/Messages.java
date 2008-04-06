@@ -9,12 +9,12 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.common.ui;
+package org.eclipse.m2m.internal.qvt.oml.common.ui;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "org.eclipse.m2m.qvt.oml.common.ui.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.eclipse.m2m.internal.qvt.oml.common.ui.messages"; //$NON-NLS-1$
 
 	public static String FolderSelectionDialog_button;
 	static {
