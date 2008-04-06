@@ -68,7 +68,7 @@ public interface LibraryOperation {
      *            java class which should be returned by this native operation
      */
     Object run(Object context, Object[] parameterValues,
-            Object[] implicitParameterValues, Class returnTypeClass);
+            Object[] implicitParameterValues, Class<?> returnTypeClass);
 
     String getOperationReference(String[] parameterNames);
     

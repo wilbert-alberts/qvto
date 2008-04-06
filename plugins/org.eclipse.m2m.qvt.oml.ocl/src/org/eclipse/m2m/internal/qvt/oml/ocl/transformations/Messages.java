@@ -12,12 +12,12 @@
 /*
  * Created on Jul 27, 2005
  */
-package org.eclipse.m2m.qvt.oml.internal.ocl.transformations;
+package org.eclipse.m2m.internal.qvt.oml.ocl.transformations;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-    private static final String BUNDLE_NAME = "org.eclipse.m2m.qvt.oml.internal.ocl.transformations.messages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "org.eclipse.m2m.internal.qvt.oml.ocl.transformations.messages"; //$NON-NLS-1$
 
     private Messages() {
     }

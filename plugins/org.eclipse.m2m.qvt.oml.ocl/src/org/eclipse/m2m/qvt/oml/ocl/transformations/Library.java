@@ -14,7 +14,7 @@ package org.eclipse.m2m.qvt.oml.ocl.transformations;
 import java.util.Collection;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.m2m.qvt.oml.ocl.metainfo.OclMetainfo;
+import org.eclipse.m2m.internal.qvt.oml.ocl.metainfo.OclMetainfo;
 
 
 public interface Library extends EObject {
@@ -24,7 +24,7 @@ public interface Library extends EObject {
 
     String getLibraryClassName();
 
-    Class getLibraryClass() throws LibraryCreationException;
+    Class<?> getLibraryClass() throws LibraryCreationException;
 
     OclMetainfo getMetainfo() throws LibraryCreationException;
 

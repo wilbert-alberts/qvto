@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.ocl.metainfo;
+package org.eclipse.m2m.internal.qvt.oml.ocl.metainfo;
 
 import java.util.ArrayList;
 import java.util.List;

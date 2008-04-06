@@ -12,7 +12,7 @@
 /*
  * Created on Apr 6, 2005
  */
-package org.eclipse.m2m.qvt.oml.ocl;
+package org.eclipse.m2m.internal.qvt.oml.ocl;
 
 import java.util.logging.Level;
 

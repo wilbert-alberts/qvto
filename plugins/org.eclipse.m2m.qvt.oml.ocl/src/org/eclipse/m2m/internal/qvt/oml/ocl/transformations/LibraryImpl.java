@@ -12,12 +12,11 @@
 /*
  * Created on May 31, 2005
  */
-package org.eclipse.m2m.qvt.oml.internal.ocl.transformations;
+package org.eclipse.m2m.internal.qvt.oml.ocl.transformations;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,10 +24,10 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.m2m.qvt.oml.ocl.Logger;
-import org.eclipse.m2m.qvt.oml.ocl.metainfo.OclMetainfo;
-import org.eclipse.m2m.qvt.oml.ocl.metainfo.OclMetainfoClassLazyLoader;
-import org.eclipse.m2m.qvt.oml.ocl.metainfo.OclMetainfoOperation;
+import org.eclipse.m2m.internal.qvt.oml.ocl.Logger;
+import org.eclipse.m2m.internal.qvt.oml.ocl.metainfo.OclMetainfo;
+import org.eclipse.m2m.internal.qvt.oml.ocl.metainfo.OclMetainfoClassLazyLoader;
+import org.eclipse.m2m.internal.qvt.oml.ocl.metainfo.OclMetainfoOperation;
 import org.eclipse.m2m.qvt.oml.ocl.transformations.Library;
 import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryCreationException;
 import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryOperation;
@@ -97,7 +96,7 @@ public class LibraryImpl extends EObjectImpl implements Library {
         return myClassName;
     }
 
-    public Class getLibraryClass() throws LibraryCreationException {
+    public Class<?> getLibraryClass() throws LibraryCreationException {
         if (myLibraryClass == null) {
             String namespace = myConfiguration.getNamespaceIdentifier();
             Bundle bundle = Platform.getBundle(namespace);
@@ -170,8 +169,7 @@ public class LibraryImpl extends EObjectImpl implements Library {
 
     public void loadOperations()
             throws LibraryCreationException {
-        for (Iterator it = getLibraryOperations().iterator(); it.hasNext();) {
-            LibraryOperation nextOperation = (LibraryOperation) it.next();
+        for (LibraryOperation nextOperation : getLibraryOperations()) {
             try {
                 nextOperation.load();
             } catch (LibraryOperationException e) {
@@ -208,7 +206,7 @@ public class LibraryImpl extends EObjectImpl implements Library {
     
     private String myClassName;
 
-    private Class myLibraryClass;
+    private Class<?> myLibraryClass;
 
     private Collection<LibraryOperation> myLibraryOperations;
 

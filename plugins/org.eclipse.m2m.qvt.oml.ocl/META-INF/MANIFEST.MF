@@ -5,10 +5,10 @@ Bundle-SymbolicName: org.eclipse.m2m.qvt.oml.ocl;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-Activator: org.eclipse.m2m.qvt.oml.ocl.OclQvtoPlugin
+Bundle-Activator: org.eclipse.m2m.internal.qvt.oml.ocl.OclQvtoPlugin
 Require-Bundle: org.eclipse.core.runtime,
   org.eclipse.emf.ecore 
 Eclipse-LazyStart: true
-Export-Package: org.eclipse.m2m.qvt.oml.ocl,
- org.eclipse.m2m.qvt.oml.ocl.metainfo,
+Export-Package: org.eclipse.m2m.internal.qvt.oml.ocl,
+ org.eclipse.m2m.internal.qvt.oml.ocl.metainfo,
  org.eclipse.m2m.qvt.oml.ocl.transformations

@@ -12,7 +12,7 @@
 /*
  * Created on Apr 6, 2005
  */
-package org.eclipse.m2m.qvt.oml.ocl;
+package org.eclipse.m2m.internal.qvt.oml.ocl;
 
 import java.io.ByteArrayOutputStream;
 import java.util.logging.Level;
@@ -24,7 +24,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.m2m.qvt.oml.internal.ocl.transformations.LibrariesRegistryImpl;
+import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LibrariesRegistryImpl;
 import org.eclipse.m2m.qvt.oml.ocl.transformations.LibrariesRegistry;
 import org.osgi.framework.BundleContext;
 

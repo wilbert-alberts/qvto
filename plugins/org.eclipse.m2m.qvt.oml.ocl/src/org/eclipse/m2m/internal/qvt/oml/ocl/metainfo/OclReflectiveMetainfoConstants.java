@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.ocl.metainfo;
+package org.eclipse.m2m.internal.qvt.oml.ocl.metainfo;
 
 public interface OclReflectiveMetainfoConstants {
     public static final String METAINFO_IMPORT_CLASS_NAME = "ImportedMetainfos"; //$NON-NLS-1$

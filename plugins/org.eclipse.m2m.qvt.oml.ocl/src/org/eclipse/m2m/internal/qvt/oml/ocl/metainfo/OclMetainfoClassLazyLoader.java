@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.ocl.metainfo;
+package org.eclipse.m2m.internal.qvt.oml.ocl.metainfo;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -19,7 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.m2m.qvt.oml.ocl.Logger;
+import org.eclipse.m2m.internal.qvt.oml.ocl.Logger;
 
 
 public class OclMetainfoClassLazyLoader implements OclMetainfo.LazyLoader {

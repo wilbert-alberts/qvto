@@ -12,7 +12,7 @@
 /*
  * Created on Jun 28, 2005
  */
-package org.eclipse.m2m.qvt.oml.internal.ocl.transformations;
+package org.eclipse.m2m.internal.qvt.oml.ocl.transformations;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -22,8 +22,8 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.m2m.qvt.oml.ocl.Logger;
-import org.eclipse.m2m.qvt.oml.ocl.metainfo.OclMetainfoOperation;
+import org.eclipse.m2m.internal.qvt.oml.ocl.Logger;
+import org.eclipse.m2m.internal.qvt.oml.ocl.metainfo.OclMetainfoOperation;
 import org.eclipse.m2m.qvt.oml.ocl.transformations.Library;
 import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryCreationException;
 import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryOperation;
@@ -70,7 +70,7 @@ public class LibraryOperationImpl implements LibraryOperation {
     }
 
     public Object run(Object context, Object[] explicitParameterValues,
-            Object[] implicitParameterValues, Class returnTypeClass) {
+            Object[] implicitParameterValues, Class<?> returnTypeClass) {
         Object[] explicitParameterValuesWithContext = getJoinArray(
                 new Object[] { context }, explicitParameterValues);
         Object[] parameters = getJoinArray(implicitParameterValues,

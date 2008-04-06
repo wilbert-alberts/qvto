@@ -13,6 +13,7 @@ package org.eclipse.m2m.qvt.oml.ocl.transformations;
 
 import java.util.Collection;
 
+
 public interface LibrariesRegistry {
     Collection<Library> getLibraries();
     Library getLibrary(String id);
