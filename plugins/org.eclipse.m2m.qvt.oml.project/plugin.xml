@@ -5,7 +5,7 @@
    <extension-point id="transformNatureConfigParticipants" name="%transformNatureConfigParticipants" schema="schema/transformNatureConfigParticipants.exsd"/>
    
    <extension point="org.eclipse.m2m.qvt.oml.project.transformNatureConfigParticipants">
-      <configParticipant class="org.eclipse.m2m.qvt.oml.project.nature.QvtNatureConfigParticipant"/>
+      <configParticipant class="org.eclipse.m2m.internal.qvt.oml.project.nature.QvtNatureConfigParticipant"/>
    </extension> 
  
    <extension
@@ -13,7 +13,7 @@
          name="%transformationNature"
          point="org.eclipse.core.resources.natures">
       <runtime>
-         <run class="org.eclipse.m2m.qvt.oml.project.nature.TransformationNatureImpl"/>
+         <run class="org.eclipse.m2m.internal.qvt.oml.project.nature.TransformationNatureImpl"/>
       </runtime>
       <builder id="org.eclipse.m2m.qvt.oml.QvtBuilder"/>
    </extension>

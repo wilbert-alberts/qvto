@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.project;
+package org.eclipse.m2m.internal.qvt.oml.project;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFolder;
@@ -18,8 +18,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.common.nature.TransformationNature;
+import org.eclipse.m2m.internal.qvt.oml.project.model.IQvtProject;
 import org.eclipse.m2m.internal.qvt.oml.project.model.QvtProject;
-import org.eclipse.m2m.qvt.oml.project.model.IQvtProject;
 
 public class QvtProjectUtil {
 

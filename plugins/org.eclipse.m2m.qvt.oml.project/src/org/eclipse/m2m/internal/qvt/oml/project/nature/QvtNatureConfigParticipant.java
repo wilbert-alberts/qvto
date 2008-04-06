@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.project.nature;
+package org.eclipse.m2m.internal.qvt.oml.project.nature;
 
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilder;

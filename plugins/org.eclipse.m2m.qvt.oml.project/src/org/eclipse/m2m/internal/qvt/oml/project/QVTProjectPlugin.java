@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.project;
+package org.eclipse.m2m.internal.qvt.oml.project;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;

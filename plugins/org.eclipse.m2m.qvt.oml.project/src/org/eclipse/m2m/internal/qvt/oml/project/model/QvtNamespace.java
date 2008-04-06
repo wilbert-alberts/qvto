@@ -20,11 +20,6 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.m2m.qvt.oml.project.model.IQvtCompilationUnit;
-import org.eclipse.m2m.qvt.oml.project.model.IQvtElement;
-import org.eclipse.m2m.qvt.oml.project.model.IQvtNamespace;
-import org.eclipse.m2m.qvt.oml.project.model.IQvtProject;
-import org.eclipse.m2m.qvt.oml.project.model.QvtModelException;
 
 public class QvtNamespace extends QvtBaseElement implements IQvtNamespace {
 	

@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.project.model;
+package org.eclipse.m2m.internal.qvt.oml.project.model;
 
 public class QvtModelException extends Exception {
 

@@ -3,16 +3,16 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.m2m.qvt.oml.project;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: org.eclipse.m2m.qvt.oml.project.QVTProjectPlugin
+Bundle-Activator: org.eclipse.m2m.internal.qvt.oml.project.QVTProjectPlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Export-Package: org.eclipse.m2m.qvt.oml.project, 
- org.eclipse.m2m.qvt.oml.project.model,
- org.eclipse.m2m.qvt.oml.project.nature
+Export-Package: org.eclipse.m2m.internal.qvt.oml.project,
+ org.eclipse.m2m.internal.qvt.oml.project.nature,
+ org.eclipse.m2m.internal.qvt.oml.project.model
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.debug.ui,
  org.eclipse.m2m.qvt.oml.common,
  org.eclipse.m2m.qvt.oml.emf.util,
  org.eclipse.m2m.qvt.oml
-Eclipse-LazyStart: true
+Bundle-ActivationPolicy: lazy

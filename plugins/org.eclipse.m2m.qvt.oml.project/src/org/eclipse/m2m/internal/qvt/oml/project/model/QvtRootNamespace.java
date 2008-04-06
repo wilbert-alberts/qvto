@@ -1,7 +1,5 @@
 package org.eclipse.m2m.internal.qvt.oml.project.model;
 
-import org.eclipse.m2m.qvt.oml.project.model.IQvtProject;
-import org.eclipse.m2m.qvt.oml.project.model.QvtModelException;
 
 public class QvtRootNamespace extends QvtNamespace {
 

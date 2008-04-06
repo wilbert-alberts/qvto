@@ -14,8 +14,6 @@ package org.eclipse.m2m.internal.qvt.oml.project.model;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.m2m.qvt.oml.project.model.IQvtElement;
-import org.eclipse.m2m.qvt.oml.project.model.QvtModelException;
 
 public abstract class QvtBaseElement implements IQvtElement {
 	

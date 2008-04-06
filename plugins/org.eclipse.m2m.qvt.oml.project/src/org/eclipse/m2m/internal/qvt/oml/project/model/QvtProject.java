@@ -24,12 +24,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.m2m.internal.qvt.oml.QvtNamesChecker;
 import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
-import org.eclipse.m2m.qvt.oml.project.QVTProjectPlugin;
-import org.eclipse.m2m.qvt.oml.project.model.IQvtCompilationUnit;
-import org.eclipse.m2m.qvt.oml.project.model.IQvtElement;
-import org.eclipse.m2m.qvt.oml.project.model.IQvtNamespace;
-import org.eclipse.m2m.qvt.oml.project.model.IQvtProject;
-import org.eclipse.m2m.qvt.oml.project.model.QvtModelException;
+import org.eclipse.m2m.internal.qvt.oml.project.QVTProjectPlugin;
 
 public class QvtProject extends QvtBaseElement implements IQvtProject {
 	
