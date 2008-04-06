@@ -17,7 +17,7 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages {
 	
-    private static final String BUNDLE_NAME = "com.borland.m2m.qvt.util.dsl.messages"; //$NON-NLS-1$		
+    private static final String BUNDLE_NAME = "org.eclipse.m2m.qvt.oml.runtime.util.messages"; //$NON-NLS-1$		
 	
     private Messages() {
     }
