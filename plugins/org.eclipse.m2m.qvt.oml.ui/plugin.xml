@@ -9,7 +9,7 @@
           name="%m2mWizardsCategoryName"/>
       <wizard
             category="org.eclipse.m2m.qvt.oml.wizardCategory"
-            class="org.eclipse.m2m.qvt.oml.ui.wizards.NewQVTTransformationWizard"
+            class="org.eclipse.m2m.internal.qvt.oml.ui.wizards.NewQVTTransformationWizard"
             icon="icons/pr-Model_to_model.gif"
             id="org.eclipse.m2m.qvt.oml.ui.wizards.NewQVTTransformationWizard"
             name="%newQVTTransformation">
@@ -19,7 +19,7 @@
       </wizard>
       <wizard
             category="org.eclipse.m2m.qvt.oml.wizardCategory"
-            class="org.eclipse.m2m.qvt.oml.ui.wizards.NewQvtLibraryWizard"
+            class="org.eclipse.m2m.internal.qvt.oml.ui.wizards.NewQvtLibraryWizard"
             icon="icons/pr-Model_to_model.gif"
             id="org.eclipse.m2m.qvt.oml.ui.wizards.NewQvtLibraryWizard"
             name="%newQvtLibrary">
@@ -39,7 +39,7 @@
              
       <wizard
             category="org.eclipse.m2m.qvt.oml.wizardCategory"
-            class="org.eclipse.m2m.qvt.oml.ui.wizards.project.NewQVTProjectWizard"
+            class="org.eclipse.m2m.internal.qvt.oml.ui.wizards.project.NewQVTProjectWizard"
             icon="icons/pr-MDA.gif"
             id="org.eclipse.m2m.qvt.oml.project.newTransformationProject"
             name="%newTransformationProject"
@@ -63,7 +63,7 @@
         id="QvtMetamodelMappingPagess"
         category="org.eclipse.m2m.qvt.oml.ui.QvtSettingsPropertyPage"
         name= "%metamodelMappingsPageName"
-        class="org.eclipse.m2m.qvt.oml.ui.wizards.project.QvtMetamodelMappingPage">
+        class="org.eclipse.m2m.internal.qvt.oml.ui.wizards.project.QvtMetamodelMappingPage">
 	    <filter name="nature" value="org.eclipse.m2m.qvt.oml.project.TransformationNature"/>        
      <enabledWhen>
         <adapt type="org.eclipse.core.resources.IProject"/>
@@ -75,7 +75,7 @@
     <page
         id="org.eclipse.m2m.qvt.oml.ui.QvtSettingsPropertyPage"
         name= "%qvtSettings"
-        class="org.eclipse.m2m.qvt.oml.ui.wizards.project.QvtSettingsPropertyPage">
+        class="org.eclipse.m2m.internal.qvt.oml.ui.wizards.project.QvtSettingsPropertyPage">
 	    <filter name="nature" value="org.eclipse.m2m.qvt.oml.project.TransformationNature"/>
      <enabledWhen>
         <adapt type="org.eclipse.core.resources.IProject"/>
@@ -101,9 +101,9 @@
 	<extension point="org.eclipse.ui.navigator.navigatorContent">
 		<navigatorContent
         activeByDefault="true"
-        contentProvider="org.eclipse.m2m.qvt.oml.ui.wizards.project.NullContentProvider"
+        contentProvider="org.eclipse.m2m.internal.qvt.oml.ui.wizards.project.NullContentProvider"
         id="org.eclipse.qvt.ui.qvtContent"
-        labelProvider="org.eclipse.m2m.qvt.oml.ui.wizards.project.QvtProjectLabelProvider"
+        labelProvider="org.eclipse.m2m.internal.qvt.oml.ui.wizards.project.QvtProjectLabelProvider"
         name="%commonNavigatorContentName"
         priority="highest">
 			<triggerPoints>

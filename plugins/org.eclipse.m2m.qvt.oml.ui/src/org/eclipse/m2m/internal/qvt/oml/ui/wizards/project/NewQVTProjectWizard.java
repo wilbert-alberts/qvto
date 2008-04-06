@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.ui.wizards.project;
+package org.eclipse.m2m.internal.qvt.oml.ui.wizards.project;
 
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
@@ -37,9 +37,9 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardSelectionPage;
 import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.common.nature.TransformationNature;
+import org.eclipse.m2m.internal.qvt.oml.ui.QVTUIPlugin;
+import org.eclipse.m2m.internal.qvt.oml.ui.QvtPluginImages;
 import org.eclipse.m2m.qvt.oml.common.project.NatureUtils;
-import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
-import org.eclipse.m2m.qvt.oml.ui.QvtPluginImages;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;

@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.ui.wizards.project;
+package org.eclipse.m2m.internal.qvt.oml.ui.wizards.project;
 
 import org.eclipse.pde.internal.core.TargetPlatformHelper;
 import org.eclipse.pde.ui.IPluginFieldData;

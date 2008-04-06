@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.ui.wizards.project;
+package org.eclipse.m2m.internal.qvt.oml.ui.wizards.project;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
@@ -22,8 +22,8 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.window.Window;
 import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
-import org.eclipse.m2m.qvt.oml.ui.IStatusChangeListener;
-import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
+import org.eclipse.m2m.internal.qvt.oml.ui.IStatusChangeListener;
+import org.eclipse.m2m.internal.qvt.oml.ui.QVTUIPlugin;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;

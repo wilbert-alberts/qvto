@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.ui.wizards.project;
+package org.eclipse.m2m.internal.qvt.oml.ui.wizards.project;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -19,8 +19,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
+import org.eclipse.m2m.internal.qvt.oml.ui.QvtPluginImages;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
-import org.eclipse.m2m.qvt.oml.ui.QvtPluginImages;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 

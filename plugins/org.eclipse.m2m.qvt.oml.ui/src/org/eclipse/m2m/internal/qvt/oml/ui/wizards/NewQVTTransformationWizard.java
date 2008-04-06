@@ -9,15 +9,15 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.ui.wizards;
+package org.eclipse.m2m.internal.qvt.oml.ui.wizards;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.m2m.internal.qvt.oml.QvtNamesChecker;
-import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
-import org.eclipse.m2m.qvt.oml.ui.QvtPluginImages;
+import org.eclipse.m2m.internal.qvt.oml.ui.QVTUIPlugin;
+import org.eclipse.m2m.internal.qvt.oml.ui.QvtPluginImages;
 
 
 public class NewQVTTransformationWizard extends AbstractNewQVTElementWizard {

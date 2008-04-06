@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.ui.wizards.project;
+package org.eclipse.m2m.internal.qvt.oml.ui.wizards.project;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +28,8 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.m2m.internal.qvt.oml.ui.QVTUIPlugin;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
-import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.ide.undo.CreateFolderOperation;
 import org.eclipse.ui.ide.undo.MoveResourcesOperation;

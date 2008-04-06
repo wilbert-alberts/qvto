@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.ui.wizards.project;
+package org.eclipse.m2m.internal.qvt.oml.ui.wizards.project;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -36,7 +36,7 @@ import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.IWizardNode;
 import org.eclipse.jface.wizard.WizardSelectionPage;
-import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
+import org.eclipse.m2m.internal.qvt.oml.ui.QVTUIPlugin;
 import org.eclipse.pde.ui.IPluginContentWizard;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;

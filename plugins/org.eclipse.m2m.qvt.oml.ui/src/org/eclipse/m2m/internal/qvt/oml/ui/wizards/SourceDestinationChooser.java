@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.ui.wizards;
+package org.eclipse.m2m.internal.qvt.oml.ui.wizards;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,14 +32,14 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.window.Window;
 import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
-import org.eclipse.m2m.qvt.oml.project.QvtProjectUtil;
-import org.eclipse.m2m.qvt.oml.project.model.IQvtElement;
-import org.eclipse.m2m.qvt.oml.project.model.IQvtNamespace;
-import org.eclipse.m2m.qvt.oml.project.model.IQvtProject;
-import org.eclipse.m2m.qvt.oml.project.model.QvtModelException;
-import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
-import org.eclipse.m2m.qvt.oml.ui.QvtPluginImages;
-import org.eclipse.m2m.qvt.oml.ui.wizards.project.QvtProjectLabelProvider;
+import org.eclipse.m2m.internal.qvt.oml.project.QvtProjectUtil;
+import org.eclipse.m2m.internal.qvt.oml.project.model.IQvtElement;
+import org.eclipse.m2m.internal.qvt.oml.project.model.IQvtNamespace;
+import org.eclipse.m2m.internal.qvt.oml.project.model.IQvtProject;
+import org.eclipse.m2m.internal.qvt.oml.project.model.QvtModelException;
+import org.eclipse.m2m.internal.qvt.oml.ui.QVTUIPlugin;
+import org.eclipse.m2m.internal.qvt.oml.ui.QvtPluginImages;
+import org.eclipse.m2m.internal.qvt.oml.ui.wizards.project.QvtProjectLabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;

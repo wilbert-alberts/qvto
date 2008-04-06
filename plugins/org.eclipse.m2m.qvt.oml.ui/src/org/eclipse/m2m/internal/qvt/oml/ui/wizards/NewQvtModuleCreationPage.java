@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.ui.wizards;
+package org.eclipse.m2m.internal.qvt.oml.ui.wizards;
 
 import java.io.ByteArrayInputStream;
 import java.util.Iterator;
@@ -38,15 +38,15 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.m2m.internal.qvt.oml.QvtNamesChecker;
+import org.eclipse.m2m.internal.qvt.oml.project.QvtProjectUtil;
+import org.eclipse.m2m.internal.qvt.oml.project.model.IQvtCompilationUnit;
+import org.eclipse.m2m.internal.qvt.oml.project.model.IQvtElement;
+import org.eclipse.m2m.internal.qvt.oml.project.model.IQvtNamespace;
+import org.eclipse.m2m.internal.qvt.oml.project.model.IQvtProject;
+import org.eclipse.m2m.internal.qvt.oml.project.model.QvtModelException;
+import org.eclipse.m2m.internal.qvt.oml.ui.QVTUIPlugin;
+import org.eclipse.m2m.internal.qvt.oml.ui.wizards.project.INewQVTElementDestinationWizardDelegate;
 import org.eclipse.m2m.qvt.oml.common.MDAConstants;
-import org.eclipse.m2m.qvt.oml.project.QvtProjectUtil;
-import org.eclipse.m2m.qvt.oml.project.model.IQvtCompilationUnit;
-import org.eclipse.m2m.qvt.oml.project.model.IQvtElement;
-import org.eclipse.m2m.qvt.oml.project.model.IQvtNamespace;
-import org.eclipse.m2m.qvt.oml.project.model.IQvtProject;
-import org.eclipse.m2m.qvt.oml.project.model.QvtModelException;
-import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
-import org.eclipse.m2m.qvt.oml.ui.wizards.project.INewQVTElementDestinationWizardDelegate;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;

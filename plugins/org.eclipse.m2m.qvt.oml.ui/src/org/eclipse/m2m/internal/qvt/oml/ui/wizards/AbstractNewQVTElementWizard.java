@@ -9,15 +9,15 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.ui.wizards;
+package org.eclipse.m2m.internal.qvt.oml.ui.wizards;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.m2m.qvt.oml.ui.QVTUIPlugin;
-import org.eclipse.m2m.qvt.oml.ui.wizards.project.INewQVTElementDestinationWizardDelegate;
-import org.eclipse.m2m.qvt.oml.ui.wizards.project.INewQVTProjectElementWizard;
+import org.eclipse.m2m.internal.qvt.oml.ui.QVTUIPlugin;
+import org.eclipse.m2m.internal.qvt.oml.ui.wizards.project.INewQVTElementDestinationWizardDelegate;
+import org.eclipse.m2m.internal.qvt.oml.ui.wizards.project.INewQVTProjectElementWizard;
 import org.eclipse.ui.IWorkbench;
 
 /**
