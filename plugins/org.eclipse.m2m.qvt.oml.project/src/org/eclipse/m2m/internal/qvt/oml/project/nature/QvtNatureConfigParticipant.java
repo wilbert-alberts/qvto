@@ -13,7 +13,7 @@ package org.eclipse.m2m.internal.qvt.oml.project.nature;
 
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilder;
-import org.eclipse.m2m.qvt.oml.common.project.NatureUtils;
+import org.eclipse.m2m.internal.qvt.oml.common.project.NatureUtils;
 
 
 /**
