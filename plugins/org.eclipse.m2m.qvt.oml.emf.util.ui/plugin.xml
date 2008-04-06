@@ -4,7 +4,7 @@
    <extension-point id="metamodelHandler" name="%metamodelHandler" schema="schema/metamodel-handler.exsd"/>
    
    <extension point="org.eclipse.m2m.qvt.oml.emf.util.ui.metamodelHandler">
-      <handler class="org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.DefaultMetamodelHandler">
+      <handler class="org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.DefaultMetamodelHandler">
          <package uri="*"/>
       </handler>
    </extension>

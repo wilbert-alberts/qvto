@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.m2m.qvt.oml.emf.util.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: org.eclipse.m2m.qvt.oml.emf.util.ui.EmfUtilUiPlugin
+Bundle-Activator: org.eclipse.m2m.internal.qvt.oml.emf.util.ui.EmfUtilUiPlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
@@ -12,9 +12,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.m2m.qvt.oml.emf.util,
  org.eclipse.ui.editors
 Eclipse-LazyStart: true
-Export-Package: org.eclipse.m2m.qvt.oml.emf.util.ui,
- org.eclipse.m2m.qvt.oml.emf.util.ui.choosers,
- org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.metamodel,
- org.eclipse.m2m.qvt.oml.emf.util.ui.controls,
- org.eclipse.m2m.qvt.oml.emf.util.ui.metamodel,
- org.eclipse.m2m.qvt.oml.emf.util.ui.provider
+Export-Package: org.eclipse.m2m.internal.qvt.oml.emf.util.ui,
+ org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers,
+ org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.metamodel,
+ org.eclipse.m2m.internal.qvt.oml.emf.util.ui.controls,
+ org.eclipse.m2m.internal.qvt.oml.emf.util.ui.metamodel,
+ org.eclipse.m2m.internal.qvt.oml.emf.util.ui.provider
