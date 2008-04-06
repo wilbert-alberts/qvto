@@ -21,9 +21,9 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
+import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.nature.TransformationNature;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
-import org.eclipse.m2m.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 
 

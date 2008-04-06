@@ -12,7 +12,7 @@
 package org.eclipse.m2m.tests.qvt.oml.transform.api;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.m2m.qvt.oml.common.MDAConstants;
+import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.tests.qvt.oml.transform.ModelTestData;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 

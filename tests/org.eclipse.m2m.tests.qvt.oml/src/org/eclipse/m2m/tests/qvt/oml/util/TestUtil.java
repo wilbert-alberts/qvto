@@ -38,7 +38,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.m2m.qvt.oml.common.io.FileUtil;
+import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.tests.qvt.oml.RuntimeWorkspaceSetup;
 import org.eclipse.m2m.tests.qvt.oml.TestProject;
 import org.osgi.framework.Bundle;

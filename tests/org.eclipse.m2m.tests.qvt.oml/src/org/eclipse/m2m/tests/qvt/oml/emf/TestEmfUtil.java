@@ -16,7 +16,7 @@ import junit.framework.TestCase;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
-import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 
 public class TestEmfUtil extends TestCase {
 

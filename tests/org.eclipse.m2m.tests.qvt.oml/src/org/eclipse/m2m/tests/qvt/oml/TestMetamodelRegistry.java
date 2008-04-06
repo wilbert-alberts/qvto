@@ -22,17 +22,17 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.m2m.internal.qvt.oml.common.io.CResourceRepositoryContext;
+import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
+import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.WorkspaceMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.common.nature.TransformationNature;
-import org.eclipse.m2m.qvt.oml.common.io.CResourceRepositoryContext;
-import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
-import org.eclipse.m2m.qvt.oml.common.io.eclipse.WorkspaceMetamodelRegistryProvider;
-import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
-import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
-import org.eclipse.m2m.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
-import org.eclipse.m2m.qvt.oml.emf.util.urimap.MModelURIMapFactory;
-import org.eclipse.m2m.qvt.oml.emf.util.urimap.MappingContainer;
-import org.eclipse.m2m.qvt.oml.emf.util.urimap.MetamodelURIMappingHelper;
-import org.eclipse.m2m.qvt.oml.emf.util.urimap.URIMapping;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MModelURIMapFactory;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MappingContainer;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MetamodelURIMappingHelper;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.URIMapping;
 
 
 public class TestMetamodelRegistry extends TestCase {

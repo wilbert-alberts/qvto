@@ -16,7 +16,7 @@ import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.m2m.qvt.oml.common.MDAConstants;
+import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.runtime.util.QvtoTransformationHelper;
 import org.eclipse.m2m.tests.qvt.oml.transform.ModelTestData;
 

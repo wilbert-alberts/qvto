@@ -20,9 +20,9 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.m2m.qvt.oml.common.project.JavaProjectUtil;
-import org.eclipse.m2m.qvt.oml.common.project.PluginUtil;
-import org.eclipse.m2m.qvt.oml.common.project.PluginUtil.ModelHelper;
+import org.eclipse.m2m.internal.qvt.oml.common.project.JavaProjectUtil;
+import org.eclipse.m2m.internal.qvt.oml.common.project.PluginUtil;
+import org.eclipse.m2m.internal.qvt.oml.common.project.PluginUtil.ModelHelper;
 import org.eclipse.pde.core.build.IBuildEntry;
 import org.eclipse.pde.core.build.IBuildModel;
 import org.eclipse.pde.core.build.IBuildModelFactory;
@@ -37,7 +37,7 @@ public class ConvertProjectUtil {
               
     
     public static void convertToPluginProject(IProject project, IProgressMonitor progressMonitor) throws CoreException {
-        org.eclipse.m2m.qvt.oml.common.project.PluginUtil.addPluginNature(project);
+        org.eclipse.m2m.internal.qvt.oml.common.project.PluginUtil.addPluginNature(project);
         convertProject(project, progressMonitor);
 //        updateBuildPath(project);
     }
