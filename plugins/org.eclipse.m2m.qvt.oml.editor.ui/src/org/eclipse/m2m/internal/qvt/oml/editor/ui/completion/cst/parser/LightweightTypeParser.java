@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.1 2008/04/06 08:59:39 sboyko Exp $
+* $Id: LightweightTypeParser.java,v 1.2 2008/04/06 10:18:03 sboyko Exp $
 */
 /**
 * <copyright>
@@ -29,13 +29,62 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.1 2008/04/06 08:59:39 sboyko Exp $
+* $Id: LightweightTypeParser.java,v 1.2 2008/04/06 10:18:03 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
 
+import java.util.Map;
+
+import lpg.lpgjavaruntime.BacktrackingParser;
+import lpg.lpgjavaruntime.BadParseException;
+import lpg.lpgjavaruntime.BadParseSymFileException;
+import lpg.lpgjavaruntime.DiagnoseParser;
+import lpg.lpgjavaruntime.IToken;
+import lpg.lpgjavaruntime.Monitor;
+import lpg.lpgjavaruntime.NotBacktrackParseTableException;
+import lpg.lpgjavaruntime.NullExportedSymbolsException;
+import lpg.lpgjavaruntime.NullTerminalSymbolsException;
+import lpg.lpgjavaruntime.ParseTable;
+import lpg.lpgjavaruntime.PrsStream;
+import lpg.lpgjavaruntime.RuleAction;
+import lpg.lpgjavaruntime.Token;
+import lpg.lpgjavaruntime.UndefinedEofSymbolException;
+import lpg.lpgjavaruntime.UnimplementedTerminalsException;
+
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
+import org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum;
+import org.eclipse.m2m.internal.qvt.oml.cst.LogExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingEndCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingInitCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindEnum;
+import org.eclipse.m2m.internal.qvt.oml.cst.ModuleRefCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ReturnExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.TransformationRefineCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParserprs;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
+import org.eclipse.m2m.internal.qvt.oml.cst.temp.ResolveOpArgsExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.temp.TempFactory;
+import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CallExpCS;
 import org.eclipse.ocl.cst.CollectionTypeIdentifierEnum;
@@ -50,61 +99,12 @@ import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.SimpleTypeEnum;
 import org.eclipse.ocl.cst.StateExpCS;
+import org.eclipse.ocl.cst.StringLiteralExpCS;
 import org.eclipse.ocl.cst.TypeCS;
 import org.eclipse.ocl.cst.VariableCS;
 import org.eclipse.ocl.util.OCLStandardLibraryUtil;
 import org.eclipse.ocl.utilities.PredefinedType;
 
-import lpg.lpgjavaruntime.Monitor;
-import lpg.lpgjavaruntime.BadParseException;
-import lpg.lpgjavaruntime.BadParseSymFileException;
-import lpg.lpgjavaruntime.DiagnoseParser;
-import lpg.lpgjavaruntime.IToken;
-import lpg.lpgjavaruntime.NullExportedSymbolsException;
-import lpg.lpgjavaruntime.NullTerminalSymbolsException;
-import lpg.lpgjavaruntime.ParseTable;
-import lpg.lpgjavaruntime.PrsStream;
-import lpg.lpgjavaruntime.RuleAction;
-import lpg.lpgjavaruntime.UndefinedEofSymbolException;
-import lpg.lpgjavaruntime.UnimplementedTerminalsException;
-
-import org.eclipse.ocl.cst.StringLiteralExpCS;
-import org.eclipse.ocl.ParserException;		
-import java.util.Map;
-import lpg.lpgjavaruntime.Token;
-import lpg.lpgjavaruntime.BacktrackingParser;
-import lpg.lpgjavaruntime.NotBacktrackParseTableException;
-import org.eclipse.m2m.qvt.oml.internal.cst.AssertExpCS;	
-import org.eclipse.m2m.qvt.oml.internal.cst.LogExpCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.BlockExpCS;	
-import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.DirectionKindEnum;
-import org.eclipse.m2m.qvt.oml.internal.cst.MappingBodyCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.MappingDeclarationCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.MappingEndCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.MappingInitCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.MappingExtensionCS;	
-import org.eclipse.m2m.qvt.oml.internal.cst.MappingRuleCS;	
-import org.eclipse.m2m.qvt.oml.internal.cst.MappingQueryCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.OutExpCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.ReturnExpCS;	
-import org.eclipse.m2m.qvt.oml.internal.cst.SwitchAltExpCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.ModelTypeCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.temp.ResolveOpArgsExpCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.temp.ScopedNameCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.temp.TempFactory;
-import org.eclipse.m2m.qvt.oml.internal.cst.ModuleKindEnum;
-import org.eclipse.m2m.qvt.oml.internal.cst.ModuleKindCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.ModuleRefCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.ImportKindEnum;
-import org.eclipse.m2m.qvt.oml.internal.cst.TransformationRefineCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.TransformationHeaderCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.TypeSpecCS;
-
-import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParserprs;
-import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParsersym;
-import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLexer;	
-import org.eclipse.m2m.qvt.oml.internal.cst.parser.AbstractQVTParser;	
 
 	public class LightweightTypeParser extends AbstractQVTParser implements RuleAction {
 	protected static ParseTable prs = new LightweightTypeParserprs();
@@ -3084,7 +3084,7 @@ import org.eclipse.m2m.qvt.oml.internal.cst.parser.AbstractQVTParser;
 			//
 			case 326: {
 				
-				MappingDeclarationCS mappingDecl = org.eclipse.m2m.qvt.oml.internal.cst.CSTFactory.eINSTANCE.createMappingDeclarationCS();
+				MappingDeclarationCS mappingDecl = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingDeclarationCS();
 				mappingDecl.setSimpleNameCS(createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, "")); //$NON-NLS-1$
 				CSTNode result = createMappingRuleCS(
 						mappingDecl,

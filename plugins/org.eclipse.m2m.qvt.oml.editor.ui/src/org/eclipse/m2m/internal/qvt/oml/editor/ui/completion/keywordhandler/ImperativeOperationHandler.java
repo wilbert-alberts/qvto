@@ -3,11 +3,11 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.keywordhandler;
 import lpg.lpgjavaruntime.IToken;
 import lpg.lpgjavaruntime.PrsStream;
 
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CFileData;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.LightweightParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.keywordhandler.scopedvariablesextraction.ScopedVariablesExtractor;
-import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParsersym;
 
 /**
  * @author Aleksandr Igdalov

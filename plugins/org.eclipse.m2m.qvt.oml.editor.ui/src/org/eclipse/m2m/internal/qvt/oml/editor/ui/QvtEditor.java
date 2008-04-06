@@ -40,7 +40,7 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.outline.QvtOutlineInput;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.outline.QvtOutlineLabelProvider;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.outline.QvtOutlineNodeSelector;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.outline.QvtOutlineSelectionListener;
-import org.eclipse.m2m.qvt.oml.emf.util.Logger;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.RGB;

@@ -3,9 +3,9 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.keywordhandler.sco
 
 import lpg.lpgjavaruntime.IToken;
 
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.LightweightParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
-import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParsersym;
 
 /**
  * @author aigdalov

@@ -37,11 +37,11 @@ import org.eclipse.m2m.internal.qvt.oml.QvtEngine;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
+import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
+import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilationResult;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
-import org.eclipse.m2m.qvt.oml.common.MdaException;
-import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
-import org.eclipse.m2m.qvt.oml.emf.util.Logger;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.ui.part.FileEditorInput;
 
 /**

@@ -27,8 +27,8 @@ import org.eclipse.jface.text.reconciler.IReconcilingStrategy;
 import org.eclipse.jface.text.reconciler.IReconcilingStrategyExtension;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilationResult;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
-import org.eclipse.m2m.qvt.oml.internal.cst.MappingMethodCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.swt.widgets.Display;
 

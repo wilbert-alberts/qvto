@@ -17,15 +17,15 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
+import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolverFactory;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtEditor;
-import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
-import org.eclipse.m2m.qvt.oml.internal.cst.MappingMethodCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLPGParsersym;
-import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLexer;
 import org.eclipse.ui.part.FileEditorInput;
 
 /**

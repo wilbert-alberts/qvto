@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  */
 public class ActionMessages {
 
-	private static final String BUNDLE_NAME= "org.eclipse.m2m.qvt.oml.editor.ui.ActionMessages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME= "org.eclipse.m2m.internal.qvt.oml.editor.ui.ActionMessages"; //$NON-NLS-1$
 
 	private static final ResourceBundle RESOURCE_BUNDLE= ResourceBundle.getBundle(BUNDLE_NAME);
 

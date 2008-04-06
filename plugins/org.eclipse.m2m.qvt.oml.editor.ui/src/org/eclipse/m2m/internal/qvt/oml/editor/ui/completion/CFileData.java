@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
+import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
-import org.eclipse.m2m.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.qvt.oml.internal.cst.ImportCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.LibraryImportCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.MappingModuleCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.ModuleImportCS;
-import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtOpLexer;
+import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ModuleImportCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
 
 /**
  * @author Aleksandr Igdalov

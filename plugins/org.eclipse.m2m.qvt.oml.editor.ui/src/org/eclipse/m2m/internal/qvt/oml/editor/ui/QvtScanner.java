@@ -22,7 +22,7 @@ import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.rules.WhitespaceRule;
 import org.eclipse.jface.text.rules.WordRule;
-import org.eclipse.m2m.qvt.oml.internal.cst.parser.QvtKeywords;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtKeywords;
 import org.eclipse.swt.SWT;
 
 public class QvtScanner extends RuleBasedScanner {
