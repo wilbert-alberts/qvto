@@ -4,6 +4,6 @@
    <extension-point id="metamodelProvider" name="%metamodelProvider" schema="schema/metamodel-provider.exsd"/>
    
    <extension point="org.eclipse.m2m.qvt.oml.emf.util.metamodelProvider">
-      <provider class="org.eclipse.m2m.qvt.oml.emf.util.mmregistry.EmfStandaloneMetamodelProvider"/>
+      <provider class="org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.EmfStandaloneMetamodelProvider"/>
    </extension>
 </plugin>
