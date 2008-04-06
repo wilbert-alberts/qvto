@@ -24,14 +24,14 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
+import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
+import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
+import org.eclipse.m2m.internal.qvt.oml.common.io.CFolder;
+import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
+import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFileUtil;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
-import org.eclipse.m2m.qvt.oml.common.MDAConstants;
-import org.eclipse.m2m.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.qvt.oml.common.io.CFolder;
-import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
-import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFileUtil;
-import org.eclipse.m2m.qvt.oml.emf.util.Logger;
-import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 
 /**
  * @author pfeldman

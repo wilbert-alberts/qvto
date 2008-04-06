@@ -27,17 +27,17 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
+import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.StatusUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.IMetamodelHandler;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.MetamodelHandlerManager;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
-import org.eclipse.m2m.qvt.oml.common.MDAConstants;
-import org.eclipse.m2m.qvt.oml.common.MdaException;
-import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
-import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
-import org.eclipse.m2m.qvt.oml.emf.util.StatusUtil;
-import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
-import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.IMetamodelHandler;
-import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.MetamodelHandlerManager;
 import org.eclipse.osgi.util.NLS;
 
 public class QvtValidator {
@@ -296,7 +296,7 @@ public class QvtValidator {
         IStatus result = StatusUtil.makeOkStatus();
         switch(targetData.getTargetType()) {
         case NEW_MODEL: {
-            IFile file = org.eclipse.m2m.qvt.oml.emf.util.URIUtils.getFile(destUri);
+            IFile file = org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils.getFile(destUri);
             if (file != null && file.exists()) {
                 if (result.getSeverity() < IStatus.WARNING) {
                 	if (EmfUtil.isUriExisted(targetData.getUriString())) {

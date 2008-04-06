@@ -14,7 +14,7 @@
  */
 package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
-import org.eclipse.m2m.qvt.oml.common.MdaException;
+import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 
 
 public interface ITransformationMaker {

@@ -26,7 +26,16 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.LaunchConfigurationDelegate;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
+import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.BaseProcess;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.ShallowProcess;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.StreamsProxy;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.IMetamodelHandler;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.MetamodelHandlerManager;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
@@ -34,15 +43,6 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
-import org.eclipse.m2m.qvt.oml.common.MdaException;
-import org.eclipse.m2m.qvt.oml.common.launch.BaseProcess;
-import org.eclipse.m2m.qvt.oml.common.launch.ShallowProcess;
-import org.eclipse.m2m.qvt.oml.common.launch.StreamsProxy;
-import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
-import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
-import org.eclipse.m2m.qvt.oml.emf.util.Logger;
-import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.IMetamodelHandler;
-import org.eclipse.m2m.qvt.oml.emf.util.ui.choosers.MetamodelHandlerManager;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.externaltools.internal.model.ExternalToolBuilder;
 import org.eclipse.ui.externaltools.internal.model.IExternalToolConstants;
@@ -76,7 +76,7 @@ public class QvtBuilderLaunchConfigurationDelegate extends LaunchConfigurationDe
 			shallowProcess.run();
         }
         catch(Exception e) {
-            throw new CoreException(MiscUtil.makeErrorStatus(org.eclipse.m2m.qvt.oml.emf.util.StatusUtil.getExceptionMessages(e), e));
+            throw new CoreException(MiscUtil.makeErrorStatus(org.eclipse.m2m.internal.qvt.oml.emf.util.StatusUtil.getExceptionMessages(e), e));
         }
     }
 

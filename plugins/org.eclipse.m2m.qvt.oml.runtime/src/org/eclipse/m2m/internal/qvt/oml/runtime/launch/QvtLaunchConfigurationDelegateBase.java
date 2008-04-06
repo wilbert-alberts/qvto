@@ -35,7 +35,18 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
+import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
+import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.BaseProcess;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.SafeRunner;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.BaseProcess.IRunnable;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfException;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.StatusUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.library.IConfiguration;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
@@ -47,17 +58,6 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
-import org.eclipse.m2m.qvt.oml.common.MdaException;
-import org.eclipse.m2m.qvt.oml.common.io.eclipse.EclipseFile;
-import org.eclipse.m2m.qvt.oml.common.launch.BaseProcess;
-import org.eclipse.m2m.qvt.oml.common.launch.SafeRunner;
-import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
-import org.eclipse.m2m.qvt.oml.common.launch.BaseProcess.IRunnable;
-import org.eclipse.m2m.qvt.oml.emf.util.EmfException;
-import org.eclipse.m2m.qvt.oml.emf.util.EmfUtil;
-import org.eclipse.m2m.qvt.oml.emf.util.Logger;
-import org.eclipse.m2m.qvt.oml.emf.util.StatusUtil;
-import org.eclipse.m2m.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.m2m.qvt.oml.trace.Trace;
 import org.eclipse.osgi.util.NLS;
 
@@ -304,7 +304,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         	}
         }
         
-        org.eclipse.m2m.qvt.oml.emf.util.URIUtils.refresh(outUri);
+        org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils.refresh(outUri);
     }
     
     private static void saveResource(EObject obj) throws IOException {

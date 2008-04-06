@@ -26,14 +26,14 @@ import org.eclipse.debug.core.ILaunchConfigurationType;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData.TargetType;
 import org.eclipse.m2m.internal.qvt.oml.library.IConfiguration;
 import org.eclipse.m2m.internal.qvt.oml.library.QvtConfiguration;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
-import org.eclipse.m2m.qvt.oml.common.MDAConstants;
-import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
-import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData.TargetType;
 
 
 public class QvtLaunchUtil {
@@ -82,7 +82,7 @@ public class QvtLaunchUtil {
     }
     
     public static String getTraceFileName(URI uri) {
-        IFile file = org.eclipse.m2m.qvt.oml.emf.util.URIUtils.getFile(uri);
+        IFile file = org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils.getFile(uri);
         if(file == null) {
             return null;
         }

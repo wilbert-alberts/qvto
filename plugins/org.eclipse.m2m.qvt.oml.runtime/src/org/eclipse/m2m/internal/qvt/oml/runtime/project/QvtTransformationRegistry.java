@@ -12,10 +12,10 @@
 package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.m2m.qvt.oml.common.MdaException;
-import org.eclipse.m2m.qvt.oml.common.project.CompiledTransformation;
-import org.eclipse.m2m.qvt.oml.common.project.IRegistryConstants;
-import org.eclipse.m2m.qvt.oml.common.project.TransformationRegistry;
+import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
+import org.eclipse.m2m.internal.qvt.oml.common.project.CompiledTransformation;
+import org.eclipse.m2m.internal.qvt.oml.common.project.IRegistryConstants;
+import org.eclipse.m2m.internal.qvt.oml.common.project.TransformationRegistry;
 
 public class QvtTransformationRegistry extends TransformationRegistry { 
     private QvtTransformationRegistry() {

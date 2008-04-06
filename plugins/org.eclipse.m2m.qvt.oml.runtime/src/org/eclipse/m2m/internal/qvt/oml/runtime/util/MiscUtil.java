@@ -16,9 +16,9 @@ import java.io.Reader;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
+import org.eclipse.m2m.internal.qvt.oml.common.io.CFileUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
-import org.eclipse.m2m.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.qvt.oml.common.io.CFileUtil;
 import org.eclipse.osgi.util.NLS;
 
 /**
