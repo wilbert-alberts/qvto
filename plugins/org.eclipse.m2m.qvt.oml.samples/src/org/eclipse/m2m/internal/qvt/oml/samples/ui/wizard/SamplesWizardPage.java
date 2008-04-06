@@ -9,12 +9,12 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.samples.ui.wizard;
+package org.eclipse.m2m.internal.qvt.oml.samples.ui.wizard;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.wizard.WizardPage;
-import org.eclipse.m2m.qvt.oml.samples.ui.Messages;
-import org.eclipse.m2m.qvt.oml.samples.ui.SampleProject;
+import org.eclipse.m2m.internal.qvt.oml.samples.ui.Messages;
+import org.eclipse.m2m.internal.qvt.oml.samples.ui.SampleProject;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;

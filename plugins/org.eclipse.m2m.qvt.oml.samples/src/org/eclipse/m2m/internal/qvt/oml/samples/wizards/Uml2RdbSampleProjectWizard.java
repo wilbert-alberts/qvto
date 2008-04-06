@@ -9,14 +9,14 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.samples.wizards;
+package org.eclipse.m2m.internal.qvt.oml.samples.wizards;
 
-import org.eclipse.m2m.qvt.oml.common.MDAConstants;
-import org.eclipse.m2m.qvt.oml.samples.QVTSamplesPlugin;
-import org.eclipse.m2m.qvt.oml.samples.ui.SampleProject;
-import org.eclipse.m2m.qvt.oml.samples.wizards.launch.Data;
-import org.eclipse.m2m.qvt.oml.samples.wizards.launch.LaunchWizard;
-import org.eclipse.m2m.qvt.oml.samples.wizards.launch.QVTInterpreter;
+import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
+import org.eclipse.m2m.internal.qvt.oml.samples.QVTSamplesPlugin;
+import org.eclipse.m2m.internal.qvt.oml.samples.ui.SampleProject;
+import org.eclipse.m2m.internal.qvt.oml.samples.wizards.launch.Data;
+import org.eclipse.m2m.internal.qvt.oml.samples.wizards.launch.LaunchWizard;
+import org.eclipse.m2m.internal.qvt.oml.samples.wizards.launch.QVTInterpreter;
 
 
 public class Uml2RdbSampleProjectWizard extends LaunchWizard {

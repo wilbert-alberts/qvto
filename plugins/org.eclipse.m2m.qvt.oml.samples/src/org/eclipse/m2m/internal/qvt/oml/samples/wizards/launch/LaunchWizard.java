@@ -9,18 +9,18 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.samples.wizards.launch;
+package org.eclipse.m2m.internal.qvt.oml.samples.wizards.launch;
 
 import java.text.MessageFormat;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.DebugPlugin;
-import org.eclipse.m2m.qvt.oml.samples.QVTSamplesPlugin;
-import org.eclipse.m2m.qvt.oml.samples.ui.SampleProject;
-import org.eclipse.m2m.qvt.oml.samples.ui.wizard.SamplesWizard;
-import org.eclipse.m2m.qvt.oml.samples.ui.wizard.SamplesWizardPage;
-import org.eclipse.m2m.qvt.oml.samples.wizards.Messages;
+import org.eclipse.m2m.internal.qvt.oml.samples.QVTSamplesPlugin;
+import org.eclipse.m2m.internal.qvt.oml.samples.ui.SampleProject;
+import org.eclipse.m2m.internal.qvt.oml.samples.ui.wizard.SamplesWizard;
+import org.eclipse.m2m.internal.qvt.oml.samples.ui.wizard.SamplesWizardPage;
+import org.eclipse.m2m.internal.qvt.oml.samples.wizards.Messages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;

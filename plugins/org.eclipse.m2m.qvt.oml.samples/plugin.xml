@@ -11,7 +11,7 @@
       />
       <wizard
             category="org.eclipse.ui.Examples/org.eclipse.m2m.qvt.oml.samples.category"
-            class="org.eclipse.m2m.qvt.oml.samples.wizards.Uml2RdbSampleProjectWizard"
+            class="org.eclipse.m2m.internal.qvt.oml.samples.wizards.Uml2RdbSampleProjectWizard"
             icon="icons/pr-MDA.gif"
             id="org.eclipse.m2m.qvt.oml.samples.wizards.Uml2RdbSampleProjectWizard"
             name="%simpleuml2rdb"

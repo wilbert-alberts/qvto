@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.samples.ui.wizard;
+package org.eclipse.m2m.internal.qvt.oml.samples.ui.wizard;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -21,10 +21,10 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.m2m.qvt.oml.samples.QVTSamplesPlugin;
-import org.eclipse.m2m.qvt.oml.samples.ui.Messages;
-import org.eclipse.m2m.qvt.oml.samples.ui.SampleProject;
-import org.eclipse.m2m.qvt.oml.samples.ui.SampleProjectsCreationOperation;
+import org.eclipse.m2m.internal.qvt.oml.samples.QVTSamplesPlugin;
+import org.eclipse.m2m.internal.qvt.oml.samples.ui.Messages;
+import org.eclipse.m2m.internal.qvt.oml.samples.ui.SampleProject;
+import org.eclipse.m2m.internal.qvt.oml.samples.ui.SampleProjectsCreationOperation;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;

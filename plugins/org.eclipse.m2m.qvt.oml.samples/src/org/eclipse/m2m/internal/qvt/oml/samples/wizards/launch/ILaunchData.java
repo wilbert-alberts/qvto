@@ -9,29 +9,12 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.samples.wizards.launch;
+package org.eclipse.m2m.internal.qvt.oml.samples.wizards.launch;
 
-import java.text.MessageFormat;
+import java.util.Map;
 
-import org.eclipse.m2m.qvt.oml.samples.ui.SampleProject;
+public interface ILaunchData {
+	public Map<String, Object> getAttributesMap();
 
-
-public class Data {
-
-	private String myURI;
-	private SampleProject myProject;
-
-	public Data(String uri, SampleProject project) {
-		myURI = uri;
-		myProject = project;
-	}
-
-	public String getURI() {
-        return MessageFormat.format(myURI, myProject.getName());
-	}
-    
-    public SampleProject getProject() {
-        return myProject;
-    }
-
+	public String getTransformationType();
 }

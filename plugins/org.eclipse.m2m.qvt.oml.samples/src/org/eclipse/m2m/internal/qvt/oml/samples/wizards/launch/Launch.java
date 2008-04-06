@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.samples.wizards.launch;
+package org.eclipse.m2m.internal.qvt.oml.samples.wizards.launch;
 
 import java.util.List;
 import java.util.Map;

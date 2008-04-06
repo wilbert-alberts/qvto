@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.samples.ui;
+package org.eclipse.m2m.internal.qvt.oml.samples.ui;
 
 import java.util.ArrayList;
 

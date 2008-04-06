@@ -9,12 +9,12 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.samples.wizards;
+package org.eclipse.m2m.internal.qvt.oml.samples.wizards;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages {
-	private static final String BUNDLE_NAME = "org.eclipse.m2m.qvt.oml.samples.wizards.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.eclipse.m2m.internal.qvt.oml.samples.wizards.messages"; //$NON-NLS-1$
 
 
 	private Messages() {
