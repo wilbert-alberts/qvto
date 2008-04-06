@@ -5,9 +5,9 @@ Bundle-SymbolicName: org.eclipse.m2m.qvt.oml.cst.parser;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Export-Package: org.eclipse.m2m.qvt.oml.internal.cst.parser,
- org.eclipse.m2m.qvt.oml.internal.cst,
- org.eclipse.m2m.qvt.oml.internal.cst.temp
+Export-Package: org.eclipse.m2m.internal.qvt.oml.cst,
+ org.eclipse.m2m.internal.qvt.oml.cst.parser,
+ org.eclipse.m2m.internal.qvt.oml.cst.temp
 Require-Bundle: org.eclipse.ocl
 Import-Package: lpg.lpgjavaruntime;version="[1.0.0,1.2.0)"
 Bundle-ActivationPolicy: lazy

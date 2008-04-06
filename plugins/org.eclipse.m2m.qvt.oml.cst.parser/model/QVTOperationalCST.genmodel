@@ -9,7 +9,7 @@
   <foreignModel>QVTOperationalCST.ecore</foreignModel>
   <genPackages prefix="QVTOperational" basePackage="org.eclipse.m2m.qvt.oml" disposableProviderFactory="true"
       ecorePackage="QVTOperationalCST.ecore#/">
-    <nestedGenPackages prefix="CST" basePackage="org.eclipse.m2m.qvt.oml.internal"
+    <nestedGenPackages prefix="CST" basePackage="org.eclipse.m2m.internal.qvt.oml"
         disposableProviderFactory="true" ecorePackage="QVTOperationalCST.ecore#//cst">
       <genEnums typeSafeEnumCompatible="false" ecoreEnum="QVTOperationalCST.ecore#//cst/DirectionKindEnum">
         <genEnumLiterals ecoreEnumLiteral="QVTOperationalCST.ecore#//cst/DirectionKindEnum/in"/>
@@ -255,7 +255,7 @@
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/MappingExtensionCS/kind"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingExtensionCS/mappingIdentifiers"/>
       </genClasses>
-      <nestedGenPackages prefix="Temp" basePackage="org.eclipse.m2m.qvt.oml.internal.cst"
+      <nestedGenPackages prefix="Temp" basePackage="org.eclipse.m2m.internal.qvt.oml.cst"
           disposableProviderFactory="true" ecorePackage="QVTOperationalCST.ecore#//cst/temp">
         <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/temp/ErrorCallExpCS"/>
         <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/temp/ResolveOpArgsExpCS">
