@@ -2,9 +2,6 @@
 
 rem Run me using '/org.eclipse.m2m.qvt.oml.editor.ui/CompletionParser.launch' 
 
-set LPG_HOME=C:\Eclipse_DISTR\LPG\lpgdistribution-05-16-06\lpgdistribution\
-set WS_LOC=C:\GMF_Kafka\CVS-Eclipse\org.eclipse.m2m\org.eclipse.m2m.qvt.oml\plugins\
-
 if not defined LPG_HOME goto no_home_var
 if not exist %LPG_HOME% goto home_dir_notFound
 
