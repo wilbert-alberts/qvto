@@ -17,9 +17,9 @@ import java.util.Map;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 
-import org.eclipse.m2m.qvt.oml.common.launch.TargetUriData;
 
 
 public class ApplyTransformationData {

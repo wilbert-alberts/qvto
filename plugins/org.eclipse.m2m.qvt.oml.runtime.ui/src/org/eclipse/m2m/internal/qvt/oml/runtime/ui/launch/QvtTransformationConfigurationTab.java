@@ -20,6 +20,7 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessage;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.TransformationControls;
@@ -31,7 +32,6 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.ui.QvtTransformationConfiguratio
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.QvtTransformationConfigurationUI.PropertyChangeListener;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.ApplyTransformationData;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
-import org.eclipse.m2m.qvt.oml.common.MdaException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;

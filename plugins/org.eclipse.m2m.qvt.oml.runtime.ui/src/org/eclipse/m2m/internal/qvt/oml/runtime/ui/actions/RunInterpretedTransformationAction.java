@@ -21,9 +21,9 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.m2m.internal.qvt.oml.common.ui.action.EObjectWindowActionDelegate;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.Messages;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.RunInterpretedTransformationWizard;
-import org.eclipse.m2m.qvt.oml.common.ui.action.EObjectWindowActionDelegate;
 import org.eclipse.osgi.util.NLS;
 
 /**
