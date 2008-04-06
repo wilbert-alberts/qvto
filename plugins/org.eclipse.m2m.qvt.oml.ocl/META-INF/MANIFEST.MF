@@ -8,7 +8,7 @@ Bundle-Localization: plugin
 Bundle-Activator: org.eclipse.m2m.internal.qvt.oml.ocl.OclQvtoPlugin
 Require-Bundle: org.eclipse.core.runtime,
   org.eclipse.emf.ecore 
-Eclipse-LazyStart: true
+Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.m2m.internal.qvt.oml.ocl,
  org.eclipse.m2m.internal.qvt.oml.ocl.metainfo,
  org.eclipse.m2m.qvt.oml.ocl.transformations

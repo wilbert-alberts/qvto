@@ -15,6 +15,7 @@ import java.util.Collection;
 
 
 public interface LibrariesRegistry {
-    Collection<Library> getLibraries();
-    Library getLibrary(String id);
+	Collection<Library> getLibraries();
+
+	Library getLibrary(String id);
 }

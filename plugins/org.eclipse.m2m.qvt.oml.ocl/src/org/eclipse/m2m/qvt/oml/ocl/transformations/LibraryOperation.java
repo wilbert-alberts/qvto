@@ -14,7 +14,6 @@ package org.eclipse.m2m.qvt.oml.ocl.transformations;
 import java.util.List;
 
 
-
 public interface LibraryOperation {
 
     Library getLibrary();
