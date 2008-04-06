@@ -13,7 +13,7 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.editor;
 
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.m2m.qvt.oml.runtime.ui.trace.common.TraceActionBarContributor;
+import org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.common.TraceActionBarContributor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.part.EditorActionBarContributor;
 

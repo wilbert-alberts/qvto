@@ -18,8 +18,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.m2m.qvt.oml.emf.util.ui,
  org.eclipse.m2m.qvt.oml.runtime,
  org.eclipse.emf.edit.ui
-Export-Package: org.eclipse.m2m.qvt.oml.runtime.ui.wizards,
- org.eclipse.m2m.qvt.oml.runtime.ui.trace.common,
- org.eclipse.m2m.internal.qvt.oml.runtime.ui,
- org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch
-Eclipse-LazyStart: true
+Export-Package: org.eclipse.m2m.internal.qvt.oml.runtime.ui,
+ org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch,
+ org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.common,
+ org.eclipse.m2m.qvt.oml.runtime.ui.wizards
+Bundle-ActivationPolicy: lazy
