@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.m2m.qvt.oml.editor.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: org.eclipse.m2m.qvt.oml.editor.ui.Activator
+Bundle-Activator: org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
@@ -23,12 +23,11 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.m2m.qvt.oml.ui,
  org.eclipse.m2m.qvt.oml.emf.util,
  net.sourceforge.lpg.lpgjavaruntime
-Eclipse-LazyStart: true
-Export-Package: org.eclipse.m2m.qvt.oml.editor.ui,
- org.eclipse.m2m.qvt.oml.editor.ui.completion,
- org.eclipse.m2m.qvt.oml.editor.ui.completion.collectorregistry,
- org.eclipse.m2m.qvt.oml.editor.ui.completion.cst.parser,
- org.eclipse.m2m.qvt.oml.editor.ui.hovers,
- org.eclipse.m2m.qvt.oml.editor.ui.hyperlinks,
- org.eclipse.m2m.qvt.oml.editor.ui.outline
- 
+Bundle-ActivationPolicy: lazy
+Export-Package: org.eclipse.m2m.internal.qvt.oml.editor.ui,
+ org.eclipse.m2m.internal.qvt.oml.editor.ui.completion,
+ org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectorregistry,
+ org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser,
+ org.eclipse.m2m.internal.qvt.oml.editor.ui.hovers,
+ org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks,
+ org.eclipse.m2m.internal.qvt.oml.editor.ui.outline
