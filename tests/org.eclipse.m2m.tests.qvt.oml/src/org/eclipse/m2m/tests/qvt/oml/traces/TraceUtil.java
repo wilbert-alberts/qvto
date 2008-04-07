@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.internal.qvt.oml.common.emf.ExtendedEmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
-import org.eclipse.m2m.qvt.oml.trace.Trace;
+import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.m2m.tests.qvt.oml.transform.ModelTestData;
 import org.eclipse.m2m.tests.qvt.oml.transform.TestTransformation;
 import org.eclipse.m2m.tests.qvt.oml.transform.TestTransformation.ITransformer;

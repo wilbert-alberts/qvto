@@ -40,7 +40,7 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TraceSerializer;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
-import org.eclipse.m2m.qvt.oml.trace.Trace;
+import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.m2m.tests.qvt.oml.TestProject;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 

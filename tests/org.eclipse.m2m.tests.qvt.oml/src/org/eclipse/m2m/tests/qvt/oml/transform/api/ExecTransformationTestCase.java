@@ -48,8 +48,6 @@ public class ExecTransformationTestCase extends ApiTestCase {
 		}
 		TransfExecutionResult execResult = new QvtoTransformationHelper(scriptUri).executeTransformation(inObjects, Collections.<String, Object>emptyMap(), null);
 		
-		assertNotNull("Non-null trace expected", execResult.getTrace()); //$NON-NLS-1$
-		
 		Iterator<ModelExtent> itrExt = execResult.getOutModelExtents().iterator();
 		for (URI uri : getData().getExpected(getProject())) {
 			if (!itrExt.hasNext()) {

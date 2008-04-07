@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.traces;
 
-import org.eclipse.m2m.qvt.oml.trace.Trace;
+import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.m2m.tests.qvt.oml.transform.FileToFileData;
 import org.eclipse.m2m.tests.qvt.oml.transform.TestQvtInterpreter;
 import org.eclipse.m2m.tests.qvt.oml.transform.TestTransformation;
