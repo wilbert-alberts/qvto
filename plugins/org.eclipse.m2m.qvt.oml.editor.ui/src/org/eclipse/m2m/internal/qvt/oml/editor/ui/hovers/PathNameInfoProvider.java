@@ -16,8 +16,8 @@ import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks.PathNameHyperlinkDetector;
-import org.eclipse.m2m.qvt.oml.expressions.ModelType;
-import org.eclipse.m2m.qvt.oml.expressions.PackageRef;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
+import org.eclipse.m2m.internal.qvt.oml.expressions.PackageRef;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 

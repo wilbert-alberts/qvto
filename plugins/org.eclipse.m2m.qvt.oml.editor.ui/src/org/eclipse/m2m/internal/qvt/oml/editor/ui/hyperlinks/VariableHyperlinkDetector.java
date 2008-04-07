@@ -22,15 +22,15 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
-import org.eclipse.m2m.qvt.oml.expressions.ModelParameter;
-import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
-import org.eclipse.ocl.ecore.TupleLiteralExp;
-import org.eclipse.ocl.ecore.VariableExp;
-import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
+import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.VariableCS;
 import org.eclipse.ocl.cst.VariableExpCS;
+import org.eclipse.ocl.ecore.TupleLiteralExp;
+import org.eclipse.ocl.ecore.VariableExp;
+import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.utilities.ASTNode;
 
 

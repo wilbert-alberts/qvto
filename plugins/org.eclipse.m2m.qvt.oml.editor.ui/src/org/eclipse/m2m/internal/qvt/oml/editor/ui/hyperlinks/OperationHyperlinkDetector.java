@@ -20,12 +20,12 @@ import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
-import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
-import org.eclipse.ocl.ecore.OperationCallExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.OperationCallExpCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.TypeCS;
+import org.eclipse.ocl.ecore.OperationCallExp;
 import org.eclipse.ocl.utilities.ASTNode;
 
 
