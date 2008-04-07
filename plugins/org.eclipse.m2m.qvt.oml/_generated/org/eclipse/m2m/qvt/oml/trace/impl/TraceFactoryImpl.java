@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: TraceFactoryImpl.java,v 1.3 2007/12/01 23:33:05 radvorak Exp $
+ * $Id: TraceFactoryImpl.java,v 1.4 2008/04/07 15:59:00 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.trace.impl;
 
@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.qvt.oml.trace.EDirectionKind;
 import org.eclipse.m2m.qvt.oml.trace.EMappingContext;
 import org.eclipse.m2m.qvt.oml.trace.EMappingOperation;

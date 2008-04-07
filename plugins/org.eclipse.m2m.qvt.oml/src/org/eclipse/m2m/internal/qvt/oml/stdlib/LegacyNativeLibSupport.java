@@ -21,8 +21,8 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtLibraryOperation;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
-import org.eclipse.m2m.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.ocl.transformations.Library;
 import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryCreationException;
 import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryOperation;
@@ -44,7 +44,7 @@ public class LegacyNativeLibSupport {
 	}
 	
 	public Module defineLibrary(QvtOperationalEnv env, Library lib) throws LibraryCreationException {
-		Module libModule = org.eclipse.m2m.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModule();
+		Module libModule = org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModule();
 		libModule.setName(lib.getId());
 
 		for (LibraryOperation libOp : lib.getLibraryOperations()) {

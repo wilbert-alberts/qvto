@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: TracePackageImpl.java,v 1.3 2008/02/19 00:01:23 radvorak Exp $
+ * $Id: TracePackageImpl.java,v 1.4 2008/04/07 15:59:00 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.trace.impl;
 
@@ -190,7 +190,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
         TypesPackage.eINSTANCE.eClass();
         ExpressionsPackage.eINSTANCE.eClass();
         UtilitiesPackage.eINSTANCE.eClass();
-        org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage.eINSTANCE.eClass();
+        org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
         theTracePackage.createPackageContents();
@@ -700,7 +700,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
         setNsURI(eNS_URI);
 
         // Obtain other dependent packages
-        org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage theExpressionsPackage_1 = (org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage.eNS_URI);
+        org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage theExpressionsPackage_1 = (org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage.eNS_URI);
 
         // Create type parameters
 

@@ -51,7 +51,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
-import org.eclipse.m2m.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.osgi.util.NLS;
 

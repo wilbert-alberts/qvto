@@ -17,7 +17,7 @@ import java.util.Map;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.qvt.oml.trace.EMappingContext;
 import org.eclipse.m2m.qvt.oml.trace.EMappingOperation;
 import org.eclipse.m2m.qvt.oml.trace.EMappingParameters;

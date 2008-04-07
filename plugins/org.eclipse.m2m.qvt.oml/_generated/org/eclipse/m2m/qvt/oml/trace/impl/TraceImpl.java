@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.qvt.oml.trace.Trace;
 import org.eclipse.m2m.qvt.oml.trace.TracePackage;
 import org.eclipse.m2m.qvt.oml.trace.TraceRecord;

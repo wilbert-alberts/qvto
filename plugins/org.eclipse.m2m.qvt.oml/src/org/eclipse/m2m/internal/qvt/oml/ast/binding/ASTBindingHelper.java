@@ -23,7 +23,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.util.LineNumberProvider;
 import org.eclipse.m2m.internal.qvt.oml.common.util.StringLineNumberProvider;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
-import org.eclipse.m2m.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.cst.CSTNode;

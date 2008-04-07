@@ -16,7 +16,7 @@ package org.eclipse.m2m.internal.qvt.oml.stdlib;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.m2m.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 

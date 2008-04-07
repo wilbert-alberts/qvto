@@ -14,7 +14,7 @@ package org.eclipse.m2m.internal.qvt.oml.evaluator;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.change.util.ChangeRecorder;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalTypesUtil;
-import org.eclipse.m2m.qvt.oml.expressions.ModelParameter;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.osgi.util.NLS;
 
 /**

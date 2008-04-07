@@ -15,9 +15,9 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.DeferredAssignmentListener;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitor;
+import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.library.QvtResolveUtil.SavedSourceObjectHolder;
-import org.eclipse.m2m.qvt.oml.expressions.AssignExp;
-import org.eclipse.m2m.qvt.oml.expressions.ResolveExp;
 
 /**
  * @author aigdalov

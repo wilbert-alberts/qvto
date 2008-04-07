@@ -28,7 +28,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
-import org.eclipse.m2m.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.OCLInput;
 import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.SemanticException;

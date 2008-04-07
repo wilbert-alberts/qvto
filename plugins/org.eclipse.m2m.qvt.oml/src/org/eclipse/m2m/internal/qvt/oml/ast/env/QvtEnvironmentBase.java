@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
-import org.eclipse.m2m.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.util.TypeUtil;

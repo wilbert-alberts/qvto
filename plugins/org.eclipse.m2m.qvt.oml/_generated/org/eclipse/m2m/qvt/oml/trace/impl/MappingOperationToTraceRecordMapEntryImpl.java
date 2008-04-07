@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MappingOperationToTraceRecordMapEntryImpl.java,v 1.3 2008/02/19 00:01:23 radvorak Exp $
+ * $Id: MappingOperationToTraceRecordMapEntryImpl.java,v 1.4 2008/04/07 15:59:00 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.trace.impl;
 
@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.qvt.oml.trace.TracePackage;
 import org.eclipse.m2m.qvt.oml.trace.TraceRecord;
 

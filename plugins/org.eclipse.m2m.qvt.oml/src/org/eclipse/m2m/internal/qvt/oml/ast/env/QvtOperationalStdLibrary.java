@@ -22,6 +22,11 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.AbstractContextualOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.AbstractQVTStdlib;
@@ -32,11 +37,6 @@ import org.eclipse.m2m.internal.qvt.oml.stdlib.OclAnyOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.RealOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.StdlibModuleOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.StringOperations;
-import org.eclipse.m2m.qvt.oml.expressions.ExpressionsFactory;
-import org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage;
-import org.eclipse.m2m.qvt.oml.expressions.ModelType;
-import org.eclipse.m2m.qvt.oml.expressions.Module;
-import org.eclipse.m2m.qvt.oml.expressions.impl.ModuleImpl;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.types.TypeType;
@@ -63,7 +63,7 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 	
 
 	private QvtOperationalStdLibrary() {		
-		fStdlibModule = org.eclipse.m2m.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModule();
+		fStdlibModule = org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModule();
 		fStdlibModule.setName(QVT_STDLIB_MODULE_NAME);
 
 		fEnv = new QvtOperationalEnv(null) {

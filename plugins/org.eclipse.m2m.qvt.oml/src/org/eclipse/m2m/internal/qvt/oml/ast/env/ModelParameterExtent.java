@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.UsageCrossReferencer;
-import org.eclipse.m2m.qvt.oml.expressions.ModelParameter;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 
 /**
  * @author sboyko

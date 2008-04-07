@@ -14,7 +14,7 @@ package org.eclipse.m2m.qvt.oml.trace;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.m2m.qvt.oml.expressions.MappingOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 
 /**
  * <!-- begin-user-doc -->

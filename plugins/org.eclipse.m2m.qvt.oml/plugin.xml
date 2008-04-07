@@ -31,7 +31,7 @@
  <extension point="org.eclipse.emf.ecore.generated_package">
    <package 
       uri = "http://www.eclipse.org/qvt/1.0.0/Operational/Expressions" 
-      class = "org.eclipse.m2m.qvt.oml.expressions.ExpressionsPackage"
+      class = "org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage"
       genModel = "model/QVTOperational.genmodel" /> 
  </extension>
  
