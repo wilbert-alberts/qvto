@@ -12,7 +12,7 @@
 /*
  * Created on Jul 27, 2005
  */
-package org.eclipse.m2m.qvt.oml.ocl.transformations;
+package org.eclipse.m2m.internal.qvt.oml.ocl.transformations;
 
 public class LibraryOperationException extends Exception {
 

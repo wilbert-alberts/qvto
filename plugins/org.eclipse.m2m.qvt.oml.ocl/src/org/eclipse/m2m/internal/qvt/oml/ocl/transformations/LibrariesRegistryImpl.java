@@ -22,9 +22,6 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.m2m.internal.qvt.oml.ocl.Logger;
-import org.eclipse.m2m.qvt.oml.ocl.transformations.LibrariesRegistry;
-import org.eclipse.m2m.qvt.oml.ocl.transformations.Library;
-import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryCreationException;
 
 
 public class LibrariesRegistryImpl implements LibrariesRegistry {

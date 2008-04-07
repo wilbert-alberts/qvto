@@ -11,4 +11,4 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.m2m.internal.qvt.oml.ocl,
  org.eclipse.m2m.internal.qvt.oml.ocl.metainfo,
- org.eclipse.m2m.qvt.oml.ocl.transformations
+ org.eclipse.m2m.internal.qvt.oml.ocl.transformations

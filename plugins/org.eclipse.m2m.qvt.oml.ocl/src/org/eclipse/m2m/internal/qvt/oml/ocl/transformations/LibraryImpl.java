@@ -28,10 +28,6 @@ import org.eclipse.m2m.internal.qvt.oml.ocl.Logger;
 import org.eclipse.m2m.internal.qvt.oml.ocl.metainfo.OclMetainfo;
 import org.eclipse.m2m.internal.qvt.oml.ocl.metainfo.OclMetainfoClassLazyLoader;
 import org.eclipse.m2m.internal.qvt.oml.ocl.metainfo.OclMetainfoOperation;
-import org.eclipse.m2m.qvt.oml.ocl.transformations.Library;
-import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryCreationException;
-import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryOperation;
-import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryOperationException;
 import org.osgi.framework.Bundle;
 
 
