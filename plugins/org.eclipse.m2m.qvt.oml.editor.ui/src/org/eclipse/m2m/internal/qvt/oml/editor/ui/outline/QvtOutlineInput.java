@@ -27,9 +27,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.RenameCS;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.ocl.OclQvtoPlugin;
-import org.eclipse.m2m.qvt.oml.ocl.transformations.Library;
-import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryCreationException;
-import org.eclipse.m2m.qvt.oml.ocl.transformations.LibraryOperation;
+import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.Library;
+import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LibraryCreationException;
+import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LibraryOperation;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.PathNameCS;
 

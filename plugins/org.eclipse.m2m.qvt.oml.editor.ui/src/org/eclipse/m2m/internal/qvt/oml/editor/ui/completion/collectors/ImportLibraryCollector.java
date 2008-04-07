@@ -21,8 +21,8 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalU
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionProposal;
 import org.eclipse.m2m.internal.qvt.oml.ocl.OclQvtoPlugin;
-import org.eclipse.m2m.qvt.oml.ocl.transformations.LibrariesRegistry;
-import org.eclipse.m2m.qvt.oml.ocl.transformations.Library;
+import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LibrariesRegistry;
+import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.Library;
 
 /**
  * @author aigdalov
