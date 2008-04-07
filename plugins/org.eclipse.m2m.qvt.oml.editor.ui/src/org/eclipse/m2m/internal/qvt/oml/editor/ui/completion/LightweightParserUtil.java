@@ -69,6 +69,7 @@ public class LightweightParserUtil {
         QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_LBRACKET, QvtOpLPGParsersym.TK_LPAREN,
         QvtOpLPGParsersym.TK_in,
         QvtOpLPGParsersym.TK_when,
+        QvtOpLPGParsersym.TK_return
     };
     
     public static final int[] OCLEXPRESSION_END_TOKENS = {
