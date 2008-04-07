@@ -9,9 +9,9 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: VarParameterValueItemProvider.java,v 1.2 2007/09/25 12:57:13 aigdalov Exp $
+ * $Id: EMappingOperationItemProvider.java,v 1.1 2008/04/07 19:00:26 aigdalov Exp $
  */
-package org.eclipse.m2m.qvt.oml.trace.provider;
+package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
 
 import java.util.Collection;
@@ -19,9 +19,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -32,17 +30,16 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
-import org.eclipse.m2m.qvt.oml.trace.TracePackage;
-import org.eclipse.m2m.qvt.oml.trace.VarParameterValue;
+import org.eclipse.m2m.internal.qvt.oml.trace.EMappingOperation;
+import org.eclipse.m2m.internal.qvt.oml.trace.TracePackage;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.m2m.qvt.oml.trace.VarParameterValue} object.
+ * This is the item provider adapter for a {@link org.eclipse.m2m.qvt.oml.trace.EMappingOperation} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class VarParameterValueItemProvider
+public class EMappingOperationItemProvider
 	extends ItemProviderAdapter
 	implements	
 		IEditingDomainItemProvider,	
@@ -63,7 +60,7 @@ public class VarParameterValueItemProvider
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public VarParameterValueItemProvider(AdapterFactory adapterFactory) {
+	public EMappingOperationItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -78,34 +75,12 @@ public class VarParameterValueItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addKindPropertyDescriptor(object);
             addNamePropertyDescriptor(object);
-            addTypePropertyDescriptor(object);
-            addValuePropertyDescriptor(object);
+            addPackagePropertyDescriptor(object);
+            addModulePropertyDescriptor(object);
+            addRuntimeMappingOperationPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
-    }
-
-	/**
-     * This adds a property descriptor for the Kind feature.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	protected void addKindPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_VarParameterValue_kind_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_VarParameterValue_kind_feature", "_UI_VarParameterValue_type"),
-                 TracePackage.Literals.VAR_PARAMETER_VALUE__KIND,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
     }
 
 	/**
@@ -119,9 +94,9 @@ public class VarParameterValueItemProvider
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_VarParameterValue_name_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_VarParameterValue_name_feature", "_UI_VarParameterValue_type"),
-                 TracePackage.Literals.VAR_PARAMETER_VALUE__NAME,
+                 getString("_UI_EMappingOperation_name_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_EMappingOperation_name_feature", "_UI_EMappingOperation_type"),
+                 TracePackage.Literals.EMAPPING_OPERATION__NAME,
                  true,
                  false,
                  false,
@@ -131,58 +106,80 @@ public class VarParameterValueItemProvider
     }
 
 	/**
-     * This adds a property descriptor for the Type feature.
+     * This adds a property descriptor for the Package feature.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
-	protected void addTypePropertyDescriptor(Object object) {
+	protected void addPackagePropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_VarParameterValue_type_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_VarParameterValue_type_feature", "_UI_VarParameterValue_type"),
-                 TracePackage.Literals.VAR_PARAMETER_VALUE__TYPE,
+                 getString("_UI_EMappingOperation_package_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_EMappingOperation_package_feature", "_UI_EMappingOperation_type"),
+                 TracePackage.Literals.EMAPPING_OPERATION__PACKAGE,
                  true,
                  false,
-                 true,
+                 false,
                  ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
                  null,
                  null));
     }
 
 	/**
-     * This adds a property descriptor for the Value feature.
+     * This adds a property descriptor for the Module feature.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
-	protected void addValuePropertyDescriptor(Object object) {
+	protected void addModulePropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_VarParameterValue_value_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_VarParameterValue_value_feature", "_UI_VarParameterValue_type"),
-                 TracePackage.Literals.VAR_PARAMETER_VALUE__VALUE,
+                 getString("_UI_EMappingOperation_module_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_EMappingOperation_module_feature", "_UI_EMappingOperation_type"),
+                 TracePackage.Literals.EMAPPING_OPERATION__MODULE,
                  true,
                  false,
                  false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+	/**
+     * This adds a property descriptor for the Runtime Mapping Operation feature.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	protected void addRuntimeMappingOperationPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_EMappingOperation_runtimeMappingOperation_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_EMappingOperation_runtimeMappingOperation_feature", "_UI_EMappingOperation_type"),
+                 TracePackage.Literals.EMAPPING_OPERATION__RUNTIME_MAPPING_OPERATION,
+                 true,
+                 false,
+                 true,
                  null,
                  null,
                  null));
     }
 
 	/**
-     * This returns VarParameterValue.gif.
+     * This returns EMappingOperation.gif.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
 	@Override
 	public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/VarParameterValue"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/EMappingOperation"));
     }
 
 	/**
@@ -193,10 +190,10 @@ public class VarParameterValueItemProvider
      */
 	@Override
 	public String getText(Object object) {
-        String label = ((VarParameterValue)object).getName();
+        String label = ((EMappingOperation)object).getName();
         return label == null || label.length() == 0 ?
-            getString("_UI_VarParameterValue_type") :
-            getString("_UI_VarParameterValue_type") + " " + label;
+            getString("_UI_EMappingOperation_type") :
+            getString("_UI_EMappingOperation_type") + " " + label;
     }
 
 	/**
@@ -210,10 +207,10 @@ public class VarParameterValueItemProvider
 	public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch (notification.getFeatureID(VarParameterValue.class)) {
-            case TracePackage.VAR_PARAMETER_VALUE__KIND:
-            case TracePackage.VAR_PARAMETER_VALUE__NAME:
-            case TracePackage.VAR_PARAMETER_VALUE__VALUE:
+        switch (notification.getFeatureID(EMappingOperation.class)) {
+            case TracePackage.EMAPPING_OPERATION__NAME:
+            case TracePackage.EMAPPING_OPERATION__PACKAGE:
+            case TracePackage.EMAPPING_OPERATION__MODULE:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
         }

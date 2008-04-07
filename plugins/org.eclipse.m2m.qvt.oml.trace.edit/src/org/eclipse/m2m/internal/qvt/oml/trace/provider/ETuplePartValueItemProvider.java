@@ -9,9 +9,9 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ETuplePartValueItemProvider.java,v 1.1 2007/09/25 12:57:13 aigdalov Exp $
+ * $Id: ETuplePartValueItemProvider.java,v 1.1 2008/04/07 19:00:27 aigdalov Exp $
  */
-package org.eclipse.m2m.qvt.oml.trace.provider;
+package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
 
 import java.util.Collection;
@@ -19,9 +19,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -31,9 +29,8 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
-import org.eclipse.m2m.qvt.oml.trace.ETuplePartValue;
-import org.eclipse.m2m.qvt.oml.trace.TracePackage;
+import org.eclipse.m2m.internal.qvt.oml.trace.ETuplePartValue;
+import org.eclipse.m2m.internal.qvt.oml.trace.TracePackage;
 
 /**
  * This is the item provider adapter for a {@link org.eclipse.m2m.qvt.oml.trace.ETuplePartValue} object.

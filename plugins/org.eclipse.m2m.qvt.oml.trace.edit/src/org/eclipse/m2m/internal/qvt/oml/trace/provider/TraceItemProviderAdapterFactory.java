@@ -9,9 +9,9 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: TraceItemProviderAdapterFactory.java,v 1.2 2007/09/25 12:57:13 aigdalov Exp $
+ * $Id: TraceItemProviderAdapterFactory.java,v 1.1 2008/04/07 19:00:27 aigdalov Exp $
  */
-package org.eclipse.m2m.qvt.oml.trace.provider;
+package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,7 +19,6 @@ import java.util.Collection;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.edit.provider.ChangeNotifier;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -31,8 +30,7 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-
-import org.eclipse.m2m.qvt.oml.trace.util.TraceAdapterFactory;
+import org.eclipse.m2m.internal.qvt.oml.trace.util.TraceAdapterFactory;
 
 /**
  * This is the factory that is used to provide the interfaces needed to support Viewers.

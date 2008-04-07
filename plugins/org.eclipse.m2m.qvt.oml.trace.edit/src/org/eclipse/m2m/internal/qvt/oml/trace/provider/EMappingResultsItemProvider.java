@@ -9,9 +9,9 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: EMappingParametersItemProvider.java,v 1.2 2007/09/25 12:57:13 aigdalov Exp $
+ * $Id: EMappingResultsItemProvider.java,v 1.1 2008/04/07 19:00:27 aigdalov Exp $
  */
-package org.eclipse.m2m.qvt.oml.trace.provider;
+package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
 
 import java.util.Collection;
@@ -19,11 +19,8 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
-
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -32,18 +29,17 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
-import org.eclipse.m2m.qvt.oml.trace.EMappingParameters;
-import org.eclipse.m2m.qvt.oml.trace.TraceFactory;
-import org.eclipse.m2m.qvt.oml.trace.TracePackage;
+import org.eclipse.m2m.internal.qvt.oml.trace.EMappingResults;
+import org.eclipse.m2m.internal.qvt.oml.trace.TraceFactory;
+import org.eclipse.m2m.internal.qvt.oml.trace.TracePackage;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.m2m.qvt.oml.trace.EMappingParameters} object.
+ * This is the item provider adapter for a {@link org.eclipse.m2m.qvt.oml.trace.EMappingResults} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class EMappingParametersItemProvider
+public class EMappingResultsItemProvider
 	extends ItemProviderAdapter
 	implements	
 		IEditingDomainItemProvider,	
@@ -64,7 +60,7 @@ public class EMappingParametersItemProvider
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EMappingParametersItemProvider(AdapterFactory adapterFactory) {
+	public EMappingResultsItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -95,7 +91,7 @@ public class EMappingParametersItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
-            childrenFeatures.add(TracePackage.Literals.EMAPPING_PARAMETERS__PARAMETERS);
+            childrenFeatures.add(TracePackage.Literals.EMAPPING_RESULTS__RESULT);
         }
         return childrenFeatures;
     }
@@ -114,14 +110,14 @@ public class EMappingParametersItemProvider
     }
 
 	/**
-     * This returns EMappingParameters.gif.
+     * This returns EMappingResults.gif.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
 	@Override
 	public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/EMappingParameters"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/EMappingResults"));
     }
 
 	/**
@@ -132,7 +128,7 @@ public class EMappingParametersItemProvider
      */
 	@Override
 	public String getText(Object object) {
-        return getString("_UI_EMappingParameters_type");
+        return getString("_UI_EMappingResults_type");
     }
 
 	/**
@@ -146,8 +142,8 @@ public class EMappingParametersItemProvider
 	public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch (notification.getFeatureID(EMappingParameters.class)) {
-            case TracePackage.EMAPPING_PARAMETERS__PARAMETERS:
+        switch (notification.getFeatureID(EMappingResults.class)) {
+            case TracePackage.EMAPPING_RESULTS__RESULT:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -167,7 +163,7 @@ public class EMappingParametersItemProvider
 
         newChildDescriptors.add
             (createChildParameter
-                (TracePackage.Literals.EMAPPING_PARAMETERS__PARAMETERS,
+                (TracePackage.Literals.EMAPPING_RESULTS__RESULT,
                  TraceFactory.eINSTANCE.createVarParameterValue()));
     }
 

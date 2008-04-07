@@ -9,9 +9,9 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: TraceRecordItemProvider.java,v 1.2 2007/09/25 12:57:13 aigdalov Exp $
+ * $Id: EMappingParametersItemProvider.java,v 1.1 2008/04/07 19:00:27 aigdalov Exp $
  */
-package org.eclipse.m2m.qvt.oml.trace.provider;
+package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
 
 import java.util.Collection;
@@ -19,12 +19,8 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
-
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -33,18 +29,17 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
-import org.eclipse.m2m.qvt.oml.trace.TraceFactory;
-import org.eclipse.m2m.qvt.oml.trace.TracePackage;
-import org.eclipse.m2m.qvt.oml.trace.TraceRecord;
+import org.eclipse.m2m.internal.qvt.oml.trace.EMappingParameters;
+import org.eclipse.m2m.internal.qvt.oml.trace.TraceFactory;
+import org.eclipse.m2m.internal.qvt.oml.trace.TracePackage;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.m2m.qvt.oml.trace.TraceRecord} object.
+ * This is the item provider adapter for a {@link org.eclipse.m2m.qvt.oml.trace.EMappingParameters} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class TraceRecordItemProvider
+public class EMappingParametersItemProvider
 	extends ItemProviderAdapter
 	implements	
 		IEditingDomainItemProvider,	
@@ -65,7 +60,7 @@ public class TraceRecordItemProvider
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public TraceRecordItemProvider(AdapterFactory adapterFactory) {
+	public EMappingParametersItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -80,31 +75,8 @@ public class TraceRecordItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addMappingOperationPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
-    }
-
-	/**
-     * This adds a property descriptor for the Mapping Operation feature.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	protected void addMappingOperationPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_TraceRecord_mappingOperation_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_TraceRecord_mappingOperation_feature", "_UI_TraceRecord_type"),
-                 TracePackage.Literals.TRACE_RECORD__MAPPING_OPERATION,
-                 true,
-                 false,
-                 true,
-                 null,
-                 null,
-                 null));
     }
 
 	/**
@@ -119,9 +91,7 @@ public class TraceRecordItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
-            childrenFeatures.add(TracePackage.Literals.TRACE_RECORD__CONTEXT);
-            childrenFeatures.add(TracePackage.Literals.TRACE_RECORD__PARAMETERS);
-            childrenFeatures.add(TracePackage.Literals.TRACE_RECORD__RESULT);
+            childrenFeatures.add(TracePackage.Literals.EMAPPING_PARAMETERS__PARAMETERS);
         }
         return childrenFeatures;
     }
@@ -140,14 +110,14 @@ public class TraceRecordItemProvider
     }
 
 	/**
-     * This returns TraceRecord.gif.
+     * This returns EMappingParameters.gif.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
 	@Override
 	public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/TraceRecord"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/EMappingParameters"));
     }
 
 	/**
@@ -158,7 +128,7 @@ public class TraceRecordItemProvider
      */
 	@Override
 	public String getText(Object object) {
-        return getString("_UI_TraceRecord_type");
+        return getString("_UI_EMappingParameters_type");
     }
 
 	/**
@@ -172,10 +142,8 @@ public class TraceRecordItemProvider
 	public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch (notification.getFeatureID(TraceRecord.class)) {
-            case TracePackage.TRACE_RECORD__CONTEXT:
-            case TracePackage.TRACE_RECORD__PARAMETERS:
-            case TracePackage.TRACE_RECORD__RESULT:
+        switch (notification.getFeatureID(EMappingParameters.class)) {
+            case TracePackage.EMAPPING_PARAMETERS__PARAMETERS:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -195,18 +163,8 @@ public class TraceRecordItemProvider
 
         newChildDescriptors.add
             (createChildParameter
-                (TracePackage.Literals.TRACE_RECORD__CONTEXT,
-                 TraceFactory.eINSTANCE.createEMappingContext()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (TracePackage.Literals.TRACE_RECORD__PARAMETERS,
-                 TraceFactory.eINSTANCE.createEMappingParameters()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (TracePackage.Literals.TRACE_RECORD__RESULT,
-                 TraceFactory.eINSTANCE.createEMappingResults()));
+                (TracePackage.Literals.EMAPPING_PARAMETERS__PARAMETERS,
+                 TraceFactory.eINSTANCE.createVarParameterValue()));
     }
 
 	/**

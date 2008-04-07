@@ -9,19 +9,18 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: EMappingOperationItemProvider.java,v 1.2 2007/09/25 12:57:13 aigdalov Exp $
+ * $Id: ObjectToTraceRecordMapEntryItemProvider.java,v 1.1 2008/04/07 19:00:26 aigdalov Exp $
  */
-package org.eclipse.m2m.qvt.oml.trace.provider;
+package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -32,17 +31,15 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
-import org.eclipse.m2m.qvt.oml.trace.EMappingOperation;
-import org.eclipse.m2m.qvt.oml.trace.TracePackage;
+import org.eclipse.m2m.internal.qvt.oml.trace.TracePackage;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.m2m.qvt.oml.trace.EMappingOperation} object.
+ * This is the item provider adapter for a {@link java.util.Map.Entry} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class EMappingOperationItemProvider
+public class ObjectToTraceRecordMapEntryItemProvider
 	extends ItemProviderAdapter
 	implements	
 		IEditingDomainItemProvider,	
@@ -63,7 +60,7 @@ public class EMappingOperationItemProvider
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EMappingOperationItemProvider(AdapterFactory adapterFactory) {
+	public ObjectToTraceRecordMapEntryItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -78,28 +75,48 @@ public class EMappingOperationItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addNamePropertyDescriptor(object);
-            addPackagePropertyDescriptor(object);
-            addModulePropertyDescriptor(object);
-            addRuntimeMappingOperationPropertyDescriptor(object);
+            addValuePropertyDescriptor(object);
+            addKeyPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
 
 	/**
-     * This adds a property descriptor for the Name feature.
+     * This adds a property descriptor for the Value feature.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
-	protected void addNamePropertyDescriptor(Object object) {
+	protected void addValuePropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_EMappingOperation_name_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_EMappingOperation_name_feature", "_UI_EMappingOperation_type"),
-                 TracePackage.Literals.EMAPPING_OPERATION__NAME,
+                 getString("_UI_ObjectToTraceRecordMapEntry_value_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_ObjectToTraceRecordMapEntry_value_feature", "_UI_ObjectToTraceRecordMapEntry_type"),
+                 TracePackage.Literals.OBJECT_TO_TRACE_RECORD_MAP_ENTRY__VALUE,
+                 true,
+                 false,
+                 true,
+                 null,
+                 null,
+                 null));
+    }
+
+	/**
+     * This adds a property descriptor for the Key feature.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	protected void addKeyPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_ObjectToTraceRecordMapEntry_key_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_ObjectToTraceRecordMapEntry_key_feature", "_UI_ObjectToTraceRecordMapEntry_type"),
+                 TracePackage.Literals.OBJECT_TO_TRACE_RECORD_MAP_ENTRY__KEY,
                  true,
                  false,
                  false,
@@ -109,80 +126,14 @@ public class EMappingOperationItemProvider
     }
 
 	/**
-     * This adds a property descriptor for the Package feature.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	protected void addPackagePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_EMappingOperation_package_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_EMappingOperation_package_feature", "_UI_EMappingOperation_type"),
-                 TracePackage.Literals.EMAPPING_OPERATION__PACKAGE,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
-    }
-
-	/**
-     * This adds a property descriptor for the Module feature.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	protected void addModulePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_EMappingOperation_module_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_EMappingOperation_module_feature", "_UI_EMappingOperation_type"),
-                 TracePackage.Literals.EMAPPING_OPERATION__MODULE,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
-    }
-
-	/**
-     * This adds a property descriptor for the Runtime Mapping Operation feature.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	protected void addRuntimeMappingOperationPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_EMappingOperation_runtimeMappingOperation_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_EMappingOperation_runtimeMappingOperation_feature", "_UI_EMappingOperation_type"),
-                 TracePackage.Literals.EMAPPING_OPERATION__RUNTIME_MAPPING_OPERATION,
-                 true,
-                 false,
-                 true,
-                 null,
-                 null,
-                 null));
-    }
-
-	/**
-     * This returns EMappingOperation.gif.
+     * This returns ObjectToTraceRecordMapEntry.gif.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
 	@Override
 	public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/EMappingOperation"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/ObjectToTraceRecordMapEntry"));
     }
 
 	/**
@@ -193,10 +144,8 @@ public class EMappingOperationItemProvider
      */
 	@Override
 	public String getText(Object object) {
-        String label = ((EMappingOperation)object).getName();
-        return label == null || label.length() == 0 ?
-            getString("_UI_EMappingOperation_type") :
-            getString("_UI_EMappingOperation_type") + " " + label;
+        Map.Entry<?, ?> objectToTraceRecordMapEntry = (Map.Entry<?, ?>)object;
+        return "" + objectToTraceRecordMapEntry.getKey() + " -> " + objectToTraceRecordMapEntry.getValue();
     }
 
 	/**
@@ -210,10 +159,8 @@ public class EMappingOperationItemProvider
 	public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch (notification.getFeatureID(EMappingOperation.class)) {
-            case TracePackage.EMAPPING_OPERATION__NAME:
-            case TracePackage.EMAPPING_OPERATION__PACKAGE:
-            case TracePackage.EMAPPING_OPERATION__MODULE:
+        switch (notification.getFeatureID(Map.Entry.class)) {
+            case TracePackage.OBJECT_TO_TRACE_RECORD_MAP_ENTRY__KEY:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
         }

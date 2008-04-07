@@ -9,20 +9,17 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: MappingOperationToTraceRecordMapEntryItemProvider.java,v 1.2 2007/09/25 12:57:13 aigdalov Exp $
+ * $Id: VarParameterValueItemProvider.java,v 1.1 2008/04/07 19:00:27 aigdalov Exp $
  */
-package org.eclipse.m2m.qvt.oml.trace.provider;
+package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -30,17 +27,19 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
-
-import org.eclipse.m2m.qvt.oml.trace.TracePackage;
+import org.eclipse.emf.edit.provider.ViewerNotification;
+import org.eclipse.m2m.internal.qvt.oml.trace.TracePackage;
+import org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue;
 
 /**
- * This is the item provider adapter for a {@link java.util.Map.Entry} object.
+ * This is the item provider adapter for a {@link org.eclipse.m2m.qvt.oml.trace.VarParameterValue} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class MappingOperationToTraceRecordMapEntryItemProvider
+public class VarParameterValueItemProvider
 	extends ItemProviderAdapter
 	implements	
 		IEditingDomainItemProvider,	
@@ -61,7 +60,7 @@ public class MappingOperationToTraceRecordMapEntryItemProvider
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public MappingOperationToTraceRecordMapEntryItemProvider(AdapterFactory adapterFactory) {
+	public VarParameterValueItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -76,10 +75,78 @@ public class MappingOperationToTraceRecordMapEntryItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
+            addKindPropertyDescriptor(object);
+            addNamePropertyDescriptor(object);
+            addTypePropertyDescriptor(object);
             addValuePropertyDescriptor(object);
-            addKeyPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
+    }
+
+	/**
+     * This adds a property descriptor for the Kind feature.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	protected void addKindPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_VarParameterValue_kind_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_VarParameterValue_kind_feature", "_UI_VarParameterValue_type"),
+                 TracePackage.Literals.VAR_PARAMETER_VALUE__KIND,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+	/**
+     * This adds a property descriptor for the Name feature.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	protected void addNamePropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_VarParameterValue_name_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_VarParameterValue_name_feature", "_UI_VarParameterValue_type"),
+                 TracePackage.Literals.VAR_PARAMETER_VALUE__NAME,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+	/**
+     * This adds a property descriptor for the Type feature.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	protected void addTypePropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_VarParameterValue_type_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_VarParameterValue_type_feature", "_UI_VarParameterValue_type"),
+                 TracePackage.Literals.VAR_PARAMETER_VALUE__TYPE,
+                 true,
+                 false,
+                 true,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
     }
 
 	/**
@@ -93,48 +160,26 @@ public class MappingOperationToTraceRecordMapEntryItemProvider
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_MappingOperationToTraceRecordMapEntry_value_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_MappingOperationToTraceRecordMapEntry_value_feature", "_UI_MappingOperationToTraceRecordMapEntry_type"),
-                 TracePackage.Literals.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__VALUE,
+                 getString("_UI_VarParameterValue_value_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_VarParameterValue_value_feature", "_UI_VarParameterValue_type"),
+                 TracePackage.Literals.VAR_PARAMETER_VALUE__VALUE,
                  true,
                  false,
-                 true,
+                 false,
                  null,
                  null,
                  null));
     }
 
 	/**
-     * This adds a property descriptor for the Key feature.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	protected void addKeyPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_MappingOperationToTraceRecordMapEntry_key_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_MappingOperationToTraceRecordMapEntry_key_feature", "_UI_MappingOperationToTraceRecordMapEntry_type"),
-                 TracePackage.Literals.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__KEY,
-                 true,
-                 false,
-                 true,
-                 null,
-                 null,
-                 null));
-    }
-
-	/**
-     * This returns MappingOperationToTraceRecordMapEntry.gif.
+     * This returns VarParameterValue.gif.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
 	@Override
 	public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/MappingOperationToTraceRecordMapEntry"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/VarParameterValue"));
     }
 
 	/**
@@ -145,8 +190,10 @@ public class MappingOperationToTraceRecordMapEntryItemProvider
      */
 	@Override
 	public String getText(Object object) {
-        Map.Entry<?, ?> mappingOperationToTraceRecordMapEntry = (Map.Entry<?, ?>)object;
-        return "" + mappingOperationToTraceRecordMapEntry.getKey() + " -> " + mappingOperationToTraceRecordMapEntry.getValue();
+        String label = ((VarParameterValue)object).getName();
+        return label == null || label.length() == 0 ?
+            getString("_UI_VarParameterValue_type") :
+            getString("_UI_VarParameterValue_type") + " " + label;
     }
 
 	/**
@@ -159,6 +206,14 @@ public class MappingOperationToTraceRecordMapEntryItemProvider
 	@Override
 	public void notifyChanged(Notification notification) {
         updateChildren(notification);
+
+        switch (notification.getFeatureID(VarParameterValue.class)) {
+            case TracePackage.VAR_PARAMETER_VALUE__KIND:
+            case TracePackage.VAR_PARAMETER_VALUE__NAME:
+            case TracePackage.VAR_PARAMETER_VALUE__VALUE:
+                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+                return;
+        }
         super.notifyChanged(notification);
     }
 

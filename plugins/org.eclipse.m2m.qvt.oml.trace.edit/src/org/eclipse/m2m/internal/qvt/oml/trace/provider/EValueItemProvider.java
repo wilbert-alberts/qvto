@@ -9,9 +9,9 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: EValueItemProvider.java,v 1.3 2008/04/07 15:58:48 radvorak Exp $
+ * $Id: EValueItemProvider.java,v 1.1 2008/04/07 19:00:26 aigdalov Exp $
  */
-package org.eclipse.m2m.qvt.oml.trace.provider;
+package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
 
 import java.util.Collection;
@@ -33,9 +33,9 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.eclipse.m2m.qvt.oml.trace.EValue;
-import org.eclipse.m2m.qvt.oml.trace.TraceFactory;
-import org.eclipse.m2m.qvt.oml.trace.TracePackage;
+import org.eclipse.m2m.internal.qvt.oml.trace.EValue;
+import org.eclipse.m2m.internal.qvt.oml.trace.TraceFactory;
+import org.eclipse.m2m.internal.qvt.oml.trace.TracePackage;
 import org.eclipse.ocl.expressions.ExpressionsFactory;
 import org.eclipse.ocl.types.TypesFactory;
 

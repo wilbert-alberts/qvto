@@ -9,40 +9,37 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ObjectToTraceRecordMapEntryItemProvider.java,v 1.2 2007/09/25 12:57:13 aigdalov Exp $
+ * $Id: TraceItemProvider.java,v 1.1 2008/04/07 19:00:27 aigdalov Exp $
  */
-package org.eclipse.m2m.qvt.oml.trace.provider;
+package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
-import org.eclipse.m2m.qvt.oml.trace.TracePackage;
+import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
+import org.eclipse.m2m.internal.qvt.oml.trace.TraceFactory;
+import org.eclipse.m2m.internal.qvt.oml.trace.TracePackage;
 
 /**
- * This is the item provider adapter for a {@link java.util.Map.Entry} object.
+ * This is the item provider adapter for a {@link org.eclipse.m2m.qvt.oml.trace.Trace} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ObjectToTraceRecordMapEntryItemProvider
+public class TraceItemProvider
 	extends ItemProviderAdapter
 	implements	
 		IEditingDomainItemProvider,	
@@ -63,7 +60,7 @@ public class ObjectToTraceRecordMapEntryItemProvider
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public ObjectToTraceRecordMapEntryItemProvider(AdapterFactory adapterFactory) {
+	public TraceItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -78,65 +75,52 @@ public class ObjectToTraceRecordMapEntryItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addValuePropertyDescriptor(object);
-            addKeyPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
 
 	/**
-     * This adds a property descriptor for the Value feature.
+     * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
+     * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
+     * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
-	protected void addValuePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ObjectToTraceRecordMapEntry_value_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ObjectToTraceRecordMapEntry_value_feature", "_UI_ObjectToTraceRecordMapEntry_type"),
-                 TracePackage.Literals.OBJECT_TO_TRACE_RECORD_MAP_ENTRY__VALUE,
-                 true,
-                 false,
-                 true,
-                 null,
-                 null,
-                 null));
+	@Override
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+        if (childrenFeatures == null) {
+            super.getChildrenFeatures(object);
+            childrenFeatures.add(TracePackage.Literals.TRACE__TRACE_RECORDS);
+            childrenFeatures.add(TracePackage.Literals.TRACE__TRACE_RECORD_MAP);
+            childrenFeatures.add(TracePackage.Literals.TRACE__SOURCE_TO_TRACE_RECORD_MAP);
+            childrenFeatures.add(TracePackage.Literals.TRACE__TARGET_TO_TRACE_RECORD_MAP);
+        }
+        return childrenFeatures;
     }
 
 	/**
-     * This adds a property descriptor for the Key feature.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
-	protected void addKeyPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ObjectToTraceRecordMapEntry_key_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ObjectToTraceRecordMapEntry_key_feature", "_UI_ObjectToTraceRecordMapEntry_type"),
-                 TracePackage.Literals.OBJECT_TO_TRACE_RECORD_MAP_ENTRY__KEY,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
+	@Override
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
+        // Check the type of the specified child object and return the proper feature to use for
+        // adding (see {@link AddCommand}) it as a child.
+
+        return super.getChildFeature(object, child);
     }
 
 	/**
-     * This returns ObjectToTraceRecordMapEntry.gif.
+     * This returns Trace.gif.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
 	@Override
 	public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/ObjectToTraceRecordMapEntry"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/Trace"));
     }
 
 	/**
@@ -147,8 +131,7 @@ public class ObjectToTraceRecordMapEntryItemProvider
      */
 	@Override
 	public String getText(Object object) {
-        Map.Entry<?, ?> objectToTraceRecordMapEntry = (Map.Entry<?, ?>)object;
-        return "" + objectToTraceRecordMapEntry.getKey() + " -> " + objectToTraceRecordMapEntry.getValue();
+        return getString("_UI_Trace_type");
     }
 
 	/**
@@ -162,9 +145,12 @@ public class ObjectToTraceRecordMapEntryItemProvider
 	public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch (notification.getFeatureID(Map.Entry.class)) {
-            case TracePackage.OBJECT_TO_TRACE_RECORD_MAP_ENTRY__KEY:
-                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+        switch (notification.getFeatureID(Trace.class)) {
+            case TracePackage.TRACE__TRACE_RECORDS:
+            case TracePackage.TRACE__TRACE_RECORD_MAP:
+            case TracePackage.TRACE__SOURCE_TO_TRACE_RECORD_MAP:
+            case TracePackage.TRACE__TARGET_TO_TRACE_RECORD_MAP:
+                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
         super.notifyChanged(notification);
@@ -180,6 +166,49 @@ public class ObjectToTraceRecordMapEntryItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
         super.collectNewChildDescriptors(newChildDescriptors, object);
+
+        newChildDescriptors.add
+            (createChildParameter
+                (TracePackage.Literals.TRACE__TRACE_RECORDS,
+                 TraceFactory.eINSTANCE.createTraceRecord()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (TracePackage.Literals.TRACE__TRACE_RECORD_MAP,
+                 TraceFactory.eINSTANCE.create(TracePackage.Literals.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY)));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (TracePackage.Literals.TRACE__SOURCE_TO_TRACE_RECORD_MAP,
+                 TraceFactory.eINSTANCE.create(TracePackage.Literals.OBJECT_TO_TRACE_RECORD_MAP_ENTRY)));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (TracePackage.Literals.TRACE__TARGET_TO_TRACE_RECORD_MAP,
+                 TraceFactory.eINSTANCE.create(TracePackage.Literals.OBJECT_TO_TRACE_RECORD_MAP_ENTRY)));
+    }
+
+	/**
+     * This returns the label text for {@link org.eclipse.emf.edit.command.CreateChildCommand}.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	@Override
+	public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
+        Object childFeature = feature;
+        Object childObject = child;
+
+        boolean qualify =
+            childFeature == TracePackage.Literals.TRACE__SOURCE_TO_TRACE_RECORD_MAP ||
+            childFeature == TracePackage.Literals.TRACE__TARGET_TO_TRACE_RECORD_MAP;
+
+        if (qualify) {
+            return getString
+                ("_UI_CreateChild_text2",
+                 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+        }
+        return super.getCreateChildText(owner, feature, child, selection);
     }
 
 	/**
