@@ -34,19 +34,19 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.cst.adapters.ModelTypeMetamodelsAdapter;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.MappingParameter;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
+import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.EMFType;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.QvtConfigurationProperty;
-import org.eclipse.m2m.qvt.oml.expressions.ConfigProperty;
-import org.eclipse.m2m.qvt.oml.expressions.DirectionKind;
-import org.eclipse.m2m.qvt.oml.expressions.ImperativeOperation;
-import org.eclipse.m2m.qvt.oml.expressions.MappingParameter;
-import org.eclipse.m2m.qvt.oml.expressions.ModelParameter;
-import org.eclipse.m2m.qvt.oml.expressions.ModelType;
-import org.eclipse.m2m.qvt.oml.expressions.Module;
-import org.eclipse.m2m.qvt.oml.expressions.ModuleImport;
-import org.eclipse.m2m.qvt.oml.expressions.Property;
-import org.eclipse.m2m.qvt.oml.expressions.VarParameter;
 import org.eclipse.ocl.types.VoidType;
 import org.eclipse.osgi.util.NLS;
 
@@ -137,10 +137,10 @@ public abstract class QvtModule {
         return new TransformationParameter() {
 
             public DirectionKind getDirectionKind() {
-                if (mainParam.getKind() == org.eclipse.m2m.qvt.oml.expressions.DirectionKind.IN) {
+                if (mainParam.getKind() == org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind.IN) {
                     return DirectionKind.IN;
                 }
-                if (mainParam.getKind() == org.eclipse.m2m.qvt.oml.expressions.DirectionKind.OUT) {
+                if (mainParam.getKind() == org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind.OUT) {
                     return DirectionKind.OUT;
                 }
                 return DirectionKind.INOUT;
@@ -180,10 +180,10 @@ public abstract class QvtModule {
         return new TransformationParameter() {
 
             public DirectionKind getDirectionKind() {
-                if (modelParam.getKind() == org.eclipse.m2m.qvt.oml.expressions.DirectionKind.IN) {
+                if (modelParam.getKind() == org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind.IN) {
                     return DirectionKind.IN;
                 }
-                if (modelParam.getKind() == org.eclipse.m2m.qvt.oml.expressions.DirectionKind.OUT) {
+                if (modelParam.getKind() == org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind.OUT) {
                     return DirectionKind.OUT;
                 }
                 return DirectionKind.INOUT;
