@@ -32,10 +32,10 @@ import org.eclipse.m2m.internal.qvt.oml.common.emf.ExtendedEmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
-import org.eclipse.m2m.qvt.oml.trace.EValue;
-import org.eclipse.m2m.qvt.oml.trace.Trace;
-import org.eclipse.m2m.qvt.oml.trace.TraceRecord;
-import org.eclipse.m2m.qvt.oml.trace.VarParameterValue;
+import org.eclipse.m2m.internal.qvt.oml.trace.EValue;
+import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
+import org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord;
+import org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue;
 import org.eclipse.osgi.util.NLS;
 
 

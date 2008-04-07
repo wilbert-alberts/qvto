@@ -58,7 +58,7 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
-import org.eclipse.m2m.qvt.oml.trace.Trace;
+import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.osgi.util.NLS;
 
 public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigurationDelegate {

@@ -45,7 +45,7 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtModule;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
-import org.eclipse.m2m.qvt.oml.trace.Trace;
+import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -84,12 +84,6 @@ public class QvtoTransformationHelper {
 		 */
 		List<EObject> getOutParameters();
 		
-		/**
-		 * 
-		 * @return Instance of transformation trace. May return 'null'.
-		 */
-		Trace getTrace();
-
 		/**
 		 * 
 		 * @return Console output produced by transformation.
