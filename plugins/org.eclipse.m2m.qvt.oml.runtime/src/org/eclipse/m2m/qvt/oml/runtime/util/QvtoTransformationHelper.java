@@ -26,7 +26,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
@@ -111,11 +110,7 @@ public class QvtoTransformationHelper {
 	public QvtoTransformationHelper(IFile qvtoFile) {
 		this(URI.createPlatformResourceURI(qvtoFile.getFullPath().toString(), false));
 	}
-	
-	public QvtoTransformationHelper(Module module) {
-		this(EcoreUtil.getURI(module).trimFragment());
-	}
-	
+		
 	public TransfExecutionResult executeTransformation(final List<EObject> inObjects, final Map<String, Object> inConfigProperties, ResourceSet metamodelResourceSet) throws CoreException {
         try {
         	final List<ModelExtentContents> outExtents = new ArrayList<ModelExtentContents>();
