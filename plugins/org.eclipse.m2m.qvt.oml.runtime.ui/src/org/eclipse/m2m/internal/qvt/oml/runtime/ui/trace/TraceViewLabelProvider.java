@@ -25,12 +25,12 @@ import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.CommonPluginImages;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.provider.EMFLabelProvider;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.presentation.Node;
-import org.eclipse.m2m.qvt.oml.trace.EMappingOperation;
-import org.eclipse.m2m.qvt.oml.trace.ETuplePartValue;
-import org.eclipse.m2m.qvt.oml.trace.EValue;
-import org.eclipse.m2m.qvt.oml.trace.TracePackage;
-import org.eclipse.m2m.qvt.oml.trace.TraceRecord;
-import org.eclipse.m2m.qvt.oml.trace.VarParameterValue;
+import org.eclipse.m2m.internal.qvt.oml.trace.EMappingOperation;
+import org.eclipse.m2m.internal.qvt.oml.trace.ETuplePartValue;
+import org.eclipse.m2m.internal.qvt.oml.trace.EValue;
+import org.eclipse.m2m.internal.qvt.oml.trace.TracePackage;
+import org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord;
+import org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue;
 import org.eclipse.swt.graphics.Image;
 
 /**

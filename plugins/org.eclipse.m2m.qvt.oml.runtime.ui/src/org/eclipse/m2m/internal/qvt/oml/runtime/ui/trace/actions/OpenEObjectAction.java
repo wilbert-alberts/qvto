@@ -22,7 +22,7 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.IMetamodelHandler;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.MetamodelHandlerManager;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.presentation.EObjectNode;
-import org.eclipse.m2m.qvt.oml.trace.TracePackage;
+import org.eclipse.m2m.internal.qvt.oml.trace.TracePackage;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
