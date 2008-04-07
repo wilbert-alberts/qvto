@@ -69,6 +69,76 @@
              category="org.eclipse.m2m.qvt.oml.editor.ui.category.templates"
              class="org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors.TemplateCollector">
        </collector>
+      <collector
+            category="com.borland.m2m.qvt.oml.editor.completion.category.default"
+            class="org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors.OclExpressionStartCollector">
+      </collector>
+      <collector
+            category="com.borland.m2m.qvt.oml.editor.completion.category.default"
+            class="org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors.AccessorCollector">
+      </collector>
+      <collector
+            category="com.borland.m2m.qvt.oml.editor.completion.category.default"
+            class="org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors.StructuralFeatureCollector">
+      </collector>
+      <collector
+            category="com.borland.m2m.qvt.oml.editor.completion.category.default"
+            class="org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors.ColonColonCollector">
+      </collector>
+      <collector
+            category="com.borland.m2m.qvt.oml.editor.completion.category.default"
+            class="org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors.TypeStartCollector">
+      </collector>
+      <collector
+            category="com.borland.m2m.qvt.oml.editor.completion.category.default"
+            class="org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors.LateKeywordCollector">
+      </collector>
+      <collector
+            category="com.borland.m2m.qvt.oml.editor.completion.category.default"
+            class="org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors.ResolveInMappingNameCollector">
+      </collector>
+      <category
+            id="com.borland.m2m.qvt.oml.editor.completion.category.default"
+            label="%defaultCategoryName"
+            priority="0">
+      </category>
+      <category
+            id="com.borland.m2m.qvt.oml.editor.completion.category.workspacemetamodels"
+            label="%workspaceMetamodelsCategoryName"
+            priority="5">
+      </category>
+      <collector
+            category="com.borland.m2m.qvt.oml.editor.completion.category.default"
+            class="org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors.RegisteredMetamodelCollector">
+      </collector>
+      <collector
+            category="com.borland.m2m.qvt.oml.editor.completion.category.workspacemetamodels"
+            class="org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors.WorkspaceMetamodelCollector">
+      </collector>
+      <collector
+            category="com.borland.m2m.qvt.oml.editor.completion.category.default"
+            class="org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors.MapXmapCollector">
+      </collector>
+      <collector
+            category="com.borland.m2m.qvt.oml.editor.completion.category.default"
+            class="org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors.ObjectKeywordCollector">
+      </collector>
+      <collector
+            category="com.borland.m2m.qvt.oml.editor.completion.category.default"
+            class="org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors.IteratorShorthandCollector">
+      </collector>
+      <collector
+            category="com.borland.m2m.qvt.oml.editor.completion.category.default"
+            class="org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors.ImportLibraryCollector">
+      </collector>
+      <collector
+            category="com.borland.m2m.qvt.oml.editor.completion.category.default"
+            class="org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors.ImportModuleCollector">
+      </collector>
+      <collector
+            category="com.borland.m2m.qvt.oml.editor.completion.category.default"
+            class="org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors.ResolveTypeCollector">
+      </collector>
     </extension>
 
 

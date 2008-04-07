@@ -127,6 +127,11 @@ public class LightweightParserUtil {
         QvtOpLPGParsersym.TK_closure
     };
     
+    public static final int[] MAPPING_CLAUSE_TOKENS = {
+        QvtOpLPGParsersym.TK_when, 
+        QvtOpLPGParsersym.TK_where
+    };
+    
     public static int[] uniteIntArrays(int[] array1, int[] array2) {
         int[] result = new int[array1.length + array2.length];
         System.arraycopy(array1, 0, result, 0, array1.length);

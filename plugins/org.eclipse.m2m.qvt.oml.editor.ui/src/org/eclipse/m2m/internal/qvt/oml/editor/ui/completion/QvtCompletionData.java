@@ -1,9 +1,20 @@
+/*******************************************************************************
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *   
+ * Contributors:
+ *     Borland Software Corporation - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import lpg.lpgjavaruntime.IToken;
 import lpg.lpgjavaruntime.PrsStream;
@@ -210,13 +221,14 @@ public class QvtCompletionData {
     }
 
     public IToken getParentBracingExpression(int[] keywordTokenKinds, int leftBraceKind, int rightBraceKind,
-            int maxDepth, int[] zeroDepthTerminatorKinds, int[] unexpectedTokenKinds) {
+            int maxDepth, int[] zeroDepthTerminatorKinds, int[] unexpectedTokenKinds, int[] ignoredClauses) {
         int depth = 0;
-        int maxCurrentDepth = Integer.MIN_VALUE;
+        Stack<Integer> maxCurrentDepthStack = new Stack<Integer>();
+        maxCurrentDepthStack.push(Integer.MIN_VALUE);
         for (int i = myLeftToken.getTokenIndex(); i >= 0; i--) {
             IToken token = myPrsStream.getTokenAt(i);
             if (QvtCompletionData.isKindOf(token, keywordTokenKinds)) {
-                if ((depth >= 1) && (depth > maxCurrentDepth)) {
+                if ((depth >= 1) && (depth > maxCurrentDepthStack.peek())) {
                     return token;
                 }
             } else if (token.getKind() == leftBraceKind) {
@@ -225,8 +237,8 @@ public class QvtCompletionData {
                     return null;
                 }
             } else if (token.getKind() == rightBraceKind) {
-                if (depth > maxCurrentDepth) {
-                    maxCurrentDepth = depth;
+                if (depth >= maxCurrentDepthStack.peek()) {
+                    maxCurrentDepthStack.push(depth);
                 }
                 depth--;
             } else {
@@ -237,12 +249,18 @@ public class QvtCompletionData {
                     return null;
                 }
             }
+            if (QvtCompletionData.isKindOf(token, ignoredClauses)) {
+                IToken nextToken = LightweightParserUtil.getNextToken(token);
+                if ((nextToken != null) && QvtCompletionData.isKindOf(nextToken, leftBraceKind)
+                        && (depth == maxCurrentDepthStack.peek())) {
+                    assert maxCurrentDepthStack.size() > 1;
+                    if (maxCurrentDepthStack.size() > 1) {
+                        maxCurrentDepthStack.pop();
+        }
+    }
+            }
         }
         return null;
-    }
-    
-    public boolean isWithinBracingExpression(int[] keywordTokenKinds, int leftBraceKind, int rightBraceKind, int maxDepth) {
-        return getParentBracingExpression(keywordTokenKinds, leftBraceKind, rightBraceKind, maxDepth, null, null) != null;
     }
     
     private QvtCompletionCompiler createQvtCompiler() {
@@ -287,7 +305,7 @@ public class QvtCompletionData {
     public IToken getParentImperativeOperation() {
         if (myParentImperativeOperation == null) {
             myParentImperativeOperation = getParentBracingExpression(LightweightParserUtil.IMPERATIVE_OPERATION_TOKENS,
-                    QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, Integer.MAX_VALUE, null, null);
+                    QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, Integer.MAX_VALUE, null, null, LightweightParserUtil.MAPPING_CLAUSE_TOKENS);
             if (myParentImperativeOperation != null) {
                 if (QvtCompletionData.isKindOf(myParentImperativeOperation, QvtOpLPGParsersym.TK_main)) {
                     IToken previousToken = LightweightParserUtil.getPreviousToken(myParentImperativeOperation);

@@ -22,7 +22,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.m2m.qvt.oml,
  org.eclipse.m2m.qvt.oml.ui,
  org.eclipse.m2m.qvt.oml.emf.util,
- net.sourceforge.lpg.lpgjavaruntime
+ net.sourceforge.lpg.lpgjavaruntime,
+ org.eclipse.m2m.qvt.oml.runtime
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.m2m.internal.qvt.oml.editor.ui,
  org.eclipse.m2m.internal.qvt.oml.editor.ui.completion,

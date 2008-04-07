@@ -8,20 +8,20 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion;
+package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors;
 
 import org.eclipse.osgi.util.NLS;
 
 /**
- * @author Aleksandr Igdalov
- * Created on Jul 4, 2007
+ * @author aigdalov
+ * Created on Jul 6, 2007
  */
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.messages"; //$NON-NLS-1$
-	public static String QvtCompletionData_ErrorPerformingCodeCompletion;
-	public static String QvtCompletionProcessor_ErrorMessage;
-	public static String QvtCompletionProcessor_PressCtrlSpace;
+	private static final String BUNDLE_NAME = "org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors.messages"; //$NON-NLS-1$
+	public static String RegisteredMetamodelCollector_RetrievingMetamodelsTaskName;
+	public static String WorkspaceMetamodelCollector_EPackageLoadError;
+	public static String WorkspaceMetamodelCollector_EPackageNameOrNsUriIsNull;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

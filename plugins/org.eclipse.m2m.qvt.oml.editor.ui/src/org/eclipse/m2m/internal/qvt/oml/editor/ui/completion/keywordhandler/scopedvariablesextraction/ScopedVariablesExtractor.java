@@ -1,5 +1,14 @@
+/*******************************************************************************
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *   
+ * Contributors:
+ *     Borland Software Corporation - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.keywordhandler.scopedvariablesextraction;
-
 
 import lpg.lpgjavaruntime.IToken;
 
@@ -18,7 +27,7 @@ public class ScopedVariablesExtractor {
     public String extractVariables(IToken startToken, QvtCompletionData data) {
         Scope scope = new Scope(null);
         IToken currentToken = startToken;
-        if (!QvtCompletionData.isKindOf(data.getParentImperativeOperation(), QvtOpLPGParsersym.TK_main)) {
+        if (QvtCompletionData.isKindOf(data.getParentImperativeOperation(), QvtOpLPGParsersym.TK_mapping)) {
         while ((currentToken = getNextToken(currentToken, data)) != null) {
             if (QvtCompletionData.isKindOf(currentToken, QvtOpLPGParsersym.TK_LBRACE)) {
                 break;
@@ -227,7 +236,7 @@ public class ScopedVariablesExtractor {
                 }
                 String varText = "var " + LightweightParserUtil.getText(startToken, currentToken) //$NON-NLS-1$
                     + " := " + deducedType + ';'; //$NON-NLS-1$
-                return new Result(startToken, currentToken, varText, scope); //$NON-NLS-1$ 
+                return new Result(startToken, currentToken, varText, scope); 
             }
             if (QvtCompletionData.isKindOf(currentToken, initializer)) {
                 isTypeDefined = true;
