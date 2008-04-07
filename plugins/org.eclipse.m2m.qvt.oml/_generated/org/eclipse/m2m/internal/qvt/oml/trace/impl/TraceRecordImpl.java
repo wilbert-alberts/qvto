@@ -1,23 +1,33 @@
 /**
- * <copyright>
- * </copyright>
+ * Copyright (c) 2007 Borland Software Corporation
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *   
+ * Contributors:
+ *     Borland Software Corporation - initial API and implementation
  *
- * $Id: TraceRecordImpl.java,v 1.3 2007/12/01 23:33:05 radvorak Exp $
+ * $Id: TraceRecordImpl.java,v 1.1 2008/04/07 19:00:39 aigdalov Exp $
  */
-package org.eclipse.m2m.qvt.oml.trace.impl;
+package org.eclipse.m2m.internal.qvt.oml.trace.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.m2m.qvt.oml.trace.EMappingContext;
-import org.eclipse.m2m.qvt.oml.trace.EMappingOperation;
-import org.eclipse.m2m.qvt.oml.trace.EMappingParameters;
-import org.eclipse.m2m.qvt.oml.trace.EMappingResults;
-import org.eclipse.m2m.qvt.oml.trace.TracePackage;
-import org.eclipse.m2m.qvt.oml.trace.TraceRecord;
+
+import org.eclipse.m2m.internal.qvt.oml.trace.EMappingContext;
+import org.eclipse.m2m.internal.qvt.oml.trace.EMappingOperation;
+import org.eclipse.m2m.internal.qvt.oml.trace.EMappingParameters;
+import org.eclipse.m2m.internal.qvt.oml.trace.EMappingResults;
+import org.eclipse.m2m.internal.qvt.oml.trace.TracePackage;
+import org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,10 +36,10 @@ import org.eclipse.m2m.qvt.oml.trace.TraceRecord;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.impl.TraceRecordImpl#getMappingOperation <em>Mapping Operation</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.impl.TraceRecordImpl#getContext <em>Context</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.impl.TraceRecordImpl#getParameters <em>Parameters</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.impl.TraceRecordImpl#getResult <em>Result</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.impl.TraceRecordImpl#getMappingOperation <em>Mapping Operation</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.impl.TraceRecordImpl#getContext <em>Context</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.impl.TraceRecordImpl#getParameters <em>Parameters</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.impl.TraceRecordImpl#getResult <em>Result</em>}</li>
  * </ul>
  * </p>
  *

@@ -1,4 +1,4 @@
-/*******************************************************************************
+/**
  * Copyright (c) 2007 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
@@ -8,26 +8,22 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.trace.util;
+ *
+ * $Id: TraceSwitch.java,v 1.1 2008/04/07 19:00:39 aigdalov Exp $
+ */
+package org.eclipse.m2m.internal.qvt.oml.trace.util;
 
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
-import org.eclipse.m2m.qvt.oml.trace.EMappingContext;
-import org.eclipse.m2m.qvt.oml.trace.EMappingOperation;
-import org.eclipse.m2m.qvt.oml.trace.EMappingParameters;
-import org.eclipse.m2m.qvt.oml.trace.EMappingResults;
-import org.eclipse.m2m.qvt.oml.trace.ETuplePartValue;
-import org.eclipse.m2m.qvt.oml.trace.EValue;
-import org.eclipse.m2m.qvt.oml.trace.Trace;
-import org.eclipse.m2m.qvt.oml.trace.TracePackage;
-import org.eclipse.m2m.qvt.oml.trace.TraceRecord;
-import org.eclipse.m2m.qvt.oml.trace.VarParameterValue;
+
+import org.eclipse.m2m.internal.qvt.oml.trace.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -39,7 +35,7 @@ import org.eclipse.m2m.qvt.oml.trace.VarParameterValue;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see org.eclipse.m2m.qvt.oml.trace.TracePackage
+ * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage
  * @generated
  */
 public class TraceSwitch<T> {
@@ -49,6 +45,7 @@ public class TraceSwitch<T> {
      * @generated
      */
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
+
     /**
      * The cached model package
      * <!-- begin-user-doc -->

@@ -1,4 +1,4 @@
-/*******************************************************************************
+/**
  * Copyright (c) 2007 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
@@ -8,25 +8,33 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.trace.impl;
+ *
+ * $Id: TraceImpl.java,v 1.1 2008/04/07 19:00:38 aigdalov Exp $
+ */
+package org.eclipse.m2m.internal.qvt.oml.trace.impl;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
-import org.eclipse.m2m.qvt.oml.trace.Trace;
-import org.eclipse.m2m.qvt.oml.trace.TracePackage;
-import org.eclipse.m2m.qvt.oml.trace.TraceRecord;
+
+import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
+import org.eclipse.m2m.internal.qvt.oml.trace.TracePackage;
+import org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,10 +43,10 @@ import org.eclipse.m2m.qvt.oml.trace.TraceRecord;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.impl.TraceImpl#getTraceRecords <em>Trace Records</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.impl.TraceImpl#getTraceRecordMap <em>Trace Record Map</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.impl.TraceImpl#getSourceToTraceRecordMap <em>Source To Trace Record Map</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.impl.TraceImpl#getTargetToTraceRecordMap <em>Target To Trace Record Map</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.impl.TraceImpl#getTraceRecords <em>Trace Records</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.impl.TraceImpl#getTraceRecordMap <em>Trace Record Map</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.impl.TraceImpl#getSourceToTraceRecordMap <em>Source To Trace Record Map</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.impl.TraceImpl#getTargetToTraceRecordMap <em>Target To Trace Record Map</em>}</li>
  * </ul>
  * </p>
  *

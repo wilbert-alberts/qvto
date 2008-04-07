@@ -9,9 +9,9 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ETuplePartValue.java,v 1.1 2007/09/25 12:57:18 aigdalov Exp $
+ * $Id: ETuplePartValue.java,v 1.1 2008/04/07 19:00:38 aigdalov Exp $
  */
-package org.eclipse.m2m.qvt.oml.trace;
+package org.eclipse.m2m.internal.qvt.oml.trace;
 
 
 /**
@@ -22,12 +22,12 @@ package org.eclipse.m2m.qvt.oml.trace;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.ETuplePartValue#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.ETuplePartValue#getValue <em>Value</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.ETuplePartValue#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.ETuplePartValue#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getETuplePartValue()
+ * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getETuplePartValue()
  * @model
  * @generated
  */
@@ -49,14 +49,14 @@ public interface ETuplePartValue extends EValue {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
-     * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getETuplePartValue_Name()
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getETuplePartValue_Name()
      * @model
      * @generated
      */
     String getName();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.trace.ETuplePartValue#getName <em>Name</em>}' attribute.
+     * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.ETuplePartValue#getName <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Name</em>' attribute.
@@ -69,20 +69,20 @@ public interface ETuplePartValue extends EValue {
      * Returns the value of the '<em><b>Value</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Value</em>' reference isn't clear,
+     * If the meaning of the '<em>Value</em>' containment reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Value</em>' containment reference.
      * @see #setValue(EValue)
-     * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getETuplePartValue_Value()
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getETuplePartValue_Value()
      * @model containment="true"
      * @generated
      */
     EValue getValue();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.trace.ETuplePartValue#getValue <em>Value</em>}' containment reference.
+     * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.ETuplePartValue#getValue <em>Value</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Value</em>' containment reference.

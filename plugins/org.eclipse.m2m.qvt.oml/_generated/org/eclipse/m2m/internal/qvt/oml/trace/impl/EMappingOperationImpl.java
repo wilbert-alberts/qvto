@@ -1,19 +1,30 @@
 /**
- * <copyright>
- * </copyright>
+ * Copyright (c) 2007 Borland Software Corporation
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *   
+ * Contributors:
+ *     Borland Software Corporation - initial API and implementation
  *
- * $Id: EMappingOperationImpl.java,v 1.4 2008/04/07 15:59:00 radvorak Exp $
+ * $Id: EMappingOperationImpl.java,v 1.1 2008/04/07 19:00:38 aigdalov Exp $
  */
-package org.eclipse.m2m.qvt.oml.trace.impl;
+package org.eclipse.m2m.internal.qvt.oml.trace.impl;
 
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
-import org.eclipse.m2m.qvt.oml.trace.EMappingOperation;
-import org.eclipse.m2m.qvt.oml.trace.TracePackage;
+
+import org.eclipse.m2m.internal.qvt.oml.trace.EMappingOperation;
+import org.eclipse.m2m.internal.qvt.oml.trace.TracePackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,10 +33,10 @@ import org.eclipse.m2m.qvt.oml.trace.TracePackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.impl.EMappingOperationImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.impl.EMappingOperationImpl#getPackage <em>Package</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.impl.EMappingOperationImpl#getModule <em>Module</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.impl.EMappingOperationImpl#getRuntimeMappingOperation <em>Runtime Mapping Operation</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.impl.EMappingOperationImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.impl.EMappingOperationImpl#getPackage <em>Package</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.impl.EMappingOperationImpl#getModule <em>Module</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.impl.EMappingOperationImpl#getRuntimeMappingOperation <em>Runtime Mapping Operation</em>}</li>
  * </ul>
  * </p>
  *

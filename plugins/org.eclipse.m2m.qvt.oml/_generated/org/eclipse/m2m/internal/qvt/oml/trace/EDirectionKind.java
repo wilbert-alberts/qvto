@@ -1,4 +1,4 @@
-/*******************************************************************************
+/**
  * Copyright (c) 2007 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
@@ -8,8 +8,10 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.trace;
+ *
+ * $Id: EDirectionKind.java,v 1.1 2008/04/07 19:00:38 aigdalov Exp $
+ */
+package org.eclipse.m2m.internal.qvt.oml.trace;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,7 +24,7 @@ import org.eclipse.emf.common.util.Enumerator;
  * A representation of the literals of the enumeration '<em><b>EDirection Kind</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
- * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getEDirectionKind()
+ * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getEDirectionKind()
  * @model
  * @generated
  */

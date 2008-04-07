@@ -13,7 +13,7 @@ package org.eclipse.m2m.internal.qvt.oml.library;
 
 import java.util.Map;
 
-import org.eclipse.m2m.qvt.oml.trace.Trace;
+import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 
 
 public interface IContext {

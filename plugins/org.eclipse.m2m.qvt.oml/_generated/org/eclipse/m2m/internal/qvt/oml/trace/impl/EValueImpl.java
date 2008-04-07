@@ -1,4 +1,4 @@
-/*******************************************************************************
+/**
  * Copyright (c) 2007 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
@@ -8,23 +8,30 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.trace.impl;
+ *
+ * $Id: EValueImpl.java,v 1.1 2008/04/07 19:00:39 aigdalov Exp $
+ */
+package org.eclipse.m2m.internal.qvt.oml.trace.impl;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.m2m.qvt.oml.trace.EValue;
-import org.eclipse.m2m.qvt.oml.trace.TracePackage;
+
+import org.eclipse.m2m.internal.qvt.oml.trace.EValue;
+import org.eclipse.m2m.internal.qvt.oml.trace.TracePackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,12 +40,12 @@ import org.eclipse.m2m.qvt.oml.trace.TracePackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.impl.EValueImpl#getPrimitiveValue <em>Primitive Value</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.impl.EValueImpl#getModelElement <em>Model Element</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.impl.EValueImpl#getOclObject <em>Ocl Object</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.impl.EValueImpl#getIntermediateElement <em>Intermediate Element</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.impl.EValueImpl#getCollectionType <em>Collection Type</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.impl.EValueImpl#getCollection <em>Collection</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.impl.EValueImpl#getPrimitiveValue <em>Primitive Value</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.impl.EValueImpl#getModelElement <em>Model Element</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.impl.EValueImpl#getOclObject <em>Ocl Object</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.impl.EValueImpl#getIntermediateElement <em>Intermediate Element</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.impl.EValueImpl#getCollectionType <em>Collection Type</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.impl.EValueImpl#getCollection <em>Collection</em>}</li>
  * </ul>
  * </p>
  *

@@ -1,4 +1,4 @@
-/*******************************************************************************
+/**
  * Copyright (c) 2007 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
@@ -8,28 +8,32 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.trace;
+ *
+ * $Id: EMappingResults.java,v 1.1 2008/04/07 19:00:38 aigdalov Exp $
+ */
+package org.eclipse.m2m.internal.qvt.oml.trace;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>EMapping Context</b></em>'.
+ * A representation of the model object '<em><b>EMapping Results</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.EMappingContext#getContext <em>Context</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.EMappingResults#getResult <em>Result</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getEMappingContext()
+ * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getEMappingResults()
  * @model
  * @generated
  */
-public interface EMappingContext extends EObject {
+public interface EMappingResults extends EObject {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -38,29 +42,19 @@ public interface EMappingContext extends EObject {
     String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
 
     /**
-     * Returns the value of the '<em><b>Context</b></em>' containment reference.
+     * Returns the value of the '<em><b>Result</b></em>' containment reference list.
+     * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Context</em>' containment reference isn't clear,
+     * If the meaning of the '<em>Result</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Context</em>' containment reference.
-     * @see #setContext(VarParameterValue)
-     * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getEMappingContext_Context()
+     * @return the value of the '<em>Result</em>' containment reference list.
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getEMappingResults_Result()
      * @model containment="true"
      * @generated
      */
-    VarParameterValue getContext();
+    EList<VarParameterValue> getResult();
 
-    /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.trace.EMappingContext#getContext <em>Context</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Context</em>' containment reference.
-     * @see #getContext()
-     * @generated
-     */
-    void setContext(VarParameterValue value);
-
-} // EMappingContext
+} // EMappingResults

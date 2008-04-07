@@ -24,7 +24,7 @@
  <extension point="org.eclipse.emf.ecore.generated_package">
    <package 
       uri = "http:///www.eclipse.org/m2m/qvt/operational/trace.ecore" 
-      class = "org.eclipse.m2m.qvt.oml.trace.TracePackage"
+      class = "org.eclipse.m2m.internal.qvt.oml.trace.TracePackage"
       genModel = "model/trace.genmodel" /> 
  </extension>
  

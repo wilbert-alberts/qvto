@@ -1,4 +1,4 @@
-/*******************************************************************************
+/**
  * Copyright (c) 2007 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
@@ -8,21 +8,28 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.trace.impl;
+ *
+ * $Id: EMappingResultsImpl.java,v 1.1 2008/04/07 19:00:39 aigdalov Exp $
+ */
+package org.eclipse.m2m.internal.qvt.oml.trace.impl;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.m2m.qvt.oml.trace.EMappingResults;
-import org.eclipse.m2m.qvt.oml.trace.TracePackage;
-import org.eclipse.m2m.qvt.oml.trace.VarParameterValue;
+
+import org.eclipse.m2m.internal.qvt.oml.trace.EMappingResults;
+import org.eclipse.m2m.internal.qvt.oml.trace.TracePackage;
+import org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +38,7 @@ import org.eclipse.m2m.qvt.oml.trace.VarParameterValue;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.impl.EMappingResultsImpl#getResult <em>Result</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.impl.EMappingResultsImpl#getResult <em>Result</em>}</li>
  * </ul>
  * </p>
  *
@@ -44,6 +51,7 @@ public class EMappingResultsImpl extends EObjectImpl implements EMappingResults 
      * @generated
      */
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
+
     /**
      * The cached value of the '{@link #getResult() <em>Result</em>}' containment reference list.
      * <!-- begin-user-doc -->

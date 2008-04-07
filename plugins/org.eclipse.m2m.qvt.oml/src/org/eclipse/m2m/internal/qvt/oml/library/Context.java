@@ -17,8 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.m2m.qvt.oml.trace.Trace;
-import org.eclipse.m2m.qvt.oml.trace.TraceFactory;
+import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
+import org.eclipse.m2m.internal.qvt.oml.trace.TraceFactory;
 
 public class Context implements IContext {
     private List<Runnable> myDeferredTasks;

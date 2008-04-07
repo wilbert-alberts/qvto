@@ -1,4 +1,4 @@
-/*******************************************************************************
+/**
  * Copyright (c) 2007 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
@@ -8,8 +8,10 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.trace;
+ *
+ * $Id: TraceRecord.java,v 1.1 2008/04/07 19:00:38 aigdalov Exp $
+ */
+package org.eclipse.m2m.internal.qvt.oml.trace;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -21,14 +23,14 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.TraceRecord#getMappingOperation <em>Mapping Operation</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.TraceRecord#getContext <em>Context</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.TraceRecord#getParameters <em>Parameters</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.TraceRecord#getResult <em>Result</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord#getMappingOperation <em>Mapping Operation</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord#getContext <em>Context</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord#getParameters <em>Parameters</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord#getResult <em>Result</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getTraceRecord()
+ * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getTraceRecord()
  * @model
  * @generated
  */
@@ -50,14 +52,14 @@ public interface TraceRecord extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Mapping Operation</em>' containment reference.
      * @see #setMappingOperation(EMappingOperation)
-     * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getTraceRecord_MappingOperation()
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getTraceRecord_MappingOperation()
      * @model containment="true" required="true"
      * @generated
      */
     EMappingOperation getMappingOperation();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.trace.TraceRecord#getMappingOperation <em>Mapping Operation</em>}' containment reference.
+     * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord#getMappingOperation <em>Mapping Operation</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Mapping Operation</em>' containment reference.
@@ -76,14 +78,14 @@ public interface TraceRecord extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Context</em>' containment reference.
      * @see #setContext(EMappingContext)
-     * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getTraceRecord_Context()
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getTraceRecord_Context()
      * @model containment="true" required="true"
      * @generated
      */
     EMappingContext getContext();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.trace.TraceRecord#getContext <em>Context</em>}' containment reference.
+     * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord#getContext <em>Context</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Context</em>' containment reference.
@@ -102,14 +104,14 @@ public interface TraceRecord extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Parameters</em>' containment reference.
      * @see #setParameters(EMappingParameters)
-     * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getTraceRecord_Parameters()
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getTraceRecord_Parameters()
      * @model containment="true" required="true"
      * @generated
      */
     EMappingParameters getParameters();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.trace.TraceRecord#getParameters <em>Parameters</em>}' containment reference.
+     * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord#getParameters <em>Parameters</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Parameters</em>' containment reference.
@@ -128,14 +130,14 @@ public interface TraceRecord extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Result</em>' containment reference.
      * @see #setResult(EMappingResults)
-     * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getTraceRecord_Result()
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getTraceRecord_Result()
      * @model containment="true" required="true"
      * @generated
      */
     EMappingResults getResult();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.trace.TraceRecord#getResult <em>Result</em>}' containment reference.
+     * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord#getResult <em>Result</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Result</em>' containment reference.

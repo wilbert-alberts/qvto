@@ -1,4 +1,4 @@
-/*******************************************************************************
+/**
  * Copyright (c) 2007 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
@@ -8,34 +8,32 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.trace.util;
+ *
+ * $Id: TraceAdapterFactory.java,v 1.1 2008/04/07 19:00:39 aigdalov Exp $
+ */
+package org.eclipse.m2m.internal.qvt.oml.trace.util;
 
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
+
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
+
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
-import org.eclipse.m2m.qvt.oml.trace.EMappingContext;
-import org.eclipse.m2m.qvt.oml.trace.EMappingOperation;
-import org.eclipse.m2m.qvt.oml.trace.EMappingParameters;
-import org.eclipse.m2m.qvt.oml.trace.EMappingResults;
-import org.eclipse.m2m.qvt.oml.trace.ETuplePartValue;
-import org.eclipse.m2m.qvt.oml.trace.EValue;
-import org.eclipse.m2m.qvt.oml.trace.Trace;
-import org.eclipse.m2m.qvt.oml.trace.TracePackage;
-import org.eclipse.m2m.qvt.oml.trace.TraceRecord;
-import org.eclipse.m2m.qvt.oml.trace.VarParameterValue;
+
+import org.eclipse.m2m.internal.qvt.oml.trace.*;
 
 /**
  * <!-- begin-user-doc -->
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see org.eclipse.m2m.qvt.oml.trace.TracePackage
+ * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage
  * @generated
  */
 public class TraceAdapterFactory extends AdapterFactoryImpl {
@@ -45,6 +43,7 @@ public class TraceAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
+
     /**
      * The cached model package.
      * <!-- begin-user-doc -->
@@ -85,7 +84,7 @@ public class TraceAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * The switch the delegates to the <code>createXXX</code> methods.
+     * The switch that delegates to the <code>createXXX</code> methods.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -157,13 +156,13 @@ public class TraceAdapterFactory extends AdapterFactoryImpl {
 
 
     /**
-     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.trace.Trace <em>Trace</em>}'.
+     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.trace.Trace <em>Trace</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see org.eclipse.m2m.qvt.oml.trace.Trace
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.Trace
      * @generated
      */
     public Adapter createTraceAdapter() {
@@ -171,13 +170,13 @@ public class TraceAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.trace.TraceRecord <em>Record</em>}'.
+     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord <em>Record</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see org.eclipse.m2m.qvt.oml.trace.TraceRecord
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord
      * @generated
      */
     public Adapter createTraceRecordAdapter() {
@@ -185,13 +184,13 @@ public class TraceAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.trace.VarParameterValue <em>Var Parameter Value</em>}'.
+     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue <em>Var Parameter Value</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see org.eclipse.m2m.qvt.oml.trace.VarParameterValue
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue
      * @generated
      */
     public Adapter createVarParameterValueAdapter() {
@@ -213,13 +212,13 @@ public class TraceAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.trace.EMappingOperation <em>EMapping Operation</em>}'.
+     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.trace.EMappingOperation <em>EMapping Operation</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see org.eclipse.m2m.qvt.oml.trace.EMappingOperation
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.EMappingOperation
      * @generated
      */
     public Adapter createEMappingOperationAdapter() {
@@ -227,13 +226,13 @@ public class TraceAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.trace.EValue <em>EValue</em>}'.
+     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.trace.EValue <em>EValue</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see org.eclipse.m2m.qvt.oml.trace.EValue
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.EValue
      * @generated
      */
     public Adapter createEValueAdapter() {
@@ -241,13 +240,13 @@ public class TraceAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.trace.ETuplePartValue <em>ETuple Part Value</em>}'.
+     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.trace.ETuplePartValue <em>ETuple Part Value</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see org.eclipse.m2m.qvt.oml.trace.ETuplePartValue
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.ETuplePartValue
      * @generated
      */
     public Adapter createETuplePartValueAdapter() {
@@ -255,13 +254,13 @@ public class TraceAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.trace.EMappingContext <em>EMapping Context</em>}'.
+     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.trace.EMappingContext <em>EMapping Context</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see org.eclipse.m2m.qvt.oml.trace.EMappingContext
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.EMappingContext
      * @generated
      */
     public Adapter createEMappingContextAdapter() {
@@ -269,13 +268,13 @@ public class TraceAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.trace.EMappingParameters <em>EMapping Parameters</em>}'.
+     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.trace.EMappingParameters <em>EMapping Parameters</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see org.eclipse.m2m.qvt.oml.trace.EMappingParameters
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.EMappingParameters
      * @generated
      */
     public Adapter createEMappingParametersAdapter() {
@@ -283,13 +282,13 @@ public class TraceAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.trace.EMappingResults <em>EMapping Results</em>}'.
+     * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.trace.EMappingResults <em>EMapping Results</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see org.eclipse.m2m.qvt.oml.trace.EMappingResults
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.EMappingResults
      * @generated
      */
     public Adapter createEMappingResultsAdapter() {

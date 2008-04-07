@@ -1,4 +1,4 @@
-/*******************************************************************************
+/**
  * Copyright (c) 2007 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
@@ -8,10 +8,13 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.trace;
+ *
+ * $Id: EValue.java,v 1.1 2008/04/07 19:00:38 aigdalov Exp $
+ */
+package org.eclipse.m2m.internal.qvt.oml.trace;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -22,16 +25,16 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.EValue#getPrimitiveValue <em>Primitive Value</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.EValue#getModelElement <em>Model Element</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.EValue#getOclObject <em>Ocl Object</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.EValue#getIntermediateElement <em>Intermediate Element</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.EValue#getCollectionType <em>Collection Type</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.EValue#getCollection <em>Collection</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.EValue#getPrimitiveValue <em>Primitive Value</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.EValue#getModelElement <em>Model Element</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.EValue#getOclObject <em>Ocl Object</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.EValue#getIntermediateElement <em>Intermediate Element</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.EValue#getCollectionType <em>Collection Type</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.EValue#getCollection <em>Collection</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getEValue()
+ * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getEValue()
  * @model
  * @generated
  */
@@ -53,14 +56,14 @@ public interface EValue extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Primitive Value</em>' attribute.
      * @see #setPrimitiveValue(String)
-     * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getEValue_PrimitiveValue()
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getEValue_PrimitiveValue()
      * @model
      * @generated
      */
     String getPrimitiveValue();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.trace.EValue#getPrimitiveValue <em>Primitive Value</em>}' attribute.
+     * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.EValue#getPrimitiveValue <em>Primitive Value</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Primitive Value</em>' attribute.
@@ -79,14 +82,14 @@ public interface EValue extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Model Element</em>' reference.
      * @see #setModelElement(EObject)
-     * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getEValue_ModelElement()
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getEValue_ModelElement()
      * @model
      * @generated
      */
     EObject getModelElement();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.trace.EValue#getModelElement <em>Model Element</em>}' reference.
+     * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.EValue#getModelElement <em>Model Element</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Model Element</em>' reference.
@@ -105,14 +108,14 @@ public interface EValue extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Ocl Object</em>' attribute.
      * @see #setOclObject(Object)
-     * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getEValue_OclObject()
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getEValue_OclObject()
      * @model transient="true"
      * @generated
      */
     Object getOclObject();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.trace.EValue#getOclObject <em>Ocl Object</em>}' attribute.
+     * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.EValue#getOclObject <em>Ocl Object</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Ocl Object</em>' attribute.
@@ -131,14 +134,14 @@ public interface EValue extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Intermediate Element</em>' containment reference.
      * @see #setIntermediateElement(EObject)
-     * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getEValue_IntermediateElement()
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getEValue_IntermediateElement()
      * @model containment="true"
      * @generated
      */
     EObject getIntermediateElement();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.trace.EValue#getIntermediateElement <em>Intermediate Element</em>}' containment reference.
+     * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.EValue#getIntermediateElement <em>Intermediate Element</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Intermediate Element</em>' containment reference.
@@ -157,14 +160,14 @@ public interface EValue extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Collection Type</em>' attribute.
      * @see #setCollectionType(String)
-     * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getEValue_CollectionType()
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getEValue_CollectionType()
      * @model
      * @generated
      */
     String getCollectionType();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.trace.EValue#getCollectionType <em>Collection Type</em>}' attribute.
+     * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.EValue#getCollectionType <em>Collection Type</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Collection Type</em>' attribute.
@@ -175,7 +178,7 @@ public interface EValue extends EObject {
 
     /**
      * Returns the value of the '<em><b>Collection</b></em>' containment reference list.
-     * The list contents are of type {@link org.eclipse.m2m.qvt.oml.trace.EValue}.
+     * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.trace.EValue}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Collection</em>' containment reference list isn't clear,
@@ -183,7 +186,7 @@ public interface EValue extends EObject {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Collection</em>' containment reference list.
-     * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getEValue_Collection()
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getEValue_Collection()
      * @model containment="true"
      * @generated
      */

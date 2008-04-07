@@ -1,4 +1,4 @@
-/*******************************************************************************
+/**
  * Copyright (c) 2007 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
@@ -8,10 +8,13 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.trace;
+ *
+ * $Id: EMappingParameters.java,v 1.1 2008/04/07 19:00:38 aigdalov Exp $
+ */
+package org.eclipse.m2m.internal.qvt.oml.trace;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -22,11 +25,11 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.EMappingParameters#getParameters <em>Parameters</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.EMappingParameters#getParameters <em>Parameters</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getEMappingParameters()
+ * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getEMappingParameters()
  * @model
  * @generated
  */
@@ -40,7 +43,7 @@ public interface EMappingParameters extends EObject {
 
     /**
      * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.
-     * The list contents are of type {@link org.eclipse.m2m.qvt.oml.trace.VarParameterValue}.
+     * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Parameters</em>' containment reference list isn't clear,
@@ -48,7 +51,7 @@ public interface EMappingParameters extends EObject {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Parameters</em>' containment reference list.
-     * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getEMappingParameters_Parameters()
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getEMappingParameters_Parameters()
      * @model containment="true"
      * @generated
      */

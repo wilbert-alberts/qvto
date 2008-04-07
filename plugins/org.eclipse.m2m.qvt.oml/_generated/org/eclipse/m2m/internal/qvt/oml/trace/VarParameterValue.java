@@ -1,4 +1,4 @@
-/*******************************************************************************
+/**
  * Copyright (c) 2007 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
@@ -8,8 +8,10 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.trace;
+ *
+ * $Id: VarParameterValue.java,v 1.1 2008/04/07 19:00:38 aigdalov Exp $
+ */
+package org.eclipse.m2m.internal.qvt.oml.trace;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -21,14 +23,14 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.VarParameterValue#getKind <em>Kind</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.VarParameterValue#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.VarParameterValue#getType <em>Type</em>}</li>
- *   <li>{@link org.eclipse.m2m.qvt.oml.trace.VarParameterValue#getValue <em>Value</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue#getKind <em>Kind</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue#getType <em>Type</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getVarParameterValue()
+ * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getVarParameterValue()
  * @model
  * @generated
  */
@@ -43,7 +45,7 @@ public interface VarParameterValue extends EObject {
     /**
      * Returns the value of the '<em><b>Kind</b></em>' attribute.
      * The default value is <code>"IN"</code>.
-     * The literals are from the enumeration {@link org.eclipse.m2m.qvt.oml.trace.EDirectionKind}.
+     * The literals are from the enumeration {@link org.eclipse.m2m.internal.qvt.oml.trace.EDirectionKind}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Kind</em>' attribute isn't clear,
@@ -51,20 +53,20 @@ public interface VarParameterValue extends EObject {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Kind</em>' attribute.
-     * @see org.eclipse.m2m.qvt.oml.trace.EDirectionKind
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.EDirectionKind
      * @see #setKind(EDirectionKind)
-     * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getVarParameterValue_Kind()
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getVarParameterValue_Kind()
      * @model default="IN" required="true"
      * @generated
      */
     EDirectionKind getKind();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.trace.VarParameterValue#getKind <em>Kind</em>}' attribute.
+     * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue#getKind <em>Kind</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Kind</em>' attribute.
-     * @see org.eclipse.m2m.qvt.oml.trace.EDirectionKind
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.EDirectionKind
      * @see #getKind()
      * @generated
      */
@@ -80,14 +82,14 @@ public interface VarParameterValue extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
-     * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getVarParameterValue_Name()
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getVarParameterValue_Name()
      * @model required="true"
      * @generated
      */
     String getName();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.trace.VarParameterValue#getName <em>Name</em>}' attribute.
+     * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue#getName <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Name</em>' attribute.
@@ -106,14 +108,14 @@ public interface VarParameterValue extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Type</em>' attribute.
      * @see #setType(String)
-     * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getVarParameterValue_Type()
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getVarParameterValue_Type()
      * @model required="true"
      * @generated
      */
     String getType();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.trace.VarParameterValue#getType <em>Type</em>}' attribute.
+     * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue#getType <em>Type</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Type</em>' attribute.
@@ -132,14 +134,14 @@ public interface VarParameterValue extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Value</em>' containment reference.
      * @see #setValue(EValue)
-     * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#getVarParameterValue_Value()
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getVarParameterValue_Value()
      * @model containment="true" required="true"
      * @generated
      */
     EValue getValue();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.qvt.oml.trace.VarParameterValue#getValue <em>Value</em>}' containment reference.
+     * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue#getValue <em>Value</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Value</em>' containment reference.

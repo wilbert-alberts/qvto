@@ -1,10 +1,17 @@
 /**
- * <copyright>
- * </copyright>
+ * Copyright (c) 2007 Borland Software Corporation
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *   
+ * Contributors:
+ *     Borland Software Corporation - initial API and implementation
  *
- * $Id: TracePackageImpl.java,v 1.4 2008/04/07 15:59:00 radvorak Exp $
+ * $Id: TracePackageImpl.java,v 1.1 2008/04/07 19:00:39 aigdalov Exp $
  */
-package org.eclipse.m2m.qvt.oml.trace.impl;
+package org.eclipse.m2m.internal.qvt.oml.trace.impl;
 
 import java.util.Map;
 
@@ -14,21 +21,26 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
+
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.m2m.qvt.oml.trace.EDirectionKind;
-import org.eclipse.m2m.qvt.oml.trace.EMappingContext;
-import org.eclipse.m2m.qvt.oml.trace.EMappingOperation;
-import org.eclipse.m2m.qvt.oml.trace.EMappingParameters;
-import org.eclipse.m2m.qvt.oml.trace.EMappingResults;
-import org.eclipse.m2m.qvt.oml.trace.ETuplePartValue;
-import org.eclipse.m2m.qvt.oml.trace.EValue;
-import org.eclipse.m2m.qvt.oml.trace.Trace;
-import org.eclipse.m2m.qvt.oml.trace.TraceFactory;
-import org.eclipse.m2m.qvt.oml.trace.TracePackage;
-import org.eclipse.m2m.qvt.oml.trace.TraceRecord;
-import org.eclipse.m2m.qvt.oml.trace.VarParameterValue;
+
+import org.eclipse.m2m.internal.qvt.oml.trace.EDirectionKind;
+import org.eclipse.m2m.internal.qvt.oml.trace.EMappingContext;
+import org.eclipse.m2m.internal.qvt.oml.trace.EMappingOperation;
+import org.eclipse.m2m.internal.qvt.oml.trace.EMappingParameters;
+import org.eclipse.m2m.internal.qvt.oml.trace.EMappingResults;
+import org.eclipse.m2m.internal.qvt.oml.trace.ETuplePartValue;
+import org.eclipse.m2m.internal.qvt.oml.trace.EValue;
+import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
+import org.eclipse.m2m.internal.qvt.oml.trace.TraceFactory;
+import org.eclipse.m2m.internal.qvt.oml.trace.TracePackage;
+import org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord;
+import org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue;
+
 import org.eclipse.ocl.expressions.ExpressionsPackage;
+
 import org.eclipse.ocl.types.TypesPackage;
+
 import org.eclipse.ocl.utilities.UtilitiesPackage;
 
 /**
@@ -140,7 +152,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see org.eclipse.emf.ecore.EPackage.Registry
-     * @see org.eclipse.m2m.qvt.oml.trace.TracePackage#eNS_URI
+     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#eNS_URI
      * @see #init()
      * @generated
      */
