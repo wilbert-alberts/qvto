@@ -20,6 +20,7 @@ package org.eclipse.m2m.tests.qvt.oml;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.eclipse.m2m.tests.qvt.oml.ant.QvtAntScriptTests;
 import org.eclipse.m2m.tests.qvt.oml.editor.AllEditorTests;
 import org.eclipse.m2m.tests.qvt.oml.emf.AllEmfTests;
 import org.eclipse.m2m.tests.qvt.oml.traces.TestTraceFile;
@@ -67,6 +68,7 @@ public class AllTests {
         suite.addTestSuite(TestOCLSemantics.class);
         suite.addTestSuite(TestOCLAnnotationSupport.class);     
 
+        suite.addTest(QvtAntScriptTests.suite());
 		//$JUnit-END$
 		return suite;
 	}

@@ -33,4 +33,5 @@ Require-Bundle: org.junit,
  org.eclipse.m2m.qvt.oml.editor.ui,
  org.eclipse.jface.text,
  org.eclipse.ui.ide,
- org.eclipse.ui.editors
+ org.eclipse.ui.editors,
+ org.eclipse.ant.core
