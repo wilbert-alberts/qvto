@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="org.eclipse.m2m.qvt.oml">
+<schema targetNamespace="org.eclipse.m2m.qvt.oml.common" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.eclipse.m2m.qvt.oml" id="importResolverFactory" name="importResolverFactory"/>
+         <meta.schema plugin="org.eclipse.m2m.qvt.oml.common" id="resourceSetProviders" name="resourceSetProviders"/>
       </appInfo>
       <documentation>
-         Factory to instantiate IImportResolver instances used for lookup of script imports.
+         
       </documentation>
    </annotation>
 
@@ -100,13 +100,5 @@
       </documentation>
    </annotation>
 
-   <annotation>
-      <appInfo>
-         <meta.section type="copyright"/>
-      </appInfo>
-      <documentation>
-         Copyright (c) 2007 Borland Software Corporation
-      </documentation>
-   </annotation>
 
 </schema>
