@@ -6,6 +6,6 @@
 <mapEntry key="WS_LOC" value="${workspace_loc}"/>
 <mapEntry key="LPG_HOME" value="${lpg_home}"/>
 </mapAttribute>
-<stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${workspace_loc:/org.eclipse.m2m.qvt.oml.editor.ui/src/org/eclipse/m2m/qvt/oml/editor/ui/completion/cst/parser/lpg.cmd}"/>
-<stringAttribute key="org.eclipse.ui.externaltools.ATTR_WORKING_DIRECTORY" value="${workspace_loc:/org.eclipse.m2m.qvt.oml.editor.ui/src/org/eclipse/m2m/qvt/oml/editor/ui/completion/cst/parser/}"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${workspace_loc:/org.eclipse.m2m.qvt.oml.editor.ui/src/org/eclipse/m2m/internal/qvt/oml/editor/ui/completion/cst/parser/lpg.cmd}"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_WORKING_DIRECTORY" value="${workspace_loc:/org.eclipse.m2m.qvt.oml.editor.ui/src/org/eclipse/m2m/internal/qvt/oml/editor/ui/completion/cst/parser/}"/>
 </launchConfiguration>
