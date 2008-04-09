@@ -6,17 +6,19 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Export-Package: org.eclipse.m2m.qvt.oml.runtime.util,
- org.eclipse.m2m.internal.qvt.oml.runtime,
+Export-Package: org.eclipse.m2m.internal.qvt.oml.runtime,
+ org.eclipse.m2m.internal.qvt.oml.runtime.ant,
  org.eclipse.m2m.internal.qvt.oml.runtime.generator,
  org.eclipse.m2m.internal.qvt.oml.runtime.launch,
  org.eclipse.m2m.internal.qvt.oml.runtime.project,
  org.eclipse.m2m.internal.qvt.oml.runtime.project.config,
- org.eclipse.m2m.internal.qvt.oml.runtime.util;x-internal:=true
+ org.eclipse.m2m.internal.qvt.oml.runtime.util,
+ org.eclipse.m2m.qvt.oml.runtime.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui.externaltools,
  org.eclipse.debug.core,
  org.eclipse.emf.ecore.xmi,
+ org.apache.ant,
  org.eclipse.m2m.qvt.oml,
  org.eclipse.m2m.qvt.oml.common,
  org.eclipse.m2m.qvt.oml.emf.util,
