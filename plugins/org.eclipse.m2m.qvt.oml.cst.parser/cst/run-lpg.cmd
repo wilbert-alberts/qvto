@@ -1,6 +1,6 @@
 @echo off
 
-set LPG_HOME=.\..\.externalTool\lpgdistribution
+set LPG_HOME=.\..\.externalTool\lpgdistrib
 
 set LPG_INCLUDE=%LPG_HOME%\include;.;
 set LPG_TEMPLATE=%LPG_HOME%\templates;

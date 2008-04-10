@@ -2,7 +2,7 @@ According to Eclipse IP policy (http://www.eclipse.org/org/documents/Eclipse_IP_
 here only readme.txt stub is placed.
 
 
-Folder 'lpgdistribution' is placeholder for the:
+Folder 'lpgdistrib' is placeholder for the:
 
 IBM LALR Parser Generator
 Version 1.00 (May 11 2006)
