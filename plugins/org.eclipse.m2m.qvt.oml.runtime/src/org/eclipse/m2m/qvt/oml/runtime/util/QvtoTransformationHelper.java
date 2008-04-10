@@ -160,10 +160,6 @@ public class QvtoTransformationHelper {
 				public List<EObject> getOutParameters() {
 					return outMainParams;
 				}
-
-				public Trace getTrace() {
-					return outTraces.isEmpty() ? null : outTraces.get(0);
-				}
 				
 				public String getConsoleOutput() {
 					return outConsole.isEmpty() ? "" : outConsole.get(0); //$NON-NLS-1$
