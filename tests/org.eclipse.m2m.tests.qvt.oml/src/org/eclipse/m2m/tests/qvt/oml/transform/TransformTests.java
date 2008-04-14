@@ -12,6 +12,7 @@
 package org.eclipse.m2m.tests.qvt.oml.transform;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -81,6 +82,7 @@ public class TransformTests {
 
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {
+        		new FilesToFilesData("stdlibelement", Collections.singletonList("in.ecore"), Arrays.asList("expected_x.ecore", "expected_y.ecore")),           		
         		new FileToFileData("mapDisjuncts"), //$NON-NLS-1$ 
         		new FileToFileData("mapInherits"), //$NON-NLS-1$        		
         		new FileToFileData("mapMerges"), //$NON-NLS-1$        
