@@ -22,9 +22,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EcoreFactory;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
@@ -122,15 +120,7 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
     public boolean isStdLibClassifier(EClassifier classifier) {
     	return classifier == getElementType() || classifier == fStdlibModule.getEClassifier(classifier.getName());
     }
-    
-
-	public ModelType createModel(String name) {
-		ModelType modelType = ExpressionsFactory.eINSTANCE.createModelType();
-		modelType.setName(name);		
-		modelType.getESuperTypes().add(MODEL);
-		return modelType;		
-	}
-	
+    		
 	@Override
 	public EClass getModelClass() {	
 		return MODEL;
@@ -220,7 +210,7 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 		
 		return (PrintWriter) loggerObject;
 	}
-    
+ 
 	private void define(AbstractContextualOperations typeOperations) {
 		typeOperations.define(fEnv);
 	}	
@@ -231,7 +221,7 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 		
 		EClass result = EcoreFactory.eINSTANCE.createEClass();
 		result.setName(name);
-		result.isAbstract();
+		result.setAbstract(true);
 		fStdlibModule.getEClassifiers().add(result);
 
 		return result;

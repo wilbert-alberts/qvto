@@ -32,15 +32,14 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerKernel;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.Library;
 import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LibraryCreationException;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.LegacyNativeLibSupport;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
-import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.ExpressionsFactory;
 import org.eclipse.ocl.expressions.Variable;
@@ -109,9 +108,8 @@ public class QvtOperationalFileEnv extends QvtOperationalEnv {
         return getKernel().getModule(mmas);
     }
     
-    public Module createModule(MappingModuleCS mmas, QvtCompilerOptions options,
-    		EcoreEnvironment env, CFile cFile) {
-        Module module = getKernel().createModule(mmas, options, env, cFile);
+    public Module createModule(MappingModuleCS mmas, QvtCompilerOptions options, CFile cFile) {
+        Module module = getKernel().createModule(mmas, options, this, cFile);
         
 		Variable<EClassifier, EParameter> thisVar = ExpressionsFactory.eINSTANCE.createVariable();
 		String prefix = QvtOperationalParserUtil.getMappingModuleSimpleName(mmas.getHeaderCS());

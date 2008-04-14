@@ -164,8 +164,8 @@ public class ModelParameterExtent {
 			}
 		}
 
+		elements.clear();
 		if(result != null) {
-			elements.clear();
 			elements.addAll(result);
 		}
 	}

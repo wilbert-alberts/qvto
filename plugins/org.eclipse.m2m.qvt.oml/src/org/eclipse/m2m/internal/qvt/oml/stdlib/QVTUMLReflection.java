@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
@@ -23,7 +24,12 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
@@ -35,6 +41,17 @@ public class QVTUMLReflection
 		implements UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, 
 								EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> 
 {
+	private static class QVTMetaElementMarker extends AdapterImpl {
+		private QVTMetaElementMarker() {
+		}
+		
+		@Override
+		public boolean isAdapterForType(Object type) {
+			return QVTMetaElementMarker.class == type;
+		}
+
+	}	
+	
 	private QvtOperationalStdLibrary fStdLibrary;
 	private UMLReflection<EPackage, EClassifier, EOperation, 
 					EStructuralFeature, EEnumLiteral, EParameter, EObject, 
@@ -53,12 +70,49 @@ public class QVTUMLReflection
 		fUmlReflection = umlReflection;
 	}
 
-	public EClassifier getCommonSuperType(EClassifier type1, EClassifier type2) {		
+	public static Module createModule() {
+		Module module = ExpressionsFactory.eINSTANCE.createModule();
+		module.eAdapters().add(new QVTMetaElementMarker());
+		return module;
+	}
+
+	public static ModelType createModel(String name) {
+		ModelType modelType = ExpressionsFactory.eINSTANCE.createModelType();
+		modelType.setName(name);
+		modelType.getESuperTypes().add(QvtOperationalStdLibrary.INSTANCE.getModelClass());
+		modelType.eAdapters().add(new QVTMetaElementMarker());		
+		return modelType;
+	}
+	
+	public static boolean isModelTypeInstance(EClassifier eClassifier) {
+		return (eClassifier instanceof ModelType) || eClassifier == QvtOperationalStdLibrary.INSTANCE.getModelClass();
+	}
+
+	public static boolean isModuleInstance(EClassifier eClassifier) {
+		return (eClassifier instanceof Module);// && EcoreUtil.getExistingAdapter(eClassifier, QVTMetaElementMarker.class) != null;
+	}
+	
+	
+	public static boolean isUserModelElement(EClassifier classifier) {
+		if(classifier instanceof EClass) {
+			EClass eClass = (EClass) classifier;
+			EClass metaClass = eClass.eClass();
+			EPackage stdlibPackage = QvtOperationalStdLibrary.INSTANCE.getLibaryModule();
+			
+			return false == (eClass.getEPackage() == stdlibPackage || 
+					metaClass.getEPackage() == stdlibPackage ||
+					metaClass.getEPackage() == ExpressionsPackage.eINSTANCE);
+		}
+		
+		return false;
+	}
+
+	public EClassifier getCommonSuperType(EClassifier type1, EClassifier type2) {	
 		EClassifier result = fUmlReflection.getCommonSuperType(type1, type2);
 		if(result == null) {		
-			if(type1 == fStdLibrary.getElementType() && type2 instanceof EClass) {
+			if(type1 == fStdLibrary.getElementType() && isUserModelElement(type2)) {
 				return type1;
-			} else if(type2 == fStdLibrary.getElementType() && type1 instanceof EClass) {
+			} else if(type2 == fStdLibrary.getElementType() && isUserModelElement(type1)) {
 				return type2;
 			}
 		}
@@ -67,7 +121,7 @@ public class QVTUMLReflection
 	
 	public Collection<? extends EClassifier> getAllSupertypes(EClassifier classifier) {
 		Collection<? extends EClassifier> result = fUmlReflection.getAllSupertypes(classifier);
-		if(classifier instanceof EClass) {
+		if(isUserModelElement(classifier)) {
 			// considered to be a model element
 			ArrayList<EClassifier> allSuperTupes = new ArrayList<EClassifier>(result.size() + 1);
 			allSuperTupes.addAll(result);
@@ -80,10 +134,10 @@ public class QVTUMLReflection
 		int result = fUmlReflection.getRelationship(type1, type2);
 		EClassifier element = fStdLibrary.getElementType();
 		if(type1 != type2) {
-			if(type1 == element && type2 instanceof EClass) {
+			if(type1 == element && isUserModelElement(type2)) {
 				return UMLReflection.STRICT_SUPERTYPE;
 			}
-			if(type2 == element && type1 instanceof EClass) {
+			if(type2 == element && isUserModelElement(type1)) {
 				return UMLReflection.STRICT_SUBTYPE;
 			}			
 		}
@@ -93,13 +147,13 @@ public class QVTUMLReflection
 	
 	public List<EOperation> getOperations(EClassifier classifier) {
 		List<EOperation> result = fUmlReflection.getOperations(classifier);
-		if(classifier instanceof EClass) {
+		if(isUserModelElement(classifier)) {
 			QvtOperationalStdLibrary stdlib = QvtOperationalStdLibrary.INSTANCE;
 			List<EOperation> elementOpers = stdlib.getOperations(stdlib.getElementType());			
 			List<EOperation> tmp = result;
 			result = new ArrayList<EOperation>(result.size() + elementOpers.size());
 			result.addAll(tmp);
-			result.addAll(elementOpers);
+ 			result.addAll(elementOpers);
 		}
 		return result;
 	}	

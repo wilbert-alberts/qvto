@@ -15,7 +15,7 @@ import org.eclipse.osgi.util.NLS;
 
 public final class ValidationMessages extends NLS {
 
-	private static final String BUNDLE_NAME = "org.eclipse.m2m.internal.qvt.oml.ast.parser.messages";//$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.eclipse.m2m.internal.qvt.oml.ast.parser.ValidationMessages";//$NON-NLS-1$
 
 	private ValidationMessages() {
 		// Do not instantiate
@@ -33,7 +33,8 @@ public final class ValidationMessages extends NLS {
 	public static String mappingOperationExpected;
 	public static String MissingMessageLogExpArgumentError;
 	public static String QvtOperationalParserUtil_inoutParamAssignmentError;
-    public static String QvtOperationalVisitorCS_AbstractTypesNotInitialized;
+    public static String QvtOperationalValidationVisitor_invalidContextualType;
+	public static String QvtOperationalVisitorCS_AbstractTypesNotInitialized;
 	public static String QvtOperationalVisitorCS_ambiguousMappingOperationReference;
 	public static String QvtOperationalVisitorCS_booleanTypeExpressionExpected;
 	public static String QvtOperationalVisitorCS_canNotInstantiateAbstractType;
@@ -78,12 +79,12 @@ public final class ValidationMessages extends NLS {
 	public static String StringTypeMessageLogArgumentError;
 	public static String UknownSeverityKindError;
 	public static String UnsupportedLogExpArgumentError;
-	public static String useMapKeywordWarning;
+	
 	public static String incorrectCastWarning;
-	public static String lateResolveWarning;
-	public static String missingTypeError;
+	
+	
 	public static String nonModelTypeError;
-	public static String abstractTypeError;
+	
 	public static String propertyAssignmentExpectedError;
 	public static String noPropertyInTypeError;
 	public static String ContextParamMustBeInOrInout;
@@ -92,13 +93,13 @@ public final class ValidationMessages extends NLS {
 	public static String ReadOnlyProperty;
 	public static String NoLibrary;
 	public static String FailedToLoadLibrary;
-	public static String MissingMetamodelsRequiredByLibrary;
+	
 	public static String ReturnTypeMismatch;
 	public static String DuplicateLibraryImport;
 	public static String DuplicateMetamodelImport;
 	public static String moduleNameMustMatchFileName;
 	public static String moduleNameMustBeSimpleIdentifierError;	
-	public static String wrongPackageError;
+	
 	public static String failedToResolveMetamodelError;
 	public static String propertyAlreadyExistsInTypeError;
 	public static String bodyTypeNotCompatibleWithReturnTypeError;
@@ -113,7 +114,7 @@ public final class ValidationMessages extends NLS {
 	public static String objectExpressionExpectedError;
 	public static String ConfigPropertyMustHaveType;
 	public static String ConfigPropertyTypeUnsupported;
-	public static String MappingWithoutResultMustNotHaveBody;
+
 	public static String OutParamsNotSupported;
 	public static String OutParamWithoutExtent;
 	public static String mappingGuardNotBooleanError;
@@ -122,17 +123,21 @@ public final class ValidationMessages extends NLS {
 	public static String SemanticUtil_3;
 	public static String SemanticUtil_5;
 	public static String SemanticUtil_8;
-	public static String SemanticUtil_11;
+	
 	public static String SemanticUtil_13;
 	public static String SemanticUtil_15;
 	public static String SemanticUtil_17;
-	
-	public static String Local_properties_are_not_allowed_in_libraries;
 
     public static String LibOperationAnalyser_ParametersOsReturnTypeNotFound;
     public static String LibOperationAnalyser_OperationParsingError;
     public static String ResolveExpMustHaveASource;
-	
+    public static String directCallToAbstractMappingDisallowed;
+    public static String returnUsedOutsideOperationBody;
+    public static String useReturnExpForOperationResult;
+    public static String typeMismatchError;
+    public static String missingReturnValueError;
+    public static String returnNotAllowedInMappingYet;
+    
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, ValidationMessages.class);
 	}

@@ -167,7 +167,7 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
 
 
     public Object visitMappingOperation(MappingOperation mappingOperation) {
-        doProcess(mappingOperation.getBody(), mappingOperation);
+        visitImperativeOperation(mappingOperation);
         for (OCLExpression<EClassifier> exp : mappingOperation.getWhen()) {
             doProcess(exp, mappingOperation);
         }

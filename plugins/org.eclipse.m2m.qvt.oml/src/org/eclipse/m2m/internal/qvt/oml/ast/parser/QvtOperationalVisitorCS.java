@@ -127,6 +127,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.WhileExp;
 import org.eclipse.m2m.internal.qvt.oml.library.QvtResolveUtil;
 import org.eclipse.m2m.internal.qvt.oml.ocl.OclQvtoPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LibraryCreationException;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.SemanticException;
 import org.eclipse.ocl.cst.CSTFactory;
@@ -1224,7 +1225,7 @@ public class QvtOperationalVisitorCS
         if (module != null) {
             return module;
         }        
-		module = env.createModule(moduleCS, myCompilerOptions, env, parsedModuleCS.getSource());
+		module = env.createModule(moduleCS, myCompilerOptions, parsedModuleCS.getSource());
 		module.setStartPosition(moduleCS.getStartOffset());
 		module.setEndPosition(moduleCS.getEndOffset());
 
@@ -1479,7 +1480,7 @@ public class QvtOperationalVisitorCS
 		}
 
 		SimpleNameCS identifierCS = modelTypeCS.getIdentifierCS();
-		ModelType modelType = QvtOperationalStdLibrary.INSTANCE.createModel(identifierCS != null ? identifierCS.getValue() : null);
+		ModelType modelType = QVTUMLReflection.createModel(identifierCS != null ? identifierCS.getValue() : null);
 
 		if(myCompilerOptions.isGenerateCompletionData()) {
 			ASTBindingHelper.createCST2ASTBinding(modelTypeCS, modelType);
@@ -2345,7 +2346,7 @@ public class QvtOperationalVisitorCS
 	private void validateObjectExp(ObjectExp objectExp, OutExpCS objectExpCS, QvtOperationalEnv env) {
 		EClass derivedInstantiatedClass = objectExp.getInstantiatedClass();		
 		Variable<EClassifier, EParameter> referredObject  = objectExp.getReferredObject();
-		if(derivedInstantiatedClass == null && (referredObject != null && referredObject.getType() instanceof EClass)) {
+		if(derivedInstantiatedClass == null && (referredObject != null && QVTUMLReflection.isUserModelElement(referredObject.getType()))) {
 			derivedInstantiatedClass = (EClass)referredObject.getType();
 		}
 		
@@ -2412,8 +2413,9 @@ public class QvtOperationalVisitorCS
 		// CST availability only related checks
 		if(objectExpCS != null) {
 			if(objectExpCS.getTypeSpecCS() != null) {
-				// parsed from concrete syntax, checkout the classifier of the ObjectExp 
-				if(objectExp.getType() != null && objectExp.getType() instanceof EClass == false) {
+				// parsed from concrete syntax, checkout the classifier of the ObjectExp
+				// null type reported by (Unknown type) from MDT OCL validation
+				if(objectExp.getType() != null && QVTUMLReflection.isUserModelElement(objectExp.getType()) == false) {
 					// we failed to figure out the class but type is available, let's report it's classifier only 
 					env.reportError(NLS.bind(ValidationMessages.nonModelTypeError,
 							QvtOperationalParserUtil.safeGetQualifiedName(env, objectExp.getType())), objectExpCS.getTypeSpecCS());					

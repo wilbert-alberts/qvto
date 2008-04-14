@@ -40,6 +40,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
 import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.ecore.EcoreEvaluationEnvironment;
 import org.eclipse.ocl.internal.l10n.OCLMessages;
@@ -363,7 +364,10 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			return false == object instanceof Collection;
 		} 
 		else if(classifier == QvtOperationalStdLibrary.INSTANCE.getElementType()) {
-			return classifier instanceof EClass;
+			if(object instanceof EObject) {
+				return QVTUMLReflection.isUserModelElement(((EObject)object).eClass());
+			}
+			
 		}
 		return super.isKindOf(object, classifier);
 	}
