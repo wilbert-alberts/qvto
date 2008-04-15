@@ -24,8 +24,8 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
@@ -33,6 +33,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
+import org.eclipse.ocl.ecore.internal.OCLStandardLibraryImpl;
 import org.eclipse.ocl.utilities.ExpressionInOCL;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
@@ -92,10 +93,13 @@ public class QVTUMLReflection
 		return (eClassifier instanceof Module);// && EcoreUtil.getExistingAdapter(eClassifier, QVTMetaElementMarker.class) != null;
 	}
 	
-	
 	public static boolean isUserModelElement(EClassifier classifier) {
 		if(classifier instanceof EClass) {
 			EClass eClass = (EClass) classifier;
+			EClassifier realClassifier = OCLStandardLibraryImpl.INSTANCE.getRealClassifier(eClass);
+			if(eClass != realClassifier && realClassifier != null) {
+				return false;
+			}
 			EClass metaClass = eClass.eClass();
 			EPackage stdlibPackage = QvtOperationalStdLibrary.INSTANCE.getLibaryModule();
 			
@@ -331,7 +335,10 @@ public class QVTUMLReflection
 	}
 
 	public boolean isStatic(Object feature) {
-		return fUmlReflection.isStatic(feature);
+		if(feature instanceof EOperation) {
+			return QvtOperationalParserUtil.isStaticOperation((EOperation) feature);
+		}
+		return false;
 	}
 
 	public boolean isStereotype(EClassifier type) {

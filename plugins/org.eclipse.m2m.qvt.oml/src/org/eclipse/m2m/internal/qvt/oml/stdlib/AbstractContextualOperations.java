@@ -18,6 +18,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.expressions.ExpressionsFactory;
 import org.eclipse.ocl.expressions.Variable;
@@ -43,21 +44,32 @@ public abstract class AbstractContextualOperations {
 			
 	public void define(EcoreEnvironment env) {
 		for (OperationProvider operation : getOperations()) {
-			operation.define(env);
+			EOperation defOper = operation.define(env);
+			if(operation.fIsStatic) {
+				QvtOperationalParserUtil.markAsStaticOperation(defOper);
+			}
 		}
 	}
+	
+	protected OperationProvider createStaticOperationProvider(CallHandler dispatcher, String name, EClassifier returnType, EClassifier... paramTypes) {
+		OperationProvider provider = new OperationProvider(dispatcher, name, returnType, paramTypes);
+		provider.fIsStatic = true;
+		return provider;
+	}	
 	
 	protected class OperationProvider {
 		private String fName;
 		private EClassifier fReturnType;
 		private EClassifier[] fParamTypes;
 		private CallHandler fDispatcher;
-		
+		private boolean fIsStatic; 
+				
 		protected OperationProvider(CallHandler dispatcher, String name, EClassifier returnType, EClassifier... paramTypes) {
 			this.fName = name;
 			this.fReturnType = returnType;
 			this.fParamTypes = paramTypes;
 			this.fDispatcher = dispatcher;
+			this.fIsStatic = false;
 		}
 		
 		public CallHandler callDispatcher() {

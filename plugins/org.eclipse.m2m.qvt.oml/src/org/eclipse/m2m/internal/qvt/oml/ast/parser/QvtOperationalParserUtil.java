@@ -79,6 +79,7 @@ public class QvtOperationalParserUtil {
 	
 	private static final String QVT_NAMESPACE_URI = "http://www.eclipse.org/m2m/1.0.0/QVT"; //$NON-NLS-1$
 	private static final String QVT_IS_ABSTACT = "isAbstract"; //$NON-NLS-1$
+	private static final String QVT_IS_STATIC = "isStatic"; //$NON-NLS-1$	
 	private static final String OPERATION_OWNING_MODULE_URI = QVT_NAMESPACE_URI + "/module"; //$NON-NLS-1$
 	private static final String MODULE_OWNED_OPERATION_URI =	QVT_NAMESPACE_URI + "/operation"; //$NON-NLS-1$;	
 
@@ -738,6 +739,23 @@ public class QvtOperationalParserUtil {
 		}
 		return false;
 	}
+	
+	public static void markAsStaticOperation(EOperation operation) {
+		EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
+		annotation.setSource(QVT_NAMESPACE_URI);
+		annotation.getDetails().put(QVT_IS_STATIC, Boolean.toString(true));
+		operation.getEAnnotations().add(annotation);
+	}
+	
+	public static boolean isStaticOperation(EOperation operation) {
+		EAnnotation annotation = operation.getEAnnotation(QVT_NAMESPACE_URI);
+		if(annotation != null) {
+			String value = annotation.getDetails().get(QVT_IS_STATIC);
+			return Boolean.valueOf(value);
+		}
+		return false;
+	}
+	
 	
 	public static CSTNode getImperativeOperationProblemNode(MappingMethodCS methodCS) {
 		MappingDeclarationCS mappingDeclCS = methodCS.getMappingDeclarationCS();
