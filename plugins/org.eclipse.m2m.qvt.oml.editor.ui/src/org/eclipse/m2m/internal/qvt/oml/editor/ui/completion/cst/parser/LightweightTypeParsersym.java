@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.1 2008/04/06 08:59:39 sboyko Exp $
+* $Id: LightweightTypeParsersym.java,v 1.2 2008/04/24 12:15:38 sboyko Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.1 2008/04/06 08:59:39 sboyko Exp $
+* $Id: LightweightTypeParsersym.java,v 1.2 2008/04/24 12:15:38 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -150,8 +150,9 @@ public interface LightweightTypeParsersym {
       TK_when = 116,
       TK_var = 95,
       TK_configuration = 144,
-      TK_property = 145,
-      TK_population = 146,
+      TK_intermediate = 145,
+      TK_property = 146,
+      TK_population = 147,
       TK_map = 61,
       TK_xmap = 62,
       TK_late = 63,
@@ -166,16 +167,16 @@ public interface LightweightTypeParsersym {
       TK_invresolveone = 81,
       TK_invresolveIn = 82,
       TK_invresolveoneIn = 83,
-      TK_modeltype = 147,
-      TK_uses = 148,
-      TK_where = 149,
-      TK_refines = 150,
-      TK_enforcing = 151,
-      TK_access = 152,
-      TK_extends = 153,
-      TK_blackbox = 154,
-      TK_abstract = 155,
-      TK_static = 156,
+      TK_modeltype = 148,
+      TK_uses = 149,
+      TK_where = 150,
+      TK_refines = 151,
+      TK_enforcing = 152,
+      TK_access = 153,
+      TK_extends = 154,
+      TK_blackbox = 155,
+      TK_abstract = 156,
+      TK_static = 157,
       TK_result = 28,
       TK_main = 118,
       TK_this = 33,
@@ -188,10 +189,10 @@ public interface LightweightTypeParsersym {
       TK_collectselect = 123,
       TK_collectselectOne = 124,
       TK_return = 97,
-      TK_rename = 157,
-      TK_inherits = 158,
-      TK_merges = 159,
-      TK_disjuncts = 160,
+      TK_rename = 158,
+      TK_inherits = 159,
+      TK_merges = 160,
+      TK_disjuncts = 161,
       TK_IDENTIFIER = 2,
       TK_ERROR_TOKEN = 4,
       TK_INTEGER_RANGE_START = 106,
@@ -343,6 +344,7 @@ public interface LightweightTypeParsersym {
                  "helper",
                  "inout",
                  "configuration",
+                 "intermediate",
                  "property",
                  "population",
                  "modeltype",
