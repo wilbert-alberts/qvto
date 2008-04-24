@@ -332,8 +332,7 @@ public abstract class QvtModule {
      * @param propSet - a set to put properties to
      */
     private void collectProperties(Module module, Set<QvtConfigurationProperty> propSet) {
-        List<Property> properties = module.getConfigProperty();
-        for (Property element : properties) {
+        for (Property element : module.getConfigProperty()) {
             if (element instanceof ConfigProperty) {
                 ConfigProperty property = (ConfigProperty) element;
                 EClassifier type = property.getEType();
