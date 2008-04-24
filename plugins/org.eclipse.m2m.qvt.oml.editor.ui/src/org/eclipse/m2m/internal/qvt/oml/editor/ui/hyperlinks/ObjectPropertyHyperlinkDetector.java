@@ -11,14 +11,11 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks;
 
-import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.PatternPropertyExpCS;
@@ -27,12 +24,10 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.IntermediatePropertyModelAdapt
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
-import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.FeatureCallExpCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.VariableExpCS;
-import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.TupleType;
 import org.eclipse.ocl.expressions.PropertyCallExp;
 import org.eclipse.ocl.utilities.ASTNode;
@@ -76,7 +71,7 @@ public class ObjectPropertyHyperlinkDetector implements IHyperlinkDetectorHelper
 	}
 
 	
-	private static Property getASTProperty(EStructuralFeature feature) {
+	public static Property getASTProperty(EStructuralFeature feature) {
 		EStructuralFeature originalFeature = IntermediatePropertyModelAdapter.getOverridenFeature(feature);
 		if (originalFeature.eContainer() instanceof Module) {
 			Module module = (Module) originalFeature.eContainer();
