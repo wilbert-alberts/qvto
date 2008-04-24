@@ -262,12 +262,6 @@ public class QvtOperationalParserUtil {
 	}
 
 	public static boolean validateLocalProperty(LocalProperty prop, QvtOperationalFileEnv env) {
-		if (env.lookupLocal(prop.getName()) != null) {
-			env.reportError(NLS.bind(ValidationMessages.SemanticUtil_15, new Object[] { prop.getName() }), prop
-					.getStartPosition(), prop.getEndPosition());
-			return false;
-		}
-
 		if (prop.getEType() == null) {
 			prop.setEType(prop.getExpression().getType());
 		}

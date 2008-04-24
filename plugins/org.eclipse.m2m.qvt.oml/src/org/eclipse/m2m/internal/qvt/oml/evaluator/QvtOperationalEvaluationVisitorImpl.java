@@ -56,6 +56,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp;
@@ -338,6 +339,10 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     public Object visitLocalProperty(LocalProperty localProperty) {
         return localProperty.getExpression().accept(getVisitor());
     }
+    
+	public Object visitContextualProperty(ContextualProperty contextualProperty) {
+        return contextualProperty.getInitExpression().accept(getVisitor());
+	}
     
     protected boolean isWhenPreconditionSatisfied(MappingOperation mappingOperation) {
     	if(mappingOperation.getWhen().isEmpty()) {
@@ -1762,5 +1767,5 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     
     private OCLAnnotationSupport oclAnnotationSupport;
     private boolean isInTerminatingState = false;
-    
+
 }

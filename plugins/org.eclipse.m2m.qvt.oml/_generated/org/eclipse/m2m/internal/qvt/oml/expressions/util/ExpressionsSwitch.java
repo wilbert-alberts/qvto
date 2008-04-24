@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.m2m.internal.qvt.oml.expressions.*;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
@@ -205,7 +206,7 @@ public class ExpressionsSwitch<T1> {
 			case ExpressionsPackage.PROPERTY: {
 				Property property = (Property)theEObject;
 				T1 result = caseProperty(property);
-				if (result == null) result = caseEParameter(property);
+				if (result == null) result = caseEStructuralFeature(property);
 				if (result == null) result = caseVisitableASTNode(property);
 				if (result == null) result = caseETypedElement(property);
 				if (result == null) result = caseVisitable(property);
@@ -219,7 +220,7 @@ public class ExpressionsSwitch<T1> {
 				LocalProperty localProperty = (LocalProperty)theEObject;
 				T1 result = caseLocalProperty(localProperty);
 				if (result == null) result = caseProperty(localProperty);
-				if (result == null) result = caseEParameter(localProperty);
+				if (result == null) result = caseEStructuralFeature(localProperty);
 				if (result == null) result = caseVisitableASTNode(localProperty);
 				if (result == null) result = caseETypedElement(localProperty);
 				if (result == null) result = caseVisitable(localProperty);
@@ -233,13 +234,27 @@ public class ExpressionsSwitch<T1> {
 				ConfigProperty configProperty = (ConfigProperty)theEObject;
 				T1 result = caseConfigProperty(configProperty);
 				if (result == null) result = caseProperty(configProperty);
-				if (result == null) result = caseEParameter(configProperty);
+				if (result == null) result = caseEStructuralFeature(configProperty);
 				if (result == null) result = caseVisitableASTNode(configProperty);
 				if (result == null) result = caseETypedElement(configProperty);
 				if (result == null) result = caseVisitable(configProperty);
 				if (result == null) result = caseASTNode(configProperty);
 				if (result == null) result = caseENamedElement(configProperty);
 				if (result == null) result = caseEModelElement(configProperty);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ExpressionsPackage.CONTEXTUAL_PROPERTY: {
+				ContextualProperty contextualProperty = (ContextualProperty)theEObject;
+				T1 result = caseContextualProperty(contextualProperty);
+				if (result == null) result = caseProperty(contextualProperty);
+				if (result == null) result = caseEStructuralFeature(contextualProperty);
+				if (result == null) result = caseVisitableASTNode(contextualProperty);
+				if (result == null) result = caseETypedElement(contextualProperty);
+				if (result == null) result = caseVisitable(contextualProperty);
+				if (result == null) result = caseASTNode(contextualProperty);
+				if (result == null) result = caseENamedElement(contextualProperty);
+				if (result == null) result = caseEModelElement(contextualProperty);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -698,6 +713,21 @@ public class ExpressionsSwitch<T1> {
 	 * @generated
 	 */
 	public T1 caseConfigProperty(ConfigProperty object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Contextual Property</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Contextual Property</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseContextualProperty(ContextualProperty object) {
 		return null;
 	}
 
@@ -1268,6 +1298,21 @@ public class ExpressionsSwitch<T1> {
 	 * @generated
 	 */
 	public T1 caseETypedElement(ETypedElement object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>EStructural Feature</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>EStructural Feature</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseEStructuralFeature(EStructuralFeature object) {
 		return null;
 	}
 

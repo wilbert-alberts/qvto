@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.modelparam.ResourceEObject;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.IntermediatePropertyModelAdapter;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtChangeRecorder;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
@@ -172,13 +173,20 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
             if(resolvedProperty == null) { 
             	return null;
             }
-		} else if(property.getEType() instanceof CollectionType && target instanceof EObject) {
+		}
+		else if(property.getEType() instanceof CollectionType && target instanceof EObject) {
 			// module property of direct OCL collection type => override the super impl which coerce the result value 
 			// and takes only the first element and returns from navigate call
             EObject eTarget = (EObject) target;
             if (eTarget.eClass().getEAllStructuralFeatures().contains(property)) {
                 return eTarget.eGet(property, true);
             }
+		}
+		else {
+			EStructuralFeature originalFeature = IntermediatePropertyModelAdapter.getOverridenFeature(property);
+			if (originalFeature != property) {
+				target = IntermediatePropertyModelAdapter.getPropertyHolder(originalFeature.getEContainingClass(), target, property);
+			}
 		}
 		
 		return super.navigateProperty(resolvedProperty, qualifiers, target);
@@ -593,8 +601,9 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			// call performed on OclInvalid, can not continue
 			return;
 		}
-        Class<?> expectedType = eStructuralFeature.getEType().getInstanceClass();
-
+		
+		owner = resolveOwner(owner, eStructuralFeature);
+		
         if(eStructuralFeature.getEType() instanceof CollectionType) {
         	// OCL collection type used directly, set in module properties
         	Collection<Object> currentValues = (Collection<Object>) owner.eGet(eStructuralFeature);        	
@@ -621,6 +630,8 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         	return;
         }
         
+        Class<?> expectedType = eStructuralFeature.getEType().getInstanceClass();
+
         if (isMany(owner, eStructuralFeature))  {
 			List<Object> featureValues = (List<Object>) owner.eGet(eStructuralFeature);
 			if (isReset) {
@@ -640,6 +651,14 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         } else {
         	owner.eUnset(eStructuralFeature);
         }
+	}
+
+	private EObject resolveOwner(EObject owner, EStructuralFeature feature) {
+		EStructuralFeature originalFeature = IntermediatePropertyModelAdapter.getOverridenFeature(feature);
+    	if (originalFeature != feature) {
+        	return IntermediatePropertyModelAdapter.getPropertyHolder(originalFeature.getEContainingClass(), owner, feature);
+    	}
+		return owner;
 	}
 
 	private boolean isMany(EObject ownerObj, EStructuralFeature eStructuralFeature) {

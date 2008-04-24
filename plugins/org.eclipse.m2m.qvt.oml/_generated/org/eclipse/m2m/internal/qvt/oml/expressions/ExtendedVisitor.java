@@ -100,6 +100,14 @@ public interface ExtendedVisitor<T, S, COA, SSA, CT> extends Visitor<T, EClassif
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @model contextualPropertyRequired="true"
+	 * @generated
+	 */
+	T visitContextualProperty(ContextualProperty contextualProperty);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @model imperativeOperationRequired="true"
 	 * @generated
 	 */

@@ -100,6 +100,15 @@ public interface ExpressionsFactory extends EFactory {
 	ConfigProperty createConfigProperty();
 
 	/**
+	 * Returns a new object of class '<em>Contextual Property</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Contextual Property</em>'.
+	 * @generated
+	 */
+	ContextualProperty createContextualProperty();
+
+	/**
 	 * Returns a new object of class '<em>Imperative Operation</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

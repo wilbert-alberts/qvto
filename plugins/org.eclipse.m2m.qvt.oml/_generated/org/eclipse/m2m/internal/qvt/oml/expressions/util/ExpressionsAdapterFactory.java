@@ -22,7 +22,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
+import org.eclipse.m2m.internal.qvt.oml.expressions.*;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
@@ -161,6 +163,10 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseConfigProperty(ConfigProperty object) {
 				return createConfigPropertyAdapter();
+			}
+			@Override
+			public Adapter caseContextualProperty(ContextualProperty object) {
+				return createContextualPropertyAdapter();
 			}
 			@Override
 			public Adapter caseImperativeOperation(ImperativeOperation object) {
@@ -315,12 +321,16 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createETypedElementAdapter();
 			}
 			@Override
-			public Adapter caseEParameter(EParameter object) {
-				return createEParameterAdapter();
+			public Adapter caseEStructuralFeature(EStructuralFeature object) {
+				return createEStructuralFeatureAdapter();
 			}
 			@Override
 			public Adapter caseEOperation(EOperation object) {
 				return createEOperationAdapter();
+			}
+			@Override
+			public Adapter caseEParameter(EParameter object) {
+				return createEParameterAdapter();
 			}
 			@Override
 			public <C> Adapter caseTypedElement(TypedElement<C> object) {
@@ -469,6 +479,20 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createConfigPropertyAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty <em>Contextual Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty
+	 * @generated
+	 */
+	public Adapter createContextualPropertyAdapter() {
 		return null;
 	}
 
@@ -1001,6 +1025,20 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createETypedElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecore.EStructuralFeature <em>EStructural Feature</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecore.EStructuralFeature
+	 * @generated
+	 */
+	public Adapter createEStructuralFeatureAdapter() {
 		return null;
 	}
 

@@ -143,6 +143,7 @@ public class QvtOperationalFileEnv extends QvtOperationalEnv {
             reportError(NLS.bind(ValidationMessages.SemanticUtil_15,
                     new Object[] { prop.getName() }), prop.getStartPosition(), prop.getEndPosition());
         } else {
+        	/*
             if (prop.getName() != null && prop.getEType() != null) {
                 EClassifier type = prop.getEType();
         		EStructuralFeature sFeature = null;
@@ -156,6 +157,7 @@ public class QvtOperationalFileEnv extends QvtOperationalEnv {
         		sFeature.setName(prop.getName());        		
         		sFeature.setEType(prop.getEType());                
             }
+            */
         }
     }
 	    

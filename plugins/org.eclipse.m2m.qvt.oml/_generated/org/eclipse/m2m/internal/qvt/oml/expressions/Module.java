@@ -31,6 +31,7 @@ import org.eclipse.ocl.utilities.Visitor;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getOwnedRenaming <em>Owned Renaming</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getEntry <em>Entry</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getModelParameter <em>Model Parameter</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getIntermediateProperty <em>Intermediate Property</em>}</li>
  * </ul>
  * </p>
  *
@@ -105,19 +106,33 @@ public interface Module extends EClass, EPackage, VisitableASTNode {
 	EList<ModelParameter> getModelParameter();
 
 	/**
-	 * Returns the value of the '<em><b>Config Property</b></em>' containment reference list.
+	 * Returns the value of the '<em><b>Intermediate Property</b></em>' reference list.
 	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.expressions.Property}.
-	 * It is bidirectional and its opposite is '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Property#getModule <em>Module</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Intermediate Property</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Intermediate Property</em>' reference list.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getModule_IntermediateProperty()
+	 * @model
+	 * @generated
+	 */
+	EList<Property> getIntermediateProperty();
+
+	/**
+	 * Returns the value of the '<em><b>Config Property</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.expressions.Property}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Config Property</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Config Property</em>' containment reference list.
+	 * @return the value of the '<em>Config Property</em>' reference list.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getModule_ConfigProperty()
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.Property#getModule
-	 * @model opposite="module" containment="true"
+	 * @model
 	 * @generated
 	 */
 	EList<Property> getConfigProperty();

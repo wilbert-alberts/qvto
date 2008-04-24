@@ -16,6 +16,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EStructuralFeatureImpl;
 import org.eclipse.emf.ecore.impl.EParameterImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
@@ -37,13 +38,12 @@ import org.eclipse.ocl.utilities.Visitor;
  * <ul>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.PropertyImpl#getStartPosition <em>Start Position</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.PropertyImpl#getEndPosition <em>End Position</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.PropertyImpl#getModule <em>Module</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class PropertyImpl extends EParameterImpl implements Property {
+public class PropertyImpl extends EStructuralFeatureImpl implements Property {
 	/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -157,93 +157,8 @@ public class PropertyImpl extends EParameterImpl implements Property {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Module getModule() {
-		if (eContainerFeatureID != ExpressionsPackage.PROPERTY__MODULE) return null;
-		return (Module)eContainer();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetModule(Module newModule, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newModule, ExpressionsPackage.PROPERTY__MODULE, msgs);
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setModule(Module newModule) {
-		if (newModule != eInternalContainer() || (eContainerFeatureID != ExpressionsPackage.PROPERTY__MODULE && newModule != null)) {
-			if (EcoreUtil.isAncestor(this, newModule))
-				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
-			NotificationChain msgs = null;
-			if (eInternalContainer() != null)
-				msgs = eBasicRemoveFromContainer(msgs);
-			if (newModule != null)
-				msgs = ((InternalEObject)newModule).eInverseAdd(this, ExpressionsPackage.MODULE__CONFIG_PROPERTY, Module.class, msgs);
-			msgs = basicSetModule(newModule, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.PROPERTY__MODULE, newModule, newModule));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
 		return ((ExtendedVisitor<T, ?, ?, ?, ?>) v).visitProperty(this);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case ExpressionsPackage.PROPERTY__MODULE:
-				if (eInternalContainer() != null)
-					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetModule((Module)otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case ExpressionsPackage.PROPERTY__MODULE:
-				return basicSetModule(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID) {
-			case ExpressionsPackage.PROPERTY__MODULE:
-				return eInternalContainer().eInverseRemove(this, ExpressionsPackage.MODULE__CONFIG_PROPERTY, Module.class, msgs);
-		}
-		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
 
 	/**
@@ -258,8 +173,6 @@ public class PropertyImpl extends EParameterImpl implements Property {
 				return new Integer(getStartPosition());
 			case ExpressionsPackage.PROPERTY__END_POSITION:
 				return new Integer(getEndPosition());
-			case ExpressionsPackage.PROPERTY__MODULE:
-				return getModule();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -277,9 +190,6 @@ public class PropertyImpl extends EParameterImpl implements Property {
 				return;
 			case ExpressionsPackage.PROPERTY__END_POSITION:
 				setEndPosition(((Integer)newValue).intValue());
-				return;
-			case ExpressionsPackage.PROPERTY__MODULE:
-				setModule((Module)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -299,9 +209,6 @@ public class PropertyImpl extends EParameterImpl implements Property {
 			case ExpressionsPackage.PROPERTY__END_POSITION:
 				setEndPosition(END_POSITION_EDEFAULT);
 				return;
-			case ExpressionsPackage.PROPERTY__MODULE:
-				setModule((Module)null);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -318,8 +225,6 @@ public class PropertyImpl extends EParameterImpl implements Property {
 				return startPosition != START_POSITION_EDEFAULT;
 			case ExpressionsPackage.PROPERTY__END_POSITION:
 				return endPosition != END_POSITION_EDEFAULT;
-			case ExpressionsPackage.PROPERTY__MODULE:
-				return getModule() != null;
 		}
 		return super.eIsSet(featureID);
 	}

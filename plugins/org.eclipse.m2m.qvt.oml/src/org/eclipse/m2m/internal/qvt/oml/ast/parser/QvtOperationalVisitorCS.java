@@ -43,6 +43,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.ExpressionStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
@@ -94,6 +95,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
@@ -1340,7 +1342,13 @@ public class QvtOperationalVisitorCS
 			}
 			Property prop = visitModulePropertyCS(propCS, env);
 			if (prop != null) {
-				module.getConfigProperty().add(prop);
+				module.getEStructuralFeatures().add(prop);
+				if (prop instanceof ContextualProperty) {
+					module.getIntermediateProperty().add(prop);
+				}
+				else {
+					module.getConfigProperty().add(prop);
+				}
 			}
 		}
 
@@ -2446,7 +2454,6 @@ public class QvtOperationalVisitorCS
 				}
 			}
 		} else {
-			type = env.getOCLStandardLibrary().getOclVoid();
 			env.reportError(NLS.bind(ValidationMessages.ConfigPropertyMustHaveType,
 					new Object[] { property.getName() }), propCS);
 		}
@@ -2464,23 +2471,93 @@ public class QvtOperationalVisitorCS
 
 		if (validateLocalPropertyCS(propCS, prop, env)) {
 			if (QvtOperationalParserUtil.validateLocalProperty(prop, env)) {
-				if (prop.getName() != null) {
-					env.addModuleProperty(prop);
-				}
+				env.addModuleProperty(prop);
 			}
 		}
 
 		return prop;
 	}
 
+	private Property visitContextualPropertyCS(ContextualPropertyCS propCS, QvtOperationalFileEnv env)
+			throws SemanticException {
+		ContextualProperty prop = ExpressionsFactory.eINSTANCE.createContextualProperty();
+		prop.setStartPosition(propCS.getStartOffset());
+		prop.setEndPosition(propCS.getEndOffset());
+		
+		prop.setName(QvtOperationalParserUtil.getStringRepresentation(propCS.getScopedNameCS()));
+
+		EClassifier type = null;
+		if (propCS.getTypeCS() != null) {
+			type = visitTypeCS(propCS.getTypeCS(), null, env);
+			if (type == null) {
+				return null;
+			}
+		}
+
+		OCLExpression<EClassifier> exp = null;
+		if (propCS.getOclExpressionCS() != null) {
+			exp = visitOclExpressionCS(propCS.getOclExpressionCS(), env);
+			if (exp == null) {
+				return null;
+			}
+		}
+		
+		if (type == null && exp != null) {
+			type = exp.getType();
+		}
+		if (type == null) {
+			return null;
+		}
+		
+		if (exp != null) {
+			EClassifier realType = exp.getType();
+			EClassifier declaredType = prop.getEType();
+			if (!QvtOperationalParserUtil.isAssignableToFrom(env, declaredType, realType)) {
+				env.reportError(NLS.bind(ValidationMessages.SemanticUtil_17,
+						new Object[] { QvtOperationalTypesUtil.getTypeFullName(declaredType), QvtOperationalTypesUtil.getTypeFullName(realType) }),
+						prop.getStartPosition(), prop.getEndPosition());
+			}
+		}
+		
+		prop.setEType(type);
+		prop.setInitExpression(exp);
+		
+		EClassifier contextType = visitTypeCS(propCS.getScopedNameCS().getTypeCS(), null, env);
+		if (contextType != null) {
+			Variable<EClassifier, EParameter> var = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();
+			var.setName(propCS.getSimpleNameCS().getValue());
+			var.setType(type);
+			Constraint constraint = EcoreFactory.eINSTANCE.createConstraint();
+			constraint.setStereotype(QvtOperationalEnv.INTERMEDIATE_PROPERTY_STEREOTYPE);
+			constraint.getConstrainedElements().add(prop);
+			EStructuralFeature feature = env.defineAttribute(contextType, var, constraint);
+			
+			prop.setOverridden(feature);
+		}
+		else {
+			return null;
+		}
+		
+		env.addModuleProperty(prop);
+		
+		return prop;
+	}
+	
 	protected Property visitModulePropertyCS(ModulePropertyCS propCS, QvtOperationalFileEnv env)
 			throws SemanticException {
 		
 		Property result = null;		
 		if (propCS instanceof ConfigPropertyCS) {
 			result = visitConfigPropertyCS((ConfigPropertyCS) propCS, env);
-		} else {
+		}
+		else if (propCS instanceof LocalPropertyCS) {
 			result = visitLocalPropertyCS((LocalPropertyCS) propCS, env);
+		}
+		else if (propCS instanceof ContextualPropertyCS) {
+			result = visitContextualPropertyCS((ContextualPropertyCS) propCS, env);
+		}
+		else {
+			assert false : "Unexpected CS class: " + propCS;
 		}
 		
         // AST binding

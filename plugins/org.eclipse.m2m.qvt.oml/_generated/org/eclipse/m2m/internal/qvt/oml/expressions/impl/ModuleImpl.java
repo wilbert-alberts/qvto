@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.impl.EClassImpl;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
@@ -63,6 +64,7 @@ import org.eclipse.ocl.utilities.Visitor;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getOwnedRenaming <em>Owned Renaming</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getEntry <em>Entry</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getModelParameter <em>Model Parameter</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getIntermediateProperty <em>Intermediate Property</em>}</li>
  * </ul>
  * </p>
  *
@@ -207,7 +209,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 	protected EList<ModelType> usedModelType;
 
 	/**
-	 * The cached value of the '{@link #getConfigProperty() <em>Config Property</em>}' containment reference list.
+	 * The cached value of the '{@link #getConfigProperty() <em>Config Property</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getConfigProperty()
@@ -245,6 +247,16 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * @ordered
 	 */
 	protected EList<ModelParameter> modelParameter;
+
+	/**
+	 * The cached value of the '{@link #getIntermediateProperty() <em>Intermediate Property</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIntermediateProperty()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Property> intermediateProperty;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -503,9 +515,21 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Property> getIntermediateProperty() {
+		if (intermediateProperty == null) {
+			intermediateProperty = new EObjectResolvingEList<Property>(Property.class, this, ExpressionsPackage.MODULE__INTERMEDIATE_PROPERTY);
+		}
+		return intermediateProperty;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EList<Property> getConfigProperty() {
 		if (configProperty == null) {
-			configProperty = new EObjectContainmentWithInverseEList<Property>(Property.class, this, ExpressionsPackage.MODULE__CONFIG_PROPERTY, ExpressionsPackage.PROPERTY__MODULE);
+			configProperty = new EObjectResolvingEList<Property>(Property.class, this, ExpressionsPackage.MODULE__CONFIG_PROPERTY);
 		}
 		return configProperty;
 	}
@@ -581,8 +605,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 				return eBasicSetContainer(otherEnd, ExpressionsPackage.MODULE__ESUPER_PACKAGE, msgs);
 			case ExpressionsPackage.MODULE__MODULE_IMPORT:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getModuleImport()).basicAdd(otherEnd, msgs);
-			case ExpressionsPackage.MODULE__CONFIG_PROPERTY:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getConfigProperty()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -607,8 +629,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 				return ((InternalEList<?>)getModuleImport()).basicRemove(otherEnd, msgs);
 			case ExpressionsPackage.MODULE__USED_MODEL_TYPE:
 				return ((InternalEList<?>)getUsedModelType()).basicRemove(otherEnd, msgs);
-			case ExpressionsPackage.MODULE__CONFIG_PROPERTY:
-				return ((InternalEList<?>)getConfigProperty()).basicRemove(otherEnd, msgs);
 			case ExpressionsPackage.MODULE__OWNED_RENAMING:
 				return ((InternalEList<?>)getOwnedRenaming()).basicRemove(otherEnd, msgs);
 			case ExpressionsPackage.MODULE__MODEL_PARAMETER:
@@ -669,6 +689,8 @@ public class ModuleImpl extends EClassImpl implements Module {
 				return basicGetEntry();
 			case ExpressionsPackage.MODULE__MODEL_PARAMETER:
 				return getModelParameter();
+			case ExpressionsPackage.MODULE__INTERMEDIATE_PROPERTY:
+				return getIntermediateProperty();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -728,6 +750,10 @@ public class ModuleImpl extends EClassImpl implements Module {
 				getModelParameter().clear();
 				getModelParameter().addAll((Collection<? extends ModelParameter>)newValue);
 				return;
+			case ExpressionsPackage.MODULE__INTERMEDIATE_PROPERTY:
+				getIntermediateProperty().clear();
+				getIntermediateProperty().addAll((Collection<? extends Property>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -779,6 +805,9 @@ public class ModuleImpl extends EClassImpl implements Module {
 			case ExpressionsPackage.MODULE__MODEL_PARAMETER:
 				getModelParameter().clear();
 				return;
+			case ExpressionsPackage.MODULE__INTERMEDIATE_PROPERTY:
+				getIntermediateProperty().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -819,6 +848,8 @@ public class ModuleImpl extends EClassImpl implements Module {
 				return entry != null;
 			case ExpressionsPackage.MODULE__MODEL_PARAMETER:
 				return modelParameter != null && !modelParameter.isEmpty();
+			case ExpressionsPackage.MODULE__INTERMEDIATE_PROPERTY:
+				return intermediateProperty != null && !intermediateProperty.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

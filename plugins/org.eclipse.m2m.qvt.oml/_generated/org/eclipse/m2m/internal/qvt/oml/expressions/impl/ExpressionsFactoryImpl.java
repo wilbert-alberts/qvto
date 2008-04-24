@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.m2m.internal.qvt.oml.expressions.*;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
@@ -114,6 +115,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 			case ExpressionsPackage.PROPERTY: return createProperty();
 			case ExpressionsPackage.LOCAL_PROPERTY: return createLocalProperty();
 			case ExpressionsPackage.CONFIG_PROPERTY: return createConfigProperty();
+			case ExpressionsPackage.CONTEXTUAL_PROPERTY: return createContextualProperty();
 			case ExpressionsPackage.IMPERATIVE_OPERATION: return createImperativeOperation();
 			case ExpressionsPackage.MODEL_PARAMETER: return createModelParameter();
 			case ExpressionsPackage.VAR_PARAMETER: return createVarParameter();
@@ -248,6 +250,16 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	public ConfigProperty createConfigProperty() {
 		ConfigPropertyImpl configProperty = new ConfigPropertyImpl();
 		return configProperty;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ContextualProperty createContextualProperty() {
+		ContextualPropertyImpl contextualProperty = new ContextualPropertyImpl();
+		return contextualProperty;
 	}
 
 	/**
