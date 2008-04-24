@@ -49,6 +49,14 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="oclExpressionCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
     </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ContextualPropertyCS" eSuperTypes="#//cst/ModulePropertyCS">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="scopedNameCS" eType="#//cst/temp/ScopedNameCS"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="typeCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="oclExpressionCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+          containment="true"/>
+    </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="MappingDeclarationCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
       <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
           containment="true"/>

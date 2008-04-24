@@ -23,6 +23,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.ElementWithBody;
@@ -119,16 +120,15 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		element.setBodyEndLocation(end.getStartOffset());
 	}
 	
-	protected final CSTNode createLocalPropertyCS(IToken tokenText, TypeCS sym,
-			OCLExpressionCS sym2) {
-				LocalPropertyCS prop = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createLocalPropertyCS();
-				SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, tokenText.toString());
-				setOffsets(nameCS, tokenText);
-				prop.setSimpleNameCS(nameCS);
-				prop.setTypeCS(sym);
-				prop.setOclExpressionCS(sym2);
-				return prop;
-			}
+	protected final CSTNode createLocalPropertyCS(IToken tokenText, TypeCS sym, OCLExpressionCS sym2) {
+		LocalPropertyCS prop = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createLocalPropertyCS();
+		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, tokenText.toString());
+		setOffsets(nameCS, tokenText);
+		prop.setSimpleNameCS(nameCS);
+		prop.setTypeCS(sym);
+		prop.setOclExpressionCS(sym2);
+		return prop;
+	}
 
 	protected final CSTNode createConfigPropertyCS(IToken tokenText, TypeCS sym) {
 		ConfigPropertyCS prop = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createConfigPropertyCS();
@@ -136,6 +136,15 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		setOffsets(nameCS, tokenText);
 		prop.setSimpleNameCS(nameCS);
 		prop.setTypeCS(sym);
+		return prop;
+	}
+
+	protected final CSTNode createContextualPropertyCS(ScopedNameCS scopedNameCS, TypeCS typeCS, OCLExpressionCS oclExpressionCS) {
+		ContextualPropertyCS prop = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createContextualPropertyCS();
+		prop.setSimpleNameCS(createSimpleNameCS(scopedNameCS));
+		prop.setScopedNameCS(scopedNameCS);
+		prop.setTypeCS(typeCS);
+		prop.setOclExpressionCS(oclExpressionCS);
 		return prop;
 	}
 
@@ -307,23 +316,26 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 
 	protected final CSTNode createMappingDeclarationCS(DirectionKindCS directionKindCS, ScopedNameCS scopedNameCS,
 			EList<ParameterDeclarationCS> parameters, TypeSpecCS returnType) {
-				MappingDeclarationCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingDeclarationCS();
-				result.setDirectionKindCS(directionKindCS);
-				result.setReturnType(returnType);
-				result.getParameters().addAll(parameters);
-				result.setSimpleNameCS(createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, scopedNameCS.getName()));
-			
-				SimpleNameCS name = result.getSimpleNameCS();
-				if(name != null) {
-					int endOffset = scopedNameCS.getEndOffset();
-					int length = (name.getValue() != null) ?  name.getValue().length() : 0;			
-					name.setStartOffset(endOffset - (length > 0 ? length-1 : 0));
-					name.setEndOffset(endOffset);
-				}		
-			
-				result.setContextType(scopedNameCS.getTypeCS());
-				return result;
-			}
+		MappingDeclarationCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingDeclarationCS();
+		result.setDirectionKindCS(directionKindCS);
+		result.setReturnType(returnType);
+		result.getParameters().addAll(parameters);
+		result.setSimpleNameCS(createSimpleNameCS(scopedNameCS));
+
+		result.setContextType(scopedNameCS.getTypeCS());
+		return result;
+	}
+	
+	private SimpleNameCS createSimpleNameCS(ScopedNameCS scopedNameCS) {
+		SimpleNameCS simpleNameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, scopedNameCS.getName());
+		
+		int endOffset = scopedNameCS.getEndOffset();
+		int length = (simpleNameCS.getValue() != null) ?  simpleNameCS.getValue().length() : 0;			
+		simpleNameCS.setStartOffset(endOffset - (length > 0 ? length-1 : 0));
+		simpleNameCS.setEndOffset(endOffset);
+
+		return simpleNameCS;
+	}
 
 	private PathNameCS createParentPath(PathNameCS pathNameCS) {
 		PathNameCS result = CSTFactory.eINSTANCE.createPathNameCS();

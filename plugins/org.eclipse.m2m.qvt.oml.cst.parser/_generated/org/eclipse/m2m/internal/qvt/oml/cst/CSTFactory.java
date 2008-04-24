@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactory.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: CSTFactory.java,v 1.2 2008/04/24 12:15:21 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -103,6 +103,15 @@ public interface CSTFactory extends EFactory {
 	 * @generated
 	 */
 	LocalPropertyCS createLocalPropertyCS();
+
+	/**
+	 * Returns a new object of class '<em>Contextual Property CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Contextual Property CS</em>'.
+	 * @generated
+	 */
+	ContextualPropertyCS createContextualPropertyCS();
 
 	/**
 	 * Returns a new object of class '<em>Mapping Declaration CS</em>'.

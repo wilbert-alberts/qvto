@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTAdapterFactory.java,v 1.1 2008/04/06 10:18:41 sboyko Exp $
+ * $Id: CSTAdapterFactory.java,v 1.2 2008/04/24 12:15:21 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -129,6 +129,10 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseLocalPropertyCS(LocalPropertyCS object) {
 				return createLocalPropertyCSAdapter();
+			}
+			@Override
+			public Adapter caseContextualPropertyCS(ContextualPropertyCS object) {
+				return createContextualPropertyCSAdapter();
 			}
 			@Override
 			public Adapter caseMappingDeclarationCS(MappingDeclarationCS object) {
@@ -449,6 +453,20 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createLocalPropertyCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS <em>Contextual Property CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS
+	 * @generated
+	 */
+	public Adapter createContextualPropertyCSAdapter() {
 		return null;
 	}
 

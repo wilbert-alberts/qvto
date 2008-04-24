@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpKWLexersym.java,v 1.1 2008/04/06 10:18:41 sboyko Exp $
+* $Id: QvtOpKWLexersym.java,v 1.2 2008/04/24 12:15:21 sboyko Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpKWLexersym.java,v 1.1 2008/04/06 10:18:41 sboyko Exp $
+* $Id: QvtOpKWLexersym.java,v 1.2 2008/04/24 12:15:21 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -37,7 +37,7 @@ package org.eclipse.m2m.internal.qvt.oml.cst.parser;
 public interface QvtOpKWLexersym {
     public final static int
       Char_DollarSign = 40,
-      Char_a = 9,
+      Char_a = 8,
       Char_b = 22,
       Char_c = 10,
       Char_d = 11,
@@ -51,7 +51,7 @@ public interface QvtOpKWLexersym {
       Char_l = 4,
       Char_m = 18,
       Char_n = 3,
-      Char_o = 8,
+      Char_o = 9,
       Char_p = 13,
       Char_q = 24,
       Char_r = 7,
@@ -100,8 +100,8 @@ public interface QvtOpKWLexersym {
                  "s",
                  "i",
                  "r",
-                 "o",
                  "a",
+                 "o",
                  "c",
                  "d",
                  "u",

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTSwitch.java,v 1.1 2008/04/06 10:18:41 sboyko Exp $
+ * $Id: CSTSwitch.java,v 1.2 2008/04/24 12:15:21 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -175,6 +175,14 @@ public class CSTSwitch<T> {
 				T result = caseLocalPropertyCS(localPropertyCS);
 				if (result == null) result = caseModulePropertyCS(localPropertyCS);
 				if (result == null) result = caseCSTNode(localPropertyCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.CONTEXTUAL_PROPERTY_CS: {
+				ContextualPropertyCS contextualPropertyCS = (ContextualPropertyCS)theEObject;
+				T result = caseContextualPropertyCS(contextualPropertyCS);
+				if (result == null) result = caseModulePropertyCS(contextualPropertyCS);
+				if (result == null) result = caseCSTNode(contextualPropertyCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -626,6 +634,21 @@ public class CSTSwitch<T> {
 	 * @generated
 	 */
 	public T caseLocalPropertyCS(LocalPropertyCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Contextual Property CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Contextual Property CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseContextualPropertyCS(ContextualPropertyCS object) {
 		return null;
 	}
 

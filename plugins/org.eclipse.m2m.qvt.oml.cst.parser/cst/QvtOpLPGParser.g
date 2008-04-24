@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.3 2008/04/06 10:19:11 sboyko Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.4 2008/04/24 12:15:21 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -314,6 +314,7 @@ $KeyWords
 	when
 	var
 	configuration
+	intermediate
 	property
 	population
 	map
@@ -373,7 +374,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.3 2008/04/06 10:19:11 sboyko Exp $
+ * $Id: QvtOpLPGParser.g,v 1.4 2008/04/24 12:15:21 sboyko Exp $
  */
 	./
 $End
@@ -1123,6 +1124,28 @@ $Rules
 							(OCLExpressionCS)$getSym(4)
 						);
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
+					$setResult(result);
+		  $EndJava
+		./
+	modulePropertyCS ::= intermediate property scopedNameCS : typeCS ';' 
+		/.$BeginJava
+					CSTNode result = createContextualPropertyCS(
+							(ScopedNameCS)$getSym(3),
+							(TypeCS)$getSym(5),
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(6)));
+					$setResult(result);
+		  $EndJava
+		./
+	modulePropertyCS ::= intermediate property scopedNameCS : typeCS '=' oclExpressionCS ';' 
+		/.$BeginJava
+					CSTNode result = createContextualPropertyCS(
+							(ScopedNameCS)$getSym(3),
+							(TypeCS)$getSym(5),
+							(OCLExpressionCS)$getSym(7)
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(8)));
 					$setResult(result);
 		  $EndJava
 		./

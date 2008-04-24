@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpKWLexer.g,v 1.1 2008/03/12 11:48:08 sboyko Exp $ 
+-- * $Id: QvtOpKWLexer.g,v 1.2 2008/04/24 12:15:21 sboyko Exp $ 
 -- */
 --
 -- The QVT KeyWord Lexer
@@ -75,7 +75,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpKWLexer.g,v 1.1 2008/03/12 11:48:08 sboyko Exp $
+ * $Id: QvtOpKWLexer.g,v 1.2 2008/04/24 12:15:21 sboyko Exp $
  */
 	./
 $End
@@ -96,6 +96,7 @@ $Export
 	when
 	var
 	configuration
+	intermediate
 	property
 	population	
 	map
@@ -270,6 +271,12 @@ $Rules
 		| p o p u l a  t i o n		
 		/.$BeginAction
 			$setResult($_population);
+		  $EndAction
+		./
+		
+		| i n t e r m e d i a t e
+		/.$BeginAction
+			$setResult($_intermediate);
 		  $EndAction
 		./
 		
