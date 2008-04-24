@@ -13,7 +13,7 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lpg.lpgjavaruntime.IToken;
@@ -48,7 +48,7 @@ import org.eclipse.ocl.parser.OCLLexer;
  */
 public class QvtCompletionCompiler extends QvtCompiler {
     private final QvtCompletionData myData;
-    private final Map<CFile, CFileData> myCFileDataMap = new HashMap<CFile, CFileData>();
+    private final Map<CFile, CFileData> myCFileDataMap = new LinkedHashMap<CFile, CFileData>();
     private QvtOperationalEnv myEnvironment;
 
     public QvtCompletionCompiler(IImportResolver importResolver, QvtCompletionData data) {
@@ -138,12 +138,16 @@ public class QvtCompletionCompiler extends QvtCompiler {
             QvtOpLexer lexer = createLexer(cFile);
             PrsStream prsStream = lexer.getPrsStream();
             IKeywordHandler[] keywordHandlers = KeywordHandlerRegistry.getInstance().getKeywordHandlers();
-            StringBuilder lightweightScriptBuilder = new StringBuilder();
+            StringBuilder lightweightScriptBuilder = new StringBuilder(lexer.getStreamLength());
             for (int i = 0, n = prsStream.getSize(); i < n; i++) {
                 IToken token = prsStream.getTokenAt(i);
                 for (IKeywordHandler keywordHandler : keywordHandlers) {
                     String contribution = keywordHandler.handle(token, prsStream, myData, cFileData);
                     if (contribution != null) {
+                        int offsetDelta = token.getStartOffset() - lightweightScriptBuilder.length();
+                        for (int j = 0; j < offsetDelta - 1; j++) {
+                            lightweightScriptBuilder.append(' ');
+                        }
                         lightweightScriptBuilder.append(contribution);
                         break;
                     }

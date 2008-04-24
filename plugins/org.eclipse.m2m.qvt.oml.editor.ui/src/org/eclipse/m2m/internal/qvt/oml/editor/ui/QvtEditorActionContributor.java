@@ -19,14 +19,18 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.texteditor.BasicTextEditorActionContributor;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
+import org.eclipse.ui.texteditor.RetargetTextEditorAction;
 
 public class QvtEditorActionContributor extends BasicTextEditorActionContributor {
     private GotoAnnotationAction myPreviousAnnotation;
     private GotoAnnotationAction myNextAnnotation;
+    private RetargetTextEditorAction myShowOutline;
 
     public QvtEditorActionContributor() {
         myPreviousAnnotation = new GotoAnnotationAction("PreviousAnnotation.", false); //$NON-NLS-1$
         myNextAnnotation = new GotoAnnotationAction("NextAnnotation.", true); //$NON-NLS-1$
+        myShowOutline = new RetargetTextEditorAction(ActionMessages.getResourceBundle(), "ShowOutline."); //$NON-NLS-1$
+        myShowOutline.setActionDefinitionId(QvtEditorConstants.SHOW_OUTLINE);
     }
 
     @Override
@@ -57,6 +61,8 @@ public class QvtEditorActionContributor extends BasicTextEditorActionContributor
         myPreviousAnnotation.setEditor(textEditor);
         myNextAnnotation.setEditor(textEditor);
        // myOpenAction.setEditor(textEditor);
+        
+        myShowOutline.setAction(getAction(textEditor, QvtEditorConstants.SHOW_OUTLINE));
     }
 
     @Override

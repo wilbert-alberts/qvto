@@ -65,7 +65,7 @@ public class QvtFileHyperlink extends AbstractHyperlink implements IHyperlink {
 				return;
 			}
             
-            // If you want to be able to return to the intial location, uncomment the line below
+            // If you want to be able to return to the initial location, uncomment the line below
             activePage.getNavigationHistory().markLocation(activePage.getActiveEditor());
 
 			IFile file = getEclipseFile();

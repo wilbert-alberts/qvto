@@ -30,4 +30,6 @@ Export-Package: org.eclipse.m2m.internal.qvt.oml.editor.ui,
  org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser,
  org.eclipse.m2m.internal.qvt.oml.editor.ui.hovers,
  org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks,
- org.eclipse.m2m.internal.qvt.oml.editor.ui.outline
+ org.eclipse.m2m.internal.qvt.oml.editor.ui.outline,
+ org.eclipse.m2m.internal.qvt.oml.editor.ui.quickoutline
+ 

@@ -196,6 +196,15 @@ public class QvtCompletionData {
         return modules.toArray(new MappingModuleCS[modules.size()]);
     }
     
+    public MappingModuleCS getCurrentMappingModuleCS() {
+        myQvtCompiler.compileAll();
+        CFileData cFileData = myQvtCompiler.getCFileDataMap().get(myCFile);
+        if (cFileData != null) {
+            return cFileData.getMappingModuleCS();
+        }
+        return null;
+    }
+    
     public MappingMethodCS[] getAllImperativeOperationsCS() {
         MappingModuleCS[] allMappingModulesCS = getAllMappingModulesCS();
         List<MappingMethodCS> methods = new ArrayList<MappingMethodCS>();
@@ -225,6 +234,9 @@ public class QvtCompletionData {
         int depth = 0;
         Stack<Integer> maxCurrentDepthStack = new Stack<Integer>();
         maxCurrentDepthStack.push(Integer.MIN_VALUE);
+        if (myLeftToken == null) {
+            return null;
+        }
         for (int i = myLeftToken.getTokenIndex(); i >= 0; i--) {
             IToken token = myPrsStream.getTokenAt(i);
             if (QvtCompletionData.isKindOf(token, keywordTokenKinds)) {
