@@ -2509,6 +2509,9 @@ public class QvtOperationalVisitorCS
 			return null;
 		}
 		
+		prop.setEType(type);
+		prop.setInitExpression(exp);
+		
 		if (exp != null) {
 			EClassifier realType = exp.getType();
 			EClassifier declaredType = prop.getEType();
@@ -2518,9 +2521,6 @@ public class QvtOperationalVisitorCS
 						prop.getStartPosition(), prop.getEndPosition());
 			}
 		}
-		
-		prop.setEType(type);
-		prop.setInitExpression(exp);
 		
 		EClassifier contextType = visitTypeCS(propCS.getScopedNameCS().getTypeCS(), null, env);
 		if (contextType != null) {
