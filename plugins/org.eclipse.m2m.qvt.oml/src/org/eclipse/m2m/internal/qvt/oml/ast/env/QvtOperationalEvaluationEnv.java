@@ -163,6 +163,11 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	@Override
 	public Object navigateProperty(EStructuralFeature property, List<?> qualifiers, Object target) throws IllegalArgumentException {
 		EStructuralFeature resolvedProperty = property;		
+
+		EStructuralFeature originalFeature = IntermediatePropertyModelAdapter.getOverridenFeature(property);
+		if (originalFeature != property) {
+			target = IntermediatePropertyModelAdapter.getPropertyHolder(originalFeature.getEContainingClass(), target, property);
+		}
 		
 		// Remark: workaround for a issue of multiple typle type instances, possibly coming from 
 		// imported modules. The super impl. looks for the property by feature instance, do it
@@ -181,12 +186,6 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
             if (eTarget.eClass().getEAllStructuralFeatures().contains(property)) {
                 return eTarget.eGet(property, true);
             }
-		}
-		else {
-			EStructuralFeature originalFeature = IntermediatePropertyModelAdapter.getOverridenFeature(property);
-			if (originalFeature != property) {
-				target = IntermediatePropertyModelAdapter.getPropertyHolder(originalFeature.getEContainingClass(), target, property);
-			}
 		}
 		
 		return super.navigateProperty(resolvedProperty, qualifiers, target);
