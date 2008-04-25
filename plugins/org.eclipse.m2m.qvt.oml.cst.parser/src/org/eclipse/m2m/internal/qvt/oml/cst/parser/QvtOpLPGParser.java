@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.2 2008/04/24 12:15:21 sboyko Exp $
+* $Id: QvtOpLPGParser.java,v 1.3 2008/04/25 14:13:21 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.2 2008/04/24 12:15:21 sboyko Exp $
+* $Id: QvtOpLPGParser.java,v 1.3 2008/04/25 14:13:21 radvorak Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -3212,9 +3212,14 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			//
 			case 339: {
 				
+				IToken nameToken = getIToken(dtParser.getToken(1));				
+				ScopedNameCS nameCS = createScopedNameCS(null, getTokenText(dtParser.getToken(1)));								
+				nameCS.setStartOffset(nameToken.getStartOffset());
+				nameCS.setEndOffset(nameToken.getEndOffset());
+	
 				CSTNode result = createMappingDeclarationCS(
 						null,
-						createScopedNameCS(null, getTokenText(dtParser.getToken(1))),
+						nameCS,
 						(EList)dtParser.getSym(3),
 						null
 					);
@@ -3240,18 +3245,19 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 341:  mappingDeclarationCS ::= directionKindOpt scopedNameCS ( parameterListOpt ) : typeSpecCS
+			// Rule 341:  mappingDeclarationCS ::= directionKindOpt scopedNameCS ( parameterListOpt ) : parameterList
 			//
 			case 341: {
 				
 				DirectionKindCS directionKind = (DirectionKindCS)dtParser.getSym(1);
 				CSTNode result = createMappingDeclarationCS(
-						directionKind,
-						(ScopedNameCS)dtParser.getSym(2),
-						(EList)dtParser.getSym(4),
-						(TypeSpecCS)dtParser.getSym(7)
-					);
-				setOffsets(result, (CSTNode)(directionKind == null ? dtParser.getSym(2) : directionKind), (CSTNode)dtParser.getSym(7));
+					directionKind,
+					(ScopedNameCS)dtParser.getSym(2),
+					(EList)dtParser.getSym(4),
+					(EList)dtParser.getSym(7)
+				);
+				result.setStartOffset((directionKind == null ? (CSTNode)dtParser.getSym(2) : directionKind).getStartOffset());
+				result.setEndOffset(getEndOffset(getIToken(dtParser.getToken(7)), (EList)dtParser.getSym(7)));
 				dtParser.setSym1(result);
 	  		  break;
 			}
@@ -3412,19 +3418,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 361:  parameterList ::= parameterList qvtErrorToken
+			// Rule 361:  parameterDeclarationCS ::= directionKindOpt IDENTIFIER : typeSpecCS
 			//
 			case 361: {
-				
-				EList result = (EList)dtParser.getSym(1);
-				dtParser.setSym1(result);
-	  		  break;
-			}
-	 
-			//
-			// Rule 362:  parameterDeclarationCS ::= directionKindOpt IDENTIFIER : typeSpecCS
-			//
-			case 362: {
 				
 				CSTNode result = createParameterDeclarationCS(
 						(DirectionKindCS)dtParser.getSym(1),
@@ -3432,6 +3428,19 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 						(TypeSpecCS)dtParser.getSym(4)
 					);
 				setOffsets(result, getIToken(dtParser.getToken(2)), (CSTNode)dtParser.getSym(4));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 362:  parameterDeclarationCS ::= typeSpecCS
+			//
+			case 362: {
+				
+				CSTNode result = createParameterDeclarationCS(
+						null, null, (TypeSpecCS)dtParser.getSym(1)
+					);
+				setOffsets(result, (CSTNode)dtParser.getSym(1));
 				dtParser.setSym1(result);
 	  		  break;
 			}

@@ -66,8 +66,8 @@
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
           eType="#//cst/ParameterDeclarationCS" containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="returnType" eType="#//cst/TypeSpecCS"
-          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="result" upperBound="-1"
+          eType="#//cst/ParameterDeclarationCS" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="blackBox" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="directionKindCS" eType="#//cst/DirectionKindCS"
           containment="true"/>
@@ -77,7 +77,8 @@
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="typeSpecCS" eType="#//cst/TypeSpecCS"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="directionKind" eType="#//cst/DirectionKindEnum"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="directionKind" eType="#//cst/DirectionKindEnum"
+          unsettable="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EEnum" name="DirectionKindEnum">
       <eLiterals name="in"/>

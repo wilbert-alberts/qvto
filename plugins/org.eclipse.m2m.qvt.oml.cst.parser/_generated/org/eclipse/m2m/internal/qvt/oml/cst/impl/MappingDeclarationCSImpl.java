@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingDeclarationCSImpl.java,v 1.1 2008/04/06 10:18:39 sboyko Exp $
+ * $Id: MappingDeclarationCSImpl.java,v 1.2 2008/04/25 14:13:21 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -19,26 +19,18 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
-
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.TypeCS;
-
 import org.eclipse.ocl.cst.impl.CSTNodeImpl;
 
 /**
@@ -52,7 +44,7 @@ import org.eclipse.ocl.cst.impl.CSTNodeImpl;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingDeclarationCSImpl#getContextType <em>Context Type</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingDeclarationCSImpl#getContextTypeAndName <em>Context Type And Name</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingDeclarationCSImpl#getParameters <em>Parameters</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingDeclarationCSImpl#getReturnType <em>Return Type</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingDeclarationCSImpl#getResult <em>Result</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingDeclarationCSImpl#isBlackBox <em>Black Box</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingDeclarationCSImpl#getDirectionKindCS <em>Direction Kind CS</em>}</li>
  * </ul>
@@ -109,14 +101,14 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 	protected EList<ParameterDeclarationCS> parameters;
 
 	/**
-	 * The cached value of the '{@link #getReturnType() <em>Return Type</em>}' containment reference.
+	 * The cached value of the '{@link #getResult() <em>Result</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getReturnType()
+	 * @see #getResult()
 	 * @generated
 	 * @ordered
 	 */
-	protected TypeSpecCS returnType;
+	protected EList<ParameterDeclarationCS> result;
 
 	/**
 	 * The default value of the '{@link #isBlackBox() <em>Black Box</em>}' attribute.
@@ -313,42 +305,11 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TypeSpecCS getReturnType() {
-		return returnType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetReturnType(TypeSpecCS newReturnType, NotificationChain msgs) {
-		TypeSpecCS oldReturnType = returnType;
-		returnType = newReturnType;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.MAPPING_DECLARATION_CS__RETURN_TYPE, oldReturnType, newReturnType);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+	public EList<ParameterDeclarationCS> getResult() {
+		if (result == null) {
+			result = new EObjectContainmentEList<ParameterDeclarationCS>(ParameterDeclarationCS.class, this, CSTPackage.MAPPING_DECLARATION_CS__RESULT);
 		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setReturnType(TypeSpecCS newReturnType) {
-		if (newReturnType != returnType) {
-			NotificationChain msgs = null;
-			if (returnType != null)
-				msgs = ((InternalEObject)returnType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.MAPPING_DECLARATION_CS__RETURN_TYPE, null, msgs);
-			if (newReturnType != null)
-				msgs = ((InternalEObject)newReturnType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.MAPPING_DECLARATION_CS__RETURN_TYPE, null, msgs);
-			msgs = basicSetReturnType(newReturnType, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.MAPPING_DECLARATION_CS__RETURN_TYPE, newReturnType, newReturnType));
+		return result;
 	}
 
 	/**
@@ -431,8 +392,8 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 				return basicSetContextTypeAndName(null, msgs);
 			case CSTPackage.MAPPING_DECLARATION_CS__PARAMETERS:
 				return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
-			case CSTPackage.MAPPING_DECLARATION_CS__RETURN_TYPE:
-				return basicSetReturnType(null, msgs);
+			case CSTPackage.MAPPING_DECLARATION_CS__RESULT:
+				return ((InternalEList<?>)getResult()).basicRemove(otherEnd, msgs);
 			case CSTPackage.MAPPING_DECLARATION_CS__DIRECTION_KIND_CS:
 				return basicSetDirectionKindCS(null, msgs);
 		}
@@ -455,8 +416,8 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 				return getContextTypeAndName();
 			case CSTPackage.MAPPING_DECLARATION_CS__PARAMETERS:
 				return getParameters();
-			case CSTPackage.MAPPING_DECLARATION_CS__RETURN_TYPE:
-				return getReturnType();
+			case CSTPackage.MAPPING_DECLARATION_CS__RESULT:
+				return getResult();
 			case CSTPackage.MAPPING_DECLARATION_CS__BLACK_BOX:
 				return isBlackBox() ? Boolean.TRUE : Boolean.FALSE;
 			case CSTPackage.MAPPING_DECLARATION_CS__DIRECTION_KIND_CS:
@@ -487,8 +448,9 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 				getParameters().clear();
 				getParameters().addAll((Collection<? extends ParameterDeclarationCS>)newValue);
 				return;
-			case CSTPackage.MAPPING_DECLARATION_CS__RETURN_TYPE:
-				setReturnType((TypeSpecCS)newValue);
+			case CSTPackage.MAPPING_DECLARATION_CS__RESULT:
+				getResult().clear();
+				getResult().addAll((Collection<? extends ParameterDeclarationCS>)newValue);
 				return;
 			case CSTPackage.MAPPING_DECLARATION_CS__BLACK_BOX:
 				setBlackBox(((Boolean)newValue).booleanValue());
@@ -520,8 +482,8 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 			case CSTPackage.MAPPING_DECLARATION_CS__PARAMETERS:
 				getParameters().clear();
 				return;
-			case CSTPackage.MAPPING_DECLARATION_CS__RETURN_TYPE:
-				setReturnType((TypeSpecCS)null);
+			case CSTPackage.MAPPING_DECLARATION_CS__RESULT:
+				getResult().clear();
 				return;
 			case CSTPackage.MAPPING_DECLARATION_CS__BLACK_BOX:
 				setBlackBox(BLACK_BOX_EDEFAULT);
@@ -549,8 +511,8 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 				return contextTypeAndName != null;
 			case CSTPackage.MAPPING_DECLARATION_CS__PARAMETERS:
 				return parameters != null && !parameters.isEmpty();
-			case CSTPackage.MAPPING_DECLARATION_CS__RETURN_TYPE:
-				return returnType != null;
+			case CSTPackage.MAPPING_DECLARATION_CS__RESULT:
+				return result != null && !result.isEmpty();
 			case CSTPackage.MAPPING_DECLARATION_CS__BLACK_BOX:
 				return ((eFlags & BLACK_BOX_EFLAG) != 0) != BLACK_BOX_EDEFAULT;
 			case CSTPackage.MAPPING_DECLARATION_CS__DIRECTION_KIND_CS:

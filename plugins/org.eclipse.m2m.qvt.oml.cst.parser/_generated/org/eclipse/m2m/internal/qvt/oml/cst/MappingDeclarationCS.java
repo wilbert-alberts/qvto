@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingDeclarationCS.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: MappingDeclarationCS.java,v 1.2 2008/04/25 14:13:21 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -33,7 +33,7 @@ import org.eclipse.ocl.cst.TypeCS;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getContextType <em>Context Type</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getContextTypeAndName <em>Context Type And Name</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getParameters <em>Parameters</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getReturnType <em>Return Type</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getResult <em>Result</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#isBlackBox <em>Black Box</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getDirectionKindCS <em>Direction Kind CS</em>}</li>
  * </ul>
@@ -146,30 +146,20 @@ public interface MappingDeclarationCS extends CSTNode {
 	EList<ParameterDeclarationCS> getParameters();
 
 	/**
-	 * Returns the value of the '<em><b>Return Type</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Result</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Return Type</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Result</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Return Type</em>' containment reference.
-	 * @see #setReturnType(TypeSpecCS)
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getMappingDeclarationCS_ReturnType()
+	 * @return the value of the '<em>Result</em>' containment reference list.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getMappingDeclarationCS_Result()
 	 * @model containment="true"
 	 * @generated
 	 */
-	TypeSpecCS getReturnType();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getReturnType <em>Return Type</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Return Type</em>' containment reference.
-	 * @see #getReturnType()
-	 * @generated
-	 */
-	void setReturnType(TypeSpecCS value);
+	EList<ParameterDeclarationCS> getResult();
 
 	/**
 	 * Returns the value of the '<em><b>Black Box</b></em>' attribute.

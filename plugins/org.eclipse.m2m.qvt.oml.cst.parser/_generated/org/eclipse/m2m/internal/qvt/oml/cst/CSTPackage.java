@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackage.java,v 1.2 2008/04/24 12:15:21 sboyko Exp $
+ * $Id: CSTPackage.java,v 1.3 2008/04/25 14:13:21 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -763,13 +763,13 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_DECLARATION_CS__PARAMETERS = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 3;
 
 	/**
-	 * The feature id for the '<em><b>Return Type</b></em>' containment reference.
+	 * The feature id for the '<em><b>Result</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_DECLARATION_CS__RETURN_TYPE = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 4;
+	int MAPPING_DECLARATION_CS__RESULT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Black Box</b></em>' attribute.
@@ -3721,15 +3721,15 @@ public interface CSTPackage extends EPackage {
 	EReference getMappingDeclarationCS_Parameters();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getReturnType <em>Return Type</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getResult <em>Result</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Return Type</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getReturnType()
+	 * @return the meta object for the containment reference list '<em>Result</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getResult()
 	 * @see #getMappingDeclarationCS()
 	 * @generated
 	 */
-	EReference getMappingDeclarationCS_ReturnType();
+	EReference getMappingDeclarationCS_Result();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#isBlackBox <em>Black Box</em>}'.
@@ -5343,12 +5343,12 @@ public interface CSTPackage extends EPackage {
 		EReference MAPPING_DECLARATION_CS__PARAMETERS = eINSTANCE.getMappingDeclarationCS_Parameters();
 
 		/**
-		 * The meta object literal for the '<em><b>Return Type</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Result</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference MAPPING_DECLARATION_CS__RETURN_TYPE = eINSTANCE.getMappingDeclarationCS_ReturnType();
+		EReference MAPPING_DECLARATION_CS__RESULT = eINSTANCE.getMappingDeclarationCS_Result();
 
 		/**
 		 * The meta object literal for the '<em><b>Black Box</b></em>' attribute feature.

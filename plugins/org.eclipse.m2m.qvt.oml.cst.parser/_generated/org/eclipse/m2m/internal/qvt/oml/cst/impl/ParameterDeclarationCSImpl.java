@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ParameterDeclarationCSImpl.java,v 1.1 2008/04/06 10:18:39 sboyko Exp $
+ * $Id: ParameterDeclarationCSImpl.java,v 1.2 2008/04/25 14:13:21 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -94,6 +94,15 @@ public class ParameterDeclarationCSImpl extends CSTNodeImpl implements Parameter
 	 * @ordered
 	 */
 	protected DirectionKindEnum directionKind = DIRECTION_KIND_EDEFAULT;
+
+	/**
+	 * The flag representing whether the Direction Kind attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int DIRECTION_KIND_ESETFLAG = 1 << 8;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -217,8 +226,33 @@ public class ParameterDeclarationCSImpl extends CSTNodeImpl implements Parameter
 	public void setDirectionKind(DirectionKindEnum newDirectionKind) {
 		DirectionKindEnum oldDirectionKind = directionKind;
 		directionKind = newDirectionKind == null ? DIRECTION_KIND_EDEFAULT : newDirectionKind;
+		boolean oldDirectionKindESet = (eFlags & DIRECTION_KIND_ESETFLAG) != 0;
+		eFlags |= DIRECTION_KIND_ESETFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.PARAMETER_DECLARATION_CS__DIRECTION_KIND, oldDirectionKind, directionKind));
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.PARAMETER_DECLARATION_CS__DIRECTION_KIND, oldDirectionKind, directionKind, !oldDirectionKindESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetDirectionKind() {
+		DirectionKindEnum oldDirectionKind = directionKind;
+		boolean oldDirectionKindESet = (eFlags & DIRECTION_KIND_ESETFLAG) != 0;
+		directionKind = DIRECTION_KIND_EDEFAULT;
+		eFlags &= ~DIRECTION_KIND_ESETFLAG;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, CSTPackage.PARAMETER_DECLARATION_CS__DIRECTION_KIND, oldDirectionKind, DIRECTION_KIND_EDEFAULT, oldDirectionKindESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetDirectionKind() {
+		return (eFlags & DIRECTION_KIND_ESETFLAG) != 0;
 	}
 
 	/**
@@ -291,7 +325,7 @@ public class ParameterDeclarationCSImpl extends CSTNodeImpl implements Parameter
 				setTypeSpecCS((TypeSpecCS)null);
 				return;
 			case CSTPackage.PARAMETER_DECLARATION_CS__DIRECTION_KIND:
-				setDirectionKind(DIRECTION_KIND_EDEFAULT);
+				unsetDirectionKind();
 				return;
 		}
 		super.eUnset(featureID);
@@ -310,7 +344,7 @@ public class ParameterDeclarationCSImpl extends CSTNodeImpl implements Parameter
 			case CSTPackage.PARAMETER_DECLARATION_CS__TYPE_SPEC_CS:
 				return typeSpecCS != null;
 			case CSTPackage.PARAMETER_DECLARATION_CS__DIRECTION_KIND:
-				return directionKind != DIRECTION_KIND_EDEFAULT;
+				return isSetDirectionKind();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -326,7 +360,7 @@ public class ParameterDeclarationCSImpl extends CSTNodeImpl implements Parameter
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (directionKind: "); //$NON-NLS-1$
-		result.append(directionKind);
+		if ((eFlags & DIRECTION_KIND_ESETFLAG) != 0) result.append(directionKind); else result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

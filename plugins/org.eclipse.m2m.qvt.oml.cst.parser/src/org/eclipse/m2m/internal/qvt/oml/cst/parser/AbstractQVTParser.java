@@ -276,16 +276,22 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 				section.setBodyEndLocation(endOffset);
 			}
 
-	protected final CSTNode createParameterDeclarationCS(DirectionKindCS sym, IToken tokenText,
+	protected final ParameterDeclarationCS createResultParameterDeclarationCS(TypeSpecCS typeSpecCS) {
+		DirectionKindCS directionKindCS = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createDirectionKindCS();
+		directionKindCS.setDirectionKind(DirectionKindEnum.OUT);
+		return createParameterDeclarationCS(directionKindCS, null, typeSpecCS);
+	}
+	
+	protected final ParameterDeclarationCS createParameterDeclarationCS(DirectionKindCS sym, IToken tokenText,
 			TypeSpecCS typeSpecCS) {
 				ParameterDeclarationCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createParameterDeclarationCS();
-				SimpleNameCS nameCS;
+				SimpleNameCS nameCS = null;
 				if (tokenText != null) {
 					nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, tokenText.toString());
 					setOffsets(nameCS, tokenText);
 				}
 				else {
-					nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, ""); //$NON-NLS-1$
+					//nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, ""); //$NON-NLS-1$
 				}
 				result.setSimpleNameCS(nameCS);
 				result.setTypeSpecCS(typeSpecCS);
@@ -315,10 +321,12 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	}
 
 	protected final CSTNode createMappingDeclarationCS(DirectionKindCS directionKindCS, ScopedNameCS scopedNameCS,
-			EList<ParameterDeclarationCS> parameters, TypeSpecCS returnType) {
+			EList<ParameterDeclarationCS> parameters, EList<ParameterDeclarationCS> resultParameters) {
 		MappingDeclarationCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingDeclarationCS();
 		result.setDirectionKindCS(directionKindCS);
-		result.setReturnType(returnType);
+		if(resultParameters != null) {
+			result.getResult().addAll(resultParameters);
+		}
 		result.getParameters().addAll(parameters);
 		result.setSimpleNameCS(createSimpleNameCS(scopedNameCS));
 
@@ -336,7 +344,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 
 		return simpleNameCS;
 	}
-
+	
 	private PathNameCS createParentPath(PathNameCS pathNameCS) {
 		PathNameCS result = CSTFactory.eINSTANCE.createPathNameCS();
 		result.getSequenceOfNames().addAll(pathNameCS.getSequenceOfNames());
@@ -534,6 +542,13 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		ScopedNameCS result = TempFactory.eINSTANCE.createScopedNameCS();
 		result.setTypeCS(typeCS);
 		result.setName(name);
+		if(typeCS != null) {
+			result.setStartOffset(typeCS.getStartOffset());
+			result.setEndOffset(typeCS.getEndOffset());
+			if(name != null) {
+				result.setEndOffset(result.getEndOffset() + name.length());
+			}
+		}
 		return result;
 	}
 

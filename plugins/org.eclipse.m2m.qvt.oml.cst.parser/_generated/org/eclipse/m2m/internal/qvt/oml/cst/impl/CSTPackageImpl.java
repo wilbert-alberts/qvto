@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.2 2008/04/24 12:15:21 sboyko Exp $
+ * $Id: CSTPackageImpl.java,v 1.3 2008/04/25 14:13:21 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -837,7 +837,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getMappingDeclarationCS_ReturnType() {
+	public EReference getMappingDeclarationCS_Result() {
 		return (EReference)mappingDeclarationCSEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -2018,7 +2018,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__CONTEXT_TYPE);
 		createEReference(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__CONTEXT_TYPE_AND_NAME);
 		createEReference(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__PARAMETERS);
-		createEReference(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__RETURN_TYPE);
+		createEReference(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__RESULT);
 		createEAttribute(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__BLACK_BOX);
 		createEReference(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__DIRECTION_KIND_CS);
 
@@ -2313,14 +2313,14 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEReference(getMappingDeclarationCS_ContextType(), theCSTPackage_1.getTypeCS(), null, "contextType", null, 0, 1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getMappingDeclarationCS_ContextTypeAndName(), theCSTPackage_1.getTypeCS(), null, "contextTypeAndName", null, 0, 1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getMappingDeclarationCS_Parameters(), this.getParameterDeclarationCS(), null, "parameters", null, 0, -1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(getMappingDeclarationCS_ReturnType(), this.getTypeSpecCS(), null, "returnType", null, 0, 1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getMappingDeclarationCS_Result(), this.getParameterDeclarationCS(), null, "result", null, 0, -1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getMappingDeclarationCS_BlackBox(), ecorePackage.getEBoolean(), "blackBox", null, 0, 1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getMappingDeclarationCS_DirectionKindCS(), this.getDirectionKindCS(), null, "directionKindCS", null, 0, 1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(parameterDeclarationCSEClass, ParameterDeclarationCS.class, "ParameterDeclarationCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getParameterDeclarationCS_SimpleNameCS(), theCSTPackage_1.getSimpleNameCS(), null, "simpleNameCS", null, 0, 1, ParameterDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getParameterDeclarationCS_TypeSpecCS(), this.getTypeSpecCS(), null, "typeSpecCS", null, 0, 1, ParameterDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getParameterDeclarationCS_DirectionKind(), this.getDirectionKindEnum(), "directionKind", null, 0, 1, ParameterDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getParameterDeclarationCS_DirectionKind(), this.getDirectionKindEnum(), "directionKind", null, 0, 1, ParameterDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(mappingMethodCSEClass, MappingMethodCS.class, "MappingMethodCS", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getMappingMethodCS_Qualifiers(), this.getQualifierKindCS(), "qualifiers", null, 0, -1, MappingMethodCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

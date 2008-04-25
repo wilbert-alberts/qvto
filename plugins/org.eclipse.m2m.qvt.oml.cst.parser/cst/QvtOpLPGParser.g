@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.4 2008/04/24 12:15:21 sboyko Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.5 2008/04/25 14:13:21 radvorak Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -374,7 +374,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.4 2008/04/24 12:15:21 sboyko Exp $
+ * $Id: QvtOpLPGParser.g,v 1.5 2008/04/25 14:13:21 radvorak Exp $
  */
 	./
 $End
@@ -1408,9 +1408,14 @@ $Rules
 
 	entryDeclarationCS ::= main '(' parameterListOpt ')'
 		/.$BeginJava
+					IToken nameToken = getIToken(dtParser.getToken(1));				
+					ScopedNameCS nameCS = createScopedNameCS(null, getTokenText(dtParser.getToken(1)));								
+					nameCS.setStartOffset(nameToken.getStartOffset());
+					nameCS.setEndOffset(nameToken.getEndOffset());
+		
 					CSTNode result = createMappingDeclarationCS(
 							null,
-							createScopedNameCS(null, getTokenText($getToken(1))),
+							nameCS,
 							(EList)$getSym(3),
 							null
 						);
@@ -1433,16 +1438,18 @@ $Rules
 		./
 
 
-	mappingDeclarationCS ::= directionKindOpt scopedNameCS '(' parameterListOpt ')' ':' typeSpecCS
+	
+	mappingDeclarationCS ::= directionKindOpt scopedNameCS '(' parameterListOpt ')' ':' parameterList
 		/.$BeginJava
 					DirectionKindCS directionKind = (DirectionKindCS)$getSym(1);
 					CSTNode result = createMappingDeclarationCS(
-							directionKind,
-							(ScopedNameCS)$getSym(2),
-							(EList)$getSym(4),
-							(TypeSpecCS)$getSym(7)
-						);
-					setOffsets(result, (CSTNode)(directionKind == null ? $getSym(2) : directionKind), (CSTNode)$getSym(7));
+						directionKind,
+						(ScopedNameCS)$getSym(2),
+						(EList)$getSym(4),
+						(EList)$getSym(7)
+					);
+					result.setStartOffset((directionKind == null ? (CSTNode)$getSym(2) : directionKind).getStartOffset());
+					result.setEndOffset(getEndOffset(getIToken($getToken(7)), (EList)$getSym(7)));
 					$setResult(result);
 		  $EndJava
 		./
@@ -1553,12 +1560,6 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	parameterList ::= parameterList qvtErrorToken
-		/.$BeginJava
-					EList result = (EList)$getSym(1);
-					$setResult(result);
-		  $EndJava
-		./
 		
 	parameterDeclarationCS ::= directionKindOpt IDENTIFIER ':' typeSpecCS
 		/.$BeginJava
@@ -1568,6 +1569,16 @@ $Rules
 							(TypeSpecCS)$getSym(4)
 						);
 					setOffsets(result, getIToken($getToken(2)), (CSTNode)$getSym(4));
+					$setResult(result);
+		  $EndJava
+		./
+		
+	parameterDeclarationCS ::= typeSpecCS
+		/.$BeginJava
+					CSTNode result = createParameterDeclarationCS(
+							null, null, (TypeSpecCS)$getSym(1)
+						);
+					setOffsets(result, (CSTNode)$getSym(1));
 					$setResult(result);
 		  $EndJava
 		./

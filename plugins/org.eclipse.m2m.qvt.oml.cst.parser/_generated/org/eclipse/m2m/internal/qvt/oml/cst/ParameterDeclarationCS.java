@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ParameterDeclarationCS.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: ParameterDeclarationCS.java,v 1.2 2008/04/25 14:13:21 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -107,9 +107,11 @@ public interface ParameterDeclarationCS extends CSTNode {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Direction Kind</em>' attribute.
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum
+	 * @see #isSetDirectionKind()
+	 * @see #unsetDirectionKind()
 	 * @see #setDirectionKind(DirectionKindEnum)
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getParameterDeclarationCS_DirectionKind()
-	 * @model
+	 * @model unsettable="true"
 	 * @generated
 	 */
 	DirectionKindEnum getDirectionKind();
@@ -120,9 +122,34 @@ public interface ParameterDeclarationCS extends CSTNode {
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Direction Kind</em>' attribute.
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum
+	 * @see #isSetDirectionKind()
+	 * @see #unsetDirectionKind()
 	 * @see #getDirectionKind()
 	 * @generated
 	 */
 	void setDirectionKind(DirectionKindEnum value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS#getDirectionKind <em>Direction Kind</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetDirectionKind()
+	 * @see #getDirectionKind()
+	 * @see #setDirectionKind(DirectionKindEnum)
+	 * @generated
+	 */
+	void unsetDirectionKind();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS#getDirectionKind <em>Direction Kind</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Direction Kind</em>' attribute is set.
+	 * @see #unsetDirectionKind()
+	 * @see #getDirectionKind()
+	 * @see #setDirectionKind(DirectionKindEnum)
+	 * @generated
+	 */
+	boolean isSetDirectionKind();
 
 } // ParameterDeclarationCS
