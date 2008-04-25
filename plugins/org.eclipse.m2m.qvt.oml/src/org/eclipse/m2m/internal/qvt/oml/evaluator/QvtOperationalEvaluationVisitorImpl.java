@@ -16,6 +16,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -58,6 +59,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp;
@@ -356,14 +358,30 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     	return true;
     }
     
+    private void setupInitialResultVariables(MappingBody mappingBody) {
+    	ImperativeOperation operation = mappingBody.getOperation();
+    	QvtOperationalEvaluationEnv evalEnv = getOperationalEvaluationEnv();
+		// Note: the variables for result parameters may not be set or existing yet
+		// define variables if not done already by the reusing mapping caller so
+    	// avoid overriding values    	
+    	for (VarParameter resultParam : operation.getResult()) {    		
+    		if(evalEnv.getValueOf(resultParam.getName()) == null) {
+    			replaceInEnv(resultParam.getName(), null, resultParam.getEType());    			
+    		}
+		}
+
+    	if(operation.getResult().size() > 1) {
+    		if(evalEnv.getValueOf(Environment.RESULT_VARIABLE_NAME) == null) {
+    			replaceInEnv(Environment.RESULT_VARIABLE_NAME, null, operation.getEType());    			
+    		}
+    	}    	
+    }
+    
     public Object visitMappingBody(MappingBody mappingBody) {
 		boolean hasResultVar = ! mappingBody.getOperation().getResult().isEmpty();
 		QvtOperationalEvaluationEnv evalEnv = getOperationalEvaluationEnv();
 		
-		if(hasResultVar && evalEnv.getValueOf(QvtOperationalEnv.RESULT_VARIABLE_NAME) == null) {
-			// define 'result variable only if not done already by the reusing mapping caller 
-			evalEnv.replace(QvtOperationalEnv.RESULT_VARIABLE_NAME, null);
-		}
+		setupInitialResultVariables(mappingBody);
     	
         for (OCLExpression<EClassifier> initExp : mappingBody.getInitSection()) {
             initExp.accept(getVisitor());
@@ -512,11 +530,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         // check the traces whether the relation already holds
         TraceRecord traceRecord = getTrace(getContext().getTrace(), mappingOperation);
         if (traceRecord != null) {
-            if (traceRecord.getResult().getResult().isEmpty()) {
-                return new MappingCallResult(null, getOperationalEvaluationEnv(), MappingCallResult.FETCHED_FROM_TRACE);
-            }
-            Object result = traceRecord.getResult().getResult().get(0).getValue().getOclObject(); // TODO : change it in case of multiple results
-            return new MappingCallResult(result, getOperationalEvaluationEnv(), MappingCallResult.FETCHED_FROM_TRACE);
+        	return new MappingCallResult(fetchResultFromTrace(traceRecord), getOperationalEvaluationEnv(), MappingCallResult.FETCHED_FROM_TRACE);
         }
 
         return new MappingCallResult(((OperationBodyImpl) mappingOperation.getBody()).accept(getVisitor()),
@@ -640,6 +654,11 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         Object result = null;
         for (OCLExpression<EClassifier> exp : operationBody.getContent()) {
             result = exp.accept(getVisitor());
+        }
+        
+        ImperativeOperation operation = operationBody.getOperation();
+        if(operation.getResult().size() > 1) {
+        	return createTupleResult(operation);
         }
         return result;
     }
@@ -984,12 +1003,20 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     private Object createOrGetResult(MappingOperation mappingOperation) {
     	QvtOperationalEvaluationEnv env = getOperationalEvaluationEnv();
         Object result = getRuntimeValue(Environment.RESULT_VARIABLE_NAME);
+        
         if (isUndefined(result)) { // if nothing was assigned to the result in the init section
-            VarParameter type = (mappingOperation.getResult().isEmpty() ? null : mappingOperation.getResult().get(0));
-            if (type != null && false == type.getEType() instanceof VoidType) {
-                result = createInstance(type.getEType(), ((MappingParameter) type).getExtent());
-                env.replace(Environment.RESULT_VARIABLE_NAME, result);
+            EList<VarParameter> resultParams = mappingOperation.getResult();
+            if(resultParams.size() > 1) {
+            	result = createTupleResult(mappingOperation);
+            } 
+            else {
+    			VarParameter type = (resultParams.isEmpty() ? null : resultParams.get(0));
+                if (type != null && false == type.getEType() instanceof VoidType) {
+                    result = createInstance(type.getEType(), ((MappingParameter) type).getExtent());
+                }    			
             }
+            
+            replaceInEnv(Environment.RESULT_VARIABLE_NAME, result, mappingOperation.getEType());
         }
         addTraces(mappingOperation);
         return result;
@@ -1102,16 +1129,16 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         EMappingResults eMappingResults = TraceFactory.eINSTANCE.createEMappingResults();
         traceRecord.setResult(eMappingResults);
 
-        if (!mappingOperation.getResult().isEmpty()) {
-            if (mappingOperation.getResult().size() == 1) {
-                VarParameter resultElement = mappingOperation.getResult().get(0);
-                VarParameterValue resultVPV = createVarParameterValue(mappingOperation, DirectionKind.OUT,
-                        resultElement.getEType(), Environment.RESULT_VARIABLE_NAME);
+        EList<VarParameter> results = mappingOperation.getResult();
+		if (!results.isEmpty()) {
+            for(VarParameter resultPar : results) {
+                String resultVarName = resultPar.getName();
+                EClassifier resultElementType = resultPar.getEType();
+            	
+                VarParameterValue resultVPV = createVarParameterValue(mappingOperation, DirectionKind.OUT, resultElementType, resultVarName);
                 eMappingResults.getResult().add(resultVPV);
                 EList<TraceRecord> resultMappings = createOrGetListElementFromMap(trace.getTargetToTraceRecordMap(), resultVPV.getValue().getOclObject());
                 resultMappings.add(traceRecord);
-            } else {
-                throw new UnsupportedOperationException("Multiple results unsupported yet!"); //$NON-NLS-1$
             }
         }
 
@@ -1506,8 +1533,8 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     }
 
     private Object getOutOwner(final ObjectExp objectExp) {
-        Object owner = getRuntimeValue(objectExp.getName());
-        if (owner != null) {
+        Object owner = getRuntimeValue(objectExp.getName()); 
+        if (owner != null && objectExp.getType() instanceof CollectionType == false) {
             if (!oclIsKindOf(owner, objectExp.getType())) {
                 throw new RuntimeException(MessageFormat.format(
                         EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_InvalidObjectExpType, new Object[] {
@@ -1522,6 +1549,83 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 
         return owner;
     }
+    
+    /**
+	 * Creates tuple value representing the result of the given operation.
+	 * 
+	 * @param operation
+	 *          the operation currently executed by this environment
+	 *          
+	 * @return the tuple value collecting all result parameters, never <code>null</code>
+	 */
+    private Tuple<EOperation, EStructuralFeature> createTupleResult(ImperativeOperation operation) {
+    	boolean isMapping = operation.eClass() == ExpressionsPackage.eINSTANCE.getMappingOperation();
+    	QvtOperationalEvaluationEnv evalEnv = getOperationalEvaluationEnv();
+    	EList<VarParameter> resultParams = operation.getResult();
+    	
+    	HashMap<EStructuralFeature, Object> values = new HashMap<EStructuralFeature, Object>(2);
+    	@SuppressWarnings("unchecked")
+    	TupleType<EClassifier, EStructuralFeature> tupleType = (TupleType<EClassifier, EStructuralFeature>)operation.getEType();
+		
+    	for (EStructuralFeature tupleProp : tupleType.oclProperties()) {
+			Object propVal = evalEnv.getValueOf(tupleProp.getName());
+			if(propVal == null) {
+				ModelParameter extent = null;
+				for (VarParameter resultParam : resultParams) {
+					if(tupleProp.getName().equals(resultParam.getName())) {
+						MappingParameter mappingParameter = (MappingParameter) resultParam;
+						extent = mappingParameter.getExtent();
+						break;
+					}
+				}
+				
+				if(isMapping) {
+					propVal = createInstance(tupleProp.getEType(), extent);
+				}
+			}
+			values.put(tupleProp, propVal);
+			evalEnv.replace(tupleProp.getName(), propVal);
+		}
+    	
+    	return evalEnv.createTuple(operation.getEType(), values);
+    }
+    
+    private Object fetchResultFromTrace(TraceRecord trace) {
+    	MappingOperation operation = trace.getMappingOperation().getRuntimeMappingOperation();
+    	EList<VarParameter> resultParams = operation.getResult();    	
+    	if (resultParams.isEmpty()) {
+            return null;
+        }
+
+    	EList<VarParameterValue> traceResult = trace.getResult().getResult();    	
+		if(resultParams.size() == 1) {
+    		return traceResult.get(0).getValue().getOclObject();
+    	}
+
+		assert resultParams.size() > 1 && operation.getEType() instanceof TupleType;
+    	@SuppressWarnings("unchecked")
+    	TupleType<EClassifier, EStructuralFeature> tupleType = (TupleType<EClassifier, EStructuralFeature>)operation.getEType();
+    	
+    	HashMap<EStructuralFeature, Object> partValues = new HashMap<EStructuralFeature, Object>(2);		 
+    	for (EStructuralFeature property : tupleType.oclProperties()) {
+    		VarParameterValue paramValue = null;
+    		for (VarParameterValue nextParamValue : traceResult) {
+    			if(property.getName().equals(nextParamValue.getName())) {
+    				paramValue = nextParamValue;
+    				break;
+    			}
+    		}
+    		
+    		Object value = null;
+    		if(paramValue != null && paramValue.getValue() != null) {
+				value = paramValue.getValue().getOclObject();    				
+    		}
+    		partValues.put(property, value);
+		}
+    	
+    	return getOperationalEvaluationEnv().createTuple(operation.getEType(), partValues);
+    }
+    
 
     private static CollectionKind getCollectionKind(Collection<?> collection) {
         if (collection instanceof ArrayList) {
@@ -1632,10 +1736,21 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     /**
 	* Wraps the environment's creatInstance() and transforms failures to QVT exception
 	*/    
-	protected EObject createInstance(EClassifier type, ModelParameter extent) throws QvtRuntimeException {
-		EObject newInstance = null;
-		try {
-			newInstance = getOperationalEvaluationEnv().createInstance(type, extent);
+	protected Object createInstance(EClassifier type, ModelParameter extent) throws QvtRuntimeException {
+		Object newInstance = null;
+		try {			
+			if(type instanceof CollectionType) {
+				@SuppressWarnings("unchecked")
+				CollectionType<EClassifier, EOperation> collectionType = (CollectionType<EClassifier, EOperation>)type;
+				if(collectionType.getKind() == CollectionKind.COLLECTION_LITERAL) {
+					newInstance = CollectionUtil.createNewSequence();
+				} else {
+					newInstance = CollectionUtil.createNewCollection(collectionType.getKind());
+				}
+			} else {
+				newInstance = getOperationalEvaluationEnv().createInstance(type, extent);
+			}
+
 		} catch (IllegalArgumentException e) {
 			throwQvtException(new QvtRuntimeException(e));
 		}

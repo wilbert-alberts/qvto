@@ -11,6 +11,9 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
@@ -24,6 +27,8 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
@@ -137,9 +142,9 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 	@Override
 	public Object visitMappingOperation(MappingOperation operation) {
 		boolean result = MappingExtensionHelper.validate(operation, fEnv);
-		
+				
 		for (VarParameter resultParam : operation.getResult()) {
-			result &= validateOutParamType(resultParam);
+			result &= validateOutParamType(resultParam);			
 		}
 		
 		for (EParameter nextEParam : operation.getEParameters()) {
@@ -167,6 +172,23 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 				fEnv.reportError(errMessage, context.getStartPosition(), context.getEndPosition());
 			}
 		}
+
+		validateUniqueParamNames(imperativeOperation);
+		// TODO - 1. validate no param name for single result param, for no explicit but default out direction kind
+		
+		
+		for (EParameter nextEParam : imperativeOperation.getEParameters()) {
+			VarParameter varParameter = (VarParameter) nextEParam;
+			validateParamNameRequired(varParameter);
+		}		
+		
+		for (VarParameter nextResultParam : imperativeOperation.getResult()) {
+			validateParamNameRequired(nextResultParam);
+			if(nextResultParam.getKind() != DirectionKind.OUT) {
+				fEnv.reportError(ValidationMessages.QvtOperationalValidationVisitor_resultParamDirectionMustBeOut, nextResultParam.getStartPosition(), nextResultParam.getEndPosition());
+			}
+		}
+		
 		return Boolean.TRUE.equals(super.visitImperativeOperation(imperativeOperation)) && result;
 	}
 	
@@ -178,7 +200,8 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 				return Boolean.TRUE;
 			}
 			EList<OCLExpression<EClassifier>> content = operationBody.getContent();
-			if(content.isEmpty() || content.get(content.size() - 1) instanceof ReturnExp == false) {
+			if(operation.getResult().size() == 1 && 
+				(content.isEmpty() || content.get(content.size() - 1) instanceof ReturnExp == false)) {
 				ASTNode problemTarget = operation;
 				String message = ValidationMessages.useReturnExpForOperationResult;
 				fEnv.reportWarning(message, problemTarget.getStartPosition(), operationBody.getStartPosition());
@@ -204,5 +227,65 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 			}
 		}
 		return result;
-	}	
+	}
+	
+	private void validateUniqueParamNames(ImperativeOperation operation) {
+		List<? extends VarParameter> modelParams = getModelParamsInScope(operation);
+		@SuppressWarnings("unchecked")
+		List<? extends VarParameter> regularParams = (List<? extends VarParameter>)operation.getEParameters();
+		List<? extends VarParameter> resultParams = operation.getResult();
+		validateUniqueParamNames(regularParams, modelParams);
+		validateUniqueParamNames(regularParams, regularParams);
+		
+		validateUniqueParamNames(resultParams, modelParams);		
+		validateUniqueParamNames(resultParams, regularParams);
+		validateUniqueParamNames(resultParams, resultParams);	
+	}
+	
+	private static List<ModelParameter> getModelParamsInScope(ImperativeOperation mappingOperation) {
+		Module module = QvtOperationalParserUtil.getOwningModule(mappingOperation);
+		return (module != null) ? module.getModelParameter() : Collections.<ModelParameter>emptyList();
+	}
+		
+	
+	private boolean validateParamNameRequired(VarParameter param) {
+		boolean result = true;
+		String name = param.getName();
+		if(name == null || name.trim().length() == 0) {
+			result = false;
+            fEnv.reportError(ValidationMessages.QvtOperationalValidationVisitor_parameterNamedRequired,
+                     ((VarParameter) param).getStartPosition(), 
+                     ((VarParameter) param).getEndPosition());								
+		}
+		return result;
+	}
+	
+	private <T extends VarParameter> boolean validateUniqueParamNames(List<? extends T> params, List<? extends T> scopeParameters) {
+		boolean result = true;		
+		for (T nextParam : params) {
+			if(nextParam.getName() == null) {
+				// this case is handled by 
+				continue; 
+			}
+			T sameNameParam = findParamByName(nextParam.getName(), scopeParameters);
+			if(sameNameParam != null && sameNameParam != nextParam) {
+				result = false;
+	            fEnv.reportError(NLS.bind(ValidationMessages.SemanticUtil_15,	            		 
+	                     new Object[] { nextParam.getName() }),
+	                     ((VarParameter) nextParam).getStartPosition(), 
+	                     ((VarParameter) nextParam).getEndPosition());				
+			}
+		}
+		return result;
+	}
+	
+	private static <T extends EParameter> T findParamByName(String name, List<T> parameters) {
+		for (T nextParam : parameters) {
+			String paramName = nextParam.getName();
+			if((name != null) ? name.equals(paramName) : name == paramName) {
+				return nextParam;
+			}
+		}
+		return null;
+	}
 }

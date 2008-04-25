@@ -805,19 +805,31 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		return getInternalParent() instanceof QvtOperationalEnv ? ((QvtOperationalEnv)getInternalParent()).getModuleContextType() : null;
 	}	
 		
+	private void defineParameterVar(EParameter parameter) {
+		Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
+		var.setName(parameter.getName());
+		var.setType(parameter.getEType());
+		var.setRepresentedParameter(parameter);
+		addElement(parameter.getName(), var, true);
+	}
+	
 	public void defineOperationParameters(ImperativeOperation operation) {
 		for (EParameter parameter : operation.getEParameters()) {
-	        if (lookupLocal(parameter.getName()) != null) {
-	            reportError(NLS.bind(ValidationMessages.SemanticUtil_15,
-	                    new Object[] { parameter.getName() }),
-	                    ((VarParameter) parameter).getStartPosition(), ((VarParameter) parameter).getEndPosition());
-	        } else {
-				Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
-				var.setName(parameter.getName());
-				var.setType(parameter.getEType());
-				var.setRepresentedParameter(parameter);
-				addElement(parameter.getName(), var, true);
-	        }
+			defineParameterVar(parameter);
+		}
+
+		boolean isMapping = operation instanceof MappingOperation;
+		if(isMapping || operation.getResult().size() > 1) {
+			for (VarParameter parameter : operation.getResult()) {
+		        defineParameterVar(parameter);
+			}
+		}
+
+		if(operation.getResult().size() > 1 && isMapping) {			
+			Variable<EClassifier, EParameter> var = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();
+			var.setName(Environment.RESULT_VARIABLE_NAME);
+			var.setType(operation.getEType());
+			addElement(var.getName(), var, true);
 		}
 	}
 	
@@ -838,6 +850,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		}
 
 		newEnvironment.registerModelParametersImpl(myModelParameters);
+		newEnvironment.setContextOperation(operation);
 		return newEnvironment;
 	}
     

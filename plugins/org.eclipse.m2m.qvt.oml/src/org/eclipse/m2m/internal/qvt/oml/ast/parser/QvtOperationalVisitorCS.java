@@ -1006,11 +1006,14 @@ public class QvtOperationalVisitorCS
 
     private ObjectExp visitOutExpCS(OutExpCS outExpCS, QvtOperationalEnv env) {
 		MappingDeclarationCS topLevelInMapping = findOwningMappingDeclarationCS(outExpCS);		
-		if(topLevelInMapping != null && topLevelInMapping.getReturnType() == null && topLevelInMapping.getContextType() == null) {
+		if(topLevelInMapping != null && topLevelInMapping.getResult().isEmpty() && topLevelInMapping.getContextType() == null) {
 			return null;
 		}
 		
-		TypeSpecCS typeSpecCS = getOutExpCSType(outExpCS);
+		TypeSpecCS typeSpecCS = null;
+		if (outExpCS.getTypeSpecCS() != null) {
+			typeSpecCS = outExpCS.getTypeSpecCS();
+		}
 
 		ObjectExp objectExp = ExpressionsFactory.eINSTANCE.createObjectExp();
 		objectExp.setStartPosition(outExpCS.getStartOffset());
@@ -1033,24 +1036,17 @@ public class QvtOperationalVisitorCS
 			boolean isContextInOut = topLevelInMapping.getDirectionKindCS() != null ? 
 					topLevelInMapping.getDirectionKindCS().getDirectionKind() == DirectionKindEnum.INOUT : false;
 			
-			EClassifier objectTypeCS = null;			
-			ModelParameter extent = null;
-			TypeSpecCS resultTypeSpecCS = topLevelInMapping.getReturnType();			
-			if(resultTypeSpecCS == null) {
-				if(isContextInOut && topLevelInMapping.getContextType() != null) {
-					objectTypeCS = visitTypeCS(topLevelInMapping.getContextType(), DirectionKind.INOUT, env);
-				}
-			} else {
-				TypeSpecPair resultTypeSpecPair = visitTypeSpecCS(resultTypeSpecCS, DirectionKind.OUT, env);
-				if(resultTypeSpecPair != null) {
-					extent = resultTypeSpecPair.myExtent;
+			assert env.getContextOperation() instanceof ImperativeOperation; 
+			ImperativeOperation owningOperation = (ImperativeOperation)env.getContextOperation();
+
+			if(owningOperation.getResult().isEmpty()) {
+				if(isContextInOut && owningOperation.getContext() != null) {
+					objectExp.setType(owningOperation.getContext().getEType());
 				}
 			}
-			
-			objectExp.setExtent(extent);
-			objectExp.setType(objectTypeCS);			
-			if(objectTypeCS instanceof EClass) {				
-				objectExp.setInstantiatedClass((EClass)objectTypeCS);
+
+			if(objectExp.getType() instanceof EClass) {				
+				objectExp.setInstantiatedClass((EClass)objectExp.getType());
 			}				
 		}
 
@@ -1072,7 +1068,7 @@ public class QvtOperationalVisitorCS
 			MappingBodyCS bodyCS = findOwningMappingBodyCS(outExpCS);
 			boolean isImplicitObjExp = bodyCS != null ? bodyCS.isHasImplicitObjectExp() : false;
 			if(isImplicitObjExp) {
-				if(topLevelInMapping.getReturnType() != null) {
+				if(!topLevelInMapping.getResult().isEmpty()) {
 					objectExp.setName(Environment.RESULT_VARIABLE_NAME);
 					objectExp.setReferredObject(env.lookup(Environment.RESULT_VARIABLE_NAME));
 				} else {
@@ -1172,8 +1168,9 @@ public class QvtOperationalVisitorCS
 		result.setIsReset(!propCS.isIncremental());
 
 		EClassifier outType = null;
-		if(owner == null) { 
-			EObject eParent = propCS.eContainer();
+		if(owner == null) {
+			// FIXME - should allways be owned by objectExp
+/*			EObject eParent = propCS.eContainer();
 			if (eParent instanceof OutExpCS) {
 				OutExpCS outExpCS = (OutExpCS) eParent;
 				TypeSpecCS typeSpecCS = getOutExpCSType(outExpCS);
@@ -1186,7 +1183,7 @@ public class QvtOperationalVisitorCS
 						outType = visitTypeCS(mappingRuleCS.getMappingDeclarationCS().getContextType(), DirectionKind.INOUT, env);
 					}
 				}
-			}
+			} */
 		} else {
 			outType = owner.getType();
 		}
@@ -1450,14 +1447,18 @@ public class QvtOperationalVisitorCS
 			ModelParameter varParam = ExpressionsFactory.eINSTANCE.createModelParameter();
 			varParam.setStartPosition(paramCS.getStartOffset());
 			varParam.setEndPosition(paramCS.getEndOffset());
-			varParam.setName(paramCS.getSimpleNameCS().getValue());
+			if(paramCS.getSimpleNameCS() != null) {
+				varParam.setName(paramCS.getSimpleNameCS().getValue());
+			} else {
+				varParam.setName(""); //$NON-NLS-1$
+			}
 			varParam.setEType(type);
 			varParam.setKind((DirectionKind) ExpressionsFactory.eINSTANCE.createFromString(
 					ExpressionsPackage.eINSTANCE.getDirectionKind(), paramCS.getDirectionKind().getLiteral()));
 
 			if (paramNames.contains(varParam.getName())) {
 				env.reportError(NLS.bind(ValidationMessages.SameParamName, new Object[] { varParam.getName() }),
-						paramCS.getSimpleNameCS().getValue().length() == 0 ? paramCS : paramCS.getSimpleNameCS());
+						(paramCS.getSimpleNameCS() == null || paramCS.getSimpleNameCS().getValue().length() == 0) ? paramCS : paramCS.getSimpleNameCS());
 			}
 			paramNames.add(varParam.getName());
 			
@@ -1758,20 +1759,13 @@ public class QvtOperationalVisitorCS
 					.getDirectionKindCS());
 		}
 
-		VarParameter operationResult = (operation.getResult().isEmpty() ? null : operation.getResult().get(0));
+		//VarParameter operationResult = (operation.getResult().isEmpty() ? null : operation.getResult().get(0));
 		QvtOperationalEnv newEnv = env.createOperationEnvironment(operation);
 		
         if(myCompilerOptions.isGenerateCompletionData()) {          
             ASTBindingHelper.createCST2ASTBinding(methodCS, operation, newEnv);
         }
         
-		if (operationResult != null) {
-			Variable<EClassifier, EParameter> var = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();
-			var.setName(Environment.RESULT_VARIABLE_NAME);
-			var.setType(operationResult.getEType());
-			var.setRepresentedParameter(operationResult);
-			newEnv.addElement(var.getName(), var, true);
-		}
 		newEnv.defineOperationParameters(operation);
 
 		OCLExpression<EClassifier> guard;
@@ -1973,11 +1967,15 @@ public class QvtOperationalVisitorCS
 		}
 	}
 	
-	protected boolean visitMappingDeclarationCS(MappingDeclarationCS mappingDeclarationCS, QvtOperationalEnv env,
-			ImperativeOperation operation) throws SemanticException {
+	protected boolean visitMappingDeclarationCS(MappingDeclarationCS mappingDeclarationCS, QvtOperationalEnv env, ImperativeOperation operation) throws SemanticException {
 		if (mappingDeclarationCS == null) {
 			return false;
 		}
+		
+		operation.setIsBlackbox(mappingDeclarationCS.isBlackBox());
+		operation.setStartPosition(mappingDeclarationCS.getStartOffset());
+		operation.setEndPosition(mappingDeclarationCS.getEndOffset());
+		operation.setName(mappingDeclarationCS.getSimpleNameCS().getValue());		
 
 		DirectionKind contextDirection = DirectionKind.IN;
 		if (mappingDeclarationCS.getDirectionKindCS() != null) {
@@ -1990,28 +1988,13 @@ public class QvtOperationalVisitorCS
 		if (mappingDeclarationCS.getContextType() != null) {
 			contextType = visitTypeCS(mappingDeclarationCS.getContextType(), contextDirection, env);
 			if (contextType == null) {
-				contextType = env.getModuleContextType();//env.getOCLStandardLibrary().getOclVoid();
+				contextType = env.getModuleContextType();
 			}
 		} else {
-			contextType = env.getModuleContextType();//env.getOCLStandardLibrary().getOclVoid();
+			contextType = env.getModuleContextType();
 		}
 
 		boolean isEntryPoint = QvtOperationalEnv.MAIN.equals(mappingDeclarationCS.getSimpleNameCS().getValue());
-		TypeSpecPair returnTypeSpec;
-		if (mappingDeclarationCS.getReturnType() != null) {
-			returnTypeSpec = visitTypeSpecCS(mappingDeclarationCS.getReturnType(), DirectionKind.OUT, env);
-			if (returnTypeSpec.myType == null) {
-				returnTypeSpec.myType = env.getOCLStandardLibrary().getOclVoid();
-			}
-			if (isEntryPoint) {
-				env.reportWarning(ValidationMessages.QvtOperationalVisitorCS_entryPointReturnDeprecated,
-						mappingDeclarationCS.getReturnType());
-			}
-		} else {
-			returnTypeSpec = new TypeSpecPair();
-			returnTypeSpec.myType = env.getOCLStandardLibrary().getOclVoid();
-		}
-
 		List<VarParameter> params = new ArrayList<VarParameter>();
 		for (ParameterDeclarationCS paramCS : mappingDeclarationCS.getParameters()) {
 			VarParameter param = visitParameterDeclarationCS(paramCS, env, isEntryPoint);
@@ -2019,30 +2002,10 @@ public class QvtOperationalVisitorCS
 				return false;
 			}
 
-			QvtOperationalParserUtil.validateNameClashing(param.getName(), returnTypeSpec.myType, contextType, env,
-					mappingDeclarationCS);
-
 			params.add(param);
 		}
-
-
-		MappingParameter varResult = ExpressionsFactory.eINSTANCE.createMappingParameter();
-		varResult.setName(Environment.RESULT_VARIABLE_NAME);
-		varResult.setEType(returnTypeSpec.myType);
-		varResult.setExtent(returnTypeSpec.myExtent);
-		varResult.setKind(DirectionKind.OUT);
-		if (mappingDeclarationCS.getReturnType() != null) {
-			varResult.setStartPosition(mappingDeclarationCS.getReturnType().getStartOffset());
-			varResult.setEndPosition(mappingDeclarationCS.getReturnType().getEndOffset());
-		}
-		if (varResult.getExtent() == null) {
-			varResult.setExtent(env.resolveModelParameter(returnTypeSpec.myType, varResult.getKind()));
-		}
+		operation.getEParameters().addAll(params);		
 		
-		operation.setStartPosition(mappingDeclarationCS.getStartOffset());
-		operation.setEndPosition(mappingDeclarationCS.getEndOffset());
-		operation.setName(mappingDeclarationCS.getSimpleNameCS().getValue());
-			
 		if (mappingDeclarationCS.getContextType() != null) {
 			MappingParameter varContext = ExpressionsFactory.eINSTANCE.createMappingParameter();			
 			varContext.setStartPosition(mappingDeclarationCS.getContextType().getStartOffset());
@@ -2054,24 +2017,96 @@ public class QvtOperationalVisitorCS
 				varContext.setExtent(env.resolveModelParameter(contextType, varContext.getKind()));
 			}
 		
-		operation.setContext(varContext);
-		}
+			operation.setContext(varContext);
+		}		
 		
-		operation.getEParameters().addAll(params);
-		if(mappingDeclarationCS.getReturnType() != null) {
+		EList<ParameterDeclarationCS> resultParams = mappingDeclarationCS.getResult();
+		for(ParameterDeclarationCS nextResultParamCS : resultParams) {
+			TypeSpecPair nextResultTypeSpec = visitTypeSpecCS(nextResultParamCS.getTypeSpecCS(), DirectionKind.OUT, env);
+			if (nextResultTypeSpec.myType == null) {
+				nextResultTypeSpec.myType = env.getOCLStandardLibrary().getOclVoid();
+			}
+			
+			MappingParameter varResult = createMappingResultParam(nextResultParamCS, nextResultTypeSpec, env);
+			if(resultParams.size() == 1) {
+				varResult.setName(Environment.RESULT_VARIABLE_NAME);
+				if(nextResultParamCS.getSimpleNameCS() != null) {
+					String message = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_resultParamNameNotAllowed, nextResultParamCS.getSimpleNameCS().getValue());
+					env.reportError(message, nextResultParamCS.getSimpleNameCS());
+				}
+				
+				if(nextResultParamCS.isSetDirectionKind()) {
+					env.reportError(ValidationMessages.QvtOperationalVisitorCS_resultParamNameDirectionNotAllowed, nextResultParamCS);
+				}
+			}
 			operation.getResult().add(varResult);
+			
+			if (isEntryPoint) {
+				env.reportWarning(ValidationMessages.QvtOperationalVisitorCS_entryPointReturnDeprecated,
+						nextResultParamCS.getTypeSpecCS());
+			}
+	
+			if(nextResultParamCS.getSimpleNameCS() != null) {
+				String name = nextResultParamCS.getSimpleNameCS().getValue();
+				QvtOperationalParserUtil.validateNameClashing(name, nextResultTypeSpec.myType, contextType, env, nextResultParamCS.getSimpleNameCS());
+			}
 		}
-		operation.setIsBlackbox(mappingDeclarationCS.isBlackBox());
 		
-		if (operation.getResult().size() <= 1) {
-			operation.setEType(returnTypeSpec.myType);
-		}
-		else {
-			// TODO : create TupleType
-			assert false;
+		// set operation return type
+		if(resultParams.isEmpty()) {
+			// no result parameter should exist
+			operation.setEType(env.getOCLStandardLibrary().getOclVoid());
+		} else if(resultParams.size() > 1) {
+			// create extra tuple-type the result type
+			operation.setEType(createResultTupleType(operation, env));
+		} else {
+			operation.setEType(operation.getResult().get(0).getEType());
 		}
 
 		return true;
+	}
+
+	private EClassifier createResultTupleType(ImperativeOperation operation, QvtOperationalEnv env) {
+		EList<VarParameter> resultParams = operation.getResult();
+		assert resultParams.size() > 1;
+		
+		List<Variable<EClassifier, EParameter>> parts = new ArrayList<Variable<EClassifier,EParameter>>(resultParams.size());		
+		for(VarParameter resultParam : resultParams) {
+			Variable<EClassifier, EParameter> var = oclFactory.createVariable();
+			uml.setName(var, resultParam.getName());
+			uml.setType(var, resultParam.getEType());
+			
+			parts.add(var);
+		}		
+		return env.getTypeResolver().resolve((EClassifier)env.getOCLFactory().createTupleType(parts));
+	}
+		
+	private MappingParameter createMappingResultParam(ParameterDeclarationCS paramCS, TypeSpecPair typeSpec, QvtOperationalEnv env) {
+		MappingParameter varResult = ExpressionsFactory.eINSTANCE.createMappingParameter();
+		if(paramCS.getSimpleNameCS() != null) {
+			varResult.setName(paramCS.getSimpleNameCS().getValue());
+		} 
+		
+		if(varResult.getName() == null){
+			varResult.setName(""); //$NON-NLS-1$
+		}
+		
+		varResult.setEType(typeSpec.myType);
+		varResult.setExtent(typeSpec.myExtent);
+		varResult.setKind(DirectionKind.OUT);
+		
+		varResult.setStartPosition(paramCS.getStartOffset());
+		varResult.setEndPosition(paramCS.getEndOffset());
+
+		if (varResult.getExtent() == null) {
+			varResult.setExtent(env.resolveModelParameter(typeSpec.myType, varResult.getKind()));
+		}
+		
+		if(getCompilerOptions().isGenerateCompletionData()) {
+			ASTBindingHelper.createCST2ASTBinding(paramCS, varResult);
+		}
+		
+		return varResult;
 	}
 
 	private OCLExpression<EClassifier> visitAssignStatementCS(AssignStatementCS expressionCS, QvtOperationalEnv env) {
@@ -2199,7 +2234,11 @@ public class QvtOperationalVisitorCS
 		MappingParameter varParam = ExpressionsFactory.eINSTANCE.createMappingParameter();
 		varParam.setStartPosition(paramCS.getStartOffset());
 		varParam.setEndPosition(paramCS.getEndOffset());
-		varParam.setName(paramCS.getSimpleNameCS().getValue());
+		if(paramCS.getSimpleNameCS() != null) {
+			varParam.setName(paramCS.getSimpleNameCS().getValue());
+		} else {
+			varParam.setName(""); //$NON-NLS-1$
+		}
 		varParam.setEType(typeSpec.myType);
 		varParam.setExtent(typeSpec.myExtent);
 		varParam.setKind(directionKind);
@@ -2245,13 +2284,16 @@ public class QvtOperationalVisitorCS
 						ExpressionsPackage.eINSTANCE.getDirectionKind(), mappingDeclCS.getDirectionKindCS()
 								.getDirectionKind().getLiteral());
 			}
+			// TODO - solve name clashes by higher precedence for variables
 			EClassifier contextType = mappingDeclCS.getContextType() != null ? visitTypeCS(
 					mappingDeclCS.getContextType(), contextDirection, env) : env.getOCLStandardLibrary().getOclVoid();
-			EClassifier returnType = mappingDeclCS.getReturnType() != null ? visitTypeSpecCS(
-					mappingDeclCS.getReturnType(), DirectionKind.OUT, env).myType : env.getOCLStandardLibrary().getOclVoid();
-			if (!QvtOperationalParserUtil.validateNameClashing(varInitCS.getSimpleNameCS().getValue(), returnType,
-					contextType, env, varInitCS)) {
-				return null;
+			for (ParameterDeclarationCS resultParam : mappingDeclCS.getResult()) {
+				EClassifier returnType = resultParam.getTypeSpecCS() != null ? visitTypeSpecCS(
+						resultParam.getTypeSpecCS(), DirectionKind.OUT, env).myType : env.getOCLStandardLibrary().getOclVoid();
+				if (!QvtOperationalParserUtil.validateNameClashing(varInitCS.getSimpleNameCS().getValue(), returnType,
+						contextType, env, varInitCS)) {
+					return null;
+				}
 			}
         }
 
@@ -2319,12 +2361,15 @@ public class QvtOperationalVisitorCS
 		
 		for (OCLExpressionCS nextExpCS : mappingBodyCS.getContent()) {
 			if(nextExpCS instanceof OutExpCS) {
-				ObjectExp objectExp = visitOutExpCS((OutExpCS)nextExpCS, env);
+				OutExpCS nextObjectExpCS = (OutExpCS)nextExpCS;
+				ObjectExp objectExp = visitOutExpCS(nextObjectExpCS, env);
 				if(objectExp != null) {					
 					body.getContent().add(objectExp);
 				}
 
-				if(!mappingBodyCS.isHasPopulationSection() && !mappingBodyCS.isHasImplicitObjectExp()) {
+				MappingDeclarationCS mappingDeclarationCS = findOwningMappingDeclarationCS(nextObjectExpCS);
+				boolean hasSingleResult = mappingDeclarationCS != null && mappingDeclarationCS.getResult().size() <= 1;
+				if(hasSingleResult && !mappingBodyCS.isHasPopulationSection() && !mappingBodyCS.isHasImplicitObjectExp()) {
 					// Note: multiple results not supported yet, so prohibit any object expression 
 					// without an enclosing explicit population section
 					env.reportError(ValidationMessages.QvtOperationalVisitorCS_useImplicitObjectExpOrPopulationSection,  nextExpCS);		
@@ -2364,7 +2409,8 @@ public class QvtOperationalVisitorCS
 				MappingBodyCS bodyCS = findOwningMappingBodyCS(objectExpCS);
 				if(bodyCS != null && bodyCS.isHasImplicitObjectExp()) {
 					MappingDeclarationCS mappingDeclCS = findOwningMappingDeclarationCS(objectExpCS);
-					problemCS = mappingDeclCS != null ? mappingDeclCS.getReturnType() : null;
+					problemCS = (mappingDeclCS != null && !mappingDeclCS.getResult().isEmpty()) ? 
+									mappingDeclCS.getResult().get(0) : null;
 				}
 				if(problemCS == null) {
 					problemCS = objectExpCS.getSimpleNameCS() != null ? objectExpCS.getSimpleNameCS() : objectExpCS;
@@ -2374,7 +2420,7 @@ public class QvtOperationalVisitorCS
 			int startOffs = getStartOffset(objectExp, problemCS);
 			int endOffs = getEndOffset(objectExp, problemCS);
 			if(referredObject != null)	{ 
-				if(referredObject.getType() != null) { 
+				if(referredObject.getType() != null && (referredObject.getType() instanceof CollectionType == false)) { 
 					// we failed to figure out the class but type is available, let's report it's classifier only 
 					env.reportError(NLS.bind(ValidationMessages.nonModelTypeError,
 							QvtOperationalParserUtil.safeGetQualifiedName(env, referredObject.getType())), startOffs, endOffs);
@@ -2490,7 +2536,7 @@ public class QvtOperationalVisitorCS
 		if (propCS.getTypeCS() != null) {
 			type = visitTypeCS(propCS.getTypeCS(), null, env);
 			if (type == null) {
-				return null;
+				//return null; -- FIXME null type allow
 			}
 		}
 
@@ -2506,7 +2552,7 @@ public class QvtOperationalVisitorCS
 			type = exp.getType();
 		}
 		if (type == null) {
-			return null;
+			//return null; -- FIXME null type allowed
 		}
 		
 		prop.setEType(type);
@@ -2535,7 +2581,7 @@ public class QvtOperationalVisitorCS
 			prop.setOverridden(feature);
 		}
 		else {
-			return null;
+			return prop;
 		}
 		
 		env.addModuleProperty(prop);
@@ -3127,23 +3173,7 @@ public class QvtOperationalVisitorCS
 		result.setValue(exp);
 		return true;
 	}
-	
-	private static TypeSpecCS getOutExpCSType(OutExpCS outExpCS) {
-		if (outExpCS.getTypeSpecCS() != null) {
-			return outExpCS.getTypeSpecCS();
-		}
 		
-		if ((outExpCS.eContainer() instanceof MappingBodyCS)
-				&& (outExpCS.eContainer().eContainer() instanceof MappingRuleCS)) {
-			MappingBodyCS bodyCS = (MappingBodyCS)outExpCS.eContainer();
-			if(bodyCS.isHasImplicitObjectExp()) {
-				MappingRuleCS mappingRuleCS = (MappingRuleCS) bodyCS.eContainer();
-				return mappingRuleCS.getMappingDeclarationCS().getReturnType();
-			}
-		}
-		return null;
-	}
-	
 	private void addLateResolve(ResolveExp resolve) {
 		assert resolve.isIsDeferred();
 		if(myLateResolveExps == null) {

@@ -356,7 +356,11 @@ class MappingExtensionHelper {
 			return false;
 		}
 		
-		return true;
+		if(extendingOper.getEType() == null || extendedOper.getEType() == null) {
+			return false;
+		}
+		
+		return extendingOper.getResult().size() == 1 || isAssignableTo(extendingOper.getEType(), extendedOper.getEType(), env);
 	}
 		
 	private static boolean isParameterListCaller2CalleeCompatible(EList<? extends EParameter> callerParams, EList<? extends EParameter> calleeParams, QvtOperationalEnv env) {
