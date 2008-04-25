@@ -73,6 +73,7 @@ public class ParserTests {
     
     static TestData[] ourData = new TestData[] {
         //new TestData("orderedsetdoesnotconformtoset", 1), //$NON-NLS-1$
+    	TestData.createSourceChecked("parmnamesclash", 22, 0),
     	TestData.createSourceChecked("stdlibElementAsOut", 7, 0),    	
         TestData.createSourceChecked("bug2732_wrongcondition", 1, 1), //$NON-NLS-1$      
         TestData.createSourceChecked("varscope", 10, 0), //$NON-NLS-1$      
@@ -152,7 +153,7 @@ public class ParserTests {
         new TestData("mm_header3", 1), //$NON-NLS-1$
         new TestData("mm_header4", 1), //$NON-NLS-1$
         new TestData("mm_header5", 2), //$NON-NLS-1$
-        new TestData("mm_header6", 2), //$NON-NLS-1$
+        new TestData("mm_header6", 1), //$NON-NLS-1$
         new TestData("mm_header7", 1), //$NON-NLS-1$
         new TestData("entryOpDupl", 1), //$NON-NLS-1$
         new TestData("resolveIn_ambiguity", 0, "Mappings referred in resolveIn must not be overloaded! Several 'ENamedElement::createEClass' mappings found. All of them will participate in the resolution."), //$NON-NLS-1$ //$NON-NLS-2$
