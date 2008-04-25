@@ -541,7 +541,7 @@ public class CompletionProposalUtil {
             if (methodCS instanceof MappingRuleCS) {
                 MappingDeclarationCS declarationCS = methodCS.getMappingDeclarationCS();
                 if ((declarationCS.getContextType() == null)
-                        || (declarationCS.getReturnType() == null)) {
+                        || (declarationCS.getResult().isEmpty())) {
                     continue;
                 }
                 TypeCS contextTypeCS = declarationCS.getContextType();

@@ -184,7 +184,9 @@ public class QvtOutlineLabelProvider implements ILabelProvider {
     		result.append("inout "); //$NON-NLS-1$
     	}
     	
-    	result.append(decl.getSimpleNameCS().getValue());
+    	if(decl.getSimpleNameCS() != null) {
+    		result.append(decl.getSimpleNameCS().getValue());
+    	}
         
         String typeName = getTypeAsString(decl.getTypeSpecCS().getTypeCS());
         result.append(":").append(typeName); //$NON-NLS-1$
