@@ -1,7 +1,5 @@
 
 modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
-modeltype QVT uses qvtoperational('http://www.eclipse.org/QVT/1.0.0/Operational');
-modeltype UML uses uml('http://www.eclipse.org/uml2/2.1.0/UML');
 	        
 transformation multiresultpars(in m : ECORE, out x  : ECORE, out y : ECORE); 
 
