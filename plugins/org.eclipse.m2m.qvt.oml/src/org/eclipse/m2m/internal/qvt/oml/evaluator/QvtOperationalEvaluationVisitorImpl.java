@@ -372,7 +372,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 
     	if(operation.getResult().size() > 1) {
     		if(evalEnv.getValueOf(Environment.RESULT_VARIABLE_NAME) == null) {
-    			replaceInEnv(Environment.RESULT_VARIABLE_NAME, null, operation.getEType());    			
+    			replaceInEnv(Environment.RESULT_VARIABLE_NAME, null, operation.getEType());
     		}
     	}    	
     }
@@ -1317,9 +1317,15 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     	}
 
     	for (int i = 0; i < sourceParams.size(); i++) {
-    		Object parValue = sourceEnv.getValueOf(sourceParams.get(i).getName());
-    		targetEnv.replace(targetParams.get(i).getName(), parValue);    		
+    		EParameter sourceParam = sourceParams.get(i);
+    		EParameter targetParam = targetParams.get(i);
+    		targetEnv.copyVariableValueFrom(sourceEnv, sourceParam.getName(), targetParam.getName());
 		}
+    	
+    	if(sourceParams.size() > 1) {
+    		// copy result variable explicitly as in case of many result parameters, there is no 'name=result' parameter 
+    		targetEnv.copyVariableValueFrom(sourceEnv, Environment.RESULT_VARIABLE_NAME, Environment.RESULT_VARIABLE_NAME);
+    	}
 
     	sourceParams = sourceOper.getEParameters();
     	targetParams = targetOper.getEParameters();
@@ -1330,8 +1336,8 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     	for (int i = 0; i < sourceParams.size(); i++) {
     		VarParameter sourceParam = (VarParameter) sourceParams.get(i);
     		if(sourceParam.getKind() == DirectionKind.OUT) {
-    			Object parValue = sourceEnv.getValueOf(sourceParam.getName());
-    			targetEnv.replace(targetParams.get(i).getName(), parValue);
+    			EParameter targetParam = targetParams.get(i);
+    			targetEnv.copyVariableValueFrom(sourceEnv, sourceParam.getName(), targetParam.getName());    			
     		}
 		}
     }
@@ -1500,6 +1506,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         return (QvtOperationalEvaluationEnv) getEvaluationEnvironment();
     }
     
+    
 	/**
 	 * Adds the given variable value into evaluation environment.
 	 * 
@@ -1584,7 +1591,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 				}
 			}
 			values.put(tupleProp, propVal);
-			evalEnv.replace(tupleProp.getName(), propVal);
+			evalEnv.replace(tupleProp.getName(), propVal, tupleProp.getEType());
 		}
     	
     	return evalEnv.createTuple(operation.getEType(), values);

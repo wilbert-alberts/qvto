@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.modelparam.ResourceEObject;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.IntermediatePropertyModelAdapter;
@@ -253,6 +254,11 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
     	return getInvalidResult() == value;
     }
 
+    public void copyVariableValueFrom(QvtOperationalEvaluationEnv fromEnv, String varName, String targetVarName) {
+    	Object sourceValue = fromEnv.getValueOf(varName);
+    	this.replace(targetVarName, sourceValue);
+    }
+    
     /**
      * Replaces the current value of the supplied name with the supplied value.
      * 
@@ -501,7 +507,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		myMapImportedExtents = mapImportedExtents;
 		for (Map.Entry<ModelParameter, ModelParameterExtent> entry : modelExtents.entrySet()) {
 			if (entry.getKey() != UNBOUND_MODEL_EXTENT && entry.getKey().getName().length() > 0) {
-				add(entry.getKey().getName(), entry.getValue());
+				add(entry.getKey().getName(), entry.getValue(), entry.getKey().getEType());
 			}
 		}
 	}
