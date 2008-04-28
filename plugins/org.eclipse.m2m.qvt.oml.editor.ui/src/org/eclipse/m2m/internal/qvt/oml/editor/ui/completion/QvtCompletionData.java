@@ -45,9 +45,10 @@ import org.eclipse.ui.part.FileEditorInput;
  */
 
 public class QvtCompletionData {
-    public static final int[] MAPPING_DECLARATION_TRAILING_TOKEN_KINDS = new int[] {QvtOpLPGParsersym.TK_LBRACE,
-        QvtOpLPGParsersym.TK_SEMICOLON,
-        QvtOpLPGParsersym.TK_when
+    public static final int[] MAPPING_DECLARATION_TRAILING_TOKEN_KINDS = new int[] {
+        QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_SEMICOLON,
+        QvtOpLPGParsersym.TK_when, QvtOpLPGParsersym.TK_where,
+        QvtOpLPGParsersym.TK_inherits, QvtOpLPGParsersym.TK_merges, QvtOpLPGParsersym.TK_disjuncts
     };
 
     private final QvtEditor myEditor;

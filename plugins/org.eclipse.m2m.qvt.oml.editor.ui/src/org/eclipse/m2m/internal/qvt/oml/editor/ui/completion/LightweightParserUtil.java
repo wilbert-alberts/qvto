@@ -257,7 +257,7 @@ public class LightweightParserUtil {
             switch (parserType) {
                 case LIGHTWEIGHT_PARSER: parser = new RunnableLightweightParser(lexer); break;
                 case LIGHTWEIGHT_TYPE_PARSER: parser = new RunnableLightweightTypeParser(lexer); break;
-                default: throw new RuntimeException("Unknown parserType: " + parserType);
+                default: throw new RuntimeException("Unknown parserType: " + parserType); //$NON-NLS-1$
             }
             parser.resetTokenStream();
             lexer.lexer(parser);
