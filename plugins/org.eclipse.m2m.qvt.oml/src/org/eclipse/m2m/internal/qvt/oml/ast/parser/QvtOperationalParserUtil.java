@@ -483,7 +483,7 @@ public class QvtOperationalParserUtil {
 			}
 			
 			if (parameter.getKind() != DirectionKind.OUT && parameter.getKind() != DirectionKind.INOUT) {
-				env.reportError(NLS.bind(ValidationMessages.inputParameterModificationError, parameter.getName()),
+				env.reportError(NLS.bind(ValidationMessages.inputParameterModificationError, variable.getName()),
 						varPathNameNodeCS);
 				return false;
 			}

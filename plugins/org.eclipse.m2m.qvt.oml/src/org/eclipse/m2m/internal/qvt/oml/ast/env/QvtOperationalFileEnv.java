@@ -38,8 +38,10 @@ import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.Library;
 import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LibraryCreationException;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.LegacyNativeLibSupport;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
+import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
+import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.ExpressionsFactory;
 import org.eclipse.ocl.expressions.Variable;
@@ -138,26 +140,17 @@ public class QvtOperationalFileEnv extends QvtOperationalEnv {
 		return null;
 	}
 	
-    public void addModuleProperty(Property prop) {
-        if (getModuleContextType().getEStructuralFeature(prop.getName()) != null) {
-            reportError(NLS.bind(ValidationMessages.SemanticUtil_15,
-                    new Object[] { prop.getName() }), prop.getStartPosition(), prop.getEndPosition());
+    public void addModuleProperty(Property prop, CSTNode cstElement) {
+        if (lookupProperty(getModuleContextType(), prop.getName()) != null) {
+            reportError(NLS.bind(ValidationMessages.ModulePropertyAlreadyDefined, new Object[] { prop.getName() }), cstElement);
         } else {
-        	/*
-            if (prop.getName() != null && prop.getEType() != null) {
-                EClassifier type = prop.getEType();
-        		EStructuralFeature sFeature = null;
-        		if(type instanceof EClass) { 
-        			sFeature = org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.createEReference();
-        		} else {
-        			sFeature = org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.createEAttribute();        			
-        		}
-        		
-    			getModuleContextType().getEStructuralFeatures().add(sFeature);
-        		sFeature.setName(prop.getName());        		
-        		sFeature.setEType(prop.getEType());                
-            }
-            */
+			Variable<EClassifier, EParameter> var = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();
+			var.setName(prop.getName());
+			var.setType(prop.getEType());
+			Constraint constraint = EcoreFactory.eINSTANCE.createConstraint();
+        	defineAttribute(getModuleContextType(), var, constraint);
+        	
+        	getModuleContextType().getEStructuralFeatures().add(prop);
         }
     }
 	    

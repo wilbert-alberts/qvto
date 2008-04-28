@@ -88,6 +88,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorVariableInitializationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.EmfMmUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.GraphWalker;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.IntermediatePropertyModelAdapter;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.GraphWalker.NodeProvider;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.GraphWalker.VertexProcessor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
@@ -1332,14 +1333,10 @@ public class QvtOperationalVisitorCS
 		//QvtOperationalParserUtil.defineImportedOperations(module, env);
 
 		for (ModulePropertyCS propCS : moduleCS.getProperties()) {
-			if (moduleCS instanceof LibraryCS && propCS instanceof LocalPropertyCS) {
-				// We should support Library module properties
-				//env.reportError(ValidationMessages.Local_properties_are_not_allowed_in_libraries, propCS);
-				//continue;
-			}
 			Property prop = visitModulePropertyCS(propCS, env);
 			if (prop != null) {
-				module.getEStructuralFeatures().add(prop);
+				env.addModuleProperty(prop, propCS.getSimpleNameCS());
+
 				if (prop instanceof ContextualProperty) {
 					module.getIntermediateProperty().add(prop);
 				}
@@ -2137,9 +2134,7 @@ public class QvtOperationalVisitorCS
 		
 
 		Variable<EClassifier, EParameter> variable = env.lookup(lvalueName);
-		if (variable != null) {
-			QvtOperationalParserUtil.validateVariableModification(variable, pathNameCS, env);
-		} else {
+		if (variable == null) {
 			env.reportError(NLS.bind(ValidationMessages.unresolvedNameError, new Object[] { lvalueName }),
 			        lValueCS);
 			return null;
@@ -2163,6 +2158,11 @@ public class QvtOperationalVisitorCS
 			}
 		}
 
+		EStructuralFeature originalFeature = IntermediatePropertyModelAdapter.getOverridenFeature(leftProp);
+		if (originalFeature == leftProp) {
+			QvtOperationalParserUtil.validateVariableModification(variable, pathNameCS, env);
+		}
+		
 		EClassifier type = leftProp == null ? variable.getType() : env.getUMLReflection().getOCLType(leftProp);
 		QvtOperationalParserUtil.validateAssignment(variable.getName(), type, rightExpr, expressionCS.isIncremental(),
 		        pathNameCS, env);
@@ -2504,8 +2504,6 @@ public class QvtOperationalVisitorCS
 					new Object[] { property.getName() }), propCS);
 		}
 
-		env.addModuleProperty(property);
-
 		return property;
 	}
 
@@ -2517,7 +2515,6 @@ public class QvtOperationalVisitorCS
 
 		if (validateLocalPropertyCS(propCS, prop, env)) {
 			if (QvtOperationalParserUtil.validateLocalProperty(prop, env)) {
-				env.addModuleProperty(prop);
 			}
 		}
 
@@ -2536,7 +2533,7 @@ public class QvtOperationalVisitorCS
 		if (propCS.getTypeCS() != null) {
 			type = visitTypeCS(propCS.getTypeCS(), null, env);
 			if (type == null) {
-				//return null; -- FIXME null type allow
+				return null;
 			}
 		}
 
@@ -2546,13 +2543,17 @@ public class QvtOperationalVisitorCS
 			if (exp == null) {
 				return null;
 			}
+			else {
+				env.reportWarning(NLS.bind(ValidationMessages.IntermediatePropertiesInitNotSupported,
+						new Object[] { }), propCS.getOclExpressionCS());
+			}
 		}
 		
 		if (type == null && exp != null) {
 			type = exp.getType();
 		}
 		if (type == null) {
-			//return null; -- FIXME null type allowed
+			return null;
 		}
 		
 		prop.setEType(type);
@@ -2570,21 +2571,24 @@ public class QvtOperationalVisitorCS
 		
 		EClassifier contextType = visitTypeCS(propCS.getScopedNameCS().getTypeCS(), null, env);
 		if (contextType != null) {
-			Variable<EClassifier, EParameter> var = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();
-			var.setName(propCS.getSimpleNameCS().getValue());
-			var.setType(type);
-			Constraint constraint = EcoreFactory.eINSTANCE.createConstraint();
-			constraint.setStereotype(QvtOperationalEnv.INTERMEDIATE_PROPERTY_STEREOTYPE);
-			constraint.getConstrainedElements().add(prop);
-			EStructuralFeature feature = env.defineAttribute(contextType, var, constraint);
-			
-			prop.setOverridden(feature);
+			if (env.lookupProperty(contextType, propCS.getSimpleNameCS().getValue()) != null) {
+	            env.reportError(NLS.bind(ValidationMessages.IntermediatePropertyAlreadyDefined, new Object[] { prop.getName() }), propCS.getSimpleNameCS());
+			}
+			else {
+				Variable<EClassifier, EParameter> var = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();
+				var.setName(propCS.getSimpleNameCS().getValue());
+				var.setType(type);
+				Constraint constraint = EcoreFactory.eINSTANCE.createConstraint();
+				constraint.setStereotype(QvtOperationalEnv.INTERMEDIATE_PROPERTY_STEREOTYPE);
+				constraint.getConstrainedElements().add(prop);
+				EStructuralFeature feature = env.defineAttribute(contextType, var, constraint);
+				
+				prop.setOverridden(feature);
+			}
 		}
 		else {
 			return prop;
 		}
-		
-		env.addModuleProperty(prop);
 		
 		return prop;
 	}
@@ -2607,7 +2611,7 @@ public class QvtOperationalVisitorCS
 		}
 		
         // AST binding
-        if(myCompilerOptions.isGenerateCompletionData()) {		
+        if (result != null && myCompilerOptions.isGenerateCompletionData()) {		
         	ASTBindingHelper.createCST2ASTBinding(propCS, result, env);
         }
 		//

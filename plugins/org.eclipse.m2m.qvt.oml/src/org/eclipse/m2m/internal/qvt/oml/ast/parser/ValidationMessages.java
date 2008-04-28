@@ -131,6 +131,10 @@ public final class ValidationMessages extends NLS {
 	public static String SemanticUtil_13;
 	public static String SemanticUtil_15;
 	public static String SemanticUtil_17;
+	
+	public static String ModulePropertyAlreadyDefined;
+	public static String IntermediatePropertiesInitNotSupported;
+	public static String IntermediatePropertyAlreadyDefined;
 
     public static String LibOperationAnalyser_ParametersOsReturnTypeNotFound;
     public static String LibOperationAnalyser_OperationParsingError;
