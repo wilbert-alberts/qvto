@@ -17,11 +17,13 @@ import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
+import org.eclipse.m2m.internal.qvt.oml.cst.LocalPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.PatternPropertyExpCS;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.IntermediatePropertyModelAdapter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.ocl.cst.CSTNode;
@@ -122,7 +124,10 @@ public class ObjectPropertyHyperlinkDetector implements IHyperlinkDetectorHelper
 					return pcall.getReferredProperty();
 				}
 			}
-		} 			
+		} else if(nameCS.eContainer() instanceof LocalPropertyCS) {
+			LocalPropertyCS localPropertyCS = (LocalPropertyCS) nameCS.eContainer();
+			return ASTBindingHelper.resolveASTNode(localPropertyCS, LocalProperty.class);			
+		}
 		
 		return null;	
 	}
