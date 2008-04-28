@@ -115,7 +115,7 @@ public class ParserTests {
         new TestData("bodywithsemicolon", 0), //$NON-NLS-1$
         new TestData("modifyparam", 0), //$NON-NLS-1$
         new TestData("wrongparamnameinout", 4), //$NON-NLS-1$
-        new TestData("modifyfeatureininiterror", 4), //$NON-NLS-1$
+        new TestData("modifyfeatureininiterror", 3), //$NON-NLS-1$
         TestData.createSourceChecked("voidout", 2, 0), //$NON-NLS-1$
         new TestData("modifyinparam", 1), //$NON-NLS-1$
         new TestData("modifyresult", 0), //$NON-NLS-1$
