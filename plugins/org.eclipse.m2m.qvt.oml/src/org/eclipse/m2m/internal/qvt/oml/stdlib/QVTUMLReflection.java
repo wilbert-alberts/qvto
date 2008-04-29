@@ -96,7 +96,7 @@ public class QVTUMLReflection
 	public static boolean isUserModelElement(EClassifier classifier) {
 		if(classifier instanceof EClass) {
 			EClass eClass = (EClass) classifier;
-			EClassifier realClassifier = OCLStandardLibraryImpl.INSTANCE.getRealClassifier(eClass);
+			EClassifier realClassifier = OCLStandardLibraryImpl.getRealClassifier(eClass);
 			if(eClass != realClassifier && realClassifier != null) {
 				return false;
 			}
