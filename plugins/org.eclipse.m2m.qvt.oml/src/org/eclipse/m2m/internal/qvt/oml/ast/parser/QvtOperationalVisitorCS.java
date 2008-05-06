@@ -452,7 +452,20 @@ public class QvtOperationalVisitorCS
 	            }
 	        }
 	        else {
-	            return super.oclExpressionCS(oclExpressionCS, env);
+	        	OCLExpression<EClassifier> result = super.oclExpressionCS(oclExpressionCS, env);
+
+	    		if (oclExpressionCS instanceof OperationCallExpCS) {
+	    			if (result instanceof OperationCallExp) {
+		    			validateOperationCall((OperationCallExpCS) oclExpressionCS,
+		    					(OperationCallExp<EClassifier, EOperation>) result, (QvtOperationalEnv) env);
+	    			}
+	    			if (result instanceof IteratorExp 
+	    					&& ((IteratorExp<EClassifier, EOperation>) result).getBody() instanceof OperationCallExp) {
+		    			validateOperationCall((OperationCallExpCS) oclExpressionCS,
+		    					(OperationCallExp<EClassifier, EOperation>) ((IteratorExp<EClassifier, EOperation>) result).getBody(), (QvtOperationalEnv) env);
+	    			}
+	    		}
+	    		return result;
 	        }
 	    }
 	    catch (NullPointerException ex) {
@@ -792,10 +805,6 @@ public class QvtOperationalVisitorCS
 
     private OCLExpression<EClassifier> visitOclExpressionCS(OCLExpressionCS expressionCS, QvtOperationalEnv env) {
 		OCLExpression<EClassifier> result = oclExpressionCS(expressionCS, env);
-		if (expressionCS instanceof OperationCallExpCS && result instanceof OperationCallExp) {
-			validateOperationCall((OperationCallExpCS) expressionCS,
-					(OperationCallExp<EClassifier, EOperation>) result, env);
-		}
 		if (expressionCS instanceof MappingCallExpCS) {
 		    if (result instanceof OperationCallExp) {
 		        MappingCallExp mappingCallExp = createMappingCallExp((MappingCallExpCS) expressionCS, result);
@@ -2941,7 +2950,8 @@ public class QvtOperationalVisitorCS
 		}
 		if (QvtOperationalUtil.isMappingOperation(operationCallExp.getReferredOperation())) {
 			if (false == opCallCS instanceof MappingCallExpCS) {
-				env.reportWarning(ValidationMessages.QvtOperationalVisitorCS_mapKeywordNotUsed, opCallCS);
+				env.reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_mapKeywordNotUsed,
+						operationCallExp.getReferredOperation().getName()), opCallCS);
 			}
 		}
 	}
