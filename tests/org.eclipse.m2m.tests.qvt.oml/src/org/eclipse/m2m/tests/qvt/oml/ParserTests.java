@@ -78,7 +78,7 @@ public class ParserTests {
         TestData.createSourceChecked("bug2732_wrongcondition", 1, 1), //$NON-NLS-1$      
         TestData.createSourceChecked("varscope", 10, 0), //$NON-NLS-1$      
     	TestData.createSourceChecked("_while", 10, 1), //$NON-NLS-1$
-    	TestData.createSourceChecked("implicitCallSrc", 22, 1), //$NON-NLS-1$    	
+    	TestData.createSourceChecked("implicitCallSrc", 22, 4), //$NON-NLS-1$    	
     	new TestData("assert_log", 0), //$NON-NLS-1$    	
         new TestData("opersignatureparamclash", 1), //$NON-NLS-1$    	
         new TestData("collectreturntype", 0), //$NON-NLS-1$

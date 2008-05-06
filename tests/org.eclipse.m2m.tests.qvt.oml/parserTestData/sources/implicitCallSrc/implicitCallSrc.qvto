@@ -117,7 +117,7 @@ mapping nonContextualMapping(in par : EClass) : EPackage {
 		Bag{ par }->any(getFeatureCount() > 0);
 		
 		Bag{ }->any(oclIsKindOf(String)); -- implicit source from collection iterator
-		Bag{ }->any(nonContextualMapping(par) <> null); -- implicit source from collection iterator fails-> module is selected		
+		Bag{ }->any(/*<warn>*/nonContextualMapping(par)/*</warn>*/ <> null); -- implicit source from collection iterator fails-> module is selected		
 	}
 }
  
@@ -140,7 +140,7 @@ main() {
 		strVal := this.localProp;		
 		
 		Bag{ }->any(oclIsKindOf(String)); -- implicit source from collection iterator
-		Bag{ }->any(nonContextualMapping(eClass) <> null); -- implicit source from collection iterator fails-> module is selected
+		Bag{ }->any(/*<warn>*/nonContextualMapping(eClass)/*</warn>*/ <> null); -- implicit source from collection iterator fails-> module is selected
 		
 		queryX();
 }
