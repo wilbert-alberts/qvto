@@ -71,7 +71,7 @@ mapping ecore::EClass::myMapping() : ecore::EPackage {
 	name := localProp;
 	name := this.localProp;
 	name := importedModuleProp;
-	name := importedNonContextualMapping(self).name;
+	name := /*<warn>*/importedNonContextualMapping(self)/*</warn>*/.name;
 
 	name := map /*<error>*/importedMyMapping/*</error>*/().name;
 	name := self.map importedMyMapping().name;
