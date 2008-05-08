@@ -19,12 +19,6 @@
       %license
    </license>
 
-   <url>
-      <discovery label="Internal Nightly Updates" url="http://kafka-builder.emea.borl.net:8080/updates/nightly-site.xml"/>
-      <discovery label="Internal Continuous Updates" url="http://kafka-builder.emea.borl.net:8080/updates/continuous-site.xml"/>
-      <discovery label="Internal Update Site" url="http://kafka-builder.emea.borl.net:8080/updates/site.xml"/>
-   </url>
-
    <requires>
       <import plugin="org.eclipse.core.runtime"/>
       <import plugin="org.eclipse.emf.ecore"/>
