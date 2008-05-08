@@ -6,7 +6,7 @@
 	<target name="allElements">
 		<ant antfile="${genericTargets}" target="${target}">
 			<property name="type" value="feature" />
-			<property name="id" value="org.eclipse.m2m.qvt.oml.examples" />
+			<property name="id" value="org.eclipse.m2m.qvt.oml.samples" />
 		</ant>
 	</target>
 
@@ -158,7 +158,7 @@
 		</antcall>
 
 		<unzip dest="${buildDirectory}/${buildLabel}/compilelogs" overwrite="true">
-			<fileset dir="${buildDirectory}/features/org.eclipse.m2m.qvt.oml.examples">
+			<fileset dir="${buildDirectory}/features/org.eclipse.m2m.qvt.oml.samples">
 				<include name="*.log.zip" />
 			</fileset>
 		</unzip>
