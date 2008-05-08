@@ -18,11 +18,6 @@
       %license
    </license>
 
-   <url>
-      <update label="%updateSiteName" url="http://altd.borland.com/update/main"/>
-      <discovery label="%updateSiteName" url="http://altd.borland.com/update/main"/>
-   </url>
-
    <includes
          id="org.eclipse.m2m.qvt.oml.common"
          version="0.0.0"/>
