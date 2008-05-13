@@ -1017,7 +1017,7 @@ public class QvtOperationalVisitorCS
     private ObjectExp visitOutExpCS(OutExpCS outExpCS, QvtOperationalEnv env) {
 		MappingDeclarationCS topLevelInMapping = findOwningMappingDeclarationCS(outExpCS);		
 		if(topLevelInMapping != null && topLevelInMapping.getResult().isEmpty() && topLevelInMapping.getContextType() == null) {
-			return null;
+			//return null; FIXME - review this, ommitted to get better error reporting for AST
 		}
 		
 		TypeSpecCS typeSpecCS = null;
@@ -1081,9 +1081,13 @@ public class QvtOperationalVisitorCS
 				if(!topLevelInMapping.getResult().isEmpty()) {
 					objectExp.setName(Environment.RESULT_VARIABLE_NAME);
 					objectExp.setReferredObject(env.lookup(Environment.RESULT_VARIABLE_NAME));
-				} else {
+				} else if(topLevelInMapping.getContextType() != null) {
 					objectExp.setName(Environment.SELF_VARIABLE_NAME);
 					objectExp.setReferredObject(env.lookup(Environment.SELF_VARIABLE_NAME));
+				} else if(outExpCS.getExpressions().isEmpty()) {
+					// FIXME - object expression comes here even for empty body at textual CS level
+					// -> implicit object expression is not created at AST level, nothing meaningful to be executed
+					return null;
 				}
 			}
 		}
@@ -1205,6 +1209,8 @@ public class QvtOperationalVisitorCS
 			if(outType != null) {
 				env.reportError(NLS.bind(ValidationMessages.noPropertyInTypeError, name, QvtOperationalTypesUtil
 						.getTypeFullName(outType)), variableName);
+			} else {
+				env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_NoOwningClassForPropertyInTheScope, name), variableName);
 			}
 		} else if (!property.isChangeable()) {
 			env.reportError(NLS.bind(ValidationMessages.ReadOnlyProperty, name), variableName);
