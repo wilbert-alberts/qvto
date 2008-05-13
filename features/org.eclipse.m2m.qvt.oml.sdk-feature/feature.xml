@@ -41,17 +41,17 @@
    <includes
          id="org.eclipse.m2m.qvt.oml.common.source"
          version="0.0.0"
-         name="Operational QVT Developer Resources"/>
+         name="Operational QVT Developer Resources (Incubation)"/>
    <includes
          id="org.eclipse.m2m.qvt.oml.source"
          version="0.0.0"
-         name="Operational QVT Developer Resources"/>
+         name="Operational QVT Developer Resources (Incubation)"/>
    <includes
          id="org.eclipse.m2m.qvt.oml.runtime.source"
          version="0.0.0"
-         name="Operational QVT Developer Resources"/>
+         name="Operational QVT Developer Resources (Incubation)"/>
    <includes
          id="org.eclipse.m2m.qvt.oml.editor.source"
          version="0.0.0"
-         name="Operational QVT Developer Resources"/>
+         name="Operational QVT Developer Resources (Incubation)"/>
 </feature>
