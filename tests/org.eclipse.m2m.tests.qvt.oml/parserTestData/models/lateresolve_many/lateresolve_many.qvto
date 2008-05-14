@@ -8,7 +8,7 @@ property x : Sequence(UML::Package) = null;
 property counter: Integer = 0;
 property allClasscounter: Integer = 0;
 	
-query failure(message : String) : OclAny {
+query failure(message : String) : Boolean {
 	assert fatal (false) with log('Error: ' + message);
 	return null;
 }
@@ -49,10 +49,10 @@ main() {
 	this.counter := 0;
 	eClasses.resolve(c:Class | while(counter = 0; counter = 0) { this.counter:= counter+1; } <> null)
 		.late resolve(c:UML::Class | failure('should never get here as its 2nd late resolve'));		
-	eClasses.late resolve(c:Class | if counter <= 0 then failure('counter has invalid value') endif);
+	eClasses.late resolve(c:Class | if counter <= 0 then failure('counter has invalid value') else true endif);
 	
 	eClasses.late resolve(c:Class | c.late invresolveone(ec:EClass | 
-		if true then { this.allClasscounter:=allClasscounter+1; } endif));		
+		if true then { this.allClasscounter:=allClasscounter+1; } else false endif) = null);		
 	eClasses.late resolve(c:Class | if (allClasscounter <> eClasses->size()) then failure('all class counter has invalid value') endif);	
 }
 
