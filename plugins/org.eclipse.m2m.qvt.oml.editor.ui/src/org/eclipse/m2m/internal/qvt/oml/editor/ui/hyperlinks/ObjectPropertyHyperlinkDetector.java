@@ -16,12 +16,12 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.cst.LocalPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.PatternPropertyExpCS;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
-import org.eclipse.m2m.internal.qvt.oml.evaluator.IntermediatePropertyModelAdapter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
@@ -74,20 +74,14 @@ public class ObjectPropertyHyperlinkDetector implements IHyperlinkDetectorHelper
 
 	
 	public static Property getASTProperty(EStructuralFeature feature) {
-		EStructuralFeature originalFeature = IntermediatePropertyModelAdapter.getOverridenFeature(feature);
+		if(feature instanceof Property) {
+			return (Property)feature; // includes intermediate property
+		}
+		EStructuralFeature originalFeature = feature;
 		if (originalFeature.eContainer() instanceof Module) {
-			Module module = (Module) originalFeature.eContainer();
-			for (Property prop : module.getConfigProperty()) {
-				String featureName = originalFeature.getName(); 				
-				if (featureName != null && featureName.equals(prop.getName())) {
-					return prop;
-				}
-			}
-			for (Property prop : module.getIntermediateProperty()) {
-				String featureName = originalFeature.getName(); 				
-				if (featureName != null && featureName.equals(prop.getName())) {
-					return prop;
-				}
+			Property localProp = QvtOperationalParserUtil.getLocalPropertyAST(feature);
+			if(localProp != null) {
+				return localProp;
 			}
 		}
 		
