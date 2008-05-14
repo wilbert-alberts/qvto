@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
@@ -42,7 +43,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.EMFType;
@@ -332,9 +332,7 @@ public abstract class QvtModule {
      * @param propSet - a set to put properties to
      */
     private void collectProperties(Module module, Set<QvtConfigurationProperty> propSet) {
-        for (Property element : module.getConfigProperty()) {
-            if (element instanceof ConfigProperty) {
-                ConfigProperty property = (ConfigProperty) element;
+        for (EStructuralFeature property : module.getConfigProperty()) {
                 EClassifier type = property.getEType();
                 if (type instanceof EDataType) {
                     propSet.add(
@@ -351,7 +349,6 @@ public abstract class QvtModule {
                             )
                     );
                 }
-            }
         }
     }
 }
