@@ -39,9 +39,8 @@ import org.eclipse.ocl.utilities.ExpressionInOCL;
  */
 public class QvtLibraryOperation {
 	
-	public QvtLibraryOperation(QvtOperationalEnv env, LibraryOperation libOp) throws LibraryCreationException {
-		QvtOperationalEnv parseEnv = new QvtOperationalEnvFactory().createEnvironment(null);
-		EPackage oclStdlibPackage = env.getOCLStandardLibrary().getOclAny().getEPackage();
+	public QvtLibraryOperation(QvtOperationalEnv parseEnv, LibraryOperation libOp) throws LibraryCreationException {
+		EPackage oclStdlibPackage = parseEnv.getOCLStandardLibrary().getOclAny().getEPackage();
 		parseEnv.getEPackageRegistry().put(oclStdlibPackage.getNsURI(), oclStdlibPackage);
 		if (libOp.getLibrary().getInMetamodels() != null) {
 			for (String mm : libOp.getLibrary().getInMetamodels()) {

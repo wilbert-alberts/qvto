@@ -47,12 +47,7 @@ public class QvtOperationalUtil {
 	public static String getStringRepresentation(TypeCS typeCS) {
 		return QvtOperationalParserUtil.getStringRepresentation(typeCS);
 	}
-	
-    public static boolean isAssignableToFrom(EClassifier to, EClassifier from) {
-        QvtOperationalEnv env = new QvtOperationalEnvFactory().createEnvironment(null);
-        return isAssignableToFrom(env, to, from);
-    }
-    
+	    
     public static boolean isAssignableToFrom(QvtOperationalEnv env, EClassifier to, EClassifier from) {
         return QvtOperationalParserUtil.isAssignableToFrom(env, to, from);
     }

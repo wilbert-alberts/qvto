@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerKernel;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitorImpl;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.EvaluationEnvironment;
@@ -36,6 +37,8 @@ import org.eclipse.ocl.ecore.SendSignalAction;
 
 public class QvtOperationalEnvFactory extends EcoreEnvironmentFactory {
 
+	public static final QvtOperationalEnvFactory INSTANCE = new QvtOperationalEnvFactory();
+	
 	public QvtOperationalFileEnv createEnvironment(final QvtOperationalEnv parent, final CFile file, final QvtCompilerKernel kernel) {
 		QvtOperationalFileEnv env = new QvtOperationalFileEnv(parent, file, kernel);
 		env.setFactory(this);
@@ -46,6 +49,15 @@ public class QvtOperationalEnvFactory extends EcoreEnvironmentFactory {
 		QvtOperationalEnv env = new QvtOperationalEnv(parent);
 		env.setFactory(this);
 		return env;
+	}
+	
+	public QvtOperationalEnv createModuleEnvironment(final Module module) {
+		return new QvtOperationalEnv(null) {
+			@Override
+			public Module getModuleContextType() {			
+				return module;
+			}
+		};
 	}
 	
 	@Override

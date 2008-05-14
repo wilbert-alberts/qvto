@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -185,11 +186,12 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
         // Remark: using QvtOperationalParserUtil.getOwnedOperations() operation instead of direct
         // access to EClass::getEOperations(), as contextual mappings are in owned by the module type 
         // as it is understood by MDT OCL and would produce wrong behavior in operations lookup
-        for (EOperation op : QvtOperationalParserUtil.getOwnedOperations(module)) {
+        for (EOperation op : new ArrayList<EOperation>(QvtOperationalParserUtil.getOwnedOperations(module))) {
             doProcess((ImperativeOperation) op, module);
         }
-        for (Property prop : module.getConfigProperty()) {
-            doProcess(prop, module);
+        for (EStructuralFeature prop : module.getConfigProperty()) {
+        	Property propAST = QvtOperationalParserUtil.getLocalPropertyAST(prop);
+            doProcess(propAST, module);
         }
         for (Property prop : module.getIntermediateProperty()) {
             doProcess(prop, module);

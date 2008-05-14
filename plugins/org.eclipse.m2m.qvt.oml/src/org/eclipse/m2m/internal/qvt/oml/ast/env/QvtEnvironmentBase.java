@@ -13,14 +13,12 @@ package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
 import static org.eclipse.ocl.utilities.UMLReflection.SAME_TYPE;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -77,7 +75,7 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 		super(reg);
 	}
 	
-	public abstract EClass getModuleContextType();	
+	public abstract Module getModuleContextType();	
 	
 	@Override
 	public Variable<EClassifier, EParameter> lookupImplicitSourceForOperation(String name, List<? extends TypedElement<EClassifier>> args) {
@@ -152,8 +150,8 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
         operations.addAll(ownedOperations);
         
         if(ownerType instanceof Module) {
-        	// collect all imported (extended) modules fOperationsHolder to check for clashes with this env's module
-        	collectImportedModuleOwnedOperations(operations);
+        	// collect all imported (extended) modules fOperationsHolder to check for clashes with this fEnv's module
+        	//collectImportedModuleOwnedOperations(operations);
         } else {
         
         // collect fOperationsHolder additional fOperationsHolder defined for sub-types of the checked owner type,
@@ -248,6 +246,7 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 		return false;
 	}
 	
+	/*
 	private Collection<EOperation> collectImportedModuleOwnedOperations(Collection<EOperation> result) {
 		for (QvtEnvironmentBase nextEnv : getSiblings()) {
 			List<EOperation> nextModuleOpers = nextEnv.getModuleContextType().getEOperations();
@@ -257,7 +256,8 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 		}
 		
 		return result;
-	}	
+	}
+	*/
 	
 	private Set<EOperation> operationHolder() {
 		if(fOperationsHolder == null) {

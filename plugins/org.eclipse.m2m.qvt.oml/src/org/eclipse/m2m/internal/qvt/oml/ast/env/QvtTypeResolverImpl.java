@@ -13,12 +13,14 @@ package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
@@ -27,6 +29,10 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.HiddenElementAdapter;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.TypeResolver;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
@@ -39,18 +45,17 @@ import org.eclipse.ocl.types.TypeType;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
-
 /**
  * QVT implementation of the {@link TypeResolver} interface.<p>
  * This type of resolver takes into account element resolutions with sibling environments to 
- * this owning environment. (sibling env, stands for imported one)
+ * this owning environment. (sibling fEnv, stands for imported one)
  */
 public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation, EStructuralFeature> {
 
 	private TypeResolver<EClassifier, EOperation, EStructuralFeature> fDelegate;
 	private QvtEnvironmentBase fOwner;
     private boolean fdefinesOclAnyFeatures;
-    private boolean isClosed;    
+    private Map<EClassifier, List<ImperativeOperation>> fCtx2OperationMap;
     	
     private Set<EClassifier> fAdditionalTypes;    
 	QvtTypeResolverImpl(QvtEnvironmentBase owningEnv, TypeResolver<EClassifier, EOperation, EStructuralFeature> delegate) {
@@ -84,7 +89,7 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 	
 	public List<EStructuralFeature> getAdditionalAttributes(EClassifier owner) {
 		List<EStructuralFeature> result = new ArrayList<EStructuralFeature>();
-		result.addAll(fDelegate.getAdditionalAttributes(owner));
+		getLocalAdditionalAttributes(owner, result);
 		
 		for (QvtEnvironmentBase nextSiblingEnv : fOwner.getSiblings()) {
 			nextSiblingEnv.getQVTTypeResolver().getLocalAdditionalAttributes(owner, result);
@@ -94,13 +99,11 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 	}
 	
 	protected void getLocalAdditionalAttributes(EClassifier owner, List<EStructuralFeature> result) {
+		extractIntermediateProperties(owner, result);
 		result.addAll(fDelegate.getAdditionalAttributes(owner));
 	}
 
 	public List<EOperation> getAdditionalOperations(EClassifier owner) {
-		if(isClosed && owner == fOwner.getModuleContextType()) {
-			return Collections.emptyList();
-		}
 		List<EOperation> result = new ArrayList<EOperation>();
 		getLocalAdditionalOperations(owner, result);
 		
@@ -114,11 +117,50 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 		return result;
 	}
 	
+	private void extractContextualOperations(EClassifier context, Collection<EOperation> result) {
+		if(fCtx2OperationMap != null) {
+			List<ImperativeOperation> operList = fCtx2OperationMap.get(context);
+			if(operList != null) {
+				result.addAll(operList);			
+			}
+			
+			return;
+		}		
+	}
+
+	private void extractIntermediateProperties(EClassifier context, Collection<EStructuralFeature> result) {
+		if(context instanceof EClass) {
+			Module moduleType = fOwner.getModuleContextType();
+			if(moduleType == null) {
+				return;
+			}
+			for(EStructuralFeature property : moduleType.getEStructuralFeatures()) {				
+				if(property instanceof ContextualProperty) {
+					if(HiddenElementAdapter.isMarkedAsHidden(property)) {
+						continue;
+					}
+					
+					ContextualProperty ctxProperty = (ContextualProperty) property;
+					EClass nextContext = ctxProperty.getContext();
+					if(nextContext != null && nextContext == context) {
+						result.add(ctxProperty);
+					}
+				}
+			}
+		}
+	}
+		
 	protected void getLocalAdditionalOperations(EClassifier owner, Collection<EOperation> result) {		
+		extractContextualOperations(owner, result);
+		if(fdefinesOclAnyFeatures && (owner instanceof CollectionType == false) && (owner instanceof TupleType == false)) {
+			extractContextualOperations(fOwner.getOCLStandardLibrary().getOclAny(), result);
+		}
+		
 		result.addAll(fDelegate.getAdditionalOperations(owner));
 		if(fdefinesOclAnyFeatures && (owner instanceof CollectionType == false) && (owner instanceof TupleType == false)) {
 			result.addAll(fDelegate.getAdditionalOperations(fOwner.getOCLStandardLibrary().getOclAny()));
 		}
+		
 	}	
 
 	public Resource getResource() {
@@ -133,7 +175,21 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 		return fDelegate.resolveAdditionalAttribute(owner, property);
 	}
 
-	public EOperation resolveAdditionalOperation(EClassifier owner, EOperation operation) {		
+	public EOperation resolveAdditionalOperation(EClassifier owner, EOperation operation) {
+		if(operation instanceof ImperativeOperation) {
+			if(fCtx2OperationMap == null) {
+				fCtx2OperationMap = new HashMap<EClassifier, List<ImperativeOperation>>();
+			}
+			List<ImperativeOperation> operList = fCtx2OperationMap.get(owner);
+			if(operList == null) {
+				operList = new ArrayList<ImperativeOperation>();
+				fCtx2OperationMap.put(owner, operList);
+			}
+			
+			operList.add((ImperativeOperation)operation);
+			return operation;
+		}
+		
 		EOperation resolve = fDelegate.resolveAdditionalOperation(owner, operation);
 		if(resolve != null) {
 			addAdditionalType(owner);

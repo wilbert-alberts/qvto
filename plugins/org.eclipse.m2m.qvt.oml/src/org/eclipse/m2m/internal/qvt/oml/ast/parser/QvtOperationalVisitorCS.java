@@ -87,14 +87,11 @@ import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorVariableInitializationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.EmfMmUtil;
-import org.eclipse.m2m.internal.qvt.oml.evaluator.GraphWalker;
-import org.eclipse.m2m.internal.qvt.oml.evaluator.IntermediatePropertyModelAdapter;
-import org.eclipse.m2m.internal.qvt.oml.evaluator.GraphWalker.NodeProvider;
-import org.eclipse.m2m.internal.qvt.oml.evaluator.GraphWalker.VertexProcessor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
@@ -223,7 +220,6 @@ public class QvtOperationalVisitorCS
     	astNode.setEndPosition(cstNode.getEndOffset());
     }
 	
-
 	@Override
 	protected EClassifier tupleTypeCS(TupleTypeCS tupleTypeCS, Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		EClassifier type = null;
@@ -250,7 +246,7 @@ public class QvtOperationalVisitorCS
 				}
 			}
 			// FIXME - workaround for migration to OCL 1.2 => non primitive type but
-			// resolved as OclVoid in super impl. indicates actually a type unresolved by the env.
+			// resolved as OclVoid in super impl. indicates actually a type unresolved by the fEnv.
 			return null;
 		}
 		
@@ -274,8 +270,8 @@ public class QvtOperationalVisitorCS
 	private EClassifier visitTypeCS(TypeCS typeCS, DirectionKind directionKind, QvtOperationalEnv env) {
 		EClassifier type = typeCS(typeCS, env);
 		if (type == null) {
-			// FIXME - M3.4 not needed, already reported above in #typeCS(typeCS, env); 
-			/*env.reportError(NLS.bind(ValidationMessages.UnknownClassifierType, new Object[] {
+			// FIXME - M3.4 not needed, already reported above in #typeCS(typeCS, fEnv); 
+			/*fEnv.reportError(NLS.bind(ValidationMessages.UnknownClassifierType, new Object[] {
 					QvtOperationalParserUtil.getStringRepresentation(typeCS)}),
 					typeCS); */	
 		}
@@ -302,8 +298,8 @@ public class QvtOperationalVisitorCS
 			QvtOperationalEnv env) {
 		EClassifier type = typeCS(typeSpecCS.getTypeCS(), env);
 		if (type == null) {
-			// FIXME - M3.4 not needed, already reported above in #typeCS(typeCS, env); 
-			/*env.reportError(NLS.bind(ValidationMessages.UnknownClassifierType, new Object[] {
+			// FIXME - M3.4 not needed, already reported above in #typeCS(typeCS, fEnv); 
+			/*fEnv.reportError(NLS.bind(ValidationMessages.UnknownClassifierType, new Object[] {
 					QvtOperationalParserUtil.getStringRepresentation(typeSpecCS.getTypeCS())}),
 					typeSpecCS.getTypeCS());*/
 		}
@@ -651,7 +647,7 @@ public class QvtOperationalVisitorCS
     		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
     		OCLExpression<EClassifier> source) {
     	
-    	OCLExpression<EClassifier> result = fixed_1_2_simpleNameCSsimpleNameCS(simpleNameCS, env, source); // super.simpleNameCS(simpleNameCS, env, source);
+    	OCLExpression<EClassifier> result = fixed_1_2_simpleNameCSsimpleNameCS(simpleNameCS, env, source); // super.simpleNameCS(simpleNameCS, fEnv, source);
 
         // AST binding    	
         if(myCompilerOptions.isGenerateCompletionData()) {    	
@@ -713,7 +709,7 @@ public class QvtOperationalVisitorCS
      * 
      * @param source the property call source expression
      * @param propertyCall the property call expression
-     * @param env the current environment
+     * @param fEnv the current environment
      * 
      * @return the xcollect expression
      * @throws TerminateException 
@@ -845,7 +841,7 @@ public class QvtOperationalVisitorCS
     	} 
     	finally {
     		if(beginScopeVars != null) {
-    			// remove variables of this scope when leaving it, only successfully added variables into env
+    			// remove variables of this scope when leaving it, only successfully added variables into fEnv
     			// in this block scope will be removed, so we can not remove outer scope 
     			// existing variables. 
     			// Note: nested block scopes have done their clean-up already so we remove
@@ -1189,12 +1185,12 @@ public class QvtOperationalVisitorCS
 				OutExpCS outExpCS = (OutExpCS) eParent;
 				TypeSpecCS typeSpecCS = getOutExpCSType(outExpCS);
 				if(typeSpecCS != null) {
-					outType = visitTypeSpecCS(typeSpecCS, DirectionKind.OUT, env).myType;
+					outType = visitTypeSpecCS(typeSpecCS, DirectionKind.OUT, fEnv).myType;
 				} else {
 					if ((outExpCS.eContainer() instanceof MappingBodyCS)
 							&& (outExpCS.eContainer().eContainer() instanceof MappingRuleCS)) {
 						MappingRuleCS mappingRuleCS = (MappingRuleCS) outExpCS.eContainer().eContainer();
-						outType = visitTypeCS(mappingRuleCS.getMappingDeclarationCS().getContextType(), DirectionKind.INOUT, env);
+						outType = visitTypeCS(mappingRuleCS.getMappingDeclarationCS().getContextType(), DirectionKind.INOUT, fEnv);
 					}
 				}
 			} */
@@ -1223,6 +1219,8 @@ public class QvtOperationalVisitorCS
 		PropertyCallExp<EClassifier, EStructuralFeature> sourceExp =
 			org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createPropertyCallExp();
 		sourceExp.setReferredProperty(property);
+		initStartEndPositions(sourceExp, variableName);
+		initPropertyPositions(sourceExp, variableName);
 		result.setLeft(sourceExp);
 
         // AST binding
@@ -1344,23 +1342,9 @@ public class QvtOperationalVisitorCS
 				module.getOwnedRenaming().add(rename);
 			}
 		}
-		//QvtOperationalParserUtil.defineImportedConfigProperties(module, env);
-		//QvtOperationalParserUtil.defineImportedOperations(module, env);
-
-		for (ModulePropertyCS propCS : moduleCS.getProperties()) {
-			Property prop = visitModulePropertyCS(propCS, env);
-			if (prop != null) {
-				env.addModuleProperty(prop, propCS.getSimpleNameCS());
-
-				if (prop instanceof ContextualProperty) {
-					module.getIntermediateProperty().add(prop);
-				}
-				else {
-					module.getConfigProperty().add(prop);
-				}
-			}
-		}
-
+		
+		createModuleProperties(module, moduleCS, env);
+		
 		HashMap<MappingMethodCS, ImperativeOperation> methodMap = new LinkedHashMap<MappingMethodCS, ImperativeOperation>(moduleCS.getMethods().size());
 		
 		// declare module operations as they are required to analyze rules' contents
@@ -1371,9 +1355,6 @@ public class QvtOperationalVisitorCS
 				EOperation imperativeOp = env.defineImperativeOperation(operation, methodCS instanceof MappingRuleCS, true);
 				if(imperativeOp != null) {
 					methodMap.put(methodCS, (ImperativeOperation)imperativeOp);
-					if(QvtOperationalParserUtil.isContextual(operation)) {
-						QvtOperationalParserUtil.addOwnedOperations(module, operation);
-					}
 				}
 			}
 		}
@@ -1381,17 +1362,19 @@ public class QvtOperationalVisitorCS
 		boolean moduleEntryFound = false;
 		for (MappingMethodCS methodCS : methodMap.keySet()) {
 			ImperativeOperation imperativeOp = methodMap.get(methodCS);
+			if(imperativeOp == null) {
+				continue;
+			}
 			
 			visitMappingMethodCS(methodCS, env, imperativeOp);				
 	        if(myCompilerOptions.isGenerateCompletionData()) {
 				ASTBindingHelper.createCST2ASTBinding(methodCS, imperativeOp, env);
 			} 
-
-			if(!QvtOperationalParserUtil.isContextual(imperativeOp)) {
-				module.getEOperations().add(imperativeOp);
-			}
 			
-			checkMainMappingConformance(env, imperativeOp);
+			if ((!QvtOperationalEnv.MAIN.equals(imperativeOp.getName()) || 
+					((Module) env.getModuleContextType()).getModelParameter().isEmpty()) == false) {
+				checkMainMappingConformance(env, imperativeOp);
+			}
 			
 			if (false == moduleCS instanceof LibraryCS
 					&& QvtOperationalEnv.MAIN.equals(imperativeOp.getName())) {
@@ -1420,7 +1403,62 @@ public class QvtOperationalVisitorCS
 		
 		return module;
 	}
+	
+	private void createModuleProperties(Module module, MappingModuleCS moduleCS, QvtOperationalFileEnv env) throws SemanticException {
+		
+		for (ModulePropertyCS propCS : moduleCS.getProperties()) {
+			Property prop = visitModulePropertyCS(propCS, env);
+			if (prop == null) {
+				continue;
+			}
 
+			EStructuralFeature eFeature = null;
+			if (prop instanceof ContextualProperty) {
+				module.getIntermediateProperty().add(prop);
+				eFeature = prop;
+				// using AST-CST map as this mapping is not optional but always required
+				env.getASTNodeToCSTNodeMap().put(prop, propCS); 
+			} else {
+				eFeature = env.getUMLReflection().createProperty(prop.getName(), prop.getEType());
+				QvtOperationalParserUtil.addLocalPropertyAST(eFeature, prop);				
+		        if (env.lookupProperty(module, prop.getName()) != null) {
+		        	HiddenElementAdapter.markAsHidden(eFeature);
+		            env.reportError(NLS.bind(ValidationMessages.ModulePropertyAlreadyDefined, new Object[] { prop.getName() }), propCS.getSimpleNameCS());
+		        }
+				
+				if (prop instanceof ConfigProperty) {
+					module.getConfigProperty().add(eFeature);
+				} 
+			}
+			
+			module.getEStructuralFeatures().add(eFeature);						
+		}
+
+		IntermediatePropertyHierarchy intermPropDefHierarchy = module.getIntermediateProperty().isEmpty() ? null : new IntermediatePropertyHierarchy(module, env);				
+		for (Property prop : module.getIntermediateProperty()) {			
+			if (prop instanceof ContextualProperty) {
+				ContextualProperty ctxProperty = (ContextualProperty) prop;				
+				EClass ctxType = ctxProperty.getContext();
+				EStructuralFeature lookupProperty = ctxType != null ? env.lookupProperty(ctxType, prop.getName()) : null;
+				
+				boolean isAlreadyDefined = lookupProperty != null && lookupProperty != ctxProperty;				
+				if(isAlreadyDefined || intermPropDefHierarchy.hasHierarchyClashes(ctxProperty)) {
+					HiddenElementAdapter.markAsHidden(ctxProperty);											
+					String message = NLS.bind(ValidationMessages.IntermediatePropertyAlreadyDefined, prop.getName());
+					
+					int startPos = prop.getStartPosition();
+					int endPos = prop.getEndPosition();
+					CSTNode cstNode = QvtOperationalParserUtil.getPropertyProblemNode(prop, env);
+					if(cstNode != null) {
+						startPos = cstNode.getStartOffset();
+						endPos = cstNode.getEndOffset();
+					}
+					env.reportError(message, startPos, endPos);
+				}				
+			}
+		}
+	}
+		
 	protected void visitTransformationHeaderCS(TransformationHeaderCS headerCS,
 			QvtOperationalFileEnv env, Module module) {
 		if (!headerCS.getQualifiers().isEmpty()) {
@@ -2019,7 +2057,8 @@ public class QvtOperationalVisitorCS
 		operation.getEParameters().addAll(params);		
 		
 		if (mappingDeclarationCS.getContextType() != null) {
-			MappingParameter varContext = ExpressionsFactory.eINSTANCE.createMappingParameter();			
+			MappingParameter varContext = ExpressionsFactory.eINSTANCE.createMappingParameter();
+			varContext.setName(Environment.SELF_VARIABLE_NAME);
 			varContext.setStartPosition(mappingDeclarationCS.getContextType().getStartOffset());
 			varContext.setEndPosition(mappingDeclarationCS.getContextType().getEndOffset());
 			
@@ -2173,10 +2212,7 @@ public class QvtOperationalVisitorCS
 			}
 		}
 
-		EStructuralFeature originalFeature = IntermediatePropertyModelAdapter.getOverridenFeature(leftProp);
-		if (originalFeature == leftProp) {
-			QvtOperationalParserUtil.validateVariableModification(variable, pathNameCS, env);
-		}
+		QvtOperationalParserUtil.validateVariableModification(variable, pathNameCS, leftProp, env);
 		
 		EClassifier type = leftProp == null ? variable.getType() : env.getUMLReflection().getOCLType(leftProp);
 		QvtOperationalParserUtil.validateAssignment(variable.getName(), type, rightExpr, expressionCS.isIncremental(),
@@ -2198,8 +2234,19 @@ public class QvtOperationalVisitorCS
 		}
 		else {
 			PropertyCallExp<EClassifier, EStructuralFeature> propCall = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createPropertyCallExp();
-			propCall.setName(variable.getName());			
-			propCall.setReferredProperty(leftProp);			
+			propCall.setName(variable.getName());
+			propCall.setReferredProperty(leftProp);
+			CSTNode cstNode = pathNameCS;
+			if(lValueCS instanceof FeatureCallExpCS) {
+				FeatureCallExpCS featureCallExpCS =(FeatureCallExpCS)lValueCS;
+				if(featureCallExpCS.getSimpleNameCS() != null) {
+					cstNode = featureCallExpCS.getSimpleNameCS();
+				}
+			}
+		initPropertyPositions(propCall, cstNode);
+		initStartEndPositions(propCall, cstNode);
+		propCall.setStartPosition(propCall.getStartPosition() + 1);
+		//	initPropertCallExpPositions(propCall, lValueCS);
 			sourceExp = propCall;
 		}
 		result.setLeft(sourceExp);
@@ -2528,21 +2575,37 @@ public class QvtOperationalVisitorCS
 		prop.setStartPosition(propCS.getStartOffset());
 		prop.setEndPosition(propCS.getEndOffset());
 
-		if (validateLocalPropertyCS(propCS, prop, env)) {
-			if (QvtOperationalParserUtil.validateLocalProperty(prop, env)) {
-			}
+		prop.setName(propCS.getSimpleNameCS().getValue());
+
+		EClassifier type = null;
+		if (propCS.getTypeCS() != null) {
+			type = visitTypeCS(propCS.getTypeCS(), null, env);
 		}
 
+		prop.setEType(type);
+
+		OCLExpression<EClassifier> exp = null;
+		if (propCS.getOclExpressionCS() != null) {
+			exp = visitOclExpressionCS(propCS.getOclExpressionCS(), env);
+		}
+		
+		prop.setExpression(exp);
+		
+		if (prop.getEType() == null && prop.getExpression() != null) {
+			prop.setEType(prop.getExpression().getType());
+		}
+
+		validateLocalPropertyCS(propCS, prop, env);
 		return prop;
 	}
 
 	private Property visitContextualPropertyCS(ContextualPropertyCS propCS, QvtOperationalFileEnv env)
-			throws SemanticException {
+			throws SemanticException {		
 		ContextualProperty prop = ExpressionsFactory.eINSTANCE.createContextualProperty();
 		prop.setStartPosition(propCS.getStartOffset());
 		prop.setEndPosition(propCS.getEndOffset());
 		
-		prop.setName(QvtOperationalParserUtil.getStringRepresentation(propCS.getScopedNameCS()));
+		prop.setName(propCS.getScopedNameCS().getName());
 
 		EClassifier type = null;
 		if (propCS.getTypeCS() != null) {
@@ -2550,18 +2613,13 @@ public class QvtOperationalVisitorCS
 			if (type == null) {
 				return null;
 			}
-		}
+		}		
 
 		OCLExpression<EClassifier> exp = null;
 		if (propCS.getOclExpressionCS() != null) {
+			env.reportWarning(NLS.bind(ValidationMessages.IntermediatePropertiesInitNotSupported,
+						new Object[] { }), propCS.getOclExpressionCS());			
 			exp = visitOclExpressionCS(propCS.getOclExpressionCS(), env);
-			if (exp == null) {
-				return null;
-			}
-			else {
-				env.reportWarning(NLS.bind(ValidationMessages.IntermediatePropertiesInitNotSupported,
-						new Object[] { }), propCS.getOclExpressionCS());
-			}
 		}
 		
 		if (type == null && exp != null) {
@@ -2586,28 +2644,17 @@ public class QvtOperationalVisitorCS
 		
 		EClassifier contextType = visitTypeCS(propCS.getScopedNameCS().getTypeCS(), null, env);
 		if (contextType != null) {
-			if (env.lookupProperty(contextType, propCS.getSimpleNameCS().getValue()) != null) {
-	            env.reportError(NLS.bind(ValidationMessages.IntermediatePropertyAlreadyDefined, new Object[] { prop.getName() }), propCS.getSimpleNameCS());
+			if(contextType instanceof EClass) {
+				prop.setContext((EClass)contextType);
+			} else {
+				env.reportError(NLS.bind("The contextual type for intermediate property ''{0}'' must be a class", 
+								new Object[] { prop.getName() }), propCS.getScopedNameCS().getTypeCS());
 			}
-			else {
-				Variable<EClassifier, EParameter> var = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();
-				var.setName(propCS.getSimpleNameCS().getValue());
-				var.setType(type);
-				Constraint constraint = EcoreFactory.eINSTANCE.createConstraint();
-				constraint.setStereotype(QvtOperationalEnv.INTERMEDIATE_PROPERTY_STEREOTYPE);
-				constraint.getConstrainedElements().add(prop);
-				EStructuralFeature feature = env.defineAttribute(contextType, var, constraint);
-				
-				prop.setOverridden(feature);
-			}
-		}
-		else {
-			return prop;
 		}
 		
 		return prop;
 	}
-	
+		
 	protected Property visitModulePropertyCS(ModulePropertyCS propCS, QvtOperationalFileEnv env)
 			throws SemanticException {
 		
@@ -2962,58 +3009,6 @@ public class QvtOperationalVisitorCS
 		}
 	}
 
-	private void checkReturnTypeConformance(final ImperativeOperation operation, final CSTNode cstNode,
-			final QvtOperationalEnv env) {
-        final EOperation op = env.defineImperativeOperation(operation, operation instanceof MappingOperation, false);
-        if (!QvtOperationalParserUtil.isOverloadableMapping(op, env)) {
-            return;
-        }
-        
-        NodeProvider provider = new NodeProvider() {
-            public Object[] getLinkedNodes(Object node) {
-                EClassifier classifier = (EClassifier) node;
-                List<EClass> types = null;
-                if (node instanceof EClass) {
-                	types = ((EClass) classifier).getEAllSuperTypes();
-                }
-                return types == null ? new Object[0] : types.toArray();
-            }
-        };
-        
-        VertexProcessor processor = new VertexProcessor() {
-            public boolean process(Object node) {
-                if (node instanceof EClassifier == false) {
-                    return false;
-                }
-                
-                EClassifier context = (EClassifier) node;
-                Module baseModule = QvtOperationalParserUtil.getOutermostDefiningModule(QvtOperationalParserUtil.getOwningModule(operation), op, context, env);
-                if (baseModule == null) {
-                    return false;
-                }
-                
-                ImperativeOperation baseMethod = QvtOperationalParserUtil.findMappingMethod(baseModule, op, context, env);
-                if (baseMethod == null) {
-                    throw new RuntimeException("Failed to find " + op + " in " + baseModule); //$NON-NLS-1$ //$NON-NLS-2$
-                }
-                
-                EClassifier returnType = op.getEType();
-                EClassifier expectedReturnType = baseMethod.getResult().isEmpty() ? null :
-                		baseMethod.getResult().get(0).getEType(); 
-                if (!QvtOperationalParserUtil.isTypeEquals(env, expectedReturnType, returnType)) {
-                    env.reportError(NLS.bind(ValidationMessages.ReturnTypeMismatch,  
-                                        op.getName(), QvtOperationalTypesUtil.getTypeFullName(expectedReturnType)), 
-                                        cstNode);
-                    return true;
-                }
-                
-                return false;
-            }
-        };
-
-	    EClassifier opOwner = env.getUMLReflection().getOwningClassifier(op);
-        new GraphWalker(provider).walkDepthFirst(opOwner, processor);
-	}
 	
 	private void validateImportedSignature(QvtOperationalEnv env, Module module, Module importedModule, ASTNode astNode) {
 		Set<ModelParameter> processedParams = new HashSet<ModelParameter>();
@@ -3056,11 +3051,6 @@ public class QvtOperationalVisitorCS
 	}
 
 	private void checkMainMappingConformance(QvtOperationalEnv env, ImperativeOperation operation) {
-		if (!QvtOperationalEnv.MAIN.equals(operation.getName())
-				|| ((Module) env.getModuleContextType()).getModelParameter().isEmpty()) {
-			return;
-		}
-
 		Set<ModelParameter> usedExtent = new HashSet<ModelParameter>(operation.getEParameters().size());
 		for (EParameter param : operation.getEParameters()) {
 			MappingParameter varParam = (MappingParameter) param;
@@ -3143,28 +3133,17 @@ public class QvtOperationalVisitorCS
 
 	private boolean validateLocalPropertyCS(LocalPropertyCS propCS, LocalProperty prop, QvtOperationalFileEnv env)
 			throws SemanticException {
-		prop.setName(propCS.getSimpleNameCS().getValue());
 
-		EClassifier type;
-		if (propCS.getTypeCS() != null) {
-			type = visitTypeCS(propCS.getTypeCS(), null, env);
-			if (type == null) {
-				return false;
+		if(prop.getExpression() != null) {
+			EClassifier realType = prop.getExpression().getType();
+			EClassifier declaredType = prop.getEType();
+			if (!QvtOperationalParserUtil.isAssignableToFrom(env, declaredType, realType)) {
+				env.reportError(NLS.bind(ValidationMessages.SemanticUtil_17,
+						new Object[] { QvtOperationalTypesUtil.getTypeFullName(declaredType), QvtOperationalTypesUtil.getTypeFullName(realType) }),
+						prop.getStartPosition(), prop.getEndPosition());
 			}
-		} else {
-			type = null;
 		}
 
-		if (propCS.getOclExpressionCS() == null) {
-			return false;
-		}
-		OCLExpression<EClassifier> exp = visitOclExpressionCS(propCS.getOclExpressionCS(), env);
-		if (exp == null) {
-			return false;
-		}
-
-		prop.setEType(type);
-		prop.setExpression(exp);
 		return true;
 	}
 
@@ -3216,7 +3195,7 @@ public class QvtOperationalVisitorCS
 	 * SimpleNameCS
 	 * FIXME - OCL 1.2 migration workaround
 	 * @param simpleNameCS the <code>SimpleNameCS</code> <code>CSTNode</code>
-	 * @param env the OCL environment
+	 * @param fEnv the OCL environment
 	 * @param source the source of the <code>SimpleNameCS</code>
 	 * @return the parsed <code>OCLExpression</code>
 	 * @throws TerminateException 

@@ -28,11 +28,11 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.modelparam.ResourceEObject;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.IntermediatePropertyModelAdapter;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtChangeRecorder;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingParameter;
@@ -165,9 +165,11 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	public Object navigateProperty(EStructuralFeature property, List<?> qualifiers, Object target) throws IllegalArgumentException {
 		EStructuralFeature resolvedProperty = property;		
 
-		EStructuralFeature originalFeature = IntermediatePropertyModelAdapter.getOverridenFeature(property);
-		if (originalFeature != property) {
-			target = IntermediatePropertyModelAdapter.getPropertyHolder(originalFeature.getEContainingClass(), target, property);
+		if (property instanceof ContextualProperty) {
+			IntermediatePropertyModelAdapter.ShadowEntry shadow = IntermediatePropertyModelAdapter.getPropertyHolder(
+														property.getEContainingClass(), (ContextualProperty)property, target);
+			target = shadow.getPropertyRuntimeOwner(target);
+			resolvedProperty = shadow.getProperty();
 		}
 		
 		// Remark: workaround for a issue of multiple typle type instances, possibly coming from 
@@ -607,7 +609,12 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			return;
 		}
 		
-		owner = resolveOwner(owner, eStructuralFeature);
+		if (eStructuralFeature instanceof ContextualProperty) {
+			IntermediatePropertyModelAdapter.ShadowEntry shadow = IntermediatePropertyModelAdapter.getPropertyHolder(
+										eStructuralFeature.getEContainingClass(), (ContextualProperty)eStructuralFeature, owner);
+			owner = shadow.getPropertyRuntimeOwner(owner);
+			eStructuralFeature = shadow.getProperty();
+		}
 		
         if(eStructuralFeature.getEType() instanceof CollectionType) {
         	// OCL collection type used directly, set in module properties
@@ -658,13 +665,6 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         }
 	}
 
-	private EObject resolveOwner(EObject owner, EStructuralFeature feature) {
-		EStructuralFeature originalFeature = IntermediatePropertyModelAdapter.getOverridenFeature(feature);
-    	if (originalFeature != feature) {
-        	return IntermediatePropertyModelAdapter.getPropertyHolder(originalFeature.getEContainingClass(), owner, feature);
-    	}
-		return owner;
-	}
 
 	private boolean isMany(EObject ownerObj, EStructuralFeature eStructuralFeature) {
 		if (eStructuralFeature.isMany()) {

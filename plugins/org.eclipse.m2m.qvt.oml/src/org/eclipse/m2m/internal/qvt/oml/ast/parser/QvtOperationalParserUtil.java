@@ -29,19 +29,20 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.GraphWalker;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.GraphWalker.NodeProvider;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.GraphWalker.VertexProcessor;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
@@ -80,8 +81,8 @@ public class QvtOperationalParserUtil {
 	private static final String QVT_NAMESPACE_URI = "http://www.eclipse.org/m2m/1.0.0/QVT"; //$NON-NLS-1$
 	private static final String QVT_IS_ABSTACT = "isAbstract"; //$NON-NLS-1$
 	private static final String QVT_IS_STATIC = "isStatic"; //$NON-NLS-1$	
-	private static final String OPERATION_OWNING_MODULE_URI = QVT_NAMESPACE_URI + "/module"; //$NON-NLS-1$
-	private static final String MODULE_OWNED_OPERATION_URI =	QVT_NAMESPACE_URI + "/operation"; //$NON-NLS-1$;	
+
+	private static final String QVT_LOCAL_PROPERTY_AST_URI = QVT_NAMESPACE_URI + "/localProperty"; //$NON-NLS-1$	
 
 	private QvtOperationalParserUtil() {
 	}
@@ -171,61 +172,44 @@ public class QvtOperationalParserUtil {
         return metamodels;
 	}
 
-	public static void setOwningModule(ImperativeOperation operation, Module module) {
+	public static void addLocalPropertyAST(EStructuralFeature moduleFeature, Property propertyAST) {
 		EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
-		annotation.setSource(OPERATION_OWNING_MODULE_URI);
-		annotation.getReferences().add(module);
-	
-		operation.getEAnnotations().add(annotation);
+		annotation.setSource(QVT_LOCAL_PROPERTY_AST_URI);
+		annotation.getContents().add(propertyAST);
+		moduleFeature.getEAnnotations().add(annotation);
 	}
 	
-	public static Module getOwningModule(ImperativeOperation operation) {
-		if(operation.getEContainingClass() instanceof Module) {
-			return (Module) operation.getEContainingClass();
-		}
-		EAnnotation annotation = operation.getEAnnotation(OPERATION_OWNING_MODULE_URI);		
+	public static Property getLocalPropertyAST(EStructuralFeature feature) {
+		EAnnotation annotation = feature.getEAnnotation(QVT_LOCAL_PROPERTY_AST_URI);		
 		if(annotation != null) {
-			for (EObject referredObj : annotation.getReferences()) {
-				if(referredObj instanceof Module) {
-					return (Module)referredObj;
+			for (EObject referredObj : annotation.getContents()) {
+				if(referredObj instanceof Property) {
+					return (Property)referredObj;
 				}
 			}
+		}
+		return null; 
+	}	
+	
+	public static Module getOwningModule(ImperativeOperation operation) {
+		if(operation.getEContainingClass() instanceof Module) {			
+			return (Module) operation.getEContainingClass();
 		}
 		return null; 
 	}
 	
 	
 	public static List<EOperation> getOwnedOperations(Module module) {
-		EAnnotation annotation = module.getEAnnotation(MODULE_OWNED_OPERATION_URI);
-		if(annotation == null) {
-			return module.getEOperations();
-		}
-		
-		List<EOperation> result = new ArrayList<EOperation>(annotation.getReferences().size());
-		result.addAll(module.getEOperations());
-		
-		for (EObject referredObj : annotation.getReferences()) {
-			if(referredObj instanceof EOperation) {
-				result.add((EOperation) referredObj);
+		List<EOperation> result = new ArrayList<EOperation>(module.getEOperations().size());
+		for (EOperation operation : module.getEOperations()) {
+			if(operation instanceof ImperativeOperation) {
+				result.add(operation);
 			}
 		}
-		
 		return result;
 	}
 	
-	
-	public static void addOwnedOperations(Module module, ImperativeOperation operation) {
-		EAnnotation annotation = module.getEAnnotation(MODULE_OWNED_OPERATION_URI);
-		if(annotation == null) {
-			annotation = EcoreFactory.eINSTANCE.createEAnnotation();
-			annotation.setSource(MODULE_OWNED_OPERATION_URI);
-			module.getEAnnotations().add(annotation);
-		}
 		
-		annotation.getReferences().add(operation);
-		setOwningModule(operation, module);
-	}
-	
 
 	public static void collectAllImports(Module module, Set<Module> result) {
 		for (ModuleImport imp : module.getModuleImport()) {
@@ -244,7 +228,7 @@ public class QvtOperationalParserUtil {
 			QvtOperationalEnv env, CSTNode cstNode) {
 		if (env.lookupProperty(returnType, name) != null) {
 			// should report a warning
-			// env.reportError(ValidationMessages.getString("SemanticUtil.11",
+			// fEnv.reportError(ValidationMessages.getString("SemanticUtil.11",
 			// new Object[] {name, returnType}), cstNode); //$NON-NLS-1$
 			// return false;
 		}
@@ -261,28 +245,6 @@ public class QvtOperationalParserUtil {
 		return true;
 	}
 
-	public static boolean validateLocalProperty(LocalProperty prop, QvtOperationalFileEnv env) {
-		if (prop.getEType() == null) {
-			prop.setEType(prop.getExpression().getType());
-		}
-
-		// TODO
-		// if (!validateNameClashing(prop.getName(),
-		// mapping.getDeclaration().getContextType(),
-		// mapping.getDeclaration().getReturnType(), log, pos)) {
-		// return;
-		// }
-
-		EClassifier realType = prop.getExpression().getType();
-		EClassifier declaredType = prop.getEType();
-		if (!isAssignableToFrom(env, declaredType, realType)) {
-			env.reportError(NLS.bind(ValidationMessages.SemanticUtil_17,
-					new Object[] { QvtOperationalTypesUtil.getTypeFullName(declaredType), QvtOperationalTypesUtil.getTypeFullName(realType) }),
-					prop.getStartPosition(), prop.getEndPosition());
-		}
-
-		return true;
-	}
 
 	public static boolean validateInitVariable(VariableInitExp varInit, QvtOperationalEnv env) {
 		if (env.lookupLocal(varInit.getName()) != null) {
@@ -465,24 +427,27 @@ public class QvtOperationalParserUtil {
 	 * @param varPathNameNodeCS
 	 *            the pathname representing the left side of an assignment. It can be a simple name
 	 *            representing a variable direct access or a path navigating to owned property.
+	 * @param varPathNamePropertyASTopt AST property element for a property if any available as the target for modification  
 	 *             
 	 * @return <code>true</code> if it can be modified, <code>false</code>
 	 *         otherwise.
 	 */
 	public static boolean validateVariableModification(Variable<EClassifier, EParameter> variable,
-			PathNameCS varPathNameNodeCS, QvtOperationalEnv env) {
+			PathNameCS varPathNameNodeCS, EStructuralFeature varPathNamePropertyASTopt, QvtOperationalEnv env) {
 		EParameter representedParameter = variable.getRepresentedParameter();
 		if (representedParameter instanceof VarParameter) {
 			VarParameter parameter = (VarParameter) representedParameter;
 			// detect whether an [inout] parameter variable is to be assigned a new value 
-			boolean isDirectInoutModification = parameter.getKind() == DirectionKind.INOUT && varPathNameNodeCS.getSequenceOfNames().size() == 1;				
+			boolean isDirectInoutModification = parameter.getKind() == DirectionKind.INOUT && varPathNameNodeCS.getSequenceOfNames().size() == 1;
+			boolean isContextualPropertyAccessed = varPathNamePropertyASTopt instanceof ContextualProperty;
+			
 			if(isDirectInoutModification) {
 				env.reportError(NLS.bind(ValidationMessages.QvtOperationalParserUtil_inoutParamAssignmentError, parameter.getName()),
 						varPathNameNodeCS);
 				return false;
 			}
 			
-			if (parameter.getKind() != DirectionKind.OUT && parameter.getKind() != DirectionKind.INOUT) {
+			if (parameter.getKind() != DirectionKind.OUT && parameter.getKind() != DirectionKind.INOUT && isContextualPropertyAccessed == false) {
 				env.reportError(NLS.bind(ValidationMessages.inputParameterModificationError, variable.getName()),
 						varPathNameNodeCS);
 				return false;
@@ -750,6 +715,16 @@ public class QvtOperationalParserUtil {
 		return false;
 	}
 	
+	public static CSTNode getPropertyProblemNode(Property propertyAST, QvtOperationalEnv env) {
+		CSTNode cstNode = env.getASTMapping(propertyAST);
+		if(cstNode instanceof ModulePropertyCS) {
+			CSTNode nameCS = ((ModulePropertyCS)cstNode).getSimpleNameCS();
+			if(nameCS != null) {
+				cstNode = nameCS;
+			}
+		}
+		return cstNode;
+	}
 	
 	public static CSTNode getImperativeOperationProblemNode(MappingMethodCS methodCS) {
 		MappingDeclarationCS mappingDeclCS = methodCS.getMappingDeclarationCS();

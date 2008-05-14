@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtLibraryOperation;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
@@ -43,19 +44,19 @@ public class LegacyNativeLibSupport {
 	private LegacyNativeLibSupport() {
 	}
 	
-	public Module defineLibrary(QvtOperationalEnv env, Library lib) throws LibraryCreationException {
+	public Module defineLibrary(QvtOperationalEnv targetEnv, Library lib) throws LibraryCreationException {
 		Module libModule = org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModule();
 		libModule.setName(lib.getId());
-
+		QvtOperationalEnv libEnv = QvtOperationalEnvFactory.INSTANCE.createModuleEnvironment(libModule);
 		for (LibraryOperation libOp : lib.getLibraryOperations()) {
-	        QvtLibraryOperation qvtLibOp = new QvtLibraryOperation(env, libOp);
+	        QvtLibraryOperation qvtLibOp = new QvtLibraryOperation(libEnv, libOp);
 	        EClassifier ctxType = qvtLibOp.getContextType();
 	        
-	        if(ctxType  == env.getOCLStandardLibrary().getOclVoid()) {
+	        if(ctxType  == targetEnv.getOCLStandardLibrary().getOclVoid()) {
 	        	ctxType = libModule;
 	        }
 
-	        defineOperation(env, libOp, ctxType, qvtLibOp.getReturnType(),
+	        defineOperation(targetEnv, libOp, ctxType, qvtLibOp.getReturnType(),
 	        		libOp.getName(), qvtLibOp.getParamTypes());
 		}
 		

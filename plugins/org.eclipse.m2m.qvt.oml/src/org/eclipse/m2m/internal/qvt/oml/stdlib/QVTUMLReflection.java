@@ -25,11 +25,15 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.HiddenElementAdapter;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
@@ -90,7 +94,7 @@ public class QVTUMLReflection
 	}
 
 	public static boolean isModuleInstance(EClassifier eClassifier) {
-		return (eClassifier instanceof Module);// && EcoreUtil.getExistingAdapter(eClassifier, QVTMetaElementMarker.class) != null;
+		return (eClassifier instanceof Module);
 	}
 	
 	public static boolean isUserModelElement(EClassifier classifier) {
@@ -150,6 +154,20 @@ public class QVTUMLReflection
 	}
 	
 	public List<EOperation> getOperations(EClassifier classifier) {
+		if(classifier instanceof Module) {
+			List<EOperation> operations = new ArrayList<EOperation>();
+			for (EOperation nextOperation : ((Module)classifier).getEOperations()) {
+				if(nextOperation instanceof ImperativeOperation) {
+					ImperativeOperation operation = (ImperativeOperation) nextOperation;
+					if(operation.getContext() != null) {
+						continue;
+					}
+				}
+				operations.add(nextOperation);
+			}
+			return operations;
+		}
+		
 		List<EOperation> result = fUmlReflection.getOperations(classifier);
 		if(isUserModelElement(classifier)) {
 			QvtOperationalStdLibrary stdlib = QvtOperationalStdLibrary.INSTANCE;
@@ -195,7 +213,19 @@ public class QVTUMLReflection
 	}
 
 	public List<EStructuralFeature> getAttributes(EClassifier classifier) {
-		return fUmlReflection.getAttributes(classifier);
+		List<EStructuralFeature> result = fUmlReflection.getAttributes(classifier);		
+		
+		if(classifier instanceof Module) {
+			List<EStructuralFeature> nonContextuals = new ArrayList<EStructuralFeature>(result != null ? result.size() : 5);
+			for (EStructuralFeature nextFeature : result) {
+				if(nextFeature instanceof ContextualProperty == false && 
+					HiddenElementAdapter.isMarkedAsHidden(nextFeature) == false) {
+					nonContextuals.add(nextFeature);
+				}
+			}
+			result = nonContextuals;
+		}
+		return result;
 	}
 
 	public List<EClassifier> getClassifiers(EPackage pkg) {
@@ -255,6 +285,13 @@ public class QVTUMLReflection
 	}
 
 	public EClassifier getOwningClassifier(Object feature) {
+		if(feature instanceof ImperativeOperation) {
+			ImperativeOperation imperativeOperation = (ImperativeOperation) feature;
+			VarParameter context = imperativeOperation.getContext();
+			if(context != null && context.getEType() != null) {
+				return context.getEType();
+			}
+		}
 		return fUmlReflection.getOwningClassifier(feature);
 	}
 

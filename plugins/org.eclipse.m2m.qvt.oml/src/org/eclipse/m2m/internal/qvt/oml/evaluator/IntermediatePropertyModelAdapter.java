@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007 Borland Software Corporation
+ * Copyright (c) 2008 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,18 +15,16 @@ package org.eclipse.m2m.internal.qvt.oml.evaluator;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
-import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.cst.adapters.AbstractGenericAdapter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
-import org.eclipse.ocl.Environment;
-import org.eclipse.ocl.ecore.Constraint;
-import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.util.CollectionUtil;
 
@@ -36,17 +34,7 @@ import org.eclipse.ocl.util.CollectionUtil;
  */
 public class IntermediatePropertyModelAdapter extends AbstractGenericAdapter<IntermediatePropertyModelAdapter> {
 	
-	private IntermediatePropertyModelAdapter(EStructuralFeature feature) {
-		myIntermediateFeature = feature;
-		myPropertyHolder = new IdentityHashMap<Object, EObject>(2);
-		
-		EStructuralFeature overridenFeature = getOverridenFeature(feature);
-		if (overridenFeature instanceof ContextualProperty) {
-			myInitExpression = ((ContextualProperty) overridenFeature).getInitExpression();
-		}
-		else {
-			myInitExpression = null;
-		}
+	private IntermediatePropertyModelAdapter() {
 	}
 	
     public boolean isAdapterForType(Object type) {
@@ -63,65 +51,70 @@ public class IntermediatePropertyModelAdapter extends AbstractGenericAdapter<Int
         return IntermediatePropertyModelAdapter.class.hashCode();
     }
 
-    public static EObject getPropertyHolder(EObject modelClass, Object ownerInstance, EStructuralFeature feature) {
-    	IntermediatePropertyModelAdapter adapter = (IntermediatePropertyModelAdapter) EcoreUtil.getAdapter(modelClass.eAdapters(),
+    public static ShadowEntry getPropertyHolder(EObject moduleInstance, ContextualProperty property, Object ownerInstance) {
+    	IntermediatePropertyModelAdapter adapter = (IntermediatePropertyModelAdapter) EcoreUtil.getAdapter(moduleInstance.eAdapters(),
     			IntermediatePropertyModelAdapter.class);
     	if (adapter == null) {
-    		adapter = new IntermediatePropertyModelAdapter(feature);
-    		modelClass.eAdapters().add(adapter);
+    		adapter = new IntermediatePropertyModelAdapter();
+    		moduleInstance.eAdapters().add(adapter);
     	}
     	
-    	return adapter.getPropertyHolder(ownerInstance);
+    	return adapter.getPropertyHolder(property, ownerInstance);
     }
     
-    private EObject getPropertyHolder(Object ownerInstance) {
-    	EObject target = myPropertyHolder.get(ownerInstance);
-    	if (target == null) {
-    		target = myIntermediateFeature.getEContainingClass().getEPackage().getEFactoryInstance().create(myIntermediateFeature.getEContainingClass());
-    		myPropertyHolder.put(ownerInstance, target);
-    		
-    		Object initialValue = getInitialValue();
-    		if (initialValue != null) {
-    			target.eSet(myIntermediateFeature, initialValue);
-    		}
+    private ShadowEntry getPropertyHolder(ContextualProperty property, Object ownerInstance) {
+    	ShadowEntry runtimeShadow = myProp2HolderMap.get(property);
+    	if(runtimeShadow == null) {
+    		runtimeShadow = new ShadowEntry(myPropShadowHelper.createShadowProperty(property));
+    		myProp2HolderMap.put(property, runtimeShadow);
     	}
-		return target;
+		
+		return runtimeShadow;
 	}
     
-    private Object getInitialValue() {
+    private static Object getInitialValue(EStructuralFeature feature) {
 		//Object inittialValue = myInitExpression.accept(evalVisitor);
 
-		if (myIntermediateFeature.getEType() instanceof CollectionType) {
-			CollectionType<EClassifier, EOperation> collectionType = (CollectionType<EClassifier, EOperation>) myIntermediateFeature.getEType();
+		if (feature.getEType() instanceof CollectionType) {
+			@SuppressWarnings("unchecked")
+			CollectionType<EClassifier, EOperation> collectionType = (CollectionType<EClassifier, EOperation>) feature.getEType();
 			return CollectionUtil.createNewCollection(collectionType.getKind());
 		}
     	
     	return null;
     }
 
-	public static EStructuralFeature getOverridenFeature(EStructuralFeature feature) {
-		if (feature == null) {
-			return null;
-		}
-    	EAnnotation annotation = feature.getEAnnotation(Environment.OCL_NAMESPACE_URI);
-    	if (annotation != null) {
-    		for (EObject nextAnn : annotation.getContents()) {
-    			if (false == nextAnn instanceof Constraint) {
-    				continue;
-    			}
-    			Constraint cnt = (Constraint) nextAnn;
-    			if (QvtOperationalEnv.INTERMEDIATE_PROPERTY_STEREOTYPE.equals(cnt.getStereotype())
-    					&& !cnt.getConstrainedElements().isEmpty()
-    					&& cnt.getConstrainedElements().get(0) instanceof EStructuralFeature) {
-    				return (EStructuralFeature) cnt.getConstrainedElements().get(0);
-    			}
-    		}
-    	}
-    	return feature;
-    }
+	private final Map<Property, ShadowEntry> myProp2HolderMap = new IdentityHashMap<Property, ShadowEntry>(2);
+	private final RuntimePropertyShadowHelper myPropShadowHelper = new RuntimePropertyShadowHelper();
+	
 
-	private final EStructuralFeature myIntermediateFeature;
-    private final Map<Object, EObject> myPropertyHolder;
-    private final OCLExpression<EClassifier> myInitExpression;
-    
+	public static class ShadowEntry {
+		private EStructuralFeature myFeature;
+		private Map<Object, EObject> myOwner2ShadowMap = new IdentityHashMap<Object, EObject>();
+		
+		private ShadowEntry(EStructuralFeature runtimeFeature) {
+			assert runtimeFeature != null;
+			myFeature = runtimeFeature;
+		}
+		
+		public EStructuralFeature getProperty() {
+			return myFeature;
+		}
+		
+		public EObject getPropertyRuntimeOwner(Object shadowedInstance) {
+			EObject owner = myOwner2ShadowMap.get(shadowedInstance);
+			if (owner == null) {
+				EClass ownerClass = myFeature.getEContainingClass();
+				EFactory eFactory = ownerClass.getEPackage().getEFactoryInstance();		
+				owner = eFactory.create(ownerClass);
+				myOwner2ShadowMap.put(shadowedInstance, owner);				
+
+		    	Object initialValue = getInitialValue(myFeature);
+		    	if (initialValue != null) {
+		    		owner.eSet(myFeature, initialValue);
+		    	}												
+			}
+			return owner;
+		}
+	}
 }

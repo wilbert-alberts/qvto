@@ -15,6 +15,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -123,7 +124,7 @@ public interface Module extends EClass, EPackage, VisitableASTNode {
 
 	/**
 	 * Returns the value of the '<em><b>Config Property</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.expressions.Property}.
+	 * The list contents are of type {@link org.eclipse.emf.ecore.EStructuralFeature}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Config Property</em>' containment reference list isn't clear,
@@ -135,7 +136,7 @@ public interface Module extends EClass, EPackage, VisitableASTNode {
 	 * @model
 	 * @generated
 	 */
-	EList<Property> getConfigProperty();
+	EList<EStructuralFeature> getConfigProperty();
 
 	/**
 	 * Returns the value of the '<em><b>Module Import</b></em>' containment reference list.

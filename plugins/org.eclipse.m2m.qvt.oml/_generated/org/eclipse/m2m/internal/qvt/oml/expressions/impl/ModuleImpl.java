@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EClassImpl;
@@ -216,7 +217,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Property> configProperty;
+	protected EList<EStructuralFeature> configProperty;
 
 	/**
 	 * The cached value of the '{@link #getOwnedRenaming() <em>Owned Renaming</em>}' containment reference list.
@@ -527,9 +528,9 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Property> getConfigProperty() {
+	public EList<EStructuralFeature> getConfigProperty() {
 		if (configProperty == null) {
-			configProperty = new EObjectResolvingEList<Property>(Property.class, this, ExpressionsPackage.MODULE__CONFIG_PROPERTY);
+			configProperty = new EObjectResolvingEList<EStructuralFeature>(EStructuralFeature.class, this, ExpressionsPackage.MODULE__CONFIG_PROPERTY);
 		}
 		return configProperty;
 	}
@@ -737,7 +738,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 				return;
 			case ExpressionsPackage.MODULE__CONFIG_PROPERTY:
 				getConfigProperty().clear();
-				getConfigProperty().addAll((Collection<? extends Property>)newValue);
+				getConfigProperty().addAll((Collection<? extends EStructuralFeature>)newValue);
 				return;
 			case ExpressionsPackage.MODULE__OWNED_RENAMING:
 				getOwnedRenaming().clear();

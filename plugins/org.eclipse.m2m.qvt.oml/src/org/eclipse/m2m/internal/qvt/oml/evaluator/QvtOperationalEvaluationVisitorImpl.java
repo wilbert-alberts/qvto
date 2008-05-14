@@ -339,11 +339,17 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     }
 
     public Object visitLocalProperty(LocalProperty localProperty) {
-        return localProperty.getExpression().accept(getVisitor());
+    	if(localProperty.getExpression() != null) {
+    		return localProperty.getExpression().accept(getVisitor());
+    	}
+    	return null;
     }
     
 	public Object visitContextualProperty(ContextualProperty contextualProperty) {
-        return contextualProperty.getInitExpression().accept(getVisitor());
+		if(contextualProperty.getInitExpression() != null) {
+			return contextualProperty.getInitExpression().accept(getVisitor());
+		}
+		return null;
 	}
     
     protected boolean isWhenPreconditionSatisfied(MappingOperation mappingOperation) {
@@ -428,7 +434,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 
     @Override
     public Object visitOperationCallExp(OperationCallExp<EClassifier, EOperation> operationCallExp) {
-    	// set IP of the current stack (represented by the top operation env)
+    	// set IP of the current stack (represented by the top operation fEnv)
     	// to the this operation call in order to refeflect this call position 
     	// in possible QVT stack, in case an exception is thrown 
         int oldIpPos = setCurrentEnvInstructionPointer(operationCallExp);
@@ -668,7 +674,10 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     }
 
     public Object visitRename(Rename rename) {
-        EClassifier context = rename.getEType();
+    	// nothing to do in runtime, all should be resolved during parsing time.
+    	// https://bugs.eclipse.org/bugs/show_bug.cgi?id=230175    	
+    	return null;
+/*        EClassifier context = rename.getEType();
 
         // if source is undefined, result is OclInvalid
         if (isUndefined(context))
@@ -676,6 +685,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 
         EStructuralFeature origProperty = getEnvironment().lookupProperty(rename.getEType(), rename.getName());
         return origProperty;
+*/        
     }
 
     public Object visitVarParameter(VarParameter varParameter) {
@@ -960,12 +970,19 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         }
 
         QvtOperationalEvaluationEnv env = getOperationalEvaluationEnv();
-        for (Property prop : module.getConfigProperty()) {
-        	setCurrentEnvInstructionPointer(prop);
+        for (EStructuralFeature feature : module.getEStructuralFeatures()) {
+        	if(feature instanceof ContextualProperty) {
+        		continue;
+        	}
+        	Property prop = QvtOperationalParserUtil.getLocalPropertyAST(feature);
         	
-            Object propValue = ((PropertyImpl) prop).accept(getVisitor());
+            Object propValue = null;
+            if(prop != null) {
+            	setCurrentEnvInstructionPointer(prop);            	
+            	propValue = ((PropertyImpl) prop).accept(getVisitor());
+            }
             EObject moduleInstance = getModuleDefaultInstance(module, env);
-            env.callSetter(moduleInstance, module.getEStructuralFeature(prop.getName()), propValue, isUndefined(propValue), true);
+            env.callSetter(moduleInstance, feature, propValue, isUndefined(propValue), true);
             
         	setCurrentEnvInstructionPointer(null);
         }

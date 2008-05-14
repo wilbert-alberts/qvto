@@ -15,7 +15,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
@@ -25,7 +24,6 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
-import org.eclipse.m2m.internal.qvt.oml.ast.parser.ValidationMessages;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CResourceRepositoryContext;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerKernel;
@@ -33,22 +31,18 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.Library;
 import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LibraryCreationException;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.LegacyNativeLibSupport;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
-import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
-import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.ExpressionsFactory;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.lpg.ProblemHandler;
 import org.eclipse.ocl.options.ProblemOption;
 import org.eclipse.ocl.utilities.UMLReflection;
-import org.eclipse.osgi.util.NLS;
 
 public class QvtOperationalFileEnv extends QvtOperationalEnv {
 
@@ -132,27 +126,14 @@ public class QvtOperationalFileEnv extends QvtOperationalEnv {
     }
     
 	@Override
-	public final EClass getModuleContextType() {
+	public final Module getModuleContextType() {
 		if(myQualifiedThisName != null) {
 			Variable<EClassifier, EParameter> var = lookup(myQualifiedThisName);			
-			return var != null ? (EClass)var.getType() : null;
+			return var != null ? (Module)var.getType() : null;
 		}
 		return null;
 	}
 	
-    public void addModuleProperty(Property prop, CSTNode cstElement) {
-        if (lookupProperty(getModuleContextType(), prop.getName()) != null) {
-            reportError(NLS.bind(ValidationMessages.ModulePropertyAlreadyDefined, new Object[] { prop.getName() }), cstElement);
-        } else {
-			Variable<EClassifier, EParameter> var = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();
-			var.setName(prop.getName());
-			var.setType(prop.getEType());
-			Constraint constraint = EcoreFactory.eINSTANCE.createConstraint();
-        	defineAttribute(getModuleContextType(), var, constraint);
-        	
-        	getModuleContextType().getEStructuralFeatures().add(prop);
-        }
-    }
 	    
     @Override
     public String toString() {    
