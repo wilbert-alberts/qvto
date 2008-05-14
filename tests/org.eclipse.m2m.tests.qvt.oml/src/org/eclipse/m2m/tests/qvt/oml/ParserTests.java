@@ -73,6 +73,7 @@ public class ParserTests {
     
     static TestData[] ourData = new TestData[] {
         //new TestData("orderedsetdoesnotconformtoset", 1), //$NON-NLS-1$    	
+    	TestData.createSourceChecked("intermPropClash", 9, 0),    	    	
     	TestData.createSourceChecked("noClassInImplicitPopulate", 3, 0),    	
     	TestData.createSourceChecked("parmnamesclash", 22, 0),
     	TestData.createSourceChecked("stdlibElementAsOut", 7, 0),    	
