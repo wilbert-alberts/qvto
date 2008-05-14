@@ -202,7 +202,7 @@ public class EmfUtil {
 
         Map options = new HashMap(opts);
         options.put(XMLResource.OPTION_ENCODING, "UTF-8"); //$NON-NLS-1$
-        
+        options.put(XMIResource.OPTION_PROCESS_DANGLING_HREF, XMIResource.OPTION_PROCESS_DANGLING_HREF_DISCARD);       
         for (EObject eObject : modelExtent.getContents()) {
 	        if(isDynamic(eObject)) {
 	        	options.put("SCHEMA_LOCATION", Boolean.TRUE); //$NON-NLS-1$
