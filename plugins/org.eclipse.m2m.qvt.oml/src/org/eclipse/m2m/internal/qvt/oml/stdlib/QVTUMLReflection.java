@@ -265,6 +265,9 @@ public class QVTUMLReflection
 	}
 
 	public String getName(Object namedElement) {
+		if(namedElement == null) {
+			return "<null>"; //$NON-NLS-1$
+		}
 		return fUmlReflection.getName(namedElement);
 	}
 
