@@ -2819,6 +2819,15 @@ public class QvtOperationalVisitorCS
     		addLateResolve(resolveExp);
     	}
         
+		OCLExpression<EClassifier> condition = resolveExp.getCondition();
+		if(condition != null) {
+			EClassifier condType = condition.getType();
+			if(env.getOCLStandardLibrary().getBoolean() != condType) {
+				env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_booleanTypeExpressionExpected, 
+						env.getUMLReflection().getName(condType)), condition.getStartPosition(), condition.getEndPosition());
+			}
+		}    	
+    	
         return resolveExp;
     }
     
