@@ -186,6 +186,7 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 				fCtx2OperationMap.put(owner, operList);
 			}
 			
+			addAdditionalType(owner);
 			operList.add((ImperativeOperation)operation);
 			return operation;
 		}
