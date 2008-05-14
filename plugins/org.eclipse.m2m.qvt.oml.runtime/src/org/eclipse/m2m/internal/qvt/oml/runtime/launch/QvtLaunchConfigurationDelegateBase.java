@@ -210,10 +210,17 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         
         Iterator<ModelExtentContents> itrExtent = out.getExtents().iterator();
         for (TargetUriData outData : targetData) {
+        	if (itrExtent.hasNext()) {
+        		confineInResource(itrExtent.next(), outData, resSet);
+        	}
+        }
+        
+        itrExtent = out.getExtents().iterator();
+        for (TargetUriData outUriData : targetData) {
         	if (!itrExtent.hasNext()) {
         		throw new MdaException("Imcomplete transformation results"); //$NON-NLS-1$
         	}
-        	saveTransformationResult(itrExtent.next(), outData, resSet);
+        	saveTransformationResult(itrExtent.next(), outUriData, resSet);
         }
 
         List<URI> result = new ArrayList<URI>(out.getOutParamValues().size());
@@ -247,8 +254,8 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         switch(targetData.getTargetType()) {
         	case NEW_MODEL: {
         		try {
-        	    	Resource outExtent = EmfUtil.createResource(outUri, resSet);
-        			outExtent.getContents().addAll(extent.getAllRootElements());
+        	    	Resource outExtent = resSet.getResource(outUri, false);
+        			//outExtent.getContents().addAll(extent.getAllRootElements());
         			EmfUtil.saveModel(outExtent, outUri, EmfUtil.DEFAULT_SAVE_OPTIONS);
         		}
         		catch(EmfException e) {
@@ -306,6 +313,25 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         
         org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils.refresh(outUri);
     }
+
+	private static void confineInResource(ModelExtentContents extent, TargetUriData targetData, ResourceSet resSet) throws MdaException {    	
+    	URI outUri = toUri(targetData.getUriString());
+    	
+        switch(targetData.getTargetType()) {
+        	case NEW_MODEL: {
+       	    	Resource outExtent = resSet.getResource(outUri, false);
+       	    	if(outExtent == null) {
+       	    		outExtent = EmfUtil.createResource(outUri, resSet);       	    	
+       	    	} else {
+       	    		outExtent.getContents().clear();
+       	    	}
+       			outExtent.getContents().addAll(extent.getAllRootElements());
+       			resSet.getResources().add(outExtent);
+        		break;
+        	}
+        }
+    }
+    
     
     private static void saveResource(EObject obj) throws IOException {
     	Resource resource = obj.eResource();
