@@ -1486,12 +1486,16 @@ public class QvtOperationalVisitorCS
 		Set<String> paramNames = new LinkedHashSet<String>();
 		for (ParameterDeclarationCS paramCS : headerCS.getParameters()) {
 			EClassifier type = null;
-			if (paramCS.getTypeSpecCS().getTypeCS() instanceof PathNameCS) {
-				type = env.getModelType(((PathNameCS) paramCS.getTypeSpecCS().getTypeCS()).getSequenceOfNames());
+			TypeCS paramTypeCS = (paramCS.getTypeSpecCS() != null) ? paramCS.getTypeSpecCS().getTypeCS() : null;
+			boolean isSimpleName = false;
+			if (paramTypeCS instanceof PathNameCS) {
+				PathNameCS typePathNameCS = (PathNameCS) paramTypeCS;
+				isSimpleName = typePathNameCS.getSequenceOfNames().size() == 1;
+				type = env.getModelType(typePathNameCS.getSequenceOfNames());
 			}
-			if (type == null) {
+			if (type == null || !isSimpleName) {
 				env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_transfParamWrongType,
-						new Object[] { }), paramCS.getTypeSpecCS().getTypeCS());
+						new Object[] { }), paramTypeCS);
 			}
 
 			ModelParameter varParam = ExpressionsFactory.eINSTANCE.createModelParameter();
