@@ -1,6 +1,6 @@
 modeltype ecore "strict" uses ecore('http://www.eclipse.org/emf/2002/Ecore');
 
-transformation noClassInImplicitPopulate(out output:ecore::EPackage);
+transformation noClassInImplicitPopulate(out output: ecore);
 
 mapping main(out model:ecore::EPackage@output) {
 	/*<error>*/name/*</error>*/:='generated_package';

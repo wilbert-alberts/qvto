@@ -72,7 +72,8 @@ public class ParserTests {
     
     
     static TestData[] ourData = new TestData[] {
-        //new TestData("orderedsetdoesnotconformtoset", 1), //$NON-NLS-1$    	
+        //new TestData("orderedsetdoesnotconformtoset", 1), //$NON-NLS-1$        	
+    	TestData.createSourceChecked("testmodelparamtype", 3, 0),    	
     	TestData.createSourceChecked("resolvecond", 1, 0),
     	TestData.createSourceChecked("intermPropClash", 9, 0),    	    	
     	TestData.createSourceChecked("noClassInImplicitPopulate", 3, 0),    	
