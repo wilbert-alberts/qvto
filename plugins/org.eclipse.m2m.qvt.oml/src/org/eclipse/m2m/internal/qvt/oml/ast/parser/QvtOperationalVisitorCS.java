@@ -2709,7 +2709,8 @@ public class QvtOperationalVisitorCS
         TypeCS contextTypeCS = resolveInExpCS.getInMappingType();
         EClassifier eClassifier = (contextTypeCS == null) ? null : visitTypeCS(contextTypeCS, null, env); // mapping context type
         eClassifier = eClassifier != null ? eClassifier : env.getModuleContextType();
-        List<EOperation> rawMappingOperations = env.lookupMappingOperations(eClassifier, resolveInExpCS.getInMappingName());
+        String mappingName = resolveInExpCS.getInMappingName().getValue();
+        List<EOperation> rawMappingOperations = env.lookupMappingOperations(eClassifier, mappingName);
         List<EOperation> mappingOperations = new ArrayList<EOperation>();
         
         for (EOperation operation : rawMappingOperations) {
@@ -2720,17 +2721,17 @@ public class QvtOperationalVisitorCS
             }
         }
         if (mappingOperations.size() == 1) {
-            env.registerResolveInExp(resolveInExp, eClassifier, resolveInExpCS.getInMappingName());
+            env.registerResolveInExp(resolveInExp, eClassifier, mappingName);
         } else {
             String mappingFQName = (eClassifier == null) ? "" : eClassifier.getName() + QvtOperationalTypesUtil.TYPE_NAME_SEPARATOR; //$NON-NLS-1$
-            mappingFQName += resolveInExpCS.getInMappingName();
+            mappingFQName += mappingName;
             if (mappingOperations.size() == 0) {
                 env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ResolveInMappingNotFound, new Object[] {
-                        mappingFQName}), resolveInExpCS);
+                        mappingFQName}), resolveInExpCS.getInMappingName() != null ? resolveInExpCS.getInMappingName() : resolveInExpCS);
             } else if (mappingOperations.size() > 1) {
                 env.reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ResolveInSeveralMappingsFound, new Object[] {
                         mappingFQName}), resolveInExpCS);
-                env.registerResolveInExp(resolveInExp, eClassifier, resolveInExpCS.getInMappingName());
+                env.registerResolveInExp(resolveInExp, eClassifier, mappingName);
             }
         }
         
