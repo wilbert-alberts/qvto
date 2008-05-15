@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackage.java,v 1.3 2008/04/25 14:13:21 radvorak Exp $
+ * $Id: CSTPackage.java,v 1.4 2008/05/15 13:53:39 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -2343,7 +2343,7 @@ public interface CSTPackage extends EPackage {
 	int RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE = RESOLVE_EXP_CS_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>In Mapping Name</b></em>' attribute.
+	 * The feature id for the '<em><b>In Mapping Name</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -4512,15 +4512,15 @@ public interface CSTPackage extends EPackage {
 	EReference getResolveInExpCS_InMappingType();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.cst.ResolveInExpCS#getInMappingName <em>In Mapping Name</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.ResolveInExpCS#getInMappingName <em>In Mapping Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>In Mapping Name</em>'.
+	 * @return the meta object for the containment reference '<em>In Mapping Name</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ResolveInExpCS#getInMappingName()
 	 * @see #getResolveInExpCS()
 	 * @generated
 	 */
-	EAttribute getResolveInExpCS_InMappingName();
+	EReference getResolveInExpCS_InMappingName();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS <em>Model Type CS</em>}'.
@@ -5981,12 +5981,12 @@ public interface CSTPackage extends EPackage {
 		EReference RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE = eINSTANCE.getResolveInExpCS_InMappingType();
 
 		/**
-		 * The meta object literal for the '<em><b>In Mapping Name</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>In Mapping Name</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute RESOLVE_IN_EXP_CS__IN_MAPPING_NAME = eINSTANCE.getResolveInExpCS_InMappingName();
+		EReference RESOLVE_IN_EXP_CS__IN_MAPPING_NAME = eINSTANCE.getResolveInExpCS_InMappingName();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ModelTypeCSImpl <em>Model Type CS</em>}' class.

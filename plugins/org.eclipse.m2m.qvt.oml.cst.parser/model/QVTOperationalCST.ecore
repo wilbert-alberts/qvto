@@ -219,9 +219,9 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="inMappingType" lowerBound="1"
           eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="inMappingName" lowerBound="1"
-          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-          defaultValueLiteral=""/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="inMappingName" lowerBound="1"
+          eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
+          containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ModelTypeCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode #//cst/ElementWithBody">
       <eStructuralFeatures xsi:type="ecore:EReference" name="identifierCS" lowerBound="1"

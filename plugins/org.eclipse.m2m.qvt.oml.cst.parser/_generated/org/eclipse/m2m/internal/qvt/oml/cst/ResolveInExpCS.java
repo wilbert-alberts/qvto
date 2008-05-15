@@ -11,10 +11,11 @@
  * 
  * 
  *
- * $Id: ResolveInExpCS.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: ResolveInExpCS.java,v 1.2 2008/05/15 13:53:39 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
+import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.TypeCS;
 
 /**
@@ -69,30 +70,29 @@ public interface ResolveInExpCS extends ResolveExpCS {
 	void setInMappingType(TypeCS value);
 
 	/**
-	 * Returns the value of the '<em><b>In Mapping Name</b></em>' attribute.
-	 * The default value is <code>""</code>.
+	 * Returns the value of the '<em><b>In Mapping Name</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>In Mapping Name</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>In Mapping Name</em>' attribute.
-	 * @see #setInMappingName(String)
+	 * @return the value of the '<em>In Mapping Name</em>' containment reference.
+	 * @see #setInMappingName(SimpleNameCS)
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getResolveInExpCS_InMappingName()
-	 * @model default="" required="true"
+	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	String getInMappingName();
+	SimpleNameCS getInMappingName();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ResolveInExpCS#getInMappingName <em>In Mapping Name</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ResolveInExpCS#getInMappingName <em>In Mapping Name</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>In Mapping Name</em>' attribute.
+	 * @param value the new value of the '<em>In Mapping Name</em>' containment reference.
 	 * @see #getInMappingName()
 	 * @generated
 	 */
-	void setInMappingName(String value);
+	void setInMappingName(SimpleNameCS value);
 
 } // ResolveInExpCS

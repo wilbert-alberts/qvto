@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ResolveInExpCSImpl.java,v 1.1 2008/04/06 10:18:39 sboyko Exp $
+ * $Id: ResolveInExpCSImpl.java,v 1.2 2008/05/15 13:53:39 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveInExpCS;
 
+import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.TypeCS;
 
 /**
@@ -61,24 +62,14 @@ public class ResolveInExpCSImpl extends ResolveExpCSImpl implements ResolveInExp
 	protected TypeCS inMappingType;
 
 	/**
-	 * The default value of the '{@link #getInMappingName() <em>In Mapping Name</em>}' attribute.
+	 * The cached value of the '{@link #getInMappingName() <em>In Mapping Name</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getInMappingName()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String IN_MAPPING_NAME_EDEFAULT = ""; //$NON-NLS-1$
-
-	/**
-	 * The cached value of the '{@link #getInMappingName() <em>In Mapping Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getInMappingName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String inMappingName = IN_MAPPING_NAME_EDEFAULT;
+	protected SimpleNameCS inMappingName;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -147,7 +138,7 @@ public class ResolveInExpCSImpl extends ResolveExpCSImpl implements ResolveInExp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getInMappingName() {
+	public SimpleNameCS getInMappingName() {
 		return inMappingName;
 	}
 
@@ -156,11 +147,33 @@ public class ResolveInExpCSImpl extends ResolveExpCSImpl implements ResolveInExp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setInMappingName(String newInMappingName) {
-		String oldInMappingName = inMappingName;
+	public NotificationChain basicSetInMappingName(SimpleNameCS newInMappingName, NotificationChain msgs) {
+		SimpleNameCS oldInMappingName = inMappingName;
 		inMappingName = newInMappingName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_NAME, oldInMappingName, inMappingName));
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_NAME, oldInMappingName, newInMappingName);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setInMappingName(SimpleNameCS newInMappingName) {
+		if (newInMappingName != inMappingName) {
+			NotificationChain msgs = null;
+			if (inMappingName != null)
+				msgs = ((InternalEObject)inMappingName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_NAME, null, msgs);
+			if (newInMappingName != null)
+				msgs = ((InternalEObject)newInMappingName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_NAME, null, msgs);
+			msgs = basicSetInMappingName(newInMappingName, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_NAME, newInMappingName, newInMappingName));
 	}
 
 	/**
@@ -173,6 +186,8 @@ public class ResolveInExpCSImpl extends ResolveExpCSImpl implements ResolveInExp
 		switch (featureID) {
 			case CSTPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE:
 				return basicSetInMappingType(null, msgs);
+			case CSTPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_NAME:
+				return basicSetInMappingName(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -205,7 +220,7 @@ public class ResolveInExpCSImpl extends ResolveExpCSImpl implements ResolveInExp
 				setInMappingType((TypeCS)newValue);
 				return;
 			case CSTPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_NAME:
-				setInMappingName((String)newValue);
+				setInMappingName((SimpleNameCS)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -223,7 +238,7 @@ public class ResolveInExpCSImpl extends ResolveExpCSImpl implements ResolveInExp
 				setInMappingType((TypeCS)null);
 				return;
 			case CSTPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_NAME:
-				setInMappingName(IN_MAPPING_NAME_EDEFAULT);
+				setInMappingName((SimpleNameCS)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -240,25 +255,9 @@ public class ResolveInExpCSImpl extends ResolveExpCSImpl implements ResolveInExp
 			case CSTPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE:
 				return inMappingType != null;
 			case CSTPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_NAME:
-				return IN_MAPPING_NAME_EDEFAULT == null ? inMappingName != null : !IN_MAPPING_NAME_EDEFAULT.equals(inMappingName);
+				return inMappingName != null;
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (inMappingName: "); //$NON-NLS-1$
-		result.append(inMappingName);
-		result.append(')');
-		return result.toString();
 	}
 
 } //ResolveInExpCSImpl

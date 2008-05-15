@@ -515,7 +515,17 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 			ScopedNameCS mapping, ResolveOpArgsExpCS resolveOpArgsExpCS) {
 				ResolveInExpCS resolveInExpCS = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createResolveInExpCS();
 				resolveInExpCS.setInMappingType(mapping.getTypeCS());
-				resolveInExpCS.setInMappingName(mapping.getName());
+				
+				SimpleNameCS mappingNameCS = CSTFactory.eINSTANCE.createSimpleNameCS();
+				mappingNameCS.setValue(mapping.getName());
+				
+				mappingNameCS.setStartOffset(mapping.getStartOffset());
+				if(mapping.getName() != null) {
+					mappingNameCS.setStartOffset(mapping.getEndOffset() - mapping.getName().length() + 1);
+				}
+				mappingNameCS.setEndOffset(mapping.getEndOffset());
+				
+				resolveInExpCS.setInMappingName(mappingNameCS);
 				return populateResolveExpCS(resolveInExpCS, lateToken, opCode, resolveOpArgsExpCS);
 			}
 

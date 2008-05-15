@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.3 2008/04/25 14:13:21 radvorak Exp $
+ * $Id: CSTPackageImpl.java,v 1.4 2008/05/15 13:53:39 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -1503,8 +1503,8 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getResolveInExpCS_InMappingName() {
-		return (EAttribute)resolveInExpCSEClass.getEStructuralFeatures().get(1);
+	public EReference getResolveInExpCS_InMappingName() {
+		return (EReference)resolveInExpCSEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -2115,7 +2115,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
 		resolveInExpCSEClass = createEClass(RESOLVE_IN_EXP_CS);
 		createEReference(resolveInExpCSEClass, RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE);
-		createEAttribute(resolveInExpCSEClass, RESOLVE_IN_EXP_CS__IN_MAPPING_NAME);
+		createEReference(resolveInExpCSEClass, RESOLVE_IN_EXP_CS__IN_MAPPING_NAME);
 
 		modelTypeCSEClass = createEClass(MODEL_TYPE_CS);
 		createEReference(modelTypeCSEClass, MODEL_TYPE_CS__IDENTIFIER_CS);
@@ -2410,7 +2410,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
 		initEClass(resolveInExpCSEClass, ResolveInExpCS.class, "ResolveInExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getResolveInExpCS_InMappingType(), theCSTPackage_1.getTypeCS(), null, "inMappingType", null, 1, 1, ResolveInExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getResolveInExpCS_InMappingName(), ecorePackage.getEString(), "inMappingName", "", 1, 1, ResolveInExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEReference(getResolveInExpCS_InMappingName(), theCSTPackage_1.getSimpleNameCS(), null, "inMappingName", null, 1, 1, ResolveInExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(modelTypeCSEClass, ModelTypeCS.class, "ModelTypeCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getModelTypeCS_IdentifierCS(), theCSTPackage_1.getSimpleNameCS(), null, "identifierCS", null, 1, 1, ModelTypeCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
