@@ -23,6 +23,7 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.TypeCS;
 
 
@@ -38,13 +39,15 @@ public class ResolveInHyperlinkDetector implements IHyperlinkDetectorHelper {
 			ResolveInExpCS resolveInExpCS = (ResolveInExpCS) element;
 
 			TypeCS type = resolveInExpCS.getInMappingType();		
-			if(type != null && resolveInExpCS.getInMappingName() != null) {
-				int mappingNameStartOffset = type.getEndOffset() + 3;
-				int length = resolveInExpCS.getInMappingName().length();
-				
+			SimpleNameCS inMappingNameCS = resolveInExpCS.getInMappingName();
+			if(type != null && inMappingNameCS != null) {
+				String mappingName = inMappingNameCS.getValue();
+				int mappingNameStartOffset = inMappingNameCS.getStartOffset();
+				int length = inMappingNameCS.getEndOffset() - inMappingNameCS.getStartOffset() + 1;
+					
 				if(HyperlinkUtil.isOffsetInRange(context.getRegion().getOffset(), 
 						mappingNameStartOffset, 
-						mappingNameStartOffset + resolveInExpCS.getInMappingName().length())) {
+						mappingNameStartOffset + mappingName.length())) {
 					
 					MappingDeclarationCS mappingDeclCS = findReferencedDefinitionCS(resolveInExpCS);
 					if(mappingDeclCS != null) {
