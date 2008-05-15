@@ -37,7 +37,7 @@ public class IteratorShorthandCollector extends AbstractCollector {
     
     @Override
     protected boolean isApplicableInternal(QvtCompletionData data) {
-        IToken iteratorToken = data.getParentBracingExpression(LightweightParserUtil.ITERATOR_TERMINALS, QvtOpLPGParsersym.TK_LPAREN, QvtOpLPGParsersym.TK_RPAREN,
+        IToken iteratorToken = data.getParentBracingExpression(LightweightParserUtil.ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR, QvtOpLPGParsersym.TK_LPAREN, QvtOpLPGParsersym.TK_RPAREN,
                 1, ZERO_DEPTH_TERMINATORS, LightweightParserUtil.OCLEXPRESSION_MANDATORY_TERMINATION_TOKENS, null);            
         if (iteratorToken != null) {
             data.getUserData().put(ITERATOR_TOKEN_FLAG, iteratorToken);

@@ -114,7 +114,7 @@ public class LightweightParserUtil {
         QvtOpLPGParsersym.TK_invresolveoneIn
     };
     
-    public static final int[] ITERATOR_TERMINALS = {
+    public static final int[] ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR = {
         QvtOpLPGParsersym.TK_select,
         QvtOpLPGParsersym.TK_reject,
         QvtOpLPGParsersym.TK_collect,
@@ -125,8 +125,18 @@ public class LightweightParserUtil {
         QvtOpLPGParsersym.TK_any,
         QvtOpLPGParsersym.TK_collectNested,
         QvtOpLPGParsersym.TK_sortedBy,
-        QvtOpLPGParsersym.TK_closure
+        QvtOpLPGParsersym.TK_closure,
+        QvtOpLPGParsersym.TK_xselect,
+        QvtOpLPGParsersym.TK_xcollect,
+        QvtOpLPGParsersym.TK_selectOne,
+        QvtOpLPGParsersym.TK_collectOne,
     };
+    
+    public static final int[] ITERATOR_TERMINALS = 
+        uniteIntArrays(ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR,  new int[] {
+                QvtOpLPGParsersym.TK_collectselect,
+                QvtOpLPGParsersym.TK_collectselectOne
+        });
     
     public static final int[] MAPPING_CLAUSE_TOKENS = {
         QvtOpLPGParsersym.TK_when, 
