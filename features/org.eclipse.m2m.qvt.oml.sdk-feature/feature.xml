@@ -34,9 +34,12 @@
          id="org.eclipse.m2m.qvt.oml.editor"
          version="0.0.0"/>
 
-   <includes
+   <plugin
          id="org.eclipse.m2m.qvt.oml.samples"
-         version="0.0.0"/>
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
    <includes
          id="org.eclipse.m2m.qvt.oml.common.source"
