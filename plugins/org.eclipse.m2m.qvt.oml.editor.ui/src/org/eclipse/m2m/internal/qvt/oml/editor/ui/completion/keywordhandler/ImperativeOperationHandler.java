@@ -28,6 +28,13 @@ public class ImperativeOperationHandler implements IKeywordHandler {
     
     public String handle(IToken keyword, PrsStream prsStream, QvtCompletionData data, CFileData cFileData) {
         if (QvtCompletionData.isKindOf(keyword, LightweightParserUtil.IMPERATIVE_OPERATION_TOKENS)) {
+            if (QvtCompletionData.isKindOf(keyword, QvtOpLPGParsersym.TK_main)) {
+                IToken previousToken = LightweightParserUtil.getPreviousToken(keyword);
+                if ((previousToken != null) && QvtCompletionData.isKindOf(previousToken, QvtOpLPGParsersym.TK_mapping)) {
+                    // This is the 'mapping main' case which was already handled on the previous step
+                    return null;
+                }
+            }
             IToken[] tokens = QvtCompletionData.extractTokens(keyword, QvtCompletionData.MAPPING_DECLARATION_TRAILING_TOKEN_KINDS);
             if (tokens != null) {
                 String mappingText = '\n' + LightweightParserUtil.getText(tokens); 
