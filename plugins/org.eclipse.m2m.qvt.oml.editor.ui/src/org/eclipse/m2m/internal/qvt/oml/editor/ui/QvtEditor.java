@@ -20,6 +20,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.resource.StringConverter;
+import org.eclipse.jface.text.DocumentEvent;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.text.ITextViewerExtension;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.TextSelection;
@@ -73,7 +76,7 @@ public class QvtEditor extends TextEditor {
         setRulerContextMenuId("#QvtEditorRulerContext"); //$NON-NLS-1$
         setEditorContextMenuId("#QvtEditorContext");   //$NON-NLS-1$
         
-        QvtBuilder.addBuildListener(myBuildListener);
+        QvtBuilder.addBuildListener(myBuildListener);        
     }
     
     @Override
@@ -101,6 +104,10 @@ public class QvtEditor extends TextEditor {
         if(myBuildListener != null) {
             QvtBuilder.removeBuildListener(myBuildListener);
             myBuildListener = null;
+        }
+        
+        if(fASTProvider != null) {
+        	fASTProvider.dispose();
         }
         
         super.dispose();
@@ -142,7 +149,7 @@ public class QvtEditor extends TextEditor {
         }
         return super.getAdapter(required);
     }
-    
+        
     public ISourceViewer getSourceViewerOpened() {
         return getSourceViewer();
     }
@@ -207,6 +214,8 @@ public class QvtEditor extends TextEditor {
             }
             ((ITextViewerExtension) sourceViewer).prependVerifyKeyListener(myBracketInserter);
         }
+
+        fASTProvider = new ASTProvider();
     }
     
     public void updateFoldingStructure(final List<Position> positions) {
@@ -257,8 +266,10 @@ public class QvtEditor extends TextEditor {
 		catch(PartInitException e) {
 			Logger.getLogger().log(Logger.SEVERE, "Failed to initialize QVT editor", e); //$NON-NLS-1$
 			throw e;
-		}
+		}		
 	}
+	
+	
     
     public int getTabWidth() {
         return getSourceViewerConfiguration().getTabWidth(getSourceViewer());
@@ -351,7 +362,8 @@ public class QvtEditor extends TextEditor {
     private QvtOutlineSelectionListener myOutlineSelectionListener;
     private QvtOutlineNodeSelector myOutlineSelector;
     private BracketInserter myBracketInserter;
-    
+    private ASTProvider fASTProvider; 
+     
     private QvtBuilder.BuildListener myBuildListener = new QvtBuilder.BuildListener() {
         public void buildPerformed() {
             //refresh();
@@ -365,5 +377,105 @@ public class QvtEditor extends TextEditor {
 
     public ISourceViewer getEditorSourceViewer() {
     	return getSourceViewer();
+    }
+ 
+    /**
+     * Retrieves module AST from the edited QVT module.
+     * 
+     * @param timeoutInMilisec number of milliseconds to wait if the a valid () AST is not available right-away
+     * 			Note: The argument semantics conforms to Object::wait(long)
+     *   
+     * @return AST module or <code>null</code> if it was not available within the specified timeout  
+     */
+    public CompiledModule getValidCompiledModule(long timeoutInMilisec) {
+    	return fASTProvider.getValidCompiledModule(timeoutInMilisec);
+    }
+    
+    IQVTReconcilingListener getReconcilingListener() {
+    	if(fASTProvider == null) {
+    		throw new IllegalStateException("AST Provider not available"); //$NON-NLS-1$
+    	}
+    	
+    	return fASTProvider;
+    }
+ 
+    
+    private class ASTProvider implements IQVTReconcilingListener {
+    	private IDocumentListener fDocListener;
+        private boolean fNeedsReconciling = true;
+        private long fModifyTimeStamp = 0;
+        private long fStartReconcileTimeStamp = 0;
+    	private Object fLock = new Object();
+ 
+    	public ASTProvider() {
+    		IDocument doc = getDoc();
+			if(doc == null) {
+    			throw new IllegalStateException("Editor source viewer document must be available"); //$NON-NLS-1$
+    		}
+    		
+			fDocListener = new IDocumentListener() {
+				public void documentAboutToBeChanged(DocumentEvent event) {
+			    	synchronized(fLock) {
+			    		fNeedsReconciling = true;
+			    		fModifyTimeStamp = event.fModificationStamp;
+			    	}
+				}
+				
+				public void documentChanged(DocumentEvent event) {
+					// do nothing        				
+				}
+			};
+			
+			doc.addDocumentListener(fDocListener);
+		}
+    	
+        public CompiledModule getValidCompiledModule(long timeoutInMilisec) {
+        	QvtDocumentProvider documentProvider = (QvtDocumentProvider) getDocumentProvider();
+        	synchronized (fLock) {
+        		while(fNeedsReconciling) {
+        			try {
+    					fLock.wait(timeoutInMilisec);
+    					if(fNeedsReconciling) {
+    						// time-outed
+    						return null;
+    					}
+    				} catch (InterruptedException e) {
+    					return null;
+    				}
+        		}
+        		return documentProvider.getCompiledModule();
+    		}
+        }    	
+    	
+	    public void aboutToBeReconciled() {
+	    	synchronized(fLock) {    	
+	    		fStartReconcileTimeStamp = fModifyTimeStamp;
+	    	}
+	    }
+	    
+	    public void reconciled(CompiledModule ast) {
+	    	synchronized(fLock) {
+	        	if(fModifyTimeStamp == fStartReconcileTimeStamp) {
+	        		fNeedsReconciling = false;
+	        	}
+	        	// wake-up clients waiting for AST
+	    		fLock.notifyAll();
+	    	}
+	    }
+
+	    private IDocument getDoc() {
+	   		ISourceViewer viewer = getEditorSourceViewer();
+			if(viewer != null) { 
+				return viewer.getDocument();
+    		}	    	
+			return null;
+	    }
+	    
+	    void dispose() {
+	   		IDocument doc = getDoc();
+	   		if(doc != null) {
+	   			doc.removeDocumentListener(fDocListener);
+	   		}
+	    }
     }
 }

@@ -25,6 +25,7 @@ import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.reconciler.DirtyRegion;
 import org.eclipse.jface.text.reconciler.IReconcilingStrategy;
 import org.eclipse.jface.text.reconciler.IReconcilingStrategyExtension;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilationResult;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
@@ -71,21 +72,27 @@ public class QvtReconcilingStrategy implements IReconcilingStrategy, IReconcilin
         options.setShowAnnotations(QvtCompilerFacade.isEditingInQvtSourceContainer(myEditor));
         options.setSourceLineNumbersEnabled(false);
         
+        IQVTReconcilingListener reconcilingListener = myEditor.getReconcilingListener();        
         QvtCompilationResult compilationResult = null;
         try {
-            QvtCompilerFacade.getInstance().compile(myEditor, myDocument, options, myMonitor);
+			reconcilingListener.aboutToBeReconciled();
+			
+            compilationResult = QvtCompilerFacade.getInstance().compile(myEditor, myDocument, options, myMonitor);
         } catch (Exception ex) {
             if (loggedCompilationExceptionsCount < MAX_LOGGED_COMPILATION_EXCEPTIONS) {
                 loggedCompilationExceptionsCount ++;
                 Activator.log(ex);
                 if (loggedCompilationExceptionsCount == MAX_LOGGED_COMPILATION_EXCEPTIONS) {
                     Activator.log(new Status(IStatus.WARNING, Activator.PLUGIN_ID, Messages.QvtReconcilingStrategy_TooManyExceptions));
-                }                
+                }
             }
-        }
+        } finally {
+        CompiledModule compiledModule = (compilationResult != null) ? compilationResult.getModule() : null;
         
-        if (compilationResult != null && compilationResult.getModule() != null) {
-            MappingModuleCS mappingModuleCS = compilationResult.getModule().getSyntaxElement().getModuleCS();
+        reconcilingListener.reconciled(compiledModule);
+        
+        if (compiledModule != null) {
+            MappingModuleCS mappingModuleCS = compiledModule.getSyntaxElement().getModuleCS();
             
             addListPosition(mappingModuleCS.getImports(), positions);
             addListPosition(mappingModuleCS.getImports(), positions);
@@ -96,6 +103,7 @@ public class QvtReconcilingStrategy implements IReconcilingStrategy, IReconcilin
             for (MappingMethodCS method : mappingModuleCS.getMethods()) {
                 positions.add(createPosition(method.getStartOffset(), method.getEndOffset()));
             }
+        }
         }
         
         myEditor.refresh();
