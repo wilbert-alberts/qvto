@@ -39,6 +39,10 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.m2m.qvto.doc"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.m2m.qvt.oml.common.source"
          version="0.0.0"
          name="Operational QVT Developer Resources (Incubation)"/>
