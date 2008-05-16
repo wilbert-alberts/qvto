@@ -1,5 +1,6 @@
 <project default="main">
-	<property name="pde.build.scripts" value="../org.eclipse.releng.basebuilder/plugins/org.eclipse.pde.build/scripts" />
+	<property name="pde.build.scripts" value="${eclipse.pdebuild.scripts}"/>
+	<!-- property name="pde.build.scripts" value="../org.eclipse.releng.basebuilder/plugins/org.eclipse.pde.build/scripts" / -->
 
 	<target name="init">
 		<tstamp/>
