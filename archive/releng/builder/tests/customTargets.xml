@@ -17,7 +17,7 @@
 <!-- Add one target for each root element and each configuration -->
 <!-- ===================================================================== -->
 
-<target name="assemble.org.eclipse.m2m.qvt.oml.tests">
+<target name="assemble.org.eclipse.m2m.tests.qvt.oml">
 	<property name="archiveName" value="m2m-${subprojectName}-junit-tests-${buildAlias}.zip"/>
 	<ant antfile="${assembleScriptName}"/>
 <!-- ADD POST STEPS -->
@@ -145,7 +145,7 @@
 	</antcall>
 
 	<unzip dest="${buildDirectory}/${buildLabel}/compilelogs" overwrite="true">
-		<fileset dir="${buildDirectory}/features/org.eclipse.m2m.qvt.oml.tests">
+		<fileset dir="${buildDirectory}/features/org.eclipse.m2m.tests.qvt.oml">
 			<include name="*.log.zip" />
 		</fileset>
 	</unzip>
