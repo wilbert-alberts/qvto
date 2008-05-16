@@ -36,5 +36,5 @@ plugin@org.eclipse.test=v20080313,:pserver:anonymous@dev.eclipse.org:/cvsroot/ec
 fragment@org.eclipse.ant.optional.junit=v20070202,:pserver:anonymous@dev.eclipse.org:/cvsroot/eclipse,
 
 !*** QVTO Docs ***************************************************************************
-feature@org.eclipse.m2m.qvto.doc-feature=HEAD,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/doc/org.eclipse.m2m.qvto.doc-feature
+feature@org.eclipse.m2m.qvto.doc=HEAD,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/doc/org.eclipse.m2m.qvto.doc-feature
 plugin@org.eclipse.m2m.qvto.doc=HEAD,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/doc/org.eclipse.m2m.qvto.doc
