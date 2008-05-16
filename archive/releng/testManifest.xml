@@ -19,7 +19,7 @@
 			<platform 
 				id="T" 
 				name="All" 
-				fileName='&lt;a href="m2m-qvto-automated-tests-@build@.zip"&gt;m2m-qvto-automated-tests-@build@.zip&lt;/a&gt; &lt;font size="2"&gt;(size:@m2m-qvto-automated-tests-@build@.zip.size@ - checksum:&lt;a href="m2m-qvto-automated-tests-@build@.zip.md5"&gt;md5&lt;/a&gt;)&lt;/font&gt;'>
+				fileName='&lt;a href="m2m-qvtoml-automated-tests-@build@.zip"&gt;m2m-qvtoml-automated-tests-@build@.zip&lt;/a&gt; &lt;font size="2"&gt;(size:@m2m-qvtoml-automated-tests-@build@.zip.size@ - checksum:&lt;a href="m2m-qvtoml-automated-tests-@build@.zip.md5"&gt;md5&lt;/a&gt;)&lt;/font&gt;'>
 			</platform>
 		</zipType>
 		<zipType name="projexamples">
