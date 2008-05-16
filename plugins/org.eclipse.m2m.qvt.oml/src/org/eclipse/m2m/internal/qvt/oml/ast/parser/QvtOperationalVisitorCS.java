@@ -2996,6 +2996,10 @@ public class QvtOperationalVisitorCS
 				mappingCallExp.setSource(operationCallExp.getSource());
 				mappingCallExp.setType(operationCallExp.getType());
 				mappingCallExp.setIsStrict(expressionCS.isStrict());
+				
+				mappingCallExp.setPropertyStartPosition(operationCallExp.getPropertyStartPosition());
+				mappingCallExp.setPropertyEndPosition(operationCallExp.getPropertyEndPosition());				
+				
 				return mappingCallExp;
 			}
 		}
