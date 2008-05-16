@@ -269,8 +269,8 @@ public class QvtCompletionData {
                     assert maxCurrentDepthStack.size() > 1;
                     if (maxCurrentDepthStack.size() > 1) {
                         maxCurrentDepthStack.pop();
-        }
-    }
+                    }
+                }
             }
         }
         return null;

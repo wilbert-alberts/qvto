@@ -183,6 +183,20 @@ public class LightweightParserUtil {
         return null;
     }
     
+    public static final IToken getPreviousTokenByKind(IToken startToken, int kind) {
+        return getPreviousTokenByKind(startToken, new int[] {kind});
+    }
+    
+    public static final IToken getPreviousTokenByKind(IToken startToken, int[] kinds) {
+        IToken currentToken = startToken;
+        while ((currentToken = LightweightParserUtil.getPreviousToken(currentToken)) != null) {
+            if (QvtCompletionData.isKindOf(currentToken, kinds)) {
+                return currentToken;
+            }
+        }
+        return null;
+    }
+    
     public static final String getTokenText(int tokenKind) {
         return QvtOpLPGParsersym.orderedTerminalSymbols[tokenKind];        
     }
@@ -294,7 +308,8 @@ public class LightweightParserUtil {
                 return null;
             }
             if (depth == 0) {
-                if (QvtCompletionData.isKindOf(token, OCLEXPRESSION_START_TOKENS)) {
+                if (QvtCompletionData.isKindOf(token, OCLEXPRESSION_START_TOKENS)
+                        || QvtCompletionData.isKindOf(token, QvtOpLPGParsersym.TK_RPAREN)) {
                     return tokens.toArray(new IToken[tokens.size()]);
                 }
                 for (int j = 0; j < BRACING_PAIRS.length; j++) {

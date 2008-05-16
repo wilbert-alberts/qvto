@@ -59,6 +59,14 @@ public class OclExpressionStartCollector extends AbstractCollector {
 		    if (ResolveTypeCollector.isCollectorApplicable(data)) {
 		        return false;
 		    }
+		    if (QvtCompletionData.isKindOf(leftToken, QvtOpLPGParsersym.TK_RPAREN)) {
+		        // check for switch ... { case(...) /*@*/
+	            IToken bracingSwitch = data.getParentBracingExpression(new int[] {QvtOpLPGParsersym.TK_switch}, QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, 1, null, null, null);
+	            if (bracingSwitch != null) {
+	                IToken caseToken = LightweightParserUtil.getPreviousTokenByKind(leftToken, QvtOpLPGParsersym.TK_case);
+	                return (caseToken != null) && (bracingSwitch.getEndOffset() < caseToken.getStartOffset());
+	            }
+		    }
 	        return QvtCompletionData.isKindOf(leftToken, LightweightParserUtil.OCLEXPRESSION_START_TOKENS);
 		}
 		return false;
