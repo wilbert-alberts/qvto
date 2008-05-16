@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>                                                                                                                       
 <feature                                                                                                                                                     
-      id="org.eclipse.m2m.qvt.oml.tests"                                                                                                                     
-      label="%featureName"                                                                                                                                   
-      version="1.0.0.v20071214-0231-2--8s733G575A13795"                                                                                                      
-      provider-name="%providerName">  
-                                                                                                                                                                                                                                                                              
-   <description url="http://www.example.com/description">                                                                                                    
-      [Enter Feature Description here.]                                                                                                                      
-   </description>                                                                                                                                            
-                                                                                                                                                             
-   <copyright url="http://www.example.com/copyright">                                                                                                        
-      [Enter Copyright Description here.]                                                                                                                    
-   </copyright>                                                                                                                                              
-                                                                                                                                                             
-   <license url="http://www.example.com/license">                                                                                                            
-      [Enter License Description here.]                                                                                                                      
-   </license>                                                                                                                                                
+      id="org.eclipse.m2m.qvt.oml.tests"
+      label="%featureName"
+      version="1.0.0.qualifier"
+      provider-name="%providerName"
+      image="eclipse_update_120.jpg">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
                                                                                                                                                              
    <plugin                                                                                                                                                   
          id="org.eclipse.m2m.tests.qvt.oml"                                                                                                                  
