@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>                                                                                                                       
-<feature                                                                                                                                                     
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
       id="org.eclipse.m2m.qvt.oml.tests"
       label="%featureName"
       version="1.0.0.qualifier"
@@ -17,18 +17,50 @@
    <license url="%licenseURL">
       %license
    </license>
-                                                                                                                                                             
-   <plugin                                                                                                                                                   
-         id="org.eclipse.m2m.tests.qvt.oml"                                                                                                                  
-         download-size="0"                                                                                                                                   
-         install-size="0"                                                                                                                                    
-         version="0.0.0"                                                                                                                      
-         unpack="false"/>                                                                                                                                    
-                                                                                                                                                             
-   <plugin                                                                                                                                                   
-         id="org.eclipse.m2m.qvt.oml.tests.source"                                                                                                           
-         download-size="0"                                                                                                                                   
-         install-size="0"                                                                                                                                    
-         version="0.0.0"/>                                                                                                                    
-                                                                                                                                                             
+
+   <requires>
+      <import plugin="org.junit"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.jdt.core"/>
+      <import plugin="org.eclipse.jdt.launching"/>
+      <import plugin="org.eclipse.debug.ui"/>
+      <import plugin="org.eclipse.pde.ui"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.emf.codegen.ecore"/>
+      <import plugin="org.eclipse.m2m.qvt.oml"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.common"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.emf.util"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.runtime"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.samples"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.editor.ui"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.ui.editors"/>
+      <import plugin="org.eclipse.ant.core"/>
+      <import plugin="org.eclipse.core.runtime.compatibility"/>
+      <import plugin="org.apache.ant" version="1.6.5" match="compatible"/>
+      <import plugin="org.eclipse.ui.ide.application"/>
+      <import plugin="org.eclipse.equinox.app"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.m2m.tests.qvt.oml"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ant.optional.junit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
+
+   <plugin
+         id="org.eclipse.test"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
 </feature>
