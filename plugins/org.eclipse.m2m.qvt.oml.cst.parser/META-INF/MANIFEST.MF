@@ -8,5 +8,5 @@ Bundle-Localization: plugin
 Export-Package: org.eclipse.m2m.internal.qvt.oml.cst,
  org.eclipse.m2m.internal.qvt.oml.cst.parser,
  org.eclipse.m2m.internal.qvt.oml.cst.temp
-Require-Bundle: org.eclipse.ocl
+Require-Bundle: org.eclipse.ocl;bundle-version="[1.2.0,2.0.0)"
 Bundle-ActivationPolicy: lazy
