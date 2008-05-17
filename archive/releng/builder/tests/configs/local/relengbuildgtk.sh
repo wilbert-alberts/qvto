@@ -9,11 +9,42 @@ export USERNAME=`whoami`
 echo " running as $USERNAME";
 echo " currently in dir: `pwd`";
 
+# fix for org.eclipse.swt.SWTError: No more handles [gtk_init_check() failed]
+# fix for Failed to invoke suite():org.eclipse.swt.SWTError: No more handles [gtk_init_check() failed]
+export CVS_RSH=ssh
+ulimit -c unlimited; # set corefile size to unlimited
+
+echo "Set JAVA_HIGH_ZIPFDS=500 & LANG=C";
+export JAVA_HIGH_ZIPFDS=500
+export LANG=C
+
+# configure X server thread for tests; see http://wiki.eclipse.org/Modeling_Project_Releng/Building_Zips_And_Jars#UI_Testing
+xport=51; # should be a unique port number to avoid collisions
+echo "Start Xvfb on :${xport}"
+Xvfb :${xport} -ac & # -screen 0 1024x768x16 -ac &
+export DISPLAY=localhost:${xport}.0
+xhost +
+
+#startkde &
+#sleep 40
+# xwd -silent -display :${xport} -root -out /tmp/snap.xwd; # save a snapshot
+
+readPropertyOut="";
+readProperty ()
+{
+	readPropertyOut="";
+	file=$1
+	property=$2
+	readPropertyOut=$(grep $property $file | egrep -v "^#" | tail -1 | sed -e "s/$property=//");
+}
+
 if [[ ! $JAVA_HOME ]]; then
 	echo -n "[relengbuild] Get JAVA_HOME from build.cfg ... ";
 	buildcfg=$PWD/../../../build.cfg;
-	export JAVA_HOME=$(grep "JAVA_HOME=" $buildcfg | egrep -v "^#" | tail -1 | sed -e "s/JAVAHOME=//");
-	echo "$JAVA_HOME";
+	readProperty $buildcfg JAVA_HOME
+	JAVA_HOME="$readPropertyOut";
+	javaHome="$readPropertyOut";
+	echo $JAVA_HOME
 fi
 
 Xflags="";
@@ -70,31 +101,6 @@ execCmd ()
 	fi
 }
 
-doFunction ()
-{
-	cmd=$1;
-	params=$2
-	for pth in "." "/bin" "/usr/bin" "/usr/bin/X11" "/usr/local/bin" "/usr/X11R6/bin" "`pwd`/../linux" ; do
-		defined=0;
-		checkIfDefined $pth/$cmd
-		if [ $defined -eq 1 ] ; then
-			$cmd $params
-			sleep 3
-			break;
-		fi
-	done
-	if [ $defined -eq 0 ] ; then
-		echo "$cmd is not defined (command not found)";
-	fi
-}
-
-# these don't work on old build server, so not point wrapping them to say so when we can just omit
-# doFunction Xvfb ":42 -screen 0 1024x768x24 -ac & "
-# doFunction Xnest ":43 -display :42 -depth 24 & "
-# doFunction fvwm2 "-display localhost:43.0 & "
-#export DISPLAY=$HOSTNAME:43.0
-#ulimit -c unlimited
-
 getBuildID()
 {	# given $PWD: /home/www-data/build/modeling/$projectName/$subprojectName/downloads/drops/1.1.0/N200702112049/testing/N200702112049/testing
 	# return N200702110400
@@ -115,7 +121,6 @@ getBranch()
 branch=""; getBranch $PWD; #echo branch=$branch;
 
 ############################# BEGIN RUN TESTS #############################  
-
 
 # operating system, windowing system and architecture variables
 # for *nix systems, os, ws and arch values must be specified
@@ -200,15 +205,13 @@ $Dflags -Dws=$ws -Dos=$os -Darch=$arch -D$installmode=true $J2SE15flags \
 $properties -logger org.apache.tools.ant.DefaultLogger" $consolelog;
 echo "[runtests] [`date +%H\:%M\:%S`] Eclipse test run completed. "
 
+# xwd -silent -display :${xport} -root -out /tmp/snap.xwd; # save a snapshot
+
 ############################# END RUN TESTS #############################  
 
-# supress errors by checking for the file first
-if [ -r /tmp/.X43-lock ] ; then
-	kill `cat /tmp/.X43-lock`
-fi
-if [ -r /tmp/.X42-lock ] ; then
-	kill `cat /tmp/.X42-lock`
-fi
+# drop X server process threads used by tests
+if [[ -r /tmp/.X${xport}-lock ]]; then kill `cat /tmp/.X${xport}-lock`; fi
+if [[ -f /tmp/.X${xport}-lock ]]; then rm -fr /tmp/.X${xport}-lock; fi
 
 if [[ ! -d $PWD/results ]]; then
 	echo "[relengbuild] No test results found in $PWD/results!";
@@ -217,12 +220,13 @@ if [[ ! -d $PWD/results ]]; then
 else
 # if the build failed for some reason, don't clean up!
 xmls=`find $PWD/results/xml -name "*.xml"`;
-testsFailed=1;
+testsPassed="maybe";
 for xml in $xmls; do
-	if [ $testsFailed -eq 1 ]; then
-		testsFailed=`cat $xml | grep -c "<testsuite errors=\"0\" failures=\"0\""`
-		if [ $testsFailed -lt 1 ]; then
-			echo "[relengbuild] Found test failure(s) in $xml!";
+	if [[ $testsPassed ]]; then
+		testsPassed=$(cat $xml | grep "<testsuite " | grep " errors=\"0\"" | grep " failures=\"0\"");
+		if [[ ! $testsPassed ]]; then
+			echo "[relengbuild] Found test failure(s) in $xml: "
+			echo "  "$(cat $xml | grep "<testsuite ");
 			echo "[relengbuild] Creating 'noclean' file to prevent cleanup after build completes."
 			echo "1" > $PWD/../../../noclean;
 			break;
