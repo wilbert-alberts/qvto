@@ -34,4 +34,6 @@ Require-Bundle: org.junit,
  org.eclipse.jface.text,
  org.eclipse.ui.ide,
  org.eclipse.ui.editors,
- org.eclipse.ant.core
+ org.eclipse.ant.core,
+ org.eclipse.uml2.uml;bundle-version="[2.2.0,2.3.0)"
+ 
