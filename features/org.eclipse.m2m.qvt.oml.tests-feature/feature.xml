@@ -37,7 +37,6 @@
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.ui.editors"/>
       <import plugin="org.eclipse.ant.core"/>
-      <import plugin="org.eclipse.uml2.uml"/>
    </requires>
 
    <plugin
