@@ -1,8 +1,8 @@
 <project default="run">
 	<target name="init">
 
-		<echo message="Set compilerArgs = '-enableJavadoc -encoding ISO-8859-1 -warn:-serial,nls,unused,unchecked,raw'"/>
-		<property name="compilerArg" value="-enableJavadoc -encoding ISO-8859-1 -warn:-serial,nls,unused,unchecked,raw" />
+		<echo message="Set compilerArgs = '-enableJavadoc -encoding ISO-8859-1 -warn:-serial,nls,unused,unchecked,raw,discouraged'"/>
+		<property name="compilerArg" value="-enableJavadoc -encoding ISO-8859-1 -warn:-serial,nls,unused,unchecked,raw,discouraged" />
 
 		<!-- TODO: set correct source and target levels here -->
 		<echo message="Set javacSource and javacTarget = 1.5"/>
