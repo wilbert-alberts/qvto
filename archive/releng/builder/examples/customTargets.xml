@@ -18,7 +18,7 @@
 	<!-- ===================================================================== -->
 
 	<target name="assemble.org.eclipse.m2m.qvt.oml.examples">
-		<property name="archiveName" value="m2m-${subprojectName}-examples-${buildAlias}.zip" />
+		<property name="archiveName" value="m2m-${subprojectName}-examples-incubation-${buildAlias}.zip" />
 		<ant antfile="${assembleScriptName}" />
 		<!-- ADD POST STEPS -->
 	</target>

@@ -18,7 +18,7 @@
 	<!-- ===================================================================== -->
 
 	<target name="assemble.org.eclipse.m2m.qvt.oml.sdk">
-		<property name="archiveName" value="m2m-${subprojectName}-SDK-${buildAlias}.zip" />
+		<property name="archiveName" value="m2m-${subprojectName}-SDK-incubation-${buildAlias}.zip" />
 		<ant antfile="${assembleScriptName}" />
 		<!-- ADD POST STEPS -->
 	</target>
