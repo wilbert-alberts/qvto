@@ -135,8 +135,8 @@ propertyName=propertyValue
 				src="${buildDirectory}/${buildLabel}/${SDKZip}" 
 				dirmode="775" filemode="664" 
 				excludes="**/org.eclipse.*.example*, **/org.eclipse.*.example*/**, **/org.eclipse.*.sdk*, **/org.eclipse.*.sdk*/**, **/org.eclipse.*.doc*, **/org.eclipse.*.doc*/*, **/org.eclipse.*.source*, **/org.eclipse.*.source*/**, **/*src.zip"> 
-					<include name="**/org.eclipse.uml2tools*" /> 
-					<include name="**/org.eclipse.uml2tools*/*" /> 
+				<include name="**/org.eclipse.m2m.qvt.oml*" />
+				<include name="**/org.eclipse.m2m.qvt.oml*/*" /> 
 			</zipfileset> 
 			<zipfileset 
 				src="${buildDirectory}/${buildLabel}/${SDKZip}" 
