@@ -3,17 +3,19 @@
       id="org.eclipse.m2m.qvt.oml.editor"
       label="%featureName"
       version="1.0.0.qualifier"
-      provider-name="%featureProvider">
+      provider-name="%providerName"
+      plugin="org.eclipse.m2m.qvt.oml.editor.ui"
+      image="eclipse_update_120.jpg">
 
-   <description>
+   <description url="http://www.eclipse.org/modeling/m2m">
       %description
    </description>
 
-   <copyright url="http://www.example.com/copyright">
+   <copyright url="http://www.eclipse.org/legal/epl-v10.html">
       %copyright
    </copyright>
 
-   <license url="http://www.example.com/license">
+   <license url="%licenseURL">
       %license
    </license>
 
@@ -28,13 +30,13 @@
       <import plugin="org.eclipse.ui.workbench.texteditor"/>
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.jdt.ui"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.ocl"/>
       <import plugin="org.eclipse.m2m.qvt.oml.common"/>
       <import plugin="org.eclipse.m2m.qvt.oml.common.ui"/>
       <import plugin="org.eclipse.m2m.qvt.oml"/>
       <import plugin="org.eclipse.m2m.qvt.oml.ui"/>
       <import plugin="org.eclipse.m2m.qvt.oml.emf.util"/>
-      <import plugin="net.sourceforge.lpg.lpgjavaruntime"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.ocl"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.runtime"/>
    </requires>
 
    <plugin
