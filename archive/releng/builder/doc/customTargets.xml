@@ -6,7 +6,7 @@
 	<target name="allElements">
 		<ant antfile="${genericTargets}" target="${target}">
 			<property name="type" value="feature" />
-			<property name="id" value="org.eclipse.m2m.qvto.doc" />
+			<property name="id" value="org.eclipse.m2m.qvt.oml.doc" />
 		</ant>
 	</target>
 
@@ -17,7 +17,7 @@
 	<!-- Add one target for each root element and each configuration -->
 	<!-- ===================================================================== -->
 
-	<target name="assemble.org.eclipse.m2m.qvto.doc">
+	<target name="assemble.org.eclipse.m2m.qvt.oml.doc">
 		<property name="archiveName" value="m2m-${subprojectName}-SDK-incubation-${buildAlias}.zip" />
 		<ant antfile="${assembleScriptName}" />
 		<!-- ADD POST STEPS -->
@@ -158,7 +158,7 @@
 		</antcall>
 
 		<unzip dest="${buildDirectory}/${buildLabel}/compilelogs" overwrite="true">
-			<fileset dir="${buildDirectory}/features/org.eclipse.m2m.qvto.doc">
+			<fileset dir="${buildDirectory}/features/org.eclipse.m2m.qvt.oml.doc">
 				<include name="*.log.zip" />
 			</fileset>
 		</unzip>
