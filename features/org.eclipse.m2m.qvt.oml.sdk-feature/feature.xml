@@ -40,7 +40,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.m2m.qvto.doc"
+         id="org.eclipse.m2m.qvt.oml.doc"
          version="0.0.0"/>
 
    <includes
