@@ -83,7 +83,7 @@ propertyName=propertyValue
 		<property name="stagingHome" value="/home/data/httpd/download-staging.priv" /> 
 		<property name="projectPath" value="modeling/mdt" /> 
 		<!-- user with write perms in staging dir & permission to run /usr/bin/sign --> 
-		<property name="buildServerUser" value="nickb@build.eclipse.org" /> 
+		<property name="buildServerUser" value="radvorak@build.eclipse.org" /> 
 		<property name="sign" value="true" /> 
 		
 
