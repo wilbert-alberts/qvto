@@ -4,13 +4,14 @@
       label="%featureName"
       version="1.0.0.qualifier"
       provider-name="%providerName"
+      plugin="org.eclipse.m2m.qvt.oml"
       image="eclipse_update_120.jpg">
 
-   <description>
+   <description url="http://www.eclipse.org/modeling/m2m">
       %description
    </description>
 
-   <copyright>
+   <copyright url="http://www.eclipse.org/legal/epl-v10.html">
       %copyright
    </copyright>
 
@@ -21,7 +22,7 @@
    <includes
          id="org.eclipse.m2m.qvt.oml.common"
          version="0.0.0"/>
-         
+
    <includes
          id="org.eclipse.m2m.qvt.oml"
          version="0.0.0"/>
@@ -29,7 +30,7 @@
    <includes
          id="org.eclipse.m2m.qvt.oml.runtime"
          version="0.0.0"/>
-         
+
    <includes
          id="org.eclipse.m2m.qvt.oml.editor"
          version="0.0.0"/>
@@ -44,19 +45,18 @@
 
    <includes
          id="org.eclipse.m2m.qvt.oml.common.source"
-         version="0.0.0"
-         name="Operational QVT Developer Resources (Incubation)"/>
+         version="0.0.0"/>
+
    <includes
          id="org.eclipse.m2m.qvt.oml.source"
-         version="0.0.0"
-         name="Operational QVT Developer Resources (Incubation)"/>
+         version="0.0.0"/>
+
    <includes
          id="org.eclipse.m2m.qvt.oml.runtime.source"
-         version="0.0.0"
-         name="Operational QVT Developer Resources (Incubation)"/>
+         version="0.0.0"/>
+
    <includes
          id="org.eclipse.m2m.qvt.oml.editor.source"
-         version="0.0.0"
-         name="Operational QVT Developer Resources (Incubation)"/>
+         version="0.0.0"/>
 
 </feature>
