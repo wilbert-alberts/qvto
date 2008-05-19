@@ -7,11 +7,11 @@
       plugin="org.eclipse.m2m.qvt.oml.common"
       image="eclipse_update_120.jpg">
 
-   <description>
+   <description url="http://www.eclipse.org/modeling/m2m">
       %description
    </description>
 
-   <copyright>
+   <copyright url="http://www.eclipse.org/legal/epl-v10.html">
       %copyright
    </copyright>
 
