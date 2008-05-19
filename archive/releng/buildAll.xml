@@ -41,11 +41,12 @@
 		<available file="${buildDirectory}/label.properties" property="label.properties.exists" />
 		<ant target="create.label.properties" antfile="${helper}" />
 		
-		<property name="forceContextQualifier" value="v${timestamp}" />
+<!--		<property name="forceContextQualifier" value="v${timestamp}" />
 		<echo file="${buildDirectory}/label.properties" append="true">
 			forceContextQualifier=${forceContextQualifier}
-		</echo>
+		</echo> 
 		<echo message="forceContextQualifier=${forceContextQualifier}" />
+-->		
 		<property file="${buildDirectory}/label.properties" />
 		
 		<echo message="buildAll.xml properties:"/>
