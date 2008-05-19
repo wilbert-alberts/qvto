@@ -142,7 +142,7 @@ propertyName=propertyValue
 			<zipfileset 
 				src="${buildDirectory}/${buildLabel}/${SDKZip}" 
 				dirmode="775" filemode="664" 
-				excludes="**/org.eclipse.*.example*, **/org.eclipse.*.example*/**, **/org.eclipse.*.sdk*, **/org.eclipse.*.sdk*/**, **/org.eclipse.*.doc*, **/org.eclipse.*.doc*/*, **/org.eclipse.*.source*, **/org.eclipse.*.source*/**, **/*src.zip"> 
+				excludes="**/org.eclipse.*.example*, **/org.eclipse.*.example*/**,**/org.eclipse.*.sample*, **/org.eclipse.*.sample*/**, **/org.eclipse.*.sdk*, **/org.eclipse.*.sdk*/**, **/org.eclipse.*.doc*, **/org.eclipse.*.doc*/*, **/org.eclipse.*.source*, **/org.eclipse.*.source*/**, **/*src.zip"> 
 				<include name="**/org.eclipse.m2m.qvt.oml*" />
 				<include name="**/org.eclipse.m2m.qvt.oml*/*" /> 
 			</zipfileset> 
@@ -157,9 +157,12 @@ propertyName=propertyValue
 		<zip destfile="${buildDirectory}/${buildLabel}/${projectName}-${subprojectName}-examples-incubation-${buildAlias}.zip" update="true" duplicate="preserve"> 
 			<zipfileset 
 				src="${buildDirectory}/${buildLabel}/${SDKZip}" dirmode="775" filemode="664"> 
-					<include name="**/org.eclipse.*.example*" /> 
+					<include name="**/org.eclipse.*.example*" />
 					<include name="**/org.eclipse.*.example*/**" />
-					<include name="**/org.eclipse.*.example*/**/**" /> 
+					<include name="**/org.eclipse.*.example*/**/**" />
+					<include name="**/org.eclipse.*.sample*" /> 
+					<include name="**/org.eclipse.*.sample*/**" />
+					<include name="**/org.eclipse.*.sample*/**/**" />
 			</zipfileset> 
 			<zipfileset refid="rootfiles" /> 
 		</zip> 
