@@ -92,12 +92,17 @@ public class ColonColonCollector extends AbstractCollector {
             }
 		}
 		if (classifier != null) {
-		    IToken lParen = LightweightParserUtil.getPreviousToken(pathNameFirstToken);
-		    if ((lParen != null) && (lParen.getKind() == QvtOpLPGParsersym.TK_LPAREN)) {
-		        IToken resolveToken = LightweightParserUtil.getPreviousToken(lParen);
-		        if ((resolveToken != null) && (QvtCompletionData.isKindOf(resolveToken, LightweightParserUtil.RESOLVE_FAMILY_TERMINALS))) {
-                    CompletionProposalUtil.addAllMappingNamesProposals(proposals, data, classifier, false);
-		        }
+		    IToken prevToken = LightweightParserUtil.getPreviousToken(pathNameFirstToken);
+		    if (prevToken != null) {
+	            if (QvtCompletionData.isKindOf(prevToken, QvtOpLPGParsersym.TK_LPAREN)) {
+	                IToken resolveToken = LightweightParserUtil.getPreviousToken(prevToken);
+	                if ((resolveToken != null) && (QvtCompletionData.isKindOf(resolveToken, LightweightParserUtil.RESOLVE_FAMILY_TERMINALS))) {
+	                    CompletionProposalUtil.addAllMappingNamesProposals(proposals, data, classifier, false, true);
+	                }
+	            }
+	            if (MappingExtrasMappingNameCollector.isCollectorApplicable(prevToken)) {
+	                CompletionProposalUtil.addAllMappingNamesProposals(proposals, data, classifier, false, false);
+	            }
 		    }
 		}
     }

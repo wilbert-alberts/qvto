@@ -140,6 +140,10 @@
             category="com.borland.m2m.qvt.oml.editor.completion.category.default"
             class="org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors.ResolveTypeCollector">
       </collector>
+      <collector
+            category="com.borland.m2m.qvt.oml.editor.completion.category.default"
+            class="org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors.MappingExtrasMappingNameCollector">
+      </collector>
     </extension>
 
 

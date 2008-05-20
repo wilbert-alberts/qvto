@@ -526,26 +526,29 @@ public class CompletionProposalUtil {
     }
     
     public static final void addAllMappingNamesProposals(Collection<ICompletionProposal> proposals, QvtCompletionData data, 
-            EClassifier owner, boolean longForm) {
-        List<String> mappingNames = CompletionProposalUtil.getAllMappingNames(data, owner, longForm);
+            EClassifier owner, boolean longForm, boolean withContextAndResultOnly) {
+        List<String> mappingNames = CompletionProposalUtil.getAllMappingNames(data, owner, longForm, withContextAndResultOnly);
         for (String mapping : mappingNames) {
             QvtCompletionProposal info = CompletionProposalUtil.createCompletionProposal(mapping, CategoryImageConstants.MAPPING, data);
             CompletionProposalUtil.addProposalIfNecessary(proposals, info, data);
         }
     }
 
-    public static final List<String> getAllMappingNames(QvtCompletionData data, EClassifier owner, boolean longForm) {
+    public static final List<String> getAllMappingNames(QvtCompletionData data, EClassifier owner, boolean longForm, boolean withContextAndResultOnly) {
         EClassifier resolvedOwner = (owner == null) ? null : TypeUtil.resolveType(data.getEnvironment(), owner);
         List<String> mappingNames = new ArrayList<String>();
         for (MappingMethodCS methodCS : data.getAllImperativeOperationsCS()) {
             if (methodCS instanceof MappingRuleCS) {
                 MappingDeclarationCS declarationCS = methodCS.getMappingDeclarationCS();
-                if ((declarationCS.getContextType() == null)
-                        || (declarationCS.getResult().isEmpty())) {
+                if (withContextAndResultOnly 
+                        && ((declarationCS.getContextType() == null) || (declarationCS.getResult().isEmpty()))) {
                     continue;
                 }
                 TypeCS contextTypeCS = declarationCS.getContextType();
                 if (resolvedOwner != null) {
+                    if (contextTypeCS == null) {
+                        continue;
+                    }
                     OCLExpression<EClassifier> contextType = LightweightParserUtil.getOclExpression(contextTypeCS, data);
                     if (!(contextType instanceof TypeExp)) {
                         continue;
@@ -555,8 +558,8 @@ public class CompletionProposalUtil {
                         continue;
                     }
                 }
+                StringBuilder sb = new StringBuilder();
                 if (contextTypeCS instanceof PathNameCS) {
-                    StringBuilder sb = new StringBuilder();
                     if (longForm) {
                         PathNameCS pathNameCS = (PathNameCS) contextTypeCS;
                         for (String name : pathNameCS.getSequenceOfNames()) {
@@ -564,12 +567,12 @@ public class CompletionProposalUtil {
                             sb.append("::"); //$NON-NLS-1$
                         }
                     }
-                    String shortName = declarationCS.getSimpleNameCS().getValue();
-                    sb.append(shortName);
-                    String mappingName = sb.toString();
-                    if (!mappingNames.remove(mappingName)) { // overloaded mappings cannot be used in ResolveInExp
-                        mappingNames.add(mappingName);
-                    }
+                }
+                String shortName = declarationCS.getSimpleNameCS().getValue();
+                sb.append(shortName);
+                String mappingName = sb.toString();
+                if (!mappingNames.remove(mappingName)) { // overloaded mappings cannot be used in ResolveInExp
+                    mappingNames.add(mappingName);
                 }
             }
         }

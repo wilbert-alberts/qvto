@@ -39,6 +39,6 @@ public class ResolveInMappingNameCollector extends AbstractCollector {
 	}
 
     public void addPropoposals(Collection<ICompletionProposal> proposals, QvtCompletionData data) {
-        CompletionProposalUtil.addAllMappingNamesProposals(proposals, data, null, true);
+        CompletionProposalUtil.addAllMappingNamesProposals(proposals, data, null, true, true);
     }
 }

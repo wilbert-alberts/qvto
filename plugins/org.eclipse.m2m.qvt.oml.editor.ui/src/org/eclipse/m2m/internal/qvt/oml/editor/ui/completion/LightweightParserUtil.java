@@ -12,6 +12,7 @@
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import lpg.lpgjavaruntime.IToken;
@@ -339,6 +340,28 @@ public class LightweightParserUtil {
             }
         }
         return -1;
+    }
+    
+    public static final IToken[] getScopedIdentifier(IToken trailingToken) {
+        boolean isColonColonExpected = QvtCompletionData.isKindOf(trailingToken, QvtOpLPGParsersym.TK_COLONCOLON);
+        List<IToken> tokens = new LinkedList<IToken>();
+        IToken currentToken = trailingToken;
+        do {
+            if (isColonColonExpected) {
+                if (!QvtCompletionData.isKindOf(currentToken, QvtOpLPGParsersym.TK_COLONCOLON)) {
+                    return tokens.toArray(new IToken[tokens.size()]);
+                }
+            } else {
+                if (QvtCompletionData.isKindOf(currentToken, QvtOpLPGParsersym.TK_IDENTIFIER,
+                        QvtOpLPGParsersym.TK_main)) {
+                    tokens.add(0, currentToken);
+                } else {
+                    return null; // IDENTIFIER expected but smth else found!
+                }
+            }
+            isColonColonExpected = !isColonColonExpected;
+        } while ((currentToken = LightweightParserUtil.getPreviousToken(currentToken)) != null);
+        return null; // unexpected start of stream!
     }
     
     private static interface ILightweightParser {
