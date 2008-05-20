@@ -15,6 +15,7 @@ import java.util.Collection;
 import lpg.lpgjavaruntime.IToken;
 
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
@@ -22,6 +23,7 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.LightweightParserUt
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
 import org.eclipse.ocl.ecore.TypeExp;
 import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.expressions.Variable;
 
 /**
  * @author aigdalov
@@ -61,6 +63,7 @@ public class StructuralFeatureCollector extends AbstractCollector {
     public void addPropoposals(Collection<ICompletionProposal> proposals, QvtCompletionData data) {
         IToken structuralFeatureContainerToken = (IToken) data.getUserData().get(SCTRUCTURALFEATURE_CONTAINER_FLAG);
         IToken[] typeTokens = null;
+        EClassifier objectExpType = null;
     	if (structuralFeatureContainerToken.getKind() == QvtOpLPGParsersym.TK_mapping) {
     	    typeTokens = extractMappingType(structuralFeatureContainerToken);
     	} else {
@@ -75,7 +78,19 @@ public class StructuralFeatureCollector extends AbstractCollector {
                         typeTokens = extractMappingType(mappingToken);
                     }
                 } else {
-                    typeTokens = QvtCompletionData.extractTokens(firstTypeToken, QvtOpLPGParsersym.TK_LBRACE);
+                    IToken[] tokens = QvtCompletionData.extractTokens(firstTypeToken, QvtOpLPGParsersym.TK_LBRACE);
+                    if ((tokens != null) && (tokens.length >= 2)
+                            && QvtCompletionData.isKindOf(tokens[1], QvtOpLPGParsersym.TK_COLON)) {
+                        if (tokens.length == 2) { // varName ':'
+                            Variable<EClassifier, EParameter> variable = data.getEnvironment().lookup(tokens[0].toString());
+                            objectExpType = variable.getType();
+                        } else { // varName ':' TypeCS
+                            typeTokens = new IToken[tokens.length - 2];
+                            System.arraycopy(tokens, 2, typeTokens, 0, typeTokens.length);
+                        }
+                    } else {
+                        typeTokens = tokens;
+                    }
                 }
             }
     	}
@@ -83,8 +98,11 @@ public class StructuralFeatureCollector extends AbstractCollector {
     	    OCLExpression<EClassifier> oclExpression = LightweightParserUtil.getOclExpression(typeTokens, data, LightweightParserUtil.ParserTypeEnum.LIGHTWEIGHT_TYPE_PARSER);
     	    if (oclExpression instanceof TypeExp) {
     	        TypeExp typeExp = (TypeExp) oclExpression;
-                CompletionProposalUtil.addStructuralFeatures(proposals, typeExp.getReferredType(), data);
+                objectExpType = typeExp.getReferredType();
     	    }
+    	}
+    	if (objectExpType != null) {
+            CompletionProposalUtil.addStructuralFeatures(proposals, objectExpType, data);
     	}
         if (QvtCompletionData.isKindOf(structuralFeatureContainerToken,QvtOpLPGParsersym.TK_mapping)) {
             CompletionProposalUtil.addKeywords(proposals, new int[] {
