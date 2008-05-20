@@ -31,5 +31,5 @@ $End
 
 
 $Rules
-	QvtLwGoal -> typeCS
+	QvtLwGoal -> typeSpecCS
 $End

@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.4 2008/04/25 14:12:27 radvorak Exp $
+* $Id: LightweightTypeParser.java,v 1.5 2008/05/20 15:16:27 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.4 2008/04/25 14:12:27 radvorak Exp $
+* $Id: LightweightTypeParser.java,v 1.5 2008/05/20 15:16:27 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;

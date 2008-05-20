@@ -25,6 +25,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalVisitorCS;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
+import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
@@ -239,6 +240,9 @@ public class LightweightParserUtil {
             CSTNode cstNode = LightweightParserUtil.parse(tokens, data.getCFile(), parserType);
             if (cstNode instanceof OCLExpressionCS) {
                 return (OCLExpressionCS) cstNode;
+            }
+            if (cstNode instanceof TypeSpecCS) {
+                return ((TypeSpecCS) cstNode).getTypeCS();
             }
         }
         return null;
