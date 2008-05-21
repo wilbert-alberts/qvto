@@ -85,14 +85,16 @@ propertyName=propertyValue
 		<property name="projectPath" value="modeling/mdt" /> 
 		<!-- user with write perms in staging dir & permission to run /usr/bin/sign --> 
 		<property name="buildServerUser" value="nickb@build.eclipse.org" /> 
-		<condition property="sign">
+		<property name="sign" value="true" />
+		
+		<!-- want to enable/disable signing for a given build type? add/remove types here -->
+		<!-- condition property="sign">
 		  <or>
-		    <!-- want to enable/disable signing for a given build type? add/remove types here -->
 		    <equals arg1="${buildType}" arg2="I"/>
 		    <equals arg1="${buildType}" arg2="S"/>
 		    <equals arg1="${buildType}" arg2="R"/>
 		  </or>
-		</condition>		
+		</condition -->		
 
 	</target>
 
