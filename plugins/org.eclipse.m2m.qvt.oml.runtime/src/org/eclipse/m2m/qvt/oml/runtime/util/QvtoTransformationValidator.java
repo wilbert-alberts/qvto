@@ -22,9 +22,8 @@ import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerFacade;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
+import org.eclipse.m2m.internal.qvt.oml.runtime.util.Messages;
 import org.eclipse.osgi.util.NLS;
-
-import org.eclipse.m2m.qvt.oml.runtime.util.Messages;
 
 /**
  * @author sboyko

@@ -45,6 +45,7 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtModule;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
+import org.eclipse.m2m.internal.qvt.oml.runtime.util.Messages;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.osgi.util.NLS;
 

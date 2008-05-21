@@ -19,6 +19,9 @@ public class Messages extends NLS {
 	public static String MiscUtil_ErrorMessage;
 	public static String MiscUtil_WarnMessage;
 	public static String QvtResource_moduleCompilationErrors;
+    public static String moduleDiagnosticChain;
+    public static String ImportedTransformation_NoWsFileForModule;
+    public static String ImportedTransformation_NoWsFileForLocation;
 	
 	static {
 		// initialize resource bundle
