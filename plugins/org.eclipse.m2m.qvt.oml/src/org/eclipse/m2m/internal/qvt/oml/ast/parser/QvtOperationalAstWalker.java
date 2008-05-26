@@ -189,12 +189,16 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
         for (EOperation op : new ArrayList<EOperation>(QvtOperationalParserUtil.getOwnedOperations(module))) {
             doProcess((ImperativeOperation) op, module);
         }
-        for (EStructuralFeature prop : module.getConfigProperty()) {
-        	Property propAST = QvtOperationalParserUtil.getLocalPropertyAST(prop);
-            doProcess(propAST, module);
-        }
-        for (Property prop : module.getIntermediateProperty()) {
-            doProcess(prop, module);
+        for (EStructuralFeature prop : module.getEStructuralFeatures()) {
+        	Property propAST = null;
+        	if(prop instanceof Property) {
+        		propAST = (Property) prop;
+        	} else {
+        		propAST = QvtOperationalParserUtil.getLocalPropertyAST(prop);
+        	}
+        	if(propAST != null) {
+        		doProcess(propAST, module);
+        	}
         }
         return null;
     }
@@ -348,6 +352,9 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
 
 
     public Object visitIteratorExp(IteratorExp<EClassifier, EParameter> callExp) {
+    	if(callExp.getSource() != null) {
+    		doProcess(callExp.getSource(), callExp);
+    	}
         doProcess(callExp.getBody(), callExp);
         return null;
     }
@@ -521,6 +528,9 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
     }
     
     public Object visitImperativeLoopExp(ImperativeLoopExp imperativeLoopExp) {
+    	if(imperativeLoopExp.getSource() != null) {
+    		doProcess(imperativeLoopExp.getSource(), imperativeLoopExp);
+    	}
         doProcess(imperativeLoopExp.getCondition(), imperativeLoopExp);
         doProcess(imperativeLoopExp.getBody(), imperativeLoopExp);
         return null;

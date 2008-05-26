@@ -197,14 +197,15 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 		if(operationBody instanceof MappingBody == false) {
 			ImperativeOperation operation = operationBody.getOperation();
 			if(operation.getEType() == null || operation.getEType() == fEnv.getOCLStandardLibrary().getOclVoid()) {
-				return Boolean.TRUE;
-			}
-			EList<OCLExpression<EClassifier>> content = operationBody.getContent();
-			if(operation.getResult().size() == 1 && 
-				(content.isEmpty() || content.get(content.size() - 1) instanceof ReturnExp == false)) {
-				ASTNode problemTarget = operation;
-				String message = ValidationMessages.useReturnExpForOperationResult;
-				fEnv.reportWarning(message, problemTarget.getStartPosition(), operationBody.getStartPosition());
+				//return Boolean.TRUE; // continue to super type visit
+			} else {
+				EList<OCLExpression<EClassifier>> content = operationBody.getContent();
+				if(operation.getResult().size() == 1 && 
+					(content.isEmpty() || content.get(content.size() - 1) instanceof ReturnExp == false)) {
+					ASTNode problemTarget = operation;
+					String message = ValidationMessages.useReturnExpForOperationResult;
+					fEnv.reportWarning(message, problemTarget.getStartPosition(), operationBody.getStartPosition());
+				}
 			}
 		}
 		return super.visitOperationBody(operationBody);
