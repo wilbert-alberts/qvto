@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.5 2008/04/25 14:13:21 radvorak Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.6 2008/05/26 18:39:17 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -374,7 +374,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.5 2008/04/25 14:13:21 radvorak Exp $
+ * $Id: QvtOpLPGParser.g,v 1.6 2008/05/26 18:39:17 aigdalov Exp $
  */
 	./
 $End
@@ -2141,8 +2141,10 @@ $Rules
           $EndJava
         ./
 
-    resolveOpArgsExpCS ::= $empty
+    resolveOpArgsExpCSOpt ::= $empty
         /.$NullAction./
+        
+    resolveOpArgsExpCSOpt -> resolveOpArgsExpCS
         
     resolveOpArgsExpCS ::= IDENTIFIEROpt typeCS resolveConditionOpt
         /.$BeginJava
@@ -2164,7 +2166,7 @@ $Rules
         /.$NullAction./
     lateOpt -> late
     
-    resolveExpCS ::= lateOpt resolveOp '(' resolveOpArgsExpCS ')'
+    resolveExpCS ::= lateOpt resolveOp '(' resolveOpArgsExpCSOpt ')'
         /.$BeginJava
                     CSTNode result = createResolveExpCS(
                             getIToken($getToken(1)),
@@ -2175,7 +2177,7 @@ $Rules
           $EndJava
         ./
         
-    resolveExpCS ::= lateOpt resolveOp '(' resolveOpArgsExpCS qvtErrorToken
+    resolveExpCS ::= lateOpt resolveOp '(' resolveOpArgsExpCSOpt qvtErrorToken
         /.$BeginJava
                     CSTNode result = createResolveExpCS(
                             getIToken($getToken(1)),
@@ -2226,7 +2228,20 @@ $Rules
           $EndJava
         ./
         
-    resolveInExpCS ::= lateOpt resolveInOp '(' scopedNameCS ',' resolveOpArgsExpCS qvtErrorToken
+    resolveInExpCS ::= lateOpt resolveInOp '(' scopedNameCS ')'
+        /.$BeginJava
+                    CSTNode result = createResolveInExpCS(
+                            getIToken($getToken(1)),
+                            getIToken($getToken(2)),
+                            (ScopedNameCS)$getSym(4),
+                            null);
+                            setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
+                    $setResult(result);
+          $EndJava
+        ./
+        
+        
+    resolveInExpCS ::= lateOpt resolveInOp '(' scopedNameCS ',' resolveOpArgsExpCSOpt qvtErrorToken
         /.$BeginJava
                     CSTNode result = createResolveInExpCS(
                             getIToken($getToken(1)),
