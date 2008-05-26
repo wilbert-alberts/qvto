@@ -62,12 +62,19 @@ public class ASTBindingHelper {
     }
 
 	public static void createCST2ASTBinding(CSTNode cstNode, ASTNode astNode) {
-		createCST2ASTBinding(cstNode, astNode, null);
+		createCST2ASTBinding(cstNode, astNode, true, null);
 	}
 	
 	public static void createCST2ASTBinding(CSTNode cstNode, ASTNode astNode, Environment env) {
+		createCST2ASTBinding(cstNode, astNode, true, env);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static void createCST2ASTBinding(CSTNode cstNode, ASTNode astNode, boolean isBidirectional, Environment env) {
 		ASTAdapter astAdapter = new ASTAdapter(cstNode, astNode, (EcoreEnvironment)env);
-		astNode.eAdapters().add(astAdapter);	
+		if(isBidirectional) {
+			astNode.eAdapters().add(astAdapter);
+		}
 		cstNode.eAdapters().add(astAdapter);
 	}
 

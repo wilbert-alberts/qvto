@@ -1368,7 +1368,7 @@ public class QvtOperationalVisitorCS
 			
 			visitMappingMethodCS(methodCS, env, imperativeOp);				
 	        if(myCompilerOptions.isGenerateCompletionData()) {
-				ASTBindingHelper.createCST2ASTBinding(methodCS, imperativeOp, env);
+				//ASTBindingHelper.createCST2ASTBinding(methodCS, imperativeOp, env);
 			} 
 			
 			if ((!QvtOperationalEnv.MAIN.equals(imperativeOp.getName()) || 
@@ -2013,7 +2013,7 @@ public class QvtOperationalVisitorCS
 						}
 
 						if(getCompilerOptions().isGenerateCompletionData()) {
-							ASTBindingHelper.createCST2ASTBinding(identifierCS, extendedMapping);
+							ASTBindingHelper.createCST2ASTBinding(identifierCS, extendedMapping, false, null);
 						}
 					}
 				}
