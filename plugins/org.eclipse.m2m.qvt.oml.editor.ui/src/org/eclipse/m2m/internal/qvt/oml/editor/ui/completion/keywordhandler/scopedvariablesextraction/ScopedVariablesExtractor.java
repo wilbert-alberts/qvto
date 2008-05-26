@@ -285,6 +285,9 @@ public class ScopedVariablesExtractor {
                 if (QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_COMMA)) {
                     break;
                 }
+                if (QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_RPAREN)) {
+                    return new Result(startToken, nextToken, null, scope);
+                }
             }
         }
         if (nextToken == null) {
