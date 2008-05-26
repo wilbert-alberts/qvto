@@ -82,7 +82,8 @@ public class TransformTests {
 
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {        		
-        		new FileToFileData("collectionMappingResult"), //$NON-NLS-1$
+                new FileToFileData("bug233984"), //$NON-NLS-1$
+                new FileToFileData("collectionMappingResult"), //$NON-NLS-1$
         		new FileToFileData("intermediateprop_import"), //$NON-NLS-1$ 
                 new FileToFileData("intermediateprop_resolve", "in.simpleuml", "expected.simpleuml"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 new FileToFileData("intermediateprop_trace", "in.simpleuml", "expected.simpleuml"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
