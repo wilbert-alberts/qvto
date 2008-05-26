@@ -10,16 +10,17 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.common.resourcesetprovider;
 
+import java.util.Map;
+
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 
 /**
  * @author aigdalov
- * Created on Feb 26, 2008
+ * Created on May 23, 2008
  */
-public interface IResourceSetProvider {
-    public IUriMapResourceSetPair getUriMapResourceSetPair(CFile script);
-    public void dispose(ResourceSet resourceSet);
-    public void addResourceSetProviderListener(IResourceSetProviderListener listener);
-    public boolean removeResourceSetProviderListener(IResourceSetProviderListener listener);
+public interface IUriMapResourceSetPair {
+    public boolean isMapped(URI uri);
+    public Map<URI, URI> getMap();
+    public ResourceSet getResourceSet();
 }

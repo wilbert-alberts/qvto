@@ -19,7 +19,6 @@ import org.eclipse.core.runtime.IExtensionDelta;
 import org.eclipse.core.runtime.IRegistryChangeEvent;
 import org.eclipse.core.runtime.IRegistryChangeListener;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.common.CommonPlugin;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.ui.IPluginContribution;
@@ -67,9 +66,9 @@ public class ResourceSetProviderRegistry {
     
     public static final ResourceSetResourceSetProviderPair getResourceSetResourceSetProviderPair(CFile script) {
         for (IResourceSetProvider provider : ourProviders.values()) {
-            ResourceSet resourceSet = provider.getResourceSet(script);
-            if (resourceSet != null) {
-                return new ResourceSetResourceSetProviderPair(resourceSet, provider);
+            IUriMapResourceSetPair uriMapResourceSetPair = provider.getUriMapResourceSetPair(script);
+            if (uriMapResourceSetPair != null) {
+                return new ResourceSetResourceSetProviderPair(uriMapResourceSetPair, provider);
             }
         }
         return null;
@@ -113,16 +112,16 @@ public class ResourceSetProviderRegistry {
     }
     
     public static class ResourceSetResourceSetProviderPair {
-        private ResourceSet myResourceSet;
+        private IUriMapResourceSetPair myUriMapResourceSetPair;
         private IResourceSetProvider myResourceSetProvider;
         
-        public ResourceSetResourceSetProviderPair(ResourceSet resourceSet, IResourceSetProvider resourceSetProvider) {
-            myResourceSet = resourceSet;
+        public ResourceSetResourceSetProviderPair(IUriMapResourceSetPair uriMapResourceSetPair, IResourceSetProvider resourceSetProvider) {
+            myUriMapResourceSetPair = uriMapResourceSetPair;
             myResourceSetProvider = resourceSetProvider;
         }
 
-        public ResourceSet getResourceSet() {
-            return myResourceSet;
+        public IUriMapResourceSetPair getUriMapResourceSetPair() {
+            return myUriMapResourceSetPair;
         }
 
         public IResourceSetProvider getResourceSetProvider() {
