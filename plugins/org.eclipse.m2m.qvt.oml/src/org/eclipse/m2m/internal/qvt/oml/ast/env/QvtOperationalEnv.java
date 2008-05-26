@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
@@ -41,6 +42,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.ValidationMessages;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
+import org.eclipse.m2m.internal.qvt.oml.common.resourcesetprovider.IUriMapResourceSetPair;
 import org.eclipse.m2m.internal.qvt.oml.common.resourcesetprovider.ResourceSetProviderRegistry;
 import org.eclipse.m2m.internal.qvt.oml.common.resourcesetprovider.ResourceSetProviderRegistry.ResourceSetResourceSetProviderPair;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
@@ -193,7 +195,11 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	                    CFile cFile = fileEnv.getFile();
 	                    pair = ResourceSetProviderRegistry.getResourceSetResourceSetProviderPair(cFile);
 	                    if (pair != null) {
-	                        resourceSet = pair.getResourceSet();
+	                        IUriMapResourceSetPair uriMapResourceSetPair = pair.getUriMapResourceSetPair();
+	                        URI mmURI = URI.createURI(metamodelUri);
+                            if (uriMapResourceSetPair.isMapped(mmURI)) {
+                                resourceSet = uriMapResourceSetPair.getResourceSet();
+	                        }
 	                    }
 		            }
 		            if (resourceSet != null) {
