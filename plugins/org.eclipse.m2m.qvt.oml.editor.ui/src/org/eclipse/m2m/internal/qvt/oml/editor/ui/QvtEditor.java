@@ -163,6 +163,8 @@ public class QvtEditor extends TextEditor {
         */
 		setHelpContextId("org.eclipse.m2m.qvt.oml._editor"); //$NON-NLS-1$
         super.createPartControl(parent);
+        initASTProvider();
+        
         getPreferenceStore().setValue(MATCHING_BRACKETS, true);
         getPreferenceStore().setValue(MATCHING_BRACKETS_COLOR, StringConverter.asString(new RGB(196, 196, 196)));
         myOutlinePage = new ContentOutlinePage() {
@@ -214,9 +216,15 @@ public class QvtEditor extends TextEditor {
             }
             ((ITextViewerExtension) sourceViewer).prependVerifyKeyListener(myBracketInserter);
         }
-
-        fASTProvider = new ASTProvider();
     }
+
+	private void initASTProvider() {
+		synchronized (fASTProviderLock) {
+        	fASTProvider = new ASTProvider();
+        	// notify possible waiting clients
+        	fASTProviderLock.notifyAll();
+        }
+	}
     
     public void updateFoldingStructure(final List<Position> positions) {
     	if (getProjectionSourceViewer() == null 
@@ -363,6 +371,8 @@ public class QvtEditor extends TextEditor {
     private QvtOutlineNodeSelector myOutlineSelector;
     private BracketInserter myBracketInserter;
     private ASTProvider fASTProvider; 
+    private Object fASTProviderLock = new Object();
+
      
     private QvtBuilder.BuildListener myBuildListener = new QvtBuilder.BuildListener() {
         public void buildPerformed() {
@@ -392,13 +402,21 @@ public class QvtEditor extends TextEditor {
     }
     
     IQVTReconcilingListener getReconcilingListener() {
-    	if(fASTProvider == null) {
-    		throw new IllegalStateException("AST Provider not available"); //$NON-NLS-1$
+
+    	synchronized (fASTProviderLock) {
+    		while(fASTProvider == null) {
+    			try {    				
+					fASTProviderLock.wait();					
+				} catch (InterruptedException e) {
+					// do nothing 
+				}
+    		}
     	}
     	
     	return fASTProvider;
     }
  
+    
     
     private class ASTProvider implements IQVTReconcilingListener {
     	private IDocumentListener fDocListener;
