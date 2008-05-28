@@ -157,7 +157,8 @@ public class StringOperations extends AbstractContextualOperations {
 				return -1;
 			}
 			
-			return self.indexOf((String)leftVal) + 1;
+			int result = self.indexOf((String)leftVal);
+			return (result >= 0) ? result + 1 : -1;
 		}
 	};
 
@@ -403,9 +404,9 @@ public class StringOperations extends AbstractContextualOperations {
 	static final CallHandler AS_BOOLEAN = new CallHandler() {
 		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {			
 			String self = (String) source;
-			if(self.equals("1") || self.equals("true")) { //$NON-NLS-1$ //$NON-NLS-2$
+			if(self.equals("1") || self.equalsIgnoreCase("true")) { //$NON-NLS-1$ //$NON-NLS-2$
 				return Boolean.TRUE;
-			} else if(self.equals("0") || self.equals("false")) { //$NON-NLS-1$ //$NON-NLS-2$
+			} else if(self.equals("0") || self.equalsIgnoreCase("false")) { //$NON-NLS-1$ //$NON-NLS-2$
 				return Boolean.FALSE;
 			}
 

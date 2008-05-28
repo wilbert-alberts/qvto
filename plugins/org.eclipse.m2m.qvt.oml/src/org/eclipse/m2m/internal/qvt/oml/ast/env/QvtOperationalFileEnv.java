@@ -59,6 +59,7 @@ public class QvtOperationalFileEnv extends QvtOperationalEnv {
         // Eliminate parsing warning on "" occurrences, used in model types URIs, etc.
         // TODO - solve in QVT grammar
         setOption(ProblemOption.ELEMENT_NAME_QUOTE_ESCAPE, ProblemHandler.Severity.OK);
+        setOption(ProblemOption.STRING_CASE_CONVERSION, ProblemHandler.Severity.OK);
         
     	QvtOperationalStdLibrary.INSTANCE.importTo(this);        
 	}
