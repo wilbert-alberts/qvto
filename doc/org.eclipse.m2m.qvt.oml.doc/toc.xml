@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Operational QVT Developer Guide">
-	<topic label="Operational QVT Documentation" href="http://www.eclipse.org/m2m/qvto/doc/M2M-QVTO.pdf"/>
+<toc label="QVT Operational Developer Guide">
+	<topic label="Overview" href="references/overview.html"/>
 </toc>
