@@ -79,7 +79,7 @@ propertyName=propertyValue
 			<equals arg1="${baseos}.${basews}" arg2="linux.motif" />
 		</condition>
 		
-		<property name="masterZip" value="${projectName}-${subprojectName}-Master-incubation-${buildAlias}.zip" /> 
+		<property name="masterZip" value="${projectName}-${subprojectName}-Master-${buildAlias}.zip" /> 
 		<property name="java15-home" value="/opt/sun-java2-5.0" /> 
 		<property name="stagingHome" value="/home/data/httpd/download-staging.priv" /> 
 		<property name="projectPath" value="modeling/mdt" /> 
@@ -111,7 +111,7 @@ propertyName=propertyValue
 			<property name="component" value="builder/sdk" />
 		</ant>
 		<!-- duplicate Master SDK as SDK -->
-		<property name="SDKZip" value="${projectName}-${subprojectName}-SDK-incubation-${buildAlias}.zip" />
+		<property name="SDKZip" value="${projectName}-${subprojectName}-SDK-${buildAlias}.zip" />
 		<zip destfile="${buildDirectory}/${buildLabel}/${SDKZip}" update="true" duplicate="preserve">
 			<zipfileset 
 				src="${buildDirectory}/${buildLabel}/${masterZip}" 
@@ -140,7 +140,7 @@ propertyName=propertyValue
 		
 		<ant target="removeFeatureAndPluginFoldersFromMasterZip" antfile="${helper}" />
 		<!-- build runtime -->
-		<zip destfile="${buildDirectory}/${buildLabel}/${projectName}-${subprojectName}-runtime-incubation-${buildAlias}.zip" update="true" duplicate="preserve">
+		<zip destfile="${buildDirectory}/${buildLabel}/${projectName}-${subprojectName}-runtime-${buildAlias}.zip" update="true" duplicate="preserve">
 			<zipfileset 
 				src="${buildDirectory}/${buildLabel}/${SDKZip}" 
 				dirmode="775" filemode="664" 
@@ -156,7 +156,7 @@ propertyName=propertyValue
 		</zip>
 		
 		<!-- build examples -->
-		<zip destfile="${buildDirectory}/${buildLabel}/${projectName}-${subprojectName}-examples-incubation-${buildAlias}.zip" update="true" duplicate="preserve"> 
+		<zip destfile="${buildDirectory}/${buildLabel}/${projectName}-${subprojectName}-examples-${buildAlias}.zip" update="true" duplicate="preserve"> 
 			<zipfileset 
 				src="${buildDirectory}/${buildLabel}/${SDKZip}" dirmode="775" filemode="664"> 
 					<include name="**/org.eclipse.*.example*" />

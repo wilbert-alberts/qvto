@@ -18,7 +18,7 @@
 <!-- ===================================================================== -->
 
 <target name="assemble.org.eclipse.m2m.qvt.oml.tests">
-	<property name="archiveName" value="m2m-${subprojectName}-junit-tests-incubation-${buildAlias}.zip"/>
+	<property name="archiveName" value="m2m-${subprojectName}-junit-tests-${buildAlias}.zip"/>
 	<ant antfile="${assembleScriptName}"/>
 <!-- ADD POST STEPS -->
 </target>
@@ -200,7 +200,7 @@
   	<delete dir="${workingDirectory}/eclipse/plugins/${org.eclipse.test}" includeEmptyDirs="true" />
 	
  	<!-- rezip the JUnit plugin tests -->
-	<zip destfile="${workingDirectory}/testing/m2m-${subprojectName}-junit-tests-incubation-${buildAlias}.zip">
+	<zip destfile="${workingDirectory}/testing/m2m-${subprojectName}-junit-tests-${buildAlias}.zip">
 		 <zipfileset dir="${workingDirectory}/eclipse" prefix="eclipse"/>
 	</zip>
  	
@@ -216,11 +216,11 @@
     <copy todir="${workingDirectory}/testing" file="${buildDirectory}/../build.cfg" />
 
 	<!--create zip file of the automated testing framework-->	
-	<zip destfile="${buildDirectory}/${buildLabel}/m2m-${subprojectName}-automated-tests-incubation-${buildAlias}.zip">
+	<zip destfile="${buildDirectory}/${buildLabel}/m2m-${subprojectName}-automated-tests-${buildAlias}.zip">
 		 <zipfileset dir="${workingDirectory}/testing" prefix="testing"/>
 	</zip>
 
-	<delete file="${buildDirectory}/${buildLabel}/m2m-${subprojectName}-junit-tests-incubation-${buildAlias}.zip"  />
+	<delete file="${buildDirectory}/${buildLabel}/m2m-${subprojectName}-junit-tests-${buildAlias}.zip"  />
 </target>
 
 <!-- ===================================================================== -->

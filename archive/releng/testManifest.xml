@@ -5,28 +5,28 @@
 			<platform 
 				id="projRUN" 
 				name="All" 
-				fileName='&lt;a href="m2m-qvto-runtime-incubation-@build@.zip"&gt;m2m-qvto-incubation-runtime-@build@.zip&lt;/a&gt; &lt;font size="2"&gt;(size:@m2m-qvto-runtime-incubation-@build@.zip.size@ - checksum:&lt;a href="m2m-qvto-incubation-runtime-@build@.zip.md5"&gt;md5&lt;/a&gt;)&lt;/font&gt;'>
+				fileName='&lt;a href="m2m-qvto-runtime-@build@.zip"&gt;m2m-qvto-runtime-@build@.zip&lt;/a&gt; &lt;font size="2"&gt;(size:@m2m-qvto-runtime-@build@.zip.size@ - checksum:&lt;a href="m2m-qvto-runtime-@build@.zip.md5"&gt;md5&lt;/a&gt;)&lt;/font&gt;'>
 			</platform>
 		</zipType>
 		<zipType name="projsdk">
 			<platform 
 				id="projSRC" 
 				name="All" 
-				fileName='&lt;a href="m2m-qvto-SDK-incubation-@build@.zip"&gt;m2m-qvto-SDK-incubation-@build@.zip&lt;/a&gt; &lt;font size="2"&gt;(size:@m2m-qvto-SDK-incubation-@build@.zip.size@ - checksum:&lt;a href="m2m-qvto-SDK-incubation-@build@.zip.md5"&gt;md5&lt;/a&gt;)&lt;/font&gt;'>
+				fileName='&lt;a href="m2m-qvto-SDK-@build@.zip"&gt;m2m-qvto-SDK-@build@.zip&lt;/a&gt; &lt;font size="2"&gt;(size:@m2m-qvto-SDK-@build@.zip.size@ - checksum:&lt;a href="m2m-qvto-SDK-@build@.zip.md5"&gt;md5&lt;/a&gt;)&lt;/font&gt;'>
 			</platform>
 		</zipType>
 		<zipType name="projtests">
 			<platform 
 				id="T" 
 				name="All" 
-				fileName='&lt;a href="m2m-qvtoml-automated-tests-incubation-@build@.zip"&gt;m2m-qvtoml-automated-tests-incubation-@build@.zip&lt;/a&gt; &lt;font size="2"&gt;(size:@m2m-qvtoml-automated-tests-incubation-@build@.zip.size@ - checksum:&lt;a href="m2m-qvtoml-automated-tests-incubation-@build@.zip.md5"&gt;md5&lt;/a&gt;)&lt;/font&gt;'>
+				fileName='&lt;a href="m2m-qvtoml-automated-tests-@build@.zip"&gt;m2m-qvtoml-automated-tests-@build@.zip&lt;/a&gt; &lt;font size="2"&gt;(size:@m2m-qvtoml-automated-tests-@build@.zip.size@ - checksum:&lt;a href="m2m-qvtoml-automated-tests-@build@.zip.md5"&gt;md5&lt;/a&gt;)&lt;/font&gt;'>
 			</platform>
 		</zipType>
 		<zipType name="projexamples">
 			<platform 
 				id="EX" 
 				name="All" 
-				fileName='&lt;a href="m2m-qvto-examples-incubation-@build@.zip"&gt;m2m-qvto-examples-incubation-@build@.zip&lt;/a&gt; &lt;font size="2"&gt;(size:@m2m-qvto-examples-incubation-@build@.zip.size@ - checksum:&lt;a href="m2m-qvto-examples-incubation-@build@.zip.md5"&gt;md5&lt;/a&gt;)&lt;/font&gt;'>
+				fileName='&lt;a href="m2m-qvto-examples-@build@.zip"&gt;m2m-qvto-examples-@build@.zip&lt;/a&gt; &lt;font size="2"&gt;(size:@m2m-qvto-examples-@build@.zip.size@ - checksum:&lt;a href="m2m-qvto-examples-@build@.zip.md5"&gt;md5&lt;/a&gt;)&lt;/font&gt;'>
 			</platform>
 		</zipType>
 	</zipTypes>
