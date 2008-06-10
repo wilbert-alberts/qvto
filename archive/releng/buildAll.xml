@@ -79,13 +79,22 @@ propertyName=propertyValue
 			<equals arg1="${baseos}.${basews}" arg2="linux.motif" />
 		</condition>
 		
-		<property name="masterZip" value="${projectName}-${subprojectName}-Master-${buildAlias}.zip" /> 
+		<property name="masterZip" value="${projectName}-${subprojectName}-Master-${buildAlias}.zip" />
+		<property name="SDKZip" value="${projectName}-${subprojectName}-SDK-${buildAlias}.zip" />		 
 		<property name="java15-home" value="/opt/sun-java2-5.0" /> 
 		<property name="stagingHome" value="/home/data/httpd/download-staging.priv" /> 
 		<property name="projectPath" value="modeling/mdt" /> 
 		<!-- user with write perms in staging dir & permission to run /usr/bin/sign --> 
 		<property name="buildServerUser" value="nickb@build.eclipse.org" /> 
-		<property name="sign" value="true" />
+			<condition property="sign">
+				<or>
+					<!-- want to enable/disable signing for a given build type? add/remove types here -->
+					<equals arg1="${buildType}" arg2="I" />
+					<equals arg1="${buildType}" arg2="M" />
+					<equals arg1="${buildType}" arg2="S" />
+					<equals arg1="${buildType}" arg2="R" />
+				</or>
+			</condition>
 		
 		<!-- want to enable/disable signing for a given build type? add/remove types here -->
 		<!-- condition property="sign">
@@ -110,43 +119,35 @@ propertyName=propertyValue
 		<ant antfile="build.xml" target="main">
 			<property name="component" value="builder/sdk" />
 		</ant>
-		<!-- duplicate Master SDK as SDK -->
-		<property name="SDKZip" value="${projectName}-${subprojectName}-SDK-${buildAlias}.zip" />
-		<zip destfile="${buildDirectory}/${buildLabel}/${SDKZip}" update="true" duplicate="preserve">
-			<zipfileset 
-				src="${buildDirectory}/${buildLabel}/${masterZip}" 
-				dirmode="775" filemode="664" 
-				id="SDKZipFiles" 
-				excludes="**/*.pack.gz, **/pack.properties, **/features/*.jar, **/plugins/*.source_*.jar" />
-		</zip>
-		
-		<ant antfile="build.xml" target="main">
-			<property name="component" value="builder/tests" />
-		</ant>
 		
 		<echo-timestamp />
-		<parallel failonany="true">
-			<sequential>
-				<ant target="addFeatureAndPluginJarsToMasterZip" antfile="${helper}" />
-				<ant target="signMasterZip" antfile="${helper}" />
-				<ant target="packMasterZip" antfile="${helper}" />
-			</sequential>
-		</parallel>	
+
+		<ant target="signMasterZip" antfile="${helper}">
+			<property name="mailStatus" value="nomail" />
+		</ant>
+
+		<!-- Unpack jars to produce SDK zip with mix of folders & jars -->
+		<ant target="unpackUpdateJarsAndRepack" antfile="${helper}">
+		<property name="sourceZip" value="${buildDirectory}/${buildLabel}/${masterZip}" />
+		<property name="targetZip" value="${buildDirectory}/${buildLabel}/${SDKZip}" />
+		</ant>
 		
-		<!-- update SDK w/ signed jars from Master zip -->
-		<zip destfile="${buildDirectory}/${buildLabel}/${SDKZip}" update="true">
-			<zipfileset refid="SDKZipFiles" />
-		</zip>
+		<!-- remove rootfiles -->
+		<ant target="removeRootFilesFromMaster" antfile="${helper}" />
 		
-		<ant target="removeFeatureAndPluginFoldersFromMasterZip" antfile="${helper}" />
+		<!-- pack the master zip -->
+		<ant target="packMasterZip" antfile="${helper}" />
+		
+		<echo-timestamp />
+		
 		<!-- build runtime -->
 		<zip destfile="${buildDirectory}/${buildLabel}/${projectName}-${subprojectName}-runtime-${buildAlias}.zip" update="true" duplicate="preserve">
 			<zipfileset 
 				src="${buildDirectory}/${buildLabel}/${SDKZip}" 
 				dirmode="775" filemode="664" 
-				excludes="**/org.eclipse.*.example*, **/org.eclipse.*.example*/**,**/org.eclipse.*.sample*, **/org.eclipse.*.sample*/**, **/org.eclipse.*.sdk*, **/org.eclipse.*.sdk*/**, **/org.eclipse.*.doc*, **/org.eclipse.*.doc*/*, **/org.eclipse.*.source*, **/org.eclipse.*.source*/**, **/*src.zip"> 
+				excludes="**/org.eclipse.*.example*, **/org.eclipse.*.example*/**,**/org.eclipse.*.sample*, **/org.eclipse.*.sample*/**, **/org.eclipse.*.sdk*, **/org.eclipse.*.sdk*/**, **/org.eclipse.*.doc*, **/org.eclipse.*.doc*/**, **/org.eclipse.*.source*, **/org.eclipse.*.source*/**, **/*src.zip"> 
 				<include name="**/org.eclipse.m2m.qvt.oml*" />
-				<include name="**/org.eclipse.m2m.qvt.oml*/*" /> 
+				<include name="**/org.eclipse.m2m.qvt.oml*/**" /> 
 			</zipfileset> 
 			<zipfileset 
 				src="${buildDirectory}/${buildLabel}/${SDKZip}" 
@@ -170,6 +171,13 @@ propertyName=propertyValue
 		</zip> 
 		
 		<echo-timestamp />
+		
+		<ant antfile="build.xml" target="main">
+			<property name="component" value="builder/tests" />
+		</ant>
+	
+		<echo-timestamp />
+		
 		<ant target="generateDigests" antfile="${helper}" />
 	</target>
 
