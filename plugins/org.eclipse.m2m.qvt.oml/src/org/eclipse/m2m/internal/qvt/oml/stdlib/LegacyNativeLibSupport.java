@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtLibraryOperation;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
@@ -44,12 +45,12 @@ public class LegacyNativeLibSupport {
 	private LegacyNativeLibSupport() {
 	}
 	
-	public Module defineLibrary(QvtOperationalEnv targetEnv, Library lib) throws LibraryCreationException {
+	public Module defineLibrary(QvtOperationalEnv targetEnv, Library lib, ResourceSet rs) throws LibraryCreationException {
 		Module libModule = org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModule();
 		libModule.setName(lib.getId());
 		QvtOperationalEnv libEnv = QvtOperationalEnvFactory.INSTANCE.createModuleEnvironment(libModule);
 		for (LibraryOperation libOp : lib.getLibraryOperations()) {
-	        QvtLibraryOperation qvtLibOp = new QvtLibraryOperation(libEnv, libOp);
+	        QvtLibraryOperation qvtLibOp = new QvtLibraryOperation(libEnv, libOp, rs);
 	        EClassifier ctxType = qvtLibOp.getContextType();
 	        
 	        if(ctxType  == targetEnv.getOCLStandardLibrary().getOclVoid()) {

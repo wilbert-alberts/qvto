@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
@@ -1243,7 +1244,7 @@ public class QvtOperationalVisitorCS
 		module.setEndPosition(moduleCS.getEndOffset());
 
 		for (ModelTypeCS modelTypeCS : moduleCS.getMetamodels()) {
-			ModelType modelType = visitModelTypeCS(modelTypeCS, env, module);
+			ModelType modelType = visitModelTypeCS(modelTypeCS, env, module, compiler.getResourceSet());
 			if (modelType == null) {
 				continue;
 			}
@@ -1288,7 +1289,7 @@ public class QvtOperationalVisitorCS
 			if (!myLoadedLibraries.contains(libId)) {
 				try {
 					lib.loadOperations();
-					env.defineNativeLibrary(lib);
+					env.defineNativeLibrary(lib, compiler.getResourceSet());
 				} catch (LibraryCreationException e) {
 					env.reportError(NLS.bind(ValidationMessages.FailedToLoadLibrary, new Object[] { libId,
 							e.getMessage() }), impPath);
@@ -1537,7 +1538,7 @@ public class QvtOperationalVisitorCS
 	}
 
 	protected ModelType visitModelTypeCS(ModelTypeCS modelTypeCS, QvtOperationalFileEnv env,
-			Module module) throws SemanticException {
+			Module module, ResourceSet resolutionRS) throws SemanticException {
 		if (modelTypeCS == null) {
 			return null;
 		}
@@ -1572,7 +1573,7 @@ public class QvtOperationalVisitorCS
 			if (packageRefCS.getUriCS() != null) {
 				String metamodelUri = visitLiteralExpCS(packageRefCS.getUriCS(), env);
 				packageRef.setUri(metamodelUri);
-				resolvedMetamodel = resolveMetamodel(env, metamodelUri, Collections.<String>emptyList(), packageRefCS.getUriCS());
+				resolvedMetamodel = resolveMetamodel(env, metamodelUri, Collections.<String>emptyList(), packageRefCS.getUriCS(), resolutionRS);
 			}
 			
 			PathNameCS pathNameCS = packageRefCS.getPathNameCS();
@@ -1582,7 +1583,7 @@ public class QvtOperationalVisitorCS
 				packageRef.setName(metamodelName);
 
 				if (resolvedMetamodel == null) {
-					resolvedMetamodel = resolveMetamodel(env, null, pathNameCS.getSequenceOfNames(), pathNameCS);
+					resolvedMetamodel = resolveMetamodel(env, null, pathNameCS.getSequenceOfNames(), pathNameCS, resolutionRS);
 				}
 				else {
 					resolvedMetamodel = checkMetamodelPath(env, resolvedMetamodel, pathNameCS, metamodelName);
@@ -1675,11 +1676,11 @@ public class QvtOperationalVisitorCS
 	}
 	
 	private EPackage resolveMetamodel(QvtOperationalFileEnv env, String metamodelUri, List<String> packagePath,
-			CSTNode cstNode) throws SemanticException {
+			CSTNode cstNode, ResourceSet resolutionRS) throws SemanticException {
 		EPackage resolvedMetamodel = null;
 		String metamodelName = (packagePath.isEmpty() ? metamodelUri : packagePath.toString());
 		try {
-			List<EPackage> registerMetamodels = env.registerMetamodel(metamodelUri, packagePath);
+			List<EPackage> registerMetamodels = env.registerMetamodel(metamodelUri, packagePath, resolutionRS);
 			if (registerMetamodels.isEmpty()) {
 				env.reportError(NLS.bind(ValidationMessages.failedToResolveMetamodelError,
 						new Object[] { metamodelName }), cstNode);

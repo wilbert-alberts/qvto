@@ -20,6 +20,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.ValidationMessages;
 import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LibraryCreationException;
 import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LibraryOperation;
@@ -39,17 +40,17 @@ import org.eclipse.ocl.utilities.ExpressionInOCL;
  */
 public class QvtLibraryOperation {
 	
-	public QvtLibraryOperation(QvtOperationalEnv parseEnv, LibraryOperation libOp) throws LibraryCreationException {
+	public QvtLibraryOperation(QvtOperationalEnv parseEnv, LibraryOperation libOp, ResourceSet rs) throws LibraryCreationException {
 		EPackage oclStdlibPackage = parseEnv.getOCLStandardLibrary().getOclAny().getEPackage();
 		parseEnv.getEPackageRegistry().put(oclStdlibPackage.getNsURI(), oclStdlibPackage);
 		if (libOp.getLibrary().getInMetamodels() != null) {
 			for (String mm : libOp.getLibrary().getInMetamodels()) {
-				parseEnv.registerMetamodel(mm, Collections.<String>emptyList());
+				parseEnv.registerMetamodel(mm, Collections.<String>emptyList(), rs);
 			}
 		}
 		if (libOp.getLibrary().getOutMetamodels() != null) {
 			for (String mm : libOp.getLibrary().getOutMetamodels()) {
-				parseEnv.registerMetamodel(mm, Collections.<String>emptyList());
+				parseEnv.registerMetamodel(mm, Collections.<String>emptyList(), rs);
 			}
 		}
 		
