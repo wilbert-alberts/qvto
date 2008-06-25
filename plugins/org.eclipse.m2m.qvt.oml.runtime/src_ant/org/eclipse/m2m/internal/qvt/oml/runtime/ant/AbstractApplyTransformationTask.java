@@ -210,6 +210,8 @@ public abstract class AbstractApplyTransformationTask extends Task {
 
             		List<URI> resultUris = QvtLaunchConfigurationDelegateBase.doLaunch(transf, inObjects, targetData, getConfiguration(), getTraceFile());
             		outUris.addAll(resultUris);
+            		
+            		transf.cleanup();
                 }
             };
             

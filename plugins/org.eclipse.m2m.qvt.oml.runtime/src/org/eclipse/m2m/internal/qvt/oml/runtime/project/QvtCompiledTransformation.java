@@ -23,8 +23,8 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.project.CompiledTransformation;
@@ -57,6 +57,14 @@ public class QvtCompiledTransformation implements QvtTransformation, CompiledTra
     	return transformationFilePath.removeFileExtension().lastSegment();
     }
 
+	public ResourceSet getResourceSet() throws MdaException {
+		return getImpl().getResourceSet();
+	}
+    
+	public void cleanup() throws MdaException {
+		getImpl().cleanup();
+	}
+
     public TransformationRunner.Out run(TransformationRunner.In in) throws MdaException {
         return getImpl().run(in);
     }
@@ -69,14 +77,6 @@ public class QvtCompiledTransformation implements QvtTransformation, CompiledTra
         return myNamespace;
     }
 
-    public EClass getIn() throws MdaException {
-    	return getImpl().getIn();
-    }
-
-    public EClass getOut() throws MdaException {
-    	return getImpl().getOut();
-    }
-    
     public List<TransformationParameter> getParameters() throws MdaException {
     	return getImpl().getParameters();
     }
@@ -165,5 +165,5 @@ public class QvtCompiledTransformation implements QvtTransformation, CompiledTra
     private QvtTransformation qvtTransformationImpl;
 
     private IPath transformationFilePath;
-   
+
 }

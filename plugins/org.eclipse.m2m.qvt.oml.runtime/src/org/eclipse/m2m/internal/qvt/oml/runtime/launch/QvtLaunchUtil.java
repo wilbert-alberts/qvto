@@ -88,7 +88,7 @@ public class QvtLaunchUtil {
         }
         
         IPath traceFilePath = new Path(file.getParent().getFullPath() + "/" + file.getName() + MDAConstants.QVTO_TRACEFILE_EXTENSION_WITH_DOT);  //$NON-NLS-1$
-        return traceFilePath.toString();
+        return URI.createPlatformResourceURI(traceFilePath.toOSString().toString(), false).toString();
     }
     
     public static IConfiguration getConfiguration(ILaunchConfiguration configuration) {

@@ -26,7 +26,6 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.LaunchConfigurationDelegate;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -107,12 +106,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
     }
     
     public static BaseProcess.IRunnable getSafeRunnable(QvtTransformation transformation, IRunnable r) throws CoreException {
-        try {
-            return SafeRunner.getSafeRunnable(new EClass[] {transformation.getIn(), transformation.getOut()}, r);
-        } 
-        catch (MdaException e) {
-            throw new CoreException(MiscUtil.makeErrorStatus(e));
-        }
+        return SafeRunner.getSafeRunnable(r);
     }
     
     public static void doLaunch(QvtTransformation transformation, ILaunchConfiguration configuration, IContext context) throws Exception {
@@ -234,7 +228,8 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         }
         
         if(traceFileName != null && out.getTrace() != null) {
-            IFile traceFile = WorkspaceUtils.getWorkspaceFile(traceFileName);
+        	URI traceUri = EmfUtil.makeUri(traceFileName);
+            IFile traceFile = traceUri != null ? WorkspaceUtils.getWorkspaceFile(traceUri) : null;
             if(traceFile != null) {
             	TraceSerializer traceSerializer = new TraceSerializer(out.getTrace());
             	traceSerializer.saveTraceModel(new EclipseFile(traceFile));
