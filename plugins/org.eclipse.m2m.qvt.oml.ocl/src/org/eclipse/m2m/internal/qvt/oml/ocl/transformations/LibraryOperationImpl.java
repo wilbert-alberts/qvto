@@ -141,7 +141,7 @@ public class LibraryOperationImpl implements LibraryOperation {
             }
         }
 
-        if (!returnType.isAssignableFrom(method.getReturnType())) {
+        if (returnType != null && !returnType.isAssignableFrom(method.getReturnType())) {
             Logger.getLogger().log(Logger.SEVERE,
                     "Required return type " + returnType //$NON-NLS-1$
                             + " is not assignable from method return type " //$NON-NLS-1$
