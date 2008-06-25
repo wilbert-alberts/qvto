@@ -13,11 +13,13 @@ package org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 
 public class ResourceSourceDestChooser extends ResourceSourceChooser implements IDestinationChooser {
-    public ResourceSourceDestChooser() {
-    	super(false);
+    public ResourceSourceDestChooser(ResourceSet rs) {
+    	super(false, rs);
     }
     
     protected String getDefaultFileName() {
@@ -32,7 +34,7 @@ public class ResourceSourceDestChooser extends ResourceSourceChooser implements 
             return;
         }
 
-        IFile file = org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils.getFile(uri);
+        IFile file = WorkspaceUtils.getWorkspaceFile(uri);
         if(file == null) {
             return;
         }

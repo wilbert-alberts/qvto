@@ -14,9 +14,11 @@ package org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.controls.SelectUriControl;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.provider.EmfModelContentProvider;
 import org.eclipse.swt.widgets.Composite;
@@ -25,8 +27,9 @@ import org.eclipse.ui.PlatformUI;
 
 
 public class ResourceSourceChooser extends ChooserAdapter implements ISourceChooser {
-    public ResourceSourceChooser(boolean isConsiderAdapters) {
+	public ResourceSourceChooser(boolean isConsiderAdapters, ResourceSet rs) {
     	myIsConsiderAdaptes = isConsiderAdapters;
+    	myResourceSet = rs;
     }
     
     public Control createControl(Composite parent) {
@@ -39,7 +42,7 @@ public class ResourceSourceChooser extends ChooserAdapter implements ISourceChoo
                 }
                 else {
                     myUri = uri;
-                    myObject = EmfUtil.safeLoadModel(myUri);
+                    myObject = EmfUtil.safeLoadModel(myUri, myResourceSet);
                 }
                 
                 fireChangedEvent();
@@ -64,13 +67,13 @@ public class ResourceSourceChooser extends ChooserAdapter implements ISourceChoo
             return;
         }
 
-        IFile file = org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils.getFile(uri);
+        IFile file = WorkspaceUtils.getWorkspaceFile(uri);
         if (file != null) {
             myInitialSelection = createSelectionForUri(uri, file);
             return;
         }
 
-        EObject obj = EmfUtil.safeLoadModel(uri);
+        EObject obj = EmfUtil.safeLoadModel(uri, myResourceSet);
         if (obj != null) {
             myInitialSelection = new StructuredSelection(EmfModelContentProvider.makeEObjectNode(obj, null));
             return;
@@ -116,4 +119,5 @@ public class ResourceSourceChooser extends ChooserAdapter implements ISourceChoo
     private EObject myObject;
     private URI myUri;
     private final boolean myIsConsiderAdaptes;
+    private final ResourceSet myResourceSet;
 }
