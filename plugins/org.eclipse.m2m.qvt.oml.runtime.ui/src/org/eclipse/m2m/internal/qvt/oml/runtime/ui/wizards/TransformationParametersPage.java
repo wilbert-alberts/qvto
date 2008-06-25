@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
@@ -56,11 +57,12 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class TransformationParametersPage extends WizardPage {
 	
-	public TransformationParametersPage(String pageId, List<URI> paramUris) {
+	public TransformationParametersPage(String pageId, List<URI> paramUris, ResourceSet validationRS) {
 		super(pageId);
         setDescription(org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.Messages.TransformationParametersPage_Description);
 
         myInitialParamUris = paramUris != null ? paramUris : Collections.<URI>emptyList();
+        myValidationRS = validationRS;
         
         myUriListeners = new ArrayList<IUriGroup.IModifyListener>(1);
         myUriListeners.add(new IUriGroup.IModifyListener() {
@@ -115,7 +117,7 @@ public class TransformationParametersPage extends WizardPage {
             }});
 
         TransformationControls.createLabel(parent, Messages.QvtLauncherTab_ParametersLabel, TransformationControls.GRID);
-        myTransfSignatureControl = new TransformationSignatureLaunchControl(parent, SWT.NONE|SWT.BORDER);
+        myTransfSignatureControl = new TransformationSignatureLaunchControl(parent, SWT.NONE|SWT.BORDER, myValidationRS);
         setTransformation(myTransformation);
 
         TransformationControls.createLabel(parent, "", TransformationControls.GRID); //$NON-NLS-1$
@@ -169,7 +171,12 @@ public class TransformationParametersPage extends WizardPage {
             	else {
                 	URI localURI = paramUris.get(index);
                 	if (localURI.isFile()) {
-                		localURI = URI.createPlatformResourceURI(localURI.toFileString(), false);
+                		try {
+                			localURI = URI.createPlatformResourceURI(localURI.toFileString(), false);
+                		}
+                		catch (RuntimeException ex) {
+                			localURI = null;
+                		}
                 	}
                		proposedUris.add(new TargetUriData(localURI != null ? localURI.toString() : "")); //$NON-NLS-1$
             	}
@@ -261,6 +268,7 @@ public class TransformationParametersPage extends WizardPage {
     };
     
     private QvtTransformation myTransformation;
+	private final ResourceSet myValidationRS;
     private final List<IUriGroup.IModifyListener> myUriListeners;
     private OptionalFileGroup myTraceFile;
     private boolean myTraceNameNonChanged;

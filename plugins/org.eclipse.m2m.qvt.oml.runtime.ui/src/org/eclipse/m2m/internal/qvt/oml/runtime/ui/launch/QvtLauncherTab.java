@@ -23,6 +23,8 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jface.window.Window;
 import org.eclipse.m2m.internal.qvt.oml.QvtEngine;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
@@ -61,8 +63,9 @@ import org.eclipse.ui.PlatformUI;
 
 /** @author pkobiakov */
 public class QvtLauncherTab extends MdaLaunchTab {
-	public QvtLauncherTab(ITransformationMaker transformationMaker) {
+	public QvtLauncherTab(ITransformationMaker transformationMaker, ResourceSet validationRS) {
 		myTransformationMaker = transformationMaker;
+		myValidationRS = validationRS;
 
         myUriListeners = new ArrayList<IUriGroup.IModifyListener>(1);
         myUriListeners.add(new IUriGroup.IModifyListener() {
@@ -87,6 +90,14 @@ public class QvtLauncherTab extends MdaLaunchTab {
         super.createControl(parent);
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, MDAConstants.QVTO_TRANSFORMATION_CONTEXTID);
     }
+	
+	@Override
+	public void dispose() {
+		super.dispose();
+		for (Resource res : myValidationRS.getResources()) {
+			res.unload();
+		}
+	}
     
 	@Override
 	protected void createTransformationSection(Composite parent) {
@@ -147,7 +158,7 @@ public class QvtLauncherTab extends MdaLaunchTab {
             }});
 
         TransformationControls.createLabel(parent, Messages.QvtLauncherTab_ParametersLabel, TransformationControls.GRID);
-        myTransfSignatureControl = new TransformationSignatureLaunchControl(parent, SWT.NONE|SWT.BORDER);
+        myTransfSignatureControl = new TransformationSignatureLaunchControl(parent, SWT.NONE|SWT.BORDER, myValidationRS);
 
 	}
 
@@ -180,7 +191,8 @@ public class QvtLauncherTab extends MdaLaunchTab {
             CompiledModule module = QvtEngine.getInstance(file).compile(file, null);
             if(module != null && module.getModule().getEntry() != null) {
                 initializeName(configuration, module.getModule().getName());
-                configuration.setAttribute(IQvtLaunchConstants.MODULE, file.getFullPath().toString());
+                URI transfUri = URI.createPlatformResourceURI(file.getFullPath().toString(), false);
+                configuration.setAttribute(IQvtLaunchConstants.MODULE, transfUri.toString());
             }
         }
         catch (MdaException e) {
@@ -317,6 +329,7 @@ public class QvtLauncherTab extends MdaLaunchTab {
     };
     
     private final ITransformationMaker myTransformationMaker; 
+	private final ResourceSet myValidationRS;
     private Text myQvtFile;
     private QvtTransformation myTransformation;
     private OptionalFileGroup myTraceFile;

@@ -13,6 +13,7 @@
 package org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch;
 
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.ITransformationMaker;
 import org.eclipse.ui.externaltools.internal.model.IExternalToolConstants;
 
@@ -23,7 +24,7 @@ import org.eclipse.ui.externaltools.internal.model.IExternalToolConstants;
 public class QvtBuilderLauncherTab extends QvtLauncherTab {
 
 	public QvtBuilderLauncherTab(ITransformationMaker transformationMaker) {
-		super(transformationMaker);
+		super(transformationMaker, new ResourceSetImpl());
 	}
 	
 	@Override

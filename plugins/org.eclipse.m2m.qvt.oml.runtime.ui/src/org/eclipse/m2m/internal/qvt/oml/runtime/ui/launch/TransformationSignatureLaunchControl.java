@@ -25,6 +25,7 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
@@ -52,8 +53,10 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class TransformationSignatureLaunchControl extends ScrolledComposite {
 
-	public TransformationSignatureLaunchControl(Composite parent, int style) {
+	public TransformationSignatureLaunchControl(Composite parent, int style, ResourceSet validationRS) {
 		super(parent, style|SWT.V_SCROLL);
+		
+		myValidationRS = validationRS;
 		
 		setExpandHorizontal(true);
 		setExpandVertical(true);
@@ -105,7 +108,7 @@ public class TransformationSignatureLaunchControl extends ScrolledComposite {
 		for (Map.Entry<ModelParameterInfo, IUriGroup> entry : myParamGroups.entrySet()) {
 			try {
 				IStatus status = QvtValidator.validateTransformationParameter(
-						entry.getKey().getTransfParam(), entry.getValue().getUriData());
+						entry.getKey().getTransfParam(), entry.getValue().getUriData(), myValidationRS);
 		        if (StatusUtil.isError(status)) {
 		        	return status;
 		        }
@@ -168,7 +171,7 @@ public class TransformationSignatureLaunchControl extends ScrolledComposite {
         try {
         	myParamGroups = new LinkedHashMap<ModelParameterInfo, IUriGroup>();
 			for (ModelParameterInfo paramInfo : getTransfParameters()) {
-				IUriGroup uriGroup = TransformationControls.createUriGroup(parent, paramInfo);
+				IUriGroup uriGroup = TransformationControls.createUriGroup(parent, paramInfo, myValidationRS);
 				myParamGroups.put(paramInfo, uriGroup);
 				for (IUriGroup.IModifyListener listener : listeners) {
 					uriGroup.addModifyListener(listener);
@@ -263,6 +266,7 @@ public class TransformationSignatureLaunchControl extends ScrolledComposite {
 	}
 	
 	private QvtTransformation myTransformation;
+	private final ResourceSet myValidationRS;
 	private Map<ModelParameterInfo, IUriGroup> myParamGroups = Collections.emptyMap();
 
 }
