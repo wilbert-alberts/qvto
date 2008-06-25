@@ -81,7 +81,8 @@ public class TransformTests {
     }
 
     public static ModelTestData[] createTestData() {
-        return new ModelTestData[] {        		
+        return new ModelTestData[] {        		        		
+        		new FileToFileData("blackboxlib_237781"), //$NON-NLS-1$        		
                 new FileToFileData("bug233984"), //$NON-NLS-1$
                 new FileToFileData("collectionMappingResult"), //$NON-NLS-1$
         		new FileToFileData("intermediateprop_import"), //$NON-NLS-1$ 
@@ -258,6 +259,7 @@ public class TransformTests {
     }
 
     private static final Set<String> JAVALESS_EXCLUDES = new HashSet<String>(Arrays.asList(new String[] {
+    		"blackboxlib_237781", //$NON-NLS-1$ // imports java lib oper requiring generated ecore metamodel
             "primtypesecore", // uses getDataTypeInstance() defined on ecore //$NON-NLS-1$
             "importedvirtuals", "imports_transformations", "imports", "virt", "full", "fqntraces", // TODO import other files //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
             "assigntonullowner", "resolveall", // reference not in required format: eSuperTypes = "#//NEW_Class1" insteand of "//@eClassifiers.0" //$NON-NLS-1$ //$NON-NLS-2$
