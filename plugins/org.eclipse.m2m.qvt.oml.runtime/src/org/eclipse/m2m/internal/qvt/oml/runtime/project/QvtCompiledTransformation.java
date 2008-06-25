@@ -83,6 +83,7 @@ public class QvtCompiledTransformation implements QvtTransformation, CompiledTra
 
     @Override
 	public String toString() {
+    	/*
     	String listParams = ""; //$NON-NLS-1$
     	try {
     		for (TransformationParameter param : getParameters()) {
@@ -99,6 +100,8 @@ public class QvtCompiledTransformation implements QvtTransformation, CompiledTra
     		return myId;
     	}
         return myId + "(" + listParams + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+        */
+    	return myId;
     }
 
     private static String toString(TransformationParameter param) {
