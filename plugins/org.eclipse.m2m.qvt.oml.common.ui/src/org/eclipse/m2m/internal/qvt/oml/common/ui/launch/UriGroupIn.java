@@ -12,6 +12,7 @@
 package org.eclipse.m2m.internal.qvt.oml.common.ui.launch;
 
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.IModelParameterInfo;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
@@ -36,12 +37,14 @@ import org.eclipse.swt.widgets.Text;
  */
 public class UriGroupIn extends BaseUriGroup {
 	
-    public UriGroupIn(Composite parent, String name) {
+	public UriGroupIn(Composite parent, String name, ResourceSet validationRS) {
     	super(parent, SWT.NONE);
     	
 		setLayout(new GridLayout(3, false));
         
 		createLabel(name, 1);
+		
+		myValidationRS = validationRS;
 		
         myUriText = TransformationControls.createText(this, 1);
         myUriText.addModifyListener(new ModifyListener() {
@@ -94,7 +97,7 @@ public class UriGroupIn extends BaseUriGroup {
     }
     
     protected IChooser getChooser(IMetamodelHandler handler) {
-    	return handler.getSourceAdaptableChooser();
+    	return handler.getSourceAdaptableChooser(myValidationRS);
     }
 
 	public void update(String moduleName, IModelParameterInfo paramInfo, Shell shell) {
@@ -108,5 +111,6 @@ public class UriGroupIn extends BaseUriGroup {
     private final Text myUriText;
     private final Button myBrowseButton;
     private SelectionListener myActiveListener;
+    private final ResourceSet myValidationRS;
 
 }
