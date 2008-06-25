@@ -1,18 +1,19 @@
 --/**
 -- * <copyright>
 -- *
--- * Copyright (c) 2006, 2007 Borland Inc.
+-- * Copyright (c) 2005, 2007 IBM Corporation and others.
 -- * All rights reserved.   This program and the accompanying materials
 -- * are made available under the terms of the Eclipse Public License v1.0
 -- * which accompanies this distribution, and is available at
 -- * http://www.eclipse.org/legal/epl-v10.html
 -- *
 -- * Contributors:
--- *   Borland - Initial API and implementation
+-- *   IBM - Initial API and implementation
+-- *   E.D.Willink - Lexer and Parser refactoring to support extensibility and flexible error handling
 -- *
 -- * </copyright>
 -- *
--- * $Id: OCLKWLexer.g,v 1.1 2008/03/12 11:48:09 sboyko Exp $
+-- * $Id: OCLKWLexer.g,v 1.1.2.1 2008/06/25 11:41:58 sboyko Exp $
 -- */
 --
 -- The OCL KeyWord Lexer
@@ -51,7 +52,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: OCLKWLexer.g,v 1.1 2008/03/12 11:48:09 sboyko Exp $
+ * $Id: OCLKWLexer.g,v 1.1.2.1 2008/06/25 11:41:58 sboyko Exp $
  */
 	./
 $End
