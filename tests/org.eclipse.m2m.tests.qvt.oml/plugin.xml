@@ -31,4 +31,11 @@
       </transformation>
    </extension>
 
+   <extension point="org.eclipse.m2m.qvt.oml.ocl.libraries">
+      <library class="org.eclipse.m2m.tests.qvt.oml.TestBlackboxLibrary" id="TestBlackboxLibrary">
+         <inMetamodel uri="http://www.eclipse.org/emf/2002/Ecore"/>
+         <outMetamodel uri="http://www.eclipse.org/emf/2002/Ecore"/>
+      </library>
+   </extension>
+
 </plugin>
