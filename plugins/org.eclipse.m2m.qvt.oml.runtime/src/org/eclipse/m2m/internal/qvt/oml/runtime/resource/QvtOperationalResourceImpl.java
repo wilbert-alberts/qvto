@@ -19,6 +19,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.DOMHandler;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
@@ -85,7 +86,7 @@ public class QvtOperationalResourceImpl extends XMIResourceImpl {
     private void fillCompilationDiagnostic(CompiledModule compiledModule, URI uri) {
     	warnings = getWarnings();
 		for (QvtMessage msg : compiledModule.getWarnings()) {
-			warnings.add(new QvtCompilationErrorException(msg, uri.toString()));
+			warnings.add(new Diagnostic(msg.getMessage(), uri.toString()));
 		}
 		errors = getErrors();
 		for (QvtMessage msg : compiledModule.getErrors()) {
@@ -129,4 +130,33 @@ public class QvtOperationalResourceImpl extends XMIResourceImpl {
     	return false;
     }
     
+	/**
+	 * Just a marker for diagnostic notification messages
+	 */
+	private static class Diagnostic implements Resource.Diagnostic {
+		private final String myMessage;
+		private final String myLocation;
+
+		Diagnostic(String message, String  location) {
+			myMessage = message;
+			myLocation = location;
+		}
+
+		public String getMessage() {
+			return myMessage;
+		}		
+
+		public String getLocation() {
+			return myLocation;
+		}
+
+		public int getColumn() {
+			return 0;
+		}
+
+		public int getLine() {
+			return 0;
+		}
+	}
+
 }
