@@ -50,7 +50,8 @@ public abstract class EObjectWindowActionDelegate extends WindowActionDelegate {
         if(sel instanceof IFile && considerFiles) {
             IFile file = (IFile)sel;
             try {
-                EObject model = EmfUtil.loadModel(URI.createPlatformResourceURI(file.getFullPath().toString(), false));
+            	URI resourceURI = URI.createPlatformResourceURI(file.getFullPath().toString(), false);
+                EObject model = EmfUtil.loadModel(resourceURI);
                 if(model != null) {
                     return model;
                 }

@@ -62,7 +62,7 @@ public class OptionalFileGroup {
                 ChooserDialogAdapter dialog = new ChooserDialogAdapter(parent.getShell(), myChooser);
                 
                 if(myTextControl.getCharCount() > 0) {
-                    URI uri = URI.createPlatformResourceURI(myTextControl.getText(), false);
+                    URI uri = URI.createURI(myTextControl.getText());
                     if(uri != null) {
                         dialog.getChooser().setInitialSelection(uri.toString());
                     }
@@ -71,7 +71,7 @@ public class OptionalFileGroup {
                 if(dialog.open() == Window.OK) {
                     IPath path = myChooser.getPath();
                     if(path != null) {
-                        setText(path.toString());
+                        setText(URI.createPlatformResourceURI(path.toOSString().toString(), false).toString());
                     }
                     else {
                         setText(""); //$NON-NLS-1$

@@ -11,13 +11,9 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.common.ui.launch;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.viewers.ViewerComparator;
-import org.eclipse.jface.viewers.ViewerFilter;
-import org.eclipse.jface.window.Window;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.common.CommonPlugin;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessage;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessageEx;
@@ -31,19 +27,13 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
-import org.eclipse.ui.dialogs.ISelectionStatusValidator;
-import org.eclipse.ui.model.WorkbenchContentProvider;
-import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 
 public class TransformationControls {
     private TransformationControls() {}
     
-    public static IUriGroup createUriGroup(Composite parent, IModelParameterInfo paramInfo) {
+    public static IUriGroup createUriGroup(Composite parent, IModelParameterInfo paramInfo, ResourceSet validationRS) {
     	Group group = new Group(parent, SWT.NONE);
     	group.setText(getParameterName(paramInfo));
     	group.setLayout(new FillLayout());
@@ -53,15 +43,15 @@ public class TransformationControls {
         group.setLayoutData(data);
     	
         if (paramInfo.isInParameter()) {
-	        UriGroupIn uriGroup = new UriGroupIn(group, Messages.TargetUriSelector_Uri);
+	        UriGroupIn uriGroup = new UriGroupIn(group, Messages.TargetUriSelector_Uri, validationRS);
 	        return uriGroup;
         }
         else if (paramInfo.isInOutParameter()) {
-        	UriGroupInOut uriGroup = new UriGroupInOut(group, Messages.TargetUriSelector_Uri);
+        	UriGroupInOut uriGroup = new UriGroupInOut(group, Messages.TargetUriSelector_Uri, validationRS);
             return uriGroup;
         }
         else {
-        	UriGroupOut uriGroup = new UriGroupOut(group, Messages.TargetUriSelector_Uri);
+        	UriGroupOut uriGroup = new UriGroupOut(group, Messages.TargetUriSelector_Uri, validationRS);
             return uriGroup;
         }
     }
@@ -128,37 +118,6 @@ public class TransformationControls {
         return text;
     }
     
-    public static IResource browseWorkspace(Object input, Object initialSelection, ViewerFilter filter, ISelectionStatusValidator validator, Shell shell, String title, String helpId) {
-        ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(
-                        shell,
-                        new WorkbenchLabelProvider(), new WorkbenchContentProvider());
-        dialog.setInput(input);
-        if (initialSelection!=null){
-                dialog.setInitialSelection(initialSelection);
-        }
-        
-        if(filter != null){
-            dialog.addFilter(filter);
-        }
-        
-        dialog.setComparator(FileViewerSorter.INSTANCE);
-        
-        dialog.setAllowMultiple(false);
-        dialog.setTitle(title);
-
-        if(validator != null){
-            dialog.setValidator(validator);
-        }
-        
-        dialog.create();
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(dialog.getShell(), helpId);
-        if(dialog.open() == Window.OK) {
-                return (IResource) dialog.getFirstResult();
-        }
-        
-        return null;
-    }
-    
     public static IStatus makeStatus(int code,String message){
         return new Status(code,CommonPlugin.ID,code,message,null);
     }
@@ -198,17 +157,4 @@ public class TransformationControls {
 
     public static final int GRID = 2;
     public static final int TEXT_GRID = 1;
-}
-
-class FileViewerSorter extends ViewerComparator {
-    @Override
-	public int category(Object element) {
-        if (element instanceof IFile) {
-            return 1;
-        }
-        
-        return 0;
-    }
-    
-    static FileViewerSorter INSTANCE = new FileViewerSorter();
 }

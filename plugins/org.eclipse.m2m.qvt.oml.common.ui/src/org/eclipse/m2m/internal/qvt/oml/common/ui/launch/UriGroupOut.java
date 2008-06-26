@@ -11,16 +11,19 @@
  *******************************************************************************/
  package org.eclipse.m2m.internal.qvt.oml.common.ui.launch;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jface.window.Window;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData.TargetType;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.IModelParameterInfo;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.IChooser;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.IDestinationChooser;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.IMetamodelHandler;
@@ -44,9 +47,10 @@ import org.eclipse.swt.widgets.Text;
  */
 public class UriGroupOut extends BaseUriGroup {
 	
-	public UriGroupOut(Composite parent, String name) {
+	public UriGroupOut(Composite parent, String name, ResourceSet validationRS) {
 		super(parent, SWT.NONE);
 		
+		myValidationRS = validationRS;
 		myData = new TargetUriData(""); //$NON-NLS-1$
 		myUpdating = false;
 		
@@ -150,7 +154,7 @@ public class UriGroupOut extends BaseUriGroup {
                 throw new RuntimeException("No handler for URI " + uri); //$NON-NLS-1$
             }
             else {
-                IChooser chooser = handler.getSourceDestChooser();
+                IChooser chooser = handler.getSourceDestChooser(myValidationRS);
                 ((IDestinationChooser) chooser).initNewName(baseName, extension);
                 
                 myActiveListener = new UriChooserListener(myUriText, chooser, shell);
@@ -170,8 +174,11 @@ public class UriGroupOut extends BaseUriGroup {
 			EObject oldObject = myObject;
 			
 			myObject = null;
+
+	        URI destUri = EmfUtil.makeUri(getText());
+            IFile file = destUri != null ? WorkspaceUtils.getWorkspaceFile(destUri) : null;
 			
-			TargetType targetType = EmfUtil.isUriExisted(getText()) ? TargetType.EXISTING_CONTAINER : TargetType.NEW_MODEL;
+			TargetType targetType = (file != null && file.exists()) ? TargetType.EXISTING_CONTAINER : TargetType.NEW_MODEL;
 			myData = new TargetUriData(targetType,
 					myUriText.getText().trim(),
 					myFeatureText.getText(),
@@ -230,7 +237,7 @@ public class UriGroupOut extends BaseUriGroup {
 			}
 			
 			try {
-				obj = EmfUtil.loadModel(uri);
+				obj = EmfUtil.loadModel(uri, myValidationRS);
 			}
 			catch(Exception e) {
 				obj = null;
@@ -260,6 +267,7 @@ public class UriGroupOut extends BaseUriGroup {
 	private TargetUriData myData;
 	private boolean myUpdating;
 	private EObject myObject;
+	private final ResourceSet myValidationRS;
 
 	private final Text myUriText;
 	private final Button myUriButton;

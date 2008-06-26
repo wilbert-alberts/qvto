@@ -237,7 +237,7 @@ public class UniSelectTransformationControl extends Composite {
             if (selection != null && selection.getFirstElement() instanceof IFile){
             	IFile ifile = (IFile) selection.getFirstElement();
                 myFileNameText.setText(ifile.getName());
-                myUri = URI.createFileURI(ifile.getFullPath().toOSString());
+                myUri = URI.createPlatformResourceURI(ifile.getFullPath().toOSString(), false);
             }
             else if (selection != null && selection.getFirstElement() instanceof CompiledTransformation){
             	CompiledTransformation transf = (CompiledTransformation) selection.getFirstElement();
