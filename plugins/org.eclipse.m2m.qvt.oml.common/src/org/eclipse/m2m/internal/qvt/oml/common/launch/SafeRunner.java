@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.common.launch;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.BaseProcess.IRunnable;
 
 
@@ -20,8 +19,8 @@ public class SafeRunner {
         public void run(BaseProcess.IRunnable r) throws Exception;
     }
     
-    public static BaseProcess.IRunnable getSafeRunnable(EClass[] classes, final BaseProcess.IRunnable r) {
-        final IRunner runner = getSafeRunner(classes);
+    public static BaseProcess.IRunnable getSafeRunnable(final BaseProcess.IRunnable r) {
+        final IRunner runner = SameThreadRunner.INSTANCE;
         return new BaseProcess.IRunnable() {
             public void run() throws Exception {
                 runner.run(r);
@@ -29,10 +28,6 @@ public class SafeRunner {
         };
     }
 
-    public static IRunner getSafeRunner(EClass[] classes) {
-        return SameThreadRunner.INSTANCE;
-    }
-    
     static class SameThreadRunner implements IRunner {
         public void run(IRunnable r) throws Exception {
             r.run();
