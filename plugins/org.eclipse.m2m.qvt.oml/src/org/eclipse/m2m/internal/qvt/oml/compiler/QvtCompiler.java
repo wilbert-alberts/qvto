@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
@@ -90,6 +91,12 @@ public class QvtCompiler {
 	
 	public ResourceSet getResourceSet() {
 		return resourceSet;
+	}
+	
+	public void cleanup() {
+		for (Resource res : getResourceSet().getResources()) {
+			res.unload();
+		}
 	}
 
 	/**

@@ -575,6 +575,8 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
             //myInheritanceTree = new InheritanceTree(getOperationalEnv(), new EmfClassifierProvider(getOperationalEnv()), metamodels);
         }
 
+		// create the default instance of StdLib, which is imported by default
+		createModuleDefaultInstance(QvtOperationalStdLibrary.INSTANCE.getLibaryModule(), getOperationalEvaluationEnv());        
         initAllModuleDefaultInstances(module, getOperationalEvaluationEnv());
 
         QvtOperationalEvaluationEnv evaluationEnv = getOperationalEvaluationEnv();

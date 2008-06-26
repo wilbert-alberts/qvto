@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CResourceRepositoryContext;
@@ -146,12 +147,12 @@ public class QvtOperationalFileEnv extends QvtOperationalEnv {
     	return myLibs == null ? Collections.<Module>emptyList() : Collections.unmodifiableList(myLibs);
 	} 
     
-	public Module defineNativeLibrary(Library lib) throws LibraryCreationException {
+	public Module defineNativeLibrary(Library lib, ResourceSet rs) throws LibraryCreationException {
 		if(myLibs == null) {
 			myLibs = new LinkedList<Module>();
 		}
 			 
-		Module libModule = LegacyNativeLibSupport.INSTANCE.defineLibrary(this, lib);
+		Module libModule = LegacyNativeLibSupport.INSTANCE.defineLibrary(this, lib, rs);
 		myLibs.add(libModule);
 		
 		Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();

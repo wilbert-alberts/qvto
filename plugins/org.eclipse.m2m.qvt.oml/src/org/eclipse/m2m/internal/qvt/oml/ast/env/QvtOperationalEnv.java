@@ -181,7 +181,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
      * @return the metamodel package denoted by the given <code>URI</code> or <code>null</code>
      * 	if no package was resolved 
      */
-	public List<EPackage> registerMetamodel(String metamodelUri, List<String> path) {
+	public List<EPackage> registerMetamodel(String metamodelUri, List<String> path, ResourceSet resolutionRS) {
         List<EPackage> metamodels = new ArrayList<EPackage>(1);
 		try {
 		    IMetamodelDesc[] desc = null;
@@ -220,7 +220,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	            MetamodelRegistry registry = getMetamodelRegistry();
 	            
 	            if (path.isEmpty()) {
-	                desc = new IMetamodelDesc[] { registry.getMetamodelDesc(metamodelUri) };
+	                desc = new IMetamodelDesc[] { registry.getMetamodelDesc(metamodelUri, 
+	                		myCompilerOptions != null && myCompilerOptions.getMetamodelResourceSet() != null ? myCompilerOptions.getMetamodelResourceSet() : resolutionRS) };
 	            }
 	            else {
 	                desc = registry.getMetamodelDesc(path);
