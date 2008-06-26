@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
@@ -35,8 +34,6 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.cst.adapters.ModelTypeMetamodelsAdapter;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
-import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
@@ -59,46 +56,6 @@ public abstract class QvtModule {
     public abstract CompiledModule getModule() throws MdaException;
 
     public abstract QvtCompiler getCompiler() throws MdaException;
-
-    public String getModuleName() throws MdaException {
-        return getModule().getModule().getName();
-    }
-
-
-    public EClass getIn() throws MdaException {
-        EClass inCls = getInType(getModule());
-        if (inCls != null) {
-            return inCls;
-        }
-        for (ModelParameter modelParam : getModule().getModule().getModelParameter()) {
-            if (modelParam.getKind() == DirectionKind.IN || modelParam.getKind() == DirectionKind.INOUT) {
-                List<EPackage> metamodels = ModelTypeMetamodelsAdapter.getMetamodels(modelParam.getEType());
-                if (!metamodels.isEmpty()) {
-                    return metamodels.get(0).eClass();
-                }
-                return null;
-            }
-        }	    
-        return null;
-    }
-
-
-    public EClass getOut() throws MdaException {
-        EClass outCls = getReturnType(getModule());
-        if (outCls != null) {
-            return outCls;
-        }
-        for (ModelParameter modelParam : getModule().getModule().getModelParameter()) {
-            if (modelParam.getKind() == DirectionKind.OUT) {
-                List<EPackage> metamodels = ModelTypeMetamodelsAdapter.getMetamodels(modelParam.getEType());
-                if (!metamodels.isEmpty()) {
-                    return metamodels.get(0).eClass();
-                }
-                return null;
-            }
-        }	    
-        return null;
-    }
 
     public List<TransformationParameter> getParameters() throws MdaException {
         Module module = getModule().getModule();
@@ -253,46 +210,11 @@ public abstract class QvtModule {
         return propSet;
     }
 
-    public static EClass getReturnType(CompiledModule module) {
-        ImperativeOperation mainMethod = (ImperativeOperation) module.getModule().getEntry();
-        if (mainMethod == null) {
-            return null;
-        }
-
-        if (mainMethod.getResult().isEmpty()) {
-            return null;
-        }
-        EClassifier type = mainMethod.getResult().get(0).getEType();
-        if (false == type instanceof EClass) {
-            return null;
-        }
-        return (EClass) type;
-    }
-
-
-    public static EClass getInType(CompiledModule module) {
-        ImperativeOperation mainMethod = (ImperativeOperation) module.getModule().getEntry();
-        if (mainMethod == null) {
-            return null;
-        }
-
-        List<EParameter> params = mainMethod.getEParameters();
-        if (params.isEmpty()) {
-            return null;
-        }
-        EClassifier type = params.get(0).getEType();
-        if (false == type instanceof EClass) {
-            return null;
-        }
-        return (EClass) type;
-    }
-
     /**
      * @return A string representation uniquely identifying the given QVT module.
      */
     @Override
     public abstract String toString();
-
 
     protected void checkModuleErrors(CompiledModule mappingModule) throws MdaException {
         List<QvtMessage> errors = new ArrayList<QvtMessage>();

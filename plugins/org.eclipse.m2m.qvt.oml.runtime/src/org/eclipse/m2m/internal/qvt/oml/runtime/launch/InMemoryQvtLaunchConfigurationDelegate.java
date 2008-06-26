@@ -78,6 +78,8 @@ public class InMemoryQvtLaunchConfigurationDelegate extends QvtLaunchConfigurati
                 context.put(QvtOperationalStdLibrary.OUT_PRINT_WRITER, printWriter);
 
             	QvtLaunchConfigurationDelegateBase.doLaunch(qvtTransformation, configuration, context);
+            	
+            	qvtTransformation.cleanup();
             }
         };
         

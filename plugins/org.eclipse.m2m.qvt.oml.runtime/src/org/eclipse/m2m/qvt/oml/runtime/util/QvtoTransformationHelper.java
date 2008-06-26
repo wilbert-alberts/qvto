@@ -123,6 +123,8 @@ public class QvtoTransformationHelper {
                 public void run() throws Exception {
             		QvtLaunchConfigurationDelegateBase.doLaunch(transf, inObjects, getConfiguration(inConfigProperties),
             				outExtents, outMainParams, outTraces, outConsole);
+            		
+            		transf.cleanup();
                 }
 
 				private IConfiguration getConfiguration(final Map<String, Object> inConfigProperties) {

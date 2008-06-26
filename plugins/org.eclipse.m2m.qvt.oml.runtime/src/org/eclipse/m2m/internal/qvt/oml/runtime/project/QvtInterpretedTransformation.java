@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EClass;
@@ -29,13 +28,13 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtEvaluationResult;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
-import org.eclipse.m2m.internal.qvt.oml.common.launch.SafeRunner;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
@@ -85,7 +84,7 @@ public class QvtInterpretedTransformation implements QvtTransformation {
         		}
         		transfParam = null;
         	}
-        	EObject mmClass = myModule.getIn();
+        	EObject mmClass = null;
         	if (transfParam != null) {
         		if (transfParam.getEntryType() != null) {
         			mmClass = transfParam.getEntryType();
@@ -114,15 +113,7 @@ public class QvtInterpretedTransformation implements QvtTransformation {
     }
 	
 	public String getModuleName() throws MdaException {
-		return myModule.getModuleName();
-	}
-
-	public EClass getIn() throws MdaException {
-		return myModule.getIn();
-	}
-
-	public EClass getOut() throws MdaException {
-		return myModule.getOut();
+		return myModule.getModule().getModule().getName();
 	}
 
 	public List<TransformationParameter> getParameters() throws MdaException {
@@ -133,16 +124,15 @@ public class QvtInterpretedTransformation implements QvtTransformation {
         return myModule.getConfigurationProperties();
     }
     
-    public static SafeRunner.IRunner getSafeRunner(CompiledModule module) throws CoreException {
-        EClass[] classes = new EClass[] {
-                QvtModule.getInType(module),
-                QvtModule.getReturnType(module),
-        };
-        
-        return SafeRunner.getSafeRunner(classes);
-    }
-    
-    protected QvtOperationalEnvFactory getEnvironmentFactory() {
+	public ResourceSet getResourceSet() throws MdaException {
+		return myModule.getCompiler().getResourceSet();
+	}
+
+	public void cleanup() throws MdaException {
+		myModule.getCompiler().cleanup();
+	}
+
+	protected QvtOperationalEnvFactory getEnvironmentFactory() {
     	return new QvtOperationalEnvFactory();
     }
     
@@ -171,4 +161,5 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 	}
     
     private final QvtModule myModule;
+
 }

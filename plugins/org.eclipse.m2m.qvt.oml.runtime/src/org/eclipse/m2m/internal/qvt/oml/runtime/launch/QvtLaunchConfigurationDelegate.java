@@ -62,6 +62,8 @@ public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelega
                     context.put(EvaluationContextProperties.MONITOR, execMonitor);
                     
                 	QvtLaunchConfigurationDelegateBase.doLaunch(qvtTransformation, configuration, context);
+                	
+                	qvtTransformation.cleanup();
                 }
             };
             

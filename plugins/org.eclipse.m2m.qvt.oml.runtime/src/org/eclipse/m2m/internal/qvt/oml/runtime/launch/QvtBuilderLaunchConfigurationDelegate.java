@@ -25,6 +25,7 @@ import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.LaunchConfigurationDelegate;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.BaseProcess;
@@ -39,6 +40,7 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.MetamodelHandlerMan
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtModule;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
@@ -84,7 +86,8 @@ public class QvtBuilderLaunchConfigurationDelegate extends LaunchConfigurationDe
         String moduleName = configuration.getAttribute(IQvtLaunchConstants.MODULE, ""); //$NON-NLS-1$
         final QvtInterpretedTransformation transformation;
 		try {
-			transformation = new QvtInterpretedTransformation(TransformationUtil.getQvtModule(EmfUtil.makeUri(moduleName)));
+			QvtModule qvtModule = TransformationUtil.getQvtModule(EmfUtil.makeUri(moduleName));
+			transformation = new QvtInterpretedTransformation(qvtModule);
 		} catch (MdaException e) {
             createMarker(project, NLS.bind(Messages.QvtBuilderLaunchTab_TransformationNotFound, moduleName));
             return;
@@ -102,6 +105,8 @@ public class QvtBuilderLaunchConfigurationDelegate extends LaunchConfigurationDe
                 context.put(QvtOperationalStdLibrary.OUT_PRINT_WRITER, printWriter);
 
                 QvtLaunchConfigurationDelegateBase.doLaunch(transformation, configuration, context);
+                
+                transformation.cleanup();
             }
         };
         
@@ -119,7 +124,7 @@ public class QvtBuilderLaunchConfigurationDelegate extends LaunchConfigurationDe
             return;
 		}
         
-        IMetamodelHandler handler = MetamodelHandlerManager.getInstance().getHandler(transformation.getOut());
+        IMetamodelHandler handler = MetamodelHandlerManager.getInstance().getHandler(EcorePackage.Literals.ECLASS);
         if(handler == null) {
             return;
         }
