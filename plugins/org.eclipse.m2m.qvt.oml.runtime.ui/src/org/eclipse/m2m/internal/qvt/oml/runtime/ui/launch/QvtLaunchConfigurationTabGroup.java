@@ -16,6 +16,8 @@ import org.eclipse.debug.ui.AbstractLaunchConfigurationTabGroup;
 import org.eclipse.debug.ui.CommonTab;
 import org.eclipse.debug.ui.ILaunchConfigurationDialog;
 import org.eclipse.debug.ui.ILaunchConfigurationTab;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.ITransformationMaker;
@@ -29,9 +31,14 @@ import org.eclipse.swt.widgets.Display;
 
 /** @author pkobiakov */
 public class QvtLaunchConfigurationTabGroup extends AbstractLaunchConfigurationTabGroup {
+	
+	public QvtLaunchConfigurationTabGroup() {
+        myValidationRS = new ResourceSetImpl();
+	}
+	
 	public void createTabs(ILaunchConfigurationDialog dialog, String mode) {
         ILaunchConfigurationTab[] tabs = new ILaunchConfigurationTab[] {
-                new QvtLauncherTab(TRANSFORMATION_MAKER),
+                new QvtLauncherTab(TRANSFORMATION_MAKER, myValidationRS),
                 new QvtTransformationConfigurationTab(TRANSFORMATION_MAKER),
                 new CommonTab()
 		};
@@ -58,4 +65,6 @@ public class QvtLaunchConfigurationTabGroup extends AbstractLaunchConfigurationT
             return new QvtInterpretedTransformation(qvtModule);
 		}
     };
+    
+    private final ResourceSet myValidationRS;
 }
