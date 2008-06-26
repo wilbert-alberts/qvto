@@ -11,9 +11,11 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
+
 public interface IMetamodelHandler {
     IResultSaver getSaver();
-    ISourceChooser getSourceChooser();
-    ISourceChooser getSourceAdaptableChooser();
-    IDestinationChooser getSourceDestChooser();
+    ISourceChooser getSourceChooser(ResourceSet rs);
+    ISourceChooser getSourceAdaptableChooser(ResourceSet rs);
+    IDestinationChooser getSourceDestChooser(ResourceSet rs);
 }

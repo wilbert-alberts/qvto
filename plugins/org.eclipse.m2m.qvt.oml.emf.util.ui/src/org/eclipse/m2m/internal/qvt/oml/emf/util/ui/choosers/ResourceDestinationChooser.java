@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.controls.IPathUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.controls.SelectFileControl;
 import org.eclipse.swt.widgets.Composite;
@@ -56,7 +57,7 @@ public class ResourceDestinationChooser extends ChooserAdapter implements IDesti
             return;
         }
         
-        IFile file = org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils.getFile(uri);
+        IFile file = WorkspaceUtils.getWorkspaceFile(uri);
         if(file == null) {
             return;
         }
