@@ -69,8 +69,12 @@ public class MetamodelRegistry {
 		ids.addAll(myMetamodelDescs.keySet());
 		return ids.toArray(new String[ids.size()]);
 	}
-	
+
 	public IMetamodelDesc getMetamodelDesc(String id) throws EmfException {
+		return getMetamodelDesc(id, null);
+	}
+	
+	public IMetamodelDesc getMetamodelDesc(String id, ResourceSet resolutionRS) throws EmfException {
 		IMetamodelDesc desc = myMetamodelDescs.get(id);
 
 		// hack for #35157 
@@ -99,7 +103,7 @@ public class MetamodelRegistry {
             // Unregistered platform metamodels, e.g. available via "platform:/resource" or "platform:/plugin"
             URI uri = URI.createURI(id);
             if (uri.isPlatform()) {
-                desc = MetamodelRegistry.createUndeclaredMetamodel(uri, id, new ResourceSetImpl());
+                desc = MetamodelRegistry.createUndeclaredMetamodel(uri, id, resolutionRS != null ? resolutionRS : new ResourceSetImpl());
             }
         }
         
@@ -117,6 +121,7 @@ public class MetamodelRegistry {
 	
     public static final IMetamodelDesc createUndeclaredMetamodel(URI uri, String id, ResourceSet rs) throws EmfException {
         try {
+        	int initialResourceCount = rs.getResources().size();
             Resource resource = rs.getResource(uri, true);
             if (resource != null) {
                 EObject metamodel = resource.getContents().get(0);
@@ -125,6 +130,11 @@ public class MetamodelRegistry {
 //                      TODO: registration in the map must be done
 //                      in case the changes of resource are listened out for  
 //                        myMetamodelDescs.put(id, desc);
+                }
+                for (int i = rs.getResources().size()-1; i >= initialResourceCount; --i) {
+                	Resource loadedResource = rs.getResources().get(i);
+                	loadedResource.unload();
+                	//rs.getResources().remove(i);
                 }
             }
         } catch (Exception e) {

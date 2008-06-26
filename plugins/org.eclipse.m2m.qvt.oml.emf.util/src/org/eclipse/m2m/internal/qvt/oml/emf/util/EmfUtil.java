@@ -18,6 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.notify.impl.NotificationChainImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -26,6 +27,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
@@ -77,17 +79,19 @@ public class EmfUtil {
         	return resource.getContents().get(0);
         }
         ResourceEObject resourceEObj = ModelparamFactory.eINSTANCE.createResourceEObject();
+        ((InternalEObject) resourceEObj).eSetResource((Resource.Internal) resource, new NotificationChainImpl());
+    	((InternalEObject) resourceEObj).eSetProxyURI(uri);
         resourceEObj.getChildren().addAll(resource.getContents());
 		return resourceEObj;
     }
     
-    public static EObject safeLoadModel(URI uri) {
-    	return safeLoadModel(uri, getDefaultLoadOptions());
+    public static EObject safeLoadModel(URI uri, ResourceSet rs) {
+    	return safeLoadModel(uri, getDefaultLoadOptions(), rs);
     }
     
-    public static EObject safeLoadModel(URI uri, Map options) {
+    public static EObject safeLoadModel(URI uri, Map options, ResourceSet rs) {
         try {
-            return loadModel(uri, options);
+            return loadModel(uri, options, rs);
         }
         catch(Exception e){
             return null;
@@ -156,12 +160,12 @@ public class EmfUtil {
         return in;
     }
 	
-	public static boolean isUriExisted(String textUri) {
+	public static boolean isUriExisted(String textUri, ResourceSet rs) {
         URI destUri = makeUri(textUri);
         if (destUri != null) {
         	EObject loadModel = null;
         	try {
-        		loadModel = loadModel(destUri);
+        		loadModel = loadModel(destUri, rs);
         	}
         	catch (Exception e) {
         	}
