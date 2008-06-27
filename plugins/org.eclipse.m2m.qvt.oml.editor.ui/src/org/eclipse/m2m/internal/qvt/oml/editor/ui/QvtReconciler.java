@@ -48,6 +48,10 @@ public class QvtReconciler extends MonoReconciler {
 		myEditor = textEditor;
 	}
 	
+	void doForceReconciling() {
+		super.forceReconciling();
+	}
+	
 	@Override
 	public void install(final ITextViewer textViewer) {
 		super.install(textViewer);

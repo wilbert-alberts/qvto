@@ -129,6 +129,7 @@ public class QvtConfiguration extends SourceViewerConfiguration {
 
 		QvtReconciler reconciler = new QvtReconciler(myEditor, strategy, false);
         reconciler.setDelay(RECONCILER_DELAY);
+        myEditor.setReconciler(reconciler);        
 		
         return reconciler;
     }
