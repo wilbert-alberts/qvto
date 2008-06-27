@@ -67,6 +67,8 @@ public class QvtEditor extends TextEditor {
 	public final static String ID = "org.eclipse.m2m.qvt.oml.editor.ui.QvtEditor"; //$NON-NLS-1$
     protected final static String MATCHING_BRACKETS = "matchingBrackets"; //$NON-NLS-1$
     protected final static String MATCHING_BRACKETS_COLOR = "matchingBracketsColor"; //$NON-NLS-1$
+
+    private QvtReconciler fReconciler;
     
     public QvtEditor() {
         myColorManager = new ColorManager();
@@ -78,6 +80,10 @@ public class QvtEditor extends TextEditor {
         
         QvtBuilder.addBuildListener(myBuildListener);        
     }
+    
+    void setReconciler(QvtReconciler reconciler) {
+		fReconciler = reconciler;
+	}
     
     @Override
     protected void initializeKeyBindingScopes() {
@@ -149,7 +155,16 @@ public class QvtEditor extends TextEditor {
         }
         return super.getAdapter(required);
     }
-        
+
+    /**
+     * Forces the reconciler of this editor to reconcile (if available)
+     */
+    public void forceReconciling() {
+    	if(fReconciler != null) {
+    		fReconciler.doForceReconciling();
+    	}
+    }
+    
     public ISourceViewer getSourceViewerOpened() {
         return getSourceViewer();
     }
