@@ -49,7 +49,7 @@ public class QvtSourceViewer extends ProjectionViewer {
 
         switch (operation) {
             case SHOW_OUTLINE:
-                if (myOutlinePresenter != null) {
+                if ((myOutlinePresenter != null) && (QvtQuickOutlineFactoryRegistry.getQvtQuickOutlineFactory() != null)) {
                     myOutlinePresenter.showInformation();
                 }
                 return;
