@@ -20,6 +20,8 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.qvt.oml.runtime.util.QvtoTransformationHelper;
@@ -46,7 +48,8 @@ public class ExecTransformationTestCase extends ApiTestCase {
 		for (URI uri : inputs) {
 			inObjects.add(EmfUtil.loadModel(uri));
 		}
-		TransfExecutionResult execResult = new QvtoTransformationHelper(scriptUri).executeTransformation(inObjects, Collections.<String, Object>emptyMap(), null);
+		ResourceSet metamodelResourceSet = inObjects.isEmpty() ? new ResourceSetImpl() : inObjects.get(0).eResource().getResourceSet();
+		TransfExecutionResult execResult = new QvtoTransformationHelper(scriptUri).executeTransformation(inObjects, Collections.<String, Object>emptyMap(), metamodelResourceSet);
 		
 		Iterator<ModelExtent> itrExt = execResult.getOutModelExtents().iterator();
 		for (URI uri : getData().getExpected(getProject())) {
