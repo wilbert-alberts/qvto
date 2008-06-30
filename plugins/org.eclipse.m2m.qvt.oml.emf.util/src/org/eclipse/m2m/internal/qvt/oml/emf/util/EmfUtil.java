@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -443,7 +444,19 @@ public class EmfUtil {
 		return false;
 	}
 	
-    
+	public static final boolean isUriMapped(ResourceSet resourceSet, URI uri) {
+	    if (uri != null) {
+	        URIConverter converter = resourceSet.getURIConverter();
+	        if (converter != null) {
+	            Map<URI, URI> uriMap = converter.getURIMap();
+	            if (uriMap != null) {
+	                return uriMap.containsKey(uri);
+	            }
+	        }
+	    }
+	    return false;
+	}
+	
     public static final Map DEFAULT_SAVE_OPTIONS = new HashMap();
     static {
     	DEFAULT_SAVE_OPTIONS.put(XMLResource.OPTION_ENCODING, "UTF-8"); //$NON-NLS-1$
