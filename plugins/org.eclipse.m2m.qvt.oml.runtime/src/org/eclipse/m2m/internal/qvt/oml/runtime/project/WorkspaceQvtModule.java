@@ -51,6 +51,10 @@ public class WorkspaceQvtModule extends QvtModule {
 		getModule();
 		return myCompiler;
 	}
+	
+    public IFile getTransformationFile() {
+        return myTransformationFile;
+    }
     
     private final IFile myTransformationFile;
     private CompiledModule myModule;
