@@ -18,7 +18,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
  * Created on Feb 26, 2008
  */
 public interface IResourceSetProvider {
-    public IUriMapResourceSetPair getUriMapResourceSetPair(CFile script);
+    public ResourceSet getResourceSet(CFile script);
     public void dispose(ResourceSet resourceSet);
     public void addResourceSetProviderListener(IResourceSetProviderListener listener);
     public boolean removeResourceSetProviderListener(IResourceSetProviderListener listener);
