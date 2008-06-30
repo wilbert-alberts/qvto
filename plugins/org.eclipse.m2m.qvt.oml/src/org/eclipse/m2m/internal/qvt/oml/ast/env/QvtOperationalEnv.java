@@ -42,12 +42,12 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.ValidationMessages;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.internal.qvt.oml.common.resourcesetprovider.IUriMapResourceSetPair;
 import org.eclipse.m2m.internal.qvt.oml.common.resourcesetprovider.ResourceSetProviderRegistry;
 import org.eclipse.m2m.internal.qvt.oml.common.resourcesetprovider.ResourceSetProviderRegistry.ResourceSetResourceSetProviderPair;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfException;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
@@ -195,10 +195,10 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	                    CFile cFile = fileEnv.getFile();
 	                    pair = ResourceSetProviderRegistry.getResourceSetResourceSetProviderPair(cFile);
 	                    if (pair != null) {
-	                        IUriMapResourceSetPair uriMapResourceSetPair = pair.getUriMapResourceSetPair();
+	                        ResourceSet providedResourceSet = pair.getResourceSet();
 	                        URI mmURI = URI.createURI(metamodelUri);
-                            if (uriMapResourceSetPair.isMapped(mmURI)) {
-                                resourceSet = uriMapResourceSetPair.getResourceSet();
+                            if (EmfUtil.isUriMapped(providedResourceSet, mmURI)) {
+                                resourceSet = providedResourceSet;
 	                        }
 	                    }
 		            }
