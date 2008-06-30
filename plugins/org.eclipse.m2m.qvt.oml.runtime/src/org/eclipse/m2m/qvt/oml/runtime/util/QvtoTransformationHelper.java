@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
@@ -110,6 +111,9 @@ public class QvtoTransformationHelper {
 		
 	public TransfExecutionResult executeTransformation(final List<EObject> inObjects, final Map<String, Object> inConfigProperties, ResourceSet metamodelResourceSet) throws CoreException {
         try {
+            if (metamodelResourceSet == null) {
+                metamodelResourceSet = new ResourceSetImpl();
+            }
             ResourceSet wrappedMetamodelResourceSet = metamodelResourceSet; 
             QvtModule qvtModule = TransformationUtil.getQvtModule(myTransfUri);
             if (qvtModule instanceof WorkspaceQvtModule) {
