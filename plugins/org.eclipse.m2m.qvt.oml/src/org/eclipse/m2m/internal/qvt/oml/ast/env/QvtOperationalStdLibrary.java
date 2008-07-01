@@ -22,6 +22,8 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl;
@@ -79,6 +81,16 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 		fTypeAliasMap = createTypeAliasMap(fEnv);		
 		
 		((ModuleImpl)fStdlibModule).freeze();
+
+		new EPackageImpl() {
+			@Override
+			protected Resource createResource(String uri) {
+				Resource createResource = super.createResource(uri);
+				createResource.getContents().add(fStdlibModule);
+				return createResource;
+			}
+		}.createResource(ExpressionsPackage.eNS_URI + '/' + QVT_STDLIB_MODULE_NAME);
+		
 
 		modelOperations = new ModelOperations(this);
 		anyOperations = new OclAnyOperations(this);		
