@@ -48,6 +48,7 @@ public class QvtCompilerKernel {
     public Module createModule(MappingModuleCS mmas, QvtCompilerOptions options, 
             EcoreEnvironment env, CFile cFile) {
         Module module = ExpressionsFactory.eINSTANCE.createModule();
+        module.setEFactoryInstance(ExpressionsFactory.eINSTANCE);
         mySyntaxToSemanticMap.put(mmas, module);
 
         // AST binding
