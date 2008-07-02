@@ -82,7 +82,8 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
 
     protected static IFile getModuleFile(ILaunchConfiguration configuration) throws CoreException {
         String moduleFileName = configuration.getAttribute(IQvtLaunchConstants.MODULE, ""); //$NON-NLS-1$
-        IFile moduleFile = WorkspaceUtils.getWorkspaceFile(moduleFileName);
+        URI moduleUri = URI.createURI(moduleFileName);
+        IFile moduleFile = WorkspaceUtils.getWorkspaceFile(moduleUri);
         if(moduleFile == null) {
         	IStatus errorStatus = MiscUtil.makeErrorStatus( 
         			NLS.bind(Messages.QvtLaunchConfigurationDelegate_transformationFileNotFound, moduleFileName));
