@@ -208,8 +208,12 @@ public class SourceDestinationChooser extends ElementTreeSelectionDialog {
 					(container instanceof IProject && !container.getFullPath().equals(namespace.getFullPath())) ) {
 					
 					status = QVTUIPlugin.createStatus(IStatus.ERROR, "Not a source container selection", null); //$NON-NLS-1$							
-				} else {
-					status = QVTUIPlugin.createStatus(IStatus.OK, "", null); //$NON-NLS-1$ 
+				} else if(container != null) {
+					if(!container.exists()) {
+						status = QVTUIPlugin.createStatus(IStatus.ERROR, "Source container does not exist", null); //$NON-NLS-1$
+					} else {
+						status = QVTUIPlugin.createStatus(IStatus.OK, "", null); //$NON-NLS-1$
+					}
 				}
 				
 				if(status.isOK()) {
@@ -263,7 +267,9 @@ public class SourceDestinationChooser extends ElementTreeSelectionDialog {
 		
 		public Object[] getChildren(Object o) {			
 			try {
-				return resource.members();
+				if(resource.exists()) {
+					return resource.members();
+				}
 			} catch (CoreException e) {
 				QVTUIPlugin.log(e.getStatus());
 			}

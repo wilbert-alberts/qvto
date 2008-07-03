@@ -78,7 +78,7 @@ public class QvtSettingsPropertyPage extends PropertyPage {
 
     			setValid(fSrcContainerBlock.isValid());    			
     			if(!status.isOK()) {
-    				setErrorMessage(status.getMessage());
+    				setMessage(status.getMessage(), Util.getIMessageProviderSeverity(status));
     			}
     		}
     	};

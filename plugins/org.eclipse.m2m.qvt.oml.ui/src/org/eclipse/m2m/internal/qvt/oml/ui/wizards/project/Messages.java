@@ -52,7 +52,7 @@ public class Messages extends NLS {
 
 	public static String QvtSettingsPropertyPage_NoBuilder;	
 	public static String QvtSettingsPropertyPage_SourceContainerLabel;
-	public static String QvtSettingsPropertyPage_InvalidContainer;
+	public static String QvtSettingsPropertyPage_ContainerDoesNotExist;
 	public static String QvtSettingsPropertyPage_BrowseLabel;
 	public static String QvtSettingsPropertyPage_SourceContainerSelection;
 	public static String QvtSettingsPropertyPage_SelectSourceContainerFolder;
