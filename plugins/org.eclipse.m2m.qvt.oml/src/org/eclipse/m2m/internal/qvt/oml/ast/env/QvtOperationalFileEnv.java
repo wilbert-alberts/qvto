@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
+import org.eclipse.m2m.internal.qvt.oml.common.io.CFolder;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CResourceRepositoryContext;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerKernel;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
@@ -98,8 +99,13 @@ public class QvtOperationalFileEnv extends QvtOperationalEnv {
         return myFile.getUnitName();
 	}
 
-	public String getExpectedPackageName() {
-		return getKernel().getExpectedPackageName(myFile.getParent());
+	public String getExpectedPackageName() {		
+		CFolder parent = myFile.getParent();
+		if(parent == null) {
+			// the default namespace
+			return ""; //$NON-NLS-1$
+		}
+		return getKernel().getExpectedPackageName(parent);
 	}
 	
     public Module getModule(MappingModuleCS mmas) {
