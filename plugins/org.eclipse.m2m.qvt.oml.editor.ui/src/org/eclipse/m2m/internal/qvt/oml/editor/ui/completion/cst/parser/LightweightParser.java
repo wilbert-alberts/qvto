@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.6 2008/05/26 18:39:24 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.6.2.1 2008/07/04 16:12:59 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.6 2008/05/26 18:39:24 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.6.2.1 2008/07/04 16:12:59 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -2988,7 +2988,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 				}
 					
 				result.getMappingExtension().addAll(((EList<MappingExtensionCS>)dtParser.getSym(4)));
-				setOffsets(result, getIToken(dtParser.getToken(2)), getIToken(dtParser.getToken(9)));
+				setOffsets(result, getIToken(dtParser.getToken(2)), getIToken(dtParser.getToken(10)));
 				dtParser.setSym1(result);
 	  		  break;
 			}
