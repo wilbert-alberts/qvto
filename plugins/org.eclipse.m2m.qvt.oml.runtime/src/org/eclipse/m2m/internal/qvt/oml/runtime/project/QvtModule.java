@@ -54,6 +54,7 @@ public abstract class QvtModule {
     }
 
     public abstract CompiledModule getModule() throws MdaException;
+    public abstract CompiledModule getModule(boolean isCheckErrors) throws MdaException;
 
     public abstract QvtCompiler getCompiler() throws MdaException;
 
