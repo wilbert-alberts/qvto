@@ -41,7 +41,7 @@ public class DeployedQvtModule extends QvtModule {
 	}
 	
     @Override
-	public CompiledModule getModule() throws MdaException {
+	public CompiledModule getModule(boolean isCheckErrors) throws MdaException {
         if (myModule == null) {           
             IImportResolver importResolver = new DeployedImportResolver();
         	CFile srcFile = importResolver.resolveImport(moduleID);
@@ -58,13 +58,20 @@ public class DeployedQvtModule extends QvtModule {
             }
             CompiledModule module = qvtCompiler.compile(srcFile, options, null).getModule();
             
-            checkModuleErrors(module);
+            if (isCheckErrors) {
+            	checkModuleErrors(module);
+            }
             
             myModule = module;
             myCompiler = qvtCompiler;
         }
         
         return myModule;
+    }
+    
+    @Override
+	public CompiledModule getModule() throws MdaException {
+    	return getModule(true);
     }
     
 	@Override

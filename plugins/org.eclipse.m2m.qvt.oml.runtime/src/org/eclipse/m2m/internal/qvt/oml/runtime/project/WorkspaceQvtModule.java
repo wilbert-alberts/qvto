@@ -32,18 +32,25 @@ public class WorkspaceQvtModule extends QvtModule {
     }
     
     @Override
-	public CompiledModule getModule() throws MdaException {
+	public CompiledModule getModule(boolean isCheckErrors) throws MdaException {
         if(myModule == null) {
             QvtEngine engine = QvtEngine.getInstance(myTransformationFile); 
             CompiledModule module = engine.compile(myTransformationFile, null, getQvtCompilerOptions());
             
-            checkModuleErrors(module);
+            if (isCheckErrors) {
+            	checkModuleErrors(module);
+            }
             
             myModule = module;
             myCompiler = engine.getCompiler();
         }
         
         return myModule;
+    }
+
+    @Override
+	public CompiledModule getModule() throws MdaException {
+    	return getModule(true);
     }
     
 	@Override
