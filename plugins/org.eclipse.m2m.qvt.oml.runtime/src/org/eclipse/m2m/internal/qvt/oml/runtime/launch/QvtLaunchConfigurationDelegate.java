@@ -19,9 +19,12 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.DebugException;
+import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
+import org.eclipse.debug.core.IStatusHandler;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.ShallowProcess;
@@ -32,10 +35,14 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.EvaluationMonitor;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
+import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 
 public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelegateBase {
+
+	public static final int LAUNCH_ERROR_CODE = 210;
+    public static final IStatus fgLaunchErrorStatus = new Status(IStatus.ERROR, QvtRuntimePlugin.ID, LAUNCH_ERROR_CODE, "Launch configuration error", null); //$NON-NLS-1$	
 	
 	public QvtLaunchConfigurationDelegate() {
 	}
@@ -98,6 +105,18 @@ public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelega
 					} catch (Exception e) {
 						if(e instanceof QvtRuntimeException == false) {
 							// QVT runtime exception are legal QVT transformation level errors
+							
+							IStatusHandler statusHandler = DebugPlugin.getDefault().getStatusHandler(fgLaunchErrorStatus);
+							if(statusHandler != null) {
+								IStatus actualStatus = new Status(IStatus.ERROR, QvtRuntimePlugin.ID, LAUNCH_ERROR_CODE, 
+														e.getMessage(), e.getMessage() == null ? e : null);
+								try {
+									statusHandler.handleStatus(actualStatus, configuration);
+								} catch (CoreException coreExc) {
+									QvtPlugin.log(coreExc);
+								}
+							}						
+							
 							QvtPlugin.log(e);							
 						}
 					}
