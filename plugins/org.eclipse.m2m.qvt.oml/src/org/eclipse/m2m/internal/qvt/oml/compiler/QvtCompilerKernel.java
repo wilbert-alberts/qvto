@@ -11,6 +11,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsFactoryImpl;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 
 /**
@@ -48,7 +49,7 @@ public class QvtCompilerKernel {
     public Module createModule(MappingModuleCS mmas, QvtCompilerOptions options, 
             EcoreEnvironment env, CFile cFile) {
         Module module = ExpressionsFactory.eINSTANCE.createModule();
-        module.setEFactoryInstance(ExpressionsFactory.eINSTANCE);
+        module.setEFactoryInstance(new ExpressionsFactoryImpl());
         mySyntaxToSemanticMap.put(mmas, module);
 
         // AST binding
