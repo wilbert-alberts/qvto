@@ -57,7 +57,7 @@ public class QvtOperationalResourceImpl extends XMIResourceImpl {
     		
             try {
             	URI normalizedUri = getURIConverter().normalize(getURI());
-            	CompiledModule compiledModule = TransformationUtil.getQvtModule(normalizedUri).getModule();
+            	CompiledModule compiledModule = TransformationUtil.getQvtModule(normalizedUri).getModule(false);
 				fillCompilationDiagnostic(compiledModule, normalizedUri);
 
 				if (compiledModule.getModule() == null) {
@@ -88,9 +88,8 @@ public class QvtOperationalResourceImpl extends XMIResourceImpl {
 		for (QvtMessage msg : compiledModule.getWarnings()) {
 			warnings.add(new Diagnostic(msg.getMessage(), uri.toString()));
 		}
-		errors = getErrors();
 		for (QvtMessage msg : compiledModule.getErrors()) {
-			errors.add(new QvtCompilationErrorException(msg, uri.toString()));
+			warnings.add(new QvtCompilationErrorException(msg, uri.toString()));
 		}
 	}
 
