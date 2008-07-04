@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.6 2008/05/26 18:39:17 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.7 2008/07/04 15:49:55 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -374,7 +374,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.6 2008/05/26 18:39:17 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.7 2008/07/04 15:49:55 aigdalov Exp $
  */
 	./
 $End
@@ -1228,7 +1228,7 @@ $Rules
 					}
 						
 					result.getMappingExtension().addAll(((EList<MappingExtensionCS>)dtParser.getSym(4)));
-					setOffsets(result, getIToken($getToken(2)), getIToken($getToken(9)));
+					setOffsets(result, getIToken($getToken(2)), getIToken($getToken(10)));
 					$setResult(result);
 		  $EndJava
 		./
