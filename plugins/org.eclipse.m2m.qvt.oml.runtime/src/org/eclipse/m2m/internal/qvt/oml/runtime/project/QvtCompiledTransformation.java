@@ -27,8 +27,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
+import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.project.CompiledTransformation;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.QvtConfigurationProperty;
 
@@ -70,7 +71,9 @@ public class QvtCompiledTransformation implements QvtTransformation, CompiledTra
     }
     
     public String getId() {
-        return myId;
+        IImportResolver importResolver = new DeployedImportResolver();
+    	CFile srcFile = importResolver.resolveImport(myId);
+        return srcFile != null ? srcFile.toString() : myId;
     }
 
     public String getNamespace() {
@@ -104,15 +107,15 @@ public class QvtCompiledTransformation implements QvtTransformation, CompiledTra
     	return myId;
     }
 
-    private static String toString(TransformationParameter param) {
-    	if (param.getEntryType() != null) {
-    		return EmfUtil.getFullName(param.getEntryType());
-    	}
-    	if (param.getMetamodels().isEmpty()) {
-    		return param.getName();
-    	}
-        return EmfUtil.getFullName(param.getMetamodels().get(0));
-    }
+//    private static String toString(TransformationParameter param) {
+//    	if (param.getEntryType() != null) {
+//    		return EmfUtil.getFullName(param.getEntryType());
+//    	}
+//    	if (param.getMetamodels().isEmpty()) {
+//    		return param.getName();
+//    	}
+//        return EmfUtil.getFullName(param.getMetamodels().get(0));
+//    }
 
     @Override
 	public boolean equals(Object obj) {

@@ -85,9 +85,9 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         URI moduleUri = URI.createURI(moduleFileName);
         IFile moduleFile = WorkspaceUtils.getWorkspaceFile(moduleUri);
         if(moduleFile == null) {
-        	IStatus errorStatus = MiscUtil.makeErrorStatus( 
-        			NLS.bind(Messages.QvtLaunchConfigurationDelegate_transformationFileNotFound, moduleFileName));
-        	throw new CoreException(errorStatus);
+        	//IStatus errorStatus = MiscUtil.makeErrorStatus( 
+        		//	NLS.bind(Messages.QvtLaunchConfigurationDelegate_transformationFileNotFound, moduleFileName));
+        	//throw new CoreException(errorStatus);
         }
         
         return moduleFile;
