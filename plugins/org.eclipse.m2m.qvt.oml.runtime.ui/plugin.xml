@@ -76,6 +76,15 @@
 	   </statusHandler>
 	 </extension>
 
+	<extension point="org.eclipse.debug.core.statusHandlers">
+	   <statusHandler 
+	      id="org.eclipse.m2m.qvt.oml.internal.runtime.ui.launch.ConfigurationErrorHandler"
+	      class="org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch.ConfigurationErrorHandler"
+	      plugin="org.eclipse.m2m.qvt.oml.runtime"
+	      code="210">
+	   </statusHandler>
+	 </extension>
+
     <extension point="org.eclipse.debug.ui.launchConfigurationTypeImages">        
         <launchConfigurationTypeImage
             icon="icons/launch_config.gif"
