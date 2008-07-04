@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.4.2.1 2008/06/25 11:41:58 sboyko Exp $
+* $Id: QvtOpLPGParser.java,v 1.4.2.2 2008/07/04 16:13:05 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.4.2.1 2008/06/25 11:41:58 sboyko Exp $
+* $Id: QvtOpLPGParser.java,v 1.4.2.2 2008/07/04 16:13:05 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -2983,7 +2983,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 				}
 					
 				result.getMappingExtension().addAll(((EList<MappingExtensionCS>)dtParser.getSym(4)));
-				setOffsets(result, getIToken(dtParser.getToken(2)), getIToken(dtParser.getToken(9)));
+				setOffsets(result, getIToken(dtParser.getToken(2)), getIToken(dtParser.getToken(10)));
 				dtParser.setSym1(result);
 	  		  break;
 			}
