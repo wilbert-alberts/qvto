@@ -30,6 +30,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.project.CompiledTransformation;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.QvtConfigurationProperty;
 
@@ -71,9 +72,16 @@ public class QvtCompiledTransformation implements QvtTransformation, CompiledTra
     }
     
     public String getId() {
+        return myId;
+    }
+
+    public URI getUri() {
         IImportResolver importResolver = new DeployedImportResolver();
     	CFile srcFile = importResolver.resolveImport(myId);
-        return srcFile != null ? srcFile.toString() : myId;
+    	if (srcFile != null) {
+    		return EmfUtil.makeUri(srcFile.toString()); 
+    	}
+        return URI.createPlatformPluginURI(myId, false);
     }
 
     public String getNamespace() {
