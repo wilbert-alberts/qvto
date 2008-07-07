@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
@@ -40,6 +41,7 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransforma
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.QvtRuntimePluginImages;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.QvtRuntimeUIPlugin;
 import org.eclipse.osgi.util.NLS;
@@ -150,33 +152,49 @@ public class RunInterpretedTransformationWizard extends PersistedValuesWizard {
 
         myTransformationParametersPage.applyConfiguration(workingCopy);
         
-		//InMemoryLaunchUtils.setAttribute(workingCopy, IQvtLaunchConstants.DONE_ACTION, createShowResultAction(data));
+		if (myTransformationParametersPage.isOpenInEditor()) {
+			List<TargetUriData> targetUris = QvtLaunchUtil.getTargetUris(workingCopy);
+			InMemoryLaunchUtils.setAttribute(workingCopy, IQvtLaunchConstants.DONE_ACTION, createShowResultAction(targetUris));
+		}
         
         workingCopy.setAttribute(IQvtLaunchConstants.CONFIGURATION_PROPERTIES, myTransformationData.getConfiguration());
 
         return workingCopy;
     }
 
-	@SuppressWarnings("unused")
-	private static Runnable createShowResultAction(final ApplyTransformationData data) {
-		if (!data.isOpenEditor()) {
+	private Runnable createShowResultAction(final List<TargetUriData> targetUris) {
+		if (myTransformation == null) {
 			return null;
 		}
 		return new Runnable() {
 							
 			public void run() {
 				IWorkbenchPage page = QvtRuntimeUIPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage();
-                TargetUriData targetData = data.getTargetData();
-				IMetamodelHandler handler = MetamodelHandlerManager.getInstance().getHandler(String.valueOf(targetData.getUri()));
-                EObject result = EmfUtil.loadModel(targetData.getUri());
-                if (result == null) {
-                	return;
-                }
-                try {
-					handler.getSaver().select(result, page);
-				} catch (Exception e) {
-					String message = Messages.LaunchWorkspaceTransformationWizard_ShowResultError;
-		            Logger.getLogger().log(Logger.SEVERE, message, e); 
+				
+		        Iterator<TargetUriData> itrTargetData = targetUris.iterator();
+				try {
+					for (TransformationParameter transfParam : myTransformation.getParameters()) {
+						if (!itrTargetData.hasNext()) {
+							break;
+						}
+						TargetUriData targetData = itrTargetData.next();
+						if (transfParam.getDirectionKind() == DirectionKind.IN) {
+							continue;
+						}
+						
+						IMetamodelHandler handler = MetamodelHandlerManager.getInstance().getHandler(String.valueOf(targetData.getUri()));
+					    EObject result = EmfUtil.loadModel(targetData.getUri());
+					    if (result == null) {
+					    	return;
+					    }
+					    try {
+							handler.getSaver().select(result, page);
+						} catch (Exception e) {
+					        Logger.getLogger().log(Logger.SEVERE, Messages.LaunchWorkspaceTransformationWizard_ShowResultError, e); 
+						}
+					}
+				} catch (MdaException e) {
+			        Logger.getLogger().log(Logger.SEVERE, Messages.LaunchWorkspaceTransformationWizard_ShowResultError, e); 
 				}
 			}
 			
