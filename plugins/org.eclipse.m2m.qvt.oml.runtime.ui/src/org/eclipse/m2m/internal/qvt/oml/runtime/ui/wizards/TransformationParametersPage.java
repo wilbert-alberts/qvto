@@ -208,6 +208,10 @@ public class TransformationParametersPage extends WizardPage {
 		workingCopy.setAttribute(IQvtLaunchConstants.TRACE_FILE, myTraceFile.getText());
 		workingCopy.setAttribute(IQvtLaunchConstants.USE_TRACE_FILE, myTraceFile.getUseFileFlag());
 	}
+	
+	public boolean isOpenInEditor() {
+		return myOpenEditor.getSelection();
+	}
     
 	protected boolean validatePage() {
         if (myTransformation == null) {
