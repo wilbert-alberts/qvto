@@ -145,12 +145,19 @@ public class UniSelectTransformationControl extends Composite {
         }
         
 		if (uri.isPlatformPlugin()) {
-			//final String transfId = uri.toPlatformString(false).replace("/", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			for (CompiledTransformation compiledTransf : myCompiledTransformations) {
-				if (compiledTransf.getId().equals(uri.toString())) {
+				if (compiledTransf.getUri().equals(uri)) {
 		            StructuredSelection sel = new StructuredSelection(new Object[] {compiledTransf});
 		            myViewer.setSelection(sel);
-		            break;
+		            return;
+				}
+			}
+			final String transfId = uri.toPlatformString(false).replace("/", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			for (CompiledTransformation compiledTransf : myCompiledTransformations) {
+				if (compiledTransf.getId().equals(transfId)) {
+		            StructuredSelection sel = new StructuredSelection(new Object[] {compiledTransf});
+		            myViewer.setSelection(sel);
+		            return;
 				}
 			}
 		}
@@ -241,8 +248,8 @@ public class UniSelectTransformationControl extends Composite {
             }
             else if (selection != null && selection.getFirstElement() instanceof CompiledTransformation){
             	CompiledTransformation transf = (CompiledTransformation) selection.getFirstElement();
-                myFileNameText.setText(transf.getId());
-                myUri = URI.createURI(transf.getId(), false);
+                myUri = transf.getUri();
+                myFileNameText.setText(myUri.toString());
             }
             
             fileSelectionChanged(myUri);
