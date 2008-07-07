@@ -11,8 +11,12 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.common.project;
 
+import org.eclipse.emf.common.util.URI;
+
 public interface CompiledTransformation extends Transformation {
 
 	String getId();
+	
+	URI getUri();
 	
 }
