@@ -102,7 +102,7 @@ class SourceContainerConfigBlock {
         
         fSourceField.addModifyListener(new ModifyListener() {
             public void modifyText(ModifyEvent e) {
-                containerChanged();
+                updateStatus();
                 fStatusListener.statusChanged(fStatus);
                 if(fMoveExistingButton != null) {
                 	fMoveExistingButton.setEnabled(isContainerChanged());
@@ -186,6 +186,9 @@ class SourceContainerConfigBlock {
         
         try {        	
             fBuilderConfig.save();
+            updateStatus();
+            fStatusListener.statusChanged(fStatus);
+            
         } catch (CoreException e) {
         	setError(Messages.SourceContainerConfigBlock_saveBuilderConfigError, e, true);
             return false;
@@ -198,7 +201,7 @@ class SourceContainerConfigBlock {
     	fSourceField.setText(""); //$NON-NLS-1$
     }
     
-    private void containerChanged() {
+    private void updateStatus() {
 		this.fStatus = Status.OK_STATUS;
 
 		fSourceContainer = null;
