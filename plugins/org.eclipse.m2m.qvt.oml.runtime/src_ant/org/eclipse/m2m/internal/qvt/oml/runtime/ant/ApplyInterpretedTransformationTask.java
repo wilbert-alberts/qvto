@@ -11,8 +11,13 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.ant;
 
+import org.apache.tools.ant.BuildException;
+import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
+import org.eclipse.osgi.util.NLS;
 
 
 /**
@@ -24,6 +29,15 @@ public class ApplyInterpretedTransformationTask extends AbstractApplyTransformat
     
     @Override
 	protected QvtTransformation getTransformationObject() {
-        return new QvtInterpretedTransformation(resolveFile(getTransformation()));
+        try {
+			return new QvtInterpretedTransformation(TransformationUtil.getQvtModule(EmfUtil.makeUri(getTransformation())));
+		} catch (MdaException e) {
+            throw new BuildException(
+                    NLS.bind(
+                            org.eclipse.m2m.internal.qvt.oml.runtime.ant.Messages.AbstractApplyTransformationTask_File_not_found, 
+                            getTransformation()
+                        )
+                    );
+		}
     }
 }
