@@ -183,10 +183,10 @@ public abstract class AbstractApplyTransformationTask extends Task {
         
         final List<URI> inUris = new ArrayList<URI>();
         final List<URI> outUris = new ArrayList<URI>();
+        final QvtTransformation transf = getTransformationObject();
         try {
             ShallowProcess.IRunnable r = new ShallowProcess.IRunnable() {
                 public void run() throws Exception {
-                    QvtTransformation transf = getTransformationObject();
                 	List<EObject> inObjects = new ArrayList<EObject>();
                 	List<TargetUriData> targetData = new ArrayList<TargetUriData>();
                 	
@@ -215,7 +215,7 @@ public abstract class AbstractApplyTransformationTask extends Task {
                 }
             };
             
-            r = QvtLaunchConfigurationDelegateBase.getSafeRunnable(getTransformationObject(), r);
+            r = QvtLaunchConfigurationDelegateBase.getSafeRunnable(transf, r);
             
             r.run();
             
