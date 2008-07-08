@@ -87,7 +87,7 @@ public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelega
 
             	@Override
             	public boolean isTerminated() {            	
-            		return isTerminated;
+            		return isTerminated || super.isTerminated();
             	}
             	
             	@Override
