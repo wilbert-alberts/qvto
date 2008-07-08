@@ -1560,12 +1560,14 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 
     private Object getOutOwner(final ObjectExp objectExp) {
         Object owner = getRuntimeValue(objectExp.getName()); 
-        if (owner != null && objectExp.getType() instanceof CollectionType == false) {
-            if (!oclIsKindOf(owner, objectExp.getType())) {
-                throw new RuntimeException(MessageFormat.format(
-                        EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_InvalidObjectExpType, new Object[] {
-                                objectExp.getName(), owner, objectExp.getType() }));
-            }
+        if (owner != null) {
+        	if (objectExp.getType() instanceof CollectionType == false) {
+	            if (!oclIsKindOf(owner, objectExp.getType())) {
+	                throw new RuntimeException(MessageFormat.format(
+	                        EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_InvalidObjectExpType, new Object[] {
+	                                objectExp.getName(), owner, objectExp.getType() }));
+	            }
+        	}
         } else {
         	owner = createInstance(objectExp.getType(), objectExp.getExtent());
         	if(objectExp.getName() != null) {
