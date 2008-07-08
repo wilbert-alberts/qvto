@@ -147,7 +147,7 @@ public class QvtBuilderConfig {
 			for (int i = 0; i < referencedProjects.length; i++) {
 				IProject nextProject = referencedProjects[i];
 				if(nextProject.isOpen() && nextProject.hasNature(TransformationNature.ID)) {
-					containers.add(nextProject);
+					containers.add(getConfig(nextProject).getSourceContainer());
 				}
 			}
 		} catch (CoreException e) {
