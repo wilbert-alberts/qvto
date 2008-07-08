@@ -9,6 +9,7 @@ main() {
 	m.rootObjects()[EPackage]->map fooDefaultInstantiate();	 	
 	m.rootObjects()[EPackage]->map fooExplicitInstantiate();	
 	m.rootObjects()[EPackage]->map fooNestedExplicitInistantiate();
+	m.rootObjects()[EPackage]->map fooInitEndConcordance();
 }
 
 
@@ -62,4 +63,19 @@ mapping EPackage::fooNestedExplicitInistantiate() : Sequence(Sequence(EClass)) {
 			c2
 		} };	
 	}	
+}
+
+mapping EPackage::fooInitEndConcordance() : Set(EClass) {
+	init {
+		var eClass := object EClass { name := 'fooInitEndConcordance' };
+		var resObj := Set { eClass };
+		result := resObj;
+		assert fatal (result->notEmpty());
+		assert fatal (result->count(eClass) = 1);
+	}
+	end {
+		assert fatal (result = resObj);
+		assert fatal (result->notEmpty());
+		assert fatal (result->count(eClass) = 1);
+	}
 }

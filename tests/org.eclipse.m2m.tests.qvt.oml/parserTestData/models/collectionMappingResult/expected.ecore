@@ -5,4 +5,5 @@
   <ecore:EClass name="fooExplicitInstantiate2"/>
   <ecore:EClass name="fooNestedExplicitInistantiate1"/>
   <ecore:EClass name="fooNestedExplicitInistantiate2"/>
+  <ecore:EClass name="fooInitEndConcordance"/>
 </xmi:XMI>
