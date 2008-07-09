@@ -137,6 +137,14 @@ public class QvtBuilderConfig {
 		}
     }
     
+    public void addTransformationNature() {
+        try {
+			NatureUtils.addNature(myProject, TransformationNature.ID);
+		} catch (CoreException e) {
+			QvtPlugin.log(e.getStatus());
+		}
+    }
+    
     public IContainer[] getQvtContainers() {
         List<IContainer> containers = new ArrayList<IContainer>();        
         //containers.add(myProject);
