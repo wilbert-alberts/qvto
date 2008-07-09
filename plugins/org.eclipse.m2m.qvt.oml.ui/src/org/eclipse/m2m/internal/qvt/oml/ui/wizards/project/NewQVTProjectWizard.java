@@ -242,9 +242,9 @@ public class NewQVTProjectWizard extends Wizard implements INewWizard, IExecutab
         	SourceContainerUpdater.ensureDestinationExists((IFolder)srcContainer, monitor);    		
     	}
     	
-    	QvtBuilderConfig.getConfig(createdProject).setSourceContainer(srcContainer);
-    	
-        NatureUtils.addNature(createdProject, TransformationNature.ID);
+    	QvtBuilderConfig qvtConfig = QvtBuilderConfig.getConfig(createdProject);
+    	qvtConfig.setSourceContainer(srcContainer);
+    	qvtConfig.addTransformationNature();
 
         monitor.worked(1);
     }
