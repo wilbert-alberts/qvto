@@ -15,9 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
@@ -123,21 +121,26 @@ public class QvtValidator {
 	                return StatusUtil.makeErrorStatus(Messages.QvtValidator_NoTraceFile);
 	            }
 	            else {
-	            	boolean isValidTrace = false;
+	            	IFile workspaceFile = null;
 	            	try {
 	            		URI traceUri = URI.createURI(traceFilePath);
-	            		isValidTrace = WorkspaceUtils.getWorkspaceFile(traceUri) != null;
+	            		workspaceFile = WorkspaceUtils.getWorkspaceFile(traceUri);
+	            	} catch (RuntimeException ex) {
+                        IStatus status = StatusUtil.makeErrorStatus("internal_error", ex); //$NON-NLS-1$
+                        return status;
 	            	}
-	            	catch (RuntimeException ex) {
+	            	if (workspaceFile == null) {
+	            	    IStatus status = StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_TraceNotInWorkspace, traceFilePath));
+	            	    return status;
+	            	} else {
+	            	    IProject project = workspaceFile.getProject();
+	            	    if ((project == null) || !project.isOpen()) {
+	                        String name = (project == null) ? "" : project.getName(); //$NON-NLS-1$
+	                        IStatus status = StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_TraceProjectNotOpen, name));
+	                        return status;
+	            	    }
 	            	}
-	            	if (!isValidTrace) {
-		                IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		                IStatus status = workspace.validatePath(traceFilePath, IResource.FILE);
-		                if (StatusUtil.isError(status)) {
-		                    return status;
-		                }
-	            	}
-	            	
+	            		            	
 	                if (!traceFilePath.endsWith(MDAConstants.QVTO_TRACEFILE_EXTENSION_WITH_DOT)) {
 	                    if (result.getSeverity() < IStatus.WARNING) {
 	                        result = StatusUtil.makeWarningStatus(NLS.bind(Messages.QvtValidator_NoTraceFileExtension, MDAConstants.QVTO_TRACEFILE_EXTENSION_WITH_DOT));
