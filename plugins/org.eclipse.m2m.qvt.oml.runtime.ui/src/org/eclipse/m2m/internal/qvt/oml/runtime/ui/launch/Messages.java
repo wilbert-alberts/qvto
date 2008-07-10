@@ -16,6 +16,8 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch.messages"; //$NON-NLS-1$
 
+	public static String ConfigurationErrorHandler_launchingError;
+
 	public static String QvtLauncherTab_ModuleLabel;
 	public static String QvtLauncherTab_MissingFileNameError;
 	public static String QvtLauncherTab_FileDoesNotExist;

@@ -18,7 +18,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.debug.core.IStatusHandler;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.m2m.internal.qvt.oml.common.ui.CommonUIUtils;
 import org.eclipse.ui.progress.IProgressConstants;
 
 public class TransformationJobDoneHandler implements IStatusHandler {
@@ -54,23 +54,18 @@ public class TransformationJobDoneHandler implements IStatusHandler {
 	}
 	
 	private void handleDone(Job doneJob, final IAction doneAction) {
-		if (isModal(doneJob)) {
-			if (doneAction != null) {
-				Display.getDefault().asyncExec(new Runnable() {
+		if (doneAction != null) {
+				CommonUIUtils.getStandardDisplay().asyncExec(new Runnable() {
 					public void run() {
 						doneAction.run();
 					}
 				});
-			}
-		} else {
-			doneJob.setProperty(IProgressConstants.KEEP_PROPERTY, Boolean.TRUE);
-			if (doneAction != null) {
-				doneJob.setProperty(IProgressConstants.ACTION_PROPERTY, doneAction);
-			}
 		}
+		
+		doneJob.setProperty(IProgressConstants.KEEP_PROPERTY, Boolean.FALSE);
 	}
 	
-	private boolean isModal(Job doneJob) {
+	boolean isModal(Job doneJob) {
 		Boolean inDialog = (Boolean) doneJob.getProperty(IProgressConstants.PROPERTY_IN_DIALOG);
 		return (inDialog == null) ? false : inDialog.booleanValue();
 	}	
