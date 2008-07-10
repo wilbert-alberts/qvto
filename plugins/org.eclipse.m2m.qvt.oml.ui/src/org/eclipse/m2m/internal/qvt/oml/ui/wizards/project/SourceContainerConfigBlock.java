@@ -11,7 +11,9 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ui.wizards.project;
 
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -38,6 +40,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.ide.undo.CreateFolderOperation;
 
 class SourceContainerConfigBlock {
 	
@@ -99,7 +102,7 @@ class SourceContainerConfigBlock {
         
         fSourceField.addModifyListener(new ModifyListener() {
             public void modifyText(ModifyEvent e) {
-                containerChanged();
+                updateStatus();
                 fStatusListener.statusChanged(fStatus);
                 if(fMoveExistingButton != null) {
                 	fMoveExistingButton.setEnabled(isContainerChanged());
@@ -134,7 +137,7 @@ class SourceContainerConfigBlock {
     }
 
     public boolean isValid() {
-    	return fStatus.isOK();
+    	return !fStatus.matches(IStatus.ERROR);
     }
     
 	public boolean performApply() {
@@ -143,7 +146,16 @@ class SourceContainerConfigBlock {
 		}
 		
 		if(fSourceContainer == null) {
-			throw new IllegalStateException("No valid source container selected"); //$NON-NLS-1$
+			IFolder folderToCreate = fProject.getFolder(new Path(fSourceField.getText()));
+			CreateFolderOperation createFolderOperation = new CreateFolderOperation(folderToCreate, null, "Creating source container");
+			try {			
+				if(createFolderOperation.execute(null, null).isOK()) {
+					fSourceContainer = folderToCreate;
+				}
+			} catch (ExecutionException e) {
+				setError(e.getLocalizedMessage(), null, true);
+				return false;
+			}
 		}
 		
         if(fBuilderConfig == null) {        	
@@ -160,23 +172,23 @@ class SourceContainerConfigBlock {
 		}
 
 		boolean shouldMoveSources = fMoveExistingButton != null && fMoveExistingButton.getSelection();
-		SourceContainerUpdater containerHelper = new SourceContainerUpdater(oldSourceContainer);
-		IStatus updateStatus = containerHelper.setContainer(newSourceContainer, shouldMoveSources, null, fShell);
-		if(updateStatus.isOK()) {
-				
+		if(shouldMoveSources) {
+			SourceContainerUpdater containerHelper = new SourceContainerUpdater(oldSourceContainer);
+			IStatus updateStatus = containerHelper.setContainer(newSourceContainer, shouldMoveSources, null, fShell);
+			if(updateStatus.isOK()) {
+					
+			}
 		}
         
         if(fSourceContainer != null) {
             fBuilderConfig.setSourceContainer(newSourceContainer);
         }
         
-        try {
-        	if(!fSourceContainer.exists()) {
-        		// the case  
-        		//CreateFolderOperation createFolderOperation = new CreateFolderOperation(newSourceContainer, );
-        	}
-        	
+        try {        	
             fBuilderConfig.save();
+            updateStatus();
+            fStatusListener.statusChanged(fStatus);
+            
         } catch (CoreException e) {
         	setError(Messages.SourceContainerConfigBlock_saveBuilderConfigError, e, true);
             return false;
@@ -189,7 +201,7 @@ class SourceContainerConfigBlock {
     	fSourceField.setText(""); //$NON-NLS-1$
     }
     
-    private void containerChanged() {
+    private void updateStatus() {
 		this.fStatus = Status.OK_STATUS;
 
 		fSourceContainer = null;
@@ -213,7 +225,7 @@ class SourceContainerConfigBlock {
 		if(fProject.exists()) {
 			IResource container = (IResource)fProject.getWorkspace().getRoot().findMember(absPath);
 			if (container == null || !container.exists()) {
-				setErrorMessage(NLS.bind(Messages.QvtSettingsPropertyPage_InvalidContainer, absPath)); //$NON-NLS-1$
+				setWarningMessage(NLS.bind(Messages.QvtSettingsPropertyPage_ContainerDoesNotExist, absPath)); //$NON-NLS-1$
 			} 
 			else if(!(container instanceof IContainer)) {
 				setErrorMessage(NLS.bind(Messages.QvtSettingsPropertyPage_ContainerIsNotFolder, absPath)); //$NON-NLS-1$				
@@ -254,6 +266,10 @@ class SourceContainerConfigBlock {
     	fStatus = QVTUIPlugin.createStatus(IStatus.ERROR, message, null);
     }
     
+    private void setWarningMessage(String message) {
+    	fStatus = QVTUIPlugin.createStatus(IStatus.WARNING, message, null);
+    }    
+    
     private void setError(String message, CoreException coreException, boolean notifyListener) {
     	IStatus status = QVTUIPlugin.createStatus(IStatus.ERROR, message, coreException);
     	QVTUIPlugin.log(status);
@@ -275,6 +291,10 @@ class SourceContainerConfigBlock {
     }
     
     private boolean isContainerChanged() {
-    	return !getConfiguredContainer().equals(getNewContainer());
+    	IContainer configuredContainer = getConfiguredContainer();
+    	if(configuredContainer != null) {    		
+    		return configuredContainer.exists() && !configuredContainer.equals(getNewContainer());
+    	}
+    	return true;
     }
 }

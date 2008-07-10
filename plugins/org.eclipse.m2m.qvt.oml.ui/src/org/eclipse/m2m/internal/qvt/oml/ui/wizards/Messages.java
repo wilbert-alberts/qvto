@@ -30,6 +30,8 @@ class Messages extends NLS {
 
 	public static String NewQvtModuleCreationPage_newModuleNameProposal;
 
+	public static String NewQvtModuleCreationPage_pathIsNotQVTContainer;
+
 	public static String NewQvtModuleCreationPage_sourceContainerDoesNotExist;
 
 	public static String NewQvtModuleCreationPage_sourceContainerFieldLabel;

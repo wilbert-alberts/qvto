@@ -527,6 +527,18 @@ public class NewQvtModuleCreationPage extends WizardPage implements Listener {
     				String message = NLS.bind(Messages.NewQvtModuleCreationPage_sourceContainerDoesNotExist, container.getFullPath().toString());
     				status = QVTUIPlugin.createStatus(IStatus.ERROR, message, null);
     			}
+    			
+    			if(container.exists()) {
+    				IQvtProject qvtProject = QvtProjectUtil.getQvtProject(container.getProject());
+					try {
+						IPath containerFullPath = container.getFullPath();
+						if(qvtProject == null || !containerFullPath.equals(qvtProject.getQvtSourceContainerPath())) {
+							return QVTUIPlugin.createStatus(IStatus.ERROR, NLS.bind(Messages.NewQvtModuleCreationPage_pathIsNotQVTContainer, containerFullPath.toString()), null);
+						}
+					} catch (QvtModelException e) {
+						QVTUIPlugin.log(e);
+					}
+    			}
     		}
     	}
     	return status;
