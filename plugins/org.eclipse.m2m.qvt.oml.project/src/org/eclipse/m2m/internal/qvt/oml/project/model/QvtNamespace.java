@@ -76,6 +76,9 @@ public class QvtNamespace extends QvtBaseElement implements IQvtNamespace {
 	}
 
 	public IQvtCompilationUnit findCompilationUnit(String compilationUnitName) throws QvtModelException {
+		if(!getUnderlyingResource().exists()) {
+			return null;
+		}
 		for (IQvtCompilationUnit cu : getCompilationUnits()) {
 			if(cu.getName().equals(compilationUnitName)) {
 				return cu;
