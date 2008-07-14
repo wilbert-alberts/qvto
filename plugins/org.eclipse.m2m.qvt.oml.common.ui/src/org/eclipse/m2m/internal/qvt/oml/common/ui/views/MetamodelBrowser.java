@@ -729,8 +729,15 @@ public class MetamodelBrowser  implements IAdaptable {
 			return null;
 		}
 		
-		MetamodelContainerNode root = (MetamodelContainerNode) myViewer.getInput();
-		BrowserNode targetNode = root.resolve(eModelElement);
+		BrowserNode targetNode = null;
+		Object root = myViewer.getInput();
+		if (root instanceof MetamodelContainerNode) {
+		    MetamodelContainerNode metamodelContainerNode = (MetamodelContainerNode) root;
+		    targetNode = metamodelContainerNode.resolve(eModelElement);
+		} else if (root instanceof BrowserNode) {
+		    BrowserNode browserNode = (BrowserNode) root;
+		    targetNode = BrowserNode.findNodeForInstance(browserNode, eModelElement);
+		}
 		if(targetNode != null) {
 			myViewer.setSelection(new StructuredSelection(targetNode), true);
 			myViewer.expandToLevel(targetNode, 1);
