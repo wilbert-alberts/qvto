@@ -16,5 +16,6 @@ import org.eclipse.m2m.internal.qvt.oml.common.io.CFolder;
 
 public interface IImportResolver {
 	CFile resolveImport(String importedUnitName);
+	CFile resolveImport(CFile parentFile, String importedUnitName);
     String getPackageName(CFolder folder);
 }

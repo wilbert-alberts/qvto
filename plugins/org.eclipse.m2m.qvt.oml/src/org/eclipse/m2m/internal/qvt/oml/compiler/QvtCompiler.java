@@ -326,9 +326,9 @@ public class QvtCompiler {
     
     private ParsedModuleCS getImportedModule(final CFile source, final String qualifiedName) {
     	CFile importSource = myKernel.getImportResolver().resolveImport(qualifiedName);
-//    	if (importSource == null) {
-//    		importSource = new IOImportResolver(source).resolveImport(qualifiedName);
-//    	}
+    	if (importSource == null) {
+    		importSource = myKernel.getImportResolver().resolveImport(source, qualifiedName);
+    	}
     	if (importSource == null) {
     		return null;
     	}
