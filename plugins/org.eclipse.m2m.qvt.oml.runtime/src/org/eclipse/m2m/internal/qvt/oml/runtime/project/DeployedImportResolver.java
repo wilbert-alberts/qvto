@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -69,6 +70,39 @@ public class DeployedImportResolver implements IImportResolver {
 		}
 
 		return resolveResourcePluginPath(importedUnitName);
+	}
+	
+	public CFile resolveImport(CFile parentFile, String importedUnitName) {
+		if (parentFile == null) {
+			return resolveImport(importedUnitName);
+		}
+		String importedFileName = importedUnitName.replace('.', '/') + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT;
+		URI uri = URI.createURI(parentFile.toString()).trimFileExtension().trimSegments(1);
+		CFile resolvedFile = null;
+		while (resolvedFile == null) {
+			String resolvedImportName = uri.toPlatformString(true) + '/' + importedFileName;
+			resolvedFile = resolveImport(resolvedImportName);
+			if (resolvedFile != null) {
+				InputStream contents = null;
+				try {
+					contents = resolvedFile.getContents();
+					if (contents.available() == 0) {
+						resolvedFile = null;
+					}
+				} catch (Exception e) {
+					resolvedFile = null;
+				}
+			}
+			if (resolvedFile == null) {
+				if (uri.segmentCount() > 1) {
+					uri = uri.trimSegments(1);
+				}
+				else {
+					break;
+				}
+			}
+		}
+		return resolvedFile;
 	}
 
 	private CFile resolveResourcePluginPath(String importedUnitName) {

@@ -97,6 +97,10 @@ public class EclipseImportResolver implements IImportResolver {
         return deployedQvtFileResolver.resolveImport(importedUnitName);
 	}
     
+    public CFile resolveImport(CFile parentFile, String importedUnitName) {
+    	return resolveImport(importedUnitName);
+    }
+    
     public String getPackageName(CFolder folder) {
         IContainer container = WorkspaceUtils.getIContainer(folder.getFullPath());
         if(container == null || !container.exists()) {
