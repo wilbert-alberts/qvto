@@ -29,6 +29,10 @@
             file="apiTestData/exec3/exec3.qvto"
             id="apiTestData.exec3.exec3">
       </transformation>
+      <transformation
+            file="apiTestData/exec3_withImport/exec3_withImport.qvto"
+            id="apiTestData.exec3_withImport.exec3_withImport">
+      </transformation>
    </extension>
 
    <extension point="org.eclipse.m2m.qvt.oml.ocl.libraries">

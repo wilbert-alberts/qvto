@@ -1,0 +1,12 @@
+library exec3_lib;
+
+modeltype Ecore uses 'http://www.eclipse.org/emf/2002/Ecore';
+
+query EClass::getName() : String {
+	return self.name + '_lib';
+}
+
+mapping EClass::toEClass() : EClass {
+	name := self.name + '_copy';
+}
+
