@@ -107,11 +107,6 @@ public class CompletionProposalUtil {
         QvtOpLPGParsersym.TK_invresolveoneIn
     };
     
-    private static final int[] MAPPING_CALL_TERMINALS = {
-        QvtOpLPGParsersym.TK_map,
-        QvtOpLPGParsersym.TK_xmap
-    };
-    
     public static final void addRValues(Collection<ICompletionProposal> proposals, QvtCompletionData data) {
         CompletionProposalUtil.addVariables(proposals, data);
         CompletionProposalUtil.addModuleFeatures(proposals, data);
@@ -125,7 +120,7 @@ public class CompletionProposalUtil {
     public static final void addContextProposals(Collection<ICompletionProposal> proposals, EClassifier owner, boolean addResolveFamily, QvtCompletionData data) {
         CompletionProposalUtil.addStructuralFeatures(proposals, owner, data);
         CompletionProposalUtil.addOperations(proposals, owner, data);
-        CompletionProposalUtil.addKeywords(proposals, MAPPING_CALL_TERMINALS, data);
+        CompletionProposalUtil.addKeywords(proposals, LightweightParserUtil.MAPPING_CALL_TERMINALS, data);
         if (addResolveFamily) {
             CompletionProposalUtil.addKeyword(proposals, QvtOpLPGParsersym.TK_late, data);
             CompletionProposalUtil.addKeywords(proposals, LightweightParserUtil.RESOLVE_FAMILY_TERMINALS, data);
@@ -267,6 +262,22 @@ public class CompletionProposalUtil {
 		}
     }
     
+    public static final void addAllContextlessMappings(Collection<ICompletionProposal> proposals, QvtCompletionData data) {
+        MappingMethodCS[] allImperativeOperationsCS = data.getAllImperativeOperationsCS();
+        for (MappingMethodCS mappingMethodCS : allImperativeOperationsCS) {
+            if (mappingMethodCS instanceof MappingRuleCS) {
+                MappingDeclarationCS mappingDeclarationCS = mappingMethodCS.getMappingDeclarationCS();
+                if (mappingDeclarationCS != null) {
+                    TypeCS contextTypeCS = mappingDeclarationCS.getContextType();
+                    if (contextTypeCS == null) {
+                        QvtCompletionProposal info = CompletionProposalUtil.createCompletionProposal(mappingMethodCS, data);
+                        CompletionProposalUtil.addProposalIfNecessary(proposals, info, data);
+                    }
+                }
+            }
+        }
+    }
+
     public static final void addModuleFeatures(Collection<ICompletionProposal> proposals, QvtCompletionData data) {
         MappingModuleCS[] allMappingModulesCS = data.getAllMappingModulesCS();
         for (MappingModuleCS mappingModuleCS : allMappingModulesCS) {

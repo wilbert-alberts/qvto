@@ -40,9 +40,6 @@ public abstract class AbstractCallExpSourceCollector extends AbstractCollector {
     
     @Override
     protected boolean isApplicableInternal(QvtCompletionData data) {
-        if (data.getLeftToken() == null) {
-            return false;
-        }
         TypedElement<EClassifier> callExpSource = getCallExpSource(data);
         if (callExpSource != null) {
             data.getUserData().put(CALLEXP_SOURCE_FLAG, callExpSource);
@@ -54,6 +51,9 @@ public abstract class AbstractCallExpSourceCollector extends AbstractCollector {
         QvtOperationalEnv env = data.getEnvironment();
         @SuppressWarnings("unchecked")
         TypedElement<EClassifier> callExpSource = (TypedElement<EClassifier>) data.getUserData().get(CALLEXP_SOURCE_FLAG);
+        if (callExpSource == null) {
+            return null;
+        }
         EClassifier classifier = callExpSource.getType();
         if ((accessorToken.getKind() == QvtOpLPGParsersym.TK_ARROW)
                 && !(classifier instanceof CollectionType)) {

@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
+import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.LightweightParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
 import org.eclipse.ocl.ecore.CollectionType;
 import org.eclipse.ocl.utilities.TypedElement;
@@ -28,14 +29,26 @@ import org.eclipse.ocl.utilities.TypedElement;
  */
 
 public class MapXmapCollector extends AbstractCallExpSourceCollector {
+    @Override
+    protected boolean isApplicableInternal(QvtCompletionData data) {
+        if (super.isApplicableInternal(data)) {
+            return true;
+        }
+        return QvtCompletionData.isKindOf(data.getLeftToken(), LightweightParserUtil.MAPPING_CALL_TERMINALS);
+    }
+
     public void addPropoposals(Collection<ICompletionProposal> proposals, QvtCompletionData data) {
         IToken accessorToken = getAccessorToken(data);
         EClassifier classifier = getCallExpSourceType(accessorToken, data);
-        CompletionProposalUtil.addMappingOperations(proposals, classifier, data);
-        if (QvtCompletionData.isKindOf(accessorToken, QvtOpLPGParsersym.TK_ARROW)) {
-            CollectionType collection = (CollectionType) classifier;
-            EClassifier elementType = collection.getElementType();
-            CompletionProposalUtil.addMappingOperations(proposals, elementType, data);
+        if (classifier == null) {
+            CompletionProposalUtil.addAllContextlessMappings(proposals, data);
+        } else {
+            CompletionProposalUtil.addMappingOperations(proposals, classifier, data);
+            if (QvtCompletionData.isKindOf(accessorToken, QvtOpLPGParsersym.TK_ARROW)) {
+                CollectionType collection = (CollectionType) classifier;
+                EClassifier elementType = collection.getElementType();
+                CompletionProposalUtil.addMappingOperations(proposals, elementType, data);
+            }
         }
     }
     
@@ -49,8 +62,7 @@ public class MapXmapCollector extends AbstractCallExpSourceCollector {
     
     private static IToken getAccessorToken(QvtCompletionData data) {
         IToken leftToken = data.getLeftToken();
-        if ((leftToken.getKind() == QvtOpLPGParsersym.TK_map) 
-                || (leftToken.getKind() == QvtOpLPGParsersym.TK_xmap)) {
+        if (QvtCompletionData.isKindOf(leftToken, LightweightParserUtil.MAPPING_CALL_TERMINALS)) {
             return data.getLeftToken(1);
         }
         return null;
