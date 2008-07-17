@@ -51,6 +51,8 @@ public class QvtoTransfHelperTests {
 				new ApiTestData("exec1", Arrays.asList("in1.ecore", "in2.ecore"), Arrays.asList("expected.uml", "expected.rdb")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 		suite.addTest(new ExecDeployedTransformationTestCase(false,
 				new ApiTestData("exec3", Collections.<String>emptyList(), Collections.<String>emptyList()))); //$NON-NLS-1$
+		suite.addTest(new ExecDeployedTransformationTestCase(false,
+				new ApiTestData("exec3_withImport", Collections.<String>emptyList(), Collections.<String>emptyList()))); //$NON-NLS-1$
 		
 		suite.addTest(new ExecDeployedTransformationTestCase(true,
 				new ApiTestData("exec1", Arrays.asList("in1.ecore", "in2.ecore"), Arrays.asList("expected.uml", "expected.rdb")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
@@ -58,6 +60,8 @@ public class QvtoTransfHelperTests {
 				new ApiTestData("exec2", Arrays.asList("in1.ecore", "in2.ecore"), Arrays.asList("expected.uml", "expected.rdb")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 		suite.addTest(new ExecDeployedTransformationTestCase(true,
 				new ApiTestData("exec3", Collections.<String>emptyList(), Collections.<String>emptyList()))); //$NON-NLS-1$
+		suite.addTest(new ExecDeployedTransformationTestCase(true,
+				new ApiTestData("exec3_withImport", Collections.<String>emptyList(), Collections.<String>emptyList()))); //$NON-NLS-1$
 		suite.addTest(new WrappedExecTransformationTestCase(true,
 				new ApiTestData("exec_erroneous", Collections.<String>emptyList(), Collections.<String>emptyList()))); //$NON-NLS-1$
 		
