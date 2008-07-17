@@ -145,6 +145,11 @@ public class LightweightParserUtil {
         QvtOpLPGParsersym.TK_where
     };
     
+    public static final int[] MAPPING_CALL_TERMINALS = {
+        QvtOpLPGParsersym.TK_map,
+        QvtOpLPGParsersym.TK_xmap
+    };
+    
     public static int[] uniteIntArrays(int[] array1, int[] array2) {
         int[] result = new int[array1.length + array2.length];
         System.arraycopy(array1, 0, result, 0, array1.length);
@@ -313,9 +318,17 @@ public class LightweightParserUtil {
                 return null;
             }
             if (depth == 0) {
-                if (QvtCompletionData.isKindOf(token, OCLEXPRESSION_START_TOKENS)
-                        || QvtCompletionData.isKindOf(token, QvtOpLPGParsersym.TK_RPAREN)) {
+                if (QvtCompletionData.isKindOf(token, OCLEXPRESSION_START_TOKENS)) {
                     return tokens.toArray(new IToken[tokens.size()]);
+                } else if (QvtCompletionData.isKindOf(token, QvtOpLPGParsersym.TK_RPAREN)) {
+                    // Considering switch in 07-07-07 spec: switch { case (expr) /@*@/ expr ...
+                    IToken lParen = getPairingBrace(token, false);
+                    if (lParen != null) {
+                        IToken caseToken = LightweightParserUtil.getPreviousToken(lParen);
+                        if ((caseToken != null) && QvtCompletionData.isKindOf(caseToken, QvtOpLPGParsersym.TK_case)) {
+                            return tokens.toArray(new IToken[tokens.size()]);
+                        }
+                    }
                 }
                 for (int j = 0; j < BRACING_PAIRS.length; j++) {
                     if (token.getKind() == BRACING_PAIRS[j][1]) {
@@ -332,6 +345,26 @@ public class LightweightParserUtil {
                 }
             }
             tokens.add(0, token);
+        }
+        return null;
+    }
+    
+    public static final IToken getPairingBrace(IToken brace, boolean isForward) {
+        int bracingPairKind = getBracingPairKind(brace, isForward);
+        int lBraceKind = BRACING_PAIRS[bracingPairKind][0];
+        int rBraceKind = BRACING_PAIRS[bracingPairKind][1];
+        int depth = 0;
+        for (IToken token = brace; token != null; token = (isForward) ? LightweightParserUtil.getNextToken(token) : LightweightParserUtil.getPreviousToken(token)) {
+            if (QvtCompletionData.isKindOf(token, lBraceKind)) {
+                depth++;
+            } else if (QvtCompletionData.isKindOf(token, rBraceKind)) {
+                depth--;
+            } else if (QvtCompletionData.isKindOf(token, OCLEXPRESSION_MANDATORY_TERMINATION_TOKENS)) {
+                return null;
+            }
+            if (depth == 0) {
+                return token;
+            }
         }
         return null;
     }
