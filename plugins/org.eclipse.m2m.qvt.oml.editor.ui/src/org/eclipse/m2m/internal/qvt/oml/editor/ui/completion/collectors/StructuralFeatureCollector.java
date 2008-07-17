@@ -114,14 +114,17 @@ public class StructuralFeatureCollector extends AbstractCollector {
     }
     
     private static IToken[] extractMappingType(IToken mappingToken) {
-        IToken rParen = LightweightParserUtil.getNextTokenByKind(mappingToken, QvtOpLPGParsersym.TK_RPAREN);
-        if (rParen != null) {
-            IToken colon = LightweightParserUtil.getNextToken(rParen);
-            if ((colon != null) && (colon.getKind() == QvtOpLPGParsersym.TK_COLON)) {
-                IToken firstTypeToken = LightweightParserUtil.getNextToken(colon);
-                if (firstTypeToken != null) {
-                    return QvtCompletionData.extractTokens(firstTypeToken, 
-                            QvtCompletionData.MAPPING_DECLARATION_TRAILING_TOKEN_KINDS);
+        IToken lParen = LightweightParserUtil.getNextTokenByKind(mappingToken, QvtOpLPGParsersym.TK_LPAREN);
+        if (lParen != null) {
+            IToken rParen = LightweightParserUtil.getPairingBrace(lParen, true);
+            if (rParen != null) {
+                IToken colon = LightweightParserUtil.getNextToken(rParen);
+                if ((colon != null) && (colon.getKind() == QvtOpLPGParsersym.TK_COLON)) {
+                    IToken firstTypeToken = LightweightParserUtil.getNextToken(colon);
+                    if (firstTypeToken != null) {
+                        return QvtCompletionData.extractTokens(firstTypeToken, 
+                                QvtCompletionData.MAPPING_DECLARATION_TRAILING_TOKEN_KINDS);
+                    }
                 }
             }
         }
