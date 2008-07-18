@@ -27,12 +27,30 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
 public class TypeStartCollector extends AbstractCollector {
     @Override
     protected boolean isApplicableInternal(QvtCompletionData data) {
-    	IToken leftToken = data.getLeftToken();
-		return QvtCompletionData.isKindOf(leftToken, QvtOpLPGParsersym.TK_COLON)
-		    || QvtCompletionData.isKindOf(leftToken, LightweightParserUtil.IMPERATIVE_OPERATION_TOKENS);
-	}
+        return isCollectorApplicable(data);
+    }
 
+    public static final boolean isCollectorApplicable(QvtCompletionData data) {
+        IToken leftToken = data.getLeftToken();
+        if (QvtCompletionData.isKindOf(leftToken, QvtOpLPGParsersym.TK_COLON)
+                || QvtCompletionData.isKindOf(leftToken, LightweightParserUtil.IMPERATIVE_OPERATION_TOKENS)) {
+            return true;
+        }
+        if (QvtCompletionData.isKindOf(leftToken, QvtOpLPGParsersym.TK_LPAREN)) {
+            IToken collectionTerminal = LightweightParserUtil.getPreviousToken(leftToken);
+            if ((collectionTerminal != null) && QvtCompletionData.isKindOf(collectionTerminal, 
+                    QvtOpLPGParsersym.TK_Collection, 
+                    QvtOpLPGParsersym.TK_Bag,
+                    QvtOpLPGParsersym.TK_Sequence, 
+                    QvtOpLPGParsersym.TK_Set,
+                    QvtOpLPGParsersym.TK_OrderedSet)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public void addPropoposals(Collection<ICompletionProposal> proposals, QvtCompletionData data) {
-    	CompletionProposalUtil.addAllTypes(proposals, data);
+        CompletionProposalUtil.addAllTypes(proposals, data);
     }
 }

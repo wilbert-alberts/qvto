@@ -40,15 +40,17 @@ public class OclExpressionStartCollector extends AbstractCollector {
     @Override
     protected boolean isApplicableInternal(QvtCompletionData data) {
     	IToken leftToken = data.getLeftToken();
-		if (leftToken.getKind() == QvtOpLPGParsersym.TK_LPAREN) {
+		if (QvtCompletionData.isKindOf(leftToken, QvtOpLPGParsersym.TK_LPAREN)) {
+		    if (TypeStartCollector.isCollectorApplicable(data)) {
+		        return false;
+		    }
 		    IToken previousToken = data.getLeftToken(1);
 		    if ((previousToken != null) 
 		            && QvtCompletionData.isKindOf(previousToken, LightweightParserUtil.RESOLVE_FAMILY_TERMINALS)) {
                 return false; 
 		    }
 		}
-		if ((leftToken.getKind() == QvtOpLPGParsersym.TK_SEMICOLON)
-				|| (leftToken.getKind() == QvtOpLPGParsersym.TK_LBRACE)) {
+		if (QvtCompletionData.isKindOf(leftToken, QvtOpLPGParsersym.TK_SEMICOLON, QvtOpLPGParsersym.TK_LBRACE)) {
 		    IToken parentBracingExpression = data.getParentBracingExpression(INAPPLICABLE_BRACING_EXPRESSIONS_WITH_MAPPING_CLAUSES, QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, 1, null, null, LightweightParserUtil.MAPPING_CLAUSE_TOKENS);
 		    if ((parentBracingExpression != null) 
 		            && QvtCompletionData.isKindOf(parentBracingExpression, INAPPLICABLE_BRACING_EXPRESSIONS)) {
