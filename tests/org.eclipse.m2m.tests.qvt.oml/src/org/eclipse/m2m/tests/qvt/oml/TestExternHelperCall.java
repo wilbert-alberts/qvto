@@ -131,7 +131,9 @@ public class TestExternHelperCall extends TestCase {
 		final String expectedResult = "testHelperWithResolve";
 		assertEquals(expectedResult, fCall.invoke(EcoreFactory.eINSTANCE.createEClass(), new Object[0]));
 		
+		// test imported operation call
 		Module mainModule = fCall.getLibrary();
+		assertFalse("Need imported lib to test", mainModule.getModuleImport().isEmpty());
 		Module imported = mainModule.getModuleImport().get(0).getImportedModule();
 		assertNotNull(imported);
 		HelperOperationCall call = fExecContext.createHelperCall(findOperationByName(imported, "testImportedFooLibImport"));

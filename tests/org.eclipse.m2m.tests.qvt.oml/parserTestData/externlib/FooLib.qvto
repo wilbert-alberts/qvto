@@ -47,7 +47,9 @@ helper testNoArgsHelper() : String {
 }
 
 query EClass::testQueryContextual() : String {
+	return null;
 }
 
 query testQueryNonContextual() : String {
+	return null;
 }
