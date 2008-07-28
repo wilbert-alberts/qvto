@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -150,7 +151,35 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         super(env, evalEnv, evalEnv.createExtentMap(null));
 
         myEvalEnv = evalEnv;
-    }    
+    }
+    
+    /**
+	 * Creates evaluation visitor for an non-transformation execution client.
+	 * <p>
+	 * No main entry operation is available, the execution flow is undefined and
+	 * it is the responsibility of the executor client.
+	 * </p>
+	 * <code>Note:</code>Only helper operation can be executed on the resulting
+	 * visitor by an external clients.
+	 * 
+	 * @see #executeHelperOperation(Helper, Object, List)
+	 */
+    public static QvtOperationalEvaluationVisitorImpl createNonTransformationExecutionContextVisitor(QvtOperationalEnv rootEnv, QvtOperationalEvaluationEnv evalEnv, Set<Module> libraryImports) {
+    	QvtOperationalEvaluationVisitorImpl visitor = new QvtOperationalEvaluationVisitorImpl(rootEnv, evalEnv);
+    	// create StdLib instance by default
+    	visitor.createModuleDefaultInstance(
+    				QvtOperationalStdLibrary.INSTANCE.getLibaryModule(), 
+    				visitor.getOperationalEvaluationEnv());
+    	
+    	// initialize all explicit import instances
+		for (Module library : libraryImports) {
+			visitor.initAllModuleDefaultInstances(library, visitor.getOperationalEvaluationEnv());
+			visitor.initModuleProperties(library);			
+		}
+    	
+    	return visitor;
+    }
+    
     
     public static QvtOperationalEvaluationVisitor createVisitor(QvtOperationalEnv env, QvtOperationalEvaluationEnv evalEnv) {
     	return new QvtOperationalEvaluationVisitorImpl(env, evalEnv).createInterruptibleVisitor();
@@ -557,6 +586,24 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 			throw e;
 		}
     }
+    
+    /**
+	 * Executes the given helper operation with actual arguments passed.
+	 * 
+	 * @param method
+	 *            the helper operation to execute
+	 * @param self
+	 *            the contextual instance in case of contextual operation,
+	 *            otherwise the default instance of the module which defines the
+	 *            called operation
+	 * @param args
+	 *            the actual parameter values
+	 * @return return the value directly returned by the operation
+	 */
+	public Object executeHelperOperation(Helper method, Object self, List<Object> args) {
+		OperationCallResult result = executeImperativeOperation(method, self, args, false);
+		return result.myResult;
+	}
     
     public Object doVisitModule(Module module) {
     	isInTerminatingState = false;
@@ -994,7 +1041,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         }
     }
     
-    private EObject getModuleDefaultInstance(Module moduleClass, QvtOperationalEvaluationEnv env) {
+    public EObject getModuleDefaultInstance(Module moduleClass, QvtOperationalEvaluationEnv env) {
     	return (EObject)env.getValueOf(moduleClass.getName() + QvtOperationalFileEnv.THIS_VAR_QNAME_SUFFIX);
     }
     
