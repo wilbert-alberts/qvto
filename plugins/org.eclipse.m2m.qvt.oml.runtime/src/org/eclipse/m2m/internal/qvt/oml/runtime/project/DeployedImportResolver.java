@@ -33,12 +33,33 @@ import org.eclipse.m2m.internal.qvt.oml.common.project.TransformationRegistry;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
 
 public class DeployedImportResolver implements IImportResolver {
+		
+	/**
+	 * A single instance registry including all bundles with registered QVT
+	 * modules in the platform.
+	 */
+	public static IImportResolver INSTANCE = new DeployedImportResolver(createModulesRegistry());
 	
-	private static List<BundleModuleRegistry> bundleModules;
+	
+	private List<BundleModuleRegistry> bundleModules;
 
-	public DeployedImportResolver() {
+	/**
+	 * Constructs resolver based on the given list of bundle registries.
+	 * 
+	 * @param bundleRegistryList
+	 *            a list registries of QVT module files per installed bundle
+	 */
+	public DeployedImportResolver(List<BundleModuleRegistry> bundleRegistryList) {
+		if(bundleRegistryList == null) {
+			throw new IllegalArgumentException();
+		}
+		bundleModules = bundleRegistryList;
 	}
 	
+	protected List<BundleModuleRegistry> getBundleModules() {
+		return bundleModules;
+	}
+
 	public String getPackageName(CFolder folder) {
 		if(folder == null) {
 			return ""; //$NON-NLS-1$
@@ -49,10 +70,6 @@ public class DeployedImportResolver implements IImportResolver {
 	public CFile resolveImport(String importedUnitName) {
 		if(importedUnitName == null || importedUnitName.length() == 0) {
 			return null;
-		}
-		
-		if(bundleModules == null) {
-			bundleModules = createModulesRegistry();
 		}
 		
 		IPath fullPath = new Path(importedUnitName.replace('.', '/') + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT);

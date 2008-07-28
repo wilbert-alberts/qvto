@@ -76,7 +76,7 @@ public class QvtCompiledTransformation implements QvtTransformation, CompiledTra
     }
 
     public URI getUri() {
-        IImportResolver importResolver = new DeployedImportResolver();
+        IImportResolver importResolver = DeployedImportResolver.INSTANCE;
     	CFile srcFile = importResolver.resolveImport(myId);
     	if (srcFile != null) {
     		return EmfUtil.makeUri(srcFile.toString()); 

@@ -55,7 +55,7 @@ public class EclipseImportResolver implements IImportResolver {
 	
 	public EclipseImportResolver(SourceContainerProvider sourceContainerProvider) {
 		this.sourceProvider = sourceContainerProvider;
-		this.deployedQvtFileResolver = new DeployedImportResolver();		
+		this.deployedQvtFileResolver = DeployedImportResolver.INSTANCE;
 	}
 	
 	public EclipseImportResolver(final IProject project) {

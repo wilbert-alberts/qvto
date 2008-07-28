@@ -43,7 +43,7 @@ public class DeployedQvtModule extends QvtModule {
     @Override
 	public CompiledModule getModule(boolean isCheckErrors) throws MdaException {
         if (myModule == null) {           
-            IImportResolver importResolver = new DeployedImportResolver();
+            IImportResolver importResolver = DeployedImportResolver.INSTANCE;
         	CFile srcFile = importResolver.resolveImport(moduleID);
         	if (srcFile == null) {
         		throw new MdaException(NLS.bind(CompilerMessages.importedModuleNotFound, moduleID));
