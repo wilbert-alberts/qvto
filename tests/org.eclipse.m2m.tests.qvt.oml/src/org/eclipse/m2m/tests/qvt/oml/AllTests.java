@@ -20,8 +20,6 @@ package org.eclipse.m2m.tests.qvt.oml;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.eclipse.m2m.tests.qvt.oml.ant.QvtAntScriptTests;
-import org.eclipse.m2m.tests.qvt.oml.editor.AllEditorTests;
 import org.eclipse.m2m.tests.qvt.oml.emf.AllEmfTests;
 import org.eclipse.m2m.tests.qvt.oml.traces.TestTraceFile;
 import org.eclipse.m2m.tests.qvt.oml.transform.TransformManyModelTests;
@@ -42,6 +40,7 @@ public class AllTests {
 	public static Test suite() {
 		TestSuite suite = new TestSuite("Tests for org.eclipse.m2m.tests.qvt.oml"); //$NON-NLS-1$
 		//$JUnit-BEGIN$
+		suite.addTestSuite(TestExternHelperCall.class);
 // FIXME - commented out to test I-build with the common builder
 //suite.addTest(AllEditorTests.suite());
 		suite.addTest(AllEmfTests.suite());

@@ -1,0 +1,12 @@
+modeltype ECORE "strict" uses ecore('http://www.eclipse.org/emf/2002/Ecore');
+
+library FooLibImport;
+
+
+helper EClass::testImportedFooLibImport() : String {
+	return self.metaClassName();
+}
+
+helper EClassifier::testImportedFooLibImport() : String {
+	return 'EClassifier';
+}
