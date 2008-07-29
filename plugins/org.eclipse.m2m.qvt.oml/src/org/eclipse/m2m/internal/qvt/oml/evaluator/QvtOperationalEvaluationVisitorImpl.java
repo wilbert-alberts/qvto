@@ -44,6 +44,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.IVirtualOperationTable;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtEvaluationResult;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
@@ -92,11 +93,13 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeOperationImpl
 import org.eclipse.m2m.internal.qvt.oml.expressions.impl.OperationBodyImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.impl.PropertyImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.impl.RenameImpl;
+import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.library.EObjectEStructuralFeaturePair;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.library.LateResolveInTask;
 import org.eclipse.m2m.internal.qvt.oml.library.LateResolveTask;
 import org.eclipse.m2m.internal.qvt.oml.library.QvtResolveUtil;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
 import org.eclipse.m2m.internal.qvt.oml.trace.EDirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.trace.EMappingContext;
 import org.eclipse.m2m.internal.qvt.oml.trace.EMappingOperation;
@@ -164,7 +167,18 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 	 * 
 	 * @see #executeHelperOperation(Helper, Object, List)
 	 */
-    public static QvtOperationalEvaluationVisitorImpl createNonTransformationExecutionContextVisitor(QvtOperationalEnv rootEnv, QvtOperationalEvaluationEnv evalEnv, Set<Module> libraryImports) {
+    public static QvtOperationalEvaluationVisitorImpl createNonTransformationExecutionContextVisitor(Context context, Set<Module> libraryImports) {
+    	// Create a special top-level environment, which does not represent a
+    	// compilation unit file (as no-one exists)    	
+		QvtOperationalEnv rootEnv = new QvtOperationalEnv(null) {
+			QVTUMLReflection umlReflection = new QVTUMLReflection(super.getUMLReflection(), QvtOperationalStdLibrary.INSTANCE);			
+			@Override
+			public UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
+				return umlReflection;
+			};
+		};
+		QvtOperationalEvaluationEnv evalEnv = QvtOperationalEnvFactory.INSTANCE.createEvaluationEnvironment(context, null);
+    	
     	QvtOperationalEvaluationVisitorImpl visitor = new QvtOperationalEvaluationVisitorImpl(rootEnv, evalEnv);
     	// create StdLib instance by default
     	visitor.createModuleDefaultInstance(
@@ -601,7 +615,19 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 	 * @return return the value directly returned by the operation
 	 */
 	public Object executeHelperOperation(Helper method, Object self, List<Object> args) {
-		OperationCallResult result = executeImperativeOperation(method, self, args, false);
+		Helper actualOperation = method;
+    	if(self instanceof EObject) {
+    		EClass eClass = ((EObject)self).eClass();
+    		IVirtualOperationTable vTable = getVirtualTable(actualOperation);    		
+    		if(vTable != null && eClass != null) {
+				EOperation eOperation = vTable.lookupActualOperation(eClass, getEnvironment());
+				if(eOperation instanceof Helper == true) {
+					actualOperation = (Helper) eOperation;
+				}
+			}
+    	}
+		
+		OperationCallResult result = executeImperativeOperation(actualOperation, self, args, false);
 		return result.myResult;
 	}
     
