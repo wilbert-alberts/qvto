@@ -129,15 +129,19 @@ public class TestExternHelperCall extends TestCase {
 	
 	public void testHelperWithResolve() throws Exception {
 		final String expectedResult = "testHelperWithResolve";
-		assertEquals(expectedResult, fCall.invoke(EcoreFactory.eINSTANCE.createEClass(), new Object[0]));
-		
+		assertEquals(expectedResult, fCall.invoke(EcoreFactory.eINSTANCE.createEClass(), new Object[0]));		
+	}
+	
+	public void testImportedVirtualCall() throws Exception {
 		// test imported operation call
 		Module mainModule = fCall.getLibrary();
 		assertFalse("Need imported lib to test", mainModule.getModuleImport().isEmpty());
 		Module imported = mainModule.getModuleImport().get(0).getImportedModule();
 		assertNotNull(imported);
 		HelperOperationCall call = fExecContext.createHelperCall(findOperationByName(imported, "testImportedFooLibImport"));
-		assertEquals("EClass", call.invoke(EcoreFactory.eINSTANCE.createEClass(), new Object[0]));
+		// test virtual call semantics		
+		assertEquals("EClass", call.invoke(EcoreFactory.eINSTANCE.createEClass(), new Object[0]));		
+		assertEquals("EClassifier", call.invoke(EcoreFactory.eINSTANCE.createEDataType(), new Object[0]));		
 	}
 	
 	public void testQueryNonContextual() throws Exception {

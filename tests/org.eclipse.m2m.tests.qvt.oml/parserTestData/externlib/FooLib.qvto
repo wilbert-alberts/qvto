@@ -53,3 +53,8 @@ query EClass::testQueryContextual() : String {
 query testQueryNonContextual() : String {
 	return null;
 }
+
+helper testImportedVirtualCall() : Boolean {
+	-- do nothing, just represent a test-case
+	return true;
+}
