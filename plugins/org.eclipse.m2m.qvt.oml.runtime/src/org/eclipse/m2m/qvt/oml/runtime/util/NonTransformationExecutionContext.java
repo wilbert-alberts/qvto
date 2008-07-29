@@ -14,9 +14,6 @@ package org.eclipse.m2m.qvt.oml.runtime.util;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitorImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
@@ -75,10 +72,7 @@ public class NonTransformationExecutionContext {
 		fLibraryImports = new HashSet<Module>(libraryImports);
 		
 		Context context = new Context();
-		QvtOperationalEvaluationEnv evaluationEnv = QvtOperationalEnvFactory.INSTANCE.createEvaluationEnvironment(context, null);
-		QvtOperationalEnv rootEnv = QvtOperationalEnvFactory.INSTANCE.createEnvironment(null);
-		
-		fEvaluator = QvtOperationalEvaluationVisitorImpl.createNonTransformationExecutionContextVisitor(rootEnv, evaluationEnv, libraryImports);
+		fEvaluator = QvtOperationalEvaluationVisitorImpl.createNonTransformationExecutionContextVisitor(context, libraryImports);
 	}
 	
 	/**
@@ -132,5 +126,5 @@ public class NonTransformationExecutionContext {
 			buf.append(importedLib.getName());
 		}
 		return buf.toString();
-	}
+	}	
 }
