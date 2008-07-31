@@ -45,6 +45,7 @@ import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
 import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.ecore.EcoreEvaluationEnvironment;
+import org.eclipse.ocl.ecore.EcorePackage;
 import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.types.AnyType;
 import org.eclipse.ocl.types.CollectionType;
@@ -384,6 +385,14 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			}
 			
 		}
+		
+		// The check bellow is a workarround until MDT OCL has fixed the following bug
+		// https://bugs.eclipse.org/bugs/show_bug.cgi?id=227515
+		if(classifier.eClass().getEPackage() == EcorePackage.eINSTANCE && 
+			classifier.eClass().getClassifierID() == EcorePackage.eINSTANCE.getCollectionType().getClassifierID()) {
+			return object instanceof java.util.Collection;
+		}
+		
 		return super.isKindOf(object, classifier);
 	}
 	
