@@ -58,3 +58,7 @@ helper testImportedVirtualCall() : Boolean {
 	-- do nothing, just represent a test-case
 	return true;
 }
+
+helper Collection(String)::testToUpperStrings() : Collection(String) {
+	return self.toUpper();
+}

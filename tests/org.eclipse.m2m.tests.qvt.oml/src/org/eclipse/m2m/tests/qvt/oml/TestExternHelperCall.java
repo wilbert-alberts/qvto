@@ -14,6 +14,7 @@ package org.eclipse.m2m.tests.qvt.oml;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
@@ -144,6 +145,7 @@ public class TestExternHelperCall extends TestCase {
 		assertEquals("EClassifier", call.invoke(EcoreFactory.eINSTANCE.createEDataType(), new Object[0]));		
 	}
 	
+	
 	public void testQueryNonContextual() throws Exception {
 		assertNotNull("Call must refer to operation", fCall.getOperation());
 		assertNotNull("Call must be imported from a library", fCall.getLibrary());
@@ -158,6 +160,19 @@ public class TestExternHelperCall extends TestCase {
 		assertSame(QvtOperationalParserUtil.getOwningModule(fCall.getOperation()), fCall.getLibrary());
 		assertTrue(fCall.isContextual());
 		assertSame(EcorePackage.eINSTANCE.getEClass(), fCall.getContextType());		
+	}
+	
+	/*
+	 * Tests the Collection type as the context type
+	 */
+	public void testToUpperStrings() throws Exception {
+		ArrayList<String> self = new ArrayList<String>();
+		self.add("aaa");
+		Object result = fCall.invoke(self, new Object[0]);
+		assertTrue(result instanceof Collection);
+		Collection<String> collection = (Collection<String>)result;
+		assertEquals(1, collection.size());
+		assertEquals("AAA", collection.toArray()[0]);
 	}
 	
 	private static Helper findOperationByName(Module module, String operationName) {		
