@@ -1,0 +1,15 @@
+modeltype BOOK "strict" uses BOOKS('http://org.eclipse.m2m.qvt.oml/examples/omg/BOOKS');	
+modeltype PUB "strict" uses PUB('http://org.eclipse.m2m.qvt.oml/examples/omg/PUB');
+	 
+
+transformation Book2Publication(in bookModel:BOOK, out pubModel:PUB);
+
+main() {
+	-- bookModel->objectsOfType(Book)->map book_to_publication();
+	bookModel.objects()[Book]->map book_to_publication();
+}
+
+mapping Book::book_to_publication () : Publication {
+	title := self.title;
+	nbPages := self.chapters->nbPages->sum();
+}

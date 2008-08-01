@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ASCII"?>
+<SimpleUML:Package xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SimpleUML="http://org.eclipse.m2m.qvt.oml/examples/omg/SimpleUml" xsi:schemaLocation="http://org.eclipse.m2m.qvt.oml/examples/omg/SimpleUml models/SimpleUml.ecore">
+  <elements xsi:type="SimpleUML:Class" name="Foo" kind="persistent">
+    <attribute name="fooId" kind="primary" type="//@elements.2"/>
+  </elements>
+  <elements xsi:type="SimpleUML:Class" name="Bar" kind="persistent">
+    <attribute name="barId" kind="primary" type="//@elements.2"/>
+  </elements>
+  <elements xsi:type="SimpleUML:PrimitiveDataType" name="String"/>
+  <elements xsi:type="SimpleUML:Association" name="fooToBar" kind="persistent" source="//@elements.0" destination="//@elements.1"/>
+</SimpleUML:Package>

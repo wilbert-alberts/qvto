@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ASCII"?>
+<uriMap:MappingContainer xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:uriMap="http:///www.eclipse.org/m2m/qvt/oml/MModelUriMap/1.0.0">
+  <mapping sourceURI="http://org.eclipse.m2m.qvt.oml/examples/omg/SimpleRdbms" targetURI="platform:/resource/org.eclipse.m2m.qvt.oml.examples.omg/models/SimpleRdbms.ecore"/>
+  <mapping sourceURI="http://org.eclipse.m2m.qvt.oml/examples/omg/SimpleUML" targetURI="platform:/resource/org.eclipse.m2m.qvt.oml.examples.omg/models/SimpleUml.ecore"/>
+  <mapping sourceURI="http://org.eclipse.m2m.qvt.oml/examples/omg/BOOKS" targetURI="platform:/resource/org.eclipse.m2m.qvt.oml.examples.omg/models/BOOKS.ecore"/>
+  <mapping sourceURI="http://org.eclipse.m2m.qvt.oml/examples/omg/PUB" targetURI="platform:/resource/org.eclipse.m2m.qvt.oml.examples.omg/models/PUB.ecore"/>
+  <mapping sourceURI="http://org.eclipse.m2m.qvt.oml/examples/omg/SPEM" targetURI="platform:/resource/org.eclipse.m2m.qvt.oml.examples.omg/models/SPEM.ecore"/>
+</uriMap:MappingContainer>

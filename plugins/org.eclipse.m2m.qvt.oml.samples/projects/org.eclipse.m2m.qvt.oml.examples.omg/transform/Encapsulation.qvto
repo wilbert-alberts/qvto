@@ -1,0 +1,59 @@
+-- Note: This example has been adjusted to uml2 metamodel from the Eclipse MDT project
+
+-- This QVT definition performs an in place transformation on
+-- a UML class-diagram model by privatizing the attributes and
+-- creating accessor methods
+modeltype UML uses uml('http://www.eclipse.org/uml2/2.1.0/UML');
+
+transformation Encapsulation(inout classModel:UML);
+
+-- Indicating that UML1.4 Name type is to be treated as a String
+/* 
+ Note : Not suppported, no predefined semantics in the spec
+ tag "TypeEquivalence" UML::Name = "String";
+ */
+-- entry point: selects the packages and applies the transformation
+-- on each package
+main() {
+	classModel.objectsOfType(Package)->map encapsulateAttributesInPackageClasses();
+}
+-- Applies the transformation to each class of the package
+mapping inout Package::encapsulateAttributesInPackageClasses () {
+	init {
+		self.ownedElement[Class]->map encapsulateAttributesInClass();
+	}
+}
+
+-- Performs the encapsulation for each attribute of the class
+-- The initialization section is used to retrieve the list of attributes
+-- The population section is used to add the two accessor operations
+-- The end section is used to privatize each attribute
+mapping inout Class::encapsulateAttributesInClass() {
+	init {
+		var attrs := self.feature[UML::Property];
+	}
+	
+	ownedOperation += --{ -- assignment with additive semantics
+	attrs->xcollect(a | object Operation {
+		name := 'get_' + self.name.firstToUpper();
+		visibility := VisibilityKind::public;
+		type := a.type;
+	});
+	
+	ownedOperation += attrs->xcollect(a| object Operation {
+		name := 'set_' + self.name.firstToUpper();
+		visibility := VisibilityKind::public;
+		ownedParameter += object Parameter {
+			name := 'a_'+ self.name.firstToUpper();
+			direction := ParameterDirectionKind::_in;
+			type := a.type;
+		};
+	});
+	end { 
+		attrs->map privatizeAttribute();
+	}
+}
+-- in place privatization of the attribute
+mapping inout Property::privatizeAttribute () {
+	visibility := VisibilityKind::private;
+}
