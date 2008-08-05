@@ -75,8 +75,8 @@ public class QvtEditor extends TextEditor {
         setSourceViewerConfiguration(new QvtConfiguration(this, myColorManager));
         setDocumentProvider(new QvtDocumentProvider());
         
-        setRulerContextMenuId("#QvtEditorRulerContext"); //$NON-NLS-1$
-        setEditorContextMenuId("#QvtEditorContext");   //$NON-NLS-1$
+        setRulerContextMenuId("#QvtoEditorRulerContext"); //$NON-NLS-1$
+        setEditorContextMenuId("#QvtoEditorContext");   //$NON-NLS-1$
         
         QvtBuilder.addBuildListener(myBuildListener);        
     }
