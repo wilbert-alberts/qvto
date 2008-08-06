@@ -19,8 +19,6 @@ Export-Package: org.eclipse.m2m.tests.qvt.oml,
  testqvt.util
 Require-Bundle: org.junit,
  org.eclipse.core.runtime,
- org.eclipse.jdt.core,
- org.eclipse.jdt.launching,
  org.eclipse.debug.ui,
  org.eclipse.pde.ui,
  org.eclipse.ui,

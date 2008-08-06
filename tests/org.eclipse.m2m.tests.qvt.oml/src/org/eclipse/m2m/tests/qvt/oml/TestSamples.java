@@ -47,7 +47,6 @@ public class TestSamples extends TestCase {
         
         IProject sampleProject = ResourcesPlugin.getWorkspace().getRoot().getProject(name);
         assertNotNull("project not created", sampleProject); //$NON-NLS-1$
-        RuntimeWorkspaceSetup.getInstance().updateClassPath(sampleProject);
         TestUtil.buildProject(sampleProject);
 	}
 

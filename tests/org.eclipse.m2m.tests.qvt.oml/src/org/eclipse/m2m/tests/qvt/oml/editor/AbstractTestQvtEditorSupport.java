@@ -123,7 +123,6 @@ public abstract class AbstractTestQvtEditorSupport extends TestCase {
 	
 	protected void initializeProject() throws Exception {
 		fTestProject = new TestProject("Editor", new String[] {TransformationNature.ID}); //$NON-NLS-1$
-		fTestProject.addPluginToClasspath("org.eclipse.m2m.qvt.oml"); //$NON-NLS-1$
 	
 		File srcFolder = TestUtil.getPluginRelativeFile(TestUtil.BUNDLE, "parserTestData/editor/" + fTestFolder); //$NON-NLS-1$
 	    fSrcContainer = QvtBuilderConfig.getConfig(fTestProject.getProject()).getSourceContainer();

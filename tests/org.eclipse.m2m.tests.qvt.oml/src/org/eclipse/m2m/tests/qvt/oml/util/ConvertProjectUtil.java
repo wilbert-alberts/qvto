@@ -17,10 +17,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.m2m.internal.qvt.oml.common.project.JavaProjectUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.project.PluginUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.project.PluginUtil.ModelHelper;
 import org.eclipse.pde.core.build.IBuildEntry;
@@ -39,7 +35,6 @@ public class ConvertProjectUtil {
     public static void convertToPluginProject(IProject project, IProgressMonitor progressMonitor) throws CoreException {
         org.eclipse.m2m.internal.qvt.oml.common.project.PluginUtil.addPluginNature(project);
         convertProject(project, progressMonitor);
-//        updateBuildPath(project);
     }
 
     
@@ -56,17 +51,6 @@ public class ConvertProjectUtil {
         }
     }
 
-//    private static void updateBuildPath(IProject project) throws CoreException {
-//    	PluginUtil.ModelHelper<IPluginModel> model;
-//        try {
-//            model = PluginUtil.getModel(project);
-//        } 
-//        catch (MdaException e) {
-//            throw new CoreException(new Status(IStatus.ERROR, TestUtil.BUNDLE, 1, e.getMessage(), e));
-//        }
-//        org.eclipse.pde.internal.core.ClasspathComputer.setClasspath(project, model.model());
-//    }
-    
     private static void createManifestFile(IFile file, IProgressMonitor monitor) throws CoreException {
         if(monitor == null) {
             monitor = new NullProgressMonitor();
@@ -118,46 +102,15 @@ public class ConvertProjectUtil {
         binEntry.addToken(libraryName);
 
         IBuildEntry entry = factory.createEntry(IBuildEntry.JAR_PREFIX + libraryName);
-        IJavaProject javaProject = JavaCore.create(file.getProject());
-        String srcFolder = getSourceFolderName(javaProject);
-        if (srcFolder.length() > 0) {
-            entry.addToken(new Path(srcFolder).addTrailingSeparator() .toString());
-        }
-        else {
-            entry.addToken("."); //$NON-NLS-1$
-        }
+        entry.addToken("."); //$NON-NLS-1$
         
         model.model().getBuild().add(entry);
         entry = factory.createEntry(IBuildEntry.OUTPUT_PREFIX + libraryName);
-        String outputFolder = getOutputFolderName(javaProject);
-        if (outputFolder.length() > 0) {
-            entry.addToken(new Path(outputFolder).addTrailingSeparator().toString());
-        }
-        else {
-            entry.addToken("."); //$NON-NLS-1$
-        }
+        entry.addToken("."); //$NON-NLS-1$
         
         model.model().getBuild().add(entry);
 
         model.model().getBuild().add(binEntry);
         model.save();
     }
-    
-    private static String getSourceFolderName(IJavaProject javaProject) {
-        try {
-            return JavaProjectUtil.getSourceFolderName(javaProject).toOSString();
-        }
-        catch(Exception e) {
-            return ""; //$NON-NLS-1$
-        }
-    }
-    
-    private static String getOutputFolderName(IJavaProject javaProject) {
-        try {
-            return JavaProjectUtil.getOutputFolderName(javaProject).toOSString();
-        }
-        catch(Exception e) {
-            return ""; //$NON-NLS-1$
-        }
-    }       
 }

@@ -12,34 +12,15 @@
 package org.eclipse.m2m.tests.qvt.oml;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Set;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.codegen.ecore.Generator;
-import org.eclipse.jdt.core.IClasspathContainer;
-import org.eclipse.jdt.core.IClasspathEntry;
-import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.JavaCore;
-import org.osgi.framework.Bundle;
 
 /**
  * This strategy is copied from GMF project unittest (www.eclipse.org/gmf)
@@ -120,7 +101,6 @@ public class RuntimeWorkspaceSetup {
 	}
 
 	private void init(String... pluginsToImport) throws Exception {
-		ensureJava14();
 		if (isDevLaunchMode) {
 			// Need to get some gmf source code into target workspace 
 			importDevPluginsIntoRunTimeWorkspace(pluginsToImport);
@@ -153,173 +133,7 @@ public class RuntimeWorkspaceSetup {
 		pluginXmlContent.append("<import plugin='org.eclipse.jface.text' export='true'/>\n"); //$NON-NLS-1$
 		pluginXmlContent.append("<import plugin='org.eclipse.ui.views.properties.tabbed' export='true'/>\n"); //$NON-NLS-1$
 
-		ClasspathEntry[] classpathEntries = getClasspathEntries(pluginIDs);
-		for (int i = 0; i < classpathEntries.length; i++) {
-			classpathEntries[i].importTo(p, pluginXmlContent);
-		}
-
 		pluginXmlContent.append("</requires>\n</plugin>"); //$NON-NLS-1$
 		p.getFile("plugin.xml").create(new ByteArrayInputStream(pluginXmlContent.toString().getBytes()), true, new NullProgressMonitor()); //$NON-NLS-1$
-	}
-
-	private ClasspathEntry[] getClasspathEntries(String[] pluginIDs) {
-		ArrayList<ClasspathEntry> entries = new ArrayList<ClasspathEntry>(pluginIDs.length); 
-		for (int i = 0; i < pluginIDs.length; i++) {
-			ClasspathEntry nextEntry = new ClasspathEntry(pluginIDs[i]);
-			if (nextEntry.isValid()) {
-				entries.add(nextEntry);				
-			} else {
-				System.out.println("Bundle " + pluginIDs[i] + " is missing, skipped."); //$NON-NLS-1$ //$NON-NLS-2$
-			}
-		}
-		return entries.toArray(new ClasspathEntry[entries.size()]);
-	}
-
-	private IJavaProject asJavaProject(IProject p) {
-		return JavaCore.create(p);
-	}
-
-	/**
-	 * TODO uniqueClassPathEntries is not needed if diagramProj gets here only once. It's not the case
-	 * now - refactor LinkCreationConstraintsTest to utilize genProject created in AuditRulesTest (?)
-	 * TODO refactor with ClasspathContainerInitializer - just for the sake of fixing the knowledge 
-	 */
-	public void updateClassPath(IProject aProject) throws CoreException {
-		if (!isDevLaunchMode) {
-			return;
-		}
-		IResource[] members;
-		try {
-			members = getSOSProject().members();
-		} catch (CoreException ex) {
-			ex.printStackTrace();
-			members = new IResource[0];
-		}
-		final IJavaProject sosJavaPrj = asJavaProject(getSOSProject());
-		if(!JavaCore.create(aProject).exists()) {
-			return;
-		}
-		IClasspathEntry[] cpOrig = asJavaProject(aProject).getRawClasspath();
-		ArrayList<IClasspathEntry> rv = new ArrayList<IClasspathEntry>(10 + cpOrig.length + members.length);
-		IClasspathContainer c = JavaCore.getClasspathContainer(new Path(PLUGIN_CONTAINER_ID), sosJavaPrj);
-		if (c != null) {
-			IClasspathEntry[] cpAdd = c.getClasspathEntries();
-			rv.addAll(Arrays.asList(cpAdd));
-		}
-		for (int i = 0; i < members.length; i++) {
-			if (!members[i].isLinked()) {
-				continue;
-			}
-			rv.add(JavaCore.newLibraryEntry(members[i].getFullPath(), null, null));
-		}
-
-		final Set<IPath> uniqueClassPathEntries = new HashSet<IPath>();
-		IClasspathEntry[] cpOrigResolved = asJavaProject(aProject).getResolvedClasspath(true);
-		for (int i = 0; i < cpOrigResolved.length; i++) {
-			uniqueClassPathEntries.add(cpOrigResolved[i].getPath());
-		}
-		for (Iterator it = rv.iterator(); it.hasNext();) {
-			IClasspathEntry next = (IClasspathEntry) it.next();
-			if (uniqueClassPathEntries.contains(next.getPath())) {
-				it.remove();
-			} else {
-				uniqueClassPathEntries.add(next.getPath());
-			}
-		}
-		rv.addAll(Arrays.asList(cpOrig));
-		
-		IClasspathEntry[] cpNew = rv.toArray(new IClasspathEntry[rv.size()]);
-		asJavaProject(aProject).setRawClasspath(cpNew, new NullProgressMonitor());
-	}
-
-	/**
-	 * at least
-	 */
-	@SuppressWarnings("unchecked")
-	private void ensureJava14() {
-		if (!JavaCore.VERSION_1_4.equals(JavaCore.getOption(JavaCore.COMPILER_SOURCE))) {
-			Hashtable<String,String> options = JavaCore.getOptions();
-			options.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_1_4);
-			options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_4);
-			options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_4);
-			JavaCore.setOptions(options);
-		}
-	}
-	
-	private class ClasspathEntry {
-		
-		private String myPluginID;
-		private URL myBundleURL;
-		private File myBundleFile;
-		private File myClassesContainerFile;
-
-		private ClasspathEntry(String pluginID) {
-			myPluginID = pluginID;
-		}
-
-		public void importTo(IProject p, StringBuffer pluginXmlContent) {
-			if (!getClassesContainerFile().exists()) {
-				pluginXmlContent.append("<import plugin='"); //$NON-NLS-1$
-				pluginXmlContent.append(myPluginID);
-				pluginXmlContent.append("' export='true'/>\n"); //$NON-NLS-1$
-			} else {
-				if (getClassesContainerFile().isDirectory()) {
-					String entryName = getBundleFile().getName().replace('.', '_');
-					IFolder folder = p.getFolder(entryName);
-					try {
-						folder.createLink(new Path(getClassesContainerFile().getAbsolutePath()), IResource.REPLACE, new NullProgressMonitor());
-					} catch (CoreException e) {
-						e.printStackTrace();
-					}
-				} else if (getClassesContainerFile().isFile()) {
-					String entryName = getClassesContainerFile().getName();
-					IFile file = p.getFile(entryName);
-					try {
-						file.createLink(new Path(getClassesContainerFile().getAbsolutePath()), IResource.REPLACE, new NullProgressMonitor());
-					} catch (CoreException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-		
-		private File getClassesContainerFile() {
-			if (myClassesContainerFile == null) {
-				myClassesContainerFile = new File(getBundleFile(), getRelativePath());
-			}
-			return myClassesContainerFile;
-		}
-		
-		private File getBundleFile() {
-			if (myBundleFile == null) {
-				myBundleFile = new File(getBundleURL().getFile());
-			}
-			return myBundleFile;
-		}
-		
-		private String getRelativePath() {
-			return "/bin/"; //$NON-NLS-1$
-		}
-		
-		private URL getBundleURL() {
-			if (myBundleURL == null) {
-				Bundle bundle = Platform.getBundle(myPluginID);
-				if (bundle == null) {
-					//Do not throw exception. This allows requiring lite runtime plugin and not failing in configurations where it is not present.
-					return null;
-				}
-				try {
-					myBundleURL = FileLocator.resolve(bundle.getEntry("/")); //$NON-NLS-1$
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			return myBundleURL;
-		}
-		
-		public boolean isValid() {
-			return getBundleURL() != null;
-		}
-		
 	}
 }

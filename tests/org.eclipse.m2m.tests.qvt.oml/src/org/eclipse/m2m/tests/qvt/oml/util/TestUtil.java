@@ -37,7 +37,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.tests.qvt.oml.RuntimeWorkspaceSetup;
 import org.eclipse.m2m.tests.qvt.oml.TestProject;
@@ -192,9 +191,6 @@ public class TestUtil extends Assert {
     public static void addProject(TestProject testProject, String path) throws Exception {
         String location = TestUtil.getPluginRelativeFolder(path).getAbsolutePath();
         IProject project = TestUtil.openExistingProject(location);
-        IProjectDescription description = project.getDescription();
-        description.setNatureIds(new String[] { JavaCore.NATURE_ID});
-        project.setDescription(description, null);
         TestUtil.buildProject(project);
         testProject.addWorkspaceProject(project);
     }    
