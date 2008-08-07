@@ -23,6 +23,7 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -33,6 +34,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
+import org.eclipse.m2m.internal.qvt.oml.common.project.NatureUtils;
 import org.eclipse.m2m.internal.qvt.oml.common.project.PluginUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.project.PluginUtil.ModelHelper;
 import org.eclipse.m2m.tests.qvt.oml.util.ConvertProjectUtil;
@@ -75,6 +77,8 @@ public class TestProject {
 		}
 		project.create(null);
 		project.open(null);
+		
+        setNatures(natures);
 	}
     
     private TestProject(String name) {
@@ -139,6 +143,24 @@ public class TestProject {
 	public void delete() throws CoreException {
 		project.delete(true, true, null);
 	}
+	
+    private void setNatures(String[] natures) throws CoreException {
+        try {
+            IProjectDescription description = project.getDescription();
+            project.setDescription(description, null);
+            
+            for (int i = 0; i < natures.length; i++) {
+                String nature = natures[i];
+                //if(TransformationNature.ID.equals(nature)) {
+                  NatureUtils.addNature(project, nature);
+                //}
+            }
+            
+        } catch(CoreException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }	
 
 	@SuppressWarnings("unchecked")
 	public static Path findFileInPlugin(final String plugin, final String file) throws IOException {
