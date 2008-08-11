@@ -342,7 +342,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
     private static URI toUri(String uriString) throws MdaException {
         URI uri = URI.createURI(uriString);  
         if(uri == null) {
-            throw new MdaException(NLS.bind(Messages.QvtLauncherTab_InvalidUri, uriString));
+            throw new MdaException(NLS.bind(Messages.QvtValidator_InvalidUri, uriString));
         }
         
         return uri;

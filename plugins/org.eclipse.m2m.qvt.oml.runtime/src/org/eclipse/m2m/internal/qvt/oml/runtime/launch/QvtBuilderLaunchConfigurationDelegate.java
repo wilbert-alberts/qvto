@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
@@ -25,7 +26,6 @@ import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.LaunchConfigurationDelegate;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.BaseProcess;
@@ -35,8 +35,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.launch.StreamsProxy;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.IMetamodelHandler;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.MetamodelHandlerManager;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
@@ -124,18 +123,16 @@ public class QvtBuilderLaunchConfigurationDelegate extends LaunchConfigurationDe
             return;
 		}
         
-        IMetamodelHandler handler = MetamodelHandlerManager.getInstance().getHandler(EcorePackage.Literals.ECLASS);
-        if(handler == null) {
-            return;
-        }
-        
         List<TransformationParameter> transfParams = transformation.getParameters();
         List<TargetUriData> targetUris = QvtLaunchUtil.getTargetUris(configuration);
         for (int i = 0, n = targetUris.size(); i < n; ++i) {
         	if (transfParams.size() > i && transfParams.get(i).getDirectionKind() == DirectionKind.OUT) {
 	        	URI outUri = URI.createURI(targetUris.get(i).getUriString());
 	        	if (outUri != null) {
-		        	handler.getSaver().clean(outUri);
+	                IFile file = URIUtils.getFile(outUri);
+	                if (file != null) {
+		                file.delete(true, true, null);
+	                }
 	        	}
         	}
         }
@@ -144,7 +141,10 @@ public class QvtBuilderLaunchConfigurationDelegate extends LaunchConfigurationDe
         if (traceFile != null) {
         	URI traceUri = URI.createPlatformResourceURI(traceFile, false);
         	if (traceUri != null) {
-        		handler.getSaver().clean(traceUri);
+                IFile file = URIUtils.getFile(traceUri);
+                if (file != null) {
+	                file.delete(true, true, null);
+                }
         	}
         }
     }

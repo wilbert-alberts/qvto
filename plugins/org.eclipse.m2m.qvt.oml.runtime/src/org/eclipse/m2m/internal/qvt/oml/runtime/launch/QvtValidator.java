@@ -11,6 +11,9 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.launch;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
@@ -33,8 +36,6 @@ import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.StatusUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.IMetamodelHandler;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.MetamodelHandlerManager;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
@@ -292,12 +293,7 @@ public class QvtValidator {
 			classifier = transfParam.getMetamodels().get(0).eClass();
 		}
 
-		IMetamodelHandler handler = MetamodelHandlerManager.getInstance().getHandler(classifier);
-        if (handler == null) {
-            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_UnsupportedDestination, targetData.getUriString()));
-        }
-
-        IStatus canSave = handler.getSaver().canSave(classifier, sourceUri); 
+        IStatus canSave = canSave(classifier, sourceUri); 
         if (StatusUtil.isError(canSave)) {
         	return canSave;
         }
@@ -316,11 +312,6 @@ public class QvtValidator {
 			classifier = transfParam.getMetamodels().get(0).eClass();
 		}
 
-        IMetamodelHandler handler = MetamodelHandlerManager.getInstance().getHandler(classifier);
-        if (handler == null) {
-            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_UnsupportedDestination, targetData.getUriString()));
-        }
-		
         URI destUri = EmfUtil.makeUri(targetData.getUriString());
         if (destUri == null) {
             return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidTargetUri, targetData.getUriString()));
@@ -341,7 +332,7 @@ public class QvtValidator {
                 }
             }
             
-        	IStatus canSave = handler.getSaver().canSave(classifier, destUri); 
+        	IStatus canSave = canSave(classifier, destUri); 
             if (StatusUtil.isError(canSave)) {
             	return canSave;
             }
@@ -370,7 +361,7 @@ public class QvtValidator {
                 }
         	}
         	
-        	IStatus canSave = handler.getSaver().canSave(classifier, destUri); 
+        	IStatus canSave = canSave(classifier, destUri); 
             if (StatusUtil.isError(canSave)) {
             	return canSave;
             }
@@ -407,4 +398,40 @@ public class QvtValidator {
 		return result;
 	}
 
+    private static IStatus canSave(EClassifier cls, URI destUri) {
+        ResourceSet outputRS = EmfUtil.getOutputResourceSet();
+		URI converted = outputRS.getURIConverter().normalize(destUri);
+		
+		IStatus okStatus = StatusUtil.makeOkStatus();
+		String scheme = converted.scheme();
+		if (converted.isFile()) {
+			if (!"file".equals(scheme) && !"platform".equals(scheme)) { //$NON-NLS-1$ //$NON-NLS-2$
+				return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_UriNotFile, new Object[] {destUri, scheme}));
+			}
+		}
+		else {
+			if ("archive".equals(scheme)) { //$NON-NLS-1$
+				return okStatus;  
+			}
+			else if (converted.isPlatformResource()) {
+				return okStatus;
+			}
+//			else if (isEFSScheme(scheme)) {
+//				return true;
+//			}
+			else {
+				try	{
+					URL url = new URL(destUri.toString());
+					url.openConnection();
+					return okStatus;
+				}
+				catch (MalformedURLException e) {
+				}
+				catch (IOException e) {
+				}
+			}
+		}
+		return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_UriCorrupted, destUri));
+    }
+	
 }

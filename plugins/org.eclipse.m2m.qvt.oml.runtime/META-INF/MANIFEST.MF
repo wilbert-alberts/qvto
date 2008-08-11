@@ -21,6 +21,5 @@ Require-Bundle: org.eclipse.core.runtime,
  org.apache.ant,
  org.eclipse.m2m.qvt.oml,
  org.eclipse.m2m.qvt.oml.common,
- org.eclipse.m2m.qvt.oml.emf.util,
- org.eclipse.m2m.qvt.oml.emf.util.ui
+ org.eclipse.m2m.qvt.oml.emf.util
 Bundle-ActivationPolicy: lazy

@@ -20,7 +20,6 @@ public class Messages extends NLS {
 	public static String QvtValidator_DestinationExists;
 	public static String QvtValidator_NewDestinationHasFragment;
 	public static String QvtValidator_EmptyInput;
-	public static String QvtValidator_UnsupportedDestination;
 	public static String QvtValidator_InvalidSourceUri;
 	public static String QvtValidator_InvalidTargetUri;
 	public static String QvtValidator_NoTraceFile;
@@ -38,7 +37,9 @@ public class Messages extends NLS {
 
     public static String QvtValidator_TraceProjectNotOpen;
 	
-	public static String QvtLauncherTab_InvalidUri;
+	public static String QvtValidator_InvalidUri;
+	public static String QvtValidator_UriNotFile;
+	public static String QvtValidator_UriCorrupted;
 	
 	public static String InMemoryQvtLaunchConfigurationDelegate_TransformationJobName;
 	public static String InMemoryQvtLaunchConfigurationDelegate_RunningTaskName;
