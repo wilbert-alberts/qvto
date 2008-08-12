@@ -1,0 +1,9 @@
+.inclusive
+QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = a, displayString = a, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 1
+QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = b, displayString = b, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 1
+QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = a.c, displayString = a.c, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 3
+QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = a.d, displayString = a.d, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 3
+QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = a.b.e, displayString = a.b.e, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 5
+QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = a.b.f, displayString = a.b.f, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 5
+QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = apiTestData.exec1.exec1, displayString = apiTestData.exec1.exec1, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 23
+QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = apiTestData.exec3.exec3, displayString = apiTestData.exec3.exec3, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 23

@@ -1,0 +1,8 @@
+transformation t;
+metamodel /*@*/
+
+mapping main(in pack: ecore::EPackage): ecore::EPackage {
+    object {
+        name := 'foo';
+    }
+}
