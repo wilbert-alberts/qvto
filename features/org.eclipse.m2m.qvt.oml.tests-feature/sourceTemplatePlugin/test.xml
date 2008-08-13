@@ -41,6 +41,10 @@
 			<param name="testPlugin" value="org.eclipse.m2m.tests.qvt.oml" />
 			<param name="version" value="${org.eclipse.m2m.tests.qvt.oml}" />
 		</antcall>
+		<antcall target="runtests">
+			<param name="testPlugin" value="org.eclipse.m2m.tests.qvt.oml.ui" />
+			<param name="version" value="${org.eclipse.m2m.tests.qvt.oml.ui}" />
+		</antcall>
 		<antcall target="genHtml"/>
 	</target>
 
