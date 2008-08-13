@@ -6,8 +6,8 @@
   <property name="eclipse-home" value="${basedir}\..\.."/>
 
   <property name="plugin-name" value="org.eclipse.m2m.tests.qvt.oml.ui"/>
-  <property name="classname" value="org.eclipse.m2m.tests.qvt.oml.ui.AllTests"/>
-  <property name="library-file" value="${baseLocation}/plugins/org.eclipse.test_${testPluginVersion}/library.xml"/>
+  <property name="classname" value="org.eclipse.m2m.internal.tests.qvt.oml.ui.AllTests"/>
+  <property name="library-file" value="${eclipse-home}/plugins/org.eclipse.test/library.xml"/>
 
   <!-- This target holds all initialization code that needs to be done for -->
   <!-- all tests that are to be run. Initialization for individual tests -->
@@ -15,7 +15,7 @@
   <target name="init">
     <tstamp/>
     <delete>
-      <fileset dir="${eclipse-home}" includes="com*.xml"/>
+      <fileset dir="${eclipse-home}" includes="org*.xml"/>
     </delete>
   </target>
 
@@ -23,7 +23,7 @@
   <target name="suite">
     <property name="test-folder" value="${eclipse-home}/test_folder"/>
     <delete dir="${test-folder}" quiet="true"/>
-    <ant target="ui-test" antfile="${library-file}" dir="${eclipse-home}" output="../antoutput.txt">
+    <ant target="ui-test" antfile="${library-file}" dir="${eclipse-home}">
       <property name="data-dir" value="${test-folder}"/>
       <property name="plugin-name" value="${plugin-name}"/>
       <property name="os" value="${baseos}"/>
@@ -51,4 +51,3 @@
   </target>
 
 </project>
-
