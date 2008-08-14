@@ -68,6 +68,7 @@ import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.ExpressionsFactory;
 import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.lpg.AbstractLexer;
 import org.eclipse.ocl.lpg.AbstractParser;
 import org.eclipse.ocl.lpg.AbstractProblemHandler;
@@ -371,6 +372,13 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		if ((myCompilerOptions != null) && !myCompilerOptions.isReportErrors()) {
 			return;
 		}
+		
+		// hack untill OCL [https://bugs.eclipse.org/bugs/show_bug.cgi?id=244144] is not resolved
+        String oclMsg = OCLMessages.bind(OCLMessages.CollectionType_ERROR_, "", "");
+        if (message.startsWith(oclMsg.substring(0, oclMsg.length()-2), 0)) {
+        	return;
+        }
+		
 		QvtOperationalEnv parent = this;
 		while (parent.getInternalParent() != null) {
 			parent = (QvtOperationalEnv) parent.getInternalParent();

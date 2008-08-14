@@ -118,14 +118,18 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 	}
 	
 	private void extractContextualOperations(EClassifier context, Collection<EOperation> result) {
-		if(fCtx2OperationMap != null) {
-			List<ImperativeOperation> operList = fCtx2OperationMap.get(context);
-			if(operList != null) {
-				result.addAll(operList);			
-			}
-			
+		if(fCtx2OperationMap == null) {
 			return;
-		}		
+		}
+		for (EClassifier ctx : fCtx2OperationMap.keySet()) {
+			if (TypeUtil.exactTypeMatch(fOwner, ctx, context)) {
+				List<ImperativeOperation> operList = fCtx2OperationMap.get(ctx);
+				if(operList != null) {
+					result.addAll(operList);
+					return;
+				}
+			}
+		}
 	}
 
 	private void extractIntermediateProperties(EClassifier context, Collection<EStructuralFeature> result) {
