@@ -32,6 +32,7 @@ import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.EvaluationVisitor;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
+import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.ecore.EcoreEnvironmentFactory;
 import org.eclipse.ocl.ecore.SendSignalAction;
 
@@ -45,7 +46,17 @@ public class QvtOperationalEnvFactory extends EcoreEnvironmentFactory {
 		return env;
 	}
 	
-	public QvtOperationalEnv createEnvironment(final QvtOperationalEnv parent) {
+	@Override
+    public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> createEnvironment(
+            Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent) {
+        if (!(parent instanceof QvtOperationalEnv)) {
+            throw new IllegalArgumentException(
+                "Parent environment must be a QvtOperationalEnv: " + parent); //$NON-NLS-1$
+        }
+        return createEnvironment((QvtOperationalEnv) parent);
+    }
+
+    public QvtOperationalEnv createEnvironment(final QvtOperationalEnv parent) {
 		QvtOperationalEnv env = new QvtOperationalEnv(parent);
 		env.setFactory(this);
 		return env;
