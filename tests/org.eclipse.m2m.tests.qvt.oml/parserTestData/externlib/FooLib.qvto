@@ -62,3 +62,7 @@ helper testImportedVirtualCall() : Boolean {
 helper Collection(String)::testToUpperStrings() : Collection(String) {
 	return self.toUpper();
 }
+
+helper String::testCollectionTypeInImportsMatch() : String {
+	return Sequence{self, self}->collectionOpFromImportedLib();
+}
