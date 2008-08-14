@@ -174,7 +174,20 @@ public class TestExternHelperCall extends TestCase {
 		assertEquals(1, collection.size());
 		assertEquals("AAA", collection.toArray()[0]);
 	}
-	
+
+	/*
+	 * Test collection type matching from a library and an imported library.
+	 * Quite similar to testToUpperStrings(), the difference is that in this case
+	 * both collections are parse-time (testToUpperStrings needs to convert ArrayList
+	 * to proper collection at evaluation time - different code location, though
+	 * same TypeResolver trouble, perhaps)
+	 */
+	public void testCollectionTypeInImportsMatch() throws Exception {
+		assertTrue(fCall.isContextual());
+		Object result = fCall.invoke("anything", new Object[0]);
+		assertEquals("COLLECTION SUCCESS", result);
+	}
+
 	private static Helper findOperationByName(Module module, String operationName) {		
 		for (EOperation eOperation : module.getEOperations()) {
 			if(operationName.equals(eOperation.getName()) && eOperation instanceof Helper) {
