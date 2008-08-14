@@ -30,6 +30,7 @@ plugin@org.eclipse.m2m.qvt.oml.samples=v20080611-1330,:pserver:anonymous@dev.ecl
 !*** QVTO tests ******************************************************************************
 feature@org.eclipse.m2m.qvt.oml.tests=v20080611-1330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/features/org.eclipse.m2m.qvt.oml.tests-feature
 plugin@org.eclipse.m2m.tests.qvt.oml=v20080611-1330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/tests/org.eclipse.m2m.tests.qvt.oml
+plugin@org.eclipse.m2m.tests.qvt.oml.ui=v20080611-1330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/tests/org.eclipse.m2m.tests.qvt.oml.ui
 
 !*** Special entries from eclipse  
 plugin@org.eclipse.test=v20080313,:pserver:anonymous@dev.eclipse.org:/cvsroot/eclipse,

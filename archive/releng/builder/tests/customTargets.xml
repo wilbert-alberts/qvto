@@ -149,6 +149,12 @@
 			<include name="*.log.zip" />
 		</fileset>
 	</unzip>
+
+	<unzip dest="${buildDirectory}/${buildLabel}/compilelogs" overwrite="true">
+		<fileset dir="${buildDirectory}/features/org.eclipse.m2m.tests.qvt.oml.ui">
+			<include name="*.log.zip" />
+		</fileset>
+	</unzip>
 </target>
 
 <target name="clean" unless="noclean">

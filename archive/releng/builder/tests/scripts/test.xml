@@ -70,6 +70,10 @@
 			<param name="testPlugin" value="${org.eclipse.m2m.tests.qvt.oml}" />
 			<param name="report" value="org.eclipse.m2m.tests.qvt.oml" />
 		</antcall>
+		<antcall target="runtests">
+			<param name="testPlugin" value="${org.eclipse.m2m.tests.qvt.oml.ui}" />
+			<param name="report" value="org.eclipse.m2m.tests.qvt.oml.ui" />
+		</antcall>
 
 		<!-- test if chkpii script exists before proceeding -->
 		<property name="common.releng.dir" value="${basedir}/../../../org.eclipse.modeling.common.releng"/>
