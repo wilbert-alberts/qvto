@@ -3,6 +3,7 @@ package org.eclipse.m2m.internal.qvt.oml.compiler;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
@@ -56,7 +57,13 @@ public class QvtCompilerKernel {
         	module = ExpressionsFactory.eINSTANCE.createOperationalTransformation();
         }
         
-        module.setName(mmas.getHeaderCS().getPathNameCS().getSequenceOfNames().get(0));
+        if(mmas.getHeaderCS() != null && mmas.getHeaderCS().getPathNameCS() != null) {
+        	EList<String> sequenceOfNames = mmas.getHeaderCS().getPathNameCS().getSequenceOfNames();
+        	if(!sequenceOfNames.isEmpty()) {
+        		module.setName(sequenceOfNames.get(0));
+        	}
+        }
+        
         module.setEFactoryInstance(new ExpressionsFactoryImpl());
         mySyntaxToSemanticMap.put(mmas, module);
 
