@@ -13,9 +13,9 @@ mapping main(in model: Ecore1::EPackage): Ecore1::EPackage {
 	init{  
 		var classes:= input.objectsOfType(Ecore1::EClass);
 	}
-    object {
+
     	eClassifiers += classes->collect(c|c2c(c));
-	}
+
 }   
     
 mapping c2c(in clz : Ecore1::EClass) : ecore::EClass /*use package name for resolution check*/{
