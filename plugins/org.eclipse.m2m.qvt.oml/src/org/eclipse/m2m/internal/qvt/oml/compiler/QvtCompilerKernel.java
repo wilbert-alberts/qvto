@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFolder;
+import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
@@ -48,7 +49,14 @@ public class QvtCompilerKernel {
     
     public Module createModule(MappingModuleCS mmas, QvtCompilerOptions options, 
             EcoreEnvironment env, CFile cFile) {
-        Module module = ExpressionsFactory.eINSTANCE.createModule();
+        Module module = null;
+        if(mmas instanceof LibraryCS) {
+        	module = ExpressionsFactory.eINSTANCE.createLibrary();
+        } else {
+        	module = ExpressionsFactory.eINSTANCE.createOperationalTransformation();
+        }
+        
+        module.setName(mmas.getHeaderCS().getPathNameCS().getSequenceOfNames().get(0));
         module.setEFactoryInstance(new ExpressionsFactoryImpl());
         mySyntaxToSemanticMap.put(mmas, module);
 

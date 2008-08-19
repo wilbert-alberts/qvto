@@ -56,6 +56,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VariableInitExp;
@@ -373,7 +374,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			return;
 		}
 		
-		// hack untill OCL [https://bugs.eclipse.org/bugs/show_bug.cgi?id=244144] is not resolved
+		// FIXME - hack untill OCL [https://bugs.eclipse.org/bugs/show_bug.cgi?id=244144] is not resolved
         String oclMsg = OCLMessages.bind(OCLMessages.CollectionType_ERROR_, "", "");
         if (message.startsWith(oclMsg.substring(0, oclMsg.length()-2), 0)) {
         	return;
@@ -455,7 +456,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		return Collections.emptyList();
 	}	
 	
-	public void registerModelParameters(Module module) {
+	public void registerModelParameters(OperationalTransformation module) {
 		List<Variable<EClassifier, EParameter>> modelParameters = new ArrayList<Variable<EClassifier,EParameter>>(module.getModelParameter().size());
 		for (ModelParameter modelParam : module.getModelParameter()) {
 	        if (lookupLocal(modelParam.getName()) != null) {

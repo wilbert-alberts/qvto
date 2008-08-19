@@ -75,12 +75,6 @@ public class QVTUMLReflection
 		fUmlReflection = umlReflection;
 	}
 
-	public static Module createModule() {
-		Module module = ExpressionsFactory.eINSTANCE.createModule();
-		module.eAdapters().add(new QVTMetaElementMarker());
-		return module;
-	}
-
 	public static ModelType createModel(String name) {
 		ModelType modelType = ExpressionsFactory.eINSTANCE.createModelType();
 		modelType.setName(name);

@@ -418,22 +418,13 @@ public interface ExpressionsPackage extends EPackage {
 	int MODULE__ENTRY = EcorePackage.ECLASS_FEATURE_COUNT + 12;
 
 	/**
-	 * The feature id for the '<em><b>Model Parameter</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODULE__MODEL_PARAMETER = EcorePackage.ECLASS_FEATURE_COUNT + 13;
-
-	/**
 	 * The feature id for the '<em><b>Intermediate Property</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE__INTERMEDIATE_PROPERTY = EcorePackage.ECLASS_FEATURE_COUNT + 14;
+	int MODULE__INTERMEDIATE_PROPERTY = EcorePackage.ECLASS_FEATURE_COUNT + 13;
 
 	/**
 	 * The number of structural features of the '<em>Module</em>' class.
@@ -442,7 +433,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE_FEATURE_COUNT = EcorePackage.ECLASS_FEATURE_COUNT + 15;
+	int MODULE_FEATURE_COUNT = EcorePackage.ECLASS_FEATURE_COUNT + 14;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.LibraryImpl <em>Library</em>}' class.
@@ -788,15 +779,6 @@ public interface ExpressionsPackage extends EPackage {
 	int LIBRARY__ENTRY = MODULE__ENTRY;
 
 	/**
-	 * The feature id for the '<em><b>Model Parameter</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIBRARY__MODEL_PARAMETER = MODULE__MODEL_PARAMETER;
-
-	/**
 	 * The feature id for the '<em><b>Intermediate Property</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -806,22 +788,13 @@ public interface ExpressionsPackage extends EPackage {
 	int LIBRARY__INTERMEDIATE_PROPERTY = MODULE__INTERMEDIATE_PROPERTY;
 
 	/**
-	 * The feature id for the '<em><b>Library</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIBRARY__LIBRARY = MODULE_FEATURE_COUNT + 0;
-
-	/**
 	 * The number of structural features of the '<em>Library</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LIBRARY_FEATURE_COUNT = MODULE_FEATURE_COUNT + 1;
+	int LIBRARY_FEATURE_COUNT = MODULE_FEATURE_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.RenameImpl <em>Rename</em>}' class.
@@ -4892,6 +4865,376 @@ public interface ExpressionsPackage extends EPackage {
 	int RETURN_EXP_FEATURE_COUNT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 1;
 
 																/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.OperationalTransformationImpl <em>Operational Transformation</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.OperationalTransformationImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getOperationalTransformation()
+	 * @generated
+	 */
+	int OPERATIONAL_TRANSFORMATION = 38;
+
+																/**
+	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__EANNOTATIONS = MODULE__EANNOTATIONS;
+
+																/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__NAME = MODULE__NAME;
+
+																/**
+	 * The feature id for the '<em><b>Instance Class Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__INSTANCE_CLASS_NAME = MODULE__INSTANCE_CLASS_NAME;
+
+																/**
+	 * The feature id for the '<em><b>Instance Class</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__INSTANCE_CLASS = MODULE__INSTANCE_CLASS;
+
+																/**
+	 * The feature id for the '<em><b>Default Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__DEFAULT_VALUE = MODULE__DEFAULT_VALUE;
+
+																/**
+	 * The feature id for the '<em><b>Instance Type Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__INSTANCE_TYPE_NAME = MODULE__INSTANCE_TYPE_NAME;
+
+																/**
+	 * The feature id for the '<em><b>EPackage</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__EPACKAGE = MODULE__EPACKAGE;
+
+																/**
+	 * The feature id for the '<em><b>EType Parameters</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__ETYPE_PARAMETERS = MODULE__ETYPE_PARAMETERS;
+
+																/**
+	 * The feature id for the '<em><b>Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__ABSTRACT = MODULE__ABSTRACT;
+
+																/**
+	 * The feature id for the '<em><b>Interface</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__INTERFACE = MODULE__INTERFACE;
+
+																/**
+	 * The feature id for the '<em><b>ESuper Types</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__ESUPER_TYPES = MODULE__ESUPER_TYPES;
+
+																/**
+	 * The feature id for the '<em><b>EOperations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__EOPERATIONS = MODULE__EOPERATIONS;
+
+																/**
+	 * The feature id for the '<em><b>EAll Attributes</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__EALL_ATTRIBUTES = MODULE__EALL_ATTRIBUTES;
+
+																/**
+	 * The feature id for the '<em><b>EAll References</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__EALL_REFERENCES = MODULE__EALL_REFERENCES;
+
+																/**
+	 * The feature id for the '<em><b>EReferences</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__EREFERENCES = MODULE__EREFERENCES;
+
+																/**
+	 * The feature id for the '<em><b>EAttributes</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__EATTRIBUTES = MODULE__EATTRIBUTES;
+
+																/**
+	 * The feature id for the '<em><b>EAll Containments</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__EALL_CONTAINMENTS = MODULE__EALL_CONTAINMENTS;
+
+																/**
+	 * The feature id for the '<em><b>EAll Operations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__EALL_OPERATIONS = MODULE__EALL_OPERATIONS;
+
+																/**
+	 * The feature id for the '<em><b>EAll Structural Features</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__EALL_STRUCTURAL_FEATURES = MODULE__EALL_STRUCTURAL_FEATURES;
+
+																/**
+	 * The feature id for the '<em><b>EAll Super Types</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__EALL_SUPER_TYPES = MODULE__EALL_SUPER_TYPES;
+
+																/**
+	 * The feature id for the '<em><b>EID Attribute</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__EID_ATTRIBUTE = MODULE__EID_ATTRIBUTE;
+
+																/**
+	 * The feature id for the '<em><b>EStructural Features</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__ESTRUCTURAL_FEATURES = MODULE__ESTRUCTURAL_FEATURES;
+
+																/**
+	 * The feature id for the '<em><b>EGeneric Super Types</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__EGENERIC_SUPER_TYPES = MODULE__EGENERIC_SUPER_TYPES;
+
+																/**
+	 * The feature id for the '<em><b>EAll Generic Super Types</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__EALL_GENERIC_SUPER_TYPES = MODULE__EALL_GENERIC_SUPER_TYPES;
+
+																/**
+	 * The feature id for the '<em><b>Ns URI</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__NS_URI = MODULE__NS_URI;
+
+																/**
+	 * The feature id for the '<em><b>Ns Prefix</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__NS_PREFIX = MODULE__NS_PREFIX;
+
+																/**
+	 * The feature id for the '<em><b>EFactory Instance</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__EFACTORY_INSTANCE = MODULE__EFACTORY_INSTANCE;
+
+																/**
+	 * The feature id for the '<em><b>EClassifiers</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__ECLASSIFIERS = MODULE__ECLASSIFIERS;
+
+																/**
+	 * The feature id for the '<em><b>ESubpackages</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__ESUBPACKAGES = MODULE__ESUBPACKAGES;
+
+																/**
+	 * The feature id for the '<em><b>ESuper Package</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__ESUPER_PACKAGE = MODULE__ESUPER_PACKAGE;
+
+																/**
+	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__START_POSITION = MODULE__START_POSITION;
+
+																/**
+	 * The feature id for the '<em><b>End Position</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__END_POSITION = MODULE__END_POSITION;
+
+																/**
+	 * The feature id for the '<em><b>Module Import</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__MODULE_IMPORT = MODULE__MODULE_IMPORT;
+
+																/**
+	 * The feature id for the '<em><b>Used Model Type</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__USED_MODEL_TYPE = MODULE__USED_MODEL_TYPE;
+
+																/**
+	 * The feature id for the '<em><b>Config Property</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__CONFIG_PROPERTY = MODULE__CONFIG_PROPERTY;
+
+																/**
+	 * The feature id for the '<em><b>Owned Renaming</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__OWNED_RENAMING = MODULE__OWNED_RENAMING;
+
+																/**
+	 * The feature id for the '<em><b>Entry</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__ENTRY = MODULE__ENTRY;
+
+																/**
+	 * The feature id for the '<em><b>Intermediate Property</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__INTERMEDIATE_PROPERTY = MODULE__INTERMEDIATE_PROPERTY;
+
+																/**
+	 * The feature id for the '<em><b>Model Parameter</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__MODEL_PARAMETER = MODULE_FEATURE_COUNT + 0;
+
+																/**
+	 * The number of structural features of the '<em>Operational Transformation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION_FEATURE_COUNT = MODULE_FEATURE_COUNT + 1;
+
+																/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind <em>Direction Kind</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4899,7 +5242,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getDirectionKind()
 	 * @generated
 	 */
-	int DIRECTION_KIND = 38;
+	int DIRECTION_KIND = 39;
 
 
 	/**
@@ -4910,7 +5253,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getSeverityKind()
 	 * @generated
 	 */
-	int SEVERITY_KIND = 39;
+	int SEVERITY_KIND = 40;
 
 
 	/**
@@ -4944,17 +5287,6 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getModule_Entry();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getModelParameter <em>Model Parameter</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Model Parameter</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.Module#getModelParameter()
-	 * @see #getModule()
-	 * @generated
-	 */
-	EReference getModule_ModelParameter();
 
 	/**
 	 * Returns the meta object for the reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getIntermediateProperty <em>Intermediate Property</em>}'.
@@ -5009,17 +5341,6 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getLibrary();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Library#getLibrary <em>Library</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Library</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.Library#getLibrary()
-	 * @see #getLibrary()
-	 * @generated
-	 */
-	EReference getLibrary_Library();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Rename <em>Rename</em>}'.
@@ -6075,6 +6396,27 @@ public interface ExpressionsPackage extends EPackage {
 	EReference getReturnExp_Value();
 
 																/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation <em>Operational Transformation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Operational Transformation</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation
+	 * @generated
+	 */
+	EClass getOperationalTransformation();
+
+																/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation#getModelParameter <em>Model Parameter</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Model Parameter</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation#getModelParameter()
+	 * @see #getOperationalTransformation()
+	 * @generated
+	 */
+	EReference getOperationalTransformation_ModelParameter();
+
+																/**
 	 * Returns the meta object for enum '{@link org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind <em>Direction Kind</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6143,14 +6485,6 @@ public interface ExpressionsPackage extends EPackage {
 		EReference MODULE__ENTRY = eINSTANCE.getModule_Entry();
 
 		/**
-		 * The meta object literal for the '<em><b>Model Parameter</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference MODULE__MODEL_PARAMETER = eINSTANCE.getModule_ModelParameter();
-
-		/**
 		 * The meta object literal for the '<em><b>Intermediate Property</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6191,14 +6525,6 @@ public interface ExpressionsPackage extends EPackage {
 		 * @generated
 		 */
 		EClass LIBRARY = eINSTANCE.getLibrary();
-
-		/**
-		 * The meta object literal for the '<em><b>Library</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference LIBRARY__LIBRARY = eINSTANCE.getLibrary_Library();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.RenameImpl <em>Rename</em>}' class.
@@ -7063,6 +7389,24 @@ public interface ExpressionsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference RETURN_EXP__VALUE = eINSTANCE.getReturnExp_Value();
+
+																																/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.OperationalTransformationImpl <em>Operational Transformation</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.OperationalTransformationImpl
+		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getOperationalTransformation()
+		 * @generated
+		 */
+		EClass OPERATIONAL_TRANSFORMATION = eINSTANCE.getOperationalTransformation();
+
+																																/**
+		 * The meta object literal for the '<em><b>Model Parameter</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference OPERATIONAL_TRANSFORMATION__MODEL_PARAMETER = eINSTANCE.getOperationalTransformation_ModelParameter();
 
 																																/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind <em>Direction Kind</em>}' enum.

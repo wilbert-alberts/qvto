@@ -352,6 +352,15 @@ public interface ExpressionsFactory extends EFactory {
 	ReturnExp createReturnExp();
 
 																/**
+	 * Returns a new object of class '<em>Operational Transformation</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Operational Transformation</em>'.
+	 * @generated
+	 */
+	OperationalTransformation createOperationalTransformation();
+
+																/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

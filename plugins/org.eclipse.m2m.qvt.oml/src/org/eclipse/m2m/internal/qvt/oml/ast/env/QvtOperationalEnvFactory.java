@@ -27,14 +27,15 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerKernel;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitorImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.EvaluationVisitor;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
-import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.ecore.EcoreEnvironmentFactory;
 import org.eclipse.ocl.ecore.SendSignalAction;
+import org.eclipse.ocl.utilities.UMLReflection;
 
 public class QvtOperationalEnvFactory extends EcoreEnvironmentFactory {
 
@@ -57,7 +58,18 @@ public class QvtOperationalEnvFactory extends EcoreEnvironmentFactory {
     }
 
     public QvtOperationalEnv createEnvironment(final QvtOperationalEnv parent) {
-		QvtOperationalEnv env = new QvtOperationalEnv(parent);
+		QvtOperationalEnv env = new QvtOperationalEnv(parent) {
+			QVTUMLReflection fUMLReflection;
+			
+			@Override
+			public UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
+				if(fUMLReflection == null) {
+					fUMLReflection = new QVTUMLReflection(super.getUMLReflection(), QvtOperationalStdLibrary.INSTANCE); 
+				}
+				
+				return fUMLReflection; 
+			};
+		};
 		env.setFactory(this);
 		return env;
 	}

@@ -64,7 +64,6 @@ import org.eclipse.ocl.utilities.Visitor;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getConfigProperty <em>Config Property</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getOwnedRenaming <em>Owned Renaming</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getEntry <em>Entry</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getModelParameter <em>Model Parameter</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getIntermediateProperty <em>Intermediate Property</em>}</li>
  * </ul>
  * </p>
@@ -238,16 +237,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * @ordered
 	 */
 	protected EOperation entry;
-
-	/**
-	 * The cached value of the '{@link #getModelParameter() <em>Model Parameter</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getModelParameter()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<ModelParameter> modelParameter;
 
 	/**
 	 * The cached value of the '{@link #getIntermediateProperty() <em>Intermediate Property</em>}' reference list.
@@ -504,18 +493,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ModelParameter> getModelParameter() {
-		if (modelParameter == null) {
-			modelParameter = new EObjectContainmentEList<ModelParameter>(ModelParameter.class, this, ExpressionsPackage.MODULE__MODEL_PARAMETER);
-		}
-		return modelParameter;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EList<Property> getIntermediateProperty() {
 		if (intermediateProperty == null) {
 			intermediateProperty = new EObjectResolvingEList<Property>(Property.class, this, ExpressionsPackage.MODULE__INTERMEDIATE_PROPERTY);
@@ -632,8 +609,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 				return ((InternalEList<?>)getUsedModelType()).basicRemove(otherEnd, msgs);
 			case ExpressionsPackage.MODULE__OWNED_RENAMING:
 				return ((InternalEList<?>)getOwnedRenaming()).basicRemove(otherEnd, msgs);
-			case ExpressionsPackage.MODULE__MODEL_PARAMETER:
-				return ((InternalEList<?>)getModelParameter()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -688,8 +663,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 			case ExpressionsPackage.MODULE__ENTRY:
 				if (resolve) return getEntry();
 				return basicGetEntry();
-			case ExpressionsPackage.MODULE__MODEL_PARAMETER:
-				return getModelParameter();
 			case ExpressionsPackage.MODULE__INTERMEDIATE_PROPERTY:
 				return getIntermediateProperty();
 		}
@@ -747,10 +720,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 			case ExpressionsPackage.MODULE__ENTRY:
 				setEntry((EOperation)newValue);
 				return;
-			case ExpressionsPackage.MODULE__MODEL_PARAMETER:
-				getModelParameter().clear();
-				getModelParameter().addAll((Collection<? extends ModelParameter>)newValue);
-				return;
 			case ExpressionsPackage.MODULE__INTERMEDIATE_PROPERTY:
 				getIntermediateProperty().clear();
 				getIntermediateProperty().addAll((Collection<? extends Property>)newValue);
@@ -803,9 +772,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 			case ExpressionsPackage.MODULE__ENTRY:
 				setEntry((EOperation)null);
 				return;
-			case ExpressionsPackage.MODULE__MODEL_PARAMETER:
-				getModelParameter().clear();
-				return;
 			case ExpressionsPackage.MODULE__INTERMEDIATE_PROPERTY:
 				getIntermediateProperty().clear();
 				return;
@@ -847,8 +813,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 				return ownedRenaming != null && !ownedRenaming.isEmpty();
 			case ExpressionsPackage.MODULE__ENTRY:
 				return entry != null;
-			case ExpressionsPackage.MODULE__MODEL_PARAMETER:
-				return modelParameter != null && !modelParameter.isEmpty();
 			case ExpressionsPackage.MODULE__INTERMEDIATE_PROPERTY:
 				return intermediateProperty != null && !intermediateProperty.isEmpty();
 		}

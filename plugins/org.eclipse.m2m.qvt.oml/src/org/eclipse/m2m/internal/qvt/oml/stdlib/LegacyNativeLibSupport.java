@@ -46,7 +46,7 @@ public class LegacyNativeLibSupport {
 	}
 	
 	public Module defineLibrary(QvtOperationalEnv targetEnv, Library lib, ResourceSet rs) throws LibraryCreationException {
-		Module libModule = org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModule();
+		Module libModule = org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createLibrary();
 		libModule.setName(lib.getId());
 		QvtOperationalEnv libEnv = QvtOperationalEnvFactory.INSTANCE.createModuleEnvironment(libModule);
 		for (LibraryOperation libOp : lib.getLibraryOperations()) {

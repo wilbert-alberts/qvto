@@ -114,6 +114,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
+import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.PackageRef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Rename;
@@ -1113,7 +1114,7 @@ public class QvtOperationalVisitorCS
 			module = ((QvtOperationalFileEnv) env.getInternalParent()).getModule((MappingModuleCS) rootEObj);			
 		}
 		
-		if (objectExp.getExtent() == null && module != null && !module.getModelParameter().isEmpty()) {
+		if (objectExp.getExtent() == null && module != null && !getModelParameter(module).isEmpty()) {
 			boolean isInvalidForExtentResolve = objectExp.getReferredObject() == null && objectExp.getType() == null;
 			if(!isInvalidForExtentResolve) {
 				env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentFailToInfer,
@@ -1259,8 +1260,11 @@ public class QvtOperationalVisitorCS
 			}
 		}
 
-		visitTransformationHeaderCS(moduleCS.getHeaderCS(), env, module);
+		if(module instanceof OperationalTransformation) {
+			visitTransformationHeaderCS(moduleCS.getHeaderCS(), env, (OperationalTransformation) module);
+		}
 		
+		HashSet<String> importedIDs = new HashSet<String>();
 		for (ImportCS libImport : moduleCS.getImports()) {
 			if (false == libImport instanceof LibraryImportCS) {
 				continue;
@@ -1274,16 +1278,12 @@ public class QvtOperationalVisitorCS
 						impPath);
 				continue;
 			}
-
-			for (ModuleImport moduleImp : module.getModuleImport()) {
-				if (false == moduleImp.getImportedModule() instanceof Library) {
-					continue;
-				}
-				if (((Library) moduleImp.getImportedModule()).getLibrary() == lib) {
-					env.reportWarning(NLS.bind(ValidationMessages.DuplicateLibraryImport, new Object[] { libId }),
-							impPath);
-					continue;
-				}
+			
+			if(!importedIDs.contains(libId)) {  
+				importedIDs.add(libId);
+			} else {
+				env.reportWarning(NLS.bind(ValidationMessages.DuplicateLibraryImport, new Object[] { libId }), impPath);
+				continue;				
 			}
 
 			if (!myLoadedLibraries.contains(libId)) {
@@ -1300,7 +1300,6 @@ public class QvtOperationalVisitorCS
 			ModuleImport imp = ExpressionsFactory.eINSTANCE.createModuleImport();
 			Library newLib = ExpressionsFactory.eINSTANCE.createLibrary();
 			newLib.setName(libId);
-			newLib.setLibrary(lib);
 			newLib.setStartPosition(impPath.getStartOffset());
 			newLib.setEndPosition(impPath.getEndOffset());
 			imp.setStartPosition(libImport.getStartOffset());
@@ -1334,7 +1333,10 @@ public class QvtOperationalVisitorCS
 				imp.setStartPosition(cstImport.getStartOffset());
 				imp.setEndPosition(cstImport.getEndOffset());
 			}
-			validateImportedSignature(env, module, importedModule, imp);
+			
+			if(module instanceof OperationalTransformation && importedModule  instanceof OperationalTransformation) {
+				validateImportedSignature(env, (OperationalTransformation) module, (OperationalTransformation) importedModule, imp);
+			}
 		}
 
 		for (RenameCS renameCS : moduleCS.getRenamings()) {
@@ -1373,7 +1375,7 @@ public class QvtOperationalVisitorCS
 			} 
 			
 			if ((!QvtOperationalEnv.MAIN.equals(imperativeOp.getName()) || 
-					((Module) env.getModuleContextType()).getModelParameter().isEmpty()) == false) {
+					getModelParameter(env.getModuleContextType()).isEmpty()) == false) {
 				checkMainMappingConformance(env, imperativeOp);
 			}
 			
@@ -1461,7 +1463,7 @@ public class QvtOperationalVisitorCS
 	}
 		
 	protected void visitTransformationHeaderCS(TransformationHeaderCS headerCS,
-			QvtOperationalFileEnv env, Module module) {
+			QvtOperationalFileEnv env, OperationalTransformation module) {
 		if (!headerCS.getQualifiers().isEmpty()) {
 			env.reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_transfQualifiersNotSupported,
 					new Object[] { }), 
@@ -3029,7 +3031,7 @@ public class QvtOperationalVisitorCS
 	}
 
 	
-	private void validateImportedSignature(QvtOperationalEnv env, Module module, Module importedModule, ASTNode astNode) {
+	private void validateImportedSignature(QvtOperationalEnv env, OperationalTransformation module, OperationalTransformation importedModule, ASTNode astNode) {
 		Set<ModelParameter> processedParams = new HashSet<ModelParameter>();
 		Set<ModelParameter> consideredParams = new HashSet<ModelParameter>();
 		for (ModelParameter importedParam : importedModule.getModelParameter()) {
@@ -3448,4 +3450,11 @@ public class QvtOperationalVisitorCS
 		ASTBindingHelper.createCST2ASTBinding(boundCST, boundAST, env);
 	}
 
+	private static List<ModelParameter> getModelParameter(Module module) {
+		if(module instanceof OperationalTransformation) {
+			OperationalTransformation operationalTransformation = (OperationalTransformation) module;
+			return operationalTransformation.getModelParameter();
+		}
+		return Collections.emptyList();
+	}
 }

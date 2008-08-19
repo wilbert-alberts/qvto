@@ -39,6 +39,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.MappingParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
+import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
@@ -403,7 +404,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		myChangeRecorders.clear();
 	}
 
-    public void createModuleParameterExtents(Module module) {        
+    public void createModuleParameterExtents(OperationalTransformation module) {        
         Map<ModelParameter, ModelParameterExtent> modelExtents = new LinkedHashMap<ModelParameter, ModelParameterExtent>(module.getModelParameter().size());
         modelExtents.put(UNBOUND_MODEL_EXTENT, new ModelParameterExtent());
         int argIndex = 0;
@@ -467,21 +468,25 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         setModelParameterExtents(modelExtents, mapImportedExtents);
 	}
     
-	private Map<ModelParameter, ModelParameter> createImportedExtentMap(Module rootModule, Module importedModule) {
+	private Map<ModelParameter, ModelParameter> createImportedExtentMap(OperationalTransformation rootModule, OperationalTransformation importedModule) {
 		Map<ModelParameter, ModelParameter> mapImportedExtents = new HashMap<ModelParameter, ModelParameter>();
 		for (ModuleImport moduleImport : importedModule.getModuleImport()) {
 			if(moduleImport.getModule() != null) {
 				Module nextModule = moduleImport.getImportedModule();
-				mapImportedExtents.putAll(getExtentMap(rootModule, nextModule));
-				mapImportedExtents.putAll(createImportedExtentMap(rootModule, nextModule));
+				if(nextModule instanceof OperationalTransformation) {
+					OperationalTransformation nextTransfModule = (OperationalTransformation) nextModule;
+					mapImportedExtents.putAll(getExtentMap(rootModule, nextTransfModule));
+					mapImportedExtents.putAll(createImportedExtentMap(rootModule, nextTransfModule));
+				}
 			}
 		}
 		return mapImportedExtents;
 	}
 
-	private Map<ModelParameter, ModelParameter> getExtentMap(Module rootModule, Module importedModule) {
+	private Map<ModelParameter, ModelParameter> getExtentMap(OperationalTransformation rootModule, OperationalTransformation importedModule) {
 		Map<ModelParameter, ModelParameter> mapImportedModelParams = new HashMap<ModelParameter, ModelParameter>();
 		Set<ModelParameter> consideredParams = new HashSet<ModelParameter>();
+		
 		for (ModelParameter importedParam : importedModule.getModelParameter()) {
 			for (ModelParameter param : rootModule.getModelParameter()) {
 				if (consideredParams.contains(param)) {

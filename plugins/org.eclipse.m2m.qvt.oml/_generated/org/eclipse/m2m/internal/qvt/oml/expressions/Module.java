@@ -31,7 +31,6 @@ import org.eclipse.ocl.utilities.Visitor;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getConfigProperty <em>Config Property</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getOwnedRenaming <em>Owned Renaming</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getEntry <em>Entry</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getModelParameter <em>Model Parameter</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getIntermediateProperty <em>Intermediate Property</em>}</li>
  * </ul>
  * </p>
@@ -89,22 +88,6 @@ public interface Module extends EClass, EPackage, VisitableASTNode {
 	 * @generated
 	 */
 	void setEntry(EOperation value);
-
-	/**
-	 * Returns the value of the '<em><b>Model Parameter</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Model Parameter</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Model Parameter</em>' containment reference list.
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getModule_ModelParameter()
-	 * @model containment="true"
-	 * @generated
-	 */
-	EList<ModelParameter> getModelParameter();
 
 	/**
 	 * Returns the value of the '<em><b>Intermediate Property</b></em>' reference list.

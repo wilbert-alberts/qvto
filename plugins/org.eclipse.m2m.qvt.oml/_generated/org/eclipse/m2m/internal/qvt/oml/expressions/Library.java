@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -19,12 +18,6 @@ import org.eclipse.ocl.utilities.Visitor;
  * A representation of the model object '<em><b>Library</b></em>'.
  * <!-- end-user-doc -->
  *
- * <p>
- * The following features are supported:
- * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Library#getLibrary <em>Library</em>}</li>
- * </ul>
- * </p>
  *
  * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getLibrary()
  * @model
@@ -45,27 +38,5 @@ public interface Library extends Module {
 	 * @generated
 	 */
 	<T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v);
-
-	/**
-	 * Returns the value of the '<em><b>Library</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Library</em>' reference.
-	 * @see #setLibrary(EObject)
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getLibrary_Library()
-	 * @model
-	 * @generated
-	 */
-	EObject getLibrary();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Library#getLibrary <em>Library</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Library</em>' reference.
-	 * @see #getLibrary()
-	 * @generated
-	 */
-	void setLibrary(EObject value);
 
 } // Library

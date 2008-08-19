@@ -289,6 +289,10 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createReturnExpAdapter();
 			}
 			@Override
+			public Adapter caseOperationalTransformation(OperationalTransformation object) {
+				return createOperationalTransformationAdapter();
+			}
+			@Override
 			public Adapter caseEModelElement(EModelElement object) {
 				return createEModelElementAdapter();
 			}
@@ -913,6 +917,20 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createReturnExpAdapter() {
+		return null;
+	}
+
+																/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation <em>Operational Transformation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation
+	 * @generated
+	 */
+	public Adapter createOperationalTransformationAdapter() {
 		return null;
 	}
 

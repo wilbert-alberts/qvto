@@ -79,6 +79,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
+import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
@@ -637,7 +638,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
             myEntryPoint = (ImperativeOperation) module.getEntry();
         }
 
-        if (myEntryPoint == null) {
+        if (myEntryPoint == null || module instanceof OperationalTransformation == false) {
             throw new IllegalArgumentException(NLS.bind(
                     EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_ModuleNotExecutable, module.getName()));
         }
@@ -655,13 +656,14 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         QvtOperationalEvaluationEnv evaluationEnv = getOperationalEvaluationEnv();
         QvtEvaluationResult evalResult = null;
         try {
-	        evaluationEnv.createModuleParameterExtents(module);
+	        OperationalTransformation operationalTransfModule = (OperationalTransformation)module;
+			evaluationEnv.createModuleParameterExtents(operationalTransfModule);
 	        // Note: called after model parameters initialized, as mapping call during property 
 	        // intialisation will cause NPE
 	        initModuleProperties(module);
 	        setCurrentEnvInstructionPointer(myEntryPoint); // initialize IP to the main entry header
 
-	        List<Object> entryArgs = makeEntryArgs(myEntryPoint, module);
+	        List<Object> entryArgs = makeEntryArgs(myEntryPoint, operationalTransfModule);
 	        OperationCallResult callResult = executeImperativeOperation(myEntryPoint, null, entryArgs, false);
 	        	        
 	        isInTerminatingState = true;
@@ -1760,7 +1762,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         return argValues;
     }
     
-	private List<Object> makeEntryArgs(ImperativeOperation entryPoint, Module module) {
+	private List<Object> makeEntryArgs(ImperativeOperation entryPoint, OperationalTransformation module) {
 		List<Object> args = new ArrayList<Object>(entryPoint.getEParameters().size());
 		
 		int paramIndex = 0;

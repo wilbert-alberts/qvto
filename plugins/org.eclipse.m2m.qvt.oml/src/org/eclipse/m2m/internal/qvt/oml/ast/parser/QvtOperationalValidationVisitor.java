@@ -30,6 +30,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
+import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
@@ -245,7 +246,7 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 	
 	private static List<ModelParameter> getModelParamsInScope(ImperativeOperation mappingOperation) {
 		Module module = QvtOperationalParserUtil.getOwningModule(mappingOperation);
-		return (module != null) ? module.getModelParameter() : Collections.<ModelParameter>emptyList();
+		return (module instanceof OperationalTransformation) ? ((OperationalTransformation)module).getModelParameter() : Collections.<ModelParameter>emptyList();
 	}
 		
 	

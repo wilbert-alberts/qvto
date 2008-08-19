@@ -63,7 +63,7 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 	
 
 	private QvtOperationalStdLibrary() {		
-		fStdlibModule = org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModule();
+		fStdlibModule = org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createLibrary();
 		fStdlibModule.setName(QVT_STDLIB_MODULE_NAME);
 
 		fEnv = QvtOperationalEnvFactory.INSTANCE.createModuleEnvironment(fStdlibModule);

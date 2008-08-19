@@ -607,6 +607,21 @@ public class ExpressionsSwitch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ExpressionsPackage.OPERATIONAL_TRANSFORMATION: {
+				OperationalTransformation operationalTransformation = (OperationalTransformation)theEObject;
+				T1 result = caseOperationalTransformation(operationalTransformation);
+				if (result == null) result = caseModule(operationalTransformation);
+				if (result == null) result = caseEClass(operationalTransformation);
+				if (result == null) result = caseEPackage(operationalTransformation);
+				if (result == null) result = caseVisitableASTNode(operationalTransformation);
+				if (result == null) result = caseEClassifier(operationalTransformation);
+				if (result == null) result = caseENamedElement(operationalTransformation);
+				if (result == null) result = caseVisitable(operationalTransformation);
+				if (result == null) result = caseASTNode(operationalTransformation);
+				if (result == null) result = caseEModelElement(operationalTransformation);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -1178,6 +1193,21 @@ public class ExpressionsSwitch<T1> {
 	 * @generated
 	 */
 	public T1 caseReturnExp(ReturnExp object) {
+		return null;
+	}
+
+																/**
+	 * Returns the result of interpreting the object as an instance of '<em>Operational Transformation</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Operational Transformation</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseOperationalTransformation(OperationalTransformation object) {
 		return null;
 	}
 
