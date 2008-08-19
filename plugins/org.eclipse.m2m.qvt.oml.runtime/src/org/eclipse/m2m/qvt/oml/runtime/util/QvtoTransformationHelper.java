@@ -38,6 +38,7 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerFacade;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.library.IConfiguration;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchConfigurationDelegateBase;
@@ -220,12 +221,9 @@ public class QvtoTransformationHelper {
 			Set<Module> imports = new LinkedHashSet<Module>();
 			QvtOperationalParserUtil.collectAllImports(compiledModule.getModule(), imports);
 			for (Module module : imports) {
-				if (module instanceof Library) {
-					continue;
-				}
 				CFile scriptFile = ASTBindingHelper.resolveModuleFile(module);
 				if (scriptFile == null) {
-					throw new MdaException(NLS.bind(Messages.ImportedTransformation_NoWsFileForModule, module.getName()));
+					continue;
 				}
 				IFile ifile = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(new Path(scriptFile.getFullPath()));
 				if (ifile == null) {

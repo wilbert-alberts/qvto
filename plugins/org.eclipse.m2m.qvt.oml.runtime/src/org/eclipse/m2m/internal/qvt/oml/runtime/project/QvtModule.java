@@ -40,6 +40,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
+import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.EMFType;
@@ -60,10 +61,15 @@ public abstract class QvtModule {
 
     public List<TransformationParameter> getParameters() throws MdaException {
         Module module = getModule().getModule();
+        if(module instanceof OperationalTransformation == false) {
+        	return Collections.emptyList();
+        }
+        
+        OperationalTransformation transfModule = (OperationalTransformation) module;
         ImperativeOperation mainMethod = (ImperativeOperation) module.getEntry();
 
-        List<TransformationParameter> transfParams = new ArrayList<TransformationParameter>(module.getModelParameter().size());
-        for (ModelParameter modelParam : module.getModelParameter()) {
+        List<TransformationParameter> transfParams = new ArrayList<TransformationParameter>(transfModule.getModelParameter().size());
+        for (ModelParameter modelParam : transfModule.getModelParameter()) {
             MappingParameter refinedParam = findMainParameter(mainMethod, modelParam);
             transfParams.add(createTransfParam(modelParam, refinedParam));
         }
