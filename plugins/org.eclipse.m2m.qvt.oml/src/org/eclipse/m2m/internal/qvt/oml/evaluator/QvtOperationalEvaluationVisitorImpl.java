@@ -498,24 +498,14 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         	}
 
             ImperativeOperation method = null;
-            if (QvtOperationalParserUtil.isOverloadableMapping(referredOperation, getOperationalEnv())) {
-                if (isUndefined(source)) {
-                    return getOclInvalid();
-                }
-                	
-            	if(source instanceof EObject) {
-            		EClass sourceEClass = ((EObject)source).eClass();
-            		IVirtualOperationTable vTable = getVirtualTable(referredOperation);
-            		if(vTable != null) {
-            			EOperation virtualOperation = vTable.lookupActualOperation(sourceEClass, getEnvironment());
-            			if(virtualOperation instanceof ImperativeOperation) {
-            				method = (ImperativeOperation) virtualOperation;
-            			}
-            		}            		
-            	}
+            if (QvtOperationalParserUtil.isOverloadableMapping(referredOperation, getOperationalEnv())) {                
+        		EOperation actualOperation = findOperationByActualSourceType(source, referredOperation);
+				if(actualOperation instanceof ImperativeOperation) { 
+					method = (ImperativeOperation) actualOperation;
+				}
             }
             
-    		if((method instanceof ImperativeOperation == false) && referredOperation instanceof ImperativeOperation) {
+    		if((method == null) && referredOperation instanceof ImperativeOperation) {
     			// we can't dispatch non-imperative as we already evaluated the source 
     			method = (ImperativeOperation)referredOperation;
     		}
@@ -541,6 +531,30 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         }
         return result;
     }
+
+    /**
+	 * Finds operation based on the actual type of the source object as per
+	 * virtual call semantics.
+	 * 
+	 * @param source
+	 *            the self instance of the contextual type
+	 * @param referredOperation
+	 *            the operation referred by the call expresion in the AST
+	 * @return the actual operation to call, which is either the passed referred
+	 *         operation or another one defined in the bottom-most class in the
+	 *         type hierarchy of the source object
+	 */
+	private EOperation findOperationByActualSourceType(Object source, EOperation referredOperation) {
+		EOperation actualOperation = referredOperation;
+		IVirtualOperationTable vTable = getVirtualTable(referredOperation);
+		if(vTable != null) {
+			EClassifier sourceEClass = getEvaluationEnvironment().getType(source);
+			if(sourceEClass != null) {
+				actualOperation = vTable.lookupActualOperation(sourceEClass, getEnvironment());
+			}
+		}
+		return actualOperation;
+	}
     
     @Override
     public Object visitPropertyCallExp(PropertyCallExp<EClassifier, EStructuralFeature> pc) {
@@ -616,19 +630,18 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 	 * @return return the value directly returned by the operation
 	 */
 	public Object executeHelperOperation(Helper method, Object self, List<Object> args) {
-		Helper actualOperation = method;
-    	if(self instanceof EObject) {
-    		EClass eClass = ((EObject)self).eClass();
-    		IVirtualOperationTable vTable = getVirtualTable(actualOperation);    		
-    		if(vTable != null && eClass != null) {
-				EOperation eOperation = vTable.lookupActualOperation(eClass, getEnvironment());
-				if(eOperation instanceof Helper == true) {
-					actualOperation = (Helper) eOperation;
-				}
-			}
-    	}
+		Helper actualHelper = method;
+		EOperation actualOperation = findOperationByActualSourceType(self, method);
+		if(actualOperation instanceof Helper) { 
+			actualHelper = (Helper) actualOperation;			
+		} else {
+			// Remark - the case when the actual operation is not imperative but 
+			// a meta-model operation the virtual call will be dispatched by using 			
+			// a normal operation call
+			return getEvaluationEnvironment().callOperation(method, -1, self, args.toArray(new Object[args.size()]));
+		}
 		
-		OperationCallResult result = executeImperativeOperation(actualOperation, self, args, false);
+		OperationCallResult result = executeImperativeOperation(actualHelper, self, args, false);
 		return result.myResult;
 	}
     

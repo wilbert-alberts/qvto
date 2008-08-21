@@ -154,7 +154,7 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 		}
 	}
 		
-	protected void getLocalAdditionalOperations(EClassifier owner, Collection<EOperation> result) {		
+	protected void getLocalAdditionalOperations(EClassifier owner, Collection<EOperation> result) {
 		extractContextualOperations(owner, result);
 		if(fdefinesOclAnyFeatures && (owner instanceof CollectionType == false) && (owner instanceof TupleType == false)) {
 			extractContextualOperations(fOwner.getOCLStandardLibrary().getOclAny(), result);
@@ -165,6 +165,12 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 			result.addAll(fDelegate.getAdditionalOperations(fOwner.getOCLStandardLibrary().getOclAny()));
 		}
 		
+		if(owner == fOwner.getOCLStandardLibrary().getInteger()) {
+			EClassifier oclReal = fOwner.getOCLStandardLibrary().getReal();
+			this.getLocalAdditionalOperations(oclReal, result);
+		} else if(owner instanceof org.eclipse.ocl.ecore.CollectionType) {
+			getCollectionTypeAdditionalOperation((org.eclipse.ocl.ecore.CollectionType)owner, result);
+		}
 	}	
 
 	public Resource getResource() {
@@ -180,6 +186,11 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 	}
 
 	public EOperation resolveAdditionalOperation(EClassifier owner, EOperation operation) {
+		if(!fdefinesOclAnyFeatures && owner == fOwner.getOCLStandardLibrary().getOclAny()) {
+			// operations defined on OclAny;
+			fdefinesOclAnyFeatures = true;
+		}
+		
 		if(operation instanceof ImperativeOperation) {
 			if(fCtx2OperationMap == null) {
 				fCtx2OperationMap = new HashMap<EClassifier, List<ImperativeOperation>>();
@@ -197,12 +208,7 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 		
 		EOperation resolve = fDelegate.resolveAdditionalOperation(owner, operation);
 		if(resolve != null) {
-			addAdditionalType(owner);
-			
-			if(!fdefinesOclAnyFeatures && owner == fOwner.getOCLStandardLibrary().getOclAny()) {
-				// operations defined on OclAny;
-				fdefinesOclAnyFeatures = true;
-			}
+			addAdditionalType(owner);			
 		}
 		
 		return resolve;
@@ -242,5 +248,19 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 		}
 
 		fAdditionalTypes.add(type);
+	}
+	
+	
+	private void getCollectionTypeAdditionalOperation(org.eclipse.ocl.ecore.CollectionType collectionType, Collection<EOperation> result) {
+		if(fAdditionalTypes == null) {
+			return;
+		}
+		for (EClassifier nextType : fAdditionalTypes) {
+			if(nextType != collectionType && nextType instanceof org.eclipse.ocl.ecore.CollectionType) {
+				if(TypeUtil.compatibleTypeMatch(fOwner, collectionType, nextType)) {
+					getLocalAdditionalOperations((org.eclipse.ocl.ecore.CollectionType)nextType, result);
+				}
+			}
+		}
 	}
 }

@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.Environment;
@@ -80,12 +81,12 @@ abstract class VirtualTable implements IVirtualOperationTable {
 	}
 
 	@SuppressWarnings("unchecked")	
-	public EOperation lookupActualOperation(EClass actualContextType, Environment env) {
+	public EOperation lookupActualOperation(EClassifier actualContextType, Environment env) {
 		return lookupActualOperation(actualContextType, env, null);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public EOperation lookupActualOperation(EClass actualContextType, Environment env, Module scope) {
+	public EOperation lookupActualOperation(EClassifier actualContextType, Environment env, Module scope) {
 		if(actualContextType == null || env == null) {
 			throw new IllegalArgumentException();
 		}
@@ -115,11 +116,13 @@ abstract class VirtualTable implements IVirtualOperationTable {
 			} 
 		}
 
-		// try lookup in actual type's super-types for the closest match
-		for (EClass superClass : actualContextType.getESuperTypes()) {
-			EOperation superOperation = lookupActualOperation(superClass, env, scope);
-			if(superOperation != null) {
-				return superOperation;
+		if(actualContextType instanceof EClass) {
+			// try lookup in actual type's super-types for the closest match
+			for (EClass superClass : ((EClass)actualContextType).getESuperTypes()) {
+				EOperation superOperation = lookupActualOperation(superClass, env, scope);
+				if(superOperation != null) {
+					return superOperation;
+				}
 			}
 		}
 		

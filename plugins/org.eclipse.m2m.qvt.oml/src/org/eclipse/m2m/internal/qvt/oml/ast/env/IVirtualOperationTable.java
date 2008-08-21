@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
-import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.Environment;
@@ -61,7 +61,7 @@ public interface IVirtualOperationTable {
 	 * @see #addOperationInModule(EOperation, Module)
 	 */
 	@SuppressWarnings("unchecked")
-	public abstract EOperation lookupActualOperation(EClass actualContextType, Environment env);
+	public abstract EOperation lookupActualOperation(EClassifier actualContextType, Environment env);
 
 	/**
 	 * Performs actual operation lookup according to virtual semantics for the
@@ -87,5 +87,5 @@ public interface IVirtualOperationTable {
 	 * @see #addOperationInModule(EOperation, Module)
 	 */
 	@SuppressWarnings("unchecked")
-	public abstract EOperation lookupActualOperation(EClass actualContextType, Environment env, Module scope);	
+	public abstract EOperation lookupActualOperation(EClassifier actualContextType, Environment env, Module scope);	
 }
