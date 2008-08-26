@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.7 2008/07/04 15:49:55 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.8 2008/08/26 16:28:49 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -374,7 +374,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.7 2008/07/04 15:49:55 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.8 2008/08/26 16:28:49 aigdalov Exp $
  */
 	./
 $End
@@ -1751,7 +1751,7 @@ $Rules
 					CSTNode result = createVariableInitializationCS(
 							getIToken($getToken(2)),
 							(TypeCS)$getSym(4),
-							createBooleanLiteralExpCS("null")
+							null
 						);
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
 					$setResult(result);
@@ -1773,18 +1773,18 @@ $Rules
 					CSTNode result = createVariableInitializationCS(
 							getIToken($getToken(2)),
 							null,
-							createBooleanLiteralExpCS("null")
+							null
 						);
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
 					$setResult(result);
 		  $EndJava
 		./
-	variableInitializationCS ::= var IDENTIFIER ':' typeCS
+	variableInitializationCSCorrect ::= var IDENTIFIER ':' typeCS
 		/.$BeginJava
 					CSTNode result = createVariableInitializationCS(
 							getIToken($getToken(2)),
 							(TypeCS)$getSym(4),
-							createBooleanLiteralExpCS("null")
+							null
 						);
 					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(4));
 					$setResult(result);
@@ -1795,20 +1795,9 @@ $Rules
 					CSTNode result = createVariableInitializationCS(
 							getIToken($getToken(2)),
 							null,
-							createBooleanLiteralExpCS("null")
+							null
 						);
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
-					$setResult(result);
-		  $EndJava
-		./
-	variableInitializationCS ::= var IDENTIFIER
-		/.$BeginJava
-					CSTNode result = createVariableInitializationCS(
-							getIToken($getToken(2)),
-							null,
-							createBooleanLiteralExpCS("null")
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(2)));
 					$setResult(result);
 		  $EndJava
 		./
@@ -1818,7 +1807,7 @@ $Rules
 					CSTNode result = createVariableInitializationCS(
 							new Token(errorToken.getStartOffset(), errorToken.getEndOffset(), QvtOpLPGParsersym.TK_ERROR_TOKEN),
 							null,
-							createBooleanLiteralExpCS("null")
+							null
 						);
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
 					$setResult(result);

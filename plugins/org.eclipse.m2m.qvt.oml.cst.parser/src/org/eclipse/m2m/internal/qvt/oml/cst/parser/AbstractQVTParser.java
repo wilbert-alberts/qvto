@@ -238,16 +238,15 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return imp;
 	}
 
-	protected final CSTNode createVariableInitializationCS(IToken tokenText, TypeCS sym,
-			OCLExpressionCS sym2) {
+	protected final CSTNode createVariableInitializationCS(IToken tokenText, TypeCS typeCS, OCLExpressionCS initExpressionCS) {
 				VariableInitializationCS result = (tokenText.getKind() == QvtOpLPGParsersym.TK_ERROR_TOKEN)
 					? TempFactory.eINSTANCE.createErrorVariableInitializationCS()
 					: org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createVariableInitializationCS();
 				SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, tokenText.toString());
 				setOffsets(nameCS, tokenText);
 				result.setSimpleNameCS(nameCS);
-				result.setTypeCS(sym);
-				result.setOclExpressionCS(sym2);
+				result.setTypeCS(typeCS);
+				result.setOclExpressionCS(initExpressionCS);
 				return result;
 			}
 
