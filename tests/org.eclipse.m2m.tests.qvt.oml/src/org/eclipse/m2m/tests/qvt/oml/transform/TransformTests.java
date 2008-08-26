@@ -81,7 +81,8 @@ public class TransformTests {
     }
 
     public static ModelTestData[] createTestData() {
-        return new ModelTestData[] {
+        return new ModelTestData[] {        		        		
+                new FileToFileData("bug244701"), //$NON-NLS-1$
         		new FileToFileData("virtualPredefinedTypeOpers"), //$NON-NLS-1$        		
         		new FileToFileData("blackboxlib_237781"), //$NON-NLS-1$        		
                 new FileToFileData("bug233984"), //$NON-NLS-1$
