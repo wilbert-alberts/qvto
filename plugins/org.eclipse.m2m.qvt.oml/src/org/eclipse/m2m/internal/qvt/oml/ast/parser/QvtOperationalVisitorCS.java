@@ -157,17 +157,25 @@ import org.eclipse.ocl.ecore.CallExp;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreFactory;
+import org.eclipse.ocl.ecore.PrimitiveType;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.ecore.StringLiteralExp;
 import org.eclipse.ocl.expressions.AssociationClassCallExp;
+import org.eclipse.ocl.expressions.BooleanLiteralExp;
 import org.eclipse.ocl.expressions.CollectionKind;
+import org.eclipse.ocl.expressions.CollectionLiteralExp;
 import org.eclipse.ocl.expressions.FeatureCallExp;
 import org.eclipse.ocl.expressions.IfExp;
+import org.eclipse.ocl.expressions.IntegerLiteralExp;
+import org.eclipse.ocl.expressions.InvalidLiteralExp;
 import org.eclipse.ocl.expressions.IteratorExp;
+import org.eclipse.ocl.expressions.NullLiteralExp;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.PropertyCallExp;
+import org.eclipse.ocl.expressions.RealLiteralExp;
 import org.eclipse.ocl.expressions.TypeExp;
+import org.eclipse.ocl.expressions.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.expressions.VariableExp;
 import org.eclipse.ocl.internal.l10n.OCLMessages;
@@ -176,6 +184,7 @@ import org.eclipse.ocl.parser.OCLLexer;
 import org.eclipse.ocl.parser.OCLParser;
 import org.eclipse.ocl.types.BagType;
 import org.eclipse.ocl.types.CollectionType;
+import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.types.OrderedSetType;
 import org.eclipse.ocl.types.SequenceType;
 import org.eclipse.ocl.types.SetType;
@@ -3182,16 +3191,80 @@ public class QvtOperationalVisitorCS
 		}
 
 		if (varInitCS.getOclExpressionCS() == null) {
-			return false;
+		    if (type == null) {
+		        return false;
+		    } else {
+		        OCLExpression<EClassifier> defaultInitializationValue = createDefaultInitializationValue(type, env);
+		        if (defaultInitializationValue == null) {
+		            NullLiteralExp<EClassifier> nullLiteralExp = oclFactory.createNullLiteralExp();
+		            nullLiteralExp.setType(getOclVoid());
+		            defaultInitializationValue = nullLiteralExp;
+		        }
+		        result.setValue(defaultInitializationValue);
+		    }
+		} else {
+	        OCLExpression<EClassifier> exp = visitOclExpressionCS(varInitCS.getOclExpressionCS(), env);
+	        if (exp == null) {
+	            return false;
+	        }
+	        result.setValue(exp);
 		}
-		OCLExpression<EClassifier> exp = visitOclExpressionCS(varInitCS.getOclExpressionCS(), env);
-		if (exp == null) {
-			return false;
-		}
-
 		result.setType(type);
-		result.setValue(exp);
 		return true;
+	}
+
+	private OCLExpression<EClassifier> createDefaultInitializationValue(EClassifier type, QvtOperationalEnv env) {
+        // 8.2.2.10 VariableInitExp
+        // A variable may not declare an initialization value. In this case a default value is assumed (an empty collection for a collection,
+        // zero for any numeric type, the empty string for a string and null for all other elements.
+        // A. Igdalov: Spec says nothing about Booleans and OclInvalid. Abstract collections (Collection, opposed to Bags, OrderedSets, etc.) are also neglected.
+        // Thus, this implementation assigns false to Booleans, Invalid to OclInvalids and nulls to abstract collections.
+	    if (type instanceof org.eclipse.ocl.ecore.CollectionType) {
+            org.eclipse.ocl.ecore.CollectionType collectionType = (org.eclipse.ocl.ecore.CollectionType) type;
+            CollectionKind kind = collectionType.getKind();
+            if (CollectionKind.COLLECTION_LITERAL == kind) {
+                return null;
+            }
+            CollectionLiteralExp<EClassifier> collectionLiteralExp = oclFactory.createCollectionLiteralExp();
+            collectionLiteralExp.setKind(kind);
+            EClassifier resultType = getCollectionType(env, kind, collectionType.getElementType());
+            collectionLiteralExp.setType(resultType);
+            return collectionLiteralExp;
+        } else {
+            EClassifier resolvedType = env.getTypeResolver().resolve(type);
+            OCLStandardLibrary<EClassifier> oclStdLib = getStandardLibrary();
+            if (resolvedType == oclStdLib.getBoolean()) {
+                BooleanLiteralExp<EClassifier> booleanLiteralExp = oclFactory.createBooleanLiteralExp();
+                booleanLiteralExp.setBooleanSymbol(Boolean.FALSE);
+                booleanLiteralExp.setType(oclStdLib.getBoolean());
+                return booleanLiteralExp;
+            } else if (resolvedType == oclStdLib.getInteger()) {
+                IntegerLiteralExp<EClassifier> integerLiteralExp = oclFactory.createIntegerLiteralExp();
+                integerLiteralExp.setIntegerSymbol(0);
+                integerLiteralExp.setType(oclStdLib.getInteger());
+                return integerLiteralExp;
+            } else if (resolvedType == oclStdLib.getReal()) {
+                RealLiteralExp<EClassifier> realLiteralExp = oclFactory.createRealLiteralExp();
+                realLiteralExp.setRealSymbol(0.0);
+                realLiteralExp.setType(oclStdLib.getReal());
+                return realLiteralExp;
+            } else if (resolvedType == oclStdLib.getUnlimitedNatural()) {
+                UnlimitedNaturalLiteralExp<EClassifier> unlimitedNaturalLiteralExp = oclFactory.createUnlimitedNaturalLiteralExp();
+                unlimitedNaturalLiteralExp.setIntegerSymbol(0);
+                unlimitedNaturalLiteralExp.setType(oclStdLib.getUnlimitedNatural());
+                return unlimitedNaturalLiteralExp;
+            } else if (resolvedType == oclStdLib.getInvalid()) {
+                InvalidLiteralExp<EClassifier> invalidLiteralExp = oclFactory.createInvalidLiteralExp();
+                invalidLiteralExp.setType(oclStdLib.getInvalid());
+                return invalidLiteralExp;
+            } else if (resolvedType == oclStdLib.getString()) {
+                org.eclipse.ocl.expressions.StringLiteralExp<EClassifier> stringLiteralExp = oclFactory.createStringLiteralExp();
+                stringLiteralExp.setStringSymbol(""); //$NON-NLS-1$
+                stringLiteralExp.setType(oclStdLib.getString());
+                return stringLiteralExp;
+            }
+        }
+	    return null;
 	}
 		
 	private void addLateResolve(ResolveExp resolve) {
