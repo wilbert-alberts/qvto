@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.common;
 
+import org.eclipse.core.runtime.IStatus;
+
 
 /**
  * @author pkobiakov
@@ -22,6 +24,11 @@ public class MdaException extends Exception {
 		super(message);
 	}
 	
+	public MdaException(IStatus status) {
+		super(status.getMessage());
+		myStatus = status;
+	}
+	
 	public MdaException(String message, Throwable cause) {
 		super(message, cause);
 	}
@@ -29,4 +36,11 @@ public class MdaException extends Exception {
 	public MdaException(Throwable cause) {
 		super(cause);
 	}
+	
+	
+	public IStatus getStatus() {
+		return myStatus;
+	}
+	
+	private IStatus myStatus; 
 }
