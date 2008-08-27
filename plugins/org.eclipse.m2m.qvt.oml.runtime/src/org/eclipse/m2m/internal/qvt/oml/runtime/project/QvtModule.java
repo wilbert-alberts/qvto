@@ -20,6 +20,9 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
@@ -41,6 +44,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
+import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.EMFType;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.QvtConfigurationProperty;
@@ -220,9 +224,18 @@ public abstract class QvtModule {
     protected void checkModuleErrors(CompiledModule mappingModule) throws MdaException {
         List<QvtMessage> errors = new ArrayList<QvtMessage>();
         TransformationUtil.getErrors(mappingModule, errors);
-        if(!errors.isEmpty()) {
-            throw new MdaException(NLS.bind(Messages.TransformationUtil_ParseTransformationError, toString(), errors.size()));
-        }		
+        if(errors.isEmpty()) {
+        	return;
+        }
+        
+        MultiStatus multistatus = new MultiStatus(QvtRuntimePlugin.ID, 1, 
+        		NLS.bind(Messages.TransformationUtil_ParseTransformationError, toString(), errors.size()), null);
+        for (QvtMessage msg : errors) {
+            IStatus status = new Status(msg.getSeverity() == QvtMessage.SEVERITY_ERROR ? IStatus.ERROR : IStatus.WARNING,
+            		QvtRuntimePlugin.ID, 1, msg.toString(), null);
+            multistatus.merge(status);
+        }
+        throw new MdaException(multistatus);
     }	
 
     /**

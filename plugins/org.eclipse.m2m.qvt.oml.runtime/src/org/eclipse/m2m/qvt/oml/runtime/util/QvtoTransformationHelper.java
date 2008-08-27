@@ -183,6 +183,12 @@ public class QvtoTransformationHelper {
 				}
             };
         } 
+		catch (MdaException e) {
+			throw new CoreException(e.getStatus() != null ? e.getStatus() : new Status(IStatus.ERROR, QvtRuntimePlugin.ID, e.getMessage()));
+		}
+		catch (CoreException e) {
+			throw e;
+		}
 		catch (Exception e) {
 			throw new CoreException(new Status(IStatus.ERROR, QvtRuntimePlugin.ID, e.getMessage()));
 		}

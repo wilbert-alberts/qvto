@@ -149,7 +149,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
 
         IStatus status = QvtValidator.validateTransformation(transformation, inObjs);                    
         if (status.getSeverity() > IStatus.WARNING) {
-        	throw new MdaException(status.getMessage());
+        	throw new MdaException(status);
         }      	
     	
     	Context context = new Context(configuration);    	

@@ -86,7 +86,7 @@ public class QvtOperationalResourceImpl extends XMIResourceImpl {
     private void fillCompilationDiagnostic(CompiledModule compiledModule, URI uri) {
     	warnings = getWarnings();
 		for (QvtMessage msg : compiledModule.getWarnings()) {
-			warnings.add(new Diagnostic(msg.getMessage(), uri.toString()));
+			warnings.add(new Diagnostic(msg.getMessage(), uri.toString(), msg.getLineNum()));
 		}
 		for (QvtMessage msg : compiledModule.getErrors()) {
 			warnings.add(new QvtCompilationErrorException(msg, uri.toString()));
@@ -135,10 +135,12 @@ public class QvtOperationalResourceImpl extends XMIResourceImpl {
 	private static class Diagnostic implements Resource.Diagnostic {
 		private final String myMessage;
 		private final String myLocation;
+		private final int myLine;
 
-		Diagnostic(String message, String  location) {
+		Diagnostic(String message, String  location, int line) {
 			myMessage = message;
 			myLocation = location;
+			myLine = line;
 		}
 
 		public String getMessage() {
@@ -154,7 +156,7 @@ public class QvtOperationalResourceImpl extends XMIResourceImpl {
 		}
 
 		public int getLine() {
-			return 0;
+			return myLine;
 		}
 	}
 
