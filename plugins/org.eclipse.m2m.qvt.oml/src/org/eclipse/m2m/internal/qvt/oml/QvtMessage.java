@@ -60,7 +60,7 @@ public class QvtMessage {
 	
 	@Override
 	public String toString() {
-		return myPos.toString() + " " + myMessage;//$NON-NLS-1$
+		return (getLineNum() > 0 ? "Line " + getLineNum() + ':' : myPos.toString()) + " " + myMessage; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 	
 	@Override
