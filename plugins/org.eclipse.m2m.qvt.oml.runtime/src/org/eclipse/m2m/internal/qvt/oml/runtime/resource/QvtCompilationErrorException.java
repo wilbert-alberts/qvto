@@ -23,8 +23,8 @@ public class QvtCompilationErrorException extends XMIException {
 
 	private static final long serialVersionUID = 1L;
 	
-	public QvtCompilationErrorException(QvtMessage qvtMessage, String location) {
-		super(qvtMessage.getMessage(), location, qvtMessage.getOffset(), qvtMessage.getLength());
+	public QvtCompilationErrorException(QvtMessage qvtMessage, String location, int line) {
+		super(qvtMessage.getMessage(), location, line, 0);
 	}
 
 }

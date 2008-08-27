@@ -36,9 +36,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.launch.ShallowProcess;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerFacade;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
-import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.library.IConfiguration;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchConfigurationDelegateBase;
@@ -184,6 +182,12 @@ public class QvtoTransformationHelper {
 				}
             };
         } 
+		catch (MdaException e) {
+			throw new CoreException(e.getStatus() != null ? e.getStatus() : new Status(IStatus.ERROR, QvtRuntimePlugin.ID, e.getMessage()));
+		}
+		catch (CoreException e) {
+			throw e;
+		}
 		catch (Exception e) {
 			throw new CoreException(new Status(IStatus.ERROR, QvtRuntimePlugin.ID, e.getMessage()));
 		}
