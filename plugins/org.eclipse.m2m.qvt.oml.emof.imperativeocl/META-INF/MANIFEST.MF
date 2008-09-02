@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.m2m.qvt.oml.emof.imperativeocl;singleton:=true
+Bundle-Version: 0.7.0
+Bundle-ClassPath: .
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.eclipse.m2m.qvt.oml.emof.ImperativeOCL,
+ org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl,
+ org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.util
+Require-Bundle: org.eclipse.m2m.qvt.oml.ecore.imperativeocl,
+ org.eclipse.qvt.declarative.emof.essentialocl;visibility:=reexport
+Bundle-ActivationPolicy: lazy
