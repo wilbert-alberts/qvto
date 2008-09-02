@@ -68,5 +68,25 @@ public abstract class AbstractBundleResource implements CResource {
 	@Override
 	public String toString() {	
 		return "platform:/plugin/" + resourceRegistry.getBundleSymbolicName() + "/" + resourcePath.toString(); //$NON-NLS-1$ //$NON-NLS-2$
+	}
+	
+	@Override
+	public boolean equals(Object another) {
+		if(another instanceof AbstractBundleResource) {
+			AbstractBundleResource res = (AbstractBundleResource)another;
+			return resourcePath.equals(res.resourcePath) && 
+					resourceRegistry.getBundleSymbolicName().equals(
+							res.resourceRegistry.getBundleSymbolicName()); 
+		}
+		
+		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		int result = 17;
+		result = 37 * result + resourcePath.hashCode(); 
+		result = 37 * result + resourceRegistry.getBundleSymbolicName().hashCode();
+		return  result;
 	}	
 }
