@@ -80,8 +80,14 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 	@Override
 	public Variable<EClassifier, EParameter> lookupImplicitSourceForOperation(String name, List<? extends TypedElement<EClassifier>> args) {
 		Variable<EClassifier, EParameter> result = super.lookupImplicitSourceForOperation(name, args);
+		
 		if(result == null) {
-			for (QvtEnvironmentBase nextSiblingEnv : getSiblings()) {
+			QvtEnvironmentBase rootEnv = getRootEnv();
+			if(rootEnv != this) {
+				return this.getInternalParent().lookupImplicitSourceForOperation(name, args);
+			}
+			
+			for (QvtEnvironmentBase nextSiblingEnv : rootEnv.getSiblings()) {
 				result = nextSiblingEnv.lookupImplicitSourceForOperation(name, args);
 				if(result != null) {
 					break;
@@ -95,7 +101,12 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 	public Variable<EClassifier, EParameter> lookupImplicitSourceForProperty(String name) {
 		Variable<EClassifier, EParameter> result = super.lookupImplicitSourceForProperty(name);
 		if(result == null) {
-			for (QvtEnvironmentBase nextSiblingEnv : getSiblings()) {
+			QvtEnvironmentBase rootEnv = getRootEnv();
+			if(rootEnv != this) {
+				return this.getInternalParent().lookupImplicitSourceForProperty(name);
+			}
+			
+			for (QvtEnvironmentBase nextSiblingEnv : rootEnv.getSiblings()) {
 				result = nextSiblingEnv.lookupImplicitSourceForProperty(name);
 				if(result != null) {
 					break;
@@ -264,5 +275,14 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 			fOperationsHolder  = new LinkedHashSet<EOperation>();
 		}
 		return fOperationsHolder;
+	}
+
+	@SuppressWarnings("unchecked")
+	protected QvtEnvironmentBase getRootEnv() {
+		QvtEnvironmentBase root = this;
+		while(root.getInternalParent() instanceof QvtEnvironmentBase) {
+			root = (QvtEnvironmentBase) root.getInternalParent();			
+		}
+		return root;
 	}
 }

@@ -128,8 +128,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	@Override
 	public final TypeResolver<EClassifier, EOperation, EStructuralFeature> getTypeResolver() {
 		if(myTypeResolver == null) {
-			QvtOperationalEnv rootEnv = rootEnv();
-			if(rootEnv != null) {
+			QvtEnvironmentBase rootEnv = getRootEnv();
+			if(rootEnv != this) {
 				myTypeResolver = rootEnv.getQVTTypeResolver();
 			} else {
 				myTypeResolver = new QvtTypeResolverImpl(this, super.getTypeResolver());
@@ -1050,15 +1050,6 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			}
 		}
 		super.initASTMapping(astNode, cstNode);
-	}
-	
-	@SuppressWarnings("unchecked")
-	protected QvtOperationalEnv rootEnv() {
-		Environment.Internal base = this;
-		while(base.getInternalParent() instanceof QvtOperationalEnv) {
-			base = (QvtOperationalEnv) base.getInternalParent();			
-		}
-		return (base == this) ? null : (QvtOperationalEnv)base;
 	}
 	
 	private static int getLineNum(QvtOperationalEnv env, int startOffset) {
