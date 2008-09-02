@@ -14,6 +14,7 @@ package org.eclipse.m2m.qvt.oml.runtime.util;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitorImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
@@ -96,7 +97,10 @@ public class NonTransformationExecutionContext {
 		}
 		
 		Module owningModule = QvtOperationalParserUtil.getOwningModule(operation);
-		if(!fLibraryImports.contains(owningModule)) {
+		if(owningModule == null || 
+			!(owningModule == QvtOperationalStdLibrary.INSTANCE.getLibaryModule() ||
+					fLibraryImports.contains(owningModule))) {
+			
 			throw new IllegalArgumentException("Operation not imported from a library"); //$NON-NLS-1$
 		}
 		
