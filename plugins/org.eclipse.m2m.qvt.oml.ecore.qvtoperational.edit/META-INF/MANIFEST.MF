@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.m2m.qvt.oml.ecore.qvtoperational.edit;singleton:=true
+Bundle-Version: 0.7.0
+Bundle-ClassPath: .
+Bundle-Activator: org.eclipse.m2m.qvt.oml.ecore.QVTOperational.provider.QVTOperationalEditPlugin$Implementation
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.eclipse.m2m.qvt.oml.ecore.QVTOperational.provider
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.m2m.qvt.oml.ecore.qvtoperational;visibility:=reexport,
+ org.eclipse.m2m.qvt.oml.ecore.imperativeocl.edit;visibility:=reexport,
+ org.eclipse.qvt.declarative.ecore.qvtrelation.edit;visibility:=reexport
+Bundle-ActivationPolicy: lazy
