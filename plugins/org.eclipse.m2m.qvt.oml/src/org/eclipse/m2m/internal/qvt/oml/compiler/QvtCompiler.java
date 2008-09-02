@@ -72,6 +72,33 @@ public class QvtCompiler {
     private final QvtCompilerKernel myKernel;
     private final ResourceSet resourceSet;    
 
+    /**
+	 * Creates compiler that caches already compiled modules until
+	 * <code>cleanup</code> is explicitly called.
+	 * <p>
+	 * This enables to compile individual modules separately ensuring
+	 * cross-referencing among already compiled modules.
+	 * 
+	 * @param importResolver
+	 *            resolver for other module imports
+	 * @return the compiler instance
+	 */
+    public static QvtCompiler createCompilerWithHistory(IImportResolver importResolver) { 
+    	return new QvtCompiler(importResolver) {
+    		@Override
+    		protected void afterCompileCleanup() {
+    			// do nothing as we need to cross-reference cached modules on 
+    			// next compilation requests
+    		}
+    		
+    		@Override
+    		public void cleanup() {    		
+    			super.cleanup();
+    			afterCompileCleanup();
+    		}
+    	};
+    }
+    
     public QvtCompiler(IImportResolver importResolver, IMetamodelRegistryProvider metamodelRegistryProvider) {
 	    mySyntaxModules = new LinkedHashMap<CFile, ParsedModuleCS>();
 	    myCompilationResults = new IdentityHashMap<ParsedModuleCS, QvtCompilationResult>();
@@ -412,7 +439,7 @@ public class QvtCompiler {
 	    }
     }
 
-    private void afterCompileCleanup() {
+    protected void afterCompileCleanup() {
         this.importCompiler = null;
         
     	myCompilationResults.clear();

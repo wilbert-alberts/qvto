@@ -288,6 +288,9 @@ public class QVTUMLReflection
 			if(context != null && context.getEType() != null) {
 				return context.getEType();
 			}
+		} else if(feature instanceof ContextualProperty) {
+			ContextualProperty contextualProperty = (ContextualProperty)feature;
+			return contextualProperty.getContext();
 		}
 		return fUmlReflection.getOwningClassifier(feature);
 	}

@@ -18,13 +18,17 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtLibraryOperation;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
+import org.eclipse.m2m.internal.qvt.oml.ocl.OclQvtoPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.Library;
 import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LibraryCreationException;
 import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LibraryOperation;
@@ -63,7 +67,20 @@ public class LegacyNativeLibSupport {
 		
 		return libModule;
 	}
+
 	
+	public static Module getLibraryModule(String libraryID) throws LibraryCreationException  {
+		Library library = OclQvtoPlugin.getDefault().getLibrariesRegistry().getLibrary(libraryID);
+		if(library == null) {
+			return null;
+		}
+		QvtOperationalEnv env = (QvtOperationalEnv)QvtOperationalEnvFactory.INSTANCE.createEnvironment();
+		Module libraryModule = INSTANCE.defineLibrary(env, library, new ResourceSetImpl());
+		
+		// FIXME - workaround to make Environment available with the module
+		ASTBindingHelper.createCST2ASTBinding(CSTFactory.eINSTANCE.createLibraryCS(), libraryModule, env);		
+		return libraryModule;
+	}
 	
 	private static class Handler implements CallHandler {
 		private LibraryOperation fOperation;
