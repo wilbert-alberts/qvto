@@ -13,39 +13,26 @@ package org.eclipse.m2m.tests.qvt.oml;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
-import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFolder;
-import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.BundleFile;
-import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.BundleModuleRegistry;
-import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilationResult;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtAssertionFailed;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
-import org.eclipse.m2m.internal.qvt.oml.runtime.project.DeployedImportResolver;
 import org.eclipse.m2m.qvt.oml.runtime.util.HelperOperationCall;
 import org.eclipse.m2m.qvt.oml.runtime.util.NonTransformationExecutionContext;
-import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
-import org.osgi.framework.Bundle;
+import org.eclipse.m2m.tests.qvt.oml.util.TestModuleResolver;
 
 
 public class TestExternHelperCall extends TestCase {
@@ -68,7 +55,7 @@ public class TestExternHelperCall extends TestCase {
 	}
 
 	protected void setupLibrary(String libraryName) throws MdaException {
-		Resolver importResolver = new Resolver(TestUtil.BUNDLE, srcContainer);
+		TestModuleResolver importResolver = TestModuleResolver.createdTestPluginResolver(srcContainer);
 		QvtCompiler compiler = new QvtCompiler(importResolver);		
 		CFile file = importResolver.resolveImport(libraryName);
 		
@@ -196,58 +183,5 @@ public class TestExternHelperCall extends TestCase {
 		}
 
 		return null;
-	}	
-	
-	private static class Resolver implements IImportResolver {
-
-		private DeployedImportResolver fResolver;
-		private IPath fBasePath;
-				
-		public Resolver(String bundleSymbolicName, String sourceContainerPath) {
-			if(bundleSymbolicName == null || sourceContainerPath == null) {
-				throw new IllegalArgumentException();
-			}
-			
-			Bundle bundle =  Platform.getBundle(bundleSymbolicName);
-			if(bundle == null) {
-				throw new IllegalArgumentException("Not existinging bundle" + bundleSymbolicName); //$NON-NLS-1$
-			}
-
-			@SuppressWarnings("unchecked")
-			Enumeration<java.net.URL> qvtFiles = bundle.findEntries(sourceContainerPath, "*" + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT, true); //$NON-NLS-1$
-			
-			List<IPath> pathList = new ArrayList<IPath>();
-			while(qvtFiles.hasMoreElements()) {
-				pathList.add(new Path(qvtFiles.nextElement().getPath()));
-			}
-			
-			BundleModuleRegistry registry = new BundleModuleRegistry(bundleSymbolicName, pathList);
-			fResolver = new DeployedImportResolver(Arrays.asList(registry)) {
-				@Override
-				public CFile resolveImport(String importedUnitName) {
-					IPath fullPath = fBasePath.append(importedUnitName.replace('.', '/') + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT);
-					for (BundleModuleRegistry nextRegistry : getBundleModules()) {
-						if (nextRegistry.fileExists(fullPath)) {
-							return new BundleFile(fullPath, nextRegistry);
-						}
-					}
-					
-					return null;
-				}
-			};
-			fBasePath = new Path(sourceContainerPath).makeAbsolute();
-		}
-		
-		public String getPackageName(CFolder folder) {
-			return fResolver.getPackageName(folder);
-		}
-
-		public CFile resolveImport(String importedUnitName) {
-			return fResolver.resolveImport(importedUnitName);
-		}
-		
-		public CFile resolveImport(CFile parentFile, String importedUnitName) {		
-			return fResolver.resolveImport(parentFile, importedUnitName);
-		}
 	}
 }

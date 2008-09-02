@@ -16,7 +16,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import junit.framework.Assert;
 
@@ -37,9 +39,16 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
+import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilationResult;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.tests.qvt.oml.RuntimeWorkspaceSetup;
 import org.eclipse.m2m.tests.qvt.oml.TestProject;
+import org.eclipse.osgi.util.NLS;
 import org.osgi.framework.Bundle;
 
 /**
@@ -50,6 +59,45 @@ public class TestUtil extends Assert {
 	public static final String BUNDLE = "org.eclipse.m2m.tests.qvt.oml"; //$NON-NLS-1$
 
 	private TestUtil() {}
+
+	public static Set<Module> compileModules(String srcContainer, String[] modulePaths)  {
+		TestModuleResolver testResolver = TestModuleResolver.createdTestPluginResolver(srcContainer);
+		
+		QvtCompiler compiler = new QvtCompiler(TestModuleResolver.createdTestPluginResolver(srcContainer));				
+		QvtCompilerOptions options = new QvtCompilerOptions();
+		options.setGenerateCompletionData(true);
+		
+		
+		CFile[] sourceFiles = new CFile[modulePaths.length];
+		int pos = 0;
+		for (String nextModulePath : modulePaths) {
+			sourceFiles[pos] = testResolver.resolveImport(nextModulePath);
+			pos++;
+		}
+		
+		QvtCompilationResult[] result;
+		Set<Module> modules;		
+		try {
+			result = compiler.compile(sourceFiles, options, null);
+			modules = new LinkedHashSet<Module>();
+			for (QvtCompilationResult nextResult : result) {
+				assertEquals(nextResult.getModule().getSource().getFullPath()  
+						+ " must not have compilation error", //$NON-NLS-1$ 
+						0, nextResult.getErrors().length); //$NON-NLS-1$
+				modules.add(nextResult.getModule().getModule());
+			}
+			
+		} catch (MdaException e) {
+			fail("Compilation errors: " + e.getMessage());
+			return null; // never gets here			
+		}
+
+		return modules;
+	}
+		
+	public static QvtCompiler createTestPluginQvtCompiler(String sourceContainerPath) {
+		return new QvtCompiler(TestModuleResolver.createdTestPluginResolver(sourceContainerPath));
+	}
 	
 	public static void turnOffAutoBuilding() throws CoreException {
 		IWorkspaceDescription workspaceDescription = ResourcesPlugin.getWorkspace().getDescription();
