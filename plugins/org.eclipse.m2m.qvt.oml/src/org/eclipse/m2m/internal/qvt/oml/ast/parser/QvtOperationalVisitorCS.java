@@ -1426,6 +1426,13 @@ public class QvtOperationalVisitorCS
 
 			EStructuralFeature eFeature = null;
 			if (prop instanceof ContextualProperty) {
+				EClass ctxType = ((ContextualProperty) prop).getContext();
+				if (ctxType != null && env.lookupProperty(ctxType, prop.getName()) != null) {
+					// need to check now for duplicates, as MDT OCL lookup now returns the most specific 
+					// redefinition [244886], so further checking lookup might not reach the original valid feature
+					// being redefined (thus no collision would be detectable)
+					HiddenElementAdapter.markAsHidden(prop);
+				}
 				module.getIntermediateProperty().add(prop);
 				eFeature = prop;
 				// using AST-CST map as this mapping is not optional but always required
@@ -1453,7 +1460,8 @@ public class QvtOperationalVisitorCS
 				EClass ctxType = ctxProperty.getContext();
 				EStructuralFeature lookupProperty = ctxType != null ? env.lookupProperty(ctxType, prop.getName()) : null;
 				
-				boolean isAlreadyDefined = lookupProperty != null && lookupProperty != ctxProperty;				
+				boolean isAlreadyDefined = (lookupProperty != null && lookupProperty != ctxProperty) |
+										HiddenElementAdapter.isMarkedAsHidden(ctxProperty);				
 				if(isAlreadyDefined || intermPropDefHierarchy.hasHierarchyClashes(ctxProperty)) {
 					HiddenElementAdapter.markAsHidden(ctxProperty);											
 					String message = NLS.bind(ValidationMessages.IntermediatePropertyAlreadyDefined, prop.getName());
