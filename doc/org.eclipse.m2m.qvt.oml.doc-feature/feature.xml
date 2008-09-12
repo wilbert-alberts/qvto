@@ -19,7 +19,7 @@
    </license>
 
    <requires>
-      <import plugin="org.eclipse.help"/>
+      <import plugin="org.eclipse.help" version="3.4.0" match="compatible"/>
    </requires>
 
    <plugin
