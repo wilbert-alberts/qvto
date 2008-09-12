@@ -20,13 +20,13 @@
    </license>
 
    <requires>
-      <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.ui.ide"/>
-      <import plugin="org.eclipse.emf.ecore"/>
-      <import plugin="org.eclipse.emf.ecore.xmi"/>
-      <import plugin="org.eclipse.emf.edit.ui"/>
-      <import plugin="org.eclipse.debug.core"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.common"/>
+      <import plugin="org.eclipse.core.runtime" version="3.4.0" match="compatible"/>
+      <import plugin="org.eclipse.ui.ide" version="3.4.0" match="compatible"/>
+      <import plugin="org.eclipse.emf.ecore" version="2.5.0" match="compatible"/>
+      <import plugin="org.eclipse.emf.ecore.xmi" version="2.5.0" match="compatible"/>
+      <import plugin="org.eclipse.emf.edit.ui" version="2.5.0" match="compatible"/>
+      <import plugin="org.eclipse.debug.core" version="3.4.0" match="compatible"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.common" version="1.0.0" match="compatible"/>
    </requires>
 
    <plugin
