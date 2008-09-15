@@ -20,6 +20,7 @@ package org.eclipse.m2m.tests.qvt.oml;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.eclipse.m2m.tests.qvt.oml.ant.QvtAntScriptTests;
 import org.eclipse.m2m.tests.qvt.oml.emf.AllEmfTests;
 import org.eclipse.m2m.tests.qvt.oml.traces.TestTraceFile;
 import org.eclipse.m2m.tests.qvt.oml.transform.TransformManyModelTests;
@@ -68,9 +69,8 @@ public class AllTests {
         
         suite.addTestSuite(TestOCLSemantics.class);
         suite.addTestSuite(TestOCLAnnotationSupport.class);     
-
-        // TODO - commented out to make M6 pass - fails on the build server only but works locally        
-        //suite.addTest(QvtAntScriptTests.suite());
+                
+        suite.addTest(QvtAntScriptTests.suite());
 		//$JUnit-END$
 		return suite;
 	}
