@@ -30,6 +30,7 @@ import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.nature.TransformationNature;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtDocumentProvider;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtEditor;
 import org.eclipse.m2m.tests.qvt.oml.TestProject;
@@ -84,19 +85,12 @@ public abstract class AbstractTestQvtEditorSupport extends TestCase {
 			ITextEditor textEditor = (QvtEditor) IDE.openEditor(page, transformationFile);
 			assertTrue("QVT Editor instance expected", textEditor instanceof QvtEditor); //$NON-NLS-1$
 			editor = (QvtEditor) textEditor;
-			QvtDocumentProvider qvtDocProvider = getQVTDocumentProvider(editor);
-			// wait until the currently open editor gets reconciled to produce the QVT AST
-			final int maxCount = 100;
-			int counter = 0;
-			while(qvtDocProvider.getCompiledModule() == null && counter++ < maxCount) {
-				try {				
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-					fail("Should never be interrupted"); //$NON-NLS-1$
-				}
-			}
 			
-			assertNotNull("Failed to open QVT Editor", qvtDocProvider.getCompiledModule()); //$NON-NLS-1$
+			final int WAIT_FOR_RECONCILE = 15000;
+			editor.forceReconciling();
+			CompiledModule compiledModule = editor.getValidCompiledModule(WAIT_FOR_RECONCILE);
+			
+			assertNotNull("Failed to aquire AST model in QVT Editor", compiledModule); //$NON-NLS-1$
 			
 		} catch (PartInitException e) {
 			fail("Failed to open QVTEditor. " + e); //$NON-NLS-1$
