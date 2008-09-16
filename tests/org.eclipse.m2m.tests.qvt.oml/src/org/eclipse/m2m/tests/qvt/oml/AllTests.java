@@ -21,6 +21,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.eclipse.m2m.tests.qvt.oml.ant.QvtAntScriptTests;
+import org.eclipse.m2m.tests.qvt.oml.editor.AllEditorTests;
 import org.eclipse.m2m.tests.qvt.oml.emf.AllEmfTests;
 import org.eclipse.m2m.tests.qvt.oml.traces.TestTraceFile;
 import org.eclipse.m2m.tests.qvt.oml.transform.TransformManyModelTests;
@@ -43,8 +44,7 @@ public class AllTests {
 		//$JUnit-BEGIN$
 		suite.addTestSuite(OCLEnvironmentWithQVTAccessTest.class);
 		suite.addTestSuite(TestExternHelperCall.class);
-// FIXME - commented out to test I-build with the common builder
-//suite.addTest(AllEditorTests.suite());
+		suite.addTest(AllEditorTests.suite());
 		suite.addTest(AllEmfTests.suite());
 		suite.addTestSuite(TestMetamodelRegistry.class);
         suite.addTestSuite(TestLaunchConfiguration.class);
