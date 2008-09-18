@@ -26,9 +26,16 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransforma
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 
 public class TestQvtInterpreter extends TestTransformation {
+	
+	private static final String PREFIX = "interpret_"; //$NON-NLS-1$
+	
+	public TestQvtInterpreter(String testName) {
+		this(TestDataMapper.getTestDataByTestNameWithPrefix(PREFIX, testName));
+	}
+	
     public TestQvtInterpreter(ModelTestData data) {
-        super(data);
-        setName("interpret_" + data.getName()); //$NON-NLS-1$
+        super(data);        
+		setName(PREFIX + data.getName()); //$NON-NLS-1$
     }
     
     @Override

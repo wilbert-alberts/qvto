@@ -19,8 +19,7 @@ import java.util.Set;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.eclipse.m2m.tests.qvt.oml.transform.javaless.JavalessFileToFileData;
-import org.eclipse.m2m.tests.qvt.oml.transform.javaless.JavalessMetamodelProvider;
+import org.eclipse.m2m.tests.qvt.oml.transform.javaless.JavalessQvtTest;
 import org.eclipse.m2m.tests.qvt.oml.transform.javaless.JavalessUtil;
 
 
@@ -50,17 +49,13 @@ public class TransformTests {
     }
 
     public static TestSuite javalessSuite() {
-        JavalessMetamodelProvider.registerMetamodel();
-
         TestSuite suite = new TestSuite("QVT javaless"); //$NON-NLS-1$
 
         ModelTestData[] datas = createTestData();
 
         for (ModelTestData data : datas) {
             if(!JAVALESS_EXCLUDES.contains(data.getName()) && JavalessUtil.isValidJavalessData(data)) {
-                JavalessFileToFileData javaless = new JavalessFileToFileData(data);
-                TestQvtInterpreter test = new TestQvtInterpreter(javaless);
-                test.setName("javaless_" + test.getName()); //$NON-NLS-1$
+                JavalessQvtTest test = new JavalessQvtTest(data);                
                 suite.addTest(test);
             }
         }
@@ -79,7 +74,8 @@ public class TransformTests {
 
         return suite;
     }
-
+        
+    
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {        		        		
                 new FileToFileData("bug244701"), //$NON-NLS-1$

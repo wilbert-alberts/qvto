@@ -50,6 +50,11 @@ import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
  * @author pkobiakov
  */
 public class TestQvtParser extends TestCase {
+	
+	public TestQvtParser(String testName) {
+		this(ParserTests.getTestData(testName));
+	}
+	
 	public TestQvtParser(TestData data) {
         super(data.getDir());
         myData = data;

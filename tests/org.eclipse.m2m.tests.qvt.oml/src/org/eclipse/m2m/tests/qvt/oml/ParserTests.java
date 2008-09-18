@@ -71,7 +71,17 @@ public class ParserTests {
     }
     
     
-    static TestData[] ourData = new TestData[] {
+    static TestData getTestData(String name) {
+    	for (TestData data : ourData) {
+			if(name.equals(data.getDir())) {
+				return data;
+			}
+		}
+    	
+    	throw new IllegalArgumentException("No such testdata: " + name); //$NON-NLS-1$
+    }
+    
+    private static TestData[] ourData = new TestData[] {
         //new TestData("orderedsetdoesnotconformtoset", 1), //$NON-NLS-1$    	
     	TestData.createSourceChecked("dupImportLibrary", 0, 1),    	
     	TestData.createSourceChecked("testmodelparamtype", 3, 0),    	

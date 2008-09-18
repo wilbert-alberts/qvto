@@ -23,9 +23,16 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
 import org.eclipse.ocl.utilities.Visitable;
 
 public class TestQvtWalker extends TestTransformation {
+	
+	private static final String PREFIX = "walker_"; //$NON-NLS-1$
+	
+	public TestQvtWalker(String testName) {
+		this(TestDataMapper.getTestDataByTestNameWithPrefix(PREFIX, testName));
+	}
+	
 	public TestQvtWalker(ModelTestData data) {
-        super(data);
-        setName("walker_" + data.getName()); //$NON-NLS-1$
+        super(data);        
+		setName(PREFIX + data.getName()); //$NON-NLS-1$
     }
 
     @Override
