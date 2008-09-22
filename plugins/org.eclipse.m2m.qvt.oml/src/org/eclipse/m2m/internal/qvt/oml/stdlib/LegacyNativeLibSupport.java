@@ -16,17 +16,16 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtLibraryOperation;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsFactoryImpl;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.ocl.OclQvtoPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.Library;
@@ -49,12 +48,16 @@ public class LegacyNativeLibSupport {
 	private LegacyNativeLibSupport() {
 	}
 	
-	public Module defineLibrary(QvtOperationalEnv targetEnv, Library lib, ResourceSet rs) throws LibraryCreationException {
-		Module libModule = org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createLibrary();
+	public Module defineLibrary(QvtOperationalEnv targetEnv, Library lib) throws LibraryCreationException {
+		Module libModule = org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createLibrary();		
 		libModule.setName(lib.getId());
-		QvtOperationalEnv libEnv = QvtOperationalEnvFactory.INSTANCE.createModuleEnvironment(libModule);
+        // must set the instance factory as a QVT module is also a Package 
+        libModule.setEFactoryInstance(new ExpressionsFactoryImpl());
+		
+		QvtOperationalEnv libEnv = initLibEnvironment(lib, libModule);
+		
 		for (LibraryOperation libOp : lib.getLibraryOperations()) {
-	        QvtLibraryOperation qvtLibOp = new QvtLibraryOperation(libEnv, libOp, rs);
+	        QvtLibraryOperation qvtLibOp = new QvtLibraryOperation(libEnv, libOp);
 	        EClassifier ctxType = qvtLibOp.getContextType();
 	        
 	        if(ctxType  == targetEnv.getOCLStandardLibrary().getOclVoid()) {
@@ -67,7 +70,6 @@ public class LegacyNativeLibSupport {
 		
 		return libModule;
 	}
-
 	
 	public static Module getLibraryModule(String libraryID) throws LibraryCreationException  {
 		Library library = OclQvtoPlugin.getDefault().getLibrariesRegistry().getLibrary(libraryID);
@@ -75,13 +77,38 @@ public class LegacyNativeLibSupport {
 			return null;
 		}
 		QvtOperationalEnv env = (QvtOperationalEnv)QvtOperationalEnvFactory.INSTANCE.createEnvironment();
-		Module libraryModule = INSTANCE.defineLibrary(env, library, new ResourceSetImpl());
+		Module libraryModule = INSTANCE.defineLibrary(env, library);
 		
 		// FIXME - workaround to make Environment available with the module
 		ASTBindingHelper.createCST2ASTBinding(CSTFactory.eINSTANCE.createLibraryCS(), libraryModule, env);		
 		return libraryModule;
 	}
 	
+	private static QvtOperationalEnv initLibEnvironment(Library lib, Module libModule) {
+		QvtOperationalEnv libEnv = QvtOperationalEnvFactory.INSTANCE.createModuleEnvironment(libModule);
+		EPackage.Registry libEnvRegistry = libEnv.getEPackageRegistry();
+
+		EPackage oclStdlibPackage = libEnv.getOCLStandardLibrary().getOclAny().getEPackage();
+		libEnv.getEPackageRegistry().put(oclStdlibPackage.getNsURI(), oclStdlibPackage);
+		if (lib.getInMetamodels() != null) {
+			for (String mm : lib.getInMetamodels()) {
+				EPackage ePackage = EPackage.Registry.INSTANCE.getEPackage(mm);
+				if(ePackage != null) {
+					libEnvRegistry.put(mm, ePackage);
+				}
+			}
+		}
+		if (lib.getOutMetamodels() != null) {
+			for (String mm : lib.getOutMetamodels()) {
+				EPackage ePackage = EPackage.Registry.INSTANCE.getEPackage(mm);
+				if(ePackage != null) {
+					libEnvRegistry.put(mm, ePackage);
+				}
+			}
+		}
+		return libEnv;
+	}
+		
 	private static class Handler implements CallHandler {
 		private LibraryOperation fOperation;
 		private Class<?> fReturnClass;

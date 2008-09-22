@@ -23,12 +23,12 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EPackage.Registry;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerKernel;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitorImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
-import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.EvaluationVisitor;
@@ -36,37 +36,51 @@ import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreEnvironmentFactory;
 import org.eclipse.ocl.ecore.SendSignalAction;
-import org.eclipse.ocl.utilities.UMLReflection;
 
+/**
+ * A factory class for operational QVT environments creation.  
+ */
 public class QvtOperationalEnvFactory extends EcoreEnvironmentFactory {
 
+	/**
+     * A shared instance of the QV environment factory using the global package registry 
+     * for creating environments.
+     * <p>
+     * FIXME - Using a copy of the global registry until it's ensured that QVT environments do not 
+     * store into its package registry imported metamodels, so other EMF clients are not affected.     
+	 */	
+	public static final QvtOperationalEnvFactory INSTANCE = new QvtOperationalEnvFactory();
+		
+	/* TODO - Do we need a default constructor? */
 	public QvtOperationalEnvFactory() {
-		super();
+		super(copyPackageRegistry(EPackage.Registry.INSTANCE));
 	}
 
+	/**
+	 * Initializes me with an <code>EPackage.Registry</code> that the
+     * environments I create will use to look up packages.
+     * 
+     * @param reg my package registry (must not be <code>null</code>)
+	 */
 	public QvtOperationalEnvFactory(Registry reg) {
 		super(reg);
 	}
-
-	public static final QvtOperationalEnvFactory INSTANCE = new QvtOperationalEnvFactory();
-	
 	
 	@Override
-	public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> createEnvironment() {
-		QvtOperationalEnv env = new QvtOperationalEnv(null, super.getEPackageRegistry());
+	public QvtOperationalEnv createEnvironment() {
+		QvtOperationalEnv env = new QvtOperationalEnv(getEPackageRegistry());
 		env.setFactory(this);
 		return env;
 	}
 	
-	public QvtOperationalFileEnv createEnvironment(final QvtOperationalEnv parent, final CFile file, final QvtCompilerKernel kernel) {
-		QvtOperationalFileEnv env = new QvtOperationalFileEnv(parent, file, kernel);
+	public QvtOperationalFileEnv createEnvironment(final CFile file, final QvtCompilerKernel kernel) {
+		QvtOperationalFileEnv env = new QvtOperationalFileEnv(file, kernel);
 		env.setFactory(this);
 		return env;
 	}
 	
 	@Override
-    public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> createEnvironment(
-            Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent) {
+    public QvtOperationalEnv createEnvironment(Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent) {
         if (!(parent instanceof QvtOperationalEnv)) {
             throw new IllegalArgumentException(
                 "Parent environment must be a QvtOperationalEnv: " + parent); //$NON-NLS-1$
@@ -74,30 +88,30 @@ public class QvtOperationalEnvFactory extends EcoreEnvironmentFactory {
         return createEnvironment((QvtOperationalEnv) parent);
     }
 
-    public QvtOperationalEnv createEnvironment(final QvtOperationalEnv parent) {
-		QvtOperationalEnv env = new QvtOperationalEnv(parent) {
-			QVTUMLReflection fUMLReflection;
-			
-			@Override
-			public UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
-				if(fUMLReflection == null) {
-					fUMLReflection = new QVTUMLReflection(super.getUMLReflection(), QvtOperationalStdLibrary.INSTANCE); 
-				}
-				
-				return fUMLReflection; 
-			};
-		};
+    protected QvtOperationalEnv createEnvironment(final QvtOperationalEnv parent) {
+		QvtOperationalEnv env = new QvtOperationalEnv(parent);
 		env.setFactory(this);
 		return env;
 	}
 	
-	public QvtOperationalEnv createModuleEnvironment(final Module module) {
-		return new QvtOperationalEnv(null) {
-			@Override
-			public Module getModuleContextType() {			
-				return module;
-			}
-		};
+	public QvtOperationalModuleEnv createModuleEnvironment(final Module module) {		
+		QvtOperationalModuleEnv env = new QvtOperationalModuleEnv(getEPackageRegistry());
+		env.setFactory(this);		
+		env.setContextModule(module);
+		QvtOperationalStdLibrary.INSTANCE.importTo(env);		
+		return env;
+	}
+	
+	@Override
+	public QvtOperationalEnv createOperationContext(
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent,
+			EOperation operation) {
+		QvtOperationalEnv newEnv = createEnvironment(parent);
+		QvtOperationalEnv parentEnv = (QvtOperationalEnv) parent;
+		newEnv.setASTNodeToCSTNodeMap(parentEnv.getASTNodeToCSTNodeMap());
+		
+		newEnv.setContextOperation(operation);		
+		return newEnv;
 	}
 	
 	@Override
@@ -127,5 +141,11 @@ public class QvtOperationalEnvFactory extends EcoreEnvironmentFactory {
 		}
 		
 		return QvtOperationalEvaluationVisitorImpl.createVisitor((QvtOperationalEnv)env, (QvtOperationalEvaluationEnv)evalEnv);
+	}
+	
+	private static EPackage.Registry copyPackageRegistry(EPackage.Registry registry) {
+		EPackageRegistryImpl result = new EPackageRegistryImpl();
+		result.putAll(registry);
+		return result;
 	}
 }

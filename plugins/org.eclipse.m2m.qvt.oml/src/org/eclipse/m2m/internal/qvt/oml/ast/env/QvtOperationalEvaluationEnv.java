@@ -608,7 +608,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 				params.add(modelParameter);
 			}
 		}
-		ModelParameter modelParameter = QvtOperationalEnv.findModelParameter(type, DirectionKind.OUT, params);
+		ModelParameter modelParameter = QvtOperationalModuleEnv.findModelParameter(type, DirectionKind.OUT, params);
 		if(modelParameter != null) {
 			return myModelExtents.get(modelParameter);
 		}

@@ -100,7 +100,6 @@ import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.library.LateResolveInTask;
 import org.eclipse.m2m.internal.qvt.oml.library.LateResolveTask;
 import org.eclipse.m2m.internal.qvt.oml.library.QvtResolveUtil;
-import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
 import org.eclipse.m2m.internal.qvt.oml.trace.EDirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.trace.EMappingContext;
 import org.eclipse.m2m.internal.qvt.oml.trace.EMappingOperation;
@@ -170,14 +169,8 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 	 */
     public static QvtOperationalEvaluationVisitorImpl createNonTransformationExecutionContextVisitor(Context context, Set<Module> libraryImports) {
     	// Create a special top-level environment, which does not represent a
-    	// compilation unit file (as no-one exists)    	
-		QvtOperationalEnv rootEnv = new QvtOperationalEnv(null) {
-			QVTUMLReflection umlReflection = new QVTUMLReflection(super.getUMLReflection(), QvtOperationalStdLibrary.INSTANCE);			
-			@Override
-			public UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
-				return umlReflection;
-			};
-		};
+    	// compilation unit file (as no-one exist    	
+		QvtOperationalEnv rootEnv = (QvtOperationalEnv)QvtOperationalEnvFactory.INSTANCE.createEnvironment();
 		QvtOperationalEvaluationEnv evalEnv = QvtOperationalEnvFactory.INSTANCE.createEvaluationEnvironment(context, null);
     	
     	QvtOperationalEvaluationVisitorImpl visitor = new QvtOperationalEvaluationVisitorImpl(rootEnv, evalEnv);

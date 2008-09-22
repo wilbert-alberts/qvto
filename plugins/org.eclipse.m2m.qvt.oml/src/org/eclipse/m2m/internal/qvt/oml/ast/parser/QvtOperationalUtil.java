@@ -63,11 +63,7 @@ public class QvtOperationalUtil {
 	public static Object getOclInvalid() {
 		return ourOclInvalid;
 	}
-	
-	public static EClassifier getOclVoid() {
-		return ourOclVoid;
-	}
-	
+		
 	public static boolean isPrimitiveType(Object type) {
 		return type instanceof PrimitiveType;
 	}
@@ -189,7 +185,8 @@ public class QvtOperationalUtil {
     	return false;
     }
     
-	private static final Object ourOclInvalid = new QvtOperationalEnvFactory().createEnvironment(null).getOCLStandardLibrary().getOclInvalid();
-	private static final EClassifier ourOclVoid = new QvtOperationalEnvFactory().createEnvironment(null).getOCLStandardLibrary().getOclVoid();
-
+    /**
+     * FIXME - eliminate this hack, there is no guarantee of StdLib singleton in MDT OCL !!! 
+     */    
+	private static final Object ourOclInvalid = QvtOperationalEnvFactory.INSTANCE.createEnvironment().getOCLStandardLibrary().getOclInvalid();
 }

@@ -19,14 +19,22 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
+import org.eclipse.ocl.ecore.CallOperationAction;
+import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
+import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.TypedElement;
@@ -34,7 +42,7 @@ import org.eclipse.ocl.utilities.UMLReflection;
 
 
 abstract class QvtEnvironmentBase extends EcoreEnvironment {
-
+	
 	public static class CollisionStatus {
 		public static final int ALREADY_DEFINED = 1;		
 		public static final int VIRTUAL_METHOD_RETURNTYPE = 2;
@@ -60,6 +68,7 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 		}
 	}	
 	
+    private QVTUMLReflection fQVUMLReflection;
 	private List<QvtEnvironmentBase> siblings;
 	private Set<EOperation> fOperationsHolder;	
 
@@ -119,7 +128,21 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 
 	public final QvtTypeResolverImpl getQVTTypeResolver() {
 		return (QvtTypeResolverImpl)getTypeResolver();
-	} 
+	}
+	
+	@Override
+	public UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
+		Internal<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent = getInternalParent();
+		if(parent != null) {
+			return parent.getUMLReflection();
+		}
+		
+		if(fQVUMLReflection == null) {
+			fQVUMLReflection = new QVTUMLReflection(super.getUMLReflection());
+		}
+		
+		return fQVUMLReflection;
+	}	
 	
 	public final void addSibling(QvtEnvironmentBase env) {
 		if(env == null || env == this || isOneOfParents(env)) {
@@ -277,7 +300,6 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 		return fOperationsHolder;
 	}
 
-	@SuppressWarnings("unchecked")
 	protected QvtEnvironmentBase getRootEnv() {
 		QvtEnvironmentBase root = this;
 		while(root.getInternalParent() instanceof QvtEnvironmentBase) {

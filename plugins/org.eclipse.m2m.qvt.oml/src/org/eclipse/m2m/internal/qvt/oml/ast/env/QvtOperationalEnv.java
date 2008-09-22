@@ -12,7 +12,6 @@
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -22,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
@@ -32,8 +30,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.HiddenElementAdapter;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.MappingsMapKey;
@@ -41,25 +38,14 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.ValidationMessages;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.internal.qvt.oml.common.resourcesetprovider.ResourceSetProviderRegistry;
-import org.eclipse.m2m.internal.qvt.oml.common.resourcesetprovider.ResourceSetProviderRegistry.ResourceSetResourceSetProviderPair;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.cst.adapters.ModelTypeMetamodelsAdapter;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfException;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
-import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
-import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
-import org.eclipse.m2m.internal.qvt.oml.expressions.VariableInitExp;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.EnvironmentFactory;
 import org.eclipse.ocl.TypeResolver;
@@ -69,11 +55,12 @@ import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.ExpressionsFactory;
 import org.eclipse.ocl.expressions.Variable;
-import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.lpg.AbstractLexer;
 import org.eclipse.ocl.lpg.AbstractParser;
 import org.eclipse.ocl.lpg.AbstractProblemHandler;
 import org.eclipse.ocl.lpg.ProblemHandler;
+import org.eclipse.ocl.lpg.ProblemHandler.Phase;
+import org.eclipse.ocl.lpg.ProblemHandler.Severity;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.TypedElement;
@@ -99,52 +86,46 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
      * iteration variable specified.
      */
     private List<QvtVariableEntry> myNamedElements = new java.util.ArrayList<QvtVariableEntry>();
+    private EPackage.Registry myPackageRegistry;    
 	
-	protected QvtOperationalEnv(QvtOperationalEnv parent, EPackage.Registry eRegistry) {
-		// Set our own package registry to be populated by imported metamodels
-		super(eRegistry);
-		setParent(parent);
-
-		myWarningsList = new ArrayList<QvtMessage>(2);
-		myErrorsList = new ArrayList<QvtMessage>(2);
-		myCheckForDuplicateErrors = false;
-
+	protected QvtOperationalEnv(QvtOperationalEnv parent) {
+		super(parent);
+		
 		if(parent == null) {
-			// define std only in the root environment
-			//defineStandardOperations();
+			throw new IllegalArgumentException("Non-null parent QVT environment expected"); //$NON-NLS-1$
 		}
-
-		ePackageRegistry = eRegistry;		
+		
+		myCheckForDuplicateErrors = false;
+		
 		myModelTypeRegistry = parent != null ? parent.myModelTypeRegistry : new LinkedHashMap<String, ModelType>(1);
 		if (parent != null) {
 		    myCompilerOptions = parent.myCompilerOptions;
 		}
 	}
 	
-	protected QvtOperationalEnv(QvtOperationalEnv parent) {
-		this(parent, parent != null ? parent.getEPackageRegistry() : new EPackageRegistryImpl());
+	protected QvtOperationalEnv() {
+		this(createDefaultPackageRegistry());
+	}
+
+	protected QvtOperationalEnv(EPackage.Registry packageRegistry) {
+		super(packageRegistry);
+		myPackageRegistry = packageRegistry;
+		myModelTypeRegistry = new LinkedHashMap<String, ModelType>(1);
 	}
 	
+	/**
+	 * This operation declares the parameters of the given operation
+	 */
 	@Override
-	public final TypeResolver<EClassifier, EOperation, EStructuralFeature> getTypeResolver() {
-		if(myTypeResolver == null) {
-			QvtEnvironmentBase rootEnv = getRootEnv();
-			if(rootEnv != this) {
-				myTypeResolver = rootEnv.getQVTTypeResolver();
-			} else {
-				myTypeResolver = new QvtTypeResolverImpl(this, super.getTypeResolver());
-			}
-		}
-		return myTypeResolver;
-	}	
-	
+	protected void setContextOperation(EOperation operation) {
+		super.setContextOperation(operation);
+		
+		defineOperationParameters(operation);
+	}
+			
 	@Override
-	public UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
-		Internal<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent = getInternalParent();
-		if(parent != null) {
-			return parent.getUMLReflection();
-		}
-		return super.getUMLReflection();
+	protected TypeResolver<EClassifier, EOperation, EStructuralFeature> createTypeResolver(Resource resource) {
+		return new QvtTypeResolverImpl(this, super.createTypeResolver(resource));
 	}
 	
     public List<Module> getNativeLibs() {
@@ -159,113 +140,55 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	* Gets the package registry used in this environment EClassifier lookup.
 	*/
 	public EPackage.Registry getEPackageRegistry() {
-		return ePackageRegistry;
+		if(myPackageRegistry != null) {
+			return myPackageRegistry;   
+		}
+		
+		EPackage.Registry registry;
+		if(getInternalParent() == null) {
+			if(getFactory() != null) {
+				registry = getFactory().getEPackageRegistry();
+			} else {
+				myPackageRegistry = registry = createDefaultPackageRegistry();				
+			}
+		} else {
+			QvtOperationalEnv parentEnv = (QvtOperationalEnv) getInternalParent();
+			registry = parentEnv.getEPackageRegistry();
+		}
+		
+		return registry;
 	}
 	
     public Map<String, ModelType> getModelTypeRegistry() {
         return myModelTypeRegistry;
     }
 
-	public MetamodelRegistry getMetamodelRegistry() {
-		if(getInternalParent() instanceof QvtOperationalEnv) {
-			return ((QvtOperationalEnv)getInternalParent()).getMetamodelRegistry();
-		}
-		return MetamodelRegistry.getInstance();
-	}
-
 	public QvtOperationalStdLibrary getQVTStandardLibrary() {
 		return QvtOperationalStdLibrary.INSTANCE;
 	}
 	
-    /**
-     * Registers metamodel for use with this environment.
-     * 
-     * @return the metamodel package denoted by the given <code>URI</code> or <code>null</code>
-     * 	if no package was resolved 
-     */
-	public List<EPackage> registerMetamodel(String metamodelUri, List<String> path, ResourceSet resolutionRS) {
-        List<EPackage> metamodels = new ArrayList<EPackage>(1);
-		try {
-		    IMetamodelDesc[] desc = null;
-		    Internal<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env = this;
-		    while (env != null) {
-		        if (env instanceof QvtOperationalFileEnv) {
-		            QvtOperationalFileEnv fileEnv = (QvtOperationalFileEnv) env;
-		            ResourceSet resourceSet = fileEnv.getKernel().getMetamodelResourceSet();
-		            ResourceSetResourceSetProviderPair pair = null;
-		            if (resourceSet == null) {
-	                    CFile cFile = fileEnv.getFile();
-	                    pair = ResourceSetProviderRegistry.getResourceSetResourceSetProviderPair(cFile);
-	                    if (pair != null) {
-	                        ResourceSet providedResourceSet = pair.getResourceSet();
-	                        URI mmURI = URI.createURI(metamodelUri);
-                            if (EmfUtil.isUriMapped(providedResourceSet, mmURI)) {
-                                resourceSet = providedResourceSet;
-	                        }
-	                    }
-		            }
-		            if (resourceSet != null) {
-		                IMetamodelDesc metamodelDesc = MetamodelRegistry.createUndeclaredMetamodel(metamodelUri, resourceSet);
-		                if (metamodelDesc != null) {
-	                        desc = new IMetamodelDesc[] { metamodelDesc };
-		                }
-		                if (pair != null) {
-		                    pair.getResourceSetProvider().dispose(resourceSet);
-		                }
-		            }
-                    break;
-		        }
-                env = env.getInternalParent();
-		    }
-		    
-		    if (desc == null) {
-	            MetamodelRegistry registry = getMetamodelRegistry();
-	            
-	            if (path.isEmpty()) {
-	                desc = new IMetamodelDesc[] { registry.getMetamodelDesc(metamodelUri, 
-	                		myCompilerOptions != null && myCompilerOptions.getMetamodelResourceSet() != null ? myCompilerOptions.getMetamodelResourceSet() : resolutionRS) };
-	            }
-	            else {
-	                desc = registry.getMetamodelDesc(path);
-	            }
-		    }
-
-			for(IMetamodelDesc nextDesc : desc) {
-	        	EPackage model = nextDesc.getModel();
-	            // register metamodel for EClassifier lookup
-	        	if (model.getNsURI() == null) {
-					while (true) {
-						if (model.getESuperPackage() == null) {
-							break;
-						}
-						model = model.getESuperPackage();
-					}
-	        	}
-	        	
-	        	metamodels.add(model);
-	            getEPackageRegistry().put(model.getNsURI(), model);
-	            break;
-/*
-	            EPackage[] all = EmfMmUtil.getRegisterableModels(model, true);            
-	            for (EPackage pack : all) {
-//		            getEPackageRegistry().put(pack.getNsURI(), pack);
-	            }
-*/
-	        }			
-		} catch (EmfException e) {
-			// It's legal situation of unresolved metamodels
-		}
-		return metamodels;
-	}
-	
-	@Override
+    @Override
 	public QvtOperationalEnvFactory getFactory() {
-		return myFactory;
+		EnvironmentFactory<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> 
+			superFactory = super.getFactory();
+		
+		if(superFactory instanceof QvtOperationalEnvFactory == true) {			
+			// I have an explicitly assigned creating factory already
+			return (QvtOperationalEnvFactory) superFactory;
+		}
+		// no factory or the default Ecore factory instantiated by OCL environment
+		QvtOperationalEnvFactory qvtFactory = new QvtOperationalEnvFactory(getEPackageRegistry());
+		setFactory(qvtFactory);
+		return qvtFactory;
 	}
 	
 	@Override
 	protected void setFactory(EnvironmentFactory<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral,
 			EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> factory) {
+		if(factory instanceof QvtOperationalEnvFactory == false) {
+			throw new IllegalArgumentException("QVT EnvFactory required"); //$NON-NLS-1$
+		}
+		
 		super.setFactory(factory);
 	}
 		
@@ -274,9 +197,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			List<? extends TypedElement<EClassifier>> args) {
 		EOperation o = getQVTStandardLibrary().resolveGenericOperationsIfNeeded(this, owner, name, args);
 		if(o != null) {
-			return o;
+	 		return o;
 		}
-		
 		// first try to lookup imperative operation with param's exact matching  
         UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> uml = getUMLReflection();
 		List<EOperation> lookupMappingOperations = lookupMappingOperations(owner, name);
@@ -313,11 +235,19 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
         UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> uml = getUMLReflection();
         List<EOperation> operations = TypeUtil.getOperations(this, owner);
         List<EOperation> result = new ArrayList<EOperation>();
-        for (EOperation operation : operations) {
-            if (uml.getName(operation).equals(name) && QvtOperationalUtil.isMappingOperation(operation)) {
-                result.add(operation);
-            }
-        }
+        try {
+			for (EOperation operation : operations) {
+			    if (uml.getName(operation).equals(name) && QvtOperationalUtil.isMappingOperation(operation)) {
+			        result.add(operation);
+			    }
+			}
+		} catch (ExceptionInInitializerError e) {
+			if(e.getCause()!= null) {
+				e.getCause().printStackTrace();
+			} else {
+				throw e;
+			}
+		}
 
         return result;
     } 
@@ -368,18 +298,12 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
         }
         return implicitSource;
     }
-    
+        
 	public void reportError(String message, int startOffset, int endOffset) {
 		if ((myCompilerOptions != null) && !myCompilerOptions.isReportErrors()) {
 			return;
 		}
-		
-		// FIXME - hack untill OCL [https://bugs.eclipse.org/bugs/show_bug.cgi?id=244144] is not resolved
-        String oclMsg = OCLMessages.bind(OCLMessages.CollectionType_ERROR_, "", "");
-        if (message.startsWith(oclMsg.substring(0, oclMsg.length()-2), 0)) {
-        	return;
-        }
-		
+				
 		QvtOperationalEnv parent = this;
 		while (parent.getInternalParent() != null) {
 			parent = (QvtOperationalEnv) parent.getInternalParent();
@@ -395,12 +319,10 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 				}
 			}
 		}
+		
 		if (!foundSameLocation) {
 			parent.myErrorsList.add(new QvtMessage(message, QvtMessage.SEVERITY_ERROR, startOffset, msgLength, getLineNum(parent, startOffset)));
 		}
-		
-		// TODO #199408  Use traces in QVTParser instead of System.xxx output facilities
-		//System.err.println("Error: " + message + ", Pos: " + startOffset + "-" + endOffset);
 	}
 
 	public void reportWarning(String message, int startOffset, int endOffset) {
@@ -455,130 +377,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		
 		return Collections.emptyList();
 	}	
-	
-	public void registerModelParameters(OperationalTransformation module) {
-		List<Variable<EClassifier, EParameter>> modelParameters = new ArrayList<Variable<EClassifier,EParameter>>(module.getModelParameter().size());
-		for (ModelParameter modelParam : module.getModelParameter()) {
-	        if (lookupLocal(modelParam.getName()) != null) {
-	            reportError(NLS.bind(ValidationMessages.SemanticUtil_15,
-	                    new Object[] { modelParam.getName() }),
-	                    modelParam.getStartPosition(), modelParam.getEndPosition());
-	        } else {
-                Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
-                var.setName(modelParam.getName());
-                var.setType(modelParam.getEType());
-                var.setRepresentedParameter(modelParam);
-                modelParameters.add(var);
-	        }
-		}
-		registerModelParametersImpl(modelParameters);
-	}
-	
-	private void registerModelParametersImpl(List<Variable<EClassifier, EParameter>> modelParameters) {
-		myModelParameters = modelParameters;
-		for (Variable<EClassifier, EParameter> var : modelParameters) {
-            addElement(var.getName(), var, true);
-		}
-	}
-	
-
-	public ModelParameter lookupModelParameter(String name, DirectionKind directionKind) {
-		if(name == null) {
-			return null;
-		}
 		
-		for (Variable<EClassifier, EParameter> var : myModelParameters) {
-			ModelParameter modelParam = (ModelParameter) var.getRepresentedParameter();
-			if (directionKind == DirectionKind.OUT) {
-				if (modelParam.getKind() == DirectionKind.IN) {
-					continue;
-				}
-			}
-
-			String nextParamName = modelParam.getName();
-			if (nextParamName != null) {
-				if (nextParamName.equals(name)) {
-					return modelParam;
-				}
-			}
-		}
-		
-		return null;
-	}    
-	
-	/**
-	 * Get names of all available extents of given direction kind in this
-	 * environments.
-	 * 
-	 * @param directionKind
-	 *            filtering condition to be satisfied by returned extents or
-	 *            <code>null</code> if all kinds are acceptable
-	 * @return list of corresponding model parameter names
-	 */
-	public List<String> getAllExtentNames(DirectionKind directionKind) {
-		List<String> result = new ArrayList<String>(myModelParameters.size());
-		for (Variable<EClassifier, EParameter> var : myModelParameters) {
-			ModelParameter modelParam = (ModelParameter) var.getRepresentedParameter();
-			if (directionKind == DirectionKind.OUT) {
-				if (modelParam.getKind() == DirectionKind.IN) {
-					continue;
-				}
-			}
-
-			String nextParam = modelParam.getName();
-			if(nextParam != null && nextParam.length() > 0) {
-				result.add(nextParam);
-			}
-		}
-		
-		return Collections.unmodifiableList(result);
-	}
-	
-	public ModelParameter resolveModelParameter(EClassifier type, DirectionKind directionKind) {
-		if (!isMayBelongToExtent(type)) {
-			return null;
-		}
-		return findModelParameter(type, directionKind, getModelParameters());
-	}
-
-	private List<ModelParameter> getModelParameters() {
-		List<ModelParameter> result = new ArrayList<ModelParameter>(myModelParameters.size());
-		for (Variable<EClassifier, EParameter> modelParamVar : myModelParameters) {
-			result.add((ModelParameter)modelParamVar.getRepresentedParameter());
-		}
-		return result;
-	}
-	
-	static ModelParameter findModelParameter(EClassifier type, DirectionKind directionKind, 
-			Collection<ModelParameter> modelParameters) {
-		EObject rootContainer = EcoreUtil.getRootContainer(type);
-		
-		// lookup explicit extent 
-		for (ModelParameter modelParam : modelParameters) {
-			if (directionKind == DirectionKind.OUT) {
-				if (modelParam.getKind() == DirectionKind.IN) {
-					continue;
-				}
-			}
-			List<EPackage> metamodels = ModelTypeMetamodelsAdapter.getMetamodels(modelParam.getEType());
-			if (!metamodels.isEmpty() && rootContainer == metamodels.get(0)) {
-				return modelParam;
-			}
-		}
-		
-		// lookup implicit extent 
-		for (ModelParameter modelParam : modelParameters) {
-			if (directionKind == DirectionKind.OUT) {
-				if (modelParam.getKind() == DirectionKind.IN) {
-					continue;
-				}
-			}
-			return modelParam;
-		}
-		
-		return null;
-	}    
-	
+			
 	/**
 	 * Register given modeltype in the Environment. Modeltype's registry is used in
 	 * override {@link #lookupPackage(List)} and {@link #lookupClassifier(List)}
@@ -834,53 +634,36 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		addElement(parameter.getName(), var, true);
 	}
 	
-	public void defineOperationParameters(ImperativeOperation operation) {
+	private void defineOperationParameters(EOperation operation) {
+		final ImperativeOperation imperativeOperation = (operation instanceof ImperativeOperation) ? (ImperativeOperation) operation : null; 
+		final boolean isMapping = operation instanceof MappingOperation;
+		final boolean hasMultipleResultParams = (imperativeOperation != null) ? imperativeOperation.getResult().size() > 1 : false;
+		
+		if(imperativeOperation != null && QvtOperationalParserUtil.isContextual(imperativeOperation)) {
+			VarParameter context = imperativeOperation.getContext();
+			Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
+			var.setName(Environment.SELF_VARIABLE_NAME);
+			var.setType(context.getEType());
+			var.setRepresentedParameter(context);
+			addElement(var.getName(), var, false);
+		}
+		
 		for (EParameter parameter : operation.getEParameters()) {
 			defineParameterVar(parameter);
 		}
-
-		boolean isMapping = operation instanceof MappingOperation;
-		if(isMapping || operation.getResult().size() > 1) {
-			for (VarParameter parameter : operation.getResult()) {
+		
+		if(isMapping || hasMultipleResultParams) {
+			assert imperativeOperation != null;
+			for (VarParameter parameter : imperativeOperation.getResult()) {
 		        defineParameterVar(parameter);
 			}
 		}
 
-		if(operation.getResult().size() > 1 && isMapping) {			
+		if(hasMultipleResultParams && isMapping) {			
 			Variable<EClassifier, EParameter> var = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();
 			var.setName(Environment.RESULT_VARIABLE_NAME);
 			var.setType(operation.getEType());
 			addElement(var.getName(), var, true);
-		}
-	}
-	
-	public QvtOperationalEnv createOperationEnvironment(ImperativeOperation operation) {
-		QvtOperationalEnv newEnvironment = new QvtOperationalEnv(this);
-		newEnvironment.setASTNodeToCSTNodeMap(getASTNodeToCSTNodeMap());
-		
-		if(QvtOperationalParserUtil.isContextual(operation)) {
-			VarParameter context = operation.getContext();
-			if(context.getEType() != getModuleContextType()) {
-				// define self implicit source only in case if contextual operations
-				Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
-				var.setName(Environment.SELF_VARIABLE_NAME);
-				var.setType(context.getEType());
-				var.setRepresentedParameter(context);
-				newEnvironment.addElement(var.getName(), var, false);
-			}
-		}
-
-		newEnvironment.registerModelParametersImpl(myModelParameters);
-		newEnvironment.setContextOperation(operation);
-		return newEnvironment;
-	}
-    
-	public void addInitVariable(VariableInitExp varInit) {
-		if (varInit.getName() != null) {
-			Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
-			var.setName(varInit.getName());
-			var.setType(varInit.getType());
-			addElement(varInit.getName(), var, true);
 		}
 	}
 
@@ -942,11 +725,13 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			@Override
 			public void handleProblem(Severity problemSeverity, Phase processingPhase, String problemMessage,					
 					String processingContext, int startOffset, int endOffset) {
-				
-				if (startOffset == -1 && endOffset == -1) {
-					// spam filter
+				boolean allowCsUnboundValidationProblems = false;
+				if(isMDTOCLCompatibilityFalseProblem(allowCsUnboundValidationProblems, problemSeverity, 
+						processingPhase, problemMessage, processingContext, startOffset, endOffset)) {
+					// Remark: Not a real problem we can handle now, but we keep in mind ;) 
 					return;
 				}
+				
 				if(problemSeverity == Severity.INFO || problemSeverity == Severity.OK || problemSeverity == Severity.WARNING) {
 					reportWarning(problemMessage, startOffset, endOffset);
 				} else {
@@ -955,29 +740,17 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			}
 		};
 	}
-	
-
-	private boolean isMayBelongToExtent(EClassifier myType) {
-		return myType != null 
-			&& getOCLStandardLibrary().getOclVoid() != myType
-			&& getOCLStandardLibrary().getOclInvalid() != myType;
-	}
-	
-	
-	private final List<QvtMessage> myWarningsList;
-	private final List<QvtMessage> myErrorsList;
+		
+	private final List<QvtMessage> myWarningsList = new ArrayList<QvtMessage>(2);
+	private final List<QvtMessage> myErrorsList = new ArrayList<QvtMessage>(2);
 	private boolean myCheckForDuplicateErrors;
 	private QvtCompilerOptions myCompilerOptions;
-
-	private QvtTypeResolverImpl myTypeResolver;	
-	private Map<String, ModelType> myModelTypeRegistry;
-	private List<Variable<EClassifier, EParameter>> myModelParameters = Collections.emptyList();
 	
-	private final EPackage.Registry ePackageRegistry;
+	private final Map<String, ModelType> myModelTypeRegistry;
+	
     private final Map<MappingsMapKey, List<MappingOperation>> myMappingsMap = new HashMap<MappingsMapKey, List<MappingOperation>>();
     private final Map<ResolveInExp, MappingsMapKey> myResolveInExps = new HashMap<ResolveInExp, MappingsMapKey>();
 
-    private static final QvtOperationalEnvFactory myFactory = new QvtOperationalEnvFactory();
     
     private interface LookupPackageableElementDelegate<T> {
         public T lookupPackageableElement(List<String> names);
@@ -1072,4 +845,38 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		}
 		return -1;
 	}
+	
+	private static EPackage.Registry createDefaultPackageRegistry() {
+		return new EPackageRegistryImpl();
+	}	
+	
+	/**
+	 * This operation indicates whether the given problem is a real QVT domain
+	 * problem or a compatibility with MDT OCL to solve, thus not a problem to be propagated.
+	 * For example, AST validation problem with not source text location, error conditions
+	 * that are valid in QVT, etc.
+	 * <p> 
+	 * @param allowCsUnboundValidationProblems <code>false</code> indicates that all OCL AST 
+	 * validation problems without CST binding will be recognized as a false compatibility problem   
+	 */
+    public static boolean isMDTOCLCompatibilityFalseProblem(
+    		boolean allowCsUnboundValidationProblems,
+			Severity problemSeverity, Phase processingPhase, String problemMessage,
+			String processingContext, int startOffset, int endOffset) {
+    	
+		// FIXME - filter out those MDT OCL validation problems we can not handle yet   
+		if (Phase.VALIDATOR == processingPhase && startOffset == -1 && endOffset == -1
+			&& !allowCsUnboundValidationProblems) {
+			return true;
+		}
+    	
+		// FIXME - workaround until fixed [https://bugs.eclipse.org/bugs/show_bug.cgi?id=244144] 
+		if("collectionTypeResultTypeOf".equals(processingContext)) { //$NON-NLS-1$
+			return true;
+		}
+		
+		return false;
+    }
+    
+
 }

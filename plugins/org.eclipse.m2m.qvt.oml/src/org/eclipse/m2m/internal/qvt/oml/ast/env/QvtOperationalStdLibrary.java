@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
@@ -56,7 +57,7 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 	private EClass MODEL;
 	
 	private final Module fStdlibModule;
-	private final QvtOperationalEnv fEnv;
+	private final QvtOperationalModuleEnv fEnv;
 	private final Map<String, EClassifier> fTypeAliasMap;
 	private final ModelOperations modelOperations;
 	private final OclAnyOperations anyOperations;
@@ -66,7 +67,8 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 		fStdlibModule = org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createLibrary();
 		fStdlibModule.setName(QVT_STDLIB_MODULE_NAME);
 
-		fEnv = QvtOperationalEnvFactory.INSTANCE.createModuleEnvironment(fStdlibModule);
+		fEnv = new QvtOperationalModuleEnv(new EPackageRegistryImpl());
+		fEnv.setContextModule(fStdlibModule);
 
 		if(fEnv.getInternalParent() == null) {
 	        Variable<EClassifier, EParameter> variable = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();

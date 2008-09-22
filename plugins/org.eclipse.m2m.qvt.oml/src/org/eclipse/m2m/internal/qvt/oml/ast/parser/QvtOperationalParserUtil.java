@@ -32,8 +32,10 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
+import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
@@ -42,6 +44,7 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.GraphWalker.NodeProvider;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.GraphWalker.VertexProcessor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
@@ -52,6 +55,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VariableInitExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsFactoryImpl;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CollectionTypeCS;
 import org.eclipse.ocl.cst.PathNameCS;
@@ -752,5 +756,25 @@ public class QvtOperationalParserUtil {
 			}
 		} 
 		return (result != null) ? result : Collections.<T>emptySet();
+	}
+	
+	public static Module createModule(MappingModuleCS moduleCS) {
+        Module module;
+        if(moduleCS instanceof LibraryCS) {
+        	module = ExpressionsFactory.eINSTANCE.createLibrary();
+        } else {
+        	module = ExpressionsFactory.eINSTANCE.createOperationalTransformation();
+        }
+        
+        if(moduleCS.getHeaderCS() != null && moduleCS.getHeaderCS().getPathNameCS() != null) {
+        	EList<String> sequenceOfNames = moduleCS.getHeaderCS().getPathNameCS().getSequenceOfNames();
+        	if(!sequenceOfNames.isEmpty()) {
+        		module.setName(sequenceOfNames.get(0));
+        	}
+        }
+ 
+        // must set the instance factory as a QVT module is also a Package 
+        module.setEFactoryInstance(new ExpressionsFactoryImpl());
+        return module;
 	}
 }

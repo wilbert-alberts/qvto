@@ -3,18 +3,14 @@ package org.eclipse.m2m.internal.qvt.oml.compiler;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFolder;
-import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
+import org.eclipse.m2m.internal.qvt.oml.common.io.CResourceRepositoryContext;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
-import org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsFactoryImpl;
-import org.eclipse.ocl.ecore.EcoreEnvironment;
 
 /**
  * @author aigdalov
@@ -34,9 +30,9 @@ public class QvtCompilerKernel {
     public IImportResolver getImportResolver() {
         return myImportResolver;
     }
-
-    public IMetamodelRegistryProvider getMetamodelRegistryProvider() {
-        return myMetamodelRegistryProvider;
+    
+    public MetamodelRegistry getMetamodelRegistry(CFile sourceFile) {
+    	return myMetamodelRegistryProvider.getRegistry(new CResourceRepositoryContext(sourceFile));    	
     }
     
     public String getExpectedPackageName(CFolder folder) {
@@ -48,31 +44,8 @@ public class QvtCompilerKernel {
         return mySyntaxToSemanticMap.get(mmas);
     }
     
-    public Module createModule(MappingModuleCS mmas, QvtCompilerOptions options, 
-            EcoreEnvironment env, CFile cFile) {
-        Module module = null;
-        if(mmas instanceof LibraryCS) {
-        	module = ExpressionsFactory.eINSTANCE.createLibrary();
-        } else {
-        	module = ExpressionsFactory.eINSTANCE.createOperationalTransformation();
-        }
-        
-        if(mmas.getHeaderCS() != null && mmas.getHeaderCS().getPathNameCS() != null) {
-        	EList<String> sequenceOfNames = mmas.getHeaderCS().getPathNameCS().getSequenceOfNames();
-        	if(!sequenceOfNames.isEmpty()) {
-        		module.setName(sequenceOfNames.get(0));
-        	}
-        }
-        
-        module.setEFactoryInstance(new ExpressionsFactoryImpl());
+    public Module setModule(Module module, MappingModuleCS mmas) {                
         mySyntaxToSemanticMap.put(mmas, module);
-
-        // AST binding
-        if(options.isGenerateCompletionData()) {
-            ASTBindingHelper.createModuleBinding(mmas, module, env, cFile);
-        }
-        //      
-        
         return module;
     }
     

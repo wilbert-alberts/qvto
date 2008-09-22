@@ -232,7 +232,7 @@ public class QvtCompiler {
     protected ParsedModuleCS parseInternal(CFile source) throws IOException {
         Reader is = CFileUtil.getReader(source);
         try {        	
-        	QvtOperationalFileEnv env = new QvtOperationalEnvFactory().createEnvironment(null, source, myKernel);
+        	QvtOperationalFileEnv env = new QvtOperationalEnvFactory().createEnvironment(source, myKernel);
         	QvtOperationalParser qvtParser = new QvtOperationalParser();
         	MappingModuleCS moduleCS = qvtParser.parse(is, source.getName(), env);
             
@@ -339,8 +339,18 @@ public class QvtCompiler {
         
         if (module == null) {
         	// FIXME - review this strange name initialization
-            module = myKernel.createModule(mma.getModuleCS(), options, env, mma.getSource());
-            module.setName(""); //$NON-NLS-1$
+        	module = QvtOperationalParserUtil.createModule(mma.getModuleCS());
+        	if(module.getName() == null) {
+        		module.setName(""); //$NON-NLS-1$
+        	}
+        	
+        	env.setContextModule(module);
+            myKernel.setModule(module, mma.getModuleCS());            
+            // AST binding
+            if(options.isGenerateCompletionData()) {
+                ASTBindingHelper.createModuleBinding(mma.getModuleCS(), module, env, mma.getSource());
+            }
+            //            
         }
         
         if(options.isSourceLineNumbersEnabled()) {

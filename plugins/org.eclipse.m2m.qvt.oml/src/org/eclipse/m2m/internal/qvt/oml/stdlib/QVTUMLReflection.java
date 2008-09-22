@@ -57,22 +57,23 @@ public class QVTUMLReflection
 
 	}	
 	
-	private QvtOperationalStdLibrary fStdLibrary;
 	private UMLReflection<EPackage, EClassifier, EOperation, 
 					EStructuralFeature, EEnumLiteral, EParameter, EObject, 
 					CallOperationAction, SendSignalAction, Constraint> fUmlReflection;
 			
 	public QVTUMLReflection(UMLReflection<EPackage, EClassifier, EOperation, 
 			EStructuralFeature, EEnumLiteral, EParameter, EObject, 
-			CallOperationAction, SendSignalAction, Constraint> umlReflection, 
-			QvtOperationalStdLibrary stdLibrary) {
+			CallOperationAction, SendSignalAction, Constraint> umlReflection) {
 		
-		if(umlReflection == null || stdLibrary == null) {
+		if(umlReflection == null) {
 			throw new IllegalArgumentException();
 		}
 		
-		fStdLibrary = stdLibrary;
 		fUmlReflection = umlReflection;
+	}
+	
+	private QvtOperationalStdLibrary getStdLibrary() {
+		return QvtOperationalStdLibrary.INSTANCE;
 	}
 
 	public static ModelType createModel(String name) {
@@ -112,9 +113,9 @@ public class QVTUMLReflection
 	public EClassifier getCommonSuperType(EClassifier type1, EClassifier type2) {	
 		EClassifier result = fUmlReflection.getCommonSuperType(type1, type2);
 		if(result == null) {		
-			if(type1 == fStdLibrary.getElementType() && isUserModelElement(type2)) {
+			if(type1 == getStdLibrary().getElementType() && isUserModelElement(type2)) {
 				return type1;
-			} else if(type2 == fStdLibrary.getElementType() && isUserModelElement(type1)) {
+			} else if(type2 == getStdLibrary().getElementType() && isUserModelElement(type1)) {
 				return type2;
 			}
 		}
@@ -134,7 +135,7 @@ public class QVTUMLReflection
 	
 	public int getRelationship(EClassifier type1, EClassifier type2) {
 		int result = fUmlReflection.getRelationship(type1, type2);
-		EClassifier element = fStdLibrary.getElementType();
+		EClassifier element = getStdLibrary().getElementType();
 		if(type1 != type2) {
 			if(type1 == element && isUserModelElement(type2)) {
 				return UMLReflection.STRICT_SUPERTYPE;
