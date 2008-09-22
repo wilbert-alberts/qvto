@@ -185,20 +185,20 @@ public final class OCLEnvironmentWithQVTAccessFactory extends EcoreEnvironmentFa
 				EnvImpl qvtParentEnv = (EnvImpl)parent;
 				fQVTdelegate = qvtParentEnv.fQVTdelegate;
 			} else {
-				fQVTdelegate = (QvtOperationalEnv)OCLEnvironmentWithQVTAccessFactory.this.fQVTEnvFactory.createEnvironment();
+				fQVTdelegate = OCLEnvironmentWithQVTAccessFactory.this.fQVTEnvFactory.createEnvironment();
 				initiliazeImports();				
 			}						
 		}
 
 		protected EnvImpl(EPackage.Registry reg, Resource resource) {
 			super(reg, resource);
-			fQVTdelegate = (QvtOperationalEnv)OCLEnvironmentWithQVTAccessFactory.this.fQVTEnvFactory.createEnvironment();
+			fQVTdelegate = OCLEnvironmentWithQVTAccessFactory.this.fQVTEnvFactory.createEnvironment();
 			initiliazeImports();			
 		}
 
 		protected EnvImpl(EPackage.Registry reg) {
 			super(reg);
-			fQVTdelegate = (QvtOperationalEnv)OCLEnvironmentWithQVTAccessFactory.this.fQVTEnvFactory.createEnvironment();			
+			fQVTdelegate = OCLEnvironmentWithQVTAccessFactory.this.fQVTEnvFactory.createEnvironment();			
 			initiliazeImports();			
 		}
 
@@ -209,10 +209,15 @@ public final class OCLEnvironmentWithQVTAccessFactory extends EcoreEnvironmentFa
 				public void handleProblem(Severity problemSeverity,
 						Phase processingPhase, String problemMessage,
 						String processingContext, int startOffset, int endOffset) {
-					// FIXME - workaround until fixed [https://bugs.eclipse.org/bugs/show_bug.cgi?id=244144] 
-					if("collectionTypeResultTypeOf".equals(processingContext)) { //$NON-NLS-1$
+					boolean allowCsUnboundValidationProblems = true;
+					// Note: We are an OCL based environment, but still need relax some restrictions
+					// imposed by pending compatibility issues
+					if(QvtOperationalEnv.isMDTOCLCompatibilityFalseProblem(allowCsUnboundValidationProblems,
+							problemSeverity, processingPhase, problemMessage, processingContext, 
+							startOffset, endOffset)) {
 						return;
 					}
+					
 					super.handleProblem(problemSeverity, processingPhase, problemMessage,
 							processingContext, startOffset, endOffset);
 				}
