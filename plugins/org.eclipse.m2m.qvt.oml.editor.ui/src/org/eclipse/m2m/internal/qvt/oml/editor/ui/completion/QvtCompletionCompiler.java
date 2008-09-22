@@ -67,7 +67,7 @@ public class QvtCompletionCompiler extends QvtCompiler {
         }
         Reader reader = getCFileReader(cFile);
         
-        QvtOpLexer lexer = new QvtOpLexer(new QvtOperationalEnvFactory().createEnvironment(null, cFile, getKernel()));
+        QvtOpLexer lexer = new QvtOpLexer(new QvtOperationalEnvFactory().createEnvironment(cFile, getKernel()));
         cFileData.setLexer(lexer);
         try {
             lexer.initialize(new OCLInput(reader).getContent(), cFile.getName());
@@ -88,7 +88,7 @@ public class QvtCompletionCompiler extends QvtCompiler {
     
     public QvtOperationalEnv compileAll() {
         if (myEnvironment == null) {
-            myEnvironment = new QvtOperationalEnvFactory().createEnvironment(null, myData.getCFile(), getKernel());
+            myEnvironment = new QvtOperationalEnvFactory().createEnvironment(myData.getCFile(), getKernel());
 
             QvtCompilerOptions options = new QvtCompilerOptions();
             options.setReportErrors(false);

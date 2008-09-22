@@ -16,7 +16,6 @@ import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfException;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.StringLiteralExpCS;
@@ -73,13 +72,7 @@ public class ModelTypeHyperlinkDetector implements IHyperlinkDetectorHelper {
 		
 		// strip quotations
 		id = id.substring(1, id.length() - 1);
-		try {
-			return env.getMetamodelRegistry().getMetamodelDesc(id).getModel();
-		} catch (EmfException e) {
-			// do nothing, a metamodel may not have been resolved
-		}
-		
-		return null;
+		return env.getEPackageRegistry().getEPackage(id);
 	}
 	
 	private static QvtOperationalEnv getEnv(CSTNode node) {

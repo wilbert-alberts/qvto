@@ -284,7 +284,7 @@ public class LightweightParserUtil {
     
     public static final CSTNode parse(String script, CFile cFile, ParserTypeEnum parserType) {
         try {
-        	QvtOperationalEnv env = new QvtOperationalEnvFactory().createEnvironment(null, null, null);
+        	QvtOperationalEnv env = new QvtOperationalEnvFactory().createEnvironment();
             QvtOpLexer lexer = new QvtOpLexer(env);
             lexer.initialize(new OCLInput(script).getContent(), cFile.getName());
             PrsStream parser = null;

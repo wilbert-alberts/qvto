@@ -60,7 +60,7 @@ public class RegisteredMetamodelCollector extends AbstractMetamodelCollector {
 	}
 
 	private boolean isInitialized(QvtCompletionData data) {
-		MetamodelRegistry metamodelRegistry = data.getEnvironment().getMetamodelRegistry();
+		MetamodelRegistry metamodelRegistry = data.getMetamodelRegistry();
 		String[] metamodelIds = metamodelRegistry.getMetamodelIds();
 		for (String id : metamodelIds) {
 			try {
@@ -77,7 +77,7 @@ public class RegisteredMetamodelCollector extends AbstractMetamodelCollector {
 
 	private void retrieveMetamodels(Collection<ICompletionProposal> proposals,
 			QvtCompletionData data, IProgressMonitor monitor) {
-		MetamodelRegistry metamodelRegistry = data.getEnvironment().getMetamodelRegistry();
+		MetamodelRegistry metamodelRegistry = data.getMetamodelRegistry();
 		String[] metamodelIds = metamodelRegistry.getMetamodelIds();
 		if (monitor == null) {
 			monitor = new NullProgressMonitor();

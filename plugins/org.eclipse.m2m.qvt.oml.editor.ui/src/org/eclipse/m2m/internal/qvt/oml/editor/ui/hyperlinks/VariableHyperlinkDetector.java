@@ -23,6 +23,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
+import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.SimpleNameCS;
@@ -126,7 +127,7 @@ public class VariableHyperlinkDetector implements IHyperlinkDetectorHelper {
 				return null;
 			}
 
-			ModelParameter modelParam = getEnv(nameCS).lookupModelParameter(nameCS.getValue(), null);
+			ModelParameter modelParam = lookupModelParameter(getEnv(nameCS), nameCS.getValue());
 			if(modelParam != null) {
 				return ASTBindingHelper.resolveCSTNode(modelParam, CSTNode.class);
 			}
@@ -138,5 +139,18 @@ public class VariableHyperlinkDetector implements IHyperlinkDetectorHelper {
 	private static QvtOperationalEnv getEnv(CSTNode node) {
 		return (QvtOperationalEnv)CSTHelper.getEnvironment(node);
 	}	
-	
+
+	private static ModelParameter lookupModelParameter(QvtOperationalEnv env, String paramName) {
+		if(env.getModuleContextType() instanceof OperationalTransformation == false) {
+			return null;
+		}
+		
+		OperationalTransformation module = (OperationalTransformation) env.getModuleContextType();
+		for (ModelParameter nextParam : module.getModelParameter()) {
+			if(paramName.equals(nextParam.getName())) {
+				return nextParam;
+			}
+		}
+		return null;
+	}
 }

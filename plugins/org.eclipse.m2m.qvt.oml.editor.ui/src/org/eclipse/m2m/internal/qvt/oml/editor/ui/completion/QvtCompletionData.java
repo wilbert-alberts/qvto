@@ -37,6 +37,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtEditor;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.ui.part.FileEditorInput;
 
 /**
@@ -83,6 +84,10 @@ public class QvtCompletionData {
             myException = ex;
             Activator.log(ex);
         }
+    }
+    
+    public MetamodelRegistry getMetamodelRegistry() {
+    	return myQvtCompiler.getKernel().getMetamodelRegistry(myCFile);
     }
 
     public QvtEditor getEditor() {
