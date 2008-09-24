@@ -1547,6 +1547,7 @@ public class QvtOperationalVisitorCS
 			}
 
 			ModelParameter varParam = ExpressionsFactory.eINSTANCE.createModelParameter();
+			varParam.setRepresentedParameter(varParam);
 			varParam.setStartPosition(paramCS.getStartOffset());
 			varParam.setEndPosition(paramCS.getEndOffset());
 			if(paramCS.getSimpleNameCS() != null) {
@@ -1950,6 +1951,12 @@ public class QvtOperationalVisitorCS
             ASTBindingHelper.createCST2ASTBinding(methodCS, helper, newEnv);
         }
 
+		OperationBody body = ExpressionsFactory.eINSTANCE.createOperationBody();
+		helper.setBody(body);		
+		helper.setIsQuery(true);				
+		body.setStartPosition(methodCS.getMappingDeclarationCS().getEndOffset());
+		body.setEndPosition(methodCS.getEndOffset());
+        
         List<OCLExpression<EClassifier>> expressions = new ArrayList<OCLExpression<EClassifier>>();
 		for (OCLExpressionCS exprCS : methodCS.getExpressions()) {
 			if (exprCS == null) {
@@ -1961,13 +1968,7 @@ public class QvtOperationalVisitorCS
 			}
 		}
 
-		OperationBody body = ExpressionsFactory.eINSTANCE.createOperationBody();
-		body.setStartPosition(methodCS.getMappingDeclarationCS().getEndOffset());
-		body.setEndPosition(methodCS.getEndOffset());
 		body.getContent().addAll(expressions);
-
-		helper.setIsQuery(true);
-		helper.setBody(body);
 
 		EClassifier returnType = (helper.getResult().isEmpty() ? helper.getEType() : helper.getResult().get(0).getEType());
 		EClassifier helperType = body.getContent().isEmpty() == false ? body.getContent().get(body.getContent().size() - 1).getType() : null;
@@ -2097,27 +2098,35 @@ public class QvtOperationalVisitorCS
 		}
 
 		boolean isEntryPoint = QvtOperationalEnv.MAIN.equals(mappingDeclarationCS.getSimpleNameCS().getValue());
-		List<VarParameter> params = new ArrayList<VarParameter>();
+		boolean isMapping = ExpressionsPackage.eINSTANCE.getMappingOperation().getClassifierID() == 
+							operation.eClass().getClassifierID();
+		boolean createMappingParams = isEntryPoint || isMapping;
+		
+		List<EParameter> params = operation.getEParameters();
 		for (ParameterDeclarationCS paramCS : mappingDeclarationCS.getParameters()) {
-			VarParameter param = visitParameterDeclarationCS(paramCS, env, isEntryPoint);
+			VarParameter param = visitParameterDeclarationCS(paramCS, createMappingParams, env, isEntryPoint);
 			if (param == null) {
 				return false;
 			}
 
 			params.add(param);
 		}
-		operation.getEParameters().addAll(params);		
-		
+				
 		if (mappingDeclarationCS.getContextType() != null) {
-			MappingParameter varContext = ExpressionsFactory.eINSTANCE.createMappingParameter();
+			MappingParameter mappingParam = createMappingParams ? ExpressionsFactory.eINSTANCE.createMappingParameter() : null;
+			VarParameter varContext = createMappingParams ? mappingParam : ExpressionsFactory.eINSTANCE.createVarParameter();
+			
+			varContext.setRepresentedParameter(varContext);
 			varContext.setName(Environment.SELF_VARIABLE_NAME);
 			varContext.setStartPosition(mappingDeclarationCS.getContextType().getStartOffset());
 			varContext.setEndPosition(mappingDeclarationCS.getContextType().getEndOffset());
 			
 			varContext.setEType(contextType);
 			varContext.setKind(contextDirection);
-			if (varContext.getExtent() == null) {
-				varContext.setExtent(env.resolveModelParameter(contextType, varContext.getKind()));
+			if(mappingParam != null) {
+				if (mappingParam.getExtent() == null) {
+					mappingParam.setExtent(env.resolveModelParameter(contextType, varContext.getKind()));
+				}
 			}
 		
 			operation.setContext(varContext);
@@ -2130,7 +2139,7 @@ public class QvtOperationalVisitorCS
 				nextResultTypeSpec.myType = env.getOCLStandardLibrary().getOclVoid();
 			}
 			
-			MappingParameter varResult = createMappingResultParam(nextResultParamCS, nextResultTypeSpec, env);
+			VarParameter varResult = createMappingResultParam(nextResultParamCS, createMappingParams, nextResultTypeSpec, env);
 			if(resultParams.size() == 1) {
 				varResult.setName(Environment.RESULT_VARIABLE_NAME);
 				if(nextResultParamCS.getSimpleNameCS() != null) {
@@ -2184,8 +2193,12 @@ public class QvtOperationalVisitorCS
 		return env.getTypeResolver().resolve((EClassifier)env.getOCLFactory().createTupleType(parts));
 	}
 		
-	private MappingParameter createMappingResultParam(ParameterDeclarationCS paramCS, TypeSpecPair typeSpec, QvtOperationalEnv env) {
-		MappingParameter varResult = ExpressionsFactory.eINSTANCE.createMappingParameter();
+	private VarParameter createMappingResultParam(ParameterDeclarationCS paramCS, boolean createMappingParam, TypeSpecPair typeSpec, QvtOperationalEnv env) {
+		MappingParameter mappingParam = createMappingParam ? ExpressionsFactory.eINSTANCE.createMappingParameter() : null;
+		VarParameter varResult = createMappingParam ? mappingParam : ExpressionsFactory.eINSTANCE.createVarParameter();
+		varResult.setStartPosition(paramCS.getStartOffset());
+		varResult.setEndPosition(paramCS.getEndOffset());
+		
 		if(paramCS.getSimpleNameCS() != null) {
 			varResult.setName(paramCS.getSimpleNameCS().getValue());
 		} 
@@ -2195,15 +2208,14 @@ public class QvtOperationalVisitorCS
 		}
 		
 		varResult.setEType(typeSpec.myType);
-		varResult.setExtent(typeSpec.myExtent);
-		varResult.setKind(DirectionKind.OUT);
+		varResult.setKind(DirectionKind.OUT);		
 		
-		varResult.setStartPosition(paramCS.getStartOffset());
-		varResult.setEndPosition(paramCS.getEndOffset());
-
-		if (varResult.getExtent() == null) {
-			QvtOperationalModuleEnv moduleEnv = getModuleContextEnv(env);
-			varResult.setExtent(moduleEnv.resolveModelParameter(typeSpec.myType, varResult.getKind()));
+		if(mappingParam != null) {
+			mappingParam.setExtent(typeSpec.myExtent);
+			if (mappingParam.getExtent() == null) {
+				QvtOperationalModuleEnv moduleEnv = getModuleContextEnv(env);
+				mappingParam.setExtent(moduleEnv.resolveModelParameter(typeSpec.myType, varResult.getKind()));
+			}
 		}
 		
 		if(getCompilerOptions().isGenerateCompletionData()) {
@@ -2337,8 +2349,8 @@ public class QvtOperationalVisitorCS
         return null;
     }
 	
-	private VarParameter visitParameterDeclarationCS(ParameterDeclarationCS paramCS, QvtOperationalModuleEnv env,
-			boolean isOutAllowed) throws SemanticException {
+	private VarParameter visitParameterDeclarationCS(ParameterDeclarationCS paramCS, boolean createMappingParam, 
+			QvtOperationalModuleEnv env, boolean isOutAllowed) throws SemanticException {
 		DirectionKind directionKind = (DirectionKind) ExpressionsFactory.eINSTANCE.createFromString(
 				ExpressionsPackage.eINSTANCE.getDirectionKind(), paramCS.getDirectionKind().getLiteral());
 		TypeSpecPair typeSpec = visitTypeSpecCS(paramCS.getTypeSpecCS(), directionKind, env);
@@ -2346,7 +2358,9 @@ public class QvtOperationalVisitorCS
 			typeSpec.myType = env.getOCLStandardLibrary().getOclVoid();
 		}
 
-		MappingParameter varParam = ExpressionsFactory.eINSTANCE.createMappingParameter();
+		MappingParameter mappingParam = createMappingParam ? ExpressionsFactory.eINSTANCE.createMappingParameter() : null;
+		VarParameter varParam = createMappingParam ? mappingParam : ExpressionsFactory.eINSTANCE.createVarParameter();
+		varParam.setRepresentedParameter(varParam);
 		varParam.setStartPosition(paramCS.getStartOffset());
 		varParam.setEndPosition(paramCS.getEndOffset());
 		if(paramCS.getSimpleNameCS() != null) {
@@ -2355,12 +2369,15 @@ public class QvtOperationalVisitorCS
 			varParam.setName(""); //$NON-NLS-1$
 		}
 		varParam.setEType(typeSpec.myType);
-		varParam.setExtent(typeSpec.myExtent);
-		varParam.setKind(directionKind);
-		if (varParam.getExtent() == null) {
-			varParam.setExtent(env.resolveModelParameter(typeSpec.myType, directionKind));
-			if (varParam.getExtent() == null && directionKind == DirectionKind.OUT) {
-				env.reportError(ValidationMessages.OutParamWithoutExtent, paramCS);
+		varParam.setKind(directionKind);		
+
+		if(mappingParam != null) {
+			mappingParam.setExtent(typeSpec.myExtent);
+			if (mappingParam.getExtent() == null) {
+				mappingParam.setExtent(env.resolveModelParameter(typeSpec.myType, directionKind));
+				if (mappingParam.getExtent() == null && directionKind == DirectionKind.OUT) {
+					env.reportError(ValidationMessages.OutParamWithoutExtent, paramCS);
+				}
 			}
 		}
 		

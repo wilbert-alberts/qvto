@@ -68,8 +68,10 @@ import org.eclipse.ocl.expressions.FeatureCallExp;
 import org.eclipse.ocl.expressions.LoopExp;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.OperationCallExp;
+import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.CallingASTNode;
+import org.eclipse.ocl.utilities.TypedASTNode;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.Visitable;
 import org.eclipse.ocl.utilities.Visitor;
@@ -333,12 +335,24 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createEOperationAdapter();
 			}
 			@Override
-			public Adapter caseEParameter(EParameter object) {
-				return createEParameterAdapter();
-			}
-			@Override
 			public <C> Adapter caseTypedElement(TypedElement<C> object) {
 				return createTypedElementAdapter();
+			}
+			@Override
+			public Adapter caseTypedASTNode(TypedASTNode object) {
+				return createTypedASTNodeAdapter();
+			}
+			@Override
+			public <C, PM> Adapter caseVariable(Variable<C, PM> object) {
+				return createVariableAdapter();
+			}
+			@Override
+			public Adapter caseVariable_1(org.eclipse.ocl.ecore.Variable object) {
+				return createVariable_1Adapter();
+			}
+			@Override
+			public Adapter caseEParameter(EParameter object) {
+				return createEParameterAdapter();
 			}
 			@Override
 			public <C> Adapter caseOCLExpression(OCLExpression<C> object) {
@@ -1099,6 +1113,48 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTypedElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.utilities.TypedASTNode <em>Typed AST Node</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.utilities.TypedASTNode
+	 * @generated
+	 */
+	public Adapter createTypedASTNodeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.expressions.Variable <em>Variable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.expressions.Variable
+	 * @generated
+	 */
+	public Adapter createVariableAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.ecore.Variable <em>Variable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.ecore.Variable
+	 * @generated
+	 */
+	public Adapter createVariable_1Adapter() {
 		return null;
 	}
 

@@ -52,8 +52,8 @@ import org.eclipse.ocl.TypeResolver;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
+import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.ecore.SendSignalAction;
-import org.eclipse.ocl.expressions.ExpressionsFactory;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.lpg.AbstractLexer;
 import org.eclipse.ocl.lpg.AbstractParser;
@@ -250,18 +250,27 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		}
 
         return result;
-    } 
+    }
     
     @Override
-    protected void addedVariable(String name,
-            Variable<EClassifier, EParameter> elem, boolean isExplicit) {
-        super.addedVariable(name, elem, isExplicit);
+    protected void addedVariable(String name, Variable<EClassifier, EParameter> elem, boolean isExplicit) {    	
+        if(elem instanceof VarParameter == false) {
+        	if(getContextOperation() instanceof ImperativeOperation) {
+        		ImperativeOperation imperativeOperation = (ImperativeOperation) getContextOperation();
+        		if(imperativeOperation.getBody() != null && elem.eContainer() == null) {        			
+        			imperativeOperation.getBody().getVariable().add(elem);
+        		}
+        	} else {
+        		super.addedVariable(name, elem, isExplicit);
+        	}
+        } 
+    	
         if (!getOCLStandardLibrary().getOclVoid().getName().equals(name)) {
             QvtVariableEntry newelem = new QvtVariableEntry(name, elem, isExplicit);
             myNamedElements.add(newelem);
         }
     }
-
+    
     @Override
     public void deleteElement(String name) {
         for (Iterator<QvtVariableEntry> iter = myNamedElements.iterator(); iter.hasNext();) {
@@ -626,11 +635,17 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		return getInternalParent() instanceof QvtOperationalEnv ? ((QvtOperationalEnv)getInternalParent()).getModuleContextType() : null;
 	}	
 		
-	private void defineParameterVar(EParameter parameter) {
-		Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
-		var.setName(parameter.getName());
-		var.setType(parameter.getEType());
-		var.setRepresentedParameter(parameter);
+	private void defineParameterVar(EParameter parameter) {		
+		Variable<EClassifier, EParameter> var;
+		if(parameter instanceof VarParameter) {
+			var = (VarParameter) parameter;
+		} else {
+			var = EcoreFactory.eINSTANCE.createVariable();
+			var.setName(parameter.getName());
+			var.setType(parameter.getEType());
+			var.setRepresentedParameter(parameter);
+		}
+		
 		addElement(parameter.getName(), var, true);
 	}
 	
@@ -641,11 +656,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		
 		if(imperativeOperation != null && QvtOperationalParserUtil.isContextual(imperativeOperation)) {
 			VarParameter context = imperativeOperation.getContext();
-			Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
-			var.setName(Environment.SELF_VARIABLE_NAME);
-			var.setType(context.getEType());
-			var.setRepresentedParameter(context);
-			addElement(var.getName(), var, false);
+			assert context != null;
+			addElement(context.getName(), context, false);
 		}
 		
 		for (EParameter parameter : operation.getEParameters()) {
@@ -660,7 +672,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		}
 
 		if(hasMultipleResultParams && isMapping) {			
-			Variable<EClassifier, EParameter> var = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();
+			Variable<EClassifier, EParameter> var = EcoreFactory.eINSTANCE.createVariable();
 			var.setName(Environment.RESULT_VARIABLE_NAME);
 			var.setType(operation.getEType());
 			addElement(var.getName(), var, true);

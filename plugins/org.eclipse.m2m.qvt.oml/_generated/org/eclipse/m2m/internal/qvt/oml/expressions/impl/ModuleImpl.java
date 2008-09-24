@@ -32,13 +32,13 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VisitableASTNode;
+import org.eclipse.ocl.ecore.Variable;
 import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.UtilitiesPackage;
 import org.eclipse.ocl.utilities.Visitable;
@@ -59,6 +59,7 @@ import org.eclipse.ocl.utilities.Visitor;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getESuperPackage <em>ESuper Package</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getStartPosition <em>Start Position</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getEndPosition <em>End Position</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getOwnedVariable <em>Owned Variable</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getModuleImport <em>Module Import</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getUsedModelType <em>Used Model Type</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getConfigProperty <em>Config Property</em>}</li>
@@ -187,6 +188,16 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * @ordered
 	 */
 	protected int endPosition = END_POSITION_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getOwnedVariable() <em>Owned Variable</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOwnedVariable()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Variable> ownedVariable;
 
 	/**
 	 * The cached value of the '{@link #getModuleImport() <em>Module Import</em>}' containment reference list.
@@ -443,6 +454,18 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Variable> getOwnedVariable() {
+		if (ownedVariable == null) {
+			ownedVariable = new EObjectContainmentEList<Variable>(Variable.class, this, ExpressionsPackage.MODULE__OWNED_VARIABLE);
+		}
+		return ownedVariable;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EList<Rename> getOwnedRenaming() {
 		if (ownedRenaming == null) {
 			ownedRenaming = new EObjectContainmentEList<Rename>(Rename.class, this, ExpressionsPackage.MODULE__OWNED_RENAMING);
@@ -603,6 +626,8 @@ public class ModuleImpl extends EClassImpl implements Module {
 				return ((InternalEList<?>)getESubpackages()).basicRemove(otherEnd, msgs);
 			case ExpressionsPackage.MODULE__ESUPER_PACKAGE:
 				return eBasicSetContainer(null, ExpressionsPackage.MODULE__ESUPER_PACKAGE, msgs);
+			case ExpressionsPackage.MODULE__OWNED_VARIABLE:
+				return ((InternalEList<?>)getOwnedVariable()).basicRemove(otherEnd, msgs);
 			case ExpressionsPackage.MODULE__MODULE_IMPORT:
 				return ((InternalEList<?>)getModuleImport()).basicRemove(otherEnd, msgs);
 			case ExpressionsPackage.MODULE__USED_MODEL_TYPE:
@@ -652,6 +677,8 @@ public class ModuleImpl extends EClassImpl implements Module {
 				return new Integer(getStartPosition());
 			case ExpressionsPackage.MODULE__END_POSITION:
 				return new Integer(getEndPosition());
+			case ExpressionsPackage.MODULE__OWNED_VARIABLE:
+				return getOwnedVariable();
 			case ExpressionsPackage.MODULE__MODULE_IMPORT:
 				return getModuleImport();
 			case ExpressionsPackage.MODULE__USED_MODEL_TYPE:
@@ -700,6 +727,10 @@ public class ModuleImpl extends EClassImpl implements Module {
 				return;
 			case ExpressionsPackage.MODULE__END_POSITION:
 				setEndPosition(((Integer)newValue).intValue());
+				return;
+			case ExpressionsPackage.MODULE__OWNED_VARIABLE:
+				getOwnedVariable().clear();
+				getOwnedVariable().addAll((Collection<? extends Variable>)newValue);
 				return;
 			case ExpressionsPackage.MODULE__MODULE_IMPORT:
 				getModuleImport().clear();
@@ -757,6 +788,9 @@ public class ModuleImpl extends EClassImpl implements Module {
 			case ExpressionsPackage.MODULE__END_POSITION:
 				setEndPosition(END_POSITION_EDEFAULT);
 				return;
+			case ExpressionsPackage.MODULE__OWNED_VARIABLE:
+				getOwnedVariable().clear();
+				return;
 			case ExpressionsPackage.MODULE__MODULE_IMPORT:
 				getModuleImport().clear();
 				return;
@@ -803,6 +837,8 @@ public class ModuleImpl extends EClassImpl implements Module {
 				return startPosition != START_POSITION_EDEFAULT;
 			case ExpressionsPackage.MODULE__END_POSITION:
 				return endPosition != END_POSITION_EDEFAULT;
+			case ExpressionsPackage.MODULE__OWNED_VARIABLE:
+				return ownedVariable != null && !ownedVariable.isEmpty();
 			case ExpressionsPackage.MODULE__MODULE_IMPORT:
 				return moduleImport != null && !moduleImport.isEmpty();
 			case ExpressionsPackage.MODULE__USED_MODEL_TYPE:

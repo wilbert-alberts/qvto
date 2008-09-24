@@ -1,4 +1,4 @@
-/*******************************************************************************
+/**
  * Copyright (c) 2007 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
@@ -8,7 +8,9 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *******************************************************************************/
+ *
+ * $Id: ExpressionsPackage.java,v 1.4 2008/09/24 19:29:07 radvorak Exp $
+ */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -17,6 +19,7 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
+
 import org.eclipse.ocl.utilities.UtilitiesPackage;
 
 /**
@@ -37,12 +40,12 @@ import org.eclipse.ocl.utilities.UtilitiesPackage;
 public interface ExpressionsPackage extends EPackage {
 	/**
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-    String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
+	String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
-    /**
+	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -373,13 +376,22 @@ public interface ExpressionsPackage extends EPackage {
 	int MODULE__END_POSITION = EcorePackage.ECLASS_FEATURE_COUNT + 7;
 
 	/**
+	 * The feature id for the '<em><b>Owned Variable</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODULE__OWNED_VARIABLE = EcorePackage.ECLASS_FEATURE_COUNT + 8;
+
+	/**
 	 * The feature id for the '<em><b>Module Import</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE__MODULE_IMPORT = EcorePackage.ECLASS_FEATURE_COUNT + 8;
+	int MODULE__MODULE_IMPORT = EcorePackage.ECLASS_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Used Model Type</b></em>' containment reference list.
@@ -388,7 +400,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE__USED_MODEL_TYPE = EcorePackage.ECLASS_FEATURE_COUNT + 9;
+	int MODULE__USED_MODEL_TYPE = EcorePackage.ECLASS_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Config Property</b></em>' reference list.
@@ -397,7 +409,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE__CONFIG_PROPERTY = EcorePackage.ECLASS_FEATURE_COUNT + 10;
+	int MODULE__CONFIG_PROPERTY = EcorePackage.ECLASS_FEATURE_COUNT + 11;
 
 	/**
 	 * The feature id for the '<em><b>Owned Renaming</b></em>' containment reference list.
@@ -406,7 +418,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE__OWNED_RENAMING = EcorePackage.ECLASS_FEATURE_COUNT + 11;
+	int MODULE__OWNED_RENAMING = EcorePackage.ECLASS_FEATURE_COUNT + 12;
 
 	/**
 	 * The feature id for the '<em><b>Entry</b></em>' reference.
@@ -415,7 +427,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE__ENTRY = EcorePackage.ECLASS_FEATURE_COUNT + 12;
+	int MODULE__ENTRY = EcorePackage.ECLASS_FEATURE_COUNT + 13;
 
 	/**
 	 * The feature id for the '<em><b>Intermediate Property</b></em>' reference list.
@@ -424,7 +436,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE__INTERMEDIATE_PROPERTY = EcorePackage.ECLASS_FEATURE_COUNT + 13;
+	int MODULE__INTERMEDIATE_PROPERTY = EcorePackage.ECLASS_FEATURE_COUNT + 14;
 
 	/**
 	 * The number of structural features of the '<em>Module</em>' class.
@@ -433,7 +445,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE_FEATURE_COUNT = EcorePackage.ECLASS_FEATURE_COUNT + 14;
+	int MODULE_FEATURE_COUNT = EcorePackage.ECLASS_FEATURE_COUNT + 15;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.LibraryImpl <em>Library</em>}' class.
@@ -732,6 +744,15 @@ public interface ExpressionsPackage extends EPackage {
 	 * @ordered
 	 */
 	int LIBRARY__END_POSITION = MODULE__END_POSITION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Variable</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIBRARY__OWNED_VARIABLE = MODULE__OWNED_VARIABLE;
 
 	/**
 	 * The feature id for the '<em><b>Module Import</b></em>' containment reference list.
@@ -2081,7 +2102,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_PARAMETER__EANNOTATIONS = EcorePackage.EPARAMETER__EANNOTATIONS;
+	int VAR_PARAMETER__EANNOTATIONS = org.eclipse.ocl.ecore.EcorePackage.VARIABLE__EANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2090,7 +2111,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_PARAMETER__NAME = EcorePackage.EPARAMETER__NAME;
+	int VAR_PARAMETER__NAME = org.eclipse.ocl.ecore.EcorePackage.VARIABLE__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Ordered</b></em>' attribute.
@@ -2099,7 +2120,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_PARAMETER__ORDERED = EcorePackage.EPARAMETER__ORDERED;
+	int VAR_PARAMETER__ORDERED = org.eclipse.ocl.ecore.EcorePackage.VARIABLE__ORDERED;
 
 	/**
 	 * The feature id for the '<em><b>Unique</b></em>' attribute.
@@ -2108,7 +2129,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_PARAMETER__UNIQUE = EcorePackage.EPARAMETER__UNIQUE;
+	int VAR_PARAMETER__UNIQUE = org.eclipse.ocl.ecore.EcorePackage.VARIABLE__UNIQUE;
 
 	/**
 	 * The feature id for the '<em><b>Lower Bound</b></em>' attribute.
@@ -2117,7 +2138,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_PARAMETER__LOWER_BOUND = EcorePackage.EPARAMETER__LOWER_BOUND;
+	int VAR_PARAMETER__LOWER_BOUND = org.eclipse.ocl.ecore.EcorePackage.VARIABLE__LOWER_BOUND;
 
 	/**
 	 * The feature id for the '<em><b>Upper Bound</b></em>' attribute.
@@ -2126,7 +2147,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_PARAMETER__UPPER_BOUND = EcorePackage.EPARAMETER__UPPER_BOUND;
+	int VAR_PARAMETER__UPPER_BOUND = org.eclipse.ocl.ecore.EcorePackage.VARIABLE__UPPER_BOUND;
 
 	/**
 	 * The feature id for the '<em><b>Many</b></em>' attribute.
@@ -2135,7 +2156,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_PARAMETER__MANY = EcorePackage.EPARAMETER__MANY;
+	int VAR_PARAMETER__MANY = org.eclipse.ocl.ecore.EcorePackage.VARIABLE__MANY;
 
 	/**
 	 * The feature id for the '<em><b>Required</b></em>' attribute.
@@ -2144,7 +2165,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_PARAMETER__REQUIRED = EcorePackage.EPARAMETER__REQUIRED;
+	int VAR_PARAMETER__REQUIRED = org.eclipse.ocl.ecore.EcorePackage.VARIABLE__REQUIRED;
 
 	/**
 	 * The feature id for the '<em><b>EType</b></em>' reference.
@@ -2153,7 +2174,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_PARAMETER__ETYPE = EcorePackage.EPARAMETER__ETYPE;
+	int VAR_PARAMETER__ETYPE = org.eclipse.ocl.ecore.EcorePackage.VARIABLE__ETYPE;
 
 	/**
 	 * The feature id for the '<em><b>EGeneric Type</b></em>' containment reference.
@@ -2162,16 +2183,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_PARAMETER__EGENERIC_TYPE = EcorePackage.EPARAMETER__EGENERIC_TYPE;
-
-	/**
-	 * The feature id for the '<em><b>EOperation</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VAR_PARAMETER__EOPERATION = EcorePackage.EPARAMETER__EOPERATION;
+	int VAR_PARAMETER__EGENERIC_TYPE = org.eclipse.ocl.ecore.EcorePackage.VARIABLE__EGENERIC_TYPE;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -2180,7 +2192,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_PARAMETER__START_POSITION = EcorePackage.EPARAMETER_FEATURE_COUNT + 0;
+	int VAR_PARAMETER__START_POSITION = org.eclipse.ocl.ecore.EcorePackage.VARIABLE__START_POSITION;
 
 	/**
 	 * The feature id for the '<em><b>End Position</b></em>' attribute.
@@ -2189,7 +2201,52 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_PARAMETER__END_POSITION = EcorePackage.EPARAMETER_FEATURE_COUNT + 1;
+	int VAR_PARAMETER__END_POSITION = org.eclipse.ocl.ecore.EcorePackage.VARIABLE__END_POSITION;
+
+	/**
+	 * The feature id for the '<em><b>Type Start Position</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VAR_PARAMETER__TYPE_START_POSITION = org.eclipse.ocl.ecore.EcorePackage.VARIABLE__TYPE_START_POSITION;
+
+	/**
+	 * The feature id for the '<em><b>Type End Position</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VAR_PARAMETER__TYPE_END_POSITION = org.eclipse.ocl.ecore.EcorePackage.VARIABLE__TYPE_END_POSITION;
+
+	/**
+	 * The feature id for the '<em><b>Init Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VAR_PARAMETER__INIT_EXPRESSION = org.eclipse.ocl.ecore.EcorePackage.VARIABLE__INIT_EXPRESSION;
+
+	/**
+	 * The feature id for the '<em><b>Represented Parameter</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VAR_PARAMETER__REPRESENTED_PARAMETER = org.eclipse.ocl.ecore.EcorePackage.VARIABLE__REPRESENTED_PARAMETER;
+
+	/**
+	 * The feature id for the '<em><b>EOperation</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VAR_PARAMETER__EOPERATION = org.eclipse.ocl.ecore.EcorePackage.VARIABLE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Ctx Owner</b></em>' container reference.
@@ -2198,7 +2255,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_PARAMETER__CTX_OWNER = EcorePackage.EPARAMETER_FEATURE_COUNT + 2;
+	int VAR_PARAMETER__CTX_OWNER = org.eclipse.ocl.ecore.EcorePackage.VARIABLE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Res Owner</b></em>' container reference.
@@ -2207,7 +2264,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_PARAMETER__RES_OWNER = EcorePackage.EPARAMETER_FEATURE_COUNT + 3;
+	int VAR_PARAMETER__RES_OWNER = org.eclipse.ocl.ecore.EcorePackage.VARIABLE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Kind</b></em>' attribute.
@@ -2216,7 +2273,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_PARAMETER__KIND = EcorePackage.EPARAMETER_FEATURE_COUNT + 4;
+	int VAR_PARAMETER__KIND = org.eclipse.ocl.ecore.EcorePackage.VARIABLE_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Var Parameter</em>' class.
@@ -2225,7 +2282,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_PARAMETER_FEATURE_COUNT = EcorePackage.EPARAMETER_FEATURE_COUNT + 5;
+	int VAR_PARAMETER_FEATURE_COUNT = org.eclipse.ocl.ecore.EcorePackage.VARIABLE_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModelParameterImpl <em>Model Parameter</em>}' class.
@@ -2328,15 +2385,6 @@ public interface ExpressionsPackage extends EPackage {
 	int MODEL_PARAMETER__EGENERIC_TYPE = VAR_PARAMETER__EGENERIC_TYPE;
 
 	/**
-	 * The feature id for the '<em><b>EOperation</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODEL_PARAMETER__EOPERATION = VAR_PARAMETER__EOPERATION;
-
-	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2353,6 +2401,51 @@ public interface ExpressionsPackage extends EPackage {
 	 * @ordered
 	 */
 	int MODEL_PARAMETER__END_POSITION = VAR_PARAMETER__END_POSITION;
+
+	/**
+	 * The feature id for the '<em><b>Type Start Position</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_PARAMETER__TYPE_START_POSITION = VAR_PARAMETER__TYPE_START_POSITION;
+
+	/**
+	 * The feature id for the '<em><b>Type End Position</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_PARAMETER__TYPE_END_POSITION = VAR_PARAMETER__TYPE_END_POSITION;
+
+	/**
+	 * The feature id for the '<em><b>Init Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_PARAMETER__INIT_EXPRESSION = VAR_PARAMETER__INIT_EXPRESSION;
+
+	/**
+	 * The feature id for the '<em><b>Represented Parameter</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_PARAMETER__REPRESENTED_PARAMETER = VAR_PARAMETER__REPRESENTED_PARAMETER;
+
+	/**
+	 * The feature id for the '<em><b>EOperation</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_PARAMETER__EOPERATION = VAR_PARAMETER__EOPERATION;
 
 	/**
 	 * The feature id for the '<em><b>Ctx Owner</b></em>' container reference.
@@ -3585,114 +3678,114 @@ public interface ExpressionsPackage extends EPackage {
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.SwitchExpImpl <em>Switch Exp</em>}' class.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.SwitchExpImpl
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getSwitchExp()
 	 * @generated
 	 */
-    int SWITCH_EXP = 23;
+	int SWITCH_EXP = 23;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int SWITCH_EXP__START_POSITION = IMPERATIVE_EXPRESSION__START_POSITION;
+	int SWITCH_EXP__START_POSITION = IMPERATIVE_EXPRESSION__START_POSITION;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>End Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int SWITCH_EXP__END_POSITION = IMPERATIVE_EXPRESSION__END_POSITION;
+	int SWITCH_EXP__END_POSITION = IMPERATIVE_EXPRESSION__END_POSITION;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>Alternative Part</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int SWITCH_EXP__ALTERNATIVE_PART = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 0;
+	int SWITCH_EXP__ALTERNATIVE_PART = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 0;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>Else Part</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int SWITCH_EXP__ELSE_PART = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 1;
+	int SWITCH_EXP__ELSE_PART = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 1;
 
-    /**
+	/**
 	 * The number of structural features of the '<em>Switch Exp</em>' class.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int SWITCH_EXP_FEATURE_COUNT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 2;
+	int SWITCH_EXP_FEATURE_COUNT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 2;
 
-    /**
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.AltExpImpl <em>Alt Exp</em>}' class.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.AltExpImpl
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getAltExp()
 	 * @generated
 	 */
-    int ALT_EXP = 24;
+	int ALT_EXP = 24;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int ALT_EXP__START_POSITION = IMPERATIVE_EXPRESSION__START_POSITION;
+	int ALT_EXP__START_POSITION = IMPERATIVE_EXPRESSION__START_POSITION;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>End Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int ALT_EXP__END_POSITION = IMPERATIVE_EXPRESSION__END_POSITION;
+	int ALT_EXP__END_POSITION = IMPERATIVE_EXPRESSION__END_POSITION;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int ALT_EXP__CONDITION = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 0;
+	int ALT_EXP__CONDITION = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 0;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>Body</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int ALT_EXP__BODY = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 1;
+	int ALT_EXP__BODY = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 1;
 
-    /**
+	/**
 	 * The number of structural features of the '<em>Alt Exp</em>' class.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int ALT_EXP_FEATURE_COUNT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 2;
+	int ALT_EXP_FEATURE_COUNT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 2;
 
-    /**
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor <em>Extended Visitor</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3714,231 +3807,231 @@ public interface ExpressionsPackage extends EPackage {
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ResolveExpImpl <em>Resolve Exp</em>}' class.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ResolveExpImpl
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getResolveExp()
 	 * @generated
 	 */
-    int RESOLVE_EXP = 27;
+	int RESOLVE_EXP = 27;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_EXP__START_POSITION = org.eclipse.ocl.expressions.ExpressionsPackage.CALL_EXP__START_POSITION;
+	int RESOLVE_EXP__START_POSITION = org.eclipse.ocl.expressions.ExpressionsPackage.CALL_EXP__START_POSITION;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>End Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_EXP__END_POSITION = org.eclipse.ocl.expressions.ExpressionsPackage.CALL_EXP__END_POSITION;
+	int RESOLVE_EXP__END_POSITION = org.eclipse.ocl.expressions.ExpressionsPackage.CALL_EXP__END_POSITION;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>Property Start Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_EXP__PROPERTY_START_POSITION = org.eclipse.ocl.expressions.ExpressionsPackage.CALL_EXP__PROPERTY_START_POSITION;
+	int RESOLVE_EXP__PROPERTY_START_POSITION = org.eclipse.ocl.expressions.ExpressionsPackage.CALL_EXP__PROPERTY_START_POSITION;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>Property End Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_EXP__PROPERTY_END_POSITION = org.eclipse.ocl.expressions.ExpressionsPackage.CALL_EXP__PROPERTY_END_POSITION;
+	int RESOLVE_EXP__PROPERTY_END_POSITION = org.eclipse.ocl.expressions.ExpressionsPackage.CALL_EXP__PROPERTY_END_POSITION;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>Source</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_EXP__SOURCE = org.eclipse.ocl.expressions.ExpressionsPackage.CALL_EXP__SOURCE;
+	int RESOLVE_EXP__SOURCE = org.eclipse.ocl.expressions.ExpressionsPackage.CALL_EXP__SOURCE;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>One</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_EXP__ONE = org.eclipse.ocl.expressions.ExpressionsPackage.CALL_EXP_FEATURE_COUNT + 0;
+	int RESOLVE_EXP__ONE = org.eclipse.ocl.expressions.ExpressionsPackage.CALL_EXP_FEATURE_COUNT + 0;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>Is Inverse</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_EXP__IS_INVERSE = org.eclipse.ocl.expressions.ExpressionsPackage.CALL_EXP_FEATURE_COUNT + 1;
+	int RESOLVE_EXP__IS_INVERSE = org.eclipse.ocl.expressions.ExpressionsPackage.CALL_EXP_FEATURE_COUNT + 1;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>Is Deferred</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_EXP__IS_DEFERRED = org.eclipse.ocl.expressions.ExpressionsPackage.CALL_EXP_FEATURE_COUNT + 2;
+	int RESOLVE_EXP__IS_DEFERRED = org.eclipse.ocl.expressions.ExpressionsPackage.CALL_EXP_FEATURE_COUNT + 2;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>Target</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_EXP__TARGET = org.eclipse.ocl.expressions.ExpressionsPackage.CALL_EXP_FEATURE_COUNT + 3;
+	int RESOLVE_EXP__TARGET = org.eclipse.ocl.expressions.ExpressionsPackage.CALL_EXP_FEATURE_COUNT + 3;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_EXP__CONDITION = org.eclipse.ocl.expressions.ExpressionsPackage.CALL_EXP_FEATURE_COUNT + 4;
+	int RESOLVE_EXP__CONDITION = org.eclipse.ocl.expressions.ExpressionsPackage.CALL_EXP_FEATURE_COUNT + 4;
 
-    /**
+	/**
 	 * The number of structural features of the '<em>Resolve Exp</em>' class.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_EXP_FEATURE_COUNT = org.eclipse.ocl.expressions.ExpressionsPackage.CALL_EXP_FEATURE_COUNT + 5;
+	int RESOLVE_EXP_FEATURE_COUNT = org.eclipse.ocl.expressions.ExpressionsPackage.CALL_EXP_FEATURE_COUNT + 5;
 
-    /**
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ResolveInExpImpl <em>Resolve In Exp</em>}' class.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ResolveInExpImpl
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getResolveInExp()
 	 * @generated
 	 */
-    int RESOLVE_IN_EXP = 28;
+	int RESOLVE_IN_EXP = 28;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_IN_EXP__START_POSITION = RESOLVE_EXP__START_POSITION;
+	int RESOLVE_IN_EXP__START_POSITION = RESOLVE_EXP__START_POSITION;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>End Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_IN_EXP__END_POSITION = RESOLVE_EXP__END_POSITION;
+	int RESOLVE_IN_EXP__END_POSITION = RESOLVE_EXP__END_POSITION;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>Property Start Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_IN_EXP__PROPERTY_START_POSITION = RESOLVE_EXP__PROPERTY_START_POSITION;
+	int RESOLVE_IN_EXP__PROPERTY_START_POSITION = RESOLVE_EXP__PROPERTY_START_POSITION;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>Property End Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_IN_EXP__PROPERTY_END_POSITION = RESOLVE_EXP__PROPERTY_END_POSITION;
+	int RESOLVE_IN_EXP__PROPERTY_END_POSITION = RESOLVE_EXP__PROPERTY_END_POSITION;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>Source</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_IN_EXP__SOURCE = RESOLVE_EXP__SOURCE;
+	int RESOLVE_IN_EXP__SOURCE = RESOLVE_EXP__SOURCE;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>One</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_IN_EXP__ONE = RESOLVE_EXP__ONE;
+	int RESOLVE_IN_EXP__ONE = RESOLVE_EXP__ONE;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>Is Inverse</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_IN_EXP__IS_INVERSE = RESOLVE_EXP__IS_INVERSE;
+	int RESOLVE_IN_EXP__IS_INVERSE = RESOLVE_EXP__IS_INVERSE;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>Is Deferred</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_IN_EXP__IS_DEFERRED = RESOLVE_EXP__IS_DEFERRED;
+	int RESOLVE_IN_EXP__IS_DEFERRED = RESOLVE_EXP__IS_DEFERRED;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>Target</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_IN_EXP__TARGET = RESOLVE_EXP__TARGET;
+	int RESOLVE_IN_EXP__TARGET = RESOLVE_EXP__TARGET;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_IN_EXP__CONDITION = RESOLVE_EXP__CONDITION;
+	int RESOLVE_IN_EXP__CONDITION = RESOLVE_EXP__CONDITION;
 
-    /**
+	/**
 	 * The feature id for the '<em><b>In Mappings</b></em>' reference list.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_IN_EXP__IN_MAPPINGS = RESOLVE_EXP_FEATURE_COUNT + 0;
+	int RESOLVE_IN_EXP__IN_MAPPINGS = RESOLVE_EXP_FEATURE_COUNT + 0;
 
-    /**
+	/**
 	 * The number of structural features of the '<em>Resolve In Exp</em>' class.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int RESOLVE_IN_EXP_FEATURE_COUNT = RESOLVE_EXP_FEATURE_COUNT + 1;
+	int RESOLVE_IN_EXP_FEATURE_COUNT = RESOLVE_EXP_FEATURE_COUNT + 1;
 
-    /**
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModelTypeImpl <em>Model Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3948,7 +4041,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE = 29;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3957,7 +4050,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__EANNOTATIONS = EcorePackage.ECLASS__EANNOTATIONS;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3966,7 +4059,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__NAME = EcorePackage.ECLASS__NAME;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Instance Class Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3975,7 +4068,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__INSTANCE_CLASS_NAME = EcorePackage.ECLASS__INSTANCE_CLASS_NAME;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Instance Class</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3984,7 +4077,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__INSTANCE_CLASS = EcorePackage.ECLASS__INSTANCE_CLASS;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Default Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3993,7 +4086,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__DEFAULT_VALUE = EcorePackage.ECLASS__DEFAULT_VALUE;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Instance Type Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4002,7 +4095,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__INSTANCE_TYPE_NAME = EcorePackage.ECLASS__INSTANCE_TYPE_NAME;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>EPackage</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4011,7 +4104,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__EPACKAGE = EcorePackage.ECLASS__EPACKAGE;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>EType Parameters</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4020,7 +4113,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__ETYPE_PARAMETERS = EcorePackage.ECLASS__ETYPE_PARAMETERS;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Abstract</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4029,7 +4122,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__ABSTRACT = EcorePackage.ECLASS__ABSTRACT;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Interface</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4038,7 +4131,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__INTERFACE = EcorePackage.ECLASS__INTERFACE;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>ESuper Types</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4047,7 +4140,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__ESUPER_TYPES = EcorePackage.ECLASS__ESUPER_TYPES;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>EOperations</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4056,7 +4149,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__EOPERATIONS = EcorePackage.ECLASS__EOPERATIONS;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>EAll Attributes</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4065,7 +4158,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__EALL_ATTRIBUTES = EcorePackage.ECLASS__EALL_ATTRIBUTES;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>EAll References</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4074,7 +4167,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__EALL_REFERENCES = EcorePackage.ECLASS__EALL_REFERENCES;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>EReferences</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4083,7 +4176,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__EREFERENCES = EcorePackage.ECLASS__EREFERENCES;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>EAttributes</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4092,7 +4185,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__EATTRIBUTES = EcorePackage.ECLASS__EATTRIBUTES;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>EAll Containments</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4101,7 +4194,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__EALL_CONTAINMENTS = EcorePackage.ECLASS__EALL_CONTAINMENTS;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>EAll Operations</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4110,7 +4203,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__EALL_OPERATIONS = EcorePackage.ECLASS__EALL_OPERATIONS;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>EAll Structural Features</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4119,7 +4212,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__EALL_STRUCTURAL_FEATURES = EcorePackage.ECLASS__EALL_STRUCTURAL_FEATURES;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>EAll Super Types</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4128,7 +4221,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__EALL_SUPER_TYPES = EcorePackage.ECLASS__EALL_SUPER_TYPES;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>EID Attribute</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4137,7 +4230,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__EID_ATTRIBUTE = EcorePackage.ECLASS__EID_ATTRIBUTE;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>EStructural Features</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4146,7 +4239,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__ESTRUCTURAL_FEATURES = EcorePackage.ECLASS__ESTRUCTURAL_FEATURES;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>EGeneric Super Types</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4155,7 +4248,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__EGENERIC_SUPER_TYPES = EcorePackage.ECLASS__EGENERIC_SUPER_TYPES;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>EAll Generic Super Types</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4164,7 +4257,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__EALL_GENERIC_SUPER_TYPES = EcorePackage.ECLASS__EALL_GENERIC_SUPER_TYPES;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4173,7 +4266,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__START_POSITION = EcorePackage.ECLASS_FEATURE_COUNT + 0;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>End Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4182,7 +4275,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__END_POSITION = EcorePackage.ECLASS_FEATURE_COUNT + 1;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Metamodel</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4191,7 +4284,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__METAMODEL = EcorePackage.ECLASS_FEATURE_COUNT + 2;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Additional Condition</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4200,7 +4293,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__ADDITIONAL_CONDITION = EcorePackage.ECLASS_FEATURE_COUNT + 3;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Conformance Kind</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4209,7 +4302,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE__CONFORMANCE_KIND = EcorePackage.ECLASS_FEATURE_COUNT + 4;
 
-				/**
+	/**
 	 * The number of structural features of the '<em>Model Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4218,7 +4311,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MODEL_TYPE_FEATURE_COUNT = EcorePackage.ECLASS_FEATURE_COUNT + 5;
 
-				/**
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.PackageRefImpl <em>Package Ref</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4228,7 +4321,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int PACKAGE_REF = 30;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4237,7 +4330,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int PACKAGE_REF__START_POSITION = UtilitiesPackage.AST_NODE__START_POSITION;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>End Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4246,7 +4339,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int PACKAGE_REF__END_POSITION = UtilitiesPackage.AST_NODE__END_POSITION;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Uri</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4255,7 +4348,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int PACKAGE_REF__URI = UtilitiesPackage.AST_NODE_FEATURE_COUNT + 0;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4264,7 +4357,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int PACKAGE_REF__NAME = UtilitiesPackage.AST_NODE_FEATURE_COUNT + 1;
 
-				/**
+	/**
 	 * The number of structural features of the '<em>Package Ref</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4273,7 +4366,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int PACKAGE_REF_FEATURE_COUNT = UtilitiesPackage.AST_NODE_FEATURE_COUNT + 2;
 
-				/**
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.MappingParameterImpl <em>Mapping Parameter</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4283,7 +4376,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MAPPING_PARAMETER = 31;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4292,7 +4385,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MAPPING_PARAMETER__EANNOTATIONS = VAR_PARAMETER__EANNOTATIONS;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4301,7 +4394,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MAPPING_PARAMETER__NAME = VAR_PARAMETER__NAME;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Ordered</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4310,7 +4403,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MAPPING_PARAMETER__ORDERED = VAR_PARAMETER__ORDERED;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Unique</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4319,7 +4412,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MAPPING_PARAMETER__UNIQUE = VAR_PARAMETER__UNIQUE;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Lower Bound</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4328,7 +4421,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MAPPING_PARAMETER__LOWER_BOUND = VAR_PARAMETER__LOWER_BOUND;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Upper Bound</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4337,7 +4430,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MAPPING_PARAMETER__UPPER_BOUND = VAR_PARAMETER__UPPER_BOUND;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Many</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4346,7 +4439,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MAPPING_PARAMETER__MANY = VAR_PARAMETER__MANY;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Required</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4355,7 +4448,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MAPPING_PARAMETER__REQUIRED = VAR_PARAMETER__REQUIRED;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>EType</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4364,7 +4457,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MAPPING_PARAMETER__ETYPE = VAR_PARAMETER__ETYPE;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>EGeneric Type</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4373,16 +4466,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MAPPING_PARAMETER__EGENERIC_TYPE = VAR_PARAMETER__EGENERIC_TYPE;
 
-				/**
-	 * The feature id for the '<em><b>EOperation</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_PARAMETER__EOPERATION = VAR_PARAMETER__EOPERATION;
-
-				/**
+	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4391,7 +4475,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MAPPING_PARAMETER__START_POSITION = VAR_PARAMETER__START_POSITION;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>End Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4400,7 +4484,52 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MAPPING_PARAMETER__END_POSITION = VAR_PARAMETER__END_POSITION;
 
-				/**
+	/**
+	 * The feature id for the '<em><b>Type Start Position</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_PARAMETER__TYPE_START_POSITION = VAR_PARAMETER__TYPE_START_POSITION;
+
+	/**
+	 * The feature id for the '<em><b>Type End Position</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_PARAMETER__TYPE_END_POSITION = VAR_PARAMETER__TYPE_END_POSITION;
+
+	/**
+	 * The feature id for the '<em><b>Init Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_PARAMETER__INIT_EXPRESSION = VAR_PARAMETER__INIT_EXPRESSION;
+
+	/**
+	 * The feature id for the '<em><b>Represented Parameter</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_PARAMETER__REPRESENTED_PARAMETER = VAR_PARAMETER__REPRESENTED_PARAMETER;
+
+	/**
+	 * The feature id for the '<em><b>EOperation</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_PARAMETER__EOPERATION = VAR_PARAMETER__EOPERATION;
+
+	/**
 	 * The feature id for the '<em><b>Ctx Owner</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4409,7 +4538,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MAPPING_PARAMETER__CTX_OWNER = VAR_PARAMETER__CTX_OWNER;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Res Owner</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4418,7 +4547,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MAPPING_PARAMETER__RES_OWNER = VAR_PARAMETER__RES_OWNER;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Kind</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4427,7 +4556,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MAPPING_PARAMETER__KIND = VAR_PARAMETER__KIND;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Extent</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4436,7 +4565,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MAPPING_PARAMETER__EXTENT = VAR_PARAMETER_FEATURE_COUNT + 0;
 
-				/**
+	/**
 	 * The number of structural features of the '<em>Mapping Parameter</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4445,7 +4574,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int MAPPING_PARAMETER_FEATURE_COUNT = VAR_PARAMETER_FEATURE_COUNT + 1;
 
-				/**
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.LogExpImpl <em>Log Exp</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4455,7 +4584,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int LOG_EXP = 32;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4464,7 +4593,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int LOG_EXP__START_POSITION = org.eclipse.ocl.expressions.ExpressionsPackage.OPERATION_CALL_EXP__START_POSITION;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>End Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4473,7 +4602,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int LOG_EXP__END_POSITION = org.eclipse.ocl.expressions.ExpressionsPackage.OPERATION_CALL_EXP__END_POSITION;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Property Start Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4482,7 +4611,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int LOG_EXP__PROPERTY_START_POSITION = org.eclipse.ocl.expressions.ExpressionsPackage.OPERATION_CALL_EXP__PROPERTY_START_POSITION;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Property End Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4491,7 +4620,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int LOG_EXP__PROPERTY_END_POSITION = org.eclipse.ocl.expressions.ExpressionsPackage.OPERATION_CALL_EXP__PROPERTY_END_POSITION;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Source</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4500,7 +4629,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int LOG_EXP__SOURCE = org.eclipse.ocl.expressions.ExpressionsPackage.OPERATION_CALL_EXP__SOURCE;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Marked Pre</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4509,7 +4638,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int LOG_EXP__MARKED_PRE = org.eclipse.ocl.expressions.ExpressionsPackage.OPERATION_CALL_EXP__MARKED_PRE;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Argument</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4518,7 +4647,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int LOG_EXP__ARGUMENT = org.eclipse.ocl.expressions.ExpressionsPackage.OPERATION_CALL_EXP__ARGUMENT;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Referred Operation</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4527,7 +4656,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int LOG_EXP__REFERRED_OPERATION = org.eclipse.ocl.expressions.ExpressionsPackage.OPERATION_CALL_EXP__REFERRED_OPERATION;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Operation Code</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4536,7 +4665,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int LOG_EXP__OPERATION_CODE = org.eclipse.ocl.expressions.ExpressionsPackage.OPERATION_CALL_EXP__OPERATION_CODE;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4545,7 +4674,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int LOG_EXP__CONDITION = org.eclipse.ocl.expressions.ExpressionsPackage.OPERATION_CALL_EXP_FEATURE_COUNT + 0;
 
-				/**
+	/**
 	 * The number of structural features of the '<em>Log Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4554,7 +4683,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int LOG_EXP_FEATURE_COUNT = org.eclipse.ocl.expressions.ExpressionsPackage.OPERATION_CALL_EXP_FEATURE_COUNT + 1;
 
-				/**
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.AssertExpImpl <em>Assert Exp</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4564,7 +4693,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int ASSERT_EXP = 33;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4573,7 +4702,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int ASSERT_EXP__START_POSITION = IMPERATIVE_EXPRESSION__START_POSITION;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>End Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4582,7 +4711,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int ASSERT_EXP__END_POSITION = IMPERATIVE_EXPRESSION__END_POSITION;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Assertion</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4591,7 +4720,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int ASSERT_EXP__ASSERTION = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 0;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Log</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4600,7 +4729,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int ASSERT_EXP__LOG = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 1;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Severity</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4609,7 +4738,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int ASSERT_EXP__SEVERITY = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 2;
 
-				/**
+	/**
 	 * The feature id for the '<em><b>Line</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4618,7 +4747,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int ASSERT_EXP__LINE = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 3;
 
-				/**
+	/**
 	 * The number of structural features of the '<em>Assert Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4627,198 +4756,198 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int ASSERT_EXP_FEATURE_COUNT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 4;
 
-				/**
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeLoopExpImpl <em>Imperative Loop Exp</em>}' class.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeLoopExpImpl
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getImperativeLoopExp()
 	 * @generated
 	 */
-    int IMPERATIVE_LOOP_EXP = 34;
+	int IMPERATIVE_LOOP_EXP = 34;
 
-                /**
+	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int IMPERATIVE_LOOP_EXP__START_POSITION = org.eclipse.ocl.expressions.ExpressionsPackage.LOOP_EXP__START_POSITION;
+	int IMPERATIVE_LOOP_EXP__START_POSITION = org.eclipse.ocl.expressions.ExpressionsPackage.LOOP_EXP__START_POSITION;
 
-                /**
+	/**
 	 * The feature id for the '<em><b>End Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int IMPERATIVE_LOOP_EXP__END_POSITION = org.eclipse.ocl.expressions.ExpressionsPackage.LOOP_EXP__END_POSITION;
+	int IMPERATIVE_LOOP_EXP__END_POSITION = org.eclipse.ocl.expressions.ExpressionsPackage.LOOP_EXP__END_POSITION;
 
-                /**
+	/**
 	 * The feature id for the '<em><b>Property Start Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int IMPERATIVE_LOOP_EXP__PROPERTY_START_POSITION = org.eclipse.ocl.expressions.ExpressionsPackage.LOOP_EXP__PROPERTY_START_POSITION;
+	int IMPERATIVE_LOOP_EXP__PROPERTY_START_POSITION = org.eclipse.ocl.expressions.ExpressionsPackage.LOOP_EXP__PROPERTY_START_POSITION;
 
-                /**
+	/**
 	 * The feature id for the '<em><b>Property End Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int IMPERATIVE_LOOP_EXP__PROPERTY_END_POSITION = org.eclipse.ocl.expressions.ExpressionsPackage.LOOP_EXP__PROPERTY_END_POSITION;
+	int IMPERATIVE_LOOP_EXP__PROPERTY_END_POSITION = org.eclipse.ocl.expressions.ExpressionsPackage.LOOP_EXP__PROPERTY_END_POSITION;
 
-                /**
+	/**
 	 * The feature id for the '<em><b>Source</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int IMPERATIVE_LOOP_EXP__SOURCE = org.eclipse.ocl.expressions.ExpressionsPackage.LOOP_EXP__SOURCE;
+	int IMPERATIVE_LOOP_EXP__SOURCE = org.eclipse.ocl.expressions.ExpressionsPackage.LOOP_EXP__SOURCE;
 
-                /**
+	/**
 	 * The feature id for the '<em><b>Body</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int IMPERATIVE_LOOP_EXP__BODY = org.eclipse.ocl.expressions.ExpressionsPackage.LOOP_EXP__BODY;
+	int IMPERATIVE_LOOP_EXP__BODY = org.eclipse.ocl.expressions.ExpressionsPackage.LOOP_EXP__BODY;
 
-                /**
+	/**
 	 * The feature id for the '<em><b>Iterator</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int IMPERATIVE_LOOP_EXP__ITERATOR = org.eclipse.ocl.expressions.ExpressionsPackage.LOOP_EXP__ITERATOR;
+	int IMPERATIVE_LOOP_EXP__ITERATOR = org.eclipse.ocl.expressions.ExpressionsPackage.LOOP_EXP__ITERATOR;
 
-                /**
+	/**
 	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int IMPERATIVE_LOOP_EXP__CONDITION = org.eclipse.ocl.expressions.ExpressionsPackage.LOOP_EXP_FEATURE_COUNT + 0;
+	int IMPERATIVE_LOOP_EXP__CONDITION = org.eclipse.ocl.expressions.ExpressionsPackage.LOOP_EXP_FEATURE_COUNT + 0;
 
-                /**
+	/**
 	 * The number of structural features of the '<em>Imperative Loop Exp</em>' class.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int IMPERATIVE_LOOP_EXP_FEATURE_COUNT = org.eclipse.ocl.expressions.ExpressionsPackage.LOOP_EXP_FEATURE_COUNT + 1;
+	int IMPERATIVE_LOOP_EXP_FEATURE_COUNT = org.eclipse.ocl.expressions.ExpressionsPackage.LOOP_EXP_FEATURE_COUNT + 1;
 
-                /**
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeIterateExpImpl <em>Imperative Iterate Exp</em>}' class.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeIterateExpImpl
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getImperativeIterateExp()
 	 * @generated
 	 */
-    int IMPERATIVE_ITERATE_EXP = 35;
+	int IMPERATIVE_ITERATE_EXP = 35;
 
-                /**
+	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int IMPERATIVE_ITERATE_EXP__START_POSITION = IMPERATIVE_LOOP_EXP__START_POSITION;
+	int IMPERATIVE_ITERATE_EXP__START_POSITION = IMPERATIVE_LOOP_EXP__START_POSITION;
 
-                /**
+	/**
 	 * The feature id for the '<em><b>End Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int IMPERATIVE_ITERATE_EXP__END_POSITION = IMPERATIVE_LOOP_EXP__END_POSITION;
+	int IMPERATIVE_ITERATE_EXP__END_POSITION = IMPERATIVE_LOOP_EXP__END_POSITION;
 
-                /**
+	/**
 	 * The feature id for the '<em><b>Property Start Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int IMPERATIVE_ITERATE_EXP__PROPERTY_START_POSITION = IMPERATIVE_LOOP_EXP__PROPERTY_START_POSITION;
+	int IMPERATIVE_ITERATE_EXP__PROPERTY_START_POSITION = IMPERATIVE_LOOP_EXP__PROPERTY_START_POSITION;
 
-                /**
+	/**
 	 * The feature id for the '<em><b>Property End Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int IMPERATIVE_ITERATE_EXP__PROPERTY_END_POSITION = IMPERATIVE_LOOP_EXP__PROPERTY_END_POSITION;
+	int IMPERATIVE_ITERATE_EXP__PROPERTY_END_POSITION = IMPERATIVE_LOOP_EXP__PROPERTY_END_POSITION;
 
-                /**
+	/**
 	 * The feature id for the '<em><b>Source</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int IMPERATIVE_ITERATE_EXP__SOURCE = IMPERATIVE_LOOP_EXP__SOURCE;
+	int IMPERATIVE_ITERATE_EXP__SOURCE = IMPERATIVE_LOOP_EXP__SOURCE;
 
-                /**
+	/**
 	 * The feature id for the '<em><b>Body</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int IMPERATIVE_ITERATE_EXP__BODY = IMPERATIVE_LOOP_EXP__BODY;
+	int IMPERATIVE_ITERATE_EXP__BODY = IMPERATIVE_LOOP_EXP__BODY;
 
-                /**
+	/**
 	 * The feature id for the '<em><b>Iterator</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int IMPERATIVE_ITERATE_EXP__ITERATOR = IMPERATIVE_LOOP_EXP__ITERATOR;
+	int IMPERATIVE_ITERATE_EXP__ITERATOR = IMPERATIVE_LOOP_EXP__ITERATOR;
 
-                /**
+	/**
 	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int IMPERATIVE_ITERATE_EXP__CONDITION = IMPERATIVE_LOOP_EXP__CONDITION;
+	int IMPERATIVE_ITERATE_EXP__CONDITION = IMPERATIVE_LOOP_EXP__CONDITION;
 
-                /**
+	/**
 	 * The feature id for the '<em><b>Target</b></em>' reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int IMPERATIVE_ITERATE_EXP__TARGET = IMPERATIVE_LOOP_EXP_FEATURE_COUNT + 0;
+	int IMPERATIVE_ITERATE_EXP__TARGET = IMPERATIVE_LOOP_EXP_FEATURE_COUNT + 0;
 
-                /**
+	/**
 	 * The number of structural features of the '<em>Imperative Iterate Exp</em>' class.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int IMPERATIVE_ITERATE_EXP_FEATURE_COUNT = IMPERATIVE_LOOP_EXP_FEATURE_COUNT + 1;
+	int IMPERATIVE_ITERATE_EXP_FEATURE_COUNT = IMPERATIVE_LOOP_EXP_FEATURE_COUNT + 1;
 
-                /**
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ReturnExpImpl <em>Return Exp</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4828,7 +4957,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int RETURN_EXP = 37;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4837,7 +4966,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int RETURN_EXP__START_POSITION = IMPERATIVE_EXPRESSION__START_POSITION;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>End Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4846,7 +4975,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int RETURN_EXP__END_POSITION = IMPERATIVE_EXPRESSION__END_POSITION;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>Value</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4855,7 +4984,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int RETURN_EXP__VALUE = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 0;
 
-																/**
+	/**
 	 * The number of structural features of the '<em>Return Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4864,7 +4993,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int RETURN_EXP_FEATURE_COUNT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 1;
 
-																/**
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.OperationalTransformationImpl <em>Operational Transformation</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4874,7 +5003,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION = 38;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4883,7 +5012,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__EANNOTATIONS = MODULE__EANNOTATIONS;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4892,7 +5021,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__NAME = MODULE__NAME;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>Instance Class Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4901,7 +5030,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__INSTANCE_CLASS_NAME = MODULE__INSTANCE_CLASS_NAME;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>Instance Class</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4910,7 +5039,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__INSTANCE_CLASS = MODULE__INSTANCE_CLASS;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>Default Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4919,7 +5048,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__DEFAULT_VALUE = MODULE__DEFAULT_VALUE;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>Instance Type Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4928,7 +5057,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__INSTANCE_TYPE_NAME = MODULE__INSTANCE_TYPE_NAME;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>EPackage</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4937,7 +5066,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__EPACKAGE = MODULE__EPACKAGE;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>EType Parameters</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4946,7 +5075,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__ETYPE_PARAMETERS = MODULE__ETYPE_PARAMETERS;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>Abstract</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4955,7 +5084,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__ABSTRACT = MODULE__ABSTRACT;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>Interface</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4964,7 +5093,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__INTERFACE = MODULE__INTERFACE;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>ESuper Types</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4973,7 +5102,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__ESUPER_TYPES = MODULE__ESUPER_TYPES;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>EOperations</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4982,7 +5111,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__EOPERATIONS = MODULE__EOPERATIONS;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>EAll Attributes</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4991,7 +5120,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__EALL_ATTRIBUTES = MODULE__EALL_ATTRIBUTES;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>EAll References</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5000,7 +5129,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__EALL_REFERENCES = MODULE__EALL_REFERENCES;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>EReferences</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5009,7 +5138,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__EREFERENCES = MODULE__EREFERENCES;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>EAttributes</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5018,7 +5147,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__EATTRIBUTES = MODULE__EATTRIBUTES;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>EAll Containments</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5027,7 +5156,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__EALL_CONTAINMENTS = MODULE__EALL_CONTAINMENTS;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>EAll Operations</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5036,7 +5165,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__EALL_OPERATIONS = MODULE__EALL_OPERATIONS;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>EAll Structural Features</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5045,7 +5174,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__EALL_STRUCTURAL_FEATURES = MODULE__EALL_STRUCTURAL_FEATURES;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>EAll Super Types</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5054,7 +5183,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__EALL_SUPER_TYPES = MODULE__EALL_SUPER_TYPES;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>EID Attribute</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5063,7 +5192,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__EID_ATTRIBUTE = MODULE__EID_ATTRIBUTE;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>EStructural Features</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5072,7 +5201,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__ESTRUCTURAL_FEATURES = MODULE__ESTRUCTURAL_FEATURES;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>EGeneric Super Types</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5081,7 +5210,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__EGENERIC_SUPER_TYPES = MODULE__EGENERIC_SUPER_TYPES;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>EAll Generic Super Types</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5090,7 +5219,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__EALL_GENERIC_SUPER_TYPES = MODULE__EALL_GENERIC_SUPER_TYPES;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>Ns URI</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5099,7 +5228,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__NS_URI = MODULE__NS_URI;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>Ns Prefix</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5108,7 +5237,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__NS_PREFIX = MODULE__NS_PREFIX;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>EFactory Instance</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5117,7 +5246,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__EFACTORY_INSTANCE = MODULE__EFACTORY_INSTANCE;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>EClassifiers</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5126,7 +5255,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__ECLASSIFIERS = MODULE__ECLASSIFIERS;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>ESubpackages</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5135,7 +5264,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__ESUBPACKAGES = MODULE__ESUBPACKAGES;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>ESuper Package</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5144,7 +5273,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__ESUPER_PACKAGE = MODULE__ESUPER_PACKAGE;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5153,7 +5282,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__START_POSITION = MODULE__START_POSITION;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>End Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5162,7 +5291,16 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__END_POSITION = MODULE__END_POSITION;
 
-																/**
+	/**
+	 * The feature id for the '<em><b>Owned Variable</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__OWNED_VARIABLE = MODULE__OWNED_VARIABLE;
+
+	/**
 	 * The feature id for the '<em><b>Module Import</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5171,7 +5309,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__MODULE_IMPORT = MODULE__MODULE_IMPORT;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>Used Model Type</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5180,7 +5318,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__USED_MODEL_TYPE = MODULE__USED_MODEL_TYPE;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>Config Property</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5189,7 +5327,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__CONFIG_PROPERTY = MODULE__CONFIG_PROPERTY;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>Owned Renaming</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5198,7 +5336,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__OWNED_RENAMING = MODULE__OWNED_RENAMING;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>Entry</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5207,7 +5345,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__ENTRY = MODULE__ENTRY;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>Intermediate Property</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5216,7 +5354,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__INTERMEDIATE_PROPERTY = MODULE__INTERMEDIATE_PROPERTY;
 
-																/**
+	/**
 	 * The feature id for the '<em><b>Model Parameter</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5225,7 +5363,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION__MODEL_PARAMETER = MODULE_FEATURE_COUNT + 0;
 
-																/**
+	/**
 	 * The number of structural features of the '<em>Operational Transformation</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5234,7 +5372,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	int OPERATIONAL_TRANSFORMATION_FEATURE_COUNT = MODULE_FEATURE_COUNT + 1;
 
-																/**
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind <em>Direction Kind</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5243,7 +5381,6 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 */
 	int DIRECTION_KIND = 39;
-
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.SeverityKind <em>Severity Kind</em>}' enum.
@@ -5265,6 +5402,50 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getModule();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getOwnedVariable <em>Owned Variable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Owned Variable</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.Module#getOwnedVariable()
+	 * @see #getModule()
+	 * @generated
+	 */
+	EReference getModule_OwnedVariable();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getModuleImport <em>Module Import</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Module Import</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.Module#getModuleImport()
+	 * @see #getModule()
+	 * @generated
+	 */
+	EReference getModule_ModuleImport();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getUsedModelType <em>Used Model Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Used Model Type</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.Module#getUsedModelType()
+	 * @see #getModule()
+	 * @generated
+	 */
+	EReference getModule_UsedModelType();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getConfigProperty <em>Config Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Config Property</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.Module#getConfigProperty()
+	 * @see #getModule()
+	 * @generated
+	 */
+	EReference getModule_ConfigProperty();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getOwnedRenaming <em>Owned Renaming</em>}'.
@@ -5298,39 +5479,6 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getModule_IntermediateProperty();
-
-	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getConfigProperty <em>Config Property</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Config Property</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.Module#getConfigProperty()
-	 * @see #getModule()
-	 * @generated
-	 */
-	EReference getModule_ConfigProperty();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getModuleImport <em>Module Import</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Module Import</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.Module#getModuleImport()
-	 * @see #getModule()
-	 * @generated
-	 */
-	EReference getModule_ModuleImport();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getUsedModelType <em>Used Model Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Used Model Type</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.Module#getUsedModelType()
-	 * @see #getModule()
-	 * @generated
-	 */
-	EReference getModule_UsedModelType();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Library <em>Library</em>}'.
@@ -5951,68 +6099,68 @@ public interface ExpressionsPackage extends EPackage {
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.SwitchExp <em>Switch Exp</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Switch Exp</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.SwitchExp
 	 * @generated
 	 */
-    EClass getSwitchExp();
+	EClass getSwitchExp();
 
-    /**
+	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.SwitchExp#getAlternativePart <em>Alternative Part</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Alternative Part</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.SwitchExp#getAlternativePart()
 	 * @see #getSwitchExp()
 	 * @generated
 	 */
-    EReference getSwitchExp_AlternativePart();
+	EReference getSwitchExp_AlternativePart();
 
-    /**
+	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.expressions.SwitchExp#getElsePart <em>Else Part</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Else Part</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.SwitchExp#getElsePart()
 	 * @see #getSwitchExp()
 	 * @generated
 	 */
-    EReference getSwitchExp_ElsePart();
+	EReference getSwitchExp_ElsePart();
 
-    /**
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.AltExp <em>Alt Exp</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Alt Exp</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.AltExp
 	 * @generated
 	 */
-    EClass getAltExp();
+	EClass getAltExp();
 
-    /**
+	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.expressions.AltExp#getCondition <em>Condition</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Condition</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.AltExp#getCondition()
 	 * @see #getAltExp()
 	 * @generated
 	 */
-    EReference getAltExp_Condition();
+	EReference getAltExp_Condition();
 
-    /**
+	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.expressions.AltExp#getBody <em>Body</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Body</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.AltExp#getBody()
 	 * @see #getAltExp()
 	 * @generated
 	 */
-    EReference getAltExp_Body();
+	EReference getAltExp_Body();
 
-    /**
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor <em>Extended Visitor</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6035,90 +6183,90 @@ public interface ExpressionsPackage extends EPackage {
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp <em>Resolve Exp</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Resolve Exp</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp
 	 * @generated
 	 */
-    EClass getResolveExp();
+	EClass getResolveExp();
 
-    /**
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp#isOne <em>One</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>One</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp#isOne()
 	 * @see #getResolveExp()
 	 * @generated
 	 */
-    EAttribute getResolveExp_One();
+	EAttribute getResolveExp_One();
 
-    /**
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp#isIsInverse <em>Is Inverse</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Is Inverse</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp#isIsInverse()
 	 * @see #getResolveExp()
 	 * @generated
 	 */
-    EAttribute getResolveExp_IsInverse();
+	EAttribute getResolveExp_IsInverse();
 
-    /**
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp#isIsDeferred <em>Is Deferred</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Is Deferred</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp#isIsDeferred()
 	 * @see #getResolveExp()
 	 * @generated
 	 */
-    EAttribute getResolveExp_IsDeferred();
+	EAttribute getResolveExp_IsDeferred();
 
-    /**
+	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp#getTarget <em>Target</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Target</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp#getTarget()
 	 * @see #getResolveExp()
 	 * @generated
 	 */
-    EReference getResolveExp_Target();
+	EReference getResolveExp_Target();
 
-    /**
+	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp#getCondition <em>Condition</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Condition</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp#getCondition()
 	 * @see #getResolveExp()
 	 * @generated
 	 */
-    EReference getResolveExp_Condition();
+	EReference getResolveExp_Condition();
 
-    /**
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp <em>Resolve In Exp</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Resolve In Exp</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp
 	 * @generated
 	 */
-    EClass getResolveInExp();
+	EClass getResolveInExp();
 
-    /**
+	/**
 	 * Returns the meta object for the reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp#getInMappings <em>In Mappings</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference list '<em>In Mappings</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp#getInMappings()
 	 * @see #getResolveInExp()
 	 * @generated
 	 */
-    EReference getResolveInExp_InMappings();
+	EReference getResolveInExp_InMappings();
 
-    /**
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ModelType <em>Model Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6128,7 +6276,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EClass getModelType();
 
-				/**
+	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ModelType#getMetamodel <em>Metamodel</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6139,7 +6287,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EReference getModelType_Metamodel();
 
-				/**
+	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ModelType#getAdditionalCondition <em>Additional Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6150,7 +6298,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EReference getModelType_AdditionalCondition();
 
-				/**
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ModelType#getConformanceKind <em>Conformance Kind</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6161,7 +6309,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EAttribute getModelType_ConformanceKind();
 
-				/**
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.PackageRef <em>Package Ref</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6171,7 +6319,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EClass getPackageRef();
 
-				/**
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.expressions.PackageRef#getUri <em>Uri</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6182,7 +6330,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EAttribute getPackageRef_Uri();
 
-				/**
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.expressions.PackageRef#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6193,7 +6341,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EAttribute getPackageRef_Name();
 
-				/**
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.MappingParameter <em>Mapping Parameter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6203,7 +6351,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EClass getMappingParameter();
 
-				/**
+	/**
 	 * Returns the meta object for the reference '{@link org.eclipse.m2m.internal.qvt.oml.expressions.MappingParameter#getExtent <em>Extent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6214,7 +6362,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EReference getMappingParameter_Extent();
 
-				/**
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.LogExp <em>Log Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6224,7 +6372,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EClass getLogExp();
 
-				/**
+	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.expressions.LogExp#getCondition <em>Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6235,7 +6383,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EReference getLogExp_Condition();
 
-				/**
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp <em>Assert Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6245,7 +6393,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EClass getAssertExp();
 
-				/**
+	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp#getAssertion <em>Assertion</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6256,7 +6404,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EReference getAssertExp_Assertion();
 
-				/**
+	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp#getLog <em>Log</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6267,7 +6415,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EReference getAssertExp_Log();
 
-				/**
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp#getSeverity <em>Severity</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6278,7 +6426,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EAttribute getAssertExp_Severity();
 
-				/**
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp#getLine <em>Line</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6289,49 +6437,49 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EAttribute getAssertExp_Line();
 
-				/**
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp <em>Imperative Loop Exp</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Imperative Loop Exp</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp
 	 * @generated
 	 */
-    EClass getImperativeLoopExp();
+	EClass getImperativeLoopExp();
 
-                /**
+	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp#getCondition <em>Condition</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Condition</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp#getCondition()
 	 * @see #getImperativeLoopExp()
 	 * @generated
 	 */
-    EReference getImperativeLoopExp_Condition();
+	EReference getImperativeLoopExp_Condition();
 
-                /**
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp <em>Imperative Iterate Exp</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Imperative Iterate Exp</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp
 	 * @generated
 	 */
-    EClass getImperativeIterateExp();
+	EClass getImperativeIterateExp();
 
-                /**
+	/**
 	 * Returns the meta object for the reference '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp#getTarget <em>Target</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Target</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp#getTarget()
 	 * @see #getImperativeIterateExp()
 	 * @generated
 	 */
-    EReference getImperativeIterateExp_Target();
+	EReference getImperativeIterateExp_Target();
 
-                /**
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp <em>Instantiation Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6341,7 +6489,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EClass getInstantiationExp();
 
-																/**
+	/**
 	 * Returns the meta object for the reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp#getArgument <em>Argument</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6352,7 +6500,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EReference getInstantiationExp_Argument();
 
-																/**
+	/**
 	 * Returns the meta object for the reference '{@link org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp#getExtent <em>Extent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6363,7 +6511,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EReference getInstantiationExp_Extent();
 
-																/**
+	/**
 	 * Returns the meta object for the reference '{@link org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp#getInstantiatedClass <em>Instantiated Class</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6374,7 +6522,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EReference getInstantiationExp_InstantiatedClass();
 
-																/**
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp <em>Return Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6384,7 +6532,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EClass getReturnExp();
 
-																/**
+	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp#getValue <em>Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6395,7 +6543,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EReference getReturnExp_Value();
 
-																/**
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation <em>Operational Transformation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6405,7 +6553,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EClass getOperationalTransformation();
 
-																/**
+	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation#getModelParameter <em>Model Parameter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6416,7 +6564,7 @@ public interface ExpressionsPackage extends EPackage {
 	 */
 	EReference getOperationalTransformation_ModelParameter();
 
-																/**
+	/**
 	 * Returns the meta object for enum '{@link org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind <em>Direction Kind</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6469,6 +6617,38 @@ public interface ExpressionsPackage extends EPackage {
 		EClass MODULE = eINSTANCE.getModule();
 
 		/**
+		 * The meta object literal for the '<em><b>Owned Variable</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MODULE__OWNED_VARIABLE = eINSTANCE.getModule_OwnedVariable();
+
+		/**
+		 * The meta object literal for the '<em><b>Module Import</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MODULE__MODULE_IMPORT = eINSTANCE.getModule_ModuleImport();
+
+		/**
+		 * The meta object literal for the '<em><b>Used Model Type</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MODULE__USED_MODEL_TYPE = eINSTANCE.getModule_UsedModelType();
+
+		/**
+		 * The meta object literal for the '<em><b>Config Property</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MODULE__CONFIG_PROPERTY = eINSTANCE.getModule_ConfigProperty();
+
+		/**
 		 * The meta object literal for the '<em><b>Owned Renaming</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6491,30 +6671,6 @@ public interface ExpressionsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference MODULE__INTERMEDIATE_PROPERTY = eINSTANCE.getModule_IntermediateProperty();
-
-		/**
-		 * The meta object literal for the '<em><b>Config Property</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference MODULE__CONFIG_PROPERTY = eINSTANCE.getModule_ConfigProperty();
-
-		/**
-		 * The meta object literal for the '<em><b>Module Import</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference MODULE__MODULE_IMPORT = eINSTANCE.getModule_ModuleImport();
-
-		/**
-		 * The meta object literal for the '<em><b>Used Model Type</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference MODULE__USED_MODEL_TYPE = eINSTANCE.getModule_UsedModelType();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.LibraryImpl <em>Library</em>}' class.
@@ -7027,56 +7183,56 @@ public interface ExpressionsPackage extends EPackage {
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.SwitchExpImpl <em>Switch Exp</em>}' class.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.SwitchExpImpl
 		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getSwitchExp()
 		 * @generated
 		 */
-        EClass SWITCH_EXP = eINSTANCE.getSwitchExp();
+		EClass SWITCH_EXP = eINSTANCE.getSwitchExp();
 
-        /**
+		/**
 		 * The meta object literal for the '<em><b>Alternative Part</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-        EReference SWITCH_EXP__ALTERNATIVE_PART = eINSTANCE.getSwitchExp_AlternativePart();
+		EReference SWITCH_EXP__ALTERNATIVE_PART = eINSTANCE.getSwitchExp_AlternativePart();
 
-        /**
+		/**
 		 * The meta object literal for the '<em><b>Else Part</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-        EReference SWITCH_EXP__ELSE_PART = eINSTANCE.getSwitchExp_ElsePart();
+		EReference SWITCH_EXP__ELSE_PART = eINSTANCE.getSwitchExp_ElsePart();
 
-        /**
+		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.AltExpImpl <em>Alt Exp</em>}' class.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.AltExpImpl
 		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getAltExp()
 		 * @generated
 		 */
-        EClass ALT_EXP = eINSTANCE.getAltExp();
+		EClass ALT_EXP = eINSTANCE.getAltExp();
 
-        /**
+		/**
 		 * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-        EReference ALT_EXP__CONDITION = eINSTANCE.getAltExp_Condition();
+		EReference ALT_EXP__CONDITION = eINSTANCE.getAltExp_Condition();
 
-        /**
+		/**
 		 * The meta object literal for the '<em><b>Body</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-        EReference ALT_EXP__BODY = eINSTANCE.getAltExp_Body();
+		EReference ALT_EXP__BODY = eINSTANCE.getAltExp_Body();
 
-        /**
+		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor <em>Extended Visitor</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7099,72 +7255,72 @@ public interface ExpressionsPackage extends EPackage {
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ResolveExpImpl <em>Resolve Exp</em>}' class.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ResolveExpImpl
 		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getResolveExp()
 		 * @generated
 		 */
-        EClass RESOLVE_EXP = eINSTANCE.getResolveExp();
+		EClass RESOLVE_EXP = eINSTANCE.getResolveExp();
 
-        /**
+		/**
 		 * The meta object literal for the '<em><b>One</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-        EAttribute RESOLVE_EXP__ONE = eINSTANCE.getResolveExp_One();
+		EAttribute RESOLVE_EXP__ONE = eINSTANCE.getResolveExp_One();
 
-        /**
+		/**
 		 * The meta object literal for the '<em><b>Is Inverse</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-        EAttribute RESOLVE_EXP__IS_INVERSE = eINSTANCE.getResolveExp_IsInverse();
+		EAttribute RESOLVE_EXP__IS_INVERSE = eINSTANCE.getResolveExp_IsInverse();
 
-        /**
+		/**
 		 * The meta object literal for the '<em><b>Is Deferred</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-        EAttribute RESOLVE_EXP__IS_DEFERRED = eINSTANCE.getResolveExp_IsDeferred();
+		EAttribute RESOLVE_EXP__IS_DEFERRED = eINSTANCE.getResolveExp_IsDeferred();
 
-        /**
+		/**
 		 * The meta object literal for the '<em><b>Target</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-        EReference RESOLVE_EXP__TARGET = eINSTANCE.getResolveExp_Target();
+		EReference RESOLVE_EXP__TARGET = eINSTANCE.getResolveExp_Target();
 
-        /**
+		/**
 		 * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-        EReference RESOLVE_EXP__CONDITION = eINSTANCE.getResolveExp_Condition();
+		EReference RESOLVE_EXP__CONDITION = eINSTANCE.getResolveExp_Condition();
 
-        /**
+		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ResolveInExpImpl <em>Resolve In Exp</em>}' class.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ResolveInExpImpl
 		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getResolveInExp()
 		 * @generated
 		 */
-        EClass RESOLVE_IN_EXP = eINSTANCE.getResolveInExp();
+		EClass RESOLVE_IN_EXP = eINSTANCE.getResolveInExp();
 
-        /**
+		/**
 		 * The meta object literal for the '<em><b>In Mappings</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-        EReference RESOLVE_IN_EXP__IN_MAPPINGS = eINSTANCE.getResolveInExp_InMappings();
+		EReference RESOLVE_IN_EXP__IN_MAPPINGS = eINSTANCE.getResolveInExp_InMappings();
 
-        /**
+		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModelTypeImpl <em>Model Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7174,7 +7330,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EClass MODEL_TYPE = eINSTANCE.getModelType();
 
-								/**
+		/**
 		 * The meta object literal for the '<em><b>Metamodel</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7182,7 +7338,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EReference MODEL_TYPE__METAMODEL = eINSTANCE.getModelType_Metamodel();
 
-								/**
+		/**
 		 * The meta object literal for the '<em><b>Additional Condition</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7190,7 +7346,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EReference MODEL_TYPE__ADDITIONAL_CONDITION = eINSTANCE.getModelType_AdditionalCondition();
 
-								/**
+		/**
 		 * The meta object literal for the '<em><b>Conformance Kind</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7198,7 +7354,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EAttribute MODEL_TYPE__CONFORMANCE_KIND = eINSTANCE.getModelType_ConformanceKind();
 
-								/**
+		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.PackageRefImpl <em>Package Ref</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7208,7 +7364,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EClass PACKAGE_REF = eINSTANCE.getPackageRef();
 
-								/**
+		/**
 		 * The meta object literal for the '<em><b>Uri</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7216,7 +7372,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EAttribute PACKAGE_REF__URI = eINSTANCE.getPackageRef_Uri();
 
-								/**
+		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7224,7 +7380,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EAttribute PACKAGE_REF__NAME = eINSTANCE.getPackageRef_Name();
 
-								/**
+		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.MappingParameterImpl <em>Mapping Parameter</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7234,7 +7390,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EClass MAPPING_PARAMETER = eINSTANCE.getMappingParameter();
 
-								/**
+		/**
 		 * The meta object literal for the '<em><b>Extent</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7242,7 +7398,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EReference MAPPING_PARAMETER__EXTENT = eINSTANCE.getMappingParameter_Extent();
 
-								/**
+		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.LogExpImpl <em>Log Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7252,7 +7408,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EClass LOG_EXP = eINSTANCE.getLogExp();
 
-								/**
+		/**
 		 * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7260,7 +7416,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EReference LOG_EXP__CONDITION = eINSTANCE.getLogExp_Condition();
 
-								/**
+		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.AssertExpImpl <em>Assert Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7270,7 +7426,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EClass ASSERT_EXP = eINSTANCE.getAssertExp();
 
-								/**
+		/**
 		 * The meta object literal for the '<em><b>Assertion</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7278,7 +7434,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EReference ASSERT_EXP__ASSERTION = eINSTANCE.getAssertExp_Assertion();
 
-								/**
+		/**
 		 * The meta object literal for the '<em><b>Log</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7286,7 +7442,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EReference ASSERT_EXP__LOG = eINSTANCE.getAssertExp_Log();
 
-								/**
+		/**
 		 * The meta object literal for the '<em><b>Severity</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7294,7 +7450,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EAttribute ASSERT_EXP__SEVERITY = eINSTANCE.getAssertExp_Severity();
 
-								/**
+		/**
 		 * The meta object literal for the '<em><b>Line</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7302,43 +7458,43 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EAttribute ASSERT_EXP__LINE = eINSTANCE.getAssertExp_Line();
 
-								/**
+		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeLoopExpImpl <em>Imperative Loop Exp</em>}' class.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeLoopExpImpl
 		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getImperativeLoopExp()
 		 * @generated
 		 */
-        EClass IMPERATIVE_LOOP_EXP = eINSTANCE.getImperativeLoopExp();
+		EClass IMPERATIVE_LOOP_EXP = eINSTANCE.getImperativeLoopExp();
 
-                                /**
+		/**
 		 * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-        EReference IMPERATIVE_LOOP_EXP__CONDITION = eINSTANCE.getImperativeLoopExp_Condition();
+		EReference IMPERATIVE_LOOP_EXP__CONDITION = eINSTANCE.getImperativeLoopExp_Condition();
 
-                                /**
+		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeIterateExpImpl <em>Imperative Iterate Exp</em>}' class.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeIterateExpImpl
 		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getImperativeIterateExp()
 		 * @generated
 		 */
-        EClass IMPERATIVE_ITERATE_EXP = eINSTANCE.getImperativeIterateExp();
+		EClass IMPERATIVE_ITERATE_EXP = eINSTANCE.getImperativeIterateExp();
 
-                                /**
+		/**
 		 * The meta object literal for the '<em><b>Target</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-        EReference IMPERATIVE_ITERATE_EXP__TARGET = eINSTANCE.getImperativeIterateExp_Target();
+		EReference IMPERATIVE_ITERATE_EXP__TARGET = eINSTANCE.getImperativeIterateExp_Target();
 
-                                /**
+		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.InstantiationExpImpl <em>Instantiation Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7348,7 +7504,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EClass INSTANTIATION_EXP = eINSTANCE.getInstantiationExp();
 
-																																/**
+		/**
 		 * The meta object literal for the '<em><b>Argument</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7356,7 +7512,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EReference INSTANTIATION_EXP__ARGUMENT = eINSTANCE.getInstantiationExp_Argument();
 
-																																/**
+		/**
 		 * The meta object literal for the '<em><b>Extent</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7364,7 +7520,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EReference INSTANTIATION_EXP__EXTENT = eINSTANCE.getInstantiationExp_Extent();
 
-																																/**
+		/**
 		 * The meta object literal for the '<em><b>Instantiated Class</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7372,7 +7528,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EReference INSTANTIATION_EXP__INSTANTIATED_CLASS = eINSTANCE.getInstantiationExp_InstantiatedClass();
 
-																																/**
+		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ReturnExpImpl <em>Return Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7382,7 +7538,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EClass RETURN_EXP = eINSTANCE.getReturnExp();
 
-																																/**
+		/**
 		 * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7390,7 +7546,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EReference RETURN_EXP__VALUE = eINSTANCE.getReturnExp_Value();
 
-																																/**
+		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.OperationalTransformationImpl <em>Operational Transformation</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7400,7 +7556,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EClass OPERATIONAL_TRANSFORMATION = eINSTANCE.getOperationalTransformation();
 
-																																/**
+		/**
 		 * The meta object literal for the '<em><b>Model Parameter</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7408,7 +7564,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EReference OPERATIONAL_TRANSFORMATION__MODEL_PARAMETER = eINSTANCE.getOperationalTransformation_ModelParameter();
 
-																																/**
+		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind <em>Direction Kind</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7418,7 +7574,7 @@ public interface ExpressionsPackage extends EPackage {
 		 */
 		EEnum DIRECTION_KIND = eINSTANCE.getDirectionKind();
 
-								/**
+		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.SeverityKind <em>Severity Kind</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->

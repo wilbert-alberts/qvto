@@ -14,19 +14,18 @@ package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EParameterImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
-import org.eclipse.m2m.internal.qvt.oml.expressions.VisitableASTNode;
-import org.eclipse.ocl.utilities.ASTNode;
-import org.eclipse.ocl.utilities.UtilitiesPackage;
-import org.eclipse.ocl.utilities.Visitable;
+import org.eclipse.ocl.ecore.impl.VariableImpl;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -36,8 +35,7 @@ import org.eclipse.ocl.utilities.Visitor;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.VarParameterImpl#getStartPosition <em>Start Position</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.VarParameterImpl#getEndPosition <em>End Position</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.VarParameterImpl#getEOperation <em>EOperation</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.VarParameterImpl#getCtxOwner <em>Ctx Owner</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.VarParameterImpl#getResOwner <em>Res Owner</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.VarParameterImpl#getKind <em>Kind</em>}</li>
@@ -46,7 +44,7 @@ import org.eclipse.ocl.utilities.Visitor;
  *
  * @generated
  */
-public class VarParameterImpl extends EParameterImpl implements VarParameter {
+public class VarParameterImpl extends VariableImpl implements VarParameter {
 	/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -55,46 +53,6 @@ public class VarParameterImpl extends EParameterImpl implements VarParameter {
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
     /**
-	 * The default value of the '{@link #getStartPosition() <em>Start Position</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getStartPosition()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int START_POSITION_EDEFAULT = -1;
-
-	/**
-	 * The cached value of the '{@link #getStartPosition() <em>Start Position</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getStartPosition()
-	 * @generated
-	 * @ordered
-	 */
-	protected int startPosition = START_POSITION_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getEndPosition() <em>End Position</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getEndPosition()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int END_POSITION_EDEFAULT = -1;
-
-	/**
-	 * The cached value of the '{@link #getEndPosition() <em>End Position</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getEndPosition()
-	 * @generated
-	 * @ordered
-	 */
-	protected int endPosition = END_POSITION_EDEFAULT;
-
-	/**
 	 * The default value of the '{@link #getKind() <em>Kind</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -138,41 +96,9 @@ public class VarParameterImpl extends EParameterImpl implements VarParameter {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int getStartPosition() {
-		return startPosition;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setStartPosition(int newStartPosition) {
-		int oldStartPosition = startPosition;
-		startPosition = newStartPosition;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.VAR_PARAMETER__START_POSITION, oldStartPosition, startPosition));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public int getEndPosition() {
-		return endPosition;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setEndPosition(int newEndPosition) {
-		int oldEndPosition = endPosition;
-		endPosition = newEndPosition;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.VAR_PARAMETER__END_POSITION, oldEndPosition, endPosition));
+	public EOperation getEOperation() {
+		if (eContainerFeatureID != ExpressionsPackage.VAR_PARAMETER__EOPERATION) return null;
+		return (EOperation)eContainer();
 	}
 
 	/**
@@ -295,6 +221,10 @@ public class VarParameterImpl extends EParameterImpl implements VarParameter {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case ExpressionsPackage.VAR_PARAMETER__EOPERATION:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return eBasicSetContainer(otherEnd, ExpressionsPackage.VAR_PARAMETER__EOPERATION, msgs);
 			case ExpressionsPackage.VAR_PARAMETER__CTX_OWNER:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
@@ -315,6 +245,8 @@ public class VarParameterImpl extends EParameterImpl implements VarParameter {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case ExpressionsPackage.VAR_PARAMETER__EOPERATION:
+				return eBasicSetContainer(null, ExpressionsPackage.VAR_PARAMETER__EOPERATION, msgs);
 			case ExpressionsPackage.VAR_PARAMETER__CTX_OWNER:
 				return basicSetCtxOwner(null, msgs);
 			case ExpressionsPackage.VAR_PARAMETER__RES_OWNER:
@@ -331,6 +263,8 @@ public class VarParameterImpl extends EParameterImpl implements VarParameter {
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID) {
+			case ExpressionsPackage.VAR_PARAMETER__EOPERATION:
+				return eInternalContainer().eInverseRemove(this, EcorePackage.EOPERATION__EPARAMETERS, EOperation.class, msgs);
 			case ExpressionsPackage.VAR_PARAMETER__CTX_OWNER:
 				return eInternalContainer().eInverseRemove(this, ExpressionsPackage.IMPERATIVE_OPERATION__CONTEXT, ImperativeOperation.class, msgs);
 			case ExpressionsPackage.VAR_PARAMETER__RES_OWNER:
@@ -347,10 +281,8 @@ public class VarParameterImpl extends EParameterImpl implements VarParameter {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ExpressionsPackage.VAR_PARAMETER__START_POSITION:
-				return new Integer(getStartPosition());
-			case ExpressionsPackage.VAR_PARAMETER__END_POSITION:
-				return new Integer(getEndPosition());
+			case ExpressionsPackage.VAR_PARAMETER__EOPERATION:
+				return getEOperation();
 			case ExpressionsPackage.VAR_PARAMETER__CTX_OWNER:
 				return getCtxOwner();
 			case ExpressionsPackage.VAR_PARAMETER__RES_OWNER:
@@ -369,12 +301,6 @@ public class VarParameterImpl extends EParameterImpl implements VarParameter {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ExpressionsPackage.VAR_PARAMETER__START_POSITION:
-				setStartPosition(((Integer)newValue).intValue());
-				return;
-			case ExpressionsPackage.VAR_PARAMETER__END_POSITION:
-				setEndPosition(((Integer)newValue).intValue());
-				return;
 			case ExpressionsPackage.VAR_PARAMETER__CTX_OWNER:
 				setCtxOwner((ImperativeOperation)newValue);
 				return;
@@ -396,12 +322,6 @@ public class VarParameterImpl extends EParameterImpl implements VarParameter {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.VAR_PARAMETER__START_POSITION:
-				setStartPosition(START_POSITION_EDEFAULT);
-				return;
-			case ExpressionsPackage.VAR_PARAMETER__END_POSITION:
-				setEndPosition(END_POSITION_EDEFAULT);
-				return;
 			case ExpressionsPackage.VAR_PARAMETER__CTX_OWNER:
 				setCtxOwner((ImperativeOperation)null);
 				return;
@@ -423,10 +343,8 @@ public class VarParameterImpl extends EParameterImpl implements VarParameter {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.VAR_PARAMETER__START_POSITION:
-				return startPosition != START_POSITION_EDEFAULT;
-			case ExpressionsPackage.VAR_PARAMETER__END_POSITION:
-				return endPosition != END_POSITION_EDEFAULT;
+			case ExpressionsPackage.VAR_PARAMETER__EOPERATION:
+				return getEOperation() != null;
 			case ExpressionsPackage.VAR_PARAMETER__CTX_OWNER:
 				return getCtxOwner() != null;
 			case ExpressionsPackage.VAR_PARAMETER__RES_OWNER:
@@ -444,20 +362,9 @@ public class VarParameterImpl extends EParameterImpl implements VarParameter {
 	 */
 	@Override
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
-		if (baseClass == Visitable.class) {
+		if (baseClass == EParameter.class) {
 			switch (derivedFeatureID) {
-				default: return -1;
-			}
-		}
-		if (baseClass == ASTNode.class) {
-			switch (derivedFeatureID) {
-				case ExpressionsPackage.VAR_PARAMETER__START_POSITION: return UtilitiesPackage.AST_NODE__START_POSITION;
-				case ExpressionsPackage.VAR_PARAMETER__END_POSITION: return UtilitiesPackage.AST_NODE__END_POSITION;
-				default: return -1;
-			}
-		}
-		if (baseClass == VisitableASTNode.class) {
-			switch (derivedFeatureID) {
+				case ExpressionsPackage.VAR_PARAMETER__EOPERATION: return EcorePackage.EPARAMETER__EOPERATION;
 				default: return -1;
 			}
 		}
@@ -471,20 +378,9 @@ public class VarParameterImpl extends EParameterImpl implements VarParameter {
 	 */
 	@Override
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
-		if (baseClass == Visitable.class) {
+		if (baseClass == EParameter.class) {
 			switch (baseFeatureID) {
-				default: return -1;
-			}
-		}
-		if (baseClass == ASTNode.class) {
-			switch (baseFeatureID) {
-				case UtilitiesPackage.AST_NODE__START_POSITION: return ExpressionsPackage.VAR_PARAMETER__START_POSITION;
-				case UtilitiesPackage.AST_NODE__END_POSITION: return ExpressionsPackage.VAR_PARAMETER__END_POSITION;
-				default: return -1;
-			}
-		}
-		if (baseClass == VisitableASTNode.class) {
-			switch (baseFeatureID) {
+				case EcorePackage.EPARAMETER__EOPERATION: return ExpressionsPackage.VAR_PARAMETER__EOPERATION;
 				default: return -1;
 			}
 		}
@@ -501,11 +397,7 @@ public class VarParameterImpl extends EParameterImpl implements VarParameter {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (startPosition: "); //$NON-NLS-1$
-		result.append(startPosition);
-		result.append(", endPosition: "); //$NON-NLS-1$
-		result.append(endPosition);
-		result.append(", kind: "); //$NON-NLS-1$
+		result.append(" (kind: "); //$NON-NLS-1$
 		result.append(kind);
 		result.append(')');
 		return result.toString();

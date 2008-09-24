@@ -30,6 +30,9 @@
           <eGenericType eTypeParameter="#//expressions/Module/accept/U"/>
         </eParameters>
       </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="ownedVariable" ordered="false"
+          upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/Variable"
+          containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="moduleImport" upperBound="-1"
           eType="#//expressions/ModuleImport" containment="true" eOpposite="#//expressions/ModuleImport/module"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="usedModelType" upperBound="-1"
@@ -276,7 +279,7 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="isBlackbox" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ModelParameter" eSuperTypes="#//expressions/VarParameter"/>
-    <eClassifiers xsi:type="ecore:EClass" name="VarParameter" eSuperTypes="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EParameter #//expressions/VisitableASTNode">
+    <eClassifiers xsi:type="ecore:EClass" name="VarParameter" eSuperTypes="platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/Variable platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EParameter">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitVarParameter(this);"/>

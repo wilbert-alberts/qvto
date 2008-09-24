@@ -12,7 +12,6 @@
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**

@@ -12,6 +12,7 @@
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.ocl.ecore.Variable;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -32,7 +33,7 @@ import org.eclipse.ocl.utilities.Visitor;
  * @model
  * @generated
  */
-public interface VarParameter extends EParameter, VisitableASTNode {
+public interface VarParameter extends Variable, EParameter {
 	/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

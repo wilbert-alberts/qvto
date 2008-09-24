@@ -67,8 +67,10 @@ import org.eclipse.ocl.expressions.FeatureCallExp;
 import org.eclipse.ocl.expressions.LoopExp;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.OperationCallExp;
+import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.CallingASTNode;
+import org.eclipse.ocl.utilities.TypedASTNode;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.Visitable;
 import org.eclipse.ocl.utilities.Visitor;
@@ -275,26 +277,32 @@ public class ExpressionsSwitch<T1> {
 				ModelParameter modelParameter = (ModelParameter)theEObject;
 				T1 result = caseModelParameter(modelParameter);
 				if (result == null) result = caseVarParameter(modelParameter);
+				if (result == null) result = caseVariable_1(modelParameter);
 				if (result == null) result = caseEParameter(modelParameter);
-				if (result == null) result = caseVisitableASTNode(modelParameter);
 				if (result == null) result = caseETypedElement(modelParameter);
-				if (result == null) result = caseVisitable(modelParameter);
-				if (result == null) result = caseASTNode(modelParameter);
+				if (result == null) result = caseVariable(modelParameter);
 				if (result == null) result = caseENamedElement(modelParameter);
+				if (result == null) result = caseTypedElement(modelParameter);
+				if (result == null) result = caseVisitable(modelParameter);
+				if (result == null) result = caseTypedASTNode(modelParameter);
 				if (result == null) result = caseEModelElement(modelParameter);
+				if (result == null) result = caseASTNode(modelParameter);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case ExpressionsPackage.VAR_PARAMETER: {
 				VarParameter varParameter = (VarParameter)theEObject;
 				T1 result = caseVarParameter(varParameter);
+				if (result == null) result = caseVariable_1(varParameter);
 				if (result == null) result = caseEParameter(varParameter);
-				if (result == null) result = caseVisitableASTNode(varParameter);
 				if (result == null) result = caseETypedElement(varParameter);
-				if (result == null) result = caseVisitable(varParameter);
-				if (result == null) result = caseASTNode(varParameter);
+				if (result == null) result = caseVariable(varParameter);
 				if (result == null) result = caseENamedElement(varParameter);
+				if (result == null) result = caseTypedElement(varParameter);
+				if (result == null) result = caseVisitable(varParameter);
+				if (result == null) result = caseTypedASTNode(varParameter);
 				if (result == null) result = caseEModelElement(varParameter);
+				if (result == null) result = caseASTNode(varParameter);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -521,13 +529,16 @@ public class ExpressionsSwitch<T1> {
 				MappingParameter mappingParameter = (MappingParameter)theEObject;
 				T1 result = caseMappingParameter(mappingParameter);
 				if (result == null) result = caseVarParameter(mappingParameter);
+				if (result == null) result = caseVariable_1(mappingParameter);
 				if (result == null) result = caseEParameter(mappingParameter);
-				if (result == null) result = caseVisitableASTNode(mappingParameter);
 				if (result == null) result = caseETypedElement(mappingParameter);
-				if (result == null) result = caseVisitable(mappingParameter);
-				if (result == null) result = caseASTNode(mappingParameter);
+				if (result == null) result = caseVariable(mappingParameter);
 				if (result == null) result = caseENamedElement(mappingParameter);
+				if (result == null) result = caseTypedElement(mappingParameter);
+				if (result == null) result = caseVisitable(mappingParameter);
+				if (result == null) result = caseTypedASTNode(mappingParameter);
 				if (result == null) result = caseEModelElement(mappingParameter);
+				if (result == null) result = caseASTNode(mappingParameter);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -1388,6 +1399,51 @@ public class ExpressionsSwitch<T1> {
 	 * @generated
 	 */
 	public <C> T1 caseTypedElement(TypedElement<C> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Typed AST Node</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Typed AST Node</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseTypedASTNode(TypedASTNode object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Variable</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Variable</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <C, PM> T1 caseVariable(Variable<C, PM> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Variable</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Variable</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseVariable_1(org.eclipse.ocl.ecore.Variable object) {
 		return null;
 	}
 

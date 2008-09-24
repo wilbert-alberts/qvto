@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.ocl.ecore.Variable;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -26,6 +27,7 @@ import org.eclipse.ocl.utilities.Visitor;
  * <p>
  * The following features are supported:
  * <ul>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getOwnedVariable <em>Owned Variable</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getModuleImport <em>Module Import</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getUsedModelType <em>Used Model Type</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getConfigProperty <em>Config Property</em>}</li>
@@ -48,6 +50,22 @@ public interface Module extends EClass, EPackage, VisitableASTNode {
     String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
     /**
+	 * Returns the value of the '<em><b>Owned Variable</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.ocl.ecore.Variable}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Owned Variable</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Owned Variable</em>' containment reference list.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getModule_OwnedVariable()
+	 * @model containment="true" ordered="false"
+	 * @generated
+	 */
+	EList<Variable> getOwnedVariable();
+
+				/**
 	 * Returns the value of the '<em><b>Owned Renaming</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.expressions.Rename}.
 	 * <!-- begin-user-doc -->

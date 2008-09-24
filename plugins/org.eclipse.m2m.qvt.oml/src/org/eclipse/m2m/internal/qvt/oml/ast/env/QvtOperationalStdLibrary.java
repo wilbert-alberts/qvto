@@ -20,7 +20,6 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
@@ -39,7 +38,6 @@ import org.eclipse.m2m.internal.qvt.oml.stdlib.RealOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.StdlibModuleOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.StringOperations;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
-import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.types.TypeType;
 import org.eclipse.ocl.utilities.PredefinedType;
 import org.eclipse.ocl.utilities.TypedElement;
@@ -69,13 +67,6 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 
 		fEnv = new QvtOperationalModuleEnv(new EPackageRegistryImpl());
 		fEnv.setContextModule(fStdlibModule);
-
-		if(fEnv.getInternalParent() == null) {
-	        Variable<EClassifier, EParameter> variable = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();
-	        variable.setName(fStdlibModule.getName() + QvtOperationalFileEnv.THIS_VAR_QNAME_SUFFIX); 
-	        variable.setType(fStdlibModule);
-	        fEnv.addElement(variable.getName(), variable, false);
-		}
 
 		ELEMENT = createClass("Element", true); //$NON-NLS-1$
 		MODEL = createClass("Model", true); //$NON-NLS-1$

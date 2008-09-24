@@ -30,7 +30,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.Library;
 import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LibraryCreationException;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.LegacyNativeLibSupport;
-import org.eclipse.ocl.expressions.ExpressionsFactory;
+import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.lpg.ProblemHandler;
 import org.eclipse.ocl.options.ProblemOption;
@@ -52,6 +52,17 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
         setOption(ProblemOption.ELEMENT_NAME_QUOTE_ESCAPE, ProblemHandler.Severity.OK);
         setOption(ProblemOption.STRING_CASE_CONVERSION, ProblemHandler.Severity.OK);        
 	}
+	
+	@Override
+	protected void addedVariable(String name, Variable<EClassifier, EParameter> elem, boolean isExplicit) {
+		if(name != null && name.endsWith(THIS_VAR_QNAME_SUFFIX)) {
+			if(myContextModule != null) {
+				myContextModule.getOwnedVariable().add((org.eclipse.ocl.ecore.Variable)elem);
+				return;
+			}
+		}
+		super.addedVariable(name, elem, isExplicit);
+	}
 			    
     public void setContextModule(Module module) {
     	if(myQualifiedThisName != null) {
@@ -65,7 +76,7 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
     		myContextModule = module;
     		myQualifiedThisName = getThisVariableName(module);
     		
-    		Variable<EClassifier, EParameter> thisVar = ExpressionsFactory.eINSTANCE.createVariable();
+    		org.eclipse.ocl.ecore.Variable thisVar = EcoreFactory.eINSTANCE.createVariable();
     		thisVar.setName(myQualifiedThisName);
     		thisVar.setType(module);    		
             addElement(myQualifiedThisName, thisVar, false);    		
@@ -204,8 +215,8 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 		Module libModule = LegacyNativeLibSupport.INSTANCE.defineLibrary(this, lib);
 		myLibs.add(libModule);
 		
-		Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
-		var.setName(libModule.getName() + THIS_VAR_QNAME_SUFFIX);
+		Variable<EClassifier, EParameter> var = EcoreFactory.eINSTANCE.createVariable();
+		var.setName(getThisVariableName(libModule));
 		var.setType(libModule);
 		this.addElement(var.getName(), var, false);
 		
@@ -222,19 +233,11 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 	private void registerModelParameters(OperationalTransformation module) {
 		List<Variable<EClassifier, EParameter>> modelParameters = new ArrayList<Variable<EClassifier,EParameter>>(module.getModelParameter().size());
 		for (ModelParameter modelParam : module.getModelParameter()) {
-            Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE.createVariable();
-            var.setName(modelParam.getName());
-            var.setType(modelParam.getEType());
-            var.setRepresentedParameter(modelParam);
-            modelParameters.add(var);
+			addElement(modelParam.getName(), modelParam, true);
+            modelParameters.add(modelParam);
 		}
-		registerModelParametersImpl(modelParameters);
+
+		myModelParameters = modelParameters;		
 	}
 	
-	private void registerModelParametersImpl(List<Variable<EClassifier, EParameter>> modelParameters) {
-		myModelParameters = modelParameters;
-		for (Variable<EClassifier, EParameter> var : modelParameters) {
-            addElement(var.getName(), var, true);
-		}
-	}	
 }
