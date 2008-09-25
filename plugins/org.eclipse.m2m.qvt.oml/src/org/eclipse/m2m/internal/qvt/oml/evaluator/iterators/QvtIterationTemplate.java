@@ -22,8 +22,6 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
-import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.EvaluationVisitor;
 import org.eclipse.ocl.expressions.OCLExpression;
@@ -57,6 +55,8 @@ public abstract class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT,
     public final boolean isDone() {
         return done;
     }
+    
+    protected abstract Object evaluateResultTemplate(List<Variable<C, PM>> iterators, Variable<EClassifier, EParameter> target, String resultName, OCLExpression<C> condition, OCLExpression<C> body, boolean isOne);
 
     public Object evaluate(Collection<?> coll, 
             List<Variable<C, PM>> iterators,
@@ -77,14 +77,7 @@ public abstract class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT,
             initializeIterators(iterators, javaIters, coll);
 
             while (true) {
-                // evaluate the body of the expression in this environment
-                Object bodyVal = (body == null) ? null : myEvalVisitor.visitExpression(body);
-
-                advanceTarget(target, bodyVal);
-
-                // get the new result value
-                @SuppressWarnings("unchecked")
-                Object resultVal = evaluateResult(iterators, resultName, (OCLExpression<EClassifier>) condition, bodyVal, isOne);
+                Object resultVal = evaluateResultTemplate(iterators, target, resultName, condition, body, isOne);
 
                 // set the result variable in the environment with the result value
                 myEvalEnv.replace(resultName, resultVal);
@@ -182,46 +175,11 @@ public abstract class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT,
         }
     }
 
-    // override this method for different iterator behaviors
-    protected abstract Object evaluateResult(List<Variable<C, PM>> iterators, String resultName, OCLExpression<EClassifier> conditionExp, Object bodyVal, boolean isOne);
-
     protected OCLStandardLibrary<C> getOCLStandardLibrary() {
         return myEvalVisitor.getEnvironment().getOCLStandardLibrary();
     }
 
     protected Object getOclInvalid() {
         return getOCLStandardLibrary().getOclInvalid();
-    }
-    
-    protected Boolean isConditionOk(OCLExpression<EClassifier> conditionExp, Object bodyVal) {
-        // evaluate the condition of the expression in this environment
-        Object conditionVal = conditionExp.accept(myEvalVisitor);
-        if (conditionVal instanceof Boolean) {
-            return (Boolean) conditionVal;
-        } else if (conditionVal instanceof EClassifier){
-            @SuppressWarnings("unchecked")
-            QvtOperationalEvaluationEnv env = (QvtOperationalEvaluationEnv) getEvalEnvironment();
-            return QvtOperationalUtil.oclIsKindOf(bodyVal, (EClassifier) conditionVal, env);
-        } else {
-            setDone(true);
-            return null;
-        }
-    }
-    
-    protected Object returnCheckedEvaluationResult(Object addedElement, boolean isOne, String resultName) {
-        // If the body result is invalid then the entire expression's value
-        // is invalid, because OCL does not permit OclInvalid in a collection
-        if (addedElement == getOclInvalid()) {
-            setDone(true);
-            return getOclInvalid();
-        }
-        if (isOne) {
-            setDone(true);
-            return addedElement;
-        }
-        @SuppressWarnings("unchecked")
-        Collection<Object> resultingCollection = (Collection<Object>) getEvalEnvironment().getValueOf(resultName);
-        resultingCollection.add(addedElement);
-        return resultingCollection;
     }
 }

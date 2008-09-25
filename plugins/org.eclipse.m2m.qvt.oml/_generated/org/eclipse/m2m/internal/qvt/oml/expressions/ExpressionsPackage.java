@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ExpressionsPackage.java,v 1.4 2008/09/24 19:29:07 radvorak Exp $
+ * $Id: ExpressionsPackage.java,v 1.5 2008/09/25 17:35:23 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
@@ -3464,7 +3464,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getInstantiationExp()
 	 * @generated
 	 */
-	int INSTANTIATION_EXP = 36;
+	int INSTANTIATION_EXP = 37;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -4848,6 +4848,97 @@ public interface ExpressionsPackage extends EPackage {
 	int IMPERATIVE_LOOP_EXP_FEATURE_COUNT = org.eclipse.ocl.expressions.ExpressionsPackage.LOOP_EXP_FEATURE_COUNT + 1;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ForExpImpl <em>For Exp</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ForExpImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getForExp()
+	 * @generated
+	 */
+	int FOR_EXP = 35;
+
+	/**
+	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FOR_EXP__START_POSITION = IMPERATIVE_LOOP_EXP__START_POSITION;
+
+	/**
+	 * The feature id for the '<em><b>End Position</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FOR_EXP__END_POSITION = IMPERATIVE_LOOP_EXP__END_POSITION;
+
+	/**
+	 * The feature id for the '<em><b>Property Start Position</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FOR_EXP__PROPERTY_START_POSITION = IMPERATIVE_LOOP_EXP__PROPERTY_START_POSITION;
+
+	/**
+	 * The feature id for the '<em><b>Property End Position</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FOR_EXP__PROPERTY_END_POSITION = IMPERATIVE_LOOP_EXP__PROPERTY_END_POSITION;
+
+	/**
+	 * The feature id for the '<em><b>Source</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FOR_EXP__SOURCE = IMPERATIVE_LOOP_EXP__SOURCE;
+
+	/**
+	 * The feature id for the '<em><b>Body</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FOR_EXP__BODY = IMPERATIVE_LOOP_EXP__BODY;
+
+	/**
+	 * The feature id for the '<em><b>Iterator</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FOR_EXP__ITERATOR = IMPERATIVE_LOOP_EXP__ITERATOR;
+
+	/**
+	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FOR_EXP__CONDITION = IMPERATIVE_LOOP_EXP__CONDITION;
+
+	/**
+	 * The number of structural features of the '<em>For Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FOR_EXP_FEATURE_COUNT = IMPERATIVE_LOOP_EXP_FEATURE_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeIterateExpImpl <em>Imperative Iterate Exp</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4855,7 +4946,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getImperativeIterateExp()
 	 * @generated
 	 */
-	int IMPERATIVE_ITERATE_EXP = 35;
+	int IMPERATIVE_ITERATE_EXP = 36;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -4955,7 +5046,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getReturnExp()
 	 * @generated
 	 */
-	int RETURN_EXP = 37;
+	int RETURN_EXP = 38;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -5001,7 +5092,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getOperationalTransformation()
 	 * @generated
 	 */
-	int OPERATIONAL_TRANSFORMATION = 38;
+	int OPERATIONAL_TRANSFORMATION = 39;
 
 	/**
 	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
@@ -5380,7 +5471,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getDirectionKind()
 	 * @generated
 	 */
-	int DIRECTION_KIND = 39;
+	int DIRECTION_KIND = 40;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.SeverityKind <em>Severity Kind</em>}' enum.
@@ -5390,7 +5481,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getSeverityKind()
 	 * @generated
 	 */
-	int SEVERITY_KIND = 40;
+	int SEVERITY_KIND = 41;
 
 
 	/**
@@ -6459,6 +6550,16 @@ public interface ExpressionsPackage extends EPackage {
 	EReference getImperativeLoopExp_Condition();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ForExp <em>For Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>For Exp</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ForExp
+	 * @generated
+	 */
+	EClass getForExp();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp <em>Imperative Iterate Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7475,6 +7576,16 @@ public interface ExpressionsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference IMPERATIVE_LOOP_EXP__CONDITION = eINSTANCE.getImperativeLoopExp_Condition();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ForExpImpl <em>For Exp</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ForExpImpl
+		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getForExp()
+		 * @generated
+		 */
+		EClass FOR_EXP = eINSTANCE.getForExp();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeIterateExpImpl <em>Imperative Iterate Exp</em>}' class.

@@ -279,6 +279,10 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createImperativeLoopExpAdapter();
 			}
 			@Override
+			public Adapter caseForExp(ForExp object) {
+				return createForExpAdapter();
+			}
+			@Override
 			public Adapter caseImperativeIterateExp(ImperativeIterateExp object) {
 				return createImperativeIterateExpAdapter();
 			}
@@ -893,6 +897,20 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	}
 
                 /**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ForExp <em>For Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ForExp
+	 * @generated
+	 */
+	public Adapter createForExpAdapter() {
+		return null;
+	}
+
+																/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp <em>Imperative Iterate Exp</em>}'.
 	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;

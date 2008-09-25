@@ -23,7 +23,7 @@ import org.eclipse.ocl.expressions.Variable;
  * Created on Jan 31, 2008
  */
 public class QvtIterationTemplateCollectSelect<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
-extends QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
+extends QvtImperativeIteratorTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
     private QvtIterationTemplateCollectSelect(EvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> v) {
         super(v);
     }

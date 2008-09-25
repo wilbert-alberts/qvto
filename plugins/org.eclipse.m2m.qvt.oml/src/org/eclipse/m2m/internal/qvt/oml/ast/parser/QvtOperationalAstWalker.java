@@ -29,6 +29,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ForExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp;
@@ -544,5 +545,9 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
         doProcess(contextualProperty.getInitExpression(), contextualProperty);
         return null;
 	}
+
+    public Object visitForExp(ForExp forExp) {
+        return visitImperativeLoopExp(forExp);
+    }
 	
 }

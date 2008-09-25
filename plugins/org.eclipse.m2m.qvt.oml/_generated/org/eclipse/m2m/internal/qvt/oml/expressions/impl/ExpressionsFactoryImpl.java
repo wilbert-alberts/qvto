@@ -140,6 +140,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 			case ExpressionsPackage.LOG_EXP: return createLogExp();
 			case ExpressionsPackage.ASSERT_EXP: return createAssertExp();
 			case ExpressionsPackage.IMPERATIVE_LOOP_EXP: return createImperativeLoopExp();
+			case ExpressionsPackage.FOR_EXP: return createForExp();
 			case ExpressionsPackage.IMPERATIVE_ITERATE_EXP: return createImperativeIterateExp();
 			case ExpressionsPackage.INSTANTIATION_EXP: return createInstantiationExp();
 			case ExpressionsPackage.RETURN_EXP: return createReturnExp();
@@ -504,6 +505,16 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	}
 
                 /**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ForExp createForExp() {
+		ForExpImpl forExp = new ForExpImpl();
+		return forExp;
+	}
+
+																/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated

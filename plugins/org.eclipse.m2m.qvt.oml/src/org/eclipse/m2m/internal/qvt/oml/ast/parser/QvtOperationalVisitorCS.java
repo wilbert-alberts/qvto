@@ -51,6 +51,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.ExpressionStatementCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
@@ -103,6 +104,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ForExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
@@ -442,7 +444,11 @@ public class QvtOperationalVisitorCS
 	            return assertExp((AssertExpCS) oclExpressionCS, (QvtOperationalEnv) env);
 	        }
 
-	        if (oclExpressionCS instanceof ImperativeIterateExpCS) {
+            if (oclExpressionCS instanceof ForExpCS) {
+                return visitForExp((ForExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+            }
+
+            if (oclExpressionCS instanceof ImperativeIterateExpCS) {
 	            return visitImperativeIterateExp((ImperativeIterateExpCS) oclExpressionCS, (QvtOperationalEnv) env);
 	        }
 
@@ -2900,6 +2906,54 @@ public class QvtOperationalVisitorCS
 		}    	
     	
         return resolveExp;
+    }
+
+    private OCLExpression<EClassifier> visitForExp(ForExpCS forExpCS, QvtOperationalEnv env) {
+        OCLExpression<EClassifier> source =
+            getCollectionSourceExpression(forExpCS.getSource(), env);
+        if (!(source.getType() instanceof CollectionType)) {
+            return createDummyInvalidLiteralExp();
+        }
+        String name = forExpCS.getSimpleNameCS().getValue();
+
+        Variable<EClassifier, EParameter> vdcl = variableDeclarationCS(forExpCS.getVariable1(), env, true);
+        
+        ForExp astNode = ExpressionsFactory.eINSTANCE.createForExp();
+        initASTMapping(env, astNode, forExpCS);
+        astNode.setName(name);
+        astNode.setStartPosition(forExpCS.getStartOffset());
+        astNode.setEndPosition(forExpCS.getEndOffset());
+        astNode.setType(env.getOCLStandardLibrary().getOclVoid());
+
+        EList<Variable<EClassifier, EParameter>> iterators = astNode.getIterator();
+        @SuppressWarnings("unchecked")
+        CollectionType<EClassifier, EOperation> sourceCollectionType = (CollectionType<EClassifier, EOperation>) source.getType();
+        vdcl.setType(sourceCollectionType.getElementType());
+        iterators.add(vdcl);
+        
+        Variable<EClassifier, EParameter> vdcl1 = null;
+        if (forExpCS.getVariable2() != null) {
+            vdcl1 = variableDeclarationCS(forExpCS.getVariable2(), env, true);
+            vdcl1.setType(sourceCollectionType.getElementType());
+            iterators.add(vdcl1);
+        }
+        
+        if (forExpCS.getCondition() != null) { 
+            OCLExpression<EClassifier> conditionExp = oclExpressionCS(forExpCS.getCondition(), env);
+            astNode.setCondition(conditionExp);
+        }
+        
+        OCLExpression<EClassifier> bodyExp = oclExpressionCS(forExpCS.getBody(), env);
+        astNode.setBody(bodyExp);
+        
+        astNode.setSource(source);
+        
+        env.deleteElement(vdcl.getName());
+        if (vdcl1 != null) {
+            env.deleteElement(vdcl1.getName());
+        }
+
+        return astNode;
     }
     
     private OCLExpression<EClassifier> visitImperativeIterateExp(ImperativeIterateExpCS imperativeIterateExpCS, QvtOperationalEnv env) {

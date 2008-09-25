@@ -870,6 +870,10 @@
         <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
         <eParameters name="imperativeLoopExp" lowerBound="1" eType="#//expressions/ImperativeLoopExp"/>
       </eOperations>
+      <eOperations name="visitForExp">
+        <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
+        <eParameters name="forExp" lowerBound="1" eType="#//expressions/ForExp"/>
+      </eOperations>
       <eOperations name="visitImperativeIterateExp">
         <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
         <eParameters name="imperativeIterateExp" lowerBound="1" eType="#//expressions/ImperativeIterateExp"/>
@@ -1073,6 +1077,32 @@
         <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EParameter"/>
       </eGenericSuperTypes>
       <eGenericSuperTypes eClassifier="#//expressions/ImperativeExpression"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ForExp" eSuperTypes="#//expressions/ImperativeLoopExp">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitForExp(this);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/ForExp/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/ForExp/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/ForExp/accept/U"/>
+        </eParameters>
+      </eOperations>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ImperativeIterateExp" eSuperTypes="#//expressions/ImperativeLoopExp">
       <eOperations name="accept">

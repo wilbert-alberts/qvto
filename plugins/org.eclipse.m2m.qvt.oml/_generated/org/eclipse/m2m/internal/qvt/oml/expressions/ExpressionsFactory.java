@@ -325,6 +325,15 @@ public interface ExpressionsFactory extends EFactory {
     ImperativeLoopExp createImperativeLoopExp();
 
                 /**
+	 * Returns a new object of class '<em>For Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>For Exp</em>'.
+	 * @generated
+	 */
+	ForExp createForExp();
+
+																/**
 	 * Returns a new object of class '<em>Imperative Iterate Exp</em>'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

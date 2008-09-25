@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ExpressionsPackageImpl.java,v 1.5 2008/09/24 19:29:07 radvorak Exp $
+ * $Id: ExpressionsPackageImpl.java,v 1.6 2008/09/25 17:35:23 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -34,6 +34,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ForExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeExpression;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp;
@@ -327,6 +328,13 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 	 * @generated
 	 */
 	private EClass imperativeLoopExpEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass forExpEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1371,6 +1379,15 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getForExp() {
+		return forExpEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getImperativeIterateExp() {
 		return imperativeIterateExpEClass;
 	}
@@ -1637,6 +1654,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		imperativeLoopExpEClass = createEClass(IMPERATIVE_LOOP_EXP);
 		createEReference(imperativeLoopExpEClass, IMPERATIVE_LOOP_EXP__CONDITION);
 
+		forExpEClass = createEClass(FOR_EXP);
+
 		imperativeIterateExpEClass = createEClass(IMPERATIVE_ITERATE_EXP);
 		createEReference(imperativeIterateExpEClass, IMPERATIVE_ITERATE_EXP__TARGET);
 
@@ -1782,6 +1801,7 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		imperativeLoopExpEClass.getEGenericSuperTypes().add(g1);
 		g1 = createEGenericType(this.getImperativeExpression());
 		imperativeLoopExpEClass.getEGenericSuperTypes().add(g1);
+		forExpEClass.getESuperTypes().add(this.getImperativeLoopExp());
 		imperativeIterateExpEClass.getESuperTypes().add(this.getImperativeLoopExp());
 		instantiationExpEClass.getESuperTypes().add(this.getImperativeExpression());
 		returnExpEClass.getESuperTypes().add(this.getImperativeExpression());
@@ -2750,6 +2770,11 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		g1 = createEGenericType(extendedVisitorEClass_T);
 		initEOperation(op, g1);
 
+		op = addEOperation(extendedVisitorEClass, null, "visitForExp", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getForExp(), "forExp", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(extendedVisitorEClass_T);
+		initEOperation(op, g1);
+
 		op = addEOperation(extendedVisitorEClass, null, "visitImperativeIterateExp", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getImperativeIterateExp(), "imperativeIterateExp", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(extendedVisitorEClass_T);
@@ -2907,6 +2932,38 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		initEReference(getImperativeLoopExp_Condition(), g1, null, "condition", null, 0, 1, ImperativeLoopExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		op = addEOperation(imperativeLoopExpEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		t1 = addETypeParameter(op, "T"); //$NON-NLS-1$
+		t2 = addETypeParameter(op, "U"); //$NON-NLS-1$
+		g1 = createEGenericType(theUtilitiesPackage.getVisitor());
+		g2 = createEGenericType(t1);
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		t2.getEBounds().add(g1);
+		g1 = createEGenericType(t2);
+		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(t1);
+		initEOperation(op, g1);
+
+		initEClass(forExpEClass, ForExp.class, "ForExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		op = addEOperation(forExpEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "T"); //$NON-NLS-1$
 		t2 = addETypeParameter(op, "U"); //$NON-NLS-1$
 		g1 = createEGenericType(theUtilitiesPackage.getVisitor());

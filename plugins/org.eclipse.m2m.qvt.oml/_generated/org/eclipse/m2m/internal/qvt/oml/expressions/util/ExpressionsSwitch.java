@@ -581,6 +581,21 @@ public class ExpressionsSwitch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ExpressionsPackage.FOR_EXP: {
+				ForExp forExp = (ForExp)theEObject;
+				T1 result = caseForExp(forExp);
+				if (result == null) result = caseImperativeLoopExp(forExp);
+				if (result == null) result = caseLoopExp(forExp);
+				if (result == null) result = caseImperativeExpression(forExp);
+				if (result == null) result = caseCallExp(forExp);
+				if (result == null) result = caseOCLExpression(forExp);
+				if (result == null) result = caseCallingASTNode(forExp);
+				if (result == null) result = caseTypedElement(forExp);
+				if (result == null) result = caseVisitable(forExp);
+				if (result == null) result = caseASTNode(forExp);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ExpressionsPackage.IMPERATIVE_ITERATE_EXP: {
 				ImperativeIterateExp imperativeIterateExp = (ImperativeIterateExp)theEObject;
 				T1 result = caseImperativeIterateExp(imperativeIterateExp);
@@ -1163,6 +1178,21 @@ public class ExpressionsSwitch<T1> {
 	}
 
                 /**
+	 * Returns the result of interpreting the object as an instance of '<em>For Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>For Exp</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseForExp(ForExp object) {
+		return null;
+	}
+
+																/**
 	 * Returns the result of interpreting the object as an instance of '<em>Imperative Iterate Exp</em>'.
 	 * <!-- begin-user-doc -->
      * This implementation returns null;

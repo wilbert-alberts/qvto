@@ -52,6 +52,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.iterators.QvtIterationTemplateCollectSelect;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.iterators.QvtIterationTemplateForExp;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.iterators.QvtIterationTemplateXCollect;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.iterators.QvtIterationTemplateXSelect;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
@@ -62,6 +63,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ForExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp;
@@ -970,6 +972,34 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 	
     public Object visitImperativeLoopExp(ImperativeLoopExp imperativeLoopExp) {
         throw new UnsupportedOperationException();
+    }
+    
+    public Object visitForExp(ForExp forExp) {
+        Object sourceValue = forExp.getSource().accept(getVisitor());
+        
+        if (!isUndefined(sourceValue)) {
+            // generate a name for the result variable and add it to the environment
+            String resultName = generateName();
+            getEvaluationEnvironment().add(resultName, null);
+            
+            Collection<?> sourceCollection = (Collection<?>) sourceValue;
+            // get the list of ocl iterators
+            List<Variable<EClassifier, EParameter>> iterators = forExp.getIterator();
+            // get the condition expression
+            OCLExpression<EClassifier> condition = forExp.getCondition();
+            // get the body expression
+            OCLExpression<EClassifier> body = forExp.getBody();
+            
+            // evaluate
+            QvtIterationTemplateForExp.getInstance(getVisitor()).evaluate(
+                    sourceCollection, iterators, null, condition, body, resultName, "forOne".equals(forExp.getName())); //$NON-NLS-1$
+
+            // remove result name from environment
+            getEvaluationEnvironment().remove(resultName);
+            
+        }
+        
+        return null;
     }
 
     public Object visitImperativeIterateExp(ImperativeIterateExp imperativeIterateExp) {
@@ -1991,5 +2021,4 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     
     private OCLAnnotationSupport oclAnnotationSupport;
     private boolean isInTerminatingState = false;
-
 }
