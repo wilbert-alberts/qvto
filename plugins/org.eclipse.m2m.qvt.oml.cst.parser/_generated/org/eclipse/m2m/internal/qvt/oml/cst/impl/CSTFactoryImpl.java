@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactoryImpl.java,v 1.2 2008/04/24 12:15:21 sboyko Exp $
+ * $Id: CSTFactoryImpl.java,v 1.3 2008/09/25 17:35:30 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -116,6 +116,7 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 			case CSTPackage.LOG_EXP_CS: return createLogExpCS();
 			case CSTPackage.ASSERT_EXP_CS: return createAssertExpCS();
 			case CSTPackage.IMPERATIVE_LOOP_EXP_CS: return createImperativeLoopExpCS();
+			case CSTPackage.FOR_EXP_CS: return createForExpCS();
 			case CSTPackage.IMPERATIVE_ITERATE_EXP_CS: return createImperativeIterateExpCS();
 			case CSTPackage.RETURN_EXP_CS: return createReturnExpCS();
 			case CSTPackage.MAPPING_EXTENSION_CS: return createMappingExtensionCS();
@@ -561,6 +562,16 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 */
+    public ForExpCS createForExpCS() {
+		ForExpCSImpl forExpCS = new ForExpCSImpl();
+		return forExpCS;
+	}
+
+    /**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

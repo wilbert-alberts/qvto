@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackage.java,v 1.4 2008/05/15 13:53:39 radvorak Exp $
+ * $Id: CSTPackage.java,v 1.5 2008/09/25 17:35:30 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -3119,6 +3119,106 @@ public interface CSTPackage extends EPackage {
 	int IMPERATIVE_LOOP_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS_FEATURE_COUNT + 1;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ForExpCSImpl <em>For Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ForExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getForExpCS()
+	 * @generated
+	 */
+    int FOR_EXP_CS = 45;
+
+    /**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int FOR_EXP_CS__START_OFFSET = IMPERATIVE_LOOP_EXP_CS__START_OFFSET;
+
+    /**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int FOR_EXP_CS__END_OFFSET = IMPERATIVE_LOOP_EXP_CS__END_OFFSET;
+
+    /**
+	 * The feature id for the '<em><b>Source</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int FOR_EXP_CS__SOURCE = IMPERATIVE_LOOP_EXP_CS__SOURCE;
+
+    /**
+	 * The feature id for the '<em><b>Accessor</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int FOR_EXP_CS__ACCESSOR = IMPERATIVE_LOOP_EXP_CS__ACCESSOR;
+
+    /**
+	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int FOR_EXP_CS__SIMPLE_NAME_CS = IMPERATIVE_LOOP_EXP_CS__SIMPLE_NAME_CS;
+
+    /**
+	 * The feature id for the '<em><b>Variable1</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int FOR_EXP_CS__VARIABLE1 = IMPERATIVE_LOOP_EXP_CS__VARIABLE1;
+
+    /**
+	 * The feature id for the '<em><b>Variable2</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int FOR_EXP_CS__VARIABLE2 = IMPERATIVE_LOOP_EXP_CS__VARIABLE2;
+
+    /**
+	 * The feature id for the '<em><b>Body</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int FOR_EXP_CS__BODY = IMPERATIVE_LOOP_EXP_CS__BODY;
+
+    /**
+	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int FOR_EXP_CS__CONDITION = IMPERATIVE_LOOP_EXP_CS__CONDITION;
+
+    /**
+	 * The number of structural features of the '<em>For Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int FOR_EXP_CS_FEATURE_COUNT = IMPERATIVE_LOOP_EXP_CS_FEATURE_COUNT + 0;
+
+    /**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ImperativeIterateExpCSImpl <em>Imperative Iterate Exp CS</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3126,7 +3226,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getImperativeIterateExpCS()
 	 * @generated
 	 */
-	int IMPERATIVE_ITERATE_EXP_CS = 45;
+	int IMPERATIVE_ITERATE_EXP_CS = 46;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3235,7 +3335,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getReturnExpCS()
 	 * @generated
 	 */
-	int RETURN_EXP_CS = 46;
+	int RETURN_EXP_CS = 47;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3281,7 +3381,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingExtensionCS()
 	 * @generated
 	 */
-	int MAPPING_EXTENSION_CS = 47;
+	int MAPPING_EXTENSION_CS = 48;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3336,7 +3436,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getDirectionKindEnum()
 	 * @generated
 	 */
-	int DIRECTION_KIND_ENUM = 48;
+	int DIRECTION_KIND_ENUM = 49;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindEnum <em>Module Kind Enum</em>}' enum.
@@ -3346,7 +3446,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getModuleKindEnum()
 	 * @generated
 	 */
-	int MODULE_KIND_ENUM = 49;
+	int MODULE_KIND_ENUM = 50;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum <em>Import Kind Enum</em>}' enum.
@@ -3356,7 +3456,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getImportKindEnum()
 	 * @generated
 	 */
-	int IMPORT_KIND_ENUM = 50;
+	int IMPORT_KIND_ENUM = 51;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionKindCS <em>Mapping Extension Kind CS</em>}' enum.
@@ -3366,7 +3466,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingExtensionKindCS()
 	 * @generated
 	 */
-	int MAPPING_EXTENSION_KIND_CS = 51;
+	int MAPPING_EXTENSION_KIND_CS = 52;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS <em>Qualifier Kind CS</em>}' enum.
@@ -3376,7 +3476,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getQualifierKindCS()
 	 * @generated
 	 */
-	int QUALIFIER_KIND_CS = 52;
+	int QUALIFIER_KIND_CS = 53;
 
 
 	/**
@@ -4919,6 +5019,16 @@ public interface CSTPackage extends EPackage {
 	EReference getImperativeLoopExpCS_Condition();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS <em>For Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>For Exp CS</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS
+	 * @generated
+	 */
+    EClass getForExpCS();
+
+    /**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS <em>Imperative Iterate Exp CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6307,6 +6417,16 @@ public interface CSTPackage extends EPackage {
 		EReference IMPERATIVE_LOOP_EXP_CS__CONDITION = eINSTANCE.getImperativeLoopExpCS_Condition();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ForExpCSImpl <em>For Exp CS</em>}' class.
+		 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ForExpCSImpl
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getForExpCS()
+		 * @generated
+		 */
+        EClass FOR_EXP_CS = eINSTANCE.getForExpCS();
+
+        /**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ImperativeIterateExpCSImpl <em>Imperative Iterate Exp CS</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->

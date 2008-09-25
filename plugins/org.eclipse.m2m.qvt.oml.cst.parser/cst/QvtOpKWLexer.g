@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpKWLexer.g,v 1.2 2008/04/24 12:15:21 sboyko Exp $ 
+-- * $Id: QvtOpKWLexer.g,v 1.3 2008/09/25 17:35:30 aigdalov Exp $ 
 -- */
 --
 -- The QVT KeyWord Lexer
@@ -75,7 +75,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpKWLexer.g,v 1.2 2008/04/24 12:15:21 sboyko Exp $
+ * $Id: QvtOpKWLexer.g,v 1.3 2008/09/25 17:35:30 aigdalov Exp $
  */
 	./
 $End
@@ -139,6 +139,8 @@ $Export
 	disjuncts
 	merges
 	inherits	
+	forEach
+	forOne
 $End
 
 $Rules
@@ -493,6 +495,18 @@ $Rules
 		| c o l l e c t s e l e c t O n e
 		/.$BeginAction
 			$setResult($_collectselectOne);
+		  $EndAction
+		./
+
+		| f o r E a c h
+		/.$BeginAction
+			$setResult($_forEach);
+		  $EndAction
+		./
+		
+		| f o r O n e
+		/.$BeginAction
+			$setResult($_forOne);
 		  $EndAction
 		./
 		

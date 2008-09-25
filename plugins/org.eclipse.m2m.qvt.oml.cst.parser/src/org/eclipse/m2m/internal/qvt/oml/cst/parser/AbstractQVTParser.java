@@ -28,6 +28,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.ElementWithBody;
 import org.eclipse.m2m.internal.qvt.oml.cst.ExpressionStatementCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum;
@@ -596,7 +597,30 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	}
 	
 
-	protected final CSTNode createSwitchExpCS(EList<SwitchAltExpCS> altExps, OCLExpressionCS elseExp) {
+	protected final CSTNode createForExpCS(IToken opCode, EList<IToken> iterators, OCLExpressionCS condition, BlockExpCS body) {
+	    ForExpCS forExpCS = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createForExpCS();
+
+	    SimpleNameCS operCodeSimpleName = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, opCode.toString());
+        operCodeSimpleName.setStartOffset(opCode.getStartOffset());
+        operCodeSimpleName.setEndOffset(opCode.getEndOffset());
+        forExpCS.setSimpleNameCS(operCodeSimpleName);
+
+        VariableCS[] iterVars = new VariableCS[iterators.size()];
+        for (int i = 0, n = iterVars.length; i < n; i++) {
+            iterVars[i] = createVariableCS(iterators.get(i).toString(), null, null);
+        }
+        forExpCS.setVariable1(iterVars[0]);
+        if (iterVars.length > 1) {
+            forExpCS.setVariable2(iterVars[1]);
+        }
+        
+        forExpCS.setCondition(condition);
+        forExpCS.setBody(body);
+        
+        return forExpCS;
+    }
+
+    protected final CSTNode createSwitchExpCS(EList<SwitchAltExpCS> altExps, OCLExpressionCS elseExp) {
 		SwitchExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createSwitchExpCS();
 		result.getAlternativePart().addAll(altExps);
 		result.setElsePart(elseExp);

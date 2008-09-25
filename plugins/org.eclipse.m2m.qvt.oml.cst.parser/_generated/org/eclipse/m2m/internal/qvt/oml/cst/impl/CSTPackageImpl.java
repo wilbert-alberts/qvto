@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.4 2008/05/15 13:53:39 radvorak Exp $
+ * $Id: CSTPackageImpl.java,v 1.5 2008/09/25 17:35:30 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -34,6 +34,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.ElementWithBody;
 import org.eclipse.m2m.internal.qvt.oml.cst.ExpressionStatementCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeLoopExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
@@ -413,6 +414,13 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	private EClass imperativeLoopExpCSEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 */
+    private EClass forExpCSEClass = null;
+
+    /**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -1842,6 +1850,15 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 */
+    public EClass getForExpCS() {
+		return forExpCSEClass;
+	}
+
+    /**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -2165,6 +2182,8 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		imperativeLoopExpCSEClass = createEClass(IMPERATIVE_LOOP_EXP_CS);
 		createEReference(imperativeLoopExpCSEClass, IMPERATIVE_LOOP_EXP_CS__CONDITION);
 
+		forExpCSEClass = createEClass(FOR_EXP_CS);
+
 		imperativeIterateExpCSEClass = createEClass(IMPERATIVE_ITERATE_EXP_CS);
 		createEReference(imperativeIterateExpCSEClass, IMPERATIVE_ITERATE_EXP_CS__TARGET);
 
@@ -2266,6 +2285,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		assertExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
 		imperativeLoopExpCSEClass.getESuperTypes().add(theCSTPackage_1.getLoopExpCS());
 		imperativeLoopExpCSEClass.getESuperTypes().add(this.getStatementCS());
+		forExpCSEClass.getESuperTypes().add(this.getImperativeLoopExpCS());
 		imperativeIterateExpCSEClass.getESuperTypes().add(this.getImperativeLoopExpCS());
 		returnExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
 		mappingExtensionCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
@@ -2459,6 +2479,8 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
 		initEClass(imperativeLoopExpCSEClass, ImperativeLoopExpCS.class, "ImperativeLoopExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getImperativeLoopExpCS_Condition(), theCSTPackage_1.getOCLExpressionCS(), null, "condition", null, 1, 1, ImperativeLoopExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(forExpCSEClass, ForExpCS.class, "ForExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(imperativeIterateExpCSEClass, ImperativeIterateExpCS.class, "ImperativeIterateExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getImperativeIterateExpCS_Target(), theCSTPackage_1.getVariableCS(), null, "target", null, 0, 1, ImperativeIterateExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

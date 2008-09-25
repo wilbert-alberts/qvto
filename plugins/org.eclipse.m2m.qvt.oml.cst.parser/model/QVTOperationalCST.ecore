@@ -5,7 +5,7 @@
     nsURI="http://www.eclipse.org/QVT2/1.0.0/Operational" nsPrefix="qvtoperational">
   <eSubpackages name="cst" nsURI="http://www.eclipse.org/QVT2/1.0.0/Operational/cst"
       nsPrefix="qvtoperational.cst">
-    <eClassifiers xsi:type="ecore:EClass" name="MappingModuleCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+    <eClassifiers xsi:type="ecore:EClass" name="MappingModuleCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
       <eStructuralFeatures xsi:type="ecore:EReference" name="headerCS" lowerBound="1"
           eType="#//cst/TransformationHeaderCS" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="imports" upperBound="-1"
@@ -20,49 +20,49 @@
           eType="#//cst/MappingMethodCS" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="LibraryCS" eSuperTypes="#//cst/MappingModuleCS"/>
-    <eClassifiers xsi:type="ecore:EClass" name="ImportCS" abstract="true" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="pathNameCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/PathNameCS"
+    <eClassifiers xsi:type="ecore:EClass" name="ImportCS" abstract="true" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="pathNameCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/PathNameCS"
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ModuleImportCS" eSuperTypes="#//cst/ImportCS"/>
     <eClassifiers xsi:type="ecore:EClass" name="LibraryImportCS" eSuperTypes="#//cst/ImportCS"/>
-    <eClassifiers xsi:type="ecore:EClass" name="RenameCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="typeCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
+    <eClassifiers xsi:type="ecore:EClass" name="RenameCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="typeCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="originalName" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/StringLiteralExpCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="originalName" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/StringLiteralExpCS"
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ModulePropertyCS" abstract="true"
-        eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
+        eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ConfigPropertyCS" eSuperTypes="#//cst/ModulePropertyCS">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="typeCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="typeCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="LocalPropertyCS" eSuperTypes="#//cst/ModulePropertyCS">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="typeCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="typeCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="oclExpressionCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="oclExpressionCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ContextualPropertyCS" eSuperTypes="#//cst/ModulePropertyCS">
       <eStructuralFeatures xsi:type="ecore:EReference" name="scopedNameCS" eType="#//cst/temp/ScopedNameCS"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="typeCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="typeCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="oclExpressionCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="oclExpressionCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="MappingDeclarationCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
+    <eClassifiers xsi:type="ecore:EClass" name="MappingDeclarationCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="contextType" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="contextType" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="contextTypeAndName" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="contextTypeAndName" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
           eType="#//cst/ParameterDeclarationCS" containment="true"/>
@@ -72,8 +72,8 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="directionKindCS" eType="#//cst/DirectionKindCS"
           containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="ParameterDeclarationCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
+    <eClassifiers xsi:type="ecore:EClass" name="ParameterDeclarationCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="typeSpecCS" eType="#//cst/TypeSpecCS"
           containment="true"/>
@@ -85,14 +85,14 @@
       <eLiterals name="out"/>
       <eLiterals name="inout"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="MappingMethodCS" abstract="true" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+    <eClassifiers xsi:type="ecore:EClass" name="MappingMethodCS" abstract="true" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="qualifiers" unique="false"
           upperBound="-1" eType="#//cst/QualifierKindCS"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="mappingDeclarationCS"
           eType="#//cst/MappingDeclarationCS" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="MappingRuleCS" eSuperTypes="#//cst/MappingMethodCS">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="guard" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="guard" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="mappingInitCS" eType="#//cst/MappingInitCS"
           containment="true"/>
@@ -105,11 +105,11 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="MappingQueryCS" eSuperTypes="#//cst/MappingMethodCS">
       <eStructuralFeatures xsi:type="ecore:EReference" name="expressions" upperBound="-1"
-          eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="MappingSectionCS" abstract="true"
-        eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode #//cst/ElementWithBody">
+        eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode #//cst/ElementWithBody">
       <eStructuralFeatures xsi:type="ecore:EReference" name="statements" upperBound="-1"
           eType="#//cst/StatementCS" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="mappingRuleCS" eType="#//cst/MappingRuleCS"
@@ -117,85 +117,85 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="MappingInitCS" eSuperTypes="#//cst/MappingSectionCS"/>
     <eClassifiers xsi:type="ecore:EClass" name="MappingEndCS" eSuperTypes="#//cst/MappingSectionCS"/>
-    <eClassifiers xsi:type="ecore:EClass" name="StatementCS" abstract="true" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"/>
+    <eClassifiers xsi:type="ecore:EClass" name="StatementCS" abstract="true" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"/>
     <eClassifiers xsi:type="ecore:EClass" name="AssignStatementCS" eSuperTypes="#//cst/StatementCS">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="lValueCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="lValueCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="oclExpressionCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="oclExpressionCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="incremental" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ExpressionStatementCS" eSuperTypes="#//cst/StatementCS">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="oclExpressionCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="oclExpressionCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="VariableInitializationCS" eSuperTypes="#//cst/StatementCS">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="oclExpressionCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="oclExpressionCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="typeCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="typeCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
           containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="MappingBodyCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS">
+    <eClassifiers xsi:type="ecore:EClass" name="MappingBodyCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS">
       <eStructuralFeatures xsi:type="ecore:EReference" name="content" upperBound="-1"
-          eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="hasImplicitObjectExp"
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="hasPopulationSection"
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="OutExpCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS #//cst/ElementWithBody">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
+    <eClassifiers xsi:type="ecore:EClass" name="OutExpCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS #//cst/ElementWithBody">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="typeSpecCS" eType="#//cst/TypeSpecCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="expressions" upperBound="-1"
-          eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="PatternPropertyExpCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
+    <eClassifiers xsi:type="ecore:EClass" name="PatternPropertyExpCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="oclExpressionCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="oclExpressionCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="incremental" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="MappingCallExpCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OperationCallExpCS">
+    <eClassifiers xsi:type="ecore:EClass" name="MappingCallExpCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OperationCallExpCS">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="strict" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="WhileExpCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS">
+    <eClassifiers xsi:type="ecore:EClass" name="WhileExpCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS">
       <eStructuralFeatures xsi:type="ecore:EReference" name="body" lowerBound="1"
-          eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="result" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="result" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="resultVar" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/VariableCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="resultVar" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/VariableCS"
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="SwitchExpCS" eSuperTypes="#//cst/StatementCS">
       <eStructuralFeatures xsi:type="ecore:EReference" name="alternativePart" lowerBound="1"
           upperBound="-1" eType="#//cst/SwitchAltExpCS" containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="elsePart" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="elsePart" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="SwitchAltExpCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+    <eClassifiers xsi:type="ecore:EClass" name="SwitchAltExpCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
       <eStructuralFeatures xsi:type="ecore:EReference" name="condition" lowerBound="1"
-          eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="body" lowerBound="1"
-          eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="BlockExpCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS">
+    <eClassifiers xsi:type="ecore:EClass" name="BlockExpCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS">
       <eStructuralFeatures xsi:type="ecore:EReference" name="bodyExpressions" upperBound="-1"
-          eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="DirectionKindCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+    <eClassifiers xsi:type="ecore:EClass" name="DirectionKindCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="directionKind" eType="#//cst/DirectionKindEnum"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ElementWithBody" abstract="true">
@@ -204,48 +204,48 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="bodyEndLocation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
           defaultValueLiteral="0"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="ResolveExpCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CallExpCS">
+    <eClassifiers xsi:type="ecore:EClass" name="ResolveExpCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CallExpCS">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="one" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInverse" lowerBound="1"
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="isDeferred" lowerBound="1"
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/VariableCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/VariableCS"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ResolveInExpCS" eSuperTypes="#//cst/ResolveExpCS">
       <eStructuralFeatures xsi:type="ecore:EReference" name="inMappingType" lowerBound="1"
-          eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="inMappingName" lowerBound="1"
-          eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
           containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="ModelTypeCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode #//cst/ElementWithBody">
+    <eClassifiers xsi:type="ecore:EClass" name="ModelTypeCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode #//cst/ElementWithBody">
       <eStructuralFeatures xsi:type="ecore:EReference" name="identifierCS" lowerBound="1"
-          eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="complianceKindCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/StringLiteralExpCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="complianceKindCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/StringLiteralExpCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="packageRefs" lowerBound="1"
           upperBound="-1" eType="#//cst/PackageRefCS" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="whereStatements" upperBound="-1"
           eType="#//cst/StatementCS" containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="PackageRefCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="pathNameCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/PathNameCS"
+    <eClassifiers xsi:type="ecore:EClass" name="PackageRefCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="pathNameCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/PathNameCS"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="uriCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/StringLiteralExpCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="uriCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/StringLiteralExpCS"
           containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="TransformationHeaderCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+    <eClassifiers xsi:type="ecore:EClass" name="TransformationHeaderCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
       <eStructuralFeatures xsi:type="ecore:EReference" name="qualifiers" upperBound="-1"
-          eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/StringLiteralExpCS"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/StringLiteralExpCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="pathNameCS" lowerBound="1"
-          eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/PathNameCS"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/PathNameCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
           eType="#//cst/ParameterDeclarationCS" containment="true"/>
@@ -258,12 +258,12 @@
       <eLiterals name="transformation"/>
       <eLiterals name="library" value="1"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="ModuleKindCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+    <eClassifiers xsi:type="ecore:EClass" name="ModuleKindCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="moduleKind" eType="#//cst/ModuleKindEnum"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="ModuleRefCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+    <eClassifiers xsi:type="ecore:EClass" name="ModuleRefCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
       <eStructuralFeatures xsi:type="ecore:EReference" name="pathNameCS" lowerBound="1"
-          eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/PathNameCS"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/PathNameCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
           eType="#//cst/ParameterDeclarationCS" containment="true"/>
@@ -272,54 +272,55 @@
       <eLiterals name="extension"/>
       <eLiterals name="access" value="1"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="ModuleUsageCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+    <eClassifiers xsi:type="ecore:EClass" name="ModuleUsageCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="importKind" eType="#//cst/ImportKindEnum"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="moduleKindCS" eType="#//cst/ModuleKindCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="moduleRefs" lowerBound="1"
           upperBound="-1" eType="#//cst/ModuleRefCS" containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="TransformationRefineCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+    <eClassifiers xsi:type="ecore:EClass" name="TransformationRefineCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
       <eStructuralFeatures xsi:type="ecore:EReference" name="moduleRefCS" lowerBound="1"
           eType="#//cst/ModuleRefCS" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" lowerBound="1"
-          eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
           containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="TypeSpecCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+    <eClassifiers xsi:type="ecore:EClass" name="TypeSpecCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
       <eStructuralFeatures xsi:type="ecore:EReference" name="typeCS" lowerBound="1"
-          eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
-          containment="true"/>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="LogExpCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OperationCallExpCS">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
           containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="AssertExpCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS">
+    <eClassifiers xsi:type="ecore:EClass" name="LogExpCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OperationCallExpCS">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="AssertExpCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS">
       <eStructuralFeatures xsi:type="ecore:EReference" name="assertion" lowerBound="1"
-          eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="log" eType="#//cst/LogExpCS"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="severity" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="severity" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
           containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="ImperativeLoopExpCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/LoopExpCS #//cst/StatementCS">
+    <eClassifiers xsi:type="ecore:EClass" name="ImperativeLoopExpCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/LoopExpCS #//cst/StatementCS">
       <eStructuralFeatures xsi:type="ecore:EReference" name="condition" lowerBound="1"
-          eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
     </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ForExpCS" eSuperTypes="#//cst/ImperativeLoopExpCS"/>
     <eClassifiers xsi:type="ecore:EClass" name="ImperativeIterateExpCS" eSuperTypes="#//cst/ImperativeLoopExpCS">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/VariableCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/VariableCS"
           containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="ReturnExpCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+    <eClassifiers xsi:type="ecore:EClass" name="ReturnExpCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="MappingExtensionCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+    <eClassifiers xsi:type="ecore:EClass" name="MappingExtensionCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="#//cst/MappingExtensionKindCS"
           defaultValueLiteral="disjuncts"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="mappingIdentifiers" lowerBound="1"
@@ -337,13 +338,13 @@
     </eClassifiers>
     <eSubpackages name="temp" nsURI="http://www.eclipse.org/QVT2/1.0.0/Operational/cst/temp"
         nsPrefix="qvtoperational.cst.temp">
-      <eClassifiers xsi:type="ecore:EClass" name="ErrorCallExpCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CallExpCS"/>
-      <eClassifiers xsi:type="ecore:EClass" name="ResolveOpArgsExpCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
-        <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/VariableCS"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"/>
+      <eClassifiers xsi:type="ecore:EClass" name="ErrorCallExpCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CallExpCS"/>
+      <eClassifiers xsi:type="ecore:EClass" name="ResolveOpArgsExpCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/VariableCS"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"/>
       </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="ScopedNameCS" eSuperTypes="../../org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
-        <eStructuralFeatures xsi:type="ecore:EReference" name="typeCS" eType="ecore:EClass ../../org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
+      <eClassifiers xsi:type="ecore:EClass" name="ScopedNameCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="typeCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
             containment="true"/>
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1"
             eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

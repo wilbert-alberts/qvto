@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.7 2008/08/26 16:28:48 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.8 2008/09/25 17:35:30 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.7 2008/08/26 16:28:48 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.8 2008/09/25 17:35:30 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -57,7 +57,7 @@ public interface QvtOpLPGParsersym {
       TK_LBRACKET = 108,
       TK_RBRACKET = 121,
       TK_ARROW = 137,
-      TK_BAR = 91,
+      TK_BAR = 90,
       TK_COMMA = 87,
       TK_COLON = 88,
       TK_COLONCOLON = 89,
@@ -75,13 +75,13 @@ public interface QvtOpLPGParsersym {
       TK_EXCLAMATION_MARK = 125,
       TK_NOT_EQUAL_EXEQ = 113,
       TK_self = 29,
-      TK_inv = 155,
-      TK_pre = 156,
-      TK_post = 157,
-      TK_context = 158,
-      TK_package = 159,
-      TK_endpackage = 160,
-      TK_def = 161,
+      TK_inv = 157,
+      TK_pre = 158,
+      TK_post = 159,
+      TK_context = 160,
+      TK_package = 161,
+      TK_endpackage = 162,
+      TK_def = 163,
       TK_if = 70,
       TK_then = 141,
       TK_else = 133,
@@ -99,8 +99,8 @@ public interface QvtOpLPGParsersym {
       TK_derive = 31,
       TK_init = 26,
       TK_null = 53,
-      TK_attr = 162,
-      TK_oper = 163,
+      TK_attr = 164,
+      TK_oper = 165,
       TK_Set = 5,
       TK_Bag = 6,
       TK_Sequence = 7,
@@ -180,7 +180,7 @@ public interface QvtOpLPGParsersym {
       TK_abstract = 97,
       TK_static = 98,
       TK_result = 45,
-      TK_main = 90,
+      TK_main = 91,
       TK_this = 50,
       TK_switch = 66,
       TK_case = 143,
@@ -195,6 +195,8 @@ public interface QvtOpLPGParsersym {
       TK_disjuncts = 118,
       TK_merges = 119,
       TK_inherits = 120,
+      TK_forEach = 155,
+      TK_forOne = 156,
       TK_EOF_TOKEN = 100,
       TK_IDENTIFIER = 3,
       TK_INTEGER_RANGE_START = 136,
@@ -291,8 +293,8 @@ public interface QvtOpLPGParsersym {
                  "COMMA",
                  "COLON",
                  "COLONCOLON",
-                 "main",
                  "BAR",
+                 "main",
                  "in",
                  "log",
                  "var",
@@ -356,6 +358,8 @@ public interface QvtOpLPGParsersym {
                  "collectOne",
                  "collectselect",
                  "collectselectOne",
+                 "forEach",
+                 "forOne",
                  "inv",
                  "pre",
                  "post",

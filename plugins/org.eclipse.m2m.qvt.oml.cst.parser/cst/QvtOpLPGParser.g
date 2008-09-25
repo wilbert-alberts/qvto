@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.8 2008/08/26 16:28:49 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.9 2008/09/25 17:35:30 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -357,6 +357,8 @@ $KeyWords
 	inherits
 	merges
 	disjuncts
+	forEach
+	forOne
 $End
 
 $Notice
@@ -374,7 +376,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.8 2008/08/26 16:28:49 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.9 2008/09/25 17:35:30 aigdalov Exp $
  */
 	./
 $End
@@ -2386,6 +2388,69 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
+	
+	-- ForExp begin
+
+	loopExpCS -> forExpCS
+
+	forOpCode -> forEach
+	forOpCode -> forOne
+
+	forExpDeclaratorList ::= IDENTIFIER
+        	/.$BeginJava
+			EList result = new BasicEList();
+			result.add(getIToken($getToken(1)));
+			$setResult(result);
+	          $EndJava
+        	./
+	forExpDeclaratorList ::= forExpDeclaratorList ',' IDENTIFIER
+        	/.$BeginJava
+			EList result = (EList)$getSym(1);
+			result.add(getIToken($getToken(3)));
+			$setResult(result);
+	          $EndJava
+        	./
+
+
+	forExpConditionOpt ::= $empty
+        	/.$NullAction./
+        
+	forExpConditionOpt ::= '|' oclExpressionCS
+        	/.$BeginJava
+                	    $setResult((OCLExpressionCS)$getSym(2));
+	          $EndJava
+        	./
+
+	forExpConditionOpt ::= '|' qvtErrorToken
+        	/.$NullAction./
+
+	forExpCS ::= forOpCode '(' forExpDeclaratorList forExpConditionOpt ')' blockExpCS
+		/.$BeginJava
+					CSTNode result = createForExpCS(
+							getIToken($getToken(1)),
+							(EList)$getSym(3),
+							(OCLExpressionCS)$getSym(4),
+							(BlockExpCS)$getSym(6)
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(6));
+					$setResult(result);
+		  $EndJava
+		./
+
+	forExpCS ::= forOpCode qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createForExpCS(
+							getIToken($getToken(1)),
+							null,
+							null,
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	-- ForExp end
 
 	-- operation call and expression extension in QVT
 	featureCallExpCS -> featureMappingCallExpCS

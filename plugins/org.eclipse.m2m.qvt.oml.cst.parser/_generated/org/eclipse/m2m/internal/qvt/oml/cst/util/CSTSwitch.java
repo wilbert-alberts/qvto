@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTSwitch.java,v 1.2 2008/04/24 12:15:21 sboyko Exp $
+ * $Id: CSTSwitch.java,v 1.3 2008/09/25 17:35:30 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -468,6 +468,18 @@ public class CSTSwitch<T> {
 				if (result == null) result = caseCallExpCS(imperativeLoopExpCS);
 				if (result == null) result = caseOCLExpressionCS(imperativeLoopExpCS);
 				if (result == null) result = caseCSTNode(imperativeLoopExpCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.FOR_EXP_CS: {
+				ForExpCS forExpCS = (ForExpCS)theEObject;
+				T result = caseForExpCS(forExpCS);
+				if (result == null) result = caseImperativeLoopExpCS(forExpCS);
+				if (result == null) result = caseLoopExpCS(forExpCS);
+				if (result == null) result = caseStatementCS(forExpCS);
+				if (result == null) result = caseCallExpCS(forExpCS);
+				if (result == null) result = caseOCLExpressionCS(forExpCS);
+				if (result == null) result = caseCSTNode(forExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -1178,6 +1190,21 @@ public class CSTSwitch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>For Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>For Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+    public T caseForExpCS(ForExpCS object) {
+		return null;
+	}
+
+    /**
 	 * Returns the result of interpreting the object as an instance of '<em>Imperative Iterate Exp CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;

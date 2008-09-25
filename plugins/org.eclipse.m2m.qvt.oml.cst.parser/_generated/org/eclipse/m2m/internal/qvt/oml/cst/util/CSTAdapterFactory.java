@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTAdapterFactory.java,v 1.2 2008/04/24 12:15:21 sboyko Exp $
+ * $Id: CSTAdapterFactory.java,v 1.3 2008/09/25 17:35:31 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -273,6 +273,10 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseImperativeLoopExpCS(ImperativeLoopExpCS object) {
 				return createImperativeLoopExpCSAdapter();
+			}
+			@Override
+			public Adapter caseForExpCS(ForExpCS object) {
+				return createForExpCSAdapter();
 			}
 			@Override
 			public Adapter caseImperativeIterateExpCS(ImperativeIterateExpCS object) {
@@ -961,6 +965,20 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS <em>For Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS
+	 * @generated
+	 */
+    public Adapter createForExpCSAdapter() {
+		return null;
+	}
+
+    /**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS <em>Imperative Iterate Exp CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;

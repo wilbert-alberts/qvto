@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactory.java,v 1.2 2008/04/24 12:15:21 sboyko Exp $
+ * $Id: CSTFactory.java,v 1.3 2008/09/25 17:35:30 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -393,6 +393,15 @@ public interface CSTFactory extends EFactory {
 	ImperativeLoopExpCS createImperativeLoopExpCS();
 
 	/**
+	 * Returns a new object of class '<em>For Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @return a new object of class '<em>For Exp CS</em>'.
+	 * @generated
+	 */
+    ForExpCS createForExpCS();
+
+    /**
 	 * Returns a new object of class '<em>Imperative Iterate Exp CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

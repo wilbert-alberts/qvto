@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.7 2008/08/26 16:28:48 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.8 2008/09/25 17:35:30 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.7 2008/08/26 16:28:48 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.8 2008/09/25 17:35:30 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -4471,9 +4471,86 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 477:  letExpSubCS3 ::= variableCS2
+			// Rule 474:  forExpDeclaratorList ::= IDENTIFIER
+			//
+			case 474: {
+				
+		EList result = new BasicEList();
+		result.add(getIToken(dtParser.getToken(1)));
+		dtParser.setSym1(result);
+          		  break;
+			}
+    	 
+			//
+			// Rule 475:  forExpDeclaratorList ::= forExpDeclaratorList , IDENTIFIER
+			//
+			case 475: {
+				
+		EList result = (EList)dtParser.getSym(1);
+		result.add(getIToken(dtParser.getToken(3)));
+		dtParser.setSym1(result);
+          		  break;
+			}
+    	 
+			//
+			// Rule 476:  forExpConditionOpt ::= $Empty
+			//
+			case 476:
+				dtParser.setSym1(null);
+				break;
+ 
+			//
+			// Rule 477:  forExpConditionOpt ::= | oclExpressionCS
 			//
 			case 477: {
+				
+            	    dtParser.setSym1((OCLExpressionCS)dtParser.getSym(2));
+          		  break;
+			}
+    	 
+			//
+			// Rule 478:  forExpConditionOpt ::= | qvtErrorToken
+			//
+			case 478:
+				dtParser.setSym1(null);
+				break;
+ 
+			//
+			// Rule 479:  forExpCS ::= forOpCode ( forExpDeclaratorList forExpConditionOpt ) blockExpCS
+			//
+			case 479: {
+				
+				CSTNode result = createForExpCS(
+						getIToken(dtParser.getToken(1)),
+						(EList)dtParser.getSym(3),
+						(OCLExpressionCS)dtParser.getSym(4),
+						(BlockExpCS)dtParser.getSym(6)
+					);
+				setOffsets(result, getIToken(dtParser.getToken(1)), (CSTNode)dtParser.getSym(6));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 480:  forExpCS ::= forOpCode qvtErrorToken
+			//
+			case 480: {
+				
+				CSTNode result = createForExpCS(
+						getIToken(dtParser.getToken(1)),
+						null,
+						null,
+						null
+					);
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(1)));
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
+			//
+			// Rule 487:  letExpSubCS3 ::= variableCS2
+			//
+			case 487: {
 				
 				EList result = new BasicEList();
 				result.add(dtParser.getSym(1));
@@ -4482,9 +4559,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 478:  letExpSubCS3 ::= letExpSubCS3 , variableCS2
+			// Rule 488:  letExpSubCS3 ::= letExpSubCS3 , variableCS2
 			//
-			case 478: {
+			case 488: {
 				
 				EList result = (EList)dtParser.getSym(1);
 				result.add(dtParser.getSym(3));
@@ -4493,9 +4570,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 479:  letExpCS ::= let letExpSubCS3 in oclExpressionCS
+			// Rule 489:  letExpCS ::= let letExpSubCS3 in oclExpressionCS
 			//
-			case 479: {
+			case 489: {
 				
 				EList variables = (EList)dtParser.getSym(2);
 				CSTNode result = createLetExpCS(
@@ -4508,9 +4585,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 480:  letExpCS ::= let letExpSubCS3 in qvtErrorToken
+			// Rule 490:  letExpCS ::= let letExpSubCS3 in qvtErrorToken
 			//
-			case 480: {
+			case 490: {
 				
 				EList variables = (EList)dtParser.getSym(2);
 				CSTNode result = createLetExpCS(
@@ -4523,14 +4600,14 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 481:  simpleNameCS ::= this
+			// Rule 491:  simpleNameCS ::= this
 			//
-			case 481:
+			case 491:
  
 			//
-			// Rule 482:  simpleNameCS ::= result
+			// Rule 492:  simpleNameCS ::= result
 			//
-			case 482: {
+			case 492: {
 				
 				CSTNode result = createSimpleNameCS(
 						SimpleTypeEnum.IDENTIFIER_LITERAL,
@@ -4542,9 +4619,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 483:  modelTypeExpCS ::= modeltype IDENTIFIER complianceKindCSOpt uses packageRefList modelTypeWhereCSOpt ;
+			// Rule 493:  modelTypeExpCS ::= modeltype IDENTIFIER complianceKindCSOpt uses packageRefList modelTypeWhereCSOpt ;
 			//
-			case 483: {
+			case 493: {
 				
 				EList whereList = (EList)dtParser.getSym(6);
 				EList packageRefList = (EList)dtParser.getSym(5);
@@ -4567,9 +4644,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 484:  modelTypeExpCS ::= modeltype qvtErrorToken
+			// Rule 494:  modelTypeExpCS ::= modeltype qvtErrorToken
 			//
-			case 484: {
+			case 494: {
 				
 				ModelTypeCS result = createModelTypeCS(
 						new Token(0, 0, 0),
@@ -4583,9 +4660,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 485:  complianceKindCSOpt ::= $Empty
+			// Rule 495:  complianceKindCSOpt ::= $Empty
 			//
-			case 485: {
+			case 495: {
 				
 				CSTNode result = createStringLiteralExpCS("''");
 				setOffsets(result, getIToken(dtParser.getToken(1)));
@@ -4594,9 +4671,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 487:  packageRefList ::= packageRefCS
+			// Rule 497:  packageRefList ::= packageRefCS
 			//
-			case 487: {
+			case 497: {
 				
 				EList result = new BasicEList();
 				result.add(dtParser.getSym(1));
@@ -4605,9 +4682,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 488:  packageRefList ::= packageRefList , packageRefCS
+			// Rule 498:  packageRefList ::= packageRefList , packageRefCS
 			//
-			case 488: {
+			case 498: {
 				
 				EList result = (EList)dtParser.getSym(1);
 				result.add(dtParser.getSym(3));
@@ -4616,9 +4693,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 489:  packageRefCS ::= pathNameCS
+			// Rule 499:  packageRefCS ::= pathNameCS
 			//
-			case 489: {
+			case 499: {
 				
 				CSTNode result = createPackageRefCS(
 						(PathNameCS)dtParser.getSym(1),
@@ -4630,9 +4707,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 490:  packageRefCS ::= pathNameCS ( qvtStringLiteralExpCS )
+			// Rule 500:  packageRefCS ::= pathNameCS ( qvtStringLiteralExpCS )
 			//
-			case 490: {
+			case 500: {
 				
 				CSTNode result = createPackageRefCS(
 						(PathNameCS)dtParser.getSym(1),
@@ -4644,9 +4721,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 491:  packageRefCS ::= qvtStringLiteralExpCS
+			// Rule 501:  packageRefCS ::= qvtStringLiteralExpCS
 			//
-			case 491: {
+			case 501: {
 				
 				CSTNode result = createPackageRefCS(
 						null,
@@ -4658,9 +4735,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 493:  qvtStringLiteralExpCS ::= QUOTE_STRING_LITERAL
+			// Rule 503:  qvtStringLiteralExpCS ::= QUOTE_STRING_LITERAL
 			//
-			case 493: {
+			case 503: {
 				
 				CSTNode result = createStringLiteralExpCS("'" + unquote(getTokenText(dtParser.getToken(1))) + "'"); //$NON-NLS-1$ //$NON-NLS-2$
 				setOffsets(result, getIToken(dtParser.getToken(1)));
@@ -4669,16 +4746,16 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 494:  modelTypeWhereCSOpt ::= $Empty
+			// Rule 504:  modelTypeWhereCSOpt ::= $Empty
 			//
-			case 494:
+			case 504:
 				dtParser.setSym1(new BasicEList());
 				break;
  
 			//
-			// Rule 495:  modelTypeWhereCSOpt ::= where { statementListOpt }
+			// Rule 505:  modelTypeWhereCSOpt ::= where { statementListOpt }
 			//
-			case 495: {
+			case 505: {
 				
 				EList result = (EList)dtParser.getSym(3);
 				dtParser.setSym1(result);
@@ -4686,18 +4763,18 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 498:  qvtErrorToken ::= ERROR_TOKEN
+			// Rule 508:  qvtErrorToken ::= ERROR_TOKEN
 			//
-			case 498: {
+			case 508: {
 				
 				diagnozeErrorToken(dtParser.getToken(1));
 	  		  break;
 			}
 	 
 			//
-			// Rule 499:  iterContents ::= variableCS | qvtErrorToken
+			// Rule 509:  iterContents ::= variableCS | qvtErrorToken
 			//
-			case 499: {
+			case 509: {
 				
 				CSTNode fakeCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, ""); //$NON-NLS-1$
 				setOffsets(fakeCS, getIToken(dtParser.getToken(3)));
@@ -4710,9 +4787,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 500:  callExpCS ::= . qvtErrorToken
+			// Rule 510:  callExpCS ::= . qvtErrorToken
 			//
-			case 500: {
+			case 510: {
 				
 				CallExpCS result = TempFactory.eINSTANCE.createErrorCallExpCS();
 	 			result.setAccessor(DotOrArrowEnum.DOT_LITERAL);
@@ -4722,9 +4799,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 501:  callExpCS ::= -> qvtErrorToken
+			// Rule 511:  callExpCS ::= -> qvtErrorToken
 			//
-			case 501: {
+			case 511: {
 				
 				CallExpCS result = TempFactory.eINSTANCE.createErrorCallExpCS();
 	 			result.setAccessor(DotOrArrowEnum.ARROW_LITERAL);
@@ -4734,16 +4811,16 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 502:  argumentsCS ::= qvtErrorToken
+			// Rule 512:  argumentsCS ::= qvtErrorToken
 			//
-			case 502:
+			case 512:
 				dtParser.setSym1(new BasicEList());
 				break;
  
 			//
-			// Rule 506:  ifExpCS ::= if oclExpressionCS then ifExpBodyCS else ifExpBodyCS endif
+			// Rule 516:  ifExpCS ::= if oclExpressionCS then ifExpBodyCS else ifExpBodyCS endif
 			//
-			case 506: {
+			case 516: {
 				
 				CSTNode result = createIfExpCS(
 						(OCLExpressionCS)dtParser.getSym(2),
@@ -4756,9 +4833,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 507:  ifExpCS ::= if oclExpressionCS then ifExpBodyCS endif
+			// Rule 517:  ifExpCS ::= if oclExpressionCS then ifExpBodyCS endif
 			//
-			case 507: {
+			case 517: {
 				
 				CSTNode result = createIfExpCS(
 						(OCLExpressionCS)dtParser.getSym(2),
@@ -4771,9 +4848,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 508:  ifExpCS ::= if oclExpressionCS then ifExpBodyCS else ifExpBodyCS qvtErrorToken
+			// Rule 518:  ifExpCS ::= if oclExpressionCS then ifExpBodyCS else ifExpBodyCS qvtErrorToken
 			//
-			case 508: {
+			case 518: {
 				
 				CSTNode result = createIfExpCS(
 						(OCLExpressionCS)dtParser.getSym(2),
@@ -4786,9 +4863,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 509:  ifExpCS ::= if oclExpressionCS then ifExpBodyCS else qvtErrorToken
+			// Rule 519:  ifExpCS ::= if oclExpressionCS then ifExpBodyCS else qvtErrorToken
 			//
-			case 509: {
+			case 519: {
 				
 				CSTNode result = createIfExpCS(
 						(OCLExpressionCS)dtParser.getSym(2),
@@ -4801,9 +4878,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 510:  ifExpCS ::= if oclExpressionCS then ifExpBodyCS qvtErrorToken
+			// Rule 520:  ifExpCS ::= if oclExpressionCS then ifExpBodyCS qvtErrorToken
 			//
-			case 510: {
+			case 520: {
 				
 				CSTNode result = createIfExpCS(
 						(OCLExpressionCS)dtParser.getSym(2),
@@ -4816,9 +4893,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 511:  ifExpCS ::= if oclExpressionCS then qvtErrorToken
+			// Rule 521:  ifExpCS ::= if oclExpressionCS then qvtErrorToken
 			//
-			case 511: {
+			case 521: {
 				
 				CSTNode result = createIfExpCS(
 						(OCLExpressionCS)dtParser.getSym(2),
@@ -4831,9 +4908,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 512:  ifExpCS ::= if oclExpressionCS qvtErrorToken
+			// Rule 522:  ifExpCS ::= if oclExpressionCS qvtErrorToken
 			//
-			case 512: {
+			case 522: {
 				
 				CSTNode result = createIfExpCS(
 						(OCLExpressionCS)dtParser.getSym(2),
@@ -4846,9 +4923,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 513:  ifExpCS ::= if qvtErrorToken
+			// Rule 523:  ifExpCS ::= if qvtErrorToken
 			//
-			case 513: {
+			case 523: {
 				
 				CSTNode result = createIfExpCS(
 						null,
@@ -4861,9 +4938,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 516:  switchExpCS ::= switch switchBodyExpCS
+			// Rule 526:  switchExpCS ::= switch switchBodyExpCS
 			//
-			case 516: {
+			case 526: {
 				
 				Object[] switchBody = (Object[]) dtParser.getSym(2);
 
@@ -4881,9 +4958,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 518:  switchDeclaratorCS ::= IDENTIFIER
+			// Rule 528:  switchDeclaratorCS ::= IDENTIFIER
 			//
-			case 518: {
+			case 528: {
 				
 				CSTNode result = createVariableCS(
 						getTokenText(dtParser.getToken(1)),
@@ -4896,9 +4973,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 519:  switchDeclaratorCS ::= IDENTIFIER = oclExpressionCS
+			// Rule 529:  switchDeclaratorCS ::= IDENTIFIER = oclExpressionCS
 			//
-			case 519: {
+			case 529: {
 				
 				CSTNode result = createVariableCS(
 						getTokenText(dtParser.getToken(1)),
@@ -4911,9 +4988,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 520:  iterateSwitchExpCS ::= switch ( switchDeclaratorCS ) switchBodyExpCS
+			// Rule 530:  iterateSwitchExpCS ::= switch ( switchDeclaratorCS ) switchBodyExpCS
 			//
-			case 520: {
+			case 530: {
 				
 				Object[] switchBody = (Object[]) dtParser.getSym(5);
 
@@ -4945,9 +5022,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 521:  switchExpCS ::= switch qvtErrorToken
+			// Rule 531:  switchExpCS ::= switch qvtErrorToken
 			//
-			case 521: {
+			case 531: {
 				
 				CSTNode result = createSwitchExpCS(
 						new BasicEList(),
@@ -4959,9 +5036,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 522:  switchBodyExpCS ::= { switchAltExpCSList switchElseExpCSOpt }
+			// Rule 532:  switchBodyExpCS ::= { switchAltExpCSList switchElseExpCSOpt }
 			//
-			case 522: {
+			case 532: {
 				
 				Object[] result = new Object[] {dtParser.getSym(2), dtParser.getSym(3), getIToken(dtParser.getToken(4))};
 				dtParser.setSym1(result);
@@ -4969,9 +5046,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 523:  switchBodyExpCS ::= { switchAltExpCSList switchElseExpCSOpt qvtErrorToken
+			// Rule 533:  switchBodyExpCS ::= { switchAltExpCSList switchElseExpCSOpt qvtErrorToken
 			//
-			case 523: {
+			case 533: {
 				
 				Object[] result = new Object[] {dtParser.getSym(2), dtParser.getSym(3), dtParser.getSym(3)};
 				dtParser.setSym1(result);
@@ -4979,9 +5056,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 524:  switchBodyExpCS ::= { qvtErrorToken
+			// Rule 534:  switchBodyExpCS ::= { qvtErrorToken
 			//
-			case 524: {
+			case 534: {
 				
 				Object[] result = new Object[] {new BasicEList(), null, getIToken(dtParser.getToken(1))};
 				dtParser.setSym1(result);
@@ -4989,9 +5066,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 525:  switchAltExpCSList ::= switchAltExpCS
+			// Rule 535:  switchAltExpCSList ::= switchAltExpCS
 			//
-			case 525: {
+			case 535: {
 				
 				EList result = new BasicEList();
 				result.add(dtParser.getSym(1));
@@ -5000,9 +5077,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 526:  switchAltExpCSList ::= switchAltExpCSList switchAltExpCS
+			// Rule 536:  switchAltExpCSList ::= switchAltExpCSList switchAltExpCS
 			//
-			case 526: {
+			case 536: {
 				
 				EList result = (EList)dtParser.getSym(1);
 				result.add(dtParser.getSym(2));
@@ -5011,9 +5088,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 527:  switchAltExpCS ::= ( oclExpressionCS ) ? statementCS ;
+			// Rule 537:  switchAltExpCS ::= ( oclExpressionCS ) ? statementCS ;
 			//
-			case 527: {
+			case 537: {
 				
 				CSTNode result = createSwitchAltExpCS(
 						(OCLExpressionCS) dtParser.getSym(2),
@@ -5025,9 +5102,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 528:  switchAltExpCS ::= case ( oclExpressionCS ) expressionStatementCS
+			// Rule 538:  switchAltExpCS ::= case ( oclExpressionCS ) expressionStatementCS
 			//
-			case 528: {
+			case 538: {
 				
 				CSTNode result = createSwitchAltExpCS(
 						(OCLExpressionCS) dtParser.getSym(3),
@@ -5039,9 +5116,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 529:  switchAltExpCS ::= ( oclExpressionCS ) ? statementCS qvtErrorToken
+			// Rule 539:  switchAltExpCS ::= ( oclExpressionCS ) ? statementCS qvtErrorToken
 			//
-			case 529: {
+			case 539: {
 				
 				CSTNode result = createSwitchAltExpCS(
 						(OCLExpressionCS) dtParser.getSym(2),
@@ -5053,9 +5130,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 530:  switchAltExpCS ::= ( oclExpressionCS ) qvtErrorToken
+			// Rule 540:  switchAltExpCS ::= ( oclExpressionCS ) qvtErrorToken
 			//
-			case 530: {
+			case 540: {
 				
 				CSTNode result = createSwitchAltExpCS(
 						(OCLExpressionCS) dtParser.getSym(2),
@@ -5067,9 +5144,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 531:  switchAltExpCS ::= ( qvtErrorToken
+			// Rule 541:  switchAltExpCS ::= ( qvtErrorToken
 			//
-			case 531: {
+			case 541: {
 				
 				CSTNode result = createSwitchAltExpCS(
 						null,
@@ -5081,52 +5158,52 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 532:  switchElseExpCSOpt ::= $Empty
+			// Rule 542:  switchElseExpCSOpt ::= $Empty
 			//
-			case 532:
+			case 542:
 				dtParser.setSym1(null);
 				break;
  
 			//
-			// Rule 534:  switchElseExpCS ::= else ? statementCS ;
+			// Rule 544:  switchElseExpCS ::= else ? statementCS ;
 			//
-			case 534: {
+			case 544: {
 				
 				dtParser.setSym1((CSTNode)dtParser.getSym(3));
 	  		  break;
 			}
 	 
 			//
-			// Rule 535:  switchElseExpCS ::= else expressionStatementCS
+			// Rule 545:  switchElseExpCS ::= else expressionStatementCS
 			//
-			case 535: {
+			case 545: {
 				
 				dtParser.setSym1((CSTNode)dtParser.getSym(2));
 	  		  break;
 			}
 	 
 			//
-			// Rule 536:  switchElseExpCS ::= else ? statementCS qvtErrorToken
+			// Rule 546:  switchElseExpCS ::= else ? statementCS qvtErrorToken
 			//
-			case 536: {
+			case 546: {
 				
 				dtParser.setSym1((CSTNode)dtParser.getSym(3));
 	  		  break;
 			}
 	 
 			//
-			// Rule 537:  switchElseExpCS ::= else qvtErrorToken
+			// Rule 547:  switchElseExpCS ::= else qvtErrorToken
 			//
-			case 537: {
+			case 547: {
 				
 				dtParser.setSym1(null);
 	  		  break;
 			}
 	 
 			//
-			// Rule 549:  iteratorExpCS ::= iteratorExpCSToken ( iterContents )
+			// Rule 559:  iteratorExpCS ::= iteratorExpCSToken ( iterContents )
 			//
-			case 549: {
+			case 559: {
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 							SimpleTypeEnum.KEYWORD_LITERAL,
@@ -5146,9 +5223,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 550:  iteratorExpCS ::= iteratorExpCSToken ( iterContents qvtErrorToken
+			// Rule 560:  iteratorExpCS ::= iteratorExpCSToken ( iterContents qvtErrorToken
 			//
-			case 550: {
+			case 560: {
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 							SimpleTypeEnum.KEYWORD_LITERAL,
@@ -5174,9 +5251,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 551:  iteratorExpCS ::= iteratorExpCSToken ( qvtErrorToken
+			// Rule 561:  iteratorExpCS ::= iteratorExpCSToken ( qvtErrorToken
 			//
-			case 551: {
+			case 561: {
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 							SimpleTypeEnum.KEYWORD_LITERAL,
@@ -5195,19 +5272,19 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 552:  operationCallExpCS ::= oclAsType isMarkedPreCS ( typeCS )
+			// Rule 562:  operationCallExpCS ::= oclAsType isMarkedPreCS ( typeCS )
 			//
-			case 552:
+			case 562:
  
 			//
-			// Rule 553:  operationCallExpCS ::= oclIsKindOf isMarkedPreCS ( typeCS )
+			// Rule 563:  operationCallExpCS ::= oclIsKindOf isMarkedPreCS ( typeCS )
 			//
-			case 553:
+			case 563:
  
 			//
-			// Rule 554:  operationCallExpCS ::= oclIsTypeOf isMarkedPreCS ( typeCS )
+			// Rule 564:  operationCallExpCS ::= oclIsTypeOf isMarkedPreCS ( typeCS )
 			//
-			case 554: {
+			case 564: {
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 							SimpleTypeEnum.IDENTIFIER_LITERAL,
@@ -5227,9 +5304,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 556:  logWhenExp ::= when oclExpressionCS
+			// Rule 566:  logWhenExp ::= when oclExpressionCS
 			//
-			case 556: {
+			case 566: {
 				
 			OCLExpressionCS condition = (OCLExpressionCS) dtParser.getSym(2);
 			dtParser.setSym1(condition);
@@ -5237,16 +5314,16 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
      
 			//
-			// Rule 558:  logWhenExpOpt ::= $Empty
+			// Rule 568:  logWhenExpOpt ::= $Empty
 			//
-			case 558:
+			case 568:
 				dtParser.setSym1(null);
 				break;
  
 			//
-			// Rule 559:  logExpCS ::= log ( argumentsCSopt ) logWhenExpOpt
+			// Rule 569:  logExpCS ::= log ( argumentsCSopt ) logWhenExpOpt
 			//
-			case 559: {
+			case 569: {
 				
 			OCLExpressionCS condition = (OCLExpressionCS) dtParser.getSym(5);
 			LogExpCS result = (LogExpCS)createLogExpCS((EList<OCLExpressionCS>)dtParser.getSym(3), condition);
@@ -5260,25 +5337,25 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
      
 			//
-			// Rule 561:  severityKindCS ::= simpleNameCS
+			// Rule 571:  severityKindCS ::= simpleNameCS
 			//
-			case 561: {
+			case 571: {
 				
 			dtParser.setSym1(dtParser.getSym(1));
 	  		  break;
 			}
 	 
 			//
-			// Rule 563:  severityKindCSOpt ::= $Empty
+			// Rule 573:  severityKindCSOpt ::= $Empty
 			//
-			case 563:
+			case 573:
 				dtParser.setSym1(null);
 				break;
  
 			//
-			// Rule 564:  assertWithLogExp ::= with logExpCS
+			// Rule 574:  assertWithLogExp ::= with logExpCS
 			//
-			case 564: {
+			case 574: {
 				
 			LogExpCS logExp = (LogExpCS) dtParser.getSym(2);
 			setOffsets(logExp, getIToken(dtParser.getToken(2)), logExp);
@@ -5287,16 +5364,16 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
      
 			//
-			// Rule 566:  assertWithLogExpOpt ::= $Empty
+			// Rule 576:  assertWithLogExpOpt ::= $Empty
 			//
-			case 566:
+			case 576:
 				dtParser.setSym1(null);
 				break;
  
 			//
-			// Rule 567:  assertExpCS ::= assert severityKindCSOpt ( oclExpressionCS ) assertWithLogExpOpt
+			// Rule 577:  assertExpCS ::= assert severityKindCSOpt ( oclExpressionCS ) assertWithLogExpOpt
 			//
-			case 567: {
+			case 577: {
 				
 			LogExpCS logExpCS = (LogExpCS)dtParser.getSym(6);
 			OCLExpressionCS condition = (OCLExpressionCS)dtParser.getSym(4);
@@ -5309,9 +5386,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
      
 			//
-			// Rule 568:  blockExpCS ::= { statementListOpt }
+			// Rule 578:  blockExpCS ::= { statementListOpt }
 			//
-			case 568: {
+			case 578: {
 				
 			EList bodyList = (EList) dtParser.getSym(2);
 			CSTNode result = createBlockExpCS(
@@ -5324,14 +5401,14 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 581:  imperativeIterateExpCS ::= imperativeIteratorExpCSToken12 ( imperativeIterContents12 )
+			// Rule 591:  imperativeIterateExpCS ::= imperativeIteratorExpCSToken12 ( imperativeIterContents12 )
 			//
-			case 581:
+			case 591:
  
 			//
-			// Rule 582:  imperativeIterateExpCS ::= imperativeIteratorExpCSToken3 ( imperativeIterContents3 )
+			// Rule 592:  imperativeIterateExpCS ::= imperativeIteratorExpCSToken3 ( imperativeIterContents3 )
 			//
-			case 582: {
+			case 592: {
 				
 				String opCode = getTokenText(dtParser.getToken(1));
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
@@ -5360,9 +5437,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 583:  imperativeIterateExpCS ::= imperativeIteratorExpCSToken qvtErrorToken
+			// Rule 593:  imperativeIterateExpCS ::= imperativeIteratorExpCSToken qvtErrorToken
 			//
-			case 583: {
+			case 593: {
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 							SimpleTypeEnum.KEYWORD_LITERAL,
@@ -5382,9 +5459,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 584:  imperativeIterContents12 ::= oclExpressionCS
+			// Rule 594:  imperativeIterContents12 ::= oclExpressionCS
 			//
-			case 584: {
+			case 594: {
 				
 				dtParser.setSym1(new Object[] {
 						ourEmptyEList,
@@ -5395,9 +5472,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 585:  imperativeIterContents12 ::= variableListCS | oclExpressionCS
+			// Rule 595:  imperativeIterContents12 ::= variableListCS | oclExpressionCS
 			//
-			case 585: {
+			case 595: {
 				
 				dtParser.setSym1(new Object[] {
 						dtParser.getSym(1),
@@ -5408,9 +5485,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 586:  imperativeIterContents3 ::= variableListCS ; variableCS2 | oclExpressionCS
+			// Rule 596:  imperativeIterContents3 ::= variableListCS ; variableCS2 | oclExpressionCS
 			//
-			case 586: {
+			case 596: {
 				
 				dtParser.setSym1(new Object[] {
 						dtParser.getSym(1),
@@ -5421,16 +5498,16 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 587:  exclamationOpt ::= $Empty
+			// Rule 597:  exclamationOpt ::= $Empty
 			//
-			case 587:
+			case 597:
 				dtParser.setSym1(null);
 				break;
  
 			//
-			// Rule 589:  declarator_vsep ::= IDENTIFIER |
+			// Rule 599:  declarator_vsep ::= IDENTIFIER |
 			//
-			case 589: {
+			case 599: {
 				
 		CSTNode result = createVariableCS(
 					getTokenText(dtParser.getToken(1)),
@@ -5443,23 +5520,23 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
     	 
 			//
-			// Rule 590:  declarator_vsepOpt ::= $Empty
+			// Rule 600:  declarator_vsepOpt ::= $Empty
 			//
-			case 590:
+			case 600:
 				dtParser.setSym1(null);
 				break;
  
 			//
-			// Rule 592:  condExpOpt ::= $Empty
+			// Rule 602:  condExpOpt ::= $Empty
 			//
-			case 592:
+			case 602:
 				dtParser.setSym1(null);
 				break;
  
 			//
-			// Rule 593:  callExpCS ::= -> featureCallExpCS exclamationOpt [ declarator_vsepOpt oclExpressionCS ]
+			// Rule 603:  callExpCS ::= -> featureCallExpCS exclamationOpt [ declarator_vsepOpt oclExpressionCS ]
 			//
-			case 593: {
+			case 603: {
 				
 	        String opCode = isTokenOfType(getIToken(dtParser.getToken(3)), QvtOpLPGParsersym.TK_EXCLAMATION_MARK) ?  "collectselectOne" : "collectselect"; //$NON-NLS-1$ //$NON-NLS-2$ 
 		SimpleNameCS simpleNameCS = createSimpleNameCS(
@@ -5481,9 +5558,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 594:  oclExpCS ::= oclExpCS exclamationOpt [ oclExpressionCS ]
+			// Rule 604:  oclExpCS ::= oclExpCS exclamationOpt [ oclExpressionCS ]
 			//
-			case 594: {
+			case 604: {
 				
 			        String opCode = isTokenOfType(getIToken(dtParser.getToken(2)), QvtOpLPGParsersym.TK_EXCLAMATION_MARK) ?  "selectOne" : "xselect"; //$NON-NLS-1$ //$NON-NLS-2$ 
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
@@ -5505,9 +5582,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 595:  dotArrowExpCS ::= dotArrowExpCS . featureCallExpCS exclamationOpt [ oclExpressionCS ]
+			// Rule 605:  dotArrowExpCS ::= dotArrowExpCS . featureCallExpCS exclamationOpt [ oclExpressionCS ]
 			//
-			case 595: {
+			case 605: {
 				
 				CallExpCS callExpCS = (CallExpCS)dtParser.getSym(3);
 				callExpCS.setSource((OCLExpressionCS)dtParser.getSym(1));
@@ -5535,14 +5612,14 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			}
 	 
 			//
-			// Rule 596:  equalityExpCS ::= equalityExpCS != relationalExpCS
+			// Rule 606:  equalityExpCS ::= equalityExpCS != relationalExpCS
 			//
-			case 596:
+			case 606:
  
 			//
-			// Rule 597:  equalityWithLet ::= equalityExpCS != relationalWithLet
+			// Rule 607:  equalityWithLet ::= equalityExpCS != relationalWithLet
 			//
-			case 597: {
+			case 607: {
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 							SimpleTypeEnum.STRING_LITERAL,
