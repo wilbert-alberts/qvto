@@ -58,7 +58,6 @@ extends QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
         if (conditionVal instanceof Boolean) {
             return (Boolean) conditionVal;
         } else if (conditionVal instanceof EClassifier){
-            @SuppressWarnings("unchecked")
             QvtOperationalEvaluationEnv env = (QvtOperationalEvaluationEnv) getEvalEnvironment();
             return QvtOperationalUtil.oclIsKindOf(bodyVal, (EClassifier) conditionVal, env);
         } else {

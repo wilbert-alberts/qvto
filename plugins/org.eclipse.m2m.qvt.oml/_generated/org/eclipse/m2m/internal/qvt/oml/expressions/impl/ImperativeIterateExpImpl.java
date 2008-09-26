@@ -9,11 +9,12 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ImperativeIterateExpImpl.java,v 1.1 2008/04/07 15:58:59 radvorak Exp $
+ * $Id: ImperativeIterateExpImpl.java,v 1.2 2008/09/26 17:05:08 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
@@ -47,7 +48,7 @@ public class ImperativeIterateExpImpl extends ImperativeLoopExpImpl implements I
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
     /**
-	 * The cached value of the '{@link #getTarget() <em>Target</em>}' reference.
+	 * The cached value of the '{@link #getTarget() <em>Target</em>}' containment reference.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @see #getTarget()
@@ -82,36 +83,41 @@ public class ImperativeIterateExpImpl extends ImperativeLoopExpImpl implements I
 	 */
     @SuppressWarnings("unchecked")
     public Variable<EClassifier, EParameter> getTarget() {
-		if (target != null && target.eIsProxy()) {
-			InternalEObject oldTarget = (InternalEObject)target;
-			target = (Variable<EClassifier, EParameter>)eResolveProxy(oldTarget);
-			if (target != oldTarget) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ExpressionsPackage.IMPERATIVE_ITERATE_EXP__TARGET, oldTarget, target));
-			}
-		}
 		return target;
 	}
 
     /**
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public Variable<EClassifier, EParameter> basicGetTarget() {
-		return target;
+	public NotificationChain basicSetTarget(Variable<EClassifier, EParameter> newTarget, NotificationChain msgs) {
+		Variable<EClassifier, EParameter> oldTarget = target;
+		target = newTarget;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpressionsPackage.IMPERATIVE_ITERATE_EXP__TARGET, oldTarget, newTarget);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
 	}
 
-    /**
+				/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
     public void setTarget(Variable<EClassifier, EParameter> newTarget) {
-		Variable<EClassifier, EParameter> oldTarget = target;
-		target = newTarget;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.IMPERATIVE_ITERATE_EXP__TARGET, oldTarget, target));
+		if (newTarget != target) {
+			NotificationChain msgs = null;
+			if (target != null)
+				msgs = ((InternalEObject)target).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.IMPERATIVE_ITERATE_EXP__TARGET, null, msgs);
+			if (newTarget != null)
+				msgs = ((InternalEObject)newTarget).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.IMPERATIVE_ITERATE_EXP__TARGET, null, msgs);
+			msgs = basicSetTarget(newTarget, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.IMPERATIVE_ITERATE_EXP__TARGET, newTarget, newTarget));
 	}
 
     /**
@@ -125,6 +131,20 @@ public class ImperativeIterateExpImpl extends ImperativeLoopExpImpl implements I
 
     /**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case ExpressionsPackage.IMPERATIVE_ITERATE_EXP__TARGET:
+				return basicSetTarget(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -132,8 +152,7 @@ public class ImperativeIterateExpImpl extends ImperativeLoopExpImpl implements I
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ExpressionsPackage.IMPERATIVE_ITERATE_EXP__TARGET:
-				if (resolve) return getTarget();
-				return basicGetTarget();
+				return getTarget();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}

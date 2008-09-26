@@ -14,10 +14,13 @@ package org.eclipse.m2m.internal.qvt.oml.stdlib;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
@@ -48,9 +51,18 @@ public class LegacyNativeLibSupport {
 	private LegacyNativeLibSupport() {
 	}
 	
-	public Module defineLibrary(QvtOperationalEnv targetEnv, Library lib) throws LibraryCreationException {
-		Module libModule = org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createLibrary();		
+	public org.eclipse.m2m.internal.qvt.oml.expressions.Library defineLibrary(QvtOperationalEnv targetEnv, Library lib) throws LibraryCreationException {
+		final org.eclipse.m2m.internal.qvt.oml.expressions.Library libModule = org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createLibrary();		
 		libModule.setName(lib.getId());
+		new EPackageImpl() {
+			@Override
+			protected Resource createResource(String uri) {
+				Resource createResource = super.createResource(uri);
+				createResource.getContents().add(libModule);
+				return createResource;
+			}
+		}.createResource("qvto:/" + lib.getId()).getContents().add(libModule);
+		
         // must set the instance factory as a QVT module is also a Package 
         libModule.setEFactoryInstance(new ExpressionsFactoryImpl());
 		
@@ -68,6 +80,7 @@ public class LegacyNativeLibSupport {
 	        		libOp.getName(), qvtLibOp.getParamTypes());
 		}
 		
+		libModule.eResource().setURI(URI.createURI("qvto:/module/blackboxlib" + lib.getId()));
 		return libModule;
 	}
 	

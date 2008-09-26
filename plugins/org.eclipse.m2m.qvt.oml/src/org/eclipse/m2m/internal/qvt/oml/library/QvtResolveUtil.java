@@ -77,6 +77,7 @@ public class QvtResolveUtil {
 	 * @return <code>true</code> if the assignment is to receive a future
 	 *         value from late resolve; <code>false</code> otherwise
 	 */
+	@SuppressWarnings("unchecked")
 	public static boolean hasDeferredRightSideValue(AssignExp assignExp) {
 		if(assignExp.getValue().isEmpty()) {
 			return false;
@@ -107,8 +108,7 @@ public class QvtResolveUtil {
 	 * @return <code>true</code> if there is a supported deferred assignment
 	 *         to receive the future value; <code>false</code> otherwise.
 	 * @see #getDeferredAssignmentFor(ResolveExp)
-	 */
-	@SuppressWarnings("unchecked")	
+	 */	
 	public static boolean isSuppportedAsDeferredAssigned(ResolveExp  resolveExp) {
 		return getDeferredAssignmentFor(resolveExp) != null;
 	}

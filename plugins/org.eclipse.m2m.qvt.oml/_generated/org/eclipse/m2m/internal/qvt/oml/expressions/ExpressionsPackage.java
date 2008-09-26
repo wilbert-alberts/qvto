@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ExpressionsPackage.java,v 1.5 2008/09/25 17:35:23 aigdalov Exp $
+ * $Id: ExpressionsPackage.java,v 1.6 2008/09/26 17:05:08 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
@@ -1435,7 +1435,7 @@ public interface ExpressionsPackage extends EPackage {
 	int LOCAL_PROPERTY__END_POSITION = PROPERTY__END_POSITION;
 
 	/**
-	 * The feature id for the '<em><b>Expression</b></em>' reference.
+	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -5021,7 +5021,7 @@ public interface ExpressionsPackage extends EPackage {
 	int IMPERATIVE_ITERATE_EXP__CONDITION = IMPERATIVE_LOOP_EXP__CONDITION;
 
 	/**
-	 * The feature id for the '<em><b>Target</b></em>' reference.
+	 * The feature id for the '<em><b>Target</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -5655,10 +5655,10 @@ public interface ExpressionsPackage extends EPackage {
 	EClass getLocalProperty();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty#getExpression <em>Expression</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty#getExpression <em>Expression</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Expression</em>'.
+	 * @return the meta object for the containment reference '<em>Expression</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty#getExpression()
 	 * @see #getLocalProperty()
 	 * @generated
@@ -6570,10 +6570,10 @@ public interface ExpressionsPackage extends EPackage {
 	EClass getImperativeIterateExp();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp#getTarget <em>Target</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp#getTarget <em>Target</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Target</em>'.
+	 * @return the meta object for the containment reference '<em>Target</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp#getTarget()
 	 * @see #getImperativeIterateExp()
 	 * @generated
@@ -6848,7 +6848,7 @@ public interface ExpressionsPackage extends EPackage {
 		EClass LOCAL_PROPERTY = eINSTANCE.getLocalProperty();
 
 		/**
-		 * The meta object literal for the '<em><b>Expression</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -7598,7 +7598,7 @@ public interface ExpressionsPackage extends EPackage {
 		EClass IMPERATIVE_ITERATE_EXP = eINSTANCE.getImperativeIterateExp();
 
 		/**
-		 * The meta object literal for the '<em><b>Target</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Target</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

@@ -40,26 +40,26 @@ public interface LocalProperty extends Property {
     String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
     /**
-	 * Returns the value of the '<em><b>Expression</b></em>' reference.
+	 * Returns the value of the '<em><b>Expression</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Expression</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Expression</em>' reference.
+	 * @return the value of the '<em>Expression</em>' containment reference.
 	 * @see #setExpression(OCLExpression)
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getLocalProperty_Expression()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
 	OCLExpression<EClassifier> getExpression();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty#getExpression <em>Expression</em>}' reference.
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty#getExpression <em>Expression</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Expression</em>' reference.
+	 * @param value the new value of the '<em>Expression</em>' containment reference.
 	 * @see #getExpression()
 	 * @generated
 	 */

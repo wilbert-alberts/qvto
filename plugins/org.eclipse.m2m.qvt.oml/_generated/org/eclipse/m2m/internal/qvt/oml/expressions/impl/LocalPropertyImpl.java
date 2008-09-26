@@ -12,6 +12,7 @@
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -43,7 +44,7 @@ public class LocalPropertyImpl extends PropertyImpl implements LocalProperty {
 	 */
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
     /**
-	 * The cached value of the '{@link #getExpression() <em>Expression</em>}' reference.
+	 * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getExpression()
@@ -76,16 +77,7 @@ public class LocalPropertyImpl extends PropertyImpl implements LocalProperty {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	public OCLExpression<EClassifier> getExpression() {
-		if (expression != null && expression.eIsProxy()) {
-			InternalEObject oldExpression = (InternalEObject)expression;
-			expression = (OCLExpression<EClassifier>)eResolveProxy(oldExpression);
-			if (expression != oldExpression) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ExpressionsPackage.LOCAL_PROPERTY__EXPRESSION, oldExpression, expression));
-			}
-		}
 		return expression;
 	}
 
@@ -94,8 +86,14 @@ public class LocalPropertyImpl extends PropertyImpl implements LocalProperty {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public OCLExpression<EClassifier> basicGetExpression() {
-		return expression;
+	public NotificationChain basicSetExpression(OCLExpression<EClassifier> newExpression, NotificationChain msgs) {
+		OCLExpression<EClassifier> oldExpression = expression;
+		expression = newExpression;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpressionsPackage.LOCAL_PROPERTY__EXPRESSION, oldExpression, newExpression);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
 	}
 
 	/**
@@ -104,10 +102,17 @@ public class LocalPropertyImpl extends PropertyImpl implements LocalProperty {
 	 * @generated
 	 */
 	public void setExpression(OCLExpression<EClassifier> newExpression) {
-		OCLExpression<EClassifier> oldExpression = expression;
-		expression = newExpression;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.LOCAL_PROPERTY__EXPRESSION, oldExpression, expression));
+		if (newExpression != expression) {
+			NotificationChain msgs = null;
+			if (expression != null)
+				msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.LOCAL_PROPERTY__EXPRESSION, null, msgs);
+			if (newExpression != null)
+				msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.LOCAL_PROPERTY__EXPRESSION, null, msgs);
+			msgs = basicSetExpression(newExpression, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.LOCAL_PROPERTY__EXPRESSION, newExpression, newExpression));
 	}
 
 	/**
@@ -115,8 +120,23 @@ public class LocalPropertyImpl extends PropertyImpl implements LocalProperty {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
 		return ((ExtendedVisitor<T, ?, ?, ?, ?>) v).visitLocalProperty(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case ExpressionsPackage.LOCAL_PROPERTY__EXPRESSION:
+				return basicSetExpression(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -128,8 +148,7 @@ public class LocalPropertyImpl extends PropertyImpl implements LocalProperty {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ExpressionsPackage.LOCAL_PROPERTY__EXPRESSION:
-				if (resolve) return getExpression();
-				return basicGetExpression();
+				return getExpression();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}

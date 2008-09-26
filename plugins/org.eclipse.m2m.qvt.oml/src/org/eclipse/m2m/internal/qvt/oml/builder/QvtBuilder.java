@@ -61,7 +61,8 @@ public class QvtBuilder extends IncrementalProjectBuilder {
     }
     
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
 	protected IProject[] build(int kind, Map args, IProgressMonitor monitor) throws CoreException {        
         if (kind == IncrementalProjectBuilder.FULL_BUILD) {
             fullBuild(monitor);

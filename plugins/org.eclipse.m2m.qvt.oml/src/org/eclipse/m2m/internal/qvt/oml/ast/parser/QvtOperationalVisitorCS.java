@@ -19,6 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
@@ -206,8 +207,8 @@ public class QvtOperationalVisitorCS
 		extends AbstractOCLAnalyzer<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, 
 							CallOperationAction, SendSignalAction, Constraint, EClass, EObject> { 	// FIXME - changed in M3.4 migration
 
-    private final Set<String> myLoadedLibraries = new HashSet<String>(1);
     private final QvtCompilerOptions myCompilerOptions;
+    private final Map<String, Library> myLoadedBlackBoxLibraries = new HashMap<String, Library>(1);    
 	/* TODO - 
 	 * Groups all late resolve expression encountered during CST analysis for later validation.
 	 * At the moment when resolve expression is visited it has not its container connect yet, which
@@ -1297,49 +1298,7 @@ public class QvtOperationalVisitorCS
 		
         env.setContextModule(module);
 		
-		HashSet<String> importedIDs = new HashSet<String>();
-		for (ImportCS libImport : moduleCS.getImports()) {
-			if (false == libImport instanceof LibraryImportCS) {
-				continue;
-			}
-			PathNameCS impPath = libImport.getPathNameCS();
-			String libId = QvtOperationalParserUtil.getStringRepresentation(impPath, "."); //$NON-NLS-1$
-
-			org.eclipse.m2m.internal.qvt.oml.ocl.transformations.Library lib = OclQvtoPlugin.getDefault().getLibrariesRegistry().getLibrary(libId);
-			if (lib == null) {
-				env.reportError(NLS.bind(ValidationMessages.NoLibrary, new Object[] {libId}),
-						impPath);
-				continue;
-			}
-			
-			if(!importedIDs.contains(libId)) {  
-				importedIDs.add(libId);
-			} else {
-				env.reportWarning(NLS.bind(ValidationMessages.DuplicateLibraryImport, new Object[] { libId }), impPath);
-				continue;				
-			}
-
-			if (!myLoadedLibraries.contains(libId)) {
-				try {
-					lib.loadOperations();
-					env.defineNativeLibrary(lib);
-				} catch (LibraryCreationException e) {
-					env.reportError(NLS.bind(ValidationMessages.FailedToLoadLibrary, new Object[] { libId,
-							e.getMessage() }), impPath);
-				}
-				myLoadedLibraries.add(libId);
-			}
-
-			ModuleImport imp = ExpressionsFactory.eINSTANCE.createModuleImport();
-			Library newLib = ExpressionsFactory.eINSTANCE.createLibrary();
-			newLib.setName(libId);
-			newLib.setStartPosition(impPath.getStartOffset());
-			newLib.setEndPosition(impPath.getEndOffset());
-			imp.setStartPosition(libImport.getStartOffset());
-			imp.setEndPosition(libImport.getEndOffset());
-			imp.setImportedModule(newLib);
-			module.getModuleImport().add(imp);
-		}
+	    processModuleImports(env, moduleCS, module);
 
 		for (ParsedModuleCS importedModuleCS : parsedModuleCS.getParsedImports()) {
 			// Check for duplicate imports is handled by QvtCompiler
@@ -1439,7 +1398,7 @@ public class QvtOperationalVisitorCS
 		
 		return module;
 	}
-	
+
 	private void createModuleProperties(Module module, MappingModuleCS moduleCS, QvtOperationalFileEnv env) throws SemanticException {
 		
 		for (ModulePropertyCS propCS : moduleCS.getProperties()) {
@@ -1598,7 +1557,7 @@ public class QvtOperationalVisitorCS
 
 		SimpleNameCS identifierCS = modelTypeCS.getIdentifierCS();
 		ModelType modelType = QVTUMLReflection.createModel(identifierCS != null ? identifierCS.getValue() : null);
-
+		module.getEClassifiers().add(modelType);
 		if(myCompilerOptions.isGenerateCompletionData()) {
 			ASTBindingHelper.createCST2ASTBinding(modelTypeCS, modelType);
 		}
@@ -1793,7 +1752,7 @@ public class QvtOperationalVisitorCS
 			return null;
 		}
 
-		Variable<EClassifier, EParameter> var = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();
+		Variable<EClassifier, EParameter> var = EcoreFactory.eINSTANCE.createVariable();
 		var.setName(newName);
 		var.setType(originalProperty.getEType());
 		Constraint constraint = EcoreFactory.eINSTANCE.createConstraint();
@@ -1930,6 +1889,7 @@ public class QvtOperationalVisitorCS
 			operation.getWhen().add(guard);
 		}
 		operation.setBody(body);
+				
 		if (body != null) {
 			body.getInitSection().addAll(inits);
 			body.getEndSection().addAll(ends);
@@ -1938,7 +1898,33 @@ public class QvtOperationalVisitorCS
 		checkAbstractOutParamsInitialized(operation.getResult(), methodCS, env);
 
 		processMappingExtensions(methodCS, operation, env);
+		
+		// adjust implicit variables for serialization
+		consolidateImplicitVariables(newEnv);
+		//		
 		return operation;
+	}
+
+	private static void consolidateImplicitVariables(QvtOperationalEnv newEnv) {
+		EOperation eOperation = newEnv.getContextOperation();
+		OperationBody body = null;
+		if(eOperation instanceof ImperativeOperation) {
+			body = ((ImperativeOperation)eOperation).getBody();
+		}
+		
+		if(body == null) {
+			return;
+		}
+		for (Variable<EClassifier, EParameter> var : newEnv.getImplicitVariables()) {
+			if(var.eContainer() == null) {
+				body.getVariable().add((org.eclipse.ocl.ecore.Variable)var);
+			}			
+		}
+		for (Variable<EClassifier, EParameter> var : newEnv.getVariables()) {
+			if(var.eContainer() == null) {
+				body.getVariable().add((org.eclipse.ocl.ecore.Variable)var);
+			}			
+		}		
 	}
 
 	private void visitMappingQueryCS(MappingQueryCS methodCS, QvtOperationalEnv env, Helper helper)
@@ -1989,6 +1975,10 @@ public class QvtOperationalVisitorCS
 				}), 
 				methodCS.getMappingDeclarationCS());
 		}
+		
+		// adjust implicit variables for serialization
+		consolidateImplicitVariables(newEnv);
+		//
 	}
 	
 	/**
@@ -2297,7 +2287,7 @@ public class QvtOperationalVisitorCS
 
 		OCLExpression<EClassifier> sourceExp;
 		if (leftProp == null) {
-			VariableExp<EClassifier, EParameter> var = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariableExp();
+			VariableExp<EClassifier, EParameter> var = EcoreFactory.eINSTANCE.createVariableExp();
 			var.setType(type);
 			var.setName(variable.getName());
 			var.setReferredVariable(variable);
@@ -2839,7 +2829,7 @@ public class QvtOperationalVisitorCS
         resolveExp.setIsDeferred(resolveExpCS.isIsDeferred());
         
         if (resolveExpCS.getTarget() != null) { // at least type is defined
-            Variable<EClassifier, EParameter> variable = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();
+            Variable<EClassifier, EParameter> variable = EcoreFactory.eINSTANCE.createVariable();
             EClassifier type = visitTypeCS(resolveExpCS.getTarget().getTypeCS(), null, env);
             variable.setType(type);
             
@@ -3087,7 +3077,8 @@ public class QvtOperationalVisitorCS
         if (vdcl1 != null) {
             env.deleteElement(vdcl1.getName());
         }
-
+		// ensure AST containment tree
+        astNode.getIterator().addAll(iterators);
         return astNode;
     }
     
@@ -3641,14 +3632,14 @@ public class QvtOperationalVisitorCS
 	
 	private static void addInitVariable(QvtOperationalEnv env, VariableInitExp varInit) {
 		if (varInit.getName() != null) {
-			Variable<EClassifier, EParameter> var = org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createVariable();
+			Variable<EClassifier, EParameter> var = EcoreFactory.eINSTANCE.createVariable();
 			var.setName(varInit.getName());
 			var.setType(varInit.getType());
 			env.addElement(varInit.getName(), var, true);
 		}
 	}
 	
-	public QvtOperationalModuleEnv getModuleContextEnv(QvtOperationalEnv env) {
+	private static QvtOperationalModuleEnv getModuleContextEnv(QvtOperationalEnv env) {
 		Internal<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> 
 			nextParent = env;
 		while(nextParent != null) {
@@ -3661,4 +3652,64 @@ public class QvtOperationalVisitorCS
 		return null;
 	}
  
+	/*
+	 * Note: Caches already loaded (even failed attempts) libraries in this visitor in order
+	 * to allow sharing single library instances cross multiple importing modules
+	 */
+	private void processModuleImports(QvtOperationalFileEnv env, MappingModuleCS moduleCS, Module module) {
+		Set<String> perModuleProcessedIDs = new HashSet<String>(5);
+		
+		for (ImportCS libImport : moduleCS.getImports()) {
+			if (false == libImport instanceof LibraryImportCS) {
+				continue;
+			}
+			PathNameCS impPath = libImport.getPathNameCS();
+			String libId = QvtOperationalParserUtil.getStringRepresentation(impPath, "."); //$NON-NLS-1$
+
+			if(perModuleProcessedIDs.contains(libId)) {  
+				env.reportWarning(NLS.bind(ValidationMessages.DuplicateLibraryImport, new Object[] { libId }), impPath);
+				continue;				
+			}
+			
+			org.eclipse.m2m.internal.qvt.oml.ocl.transformations.Library lib = OclQvtoPlugin.getDefault().getLibrariesRegistry().getLibrary(libId);
+			if (lib == null) {
+				env.reportError(NLS.bind(ValidationMessages.NoLibrary, new Object[] {libId}), impPath);
+				continue;
+			}
+			
+			// ad this library as newly processed for the given importing module
+			assert perModuleProcessedIDs.contains(libId) == false; 
+			perModuleProcessedIDs.add(libId);
+
+			Library newLib = myLoadedBlackBoxLibraries.get(libId);
+			if(newLib == null) { 					
+				if(!myLoadedBlackBoxLibraries.containsKey(libId)) {
+					try {						
+						lib.loadOperations();
+						newLib = env.defineNativeLibrary(lib);
+						// cache the newly loaded library globally
+						myLoadedBlackBoxLibraries.put(libId, newLib);
+					} catch (LibraryCreationException e) {
+						QvtPlugin.log(e);
+						// set null to indicate a library load failure
+						myLoadedBlackBoxLibraries.put(libId, null);				
+					}
+				}
+			}				
+
+			if(newLib == null) {
+				env.reportError(NLS.bind(ValidationMessages.FailedToLoadLibrary, new Object[] { libId }), impPath);
+			} else {
+				ModuleImport imp = ExpressionsFactory.eINSTANCE.createModuleImport();
+				newLib.setName(libId);
+				newLib.setStartPosition(impPath.getStartOffset());
+				newLib.setEndPosition(impPath.getEndOffset());
+				imp.setStartPosition(libImport.getStartOffset());
+				imp.setEndPosition(libImport.getEndOffset());
+				imp.setImportedModule(newLib);
+				
+				module.getModuleImport().add(imp);				
+			}
+		}
+	}
 }

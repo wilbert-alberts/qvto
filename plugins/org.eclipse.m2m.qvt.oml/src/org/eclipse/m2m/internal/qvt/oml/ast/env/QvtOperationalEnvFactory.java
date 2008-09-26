@@ -68,7 +68,7 @@ public class QvtOperationalEnvFactory extends EcoreEnvironmentFactory {
 	
 	@Override
 	public QvtOperationalEnv createEnvironment() {
-		QvtOperationalEnv env = new QvtOperationalEnv(getEPackageRegistry());
+		QvtOperationalEnv env = new QvtOperationalEnv(getEPackageRegistry(), null);
 		env.setFactory(this);
 		return env;
 	}

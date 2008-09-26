@@ -12,6 +12,7 @@
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -103,12 +104,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		}
 	}
 	
-	protected QvtOperationalEnv() {
-		this(createDefaultPackageRegistry());
-	}
-
-	protected QvtOperationalEnv(EPackage.Registry packageRegistry) {
-		super(packageRegistry);
+	protected QvtOperationalEnv(EPackage.Registry packageRegistry, Resource resource) {
+		super(packageRegistry, resource);
 		myPackageRegistry = packageRegistry;
 		myModelTypeRegistry = new LinkedHashMap<String, ModelType>(1);
 	}
@@ -253,11 +250,11 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
     }
     
     @Override
-    protected void addedVariable(String name, Variable<EClassifier, EParameter> elem, boolean isExplicit) {    	
+    protected void addedVariable(String name, Variable<EClassifier, EParameter> elem, boolean isExplicit) {
         if(elem instanceof VarParameter == false) {
         	if(getContextOperation() instanceof ImperativeOperation) {
         		ImperativeOperation imperativeOperation = (ImperativeOperation) getContextOperation();
-        		if(imperativeOperation.getBody() != null && elem.eContainer() == null) {        			
+         		if(imperativeOperation.getBody() != null && elem.eContainer() == null) {        			
         			imperativeOperation.getBody().getVariable().add(elem);
         		}
         	} else {
@@ -282,7 +279,17 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
         }
         super.deleteElement(name);
     }
-
+    
+    public Collection<Variable<EClassifier, EParameter>> getImplicitVariables() {
+    	Collection<Variable<EClassifier, EParameter>> result = new ArrayList<Variable<EClassifier,EParameter>>(myNamedElements.size());
+    	for (QvtVariableEntry entry : myNamedElements) {
+			if(!entry.isExplicit) {
+				result.add(entry.myVariable);
+			}
+		}
+    	return result;
+    }
+    
     public Variable<EClassifier, EParameter> lookupAnyImplicitSource() {
         for (int i = myNamedElements.size() - 1; i >= 0; i--) {
             QvtVariableEntry element = myNamedElements.get(i);

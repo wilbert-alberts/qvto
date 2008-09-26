@@ -17,11 +17,14 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
@@ -45,7 +48,7 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 	private List<Variable<EClassifier, EParameter>> myModelParameters = Collections.emptyList();    
 	
 	public QvtOperationalModuleEnv(EPackage.Registry registry) {
-		super(registry);
+		super(registry,  new XMIResourceImpl(URI.createURI("qvto:/module.env"))); //$NON-NLS-1$
 
         // Eliminate parsing warning on "" occurrences, used in model types URIs, etc.
         // TODO - solve in QVT grammar
@@ -85,6 +88,8 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
     	if(module instanceof OperationalTransformation) {
     		registerModelParameters((OperationalTransformation)module);
     	}
+    	
+    	QvtOperationalParserUtil.setTypeResolverResource(module, getTypeResolver());
     }
     
     public ModelParameter lookupModelParameter(String name, DirectionKind directionKind) {
@@ -207,12 +212,12 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
     	return myLibs == null ? Collections.<Module>emptyList() : Collections.unmodifiableList(myLibs);
 	} 
     
-	public Module defineNativeLibrary(Library lib) throws LibraryCreationException {
+	public org.eclipse.m2m.internal.qvt.oml.expressions.Library defineNativeLibrary(Library lib) throws LibraryCreationException {
 		if(myLibs == null) {
 			myLibs = new LinkedList<Module>();
 		}
 			 
-		Module libModule = LegacyNativeLibSupport.INSTANCE.defineLibrary(this, lib);
+		org.eclipse.m2m.internal.qvt.oml.expressions.Library libModule = LegacyNativeLibSupport.INSTANCE.defineLibrary(this, lib);
 		myLibs.add(libModule);
 		
 		Variable<EClassifier, EParameter> var = EcoreFactory.eINSTANCE.createVariable();

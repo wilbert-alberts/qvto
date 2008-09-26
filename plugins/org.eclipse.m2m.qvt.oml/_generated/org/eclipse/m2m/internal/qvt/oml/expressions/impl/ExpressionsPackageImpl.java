@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ExpressionsPackageImpl.java,v 1.6 2008/09/25 17:35:23 aigdalov Exp $
+ * $Id: ExpressionsPackageImpl.java,v 1.7 2008/09/26 17:05:07 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -1982,7 +1982,7 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		g1 = createEGenericType(theExpressionsPackage_1.getOCLExpression());
 		g2 = createEGenericType(theEcorePackage_1.getEClassifier());
 		g1.getETypeArguments().add(g2);
-		initEReference(getLocalProperty_Expression(), g1, null, "expression", null, 0, 1, LocalProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getLocalProperty_Expression(), g1, null, "expression", null, 0, 1, LocalProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		op = addEOperation(localPropertyEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "T"); //$NON-NLS-1$
@@ -2999,7 +2999,7 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		g1.getETypeArguments().add(g2);
 		g2 = createEGenericType(theEcorePackage_1.getEParameter());
 		g1.getETypeArguments().add(g2);
-		initEReference(getImperativeIterateExp_Target(), g1, null, "target", null, 0, 1, ImperativeIterateExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getImperativeIterateExp_Target(), g1, null, "target", null, 0, 1, ImperativeIterateExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		op = addEOperation(imperativeIterateExpEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "T"); //$NON-NLS-1$
