@@ -120,6 +120,14 @@ public class TestQvtParser extends TestCase {
 	        }
 		}
 
+		// check the AST is consistent
+		for (QvtCompilationResult compilationResult : compiled) {
+			if(compilationResult.getErrors().length == 0) {
+				TestUtil.assertAllPersistableAST(compilationResult.getModule());
+			}
+		}
+		//		
+		
 		if(myData.usesSourceAnnotations()) {
 			Set<ProblemSourceAnnotationHelper> helpers = new HashSet<ProblemSourceAnnotationHelper>();	
 			for (QvtCompilationResult compilationResult : compiled) {
@@ -236,8 +244,8 @@ public class TestQvtParser extends TestCase {
 		destFolder.mkdirs();
 		FileUtil.copyFolder(sourceFolder, destFolder);
 		myProject.getProject().refreshLocal(IResource.DEPTH_INFINITE, null);
-	}
-    
+	}	
+	
     private final TestData myData;
 	private TestProject myProject;
 }

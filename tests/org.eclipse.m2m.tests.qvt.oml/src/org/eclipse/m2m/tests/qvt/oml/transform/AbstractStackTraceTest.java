@@ -36,6 +36,7 @@ import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.library.QvtConfiguration;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
+import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 
 public abstract class AbstractStackTraceTest extends TestTransformation {
 
@@ -138,6 +139,9 @@ public abstract class AbstractStackTraceTest extends TestTransformation {
 	                TestQvtInterpreter.saveModel(outExt, new EclipseFile(transformation));
 	            }
 	            saveTraceData(output.getTrace(), new EclipseFile(transformation));
+	            
+	        	TestUtil.assertAllPersistableAST(transf.getModule().getModule());	        	
+	            
 	            return result;
 	        }
 		};

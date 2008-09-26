@@ -20,10 +20,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
-import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
+import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 
 public class TestQvtInterpreter extends TestTransformation {
 	
@@ -45,7 +46,9 @@ public class TestQvtInterpreter extends TestTransformation {
     
     public static final ITransformer TRANSFORMER = new ITransformer() {
         public List<EObject> transform(IFile transformation, List<URI> inUris, IContext qvtContext) throws Exception {
-        	QvtTransformation trans = new QvtInterpretedTransformation(transformation);
+        	QvtInterpretedTransformation trans = new QvtInterpretedTransformation(transformation);
+        	
+        	TestUtil.assertAllPersistableAST(trans.getModule().getModule());
             
         	List<EObject> inputs = new ArrayList<EObject>(inUris.size());
         	for (URI uri : inUris) {
@@ -53,8 +56,13 @@ public class TestQvtInterpreter extends TestTransformation {
         		inputs.add(in);
         	}
             TransformationRunner.In input = new TransformationRunner.In(inputs.toArray(new EObject[inputs.size()]), qvtContext);
-            
-            TransformationRunner.Out output = trans.run(input);
+            TransformationRunner.Out output = null;
+            try {
+            	output = trans.run(input);
+            } catch (QvtRuntimeException e) {            	
+            	TestUtil.logQVTStackTrace(e);
+				throw e;
+			}
             
             List<ModelExtentContents> extents = output.getExtents();
             List<EObject> result = new ArrayList<EObject>();

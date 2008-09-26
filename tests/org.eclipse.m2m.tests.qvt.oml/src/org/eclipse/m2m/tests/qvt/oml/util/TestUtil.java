@@ -13,8 +13,13 @@ package org.eclipse.m2m.tests.qvt.oml.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -39,16 +44,22 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
+import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilationResult;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.tests.qvt.oml.RuntimeWorkspaceSetup;
 import org.eclipse.m2m.tests.qvt.oml.TestProject;
-import org.eclipse.osgi.util.NLS;
 import org.osgi.framework.Bundle;
 
 /**
@@ -60,6 +71,53 @@ public class TestUtil extends Assert {
 
 	private TestUtil() {}
 
+	static Set<CompiledModule> collectAllCompiledModules(CompiledModule compiledModule, Set<CompiledModule> result) {
+		result.add(compiledModule);
+		for (CompiledModule imported : compiledModule.getCompiledImports()) {
+			collectAllCompiledModules(imported, result);
+		}
+		return result;
+	}
+	
+	public static void assertAllPersistableAST(CompiledModule compiledModule) {
+		Collection<CompiledModule> all = collectAllCompiledModules(compiledModule, new HashSet<CompiledModule>());
+		
+		HashMap<CompiledModule, Resource> resourceMap = new HashMap<CompiledModule, Resource>();
+		for (CompiledModule nextModule : all) {
+			resourceMap.put(nextModule, confineInResource(nextModule));
+		}
+		
+		for (CompiledModule nextModule : all) {
+			Resource res = resourceMap.get(nextModule);
+			assertPersistableAST(nextModule, res);
+		}
+	}
+	
+	private static Resource confineInResource(CompiledModule module) {
+		// FIXME -
+		EclipseFile source = (EclipseFile)module.getSource();
+		URI uri = URI.createURI(source.getFile().getLocationURI().toString()).appendFileExtension("xmi"); //$NON-NLS-1$
+		Resource res = QvtOperationalParserUtil.getTypeResolverResource(module.getModule());
+		assertNotNull("A resource must be bound to AST Module: " + uri, res); //$NON-NLS-1$
+		res.getContents().add(module.getModule());		
+		res.setURI(uri);
+		return res;
+	}
+	
+	private static Resource assertPersistableAST(CompiledModule module, Resource res) {
+		try {
+			res.save(null);
+		} catch (Exception e) {
+			System.err.print(module.getSource().getFullPath());
+			e.printStackTrace();							
+			fail("Invalid module AST for serialization" + e.getLocalizedMessage()); //$NON-NLS-1$
+		}
+		
+		assertTrue(new ExtensibleURIConverterImpl().exists(res.getURI(), Collections.emptyMap()));
+		
+		return res;
+	}
+	
 	public static Set<Module> compileModules(String srcContainer, String[] modulePaths)  {
 		TestModuleResolver testResolver = TestModuleResolver.createdTestPluginResolver(srcContainer);
 		
@@ -243,4 +301,10 @@ public class TestUtil extends Assert {
         testProject.addWorkspaceProject(project);
     }    
 	
+	public static void logQVTStackTrace(QvtRuntimeException e) {
+		PrintWriter pw = new PrintWriter(System.err);
+		pw.println("QVT stacktrace:"); //$NON-NLS-1$
+		e.printQvtStackTrace(pw);
+		pw.flush();
+	}    
 }
