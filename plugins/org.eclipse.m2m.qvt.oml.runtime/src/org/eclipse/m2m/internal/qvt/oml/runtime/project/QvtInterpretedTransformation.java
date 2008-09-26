@@ -62,6 +62,10 @@ public class QvtInterpretedTransformation implements QvtTransformation {
     	myModule = qvtModule;
     }
 	
+	public QvtModule getModule() {
+		return myModule;
+	}
+	
     public EObject loadInput(URI inputObjectURI) throws MdaException {
     	return EmfUtil.loadModel(inputObjectURI, myModule.getCompiler().getResourceSet());
     }
