@@ -121,6 +121,10 @@ public class CompletionProposalUtil {
         CompletionProposalUtil.addStructuralFeatures(proposals, owner, data);
         CompletionProposalUtil.addOperations(proposals, owner, data);
         CompletionProposalUtil.addKeywords(proposals, LightweightParserUtil.MAPPING_CALL_TERMINALS, data);
+        if (owner instanceof CollectionType) {
+            CompletionProposalUtil.addKeywords(proposals, LightweightParserUtil.FOR_EXP_TERMINALS, data);
+            CompletionProposalUtil.addKeywords(proposals, LightweightParserUtil.QVTO_ITERATOR_TERMINALS, data);
+        }
         if (addResolveFamily) {
             CompletionProposalUtil.addKeyword(proposals, QvtOpLPGParsersym.TK_late, data);
             CompletionProposalUtil.addKeywords(proposals, LightweightParserUtil.RESOLVE_FAMILY_TERMINALS, data);

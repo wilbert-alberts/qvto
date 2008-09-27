@@ -21,12 +21,18 @@ class Result {
     private IToken myEndToken;
     private String myString;
     private Scope myScope;
+    private IToken myLastKnownGoodToken;
     
     public Result(IToken startToken, IToken endToken, String string, Scope scope) {
         myStartToken = startToken;
         myEndToken = endToken;
         myString = string;
         myScope = scope;
+    }
+
+    public Result(IToken startToken, IToken endToken, String string, Scope scope, IToken lastKnownGoodToken) {
+        this(startToken, endToken, string, scope);
+        myLastKnownGoodToken = lastKnownGoodToken;
     }
 
     public IToken getStartToken() {
@@ -59,5 +65,13 @@ class Result {
     
     public void setScope(Scope scope) {
         myScope = scope;
+    }
+
+    public IToken getLastKnownGoodToken() {
+        return myLastKnownGoodToken;
+    }
+
+    public void setLastKnownGoodToken(IToken lastKnownGoodToken) {
+        myLastKnownGoodToken = lastKnownGoodToken;
     }
 }

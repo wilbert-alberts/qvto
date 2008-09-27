@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.6 2008/07/04 15:49:48 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.7 2008/09/27 17:39:15 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.6 2008/07/04 15:49:48 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.7 2008/09/27 17:39:15 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -57,7 +57,7 @@ public interface LightweightParsersym {
       TK_LBRACKET = 108,
       TK_RBRACKET = 122,
       TK_ARROW = 137,
-      TK_BAR = 91,
+      TK_BAR = 90,
       TK_COMMA = 87,
       TK_COLON = 88,
       TK_COLONCOLON = 89,
@@ -75,11 +75,11 @@ public interface LightweightParsersym {
       TK_EXCLAMATION_MARK = 126,
       TK_NOT_EQUAL_EXEQ = 116,
       TK_self = 29,
-      TK_inv = 155,
-      TK_pre = 156,
-      TK_post = 157,
-      TK_endpackage = 158,
-      TK_def = 159,
+      TK_inv = 157,
+      TK_pre = 158,
+      TK_post = 159,
+      TK_endpackage = 160,
+      TK_def = 161,
       TK_if = 70,
       TK_then = 141,
       TK_else = 133,
@@ -97,8 +97,8 @@ public interface LightweightParsersym {
       TK_derive = 31,
       TK_init = 26,
       TK_null = 53,
-      TK_attr = 160,
-      TK_oper = 161,
+      TK_attr = 162,
+      TK_oper = 163,
       TK_Set = 5,
       TK_Bag = 6,
       TK_Sequence = 7,
@@ -178,7 +178,7 @@ public interface LightweightParsersym {
       TK_abstract = 95,
       TK_static = 96,
       TK_result = 45,
-      TK_main = 90,
+      TK_main = 91,
       TK_this = 50,
       TK_switch = 66,
       TK_case = 143,
@@ -193,6 +193,8 @@ public interface LightweightParsersym {
       TK_inherits = 119,
       TK_merges = 120,
       TK_disjuncts = 121,
+      TK_forEach = 155,
+      TK_forOne = 156,
       TK_IDENTIFIER = 3,
       TK_ERROR_TOKEN = 2,
       TK_INTEGER_RANGE_START = 136,
@@ -289,8 +291,8 @@ public interface LightweightParsersym {
                  "COMMA",
                  "COLON",
                  "COLONCOLON",
-                 "main",
                  "BAR",
+                 "main",
                  "in",
                  "log",
                  "blackbox",
@@ -354,6 +356,8 @@ public interface LightweightParsersym {
                  "collectOne",
                  "collectselect",
                  "collectselectOne",
+                 "forEach",
+                 "forOne",
                  "inv",
                  "pre",
                  "post",

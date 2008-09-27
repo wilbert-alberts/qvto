@@ -116,7 +116,7 @@ public class LightweightParserUtil {
         QvtOpLPGParsersym.TK_invresolveoneIn
     };
     
-    public static final int[] ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR = {
+    public static final int[] OCL_ITERATOR_TERMINALS = {
         QvtOpLPGParsersym.TK_select,
         QvtOpLPGParsersym.TK_reject,
         QvtOpLPGParsersym.TK_collect,
@@ -127,18 +127,27 @@ public class LightweightParserUtil {
         QvtOpLPGParsersym.TK_any,
         QvtOpLPGParsersym.TK_collectNested,
         QvtOpLPGParsersym.TK_sortedBy,
-        QvtOpLPGParsersym.TK_closure,
+        QvtOpLPGParsersym.TK_closure
+    };
+    
+    public static final int[] QVTO_ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR = {
         QvtOpLPGParsersym.TK_xselect,
         QvtOpLPGParsersym.TK_xcollect,
         QvtOpLPGParsersym.TK_selectOne,
-        QvtOpLPGParsersym.TK_collectOne,
+        QvtOpLPGParsersym.TK_collectOne
     };
     
-    public static final int[] ITERATOR_TERMINALS = 
-        uniteIntArrays(ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR,  new int[] {
+    public static final int[] ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR = 
+        uniteIntArrays(OCL_ITERATOR_TERMINALS, QVTO_ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR);
+    
+    public static final int[] QVTO_ITERATOR_TERMINALS = 
+        uniteIntArrays(QVTO_ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR,  new int[] {
                 QvtOpLPGParsersym.TK_collectselect,
                 QvtOpLPGParsersym.TK_collectselectOne
         });
+    
+    public static final int[] ITERATOR_TERMINALS = 
+        uniteIntArrays(OCL_ITERATOR_TERMINALS, QVTO_ITERATOR_TERMINALS);
     
     public static final int[] MAPPING_CLAUSE_TOKENS = {
         QvtOpLPGParsersym.TK_when, 
@@ -148,6 +157,11 @@ public class LightweightParserUtil {
     public static final int[] MAPPING_CALL_TERMINALS = {
         QvtOpLPGParsersym.TK_map,
         QvtOpLPGParsersym.TK_xmap
+    };
+    
+    public static final int[] FOR_EXP_TERMINALS = {
+        QvtOpLPGParsersym.TK_forEach,
+        QvtOpLPGParsersym.TK_forOne
     };
     
     public static int[] uniteIntArrays(int[] array1, int[] array2) {
