@@ -1,0 +1,16 @@
+import library Strings; 
+import library TestBlackboxLibrary;
+
+modeltype ECORE uses ecore('http://www.eclipse.org/emf/2002/Ecore');
+  
+transformation blackboxlibASTmodel(inout model : ECORE);
+  
+main() {
+	model.objects();
+	
+	'a::b::c'.split('::');
+	
+	true.oclAnyMyOperation();
+	
+	'aString'.length(); -- oclstdlib operation	
+}

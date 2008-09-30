@@ -57,10 +57,13 @@ public class TestQvtParser extends TestCase {
 	
 	public TestQvtParser(TestData data) {
         super(data.getDir());
-        myData = data;
-        
+        myData = data;        
     }
-    
+	
+	protected QvtCompilationResult[] getCompiledResults() {
+		return myCompiled;
+	}
+	    
 	@Override
 	public void setUp() throws Exception {
 		TestUtil.turnOffAutoBuilding();		
@@ -89,6 +92,7 @@ public class TestQvtParser extends TestCase {
 	
 	@Override
 	public void tearDown() throws Exception {
+		myCompiled = null;
 	}
 	
     public TestProject getTestProject() {
@@ -99,17 +103,17 @@ public class TestQvtParser extends TestCase {
 	public void runTest() throws Exception {
 		copyData("sources/" + myData.getDir(), "parserTestData/sources/" + myData.getDir()); //$NON-NLS-1$ //$NON-NLS-2$
 		
-        File folder = new File(myProject.getProject().getLocation().toString() + "/sources/" + myData.getDir()); //$NON-NLS-1$
+        File folder = getDestinationFolder(); //$NON-NLS-1$
 		assertTrue("Invalid folder " + folder, folder.exists() && folder.isDirectory()); //$NON-NLS-1$
 		
 		//System.err.println("testParsing: " + folder.getName()); //$NON-NLS-1$
-		QvtCompilationResult[] compiled = compile(folder);
+		myCompiled = compile(folder);
 		
-		assertTrue("No results", compiled.length > 0); //$NON-NLS-1$
-		List<QvtMessage> allErrors = getAllErrors(compiled);
+		assertTrue("No results", myCompiled.length > 0); //$NON-NLS-1$
+		List<QvtMessage> allErrors = getAllErrors(myCompiled);
 		assertEquals("Wrong error count for '" + folder.getName() + "', error(s)=" + allErrors, myData.getErrCount(), allErrors.size()); //$NON-NLS-1$ //$NON-NLS-2$
 		if (myData.getWarnings() != null) {
-	        List<QvtMessage> allWarnings = getAllWarnings(compiled);
+	        List<QvtMessage> allWarnings = getAllWarnings(myCompiled);
 	        expectedWarningsCycle : for (String expectedWarning : myData.getWarnings()) {
 	            for (QvtMessage qvtMessage : allWarnings) {
 	                if (expectedWarning.equals(qvtMessage.getMessage())) {
@@ -121,16 +125,16 @@ public class TestQvtParser extends TestCase {
 		}
 
 		// check the AST is consistent
-		for (QvtCompilationResult compilationResult : compiled) {
+		for (QvtCompilationResult compilationResult : myCompiled) {
 			if(compilationResult.getErrors().length == 0) {
 				TestUtil.assertAllPersistableAST(compilationResult.getModule());
 			}
-		}
+		}		
 		//		
 		
 		if(myData.usesSourceAnnotations()) {
 			Set<ProblemSourceAnnotationHelper> helpers = new HashSet<ProblemSourceAnnotationHelper>();	
-			for (QvtCompilationResult compilationResult : compiled) {
+			for (QvtCompilationResult compilationResult : myCompiled) {
 				doCompiledUnitCheck(compilationResult.getModule(), helpers);
 			}
 	
@@ -144,6 +148,10 @@ public class TestQvtParser extends TestCase {
 				TestCase.assertEquals(expectedProblemCount, foundProblemCount);
 			}			
 		}
+	}
+
+	protected File getDestinationFolder() {
+		return new File(myProject.getProject().getLocation().toString() + "/sources/" + myData.getDir());
 	}
 	
 	private void doCompiledUnitCheck(CompiledModule module,Set<ProblemSourceAnnotationHelper> annotationCollector) {
@@ -248,4 +256,5 @@ public class TestQvtParser extends TestCase {
 	
     private final TestData myData;
 	private TestProject myProject;
+	private QvtCompilationResult[] myCompiled;
 }

@@ -9,4 +9,8 @@ main() {
 		var r := asRenamedSetSingleton(object EClass {}, name);	
 		assert fatal (r->asSequence()->at(1).name = name) 
 			with log('The java library operation did give expected result');
+
+		var r2 : Set(OclAny) := 'selfString'.oclAnyMyOperation();	
+		assert fatal (r2->asSequence()->at(1) = 'selfString') 
+			with log('The java library operation ''oclAnyMyOperation'' did give expected result');			
 }

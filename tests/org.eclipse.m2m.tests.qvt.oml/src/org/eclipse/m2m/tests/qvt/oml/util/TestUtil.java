@@ -13,6 +13,7 @@ package org.eclipse.m2m.tests.qvt.oml.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 import junit.framework.Assert;
+import junit.framework.TestCase;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
@@ -47,7 +49,6 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
-import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
@@ -79,6 +80,24 @@ public class TestUtil extends Assert {
 		return result;
 	}
 	
+	public static void assertPersistableAST(Module module, URI targetUri) {
+		OutputStream os = null;
+		try {
+			os = new ExtensibleURIConverterImpl().createOutputStream(targetUri);
+			module.eResource().save(os, Collections.emptyMap());
+		} catch (Exception e) {
+			TestCase.fail("Failed to serialize AST: " + e.getMessage()); //$NON-NLS-1$ 
+		} finally {
+			if(os != null) {
+				try {
+					os.close();
+				} catch (IOException e) {					
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	public static void assertAllPersistableAST(CompiledModule compiledModule) {
 		Collection<CompiledModule> all = collectAllCompiledModules(compiledModule, new HashSet<CompiledModule>());
 		
@@ -97,7 +116,7 @@ public class TestUtil extends Assert {
 		// FIXME -
 		EclipseFile source = (EclipseFile)module.getSource();
 		URI uri = URI.createURI(source.getFile().getLocationURI().toString()).appendFileExtension("xmi"); //$NON-NLS-1$
-		Resource res = QvtOperationalParserUtil.getTypeResolverResource(module.getModule());
+		Resource res = module.getModule().eResource();
 		assertNotNull("A resource must be bound to AST Module: " + uri, res); //$NON-NLS-1$
 		res.getContents().add(module.getModule());		
 		res.setURI(uri);

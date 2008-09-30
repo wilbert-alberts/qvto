@@ -18,6 +18,8 @@ public class ParserTests {
     public static Test suite() {
         TestSuite suite = new TestSuite("QVT parser"); //$NON-NLS-1$
         
+        suite.addTest(new QvtLibraryASTTest());
+        
         for (int i = 0; i < ourData.length; i++) {
             TestData data = ourData[i];
             suite.addTest(new TestQvtParser(data));
