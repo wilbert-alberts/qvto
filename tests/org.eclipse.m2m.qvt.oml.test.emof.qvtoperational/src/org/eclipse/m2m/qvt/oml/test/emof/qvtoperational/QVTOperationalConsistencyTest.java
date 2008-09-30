@@ -44,6 +44,16 @@ public class QVTOperationalConsistencyTest extends AbstractEssentialOCLConsisten
 		//
 		changeOfObject(differences, helper, org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage.Literals.MODULE__OWNED_TAG, EcorePackage.Literals.ETYPED_ELEMENT__ETYPE);
 		//
+		//	Ecore limitation on EBoolean rather than EBooleanObject
+		//
+		changeOfUnsettable(differences, helper, org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage.Literals.HELPER__IS_QUERY);
+		changeOfUnsettable(differences, helper, org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage.Literals.IMPERATIVE_OPERATION__IS_BLACKBOX);
+		changeOfUnsettable(differences, helper, org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage.Literals.MAPPING_CALL_EXP__IS_STRICT);
+		changeOfUnsettable(differences, helper, org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage.Literals.MODULE__IS_BLACKBOX);
+		changeOfUnsettable(differences, helper, org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage.Literals.RESOLVE_EXP__IS_DEFERRED);
+		changeOfUnsettable(differences, helper, org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage.Literals.RESOLVE_EXP__IS_INVERSE);
+		changeOfUnsettable(differences, helper, org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage.Literals.RESOLVE_EXP__ONE);
+		//
 		//	Ecore added value
 		//
 		missingConstraint(differences, helper, org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage.Literals.MODULE);

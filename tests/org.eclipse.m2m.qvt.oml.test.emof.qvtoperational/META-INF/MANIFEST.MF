@@ -6,7 +6,8 @@ Bundle-Version: 0.7.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Require-Bundle: org.eclipse.m2m.qvt.oml.test.emof.imperativeocl;visibility:=reexport,
+Require-Bundle: org.junit,
+ org.eclipse.m2m.qvt.oml.test.emof.imperativeocl;visibility:=reexport,
  org.eclipse.m2m.qvt.oml.emof.qvtoperational;visibility:=reexport,
  org.eclipse.m2m.qvt.oml.ecore.qvtoperational;visibility:=reexport
 Eclipse-LazyStart: false
