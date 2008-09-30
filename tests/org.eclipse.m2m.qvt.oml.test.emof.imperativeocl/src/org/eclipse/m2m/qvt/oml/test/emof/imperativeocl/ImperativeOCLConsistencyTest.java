@@ -36,6 +36,10 @@ public class ImperativeOCLConsistencyTest extends AbstractEssentialOCLConsistenc
 		changeOfURI(differences, helper, org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage.eINSTANCE);
 		changeOfPrefix(differences, helper, org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage.eINSTANCE);			
 		//
+		//	Ecore limitation on EBoolean rather than EBooleanObject
+		//
+		changeOfUnsettable(differences, helper, org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage.Literals.ASSIGN_EXP__IS_RESET);
+		//
 		//	Ecore added value
 		//
 		missingConstraint(differences, helper, org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage.Literals.ORDERED_TUPLE_TYPE);
@@ -271,10 +275,10 @@ public class ImperativeOCLConsistencyTest extends AbstractEssentialOCLConsistenc
 		getExpectedDerivedPackageInconsistencies(ecoreInconsistencies, adaptingInconsistencies);
 		htmlStream.setEnabled(true);
 		ecore2EmofAdapterConsistencyTest(ecoreInconsistencies, adaptingInconsistencies);
-		emof2OmgRoseConsistencyTest(ImperativeOCLPackage.eNS_URI, "imperativeocl.ecore");
-		emof2OmgEcoreConsistencyTest(ImperativeOCLPackage.eNS_URI, "imperativeocl.ecore");
-		emof2OmgEmofConsistencyTest(ImperativeOCLPackage.eNS_URI);
-		emof2RoseConsistencyTest(ImperativeOCLPackage.eNS_URI, "ImperativeOCL.ecore");
+//		emof2OmgRoseConsistencyTest(ImperativeOCLPackage.eNS_URI, "imperativeocl.ecore");
+//		emof2OmgEcoreConsistencyTest(ImperativeOCLPackage.eNS_URI, "imperativeocl.ecore");
+//		emof2OmgEmofConsistencyTest(ImperativeOCLPackage.eNS_URI);
+//		emof2RoseConsistencyTest(ImperativeOCLPackage.eNS_URI, "ImperativeOCL.ecore");
 		ecore2EmofConsistencyTest(org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage.eNS_URI,
 				ImperativeOCLPackage.eINSTANCE,
 				org.eclipse.qvt.declarative.emof.EssentialOCL.EssentialOCLPackage.eINSTANCE,
