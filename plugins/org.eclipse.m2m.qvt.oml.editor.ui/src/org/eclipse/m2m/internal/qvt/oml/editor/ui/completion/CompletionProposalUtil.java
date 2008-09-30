@@ -257,7 +257,7 @@ public class CompletionProposalUtil {
         allLibs.add(QvtOperationalStdLibrary.INSTANCE.getStdLibModule());
         
         for (Module module : allLibs) {
-        	for (EOperation nextLibOper : data.getEnvironment().getAdditionalOperations(module)) {
+        	for (EOperation nextLibOper : TypeUtil.getOperations(data.getEnvironment(), module)) {
         		if(data.getEnvironment().getUMLReflection().getOwningClassifier(nextLibOper) == module) {
         			QvtCompletionProposal info = CompletionProposalUtil.createCompletionProposal(nextLibOper, data);
         			CompletionProposalUtil.addProposalIfNecessary(proposals, info, data);
