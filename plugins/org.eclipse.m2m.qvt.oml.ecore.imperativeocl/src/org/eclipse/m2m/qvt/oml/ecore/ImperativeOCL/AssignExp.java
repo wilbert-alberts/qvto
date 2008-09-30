@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: AssignExp.java,v 1.1 2008/09/02 20:01:44 radvorak Exp $
+ * $Id: AssignExp.java,v 1.2 2008/09/30 22:11:31 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL;
 
@@ -74,9 +74,11 @@ public interface AssignExp extends ImperativeExpression {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Is Reset</em>' attribute.
+	 * @see #isSetIsReset()
+	 * @see #unsetIsReset()
 	 * @see #setIsReset(boolean)
 	 * @see org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage#getAssignExp_IsReset()
-	 * @model
+	 * @model unsettable="true"
 	 * @generated
 	 */
 	boolean isIsReset();
@@ -86,10 +88,35 @@ public interface AssignExp extends ImperativeExpression {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Is Reset</em>' attribute.
+	 * @see #isSetIsReset()
+	 * @see #unsetIsReset()
 	 * @see #isIsReset()
 	 * @generated
 	 */
 	void setIsReset(boolean value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp#isIsReset <em>Is Reset</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetIsReset()
+	 * @see #isIsReset()
+	 * @see #setIsReset(boolean)
+	 * @generated
+	 */
+	void unsetIsReset();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp#isIsReset <em>Is Reset</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Is Reset</em>' attribute is set.
+	 * @see #unsetIsReset()
+	 * @see #isIsReset()
+	 * @see #setIsReset(boolean)
+	 * @generated
+	 */
+	boolean isSetIsReset();
 
 	/**
 	 * Returns the value of the '<em><b>Left</b></em>' containment reference.

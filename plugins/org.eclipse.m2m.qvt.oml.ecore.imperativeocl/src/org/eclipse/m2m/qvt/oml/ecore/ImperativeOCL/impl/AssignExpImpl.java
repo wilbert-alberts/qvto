@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: AssignExpImpl.java,v 1.1 2008/09/02 20:01:45 radvorak Exp $
+ * $Id: AssignExpImpl.java,v 1.2 2008/09/30 22:11:32 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.impl;
 
@@ -80,6 +80,15 @@ public class AssignExpImpl extends ImperativeExpressionImpl implements AssignExp
 	 * @ordered
 	 */
 	protected boolean isReset = IS_RESET_EDEFAULT;
+
+	/**
+	 * This is true if the Is Reset attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isResetESet;
 
 	/**
 	 * The cached value of the '{@link #getLeft() <em>Left</em>}' containment reference.
@@ -180,8 +189,33 @@ public class AssignExpImpl extends ImperativeExpressionImpl implements AssignExp
 	public void setIsReset(boolean newIsReset) {
 		boolean oldIsReset = isReset;
 		isReset = newIsReset;
+		boolean oldIsResetESet = isResetESet;
+		isResetESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLPackage.ASSIGN_EXP__IS_RESET, oldIsReset, isReset));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLPackage.ASSIGN_EXP__IS_RESET, oldIsReset, isReset, !oldIsResetESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetIsReset() {
+		boolean oldIsReset = isReset;
+		boolean oldIsResetESet = isResetESet;
+		isReset = IS_RESET_EDEFAULT;
+		isResetESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ImperativeOCLPackage.ASSIGN_EXP__IS_RESET, oldIsReset, IS_RESET_EDEFAULT, oldIsResetESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetIsReset() {
+		return isResetESet;
 	}
 
 	/**
@@ -315,7 +349,7 @@ public class AssignExpImpl extends ImperativeExpressionImpl implements AssignExp
 				setDefaultValue((OCLExpression)null);
 				return;
 			case ImperativeOCLPackage.ASSIGN_EXP__IS_RESET:
-				setIsReset(IS_RESET_EDEFAULT);
+				unsetIsReset();
 				return;
 			case ImperativeOCLPackage.ASSIGN_EXP__LEFT:
 				setLeft((OCLExpression)null);
@@ -338,7 +372,7 @@ public class AssignExpImpl extends ImperativeExpressionImpl implements AssignExp
 			case ImperativeOCLPackage.ASSIGN_EXP__DEFAULT_VALUE:
 				return defaultValue != null;
 			case ImperativeOCLPackage.ASSIGN_EXP__IS_RESET:
-				return isReset != IS_RESET_EDEFAULT;
+				return isSetIsReset();
 			case ImperativeOCLPackage.ASSIGN_EXP__LEFT:
 				return left != null;
 			case ImperativeOCLPackage.ASSIGN_EXP__VALUE:
@@ -358,7 +392,7 @@ public class AssignExpImpl extends ImperativeExpressionImpl implements AssignExp
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (isReset: ");
-		result.append(isReset);
+		if (isResetESet) result.append(isReset); else result.append("<unset>");
 		result.append(')');
 		return result.toString();
 	}
