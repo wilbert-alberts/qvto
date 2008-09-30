@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: QVTOperationalEditor.java,v 1.1 2008/09/02 20:00:39 radvorak Exp $
+ * $Id: QVTOperationalEditor.java,v 1.2 2008/09/30 22:10:56 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.presentation;
 
@@ -496,7 +496,7 @@ public class QVTOperationalEditor
 							if (delta.getResource().getType() == IResource.FILE) {
 								if (delta.getKind() == IResourceDelta.REMOVED ||
 								    delta.getKind() == IResourceDelta.CHANGED && delta.getFlags() != IResourceDelta.MARKERS) {
-									Resource resource = resourceSet.getResource(URI.createURI(delta.getFullPath().toString()), false);
+									Resource resource = resourceSet.getResource(URI.createPlatformResourceURI(delta.getFullPath().toString(), true), false);
 									if (resource != null) {
 										if (delta.getKind() == IResourceDelta.REMOVED) {
 											removedResources.add(resource);
