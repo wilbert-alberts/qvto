@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: ObjectExpItemProvider.java,v 1.1 2008/09/02 20:01:11 radvorak Exp $
+ * $Id: ObjectExpItemProvider.java,v 1.2 2008/09/30 22:11:18 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.provider;
 
@@ -218,6 +218,11 @@ public class ObjectExpItemProvider
 			(createChildParameter
 				(ImperativeOCLPackage.Literals.INSTANTIATION_EXP__ARGUMENT,
 				 QVTOperationalFactory.eINSTANCE.createResolveInExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ImperativeOCLPackage.Literals.INSTANTIATION_EXP__ARGUMENT,
+				 QVTRelationFactory.eINSTANCE.createOppositePropertyCallExp()));
 
 		newChildDescriptors.add
 			(createChildParameter

@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: ModelTypeItemProvider.java,v 1.1 2008/09/02 20:01:11 radvorak Exp $
+ * $Id: ModelTypeItemProvider.java,v 1.2 2008/09/30 22:11:19 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.provider;
 
@@ -395,6 +395,11 @@ public class ModelTypeItemProvider
 			(createChildParameter
 				(QVTOperationalPackage.Literals.MODEL_TYPE__ADDITIONAL_CONDITION,
 				 ImperativeOCLFactory.eINSTANCE.createWhileExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(QVTOperationalPackage.Literals.MODEL_TYPE__ADDITIONAL_CONDITION,
+				 QVTRelationFactory.eINSTANCE.createOppositePropertyCallExp()));
 
 		newChildDescriptors.add
 			(createChildParameter

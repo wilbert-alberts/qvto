@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: ImperativeCallExpItemProvider.java,v 1.1 2008/09/02 20:01:11 radvorak Exp $
+ * $Id: ImperativeCallExpItemProvider.java,v 1.2 2008/09/30 22:11:19 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.provider;
 
@@ -303,6 +303,11 @@ public class ImperativeCallExpItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(ExpressionsPackage.Literals.CALL_EXP__SOURCE,
+				 QVTRelationFactory.eINSTANCE.createOppositePropertyCallExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ExpressionsPackage.Literals.CALL_EXP__SOURCE,
 				 QVTRelationFactory.eINSTANCE.createRelationCallExp()));
 
 		newChildDescriptors.add
@@ -449,6 +454,11 @@ public class ImperativeCallExpItemProvider
 			(createChildParameter
 				(ExpressionsPackage.Literals.OPERATION_CALL_EXP__ARGUMENT,
 				 ImperativeOCLFactory.eINSTANCE.createWhileExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ExpressionsPackage.Literals.OPERATION_CALL_EXP__ARGUMENT,
+				 QVTRelationFactory.eINSTANCE.createOppositePropertyCallExp()));
 
 		newChildDescriptors.add
 			(createChildParameter

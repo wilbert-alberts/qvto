@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: VarParameterItemProvider.java,v 1.1 2008/09/02 20:01:11 radvorak Exp $
+ * $Id: VarParameterItemProvider.java,v 1.2 2008/09/30 22:11:18 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.provider;
 
@@ -299,6 +299,11 @@ public class VarParameterItemProvider
 			(createChildParameter
 				(ExpressionsPackage.Literals.VARIABLE__INIT_EXPRESSION,
 				 ImperativeOCLFactory.eINSTANCE.createWhileExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ExpressionsPackage.Literals.VARIABLE__INIT_EXPRESSION,
+				 QVTRelationFactory.eINSTANCE.createOppositePropertyCallExp()));
 
 		newChildDescriptors.add
 			(createChildParameter

@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: MappingBodyItemProvider.java,v 1.1 2008/09/02 20:01:11 radvorak Exp $
+ * $Id: MappingBodyItemProvider.java,v 1.2 2008/09/30 22:11:18 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.provider;
 
@@ -305,6 +305,11 @@ public class MappingBodyItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(QVTOperationalPackage.Literals.MAPPING_BODY__END_SECTION,
+				 QVTRelationFactory.eINSTANCE.createOppositePropertyCallExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(QVTOperationalPackage.Literals.MAPPING_BODY__END_SECTION,
 				 QVTRelationFactory.eINSTANCE.createRelationCallExp()));
 
 		newChildDescriptors.add
@@ -561,6 +566,11 @@ public class MappingBodyItemProvider
 			(createChildParameter
 				(QVTOperationalPackage.Literals.MAPPING_BODY__INIT_SECTION,
 				 ImperativeOCLFactory.eINSTANCE.createWhileExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(QVTOperationalPackage.Literals.MAPPING_BODY__INIT_SECTION,
+				 QVTRelationFactory.eINSTANCE.createOppositePropertyCallExp()));
 
 		newChildDescriptors.add
 			(createChildParameter

@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: ResolveExpItemProvider.java,v 1.1 2008/09/02 20:01:11 radvorak Exp $
+ * $Id: ResolveExpItemProvider.java,v 1.2 2008/09/30 22:11:18 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.provider;
 
@@ -392,6 +392,11 @@ public class ResolveExpItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(ExpressionsPackage.Literals.CALL_EXP__SOURCE,
+				 QVTRelationFactory.eINSTANCE.createOppositePropertyCallExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ExpressionsPackage.Literals.CALL_EXP__SOURCE,
 				 QVTRelationFactory.eINSTANCE.createRelationCallExp()));
 
 		newChildDescriptors.add
@@ -538,6 +543,11 @@ public class ResolveExpItemProvider
 			(createChildParameter
 				(QVTOperationalPackage.Literals.RESOLVE_EXP__CONDITION,
 				 ImperativeOCLFactory.eINSTANCE.createWhileExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(QVTOperationalPackage.Literals.RESOLVE_EXP__CONDITION,
+				 QVTRelationFactory.eINSTANCE.createOppositePropertyCallExp()));
 
 		newChildDescriptors.add
 			(createChildParameter

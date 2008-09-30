@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: MappingOperationItemProvider.java,v 1.1 2008/09/02 20:01:11 radvorak Exp $
+ * $Id: MappingOperationItemProvider.java,v 1.2 2008/09/30 22:11:18 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.provider;
 
@@ -402,6 +402,11 @@ public class MappingOperationItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(QVTOperationalPackage.Literals.MAPPING_OPERATION__WHEN,
+				 QVTRelationFactory.eINSTANCE.createOppositePropertyCallExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(QVTOperationalPackage.Literals.MAPPING_OPERATION__WHEN,
 				 QVTRelationFactory.eINSTANCE.createRelationCallExp()));
 
 		newChildDescriptors.add
@@ -658,6 +663,11 @@ public class MappingOperationItemProvider
 			(createChildParameter
 				(QVTOperationalPackage.Literals.MAPPING_OPERATION__WHERE,
 				 ImperativeOCLFactory.eINSTANCE.createWhileExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(QVTOperationalPackage.Literals.MAPPING_OPERATION__WHERE,
+				 QVTRelationFactory.eINSTANCE.createOppositePropertyCallExp()));
 
 		newChildDescriptors.add
 			(createChildParameter
