@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: ResolveExp.java,v 1.1 2008/09/02 20:02:27 radvorak Exp $
+ * $Id: ResolveExp.java,v 1.2 2008/09/30 22:11:49 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational;
 
@@ -76,9 +76,11 @@ public interface ResolveExp extends CallExp, ImperativeExpression {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Is Deferred</em>' attribute.
+	 * @see #isSetIsDeferred()
+	 * @see #unsetIsDeferred()
 	 * @see #setIsDeferred(boolean)
 	 * @see org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage#getResolveExp_IsDeferred()
-	 * @model
+	 * @model unsettable="true"
 	 * @generated
 	 */
 	boolean isIsDeferred();
@@ -88,10 +90,35 @@ public interface ResolveExp extends CallExp, ImperativeExpression {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Is Deferred</em>' attribute.
+	 * @see #isSetIsDeferred()
+	 * @see #unsetIsDeferred()
 	 * @see #isIsDeferred()
 	 * @generated
 	 */
 	void setIsDeferred(boolean value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ResolveExp#isIsDeferred <em>Is Deferred</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetIsDeferred()
+	 * @see #isIsDeferred()
+	 * @see #setIsDeferred(boolean)
+	 * @generated
+	 */
+	void unsetIsDeferred();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ResolveExp#isIsDeferred <em>Is Deferred</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Is Deferred</em>' attribute is set.
+	 * @see #unsetIsDeferred()
+	 * @see #isIsDeferred()
+	 * @see #setIsDeferred(boolean)
+	 * @generated
+	 */
+	boolean isSetIsDeferred();
 
 	/**
 	 * Returns the value of the '<em><b>Is Inverse</b></em>' attribute.
@@ -102,9 +129,11 @@ public interface ResolveExp extends CallExp, ImperativeExpression {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Is Inverse</em>' attribute.
+	 * @see #isSetIsInverse()
+	 * @see #unsetIsInverse()
 	 * @see #setIsInverse(boolean)
 	 * @see org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage#getResolveExp_IsInverse()
-	 * @model
+	 * @model unsettable="true"
 	 * @generated
 	 */
 	boolean isIsInverse();
@@ -114,10 +143,35 @@ public interface ResolveExp extends CallExp, ImperativeExpression {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Is Inverse</em>' attribute.
+	 * @see #isSetIsInverse()
+	 * @see #unsetIsInverse()
 	 * @see #isIsInverse()
 	 * @generated
 	 */
 	void setIsInverse(boolean value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ResolveExp#isIsInverse <em>Is Inverse</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetIsInverse()
+	 * @see #isIsInverse()
+	 * @see #setIsInverse(boolean)
+	 * @generated
+	 */
+	void unsetIsInverse();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ResolveExp#isIsInverse <em>Is Inverse</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Is Inverse</em>' attribute is set.
+	 * @see #unsetIsInverse()
+	 * @see #isIsInverse()
+	 * @see #setIsInverse(boolean)
+	 * @generated
+	 */
+	boolean isSetIsInverse();
 
 	/**
 	 * Returns the value of the '<em><b>One</b></em>' attribute.
@@ -128,9 +182,11 @@ public interface ResolveExp extends CallExp, ImperativeExpression {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>One</em>' attribute.
+	 * @see #isSetOne()
+	 * @see #unsetOne()
 	 * @see #setOne(boolean)
 	 * @see org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage#getResolveExp_One()
-	 * @model
+	 * @model unsettable="true"
 	 * @generated
 	 */
 	boolean isOne();
@@ -140,10 +196,35 @@ public interface ResolveExp extends CallExp, ImperativeExpression {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>One</em>' attribute.
+	 * @see #isSetOne()
+	 * @see #unsetOne()
 	 * @see #isOne()
 	 * @generated
 	 */
 	void setOne(boolean value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ResolveExp#isOne <em>One</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetOne()
+	 * @see #isOne()
+	 * @see #setOne(boolean)
+	 * @generated
+	 */
+	void unsetOne();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ResolveExp#isOne <em>One</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>One</em>' attribute is set.
+	 * @see #unsetOne()
+	 * @see #isOne()
+	 * @see #setOne(boolean)
+	 * @generated
+	 */
+	boolean isSetOne();
 
 	/**
 	 * Returns the value of the '<em><b>Target</b></em>' containment reference.

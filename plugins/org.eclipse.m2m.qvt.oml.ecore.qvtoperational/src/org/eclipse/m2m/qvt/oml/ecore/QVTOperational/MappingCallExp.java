@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: MappingCallExp.java,v 1.1 2008/09/02 20:02:27 radvorak Exp $
+ * $Id: MappingCallExp.java,v 1.2 2008/09/30 22:11:49 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational;
 
@@ -42,9 +42,11 @@ public interface MappingCallExp extends ImperativeCallExp {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Is Strict</em>' attribute.
+	 * @see #isSetIsStrict()
+	 * @see #unsetIsStrict()
 	 * @see #setIsStrict(boolean)
 	 * @see org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage#getMappingCallExp_IsStrict()
-	 * @model
+	 * @model unsettable="true"
 	 * @generated
 	 */
 	boolean isIsStrict();
@@ -54,9 +56,34 @@ public interface MappingCallExp extends ImperativeCallExp {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Is Strict</em>' attribute.
+	 * @see #isSetIsStrict()
+	 * @see #unsetIsStrict()
 	 * @see #isIsStrict()
 	 * @generated
 	 */
 	void setIsStrict(boolean value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.m2m.qvt.oml.ecore.QVTOperational.MappingCallExp#isIsStrict <em>Is Strict</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetIsStrict()
+	 * @see #isIsStrict()
+	 * @see #setIsStrict(boolean)
+	 * @generated
+	 */
+	void unsetIsStrict();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.m2m.qvt.oml.ecore.QVTOperational.MappingCallExp#isIsStrict <em>Is Strict</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Is Strict</em>' attribute is set.
+	 * @see #unsetIsStrict()
+	 * @see #isIsStrict()
+	 * @see #setIsStrict(boolean)
+	 * @generated
+	 */
+	boolean isSetIsStrict();
 
 } // MappingCallExp

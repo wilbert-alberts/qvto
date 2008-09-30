@@ -27,7 +27,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EntryOperation" eSuperTypes="#//ImperativeOperation"/>
   <eClassifiers xsi:type="ecore:EClass" name="Helper" eSuperTypes="#//ImperativeOperation">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isQuery" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isQuery" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
+        unsettable="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ImperativeCallExp" eSuperTypes="platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OperationCallExp platform:/plugin/org.eclipse.m2m.qvt.oml.ecore.imperativeocl/model/ImperativeOCL.ecore#//ImperativeExpression">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isVirtual" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
@@ -38,7 +39,8 @@
         containment="true" eOpposite="#//OperationBody/operation"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="context" eType="#//VarParameter"
         containment="true" eOpposite="#//VarParameter/ctxOwner"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isBlackbox" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isBlackbox" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
+        unsettable="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="overridden" eType="#//ImperativeOperation">
       <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
         <details key="body" value="overriding"/>
@@ -69,7 +71,8 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MappingCallExp" eSuperTypes="#//ImperativeCallExp">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isStrict" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isStrict" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
+        unsettable="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MappingOperation" eSuperTypes="#//ImperativeOperation">
     <eStructuralFeatures xsi:type="ecore:EReference" name="disjunct" upperBound="-1"
@@ -141,7 +144,8 @@
         <details key="body" value="entryContext"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isBlackbox" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isBlackbox" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
+        unsettable="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="moduleImport" upperBound="-1"
         eType="#//ModuleImport" containment="true" eOpposite="#//ModuleImport/module"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedTag" upperBound="-1"
@@ -237,9 +241,12 @@
   <eClassifiers xsi:type="ecore:EClass" name="ResolveExp" eSuperTypes="platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/CallExp platform:/plugin/org.eclipse.m2m.qvt.oml.ecore.imperativeocl/model/ImperativeOCL.ecore#//ImperativeExpression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isDeferred" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInverse" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="one" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isDeferred" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInverse" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="one" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
+        unsettable="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/Variable"
         containment="true"/>
   </eClassifiers>

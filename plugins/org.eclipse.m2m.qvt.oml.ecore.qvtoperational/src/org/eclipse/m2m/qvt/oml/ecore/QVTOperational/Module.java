@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: Module.java,v 1.1 2008/09/02 20:02:27 radvorak Exp $
+ * $Id: Module.java,v 1.2 2008/09/30 22:11:49 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational;
 
@@ -98,9 +98,11 @@ public interface Module extends EClass, EPackage {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Is Blackbox</em>' attribute.
+	 * @see #isSetIsBlackbox()
+	 * @see #unsetIsBlackbox()
 	 * @see #setIsBlackbox(boolean)
 	 * @see org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage#getModule_IsBlackbox()
-	 * @model
+	 * @model unsettable="true"
 	 * @generated
 	 */
 	boolean isIsBlackbox();
@@ -110,10 +112,35 @@ public interface Module extends EClass, EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Is Blackbox</em>' attribute.
+	 * @see #isSetIsBlackbox()
+	 * @see #unsetIsBlackbox()
 	 * @see #isIsBlackbox()
 	 * @generated
 	 */
 	void setIsBlackbox(boolean value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.m2m.qvt.oml.ecore.QVTOperational.Module#isIsBlackbox <em>Is Blackbox</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetIsBlackbox()
+	 * @see #isIsBlackbox()
+	 * @see #setIsBlackbox(boolean)
+	 * @generated
+	 */
+	void unsetIsBlackbox();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.m2m.qvt.oml.ecore.QVTOperational.Module#isIsBlackbox <em>Is Blackbox</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Is Blackbox</em>' attribute is set.
+	 * @see #unsetIsBlackbox()
+	 * @see #isIsBlackbox()
+	 * @see #setIsBlackbox(boolean)
+	 * @generated
+	 */
+	boolean isSetIsBlackbox();
 
 	/**
 	 * Returns the value of the '<em><b>Module Import</b></em>' containment reference list.

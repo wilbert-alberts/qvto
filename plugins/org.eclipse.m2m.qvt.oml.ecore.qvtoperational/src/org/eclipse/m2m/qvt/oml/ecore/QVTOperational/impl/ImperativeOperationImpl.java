@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: ImperativeOperationImpl.java,v 1.1 2008/09/02 20:02:26 radvorak Exp $
+ * $Id: ImperativeOperationImpl.java,v 1.2 2008/09/30 22:11:49 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
@@ -88,6 +88,15 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 	 * @ordered
 	 */
 	protected boolean isBlackbox = IS_BLACKBOX_EDEFAULT;
+
+	/**
+	 * This is true if the Is Blackbox attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isBlackboxESet;
 
 	/**
 	 * The cached value of the '{@link #getOverridden() <em>Overridden</em>}' reference.
@@ -231,8 +240,33 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 	public void setIsBlackbox(boolean newIsBlackbox) {
 		boolean oldIsBlackbox = isBlackbox;
 		isBlackbox = newIsBlackbox;
+		boolean oldIsBlackboxESet = isBlackboxESet;
+		isBlackboxESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalPackage.IMPERATIVE_OPERATION__IS_BLACKBOX, oldIsBlackbox, isBlackbox));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalPackage.IMPERATIVE_OPERATION__IS_BLACKBOX, oldIsBlackbox, isBlackbox, !oldIsBlackboxESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetIsBlackbox() {
+		boolean oldIsBlackbox = isBlackbox;
+		boolean oldIsBlackboxESet = isBlackboxESet;
+		isBlackbox = IS_BLACKBOX_EDEFAULT;
+		isBlackboxESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, QVTOperationalPackage.IMPERATIVE_OPERATION__IS_BLACKBOX, oldIsBlackbox, IS_BLACKBOX_EDEFAULT, oldIsBlackboxESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetIsBlackbox() {
+		return isBlackboxESet;
 	}
 
 	/**
@@ -393,7 +427,7 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 				setContext((VarParameter)null);
 				return;
 			case QVTOperationalPackage.IMPERATIVE_OPERATION__IS_BLACKBOX:
-				setIsBlackbox(IS_BLACKBOX_EDEFAULT);
+				unsetIsBlackbox();
 				return;
 			case QVTOperationalPackage.IMPERATIVE_OPERATION__OVERRIDDEN:
 				setOverridden((ImperativeOperation)null);
@@ -418,7 +452,7 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 			case QVTOperationalPackage.IMPERATIVE_OPERATION__CONTEXT:
 				return context != null;
 			case QVTOperationalPackage.IMPERATIVE_OPERATION__IS_BLACKBOX:
-				return isBlackbox != IS_BLACKBOX_EDEFAULT;
+				return isSetIsBlackbox();
 			case QVTOperationalPackage.IMPERATIVE_OPERATION__OVERRIDDEN:
 				return overridden != null;
 			case QVTOperationalPackage.IMPERATIVE_OPERATION__RESULT:
@@ -438,7 +472,7 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (isBlackbox: ");
-		result.append(isBlackbox);
+		if (isBlackboxESet) result.append(isBlackbox); else result.append("<unset>");
 		result.append(')');
 		return result.toString();
 	}

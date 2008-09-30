@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: ModuleImpl.java,v 1.1 2008/09/02 20:02:26 radvorak Exp $
+ * $Id: ModuleImpl.java,v 1.2 2008/09/30 22:11:49 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
@@ -190,6 +190,15 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * @ordered
 	 */
 	protected boolean isBlackbox = IS_BLACKBOX_EDEFAULT;
+
+	/**
+	 * This is true if the Is Blackbox attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isBlackboxESet;
 
 	/**
 	 * The cached value of the '{@link #getModuleImport() <em>Module Import</em>}' containment reference list.
@@ -449,8 +458,33 @@ public class ModuleImpl extends EClassImpl implements Module {
 	public void setIsBlackbox(boolean newIsBlackbox) {
 		boolean oldIsBlackbox = isBlackbox;
 		isBlackbox = newIsBlackbox;
+		boolean oldIsBlackboxESet = isBlackboxESet;
+		isBlackboxESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalPackage.MODULE__IS_BLACKBOX, oldIsBlackbox, isBlackbox));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalPackage.MODULE__IS_BLACKBOX, oldIsBlackbox, isBlackbox, !oldIsBlackboxESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetIsBlackbox() {
+		boolean oldIsBlackbox = isBlackbox;
+		boolean oldIsBlackboxESet = isBlackboxESet;
+		isBlackbox = IS_BLACKBOX_EDEFAULT;
+		isBlackboxESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, QVTOperationalPackage.MODULE__IS_BLACKBOX, oldIsBlackbox, IS_BLACKBOX_EDEFAULT, oldIsBlackboxESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetIsBlackbox() {
+		return isBlackboxESet;
 	}
 
 	/**
@@ -721,7 +755,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 				setEntry((EntryOperation)null);
 				return;
 			case QVTOperationalPackage.MODULE__IS_BLACKBOX:
-				setIsBlackbox(IS_BLACKBOX_EDEFAULT);
+				unsetIsBlackbox();
 				return;
 			case QVTOperationalPackage.MODULE__MODULE_IMPORT:
 				getModuleImport().clear();
@@ -764,7 +798,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 			case QVTOperationalPackage.MODULE__ENTRY:
 				return entry != null;
 			case QVTOperationalPackage.MODULE__IS_BLACKBOX:
-				return isBlackbox != IS_BLACKBOX_EDEFAULT;
+				return isSetIsBlackbox();
 			case QVTOperationalPackage.MODULE__MODULE_IMPORT:
 				return moduleImport != null && !moduleImport.isEmpty();
 			case QVTOperationalPackage.MODULE__OWNED_TAG:
@@ -834,7 +868,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 		result.append(", nsPrefix: ");
 		result.append(nsPrefix);
 		result.append(", isBlackbox: ");
-		result.append(isBlackbox);
+		if (isBlackboxESet) result.append(isBlackbox); else result.append("<unset>");
 		result.append(')');
 		return result.toString();
 	}

@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: MappingCallExpImpl.java,v 1.1 2008/09/02 20:02:26 radvorak Exp $
+ * $Id: MappingCallExpImpl.java,v 1.2 2008/09/30 22:11:49 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
@@ -59,6 +59,15 @@ public class MappingCallExpImpl extends ImperativeCallExpImpl implements Mapping
 	protected boolean isStrict = IS_STRICT_EDEFAULT;
 
 	/**
+	 * This is true if the Is Strict attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isStrictESet;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -94,8 +103,33 @@ public class MappingCallExpImpl extends ImperativeCallExpImpl implements Mapping
 	public void setIsStrict(boolean newIsStrict) {
 		boolean oldIsStrict = isStrict;
 		isStrict = newIsStrict;
+		boolean oldIsStrictESet = isStrictESet;
+		isStrictESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalPackage.MAPPING_CALL_EXP__IS_STRICT, oldIsStrict, isStrict));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalPackage.MAPPING_CALL_EXP__IS_STRICT, oldIsStrict, isStrict, !oldIsStrictESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetIsStrict() {
+		boolean oldIsStrict = isStrict;
+		boolean oldIsStrictESet = isStrictESet;
+		isStrict = IS_STRICT_EDEFAULT;
+		isStrictESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, QVTOperationalPackage.MAPPING_CALL_EXP__IS_STRICT, oldIsStrict, IS_STRICT_EDEFAULT, oldIsStrictESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetIsStrict() {
+		return isStrictESet;
 	}
 
 	/**
@@ -136,7 +170,7 @@ public class MappingCallExpImpl extends ImperativeCallExpImpl implements Mapping
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case QVTOperationalPackage.MAPPING_CALL_EXP__IS_STRICT:
-				setIsStrict(IS_STRICT_EDEFAULT);
+				unsetIsStrict();
 				return;
 		}
 		super.eUnset(featureID);
@@ -151,7 +185,7 @@ public class MappingCallExpImpl extends ImperativeCallExpImpl implements Mapping
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case QVTOperationalPackage.MAPPING_CALL_EXP__IS_STRICT:
-				return isStrict != IS_STRICT_EDEFAULT;
+				return isSetIsStrict();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -167,7 +201,7 @@ public class MappingCallExpImpl extends ImperativeCallExpImpl implements Mapping
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (isStrict: ");
-		result.append(isStrict);
+		if (isStrictESet) result.append(isStrict); else result.append("<unset>");
 		result.append(')');
 		return result.toString();
 	}

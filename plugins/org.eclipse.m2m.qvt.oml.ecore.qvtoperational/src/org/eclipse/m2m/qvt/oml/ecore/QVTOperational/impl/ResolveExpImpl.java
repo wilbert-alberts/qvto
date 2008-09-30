@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: ResolveExpImpl.java,v 1.1 2008/09/02 20:02:26 radvorak Exp $
+ * $Id: ResolveExpImpl.java,v 1.2 2008/09/30 22:11:49 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
@@ -80,6 +80,15 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	protected boolean isDeferred = IS_DEFERRED_EDEFAULT;
 
 	/**
+	 * This is true if the Is Deferred attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isDeferredESet;
+
+	/**
 	 * The default value of the '{@link #isIsInverse() <em>Is Inverse</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -100,6 +109,15 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	protected boolean isInverse = IS_INVERSE_EDEFAULT;
 
 	/**
+	 * This is true if the Is Inverse attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isInverseESet;
+
+	/**
 	 * The default value of the '{@link #isOne() <em>One</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -118,6 +136,15 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	 * @ordered
 	 */
 	protected boolean one = ONE_EDEFAULT;
+
+	/**
+	 * This is true if the One attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean oneESet;
 
 	/**
 	 * The cached value of the '{@link #getTarget() <em>Target</em>}' containment reference.
@@ -208,8 +235,33 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	public void setIsDeferred(boolean newIsDeferred) {
 		boolean oldIsDeferred = isDeferred;
 		isDeferred = newIsDeferred;
+		boolean oldIsDeferredESet = isDeferredESet;
+		isDeferredESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalPackage.RESOLVE_EXP__IS_DEFERRED, oldIsDeferred, isDeferred));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalPackage.RESOLVE_EXP__IS_DEFERRED, oldIsDeferred, isDeferred, !oldIsDeferredESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetIsDeferred() {
+		boolean oldIsDeferred = isDeferred;
+		boolean oldIsDeferredESet = isDeferredESet;
+		isDeferred = IS_DEFERRED_EDEFAULT;
+		isDeferredESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, QVTOperationalPackage.RESOLVE_EXP__IS_DEFERRED, oldIsDeferred, IS_DEFERRED_EDEFAULT, oldIsDeferredESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetIsDeferred() {
+		return isDeferredESet;
 	}
 
 	/**
@@ -229,8 +281,33 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	public void setIsInverse(boolean newIsInverse) {
 		boolean oldIsInverse = isInverse;
 		isInverse = newIsInverse;
+		boolean oldIsInverseESet = isInverseESet;
+		isInverseESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalPackage.RESOLVE_EXP__IS_INVERSE, oldIsInverse, isInverse));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalPackage.RESOLVE_EXP__IS_INVERSE, oldIsInverse, isInverse, !oldIsInverseESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetIsInverse() {
+		boolean oldIsInverse = isInverse;
+		boolean oldIsInverseESet = isInverseESet;
+		isInverse = IS_INVERSE_EDEFAULT;
+		isInverseESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, QVTOperationalPackage.RESOLVE_EXP__IS_INVERSE, oldIsInverse, IS_INVERSE_EDEFAULT, oldIsInverseESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetIsInverse() {
+		return isInverseESet;
 	}
 
 	/**
@@ -250,8 +327,33 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	public void setOne(boolean newOne) {
 		boolean oldOne = one;
 		one = newOne;
+		boolean oldOneESet = oneESet;
+		oneESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalPackage.RESOLVE_EXP__ONE, oldOne, one));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalPackage.RESOLVE_EXP__ONE, oldOne, one, !oldOneESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetOne() {
+		boolean oldOne = one;
+		boolean oldOneESet = oneESet;
+		one = ONE_EDEFAULT;
+		oneESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, QVTOperationalPackage.RESOLVE_EXP__ONE, oldOne, ONE_EDEFAULT, oldOneESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetOne() {
+		return oneESet;
 	}
 
 	/**
@@ -374,13 +476,13 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 				setCondition((OCLExpression)null);
 				return;
 			case QVTOperationalPackage.RESOLVE_EXP__IS_DEFERRED:
-				setIsDeferred(IS_DEFERRED_EDEFAULT);
+				unsetIsDeferred();
 				return;
 			case QVTOperationalPackage.RESOLVE_EXP__IS_INVERSE:
-				setIsInverse(IS_INVERSE_EDEFAULT);
+				unsetIsInverse();
 				return;
 			case QVTOperationalPackage.RESOLVE_EXP__ONE:
-				setOne(ONE_EDEFAULT);
+				unsetOne();
 				return;
 			case QVTOperationalPackage.RESOLVE_EXP__TARGET:
 				setTarget((Variable)null);
@@ -400,11 +502,11 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 			case QVTOperationalPackage.RESOLVE_EXP__CONDITION:
 				return condition != null;
 			case QVTOperationalPackage.RESOLVE_EXP__IS_DEFERRED:
-				return isDeferred != IS_DEFERRED_EDEFAULT;
+				return isSetIsDeferred();
 			case QVTOperationalPackage.RESOLVE_EXP__IS_INVERSE:
-				return isInverse != IS_INVERSE_EDEFAULT;
+				return isSetIsInverse();
 			case QVTOperationalPackage.RESOLVE_EXP__ONE:
-				return one != ONE_EDEFAULT;
+				return isSetOne();
 			case QVTOperationalPackage.RESOLVE_EXP__TARGET:
 				return target != null;
 		}
@@ -422,11 +524,11 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (isDeferred: ");
-		result.append(isDeferred);
+		if (isDeferredESet) result.append(isDeferred); else result.append("<unset>");
 		result.append(", isInverse: ");
-		result.append(isInverse);
+		if (isInverseESet) result.append(isInverse); else result.append("<unset>");
 		result.append(", one: ");
-		result.append(one);
+		if (oneESet) result.append(one); else result.append("<unset>");
 		result.append(')');
 		return result.toString();
 	}

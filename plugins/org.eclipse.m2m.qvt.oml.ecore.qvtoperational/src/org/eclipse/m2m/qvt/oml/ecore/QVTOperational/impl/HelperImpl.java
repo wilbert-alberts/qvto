@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: HelperImpl.java,v 1.1 2008/09/02 20:02:26 radvorak Exp $
+ * $Id: HelperImpl.java,v 1.2 2008/09/30 22:11:49 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
@@ -59,6 +59,15 @@ public class HelperImpl extends ImperativeOperationImpl implements Helper {
 	protected boolean isQuery = IS_QUERY_EDEFAULT;
 
 	/**
+	 * This is true if the Is Query attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isQueryESet;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -94,8 +103,33 @@ public class HelperImpl extends ImperativeOperationImpl implements Helper {
 	public void setIsQuery(boolean newIsQuery) {
 		boolean oldIsQuery = isQuery;
 		isQuery = newIsQuery;
+		boolean oldIsQueryESet = isQueryESet;
+		isQueryESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalPackage.HELPER__IS_QUERY, oldIsQuery, isQuery));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalPackage.HELPER__IS_QUERY, oldIsQuery, isQuery, !oldIsQueryESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetIsQuery() {
+		boolean oldIsQuery = isQuery;
+		boolean oldIsQueryESet = isQueryESet;
+		isQuery = IS_QUERY_EDEFAULT;
+		isQueryESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, QVTOperationalPackage.HELPER__IS_QUERY, oldIsQuery, IS_QUERY_EDEFAULT, oldIsQueryESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetIsQuery() {
+		return isQueryESet;
 	}
 
 	/**
@@ -136,7 +170,7 @@ public class HelperImpl extends ImperativeOperationImpl implements Helper {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case QVTOperationalPackage.HELPER__IS_QUERY:
-				setIsQuery(IS_QUERY_EDEFAULT);
+				unsetIsQuery();
 				return;
 		}
 		super.eUnset(featureID);
@@ -151,7 +185,7 @@ public class HelperImpl extends ImperativeOperationImpl implements Helper {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case QVTOperationalPackage.HELPER__IS_QUERY:
-				return isQuery != IS_QUERY_EDEFAULT;
+				return isSetIsQuery();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -167,7 +201,7 @@ public class HelperImpl extends ImperativeOperationImpl implements Helper {
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (isQuery: ");
-		result.append(isQuery);
+		if (isQueryESet) result.append(isQuery); else result.append("<unset>");
 		result.append(')');
 		return result.toString();
 	}
