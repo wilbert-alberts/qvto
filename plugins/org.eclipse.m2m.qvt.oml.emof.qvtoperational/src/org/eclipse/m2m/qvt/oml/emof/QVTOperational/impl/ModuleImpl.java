@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ModuleImpl.java,v 1.1 2008/09/02 20:36:01 radvorak Exp $
+ * $Id: ModuleImpl.java,v 1.2 2008/09/30 22:11:05 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.QVTOperational.impl;
 
@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.m2m.qvt.oml.emof.QVTOperational.EntryOperation;
@@ -46,6 +47,7 @@ import org.eclipse.qvt.declarative.emof.EssentialOCL.Variable;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.m2m.qvt.oml.emof.QVTOperational.impl.ModuleImpl#getNestedPackage <em>Nested Package</em>}</li>
+ *   <li>{@link org.eclipse.m2m.qvt.oml.emof.QVTOperational.impl.ModuleImpl#getNestingPackage <em>Nesting Package</em>}</li>
  *   <li>{@link org.eclipse.m2m.qvt.oml.emof.QVTOperational.impl.ModuleImpl#getOwnedType <em>Owned Type</em>}</li>
  *   <li>{@link org.eclipse.m2m.qvt.oml.emof.QVTOperational.impl.ModuleImpl#getUri <em>Uri</em>}</li>
  *   <li>{@link org.eclipse.m2m.qvt.oml.emof.QVTOperational.impl.ModuleImpl#getConfigProperty <em>Config Property</em>}</li>
@@ -207,9 +209,50 @@ public class ModuleImpl extends ClassImpl implements Module {
 	 */
 	public EList<org.eclipse.qvt.declarative.emof.EMOF.Package> getNestedPackage() {
 		if (nestedPackage == null) {
-			nestedPackage = new EObjectContainmentEList<org.eclipse.qvt.declarative.emof.EMOF.Package>(org.eclipse.qvt.declarative.emof.EMOF.Package.class, this, QVTOperationalPackage.MODULE__NESTED_PACKAGE);
+			nestedPackage = new EObjectContainmentWithInverseEList<org.eclipse.qvt.declarative.emof.EMOF.Package>(org.eclipse.qvt.declarative.emof.EMOF.Package.class, this, QVTOperationalPackage.MODULE__NESTED_PACKAGE, EMOFPackage.PACKAGE__NESTING_PACKAGE);
 		}
 		return nestedPackage;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public org.eclipse.qvt.declarative.emof.EMOF.Package getNestingPackage() {
+		if (eContainerFeatureID != QVTOperationalPackage.MODULE__NESTING_PACKAGE) return null;
+		return (org.eclipse.qvt.declarative.emof.EMOF.Package)eContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetNestingPackage(org.eclipse.qvt.declarative.emof.EMOF.Package newNestingPackage, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newNestingPackage, QVTOperationalPackage.MODULE__NESTING_PACKAGE, msgs);
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setNestingPackage(org.eclipse.qvt.declarative.emof.EMOF.Package newNestingPackage) {
+		if (newNestingPackage != eInternalContainer() || (eContainerFeatureID != QVTOperationalPackage.MODULE__NESTING_PACKAGE && newNestingPackage != null)) {
+			if (EcoreUtil.isAncestor(this, newNestingPackage))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newNestingPackage != null)
+				msgs = ((InternalEObject)newNestingPackage).eInverseAdd(this, EMOFPackage.PACKAGE__NESTED_PACKAGE, org.eclipse.qvt.declarative.emof.EMOF.Package.class, msgs);
+			msgs = basicSetNestingPackage(newNestingPackage, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalPackage.MODULE__NESTING_PACKAGE, newNestingPackage, newNestingPackage));
 	}
 
 	/**
@@ -373,6 +416,12 @@ public class ModuleImpl extends ClassImpl implements Module {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case QVTOperationalPackage.MODULE__NESTED_PACKAGE:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getNestedPackage()).basicAdd(otherEnd, msgs);
+			case QVTOperationalPackage.MODULE__NESTING_PACKAGE:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetNestingPackage((org.eclipse.qvt.declarative.emof.EMOF.Package)otherEnd, msgs);
 			case QVTOperationalPackage.MODULE__OWNED_TYPE:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedType()).basicAdd(otherEnd, msgs);
 			case QVTOperationalPackage.MODULE__MODULE_IMPORT:
@@ -391,6 +440,8 @@ public class ModuleImpl extends ClassImpl implements Module {
 		switch (featureID) {
 			case QVTOperationalPackage.MODULE__NESTED_PACKAGE:
 				return ((InternalEList<?>)getNestedPackage()).basicRemove(otherEnd, msgs);
+			case QVTOperationalPackage.MODULE__NESTING_PACKAGE:
+				return basicSetNestingPackage(null, msgs);
 			case QVTOperationalPackage.MODULE__OWNED_TYPE:
 				return ((InternalEList<?>)getOwnedType()).basicRemove(otherEnd, msgs);
 			case QVTOperationalPackage.MODULE__MODULE_IMPORT:
@@ -409,10 +460,26 @@ public class ModuleImpl extends ClassImpl implements Module {
 	 * @generated
 	 */
 	@Override
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID) {
+			case QVTOperationalPackage.MODULE__NESTING_PACKAGE:
+				return eInternalContainer().eInverseRemove(this, EMOFPackage.PACKAGE__NESTED_PACKAGE, org.eclipse.qvt.declarative.emof.EMOF.Package.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case QVTOperationalPackage.MODULE__NESTED_PACKAGE:
 				return getNestedPackage();
+			case QVTOperationalPackage.MODULE__NESTING_PACKAGE:
+				return getNestingPackage();
 			case QVTOperationalPackage.MODULE__OWNED_TYPE:
 				return getOwnedType();
 			case QVTOperationalPackage.MODULE__URI:
@@ -448,6 +515,9 @@ public class ModuleImpl extends ClassImpl implements Module {
 			case QVTOperationalPackage.MODULE__NESTED_PACKAGE:
 				getNestedPackage().clear();
 				getNestedPackage().addAll((Collection<? extends org.eclipse.qvt.declarative.emof.EMOF.Package>)newValue);
+				return;
+			case QVTOperationalPackage.MODULE__NESTING_PACKAGE:
+				setNestingPackage((org.eclipse.qvt.declarative.emof.EMOF.Package)newValue);
 				return;
 			case QVTOperationalPackage.MODULE__OWNED_TYPE:
 				getOwnedType().clear();
@@ -497,6 +567,9 @@ public class ModuleImpl extends ClassImpl implements Module {
 			case QVTOperationalPackage.MODULE__NESTED_PACKAGE:
 				getNestedPackage().clear();
 				return;
+			case QVTOperationalPackage.MODULE__NESTING_PACKAGE:
+				setNestingPackage((org.eclipse.qvt.declarative.emof.EMOF.Package)null);
+				return;
 			case QVTOperationalPackage.MODULE__OWNED_TYPE:
 				getOwnedType().clear();
 				return;
@@ -538,6 +611,8 @@ public class ModuleImpl extends ClassImpl implements Module {
 		switch (featureID) {
 			case QVTOperationalPackage.MODULE__NESTED_PACKAGE:
 				return nestedPackage != null && !nestedPackage.isEmpty();
+			case QVTOperationalPackage.MODULE__NESTING_PACKAGE:
+				return getNestingPackage() != null;
 			case QVTOperationalPackage.MODULE__OWNED_TYPE:
 				return ownedType != null && !ownedType.isEmpty();
 			case QVTOperationalPackage.MODULE__URI:
@@ -570,6 +645,7 @@ public class ModuleImpl extends ClassImpl implements Module {
 		if (baseClass == org.eclipse.qvt.declarative.emof.EMOF.Package.class) {
 			switch (derivedFeatureID) {
 				case QVTOperationalPackage.MODULE__NESTED_PACKAGE: return EMOFPackage.PACKAGE__NESTED_PACKAGE;
+				case QVTOperationalPackage.MODULE__NESTING_PACKAGE: return EMOFPackage.PACKAGE__NESTING_PACKAGE;
 				case QVTOperationalPackage.MODULE__OWNED_TYPE: return EMOFPackage.PACKAGE__OWNED_TYPE;
 				case QVTOperationalPackage.MODULE__URI: return EMOFPackage.PACKAGE__URI;
 				default: return -1;
@@ -588,6 +664,7 @@ public class ModuleImpl extends ClassImpl implements Module {
 		if (baseClass == org.eclipse.qvt.declarative.emof.EMOF.Package.class) {
 			switch (baseFeatureID) {
 				case EMOFPackage.PACKAGE__NESTED_PACKAGE: return QVTOperationalPackage.MODULE__NESTED_PACKAGE;
+				case EMOFPackage.PACKAGE__NESTING_PACKAGE: return QVTOperationalPackage.MODULE__NESTING_PACKAGE;
 				case EMOFPackage.PACKAGE__OWNED_TYPE: return QVTOperationalPackage.MODULE__OWNED_TYPE;
 				case EMOFPackage.PACKAGE__URI: return QVTOperationalPackage.MODULE__URI;
 				default: return -1;

@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: QVTOperationalPackage.java,v 1.1 2008/09/02 20:36:00 radvorak Exp $
+ * $Id: QVTOperationalPackage.java,v 1.2 2008/09/30 22:11:05 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.QVTOperational;
 
@@ -1146,13 +1146,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int MODULE__NESTED_PACKAGE = EMOFPackage.CLASS_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Nesting Package</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODULE__NESTING_PACKAGE = EMOFPackage.CLASS_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Owned Type</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE__OWNED_TYPE = EMOFPackage.CLASS_FEATURE_COUNT + 1;
+	int MODULE__OWNED_TYPE = EMOFPackage.CLASS_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Uri</b></em>' attribute.
@@ -1161,7 +1170,7 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE__URI = EMOFPackage.CLASS_FEATURE_COUNT + 2;
+	int MODULE__URI = EMOFPackage.CLASS_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Config Property</b></em>' reference list.
@@ -1170,7 +1179,7 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE__CONFIG_PROPERTY = EMOFPackage.CLASS_FEATURE_COUNT + 3;
+	int MODULE__CONFIG_PROPERTY = EMOFPackage.CLASS_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Entry</b></em>' reference.
@@ -1179,7 +1188,7 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE__ENTRY = EMOFPackage.CLASS_FEATURE_COUNT + 4;
+	int MODULE__ENTRY = EMOFPackage.CLASS_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Is Blackbox</b></em>' attribute.
@@ -1188,7 +1197,7 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE__IS_BLACKBOX = EMOFPackage.CLASS_FEATURE_COUNT + 5;
+	int MODULE__IS_BLACKBOX = EMOFPackage.CLASS_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Module Import</b></em>' containment reference list.
@@ -1197,7 +1206,7 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE__MODULE_IMPORT = EMOFPackage.CLASS_FEATURE_COUNT + 6;
+	int MODULE__MODULE_IMPORT = EMOFPackage.CLASS_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Owned Tag</b></em>' containment reference list.
@@ -1206,7 +1215,7 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE__OWNED_TAG = EMOFPackage.CLASS_FEATURE_COUNT + 7;
+	int MODULE__OWNED_TAG = EMOFPackage.CLASS_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Owned Variable</b></em>' containment reference list.
@@ -1215,7 +1224,7 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE__OWNED_VARIABLE = EMOFPackage.CLASS_FEATURE_COUNT + 8;
+	int MODULE__OWNED_VARIABLE = EMOFPackage.CLASS_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Used Model Type</b></em>' reference list.
@@ -1224,7 +1233,7 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE__USED_MODEL_TYPE = EMOFPackage.CLASS_FEATURE_COUNT + 9;
+	int MODULE__USED_MODEL_TYPE = EMOFPackage.CLASS_FEATURE_COUNT + 10;
 
 	/**
 	 * The number of structural features of the '<em>Module</em>' class.
@@ -1233,7 +1242,7 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE_FEATURE_COUNT = EMOFPackage.CLASS_FEATURE_COUNT + 10;
+	int MODULE_FEATURE_COUNT = EMOFPackage.CLASS_FEATURE_COUNT + 11;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.emof.QVTOperational.impl.LibraryImpl <em>Library</em>}' class.
@@ -1316,6 +1325,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int LIBRARY__NESTED_PACKAGE = MODULE__NESTED_PACKAGE;
+
+	/**
+	 * The feature id for the '<em><b>Nesting Package</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIBRARY__NESTING_PACKAGE = MODULE__NESTING_PACKAGE;
 
 	/**
 	 * The feature id for the '<em><b>Owned Type</b></em>' containment reference list.
@@ -2577,6 +2595,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int OPERATIONAL_TRANSFORMATION__NESTED_PACKAGE = MODULE__NESTED_PACKAGE;
+
+	/**
+	 * The feature id for the '<em><b>Nesting Package</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__NESTING_PACKAGE = MODULE__NESTING_PACKAGE;
 
 	/**
 	 * The feature id for the '<em><b>Owned Type</b></em>' containment reference list.
