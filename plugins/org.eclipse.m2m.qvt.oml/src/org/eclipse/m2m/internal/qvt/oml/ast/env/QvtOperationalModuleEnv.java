@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
-import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
@@ -89,7 +88,8 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
     		registerModelParameters((OperationalTransformation)module);
     	}
     	
-    	QvtOperationalParserUtil.setTypeResolverResource(module, getTypeResolver());
+    	// confine module in resource
+    	getTypeResolver().getResource().getContents().add(module);
     }
     
     public ModelParameter lookupModelParameter(String name, DirectionKind directionKind) {
@@ -212,20 +212,22 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
     	return myLibs == null ? Collections.<Module>emptyList() : Collections.unmodifiableList(myLibs);
 	} 
     
-	public org.eclipse.m2m.internal.qvt.oml.expressions.Library defineNativeLibrary(Library lib) throws LibraryCreationException {
+	public QvtOperationalModuleEnv defineNativeLibrary(Library lib) throws LibraryCreationException {
 		if(myLibs == null) {
 			myLibs = new LinkedList<Module>();
 		}
 			 
-		org.eclipse.m2m.internal.qvt.oml.expressions.Library libModule = LegacyNativeLibSupport.INSTANCE.defineLibrary(this, lib);
+		QvtOperationalModuleEnv libModuleEnv = LegacyNativeLibSupport.INSTANCE.defineLibrary(lib);
+		Module libModule = libModuleEnv.getModuleContextType();
 		myLibs.add(libModule);
+		addSibling(libModuleEnv);
 		
 		Variable<EClassifier, EParameter> var = EcoreFactory.eINSTANCE.createVariable();
 		var.setName(getThisVariableName(libModule));
 		var.setType(libModule);
 		this.addElement(var.getName(), var, false);
 		
-		return libModule;
+		return libModuleEnv;
 	}
 
 	private boolean isMayBelongToExtent(EClassifier myType) {

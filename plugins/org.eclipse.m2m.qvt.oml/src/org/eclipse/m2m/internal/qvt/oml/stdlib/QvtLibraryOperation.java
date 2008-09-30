@@ -29,8 +29,8 @@ import org.eclipse.ocl.ecore.OCL;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.helper.ConstraintKind;
 import org.eclipse.ocl.types.AnyType;
-import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.utilities.ExpressionInOCL;
+import org.eclipse.ocl.utilities.UMLReflection;
 
 /**
  * @author sboyko
@@ -92,22 +92,22 @@ class QvtLibraryOperation {
 		OCL ocl = OCL.newInstance(env);
 		Constraint constraint = null;
 		
-		try {	 
-			OCLStandardLibrary<EClassifier> oclStdlib = env.getOCLStandardLibrary();
-			EClassifier oclAny = oclStdlib.getOclAny();
-			if(oclAny.getName().equals(libOp.getContext())) {
-				// Note: a workaround for OclAny context which is not 
-				// supported by the constraint parser, so OclAny instance is passed 
-				// and trimmed from the def: constraint specification
+		try {
+			if(isOclVoidTypeName(libOp.getContext(), env)) {
+				// Note: a workaround for OclVoid context which is not used for module owned
+				// operations -> trim the def: constraint specification and use library module
+				// type explicitly
 				int startPos = text.indexOf(" " + OCL_DEF) + OCL_DEF.length() + 1; //$NON-NLS-1$
 				String trimmedText = startPos < text.length() ? text.substring(startPos) : text;
 				
 				OCL.Helper helper = ocl.createOCLHelper();
-				helper.setContext(oclStdlib.getOclAny());
+				helper.setContext(env.getModuleContextType());
 				constraint = helper.createConstraint(ConstraintKind.DEFINITION, trimmedText);				
 			} else {
 				List<Constraint> constraints = ocl.parse(new OCLInput(text));
-				constraint = constraints.get(0);
+				if(!constraints.isEmpty()) {
+					constraint = constraints.get(0);
+				}
 			}
 		} catch (ParserException e) {
             throw new LibraryCreationException(MessageFormat.format(
@@ -119,6 +119,12 @@ class QvtLibraryOperation {
                     text, e.getLocalizedMessage()));
 		}
 		
+		if(constraint == null) {
+			throw new LibraryCreationException(MessageFormat.format(
+                    ValidationMessages.LibOperationAnalyser_OperationParsingError,
+                    text));
+		}
+
 		ExpressionInOCL<EClassifier, EParameter> result = constraint.getSpecification();
 		if (result == null) {
             throw new LibraryCreationException(MessageFormat.format(
@@ -139,6 +145,15 @@ class QvtLibraryOperation {
 		}
 		
 		return result;
+	}
+		
+	@SuppressWarnings("unchecked")
+	private static boolean isOclVoidTypeName(String typeName, QvtOperationalEnv env) {
+		UMLReflection umlReflection = env.getUMLReflection();
+		EClassifier oclVoid = env.getOCLStandardLibrary().getOclVoid();
+		String simpleName = umlReflection.getName(oclVoid);
+		String qName = umlReflection.getQualifiedName(oclVoid);
+		return typeName.equals(simpleName) || typeName.equals(qName);
 	}
 	
 	private String getFakeOperation(LibraryOperation libOp) {

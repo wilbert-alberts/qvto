@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ExpressionsPackageImpl.java,v 1.7 2008/09/26 17:05:07 radvorak Exp $
+ * $Id: ExpressionsPackageImpl.java,v 1.8 2008/09/30 14:12:00 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -63,6 +63,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.SeverityKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.SwitchExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Typedef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VariableInitExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VisitableASTNode;
@@ -83,6 +84,13 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 	 * @generated
 	 */
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass typedefEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -472,6 +480,33 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		theExpressionsPackage.freeze();
 
 		return theExpressionsPackage;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getTypedef() {
+		return typedefEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTypedef_Base() {
+		return (EReference)typedefEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTypedef_Condition() {
+		return (EReference)typedefEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1519,6 +1554,10 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		isCreated = true;
 
 		// Create classes and their features
+		typedefEClass = createEClass(TYPEDEF);
+		createEReference(typedefEClass, TYPEDEF__BASE);
+		createEReference(typedefEClass, TYPEDEF__CONDITION);
+
 		moduleEClass = createEClass(MODULE);
 		createEReference(moduleEClass, MODULE__OWNED_VARIABLE);
 		createEReference(moduleEClass, MODULE__MODULE_IMPORT);
@@ -1714,6 +1753,7 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		typedefEClass.getESuperTypes().add(theEcorePackage_1.getEClass());
 		moduleEClass.getESuperTypes().add(theEcorePackage_1.getEClass());
 		moduleEClass.getESuperTypes().add(theEcorePackage_1.getEPackage());
 		moduleEClass.getESuperTypes().add(this.getVisitableASTNode());
@@ -1808,6 +1848,10 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		operationalTransformationEClass.getESuperTypes().add(this.getModule());
 
 		// Initialize classes and features; add operations and parameters
+		initEClass(typedefEClass, Typedef.class, "Typedef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getTypedef_Base(), theEcorePackage_1.getEClassifier(), null, "base", null, 1, 1, Typedef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getTypedef_Condition(), theEcorePackage.getOCLExpression(), null, "condition", null, 0, 1, Typedef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
 		initEClass(moduleEClass, Module.class, "Module", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getModule_OwnedVariable(), theEcorePackage.getVariable(), null, "ownedVariable", null, 0, -1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEReference(getModule_ModuleImport(), this.getModuleImport(), this.getModuleImport_Module(), "moduleImport", null, 0, -1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

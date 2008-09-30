@@ -108,6 +108,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
+			case ExpressionsPackage.TYPEDEF: return createTypedef();
 			case ExpressionsPackage.MODULE: return createModule();
 			case ExpressionsPackage.LIBRARY: return createLibrary();
 			case ExpressionsPackage.RENAME: return createRename();
@@ -182,6 +183,16 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Typedef createTypedef() {
+		TypedefImpl typedef = new TypedefImpl();
+		return typedef;
 	}
 
 	/**

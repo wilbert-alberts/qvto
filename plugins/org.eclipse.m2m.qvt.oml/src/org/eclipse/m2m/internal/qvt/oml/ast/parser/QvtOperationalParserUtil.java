@@ -779,31 +779,4 @@ public class QvtOperationalParserUtil {
         module.setEFactoryInstance(new ExpressionsFactoryImpl());
         return module;
 	}
-	
-	
-	private static final String RESOURCE_REF_KEEPER_URI = "qvto:/typeresolver.resource.binder.workaround"; //$NON-NLS-1$ 
-	// FIXME - A temporary workaround - indirect binding of modules to type resolver resource 
-	// If it was kept in the same resource, Module being also a package might 
-	// be recognized as of on dynamic type keepers and result in unpredictable behavior during execution
-	public static void setTypeResolverResource(Module module, TypeResolver<EClassifier, EOperation, EStructuralFeature> typeResolver) {
-    	EObject resourceContained = org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.createEAnnotation();
-    	typeResolver.getResource().getContents().add(resourceContained);
-
-    	EAnnotation dummyResourceReferencer = org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.createEAnnotation();
-    	dummyResourceReferencer.setSource(RESOURCE_REF_KEEPER_URI);
-    	dummyResourceReferencer.getReferences().add(resourceContained);
-    	module.getEAnnotations().add(dummyResourceReferencer);
-	}
-
-	public static Resource getTypeResolverResource(Module module) {
-		EAnnotation eAnnotation =  module.getEAnnotation(RESOURCE_REF_KEEPER_URI);
-		if(eAnnotation != null) {
-			for (EObject referenced : eAnnotation.getReferences()) {
-				if(referenced.eResource() != null) {
-					return referenced.eResource(); 
-				}
-			}
-		}
-		return null;
-	}
 }

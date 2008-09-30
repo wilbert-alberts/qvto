@@ -33,6 +33,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Typedef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
@@ -289,6 +290,12 @@ public class QVTUMLReflection
 			if(context != null && context.getEType() != null) {
 				return context.getEType();
 			}
+		} else if(feature instanceof EOperation) {
+			EClass containingClass = ((EOperation) feature).getEContainingClass();
+			if(isTypedef(containingClass)) {
+				Typedef typeDef = (Typedef) containingClass;
+				return typeDef.getBase();
+			}
 		} else if(feature instanceof ContextualProperty) {
 			ContextualProperty contextualProperty = (ContextualProperty)feature;
 			return contextualProperty.getContext();
@@ -403,4 +410,12 @@ public class QVTUMLReflection
 		fUmlReflection.setType(element, type);
 	}
 	
+	private static boolean isTypedef(EClassifier eClassifier) {
+		if(eClassifier != null && eClassifier instanceof Typedef) {
+			Typedef typeDef = (Typedef) eClassifier;
+			return typeDef.getBase() != null;
+		}
+		
+		return false;
+	}
 }

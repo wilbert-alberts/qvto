@@ -122,7 +122,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			
 	@Override
 	protected TypeResolver<EClassifier, EOperation, EStructuralFeature> createTypeResolver(Resource resource) {
-		return new QvtTypeResolverImpl(this, super.createTypeResolver(resource));
+		return new QvtTypeResolverImpl(this, resource);
 	}
 	
     public List<Module> getNativeLibs() {
@@ -232,18 +232,10 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
         UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> uml = getUMLReflection();
         List<EOperation> operations = TypeUtil.getOperations(this, owner);
         List<EOperation> result = new ArrayList<EOperation>();
-        try {
-			for (EOperation operation : operations) {
-			    if (uml.getName(operation).equals(name) && QvtOperationalUtil.isMappingOperation(operation)) {
-			        result.add(operation);
-			    }
-			}
-		} catch (ExceptionInInitializerError e) {
-			if(e.getCause()!= null) {
-				e.getCause().printStackTrace();
-			} else {
-				throw e;
-			}
+		for (EOperation operation : operations) {
+		    if (uml.getName(operation).equals(name) && QvtOperationalUtil.isMappingOperation(operation)) {
+		        result.add(operation);
+		    }
 		}
 
         return result;
@@ -599,6 +591,32 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
         return result;
     }
     
+    @Override
+	public EOperation defineOperation(EClassifier owner, String name, EClassifier type, 
+			List<org.eclipse.ocl.expressions.Variable<EClassifier, EParameter>> params,
+			Constraint constraint) {
+		EOperation result = org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.createEOperation();
+		
+		result.setName(name);
+		result.setEType((type == null) ? getOCLStandardLibrary().getOclVoid() : type);
+		
+		for (Variable<EClassifier, EParameter> next : params) {
+			EParameter param = org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.createEParameter();
+			param.setName(next.getName());
+			param.setEType((next.getType() == null)? getOCLStandardLibrary().getOclVoid() : next.getType());
+			
+			result.getEParameters().add(param);
+		}
+
+		if(owner == getModuleContextType()) {
+			getModuleContextType().getEOperations().add(result);
+		} else {
+			addHelperOperation(owner, result);
+		}
+		
+		return result;
+	}
+        
 	public EOperation defineImperativeOperation(ImperativeOperation operation, boolean isMappingOperation,
 			boolean isCheckDuplicates) {
 		EClassifier ownerType = QvtOperationalParserUtil.getContextualType(operation);

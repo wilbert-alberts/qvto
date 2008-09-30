@@ -17,13 +17,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EcoreFactory;
-import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl;
@@ -39,6 +38,7 @@ import org.eclipse.m2m.internal.qvt.oml.stdlib.StdlibModuleOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.StringOperations;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.types.TypeType;
+import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.PredefinedType;
 import org.eclipse.ocl.utilities.TypedElement;
 
@@ -49,7 +49,10 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 	
 	public static final String QVT_STDLIB_MODULE_NAME = "Stdlib"; //$NON-NLS-1$
 	
-	public static final QvtOperationalStdLibrary INSTANCE = createLibrary(); 
+	public static final QvtOperationalStdLibrary INSTANCE = createLibrary();
+	static {
+		INSTANCE.defineStandardOperations();		
+	}
 	
 	private EClassifier ELEMENT;	
 	private EClass MODEL;
@@ -67,6 +70,9 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 
 		fEnv = new QvtOperationalModuleEnv(new EPackageRegistryImpl());
 		fEnv.setContextModule(fStdlibModule);
+		
+		assert fStdlibModule.eResource() != null;
+		fStdlibModule.eResource().setURI(URI.createURI("qvto:/Stdlib.ecore")); //$NON-NLS-1$		
 
 		ELEMENT = createClass("Element", true); //$NON-NLS-1$
 		MODEL = createClass("Model", true); //$NON-NLS-1$
@@ -74,16 +80,6 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 		fTypeAliasMap = createTypeAliasMap(fEnv);		
 		
 		((ModuleImpl)fStdlibModule).freeze();
-
-		new EPackageImpl() {
-			@Override
-			protected Resource createResource(String uri) {
-				Resource createResource = super.createResource(uri);
-				createResource.getContents().add(fStdlibModule);
-				return createResource;
-			}
-		}.createResource(ExpressionsPackage.eNS_URI + '/' + QVT_STDLIB_MODULE_NAME);
-		
 
 		modelOperations = new ModelOperations(this);
 		anyOperations = new OclAnyOperations(this);		
@@ -105,7 +101,7 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 	}
 		
 	public List<EOperation> getOperations(EClassifier classifier) {
-		List<EOperation> result = fEnv.getAdditionalOperations(classifier);
+		List<EOperation> result = TypeUtil.getOperations(fEnv, classifier);
 		return (result != null) ? result : Collections.<EOperation>emptyList();
 	}
 
@@ -229,7 +225,6 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 		
 	private static QvtOperationalStdLibrary createLibrary() {
 		QvtOperationalStdLibrary lib = new QvtOperationalStdLibrary();
-		lib.defineStandardOperations();
 		return lib;
 	}	
 	

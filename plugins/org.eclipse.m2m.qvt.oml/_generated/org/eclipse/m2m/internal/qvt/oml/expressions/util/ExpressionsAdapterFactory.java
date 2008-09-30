@@ -139,6 +139,10 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	protected ExpressionsSwitch<Adapter> modelSwitch =
 		new ExpressionsSwitch<Adapter>() {
 			@Override
+			public Adapter caseTypedef(Typedef object) {
+				return createTypedefAdapter();
+			}
+			@Override
 			public Adapter caseModule(Module object) {
 				return createModuleAdapter();
 			}
@@ -405,6 +409,20 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 		return modelSwitch.doSwitch((EObject)target);
 	}
 
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Typedef <em>Typedef</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.Typedef
+	 * @generated
+	 */
+	public Adapter createTypedefAdapter() {
+		return null;
+	}
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module <em>Module</em>}'.

@@ -38,7 +38,7 @@ public class ModelOperations extends AbstractContextualOperations {
 	}
 	
 	public EOperation defineGenericObjectsOfType(EcoreEnvironment env, EClassifier actualType) {		
-		return new OperationProvider(OBJECTS_OF_TYPE, OBJECTS_OF_TYPE_NAME,  
+		return new OwnedOperationProvider(OBJECTS_OF_TYPE, OBJECTS_OF_TYPE_NAME,  
 				TypeUtil.resolveSetType(env, actualType), env.getOCLStandardLibrary().getOclType()).define(env);
 	}	
 	
@@ -46,11 +46,11 @@ public class ModelOperations extends AbstractContextualOperations {
 	protected OperationProvider[] getOperations() {		
 		EClassifier setOfElements = TypeUtil.resolveSetType(getStdlib().getEnvironment(), getStdlib().getElementType());
 		OCLStandardLibrary<EClassifier> oclStdLib = getStdlib().getEnvironment().getOCLStandardLibrary();
-		return new OperationProvider[] {
-			new OperationProvider(OBJECTS, OBJECTS_NAME, setOfElements),
-			new OperationProvider(ROOT_OBJECTS, ROOT_OBJECTS_NAME, setOfElements),
-			new OperationProvider(OBJECTS_OF_TYPE, OBJECTS_OF_TYPE_NAME, setOfElements, oclStdLib.getOclType()),
-			new OperationProvider(REMOVE_ELEMENT, REMOVE_ELEMENT_NAME, oclStdLib.getOclVoid(), getStdlib().getElementType())
+		return new OwnedOperationProvider[] {
+			new OwnedOperationProvider(OBJECTS, OBJECTS_NAME, setOfElements),
+			new OwnedOperationProvider(ROOT_OBJECTS, ROOT_OBJECTS_NAME, setOfElements),
+			new OwnedOperationProvider(OBJECTS_OF_TYPE, OBJECTS_OF_TYPE_NAME, setOfElements, oclStdLib.getOclType()),
+			new OwnedOperationProvider(REMOVE_ELEMENT, REMOVE_ELEMENT_NAME, oclStdLib.getOclVoid(), getStdlib().getElementType())
 		};
 	}
 	

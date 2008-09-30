@@ -15,9 +15,11 @@ package org.eclipse.m2m.internal.qvt.oml.stdlib;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.expressions.ExpressionsFactory;
@@ -57,12 +59,40 @@ public abstract class AbstractContextualOperations {
 		return provider;
 	}	
 	
+	protected class OwnedOperationProvider extends OperationProvider {
+		
+		public OwnedOperationProvider(CallHandler dispatcher, String name,
+				EClassifier returnType, EClassifier... paramTypes) {
+			super(dispatcher, name, returnType, paramTypes);
+		}
+
+		public EOperation define(EcoreEnvironment env) {
+			EOperation eOperation = EcoreFactory.eINSTANCE.createEOperation();
+			eOperation.setName(fName);
+						
+			for (EClassifier cls : fParamTypes) {
+				EParameter eParam = EcoreFactory.eINSTANCE.createEParameter();
+				eParam.setName(cls.getName());
+				eParam.setEType(cls);
+				eOperation.getEParameters().add(eParam);
+			}
+						 
+			eOperation.setEType(fReturnType);
+			
+			assert fContextType instanceof EClass;
+			((EClass)fContextType).getEOperations().add(eOperation);
+			
+			CallHandlerAdapter.attach(eOperation, fDispatcher);
+			return eOperation;
+		}		
+	}
+	
 	protected class OperationProvider {
-		private String fName;
-		private EClassifier fReturnType;
-		private EClassifier[] fParamTypes;
-		private CallHandler fDispatcher;
-		private boolean fIsStatic; 
+		protected final String fName;
+		protected final EClassifier fReturnType;
+		protected final EClassifier[] fParamTypes;
+		protected final CallHandler fDispatcher;
+		protected boolean fIsStatic; 
 				
 		protected OperationProvider(CallHandler dispatcher, String name, EClassifier returnType, EClassifier... paramTypes) {
 			this.fName = name;

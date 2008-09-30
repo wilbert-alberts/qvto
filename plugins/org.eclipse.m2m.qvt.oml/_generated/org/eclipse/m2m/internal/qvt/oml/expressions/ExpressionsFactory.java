@@ -37,6 +37,15 @@ public interface ExpressionsFactory extends EFactory {
 	ExpressionsFactory eINSTANCE = org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsFactoryImpl.init();
 
 	/**
+	 * Returns a new object of class '<em>Typedef</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Typedef</em>'.
+	 * @generated
+	 */
+	Typedef createTypedef();
+
+	/**
 	 * Returns a new object of class '<em>Module</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

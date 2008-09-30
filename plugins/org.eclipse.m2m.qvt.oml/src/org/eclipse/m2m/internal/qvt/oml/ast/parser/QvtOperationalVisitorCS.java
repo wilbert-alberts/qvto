@@ -109,7 +109,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ForExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
@@ -208,7 +207,7 @@ public class QvtOperationalVisitorCS
 							CallOperationAction, SendSignalAction, Constraint, EClass, EObject> { 	// FIXME - changed in M3.4 migration
 
     private final QvtCompilerOptions myCompilerOptions;
-    private final Map<String, Library> myLoadedBlackBoxLibraries = new HashMap<String, Library>(1);    
+    private final Map<String, QvtOperationalModuleEnv> myLoadedBlackBoxLibraries = new HashMap<String, QvtOperationalModuleEnv>(1);    
 	/* TODO - 
 	 * Groups all late resolve expression encountered during CST analysis for later validation.
 	 * At the moment when resolve expression is visited it has not its container connect yet, which
@@ -3681,14 +3680,14 @@ public class QvtOperationalVisitorCS
 			assert perModuleProcessedIDs.contains(libId) == false; 
 			perModuleProcessedIDs.add(libId);
 
-			Library newLib = myLoadedBlackBoxLibraries.get(libId);
-			if(newLib == null) { 					
+			QvtOperationalModuleEnv libEnv = myLoadedBlackBoxLibraries.get(libId);
+			if(libEnv == null) { 					
 				if(!myLoadedBlackBoxLibraries.containsKey(libId)) {
 					try {						
 						lib.loadOperations();
-						newLib = env.defineNativeLibrary(lib);
+						libEnv = env.defineNativeLibrary(lib);
 						// cache the newly loaded library globally
-						myLoadedBlackBoxLibraries.put(libId, newLib);
+						myLoadedBlackBoxLibraries.put(libId, libEnv);
 					} catch (LibraryCreationException e) {
 						QvtPlugin.log(e);
 						// set null to indicate a library load failure
@@ -3697,16 +3696,13 @@ public class QvtOperationalVisitorCS
 				}
 			}				
 
-			if(newLib == null) {
+			if(libEnv == null) {
 				env.reportError(NLS.bind(ValidationMessages.FailedToLoadLibrary, new Object[] { libId }), impPath);
 			} else {
 				ModuleImport imp = ExpressionsFactory.eINSTANCE.createModuleImport();
-				newLib.setName(libId);
-				newLib.setStartPosition(impPath.getStartOffset());
-				newLib.setEndPosition(impPath.getEndOffset());
 				imp.setStartPosition(libImport.getStartOffset());
 				imp.setEndPosition(libImport.getEndOffset());
-				imp.setImportedModule(newLib);
+				imp.setImportedModule(libEnv.getModuleContextType());
 				
 				module.getModuleImport().add(imp);				
 			}

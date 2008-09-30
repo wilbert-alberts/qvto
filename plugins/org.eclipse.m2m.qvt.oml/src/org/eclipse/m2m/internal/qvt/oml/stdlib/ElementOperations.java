@@ -42,17 +42,17 @@ public class ElementOperations extends AbstractContextualOperations {
 	protected OperationProvider[] getOperations() {
 		EClassifier elementSet = TypeUtil.resolveSetType(getStdlib().getEnvironment(), getStdlib().getElementType());
 		EClassifier oclType = getStdlib().getOCLStdLib().getOclType();
-		return new OperationProvider[] {
-			new OperationProvider(DEEP_CLONE, DEEP_CLONE_NAME, getStdlib().getElementType()),
-			new OperationProvider(CLONE, CLONE_NAME, getStdlib().getElementType()),
-			new OperationProvider(CONTAINER, CONTAINER_NAME, getStdlib().getElementType()),
-			new OperationProvider(METACLASS, METACLASS_NAME, getOclStdlib().getString()),
-			new OperationProvider(SUBOBJECTS, SUBOBJECTS_NAME, elementSet),
-			new OperationProvider(SUBOBJECTS_OF_TYPE, SUBOBJECTS_OF_TYPE_NAME, elementSet, oclType),
-			new OperationProvider(SUBOBJECTS_OF_KIND, SUBOBJECTS_OF_KIND_NAME, elementSet, oclType),
-			new OperationProvider(ALL_SUBOBJECTS, ALL_SUBOBJECTS_NAME, elementSet),
-			new OperationProvider(ALL_SUBOBJECTS_OF_TYPE, ALL_SUBOBJECTS_OF_TYPE_NAME, elementSet, oclType),
-			new OperationProvider(ALL_SUBOBJECTS_OF_KIND, ALL_SUBOBJECTS_OF_KIND_NAME, elementSet, oclType),					
+		return new OwnedOperationProvider[] {
+			new OwnedOperationProvider(DEEP_CLONE, DEEP_CLONE_NAME, getStdlib().getElementType()),
+			new OwnedOperationProvider(CLONE, CLONE_NAME, getStdlib().getElementType()),
+			new OwnedOperationProvider(CONTAINER, CONTAINER_NAME, getStdlib().getElementType()),
+			new OwnedOperationProvider(METACLASS, METACLASS_NAME, getOclStdlib().getString()),
+			new OwnedOperationProvider(SUBOBJECTS, SUBOBJECTS_NAME, elementSet),
+			new OwnedOperationProvider(SUBOBJECTS_OF_TYPE, SUBOBJECTS_OF_TYPE_NAME, elementSet, oclType),
+			new OwnedOperationProvider(SUBOBJECTS_OF_KIND, SUBOBJECTS_OF_KIND_NAME, elementSet, oclType),
+			new OwnedOperationProvider(ALL_SUBOBJECTS, ALL_SUBOBJECTS_NAME, elementSet),
+			new OwnedOperationProvider(ALL_SUBOBJECTS_OF_TYPE, ALL_SUBOBJECTS_OF_TYPE_NAME, elementSet, oclType),
+			new OwnedOperationProvider(ALL_SUBOBJECTS_OF_KIND, ALL_SUBOBJECTS_OF_KIND_NAME, elementSet, oclType),					
 		};
 	}
 

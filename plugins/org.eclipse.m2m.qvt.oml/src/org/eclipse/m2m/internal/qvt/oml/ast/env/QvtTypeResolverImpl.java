@@ -55,17 +55,30 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 	private TypeResolver<EClassifier, EOperation, EStructuralFeature> fDelegate;
 	private QvtEnvironmentBase fOwner;
     private boolean fdefinesOclAnyFeatures;
-    private Map<EClassifier, List<ImperativeOperation>> fCtx2OperationMap;
+    private Map<EClassifier, List<ImperativeOperation>> fCtx2OperationMap; 
     	
-    private Set<EClassifier> fAdditionalTypes;    
-	QvtTypeResolverImpl(QvtEnvironmentBase owningEnv, TypeResolver<EClassifier, EOperation, EStructuralFeature> delegate) {
-		if(delegate == null || owningEnv == null) {
+    private Set<EClassifier> fAdditionalTypes;
+    private Resource fResource;
+	
+    QvtTypeResolverImpl(QvtEnvironmentBase owningEnv, Resource resource) {
+		if(owningEnv == null) {
 			throw new IllegalArgumentException();
 		}
 
 		fOwner = owningEnv;
-		fDelegate = delegate;
-		fdefinesOclAnyFeatures = false;		
+		fdefinesOclAnyFeatures = false;
+		fResource = resource;
+	}
+
+	protected TypeResolver<EClassifier, EOperation, EStructuralFeature> getDelegate() {
+		if(fDelegate == null) {
+			fDelegate = createDelegate();
+		}
+		return fDelegate;
+	}
+	
+	protected TypeResolver<EClassifier, EOperation, EStructuralFeature> createDelegate() {
+		return new BasicTypeResolverImpl(getOwner(), fResource);
 	}
 	
 	QvtEnvironmentBase getOwner() {
@@ -100,7 +113,7 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 	
 	protected void getLocalAdditionalAttributes(EClassifier owner, List<EStructuralFeature> result) {
 		extractIntermediateProperties(owner, result);
-		result.addAll(fDelegate.getAdditionalAttributes(owner));
+		result.addAll(getDelegate().getAdditionalAttributes(owner));
 	}
 
 	public List<EOperation> getAdditionalOperations(EClassifier owner) {
@@ -160,9 +173,9 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 			extractContextualOperations(fOwner.getOCLStandardLibrary().getOclAny(), result);
 		}
 		
-		result.addAll(fDelegate.getAdditionalOperations(owner));
+		result.addAll(getDelegate().getAdditionalOperations(owner));
 		if(fdefinesOclAnyFeatures && (owner instanceof CollectionType == false) && (owner instanceof TupleType == false)) {
-			result.addAll(fDelegate.getAdditionalOperations(fOwner.getOCLStandardLibrary().getOclAny()));
+			result.addAll(getDelegate().getAdditionalOperations(fOwner.getOCLStandardLibrary().getOclAny()));
 		}
 		
 		if(owner == fOwner.getOCLStandardLibrary().getInteger()) {
@@ -174,15 +187,18 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 	}	
 
 	public Resource getResource() {
-		return fDelegate.getResource();
+		if(fResource != null) {
+			return fResource;
+		}
+		return getDelegate().getResource();
 	}
 
 	public EClassifier resolve(EClassifier type) {
-		return fDelegate.resolve(type);
+		return getDelegate().resolve(type);
 	}
 
 	public EStructuralFeature resolveAdditionalAttribute(EClassifier owner, EStructuralFeature property) {
-		return fDelegate.resolveAdditionalAttribute(owner, property);
+		return getDelegate().resolveAdditionalAttribute(owner, property);
 	}
 
 	public EOperation resolveAdditionalOperation(EClassifier owner, EOperation operation) {
@@ -206,7 +222,7 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 			return operation;
 		}
 		
-		EOperation resolve = fDelegate.resolveAdditionalOperation(owner, operation);
+		EOperation resolve = getDelegate().resolveAdditionalOperation(owner, operation);
 		if(resolve != null) {
 			addAdditionalType(owner);			
 		}
@@ -216,26 +232,26 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 
 	public CollectionType<EClassifier, EOperation> resolveCollectionType(
 			CollectionKind kind, EClassifier elementType) {
-		return fDelegate.resolveCollectionType(kind, elementType);
+		return getDelegate().resolveCollectionType(kind, elementType);
 	}
 
 	public MessageType<EClassifier, EOperation, EStructuralFeature> resolveOperationMessageType(
 			EOperation operation) {
-		return fDelegate.resolveOperationMessageType(operation);
+		return getDelegate().resolveOperationMessageType(operation);
 	}
 
 	public MessageType<EClassifier, EOperation, EStructuralFeature> resolveSignalMessageType(
 			EClassifier signal) {
-		return fDelegate.resolveSignalMessageType(signal);
+		return getDelegate().resolveSignalMessageType(signal);
 	}
 
 	public TupleType<EOperation, EStructuralFeature> resolveTupleType(
 			EList<? extends TypedElement<EClassifier>> parts) {
-		return fDelegate.resolveTupleType(parts);
+		return getDelegate().resolveTupleType(parts);
 	}
 
 	public TypeType<EClassifier, EOperation> resolveTypeType(EClassifier type) {
-		return fDelegate.resolveTypeType(type);
+		return getDelegate().resolveTypeType(type);
 	}
 		
 	UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> uml() {

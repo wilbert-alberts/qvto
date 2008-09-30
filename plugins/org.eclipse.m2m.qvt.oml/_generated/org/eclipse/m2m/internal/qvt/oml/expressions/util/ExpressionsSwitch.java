@@ -155,6 +155,16 @@ public class ExpressionsSwitch<T1> {
 	 */
 	protected T1 doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
+			case ExpressionsPackage.TYPEDEF: {
+				Typedef typedef = (Typedef)theEObject;
+				T1 result = caseTypedef(typedef);
+				if (result == null) result = caseEClass(typedef);
+				if (result == null) result = caseEClassifier(typedef);
+				if (result == null) result = caseENamedElement(typedef);
+				if (result == null) result = caseEModelElement(typedef);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ExpressionsPackage.MODULE: {
 				Module module = (Module)theEObject;
 				T1 result = caseModule(module);
@@ -650,6 +660,21 @@ public class ExpressionsSwitch<T1> {
 			}
 			default: return defaultCase(theEObject);
 		}
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Typedef</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Typedef</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseTypedef(Typedef object) {
+		return null;
 	}
 
 	/**
