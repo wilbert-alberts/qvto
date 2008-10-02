@@ -32,12 +32,9 @@ import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.modelparam.ResourceEObject;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MModelURIMapFactory;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MappingContainer;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MetamodelURIMappingHelper;
@@ -67,12 +64,15 @@ public abstract class ModelTestData {
         return myName;
     }
     
-    public void compareWithExpected(EObject out, IProject project, int index) {
-    	ResourceSet sharedRsSet = out.eResource().getResourceSet();
-        EObject expected = EmfUtil.loadModel(getExpected(project).get(index), sharedRsSet);
-        if (expected instanceof ResourceEObject) {
-        	expected = ((ResourceEObject) expected).getChildren().get(0);
-        }
+    public void compareWithExpected(List<EObject> out, List<EObject> expected) {
+    	TestCase.assertEquals("transf output differs in size to expected result", //$NON-NLS-1$ 
+    			out.size(), expected.size());
+    	for(int i = 0; i < out.size(); i++) {
+    		compareWithExpected(out.get(i), expected.get(i));
+    	}
+    }
+    
+    public void compareWithExpected(EObject out, EObject expected) {        
         TestCase.assertNotSame("Actual output and expected output must not be the same instances", out, expected); //$NON-NLS-1$
         TestCase.assertFalse("Actual output and expected output must be at distinct location", //$NON-NLS-1$ 
         		out.eResource().getURI().toString().equals(expected.eResource().getURI().toString())); 

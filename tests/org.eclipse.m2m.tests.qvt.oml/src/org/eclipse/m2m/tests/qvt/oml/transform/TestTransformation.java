@@ -13,6 +13,7 @@ package org.eclipse.m2m.tests.qvt.oml.transform;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -28,6 +29,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
@@ -113,27 +115,29 @@ public abstract class TestTransformation extends TestCase {
         public void check(ModelTestData data, IProject project) throws Exception {
             IFile transformation = getIFile(data.getTransformation(project));
             
-            List<EObject> transfResult = myTransformer.transform(transformation, data.getIn(project), data.getContext());
-            
-            int index = 0;
-            for (EObject out : transfResult) {
-            	if (data.getExpected(project).size() >= index) {
-            		//break;
-            	}
-	            // for xhtml, as otherwise result contains more elements then the expected one from disk
-	            out = saveLoad(transformation, out);
-	            
-	            data.compareWithExpected(out, project, index);
-	            index++;
-            }
+            LinkedHashMap<ModelExtentContents, URI> transfResult = myTransformer.transform(transformation, data.getIn(project), data.getContext());
+        	List<URI> expectedResultURIs = data.getExpected(project);
+        	
+        	ResourceSet rs = new ResourceSetImpl();
+        	int i = 0;
+        	for (ModelExtentContents nextExtent : transfResult.keySet()) {
+        		URI uri = expectedResultURIs.get(i++);
+        		Resource expectedResource = rs.getResource(uri, true);
+        		List<EObject> actualExtentObjects = nextExtent.getAllRootElements();
+        		
+        		URI actualResultURI = transfResult.get(nextExtent);
+        		// reload in the same resource set
+        		actualExtentObjects = rs.getResource(actualResultURI, true).getContents();
+        		data.compareWithExpected(expectedResource.getContents(), actualExtentObjects);
+			}
         }
         
         private final ITransformer  myTransformer;
     };
     
     public static interface ITransformer {
-        List<EObject> transform(IFile transformation, List<URI> inUris, IContext context) throws Exception;
-    }
+    	LinkedHashMap<ModelExtentContents, URI> transform(IFile transformation, List<URI> inUris, IContext context) throws Exception;
+    }	
 
     protected void checkTransformation(IChecker checker) throws Exception {
         checker.check(myData, getProject());
@@ -179,8 +183,8 @@ public abstract class TestTransformation extends TestCase {
     }
 
     
-    public static void saveModel(ModelExtentContents extent, CFile qvtFile) throws MdaException {
-        String fileName = qvtFile.getUnitName() + "." + getExtensionForResult(extent); //$NON-NLS-1$
+    public static URI saveModel(String extentName, ModelExtentContents extent, CFile qvtFile) throws MdaException {
+        String fileName = qvtFile.getUnitName() + "." + extentName + "." + getExtensionForResult(extent); //$NON-NLS-1$ //$NON-NLS-2$
         CFile outFile = qvtFile.getParent().getFile(fileName);
 
     	URI uri;
@@ -193,6 +197,7 @@ public abstract class TestTransformation extends TestCase {
 		Resource resource = EmfUtil.createResource(uri, new ResourceSetImpl());
     	resource.getContents().addAll(extent.getAllRootElements());
         ExtendedEmfUtil.saveModel(resource, outFile);
+        return uri;
     }
 
     public static String getExtensionForResult(ModelExtentContents extent) {

@@ -17,18 +17,19 @@ main(in inModel : ecore::EPackage, out outModel : ecore::EPackage@model) {
 		name := 'testRoot';
 	};
 
-	var testGlobalVirtualMapping := testGlobalVirtualMapping(
+	var testGlobalVirtualMapping := map testGlobalVirtualMapping(
 			object EAnnotation@model {}, 
 			object EEnumLiteral@model { name:= 'e'}, 
 			object EOperation@model {}, 
 			object EAttribute@model {}, 
 			object EReference@model {},
-			object EParameter@model {});	
+			object EParameter@model {}
+	);	
 
 	var testResult : Boolean :=
 		INDIRECT_IMPORT_PROP = 'ImportedMappingTest::INDIRECT_IMPORT_PROP'
 			and
-		echoMapping(inModel) = inModel	
+		map upCastToModelElement(inModel) = inModel	
 	 		and
 		testGlobalVirtualMapping.status			
 			and
@@ -64,8 +65,10 @@ main(in inModel : ecore::EPackage, out outModel : ecore::EPackage@model) {
 	};
 	
 	outModel.eClassifiers += object EClass {
-		name := if(testResult) then 'passed' endif;
+		name := if(testResult) then 'passed' else null endif;
 	};	
+	
+	assert fatal (testResult);
 }
 
     
@@ -102,7 +105,7 @@ query virtQuery() : EClassifier {
  Tests that matching context-less query overrides imported ones
 */
 query testOverrideLocalQuery() : Boolean {
-	Sequence { 
+	return Sequence { 
 		localQuery(),
 		checkImportedLocalQuery(),	
 		checkImported2LocalQuery()
@@ -114,18 +117,20 @@ query testOverrideLocalQuery() : Boolean {
 }
 
 query localQuery() : String {
-	'importedvirtuals::localQuery';
+	return 'importedvirtuals::localQuery';
 }
 
 /**
  Test virtual operations deifned in a single module
 */
-query testLocalVirtualQuery(in arg1: EClass, in arg2: EDataType, in arg3 : EPackage) : Boolean {
+query testLocalVirtualQuery(in eClass: EClass, in eDataType: EDataType, in ePackage : EPackage) : Boolean {
+	return Sequence { 
+		eClass.oclAsType(ENamedElement).localVirtualQuery(12, Set{ 1 }, Tuple { val = Bag{ false }}),
+		eDataType.oclAsType(ENamedElement).localVirtualQuery(12, Set{ 1 }, Tuple { val = Bag{ false }}),	
+		ePackage.oclAsType(ENamedElement).localVirtualQuery(12, Set{ 1 }, Tuple { val = Bag{ false }})
+	} 
+	= 
 	Sequence { 
-		arg1.oclAsType(ENamedElement).localVirtualQuery(12, Set{ 1 }, Tuple { val = Bag{ false }}),
-		arg2.oclAsType(ENamedElement).localVirtualQuery(12, Set{ 1 }, Tuple { val = Bag{ false }}),	
-		arg3.oclAsType(ENamedElement).localVirtualQuery(12, Set{ 1 }, Tuple { val = Bag{ false }})
-	} = Sequence { 
 		'EClass::localVirtualQuery',
 		'EClassifier::localVirtualQuery',
 		'ENamedElement::localVirtualQuery'
@@ -133,15 +138,15 @@ query testLocalVirtualQuery(in arg1: EClass, in arg2: EDataType, in arg3 : EPack
 }
 
 query EClass::localVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
-	'EClass::localVirtualQuery';
+	return 'EClass::localVirtualQuery';
 }
 
 query ENamedElement::localVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
-	'ENamedElement::localVirtualQuery';
+	return 'ENamedElement::localVirtualQuery';
 }
 
 query EClassifier::localVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
-	'EClassifier::localVirtualQuery';
+	return 'EClassifier::localVirtualQuery';
 }
 
 
@@ -152,7 +157,7 @@ query testGlobalVirtualQuery(
 	element: EModelElement, named: ENamedElement, 
 	typed: ETypedElement, attrib: EStructuralFeature, 
 	ref: EReference, param : EParameter) : Boolean {
-	Sequence { 
+	return Sequence { 
 		element.oclAsType(EModelElement).globalVirtualQuery(12, Set{ 1 }, Tuple { val = Bag{ false }}),
 		named.oclAsType(EModelElement).globalVirtualQuery(12, Set{ 1 }, Tuple { val = Bag{ false }}),	
 		typed.oclAsType(EModelElement).globalVirtualQuery(12, Set{ 1 }, Tuple { val = Bag{ false }}),
@@ -172,23 +177,23 @@ query testGlobalVirtualQuery(
 
 
 query EReference::globalVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
-	'EReference::globalVirtualQuery';
+	return 'EReference::globalVirtualQuery';
 }
 
 query EParameter::globalVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
-	'EParameter::globalVirtualQuery';
+	return 'EParameter::globalVirtualQuery';
 }
 
 
 query EStructuralFeature::globalVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
-	'EStructuralFeature::globalVirtualQuery';
+	return 'EStructuralFeature::globalVirtualQuery';
 }
 
 /**
  Test virtual operations fully defined in a single module, imported indirectly
 */
 query testRemoteVirtualQuery(in arg1: EClass, in arg2: EDataType, in arg3 : EPackage) : Boolean {
-	Sequence { 
+	return Sequence { 
 		arg1.oclAsType(ENamedElement).remoteVirtualQuery(12, Set{ 1 }, Tuple { val = Bag{ false }}),
 		arg2.oclAsType(ENamedElement).remoteVirtualQuery(12, Set{ 1 }, Tuple { val = Bag{ false }}),	
 		arg3.oclAsType(ENamedElement).remoteVirtualQuery(12, Set{ 1 }, Tuple { val = Bag{ false }})
@@ -204,20 +209,20 @@ query testRemoteVirtualQuery(in arg1: EClass, in arg2: EDataType, in arg3 : EPac
 * Testing module property resolution 
 */
 query testProperties() : Boolean {
-	testLocalProperty() and 
+	return testLocalProperty() and 
 	testGlobalProperty() and 
 	INDIRECT_IMPORT_PROP = 'ImportedMappingTest::INDIRECT_IMPORT_PROP'
 }
 
 query testGlobalProperty() : Boolean {
-	importedvirtuals_PROP = 'importedvirtuals::PROP' and  
+	return importedvirtuals_PROP = 'importedvirtuals::PROP' and  
 	Imported_PROP = 'Imported::PROP' and
 	Imported2_PROP = 'Imported2::PROP'
 }
 
 
 query testLocalProperty() : Boolean {
-	LOCAL_PROP = 'importedvirtuals::LOCAL_PROP' and
+	return LOCAL_PROP = 'importedvirtuals::LOCAL_PROP' and
 	LOCAL_PROP = getLocalProperty() and
 	getImportedLocalProperty() = 'Imported::LOCAL_PROP' and
 	getImported2LocalProperty() = 'Imported2::LOCAL_PROP'
@@ -225,7 +230,7 @@ query testLocalProperty() : Boolean {
 
 
 query getLocalProperty() : String {
-	LOCAL_PROP;
+	return LOCAL_PROP;
 }
 
 ----- virtual mapping exposed to indirectly imported ImportMappingTest

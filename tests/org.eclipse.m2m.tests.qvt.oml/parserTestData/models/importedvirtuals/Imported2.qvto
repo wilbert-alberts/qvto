@@ -3,13 +3,13 @@ import models.importedvirtuals.ImportedMappingTest;
 
 modeltype ecore uses "http://www.eclipse.org/emf/2002/Ecore";
 
-transformation Imported2();
+transformation Imported2(in modelIn : ecore, out model : ecore);
 
 property LOCAL_PROP : String = 'Imported2::LOCAL_PROP';
 property Imported2_PROP : String = 'Imported2::PROP';
 
 
-main(inout inoutModel : ecore::EPackage) {
+main(in inModel : ecore::EPackage) {
 }
 
 

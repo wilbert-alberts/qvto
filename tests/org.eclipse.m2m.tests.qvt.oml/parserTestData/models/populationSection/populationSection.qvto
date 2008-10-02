@@ -93,7 +93,7 @@ mapping populationLocalVar(inout par1 : EPackage) {
 	}
 	population {
 		object refToPar1 : {
-			name := 'populationLocalVar';
+			name := refToPar1.name + '-populationLocalVar';
 		};
 	}
 }

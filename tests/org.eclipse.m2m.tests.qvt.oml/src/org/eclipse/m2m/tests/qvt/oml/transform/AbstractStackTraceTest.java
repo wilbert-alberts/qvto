@@ -20,6 +20,7 @@ import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -110,7 +111,7 @@ public abstract class AbstractStackTraceTest extends TestTransformation {
 
 	private ITransformer createTransformer() {
 		return new ITransformer() {
-	        public List<EObject> transform(IFile transformation, List<URI> inUris, IContext qvtContext) throws Exception {
+	        public LinkedHashMap<ModelExtentContents, URI> transform(IFile transformation, List<URI> inUris, IContext qvtContext) throws Exception {
 	        	QvtInterpretedTransformation transf = new QvtInterpretedTransformation(transformation);
 	        	
 	        	QvtCompilerOptions options = new QvtCompilerOptions();
@@ -126,20 +127,18 @@ public abstract class AbstractStackTraceTest extends TestTransformation {
 	        		EObject in = transf.loadInput(uri);
 	        		inputs.add(in);
 	        	}
-	            TransformationRunner.In input = new TransformationRunner.In(inputs.toArray(new EObject[inputs.size()]), qvtContext);
-	            
+	            TransformationRunner.In input = new TransformationRunner.In(inputs.toArray(new EObject[inputs.size()]), qvtContext);	            
 	            TransformationRunner.Out output = transf.run(input);
-	            
+
 	            List<ModelExtentContents> extents = output.getExtents();
-	            List<EObject> result = new ArrayList<EObject>();
-	            for (ModelExtentContents outExt : extents) {
-	            	if (!outExt.getAllRootElements().isEmpty()) {
-	            		result.add(outExt.getAllRootElements().get(0));
-	            	}
-	                TestQvtInterpreter.saveModel(outExt, new EclipseFile(transformation));
+	            LinkedHashMap<ModelExtentContents, URI> result = new LinkedHashMap<ModelExtentContents, URI>(); 
+	            int i = 0;
+	            for (ModelExtentContents outExtent : extents) {
+	                URI extentURI = saveModel("extent" + (++i), outExtent, new EclipseFile(transformation));
+	                result.put(outExtent, extentURI);
 	            }
-	            saveTraceData(output.getTrace(), new EclipseFile(transformation));
 	            
+	            saveTraceData(output.getTrace(), new EclipseFile(transformation));	            
 	        	TestUtil.assertAllPersistableAST(transf.getModule().getModule());	        	
 	            
 	            return result;

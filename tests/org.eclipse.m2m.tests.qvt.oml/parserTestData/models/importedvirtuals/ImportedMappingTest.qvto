@@ -1,14 +1,14 @@
 
 modeltype ecore uses "http://www.eclipse.org/emf/2002/Ecore";
 
-transformation ImportedMappingTest();
+transformation ImportedMappingTest(in modelIn : ecore, out model : ecore);
 
 property INDIRECT_IMPORT_PROP : String = 'ImportedMappingTest::INDIRECT_IMPORT_PROP';
 
 main() {	
 }
 
-mapping echoMapping(in element: EModelElement) : ecore::EModelElement {
+mapping upCastToModelElement(in element: EModelElement) : ecore::EModelElement {
 	init {
 		result := element;	
 	}
@@ -20,37 +20,38 @@ mapping echoMapping(in element: EModelElement) : ecore::EModelElement {
 mapping testGlobalVirtualMapping(
 	element: EAnnotation, named: EEnumLiteral, 
 	typed: EOperation, attrib: EStructuralFeature, 
-	ref: EReference, param : EParameter) : Tuple(status :Boolean, p : EPackage) {
+	ref: EReference, param : EParameter) : Tuple(status : Boolean, p : EPackage) {
 	
 	--just test a local mapping
 	
 	init {
 		var outputs : Sequence(EModelElement) := Sequence { 
-			this.echoMapping(element), named, typed, attrib, ref, param	
+			this.map upCastToModelElement(element), named, typed, attrib, ref, param	
 		};
 		  
-		var pack := object EPackage {
+		var resultCollectorPack := object EPackage {
 			name := 'testGlobalVirtualMapping';
-			eClassifiers := outputs.globalVirtualMapping(12, Set{ 1 }, Tuple { val = Bag{ false }})->asOrderedSet();			
+			eClassifiers := outputs.map globalVirtualMapping(
+								12, Set{ 1 }, Tuple { val = Bag{ false }})->asOrderedSet();			
 		};
 	
-		var resultTag := pack.eClassifiers.name = Sequence {
-			'EModelElement::globalVirtualMapping',
-			'ENamedElement::globalVirtualMapping',
+		var expectedResultTag := resultCollectorPack.eClassifiers.name = Sequence {
+			'EModelElement::globalVirtualMapping', -- EAnnotation
+			'ENamedElement::globalVirtualMapping', -- EEnumLiteral
 			'ETypedElement::globalVirtualMapping', -- EOperation
 			'EStructuralFeature::globalVirtualMapping', -- EAttribute		
 			'EReference::globalVirtualMapping', -- concrete match
 			'EParameter::globalVirtualMapping' -- concrete match  	
 		};
 		
-		result := Tuple { status = resultTag, p = pack };				
+		result := Tuple { status = expectedResultTag, p = resultCollectorPack };				
 	}
 }
 
 /**
  Define for the leaf sub-types first as the subsequent operations on super-types are not be available 
  to MDT OCL yet. Otherwise they would be resolved as available on supertype.
- => this test the lookup including methods defined on subtyps
+ => this test the lookup including methods defined on subtypes
 */
 mapping EReference::globalVirtualMapping(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : EClass {
 	name:='EReference::globalVirtualMapping';

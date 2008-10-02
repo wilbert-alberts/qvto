@@ -13,6 +13,7 @@ package org.eclipse.m2m.tests.qvt.oml.ant;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.List;
 
 import junit.framework.TestCase;
 
@@ -67,7 +68,9 @@ public class TestQvtAntScript extends TestCase {
     		URI uri = URI.createURI(strUri);
     		EObject loadModel = EmfUtil.loadModel(uri);
     	
-            myData.compareWithExpected(loadModel, getProject(), index);
+            URI expectedURI = myData.getExpected(getProject()).get(index);
+            EObject expectedObject = loadModel.eResource().getResourceSet().getResource(expectedURI, true).getContents().get(0);
+			myData.compareWithExpected(loadModel, expectedObject);
             index++;
     	}
     }

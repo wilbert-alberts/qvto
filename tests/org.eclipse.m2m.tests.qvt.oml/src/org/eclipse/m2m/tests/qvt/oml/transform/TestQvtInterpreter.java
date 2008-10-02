@@ -12,6 +12,7 @@
 package org.eclipse.m2m.tests.qvt.oml.transform;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -45,7 +46,7 @@ public class TestQvtInterpreter extends TestTransformation {
     }
     
     public static final ITransformer TRANSFORMER = new ITransformer() {
-        public List<EObject> transform(IFile transformation, List<URI> inUris, IContext qvtContext) throws Exception {
+        public LinkedHashMap<ModelExtentContents, URI> transform(IFile transformation, List<URI> inUris, IContext qvtContext) throws Exception {
         	QvtInterpretedTransformation trans = new QvtInterpretedTransformation(transformation);
         	
         	TestUtil.assertAllPersistableAST(trans.getModule().getModule());
@@ -63,14 +64,15 @@ public class TestQvtInterpreter extends TestTransformation {
             	TestUtil.logQVTStackTrace(e);
 				throw e;
 			}
-            
+
             List<ModelExtentContents> extents = output.getExtents();
-            List<EObject> result = new ArrayList<EObject>();
+            LinkedHashMap<ModelExtentContents, URI> result = new LinkedHashMap<ModelExtentContents, URI>(); 
+            int i = 0;
             for (ModelExtentContents outExtent : extents) {
-            	if (!outExtent.getAllRootElements().isEmpty()) {
-                    saveModel(outExtent, new EclipseFile(transformation));            		
-            	}
+                URI extentURI = saveModel("extent" + (++i), outExtent, new EclipseFile(transformation));
+                result.put(outExtent, extentURI);
             }
+            
             saveTraceData(output.getTrace(), new EclipseFile(transformation));
             return result;
         }

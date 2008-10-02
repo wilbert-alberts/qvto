@@ -2,12 +2,12 @@ import models.importedvirtuals.Imported2;
 
 modeltype ecore uses "http://www.eclipse.org/emf/2002/Ecore";
 
-transformation Imported();
+transformation Imported(in modelIn : ecore, out model : ecore);
 
 property LOCAL_PROP : String = 'Imported::LOCAL_PROP';
 property Imported_PROP : String = 'Imported::PROP';
 
-main(inout inoutModel : ecore::EPackage) {
+main(in inModel : ecore::EPackage) {
 }
 
 
@@ -40,5 +40,5 @@ mapping ETypedElement::globalVirtualMapping(in arg1 : OclAny, in arg2 : Collecti
 
 
 query ENamedElement::globalVirtualQuery(in arg1 : OclAny, in arg2 : Collection(Real), in arg3: Tuple (val : Collection(OclAny))) : String {
-	'ENamedElement::globalVirtualQuery';
+	return 'ENamedElement::globalVirtualQuery';
 }
