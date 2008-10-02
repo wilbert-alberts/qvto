@@ -15,12 +15,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -86,8 +84,29 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
      * Implicit variables are generated when there is an iterator without any
      * iteration variable specified.
      */
-    private List<QvtVariableEntry> myNamedElements = new java.util.ArrayList<QvtVariableEntry>();
+    private List<Variable<EClassifier, EParameter>> myImplicitVars = new LinkedList<Variable<EClassifier, EParameter>>();
     private EPackage.Registry myPackageRegistry;    
+	private final List<QvtMessage> myWarningsList = new ArrayList<QvtMessage>(2);
+	private final List<QvtMessage> myErrorsList = new ArrayList<QvtMessage>(2);
+	private boolean myCheckForDuplicateErrors;
+	private QvtCompilerOptions myCompilerOptions;
+	
+	private final Map<String, ModelType> myModelTypeRegistry;
+	
+    private final Map<MappingsMapKey, List<MappingOperation>> myMappingsMap = new HashMap<MappingsMapKey, List<MappingOperation>>();
+    private final Map<ResolveInExp, MappingsMapKey> myResolveInExps = new HashMap<ResolveInExp, MappingsMapKey>();
+    
+    private final LookupPackageableElementDelegate<EClassifier> LOOKUP_CLASSIFIER_DELEGATE = new LookupPackageableElementDelegate<EClassifier>() {
+        public EClassifier lookupPackageableElement(List<String> names) {
+            return QvtOperationalEnv.super.lookupClassifier(names);
+        }
+    };
+
+    private final LookupPackageableElementDelegate<EPackage> LOOKUP_PACKAGE_DELEGATE = new LookupPackageableElementDelegate<EPackage>() {
+        public EPackage lookupPackageableElement(List<String> names) {
+            return QvtOperationalEnv.super.lookupPackage(names);
+        }
+    };
 	
 	protected QvtOperationalEnv(QvtOperationalEnv parent) {
 		super(parent);
@@ -243,6 +262,10 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
     
     @Override
     protected void addedVariable(String name, Variable<EClassifier, EParameter> elem, boolean isExplicit) {
+    	if(!isExplicit) {
+    		myImplicitVars.add(elem);
+    	}
+    	
         if(elem instanceof VarParameter == false) {
         	if(getContextOperation() instanceof ImperativeOperation) {
         		ImperativeOperation imperativeOperation = (ImperativeOperation) getContextOperation();
@@ -253,44 +276,27 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
         		super.addedVariable(name, elem, isExplicit);
         	}
         } 
-    	
-        if (!getOCLStandardLibrary().getOclVoid().getName().equals(name)) {
-            QvtVariableEntry newelem = new QvtVariableEntry(name, elem, isExplicit);
-            myNamedElements.add(newelem);
-        }
     }
     
     @Override
-    public void deleteElement(String name) {
-        for (Iterator<QvtVariableEntry> iter = myNamedElements.iterator(); iter.hasNext();) {
-            QvtVariableEntry elem = iter.next();
-            
-            if (elem.getName().equals(name)) {
-                iter.remove();
-            }
-        }
-        super.deleteElement(name);
+    protected void removedVariable(String name, Variable<EClassifier, EParameter> variable, boolean isExplicit) {
+    	if(!isExplicit) {
+    		myImplicitVars.remove(variable);
+    	}
+
+    	super.removedVariable(name, variable, isExplicit);
     }
     
     public Collection<Variable<EClassifier, EParameter>> getImplicitVariables() {
-    	Collection<Variable<EClassifier, EParameter>> result = new ArrayList<Variable<EClassifier,EParameter>>(myNamedElements.size());
-    	for (QvtVariableEntry entry : myNamedElements) {
-			if(!entry.isExplicit) {
-				result.add(entry.myVariable);
-			}
-		}
-    	return result;
+    	return Collections.unmodifiableCollection(myImplicitVars);
     }
     
     public Variable<EClassifier, EParameter> lookupAnyImplicitSource() {
-        for (int i = myNamedElements.size() - 1; i >= 0; i--) {
-            QvtVariableEntry element = myNamedElements.get(i);
-            Variable<EClassifier, EParameter> vdcl = element.getVariable();
-            
-            if (!element.isExplicit) {
-                return vdcl;
-            }
+        for (int i = myImplicitVars.size() - 1; i >= 0; i--) {
+        	Variable<EClassifier, EParameter> vdcl = myImplicitVars.get(i);
+            return vdcl;
         }
+        
         if (getInternalParent() instanceof QvtOperationalEnv) {
             QvtOperationalEnv parentEnv = (QvtOperationalEnv) getInternalParent();
             return parentEnv.lookupAnyImplicitSource();
@@ -412,80 +418,37 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		return myModelTypeRegistry.get(path.get(0));
 	}
 	
-	// TODO This stub fixes stack overflow in recurrent calls. Should be fixed in OCL
-	private final Set<String> myLookupOperationNames = new HashSet<String>(1);
 	@Override
 	public Variable<EClassifier, EParameter> lookupImplicitSourceForOperation(
 			String name, List<? extends TypedElement<EClassifier>> args) {
-		if (myLookupOperationNames.contains(name)) {
-			return null;
-		}
 		// propagate implict source lookup to parent, allowing to reach the module-wide 'this'
-		Variable<EClassifier, EParameter> result = null;
-		try {
-			myLookupOperationNames.add(name);
-			result = super.lookupImplicitSourceForOperation(name, args);
-			Variable<EClassifier, EParameter> tentativeResult = result;
-			// check if implicit source results in self variable, try lookup for implicit this as a higher precedence
-			// Remark: validation should report the problem about call on 'self' using implicit source			
-			if((result == null || SELF_VARIABLE_NAME.equals(result.getName())) && getInternalParent() != null) {
-				result = getInternalParent().lookupImplicitSourceForOperation(name, args);
-				if(tentativeResult != null && result == null) {
-					result = tentativeResult;
-				}
+		Variable<EClassifier, EParameter> result = super.lookupImplicitSourceForOperation(name, args);
+		Variable<EClassifier, EParameter> tentativeResult = result;
+		// check if implicit source results in self variable, try lookup for implicit this as a higher precedence
+		// Remark: validation should report the problem about call on 'self' using implicit source			
+		if((result == null || SELF_VARIABLE_NAME.equals(result.getName())) && getInternalParent() != null) {
+			result = getInternalParent().lookupImplicitSourceForOperation(name, args);
+			if(tentativeResult != null && result == null) {
+				result = tentativeResult;
 			}
-		}
-		finally {
-			myLookupOperationNames.remove(name);
 		}
 		
 		return result;
 	}
 	
-	// TODO This stub fixes stack overflow in recurrent calls. Should be fixed in OCL
-	private final Set<String> myLookupPropertyNames = new HashSet<String>(1);
 	@Override
-	public Variable<EClassifier, EParameter> lookupImplicitSourceForProperty(
-			String name) {
-		if (myLookupPropertyNames.contains(name)) {
-			return null;
-		}
-		Variable<EClassifier, EParameter> implicitSource = null;
-		try {
-			myLookupPropertyNames.add(name);
-			implicitSource = super.lookupImplicitSourceForProperty(name);
-			Variable<EClassifier, EParameter> tentativeResult = implicitSource;
-			// check if implicit source results in self variable, try lookup for implicit this as a higher precedence
-			// Remark: validation should report the problem about call on 'self' using implicit source
-			if((implicitSource == null || SELF_VARIABLE_NAME.equals(implicitSource.getName())) && getInternalParent() != null) {
-				implicitSource = getInternalParent().lookupImplicitSourceForProperty(name);
-				if(tentativeResult != null && implicitSource == null) {
-					implicitSource = tentativeResult;
-				}
-			}			
-		}
-		finally {
-			myLookupPropertyNames.remove(name);
-		}
-		return implicitSource;
-	}
-	
-	// TODO This stub fixes stack overflow in recurrent calls. Should be fixed in OCL
-	private final Set<String> myLookupAssocClassNames = new HashSet<String>(1);
-	@Override
-	public Variable<EClassifier, EParameter> lookupImplicitSourceForAssociationClass(
-			String name) {
-		if (myLookupAssocClassNames.contains(name)) {
-			return null;
-		}
-		Variable<EClassifier, EParameter> implicitSource = null;
-		try {
-			myLookupAssocClassNames.add(name);
-			implicitSource = super.lookupImplicitSourceForAssociationClass(name);
-		}
-		finally {
-			myLookupAssocClassNames.remove(name);
-		}
+	public Variable<EClassifier, EParameter> lookupImplicitSourceForProperty(String name) {
+		Variable<EClassifier, EParameter> implicitSource = super.lookupImplicitSourceForProperty(name);
+		Variable<EClassifier, EParameter> tentativeResult = implicitSource;
+		// check if implicit source results in self variable, try lookup for implicit this as a higher precedence
+		// Remark: validation should report the problem about call on 'self' using implicit source
+		if((implicitSource == null || SELF_VARIABLE_NAME.equals(implicitSource.getName())) && getInternalParent() != null) {
+			implicitSource = getInternalParent().lookupImplicitSourceForProperty(name);
+			if(tentativeResult != null && implicitSource == null) {
+				implicitSource = tentativeResult;
+			}
+		}			
+
 		return implicitSource;
 	}
 	
@@ -778,63 +741,6 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		};
 	}
 		
-	private final List<QvtMessage> myWarningsList = new ArrayList<QvtMessage>(2);
-	private final List<QvtMessage> myErrorsList = new ArrayList<QvtMessage>(2);
-	private boolean myCheckForDuplicateErrors;
-	private QvtCompilerOptions myCompilerOptions;
-	
-	private final Map<String, ModelType> myModelTypeRegistry;
-	
-    private final Map<MappingsMapKey, List<MappingOperation>> myMappingsMap = new HashMap<MappingsMapKey, List<MappingOperation>>();
-    private final Map<ResolveInExp, MappingsMapKey> myResolveInExps = new HashMap<ResolveInExp, MappingsMapKey>();
-
-    
-    private interface LookupPackageableElementDelegate<T> {
-        public T lookupPackageableElement(List<String> names);
-    };
-
-    private final LookupPackageableElementDelegate<EClassifier> LOOKUP_CLASSIFIER_DELEGATE = new LookupPackageableElementDelegate<EClassifier>() {
-        public EClassifier lookupPackageableElement(List<String> names) {
-            return QvtOperationalEnv.super.lookupClassifier(names);
-        }
-    };
-
-    private final LookupPackageableElementDelegate<EPackage> LOOKUP_PACKAGE_DELEGATE = new LookupPackageableElementDelegate<EPackage>() {
-        public EPackage lookupPackageableElement(List<String> names) {
-            return QvtOperationalEnv.super.lookupPackage(names);
-        }
-    };
-    
-    /*
-     * The constructor of VariableEntry (which was duplicated in the code below) in AbstractEnvironment  
-     * is package visible and something like that must be created in QvtOperationalEnv.
-     * The whole construction (QvtVariableEntry, addedVariable, removedVariable and myNamedElements) 
-     * is necessary for lookup for implicit source in ResolveExps.
-     */
-    protected final class QvtVariableEntry {
-        private final String myName;
-        private final Variable<EClassifier, EParameter> myVariable;
-        private final boolean isExplicit;
-        
-        public QvtVariableEntry(String name, Variable<EClassifier, EParameter> variable, boolean isExplicit) {
-            this.myName = name;
-            this.myVariable = variable;
-            this.isExplicit = isExplicit;
-        }
-
-        public String getName() {
-            return myName;
-        }
-
-        public Variable<EClassifier, EParameter> getVariable() {
-            return myVariable;
-        }
-
-        public boolean isExplicit() {
-            return isExplicit;
-        }
-    }
-    
 	@Override
 	public void analyzerError(String problemMessage, String problemContext, Object problemObject) {
 		CSTNode cstNode = getASTMapping(problemObject);
@@ -914,6 +820,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		
 		return false;
     }
-    
-
+        
+    private interface LookupPackageableElementDelegate<T> {
+        public T lookupPackageableElement(List<String> names);
+    };
 }
