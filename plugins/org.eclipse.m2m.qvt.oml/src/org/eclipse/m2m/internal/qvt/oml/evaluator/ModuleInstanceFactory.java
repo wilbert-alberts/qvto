@@ -11,23 +11,23 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.util.CollectionUtil;
 	
 
-class ModuleInstanceFactory extends EFactoryImpl {
+public class ModuleInstanceFactory extends EFactoryImpl {
 	
-	public static final EFactory eINSTANCE = new ModuleInstanceFactory(); 
-	
-	private ModuleInstanceFactory() {
+	public ModuleInstanceFactory() {
 		super();
 	}
 	
@@ -41,6 +41,28 @@ class ModuleInstanceFactory extends EFactoryImpl {
 			}
 		}
 	}	
+	
+	  public EObject create(EClass eClass) 
+	  {
+	    if (getEPackage() != eClass.getEPackage() || eClass.isAbstract())
+	    {
+	      //throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+	    }
+
+	    for (List<EClass> eSuperTypes = eClass.getESuperTypes(); !eSuperTypes.isEmpty(); )
+	    {
+	      EClass eSuperType = eSuperTypes.get(0);
+	      if (eSuperType.getInstanceClass() != null)
+	      {
+	        EObject result = eSuperType.getEPackage().getEFactoryInstance().create(eSuperType);
+	        ((InternalEObject)result).eSetClass(eClass);
+	        return result;
+	      }
+	      eSuperTypes = eSuperType.getESuperTypes();
+	    }
+
+	    return basicCreate(eClass);
+	  }	
 	
 	@Override
 	protected EObject basicCreate(EClass eClass) {
