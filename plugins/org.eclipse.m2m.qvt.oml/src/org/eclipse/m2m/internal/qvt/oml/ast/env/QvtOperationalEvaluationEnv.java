@@ -47,11 +47,11 @@ import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
 import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.ecore.EcoreEvaluationEnvironment;
 import org.eclipse.ocl.ecore.EcorePackage;
-import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.types.AnyType;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.util.CollectionUtil;
 import org.eclipse.ocl.util.Tuple;
+import org.eclipse.osgi.util.NLS;
 
 
 public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
@@ -60,7 +60,6 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> parent) {
 		super(parent);
 	    myBindings = new HashMap<String, Object>();
-		myObjectExpOwnerStack = new Stack<Object>();
 		myOperationArgs = new ArrayList<Object>();
 		myContext = context;
 		
@@ -73,10 +72,22 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		}
 	}
 	
-	public Object getInvalid() {
-		return getInvalidResult();
+	@Override
+	public <T> T getAdapter(Class<T> adapterType) {
+		if(InternalEvaluationEnv.class == adapterType) {
+			return adapterType.cast(internalEnv());
+		}
+		
+		return super.getAdapter(adapterType);
 	}
-	
+
+	private Internal internalEnv() {
+		if(myInternal == null) {
+			myInternal = new Internal();				
+		}
+		return myInternal;
+	}
+		
 	@Override
 	public Map<EClass, Set<EObject>> createExtentMap(Object object) {
     	return new HashMap<EClass, Set<EObject>>() {    		
@@ -110,18 +121,6 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
     	};
 	}
 	
-	public void popObjectExpOwner() {
-		myObjectExpOwnerStack.pop();
-	}
-
-	public Object peekObjectExpOwner() {
-		return myObjectExpOwnerStack.peek();
-	}
-
-	public void pushObjectExpOwner(Object owner) {
-		myObjectExpOwnerStack.push(owner);
-	}
-
 	public List<Object> getOperationArgs() {
 		return myOperationArgs;
 	}
@@ -137,11 +136,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	public IContext getContext() {
 		return myContext;
 	}
-	
-	public String getConfigurationProperty(String name) {
-		return myContext.getConfiguration().getProperty(name);
-	}
-	
+		
 	@Override
 	public boolean overrides(EOperation operation, int opcode) {
 		if (CallHandler.Access.hasHandler(operation)) {
@@ -306,10 +301,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	@Override
     public void add(String name, Object value) {
         if (myBindings.containsKey(name)) {
-            String message = OCLMessages.bind(
-            		OCLMessages.BindingExist_ERROR_,
-                    name,
-                    myBindings.get(name));
+        	String message = NLS.bind("The name: ({0})  already has a binding: ({1})", name, myBindings.get(name)); 
             throw new IllegalArgumentException(message);
         }
         myBindings.put(name, value);
@@ -367,7 +359,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         return myBindings.toString();
     }
 	
-	public Set<String> getKeys() {
+	public Set<String> getNames() {
 		return myBindings.keySet();
 	}
 	
@@ -404,8 +396,8 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		myChangeRecorders.clear();
 	}
 
-    public void createModuleParameterExtents(OperationalTransformation module) {        
-        Map<ModelParameter, ModelParameterExtent> modelExtents = new LinkedHashMap<ModelParameter, ModelParameterExtent>(module.getModelParameter().size());
+    public LinkedHashMap<ModelParameter, ModelParameterExtent> createModuleParameterExtents(OperationalTransformation module) {        
+    	LinkedHashMap<ModelParameter, ModelParameterExtent> modelExtents = new LinkedHashMap<ModelParameter, ModelParameterExtent>(module.getModelParameter().size());
         modelExtents.put(UNBOUND_MODEL_EXTENT, new ModelParameterExtent());
         int argIndex = 0;
         for (ModelParameter modelParam : module.getModelParameter()) {
@@ -419,35 +411,6 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         			|| false == getOperationArgs().get(argIndex) instanceof EObject) {
                 throw new IllegalArgumentException("Missed argument for model parameter: " + modelParam.getName()); //$NON-NLS-1$
         	}
-
-        	/*
-        	 * See: https://bugs.eclipse.org/bugs/show_bug.cgi?id=216903 (QVT run configuration should consider all objects in selected model)
-        	 * 
-        	if (metamodels.isEmpty()) {
-        		modelExtents.put(modelParam, new ModelParameterExtent(metamodels));
-        	}
-        	else {        	
-	        	EPackage expMetamodel = metamodels.get(0);
-	        	EObject argument = (EObject) getOperationArgs().get(argIndex);
-	        	
-	        	while (true) {
-	        		if (EcoreUtil.getRootContainer(argument.eClass()) == expMetamodel) {
-	        			modelExtents.put(modelParam, new ModelParameterExtent(argument, metamodels));
-	                	if (modelParam.getKind() == DirectionKind.IN) {
-	                		QvtChangeRecorder qvtChangeRecorder = new QvtChangeRecorder(modelParam);
-	                		qvtChangeRecorder.beginRecording(Collections.singletonList(argument));
-	                		myChangeRecorders.add(qvtChangeRecorder);
-	                	}
-	        			break;
-	        		}
-	        		if (argument.eContainer() == null) {
-	        			modelExtents.put(modelParam, new ModelParameterExtent(metamodels));
-	        			break;
-	        		}
-	        		argument = argument.eContainer();
-	        	}	        	
-        	}
-        	*/
 
         	Object argument = getOperationArgs().get(argIndex);
         	List<EObject> argValues = argument instanceof ResourceEObject ? ((ResourceEObject) argument).getChildren() 
@@ -466,6 +429,8 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		
         Map<ModelParameter, ModelParameter> mapImportedExtents = createImportedExtentMap(module, module);
         setModelParameterExtents(modelExtents, mapImportedExtents);
+        
+        return modelExtents;
 	}
     
 	private Map<ModelParameter, ModelParameter> createImportedExtentMap(OperationalTransformation rootModule, OperationalTransformation importedModule) {
@@ -729,30 +694,20 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 
     public QvtOperationalEvaluationEnv cloneEvaluationEnv() {
         QvtOperationalEvaluationEnv env = new QvtOperationalEvaluationEnv(getContext(), getParent());
-        env.myObjectExpOwnerStack.addAll(myObjectExpOwnerStack);
+        env.internalEnv().myObjectExpOwnerStack.addAll(internalEnv().myObjectExpOwnerStack);
         env.myOperationArgs.addAll(myOperationArgs);
         env.myOperationSelf = myOperationSelf;
         env.myBindings.putAll(myBindings);
         return env;
     }
-    
-    public int setCurrentASTOffset(int currentASTOffset) {
-    	int prevValue = this.myCurrentASTOffset;
-    	this.myCurrentASTOffset = currentASTOffset;
-    	return prevValue;
-	}
-    
-    public int getCurrentASTOffset() {
-		return myCurrentASTOffset;
-	}
-    
+        
     /**
      * Sets the operation being currently executed.
      */
     public void setOperation(EOperation myOperation) {
 		this.myOperation = myOperation;
 	}
-
+    
     /**
 	 * Gets the operation being currently executed.
 	 * 
@@ -762,11 +717,9 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
     public EOperation getOperation() {
 		return myOperation;
 	}
-    
-    private EOperation myOperation;
-    private int myCurrentASTOffset = -1;
-    
-	private final Stack<Object> myObjectExpOwnerStack;
+
+    private Internal myInternal;
+    private EOperation myOperation;    
 	private final List<Object> myOperationArgs;
 	private Object myOperationSelf;
 	private final IContext myContext;
@@ -785,5 +738,49 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			this.value = value;
 			this.type = type;
 		}
+	}
+	
+	private class Internal implements InternalEvaluationEnv {
+	    private CallHandler myMainHandler;
+	    private int myCurrentASTOffset = -1;
+		private final Stack<Object> myObjectExpOwnerStack;
+	    
+		Internal() {
+			myObjectExpOwnerStack = new Stack<Object>();			
+		}		
+	    
+		public Object getInvalid() {
+			return getInvalidResult();
+		}
+		
+	    public CallHandler getEntryOperationHandler() {
+	    	return myMainHandler;
+	    }
+	    
+	    public void setEntryOperationHandler(CallHandler mainHandler) {
+	    	myMainHandler = mainHandler;
+	    }
+	    
+		public void popObjectExpOwner() {
+			myObjectExpOwnerStack.pop();
+		}
+
+		public Object peekObjectExpOwner() {
+			return myObjectExpOwnerStack.peek();
+		}
+
+		public void pushObjectExpOwner(Object owner) {
+			myObjectExpOwnerStack.push(owner);
+		}
+		
+	    public int setCurrentASTOffset(int currentASTOffset) {
+	    	int prevValue = myCurrentASTOffset;
+	    	myCurrentASTOffset = currentASTOffset;
+	    	return prevValue;
+		}
+	    
+	    public int getCurrentASTOffset() {
+			return myCurrentASTOffset;
+		}		
 	}
 }

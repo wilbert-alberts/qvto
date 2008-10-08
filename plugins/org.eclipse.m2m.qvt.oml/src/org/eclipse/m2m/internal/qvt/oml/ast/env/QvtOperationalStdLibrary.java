@@ -23,8 +23,12 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstanceFactory;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
+import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.AbstractContextualOperations;
@@ -56,18 +60,18 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 	
 	private EClassifier ELEMENT;	
 	private EClass MODEL;
+	private EClass TRANSFORMATION;
 	
-	private final Module fStdlibModule;
+	private final Library fStdlibModule;
 	private final QvtOperationalModuleEnv fEnv;
 	private final Map<String, EClassifier> fTypeAliasMap;
 	private final ModelOperations modelOperations;
 	private final OclAnyOperations anyOperations;
 	
 
-	private QvtOperationalStdLibrary() {		
-		fStdlibModule = org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createLibrary();
-		fStdlibModule.setName(QVT_STDLIB_MODULE_NAME);
-
+	private QvtOperationalStdLibrary() {
+		fStdlibModule = createLibrary(QVT_STDLIB_MODULE_NAME);
+		
 		fEnv = new QvtOperationalModuleEnv(new EPackageRegistryImpl());
 		fEnv.setContextModule(fStdlibModule);
 		
@@ -76,16 +80,15 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 
 		ELEMENT = createClass("Element", true); //$NON-NLS-1$
 		MODEL = createClass("Model", true); //$NON-NLS-1$
-		
+		TRANSFORMATION = createClass("Transformation", true); //$NON-NLS-1$ 
+
 		fTypeAliasMap = createTypeAliasMap(fEnv);		
 		
-		((ModuleImpl)fStdlibModule).freeze();
-
 		modelOperations = new ModelOperations(this);
 		anyOperations = new OclAnyOperations(this);		
 	}	
 	
-	protected void defineStandardOperations() {
+	private void defineStandardOperations() {
 		define(new StringOperations(this));
 		define(modelOperations);
 		define(anyOperations);
@@ -93,6 +96,8 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 		define(new StdlibModuleOperations(this));
 		define(new IntegerOperations(this));		
 		define(new RealOperations(this));
+		
+		((ModuleImpl)fStdlibModule).freeze();		
 	}
 		
 	@Override
@@ -108,19 +113,25 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 	public void importTo(QvtOperationalEnv env) {
 		env.addSibling(fEnv);
 	}
-	
-    public Module getStdLibModule() {
-		return fStdlibModule;
-	}
-    
+	    
     public boolean isStdLibClassifier(EClassifier classifier) {
     	return classifier == getElementType() || classifier == fStdlibModule.getEClassifier(classifier.getName());
     }
-    		
+    
+	@Override
+    public Library getStdLibModule() {
+		return fStdlibModule;
+	}
+        		
 	@Override
 	public EClass getModelClass() {	
 		return MODEL;
 	}
+	
+	@Override
+	public EClass getTransformationClass() {	
+		return TRANSFORMATION;
+	}	
 	
 	@Override
 	public EClass getModuleType() {
@@ -132,11 +143,31 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 		return ELEMENT;
 	}
 	
-	@Override
-	public Module getLibaryModule() {
-		return fStdlibModule;
+	public ModelType createModel(String name) {
+		ModelType modelType = ExpressionsFactory.eINSTANCE.createModelType();
+		modelType.setName(name);
+		modelType.getESuperTypes().add(QvtOperationalStdLibrary.INSTANCE.getModelClass());		
+		return modelType;
 	}
 
+	public static Library createLibrary(String name) {	
+		Library transf = ExpressionsFactory.eINSTANCE.createLibrary();
+		transf.setEFactoryInstance(new ModuleInstanceFactory());
+		transf.setName(name);		
+		return transf;
+	}
+	
+	public OperationalTransformation createTransformation(String name) {	
+		OperationalTransformation transf = ExpressionsFactory.eINSTANCE.createOperationalTransformation();
+		transf.setEFactoryInstance(new ModuleInstanceFactory());
+		transf.setName(name);
+		
+		EClass transformationBase = getTransformationClass();		
+		transf.getESuperTypes().add(transformationBase);
+		
+		return transf;
+	}
+	
 	public EClassifier lookupClassifier(List<String> nameElements) {	
 		int size = nameElements.size();
 		if(size == 0 || size > 2) {
@@ -226,7 +257,7 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 	private static QvtOperationalStdLibrary createLibrary() {
 		QvtOperationalStdLibrary lib = new QvtOperationalStdLibrary();
 		return lib;
-	}	
+	}
 	
 	private EClassifier getTypeAlias(String typeName) {
 		return fTypeAliasMap.get(typeName);
