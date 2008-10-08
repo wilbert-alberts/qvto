@@ -31,8 +31,8 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
@@ -45,7 +45,6 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.GraphWalker.NodeProvider;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.GraphWalker.VertexProcessor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
@@ -56,8 +55,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VariableInitExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsFactoryImpl;
-import org.eclipse.ocl.TypeResolver;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CollectionTypeCS;
 import org.eclipse.ocl.cst.PathNameCS;
@@ -467,26 +464,25 @@ public class QvtOperationalParserUtil {
 		return true;
 	}
 
-	public static EOperation getMainMethod(Module module) {
-		MAIN:
+	/**
+	 * Finds the first imperative operation named <code>main</code>.
+	 * <p>
+	 * Note: This method isolates the caller from the legacy QVT AST model incompatibility, 
+	 * allowing a mapping to be the entry operation, while the OMG specification requires
+	 * EntryOperation only. 
+	 */
+	public static ImperativeOperation getMainOperation(Module module) {
+		if(module.getEntry() != null) {
+			return module.getEntry();
+		}
+		
 		for (Iterator<EOperation> ruleIt = module.getEOperations().iterator(); ruleIt.hasNext();) {
-			ImperativeOperation method = (ImperativeOperation) ruleIt.next();
-
-			if (!QvtOperationalEnv.MAIN.equals(method.getName())) {
-				continue;
+			EOperation nextOperation = ruleIt.next();
+			
+			if (QvtOperationalEnv.MAIN.equals(nextOperation.getName()) &&
+				nextOperation instanceof ImperativeOperation) {
+				return (ImperativeOperation)nextOperation;
 			}
-
-			for (EParameter param : method.getEParameters()) {
-				if (param.getEType() == null) {
-					continue MAIN;
-				}
-			}
-
-			if (method.getContext() != null && method.getContext().getEType() == null) {
-				continue;
-			}
-
-			return method;
 		}
 
 		return null;
@@ -761,22 +757,21 @@ public class QvtOperationalParserUtil {
 	}
 	
 	public static Module createModule(MappingModuleCS moduleCS) {
-        Module module;
-        if(moduleCS instanceof LibraryCS) {
-        	module = ExpressionsFactory.eINSTANCE.createLibrary();
-        } else {
-        	module = ExpressionsFactory.eINSTANCE.createOperationalTransformation();
-        }
-        
+        String name = null; //$NON-NLS-1$
         if(moduleCS.getHeaderCS() != null && moduleCS.getHeaderCS().getPathNameCS() != null) {
         	EList<String> sequenceOfNames = moduleCS.getHeaderCS().getPathNameCS().getSequenceOfNames();
         	if(!sequenceOfNames.isEmpty()) {
-        		module.setName(sequenceOfNames.get(0));
+        		name = sequenceOfNames.get(0);
         	}
         }
+		
+        Module module;
+        if(moduleCS instanceof LibraryCS) {
+        	module = QvtOperationalStdLibrary.INSTANCE.createLibrary(name);
+        } else {
+        	module = QvtOperationalStdLibrary.INSTANCE.createTransformation(name);
+        }
  
-        // must set the instance factory as a QVT module is also a Package 
-        module.setEFactoryInstance(new ExpressionsFactoryImpl());
         return module;
 	}
 }

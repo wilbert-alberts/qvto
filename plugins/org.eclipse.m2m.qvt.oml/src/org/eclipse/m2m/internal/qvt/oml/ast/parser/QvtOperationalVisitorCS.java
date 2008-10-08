@@ -103,10 +103,10 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
+import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ForExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty;
@@ -1343,8 +1343,11 @@ public class QvtOperationalVisitorCS
 		
 		// declare module operations as they are required to analyze rules' contents
 		for (MappingMethodCS methodCS : moduleCS.getMethods()) {
+			String name = methodCS.getMappingDeclarationCS().getSimpleNameCS().getValue();
 			boolean isMapping = methodCS instanceof MappingRuleCS;
-			ImperativeOperation operation = isMapping ? ExpressionsFactory.eINSTANCE.createMappingOperation() : ExpressionsFactory.eINSTANCE.createHelper();
+			ImperativeOperation operation = isMapping ? ExpressionsFactory.eINSTANCE.createMappingOperation() : 
+					(QvtOperationalEnv.MAIN.equals(name) ? ExpressionsFactory.eINSTANCE.createEntryOperation() : ExpressionsFactory.eINSTANCE.createHelper());
+			
 			if (visitMappingDeclarationCS(methodCS.getMappingDeclarationCS(), env, operation)) {
 				EOperation imperativeOp = env.defineImperativeOperation(operation, methodCS instanceof MappingRuleCS, true);
 				if(imperativeOp != null) {
@@ -1391,7 +1394,10 @@ public class QvtOperationalVisitorCS
 		
 		env.resolveResolveInExpInMappings();
 		
-		module.setEntry(QvtOperationalParserUtil.getMainMethod(module));
+		ImperativeOperation mainMethod = QvtOperationalParserUtil.getMainOperation(module);
+		if(mainMethod instanceof EntryOperation) {
+			module.setEntry((EntryOperation)mainMethod);
+		}
 
 		validate(env);
 		
@@ -1555,7 +1561,7 @@ public class QvtOperationalVisitorCS
 		}
 
 		SimpleNameCS identifierCS = modelTypeCS.getIdentifierCS();
-		ModelType modelType = QVTUMLReflection.createModel(identifierCS != null ? identifierCS.getValue() : null);
+		ModelType modelType = QvtOperationalStdLibrary.INSTANCE.createModel(identifierCS != null ? identifierCS.getValue() : null);
 		module.getEClassifiers().add(modelType);
 		if(myCompilerOptions.isGenerateCompletionData()) {
 			ASTBindingHelper.createCST2ASTBinding(modelTypeCS, modelType);
@@ -1793,7 +1799,7 @@ public class QvtOperationalVisitorCS
 			visitMappingRuleCS((MappingRuleCS) methodCS, env, (MappingOperation)declaredOperation);
 		}
 		else {
-			visitMappingQueryCS((MappingQueryCS) methodCS, env, (Helper)declaredOperation);
+			visitMappingQueryCS((MappingQueryCS) methodCS, env, declaredOperation);
 		}
 
 		// process operation qualifiers
@@ -1926,7 +1932,7 @@ public class QvtOperationalVisitorCS
 		}		
 	}
 
-	private void visitMappingQueryCS(MappingQueryCS methodCS, QvtOperationalEnv env, Helper helper)
+	private void visitMappingQueryCS(MappingQueryCS methodCS, QvtOperationalEnv env, ImperativeOperation helper)
 			throws SemanticException {
 		helper.setEndPosition(methodCS.getEndOffset());
 
@@ -1943,8 +1949,9 @@ public class QvtOperationalVisitorCS
         }
 
 		OperationBody body = ExpressionsFactory.eINSTANCE.createOperationBody();
-		helper.setBody(body);		
-		helper.setIsQuery(true);				
+		helper.setBody(body);
+		// FIXME - use CST info to set the flag
+		//helper.setIsQuery(true);				
 		body.setStartPosition(methodCS.getMappingDeclarationCS().getEndOffset());
 		body.setEndPosition(methodCS.getEndOffset());
         

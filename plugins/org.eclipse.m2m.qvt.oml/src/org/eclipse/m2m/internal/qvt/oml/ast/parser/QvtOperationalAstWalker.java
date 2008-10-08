@@ -28,12 +28,14 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
+import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ForExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
@@ -125,6 +127,10 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
         return null;
     }
 
+    @Override
+    public Object visitEntryOperation(EntryOperation entryOperation) {    
+    	return visitImperativeOperation(entryOperation);
+    }
 
     public Object visitImperativeOperation(ImperativeOperation imperativeOperation) {
         doProcess(imperativeOperation.getBody(), imperativeOperation);
@@ -220,6 +226,13 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
         return null;
     }
 
+    @Override
+    public Object visitInstantiationExp(InstantiationExp instantiationExp) {
+	    for (OCLExpression<EClassifier> argExp : instantiationExp.getArgument()) {
+	        doProcess(argExp, argExp);
+	    }
+        return null;
+    }
 
     public Object visitOperationBody(OperationBody operationBody) {
         for (OCLExpression<EClassifier> exp : operationBody.getContent()) {
