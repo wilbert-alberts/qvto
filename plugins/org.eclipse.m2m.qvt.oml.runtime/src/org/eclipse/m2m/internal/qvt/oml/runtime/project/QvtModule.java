@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
@@ -70,7 +71,10 @@ public abstract class QvtModule {
         }
         
         OperationalTransformation transfModule = (OperationalTransformation) module;
-        ImperativeOperation mainMethod = (ImperativeOperation) module.getEntry();
+        ImperativeOperation mainMethod = QvtOperationalParserUtil.getMainOperation(module);
+        if(mainMethod == null) {
+        	return Collections.emptyList();
+        }
 
         List<TransformationParameter> transfParams = new ArrayList<TransformationParameter>(transfModule.getModelParameter().size());
         for (ModelParameter modelParam : transfModule.getModelParameter()) {
