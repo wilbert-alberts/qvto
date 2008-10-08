@@ -15,6 +15,8 @@ package org.eclipse.m2m.internal.qvt.oml.stdlib;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 
 
 class CallHandlerAdapter extends AdapterImpl {
@@ -46,4 +48,8 @@ class CallHandlerAdapter extends AdapterImpl {
 		CallHandlerAdapter adapter = (CallHandlerAdapter)EcoreUtil.getExistingAdapter(operation, CallHandlerAdapter.class);
 		return (adapter != null) ? adapter.getDispatch() : null;
 	}	
+	
+	static Object getInvalidResult(QvtOperationalEvaluationEnv evalEnv) {
+		return evalEnv.getAdapter(InternalEvaluationEnv.class).getInvalid();
+	}
 }

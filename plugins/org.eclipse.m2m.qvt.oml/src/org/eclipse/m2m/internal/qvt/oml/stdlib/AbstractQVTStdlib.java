@@ -16,12 +16,12 @@ package org.eclipse.m2m.internal.qvt.oml.stdlib;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 
 public abstract class AbstractQVTStdlib {
-
+	/* FIXME -  */
 	static interface IFilter {
     	boolean matches(Object obj, Object type);
     }
@@ -41,11 +41,13 @@ public abstract class AbstractQVTStdlib {
 	protected AbstractQVTStdlib() {
 		super();
 	}	
-
-	public abstract Module getLibaryModule();
+	
+	public abstract Library getStdLibModule();	
 	
 	public abstract EClassifier getModelClass();
 	
+	public abstract EClass getTransformationClass();
+
 	public abstract EClass getModuleType();
 	
 	public abstract EClassifier getElementType();

@@ -26,7 +26,7 @@ public class StdlibModuleOperations extends AbstractContextualOperations {
     static final String DUMP_NAME = "dump"; //$NON-NLS-1$
 
     public StdlibModuleOperations(AbstractQVTStdlib library) {
-		super(library, library.getLibaryModule());
+		super(library, library.getStdLibModule());
 	}
 	
 	@Override

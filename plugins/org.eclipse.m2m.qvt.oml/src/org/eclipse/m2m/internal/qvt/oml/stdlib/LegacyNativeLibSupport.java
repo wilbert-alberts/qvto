@@ -24,6 +24,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
@@ -51,12 +52,11 @@ public class LegacyNativeLibSupport {
 	}
 	
 	public QvtOperationalModuleEnv defineLibrary(Library lib) throws LibraryCreationException {
-		final org.eclipse.m2m.internal.qvt.oml.expressions.Library libModule = org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createLibrary();		
-		libModule.setName(lib.getId());
+		org.eclipse.m2m.internal.qvt.oml.expressions.Library libModule = QvtOperationalStdLibrary.createLibrary(lib.getId());		
 		// FIXME - set isBlackBox=TRUE, as soon is it gets into the AST metamodel
 				
         // must set the instance factory as a QVT module is also a Package 
-        libModule.setEFactoryInstance(new ExpressionsFactoryImpl());
+        //libModule.setEFactoryInstance(new ExpressionsFactoryImpl());
 		
         QvtOperationalModuleEnv libEnv = initLibEnvironment(lib, libModule);
 		libModule.eResource().setURI(URI.createURI("qvto:/blackboxlib/" + lib.getId()));		
@@ -131,8 +131,8 @@ public class LegacyNativeLibSupport {
 	private static Object callOperation(QvtOperationalEvaluationEnv evalEnv, IContext context, 
 			LibraryOperation libOp, Object source, Object[] args, Class<?> returnClass) {
 		
-		if(source == null || source == evalEnv.getInvalid()) {
-			return evalEnv.getInvalid();
+		if(source == null || source == CallHandlerAdapter.getInvalidResult(evalEnv)) {
+			return CallHandlerAdapter.getInvalidResult(evalEnv);
 		}
 		
         // reset OclInvalid to 'null'

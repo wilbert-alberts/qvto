@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
@@ -28,7 +27,6 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.HiddenElementAdapter;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
@@ -46,18 +44,7 @@ import org.eclipse.ocl.utilities.UMLReflection;
 public class QVTUMLReflection 
 		implements UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, 
 								EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> 
-{
-	private static class QVTMetaElementMarker extends AdapterImpl {
-		private QVTMetaElementMarker() {
-		}
-		
-		@Override
-		public boolean isAdapterForType(Object type) {
-			return QVTMetaElementMarker.class == type;
-		}
-
-	}	
-	
+{	
 	private UMLReflection<EPackage, EClassifier, EOperation, 
 					EStructuralFeature, EEnumLiteral, EParameter, EObject, 
 					CallOperationAction, SendSignalAction, Constraint> fUmlReflection;
@@ -76,14 +63,6 @@ public class QVTUMLReflection
 	private QvtOperationalStdLibrary getStdLibrary() {
 		return QvtOperationalStdLibrary.INSTANCE;
 	}
-
-	public static ModelType createModel(String name) {
-		ModelType modelType = ExpressionsFactory.eINSTANCE.createModelType();
-		modelType.setName(name);
-		modelType.getESuperTypes().add(QvtOperationalStdLibrary.INSTANCE.getModelClass());
-		modelType.eAdapters().add(new QVTMetaElementMarker());		
-		return modelType;
-	}
 	
 	public static boolean isModelTypeInstance(EClassifier eClassifier) {
 		return (eClassifier instanceof ModelType) || eClassifier == QvtOperationalStdLibrary.INSTANCE.getModelClass();
@@ -101,7 +80,7 @@ public class QVTUMLReflection
 				return false;
 			}
 			EClass metaClass = eClass.eClass();
-			EPackage stdlibPackage = QvtOperationalStdLibrary.INSTANCE.getLibaryModule();
+			EPackage stdlibPackage = QvtOperationalStdLibrary.INSTANCE.getStdLibModule();
 			
 			return false == (eClass.getEPackage() == stdlibPackage || 
 					metaClass.getEPackage() == stdlibPackage ||

@@ -89,8 +89,8 @@ public class StringOperations extends AbstractContextualOperations {
 	static final CallHandler SUBSTRING_BEFORE = new CallHandler() {
 		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
 			Object leftVal = args[0];
-			if(leftVal == null && leftVal == evalEnv.getInvalid()) {
-				return evalEnv.getInvalid();
+			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
+				return CallHandlerAdapter.getInvalidResult(evalEnv);
 			}
 			String self = (String) source;
 			String arg = (String) leftVal;
@@ -107,8 +107,8 @@ public class StringOperations extends AbstractContextualOperations {
 	static final CallHandler SUBSTRING_AFTER = new CallHandler() {
 		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
 			Object leftVal = args[0];
-			if(leftVal == null && leftVal == evalEnv.getInvalid()) {
-				return evalEnv.getInvalid();
+			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
+				return CallHandlerAdapter.getInvalidResult(evalEnv);
 			}
 			String self = (String) source;
 			String arg = (String) leftVal;
@@ -153,7 +153,7 @@ public class StringOperations extends AbstractContextualOperations {
 		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
 			String self = (String) source;
 			Object leftVal = args[0];
-			if(leftVal == null && leftVal == evalEnv.getInvalid()) {
+			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return -1;
 			}
 			
@@ -167,7 +167,7 @@ public class StringOperations extends AbstractContextualOperations {
 		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
 			String self = (String) source;
 			Object leftVal = args[0];
-			if(leftVal == null && leftVal == evalEnv.getInvalid()) {
+			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return false;
 			}
 
@@ -180,7 +180,7 @@ public class StringOperations extends AbstractContextualOperations {
 		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
 			String self = (String) source;
 			Object leftVal = args[0];
-			if(leftVal == null && leftVal == evalEnv.getInvalid()) {
+			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return false;
 			}
 
@@ -227,13 +227,13 @@ public class StringOperations extends AbstractContextualOperations {
 		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
 			String self = (String) source;
 			Object arg0 = args[0];
-			if(arg0 == null && arg0 == evalEnv.getInvalid()) {
+			if(arg0 == null && arg0 == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return self;
 			}
 			
 			Object arg1 = args[1];
-			if(arg1 == null && arg1 == evalEnv.getInvalid()) {
-				return evalEnv.getInvalid();
+			if(arg1 == null && arg1 == CallHandlerAdapter.getInvalidResult(evalEnv)) {
+				return CallHandlerAdapter.getInvalidResult(evalEnv);
 			}
 
 			return self.replace((String)arg0, (String)arg1);
@@ -245,7 +245,7 @@ public class StringOperations extends AbstractContextualOperations {
 		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
 			String self = (String) source;
 			Object leftVal = args[0];
-			if(leftVal == null && leftVal == evalEnv.getInvalid()) {
+			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return false;
 			}
 
@@ -258,7 +258,7 @@ public class StringOperations extends AbstractContextualOperations {
 		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
 			String self = (String) source;
 			Object leftVal = args[0];
-			if(leftVal == null && leftVal == evalEnv.getInvalid()) {
+			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return false;
 			}
 
@@ -271,7 +271,7 @@ public class StringOperations extends AbstractContextualOperations {
 		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
 			String self = (String) source;
 			Object leftVal = args[0];
-			if(leftVal == null && leftVal == evalEnv.getInvalid()) {
+			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return -1;
 			}
 			
@@ -284,7 +284,7 @@ public class StringOperations extends AbstractContextualOperations {
 		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
 			String self = (String) source;
 			Object leftVal = args[0];
-			if(leftVal == null && leftVal == evalEnv.getInvalid()) {
+			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return -1;
 			}
 			
@@ -296,7 +296,7 @@ public class StringOperations extends AbstractContextualOperations {
 	static final CallHandler IS_QUOTED = new CallHandler() {
 		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {			
 			Object leftVal = args[0];
-			if(leftVal == null && leftVal == evalEnv.getInvalid()) {
+			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return false;
 			}
 			String quoteStr = (String) leftVal;		
@@ -309,7 +309,7 @@ public class StringOperations extends AbstractContextualOperations {
 	static final CallHandler QUOTIFY = new CallHandler() {
 		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
 			Object leftVal = args[0];
-			if(leftVal == null && leftVal == evalEnv.getInvalid()) {
+			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return source;
 			}
 			String quoteStr = (String) leftVal;
@@ -325,7 +325,7 @@ public class StringOperations extends AbstractContextualOperations {
 				return source;
 			}
 			Object leftVal = args[0];
-			if(leftVal == null && leftVal == evalEnv.getInvalid()) {
+			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return false;
 			}
 			String quoteStr = (String) leftVal;
@@ -338,7 +338,7 @@ public class StringOperations extends AbstractContextualOperations {
 	static final CallHandler MATCH_BOOLEAN = new CallHandler() {
 		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
 			Object leftVal = args[0];
-			if(leftVal == null && leftVal == evalEnv.getInvalid()) {
+			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return false;
 			}		
 
@@ -352,7 +352,7 @@ public class StringOperations extends AbstractContextualOperations {
 	static final CallHandler MATCH_INTEGER = new CallHandler() {
 		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
 			Object leftVal = args[0];
-			if(leftVal == null && leftVal == evalEnv.getInvalid()) {
+			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return false;
 			}		
 
@@ -366,7 +366,7 @@ public class StringOperations extends AbstractContextualOperations {
 	static final CallHandler MATCH_FLOAT = new CallHandler() {
 		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
 			Object leftVal = args[0];
-			if(leftVal == null && leftVal == evalEnv.getInvalid()) {
+			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return false;
 			}		
 
@@ -383,7 +383,7 @@ public class StringOperations extends AbstractContextualOperations {
 	static final CallHandler MATCH_IDENTIFIER = new CallHandler() {
 		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
 			Object leftVal = args[0];
-			if(leftVal == null && leftVal == evalEnv.getInvalid()) {
+			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return false;
 			}
 
@@ -447,7 +447,7 @@ public class StringOperations extends AbstractContextualOperations {
 	static final CallHandler START_STR_COUNTER = new CallHandler() {
 		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {			
 			Object leftVal = args[0];
-			if(leftVal == null && leftVal == evalEnv.getInvalid()) {
+			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return false;
 			}
 			
@@ -461,7 +461,7 @@ public class StringOperations extends AbstractContextualOperations {
 	static final CallHandler GET_STR_COUNTER = new CallHandler() {
 		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {			
 			Object leftVal = args[0];
-			if(leftVal == null && leftVal == evalEnv.getInvalid()) {
+			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return false;
 			}
 			
@@ -474,7 +474,7 @@ public class StringOperations extends AbstractContextualOperations {
 	static final CallHandler INCR_STR_COUNTER = new CallHandler() {
 		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {			
 			Object leftVal = args[0];
-			if(leftVal == null && leftVal == evalEnv.getInvalid()) {
+			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return false;
 			}
 			

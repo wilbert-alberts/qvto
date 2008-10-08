@@ -78,7 +78,7 @@ public class ElementOperations extends AbstractContextualOperations {
 				
 				return result;
 			}
-	        return evalEnv.getInvalid();
+	        return CallHandlerAdapter.getInvalidResult(evalEnv);
 		}
 	};
 	
@@ -108,7 +108,7 @@ public class ElementOperations extends AbstractContextualOperations {
 				
 				return result;
 			}
-	        return evalEnv.getInvalid();
+	        return CallHandlerAdapter.getInvalidResult(evalEnv);
 		}
 	};
 
@@ -119,7 +119,7 @@ public class ElementOperations extends AbstractContextualOperations {
 				EObject eObject = (EObject) source;
 				return eObject.eContainer();
 			}
-	        return evalEnv.getInvalid();
+	        return CallHandlerAdapter.getInvalidResult(evalEnv);
 		}
 	};
 
@@ -130,7 +130,7 @@ public class ElementOperations extends AbstractContextualOperations {
 				EObject eObject = (EObject) source;
 				return eObject.eClass().getName();
 			}
-	        return evalEnv.getInvalid();
+	        return CallHandlerAdapter.getInvalidResult(evalEnv);
 		}
 	};
 
@@ -141,7 +141,7 @@ public class ElementOperations extends AbstractContextualOperations {
 				EObject eObject = (EObject) source;
 				return getSubObjects(eObject, null, FILTER_ALL, evalEnv);
 			}
-	        return evalEnv.getInvalid();
+	        return CallHandlerAdapter.getInvalidResult(evalEnv);
 		}
 	};
 	
@@ -152,7 +152,7 @@ public class ElementOperations extends AbstractContextualOperations {
 				EObject eObject = (EObject) source;
 				return getSubObjects(eObject, getTypeFilterArg(args), FILTER_OF_TYPE, evalEnv);
 			}
-	        return evalEnv.getInvalid();
+	        return CallHandlerAdapter.getInvalidResult(evalEnv);
 		}
 	};	
 
@@ -163,7 +163,7 @@ public class ElementOperations extends AbstractContextualOperations {
 				EObject eObject = (EObject) source;
 				return getSubObjects(eObject, getTypeFilterArg(args), FILTER_OF_KIND, evalEnv);
 			}
-	        return evalEnv.getInvalid();
+	        return CallHandlerAdapter.getInvalidResult(evalEnv);
 		}
 	};	
 
@@ -175,7 +175,7 @@ public class ElementOperations extends AbstractContextualOperations {
 				EObject eObject = (EObject) source;				
 				return getAllSubObjects(eObject, null, FILTER_ALL, evalEnv);
 			}
-	        return evalEnv.getInvalid();
+	        return CallHandlerAdapter.getInvalidResult(evalEnv);
 		}
 	};
 	
@@ -187,7 +187,7 @@ public class ElementOperations extends AbstractContextualOperations {
 				EClassifier type = getTypeFilterArg(args);				
 				return getAllSubObjects(eObject, type, FILTER_OF_TYPE, evalEnv);
 			}
-	        return evalEnv.getInvalid();
+	        return CallHandlerAdapter.getInvalidResult(evalEnv);
 		}
 	};	
 
@@ -199,7 +199,7 @@ public class ElementOperations extends AbstractContextualOperations {
 				EClassifier type = getTypeFilterArg(args);				
 				return getAllSubObjects(eObject, type, FILTER_OF_KIND, evalEnv);
 			}
-	        return evalEnv.getInvalid();
+	        return CallHandlerAdapter.getInvalidResult(evalEnv);
 		}
 	};	
 	
