@@ -1,7 +1,7 @@
 --/**
 -- * <copyright>
 -- *
--- * Copyright (c) 2006, 2007 Borland Inc.
+-- * Copyright (c) 2006-2008 Borland Inc.
 -- * All rights reserved.   This program and the accompanying materials
 -- * are made available under the terms of the Eclipse Public License v1.0
 -- * which accompanies this distribution, and is available at
@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.9 2008/09/25 17:35:30 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.10 2008/10/08 19:41:58 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -32,13 +32,14 @@
 %options programming_language=java
 %options action=("*.java", "/.", "./")
 %options ParseTable=lpg.lpgjavaruntime.ParseTable
+%options include_directory=".;../lpg"
 
 $Start
     QVTgoal
 $End
 
 $Import
-	OCLLPGParser.g
+	EssentialOCL.g
 
 $DropRules
 		
@@ -47,6 +48,7 @@ $DropRules
 	operationCS1 ::= IDENTIFIER '(' parametersCSopt ')' ':' typeCSopt
 	operationCS2 ::= pathNameCS '::' simpleNameCS '(' parametersCSopt ')' ':' typeCSopt
 
+	parametersCSopt ::= $empty
 	parametersCSopt -> parametersCS
 	parametersCS ::= variableCS
 	parametersCS ::= parametersCS ',' variableCS
@@ -84,7 +86,6 @@ $DropSymbols
 	operationCS2
 	
 	parametersCS
-	
 $End
 
 $Define
@@ -257,7 +258,12 @@ $Globals
 	import java.util.Map;
 	import lpg.lpgjavaruntime.Token;
 	import lpg.lpgjavaruntime.BacktrackingParser;
+	import lpg.lpgjavaruntime.PrsStream;
 	import lpg.lpgjavaruntime.NotBacktrackParseTableException;
+	import lpg.lpgjavaruntime.NullExportedSymbolsException;
+	import lpg.lpgjavaruntime.NullTerminalSymbolsException;
+	import lpg.lpgjavaruntime.UndefinedEofSymbolException;
+	import lpg.lpgjavaruntime.UnimplementedTerminalsException;
 	import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;	
 	import org.eclipse.m2m.internal.qvt.oml.cst.LogExpCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;	
@@ -376,7 +382,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.9 2008/09/25 17:35:30 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.10 2008/10/08 19:41:58 aigdalov Exp $
  */
 	./
 $End
@@ -3296,9 +3302,6 @@ $Rules
 	declarator_vsepOpt ::= $empty
 	        /.$NullAction./
 	declarator_vsepOpt -> declarator_vsep
-
-	condExpOpt ::= $empty
-	        /.$NullAction./
 
 	callExpCS ::= '->' featureCallExpCS exclamationOpt '[' declarator_vsepOpt oclExpressionCS ']'
 		/.$BeginJava

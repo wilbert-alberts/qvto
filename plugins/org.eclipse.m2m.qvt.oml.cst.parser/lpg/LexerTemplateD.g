@@ -41,7 +41,7 @@ $Define
     
     $additional_interfaces /../
     $super_stream_class /.AbstractLexer./
-    $prs_stream_class /.PrsStream./
+    $prs_stream_class /.AbstractParser./
     $environment_class /.BasicEnvironment./
     $adapt_environment /.environment./
     
@@ -125,7 +125,6 @@ $Globals
     /.import lpg.lpgjavaruntime.*;
     import org.eclipse.ocl.lpg.AbstractLexer;
     import org.eclipse.ocl.lpg.AbstractParser;
-    import org.eclipse.ocl.lpg.BasicEnvironment;
     ./
 $End
 
@@ -190,8 +189,6 @@ $Headers
 
         @Override
         public String[] orderedExportedSymbols() { return $exp_type.orderedTerminalSymbols; }
-        public LexStream getLexStream() { return (LexStream) this; }
-
         
 	    @Override
 	    public void setInputChars(char[] inputChars) {
@@ -200,7 +197,7 @@ $Headers
 		}
         
         @Override
-        public void lexToTokens(Monitor monitor, AbstractParser parser)
+        public void lexToTokens(Monitor monitor, $prs_stream_class parser)
         {
             if (getInputChars() == null)
                 throw new NullPointerException("LexStream was not initialized");
@@ -217,29 +214,6 @@ $Headers
                 
             return;
         }
-        
-	    public void lexer(PrsStream prsStream)
-	    {
-	        lexer(null, prsStream);
-	    }
-	    
-	    public void lexer(Monitor monitor, PrsStream prsStream)
-	    {
-	        if (getInputChars() == null)
-	            throw new NullPointerException("LexStream was not initialized");
-	
-	        this.parser = prsStream;
-	
-	        prsStream.makeToken(0, 0, 0); // Token list must start with a bad token
-	            
-	        lexParser.parseCharacters(monitor);  // Lex the input characters
-	            
-	        int i = getStreamIndex();
-	        prsStream.makeToken(i, i, TK_EOF_TOKEN); // and end with the end of file token
-	        prsStream.setStreamLength(prsStream.getSize());
-	            
-	        return;
-	    }
     ./
 $End
 

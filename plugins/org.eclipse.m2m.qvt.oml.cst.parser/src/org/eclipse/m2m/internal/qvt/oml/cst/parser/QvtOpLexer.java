@@ -1,24 +1,24 @@
 /**
 * <copyright>
 *
-* Copyright (c) 2007 Borland Software Corporation
-* 
-* All rights reserved. This program and the accompanying materials
+* Copyright (c) 2005, 2007 IBM Corporation and others.
+* All rights reserved.   This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
 * http://www.eclipse.org/legal/epl-v10.html
 *
 * Contributors:
-*     Borland Software Corporation - initial API and implementation
+*   IBM - Initial API and implementation
+*   E.D.Willink - Lexer and Parser refactoring to support extensibility and flexible error handling
 *
 * </copyright>
 *
-* $Id: QvtOpLexer.java,v 1.8 2008/09/25 17:35:30 aigdalov Exp $
+* $Id: QvtOpLexer.java,v 1.9 2008/10/08 19:41:59 aigdalov Exp $
 */
 /**
 * <copyright>
 *
-* Copyright (c) 2006, 2007 Borland Inc.
+* Copyright (c) 2006-2008 Borland Inc.
 * All rights reserved.   This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexer.java,v 1.8 2008/09/25 17:35:30 aigdalov Exp $
+* $Id: QvtOpLexer.java,v 1.9 2008/10/08 19:41:59 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -37,8 +37,10 @@ package org.eclipse.m2m.internal.qvt.oml.cst.parser;
 import lpg.lpgjavaruntime.*;
 import org.eclipse.ocl.lpg.AbstractLexer;
 import org.eclipse.ocl.lpg.AbstractParser;
+import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.lpg.BasicEnvironment;
-
+import org.eclipse.ocl.util.OCLUtil;
+import org.eclipse.ocl.parser.OCLKWLexer;
 @SuppressWarnings("nls")
 public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtOpLexersym, RuleAction
 {
@@ -53,34 +55,34 @@ public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtO
     //
     protected QvtOpKWLexer kwLexer;
     protected boolean printTokens;
-    private PrsStream parser;
+    private AbstractParser parser;
     private LexParser lexParser = new LexParser(this, prs, this);
     
-    private final BasicEnvironment oclEnvironment;
+    private final Environment<?,?,?,?,?,?,?,?,?,?,?,?> oclEnvironment;
 
-    public QvtOpLexer(BasicEnvironment environment) {
-        super(environment);
+    public QvtOpLexer(Environment<?,?,?,?,?,?,?,?,?,?,?,?> environment) {
+        super(OCLUtil.getAdapter(environment, BasicEnvironment.class));
         oclEnvironment = environment;
     }
     
     @SuppressWarnings("nls")
-	public QvtOpLexer(BasicEnvironment environment, char[] chars) {
+	public QvtOpLexer(Environment<?,?,?,?,?,?,?,?,?,?,?,?> environment, char[] chars) {
 		this(environment, chars, "QVTO", ECLIPSE_TAB_VALUE);
 		kwLexer = new QvtOpKWLexer(getInputChars(), TK_IDENTIFIER);
 	}
 
-    public QvtOpLexer(BasicEnvironment environment, char[] input_chars, String filename, int tab)  {
-        super(environment, input_chars, filename, tab);
+    public QvtOpLexer(Environment<?,?,?,?,?,?,?,?,?,?,?,?> environment, char[] input_chars, String filename, int tab)  {
+        super(OCLUtil.getAdapter(environment, BasicEnvironment.class), input_chars, filename, tab);
         oclEnvironment = environment;
     }
     
-	public BasicEnvironment getOCLEnvironment() {
+	public Environment<?,?,?,?,?,?,?,?,?,?,?,?> getOCLEnvironment() {
     	return oclEnvironment;
     }
 
     public int [] getKeywordKinds() { return kwLexer.getKeywordKinds(); }
     public int getLeftSpan() { return lexParser.getFirstToken(); }
-    public PrsStream getParser() { return parser; }
+    public AbstractParser getParser() { return parser; }
     public int getRhsFirstTokenIndex(int i) { return lexParser.getFirstToken(i); }
     public int getRhsLastTokenIndex(int i) { return lexParser.getLastToken(i); }
     public int getRightSpan() { return lexParser.getLastToken(); }
@@ -98,8 +100,6 @@ public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtO
 
     @Override
     public String[] orderedExportedSymbols() { return QvtOpLPGParsersym.orderedTerminalSymbols; }
-    public LexStream getLexStream() { return (LexStream) this; }
-
     
     @Override
     public void setInputChars(char[] inputChars) {
@@ -122,29 +122,6 @@ public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtO
         int i = getStreamIndex();
         parser.makeToken(i, i, TK_EOF_TOKEN); // and end with the end of file token
         parser.setStreamLength(parser.getSize());
-            
-        return;
-    }
-    
-    public void lexer(PrsStream prsStream)
-    {
-        lexer(null, prsStream);
-    }
-    
-    public void lexer(Monitor monitor, PrsStream prsStream)
-    {
-        if (getInputChars() == null)
-            throw new NullPointerException("LexStream was not initialized");
-
-        this.parser = prsStream;
-
-        prsStream.makeToken(0, 0, 0); // Token list must start with a bad token
-            
-        lexParser.parseCharacters(monitor);  // Lex the input characters
-            
-        int i = getStreamIndex();
-        prsStream.makeToken(i, i, TK_EOF_TOKEN); // and end with the end of file token
-        prsStream.setStreamLength(prsStream.getSize());
             
         return;
     }
@@ -523,27 +500,6 @@ public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtO
                            Char_AfterASCIINotAcute;
     }
 
-	public OCLLexer(char[] chars) {
-		this(chars, "OCL", ECLIPSE_TAB_VALUE);
-		kwLexer = new OCLKWLexer(getInputChars(), TK_IDENTIFIER);
-	}
-
-	public void reportError(int i, String code) {
-		// empty
-	}
-
-	public void reportError(int left_loc, int right_loc) {
-		// empty
-	}
-
-	public void reportError(int errorCode, String locationInfo, String tokenText) {
-		// empty
-	}
-
-	public void reportError(int errorCode, String locationInfo, int leftToken, int rightToken, String tokenText) {
-		// empty
-	}
-
 	*/
 
     public void ruleAction( int ruleNumber)
@@ -918,8 +874,7 @@ public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtO
 				makeToken(TK_NOT_EQUAL_EXEQ);
 	            break;
             }
-	
-    
+	    
             default:
                 break;
         }

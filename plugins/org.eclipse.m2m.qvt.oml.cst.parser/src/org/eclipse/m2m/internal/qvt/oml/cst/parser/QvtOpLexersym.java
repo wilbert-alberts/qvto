@@ -1,24 +1,24 @@
 /**
 * <copyright>
 *
-* Copyright (c) 2007 Borland Software Corporation
-* 
-* All rights reserved. This program and the accompanying materials
+* Copyright (c) 2005, 2007 IBM Corporation and others.
+* All rights reserved.   This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
 * http://www.eclipse.org/legal/epl-v10.html
 *
 * Contributors:
-*     Borland Software Corporation - initial API and implementation
+*   IBM - Initial API and implementation
+*   E.D.Willink - Lexer and Parser refactoring to support extensibility and flexible error handling
 *
 * </copyright>
 *
-* $Id: QvtOpLexersym.java,v 1.8 2008/09/25 17:35:30 aigdalov Exp $
+* $Id: QvtOpLexersym.java,v 1.9 2008/10/08 19:41:59 aigdalov Exp $
 */
 /**
 * <copyright>
 *
-* Copyright (c) 2006, 2007 Borland Inc.
+* Copyright (c) 2006-2008 Borland Inc.
 * All rights reserved.   This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexersym.java,v 1.8 2008/09/25 17:35:30 aigdalov Exp $
+* $Id: QvtOpLexersym.java,v 1.9 2008/10/08 19:41:59 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;

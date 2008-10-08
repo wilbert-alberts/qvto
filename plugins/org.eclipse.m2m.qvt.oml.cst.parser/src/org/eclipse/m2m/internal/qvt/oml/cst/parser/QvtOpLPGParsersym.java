@@ -1,19 +1,21 @@
 /**
 * <copyright>
 *
-* Copyright (c) 2007 Borland Software Corporation
-* 
-* All rights reserved. This program and the accompanying materials
+* Copyright (c) 2005, 2008 IBM Corporation and others.
+* All rights reserved.   This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
 * http://www.eclipse.org/legal/epl-v10.html
 *
 * Contributors:
-*     Borland Software Corporation - initial API and implementation
+*   IBM - Initial API and implementation
+*   E.D.Willink - Elimination of some shift-reduce conflicts
+*   E.D.Willink - Remove unnecessary warning suppression
+*   E.D.Willink - 225493 Need ability to set CSTNode offsets
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.8 2008/09/25 17:35:30 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.9 2008/10/08 19:41:59 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.8 2008/09/25 17:35:30 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.9 2008/10/08 19:41:59 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;

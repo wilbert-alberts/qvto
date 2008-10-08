@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLexer.g,v 1.1 2008/03/12 11:48:09 sboyko Exp $
+-- * $Id: QvtOpLexer.g,v 1.2 2008/10/08 19:41:58 aigdalov Exp $
 -- */
 --
 -- The QVT Lexer
@@ -23,9 +23,11 @@
 %options fp=QvtOpLexer,prefix=Char_
 %options single-productions
 %options noserialize
-%options template=LexerTemplateD.g
+%options template=../lpg/LexerTemplateD.g
 %options filter=QvtOpKWLexer.g
 %options export_terminals=("QVTParsersym.java", "TK_")
+%options include_directory=".;../lpg"
+
 
 $Define
 
@@ -46,6 +48,7 @@ $Headers
 	./
 $End
 
+
 $Import
 	OCLLexer.g
 
@@ -53,6 +56,11 @@ $DropRules
 
 	Identifier -> QuotedName
 
+$End
+
+$Globals
+    /.import org.eclipse.ocl.parser.OCLKWLexer;
+    ./
 $End
 
 $Headers
@@ -65,7 +73,7 @@ $Notice
 	/./**
  * <copyright>
  *
- * Copyright (c) 2006, 2007 Borland Inc.
+ * Copyright (c) 2006-2008 Borland Inc.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -76,7 +84,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLexer.g,v 1.1 2008/03/12 11:48:09 sboyko Exp $
+ * $Id: QvtOpLexer.g,v 1.2 2008/10/08 19:41:58 aigdalov Exp $
  */
 	./
 $End

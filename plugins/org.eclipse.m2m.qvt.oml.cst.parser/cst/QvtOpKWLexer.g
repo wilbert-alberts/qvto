@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpKWLexer.g,v 1.3 2008/09/25 17:35:30 aigdalov Exp $ 
+-- * $Id: QvtOpKWLexer.g,v 1.4 2008/10/08 19:41:58 aigdalov Exp $ 
 -- */
 --
 -- The QVT KeyWord Lexer
@@ -21,8 +21,10 @@
 %Options slr
 %Options fp=QvtOpKWLexer,prefix=Char_
 %options noserialize
-%options template=KeywordTemplateD.g
+%options template=../lpg/KeywordTemplateD.g
 %options export_terminals=("QVTParsersym.java", "TK_")
+%options include_directory=".;../lpg"
+
 
 $Start
 	QVTKeyWord
@@ -64,7 +66,7 @@ $Notice
 	/./**
  * <copyright>
  *
- * Copyright (c) 2006, 2007 Borland Inc.
+ * Copyright (c) 2006-2008 Borland Inc.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -75,7 +77,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpKWLexer.g,v 1.3 2008/09/25 17:35:30 aigdalov Exp $
+ * $Id: QvtOpKWLexer.g,v 1.4 2008/10/08 19:41:58 aigdalov Exp $
  */
 	./
 $End

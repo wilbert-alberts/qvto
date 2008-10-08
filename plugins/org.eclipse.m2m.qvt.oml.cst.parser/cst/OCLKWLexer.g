@@ -13,7 +13,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: OCLKWLexer.g,v 1.2 2008/06/26 12:07:34 radvorak Exp $
+-- * $Id: OCLKWLexer.g,v 1.3 2008/10/08 19:41:58 aigdalov Exp $
 -- */
 --
 -- The OCL KeyWord Lexer
@@ -23,8 +23,9 @@
 %Options fp=OCLKWLexer,prefix=Char_
 %options noserialize
 %options package=org.eclipse.ocl.parser
-%options template=KeywordTemplateD.g
+%options template=../lpg/KeywordTemplateD.g
 %options export_terminals=("OCLParsersym.java", "TK_")
+%options include_directory="../lpg"
 
 $Define
 
@@ -33,6 +34,7 @@ $Define
 	--
 	$action_class /.$file_prefix./
 	$eof_char /.Char_EOF./
+	$copyright_contributions /.*./
 
 $End
 
@@ -40,19 +42,19 @@ $Notice
 	/./**
  * <copyright>
  *
- * Copyright (c) 2007 Borland Software Corporation
- * 
- * All rights reserved. This program and the accompanying materials
+ * Copyright (c) 2005, 2007 IBM Corporation and others.
+ * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *     Borland Software Corporation - initial API and implementation
- *
+ *   IBM - Initial API and implementation
+ *   E.D.Willink - Lexer and Parser refactoring to support extensibility and flexible error handling
+$copyright_contributions
  * </copyright>
  *
- * $Id: OCLKWLexer.g,v 1.2 2008/06/26 12:07:34 radvorak Exp $
+ * $Id: OCLKWLexer.g,v 1.3 2008/10/08 19:41:58 aigdalov Exp $
  */
 	./
 $End

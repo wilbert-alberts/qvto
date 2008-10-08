@@ -13,7 +13,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: OCLLexer.g,v 1.2 2008/06/26 12:07:34 radvorak Exp $
+-- * $Id: OCLLexer.g,v 1.3 2008/10/08 19:41:58 aigdalov Exp $
 -- */
 --
 -- The OCL Lexer
@@ -25,9 +25,10 @@
 %options single-productions
 %options noserialize
 %options package=org.eclipse.ocl.parser
-%options template=LexerTemplateD.g
+%options template=../lpg/LexerTemplateD.g
 %options filter=OCLKWLexer.g
 %options export_terminals=("OCLParsersym.java", "TK_")
+%options include_directory="../lpg"
 
 $Define
 
@@ -36,11 +37,15 @@ $Define
 	--
 	$action_class /.$file_prefix./
 	$eof_token /.$_EOF_TOKEN./
+    $environment_class /.Environment<?,?,?,?,?,?,?,?,?,?,?,?>./
+    $adapt_environment /.OCLUtil.getAdapter(environment, BasicEnvironment.class)./
+    $environment_import /.org.eclipse.ocl.Environment./
  
 	--
 	-- Definition of macro used in the included file LexerBasicMap.g
 	--
 	$kw_lexer_class /.$OCLKWLexer./
+	$copyright_contributions /.*./
 
 $End
 
@@ -48,19 +53,19 @@ $Notice
 	/./**
  * <copyright>
  *
- * Copyright (c) 2007 Borland Software Corporation
- * 
- * All rights reserved. This program and the accompanying materials
+ * Copyright (c) 2005, 2007 IBM Corporation and others.
+ * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *     Borland Software Corporation - initial API and implementation
- *
+ *   IBM - Initial API and implementation
+ *   E.D.Willink - Lexer and Parser refactoring to support extensibility and flexible error handling
+ $copyright_contributions
  * </copyright>
  *
- * $Id: OCLLexer.g,v 1.2 2008/06/26 12:07:34 radvorak Exp $
+ * $Id: OCLLexer.g,v 1.3 2008/10/08 19:41:58 aigdalov Exp $
  */
 	./
 $End
@@ -69,29 +74,11 @@ $Include
 	LexerBasicMap.g
 $End
 
-$Headers
-	/.
-		public OCLLexer(char[] chars) {
-			this(chars, "OCL", ECLIPSE_TAB_VALUE);
-			kwLexer = new OCLKWLexer(getInputChars(), TK_IDENTIFIER);
-		}
-
-		public void reportError(int i, String code) {
-			// empty
-		}
-	
-		public void reportError(int left_loc, int right_loc) {
-			// empty
-		}
-	
-		public void reportError(int errorCode, String locationInfo, String tokenText) {
-			// empty
-		}
-	
-		public void reportError(int errorCode, String locationInfo, int leftToken, int rightToken, String tokenText) {
-			// empty
-		}
-	./
+$Globals
+    /.import $environment_import;
+    import org.eclipse.ocl.lpg.BasicEnvironment;
+    import org.eclipse.ocl.util.OCLUtil;
+    ./
 $End
 
 $Export
@@ -135,8 +122,6 @@ $Export
 	CARET
 	CARETCARET
 	QUESTIONMARK
-	
-	EOF_TOKEN
 
 $End
 
@@ -191,10 +176,6 @@ $Terminals
 	RightParen   ::= ')'
 	Equal        ::= '='
 
-$End
-
-	$Eof
-	EOF
 $End
 
 $Start
