@@ -1,19 +1,21 @@
 /**
 * <copyright>
 *
-* Copyright (c) 2007 Borland Software Corporation
-* 
-* All rights reserved. This program and the accompanying materials
+* Copyright (c) 2005, 2008 IBM Corporation and others.
+* All rights reserved.   This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
 * http://www.eclipse.org/legal/epl-v10.html
 *
 * Contributors:
-*     Borland Software Corporation - initial API and implementation
+*   IBM - Initial API and implementation
+*   E.D.Willink - Elimination of some shift-reduce conflicts
+*   E.D.Willink - Remove unnecessary warning suppression
+*   E.D.Willink - 225493 Need ability to set CSTNode offsets
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.7 2008/09/27 17:39:15 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.8 2008/10/08 19:37:08 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.7 2008/09/27 17:39:15 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.8 2008/10/08 19:37:08 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -97,8 +99,6 @@ public interface LightweightTypeParsersym {
       TK_derive = 37,
       TK_init = 38,
       TK_null = 39,
-      TK_attr = 134,
-      TK_oper = 135,
       TK_Set = 15,
       TK_Bag = 16,
       TK_Sequence = 17,
@@ -135,24 +135,24 @@ public interface LightweightTypeParsersym {
       TK_Invalid = 13,
       TK_OclMessage = 14,
       TK_OclInvalid = 72,
-      TK_end = 136,
+      TK_end = 134,
       TK_while = 73,
-      TK_out = 137,
+      TK_out = 135,
       TK_object = 74,
-      TK_transformation = 138,
-      TK_import = 139,
-      TK_library = 140,
-      TK_metamodel = 141,
-      TK_mapping = 142,
-      TK_query = 143,
-      TK_helper = 144,
-      TK_inout = 145,
+      TK_transformation = 136,
+      TK_import = 137,
+      TK_library = 138,
+      TK_metamodel = 139,
+      TK_mapping = 140,
+      TK_query = 141,
+      TK_helper = 142,
+      TK_inout = 143,
       TK_when = 116,
       TK_var = 95,
-      TK_configuration = 146,
-      TK_intermediate = 147,
-      TK_property = 148,
-      TK_population = 149,
+      TK_configuration = 144,
+      TK_intermediate = 145,
+      TK_property = 146,
+      TK_population = 147,
       TK_map = 61,
       TK_xmap = 62,
       TK_late = 63,
@@ -167,16 +167,16 @@ public interface LightweightTypeParsersym {
       TK_invresolveone = 81,
       TK_invresolveIn = 82,
       TK_invresolveoneIn = 83,
-      TK_modeltype = 150,
-      TK_uses = 151,
-      TK_where = 152,
-      TK_refines = 153,
-      TK_enforcing = 154,
-      TK_access = 155,
-      TK_extends = 156,
-      TK_blackbox = 157,
-      TK_abstract = 158,
-      TK_static = 159,
+      TK_modeltype = 148,
+      TK_uses = 149,
+      TK_where = 150,
+      TK_refines = 151,
+      TK_enforcing = 152,
+      TK_access = 153,
+      TK_extends = 154,
+      TK_blackbox = 155,
+      TK_abstract = 156,
+      TK_static = 157,
       TK_result = 28,
       TK_main = 118,
       TK_this = 33,
@@ -189,10 +189,10 @@ public interface LightweightTypeParsersym {
       TK_collectselect = 123,
       TK_collectselectOne = 124,
       TK_return = 97,
-      TK_rename = 160,
-      TK_inherits = 161,
-      TK_merges = 162,
-      TK_disjuncts = 163,
+      TK_rename = 158,
+      TK_inherits = 159,
+      TK_merges = 160,
+      TK_disjuncts = 161,
       TK_forEach = 125,
       TK_forOne = 126,
       TK_IDENTIFIER = 2,
@@ -335,8 +335,6 @@ public interface LightweightTypeParsersym {
                  "post",
                  "endpackage",
                  "def",
-                 "attr",
-                 "oper",
                  "end",
                  "out",
                  "transformation",

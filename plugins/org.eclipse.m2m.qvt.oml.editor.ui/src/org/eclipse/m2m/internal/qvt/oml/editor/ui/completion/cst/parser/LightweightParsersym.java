@@ -1,19 +1,21 @@
 /**
 * <copyright>
 *
-* Copyright (c) 2007 Borland Software Corporation
-* 
-* All rights reserved. This program and the accompanying materials
+* Copyright (c) 2005, 2008 IBM Corporation and others.
+* All rights reserved.   This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
 * http://www.eclipse.org/legal/epl-v10.html
 *
 * Contributors:
-*     Borland Software Corporation - initial API and implementation
+*   IBM - Initial API and implementation
+*   E.D.Willink - Elimination of some shift-reduce conflicts
+*   E.D.Willink - Remove unnecessary warning suppression
+*   E.D.Willink - 225493 Need ability to set CSTNode offsets
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.7 2008/09/27 17:39:15 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.8 2008/10/08 19:37:08 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.7 2008/09/27 17:39:15 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.8 2008/10/08 19:37:08 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -97,8 +99,6 @@ public interface LightweightParsersym {
       TK_derive = 31,
       TK_init = 26,
       TK_null = 53,
-      TK_attr = 162,
-      TK_oper = 163,
       TK_Set = 5,
       TK_Bag = 6,
       TK_Sequence = 7,
@@ -362,9 +362,7 @@ public interface LightweightParsersym {
                  "pre",
                  "post",
                  "endpackage",
-                 "def",
-                 "attr",
-                 "oper"
+                 "def"
              };
 
     public final static boolean isValidForParser = true;

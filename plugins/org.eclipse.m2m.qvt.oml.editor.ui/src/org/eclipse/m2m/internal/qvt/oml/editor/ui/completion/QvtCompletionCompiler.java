@@ -71,7 +71,7 @@ public class QvtCompletionCompiler extends QvtCompiler {
         cFileData.setLexer(lexer);
         try {
             lexer.initialize(new OCLInput(reader).getContent(), cFile.getName());
-            lexer.lexer(new PrsStream(lexer));
+            lexer.lexToTokens(new QvtOpLPGParser(lexer));
         } finally {
             reader.close();
         }

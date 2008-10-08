@@ -26,6 +26,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalVisitorCS;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
@@ -301,14 +302,14 @@ public class LightweightParserUtil {
         	QvtOperationalEnv env = new QvtOperationalEnvFactory().createEnvironment();
             QvtOpLexer lexer = new QvtOpLexer(env);
             lexer.initialize(new OCLInput(script).getContent(), cFile.getName());
-            PrsStream parser = null;
+            AbstractQVTParser parser = null;
             switch (parserType) {
                 case LIGHTWEIGHT_PARSER: parser = new RunnableLightweightParser(lexer); break;
                 case LIGHTWEIGHT_TYPE_PARSER: parser = new RunnableLightweightTypeParser(lexer); break;
                 default: throw new RuntimeException("Unknown parserType: " + parserType); //$NON-NLS-1$
             }
             parser.resetTokenStream();
-            lexer.lexer(parser);
+            lexer.lexToTokens(parser);
             return (CSTNode) ((ILightweightParser) parser).runParser();
         } catch (Exception ex) {
             Activator.log(ex);

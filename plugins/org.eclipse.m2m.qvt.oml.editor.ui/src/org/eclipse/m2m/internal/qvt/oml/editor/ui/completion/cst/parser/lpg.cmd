@@ -6,7 +6,8 @@ if not defined LPG_HOME goto no_home_var
 if not exist %LPG_HOME% goto home_dir_notFound
 
 set QVT_GRAMMAR=%WS_LOC%\org.eclipse.m2m.qvt.oml.cst.parser\cst
-set LPG_INCLUDE=%LPG_HOME%\include;.;%QVT_GRAMMAR%;
+set LPG_QVT_GRAMMAR=%WS_LOC%\org.eclipse.m2m.qvt.oml.cst.parser\lpg
+set LPG_INCLUDE=%LPG_HOME%\include;.;%QVT_GRAMMAR%;%LPG_QVT_GRAMMAR%
 
 %LPG_HOME%\lpgexe\lpg.exe -backtrack -list LightweightParser.lpg
 %LPG_HOME%\lpgexe\lpg.exe -backtrack -list LightweightTypeParser.lpg
