@@ -25,7 +25,7 @@ public class Context implements IContext {
     private final Trace myTrace;
     private final IConfiguration  myConfiguration;
     private final Map<String, Object> myData;
-    private static ArrayList<IQvtLaunchConfigurationContextListener> ourListeners = new ArrayList<IQvtLaunchConfigurationContextListener>();
+
     private boolean myIsDebug = false;
     private EObjectEStructuralFeaturePair myLastAssignLvalue;
 
@@ -43,27 +43,7 @@ public class Context implements IContext {
     	myConfiguration = configuration;
     	myDeferredTasks = null;
     }
-    
-    public synchronized static final void addListener(IQvtLaunchConfigurationContextListener listener) {
-    	ourListeners.add(listener);
-    }
-    
-    public synchronized static final boolean removeListener(IQvtLaunchConfigurationContextListener listener) {
-    	return ourListeners.remove(listener);
-    }
-    
-    public void fireLaunchStarted() {
-    	for (IQvtLaunchConfigurationContextListener listener : ourListeners) {
-			listener.handleConfigurationStarted(this);
-		}
-    }
-    
-    public void fireLaunchStopped() {
-    	for (IQvtLaunchConfigurationContextListener listener : ourListeners) {
-			listener.handleConfigurationStopped(this);
-		}
-    }
-    
+            
     public Trace getTrace() {
         return myTrace;
     }
@@ -103,14 +83,6 @@ public class Context implements IContext {
     	}
     }
     
-	public void launch() {
-		fireLaunchStarted();
-	}
-
-	public void release() {
-    	fireLaunchStopped();
-	}
-
 	public boolean isDebug() {
 		return myIsDebug;
 	}

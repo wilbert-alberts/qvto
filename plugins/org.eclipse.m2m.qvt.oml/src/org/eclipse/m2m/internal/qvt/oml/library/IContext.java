@@ -24,8 +24,6 @@ public interface IContext {
     void addDeferredTask(Runnable task);
     void processDeferredTasks();
     Map<String, Object> getProperties();
-    void launch();
-    void release();
     boolean isDebug();
     void setDebug(boolean debug);
     EObjectEStructuralFeaturePair getLastAssignmentLvalueEval();
