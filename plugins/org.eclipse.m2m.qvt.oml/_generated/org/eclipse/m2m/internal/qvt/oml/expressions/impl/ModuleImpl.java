@@ -19,7 +19,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EFactory;
-import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -30,6 +29,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
@@ -247,7 +247,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * @generated
 	 * @ordered
 	 */
-	protected EOperation entry;
+	protected EntryOperation entry;
 
 	/**
 	 * The cached value of the '{@link #getIntermediateProperty() <em>Intermediate Property</em>}' reference list.
@@ -478,10 +478,10 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getEntry() {
+	public EntryOperation getEntry() {
 		if (entry != null && entry.eIsProxy()) {
 			InternalEObject oldEntry = (InternalEObject)entry;
-			entry = (EOperation)eResolveProxy(oldEntry);
+			entry = (EntryOperation)eResolveProxy(oldEntry);
 			if (entry != oldEntry) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ExpressionsPackage.MODULE__ENTRY, oldEntry, entry));
@@ -495,7 +495,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation basicGetEntry() {
+	public EntryOperation basicGetEntry() {
 		return entry;
 	}
 
@@ -504,8 +504,8 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setEntry(EOperation newEntry) {
-		EOperation oldEntry = entry;
+	public void setEntry(EntryOperation newEntry) {
+		EntryOperation oldEntry = entry;
 		entry = newEntry;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.MODULE__ENTRY, oldEntry, entry));
@@ -749,7 +749,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 				getOwnedRenaming().addAll((Collection<? extends Rename>)newValue);
 				return;
 			case ExpressionsPackage.MODULE__ENTRY:
-				setEntry((EOperation)newValue);
+				setEntry((EntryOperation)newValue);
 				return;
 			case ExpressionsPackage.MODULE__INTERMEDIATE_PROPERTY:
 				getIntermediateProperty().clear();
@@ -804,7 +804,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 				getOwnedRenaming().clear();
 				return;
 			case ExpressionsPackage.MODULE__ENTRY:
-				setEntry((EOperation)null);
+				setEntry((EntryOperation)null);
 				return;
 			case ExpressionsPackage.MODULE__INTERMEDIATE_PROPERTY:
 				getIntermediateProperty().clear();

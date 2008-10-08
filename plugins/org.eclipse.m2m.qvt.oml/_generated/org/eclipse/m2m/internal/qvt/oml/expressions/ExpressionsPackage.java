@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ExpressionsPackage.java,v 1.7 2008/09/30 14:12:00 radvorak Exp $
+ * $Id: ExpressionsPackage.java,v 1.8 2008/10/08 13:13:32 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
@@ -5717,6 +5717,214 @@ public interface ExpressionsPackage extends EPackage {
 	int OPERATIONAL_TRANSFORMATION_FEATURE_COUNT = MODULE_FEATURE_COUNT + 1;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.EntryOperationImpl <em>Entry Operation</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.EntryOperationImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getEntryOperation()
+	 * @generated
+	 */
+	int ENTRY_OPERATION = 41;
+
+	/**
+	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__EANNOTATIONS = IMPERATIVE_OPERATION__EANNOTATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__NAME = IMPERATIVE_OPERATION__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Ordered</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__ORDERED = IMPERATIVE_OPERATION__ORDERED;
+
+	/**
+	 * The feature id for the '<em><b>Unique</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__UNIQUE = IMPERATIVE_OPERATION__UNIQUE;
+
+	/**
+	 * The feature id for the '<em><b>Lower Bound</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__LOWER_BOUND = IMPERATIVE_OPERATION__LOWER_BOUND;
+
+	/**
+	 * The feature id for the '<em><b>Upper Bound</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__UPPER_BOUND = IMPERATIVE_OPERATION__UPPER_BOUND;
+
+	/**
+	 * The feature id for the '<em><b>Many</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__MANY = IMPERATIVE_OPERATION__MANY;
+
+	/**
+	 * The feature id for the '<em><b>Required</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__REQUIRED = IMPERATIVE_OPERATION__REQUIRED;
+
+	/**
+	 * The feature id for the '<em><b>EType</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__ETYPE = IMPERATIVE_OPERATION__ETYPE;
+
+	/**
+	 * The feature id for the '<em><b>EGeneric Type</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__EGENERIC_TYPE = IMPERATIVE_OPERATION__EGENERIC_TYPE;
+
+	/**
+	 * The feature id for the '<em><b>EContaining Class</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__ECONTAINING_CLASS = IMPERATIVE_OPERATION__ECONTAINING_CLASS;
+
+	/**
+	 * The feature id for the '<em><b>EType Parameters</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__ETYPE_PARAMETERS = IMPERATIVE_OPERATION__ETYPE_PARAMETERS;
+
+	/**
+	 * The feature id for the '<em><b>EParameters</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__EPARAMETERS = IMPERATIVE_OPERATION__EPARAMETERS;
+
+	/**
+	 * The feature id for the '<em><b>EExceptions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__EEXCEPTIONS = IMPERATIVE_OPERATION__EEXCEPTIONS;
+
+	/**
+	 * The feature id for the '<em><b>EGeneric Exceptions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__EGENERIC_EXCEPTIONS = IMPERATIVE_OPERATION__EGENERIC_EXCEPTIONS;
+
+	/**
+	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__START_POSITION = IMPERATIVE_OPERATION__START_POSITION;
+
+	/**
+	 * The feature id for the '<em><b>End Position</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__END_POSITION = IMPERATIVE_OPERATION__END_POSITION;
+
+	/**
+	 * The feature id for the '<em><b>Context</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__CONTEXT = IMPERATIVE_OPERATION__CONTEXT;
+
+	/**
+	 * The feature id for the '<em><b>Result</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__RESULT = IMPERATIVE_OPERATION__RESULT;
+
+	/**
+	 * The feature id for the '<em><b>Body</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__BODY = IMPERATIVE_OPERATION__BODY;
+
+	/**
+	 * The feature id for the '<em><b>Is Blackbox</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__IS_BLACKBOX = IMPERATIVE_OPERATION__IS_BLACKBOX;
+
+	/**
+	 * The number of structural features of the '<em>Entry Operation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION_FEATURE_COUNT = IMPERATIVE_OPERATION_FEATURE_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind <em>Direction Kind</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5724,7 +5932,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getDirectionKind()
 	 * @generated
 	 */
-	int DIRECTION_KIND = 41;
+	int DIRECTION_KIND = 42;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.SeverityKind <em>Severity Kind</em>}' enum.
@@ -5734,7 +5942,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getSeverityKind()
 	 * @generated
 	 */
-	int SEVERITY_KIND = 42;
+	int SEVERITY_KIND = 43;
 
 
 	/**
@@ -6951,6 +7159,16 @@ public interface ExpressionsPackage extends EPackage {
 	EReference getOperationalTransformation_ModelParameter();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation <em>Entry Operation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Entry Operation</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation
+	 * @generated
+	 */
+	EClass getEntryOperation();
+
+	/**
 	 * Returns the meta object for enum '{@link org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind <em>Direction Kind</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7985,6 +8203,16 @@ public interface ExpressionsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference OPERATIONAL_TRANSFORMATION__MODEL_PARAMETER = eINSTANCE.getOperationalTransformation_ModelParameter();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.EntryOperationImpl <em>Entry Operation</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.EntryOperationImpl
+		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getEntryOperation()
+		 * @generated
+		 */
+		EClass ENTRY_OPERATION = eINSTANCE.getEntryOperation();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind <em>Direction Kind</em>}' enum.

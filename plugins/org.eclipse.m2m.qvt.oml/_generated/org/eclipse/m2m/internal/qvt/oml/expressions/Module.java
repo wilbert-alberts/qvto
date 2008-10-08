@@ -13,7 +13,6 @@ package org.eclipse.m2m.internal.qvt.oml.expressions;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.ocl.ecore.Variable;
@@ -90,12 +89,12 @@ public interface Module extends EClass, EPackage, VisitableASTNode {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Entry</em>' reference.
-	 * @see #setEntry(EOperation)
+	 * @see #setEntry(EntryOperation)
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getModule_Entry()
 	 * @model
 	 * @generated
 	 */
-	EOperation getEntry();
+	EntryOperation getEntry();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getEntry <em>Entry</em>}' reference.
@@ -105,7 +104,7 @@ public interface Module extends EClass, EPackage, VisitableASTNode {
 	 * @see #getEntry()
 	 * @generated
 	 */
-	void setEntry(EOperation value);
+	void setEntry(EntryOperation value);
 
 	/**
 	 * Returns the value of the '<em><b>Intermediate Property</b></em>' reference list.

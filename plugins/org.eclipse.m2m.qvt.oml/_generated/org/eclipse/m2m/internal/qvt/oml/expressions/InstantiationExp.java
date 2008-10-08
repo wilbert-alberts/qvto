@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: InstantiationExp.java,v 1.1 2008/04/07 15:58:57 radvorak Exp $
+ * $Id: InstantiationExp.java,v 1.2 2008/10/08 13:13:32 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
@@ -17,6 +17,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.utilities.Visitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -111,5 +112,13 @@ public interface InstantiationExp extends ImperativeExpression {
 	 * @generated
 	 */
 	void setInstantiatedClass(EClass value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((<%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%><T, ?, ?, ?, ?>) v).visitInstantiationExp(this);'"
+	 * @generated
+	 */
+	<T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v);
 
 } // InstantiationExp

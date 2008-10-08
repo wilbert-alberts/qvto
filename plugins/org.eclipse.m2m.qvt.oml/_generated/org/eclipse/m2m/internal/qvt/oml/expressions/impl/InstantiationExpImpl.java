@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: InstantiationExpImpl.java,v 1.1 2008/04/07 15:58:59 radvorak Exp $
+ * $Id: InstantiationExpImpl.java,v 1.2 2008/10/08 13:13:32 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -23,9 +23,11 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.utilities.Visitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -185,6 +187,15 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 		instantiatedClass = newInstantiatedClass;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.INSTANTIATION_EXP__INSTANTIATED_CLASS, oldInstantiatedClass, instantiatedClass));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
+		return ((ExtendedVisitor<T, ?, ?, ?, ?>) v).visitInstantiationExp(this);
 	}
 
 	/**

@@ -379,6 +379,15 @@ public interface ExpressionsFactory extends EFactory {
 	OperationalTransformation createOperationalTransformation();
 
 																/**
+	 * Returns a new object of class '<em>Entry Operation</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Entry Operation</em>'.
+	 * @generated
+	 */
+	EntryOperation createEntryOperation();
+
+																/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

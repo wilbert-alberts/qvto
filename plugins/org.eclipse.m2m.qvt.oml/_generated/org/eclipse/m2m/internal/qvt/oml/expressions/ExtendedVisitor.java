@@ -212,6 +212,14 @@ public interface ExtendedVisitor<T, S, COA, SSA, CT> extends Visitor<T, EClassif
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @model instantiationExpRequired="true"
+	 * @generated
+	 */
+	T visitInstantiationExp(InstantiationExp instantiationExp);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @model whileExpRequired="true"
 	 * @generated
 	 */
@@ -288,5 +296,13 @@ public interface ExtendedVisitor<T, S, COA, SSA, CT> extends Visitor<T, EClassif
 	 * @generated
 	 */
 	T visitReturnExp(ReturnExp returnExp);
+
+																/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model entryOperationRequired="true"
+	 * @generated
+	 */
+	T visitEntryOperation(EntryOperation entryOperation);
 
 } // ExtendedVisitor

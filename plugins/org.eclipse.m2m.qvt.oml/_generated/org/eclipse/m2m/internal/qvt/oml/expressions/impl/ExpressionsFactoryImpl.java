@@ -146,6 +146,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 			case ExpressionsPackage.INSTANTIATION_EXP: return createInstantiationExp();
 			case ExpressionsPackage.RETURN_EXP: return createReturnExp();
 			case ExpressionsPackage.OPERATIONAL_TRANSFORMATION: return createOperationalTransformation();
+			case ExpressionsPackage.ENTRY_OPERATION: return createEntryOperation();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -563,6 +564,16 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	public OperationalTransformation createOperationalTransformation() {
 		OperationalTransformationImpl operationalTransformation = new OperationalTransformationImpl();
 		return operationalTransformation;
+	}
+
+																/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EntryOperation createEntryOperation() {
+		EntryOperationImpl entryOperation = new EntryOperationImpl();
+		return entryOperation;
 	}
 
 																/**
