@@ -48,7 +48,7 @@ public class QvtLibraryASTTest extends TestQvtParser {
 	public void runTest() throws Exception {
 		super.runTest();
 				
-		checkLibrary((Library)QvtOperationalStdLibrary.INSTANCE.getLibaryModule());
+		checkLibrary((Library)QvtOperationalStdLibrary.INSTANCE.getStdLibModule());
 		EList<ModuleImport> moduleImports = getCompiledResults()[0].getModule().getModule().getModuleImport();		
 		assertEquals(moduleImports.size(), 2);
 		
@@ -59,7 +59,7 @@ public class QvtLibraryASTTest extends TestQvtParser {
 	
 	private void checkLibrary(Library library) {
 		File libFile = new File(getDestinationFolder(), library.getName());
-		TestUtil.assertPersistableAST(QvtOperationalStdLibrary.INSTANCE.getLibaryModule(), 
+		TestUtil.assertPersistableAST(QvtOperationalStdLibrary.INSTANCE.getStdLibModule(), 
 				URI.createURI(libFile.toURI().toString(), true)); //$NON-NLS-1$
 		
 		assertTrue("library file " + libFile + " must have been saved", libFile.exists()); //$NON-NLS-1$		
