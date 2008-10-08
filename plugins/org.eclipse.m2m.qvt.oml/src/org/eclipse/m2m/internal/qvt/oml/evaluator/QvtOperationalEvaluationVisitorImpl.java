@@ -14,6 +14,7 @@ package org.eclipse.m2m.internal.qvt.oml.evaluator;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
@@ -41,6 +43,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.IVirtualOperationTable;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtEvaluationResult;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
@@ -62,12 +65,14 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
+import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ForExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
@@ -102,6 +107,7 @@ import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.library.LateResolveInTask;
 import org.eclipse.m2m.internal.qvt.oml.library.LateResolveTask;
 import org.eclipse.m2m.internal.qvt.oml.library.QvtResolveUtil;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.m2m.internal.qvt.oml.trace.EDirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.trace.EMappingContext;
 import org.eclipse.m2m.internal.qvt.oml.trace.EMappingOperation;
@@ -178,7 +184,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     	QvtOperationalEvaluationVisitorImpl visitor = new QvtOperationalEvaluationVisitorImpl(rootEnv, evalEnv);
     	// create StdLib instance by default
     	visitor.createModuleDefaultInstance(
-    				QvtOperationalStdLibrary.INSTANCE.getLibaryModule(), 
+    				QvtOperationalStdLibrary.INSTANCE.getStdLibModule(), 
     				visitor.getOperationalEvaluationEnv());
     	
     	// initialize all explicit import instances
@@ -241,13 +247,16 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 	}
     
     public Object visitAssignExp(final AssignExp assignExp) {
+        QvtOperationalEvaluationEnv env = getOperationalEvaluationEnv();
+		InternalEvaluationEnv internEnv = env.getAdapter(InternalEvaluationEnv.class);
+        
     	boolean isDeferred = false;    	
         // TODO: modify the following code for more complex l-values
         if (assignExp.getValue().size() == 1) {
         	isDeferred = QvtResolveUtil.hasDeferredRightSideValue(assignExp);
             if(isDeferred) {
             	String ownerName = assignExp.getLeft().getName();        	
-                Object ownerObj = (ownerName == null ? getOperationalEvaluationEnv().peekObjectExpOwner() : getRuntimeValue(ownerName));
+                Object ownerObj = (ownerName == null ? internEnv.peekObjectExpOwner() : getRuntimeValue(ownerName));
                 if (ownerObj instanceof EObject) {
                     PropertyCallExp<EClassifier, EStructuralFeature> lvalueExp = (PropertyCallExp<EClassifier, EStructuralFeature>) assignExp.getLeft();
                     EStructuralFeature referredProperty = getRenamedProperty(lvalueExp.getReferredProperty());
@@ -267,8 +276,6 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         	return null;
         }        
         
-        QvtOperationalEvaluationEnv env = getOperationalEvaluationEnv();
-
         String ownerName = assignExp.getLeft().getName();
         if (false == assignExp.getLeft() instanceof PropertyCallExp) {
             EClassifier variableType = assignExp.getLeft().getType();
@@ -305,8 +312,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
             	replaceInEnv(ownerName, exprValue, variableType);
             }
         } else {
-            Object ownerObj = (ownerName == null ?
-                    env.peekObjectExpOwner() : getRuntimeValue(ownerName));
+			Object ownerObj = (ownerName == null ? internEnv.peekObjectExpOwner() : getRuntimeValue(ownerName));
             if (ownerObj instanceof EObject) {
                 int oldIpPos = setCurrentEnvInstructionPointer(assignExp);
                 final EObject owner = (EObject) ownerObj;
@@ -326,7 +332,8 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     }
 
     public Object visitConfigProperty(ConfigProperty configProperty) {
-        String stringValue = getOperationalEvaluationEnv().getConfigurationProperty(configProperty.getName());
+    	IContext context = getOperationalEvaluationEnv().getContext();   	
+        String stringValue = context.getConfiguration().getProperty(configProperty.getName());
         Object value = createFromString(configProperty.getEType(), stringValue);
         if(value == getOclInvalid()) {
         	// we failed to parse the value
@@ -336,9 +343,14 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         return value;
     }
 
+    @Override
+    public Object visitEntryOperation(EntryOperation entryOperation) {    
+        visitImperativeOperation(entryOperation);
+        return new OperationCallResult(visitOperationBody(entryOperation.getBody()), getOperationalEvaluationEnv());
+    }
+    
     public Object visitHelper(Helper helper) {
         visitImperativeOperation(helper);
-
         return new OperationCallResult(visitOperationBody(helper.getBody()), getOperationalEvaluationEnv());
     }
 
@@ -640,10 +652,53 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 		return result.myResult;
 	}
     
-    public Object doVisitModule(Module module) {
+	@Override
+	public EObject visitInstantiationExp(InstantiationExp objectExp) { 
+		// should instantiate the module transformation
+		EClass _class = objectExp.getInstantiatedClass();
+		assert _class instanceof Module; // do not support normal class constructor calls yet
+		
+		EList<OCLExpression<EClassifier>> formalArguments = objectExp.getArgument();		
+		List<ModelParameterExtent> actualArguments = new ArrayList<ModelParameterExtent>(formalArguments.size());				
+		for (OCLExpression<EClassifier> nextArg : formalArguments) {
+			Object argVal = nextArg.accept(getVisitor());
+			assert argVal instanceof ModelParameterExtent;				
+			actualArguments.add((ModelParameterExtent)argVal); 
+		}
+		
+		// create a nested environment for constructor invocation representing 
+		// the root environment of explicitly called transformation		
+		// Empty default context, no configuration property is available
+		// Remark: Can we set configuration property in the concrete syntax on the explicit transf object.
+		Context nestedContext = new Context();
+		QvtOperationalEnvFactory envFactory = getOperationalEnv().getFactory();
+		QvtOperationalEvaluationEnv nestedEvalEnv = (QvtOperationalEvaluationEnv)envFactory
+						.createEvaluationEnvironment(nestedContext, null);		
+		// send arguments into the entry operation 
+		nestedEvalEnv.getOperationArgs().addAll(actualArguments);
+		
+		return callModuleImplicitConstructor((Module)_class);
+	}
+	
+	private EObject callModuleImplicitConstructor(Module moduleType) {
+		QvtOperationalEvaluationEnv evaluationEnv = getOperationalEvaluationEnv();
+
+        OperationalTransformation operationalTransfModule = (OperationalTransformation)moduleType;
+		evaluationEnv.createModuleParameterExtents(operationalTransfModule);
+		
+		createModuleDefaultInstance(QvtOperationalStdLibrary.INSTANCE.getStdLibModule(), evaluationEnv);
+		EObject moduleInstance = initAllModuleDefaultInstances(moduleType, evaluationEnv);
+        
+        initModuleProperties(moduleType);
+		
+		return moduleInstance;
+	}
+	
+	
+	Object doVisitModule(Module module) {
     	isInTerminatingState = false;
         if (myEntryPoint == null) {
-            myEntryPoint = (ImperativeOperation) module.getEntry();
+            myEntryPoint = QvtOperationalParserUtil.getMainOperation(module);
         }
 
         if (myEntryPoint == null || module instanceof OperationalTransformation == false) {
@@ -653,30 +708,22 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 
         if (myRootModule == null) {
             myRootModule = module;
-            //PackageRef[] metamodels = QvtOperationalParserUtil.getRequiredMetamodelIds(myRootModule);
-            //myInheritanceTree = new InheritanceTree(getOperationalEnv(), new EmfClassifierProvider(getOperationalEnv()), metamodels);
         }
-
-		// create the default instance of StdLib, which is imported by default
-		createModuleDefaultInstance(QvtOperationalStdLibrary.INSTANCE.getLibaryModule(), getOperationalEvaluationEnv());        
-        initAllModuleDefaultInstances(module, getOperationalEvaluationEnv());
 
         QvtOperationalEvaluationEnv evaluationEnv = getOperationalEvaluationEnv();
         QvtEvaluationResult evalResult = null;
         try {
-	        OperationalTransformation operationalTransfModule = (OperationalTransformation)module;
-			evaluationEnv.createModuleParameterExtents(operationalTransfModule);
-	        // Note: called after model parameters initialized, as mapping call during property 
-	        // intialisation will cause NPE
-	        initModuleProperties(module);
-	        setCurrentEnvInstructionPointer(myEntryPoint); // initialize IP to the main entry header
-
-	        List<Object> entryArgs = makeEntryArgs(myEntryPoint, operationalTransfModule);
-	        OperationCallResult callResult = executeImperativeOperation(myEntryPoint, null, entryArgs, false);
-	        	        
-	        isInTerminatingState = true;
-	        processDeferredTasks();	        
-	
+        	EObject moduleInstance = callModuleImplicitConstructor(module);
+	        evaluationEnv.getAdapter(InternalEvaluationEnv.class).setEntryOperationHandler(createEntryOperationHandler(this));
+	        
+	        setCurrentEnvInstructionPointer(myEntryPoint); // initialize IP to the main entry header	        
+	        // call main entry operation
+	        OperationCallResult callResult = (OperationCallResult)evaluationEnv.getAdapter(InternalEvaluationEnv.class).
+	        	getEntryOperationHandler().invoke(
+	        		moduleInstance, makeEntryOperationArgs(myEntryPoint, 
+	        		(OperationalTransformation)myRootModule).toArray(),
+	        		evaluationEnv, evaluationEnv.getContext());
+	        
 	        evalResult = callResult.myEvalEnv.createEvaluationResult(myEntryPoint);
 	        if (evalResult.getModelExtents().isEmpty()) {
 	            if (callResult.myResult instanceof EObject) {
@@ -695,6 +742,22 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         return evalResult;
     }
 
+	private static CallHandler createEntryOperationHandler(final QvtOperationalEvaluationVisitorImpl evaluator) {
+		return new CallHandler() {
+			@Override
+			public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+				OperationalTransformation transformation = (OperationalTransformation)((EObject)source).eClass();
+				ImperativeOperation entry = QvtOperationalParserUtil.getMainOperation(transformation);
+				OperationCallResult result = evaluator.executeImperativeOperation(entry, null, Arrays.asList(args), false);        	        
+				
+				evaluator.isInTerminatingState = true;
+				evaluator.processDeferredTasks();
+		        
+		        return result;
+			}
+		};
+	}
+
 	protected void processDeferredTasks() {
 		getContext().processDeferredTasks();
 	}
@@ -706,7 +769,8 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     public Object visitObjectExp(ObjectExp objectExp) {
         Object owner = getOutOwner(objectExp);
 
-        getOperationalEvaluationEnv().pushObjectExpOwner(owner);
+        InternalEvaluationEnv internEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);
+		internEnv.pushObjectExpOwner(owner);
 
     	if(objectExp.getBody() != null) {
     		EList<OCLExpression<EClassifier>> contents = objectExp.getBody().getContent();        
@@ -715,7 +779,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 	        }
     	}
     	
-        getOperationalEvaluationEnv().popObjectExpOwner();
+        internEnv.popObjectExpOwner();
 
         return owner;
     }
@@ -1110,20 +1174,25 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     }
     
     private EObject createModuleDefaultInstance(Module moduleClass, QvtOperationalEvaluationEnv env) {
-    	EObject instance = ModuleInstanceFactory.eINSTANCE.create(moduleClass);
+    	EFactory eFactory = moduleClass.getEFactoryInstance();
+		assert eFactory != null : "Module class must have factory"; //$NON-NLS-1$
+    	
+    	EObject instance = eFactory.create(moduleClass);
     	// use replace as multiple imports of the same module might happen
     	env.replace(moduleClass.getName() + QvtOperationalFileEnv.THIS_VAR_QNAME_SUFFIX, instance);
     	return instance;
     }    
 
-    private void initAllModuleDefaultInstances(Module module, QvtOperationalEvaluationEnv env) {
-    	createModuleDefaultInstance(module, env);
+    private EObject initAllModuleDefaultInstances(Module module, QvtOperationalEvaluationEnv env) {
+    	EObject moduleInstance = createModuleDefaultInstance(module, env);
 		for (ModuleImport moduleImport : module.getModuleImport()) {
 			if(moduleImport.getModule() != null) {
 				Module importedModule = moduleImport.getImportedModule();
 				initAllModuleDefaultInstances(importedModule, getOperationalEvaluationEnv());
 			}
 		}
+		
+		return moduleInstance;
     }        
     
 	private IVirtualOperationTable getVirtualTable(EOperation operation) {
@@ -1798,7 +1867,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         return argValues;
     }
     
-	private List<Object> makeEntryArgs(ImperativeOperation entryPoint, OperationalTransformation module) {
+	private List<Object> makeEntryOperationArgs(ImperativeOperation entryPoint, OperationalTransformation module) {
 		List<Object> args = new ArrayList<Object>(entryPoint.getEParameters().size());
 		
 		int paramIndex = 0;
@@ -1858,7 +1927,9 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     		
     		public List<StackTraceElement> getStackTraceElements() {
     			if(elements == null) {
-    		    	int offset = (causingASTNode != null) ? causingASTNode.getStartPosition() : topStackEnv.getCurrentASTOffset();
+    		    	int offset = (causingASTNode != null) ? 
+    		    			causingASTNode.getStartPosition() : 
+    		    				topStackEnv.getAdapter(InternalEvaluationEnv.class).getCurrentASTOffset();
     		    	if(offset < 0) {
     		    		offset = -1;
     		    	}
@@ -1899,14 +1970,15 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
    
     private int setCurrentEnvInstructionPointer(ASTNode node) {
     	if(node != null) {
-    		return getOperationalEvaluationEnv().setCurrentASTOffset(node.getStartPosition());
+    		return setCurrentEnvInstructionPointer(node.getStartPosition());
     	} else {
-    		return getOperationalEvaluationEnv().setCurrentASTOffset(-1);
+    		return setCurrentEnvInstructionPointer(-1);
     	}
     }
 
     private int setCurrentEnvInstructionPointer(int pos) {
-   		return getOperationalEvaluationEnv().setCurrentASTOffset(pos);
+    	InternalEvaluationEnv internEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);    	
+    	return internEnv.setCurrentASTOffset(pos);
     }
     
     private QvtOperationalEvaluationVisitor createInterruptibleVisitor() {
@@ -1964,22 +2036,23 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         }
         
         // QVT primitive type
+        // FIXME - should rather used primitive type singletons from the Standard library
         try {
-	        if (type instanceof PrimitiveType && PrimitiveType.INTEGER_NAME.equals(((PrimitiveType) type).getName())) {
+	        if (type instanceof org.eclipse.ocl.ecore.PrimitiveType && PrimitiveType.INTEGER_NAME.equals(((org.eclipse.ocl.ecore.PrimitiveType) type).getName())) {
 	            return new Integer(stringValue);
 	        } 
-	        if (type instanceof PrimitiveType && PrimitiveType.REAL_NAME.equals(((PrimitiveType) type).getName())) {
+	        if (type instanceof org.eclipse.ocl.ecore.PrimitiveType && PrimitiveType.REAL_NAME.equals(((org.eclipse.ocl.ecore.PrimitiveType) type).getName())) {
 	            return new Double(stringValue);
 	        }
         } catch (NumberFormatException e) {
         	return getOclInvalid();
 		}
         
-        if (type instanceof PrimitiveType && PrimitiveType.STRING_NAME.equals(((PrimitiveType) type).getName())) {
+        if (type instanceof org.eclipse.ocl.ecore.PrimitiveType && PrimitiveType.STRING_NAME.equals(((org.eclipse.ocl.ecore.PrimitiveType) type).getName())) {
             return new String(stringValue);
         } 
         
-        if (type instanceof PrimitiveType && PrimitiveType.BOOLEAN_NAME.equals(((PrimitiveType) type).getName())) {
+        if (type instanceof org.eclipse.ocl.ecore.PrimitiveType && PrimitiveType.BOOLEAN_NAME.equals(((org.eclipse.ocl.ecore.PrimitiveType) type).getName())) {
             return Boolean.valueOf(stringValue);
         } 
         // Enumeration

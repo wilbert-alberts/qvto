@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.IModuleSourceInfo;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
@@ -31,7 +32,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
-import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.UMLReflection;
 
 /**
@@ -104,15 +104,17 @@ public class QvtStackTraceBuilder {
     	int resultOffset = fOffset;
     	EOperation operation = env.getOperation();
     	    	
-    	if(isMainEnv) {
+    	InternalEvaluationEnv internEnv = env.getAdapter(InternalEvaluationEnv.class);
+		if(isMainEnv) {
 	    	operName = INITIALIZER_NAME;
 	    	module = fMainModule;
 	    	if(module != null && module.getName() != null) {
 	    		declClassName = module.getName(); 
 	    	}
-	    	resultOffset = env.getCurrentASTOffset();
-	    	if(resultOffset < 0 && fMainModule.getEntry() instanceof ASTNode) {
-	    		resultOffset = ((ASTNode)fMainModule.getEntry()).getStartPosition();
+	    	resultOffset = internEnv.getCurrentASTOffset();
+	    	ImperativeOperation mainMethod = QvtOperationalParserUtil.getMainOperation(fMainModule);
+			if(resultOffset < 0 && mainMethod != null) {
+	    		resultOffset = mainMethod.getStartPosition();
 	    	}
     	}
     	else if(operation != null) {
@@ -133,7 +135,7 @@ public class QvtStackTraceBuilder {
 	    		declClassName = fUML.getName(owner);
 			}
     		
-    		resultOffset = (stackPos == 0) ? fOffset : env.getCurrentASTOffset();
+    		resultOffset = (stackPos == 0) ? fOffset : internEnv.getCurrentASTOffset();
     	}   
 
 
