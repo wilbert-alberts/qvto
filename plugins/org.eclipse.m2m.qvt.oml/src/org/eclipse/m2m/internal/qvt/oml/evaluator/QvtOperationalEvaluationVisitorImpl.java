@@ -343,7 +343,6 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         return value;
     }
 
-    @Override
     public Object visitEntryOperation(EntryOperation entryOperation) {    
         visitImperativeOperation(entryOperation);
         return new OperationCallResult(visitOperationBody(entryOperation.getBody()), getOperationalEvaluationEnv());
@@ -652,7 +651,6 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 		return result.myResult;
 	}
     
-	@Override
 	public EObject visitInstantiationExp(InstantiationExp objectExp) { 
 		// should instantiate the module transformation
 		EClass _class = objectExp.getInstantiatedClass();
@@ -744,7 +742,6 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 
 	private static CallHandler createEntryOperationHandler(final QvtOperationalEvaluationVisitorImpl evaluator) {
 		return new CallHandler() {
-			@Override
 			public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
 				OperationalTransformation transformation = (OperationalTransformation)((EObject)source).eClass();
 				ImperativeOperation entry = QvtOperationalParserUtil.getMainOperation(transformation);
@@ -1200,7 +1197,6 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 	}
     
     private Object createOrGetResult(MappingOperation mappingOperation) {
-    	QvtOperationalEvaluationEnv env = getOperationalEvaluationEnv();
         Object result = getRuntimeValue(Environment.RESULT_VARIABLE_NAME);
         
         if (isUndefined(result)) { // if nothing was assigned to the result in the init section
