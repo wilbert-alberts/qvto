@@ -767,7 +767,7 @@ public class QvtOperationalParserUtil {
 		
         Module module;
         if(moduleCS instanceof LibraryCS) {
-        	module = QvtOperationalStdLibrary.INSTANCE.createLibrary(name);
+        	module = QvtOperationalStdLibrary.createLibrary(name);
         } else {
         	module = QvtOperationalStdLibrary.INSTANCE.createTransformation(name);
         }
