@@ -13,6 +13,7 @@ package org.eclipse.m2m.internal.qvt.oml.common.ui.launch;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.common.CommonPlugin;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessage;
@@ -61,9 +62,11 @@ public class TransformationControls {
     	if (paramInfo.getDirection() == Direction.out
     			|| paramInfo.getEntryParamType() == null) {
     		typeName = paramInfo.getModelTypeName();
-    		if (paramInfo.getMetamodel() != null
-    				&& paramInfo.getMetamodel().getNsURI().length() > 0) {
-    			typeName += " (" + paramInfo.getMetamodel().getNsURI() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+    		EPackage metamodel = paramInfo.getMetamodel();
+			if (metamodel != null) {
+				if(metamodel.getNsURI() != null && metamodel.getNsURI().length() > 0) {
+					typeName += " (" + metamodel.getNsURI() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+				}
     		}
     	}
     	else {
