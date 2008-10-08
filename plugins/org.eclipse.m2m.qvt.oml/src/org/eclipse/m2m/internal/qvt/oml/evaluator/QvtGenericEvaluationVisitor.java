@@ -25,11 +25,13 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
+import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ForExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
@@ -371,6 +373,10 @@ abstract class QvtGenericEvaluationVisitor
 	public Object visitObjectExp(ObjectExp objectExp) {
 		return getQVTDelegate().visitObjectExp(objectExp);
 	}
+		
+	public Object visitInstantiationExp(InstantiationExp instatiationExp) {
+		return getQVTDelegate().visitInstantiationExp(instatiationExp);
+	}
 
 	public Object visitOperationBody(OperationBody operationBody) {
 		return getQVTDelegate().visitOperationBody(operationBody);
@@ -434,5 +440,10 @@ abstract class QvtGenericEvaluationVisitor
     
     public Object visitReturnExp(ReturnExp returnExp) {
         return getQVTDelegate().visitReturnExp(returnExp);
+    }
+    
+    @Override
+    public Object visitEntryOperation(EntryOperation entryOperation) {    
+    	return getQVTDelegate().visitEntryOperation(entryOperation);
     }
 }
