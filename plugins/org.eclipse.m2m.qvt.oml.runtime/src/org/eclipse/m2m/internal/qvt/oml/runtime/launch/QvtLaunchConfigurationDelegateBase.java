@@ -153,10 +153,9 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         }      	
     	
     	Context context = new Context(configuration);    	
-    	try {
+
     		final StringWriter consoleLogger = new StringWriter();
             context.put(QvtOperationalStdLibrary.OUT_PRINT_WRITER, new PrintWriter(consoleLogger));
-	        context.launch();
 	    	
 	        TransformationRunner.In in = new TransformationRunner.In(inObjs.toArray(new EObject[inObjs.size()]), context);
 	        TransformationRunner.Out out = transformation.run(in);
@@ -176,15 +175,10 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
 	        	outTraces.add(out.getTrace());
 	        }
 	        outConsole.add(consoleLogger.getBuffer().toString());
-    	}
-    	finally {
-    		context.release();
-    	}
     }
         
     private static List<URI> doLaunch(final QvtTransformation transformation, final List<EObject> inObjs,
     		List<TargetUriData> targetData, IConfiguration configuration, final String traceFileName, IContext context) throws Exception {
-        context.launch();
     	
         TransformationRunner.In in = new TransformationRunner.In(inObjs.toArray(new EObject[inObjs.size()]), context);
         TransformationRunner.Out out = transformation.run(in);
@@ -236,9 +230,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
             	traceSerializer.saveTraceModel(new EclipseFile(traceFile));
             	traceSerializer.markUnboundObjects(traceFile);
             }
-        }
-        
-        context.release();
+        }        
         
         return result;
     }
