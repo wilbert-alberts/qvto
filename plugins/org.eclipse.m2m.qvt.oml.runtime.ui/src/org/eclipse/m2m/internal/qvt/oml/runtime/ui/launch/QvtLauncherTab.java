@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jface.window.Window;
 import org.eclipse.m2m.internal.qvt.oml.QvtEngine;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
@@ -41,6 +42,7 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.StatusUtil;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtValidator;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.ITransformationMaker;
@@ -189,7 +191,8 @@ public class QvtLauncherTab extends MdaLaunchTab {
         
         try {
             CompiledModule module = QvtEngine.getInstance(file).compile(file, null);
-            if(module != null && module.getModule().getEntry() != null) {
+            ImperativeOperation mainOperation = QvtOperationalParserUtil.getMainOperation(module.getModule());
+			if(module != null && mainOperation != null) {
                 initializeName(configuration, module.getModule().getName());
                 URI transfUri = URI.createPlatformResourceURI(file.getFullPath().toString(), false);
                 configuration.setAttribute(IQvtLaunchConstants.MODULE, transfUri.toString());
