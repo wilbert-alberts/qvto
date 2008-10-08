@@ -442,7 +442,6 @@ abstract class QvtGenericEvaluationVisitor
         return getQVTDelegate().visitReturnExp(returnExp);
     }
     
-    @Override
     public Object visitEntryOperation(EntryOperation entryOperation) {    
     	return getQVTDelegate().visitEntryOperation(entryOperation);
     }
