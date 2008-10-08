@@ -127,7 +127,6 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
         return null;
     }
 
-    @Override
     public Object visitEntryOperation(EntryOperation entryOperation) {    
     	return visitImperativeOperation(entryOperation);
     }
@@ -226,7 +225,6 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
         return null;
     }
 
-    @Override
     public Object visitInstantiationExp(InstantiationExp instantiationExp) {
 	    for (OCLExpression<EClassifier> argExp : instantiationExp.getArgument()) {
 	        doProcess(argExp, argExp);
