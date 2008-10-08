@@ -98,7 +98,7 @@ public class NonTransformationExecutionContext {
 		
 		Module owningModule = QvtOperationalParserUtil.getOwningModule(operation);
 		if(owningModule == null || 
-			!(owningModule == QvtOperationalStdLibrary.INSTANCE.getLibaryModule() ||
+			!(owningModule == QvtOperationalStdLibrary.INSTANCE.getStdLibModule() ||
 					fLibraryImports.contains(owningModule))) {
 			
 			throw new IllegalArgumentException("Operation not imported from a library"); //$NON-NLS-1$

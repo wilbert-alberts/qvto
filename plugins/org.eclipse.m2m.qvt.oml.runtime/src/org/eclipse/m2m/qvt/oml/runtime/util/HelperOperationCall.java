@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitorImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
@@ -220,7 +221,7 @@ public class HelperOperationCall {
 		Object result = null;
 		try {
 			result = evaluator.executeHelperOperation(fOperation, self, Arrays.asList(actualArguments));
-			if(result == evaluator.getOperationalEvaluationEnv().getInvalid()) {
+			if(result == evaluator.getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class).getInvalid()) {
 				// OclInvalid is not valid for non-QVT external callers	 
 				result = null;
 			}		
