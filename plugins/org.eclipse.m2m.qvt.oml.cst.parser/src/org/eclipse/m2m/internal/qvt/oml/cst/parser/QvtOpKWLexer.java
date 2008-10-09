@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpKWLexer.java,v 1.9 2008/10/08 19:41:59 aigdalov Exp $
+* $Id: QvtOpKWLexer.java,v 1.10 2008/10/09 15:38:01 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpKWLexer.java,v 1.9 2008/10/08 19:41:59 aigdalov Exp $
+* $Id: QvtOpKWLexer.java,v 1.10 2008/10/09 15:38:01 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -67,6 +67,7 @@ public class QvtOpKWLexer extends QvtOpKWLexerprs implements QvtOpLPGParsersym
     }
 
     public void setInputChars(char[] inputChars) { this.inputChars = inputChars; }
+
 
     final static int tokenKind[] = new int[128];
     static
