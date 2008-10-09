@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.8 2008/10/08 19:37:08 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.9 2008/10/09 15:38:10 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,23 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.8 2008/10/08 19:37:08 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.9 2008/10/09 15:38:10 aigdalov Exp $
+*/
+/**
+* <copyright>
+*
+* Copyright (c) 2006, 2007 Borland Inc.
+* All rights reserved.   This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Borland - Initial API and implementation
+*
+* </copyright>
+*
+* $Id: LightweightParsersym.java,v 1.9 2008/10/09 15:38:10 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -137,9 +153,25 @@ public interface LightweightParsersym {
       TK_OclInvalid = 73,
       TK_end = 127,
       TK_while = 74,
+      TK_when = 117,
+      TK_var = 98,
+      TK_log = 93,
+      TK_assert = 99,
+      TK_with = 144,
+      TK_switch = 64,
+      TK_case = 143,
+      TK_xselect = 145,
+      TK_xcollect = 146,
+      TK_selectOne = 147,
+      TK_collectOne = 148,
+      TK_collectselect = 149,
+      TK_collectselectOne = 150,
+      TK_return = 100,
+      TK_forEach = 151,
+      TK_forOne = 152,
       TK_out = 103,
-      TK_object = 64,
-      TK_transformation = 117,
+      TK_object = 65,
+      TK_transformation = 118,
       TK_import = 128,
       TK_library = 112,
       TK_metamodel = 113,
@@ -147,18 +179,13 @@ public interface LightweightParsersym {
       TK_query = 105,
       TK_helper = 106,
       TK_inout = 107,
-      TK_when = 118,
-      TK_var = 98,
       TK_configuration = 110,
       TK_intermediate = 111,
       TK_property = 101,
-      TK_population = 144,
+      TK_population = 153,
       TK_map = 62,
       TK_xmap = 63,
-      TK_late = 65,
-      TK_log = 93,
-      TK_assert = 99,
-      TK_with = 145,
+      TK_late = 66,
       TK_resolve = 76,
       TK_resolveone = 77,
       TK_resolveIn = 78,
@@ -168,10 +195,10 @@ public interface LightweightParsersym {
       TK_invresolveIn = 82,
       TK_invresolveoneIn = 83,
       TK_modeltype = 114,
-      TK_uses = 146,
-      TK_where = 147,
+      TK_uses = 154,
+      TK_where = 155,
       TK_refines = 135,
-      TK_enforcing = 148,
+      TK_enforcing = 156,
       TK_access = 129,
       TK_extends = 130,
       TK_blackbox = 94,
@@ -180,21 +207,10 @@ public interface LightweightParsersym {
       TK_result = 45,
       TK_main = 91,
       TK_this = 50,
-      TK_switch = 66,
-      TK_case = 143,
-      TK_xselect = 149,
-      TK_xcollect = 150,
-      TK_selectOne = 151,
-      TK_collectOne = 152,
-      TK_collectselect = 153,
-      TK_collectselectOne = 154,
-      TK_return = 100,
       TK_rename = 115,
       TK_inherits = 119,
       TK_merges = 120,
       TK_disjuncts = 121,
-      TK_forEach = 155,
-      TK_forOne = 156,
       TK_IDENTIFIER = 3,
       TK_ERROR_TOKEN = 2,
       TK_INTEGER_RANGE_START = 136,
@@ -265,9 +281,9 @@ public interface LightweightParsersym {
                  "oclIsInState",
                  "map",
                  "xmap",
+                 "switch",
                  "object",
                  "late",
-                 "switch",
                  "NUMERIC_OPERATION",
                  "INTEGER_LITERAL",
                  "REAL_LITERAL",
@@ -318,8 +334,8 @@ public interface LightweightParsersym {
                  "modeltype",
                  "rename",
                  "NOT_EQUAL_EXEQ",
-                 "transformation",
                  "when",
+                 "transformation",
                  "inherits",
                  "merges",
                  "disjuncts",
@@ -345,11 +361,7 @@ public interface LightweightParsersym {
                  "then",
                  "implies",
                  "case",
-                 "population",
                  "with",
-                 "uses",
-                 "where",
-                 "enforcing",
                  "xselect",
                  "xcollect",
                  "selectOne",
@@ -358,6 +370,10 @@ public interface LightweightParsersym {
                  "collectselectOne",
                  "forEach",
                  "forOne",
+                 "population",
+                 "uses",
+                 "where",
+                 "enforcing",
                  "inv",
                  "pre",
                  "post",

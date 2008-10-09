@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.8 2008/10/08 19:37:08 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.9 2008/10/09 15:38:10 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,23 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.8 2008/10/08 19:37:08 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.9 2008/10/09 15:38:10 aigdalov Exp $
+*/
+/**
+* <copyright>
+*
+* Copyright (c) 2006, 2007 Borland Inc.
+* All rights reserved.   This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Borland - Initial API and implementation
+*
+* </copyright>
+*
+* $Id: LightweightTypeParsersym.java,v 1.9 2008/10/09 15:38:10 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -137,6 +153,22 @@ public interface LightweightTypeParsersym {
       TK_OclInvalid = 72,
       TK_end = 134,
       TK_while = 73,
+      TK_when = 116,
+      TK_var = 95,
+      TK_log = 93,
+      TK_assert = 96,
+      TK_with = 117,
+      TK_switch = 63,
+      TK_case = 114,
+      TK_xselect = 118,
+      TK_xcollect = 119,
+      TK_selectOne = 120,
+      TK_collectOne = 121,
+      TK_collectselect = 122,
+      TK_collectselectOne = 123,
+      TK_return = 97,
+      TK_forEach = 124,
+      TK_forOne = 125,
       TK_out = 135,
       TK_object = 74,
       TK_transformation = 136,
@@ -147,18 +179,13 @@ public interface LightweightTypeParsersym {
       TK_query = 141,
       TK_helper = 142,
       TK_inout = 143,
-      TK_when = 116,
-      TK_var = 95,
       TK_configuration = 144,
       TK_intermediate = 145,
       TK_property = 146,
       TK_population = 147,
       TK_map = 61,
       TK_xmap = 62,
-      TK_late = 63,
-      TK_log = 93,
-      TK_assert = 96,
-      TK_with = 117,
+      TK_late = 64,
       TK_resolve = 76,
       TK_resolveone = 77,
       TK_resolveIn = 78,
@@ -178,23 +205,12 @@ public interface LightweightTypeParsersym {
       TK_abstract = 156,
       TK_static = 157,
       TK_result = 28,
-      TK_main = 118,
+      TK_main = 126,
       TK_this = 33,
-      TK_switch = 64,
-      TK_case = 114,
-      TK_xselect = 119,
-      TK_xcollect = 120,
-      TK_selectOne = 121,
-      TK_collectOne = 122,
-      TK_collectselect = 123,
-      TK_collectselectOne = 124,
-      TK_return = 97,
       TK_rename = 158,
       TK_inherits = 159,
       TK_merges = 160,
       TK_disjuncts = 161,
-      TK_forEach = 125,
-      TK_forOne = 126,
       TK_IDENTIFIER = 2,
       TK_ERROR_TOKEN = 4,
       TK_INTEGER_RANGE_START = 106,
@@ -264,8 +280,8 @@ public interface LightweightTypeParsersym {
                  "oclIsInState",
                  "map",
                  "xmap",
-                 "late",
                  "switch",
+                 "late",
                  "NUMERIC_OPERATION",
                  "STRING_LITERAL",
                  "INTEGER_LITERAL",
@@ -319,7 +335,6 @@ public interface LightweightTypeParsersym {
                  "AT_SIGN",
                  "when",
                  "with",
-                 "main",
                  "xselect",
                  "xcollect",
                  "selectOne",
@@ -328,6 +343,7 @@ public interface LightweightTypeParsersym {
                  "collectselectOne",
                  "forEach",
                  "forOne",
+                 "main",
                  "EOF_TOKEN",
                  "QUOTE_STRING_LITERAL",
                  "inv",
