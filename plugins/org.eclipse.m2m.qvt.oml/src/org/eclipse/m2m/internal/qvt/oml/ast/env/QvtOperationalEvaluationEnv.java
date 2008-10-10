@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
@@ -44,7 +45,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
-import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.ecore.EcoreEvaluationEnvironment;
 import org.eclipse.ocl.ecore.EcorePackage;
 import org.eclipse.ocl.types.AnyType;
@@ -57,18 +57,22 @@ import org.eclipse.osgi.util.NLS;
 public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	
 	protected QvtOperationalEvaluationEnv(IContext context,
-			EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> parent) {
+			QvtOperationalEvaluationEnv parent) {
 		super(parent);
 	    myBindings = new HashMap<String, Object>();
 		myOperationArgs = new ArrayList<Object>();
 		myContext = context;
-		
 		if (parent instanceof QvtOperationalEvaluationEnv) {
 			setModelParameterExtents(((QvtOperationalEvaluationEnv) parent).myModelExtents, ((QvtOperationalEvaluationEnv) parent).myMapImportedExtents);
 		}
 		else {
 			myModelExtents = Collections.emptyMap();
 			myMapImportedExtents = Collections.emptyMap();
+		}
+		
+		if(parent != null) {
+			internalEnv().setEntryOperationHandler(
+					parent.getAdapter(InternalEvaluationEnv.class).getEntryOperationHandler());
 		}
 	}
 	
@@ -396,6 +400,26 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		myChangeRecorders.clear();
 	}
 
+    public void setCallerModelParameters(List<ModelParameterExtent> modelParamValues, OperationalTransformation module) {
+    	EList<ModelParameter> modelParameters = module.getModelParameter();
+    	if(modelParameters.size() != modelParamValues.size()) {
+    		throw new IllegalArgumentException();
+    	}
+    	
+    	LinkedHashMap<ModelParameter, ModelParameterExtent> param2ExtentMap = new LinkedHashMap<ModelParameter, ModelParameterExtent>(2);
+        param2ExtentMap.put(UNBOUND_MODEL_EXTENT, new ModelParameterExtent());
+		
+		int i = 0;
+		for (ModelParameterExtent nextExtent : modelParamValues) {			
+			ModelParameter nextModelParam = modelParameters.get(i++);
+			nextExtent.setModelParameter(nextModelParam);
+			
+			param2ExtentMap.put(nextModelParam, new ModelParameterExtent(nextModelParam, nextExtent));
+		}
+
+		setModelParameterExtents(param2ExtentMap, Collections.<ModelParameter, ModelParameter>emptyMap());
+    }
+	
     public LinkedHashMap<ModelParameter, ModelParameterExtent> createModuleParameterExtents(OperationalTransformation module) {        
     	LinkedHashMap<ModelParameter, ModelParameterExtent> modelExtents = new LinkedHashMap<ModelParameter, ModelParameterExtent>(module.getModelParameter().size());
         modelExtents.put(UNBOUND_MODEL_EXTENT, new ModelParameterExtent());
@@ -704,7 +728,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
     /**
      * Sets the operation being currently executed.
      */
-    public void setOperation(EOperation myOperation) {
+    public void setOperation(ImperativeOperation myOperation) {
 		this.myOperation = myOperation;
 	}
     
@@ -714,12 +738,12 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	 * @return the operation of <code>null</code> if no operation context is
 	 *         available
 	 */    
-    public EOperation getOperation() {
+    public ImperativeOperation getOperation() {
 		return myOperation;
 	}
 
     private Internal myInternal;
-    private EOperation myOperation;    
+    private ImperativeOperation myOperation;    
 	private final List<Object> myOperationArgs;
 	private Object myOperationSelf;
 	private final IContext myContext;

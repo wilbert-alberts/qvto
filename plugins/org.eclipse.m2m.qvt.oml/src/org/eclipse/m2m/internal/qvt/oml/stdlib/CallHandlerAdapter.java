@@ -19,7 +19,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 
 
-class CallHandlerAdapter extends AdapterImpl {
+public class CallHandlerAdapter extends AdapterImpl {
 	
 	private CallHandler fHandler;
 
@@ -49,7 +49,7 @@ class CallHandlerAdapter extends AdapterImpl {
 		return (adapter != null) ? adapter.getDispatch() : null;
 	}	
 	
-	static Object getInvalidResult(QvtOperationalEvaluationEnv evalEnv) {
+	public static Object getInvalidResult(QvtOperationalEvaluationEnv evalEnv) {
 		return evalEnv.getAdapter(InternalEvaluationEnv.class).getInvalid();
 	}
 }

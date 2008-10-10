@@ -40,6 +40,7 @@ import org.eclipse.m2m.internal.qvt.oml.stdlib.OclAnyOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.RealOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.StdlibModuleOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.StringOperations;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.TransformationOperations;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.types.TypeType;
 import org.eclipse.ocl.util.TypeUtil;
@@ -61,6 +62,7 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 	private EClassifier ELEMENT;	
 	private EClass MODEL;
 	private EClass TRANSFORMATION;
+	private EOperation TRANSFORM;
 	
 	private final Library fStdlibModule;
 	private final QvtOperationalModuleEnv fEnv;
@@ -96,6 +98,11 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 		define(new StdlibModuleOperations(this));
 		define(new IntegerOperations(this));		
 		define(new RealOperations(this));
+		define(new TransformationOperations(this));
+		
+		TRANSFORM = fEnv.lookupOperation(TRANSFORMATION, "transform", //$NON-NLS-1$ 
+				Collections.<TypedElement<EClassifier>>emptyList());
+		assert TRANSFORM != null : "transform() operation mus be defined";
 		
 		((ModuleImpl)fStdlibModule).freeze();		
 	}
@@ -131,6 +138,10 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 	@Override
 	public EClass getTransformationClass() {	
 		return TRANSFORMATION;
+	}	
+	
+	public EOperation getTransformOperation() {	
+		return TRANSFORM;
 	}	
 	
 	@Override

@@ -22,22 +22,22 @@ import org.eclipse.ocl.types.OCLStandardLibrary;
 public class TransformationOperations extends AbstractContextualOperations {
 
     public TransformationOperations(AbstractQVTStdlib library) {
-		super(library, library.getStdLibModule());
+		super(library, library.getTransformationClass());
 	}
 	
 	@Override
 	protected OperationProvider[] getOperations() {
 		EcoreEnvironment env = getStdlib().getEnvironment();
 		OCLStandardLibrary<EClassifier> oclStdLib = env.getOCLStandardLibrary();
-		return new OperationProvider[] {
-				new OperationProvider(TRANSFORM, "transformation", oclStdLib.getOclVoid())//$NON-NLS-1$ 
+		return new OwnedOperationProvider[] {
+				new OwnedOperationProvider(TRANSFORM, "transform", oclStdLib.getOclVoid())//$NON-NLS-1$ 
 		};
 	}
 	
 	static final CallHandler TRANSFORM = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {			
+		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+			// FIXME - add validation code!!!
 			CallHandler mainHandler = evalEnv.getAdapter(InternalEvaluationEnv.class).getEntryOperationHandler();
-			assert mainHandler != null;
 		    return mainHandler.invoke(source, args, evalEnv, context);
 		}
 	};

@@ -35,9 +35,16 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
  */
 public class ModelParameterExtent {
 	
+	public ModelParameterExtent(ModelParameter modelParameter, ModelParameterExtent referencedExtent) {
+		setModelParameter(modelParameter);
+		
+		myInitialEObjects = referencedExtent.myInitialEObjects;
+		myAdditionalEObjects = referencedExtent.myAdditionalEObjects;
+	}
+	
 	public ModelParameterExtent() {
 		this(Collections.<EObject>emptyList());
-	}
+	}	
 
 	public ModelParameterExtent(List<EObject> initialEObjs) {
 		myInitialEObjects = new ArrayList<EObject>();
@@ -45,7 +52,7 @@ public class ModelParameterExtent {
 		
 		myAdditionalEObjects = new ArrayList<EObject>(INITIAL_EXTENT_SIZE);
 	}
-		
+			
 	public ModelParameterExtent(EObject initialEObj) {
 		this(Collections.singletonList(initialEObj));
 	}
