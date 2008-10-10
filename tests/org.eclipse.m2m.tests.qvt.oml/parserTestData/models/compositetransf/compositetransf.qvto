@@ -1,0 +1,14 @@
+import models.compositetransf.nested;
+
+modeltype ECORE uses "http://www.eclipse.org/emf/2002/Ecore";
+
+transformation compositetransf(in inModel : ECORE, out outModel : ECORE);
+
+main() {
+	var p :=object EPackage { name := 'before composite' };
+	-- the unittest injects the explicit transf. instantation and call into parsed AST 
+	-- new nested().transform();
+
+	object EClass {  name := 'after composite' };
+	p.eClassifiers += outModel.objects()[EClass];
+}

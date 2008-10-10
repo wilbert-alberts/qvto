@@ -25,7 +25,11 @@ public class TestDataMapper {
     }
     
     public static ModelTestData getTestDataByTestNameWithPrefix(String prefix, String testName) {
-    	String actualName = testName.substring(prefix.length());
+    	String actualName = getActualTestName(prefix, testName);
     	return getTestDataByTestName(actualName);
     }
+
+	public static String getActualTestName(String prefix, String testName) {
+		return testName.substring(prefix.length());
+	}
 }

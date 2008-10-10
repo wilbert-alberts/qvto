@@ -19,6 +19,7 @@ import java.util.Set;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.eclipse.m2m.tests.qvt.oml.CompositeTransformationTest;
 import org.eclipse.m2m.tests.qvt.oml.transform.javaless.JavalessQvtTest;
 import org.eclipse.m2m.tests.qvt.oml.transform.javaless.JavalessUtil;
 
@@ -36,6 +37,7 @@ public class TransformTests {
 
         ModelTestData[] datas = createTestData();
 
+        suite.addTest(new CompositeTransformationTest(CompositeTransformationTest.createTestData("compositetransf"))); //$NON-NLS-1$
         suite.addTest(new TestFailedTransformation(new FileToFileData("scr878"))); //$NON-NLS-1$
 
         for (ModelTestData data : datas) {

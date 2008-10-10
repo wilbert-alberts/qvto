@@ -40,14 +40,43 @@ public class TestQvtInterpreter extends TestTransformation {
 		setName(PREFIX + data.getName()); //$NON-NLS-1$
     }
     
-    @Override
-	public void runTest() throws Exception {
-        checkTransformation(new TransformationChecker(TRANSFORMER));
+    protected static String getActualTestName(String executedTestName) {
+    	return TestDataMapper.getActualTestName(PREFIX, executedTestName);
     }
     
-    public static final ITransformer TRANSFORMER = new ITransformer() {
-        public LinkedHashMap<ModelExtentContents, URI> transform(IFile transformation, List<URI> inUris, IContext qvtContext) throws Exception {
-        	QvtInterpretedTransformation trans = new QvtInterpretedTransformation(transformation);
+    protected ITransformer getTransformer() {
+    	return TRANSFORMER;
+    }
+    
+    @Override
+    public void setUp() throws Exception {
+    	super.setUp();
+    }
+    
+    @Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+	}    
+    
+    @Override
+	public void runTest() throws Exception {
+        checkTransformation(new TransformationChecker(getTransformer()));
+    }
+    
+    public static final ITransformer TRANSFORMER = new DefaultTransformer();
+    
+	public static class DefaultTransformer implements ITransformer {
+		
+		public DefaultTransformer() {
+			super();
+		}
+		
+		protected QvtInterpretedTransformation getTransformation(IFile transformation) {
+			return new QvtInterpretedTransformation(transformation);
+		}
+		
+		public LinkedHashMap<ModelExtentContents, URI> transform(IFile transformation, List<URI> inUris, IContext qvtContext) throws Exception {
+        	QvtInterpretedTransformation trans = getTransformation(transformation);
         	
         	TestUtil.assertAllPersistableAST(trans.getModule().getModule());
             
