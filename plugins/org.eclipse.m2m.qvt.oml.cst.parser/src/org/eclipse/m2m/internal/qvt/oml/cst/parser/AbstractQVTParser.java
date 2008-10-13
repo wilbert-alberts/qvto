@@ -22,6 +22,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindCS;
@@ -634,11 +635,18 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 
-	protected final CSTNode createBlockExpCS(EList<OCLExpressionCS> expressions) {
-		BlockExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createBlockExpCS();
-		result.getBodyExpressions().addAll(expressions);
-		return result;
-	}
+    protected final CSTNode createBlockExpCS(EList<OCLExpressionCS> expressions) {
+        BlockExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createBlockExpCS();
+        result.getBodyExpressions().addAll(expressions);
+        return result;
+    }
+
+    protected final CSTNode createComputeExpCS(VariableCS declarator, OCLExpressionCS body) {
+        ComputeExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createComputeExpCS();
+        result.setReturnedElement(declarator);
+        result.setBody(body);
+        return result;
+    }
 
 	protected final ModelTypeCS createModelTypeCS(IToken identifier, StringLiteralExpCS complianceKind, 
 			EList<PackageRefCS> packageRefList, EList<StatementCS> whereList) {

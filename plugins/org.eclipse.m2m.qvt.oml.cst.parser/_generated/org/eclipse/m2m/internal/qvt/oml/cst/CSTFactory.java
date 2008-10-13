@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactory.java,v 1.3 2008/09/25 17:35:30 aigdalov Exp $
+ * $Id: CSTFactory.java,v 1.4 2008/10/13 13:04:59 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -265,6 +265,15 @@ public interface CSTFactory extends EFactory {
 	 * @generated
 	 */
 	BlockExpCS createBlockExpCS();
+
+	/**
+	 * Returns a new object of class '<em>Compute Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Compute Exp CS</em>'.
+	 * @generated
+	 */
+	ComputeExpCS createComputeExpCS();
 
 	/**
 	 * Returns a new object of class '<em>Direction Kind CS</em>'.

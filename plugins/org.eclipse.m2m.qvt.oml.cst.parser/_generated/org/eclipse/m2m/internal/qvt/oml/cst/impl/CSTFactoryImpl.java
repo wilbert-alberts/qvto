@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactoryImpl.java,v 1.3 2008/09/25 17:35:30 aigdalov Exp $
+ * $Id: CSTFactoryImpl.java,v 1.4 2008/10/13 13:05:00 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -102,6 +102,7 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 			case CSTPackage.SWITCH_EXP_CS: return createSwitchExpCS();
 			case CSTPackage.SWITCH_ALT_EXP_CS: return createSwitchAltExpCS();
 			case CSTPackage.BLOCK_EXP_CS: return createBlockExpCS();
+			case CSTPackage.COMPUTE_EXP_CS: return createComputeExpCS();
 			case CSTPackage.DIRECTION_KIND_CS: return createDirectionKindCS();
 			case CSTPackage.RESOLVE_EXP_CS: return createResolveExpCS();
 			case CSTPackage.RESOLVE_IN_EXP_CS: return createResolveInExpCS();
@@ -419,6 +420,16 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	public BlockExpCS createBlockExpCS() {
 		BlockExpCSImpl blockExpCS = new BlockExpCSImpl();
 		return blockExpCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ComputeExpCS createComputeExpCS() {
+		ComputeExpCSImpl computeExpCS = new ComputeExpCSImpl();
+		return computeExpCS;
 	}
 
 	/**

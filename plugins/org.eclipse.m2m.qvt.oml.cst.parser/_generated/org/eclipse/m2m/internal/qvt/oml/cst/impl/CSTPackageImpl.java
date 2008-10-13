@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.5 2008/09/25 17:35:30 aigdalov Exp $
+ * $Id: CSTPackageImpl.java,v 1.6 2008/10/13 13:05:00 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -28,6 +28,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
+import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindCS;
@@ -307,6 +308,13 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * @generated
 	 */
 	private EClass blockExpCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass computeExpCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1394,6 +1402,33 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getComputeExpCS() {
+		return computeExpCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getComputeExpCS_ReturnedElement() {
+		return (EReference)computeExpCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getComputeExpCS_Body() {
+		return (EReference)computeExpCSEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getDirectionKindCS() {
 		return directionKindCSEClass;
 	}
@@ -2116,6 +2151,10 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		blockExpCSEClass = createEClass(BLOCK_EXP_CS);
 		createEReference(blockExpCSEClass, BLOCK_EXP_CS__BODY_EXPRESSIONS);
 
+		computeExpCSEClass = createEClass(COMPUTE_EXP_CS);
+		createEReference(computeExpCSEClass, COMPUTE_EXP_CS__RETURNED_ELEMENT);
+		createEReference(computeExpCSEClass, COMPUTE_EXP_CS__BODY);
+
 		directionKindCSEClass = createEClass(DIRECTION_KIND_CS);
 		createEAttribute(directionKindCSEClass, DIRECTION_KIND_CS__DIRECTION_KIND);
 
@@ -2269,6 +2308,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		switchExpCSEClass.getESuperTypes().add(this.getStatementCS());
 		switchAltExpCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		blockExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
+		computeExpCSEClass.getESuperTypes().add(this.getStatementCS());
 		directionKindCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		resolveExpCSEClass.getESuperTypes().add(theCSTPackage_1.getCallExpCS());
 		resolveInExpCSEClass.getESuperTypes().add(this.getResolveExpCS());
@@ -2413,6 +2453,10 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
 		initEClass(blockExpCSEClass, BlockExpCS.class, "BlockExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getBlockExpCS_BodyExpressions(), theCSTPackage_1.getOCLExpressionCS(), null, "bodyExpressions", null, 0, -1, BlockExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(computeExpCSEClass, ComputeExpCS.class, "ComputeExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getComputeExpCS_ReturnedElement(), theCSTPackage_1.getVariableCS(), null, "returnedElement", null, 1, 1, ComputeExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getComputeExpCS_Body(), theCSTPackage_1.getOCLExpressionCS(), null, "body", null, 1, 1, ComputeExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(directionKindCSEClass, DirectionKindCS.class, "DirectionKindCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getDirectionKindCS_DirectionKind(), this.getDirectionKindEnum(), "directionKind", null, 0, 1, DirectionKindCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

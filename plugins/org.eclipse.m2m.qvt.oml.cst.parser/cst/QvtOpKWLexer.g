@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpKWLexer.g,v 1.4 2008/10/08 19:41:58 aigdalov Exp $ 
+-- * $Id: QvtOpKWLexer.g,v 1.5 2008/10/13 13:04:59 aigdalov Exp $ 
 -- */
 --
 -- The QVT KeyWord Lexer
@@ -77,7 +77,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpKWLexer.g,v 1.4 2008/10/08 19:41:58 aigdalov Exp $
+ * $Id: QvtOpKWLexer.g,v 1.5 2008/10/13 13:04:59 aigdalov Exp $
  */
 	./
 $End
@@ -143,6 +143,7 @@ $Export
 	inherits	
 	forEach
 	forOne
+	compute
 $End
 
 $Rules
@@ -509,6 +510,12 @@ $Rules
 		| f o r O n e
 		/.$BeginAction
 			$setResult($_forOne);
+		  $EndAction
+		./
+		
+		| c o m p u t e
+		/.$BeginAction
+			$setResult($_compute);
 		  $EndAction
 		./
 		

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTSwitch.java,v 1.3 2008/09/25 17:35:30 aigdalov Exp $
+ * $Id: CSTSwitch.java,v 1.4 2008/10/13 13:05:00 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -349,6 +349,15 @@ public class CSTSwitch<T> {
 				T result = caseBlockExpCS(blockExpCS);
 				if (result == null) result = caseOCLExpressionCS(blockExpCS);
 				if (result == null) result = caseCSTNode(blockExpCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.COMPUTE_EXP_CS: {
+				ComputeExpCS computeExpCS = (ComputeExpCS)theEObject;
+				T result = caseComputeExpCS(computeExpCS);
+				if (result == null) result = caseStatementCS(computeExpCS);
+				if (result == null) result = caseOCLExpressionCS(computeExpCS);
+				if (result == null) result = caseCSTNode(computeExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -961,6 +970,21 @@ public class CSTSwitch<T> {
 	 * @generated
 	 */
 	public T caseBlockExpCS(BlockExpCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Compute Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Compute Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseComputeExpCS(ComputeExpCS object) {
 		return null;
 	}
 

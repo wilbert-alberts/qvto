@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.g,v 1.1 2008/10/09 15:38:01 aigdalov Exp $ 
+-- * $Id: ImperativeOCL.g,v 1.2 2008/10/13 13:04:59 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -283,6 +283,7 @@ $KeyWords
 	return
 	forEach
 	forOne
+	compute
 $End
 
 $Notice
@@ -300,7 +301,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: ImperativeOCL.g,v 1.1 2008/10/09 15:38:01 aigdalov Exp $
+ * $Id: ImperativeOCL.g,v 1.2 2008/10/13 13:04:59 aigdalov Exp $
  */
 	./
 $End
@@ -338,6 +339,59 @@ $Rules
 
 	-- opt = optional
 	-- m = multiple
+
+
+	
+	-- common part: declarators, etc.
+
+	declarator ::= IDENTIFIER ':' typeCS
+		/.$BeginJava
+					CSTNode result = createVariableCS(
+							getTokenText($getToken(1)),
+							(TypeCS)$getSym(3),
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(3));
+					$setResult(result);
+		  $EndJava
+		./
+	declarator ::= IDENTIFIER ':' typeCS '=' oclExpressionCS
+		/.$BeginJava
+					CSTNode result = createVariableCS(
+							getTokenText($getToken(1)),
+							(TypeCS)$getSym(3),
+							(OCLExpressionCS)$getSym(5)
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(5));
+					$setResult(result);
+		  $EndJava
+		./
+
+	declarator ::= IDENTIFIER ':' typeCS ':=' oclExpressionCS
+		/.$BeginJava
+					CSTNode result = createVariableCS(
+							getTokenText($getToken(1)),
+							(TypeCS)$getSym(3),
+							(OCLExpressionCS)$getSym(5)
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(5));
+					$setResult(result);
+		  $EndJava
+		./
+		
+	declarator ::= IDENTIFIER ':=' oclExpressionCS
+		/.$BeginJava
+					CSTNode result = createVariableCS(
+							getTokenText($getToken(1)),
+							null,
+							(OCLExpressionCS)$getSym(3)
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(3));
+					$setResult(result);
+		  $EndJava
+		./
+
+	-- common part end 
 	
 	statementCS -> returnExpCS 	
 	returnExpCS ::= return oclExpressionCSOpt
@@ -556,54 +610,8 @@ $Rules
 		  $EndJava
 		./
 
-	whileDeclaratorCS ::= IDENTIFIER ':' typeCS
-		/.$BeginJava
-					CSTNode result = createVariableCS(
-							getTokenText($getToken(1)),
-							(TypeCS)$getSym(3),
-							null
-						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(3));
-					$setResult(result);
-		  $EndJava
-		./
-	whileDeclaratorCS ::= IDENTIFIER ':' typeCS '=' oclExpressionCS
-		/.$BeginJava
-					CSTNode result = createVariableCS(
-							getTokenText($getToken(1)),
-							(TypeCS)$getSym(3),
-							(OCLExpressionCS)$getSym(5)
-						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(5));
-					$setResult(result);
-		  $EndJava
-		./
-
-	whileDeclaratorCS ::= IDENTIFIER ':' typeCS ':=' oclExpressionCS
-		/.$BeginJava
-					CSTNode result = createVariableCS(
-							getTokenText($getToken(1)),
-							(TypeCS)$getSym(3),
-							(OCLExpressionCS)$getSym(5)
-						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(5));
-					$setResult(result);
-		  $EndJava
-		./
 		
-	whileDeclaratorCS ::= IDENTIFIER ':=' oclExpressionCS
-		/.$BeginJava
-					CSTNode result = createVariableCS(
-							getTokenText($getToken(1)),
-							null,
-							(OCLExpressionCS)$getSym(3)
-						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(3));
-					$setResult(result);
-		  $EndJava
-		./
-		
-	whileExpCS ::= while '(' whileDeclaratorCS ';' oclExpressionCS ')' whileBodyCS
+	whileExpCS ::= while '(' declarator ';' oclExpressionCS ')' whileBodyCS
 		/.$BeginJava
 					CSTNode result = createWhileExpCS(
 							(VariableCS)$getSym(3),
@@ -1295,6 +1303,24 @@ $Rules
 	expressionStatementCS -> statementCS ';'
 	expressionStatementCS -> blockExpCS
 	expressionStatementCS -> blockExpCS ';'
+
+	-- ComputeExp start --
+
+	computeExpCS ::= compute '(' declarator ')' blockExpCS
+		/.$BeginJava
+					CSTNode result = createComputeExpCS(
+						(VariableCS) $getSym(3),
+						(OCLExpressionCS) $getSym(5)
+					);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
+					$setResult(result);
+		  $EndJava
+		./
+
+
+	oclExpCS -> computeExpCS
+
+	-- ComputeExp end --
 
 	-- imperative iterators
 
