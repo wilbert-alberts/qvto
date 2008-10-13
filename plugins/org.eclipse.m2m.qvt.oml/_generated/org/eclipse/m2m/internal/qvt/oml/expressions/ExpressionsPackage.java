@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ExpressionsPackage.java,v 1.8 2008/10/08 13:13:32 radvorak Exp $
+ * $Id: ExpressionsPackage.java,v 1.9 2008/10/13 13:10:15 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
@@ -1214,7 +1214,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getVisitableASTNode()
 	 * @generated
 	 */
-	int VISITABLE_AST_NODE = 27;
+	int VISITABLE_AST_NODE = 28;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -3710,6 +3710,61 @@ public interface ExpressionsPackage extends EPackage {
 	int BLOCK_EXP_FEATURE_COUNT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 1;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ComputeExpImpl <em>Compute Exp</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ComputeExpImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getComputeExp()
+	 * @generated
+	 */
+	int COMPUTE_EXP = 22;
+
+	/**
+	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPUTE_EXP__START_POSITION = IMPERATIVE_EXPRESSION__START_POSITION;
+
+	/**
+	 * The feature id for the '<em><b>End Position</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPUTE_EXP__END_POSITION = IMPERATIVE_EXPRESSION__END_POSITION;
+
+	/**
+	 * The feature id for the '<em><b>Returned Element</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPUTE_EXP__RETURNED_ELEMENT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Body</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPUTE_EXP__BODY = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Compute Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPUTE_EXP_FEATURE_COUNT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 2;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.InstantiationExpImpl <em>Instantiation Exp</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3717,7 +3772,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getInstantiationExp()
 	 * @generated
 	 */
-	int INSTANTIATION_EXP = 38;
+	int INSTANTIATION_EXP = 39;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -3781,7 +3836,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getObjectExp()
 	 * @generated
 	 */
-	int OBJECT_EXP = 22;
+	int OBJECT_EXP = 23;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -3863,7 +3918,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getWhileExp()
 	 * @generated
 	 */
-	int WHILE_EXP = 23;
+	int WHILE_EXP = 24;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -3936,7 +3991,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getSwitchExp()
 	 * @generated
 	 */
-	int SWITCH_EXP = 24;
+	int SWITCH_EXP = 25;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -3991,7 +4046,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getAltExp()
 	 * @generated
 	 */
-	int ALT_EXP = 25;
+	int ALT_EXP = 26;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -4046,7 +4101,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getExtendedVisitor()
 	 * @generated
 	 */
-	int EXTENDED_VISITOR = 26;
+	int EXTENDED_VISITOR = 27;
 
 	/**
 	 * The number of structural features of the '<em>Extended Visitor</em>' class.
@@ -4065,7 +4120,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getResolveExp()
 	 * @generated
 	 */
-	int RESOLVE_EXP = 28;
+	int RESOLVE_EXP = 29;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -4174,7 +4229,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getResolveInExp()
 	 * @generated
 	 */
-	int RESOLVE_IN_EXP = 29;
+	int RESOLVE_IN_EXP = 30;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -4292,7 +4347,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getModelType()
 	 * @generated
 	 */
-	int MODEL_TYPE = 30;
+	int MODEL_TYPE = 31;
 
 	/**
 	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
@@ -4572,7 +4627,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getPackageRef()
 	 * @generated
 	 */
-	int PACKAGE_REF = 31;
+	int PACKAGE_REF = 32;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -4627,7 +4682,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getMappingParameter()
 	 * @generated
 	 */
-	int MAPPING_PARAMETER = 32;
+	int MAPPING_PARAMETER = 33;
 
 	/**
 	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
@@ -4835,7 +4890,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getLogExp()
 	 * @generated
 	 */
-	int LOG_EXP = 33;
+	int LOG_EXP = 34;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -4944,7 +4999,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getAssertExp()
 	 * @generated
 	 */
-	int ASSERT_EXP = 34;
+	int ASSERT_EXP = 35;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -5017,7 +5072,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getImperativeLoopExp()
 	 * @generated
 	 */
-	int IMPERATIVE_LOOP_EXP = 35;
+	int IMPERATIVE_LOOP_EXP = 36;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -5108,7 +5163,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getForExp()
 	 * @generated
 	 */
-	int FOR_EXP = 36;
+	int FOR_EXP = 37;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -5199,7 +5254,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getImperativeIterateExp()
 	 * @generated
 	 */
-	int IMPERATIVE_ITERATE_EXP = 37;
+	int IMPERATIVE_ITERATE_EXP = 38;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -5299,7 +5354,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getReturnExp()
 	 * @generated
 	 */
-	int RETURN_EXP = 39;
+	int RETURN_EXP = 40;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -5345,7 +5400,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getOperationalTransformation()
 	 * @generated
 	 */
-	int OPERATIONAL_TRANSFORMATION = 40;
+	int OPERATIONAL_TRANSFORMATION = 41;
 
 	/**
 	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
@@ -5724,7 +5779,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getEntryOperation()
 	 * @generated
 	 */
-	int ENTRY_OPERATION = 41;
+	int ENTRY_OPERATION = 42;
 
 	/**
 	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
@@ -5932,7 +5987,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getDirectionKind()
 	 * @generated
 	 */
-	int DIRECTION_KIND = 42;
+	int DIRECTION_KIND = 43;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.SeverityKind <em>Severity Kind</em>}' enum.
@@ -5942,7 +5997,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getSeverityKind()
 	 * @generated
 	 */
-	int SEVERITY_KIND = 43;
+	int SEVERITY_KIND = 44;
 
 
 	/**
@@ -6593,6 +6648,38 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getBlockExp_Body();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp <em>Compute Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Compute Exp</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp
+	 * @generated
+	 */
+	EClass getComputeExp();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp#getReturnedElement <em>Returned Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Returned Element</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp#getReturnedElement()
+	 * @see #getComputeExp()
+	 * @generated
+	 */
+	EReference getComputeExp_ReturnedElement();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp#getBody <em>Body</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Body</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp#getBody()
+	 * @see #getComputeExp()
+	 * @generated
+	 */
+	EReference getComputeExp_Body();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp <em>Object Exp</em>}'.
@@ -7741,6 +7828,32 @@ public interface ExpressionsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference BLOCK_EXP__BODY = eINSTANCE.getBlockExp_Body();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ComputeExpImpl <em>Compute Exp</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ComputeExpImpl
+		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getComputeExp()
+		 * @generated
+		 */
+		EClass COMPUTE_EXP = eINSTANCE.getComputeExp();
+
+		/**
+		 * The meta object literal for the '<em><b>Returned Element</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COMPUTE_EXP__RETURNED_ELEMENT = eINSTANCE.getComputeExp_ReturnedElement();
+
+		/**
+		 * The meta object literal for the '<em><b>Body</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COMPUTE_EXP__BODY = eINSTANCE.getComputeExp_Body();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ObjectExpImpl <em>Object Exp</em>}' class.

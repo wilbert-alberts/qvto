@@ -430,6 +430,17 @@ public class ExpressionsSwitch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ExpressionsPackage.COMPUTE_EXP: {
+				ComputeExp computeExp = (ComputeExp)theEObject;
+				T1 result = caseComputeExp(computeExp);
+				if (result == null) result = caseImperativeExpression(computeExp);
+				if (result == null) result = caseOCLExpression(computeExp);
+				if (result == null) result = caseTypedElement(computeExp);
+				if (result == null) result = caseVisitable(computeExp);
+				if (result == null) result = caseASTNode(computeExp);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ExpressionsPackage.OBJECT_EXP: {
 				ObjectExp objectExp = (ObjectExp)theEObject;
 				T1 result = caseObjectExp(objectExp);
@@ -1003,6 +1014,21 @@ public class ExpressionsSwitch<T1> {
 	 * @generated
 	 */
 	public T1 caseBlockExp(BlockExp object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Compute Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Compute Exp</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseComputeExp(ComputeExp object) {
 		return null;
 	}
 

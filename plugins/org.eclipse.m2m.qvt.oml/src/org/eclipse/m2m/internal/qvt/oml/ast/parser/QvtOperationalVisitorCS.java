@@ -48,6 +48,7 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
@@ -99,6 +100,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
@@ -407,9 +409,12 @@ public class QvtOperationalVisitorCS
 	        EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction,
 	        Constraint, EClass, EObject> env) {
 	    try {
-	        if (oclExpressionCS instanceof BlockExpCS) {
-	            return visitBlockExpCS((BlockExpCS) oclExpressionCS, (QvtOperationalEnv) env);
-	        }
+            if (oclExpressionCS instanceof BlockExpCS) {
+                return visitBlockExpCS((BlockExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+            }
+            if (oclExpressionCS instanceof ComputeExpCS) {
+                return visitComputeExpCS((ComputeExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+            }
 	        if (oclExpressionCS instanceof WhileExpCS) {
 	            return visitWhileExpCS((WhileExpCS) oclExpressionCS, (QvtOperationalEnv) env);
 	        }
@@ -894,6 +899,20 @@ public class QvtOperationalVisitorCS
 		}
 		
 		return result;
+    }
+    
+    private OCLExpression<EClassifier> visitComputeExpCS(ComputeExpCS computeExpCS, QvtOperationalEnv env) {
+        ComputeExp result = ExpressionsFactory.eINSTANCE.createComputeExp();
+        result.setStartPosition(computeExpCS.getStartOffset());
+        result.setEndPosition(computeExpCS.getEndOffset());
+        
+        Variable<EClassifier, EParameter> returnedElementExp = variableDeclarationCS(computeExpCS.getReturnedElement(), env, true);
+        result.setReturnedElement(returnedElementExp);
+        result.setType(returnedElementExp.getType());
+        
+        OCLExpression<EClassifier> bodyExp = visitOclExpressionCS(computeExpCS.getBody(), env);
+        result.setBody(bodyExp);
+        return result;
     }
     
     private OCLExpression<EClassifier> visitSwitchExpCS(SwitchExpCS switchExpCS, QvtOperationalEnv env) {

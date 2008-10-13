@@ -23,6 +23,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
@@ -321,8 +322,12 @@ abstract class QvtGenericEvaluationVisitor
 	public Object visitBlockExp(BlockExp blockExp) {
 		return getQVTDelegate().visitBlockExp(blockExp);
 	}
+	
+	public Object visitComputeExp(ComputeExp computeExp) {
+        return getQVTDelegate().visitComputeExp(computeExp);
+    }
 
-	public Object visitConfigProperty(ConfigProperty configProperty) {		// 
+    public Object visitConfigProperty(ConfigProperty configProperty) {		// 
 		return getQVTDelegate().visitConfigProperty(configProperty);
 	}
 

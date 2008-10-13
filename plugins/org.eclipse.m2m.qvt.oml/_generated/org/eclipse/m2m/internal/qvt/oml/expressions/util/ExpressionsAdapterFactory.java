@@ -227,6 +227,10 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createBlockExpAdapter();
 			}
 			@Override
+			public Adapter caseComputeExp(ComputeExp object) {
+				return createComputeExpAdapter();
+			}
+			@Override
 			public Adapter caseObjectExp(ObjectExp object) {
 				return createObjectExpAdapter();
 			}
@@ -719,6 +723,20 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createBlockExpAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp <em>Compute Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp
+	 * @generated
+	 */
+	public Adapter createComputeExpAdapter() {
 		return null;
 	}
 

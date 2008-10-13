@@ -226,6 +226,15 @@ public interface ExpressionsFactory extends EFactory {
 	BlockExp createBlockExp();
 
 	/**
+	 * Returns a new object of class '<em>Compute Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Compute Exp</em>'.
+	 * @generated
+	 */
+	ComputeExp createComputeExp();
+
+	/**
 	 * Returns a new object of class '<em>Object Exp</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -23,6 +23,11 @@
         <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//expressions/SeverityKind/error"/>
         <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//expressions/SeverityKind/fatal"/>
       </genEnums>
+      <genClasses ecoreClass="QVTOperational.ecore#//expressions/Typedef">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference QVTOperational.ecore#//expressions/Typedef/base"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//expressions/Typedef/condition"/>
+      </genClasses>
       <genClasses ecoreClass="QVTOperational.ecore#//expressions/Module">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//expressions/Module/ownedVariable"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//expressions/Module/moduleImport"/>
@@ -198,6 +203,15 @@
           <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/BlockExp/accept/U"/>
         </genOperations>
       </genClasses>
+      <genClasses ecoreClass="QVTOperational.ecore#//expressions/ComputeExp">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//expressions/ComputeExp/returnedElement"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//expressions/ComputeExp/body"/>
+        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ComputeExp/accept">
+          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ComputeExp/accept/v"/>
+          <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/ComputeExp/accept/T"/>
+          <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/ComputeExp/accept/U"/>
+        </genOperations>
+      </genClasses>
       <genClasses ecoreClass="QVTOperational.ecore#//expressions/ObjectExp">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//expressions/ObjectExp/body"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
@@ -303,8 +317,14 @@
         <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitBlockExp">
           <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitBlockExp/blockExp"/>
         </genOperations>
+        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitComputeExp">
+          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitComputeExp/computeExp"/>
+        </genOperations>
         <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitObjectExp">
           <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitObjectExp/objectExp"/>
+        </genOperations>
+        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitInstantiationExp">
+          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitInstantiationExp/instantiationExp"/>
         </genOperations>
         <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitWhileExp">
           <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitWhileExp/whileExp"/>
@@ -335,6 +355,9 @@
         </genOperations>
         <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitReturnExp">
           <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitReturnExp/returnExp"/>
+        </genOperations>
+        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitEntryOperation">
+          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitEntryOperation/entryOperation"/>
         </genOperations>
       </genClasses>
       <genClasses image="false" ecoreClass="QVTOperational.ecore#//expressions/VisitableASTNode"/>
@@ -419,6 +442,11 @@
             ecoreFeature="ecore:EReference QVTOperational.ecore#//expressions/InstantiationExp/extent"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference QVTOperational.ecore#//expressions/InstantiationExp/instantiatedClass"/>
+        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/InstantiationExp/accept">
+          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/InstantiationExp/accept/v"/>
+          <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/InstantiationExp/accept/T"/>
+          <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/InstantiationExp/accept/U"/>
+        </genOperations>
       </genClasses>
       <genClasses ecoreClass="QVTOperational.ecore#//expressions/ReturnExp">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//expressions/ReturnExp/value"/>
@@ -430,6 +458,13 @@
       </genClasses>
       <genClasses ecoreClass="QVTOperational.ecore#//expressions/OperationalTransformation">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//expressions/OperationalTransformation/modelParameter"/>
+      </genClasses>
+      <genClasses ecoreClass="QVTOperational.ecore#//expressions/EntryOperation">
+        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/EntryOperation/accept">
+          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/EntryOperation/accept/v"/>
+          <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/EntryOperation/accept/T"/>
+          <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/EntryOperation/accept/U"/>
+        </genOperations>
       </genClasses>
     </nestedGenPackages>
   </genPackages>

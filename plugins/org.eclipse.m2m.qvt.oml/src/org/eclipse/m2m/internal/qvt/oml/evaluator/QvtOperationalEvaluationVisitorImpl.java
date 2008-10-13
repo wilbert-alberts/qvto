@@ -62,6 +62,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
@@ -881,6 +882,20 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         return null;
     }
     
+    public Object visitComputeExp(ComputeExp computeExp) {
+        Variable<EClassifier, EParameter> returnedElement = computeExp.getReturnedElement();
+        Object initExpressionValue = null;
+        OCLExpression<EClassifier> initExpression = returnedElement.getInitExpression();
+        if (initExpression != null) {
+            initExpressionValue = initExpression.accept(getVisitor());
+        }
+        replaceInEnv(returnedElement.getName(), initExpressionValue, returnedElement.getType());
+        
+        computeExp.getBody().accept(getVisitor());
+
+        return getEvaluationEnvironment().getValueOf(returnedElement.getName());
+    }
+
     public Object visitWhileExp(WhileExp whileExp) {
     	Variable<EClassifier, EParameter> resultVar = whileExp.getResultVar();
 		if(resultVar != null) {

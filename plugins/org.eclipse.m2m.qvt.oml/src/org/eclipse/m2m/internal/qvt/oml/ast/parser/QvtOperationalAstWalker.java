@@ -26,6 +26,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
@@ -267,7 +268,12 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject,
         }
         return null;
     }
-
+    
+    public Object visitComputeExp(ComputeExp computeExp) {
+        doProcess(computeExp.getReturnedElement(), computeExp);
+        doProcess(computeExp.getBody(), computeExp);
+        return null;
+    }
 
     public Object visitWhileExp(WhileExp whileExp) {
         doProcess(whileExp.getBody(), whileExp);

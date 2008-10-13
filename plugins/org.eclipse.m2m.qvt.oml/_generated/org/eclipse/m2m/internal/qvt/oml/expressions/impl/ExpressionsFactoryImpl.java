@@ -129,6 +129,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 			case ExpressionsPackage.VARIABLE_INIT_EXP: return createVariableInitExp();
 			case ExpressionsPackage.MAPPING_CALL_EXP: return createMappingCallExp();
 			case ExpressionsPackage.BLOCK_EXP: return createBlockExp();
+			case ExpressionsPackage.COMPUTE_EXP: return createComputeExp();
 			case ExpressionsPackage.OBJECT_EXP: return createObjectExp();
 			case ExpressionsPackage.WHILE_EXP: return createWhileExp();
 			case ExpressionsPackage.SWITCH_EXP: return createSwitchExp();
@@ -394,6 +395,16 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	public BlockExp createBlockExp() {
 		BlockExpImpl blockExp = new BlockExpImpl();
 		return blockExp;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ComputeExp createComputeExp() {
+		ComputeExpImpl computeExp = new ComputeExpImpl();
+		return computeExp;
 	}
 
 	/**
