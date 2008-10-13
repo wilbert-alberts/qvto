@@ -80,6 +80,7 @@ public class TransformTests {
     
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {    
+                new FileToFileData("computeExp_250403"), //$NON-NLS-1$
                 new FileToFileData("forExp_245275"), //$NON-NLS-1$
                 new FileToFileData("bug244701"), //$NON-NLS-1$
         		new FileToFileData("virtualPredefinedTypeOpers"), //$NON-NLS-1$        		
