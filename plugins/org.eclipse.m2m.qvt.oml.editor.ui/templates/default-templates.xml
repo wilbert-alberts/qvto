@@ -2,11 +2,23 @@
 
 <templates>
     <template
-          autoinsert="true"
+          autoinsert="false"
           context="org.eclipse.m2m.qvt.oml.templates"
           id="org.eclipse.m2m.qvt.oml.template.transformation"
           name="%code_template_transformation"
-          description="%code_template_transformation_desc">transformation ${name}();
+          description="%code_template_transformation_desc">modeltype ${ModelType1} "strict" uses ${uri1};
+modeltype ${ModelType2} "strict" uses ${uri2};
+
+transformation ${ModelType1}2${ModelType2}(in input : ${ModelType1}, out output : ${ModelType2});
+
+main() {
+	input.rootObjects()[${ModelType1}::${InputType}]->map process${InputType}();
+}
+
+mapping ${ModelType1}::${InputType}::process${InputType}() : ${ModelType2}::${OutputType} {
+	-- TODO - populate result
+	${cursor} 
+}
 </template>
     <template
           autoinsert="true"
@@ -36,7 +48,7 @@
           context="org.eclipse.m2m.qvt.oml.templates"
           id="org.eclipse.m2m.qvt.oml.template.mappingCtx"
           name="%code_template_mappingCtx"
-          description="%code_template_mappingCtx_desc">mapping ${ContextType}::${name}() : ${OutputType} {
+          description="%code_template_mappingCtx_desc">mapping ${ContextType}::${ContextType}2${OutputType}() : ${OutputType} {
 	${cursor}
 }</template>
 	<template

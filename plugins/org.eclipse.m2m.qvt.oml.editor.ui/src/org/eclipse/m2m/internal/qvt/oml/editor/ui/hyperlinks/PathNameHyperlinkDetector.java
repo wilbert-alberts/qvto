@@ -23,6 +23,7 @@ import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
@@ -64,6 +65,11 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 						if(cstNode instanceof ModelTypeCS) {
 							// TODO - use QVT model Switch to get destination region specific to various CST							
 							cstNode = ((ModelTypeCS) cstNode).getIdentifierCS();  
+						} else if(cstNode instanceof MappingModuleCS) {
+							MappingModuleCS moduleCS = (MappingModuleCS) cstNode;
+							if(moduleCS.getHeaderCS() != null) {
+								cstNode = moduleCS.getHeaderCS(); 
+							}
 						}
 						IRegion destReg = HyperlinkUtil.createRegion(cstNode);
 						return new QvtFileHyperlink(elementRef.sourceLinkRegion, file, destReg, destReg);
