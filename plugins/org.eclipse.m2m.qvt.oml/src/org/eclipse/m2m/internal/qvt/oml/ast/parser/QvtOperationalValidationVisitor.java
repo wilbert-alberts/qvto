@@ -127,7 +127,9 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 								nextActualArg.getStartPosition(), 
 								nextActualArg.getEndPosition());
 						result = Boolean.FALSE;						
-					}				
+					}
+					// check for compatible direction kind 
+					
 				}
 			} else {
 				fEnv.reportError(ValidationMessages.bind(

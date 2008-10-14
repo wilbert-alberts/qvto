@@ -145,6 +145,13 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 	}	
 	
 	public final void addSibling(QvtEnvironmentBase env) {
+		QvtEnvironmentBase rootEnv = getRootEnv();
+		if(rootEnv != this) {
+			// propagate to the top level parent
+			rootEnv.addSibling(env);
+			return;
+		}
+		
 		if(env == null || env == this || isOneOfParents(env)) {
 			throw new IllegalArgumentException("Illegal sibling environemnt"); //$NON-NLS-1$
 		}
@@ -159,6 +166,13 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 	}
 	
 	public final List<QvtEnvironmentBase> getSiblings() {
+		QvtEnvironmentBase rootEnv = getRootEnv();
+		if(rootEnv != this) {
+			// propagate request to the top level parent, as being a leaf env, 
+			// I'm disallowed to own siblings
+			return rootEnv.getSiblings();
+		}
+		
 		if(siblings == null) {
 			return Collections.emptyList();
 		}
