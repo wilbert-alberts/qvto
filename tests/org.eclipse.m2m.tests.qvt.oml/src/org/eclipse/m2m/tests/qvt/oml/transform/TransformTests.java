@@ -19,7 +19,6 @@ import java.util.Set;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.eclipse.m2m.tests.qvt.oml.CompositeTransformationTest;
 import org.eclipse.m2m.tests.qvt.oml.transform.javaless.JavalessQvtTest;
 import org.eclipse.m2m.tests.qvt.oml.transform.javaless.JavalessUtil;
 
@@ -37,7 +36,6 @@ public class TransformTests {
 
         ModelTestData[] datas = createTestData();
 
-        suite.addTest(new CompositeTransformationTest(CompositeTransformationTest.createTestData("compositetransf"))); //$NON-NLS-1$
         suite.addTest(new TestFailedTransformation(new FileToFileData("scr878"))); //$NON-NLS-1$
 
         for (ModelTestData data : datas) {
@@ -79,7 +77,8 @@ public class TransformTests {
         
     
     public static ModelTestData[] createTestData() {
-        return new ModelTestData[] {    
+        return new ModelTestData[] {
+        		new FileToFileData("compositetransf"), //$NON-NLS-1$        		
                 new FileToFileData("computeExp_250403"), //$NON-NLS-1$
                 new FileToFileData("forExp_245275"), //$NON-NLS-1$
                 new FileToFileData("bug244701"), //$NON-NLS-1$
@@ -261,6 +260,7 @@ public class TransformTests {
     }
 
     private static final Set<String> JAVALESS_EXCLUDES = new HashSet<String>(Arrays.asList(new String[] {
+    		"compositetransf", // FIXME - make this included as java-less    		
     		"blackboxlib_237781", //$NON-NLS-1$ // imports java lib oper requiring generated ecore metamodel
             "primtypesecore", // uses getDataTypeInstance() defined on ecore //$NON-NLS-1$
             "importedvirtuals", "imports_transformations", "imports", "virt", "full", "fqntraces", // TODO import other files //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$

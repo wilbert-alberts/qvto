@@ -6,10 +6,10 @@ modeltype uml uses "http://www.eclipse.org/uml2/2.1.0/UML";
 
 mapping main(in inModel : EPackage) : EPackage { 
 	init {   
- 		var tuples: Set(Tuple(name:String)) := Set { Tuple{name='A'},Tuple{name='B'} };
-			result := object EPackage {
+ 		var tuplesVar : Set(Tuple(name:String)) := Set { Tuple{name='A'},Tuple{name='B'} };
+		result := object EPackage {
             	name:= inModel.name;
-                eClassifiers := tuples->collect(t| tupleToClass(t))->asOrderedSet(); };
+                eClassifiers := tuplesVar->collect(t| tupleToClass(t))->asOrderedSet(); };
 }}
 
 mapping tupleToClass(in tup:Tuple(name:String)): EClass {
