@@ -56,6 +56,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleUsageCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
@@ -99,8 +100,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 			return (EList<T>)EMPTY_LIST_INSTANCE;	
 		}
 	}
-	
-	
+		
 	protected AbstractQVTParser(BasicEnvironment environment) {
 		super(environment);
 	}
@@ -729,6 +729,13 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
         result.setBody(body);
         result.setCondition(condition);
         return result;
+    }
+    
+    protected NewRuleCallExpCS createNewRuleCallExpCS(PathNameCS pathNameCS, List<OCLExpressionCS> arguments) {
+    	NewRuleCallExpCS call = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createNewRuleCallExpCS();
+		call.setScopedIdentifier(pathNameCS);
+		call.getArguments().addAll(arguments);
+    	return call;
     }
     
     protected ReturnExpCS createReturnExpCS(OCLExpressionCS value) {

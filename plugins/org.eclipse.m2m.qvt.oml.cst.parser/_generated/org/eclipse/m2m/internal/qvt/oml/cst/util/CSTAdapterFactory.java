@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTAdapterFactory.java,v 1.4 2008/10/13 13:05:00 aigdalov Exp $
+ * $Id: CSTAdapterFactory.java,v 1.5 2008/10/14 11:46:37 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -293,6 +293,10 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseMappingExtensionCS(MappingExtensionCS object) {
 				return createMappingExtensionCSAdapter();
+			}
+			@Override
+			public Adapter caseNewRuleCallExpCS(NewRuleCallExpCS object) {
+				return createNewRuleCallExpCSAdapter();
 			}
 			@Override
 			public Adapter caseCSTNode(CSTNode object) {
@@ -1035,6 +1039,20 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createMappingExtensionCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS <em>New Rule Call Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS
+	 * @generated
+	 */
+	public Adapter createNewRuleCallExpCSAdapter() {
 		return null;
 	}
 

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTSwitch.java,v 1.4 2008/10/13 13:05:00 aigdalov Exp $
+ * $Id: CSTSwitch.java,v 1.5 2008/10/14 11:46:37 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -516,6 +516,14 @@ public class CSTSwitch<T> {
 				MappingExtensionCS mappingExtensionCS = (MappingExtensionCS)theEObject;
 				T result = caseMappingExtensionCS(mappingExtensionCS);
 				if (result == null) result = caseCSTNode(mappingExtensionCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.NEW_RULE_CALL_EXP_CS: {
+				NewRuleCallExpCS newRuleCallExpCS = (NewRuleCallExpCS)theEObject;
+				T result = caseNewRuleCallExpCS(newRuleCallExpCS);
+				if (result == null) result = caseOCLExpressionCS(newRuleCallExpCS);
+				if (result == null) result = caseCSTNode(newRuleCallExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -1270,6 +1278,21 @@ public class CSTSwitch<T> {
 	 * @generated
 	 */
 	public T caseMappingExtensionCS(MappingExtensionCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>New Rule Call Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>New Rule Call Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNewRuleCallExpCS(NewRuleCallExpCS object) {
 		return null;
 	}
 

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackage.java,v 1.6 2008/10/13 13:04:59 aigdalov Exp $
+ * $Id: CSTPackage.java,v 1.7 2008/10/14 11:46:37 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -3484,6 +3484,61 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_EXTENSION_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 2;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.NewRuleCallExpCSImpl <em>New Rule Call Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.NewRuleCallExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getNewRuleCallExpCS()
+	 * @generated
+	 */
+	int NEW_RULE_CALL_EXP_CS = 50;
+
+	/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NEW_RULE_CALL_EXP_CS__START_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NEW_RULE_CALL_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>Scoped Identifier</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NEW_RULE_CALL_EXP_CS__SCOPED_IDENTIFIER = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Arguments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NEW_RULE_CALL_EXP_CS__ARGUMENTS = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>New Rule Call Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NEW_RULE_CALL_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 2;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum <em>Direction Kind Enum</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3491,7 +3546,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getDirectionKindEnum()
 	 * @generated
 	 */
-	int DIRECTION_KIND_ENUM = 50;
+	int DIRECTION_KIND_ENUM = 51;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindEnum <em>Module Kind Enum</em>}' enum.
@@ -3501,7 +3556,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getModuleKindEnum()
 	 * @generated
 	 */
-	int MODULE_KIND_ENUM = 51;
+	int MODULE_KIND_ENUM = 52;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum <em>Import Kind Enum</em>}' enum.
@@ -3511,7 +3566,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getImportKindEnum()
 	 * @generated
 	 */
-	int IMPORT_KIND_ENUM = 52;
+	int IMPORT_KIND_ENUM = 53;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionKindCS <em>Mapping Extension Kind CS</em>}' enum.
@@ -3521,7 +3576,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingExtensionKindCS()
 	 * @generated
 	 */
-	int MAPPING_EXTENSION_KIND_CS = 53;
+	int MAPPING_EXTENSION_KIND_CS = 54;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS <em>Qualifier Kind CS</em>}' enum.
@@ -3531,7 +3586,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getQualifierKindCS()
 	 * @generated
 	 */
-	int QUALIFIER_KIND_CS = 54;
+	int QUALIFIER_KIND_CS = 55;
 
 
 	/**
@@ -5190,6 +5245,38 @@ public interface CSTPackage extends EPackage {
 	EReference getMappingExtensionCS_MappingIdentifiers();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS <em>New Rule Call Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>New Rule Call Exp CS</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS
+	 * @generated
+	 */
+	EClass getNewRuleCallExpCS();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS#getScopedIdentifier <em>Scoped Identifier</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Scoped Identifier</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS#getScopedIdentifier()
+	 * @see #getNewRuleCallExpCS()
+	 * @generated
+	 */
+	EReference getNewRuleCallExpCS_ScopedIdentifier();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS#getArguments <em>Arguments</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Arguments</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS#getArguments()
+	 * @see #getNewRuleCallExpCS()
+	 * @generated
+	 */
+	EReference getNewRuleCallExpCS_Arguments();
+
+	/**
 	 * Returns the meta object for enum '{@link org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum <em>Direction Kind Enum</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6600,6 +6687,32 @@ public interface CSTPackage extends EPackage {
 		 * @generated
 		 */
 		EReference MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS = eINSTANCE.getMappingExtensionCS_MappingIdentifiers();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.NewRuleCallExpCSImpl <em>New Rule Call Exp CS</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.NewRuleCallExpCSImpl
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getNewRuleCallExpCS()
+		 * @generated
+		 */
+		EClass NEW_RULE_CALL_EXP_CS = eINSTANCE.getNewRuleCallExpCS();
+
+		/**
+		 * The meta object literal for the '<em><b>Scoped Identifier</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NEW_RULE_CALL_EXP_CS__SCOPED_IDENTIFIER = eINSTANCE.getNewRuleCallExpCS_ScopedIdentifier();
+
+		/**
+		 * The meta object literal for the '<em><b>Arguments</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NEW_RULE_CALL_EXP_CS__ARGUMENTS = eINSTANCE.getNewRuleCallExpCS_Arguments();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum <em>Direction Kind Enum</em>}' enum.

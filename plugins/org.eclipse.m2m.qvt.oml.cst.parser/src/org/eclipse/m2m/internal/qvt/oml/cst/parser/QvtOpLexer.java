@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexer.java,v 1.11 2008/10/13 13:05:00 aigdalov Exp $
+* $Id: QvtOpLexer.java,v 1.12 2008/10/14 11:46:37 radvorak Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexer.java,v 1.11 2008/10/13 13:05:00 aigdalov Exp $
+* $Id: QvtOpLexer.java,v 1.12 2008/10/14 11:46:37 radvorak Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -41,6 +41,7 @@ import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.lpg.BasicEnvironment;
 import org.eclipse.ocl.util.OCLUtil;
 import org.eclipse.ocl.parser.OCLKWLexer;
+
 @SuppressWarnings("nls")
 public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtOpLexersym, RuleAction
 {
@@ -874,7 +875,8 @@ public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtO
 				makeToken(TK_NOT_EQUAL_EXEQ);
 	            break;
             }
-	    
+	
+    
             default:
                 break;
         }

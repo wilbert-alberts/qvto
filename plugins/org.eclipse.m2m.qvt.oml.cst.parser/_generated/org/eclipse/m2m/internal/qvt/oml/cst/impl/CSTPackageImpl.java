@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.6 2008/10/13 13:05:00 aigdalov Exp $
+ * $Id: CSTPackageImpl.java,v 1.7 2008/10/14 11:46:37 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -63,6 +63,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleUsageCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
@@ -448,6 +449,13 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * @generated
 	 */
 	private EClass mappingExtensionCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass newRuleCallExpCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1960,6 +1968,33 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getNewRuleCallExpCS() {
+		return newRuleCallExpCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNewRuleCallExpCS_ScopedIdentifier() {
+		return (EReference)newRuleCallExpCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNewRuleCallExpCS_Arguments() {
+		return (EReference)newRuleCallExpCSEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getDirectionKindEnum() {
 		return directionKindEnumEEnum;
 	}
@@ -2233,6 +2268,10 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEAttribute(mappingExtensionCSEClass, MAPPING_EXTENSION_CS__KIND);
 		createEReference(mappingExtensionCSEClass, MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS);
 
+		newRuleCallExpCSEClass = createEClass(NEW_RULE_CALL_EXP_CS);
+		createEReference(newRuleCallExpCSEClass, NEW_RULE_CALL_EXP_CS__SCOPED_IDENTIFIER);
+		createEReference(newRuleCallExpCSEClass, NEW_RULE_CALL_EXP_CS__ARGUMENTS);
+
 		// Create enums
 		directionKindEnumEEnum = createEEnum(DIRECTION_KIND_ENUM);
 		moduleKindEnumEEnum = createEEnum(MODULE_KIND_ENUM);
@@ -2329,6 +2368,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		imperativeIterateExpCSEClass.getESuperTypes().add(this.getImperativeLoopExpCS());
 		returnExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
 		mappingExtensionCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
+		newRuleCallExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(mappingModuleCSEClass, MappingModuleCS.class, "MappingModuleCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -2535,6 +2575,10 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEClass(mappingExtensionCSEClass, MappingExtensionCS.class, "MappingExtensionCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getMappingExtensionCS_Kind(), this.getMappingExtensionKindCS(), "kind", "disjuncts", 0, 1, MappingExtensionCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(getMappingExtensionCS_MappingIdentifiers(), theTempPackage.getScopedNameCS(), null, "mappingIdentifiers", null, 1, -1, MappingExtensionCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(newRuleCallExpCSEClass, NewRuleCallExpCS.class, "NewRuleCallExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getNewRuleCallExpCS_ScopedIdentifier(), theCSTPackage_1.getPathNameCS(), null, "scopedIdentifier", null, 1, 1, NewRuleCallExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getNewRuleCallExpCS_Arguments(), theCSTPackage_1.getOCLExpressionCS(), null, "arguments", null, 0, -1, NewRuleCallExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Initialize enums and add enum literals
 		initEEnum(directionKindEnumEEnum, DirectionKindEnum.class, "DirectionKindEnum"); //$NON-NLS-1$

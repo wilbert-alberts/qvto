@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.g,v 1.2 2008/10/13 13:04:59 aigdalov Exp $ 
+-- * $Id: ImperativeOCL.g,v 1.3 2008/10/14 11:46:37 radvorak Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -284,6 +284,7 @@ $KeyWords
 	forEach
 	forOne
 	compute
+	new
 $End
 
 $Notice
@@ -301,7 +302,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: ImperativeOCL.g,v 1.2 2008/10/13 13:04:59 aigdalov Exp $
+ * $Id: ImperativeOCL.g,v 1.3 2008/10/14 11:46:37 radvorak Exp $
  */
 	./
 $End
@@ -1539,7 +1540,15 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	
+
+	oclExpCS -> newExpCS
+	newExpCS ::= new pathNameCS '(' argumentsCSopt ')' 
+		/.$BeginJava
+				OCLExpressionCS result = createNewRuleCallExpCS((PathNameCS)dtParser.getSym(2),(EList)dtParser.getSym(4));
+				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(5)));
+				dtParser.setSym1(result);
+		  $EndJava
+		./	
 $End
 
 	

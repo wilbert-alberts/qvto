@@ -344,6 +344,14 @@
       <eLiterals name="blackbox" value="2"/>
       <eLiterals name="static" value="3"/>
     </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="NewRuleCallExpCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="scopedIdentifier" lowerBound="1"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/PathNameCS"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="arguments" upperBound="-1"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+          containment="true"/>
+    </eClassifiers>
     <eSubpackages name="temp" nsURI="http://www.eclipse.org/QVT2/1.0.0/Operational/cst/temp"
         nsPrefix="qvtoperational.cst.temp">
       <eClassifiers xsi:type="ecore:EClass" name="ErrorCallExpCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CallExpCS"/>
