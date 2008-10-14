@@ -43,13 +43,14 @@ public class JavalessQvtTest extends TestQvtInterpreter {
 	}
 	
 	public static JavalessFileToFileData createJavalessData(ModelTestData testData) {
+		if(testData instanceof JavalessFileToFileData) {
+			return (JavalessFileToFileData) testData;
+		}
+		
 		if(!JavalessUtil.isValidJavalessData(testData)) {
 			throw new IllegalArgumentException("Not a valid javaless test"); //$NON-NLS-1$
 		}
 		
-		if(testData instanceof JavalessFileToFileData) {
-			return (JavalessFileToFileData) testData;
-		}
 		return new JavalessFileToFileData(testData);
 	}
 	
