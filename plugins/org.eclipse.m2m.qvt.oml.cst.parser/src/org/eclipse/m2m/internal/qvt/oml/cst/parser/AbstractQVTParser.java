@@ -606,13 +606,15 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
         operCodeSimpleName.setEndOffset(opCode.getEndOffset());
         forExpCS.setSimpleNameCS(operCodeSimpleName);
 
-        VariableCS[] iterVars = new VariableCS[iterators.size()];
-        for (int i = 0, n = iterVars.length; i < n; i++) {
-            iterVars[i] = createVariableCS(iterators.get(i).toString(), null, null);
-        }
-        forExpCS.setVariable1(iterVars[0]);
-        if (iterVars.length > 1) {
-            forExpCS.setVariable2(iterVars[1]);
+        if ((iterators != null) && !iterators.isEmpty()) {
+            VariableCS[] iterVars = new VariableCS[iterators.size()];
+            for (int i = 0, n = iterVars.length; i < n; i++) {
+                iterVars[i] = createVariableCS(iterators.get(i).toString(), null, null);
+            }
+            forExpCS.setVariable1(iterVars[0]);
+            if (iterVars.length > 1) {
+                forExpCS.setVariable2(iterVars[1]);
+            }
         }
         
         forExpCS.setCondition(condition);
