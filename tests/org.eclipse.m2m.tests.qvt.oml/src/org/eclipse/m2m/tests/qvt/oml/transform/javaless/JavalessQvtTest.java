@@ -39,7 +39,7 @@ public class JavalessQvtTest extends TestQvtInterpreter {
 
 	public JavalessQvtTest(ModelTestData testData) {
 		super(createJavalessData(testData));		
-		setName(PREFIX + getName()); //$NON-NLS-1$
+		setName(PREFIX + testData.getName()); //$NON-NLS-1$
 	}
 	
 	public static JavalessFileToFileData createJavalessData(ModelTestData testData) {
