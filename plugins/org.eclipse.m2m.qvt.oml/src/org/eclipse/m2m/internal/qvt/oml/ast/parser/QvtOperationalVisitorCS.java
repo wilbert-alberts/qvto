@@ -2959,8 +2959,6 @@ public class QvtOperationalVisitorCS
         }
         String name = forExpCS.getSimpleNameCS().getValue();
 
-        Variable<EClassifier, EParameter> vdcl = variableDeclarationCS(forExpCS.getVariable1(), env, true);
-        
         ForExp astNode = ExpressionsFactory.eINSTANCE.createForExp();
         initASTMapping(env, astNode, forExpCS);
         astNode.setName(name);
@@ -2971,8 +2969,12 @@ public class QvtOperationalVisitorCS
         EList<Variable<EClassifier, EParameter>> iterators = astNode.getIterator();
         @SuppressWarnings("unchecked")
         CollectionType<EClassifier, EOperation> sourceCollectionType = (CollectionType<EClassifier, EOperation>) source.getType();
-        vdcl.setType(sourceCollectionType.getElementType());
-        iterators.add(vdcl);
+        Variable<EClassifier, EParameter> vdcl = null;
+        if (forExpCS.getVariable1() != null) {
+            vdcl = variableDeclarationCS(forExpCS.getVariable1(), env, true);
+            vdcl.setType(sourceCollectionType.getElementType());
+            iterators.add(vdcl);
+        }
         
         Variable<EClassifier, EParameter> vdcl1 = null;
         if (forExpCS.getVariable2() != null) {
@@ -2986,12 +2988,16 @@ public class QvtOperationalVisitorCS
             astNode.setCondition(conditionExp);
         }
         
-        OCLExpression<EClassifier> bodyExp = oclExpressionCS(forExpCS.getBody(), env);
-        astNode.setBody(bodyExp);
+        if (forExpCS.getBody() != null) {
+            OCLExpression<EClassifier> bodyExp = oclExpressionCS(forExpCS.getBody(), env);
+            astNode.setBody(bodyExp);
+        }
         
         astNode.setSource(source);
         
-        env.deleteElement(vdcl.getName());
+        if (vdcl != null) {
+            env.deleteElement(vdcl.getName());
+        }
         if (vdcl1 != null) {
             env.deleteElement(vdcl1.getName());
         }
