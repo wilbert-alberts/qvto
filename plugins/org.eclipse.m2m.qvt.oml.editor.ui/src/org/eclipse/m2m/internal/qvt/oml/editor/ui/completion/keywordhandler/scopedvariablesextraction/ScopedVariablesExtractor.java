@@ -28,11 +28,11 @@ public class ScopedVariablesExtractor {
         Scope scope = new Scope(null);
         IToken currentToken = startToken;
         if (QvtCompletionData.isKindOf(data.getParentImperativeOperation(), QvtOpLPGParsersym.TK_mapping)) {
-        while ((currentToken = getNextToken(currentToken, data)) != null) {
-            if (QvtCompletionData.isKindOf(currentToken, QvtOpLPGParsersym.TK_LBRACE)) {
-                break;
+            while ((currentToken = getNextToken(currentToken, data)) != null) {
+                if (QvtCompletionData.isKindOf(currentToken, QvtOpLPGParsersym.TK_LBRACE)) {
+                    break;
+                }
             }
-        }
         }
         if (currentToken != null) {
             while ((currentToken = getNextToken(currentToken, data)) != null) {
@@ -57,7 +57,7 @@ public class ScopedVariablesExtractor {
         return scope.toString();
     }
     
-    // starting from '{'
+    // starting from '{' or from any token within the '{' scope 
     private Result analyseScopedVarVariables(IToken startToken, QvtCompletionData data, Scope scope, boolean isMandatoryScope) {
         IToken currentToken = startToken;
         Scope varScope = new Scope(scope);
@@ -76,6 +76,27 @@ public class ScopedVariablesExtractor {
                 }
                 Result extractVarVariableResult = extractVariable(nextToken, null, data, varScope, 
                         new int[] {QvtOpLPGParsersym.TK_RESET_ASSIGN}, NOT_A_TOKEN, QvtOpLPGParsersym.TK_SEMICOLON, QvtOpLPGParsersym.TK_RBRACE);
+                if (extractVarVariableResult.getScope() != varScope) {
+                    return extractVarVariableResult;
+                }
+                nextToken = extractVarVariableResult.getEndToken();
+                varScope.addVariable(extractVarVariableResult.getString());
+            } else if (QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_compute)) {
+                IToken computeToken = nextToken;
+                nextToken = getNextToken(nextToken, data);
+                if (nextToken == null) {
+                    break;
+                }
+                if (!QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_LPAREN)) {
+                    return new Result(startToken, computeToken, null, scope);
+                }
+                currentToken = nextToken;
+                nextToken = getNextToken(nextToken, data);
+                if (nextToken == null) {
+                    break;
+                }
+                Result extractVarVariableResult = extractVariable(nextToken, null, data, varScope, 
+                        new int[] {QvtOpLPGParsersym.TK_RESET_ASSIGN, QvtOpLPGParsersym.TK_EQUAL}, NOT_A_TOKEN, QvtOpLPGParsersym.TK_RBRACE);
                 if (extractVarVariableResult.getScope() != varScope) {
                     return extractVarVariableResult;
                 }
@@ -111,6 +132,11 @@ public class ScopedVariablesExtractor {
             return analyseForExpression(currentToken, data, scope);
         } else if (QvtCompletionData.isKindOf(currentToken, QvtOpLPGParsersym.TK_LBRACE)) {
             return analyseScopedVarVariables(currentToken, data, scope, false);
+        } else if (QvtCompletionData.isKindOf(currentToken, QvtOpLPGParsersym.TK_compute)) {
+            IToken previousToken = LightweightParserUtil.getPreviousToken(currentToken);
+            if (previousToken != null) {
+                return analyseScopedVarVariables(previousToken, data, scope, false);
+            }
         }
         return null;
     }
