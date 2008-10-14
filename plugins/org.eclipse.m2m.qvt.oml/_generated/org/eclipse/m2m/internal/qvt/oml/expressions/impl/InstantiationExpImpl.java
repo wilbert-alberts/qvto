@@ -9,19 +9,21 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: InstantiationExpImpl.java,v 1.2 2008/10/08 13:13:32 radvorak Exp $
+ * $Id: InstantiationExpImpl.java,v 1.3 2008/10/14 11:46:49 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
@@ -53,7 +55,7 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
 	/**
-	 * The cached value of the '{@link #getArgument() <em>Argument</em>}' reference list.
+	 * The cached value of the '{@link #getArgument() <em>Argument</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getArgument()
@@ -108,7 +110,7 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 	 */
 	public EList<OCLExpression<EClassifier>> getArgument() {
 		if (argument == null) {
-			argument = new EObjectResolvingEList<OCLExpression<EClassifier>>(OCLExpression.class, this, ExpressionsPackage.INSTANTIATION_EXP__ARGUMENT);
+			argument = new EObjectContainmentEList<OCLExpression<EClassifier>>(OCLExpression.class, this, ExpressionsPackage.INSTANTIATION_EXP__ARGUMENT);
 		}
 		return argument;
 	}
@@ -196,6 +198,20 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 	 */
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
 		return ((ExtendedVisitor<T, ?, ?, ?, ?>) v).visitInstantiationExp(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case ExpressionsPackage.INSTANTIATION_EXP__ARGUMENT:
+				return ((InternalEList<?>)getArgument()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**

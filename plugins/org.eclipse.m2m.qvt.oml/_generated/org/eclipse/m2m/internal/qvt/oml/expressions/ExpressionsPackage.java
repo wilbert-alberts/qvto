@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ExpressionsPackage.java,v 1.9 2008/10/13 13:10:15 aigdalov Exp $
+ * $Id: ExpressionsPackage.java,v 1.10 2008/10/14 11:46:49 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
@@ -3793,7 +3793,7 @@ public interface ExpressionsPackage extends EPackage {
 	int INSTANTIATION_EXP__END_POSITION = IMPERATIVE_EXPRESSION__END_POSITION;
 
 	/**
-	 * The feature id for the '<em><b>Argument</b></em>' reference list.
+	 * The feature id for the '<em><b>Argument</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -3857,7 +3857,7 @@ public interface ExpressionsPackage extends EPackage {
 	int OBJECT_EXP__END_POSITION = INSTANTIATION_EXP__END_POSITION;
 
 	/**
-	 * The feature id for the '<em><b>Argument</b></em>' reference list.
+	 * The feature id for the '<em><b>Argument</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -7171,10 +7171,10 @@ public interface ExpressionsPackage extends EPackage {
 	EClass getInstantiationExp();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp#getArgument <em>Argument</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp#getArgument <em>Argument</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Argument</em>'.
+	 * @return the meta object for the containment reference list '<em>Argument</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp#getArgument()
 	 * @see #getInstantiationExp()
 	 * @generated
@@ -8258,7 +8258,7 @@ public interface ExpressionsPackage extends EPackage {
 		EClass INSTANTIATION_EXP = eINSTANCE.getInstantiationExp();
 
 		/**
-		 * The meta object literal for the '<em><b>Argument</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Argument</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

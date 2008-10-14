@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
-import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 
 /**
  * This interface separates the internals of QVT Evaluation Environments that 
@@ -24,11 +23,7 @@ public interface InternalEvaluationEnv {
     int setCurrentASTOffset(int currentASTOffset);
     
     int getCurrentASTOffset();
-    
-    CallHandler getEntryOperationHandler();
-    
-    void setEntryOperationHandler(CallHandler mainHandler);
-
+        
 	void pushObjectExpOwner(Object owner);
     
 	void popObjectExpOwner();

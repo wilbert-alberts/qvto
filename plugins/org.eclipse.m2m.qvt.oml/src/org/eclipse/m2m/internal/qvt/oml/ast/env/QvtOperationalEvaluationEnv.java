@@ -69,11 +69,6 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			myModelExtents = Collections.emptyMap();
 			myMapImportedExtents = Collections.emptyMap();
 		}
-		
-		if(parent != null) {
-			internalEnv().setEntryOperationHandler(
-					parent.getAdapter(InternalEvaluationEnv.class).getEntryOperationHandler());
-		}
 	}
 	
 	@Override

@@ -33,9 +33,12 @@ public final class ValidationMessages extends NLS {
 	public static String mappingOperationExpected;
 	public static String MissingMessageLogExpArgumentError;
 	public static String QvtOperationalParserUtil_inoutParamAssignmentError;
-    public static String QvtOperationalValidationVisitor_invalidContextualType;
+    public static String QvtOperationalValidationVisitor_incompatibleArgumentModelType;
+	public static String QvtOperationalValidationVisitor_invalidContextualType;
+	public static String QvtOperationalValidationVisitor_invalidInstantiatedType;
 	public static String QvtOperationalValidationVisitor_parameterNamedRequired;
 	public static String QvtOperationalValidationVisitor_resultParamDirectionMustBeOut;
+	public static String QvtOperationalValidationVisitor_unresolvedTransformationSignature;
 	public static String QvtOperationalVisitorCS_AbstractTypesNotInitialized;
 	public static String QvtOperationalVisitorCS_ambiguousMappingOperationReference;
 	public static String QvtOperationalVisitorCS_booleanTypeExpressionExpected;

@@ -131,7 +131,7 @@ public class QVTUMLReflection
 	public List<EOperation> getOperations(EClassifier classifier) {
 		if(classifier instanceof Module) {
 			List<EOperation> operations = new ArrayList<EOperation>();
-			for (EOperation nextOperation : ((Module)classifier).getEOperations()) {
+			for (EOperation nextOperation : ((Module)classifier).getEAllOperations()) {
 				if(nextOperation instanceof ImperativeOperation) {
 					ImperativeOperation operation = (ImperativeOperation) nextOperation;
 					if(operation.getContext() != null) {

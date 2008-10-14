@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ExpressionsPackageImpl.java,v 1.10 2008/10/13 13:10:15 aigdalov Exp $
+ * $Id: ExpressionsPackageImpl.java,v 1.11 2008/10/14 11:46:49 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -3196,7 +3196,7 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		g1 = createEGenericType(theExpressionsPackage_1.getOCLExpression());
 		g2 = createEGenericType(theEcorePackage_1.getEClassifier());
 		g1.getETypeArguments().add(g2);
-		initEReference(getInstantiationExp_Argument(), g1, null, "argument", null, 0, -1, InstantiationExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getInstantiationExp_Argument(), g1, null, "argument", null, 0, -1, InstantiationExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getInstantiationExp_Extent(), this.getModelParameter(), null, "extent", null, 1, 1, InstantiationExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getInstantiationExp_InstantiatedClass(), theEcorePackage_1.getEClass(), null, "instantiatedClass", null, 1, 1, InstantiationExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 

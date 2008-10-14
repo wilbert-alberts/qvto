@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: InstantiationExp.java,v 1.2 2008/10/08 13:13:32 radvorak Exp $
+ * $Id: InstantiationExp.java,v 1.3 2008/10/14 11:46:49 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
@@ -46,7 +46,7 @@ public interface InstantiationExp extends ImperativeExpression {
 	String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
 	/**
-	 * Returns the value of the '<em><b>Argument</b></em>' reference list.
+	 * Returns the value of the '<em><b>Argument</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.ocl.expressions.OCLExpression}&lt;org.eclipse.emf.ecore.EClassifier>.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -54,9 +54,9 @@ public interface InstantiationExp extends ImperativeExpression {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Argument</em>' reference list.
+	 * @return the value of the '<em>Argument</em>' containment reference list.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getInstantiationExp_Argument()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<OCLExpression<EClassifier>> getArgument();

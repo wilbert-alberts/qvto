@@ -12,25 +12,32 @@
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.PackageRef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
@@ -38,9 +45,11 @@ import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.lpg.FormattingHelper;
 import org.eclipse.ocl.parser.ValidationVisitor;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.ASTNode;
+import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
 import org.eclipse.ocl.utilities.Visitable;
 import org.eclipse.ocl.utilities.Visitor;
@@ -64,7 +73,7 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 	}
 	
 	private static class ValidationNodeProcessor implements NodeProcessor {
-		
+			
 		ValidationNodeProcessor(QvtOperationalEnv environment) {
 			myOclValidationVisitor = ValidationVisitor.getInstance(environment);
 		}
@@ -74,12 +83,119 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 				e.accept(myOclValidationVisitor);
 			}
 			catch (Throwable throwable) {
+				// FIXME - eliminate this !!!! 
 			}
 		}
 		
 		final Visitor<Boolean, EClassifier, EOperation, EStructuralFeature, EEnumLiteral,
 			EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> myOclValidationVisitor;
 		
+	}
+	
+	@Override
+	public Object visitInstantiationExp(InstantiationExp instantiationExp) {
+		Boolean result = Boolean.TRUE;
+		EClass instantiatedClass = instantiationExp.getInstantiatedClass();
+		if(instantiatedClass == null || QvtOperationalStdLibrary.INSTANCE.getTransformationClass().isSuperTypeOf(instantiatedClass) == false) {
+			fEnv.reportError(ValidationMessages.bind(
+					ValidationMessages.QvtOperationalValidationVisitor_invalidInstantiatedType, 
+					fEnv.getFormatter().formatType(instantiatedClass)), 
+					instantiationExp.getStartPosition(), 
+					instantiationExp.getEndPosition());
+			result = Boolean.FALSE;
+		}
+		
+		if(instantiatedClass instanceof OperationalTransformation) {
+			OperationalTransformation transf = (OperationalTransformation) instantiatedClass;
+			List<OCLExpression<EClassifier>> actualArgs = instantiationExp.getArgument();
+			EList<ModelParameter> formalArgs = transf.getModelParameter();
+			
+			if(actualArgs.size() == formalArgs.size()) {
+				int i = 0;
+				for (ModelParameter modelParameter : formalArgs) {
+					EClassifier paramType = modelParameter.getType();
+					OCLExpression<EClassifier> nextActualArg = actualArgs.get(i++);
+					EClassifier expectedType = nextActualArg.getType();
+					
+					boolean compatible = paramType instanceof ModelType && expectedType instanceof ModelType &&
+										checkCompatibleModelType((ModelType)paramType, (ModelType)expectedType);
+					if(!compatible) {
+						fEnv.reportError(ValidationMessages.bind(
+								ValidationMessages.QvtOperationalValidationVisitor_incompatibleArgumentModelType,
+								fEnv.getFormatter().formatType(nextActualArg.getType()),								
+								fEnv.getFormatter().formatType(modelParameter.getEType())),								
+								nextActualArg.getStartPosition(), 
+								nextActualArg.getEndPosition());
+						result = Boolean.FALSE;						
+					}				
+				}
+			} else {
+				fEnv.reportError(ValidationMessages.bind(
+						ValidationMessages.QvtOperationalValidationVisitor_unresolvedTransformationSignature,
+						new Object [] {
+							fEnv.getFormatter().formatName(transf),
+							formatArgumentList(actualArgs, fEnv.getFormatter()), 
+							formatArgumentList(formalArgs, fEnv.getFormatter())
+						}),
+						instantiationExp.getStartPosition(), 
+						instantiationExp.getEndPosition());
+				result = Boolean.FALSE;				
+			}
+		}	
+		
+		return result;		
+	}
+		
+	private String formatArgumentList(List<?> args, FormattingHelper helper) {
+		StringBuilder buf = new StringBuilder();
+		buf.append('(');
+		int i = 0;
+		for (Object nextArg : args) {
+			if(i++ > 0) {
+				buf.append(',').append(' ');
+			}
+			if(nextArg instanceof TypedElement) {
+				@SuppressWarnings("unchecked")
+				TypedElement<EClassifier> typedElement = (TypedElement<EClassifier>) nextArg;
+				buf.append(helper.formatType(typedElement.getType()));
+			} 
+			else if(nextArg instanceof ETypedElement) {
+				buf.append(helper.formatType(((ETypedElement) nextArg).getEType()));
+			} else if(nextArg instanceof EClassifier) {
+				buf.append(helper.formatType(nextArg));
+			}
+		}
+		
+		buf.append(')');		
+		return buf.toString();
+	}
+
+	private boolean checkCompatibleModelType(ModelType modelType1, ModelType modelType2) {
+		EList<PackageRef> metamodel1 = modelType1.getMetamodel();
+		EList<PackageRef> metamodel2 = modelType2.getMetamodel();
+		if(metamodel1.size() < metamodel2.size()) {
+			return false;
+		}		
+
+		LinkedList<String> uris1 = new LinkedList<String>();
+		for (PackageRef pRef : metamodel1) {
+			if(pRef.getUri() != null) {
+				uris1.add(pRef.getUri());
+			} else {
+				return false;
+			}
+		};
+		
+		LinkedList<String> uris2 = new LinkedList<String>();
+		for (PackageRef pRef : metamodel1) {
+			if(pRef.getUri() != null) {
+				uris2.add(pRef.getUri());
+			} else {
+				return false;
+			}
+		};
+		
+		return uris1.containsAll(uris2);
 	}
 	
 	@Override

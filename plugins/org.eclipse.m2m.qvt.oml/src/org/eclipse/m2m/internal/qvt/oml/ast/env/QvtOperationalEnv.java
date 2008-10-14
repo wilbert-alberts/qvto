@@ -454,7 +454,11 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	
 	@Override
 	public EClassifier lookupClassifier(List<String> names) {
-
+		if(names.isEmpty()) {
+			return null;
+		}
+		String firstName = names.get(0);
+		
 		if (names.size() == 1) {
 			// Unqualified type. lookup rules:
 			// - Firstly a type definition existing at the level of the current module (a transformation or a library) is searched.
@@ -462,8 +466,20 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			
 			// TODO support intermediate classes (hosted in implicit '_INTERMEDIATE' package)
 			
-			if (myModelTypeRegistry.containsKey(names.get(0))) {
-				return myModelTypeRegistry.get(names.get(0));
+			Module moduleContextType = getModuleContextType();
+			if(moduleContextType != null && firstName.equals(moduleContextType.getName())) {
+				return moduleContextType;
+			}
+			
+			for (QvtEnvironmentBase nextImported : getRootEnv().getSiblings()) {
+				Module importedModule = nextImported.getModuleContextType();
+				if(firstName.equals(importedModule.getName())) {
+					return importedModule;
+				}				
+			}
+			
+			if (myModelTypeRegistry.containsKey(firstName)) {
+				return myModelTypeRegistry.get(firstName);
 			}
 
 			for (ModelType modelType : myModelTypeRegistry.values()) {
@@ -484,9 +500,9 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 				}
 			}
 			
-			if (myModelTypeRegistry.containsKey(names.get(0))) {
+			if (myModelTypeRegistry.containsKey(firstName)) {
 				EClassifier lookupClassifier = doLookupModeltypeClassifier(
-						myModelTypeRegistry.get(names.get(0)), names.subList(1, names.size()));
+						myModelTypeRegistry.get(firstName), names.subList(1, names.size()));
 				if (lookupClassifier != null) {
 					return lookupClassifier;
 				}

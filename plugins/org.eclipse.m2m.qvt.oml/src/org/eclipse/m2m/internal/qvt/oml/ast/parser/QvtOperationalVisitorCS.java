@@ -73,6 +73,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
@@ -111,6 +112,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ForExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
@@ -238,6 +240,28 @@ public class QvtOperationalVisitorCS
         // FIXME - temp workaround after OCL 1.2 migration    	
     	astNode.setStartPosition(cstNode.getStartOffset());
     	astNode.setEndPosition(cstNode.getEndOffset());
+    }
+    
+    protected InstantiationExp instantiationExpCS(NewRuleCallExpCS newCallExp, QvtOperationalEnv env) {
+		InstantiationExp instantiationExp = ExpressionsFactory.eINSTANCE.createInstantiationExp();
+		initStartEndPositions(instantiationExp, newCallExp);
+
+		PathNameCS scopedIdentifierCS = newCallExp.getScopedIdentifier();
+		EClassifier instantiatedClass = typeCS(scopedIdentifierCS, env);
+		instantiationExp.setType(instantiatedClass);
+
+		if(instantiatedClass instanceof EClass) {			
+			instantiationExp.setInstantiatedClass((EClass)instantiatedClass);
+			instantiationExp.setName(instantiatedClass.getName());
+		}
+
+		for (OCLExpressionCS nextArgCS : newCallExp.getArguments()) {
+			OCLExpression<EClassifier> nextArgAST = oclExpressionCS(nextArgCS, env);
+			if(nextArgAST != null) {
+				instantiationExp.getArgument().add(nextArgAST);
+			}
+		}
+		return instantiationExp;
     }
 	
 	@Override
@@ -460,7 +484,11 @@ public class QvtOperationalVisitorCS
 	        if (oclExpressionCS instanceof ReturnExpCS) {
 	            return visitReturnExpCS((ReturnExpCS) oclExpressionCS, (QvtOperationalEnv) env);
 	        }
-
+	        
+	        if(oclExpressionCS instanceof NewRuleCallExpCS) {
+	        	return instantiationExpCS((NewRuleCallExpCS)oclExpressionCS, (QvtOperationalEnv) env);
+	        }
+	        	
 	        if (oclExpressionCS instanceof TypeCS) {
 	            EClassifier type = typeCS((TypeCS) oclExpressionCS, env);
 	            if (type == null) {

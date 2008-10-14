@@ -1218,7 +1218,8 @@
           <eGenericType eTypeParameter="#//expressions/InstantiationExp/accept/U"/>
         </eParameters>
       </eOperations>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="argument" upperBound="-1">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="argument" upperBound="-1"
+          containment="true">
         <eGenericType eClassifier="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
           <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
         </eGenericType>

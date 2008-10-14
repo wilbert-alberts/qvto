@@ -12,12 +12,12 @@
 
 package org.eclipse.m2m.internal.qvt.oml.stdlib;
 
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstanceAdapter;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
-import org.eclipse.ocl.ecore.EcoreEnvironment;
-import org.eclipse.ocl.types.OCLStandardLibrary;
 
 public class TransformationOperations extends AbstractContextualOperations {
 
@@ -27,18 +27,26 @@ public class TransformationOperations extends AbstractContextualOperations {
 	
 	@Override
 	protected OperationProvider[] getOperations() {
-		EcoreEnvironment env = getStdlib().getEnvironment();
-		OCLStandardLibrary<EClassifier> oclStdLib = env.getOCLStandardLibrary();
 		return new OwnedOperationProvider[] {
-				new OwnedOperationProvider(TRANSFORM, "transform", oclStdLib.getOclVoid())//$NON-NLS-1$ 
+				new OwnedOperationProvider(createTransformHandler(getStdlib()), "transform", getStdlib().getStatusClass())//$NON-NLS-1$ 
 		};
 	}
 	
-	static final CallHandler TRANSFORM = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
-			// FIXME - add validation code!!!
-			CallHandler mainHandler = evalEnv.getAdapter(InternalEvaluationEnv.class).getEntryOperationHandler();
-		    return mainHandler.invoke(source, args, evalEnv, context);
-		}
-	};
+	private static CallHandler createTransformHandler(final AbstractQVTStdlib stdlib) {
+		return new CallHandler() {
+			public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+				// FIXME - add validation code!!!
+				ModuleInstanceAdapter moduleAdapter = ModuleInstanceAdapter.getAdaper((EObject)source);
+				CallHandler mainHandler = moduleAdapter.getEntryOperationHandler();
+			    try {
+			    	mainHandler.invoke(source, args, evalEnv, context);
+			    } catch(QvtRuntimeException e) {
+			    	// TODO - support raised exception
+			    	EClass raisedException = null;
+			    	return StatusOperations.createFailed(stdlib.getStatusClass(), raisedException);
+			    }
+			    return StatusOperations.createSuccess(stdlib.getStatusClass());
+			}
+		};
+	}
 }

@@ -47,7 +47,11 @@ public abstract class AbstractQVTStdlib {
 	public abstract EClassifier getModelClass();
 	
 	public abstract EClass getTransformationClass();
+	
+	public abstract EClass getStatusClass();
 
+	public abstract EClass getExceptionClass();	
+	
 	public abstract EClass getModuleType();
 	
 	public abstract EClassifier getElementType();

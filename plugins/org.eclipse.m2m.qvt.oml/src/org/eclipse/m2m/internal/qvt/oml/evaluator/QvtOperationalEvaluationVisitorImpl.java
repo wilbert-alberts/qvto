@@ -165,6 +165,20 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         myEvalEnv = evalEnv;
     }
     
+	protected QvtOperationalEvaluationVisitorImpl(QvtOperationalEvaluationVisitorImpl parent, QvtOperationalEvaluationEnv nestedEvalEnv) {
+		this(parent.getOperationalEnv(), nestedEvalEnv);
+		
+		oclAnnotationSupport = parent.getOCLAnnotationSupport();
+		myEntryPoint = nestedEvalEnv.getOperation();
+		// FIXME - nasty caste -> do we need the state in the visitor?
+		// Consider to keep this as a state per transformation instance 
+		myRootModule = (Module)getOperationalEnv().getUMLReflection().getOwningClassifier(myEntryPoint);
+	}    
+    
+	protected QvtOperationalEvaluationVisitorImpl createNestedEvaluationVisitor(QvtOperationalEvaluationVisitorImpl parent, QvtOperationalEvaluationEnv nestedEvalEnv) {
+		return new QvtOperationalEvaluationVisitorImpl(parent, nestedEvalEnv); 
+	}
+	
     /**
 	 * Creates evaluation visitor for an non-transformation execution client.
 	 * <p>
@@ -652,10 +666,10 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 		return result.myResult;
 	}
     
-	public EObject visitInstantiationExp(InstantiationExp objectExp) { 
+	public Object visitInstantiationExp(InstantiationExp objectExp) { 
 		// should instantiate the module transformation
 		EClass _class = objectExp.getInstantiatedClass();
-		assert _class instanceof Module; // do not support normal class constructor calls yet
+		assert _class instanceof OperationalTransformation; // do not support normal class constructor calls yet
 		
 		EList<OCLExpression<EClassifier>> formalArguments = objectExp.getArgument();		
 		List<ModelParameterExtent> actualArguments = new ArrayList<ModelParameterExtent>(formalArguments.size());				
@@ -672,22 +686,29 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 		Context nestedContext = new Context();
 		QvtOperationalEnvFactory envFactory = getOperationalEnv().getFactory();
 		QvtOperationalEvaluationEnv nestedEvalEnv = (QvtOperationalEvaluationEnv)envFactory
-						.createEvaluationEnvironment(nestedContext, null);		
-		// send arguments into the entry operation 
-		nestedEvalEnv.getOperationArgs().addAll(actualArguments);
+						.createEvaluationEnvironment(nestedContext, null);
 
-		// Use per transformation instance visitor 
-		QvtOperationalEvaluationVisitorImpl nestedVisitor = new QvtOperationalEvaluationVisitorImpl(this, nestedEvalEnv);
-		// wrap in intercepting visitor to catch expressions visits
-		nestedVisitor.createInterruptibleVisitor();
-		// bind main() handler the internal environment
-		nestedEvalEnv.getAdapter(InternalEvaluationEnv.class).setEntryOperationHandler(createEntryOperationHandler(this));
-		
 		OperationalTransformation targetTransf = (OperationalTransformation)_class;
+		// send arguments into the entry operation
+		nestedEvalEnv.setOperation(QvtOperationalParserUtil.getMainOperation(targetTransf));
+		nestedEvalEnv.getOperationArgs().addAll(actualArguments);
 		// setup model parameter extents
 		nestedEvalEnv.setCallerModelParameters(actualArguments, targetTransf);
 
-		return callModuleImplicitConstructor(targetTransf);
+		// Use per transformation instance visitor 
+		QvtOperationalEvaluationVisitorImpl nestedVisitor = createNestedEvaluationVisitor(this, nestedEvalEnv);
+		// wrap in intercepting visitor to catch expressions visits
+		nestedVisitor.createInterruptibleVisitor();
+		
+		QvtOperationalEvaluationEnv currentEval = getOperationalEvaluationEnv();
+		setOperationalEvaluationEnv(nestedEvalEnv);
+		try {
+			EObject moduleInstance = callModuleImplicitConstructor(targetTransf);
+			moduleInstance.eAdapters().add(new ModuleInstanceAdapter(createEntryOperationHandler(nestedVisitor)));
+			return moduleInstance;
+		} finally {
+			setOperationalEvaluationEnv(currentEval);
+		}
 	}
 	
 	private EObject callModuleImplicitConstructor(Module moduleType) {
@@ -722,14 +743,14 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         try {
         	OperationalTransformation operationalTransfModule = (OperationalTransformation)module;
     		evaluationEnv.createModuleParameterExtents(operationalTransfModule);        	
-	        evaluationEnv.getAdapter(InternalEvaluationEnv.class).setEntryOperationHandler(createEntryOperationHandler(this));
         	
         	EObject moduleInstance = callModuleImplicitConstructor(module);
+        	CallHandler entryOperationHandler = createEntryOperationHandler(this);
+			moduleInstance.eAdapters().add(new ModuleInstanceAdapter(entryOperationHandler));
 	        
 	        setCurrentEnvInstructionPointer(myEntryPoint); // initialize IP to the main entry header	        
 	        // call main entry operation
-	        OperationCallResult callResult = (OperationCallResult)evaluationEnv.getAdapter(InternalEvaluationEnv.class).
-	        	getEntryOperationHandler().invoke(
+	        OperationCallResult callResult = (OperationCallResult) entryOperationHandler.invoke(
 	        		moduleInstance, makeEntryOperationArgs(myEntryPoint, 
 	        		(OperationalTransformation)myRootModule).toArray(),
 	        		evaluationEnv, evaluationEnv.getContext());
@@ -2108,17 +2129,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 			return fResult;
 		}
 	}
- 
-	private QvtOperationalEvaluationVisitorImpl(QvtOperationalEvaluationVisitorImpl parent, QvtOperationalEvaluationEnv nestedEvalEnv) {
-		this(parent.getOperationalEnv(), nestedEvalEnv);
-		
-		oclAnnotationSupport = parent.getOCLAnnotationSupport();
-		myEntryPoint = nestedEvalEnv.getOperation();
-		// FIXME - nasty caste -> do we need the state in the visitor?
-		// Consider to keep this as a state per transformation instance 
-		myRootModule = (Module)getOperationalEnv().getUMLReflection().getOwningClassifier(myEntryPoint);
-	}
-	
+ 	
     // allow to redefine "entry" point
     private ImperativeOperation myEntryPoint;
     private Module myRootModule;

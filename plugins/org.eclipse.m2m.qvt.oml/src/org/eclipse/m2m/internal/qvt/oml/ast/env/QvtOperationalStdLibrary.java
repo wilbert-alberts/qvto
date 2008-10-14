@@ -38,6 +38,7 @@ import org.eclipse.m2m.internal.qvt.oml.stdlib.IntegerOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.ModelOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.OclAnyOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.RealOperations;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.StatusOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.StdlibModuleOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.StringOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.TransformationOperations;
@@ -63,6 +64,8 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 	private EClass MODEL;
 	private EClass TRANSFORMATION;
 	private EOperation TRANSFORM;
+	private EClass STATUS;
+	private EClass EXCEPTION;
 	
 	private final Library fStdlibModule;
 	private final QvtOperationalModuleEnv fEnv;
@@ -83,7 +86,8 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 		ELEMENT = createClass("Element", true); //$NON-NLS-1$
 		MODEL = createClass("Model", true); //$NON-NLS-1$
 		TRANSFORMATION = createClass("Transformation", true); //$NON-NLS-1$ 
-
+		STATUS = createClass("Status", false);
+		
 		fTypeAliasMap = createTypeAliasMap(fEnv);		
 		
 		modelOperations = new ModelOperations(this);
@@ -98,11 +102,12 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 		define(new StdlibModuleOperations(this));
 		define(new IntegerOperations(this));		
 		define(new RealOperations(this));
-		define(new TransformationOperations(this));
-		
+		define(new TransformationOperations(this));		
 		TRANSFORM = fEnv.lookupOperation(TRANSFORMATION, "transform", //$NON-NLS-1$ 
 				Collections.<TypedElement<EClassifier>>emptyList());
 		assert TRANSFORM != null : "transform() operation mus be defined";
+		
+		define(new StatusOperations(this));
 		
 		((ModuleImpl)fStdlibModule).freeze();		
 	}
@@ -134,6 +139,16 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 	public EClass getModelClass() {	
 		return MODEL;
 	}
+	
+	@Override
+	public EClass getStatusClass() {
+		return STATUS;
+	}
+	
+	@Override
+	public EClass getExceptionClass() {
+		return EXCEPTION;
+	}	
 	
 	@Override
 	public EClass getTransformationClass() {	
