@@ -308,6 +308,14 @@ public class QvtOperationalVisitorCS
 			}
 		}
 		
+		if(type != null) {
+			if(myCompilerOptions.isGenerateCompletionData()) {
+				// bind Module type only, for now  
+				if(type instanceof Module) {				
+					ASTBindingHelper.createCST2ASTBindingUnidirectional(typeCS, type);
+				}
+	        }
+		}
 		return type;
 	}
 	
@@ -1390,7 +1398,14 @@ public class QvtOperationalVisitorCS
 		
 		// declare module operations as they are required to analyze rules' contents
 		for (MappingMethodCS methodCS : moduleCS.getMethods()) {
-			String name = methodCS.getMappingDeclarationCS().getSimpleNameCS().getValue();
+			String name = ""; //$NON-NLS-1$			
+			if(methodCS.getMappingDeclarationCS() != null) {
+				SimpleNameCS methodNameCS = methodCS.getMappingDeclarationCS().getSimpleNameCS();
+				if(methodNameCS != null) {
+					name = methodNameCS.getValue(); //$NON-NLS-1$
+				}
+			}
+					
 			boolean isMapping = methodCS instanceof MappingRuleCS;
 			ImperativeOperation operation = isMapping ? ExpressionsFactory.eINSTANCE.createMappingOperation() : 
 					(QvtOperationalEnv.MAIN.equals(name) ? ExpressionsFactory.eINSTANCE.createEntryOperation() : ExpressionsFactory.eINSTANCE.createHelper());

@@ -25,8 +25,8 @@ import org.eclipse.m2m.internal.qvt.oml.common.util.StringLineNumberProvider;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.Environment;
-import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.utilities.ASTNode;
 
 public class ASTBindingHelper {
@@ -40,7 +40,7 @@ public class ASTBindingHelper {
 	}
 		
 	public static void createModuleBinding(MappingModuleCS cstModule, Module astModule, EcoreEnvironment env, CFile moduleFile) {
-		ASTAdapter astAdapter = new ModuleASTAdapter(cstModule, astModule, env, moduleFile);
+		ASTAdapter<ASTNode> astAdapter = new ModuleASTAdapter(cstModule, astModule, env, moduleFile);
 		astModule.eAdapters().add(astAdapter);	
 		cstModule.eAdapters().add(astAdapter);		
 	}
@@ -77,13 +77,18 @@ public class ASTBindingHelper {
 		}
 		cstNode.eAdapters().add(astAdapter);
 	}
+	
+	public static <AST> void createCST2ASTBindingUnidirectional(CSTNode cstNode, AST astNode) {
+		ASTAdapter<AST> astAdapter = new ASTAdapter<AST>(cstNode, astNode, null);
+		cstNode.eAdapters().add(astAdapter);
+	}	
 
 	public static ASTNode resolveASTNode(CSTNode cstNode) {
 		return resolveASTNode(cstNode, ASTNode.class);
 	}
 	
-	public static <T extends ASTNode> T resolveASTNode(CSTNode cstNode, Class<T> type) {
-		return firstASTNodeOfType(getASTBindings(cstNode), type);
+	public static <AST> AST resolveASTNode(CSTNode cstNode, Class<AST> astType) {
+		return firstASTNodeOfType(getASTBindings(cstNode), astType);
 	}
 	
 	public static final ASTNode resolveEnclosingASTNode(CSTNode cstNode) {
@@ -97,7 +102,7 @@ public class ASTBindingHelper {
 	    return null;
 	}
 	
-	public static <T extends CSTNode> T resolveCSTNode(ASTNode astNode, Class<T> cstType) {
+	public static <AST extends EObject, T extends CSTNode> T resolveCSTNode(AST astNode, Class<T> cstType) {
 		return firstCSTNodeOfType(getASTBindings(astNode), cstType);
 	}
 	
@@ -117,9 +122,9 @@ public class ASTBindingHelper {
 		return env;
 	}
 	
-	private static EcoreEnvironment localResolveEnvironment(ASTNode astNode) {
-		List<ASTAdapter> adapters = getASTBindings(astNode);
-		for (ASTAdapter nextAdapter : adapters) {
+	private static <A> EcoreEnvironment localResolveEnvironment(ASTNode astNode) {
+		List<ASTAdapter<A>> adapters = getASTBindings(astNode);
+		for (ASTAdapter<A> nextAdapter : adapters) {
 			if(nextAdapter.getEnvironment() != null) {
 				return nextAdapter.getEnvironment();
 			}
@@ -127,8 +132,8 @@ public class ASTBindingHelper {
 		return null;
 	}
 	
-	private static <T extends ASTNode> T firstASTNodeOfType(List<ASTAdapter> objects, Class<T> type) {
-		for (ASTAdapter nextAST : objects) {
+	private static <A, T extends A> T firstASTNodeOfType(List<ASTAdapter<A>> objects, Class<T> type) {
+		for (ASTAdapter<A> nextAST : objects) {
 			if(type.isInstance(nextAST.getASTNode())) {
 				return type.cast(nextAST.getASTNode());
 			}
@@ -136,8 +141,8 @@ public class ASTBindingHelper {
 		return null;
 	}
 	
-	private static <T extends CSTNode> T firstCSTNodeOfType(List<ASTAdapter> objects, Class<T> type) {
-		for (ASTAdapter nextCST : objects) {
+	private static <A, T extends CSTNode> T firstCSTNodeOfType(List<ASTAdapter<A>> objects, Class<T> type) {
+		for (ASTAdapter<A> nextCST : objects) {
 			if(type.isInstance(nextCST.getCSTNode())) {
 				return type.cast(nextCST.getCSTNode());
 			}
@@ -154,11 +159,11 @@ public class ASTBindingHelper {
         return null;
 	}
 	
-	static List<ASTAdapter> getASTBindings(EObject target) {
+	static <AST> List<ASTAdapter<AST>> getASTBindings(EObject target) {
 		return getASTBindings(target, ASTAdapter.class);
 	}
 	
-	static <T extends ASTAdapter> List<T> getASTBindings(EObject target, Class<T> adapterType) {
+	static <A, T extends ASTAdapter<A>> List<T> getASTBindings(EObject target, Class<T> adapterType) {
 		List<T> result = Collections.emptyList();
 		
 		for (Adapter nextAdapter : target.eAdapters()) {
@@ -174,13 +179,13 @@ public class ASTBindingHelper {
 		return result;
 	}
 
-	private static class ASTAdapter extends AdapterImpl {
-		private ASTNode fAstNode;
+	private static class ASTAdapter<A> extends AdapterImpl {
+		private A fAstNode;
 		private CSTNode fCstNode;		
 		private EcoreEnvironment fEnv;		
 		
 		
-		ASTAdapter(CSTNode cstNode, ASTNode astNode, EcoreEnvironment env) {
+		ASTAdapter(CSTNode cstNode, A astNode, EcoreEnvironment env) {
 			if(astNode == null || cstNode == null) {
 				throw new IllegalArgumentException();
 			}
@@ -190,7 +195,7 @@ public class ASTBindingHelper {
 			this.fEnv = env;
 		}
 		
-		public ASTNode getASTNode() {
+		public A getASTNode() {
 			return fAstNode;
 		}
 		
@@ -203,7 +208,7 @@ public class ASTBindingHelper {
 		}		
 	}
 	
-	private static class ModuleASTAdapter extends ASTAdapter {
+	private static class ModuleASTAdapter extends ASTAdapter<ASTNode> {
 		private CFile file;
 		
 		protected ModuleASTAdapter(CSTNode cstNode, ASTNode astNode,
