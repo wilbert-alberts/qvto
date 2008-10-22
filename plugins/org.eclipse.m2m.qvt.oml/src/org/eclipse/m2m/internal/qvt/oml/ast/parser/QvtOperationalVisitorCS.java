@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
@@ -138,9 +139,14 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VariableInitExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.WhileExp;
 import org.eclipse.m2m.internal.qvt.oml.library.QvtResolveUtil;
-import org.eclipse.m2m.internal.qvt.oml.ocl.OclQvtoPlugin;
-import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LibraryCreationException;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
+import org.eclipse.m2m.qvt.oml.blackbox.AbstractCompilationUnitDescriptor;
+import org.eclipse.m2m.qvt.oml.blackbox.BlackboxException;
+import org.eclipse.m2m.qvt.oml.blackbox.BlackboxRegistry;
+import org.eclipse.m2m.qvt.oml.blackbox.LoadContext;
+import org.eclipse.m2m.qvt.oml.blackbox.ResolutionContext;
+import org.eclipse.m2m.qvt.oml.blackbox.ResolutionContextImpl;
+import org.eclipse.m2m.qvt.oml.blackbox.AbstractBlackboxProvider.CompilationUnit;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.SemanticException;
 import org.eclipse.ocl.Environment.Internal;
@@ -2781,7 +2787,7 @@ public class QvtOperationalVisitorCS
 			if(contextType instanceof EClass) {
 				prop.setContext((EClass)contextType);
 			} else {
-				env.reportError(NLS.bind("The contextual type for intermediate property ''{0}'' must be a class", 
+				env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ContextualPropertyTypeIsNotClass, 
 								new Object[] { prop.getName() }), propCS.getScopedNameCS().getTypeCS());
 			}
 		}
@@ -3731,6 +3737,14 @@ public class QvtOperationalVisitorCS
 	 * to allow sharing single library instances cross multiple importing modules
 	 */
 	private void processModuleImports(QvtOperationalFileEnv env, MappingModuleCS moduleCS, Module module) {
+		if(moduleCS.getImports().isEmpty()) {
+			return;
+		}
+		
+		ResolutionContext context = new ResolutionContextImpl(env.getFile());
+		Registry packageRegistry = env.getFactory().getEPackageRegistry();		
+		LoadContext loadContext = new LoadContext(packageRegistry);
+		
 		Set<String> perModuleProcessedIDs = new HashSet<String>(5);
 		
 		for (ImportCS libImport : moduleCS.getImports()) {
@@ -3745,8 +3759,8 @@ public class QvtOperationalVisitorCS
 				continue;				
 			}
 			
-			org.eclipse.m2m.internal.qvt.oml.ocl.transformations.Library lib = OclQvtoPlugin.getDefault().getLibrariesRegistry().getLibrary(libId);
-			if (lib == null) {
+			AbstractCompilationUnitDescriptor libDescriptor = BlackboxRegistry.INSTANCE.getCompilationUnitDescriptor(libId, context);
+			if (libDescriptor == null) {
 				env.reportError(NLS.bind(ValidationMessages.NoLibrary, new Object[] {libId}), impPath);
 				continue;
 			}
@@ -3758,21 +3772,27 @@ public class QvtOperationalVisitorCS
 			QvtOperationalModuleEnv libEnv = myLoadedBlackBoxLibraries.get(libId);
 			if(libEnv == null) { 					
 				if(!myLoadedBlackBoxLibraries.containsKey(libId)) {
-					try {						
-						lib.loadOperations();
-						libEnv = env.defineNativeLibrary(lib);
+					try {
+						CompilationUnit cunit = BlackboxRegistry.INSTANCE.loadCompilationUnit(libDescriptor, loadContext);
+						// FIXME - so far, a single module per compilation unit has been supported => take the one
+						if(!cunit.getElements().isEmpty()) {
+							libEnv = cunit.getElements().get(0);
+							// import the library environment
+							env.addSibling(libEnv);
+						}
+						// Note: Still might be null in case of empty compilation unit  
 						// cache the newly loaded library globally
 						myLoadedBlackBoxLibraries.put(libId, libEnv);
-					} catch (LibraryCreationException e) {
-						QvtPlugin.log(e);
+					} catch (BlackboxException e) {
+						QvtPlugin.logError(NLS.bind(ValidationMessages.FailedToLoadLibrary, new Object[] { libId }), e);
 						// set null to indicate a library load failure
-						myLoadedBlackBoxLibraries.put(libId, null);				
+						myLoadedBlackBoxLibraries.put(libId, null);
 					}
 				}
 			}				
 
 			if(libEnv == null) {
-				env.reportError(NLS.bind(ValidationMessages.FailedToLoadLibrary, new Object[] { libId }), impPath);
+				env.reportError(wrappInSeeErrorLogMessage(NLS.bind(ValidationMessages.FailedToLoadLibrary, new Object[] { libId })), impPath);
 			} else {
 				ModuleImport imp = ExpressionsFactory.eINSTANCE.createModuleImport();
 				imp.setStartPosition(libImport.getStartOffset());
@@ -3782,5 +3802,9 @@ public class QvtOperationalVisitorCS
 				module.getModuleImport().add(imp);				
 			}
 		}
+	}
+	
+	private static String wrappInSeeErrorLogMessage(String message) {
+		return NLS.bind(ValidationMessages.QvtOperationalVisitorCS_SeeErrorLogForDetails, message);
 	}
 }

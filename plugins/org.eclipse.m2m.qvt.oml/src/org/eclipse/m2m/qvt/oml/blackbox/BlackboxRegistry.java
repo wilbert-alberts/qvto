@@ -1,0 +1,101 @@
+/*******************************************************************************
+ * Copyright (c) 2008 Borland Software Corporation
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *   
+ * Contributors:
+ *     Borland Software Corporation - initial API and implementation
+ *******************************************************************************/
+package org.eclipse.m2m.qvt.oml.blackbox;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
+import org.eclipse.m2m.qvt.oml.blackbox.AbstractBlackboxProvider.CompilationUnit;
+
+/*
+ * TODO - handle collisions of multiple descriptors of the same qualified name
+ */
+public class BlackboxRegistry {
+	
+	public static BlackboxRegistry INSTANCE = new BlackboxRegistry();
+	
+	private List<AbstractBlackboxProvider> fProviders;
+	
+	private BlackboxRegistry() {
+		try {
+			fProviders = readProviders();
+		} catch (RuntimeException e) {
+			fProviders = Collections.emptyList();
+			QvtPlugin.log(e);
+		}
+	}
+	
+	public AbstractCompilationUnitDescriptor getCompilationUnitDescriptor(String qualifiedName, ResolutionContext context) {
+		final List<AbstractCompilationUnitDescriptor> abstractCompilationUnitDescriptors = getCompilationUnitDescriptors(context);
+		for (AbstractCompilationUnitDescriptor abstractCompilationUnitDescriptor : abstractCompilationUnitDescriptors) {
+			if(abstractCompilationUnitDescriptor.getQualifiedName().equals(qualifiedName)) {
+				return abstractCompilationUnitDescriptor;
+			}
+		}
+		return null;
+	}
+	
+	public CompilationUnit loadCompilationUnit(AbstractCompilationUnitDescriptor descriptor, LoadContext loadContext) throws BlackboxException {
+		if(descriptor == null) {
+			throw new IllegalArgumentException("Null blackbox descriptor"); //$NON-NLS-1$
+		}
+		
+		AbstractBlackboxProvider provider = descriptor.getProvider();
+		return provider.loadCompilationUnit(descriptor, loadContext);
+	}
+		
+	public List<AbstractCompilationUnitDescriptor> getCompilationUnitDescriptors(ResolutionContext loadContext) {
+		ArrayList<AbstractCompilationUnitDescriptor> result = new ArrayList<AbstractCompilationUnitDescriptor>();
+		
+		for (AbstractBlackboxProvider provider : fProviders) {
+			for (AbstractCompilationUnitDescriptor abstractCompilationUnitDescriptor : provider.getModuleDescriptors(loadContext)) {
+				result.add(abstractCompilationUnitDescriptor);
+			}
+		}
+		
+		return result;
+	}
+
+	
+    private static List<AbstractBlackboxProvider> readProviders() {
+        List<AbstractBlackboxProvider> providers = new LinkedList<AbstractBlackboxProvider>();
+        
+        IConfigurationElement[] configs =
+            Platform.getExtensionRegistry().getConfigurationElementsFor(
+                QvtPlugin.ID, "blackboxProvider");
+
+        for (IConfigurationElement element : configs) {
+            if (element.getName().equals("provider")) {
+                try {
+                	Object extension = element.createExecutableExtension("class");
+                	if(extension instanceof AbstractBlackboxProvider == false) {
+                		QvtPlugin.log(QvtPlugin.createErrorStatus(
+                				"Provider must implement AbstractBlackboxProvider interace:" + extension, null));
+                		continue;
+                	}
+
+                	providers.add((AbstractBlackboxProvider)extension);
+                } catch (CoreException e) {
+                    QvtPlugin.log(e.getStatus());
+                }
+            }
+        }
+        
+        return providers;
+    }
+}

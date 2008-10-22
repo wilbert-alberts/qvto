@@ -15,7 +15,6 @@ package org.eclipse.m2m.internal.qvt.oml.stdlib;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.types.OCLStandardLibrary;
@@ -62,8 +61,4 @@ public abstract class AbstractQVTStdlib {
 	public OCLStandardLibrary<EClassifier> getOCLStdLib() {
 		return getEnvironment().getOCLStandardLibrary();
 	}	
-	
-    public boolean isStdLibOperaton(EOperation operation) {
-    	return null != CallHandlerAdapter.getDispatcher(operation);
-    }
 }

@@ -12,7 +12,6 @@
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -165,14 +164,6 @@ public class QvtOperationalParserUtil {
 		}
 		
 		return ""; //$NON-NLS-1$
-	}
-
-	public static Set<String> getLibMetamodels(org.eclipse.m2m.internal.qvt.oml.ocl.transformations.Library lib) {
-        LinkedHashSet<String> metamodels = new LinkedHashSet<String>();
-        metamodels.addAll(Arrays.asList(lib.getInMetamodels()));
-        metamodels.addAll(Arrays.asList(lib.getOutMetamodels()));
-        
-        return metamodels;
 	}
 
 	public static void addLocalPropertyAST(EStructuralFeature moduleFeature, Property propertyAST) {

@@ -3,6 +3,7 @@
 <plugin>
 
    <extension-point id="importResolverFactory" name="importResolverFactory" schema="schema/importResolverFactory.exsd"/>
+   <extension-point id="blackboxProvider" name="Black box provider" schema="schema/blackboxProvider.exsd"/>
     
    <extension
          id="QvtBuilder"

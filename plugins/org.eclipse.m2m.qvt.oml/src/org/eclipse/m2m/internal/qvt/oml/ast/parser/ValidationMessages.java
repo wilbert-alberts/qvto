@@ -44,6 +44,7 @@ public final class ValidationMessages extends NLS {
 	public static String QvtOperationalVisitorCS_booleanTypeExpressionExpected;
 	public static String QvtOperationalVisitorCS_canNotInstantiateAbstractType;
 	public static String QvtOperationalVisitorCS_canNotModifyINParameter;
+	public static String QvtOperationalVisitorCS_ContextualPropertyTypeIsNotClass;
 	public static String QvtOperationalVisitorCS_deprecatedWhileExp;
 	public static String QvtOperationalVisitorCS_duplicateMappingRereferenceInExtensionKind;
 	public static String QvtOperationalVisitorCS_duplicateQualifierOnOperation;
@@ -78,6 +79,7 @@ public final class ValidationMessages extends NLS {
 	public static String QvtOperationalVisitorCS_NoOwningClassForPropertyInTheScope;
 	public static String QvtOperationalVisitorCS_resultParamNameDirectionNotAllowed;
 	public static String QvtOperationalVisitorCS_resultParamNameNotAllowed;
+	public static String QvtOperationalVisitorCS_SeeErrorLogForDetails;
 	public static String QvtOperationalVisitorCS_unsupportedQualifierOnOperation;
 	public static String QvtOperationalVisitorCS_useImplicitObjectExpOrPopulationSection;
 	public static String QvtOperationalVisitorCS_userVariableForReferredObject;

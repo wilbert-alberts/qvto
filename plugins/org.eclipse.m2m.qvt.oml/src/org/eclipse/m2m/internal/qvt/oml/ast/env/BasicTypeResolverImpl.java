@@ -28,6 +28,8 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Typedef;
 import org.eclipse.ocl.AbstractTypeResolver;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.ecore.internal.TupleFactory;
+import org.eclipse.ocl.types.TupleType;
+import org.eclipse.ocl.util.TypeUtil;
 
 
 /**
@@ -121,4 +123,25 @@ class BasicTypeResolverImpl
         
         return null;
 	}
+    
+	protected EClassifier findShadowClass(EClassifier type) {
+        EPackage pkg = hasAdditionalFeatures()? getAdditionalFeaturesPackage() : null;
+        
+        if (pkg != null) {
+    		for (EClassifier next : getEnvironment().getUMLReflection().getClassifiers(pkg)) {
+    			EClassifier shadowedClassifier = getShadowedClassifier(next);
+				if (shadowedClassifier == type) {
+    				return next;
+    			}
+    			
+    			if(type instanceof TupleType) {
+    				if(TypeUtil.exactTypeMatch(getEnvironment(), type, shadowedClassifier)) {
+    					return next;
+    				}
+    			}
+    		}
+        }
+        
+		return null;
+	}    
 }

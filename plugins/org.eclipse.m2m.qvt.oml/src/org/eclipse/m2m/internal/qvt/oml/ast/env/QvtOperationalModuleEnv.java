@@ -14,7 +14,6 @@ package org.eclipse.m2m.internal.qvt.oml.ast.env;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
@@ -29,9 +28,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
-import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.Library;
-import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LibraryCreationException;
-import org.eclipse.m2m.internal.qvt.oml.stdlib.LegacyNativeLibSupport;
 import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.lpg.ProblemHandler;
@@ -212,24 +208,14 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
     	return myLibs == null ? Collections.<Module>emptyList() : Collections.unmodifiableList(myLibs);
 	} 
     
-	public QvtOperationalModuleEnv defineNativeLibrary(Library lib) throws LibraryCreationException {
-		if(myLibs == null) {
-			myLibs = new LinkedList<Module>();
-		}
-			 
-		QvtOperationalModuleEnv libModuleEnv = LegacyNativeLibSupport.INSTANCE.defineLibrary(lib);
-		Module libModule = libModuleEnv.getModuleContextType();
-		myLibs.add(libModule);
-		addSibling(libModuleEnv);
-		
-		Variable<EClassifier, EParameter> var = EcoreFactory.eINSTANCE.createVariable();
-		var.setName(getThisVariableName(libModule));
-		var.setType(libModule);
-		this.addElement(var.getName(), var, false);
-		
-		return libModuleEnv;
-	}
-
+    @Override
+    public String toString() {
+    	if(myContextModule != null && myContextModule.getName() != null) {
+    		return "Module env: <" + myContextModule.getName() + ">@" + Integer.toHexString(System.identityHashCode(this)); //$NON-NLS-1$ //$NON-NLS-2$
+    	}
+    	return super.toString();
+    }
+    
 	private boolean isMayBelongToExtent(EClassifier myType) {
 		return myType != null 
 			&& getOCLStandardLibrary().getOclVoid() != myType

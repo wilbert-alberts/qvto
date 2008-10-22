@@ -63,8 +63,12 @@ public class QvtPlugin extends Plugin {
     }
     
     public static void log(Throwable e) {
-        log(new Status(IStatus.ERROR, ID, 100001, "internal_error", e)); //$NON-NLS-1$
+        log(new Status(IStatus.ERROR, ID, 100001, "Unexpected_exception", e)); //$NON-NLS-1$
     }
+    
+    public static void logError(String message, Throwable e) {
+        log(new Status(IStatus.ERROR, ID, 100001, message, e)); //$NON-NLS-1$
+    }    
     
 	public static IStatus createErrorStatus(String message, Exception e) {
 		return new Status(IStatus.ERROR, QvtPlugin.ID, IStatus.ERROR, message, e);
