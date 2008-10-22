@@ -20,9 +20,9 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CategoryImageConsta
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionProposal;
-import org.eclipse.m2m.internal.qvt.oml.ocl.OclQvtoPlugin;
-import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LibrariesRegistry;
-import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.Library;
+import org.eclipse.m2m.qvt.oml.blackbox.AbstractCompilationUnitDescriptor;
+import org.eclipse.m2m.qvt.oml.blackbox.BlackboxRegistry;
+import org.eclipse.m2m.qvt.oml.blackbox.ResolutionContextImpl;
 
 /**
  * @author aigdalov
@@ -45,11 +45,18 @@ public class ImportLibraryCollector extends AbstractCollector {
 
     public void addPropoposals(Collection<ICompletionProposal> proposals,
             QvtCompletionData data) {
-        LibrariesRegistry librariesRegistry = OclQvtoPlugin.getDefault().getLibrariesRegistry();
-        for (Library library : librariesRegistry.getLibraries()) {
-            String proposalString = library.getId();
+//        LibrariesRegistry librariesRegistry = OclQvtoPlugin.getDefault().getLibrariesRegistry();
+//        for (Library library : librariesRegistry.getLibraries()) {
+//            String proposalString = library.getId();
+//            QvtCompletionProposal info = CompletionProposalUtil.createCompletionProposal(proposalString, CategoryImageConstants.MAPPING, data);
+//            CompletionProposalUtil.addProposalIfNecessary(proposals, info, data);
+//        }
+        
+        final ResolutionContextImpl loadContext = new ResolutionContextImpl(data.getCFile());
+        for (AbstractCompilationUnitDescriptor abstractCompilationUnitDescriptor : BlackboxRegistry.INSTANCE.getCompilationUnitDescriptors(loadContext)) {
+            String proposalString = abstractCompilationUnitDescriptor.getQualifiedName();
             QvtCompletionProposal info = CompletionProposalUtil.createCompletionProposal(proposalString, CategoryImageConstants.MAPPING, data);
-            CompletionProposalUtil.addProposalIfNecessary(proposals, info, data);
-        }
+            CompletionProposalUtil.addProposalIfNecessary(proposals, info, data);        	
+		}
     }
 }
