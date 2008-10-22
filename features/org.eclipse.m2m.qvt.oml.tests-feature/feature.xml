@@ -38,10 +38,6 @@
       <import plugin="org.eclipse.ui.editors"/>
       <import plugin="org.eclipse.ant.core"/>
       <import plugin="org.eclipse.core.resources"/>
-      <import plugin="org.eclipse.core.runtime.compatibility"/>
-      <import plugin="org.apache.ant" version="1.6.5" match="compatible"/>
-      <import plugin="org.eclipse.ui.ide.application"/>
-      <import plugin="org.eclipse.equinox.app"/>
    </requires>
 
    <plugin
