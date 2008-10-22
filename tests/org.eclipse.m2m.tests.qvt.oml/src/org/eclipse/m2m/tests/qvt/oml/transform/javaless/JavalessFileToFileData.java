@@ -77,7 +77,6 @@ public class JavalessFileToFileData extends ModelTestData {
 		String patchedName = myFileData.getName() + "_javaless"; //$NON-NLS-1$
 		{
 			File[] allQvtSources = destFolder.listFiles(new FilenameFilter() {
-				@Override
 				public boolean accept(File dir, String name) {
 					return name.endsWith(MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT);
 				}
