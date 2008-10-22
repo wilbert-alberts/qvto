@@ -3,5 +3,12 @@
 <plugin>
 
    <extension-point id="libraries" name="libraries" schema="schema/libraries.exsd"/>
+   <extension
+         name="Blackbox library wrapper to legacy native libraries"
+         point="org.eclipse.m2m.qvt.oml.blackboxProvider">
+      <provider
+            class="org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LegacyNativeLibraryProviderAdapter">
+      </provider>
+   </extension>
 
 </plugin>

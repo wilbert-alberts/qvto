@@ -26,7 +26,7 @@ import org.eclipse.m2m.internal.qvt.oml.ocl.Logger;
 import org.eclipse.m2m.internal.qvt.oml.ocl.metainfo.OclMetainfoOperation;
 
 
-public class LibraryOperationImpl implements LibraryOperation {
+class LibraryOperationImpl implements LibraryOperation {
 
     public LibraryOperationImpl(OclMetainfoOperation meta, Library library)
             throws LibraryOperationException, LibraryCreationException {
@@ -122,9 +122,9 @@ public class LibraryOperationImpl implements LibraryOperation {
 
     private boolean isMethodApplicable(Object[] parameterValues,
             Class<?> returnType) {
-        Class[] parameterClasses = getParameterClasses(parameterValues);
+        Class<?>[] parameterClasses = getParameterClasses(parameterValues);
         Method method = getMethod();
-        Class[] methodParameters = method.getParameterTypes();
+        Class<?>[] methodParameters = method.getParameterTypes();
 
         if (parameterClasses.length != methodParameters.length) {
             return false;
@@ -133,7 +133,7 @@ public class LibraryOperationImpl implements LibraryOperation {
         for (int i = 0; i < parameterClasses.length; i++) {
             // null parameters are conformed to any classes
             Class<?> required = methodParameters[i];
-            Class actual = parameterClasses[i];
+            Class<?> actual = parameterClasses[i];
             if (actual != null && !required.isAssignableFrom(actual)) {
                 Logger.getLogger().log(Logger.WARNING, "Type " + required //$NON-NLS-1$
                         + " is not assignable from " + actual); //$NON-NLS-1$
@@ -151,8 +151,8 @@ public class LibraryOperationImpl implements LibraryOperation {
         return true;
     }
 
-    private Class[] getParameterClasses(Object[] parameters) {
-        Collection<Class> parameterClasses = new ArrayList<Class>();
+    private Class<?>[] getParameterClasses(Object[] parameters) {
+        Collection<Class<?>> parameterClasses = new ArrayList<Class<?>>();
         for (Object param : parameters) {
             // null parameters are conformed to any classes
             parameterClasses.add(param == null ? null : param.getClass());

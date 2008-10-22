@@ -75,7 +75,7 @@ public class OclQvtoPlugin extends Plugin {
     private class PluginLogHandler extends StreamHandler {
 
         @Override
-        public void publish(LogRecord record) {
+        public synchronized void publish(LogRecord record) {
             int severity = IStatus.OK;
             if (record.getLevel() == Level.SEVERE) {
                 severity = IStatus.ERROR;
@@ -93,11 +93,11 @@ public class OclQvtoPlugin extends Plugin {
         }
 
         @Override
-        public void flush() {
+        public synchronized void flush() {
         }
 
         @Override
-        public void close() throws SecurityException {
+        public synchronized void close() throws SecurityException {
         }
     }
     

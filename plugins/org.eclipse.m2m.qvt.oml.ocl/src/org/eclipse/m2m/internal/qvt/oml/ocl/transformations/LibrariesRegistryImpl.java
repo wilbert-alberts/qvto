@@ -49,7 +49,7 @@ public class LibrariesRegistryImpl implements LibrariesRegistry {
     }
     
     private static Collection<Library> load(IConfigurationElement[] configurations) {
-        Set<Class> registeredLibraryClasses = new HashSet<Class>();
+        Set<Class<?>> registeredLibraryClasses = new HashSet<Class<?>>();
         Collection<Library> libraries = new LinkedList<Library>();
         for (int i = 0; i < configurations.length; i++) {
             if (!LIBRARY_TAG.equals(configurations[i].getName())) {

@@ -11,25 +11,21 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ocl.metainfo;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.m2m.internal.qvt.oml.ocl.Logger;
 
 
 public class OclMetainfoClassLazyLoader implements OclMetainfo.LazyLoader {
 
-    public OclMetainfoClassLazyLoader(Class executableClass) {
+    public OclMetainfoClassLazyLoader(Class<?> executableClass) {
         this(executableClass, getInnerClassByName(executableClass,
                 OclReflectiveMetainfoConstants.METAINFO_NAME));
     }
     
-    protected OclMetainfoClassLazyLoader(Class executableClass, Class metainfoClass) {
+    protected OclMetainfoClassLazyLoader(Class<?> executableClass, Class<?> metainfoClass) {
         myExecutableClass = executableClass;
         myMetainfoClass = metainfoClass;
     }
@@ -67,13 +63,13 @@ public class OclMetainfoClassLazyLoader implements OclMetainfo.LazyLoader {
         }
     }
 
-    protected OclMetainfo buildImportedMetainfo(Class metainfoClass) {
-        Class executableClass = getExecutableClass(metainfoClass);
+    protected OclMetainfo buildImportedMetainfo(Class<?> metainfoClass) {
+        Class<?> executableClass = getExecutableClass(metainfoClass);
         return new OclMetainfo(new OclMetainfoClassLazyLoader(executableClass, metainfoClass));
     }
 
-    protected static Class getExecutableClass(Class metainfoClass) {
-        Class executableClass = metainfoClass.getDeclaringClass();
+    protected static Class<?> getExecutableClass(Class<?> metainfoClass) {
+        Class<?> executableClass = metainfoClass.getDeclaringClass();
         if (executableClass == null) {
             Logger.logError("Class '" + metainfoClass.getName() + "' is not inner");  //$NON-NLS-1$//$NON-NLS-2$
             return null;
@@ -81,7 +77,7 @@ public class OclMetainfoClassLazyLoader implements OclMetainfo.LazyLoader {
         return executableClass;
     }
 
-    public Class getMetainfoClass() {
+    public Class<?> getMetainfoClass() {
         return myMetainfoClass;        
     }
     
@@ -113,23 +109,9 @@ public class OclMetainfoClassLazyLoader implements OclMetainfo.LazyLoader {
         return operation;
     }
 
-    private static Set<Class> getImportedMetainfoClasses(Class cl) {
-        Class importedMetainfos = getInnerClassByName(cl,
-                OclReflectiveMetainfoConstants.METAINFO_IMPORT_CLASS_NAME);
-        if (importedMetainfos == null) {
-            return Collections.emptySet();
-        }
-        Field[] fields = importedMetainfos.getFields();
-        Set<Class> result = new HashSet<Class>();
-        for (int i = 0; i < fields.length; i++) {
-            result.add(fields[i].getType());
-        }
-        return result;
-    }
-
-    protected static Class getInnerClassByName(Class cl, String name) {
-        Class[] innerClasses = cl.getClasses();
-        Class result = null;
+    protected static Class<?> getInnerClassByName(Class<?> cl, String name) {
+        Class<?>[] innerClasses = cl.getClasses();
+        Class<?> result = null;
         for (int i = 0; i < innerClasses.length; i++) {
             if (name.equals(innerClasses[i].getSimpleName())) {
                 result = innerClasses[i];
@@ -150,6 +132,6 @@ public class OclMetainfoClassLazyLoader implements OclMetainfo.LazyLoader {
         return false;
     }
 
-    private final Class myMetainfoClass;
+    private final Class<?> myMetainfoClass;
     private final Class<?> myExecutableClass;
 }
