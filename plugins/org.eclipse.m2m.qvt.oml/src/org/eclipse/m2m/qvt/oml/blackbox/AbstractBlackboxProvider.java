@@ -34,7 +34,6 @@ public abstract class AbstractBlackboxProvider {
 
 	protected CompilationUnit createCompilationUnit(final List<QvtOperationalModuleEnv> moduleEnv) {
 		return new CompilationUnit() {
-			@Override
 			public List<QvtOperationalModuleEnv> getElements() {
 				return Collections.unmodifiableList(moduleEnv);
 			}

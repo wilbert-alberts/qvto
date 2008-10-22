@@ -28,7 +28,6 @@ public class ResolutionContextImpl implements ResolutionContext {
 		fFile = cFile;
 	}
 		
-	@Override
 	public <T> T getAdapter(Class<T> adapterType) {
 		if(fFile == null) {
 			return null;
