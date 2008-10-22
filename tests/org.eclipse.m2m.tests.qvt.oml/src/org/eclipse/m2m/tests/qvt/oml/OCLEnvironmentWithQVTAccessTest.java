@@ -13,8 +13,14 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
-import org.eclipse.m2m.internal.qvt.oml.stdlib.LegacyNativeLibSupport;
+import org.eclipse.m2m.qvt.oml.blackbox.AbstractCompilationUnitDescriptor;
+import org.eclipse.m2m.qvt.oml.blackbox.BlackboxRegistry;
+import org.eclipse.m2m.qvt.oml.blackbox.LoadContext;
+import org.eclipse.m2m.qvt.oml.blackbox.ResolutionContext;
+import org.eclipse.m2m.qvt.oml.blackbox.ResolutionContextImpl;
+import org.eclipse.m2m.qvt.oml.blackbox.AbstractBlackboxProvider.CompilationUnit;
 import org.eclipse.m2m.qvt.oml.runtime.util.OCLEnvironmentWithQVTAccessFactory;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 import org.eclipse.ocl.ParserException;
@@ -31,18 +37,29 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 
 	@Override
 	protected void setUp() {
-		fImportedModules = TestUtil.compileModules(SRC_CONTAINER,
+		final Set<CompiledModule> compileModules = TestUtil.compileModules(SRC_CONTAINER,
 			new String[] {
 				"org.q1",
 				"org.q2"
 			}
 		);
 		
-		fImportedModules = new HashSet<Module>(fImportedModules);
+		fImportedModules = new HashSet<Module>();
+		for (CompiledModule compiledModule : compileModules) {
+			fImportedModules.add(compiledModule.getModule());
+		}
+		
 		try {
-			fImportedModules.add(LegacyNativeLibSupport.getLibraryModule("Strings"));
+			ResolutionContext resolutionContext = new ResolutionContextImpl(compileModules.iterator().next().getSource());
+			// import "Strings" black-box library
+			AbstractCompilationUnitDescriptor abstractCompilationUnitDescriptor = BlackboxRegistry.INSTANCE.getCompilationUnitDescriptor("Strings", resolutionContext);
+			
+			LoadContext loadContext = new LoadContext(EPackage.Registry.INSTANCE);
+			CompilationUnit loadCompilationUnit = BlackboxRegistry.INSTANCE.loadCompilationUnit(abstractCompilationUnitDescriptor, loadContext);
+			fImportedModules.add(loadCompilationUnit.getElements().get(0).getModuleContextType());
+
 		} catch (Exception e) {
-			fail(e.getMessage());
+			throw new RuntimeException("Failed to setup test", e);
 		}
 		
 		fOCL = OCL.newInstance(new OCLEnvironmentWithQVTAccessFactory(fImportedModules, EPackage.Registry.INSTANCE));

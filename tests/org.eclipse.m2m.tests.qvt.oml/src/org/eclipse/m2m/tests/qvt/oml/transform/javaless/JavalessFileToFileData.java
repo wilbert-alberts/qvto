@@ -13,6 +13,7 @@ package org.eclipse.m2m.tests.qvt.oml.transform.javaless;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -75,13 +76,26 @@ public class JavalessFileToFileData extends ModelTestData {
 		
 		String patchedName = myFileData.getName() + "_javaless"; //$NON-NLS-1$
 		{
-    		File origTransformationFile = getFile(destFolder, myFileData.getName() + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT);
-    		String contents = FileUtil.getStreamContents(new FileInputStream(origTransformationFile), ENCODING);
-
-    		contents = JavalessUtil.changeTransformationName(contents, myFileData.getName(), patchedName);
-    		contents = JavalessUtil.patchContents(contents);
-    		
-    		createFile(destFolder, patchedName + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT, contents);
+			File[] allQvtSources = destFolder.listFiles(new FilenameFilter() {
+				@Override
+				public boolean accept(File dir, String name) {
+					return name.endsWith(MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT);
+				}
+			});
+			
+			for (File origTransformationFile : allQvtSources) {
+	    		//origTransformationFile = getFile(destFolder, myFileData.getName() + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT);
+	    		String contents = FileUtil.getStreamContents(new FileInputStream(origTransformationFile), ENCODING);
+	
+	    		contents = JavalessUtil.changeTransformationName(contents, myFileData.getName(), patchedName);
+	    		contents = JavalessUtil.patchContents(contents);
+	    		
+	    		//String newFileName = patchedName + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT;
+	    		String plainName = origTransformationFile.getName();
+	    		plainName = plainName.substring(0, plainName.indexOf(MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT));
+	    		String newQVTFileName =  plainName + "_javaless" + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT; //$NON-NLS-1$	    		
+				createFile(destFolder, newQVTFileName, contents);
+			}
 		}
 		
 		String patchedFromFileName = myFileData.getFromFile() + ".javaless"; //$NON-NLS-1$

@@ -137,7 +137,7 @@ public class TestUtil extends Assert {
 		return res;
 	}
 	
-	public static Set<Module> compileModules(String srcContainer, String[] modulePaths)  {
+	public static Set<CompiledModule> compileModules(String srcContainer, String[] modulePaths)  {
 		TestModuleResolver testResolver = TestModuleResolver.createdTestPluginResolver(srcContainer);
 		
 		QvtCompiler compiler = new QvtCompiler(TestModuleResolver.createdTestPluginResolver(srcContainer));				
@@ -153,15 +153,15 @@ public class TestUtil extends Assert {
 		}
 		
 		QvtCompilationResult[] result;
-		Set<Module> modules;		
+		Set<CompiledModule> modules;		
 		try {
 			result = compiler.compile(sourceFiles, options, null);
-			modules = new LinkedHashSet<Module>();
+			modules = new LinkedHashSet<CompiledModule>();
 			for (QvtCompilationResult nextResult : result) {
 				assertEquals(nextResult.getModule().getSource().getFullPath()  
 						+ " must not have compilation error", //$NON-NLS-1$ 
 						0, nextResult.getErrors().length); //$NON-NLS-1$
-				modules.add(nextResult.getModule().getModule());
+				modules.add(nextResult.getModule());
 			}
 			
 		} catch (MdaException e) {
