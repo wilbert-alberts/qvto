@@ -72,6 +72,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
@@ -84,7 +85,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.RenameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveInExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ReturnExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.StatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
@@ -1086,10 +1086,15 @@ public class QvtOperationalVisitorCS
     
     private static MappingDeclarationCS findOwningMappingDeclarationCS(OutExpCS outExpCS) {
     	EObject eContainer = outExpCS.eContainer();
-		if(eContainer instanceof MappingBodyCS &&
-    		eContainer.eContainer() instanceof MappingRuleCS) {
-    		MappingRuleCS mappingCS = (MappingRuleCS)eContainer.eContainer();
-    		return mappingCS.getMappingDeclarationCS();
+    	if (eContainer instanceof MappingBodyCS) {
+    	    eContainer = eContainer.eContainer();
+            if (eContainer instanceof MappingSectionsCS) {
+                eContainer = eContainer.eContainer();
+                if (eContainer instanceof MappingRuleCS) {
+                    MappingRuleCS mappingCS = (MappingRuleCS) eContainer;
+                    return mappingCS.getMappingDeclarationCS();
+                }
+            }
     	}
     	return null;
     }
@@ -1416,7 +1421,7 @@ public class QvtOperationalVisitorCS
 			ImperativeOperation operation = isMapping ? ExpressionsFactory.eINSTANCE.createMappingOperation() : 
 					(QvtOperationalEnv.MAIN.equals(name) ? ExpressionsFactory.eINSTANCE.createEntryOperation() : ExpressionsFactory.eINSTANCE.createHelper());
 			
-			if (visitMappingDeclarationCS(methodCS.getMappingDeclarationCS(), env, operation)) {
+			if (visitMappingDeclarationCS(methodCS, env, operation)) {
 				EOperation imperativeOp = env.defineImperativeOperation(operation, methodCS instanceof MappingRuleCS, true);
 				if(imperativeOp != null) {
 					methodMap.put(methodCS, (ImperativeOperation)imperativeOp);
@@ -1849,7 +1854,7 @@ public class QvtOperationalVisitorCS
 			QvtOperationalEnv env) throws SemanticException {
 		List<OCLExpression<EClassifier>> statements = new ArrayList<OCLExpression<EClassifier>>(mappingSectionCS
 				.getStatements().size());
-		for (StatementCS statementCS : mappingSectionCS.getStatements()) {
+		for (OCLExpressionCS statementCS : mappingSectionCS.getStatements()) {
 			if (statementCS == null) {
 				continue;
 			}
@@ -1871,19 +1876,22 @@ public class QvtOperationalVisitorCS
 		}
 
 		// process operation qualifiers
-		EList<QualifierKindCS> qualifiersCS = methodCS.getQualifiers();
+		EList<QualifierKindCS> qualifiersCS = (methodCS.getMappingDeclarationCS() == null) ? null 
+		        : methodCS.getMappingDeclarationCS().getQualifiers();
 		
 		if(declaredOperation instanceof MappingOperation) {
-			for (QualifierKindCS nextQualifierCS : qualifiersCS) {
-				if(nextQualifierCS != QualifierKindCS.ABSTRACT) {
-					// only 'abstract' qualifier for mapping is currently supported 
-					String errMessage = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_unsupportedQualifierOnOperation, 
-							nextQualifierCS.getName(), QvtOperationalParserUtil.getMappingStringRepresentation(methodCS));
-					env.reportError(errMessage, QvtOperationalParserUtil.getImperativeOperationProblemNode(methodCS));
-				} else {
-					QvtOperationalParserUtil.markAsAbstractMappingOperation((MappingOperation) declaredOperation);
-				}
-			}
+		    if (qualifiersCS != null) {
+	            for (QualifierKindCS nextQualifierCS : qualifiersCS) {
+	                if(nextQualifierCS != QualifierKindCS.ABSTRACT) {
+	                    // only 'abstract' qualifier for mapping is currently supported 
+	                    String errMessage = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_unsupportedQualifierOnOperation, 
+	                            nextQualifierCS.getName(), QvtOperationalParserUtil.getMappingStringRepresentation(methodCS));
+	                    env.reportError(errMessage, QvtOperationalParserUtil.getImperativeOperationProblemNode(methodCS));
+	                } else {
+	                    QvtOperationalParserUtil.markAsAbstractMappingOperation((MappingOperation) declaredOperation);
+	                }
+	            }
+		    }
 		}
 		
 		Collection<QualifierKindCS> qualifierDups = QvtOperationalParserUtil.selectDuplicateQualifiers(qualifiersCS);
@@ -1925,12 +1933,12 @@ public class QvtOperationalVisitorCS
 		}
 
 		List<OCLExpression<EClassifier>> inits = Collections.emptyList();
-		if (methodCS.getMappingInitCS() != null) {
-			inits = visitMappingSectionCS(methodCS.getMappingInitCS(), newEnv);
+		if ((methodCS.getMappingBody() != null) && (methodCS.getMappingBody().getMappingInitCS() != null)) {
+			inits = visitMappingSectionCS(methodCS.getMappingBody().getMappingInitCS(), newEnv);
 		}
 
 		MappingBody body = null;
-		MappingBodyCS mappingBodyCS = methodCS.getMappingBodyCS();
+		MappingBodyCS mappingBodyCS = (methodCS.getMappingBody() == null) ? null : methodCS.getMappingBody().getMappingBodyCS();
 		if (mappingBodyCS != null) {
 			body = visitMappingBodyCS(mappingBodyCS, newEnv);
 			if (body != null) {
@@ -1954,8 +1962,8 @@ public class QvtOperationalVisitorCS
 		}
 
 		List<OCLExpression<EClassifier>> ends = Collections.emptyList();
-		if (methodCS.getMappingEndCS() != null) {
-			ends = visitMappingSectionCS(methodCS.getMappingEndCS(), newEnv);
+		if ((methodCS.getMappingBody() != null) && (methodCS.getMappingBody().getMappingEndCS() != null)) {
+			ends = visitMappingSectionCS(methodCS.getMappingBody().getMappingEndCS(), newEnv);
 		}
 
 		if (guard != null) {
@@ -2102,8 +2110,8 @@ public class QvtOperationalVisitorCS
 	}
 	
 	private void processMappingExtensions(MappingRuleCS mappingCS, MappingOperation operation, QvtOperationalEnv env) {
-		if(!mappingCS.getMappingExtension().isEmpty()) {
-			for (MappingExtensionCS extensionCS : mappingCS.getMappingExtension()) {
+		if((mappingCS.getMappingDeclarationCS() != null) && !mappingCS.getMappingDeclarationCS().getMappingExtension().isEmpty()) {
+			for (MappingExtensionCS extensionCS : mappingCS.getMappingDeclarationCS().getMappingExtension()) {
 				MappingExtensionKindCS kind = extensionCS.getKind();
 				
 				for (ScopedNameCS identifierCS : extensionCS.getMappingIdentifiers()) {
@@ -2140,12 +2148,13 @@ public class QvtOperationalVisitorCS
 		}
 	}
 	
-	protected boolean visitMappingDeclarationCS(MappingDeclarationCS mappingDeclarationCS, QvtOperationalModuleEnv env, ImperativeOperation operation) throws SemanticException {
+	protected boolean visitMappingDeclarationCS(MappingMethodCS mappingMethodCS, QvtOperationalModuleEnv env, ImperativeOperation operation) throws SemanticException {
+	    MappingDeclarationCS mappingDeclarationCS = mappingMethodCS.getMappingDeclarationCS();
 		if (mappingDeclarationCS == null) {
 			return false;
 		}
 		
-		operation.setIsBlackbox(mappingDeclarationCS.isBlackBox());
+		operation.setIsBlackbox(mappingMethodCS.isBlackBox());
 		operation.setStartPosition(mappingDeclarationCS.getStartOffset());
 		operation.setEndPosition(mappingDeclarationCS.getEndOffset());
 		operation.setName(mappingDeclarationCS.getSimpleNameCS().getValue());		
@@ -2472,11 +2481,11 @@ public class QvtOperationalVisitorCS
             return result;
         }
         MappingMethodCS mappingMethod = null;
-        if (varInitCS.eContainer() instanceof MappingMethodCS) {
-        	mappingMethod = (MappingMethodCS) varInitCS.eContainer();
-        }
-        else if (varInitCS.eContainer().eContainer() instanceof MappingMethodCS) {
+        if (varInitCS.eContainer().eContainer() instanceof MappingMethodCS) {
         	mappingMethod = (MappingMethodCS) varInitCS.eContainer().eContainer();
+        }
+        else if (varInitCS.eContainer().eContainer().eContainer() instanceof MappingMethodCS) {
+        	mappingMethod = (MappingMethodCS) varInitCS.eContainer().eContainer().eContainer();
         }
         if (mappingMethod != null) {
 			MappingDeclarationCS mappingDeclCS = mappingMethod.getMappingDeclarationCS();
@@ -3297,14 +3306,14 @@ public class QvtOperationalVisitorCS
             if (type instanceof EClass) {
                 EClass eClass = (EClass) type;
                 if (!QvtOperationalUtil.isInstantiable(eClass)) {
-                    MappingInitCS init = methodCS.getMappingInitCS();
+                    MappingInitCS init = (methodCS.getMappingBody() == null) ? null : methodCS.getMappingBody().getMappingInitCS();
                     if (init != null) {
                         // TODO: The check could be more accurate
                         return;
                     }
-                    if(!(methodCS.getQualifiers().contains(QualifierKindCS.ABSTRACT))) {
+                    if((methodCS.getMappingDeclarationCS() != null) && !(methodCS.getMappingDeclarationCS().getQualifiers().contains(QualifierKindCS.ABSTRACT))) {
                     	boolean hasDisjunct = false;
-                    	for (MappingExtensionCS extensionCS : methodCS.getMappingExtension()) {
+                    	for (MappingExtensionCS extensionCS : methodCS.getMappingDeclarationCS().getMappingExtension()) {
 							if(extensionCS.getKind() == MappingExtensionKindCS.DISJUNCTS) {
 								hasDisjunct = true;
 								break;
@@ -3319,27 +3328,6 @@ public class QvtOperationalVisitorCS
         }
     }
     
-	private boolean isEmptyBodyCS(MappingBodyCS mappingBodyCS) {
-		if (mappingBodyCS == null) {
-			return true;
-		}
-
-		List<OutExpCS> outExpList = AbstractQVTParser.collectOutExpList(mappingBodyCS);
-		if (outExpList.isEmpty()) {
-			return true;
-		}
-		
-		if(outExpList.size() > 1) {
-			return false;
-		}
-		OutExpCS outExpression = outExpList.get(0);		
-		if (outExpression.getTypeSpecCS() == null && outExpression.getExpressions().isEmpty()
-				&& outExpression.getStartOffset() == outExpression.getBodyStartLocation()) {
-			return true;
-		}
-		return false;
-	}
-
 	private boolean validateLocalPropertyCS(LocalPropertyCS propCS, LocalProperty prop, QvtOperationalFileEnv env)
 			throws SemanticException {
 
