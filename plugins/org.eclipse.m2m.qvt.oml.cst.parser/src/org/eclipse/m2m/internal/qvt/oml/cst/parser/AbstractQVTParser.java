@@ -22,6 +22,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
@@ -49,6 +50,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindCS;
@@ -66,6 +68,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.RenameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveInExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ReturnExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.SimpleSignatureCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.StatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchExpCS;
@@ -218,19 +221,11 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	}
 
 	protected final MappingRuleCS createMappingRuleCS(MappingDeclarationCS mappingDecl, OCLExpressionCS guard,
-			MappingInitCS mappingInit, MappingBodyCS mappingBody, MappingEndCS mappingEnd) {
+			MappingSectionsCS mappingBody) {
 				MappingRuleCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingRuleCS();
 				result.setMappingDeclarationCS(mappingDecl);
 				result.setGuard(guard);
-				result.setMappingInitCS(mappingInit);
-				if (mappingInit != null) {
-					mappingInit.setMappingRuleCS(result);
-				}
-				result.setMappingBodyCS(mappingBody);
-				result.setMappingEndCS(mappingEnd);
-				if (mappingEnd != null) {
-					mappingEnd.setMappingRuleCS(result);
-				}
+				result.setMappingBody(mappingBody);
 				return result;
 			}
 
@@ -258,19 +253,46 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 
-	protected final CSTNode createMappingEndCS(EList<StatementCS> statements, int endOffset, int startOffset) {
+	protected final CSTNode createMappingEndCS(EList<OCLExpressionCS> statements, int endOffset, int startOffset) {
 		MappingEndCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingEndCS();
 		initializeMappingSection(result, statements, endOffset, startOffset);		
 		return result;
 	}
 
-	protected final CSTNode createMappingInitCS(EList<StatementCS> statements, int endOffset, int startOffset) {
+	protected final CSTNode createMappingInitCS(EList<OCLExpressionCS> statements, int endOffset, int startOffset) {
 		MappingInitCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingInitCS();
 		initializeMappingSection(result, statements, endOffset, startOffset);		
 		return result;
 	}
-
-	private void initializeMappingSection(MappingSectionCS section, EList<StatementCS> statements,
+	
+	protected final CSTNode createMappingSectionsCS(MappingInitCS mappingInitCS, MappingBodyCS mappingPopulationCS, MappingEndCS mappingEndCS) {
+	    if ((mappingInitCS == null) && (mappingPopulationCS == null) && (mappingEndCS == null)) {
+	        return null;
+	    }
+	    MappingSectionsCS mappingSectionsCS = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingSectionsCS();
+	    mappingSectionsCS.setMappingInitCS(mappingInitCS);
+	    mappingSectionsCS.setMappingBodyCS(mappingPopulationCS);
+	    mappingSectionsCS.setMappingEndCS(mappingEndCS);
+	    setOffsetsForComplexNode(mappingSectionsCS, mappingInitCS, mappingPopulationCS, mappingEndCS);
+	    return mappingSectionsCS;
+    }
+	
+	private final void setOffsetsForComplexNode(CSTNode complexNode, CSTNode... cstParts) {
+	    for (CSTNode cstPart : cstParts) {
+	        if (cstPart != null) {
+	            complexNode.setStartOffset(cstPart.getStartOffset());
+	            break;
+	        }
+	    }
+	    for (int i = cstParts.length - 1; i >= 0; i--) {
+            if (cstParts[i] != null) {
+                complexNode.setEndOffset(cstParts[i].getEndOffset());
+                break;
+            }
+	    }
+	}
+	
+	private void initializeMappingSection(MappingSectionCS section, EList<OCLExpressionCS> statements,
 			int endOffset, int startOffset) {
 				section.getStatements().addAll(statements);
 				section.setBodyStartLocation(startOffset);
@@ -321,7 +343,20 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 
-	protected final CSTNode createMappingDeclarationCS(DirectionKindCS directionKindCS, ScopedNameCS scopedNameCS,
+	protected final CSTNode createCompleteSignatureCS(SimpleSignatureCS simpleSignatureCS, EList<ParameterDeclarationCS> resultList) {
+	    CompleteSignatureCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createCompleteSignatureCS();
+	    result.setSimpleSignature(simpleSignatureCS);
+	    result.getResultParams().addAll(resultList);
+        return result;
+    }
+
+    protected final CSTNode createSimpleSignatureCS(EList<ParameterDeclarationCS> paramsCS) {
+        SimpleSignatureCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createSimpleSignatureCS();
+        result.getParams().addAll(paramsCS);
+        return result;
+    }
+
+    protected final MappingDeclarationCS createMappingDeclarationCS(DirectionKindCS directionKindCS, ScopedNameCS scopedNameCS,
 			EList<ParameterDeclarationCS> parameters, EList<ParameterDeclarationCS> resultParameters) {
 		MappingDeclarationCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingDeclarationCS();
 		result.setDirectionKindCS(directionKindCS);
@@ -759,6 +794,18 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
     	return result;
     }
 
+    protected final int getEndOffset(int ensuredOffset, EList<? extends CSTNode>... listOpt) {
+        int offset = ensuredOffset;
+        for (EList<? extends CSTNode> list : listOpt) {
+            if (list.size() == 0) {
+                continue;
+            }
+            CSTNode node = list.get(list.size()-1);
+            offset = node.getEndOffset();
+        }
+        return offset;
+    }
+    
 	protected final int getEndOffset(IToken token, EList<? extends CSTNode>... listOpt) {
 		int offset = token.getEndOffset();
 		for (EList<? extends CSTNode> list : listOpt) {

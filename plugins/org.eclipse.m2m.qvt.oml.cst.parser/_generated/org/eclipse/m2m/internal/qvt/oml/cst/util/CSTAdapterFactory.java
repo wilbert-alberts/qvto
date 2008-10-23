@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTAdapterFactory.java,v 1.5 2008/10/14 11:46:37 radvorak Exp $
+ * $Id: CSTAdapterFactory.java,v 1.6 2008/10/23 20:09:18 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -143,6 +143,14 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 				return createParameterDeclarationCSAdapter();
 			}
 			@Override
+			public Adapter caseSimpleSignatureCS(SimpleSignatureCS object) {
+				return createSimpleSignatureCSAdapter();
+			}
+			@Override
+			public Adapter caseCompleteSignatureCS(CompleteSignatureCS object) {
+				return createCompleteSignatureCSAdapter();
+			}
+			@Override
 			public Adapter caseMappingMethodCS(MappingMethodCS object) {
 				return createMappingMethodCSAdapter();
 			}
@@ -165,6 +173,10 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseMappingEndCS(MappingEndCS object) {
 				return createMappingEndCSAdapter();
+			}
+			@Override
+			public Adapter caseMappingSectionsCS(MappingSectionsCS object) {
+				return createMappingSectionsCSAdapter();
 			}
 			@Override
 			public Adapter caseStatementCS(StatementCS object) {
@@ -511,6 +523,34 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.SimpleSignatureCS <em>Simple Signature CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.SimpleSignatureCS
+	 * @generated
+	 */
+	public Adapter createSimpleSignatureCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS <em>Complete Signature CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS
+	 * @generated
+	 */
+	public Adapter createCompleteSignatureCSAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS <em>Mapping Method CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -591,6 +631,20 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createMappingEndCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS <em>Mapping Sections CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS
+	 * @generated
+	 */
+	public Adapter createMappingSectionsCSAdapter() {
 		return null;
 	}
 

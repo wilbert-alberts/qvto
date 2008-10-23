@@ -11,13 +11,14 @@
  * 
  * 
  *
- * $Id: MappingSectionCS.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: MappingSectionCS.java,v 1.2 2008/10/23 20:09:04 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.cst.OCLExpressionCS;
 
 /**
  * <!-- begin-user-doc -->
@@ -46,7 +47,7 @@ public interface MappingSectionCS extends CSTNode, ElementWithBody {
 
 	/**
 	 * Returns the value of the '<em><b>Statements</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.cst.StatementCS}.
+	 * The list contents are of type {@link org.eclipse.ocl.cst.OCLExpressionCS}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Statements</em>' containment reference list isn't clear,
@@ -58,7 +59,7 @@ public interface MappingSectionCS extends CSTNode, ElementWithBody {
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<StatementCS> getStatements();
+	EList<OCLExpressionCS> getStatements();
 
 	/**
 	 * Returns the value of the '<em><b>Mapping Rule CS</b></em>' containment reference.

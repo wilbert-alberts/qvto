@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTSwitch.java,v 1.5 2008/10/14 11:46:37 radvorak Exp $
+ * $Id: CSTSwitch.java,v 1.6 2008/10/23 20:09:17 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -200,6 +200,20 @@ public class CSTSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case CSTPackage.SIMPLE_SIGNATURE_CS: {
+				SimpleSignatureCS simpleSignatureCS = (SimpleSignatureCS)theEObject;
+				T result = caseSimpleSignatureCS(simpleSignatureCS);
+				if (result == null) result = caseCSTNode(simpleSignatureCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.COMPLETE_SIGNATURE_CS: {
+				CompleteSignatureCS completeSignatureCS = (CompleteSignatureCS)theEObject;
+				T result = caseCompleteSignatureCS(completeSignatureCS);
+				if (result == null) result = caseCSTNode(completeSignatureCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case CSTPackage.MAPPING_METHOD_CS: {
 				MappingMethodCS mappingMethodCS = (MappingMethodCS)theEObject;
 				T result = caseMappingMethodCS(mappingMethodCS);
@@ -246,6 +260,13 @@ public class CSTSwitch<T> {
 				if (result == null) result = caseMappingSectionCS(mappingEndCS);
 				if (result == null) result = caseCSTNode(mappingEndCS);
 				if (result == null) result = caseElementWithBody(mappingEndCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.MAPPING_SECTIONS_CS: {
+				MappingSectionsCS mappingSectionsCS = (MappingSectionsCS)theEObject;
+				T result = caseMappingSectionsCS(mappingSectionsCS);
+				if (result == null) result = caseCSTNode(mappingSectionsCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -712,6 +733,36 @@ public class CSTSwitch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Simple Signature CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Simple Signature CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSimpleSignatureCS(SimpleSignatureCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Complete Signature CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Complete Signature CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCompleteSignatureCS(CompleteSignatureCS object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Mapping Method CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -798,6 +849,21 @@ public class CSTSwitch<T> {
 	 * @generated
 	 */
 	public T caseMappingEndCS(MappingEndCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Mapping Sections CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Mapping Sections CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseMappingSectionsCS(MappingSectionsCS object) {
 		return null;
 	}
 

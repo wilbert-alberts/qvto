@@ -80,6 +80,7 @@
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ContextualPropertyCS/oclExpressionCS"/>
       </genClasses>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/MappingDeclarationCS">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/MappingDeclarationCS/qualifiers"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingDeclarationCS/simpleNameCS"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingDeclarationCS/contextType"/>
@@ -88,28 +89,30 @@
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingDeclarationCS/parameters"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingDeclarationCS/result"/>
-        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/MappingDeclarationCS/blackBox"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingDeclarationCS/directionKindCS"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingDeclarationCS/mappingExtension"/>
       </genClasses>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/ParameterDeclarationCS">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ParameterDeclarationCS/simpleNameCS"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ParameterDeclarationCS/typeSpecCS"/>
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/ParameterDeclarationCS/directionKind"/>
       </genClasses>
+      <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/SimpleSignatureCS">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/SimpleSignatureCS/params"/>
+      </genClasses>
+      <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/CompleteSignatureCS">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/CompleteSignatureCS/simpleSignature"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/CompleteSignatureCS/resultParams"/>
+      </genClasses>
       <genClasses image="false" ecoreClass="QVTOperationalCST.ecore#//cst/MappingMethodCS">
-        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/MappingMethodCS/qualifiers"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/MappingMethodCS/blackBox"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingMethodCS/mappingDeclarationCS"/>
       </genClasses>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/MappingRuleCS">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingRuleCS/guard"/>
-        <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingRuleCS/mappingInitCS"/>
-        <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingRuleCS/mappingBodyCS"/>
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingRuleCS/mappingEndCS"/>
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingRuleCS/mappingExtension"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingRuleCS/mappingBody"/>
       </genClasses>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/MappingQueryCS">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
@@ -123,6 +126,11 @@
       </genClasses>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/MappingInitCS"/>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/MappingEndCS"/>
+      <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/MappingSectionsCS">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingSectionsCS/mappingInitCS"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingSectionsCS/mappingBodyCS"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingSectionsCS/mappingEndCS"/>
+      </genClasses>
       <genClasses image="false" ecoreClass="QVTOperationalCST.ecore#//cst/StatementCS"/>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/AssignStatementCS">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/AssignStatementCS/lValueCS"/>
@@ -263,6 +271,10 @@
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/MappingExtensionCS">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/MappingExtensionCS/kind"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingExtensionCS/mappingIdentifiers"/>
+      </genClasses>
+      <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/NewRuleCallExpCS">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/NewRuleCallExpCS/scopedIdentifier"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/NewRuleCallExpCS/arguments"/>
       </genClasses>
       <nestedGenPackages prefix="Temp" basePackage="org.eclipse.m2m.internal.qvt.oml.cst"
           disposableProviderFactory="true" ecorePackage="QVTOperationalCST.ecore#//cst/temp">

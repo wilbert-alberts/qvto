@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingRuleCSImpl.java,v 1.1 2008/04/06 10:18:39 sboyko Exp $
+ * $Id: MappingRuleCSImpl.java,v 1.2 2008/10/23 20:09:11 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -37,6 +37,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingInitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;
 
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS;
 import org.eclipse.ocl.cst.OCLExpressionCS;
 
 /**
@@ -47,10 +48,7 @@ import org.eclipse.ocl.cst.OCLExpressionCS;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingRuleCSImpl#getGuard <em>Guard</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingRuleCSImpl#getMappingInitCS <em>Mapping Init CS</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingRuleCSImpl#getMappingBodyCS <em>Mapping Body CS</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingRuleCSImpl#getMappingEndCS <em>Mapping End CS</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingRuleCSImpl#getMappingExtension <em>Mapping Extension</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingRuleCSImpl#getMappingBody <em>Mapping Body</em>}</li>
  * </ul>
  * </p>
  *
@@ -75,44 +73,14 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 	protected OCLExpressionCS guard;
 
 	/**
-	 * The cached value of the '{@link #getMappingInitCS() <em>Mapping Init CS</em>}' containment reference.
+	 * The cached value of the '{@link #getMappingBody() <em>Mapping Body</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getMappingInitCS()
+	 * @see #getMappingBody()
 	 * @generated
 	 * @ordered
 	 */
-	protected MappingInitCS mappingInitCS;
-
-	/**
-	 * The cached value of the '{@link #getMappingBodyCS() <em>Mapping Body CS</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getMappingBodyCS()
-	 * @generated
-	 * @ordered
-	 */
-	protected MappingBodyCS mappingBodyCS;
-
-	/**
-	 * The cached value of the '{@link #getMappingEndCS() <em>Mapping End CS</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getMappingEndCS()
-	 * @generated
-	 * @ordered
-	 */
-	protected MappingEndCS mappingEndCS;
-
-	/**
-	 * The cached value of the '{@link #getMappingExtension() <em>Mapping Extension</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getMappingExtension()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<MappingExtensionCS> mappingExtension;
+	protected MappingSectionsCS mappingBody;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -181,8 +149,8 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public MappingInitCS getMappingInitCS() {
-		return mappingInitCS;
+	public MappingSectionsCS getMappingBody() {
+		return mappingBody;
 	}
 
 	/**
@@ -190,11 +158,11 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetMappingInitCS(MappingInitCS newMappingInitCS, NotificationChain msgs) {
-		MappingInitCS oldMappingInitCS = mappingInitCS;
-		mappingInitCS = newMappingInitCS;
+	public NotificationChain basicSetMappingBody(MappingSectionsCS newMappingBody, NotificationChain msgs) {
+		MappingSectionsCS oldMappingBody = mappingBody;
+		mappingBody = newMappingBody;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.MAPPING_RULE_CS__MAPPING_INIT_CS, oldMappingInitCS, newMappingInitCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.MAPPING_RULE_CS__MAPPING_BODY, oldMappingBody, newMappingBody);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -205,116 +173,18 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setMappingInitCS(MappingInitCS newMappingInitCS) {
-		if (newMappingInitCS != mappingInitCS) {
+	public void setMappingBody(MappingSectionsCS newMappingBody) {
+		if (newMappingBody != mappingBody) {
 			NotificationChain msgs = null;
-			if (mappingInitCS != null)
-				msgs = ((InternalEObject)mappingInitCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.MAPPING_RULE_CS__MAPPING_INIT_CS, null, msgs);
-			if (newMappingInitCS != null)
-				msgs = ((InternalEObject)newMappingInitCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.MAPPING_RULE_CS__MAPPING_INIT_CS, null, msgs);
-			msgs = basicSetMappingInitCS(newMappingInitCS, msgs);
+			if (mappingBody != null)
+				msgs = ((InternalEObject)mappingBody).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.MAPPING_RULE_CS__MAPPING_BODY, null, msgs);
+			if (newMappingBody != null)
+				msgs = ((InternalEObject)newMappingBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.MAPPING_RULE_CS__MAPPING_BODY, null, msgs);
+			msgs = basicSetMappingBody(newMappingBody, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.MAPPING_RULE_CS__MAPPING_INIT_CS, newMappingInitCS, newMappingInitCS));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public MappingBodyCS getMappingBodyCS() {
-		return mappingBodyCS;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetMappingBodyCS(MappingBodyCS newMappingBodyCS, NotificationChain msgs) {
-		MappingBodyCS oldMappingBodyCS = mappingBodyCS;
-		mappingBodyCS = newMappingBodyCS;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.MAPPING_RULE_CS__MAPPING_BODY_CS, oldMappingBodyCS, newMappingBodyCS);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setMappingBodyCS(MappingBodyCS newMappingBodyCS) {
-		if (newMappingBodyCS != mappingBodyCS) {
-			NotificationChain msgs = null;
-			if (mappingBodyCS != null)
-				msgs = ((InternalEObject)mappingBodyCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.MAPPING_RULE_CS__MAPPING_BODY_CS, null, msgs);
-			if (newMappingBodyCS != null)
-				msgs = ((InternalEObject)newMappingBodyCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.MAPPING_RULE_CS__MAPPING_BODY_CS, null, msgs);
-			msgs = basicSetMappingBodyCS(newMappingBodyCS, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.MAPPING_RULE_CS__MAPPING_BODY_CS, newMappingBodyCS, newMappingBodyCS));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public MappingEndCS getMappingEndCS() {
-		return mappingEndCS;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetMappingEndCS(MappingEndCS newMappingEndCS, NotificationChain msgs) {
-		MappingEndCS oldMappingEndCS = mappingEndCS;
-		mappingEndCS = newMappingEndCS;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.MAPPING_RULE_CS__MAPPING_END_CS, oldMappingEndCS, newMappingEndCS);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setMappingEndCS(MappingEndCS newMappingEndCS) {
-		if (newMappingEndCS != mappingEndCS) {
-			NotificationChain msgs = null;
-			if (mappingEndCS != null)
-				msgs = ((InternalEObject)mappingEndCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.MAPPING_RULE_CS__MAPPING_END_CS, null, msgs);
-			if (newMappingEndCS != null)
-				msgs = ((InternalEObject)newMappingEndCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.MAPPING_RULE_CS__MAPPING_END_CS, null, msgs);
-			msgs = basicSetMappingEndCS(newMappingEndCS, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.MAPPING_RULE_CS__MAPPING_END_CS, newMappingEndCS, newMappingEndCS));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<MappingExtensionCS> getMappingExtension() {
-		if (mappingExtension == null) {
-			mappingExtension = new EObjectContainmentEList<MappingExtensionCS>(MappingExtensionCS.class, this, CSTPackage.MAPPING_RULE_CS__MAPPING_EXTENSION);
-		}
-		return mappingExtension;
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.MAPPING_RULE_CS__MAPPING_BODY, newMappingBody, newMappingBody));
 	}
 
 	/**
@@ -327,14 +197,8 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 		switch (featureID) {
 			case CSTPackage.MAPPING_RULE_CS__GUARD:
 				return basicSetGuard(null, msgs);
-			case CSTPackage.MAPPING_RULE_CS__MAPPING_INIT_CS:
-				return basicSetMappingInitCS(null, msgs);
-			case CSTPackage.MAPPING_RULE_CS__MAPPING_BODY_CS:
-				return basicSetMappingBodyCS(null, msgs);
-			case CSTPackage.MAPPING_RULE_CS__MAPPING_END_CS:
-				return basicSetMappingEndCS(null, msgs);
-			case CSTPackage.MAPPING_RULE_CS__MAPPING_EXTENSION:
-				return ((InternalEList<?>)getMappingExtension()).basicRemove(otherEnd, msgs);
+			case CSTPackage.MAPPING_RULE_CS__MAPPING_BODY:
+				return basicSetMappingBody(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -349,14 +213,8 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 		switch (featureID) {
 			case CSTPackage.MAPPING_RULE_CS__GUARD:
 				return getGuard();
-			case CSTPackage.MAPPING_RULE_CS__MAPPING_INIT_CS:
-				return getMappingInitCS();
-			case CSTPackage.MAPPING_RULE_CS__MAPPING_BODY_CS:
-				return getMappingBodyCS();
-			case CSTPackage.MAPPING_RULE_CS__MAPPING_END_CS:
-				return getMappingEndCS();
-			case CSTPackage.MAPPING_RULE_CS__MAPPING_EXTENSION:
-				return getMappingExtension();
+			case CSTPackage.MAPPING_RULE_CS__MAPPING_BODY:
+				return getMappingBody();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -373,18 +231,8 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 			case CSTPackage.MAPPING_RULE_CS__GUARD:
 				setGuard((OCLExpressionCS)newValue);
 				return;
-			case CSTPackage.MAPPING_RULE_CS__MAPPING_INIT_CS:
-				setMappingInitCS((MappingInitCS)newValue);
-				return;
-			case CSTPackage.MAPPING_RULE_CS__MAPPING_BODY_CS:
-				setMappingBodyCS((MappingBodyCS)newValue);
-				return;
-			case CSTPackage.MAPPING_RULE_CS__MAPPING_END_CS:
-				setMappingEndCS((MappingEndCS)newValue);
-				return;
-			case CSTPackage.MAPPING_RULE_CS__MAPPING_EXTENSION:
-				getMappingExtension().clear();
-				getMappingExtension().addAll((Collection<? extends MappingExtensionCS>)newValue);
+			case CSTPackage.MAPPING_RULE_CS__MAPPING_BODY:
+				setMappingBody((MappingSectionsCS)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -401,17 +249,8 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 			case CSTPackage.MAPPING_RULE_CS__GUARD:
 				setGuard((OCLExpressionCS)null);
 				return;
-			case CSTPackage.MAPPING_RULE_CS__MAPPING_INIT_CS:
-				setMappingInitCS((MappingInitCS)null);
-				return;
-			case CSTPackage.MAPPING_RULE_CS__MAPPING_BODY_CS:
-				setMappingBodyCS((MappingBodyCS)null);
-				return;
-			case CSTPackage.MAPPING_RULE_CS__MAPPING_END_CS:
-				setMappingEndCS((MappingEndCS)null);
-				return;
-			case CSTPackage.MAPPING_RULE_CS__MAPPING_EXTENSION:
-				getMappingExtension().clear();
+			case CSTPackage.MAPPING_RULE_CS__MAPPING_BODY:
+				setMappingBody((MappingSectionsCS)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -427,14 +266,8 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 		switch (featureID) {
 			case CSTPackage.MAPPING_RULE_CS__GUARD:
 				return guard != null;
-			case CSTPackage.MAPPING_RULE_CS__MAPPING_INIT_CS:
-				return mappingInitCS != null;
-			case CSTPackage.MAPPING_RULE_CS__MAPPING_BODY_CS:
-				return mappingBodyCS != null;
-			case CSTPackage.MAPPING_RULE_CS__MAPPING_END_CS:
-				return mappingEndCS != null;
-			case CSTPackage.MAPPING_RULE_CS__MAPPING_EXTENSION:
-				return mappingExtension != null && !mappingExtension.isEmpty();
+			case CSTPackage.MAPPING_RULE_CS__MAPPING_BODY:
+				return mappingBody != null;
 		}
 		return super.eIsSet(featureID);
 	}

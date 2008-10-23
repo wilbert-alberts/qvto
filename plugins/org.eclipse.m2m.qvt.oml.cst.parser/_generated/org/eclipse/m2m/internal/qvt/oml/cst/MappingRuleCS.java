@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingRuleCS.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: MappingRuleCS.java,v 1.2 2008/10/23 20:09:04 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -28,10 +28,7 @@ import org.eclipse.ocl.cst.OCLExpressionCS;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getGuard <em>Guard</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingInitCS <em>Mapping Init CS</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingBodyCS <em>Mapping Body CS</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingEndCS <em>Mapping End CS</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingExtension <em>Mapping Extension</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingBody <em>Mapping Body</em>}</li>
  * </ul>
  * </p>
  *
@@ -74,97 +71,29 @@ public interface MappingRuleCS extends MappingMethodCS {
 	void setGuard(OCLExpressionCS value);
 
 	/**
-	 * Returns the value of the '<em><b>Mapping Init CS</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Mapping Body</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Mapping Init CS</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Mapping Body</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Mapping Init CS</em>' containment reference.
-	 * @see #setMappingInitCS(MappingInitCS)
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getMappingRuleCS_MappingInitCS()
+	 * @return the value of the '<em>Mapping Body</em>' containment reference.
+	 * @see #setMappingBody(MappingSectionsCS)
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getMappingRuleCS_MappingBody()
 	 * @model containment="true"
 	 * @generated
 	 */
-	MappingInitCS getMappingInitCS();
+	MappingSectionsCS getMappingBody();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingInitCS <em>Mapping Init CS</em>}' containment reference.
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingBody <em>Mapping Body</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Mapping Init CS</em>' containment reference.
-	 * @see #getMappingInitCS()
+	 * @param value the new value of the '<em>Mapping Body</em>' containment reference.
+	 * @see #getMappingBody()
 	 * @generated
 	 */
-	void setMappingInitCS(MappingInitCS value);
-
-	/**
-	 * Returns the value of the '<em><b>Mapping Body CS</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Mapping Body CS</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Mapping Body CS</em>' containment reference.
-	 * @see #setMappingBodyCS(MappingBodyCS)
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getMappingRuleCS_MappingBodyCS()
-	 * @model containment="true"
-	 * @generated
-	 */
-	MappingBodyCS getMappingBodyCS();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingBodyCS <em>Mapping Body CS</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Mapping Body CS</em>' containment reference.
-	 * @see #getMappingBodyCS()
-	 * @generated
-	 */
-	void setMappingBodyCS(MappingBodyCS value);
-
-	/**
-	 * Returns the value of the '<em><b>Mapping End CS</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Mapping End CS</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Mapping End CS</em>' containment reference.
-	 * @see #setMappingEndCS(MappingEndCS)
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getMappingRuleCS_MappingEndCS()
-	 * @model containment="true"
-	 * @generated
-	 */
-	MappingEndCS getMappingEndCS();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingEndCS <em>Mapping End CS</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Mapping End CS</em>' containment reference.
-	 * @see #getMappingEndCS()
-	 * @generated
-	 */
-	void setMappingEndCS(MappingEndCS value);
-
-	/**
-	 * Returns the value of the '<em><b>Mapping Extension</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionCS}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Mapping Extension</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Mapping Extension</em>' containment reference list.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getMappingRuleCS_MappingExtension()
-	 * @model containment="true"
-	 * @generated
-	 */
-	EList<MappingExtensionCS> getMappingExtension();
+	void setMappingBody(MappingSectionsCS value);
 
 } // MappingRuleCS

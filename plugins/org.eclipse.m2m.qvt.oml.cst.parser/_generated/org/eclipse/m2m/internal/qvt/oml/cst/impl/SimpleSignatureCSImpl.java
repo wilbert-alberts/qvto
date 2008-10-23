@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: BlockExpCSImpl.java,v 1.2 2008/10/23 20:09:08 aigdalov Exp $
+ * $Id: SimpleSignatureCSImpl.java,v 1.1 2008/10/23 20:09:09 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -27,28 +27,26 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
+import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.SimpleSignatureCS;
 
-import org.eclipse.m2m.internal.qvt.oml.cst.StatementCS;
-import org.eclipse.ocl.cst.OCLExpressionCS;
-
-import org.eclipse.ocl.cst.impl.OCLExpressionCSImpl;
+import org.eclipse.ocl.cst.impl.CSTNodeImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Block Exp CS</b></em>'.
+ * An implementation of the model object '<em><b>Simple Signature CS</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.BlockExpCSImpl#getBodyExpressions <em>Body Expressions</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.SimpleSignatureCSImpl#getParams <em>Params</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class BlockExpCSImpl extends OCLExpressionCSImpl implements BlockExpCS {
+public class SimpleSignatureCSImpl extends CSTNodeImpl implements SimpleSignatureCS {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -57,21 +55,21 @@ public class BlockExpCSImpl extends OCLExpressionCSImpl implements BlockExpCS {
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 	/**
-	 * The cached value of the '{@link #getBodyExpressions() <em>Body Expressions</em>}' containment reference list.
+	 * The cached value of the '{@link #getParams() <em>Params</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getBodyExpressions()
+	 * @see #getParams()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<OCLExpressionCS> bodyExpressions;
+	protected EList<ParameterDeclarationCS> params;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected BlockExpCSImpl() {
+	protected SimpleSignatureCSImpl() {
 		super();
 	}
 
@@ -82,7 +80,7 @@ public class BlockExpCSImpl extends OCLExpressionCSImpl implements BlockExpCS {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return CSTPackage.Literals.BLOCK_EXP_CS;
+		return CSTPackage.Literals.SIMPLE_SIGNATURE_CS;
 	}
 
 	/**
@@ -90,11 +88,11 @@ public class BlockExpCSImpl extends OCLExpressionCSImpl implements BlockExpCS {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<OCLExpressionCS> getBodyExpressions() {
-		if (bodyExpressions == null) {
-			bodyExpressions = new EObjectContainmentEList<OCLExpressionCS>(OCLExpressionCS.class, this, CSTPackage.BLOCK_EXP_CS__BODY_EXPRESSIONS);
+	public EList<ParameterDeclarationCS> getParams() {
+		if (params == null) {
+			params = new EObjectContainmentEList<ParameterDeclarationCS>(ParameterDeclarationCS.class, this, CSTPackage.SIMPLE_SIGNATURE_CS__PARAMS);
 		}
-		return bodyExpressions;
+		return params;
 	}
 
 	/**
@@ -105,8 +103,8 @@ public class BlockExpCSImpl extends OCLExpressionCSImpl implements BlockExpCS {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CSTPackage.BLOCK_EXP_CS__BODY_EXPRESSIONS:
-				return ((InternalEList<?>)getBodyExpressions()).basicRemove(otherEnd, msgs);
+			case CSTPackage.SIMPLE_SIGNATURE_CS__PARAMS:
+				return ((InternalEList<?>)getParams()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -119,8 +117,8 @@ public class BlockExpCSImpl extends OCLExpressionCSImpl implements BlockExpCS {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CSTPackage.BLOCK_EXP_CS__BODY_EXPRESSIONS:
-				return getBodyExpressions();
+			case CSTPackage.SIMPLE_SIGNATURE_CS__PARAMS:
+				return getParams();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -134,9 +132,9 @@ public class BlockExpCSImpl extends OCLExpressionCSImpl implements BlockExpCS {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CSTPackage.BLOCK_EXP_CS__BODY_EXPRESSIONS:
-				getBodyExpressions().clear();
-				getBodyExpressions().addAll((Collection<? extends OCLExpressionCS>)newValue);
+			case CSTPackage.SIMPLE_SIGNATURE_CS__PARAMS:
+				getParams().clear();
+				getParams().addAll((Collection<? extends ParameterDeclarationCS>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -150,8 +148,8 @@ public class BlockExpCSImpl extends OCLExpressionCSImpl implements BlockExpCS {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CSTPackage.BLOCK_EXP_CS__BODY_EXPRESSIONS:
-				getBodyExpressions().clear();
+			case CSTPackage.SIMPLE_SIGNATURE_CS__PARAMS:
+				getParams().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -165,10 +163,10 @@ public class BlockExpCSImpl extends OCLExpressionCSImpl implements BlockExpCS {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CSTPackage.BLOCK_EXP_CS__BODY_EXPRESSIONS:
-				return bodyExpressions != null && !bodyExpressions.isEmpty();
+			case CSTPackage.SIMPLE_SIGNATURE_CS__PARAMS:
+				return params != null && !params.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //BlockExpCSImpl
+} //SimpleSignatureCSImpl

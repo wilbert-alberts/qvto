@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.g,v 1.3 2008/10/14 11:46:37 radvorak Exp $ 
+-- * $Id: ImperativeOCL.g,v 1.4 2008/10/23 20:09:12 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -65,6 +65,8 @@ $DropSymbols
 	operationCS2
 	
 	parametersCS
+	simpleNameCSopt
+	typeCSopt
 $End
 
 $Define
@@ -227,7 +229,6 @@ $Define
 			System.err.println(result);
 		}
 	./
-
 $End
 
 $Globals
@@ -261,6 +262,7 @@ $Terminals
 	AT_SIGN       ::= '@'
 	EXCLAMATION_MARK ::= '!'
 	NOT_EQUAL_EXEQ   ::= '!='
+	INTEGER_RANGE_START
 	
 $End
 
@@ -302,7 +304,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: ImperativeOCL.g,v 1.3 2008/10/14 11:46:37 radvorak Exp $
+ * $Id: ImperativeOCL.g,v 1.4 2008/10/23 20:09:12 aigdalov Exp $
  */
 	./
 $End
@@ -597,7 +599,7 @@ $Rules
 		./
 
 
-	whileBodyCS -> blockExpCS
+	whileBodyCS -> expression_block
 
 	legacyWhileExpCS ::= while '(' oclExpressionCS ';' oclExpressionCS ')' whileBodyCS
 		/.$BeginJava
@@ -671,7 +673,7 @@ $Rules
 	forExpConditionOpt ::= '|' qvtErrorToken
         	/.$NullAction./
 
-	forExpCS ::= forOpCode '(' forExpDeclaratorList forExpConditionOpt ')' blockExpCS
+	forExpCS ::= forOpCode '(' forExpDeclaratorList forExpConditionOpt ')' expression_block
 		/.$BeginJava
 					CSTNode result = createForExpCS(
 							getIToken($getToken(1)),
@@ -813,7 +815,7 @@ $Rules
 	argumentsCS -> argumentsCS ',' qvtErrorToken
 	
 	ifExpBodyCS -> oclExpressionCS
-	ifExpBodyCS -> blockExpCS
+	ifExpBodyCS -> expression_block
 
 	ifExpCS ::= if oclExpressionCS then ifExpBodyCS else ifExpBodyCS endif
 		/.$BeginJava
@@ -934,7 +936,7 @@ $Rules
 		  $EndJava
 		./
 
-	switchDeclaratorCS -> whileDeclaratorCS
+	switchDeclaratorCS -> declarator
 
 	switchDeclaratorCS ::= IDENTIFIER
 		/.$BeginJava
@@ -1289,7 +1291,7 @@ $Rules
           $EndJava
         ./
 
-	blockExpCS ::= '{' statementListOpt '}'
+	expression_block ::= '{' statementListOpt '}'
 		/.$BeginJava
 				EList bodyList = (EList) dtParser.getSym(2);
 				CSTNode result = createBlockExpCS(
@@ -1302,12 +1304,12 @@ $Rules
 		./
 
 	expressionStatementCS -> statementCS ';'
-	expressionStatementCS -> blockExpCS
-	expressionStatementCS -> blockExpCS ';'
+	expressionStatementCS -> expression_block
+	expressionStatementCS -> expression_block ';'
 
 	-- ComputeExp start --
 
-	computeExpCS ::= compute '(' declarator ')' blockExpCS
+	computeExpCS ::= compute '(' declarator ')' expression_block
 		/.$BeginJava
 					CSTNode result = createComputeExpCS(
 						(VariableCS) $getSym(3),

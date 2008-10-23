@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingSectionCSImpl.java,v 1.1 2008/04/06 10:18:39 sboyko Exp $
+ * $Id: MappingSectionCSImpl.java,v 1.2 2008/10/23 20:09:11 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -34,6 +34,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.ElementWithBody;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionCS;
+import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.StatementCS;
 
 import org.eclipse.ocl.cst.impl.CSTNodeImpl;
@@ -110,7 +111,7 @@ public abstract class MappingSectionCSImpl extends CSTNodeImpl implements Mappin
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<StatementCS> statements;
+	protected EList<OCLExpressionCS> statements;
 
 	/**
 	 * The cached value of the '{@link #getMappingRuleCS() <em>Mapping Rule CS</em>}' containment reference.
@@ -188,9 +189,9 @@ public abstract class MappingSectionCSImpl extends CSTNodeImpl implements Mappin
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<StatementCS> getStatements() {
+	public EList<OCLExpressionCS> getStatements() {
 		if (statements == null) {
-			statements = new EObjectContainmentEList<StatementCS>(StatementCS.class, this, CSTPackage.MAPPING_SECTION_CS__STATEMENTS);
+			statements = new EObjectContainmentEList<OCLExpressionCS>(OCLExpressionCS.class, this, CSTPackage.MAPPING_SECTION_CS__STATEMENTS);
 		}
 		return statements;
 	}
@@ -291,7 +292,7 @@ public abstract class MappingSectionCSImpl extends CSTNodeImpl implements Mappin
 				return;
 			case CSTPackage.MAPPING_SECTION_CS__STATEMENTS:
 				getStatements().clear();
-				getStatements().addAll((Collection<? extends StatementCS>)newValue);
+				getStatements().addAll((Collection<? extends OCLExpressionCS>)newValue);
 				return;
 			case CSTPackage.MAPPING_SECTION_CS__MAPPING_RULE_CS:
 				setMappingRuleCS((MappingRuleCS)newValue);

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingMethodCSImpl.java,v 1.1 2008/04/06 10:18:39 sboyko Exp $
+ * $Id: MappingMethodCSImpl.java,v 1.2 2008/10/23 20:09:10 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -43,7 +43,7 @@ import org.eclipse.ocl.cst.impl.CSTNodeImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingMethodCSImpl#getQualifiers <em>Qualifiers</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingMethodCSImpl#isBlackBox <em>Black Box</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingMethodCSImpl#getMappingDeclarationCS <em>Mapping Declaration CS</em>}</li>
  * </ul>
  * </p>
@@ -59,14 +59,24 @@ public abstract class MappingMethodCSImpl extends CSTNodeImpl implements Mapping
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 	/**
-	 * The cached value of the '{@link #getQualifiers() <em>Qualifiers</em>}' attribute list.
+	 * The default value of the '{@link #isBlackBox() <em>Black Box</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getQualifiers()
+	 * @see #isBlackBox()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<QualifierKindCS> qualifiers;
+	protected static final boolean BLACK_BOX_EDEFAULT = false;
+
+	/**
+	 * The flag representing the value of the '{@link #isBlackBox() <em>Black Box</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isBlackBox()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int BLACK_BOX_EFLAG = 1 << 8;
 
 	/**
 	 * The cached value of the '{@link #getMappingDeclarationCS() <em>Mapping Declaration CS</em>}' containment reference.
@@ -102,11 +112,20 @@ public abstract class MappingMethodCSImpl extends CSTNodeImpl implements Mapping
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<QualifierKindCS> getQualifiers() {
-		if (qualifiers == null) {
-			qualifiers = new EDataTypeEList<QualifierKindCS>(QualifierKindCS.class, this, CSTPackage.MAPPING_METHOD_CS__QUALIFIERS);
-		}
-		return qualifiers;
+	public boolean isBlackBox() {
+		return (eFlags & BLACK_BOX_EFLAG) != 0;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBlackBox(boolean newBlackBox) {
+		boolean oldBlackBox = (eFlags & BLACK_BOX_EFLAG) != 0;
+		if (newBlackBox) eFlags |= BLACK_BOX_EFLAG; else eFlags &= ~BLACK_BOX_EFLAG;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.MAPPING_METHOD_CS__BLACK_BOX, oldBlackBox, newBlackBox));
 	}
 
 	/**
@@ -174,8 +193,8 @@ public abstract class MappingMethodCSImpl extends CSTNodeImpl implements Mapping
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CSTPackage.MAPPING_METHOD_CS__QUALIFIERS:
-				return getQualifiers();
+			case CSTPackage.MAPPING_METHOD_CS__BLACK_BOX:
+				return isBlackBox() ? Boolean.TRUE : Boolean.FALSE;
 			case CSTPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS:
 				return getMappingDeclarationCS();
 		}
@@ -191,9 +210,8 @@ public abstract class MappingMethodCSImpl extends CSTNodeImpl implements Mapping
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CSTPackage.MAPPING_METHOD_CS__QUALIFIERS:
-				getQualifiers().clear();
-				getQualifiers().addAll((Collection<? extends QualifierKindCS>)newValue);
+			case CSTPackage.MAPPING_METHOD_CS__BLACK_BOX:
+				setBlackBox(((Boolean)newValue).booleanValue());
 				return;
 			case CSTPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS:
 				setMappingDeclarationCS((MappingDeclarationCS)newValue);
@@ -210,8 +228,8 @@ public abstract class MappingMethodCSImpl extends CSTNodeImpl implements Mapping
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CSTPackage.MAPPING_METHOD_CS__QUALIFIERS:
-				getQualifiers().clear();
+			case CSTPackage.MAPPING_METHOD_CS__BLACK_BOX:
+				setBlackBox(BLACK_BOX_EDEFAULT);
 				return;
 			case CSTPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS:
 				setMappingDeclarationCS((MappingDeclarationCS)null);
@@ -228,8 +246,8 @@ public abstract class MappingMethodCSImpl extends CSTNodeImpl implements Mapping
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CSTPackage.MAPPING_METHOD_CS__QUALIFIERS:
-				return qualifiers != null && !qualifiers.isEmpty();
+			case CSTPackage.MAPPING_METHOD_CS__BLACK_BOX:
+				return ((eFlags & BLACK_BOX_EFLAG) != 0) != BLACK_BOX_EDEFAULT;
 			case CSTPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS:
 				return mappingDeclarationCS != null;
 		}
@@ -246,8 +264,8 @@ public abstract class MappingMethodCSImpl extends CSTNodeImpl implements Mapping
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (qualifiers: "); //$NON-NLS-1$
-		result.append(qualifiers);
+		result.append(" (blackBox: "); //$NON-NLS-1$
+		result.append((eFlags & BLACK_BOX_EFLAG) != 0);
 		result.append(')');
 		return result.toString();
 	}

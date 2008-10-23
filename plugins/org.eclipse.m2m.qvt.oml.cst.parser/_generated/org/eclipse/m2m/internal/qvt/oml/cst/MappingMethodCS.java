@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingMethodCS.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: MappingMethodCS.java,v 1.2 2008/10/23 20:09:05 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -27,7 +27,7 @@ import org.eclipse.ocl.cst.CSTNode;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS#getQualifiers <em>Qualifiers</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS#isBlackBox <em>Black Box</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS#getMappingDeclarationCS <em>Mapping Declaration CS</em>}</li>
  * </ul>
  * </p>
@@ -45,22 +45,30 @@ public interface MappingMethodCS extends CSTNode {
 	String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 	/**
-	 * Returns the value of the '<em><b>Qualifiers</b></em>' attribute list.
-	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS}.
-	 * The literals are from the enumeration {@link org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS}.
+	 * Returns the value of the '<em><b>Black Box</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Qualifiers</em>' attribute list isn't clear,
+	 * If the meaning of the '<em>Black Box</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Qualifiers</em>' attribute list.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getMappingMethodCS_Qualifiers()
-	 * @model unique="false"
+	 * @return the value of the '<em>Black Box</em>' attribute.
+	 * @see #setBlackBox(boolean)
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getMappingMethodCS_BlackBox()
+	 * @model
 	 * @generated
 	 */
-	EList<QualifierKindCS> getQualifiers();
+	boolean isBlackBox();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS#isBlackBox <em>Black Box</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Black Box</em>' attribute.
+	 * @see #isBlackBox()
+	 * @generated
+	 */
+	void setBlackBox(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Mapping Declaration CS</b></em>' containment reference.

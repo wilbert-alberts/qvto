@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackage.java,v 1.7 2008/10/14 11:46:37 radvorak Exp $
+ * $Id: CSTPackage.java,v 1.8 2008/10/23 20:09:03 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -727,13 +727,22 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_DECLARATION_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
 
 	/**
+	 * The feature id for the '<em><b>Qualifiers</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_DECLARATION_CS__QUALIFIERS = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_DECLARATION_CS__SIMPLE_NAME_CS = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 0;
+	int MAPPING_DECLARATION_CS__SIMPLE_NAME_CS = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Context Type</b></em>' containment reference.
@@ -742,7 +751,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_DECLARATION_CS__CONTEXT_TYPE = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 1;
+	int MAPPING_DECLARATION_CS__CONTEXT_TYPE = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Context Type And Name</b></em>' containment reference.
@@ -751,7 +760,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_DECLARATION_CS__CONTEXT_TYPE_AND_NAME = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 2;
+	int MAPPING_DECLARATION_CS__CONTEXT_TYPE_AND_NAME = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
@@ -760,7 +769,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_DECLARATION_CS__PARAMETERS = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 3;
+	int MAPPING_DECLARATION_CS__PARAMETERS = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Result</b></em>' containment reference list.
@@ -769,16 +778,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_DECLARATION_CS__RESULT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 4;
-
-	/**
-	 * The feature id for the '<em><b>Black Box</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_DECLARATION_CS__BLACK_BOX = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 5;
+	int MAPPING_DECLARATION_CS__RESULT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Direction Kind CS</b></em>' containment reference.
@@ -790,13 +790,22 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_DECLARATION_CS__DIRECTION_KIND_CS = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 6;
 
 	/**
+	 * The feature id for the '<em><b>Mapping Extension</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_DECLARATION_CS__MAPPING_EXTENSION = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 7;
+
+	/**
 	 * The number of structural features of the '<em>Mapping Declaration CS</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_DECLARATION_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 7;
+	int MAPPING_DECLARATION_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 8;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ParameterDeclarationCSImpl <em>Parameter Declaration CS</em>}' class.
@@ -863,6 +872,107 @@ public interface CSTPackage extends EPackage {
 	int PARAMETER_DECLARATION_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 3;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.SimpleSignatureCSImpl <em>Simple Signature CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.SimpleSignatureCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getSimpleSignatureCS()
+	 * @generated
+	 */
+	int SIMPLE_SIGNATURE_CS = 12;
+
+	/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SIGNATURE_CS__START_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SIGNATURE_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>Params</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SIGNATURE_CS__PARAMS = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Simple Signature CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SIGNATURE_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.CompleteSignatureCSImpl <em>Complete Signature CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CompleteSignatureCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getCompleteSignatureCS()
+	 * @generated
+	 */
+	int COMPLETE_SIGNATURE_CS = 13;
+
+	/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPLETE_SIGNATURE_CS__START_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPLETE_SIGNATURE_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>Simple Signature</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPLETE_SIGNATURE_CS__SIMPLE_SIGNATURE = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Result Params</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPLETE_SIGNATURE_CS__RESULT_PARAMS = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Complete Signature CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPLETE_SIGNATURE_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 2;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingMethodCSImpl <em>Mapping Method CS</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -870,7 +980,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingMethodCS()
 	 * @generated
 	 */
-	int MAPPING_METHOD_CS = 12;
+	int MAPPING_METHOD_CS = 14;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -891,13 +1001,13 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_METHOD_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Qualifiers</b></em>' attribute list.
+	 * The feature id for the '<em><b>Black Box</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_METHOD_CS__QUALIFIERS = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 0;
+	int MAPPING_METHOD_CS__BLACK_BOX = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Mapping Declaration CS</b></em>' containment reference.
@@ -925,7 +1035,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingRuleCS()
 	 * @generated
 	 */
-	int MAPPING_RULE_CS = 13;
+	int MAPPING_RULE_CS = 15;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -946,13 +1056,13 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_RULE_CS__END_OFFSET = MAPPING_METHOD_CS__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Qualifiers</b></em>' attribute list.
+	 * The feature id for the '<em><b>Black Box</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_RULE_CS__QUALIFIERS = MAPPING_METHOD_CS__QUALIFIERS;
+	int MAPPING_RULE_CS__BLACK_BOX = MAPPING_METHOD_CS__BLACK_BOX;
 
 	/**
 	 * The feature id for the '<em><b>Mapping Declaration CS</b></em>' containment reference.
@@ -973,40 +1083,13 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_RULE_CS__GUARD = MAPPING_METHOD_CS_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Mapping Init CS</b></em>' containment reference.
+	 * The feature id for the '<em><b>Mapping Body</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_RULE_CS__MAPPING_INIT_CS = MAPPING_METHOD_CS_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Mapping Body CS</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_RULE_CS__MAPPING_BODY_CS = MAPPING_METHOD_CS_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Mapping End CS</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_RULE_CS__MAPPING_END_CS = MAPPING_METHOD_CS_FEATURE_COUNT + 3;
-
-	/**
-	 * The feature id for the '<em><b>Mapping Extension</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_RULE_CS__MAPPING_EXTENSION = MAPPING_METHOD_CS_FEATURE_COUNT + 4;
+	int MAPPING_RULE_CS__MAPPING_BODY = MAPPING_METHOD_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Mapping Rule CS</em>' class.
@@ -1015,7 +1098,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_RULE_CS_FEATURE_COUNT = MAPPING_METHOD_CS_FEATURE_COUNT + 5;
+	int MAPPING_RULE_CS_FEATURE_COUNT = MAPPING_METHOD_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingQueryCSImpl <em>Mapping Query CS</em>}' class.
@@ -1025,7 +1108,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingQueryCS()
 	 * @generated
 	 */
-	int MAPPING_QUERY_CS = 14;
+	int MAPPING_QUERY_CS = 16;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -1046,13 +1129,13 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_QUERY_CS__END_OFFSET = MAPPING_METHOD_CS__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Qualifiers</b></em>' attribute list.
+	 * The feature id for the '<em><b>Black Box</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_QUERY_CS__QUALIFIERS = MAPPING_METHOD_CS__QUALIFIERS;
+	int MAPPING_QUERY_CS__BLACK_BOX = MAPPING_METHOD_CS__BLACK_BOX;
 
 	/**
 	 * The feature id for the '<em><b>Mapping Declaration CS</b></em>' containment reference.
@@ -1089,7 +1172,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingSectionCS()
 	 * @generated
 	 */
-	int MAPPING_SECTION_CS = 15;
+	int MAPPING_SECTION_CS = 17;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -1162,7 +1245,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingInitCS()
 	 * @generated
 	 */
-	int MAPPING_INIT_CS = 16;
+	int MAPPING_INIT_CS = 18;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -1235,7 +1318,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingEndCS()
 	 * @generated
 	 */
-	int MAPPING_END_CS = 17;
+	int MAPPING_END_CS = 19;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -1301,6 +1384,70 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_END_CS_FEATURE_COUNT = MAPPING_SECTION_CS_FEATURE_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingSectionsCSImpl <em>Mapping Sections CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingSectionsCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingSectionsCS()
+	 * @generated
+	 */
+	int MAPPING_SECTIONS_CS = 20;
+
+	/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_SECTIONS_CS__START_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_SECTIONS_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>Mapping Init CS</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_SECTIONS_CS__MAPPING_INIT_CS = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Mapping Body CS</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_SECTIONS_CS__MAPPING_BODY_CS = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Mapping End CS</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_SECTIONS_CS__MAPPING_END_CS = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Mapping Sections CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_SECTIONS_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 3;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.StatementCSImpl <em>Statement CS</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1308,7 +1455,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getStatementCS()
 	 * @generated
 	 */
-	int STATEMENT_CS = 18;
+	int STATEMENT_CS = 21;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -1345,7 +1492,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getAssignStatementCS()
 	 * @generated
 	 */
-	int ASSIGN_STATEMENT_CS = 19;
+	int ASSIGN_STATEMENT_CS = 22;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -1409,7 +1556,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getExpressionStatementCS()
 	 * @generated
 	 */
-	int EXPRESSION_STATEMENT_CS = 20;
+	int EXPRESSION_STATEMENT_CS = 23;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -1455,7 +1602,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getVariableInitializationCS()
 	 * @generated
 	 */
-	int VARIABLE_INITIALIZATION_CS = 21;
+	int VARIABLE_INITIALIZATION_CS = 24;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -1519,7 +1666,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingBodyCS()
 	 * @generated
 	 */
-	int MAPPING_BODY_CS = 22;
+	int MAPPING_BODY_CS = 25;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -1583,7 +1730,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getOutExpCS()
 	 * @generated
 	 */
-	int OUT_EXP_CS = 23;
+	int OUT_EXP_CS = 26;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -1665,7 +1812,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getPatternPropertyExpCS()
 	 * @generated
 	 */
-	int PATTERN_PROPERTY_EXP_CS = 24;
+	int PATTERN_PROPERTY_EXP_CS = 27;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -1729,7 +1876,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingCallExpCS()
 	 * @generated
 	 */
-	int MAPPING_CALL_EXP_CS = 25;
+	int MAPPING_CALL_EXP_CS = 28;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -1820,7 +1967,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getWhileExpCS()
 	 * @generated
 	 */
-	int WHILE_EXP_CS = 26;
+	int WHILE_EXP_CS = 29;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -1893,7 +2040,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getSwitchExpCS()
 	 * @generated
 	 */
-	int SWITCH_EXP_CS = 27;
+	int SWITCH_EXP_CS = 30;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -1948,7 +2095,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getSwitchAltExpCS()
 	 * @generated
 	 */
-	int SWITCH_ALT_EXP_CS = 28;
+	int SWITCH_ALT_EXP_CS = 31;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2003,7 +2150,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getBlockExpCS()
 	 * @generated
 	 */
-	int BLOCK_EXP_CS = 29;
+	int BLOCK_EXP_CS = 32;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2049,7 +2196,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getComputeExpCS()
 	 * @generated
 	 */
-	int COMPUTE_EXP_CS = 30;
+	int COMPUTE_EXP_CS = 33;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2104,7 +2251,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getDirectionKindCS()
 	 * @generated
 	 */
-	int DIRECTION_KIND_CS = 31;
+	int DIRECTION_KIND_CS = 34;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2150,7 +2297,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getElementWithBody()
 	 * @generated
 	 */
-	int ELEMENT_WITH_BODY = 32;
+	int ELEMENT_WITH_BODY = 35;
 
 	/**
 	 * The feature id for the '<em><b>Body Start Location</b></em>' attribute.
@@ -2187,7 +2334,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getResolveExpCS()
 	 * @generated
 	 */
-	int RESOLVE_EXP_CS = 33;
+	int RESOLVE_EXP_CS = 36;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2296,7 +2443,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getResolveInExpCS()
 	 * @generated
 	 */
-	int RESOLVE_IN_EXP_CS = 34;
+	int RESOLVE_IN_EXP_CS = 37;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2423,7 +2570,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getModelTypeCS()
 	 * @generated
 	 */
-	int MODEL_TYPE_CS = 35;
+	int MODEL_TYPE_CS = 38;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2514,7 +2661,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getPackageRefCS()
 	 * @generated
 	 */
-	int PACKAGE_REF_CS = 36;
+	int PACKAGE_REF_CS = 39;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2569,7 +2716,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getTransformationHeaderCS()
 	 * @generated
 	 */
-	int TRANSFORMATION_HEADER_CS = 37;
+	int TRANSFORMATION_HEADER_CS = 40;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2651,7 +2798,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getModuleKindCS()
 	 * @generated
 	 */
-	int MODULE_KIND_CS = 38;
+	int MODULE_KIND_CS = 41;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2697,7 +2844,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getModuleRefCS()
 	 * @generated
 	 */
-	int MODULE_REF_CS = 39;
+	int MODULE_REF_CS = 42;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2752,7 +2899,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getModuleUsageCS()
 	 * @generated
 	 */
-	int MODULE_USAGE_CS = 40;
+	int MODULE_USAGE_CS = 43;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2816,7 +2963,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getTransformationRefineCS()
 	 * @generated
 	 */
-	int TRANSFORMATION_REFINE_CS = 41;
+	int TRANSFORMATION_REFINE_CS = 44;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2871,7 +3018,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getTypeSpecCS()
 	 * @generated
 	 */
-	int TYPE_SPEC_CS = 42;
+	int TYPE_SPEC_CS = 45;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2926,7 +3073,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getLogExpCS()
 	 * @generated
 	 */
-	int LOG_EXP_CS = 43;
+	int LOG_EXP_CS = 46;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3017,7 +3164,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getAssertExpCS()
 	 * @generated
 	 */
-	int ASSERT_EXP_CS = 44;
+	int ASSERT_EXP_CS = 47;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3081,7 +3228,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getImperativeLoopExpCS()
 	 * @generated
 	 */
-	int IMPERATIVE_LOOP_EXP_CS = 45;
+	int IMPERATIVE_LOOP_EXP_CS = 48;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3181,7 +3328,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getForExpCS()
 	 * @generated
 	 */
-    int FOR_EXP_CS = 46;
+    int FOR_EXP_CS = 49;
 
     /**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3281,7 +3428,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getImperativeIterateExpCS()
 	 * @generated
 	 */
-	int IMPERATIVE_ITERATE_EXP_CS = 47;
+	int IMPERATIVE_ITERATE_EXP_CS = 50;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3390,7 +3537,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getReturnExpCS()
 	 * @generated
 	 */
-	int RETURN_EXP_CS = 48;
+	int RETURN_EXP_CS = 51;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3436,7 +3583,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingExtensionCS()
 	 * @generated
 	 */
-	int MAPPING_EXTENSION_CS = 49;
+	int MAPPING_EXTENSION_CS = 52;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3491,7 +3638,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getNewRuleCallExpCS()
 	 * @generated
 	 */
-	int NEW_RULE_CALL_EXP_CS = 50;
+	int NEW_RULE_CALL_EXP_CS = 53;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3546,7 +3693,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getDirectionKindEnum()
 	 * @generated
 	 */
-	int DIRECTION_KIND_ENUM = 51;
+	int DIRECTION_KIND_ENUM = 54;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindEnum <em>Module Kind Enum</em>}' enum.
@@ -3556,7 +3703,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getModuleKindEnum()
 	 * @generated
 	 */
-	int MODULE_KIND_ENUM = 52;
+	int MODULE_KIND_ENUM = 55;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum <em>Import Kind Enum</em>}' enum.
@@ -3566,7 +3713,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getImportKindEnum()
 	 * @generated
 	 */
-	int IMPORT_KIND_ENUM = 53;
+	int IMPORT_KIND_ENUM = 56;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionKindCS <em>Mapping Extension Kind CS</em>}' enum.
@@ -3576,7 +3723,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingExtensionKindCS()
 	 * @generated
 	 */
-	int MAPPING_EXTENSION_KIND_CS = 54;
+	int MAPPING_EXTENSION_KIND_CS = 57;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS <em>Qualifier Kind CS</em>}' enum.
@@ -3586,7 +3733,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getQualifierKindCS()
 	 * @generated
 	 */
-	int QUALIFIER_KIND_CS = 55;
+	int QUALIFIER_KIND_CS = 58;
 
 
 	/**
@@ -3887,6 +4034,17 @@ public interface CSTPackage extends EPackage {
 	EClass getMappingDeclarationCS();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getQualifiers <em>Qualifiers</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Qualifiers</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getQualifiers()
+	 * @see #getMappingDeclarationCS()
+	 * @generated
+	 */
+	EAttribute getMappingDeclarationCS_Qualifiers();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getSimpleNameCS <em>Simple Name CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3942,17 +4100,6 @@ public interface CSTPackage extends EPackage {
 	EReference getMappingDeclarationCS_Result();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#isBlackBox <em>Black Box</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Black Box</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#isBlackBox()
-	 * @see #getMappingDeclarationCS()
-	 * @generated
-	 */
-	EAttribute getMappingDeclarationCS_BlackBox();
-
-	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getDirectionKindCS <em>Direction Kind CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3962,6 +4109,17 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getMappingDeclarationCS_DirectionKindCS();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getMappingExtension <em>Mapping Extension</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Mapping Extension</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getMappingExtension()
+	 * @see #getMappingDeclarationCS()
+	 * @generated
+	 */
+	EReference getMappingDeclarationCS_MappingExtension();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS <em>Parameter Declaration CS</em>}'.
@@ -4007,6 +4165,59 @@ public interface CSTPackage extends EPackage {
 	EAttribute getParameterDeclarationCS_DirectionKind();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.SimpleSignatureCS <em>Simple Signature CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Simple Signature CS</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.SimpleSignatureCS
+	 * @generated
+	 */
+	EClass getSimpleSignatureCS();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.cst.SimpleSignatureCS#getParams <em>Params</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Params</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.SimpleSignatureCS#getParams()
+	 * @see #getSimpleSignatureCS()
+	 * @generated
+	 */
+	EReference getSimpleSignatureCS_Params();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS <em>Complete Signature CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Complete Signature CS</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS
+	 * @generated
+	 */
+	EClass getCompleteSignatureCS();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS#getSimpleSignature <em>Simple Signature</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Simple Signature</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS#getSimpleSignature()
+	 * @see #getCompleteSignatureCS()
+	 * @generated
+	 */
+	EReference getCompleteSignatureCS_SimpleSignature();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS#getResultParams <em>Result Params</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Result Params</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS#getResultParams()
+	 * @see #getCompleteSignatureCS()
+	 * @generated
+	 */
+	EReference getCompleteSignatureCS_ResultParams();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS <em>Mapping Method CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4017,15 +4228,15 @@ public interface CSTPackage extends EPackage {
 	EClass getMappingMethodCS();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS#getQualifiers <em>Qualifiers</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS#isBlackBox <em>Black Box</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Qualifiers</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS#getQualifiers()
+	 * @return the meta object for the attribute '<em>Black Box</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS#isBlackBox()
 	 * @see #getMappingMethodCS()
 	 * @generated
 	 */
-	EAttribute getMappingMethodCS_Qualifiers();
+	EAttribute getMappingMethodCS_BlackBox();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS#getMappingDeclarationCS <em>Mapping Declaration CS</em>}'.
@@ -4060,48 +4271,15 @@ public interface CSTPackage extends EPackage {
 	EReference getMappingRuleCS_Guard();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingInitCS <em>Mapping Init CS</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingBody <em>Mapping Body</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Mapping Init CS</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingInitCS()
+	 * @return the meta object for the containment reference '<em>Mapping Body</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingBody()
 	 * @see #getMappingRuleCS()
 	 * @generated
 	 */
-	EReference getMappingRuleCS_MappingInitCS();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingBodyCS <em>Mapping Body CS</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Mapping Body CS</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingBodyCS()
-	 * @see #getMappingRuleCS()
-	 * @generated
-	 */
-	EReference getMappingRuleCS_MappingBodyCS();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingEndCS <em>Mapping End CS</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Mapping End CS</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingEndCS()
-	 * @see #getMappingRuleCS()
-	 * @generated
-	 */
-	EReference getMappingRuleCS_MappingEndCS();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingExtension <em>Mapping Extension</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Mapping Extension</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingExtension()
-	 * @see #getMappingRuleCS()
-	 * @generated
-	 */
-	EReference getMappingRuleCS_MappingExtension();
+	EReference getMappingRuleCS_MappingBody();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS <em>Mapping Query CS</em>}'.
@@ -4175,6 +4353,49 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getMappingEndCS();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS <em>Mapping Sections CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Mapping Sections CS</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS
+	 * @generated
+	 */
+	EClass getMappingSectionsCS();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS#getMappingInitCS <em>Mapping Init CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Mapping Init CS</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS#getMappingInitCS()
+	 * @see #getMappingSectionsCS()
+	 * @generated
+	 */
+	EReference getMappingSectionsCS_MappingInitCS();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS#getMappingBodyCS <em>Mapping Body CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Mapping Body CS</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS#getMappingBodyCS()
+	 * @see #getMappingSectionsCS()
+	 * @generated
+	 */
+	EReference getMappingSectionsCS_MappingBodyCS();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS#getMappingEndCS <em>Mapping End CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Mapping End CS</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS#getMappingEndCS()
+	 * @see #getMappingSectionsCS()
+	 * @generated
+	 */
+	EReference getMappingSectionsCS_MappingEndCS();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.StatementCS <em>Statement CS</em>}'.
@@ -5595,6 +5816,14 @@ public interface CSTPackage extends EPackage {
 		EClass MAPPING_DECLARATION_CS = eINSTANCE.getMappingDeclarationCS();
 
 		/**
+		 * The meta object literal for the '<em><b>Qualifiers</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MAPPING_DECLARATION_CS__QUALIFIERS = eINSTANCE.getMappingDeclarationCS_Qualifiers();
+
+		/**
 		 * The meta object literal for the '<em><b>Simple Name CS</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -5635,20 +5864,20 @@ public interface CSTPackage extends EPackage {
 		EReference MAPPING_DECLARATION_CS__RESULT = eINSTANCE.getMappingDeclarationCS_Result();
 
 		/**
-		 * The meta object literal for the '<em><b>Black Box</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute MAPPING_DECLARATION_CS__BLACK_BOX = eINSTANCE.getMappingDeclarationCS_BlackBox();
-
-		/**
 		 * The meta object literal for the '<em><b>Direction Kind CS</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference MAPPING_DECLARATION_CS__DIRECTION_KIND_CS = eINSTANCE.getMappingDeclarationCS_DirectionKindCS();
+
+		/**
+		 * The meta object literal for the '<em><b>Mapping Extension</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MAPPING_DECLARATION_CS__MAPPING_EXTENSION = eINSTANCE.getMappingDeclarationCS_MappingExtension();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ParameterDeclarationCSImpl <em>Parameter Declaration CS</em>}' class.
@@ -5685,6 +5914,50 @@ public interface CSTPackage extends EPackage {
 		EAttribute PARAMETER_DECLARATION_CS__DIRECTION_KIND = eINSTANCE.getParameterDeclarationCS_DirectionKind();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.SimpleSignatureCSImpl <em>Simple Signature CS</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.SimpleSignatureCSImpl
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getSimpleSignatureCS()
+		 * @generated
+		 */
+		EClass SIMPLE_SIGNATURE_CS = eINSTANCE.getSimpleSignatureCS();
+
+		/**
+		 * The meta object literal for the '<em><b>Params</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SIMPLE_SIGNATURE_CS__PARAMS = eINSTANCE.getSimpleSignatureCS_Params();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.CompleteSignatureCSImpl <em>Complete Signature CS</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CompleteSignatureCSImpl
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getCompleteSignatureCS()
+		 * @generated
+		 */
+		EClass COMPLETE_SIGNATURE_CS = eINSTANCE.getCompleteSignatureCS();
+
+		/**
+		 * The meta object literal for the '<em><b>Simple Signature</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COMPLETE_SIGNATURE_CS__SIMPLE_SIGNATURE = eINSTANCE.getCompleteSignatureCS_SimpleSignature();
+
+		/**
+		 * The meta object literal for the '<em><b>Result Params</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COMPLETE_SIGNATURE_CS__RESULT_PARAMS = eINSTANCE.getCompleteSignatureCS_ResultParams();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingMethodCSImpl <em>Mapping Method CS</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -5695,12 +5968,12 @@ public interface CSTPackage extends EPackage {
 		EClass MAPPING_METHOD_CS = eINSTANCE.getMappingMethodCS();
 
 		/**
-		 * The meta object literal for the '<em><b>Qualifiers</b></em>' attribute list feature.
+		 * The meta object literal for the '<em><b>Black Box</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute MAPPING_METHOD_CS__QUALIFIERS = eINSTANCE.getMappingMethodCS_Qualifiers();
+		EAttribute MAPPING_METHOD_CS__BLACK_BOX = eINSTANCE.getMappingMethodCS_BlackBox();
 
 		/**
 		 * The meta object literal for the '<em><b>Mapping Declaration CS</b></em>' containment reference feature.
@@ -5729,36 +6002,12 @@ public interface CSTPackage extends EPackage {
 		EReference MAPPING_RULE_CS__GUARD = eINSTANCE.getMappingRuleCS_Guard();
 
 		/**
-		 * The meta object literal for the '<em><b>Mapping Init CS</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Mapping Body</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference MAPPING_RULE_CS__MAPPING_INIT_CS = eINSTANCE.getMappingRuleCS_MappingInitCS();
-
-		/**
-		 * The meta object literal for the '<em><b>Mapping Body CS</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference MAPPING_RULE_CS__MAPPING_BODY_CS = eINSTANCE.getMappingRuleCS_MappingBodyCS();
-
-		/**
-		 * The meta object literal for the '<em><b>Mapping End CS</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference MAPPING_RULE_CS__MAPPING_END_CS = eINSTANCE.getMappingRuleCS_MappingEndCS();
-
-		/**
-		 * The meta object literal for the '<em><b>Mapping Extension</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference MAPPING_RULE_CS__MAPPING_EXTENSION = eINSTANCE.getMappingRuleCS_MappingExtension();
+		EReference MAPPING_RULE_CS__MAPPING_BODY = eINSTANCE.getMappingRuleCS_MappingBody();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingQueryCSImpl <em>Mapping Query CS</em>}' class.
@@ -5823,6 +6072,40 @@ public interface CSTPackage extends EPackage {
 		 * @generated
 		 */
 		EClass MAPPING_END_CS = eINSTANCE.getMappingEndCS();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingSectionsCSImpl <em>Mapping Sections CS</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingSectionsCSImpl
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingSectionsCS()
+		 * @generated
+		 */
+		EClass MAPPING_SECTIONS_CS = eINSTANCE.getMappingSectionsCS();
+
+		/**
+		 * The meta object literal for the '<em><b>Mapping Init CS</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MAPPING_SECTIONS_CS__MAPPING_INIT_CS = eINSTANCE.getMappingSectionsCS_MappingInitCS();
+
+		/**
+		 * The meta object literal for the '<em><b>Mapping Body CS</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MAPPING_SECTIONS_CS__MAPPING_BODY_CS = eINSTANCE.getMappingSectionsCS_MappingBodyCS();
+
+		/**
+		 * The meta object literal for the '<em><b>Mapping End CS</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MAPPING_SECTIONS_CS__MAPPING_END_CS = eINSTANCE.getMappingSectionsCS_MappingEndCS();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.StatementCSImpl <em>Statement CS</em>}' class.

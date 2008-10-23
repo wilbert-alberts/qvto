@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactory.java,v 1.5 2008/10/14 11:46:37 radvorak Exp $
+ * $Id: CSTFactory.java,v 1.6 2008/10/23 20:09:05 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -132,6 +132,24 @@ public interface CSTFactory extends EFactory {
 	ParameterDeclarationCS createParameterDeclarationCS();
 
 	/**
+	 * Returns a new object of class '<em>Simple Signature CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Simple Signature CS</em>'.
+	 * @generated
+	 */
+	SimpleSignatureCS createSimpleSignatureCS();
+
+	/**
+	 * Returns a new object of class '<em>Complete Signature CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Complete Signature CS</em>'.
+	 * @generated
+	 */
+	CompleteSignatureCS createCompleteSignatureCS();
+
+	/**
 	 * Returns a new object of class '<em>Mapping Rule CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -166,6 +184,15 @@ public interface CSTFactory extends EFactory {
 	 * @generated
 	 */
 	MappingEndCS createMappingEndCS();
+
+	/**
+	 * Returns a new object of class '<em>Mapping Sections CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Mapping Sections CS</em>'.
+	 * @generated
+	 */
+	MappingSectionsCS createMappingSectionsCS();
 
 	/**
 	 * Returns a new object of class '<em>Assign Statement CS</em>'.

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactoryImpl.java,v 1.5 2008/10/14 11:46:37 radvorak Exp $
+ * $Id: CSTFactoryImpl.java,v 1.6 2008/10/23 20:09:08 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -87,10 +87,13 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 			case CSTPackage.CONTEXTUAL_PROPERTY_CS: return createContextualPropertyCS();
 			case CSTPackage.MAPPING_DECLARATION_CS: return createMappingDeclarationCS();
 			case CSTPackage.PARAMETER_DECLARATION_CS: return createParameterDeclarationCS();
+			case CSTPackage.SIMPLE_SIGNATURE_CS: return createSimpleSignatureCS();
+			case CSTPackage.COMPLETE_SIGNATURE_CS: return createCompleteSignatureCS();
 			case CSTPackage.MAPPING_RULE_CS: return createMappingRuleCS();
 			case CSTPackage.MAPPING_QUERY_CS: return createMappingQueryCS();
 			case CSTPackage.MAPPING_INIT_CS: return createMappingInitCS();
 			case CSTPackage.MAPPING_END_CS: return createMappingEndCS();
+			case CSTPackage.MAPPING_SECTIONS_CS: return createMappingSectionsCS();
 			case CSTPackage.ASSIGN_STATEMENT_CS: return createAssignStatementCS();
 			case CSTPackage.EXPRESSION_STATEMENT_CS: return createExpressionStatementCS();
 			case CSTPackage.VARIABLE_INITIALIZATION_CS: return createVariableInitializationCS();
@@ -278,6 +281,26 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public SimpleSignatureCS createSimpleSignatureCS() {
+		SimpleSignatureCSImpl simpleSignatureCS = new SimpleSignatureCSImpl();
+		return simpleSignatureCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public CompleteSignatureCS createCompleteSignatureCS() {
+		CompleteSignatureCSImpl completeSignatureCS = new CompleteSignatureCSImpl();
+		return completeSignatureCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public MappingRuleCS createMappingRuleCS() {
 		MappingRuleCSImpl mappingRuleCS = new MappingRuleCSImpl();
 		return mappingRuleCS;
@@ -311,6 +334,16 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	public MappingEndCS createMappingEndCS() {
 		MappingEndCSImpl mappingEndCS = new MappingEndCSImpl();
 		return mappingEndCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public MappingSectionsCS createMappingSectionsCS() {
+		MappingSectionsCSImpl mappingSectionsCS = new MappingSectionsCSImpl();
+		return mappingSectionsCS;
 	}
 
 	/**
