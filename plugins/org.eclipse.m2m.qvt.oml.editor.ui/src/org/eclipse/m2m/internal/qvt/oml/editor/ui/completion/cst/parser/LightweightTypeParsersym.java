@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.11 2008/10/14 12:08:46 radvorak Exp $
+* $Id: LightweightTypeParsersym.java,v 1.12 2008/10/23 20:06:29 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.11 2008/10/14 12:08:46 radvorak Exp $
+* $Id: LightweightTypeParsersym.java,v 1.12 2008/10/23 20:06:29 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.11 2008/10/14 12:08:46 radvorak Exp $
+* $Id: LightweightTypeParsersym.java,v 1.12 2008/10/23 20:06:29 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -77,8 +77,8 @@ public interface LightweightTypeParsersym {
       TK_ARROW = 109,
       TK_BAR = 90,
       TK_COMMA = 87,
-      TK_COLON = 92,
-      TK_COLONCOLON = 91,
+      TK_COLON = 91,
+      TK_COLONCOLON = 92,
       TK_SEMICOLON = 88,
       TK_DOT = 110,
       TK_DOTDOT = 111,
@@ -86,29 +86,30 @@ public interface LightweightTypeParsersym {
       TK_CARET = 112,
       TK_CARETCARET = 113,
       TK_QUESTIONMARK = 102,
-      TK_QUOTE_STRING_LITERAL = 131,
+      TK_QUOTE_STRING_LITERAL = 130,
       TK_ADD_ASSIGN = 104,
       TK_RESET_ASSIGN = 93,
       TK_AT_SIGN = 117,
       TK_EXCLAMATION_MARK = 103,
       TK_NOT_EQUAL_EXEQ = 96,
+      TK_INTEGER_RANGE_START = 105,
       TK_self = 27,
-      TK_inv = 132,
-      TK_pre = 133,
-      TK_post = 134,
-      TK_endpackage = 135,
-      TK_def = 136,
+      TK_inv = 131,
+      TK_pre = 132,
+      TK_post = 133,
+      TK_endpackage = 134,
+      TK_def = 135,
       TK_if = 69,
       TK_then = 114,
-      TK_else = 105,
-      TK_endif = 106,
+      TK_else = 106,
+      TK_endif = 107,
       TK_and = 29,
       TK_or = 30,
       TK_xor = 31,
       TK_not = 53,
       TK_implies = 115,
       TK_let = 77,
-      TK_in = 107,
+      TK_in = 108,
       TK_true = 70,
       TK_false = 71,
       TK_body = 36,
@@ -151,7 +152,7 @@ public interface LightweightTypeParsersym {
       TK_Invalid = 13,
       TK_OclMessage = 14,
       TK_OclInvalid = 72,
-      TK_end = 137,
+      TK_end = 136,
       TK_while = 73,
       TK_when = 118,
       TK_var = 97,
@@ -171,20 +172,20 @@ public interface LightweightTypeParsersym {
       TK_forOne = 127,
       TK_compute = 74,
       TK_new = 75,
-      TK_out = 138,
+      TK_out = 137,
       TK_object = 76,
-      TK_transformation = 139,
-      TK_import = 140,
-      TK_library = 141,
-      TK_metamodel = 142,
-      TK_mapping = 143,
-      TK_query = 144,
-      TK_helper = 145,
-      TK_inout = 146,
-      TK_configuration = 147,
-      TK_intermediate = 148,
-      TK_property = 149,
-      TK_population = 150,
+      TK_transformation = 138,
+      TK_import = 139,
+      TK_library = 140,
+      TK_metamodel = 141,
+      TK_mapping = 142,
+      TK_query = 143,
+      TK_helper = 144,
+      TK_inout = 145,
+      TK_configuration = 146,
+      TK_intermediate = 147,
+      TK_property = 148,
+      TK_population = 149,
       TK_map = 61,
       TK_xmap = 62,
       TK_late = 64,
@@ -196,28 +197,26 @@ public interface LightweightTypeParsersym {
       TK_invresolveone = 83,
       TK_invresolveIn = 84,
       TK_invresolveoneIn = 85,
-      TK_modeltype = 151,
-      TK_uses = 152,
-      TK_where = 153,
-      TK_refines = 154,
-      TK_enforcing = 155,
-      TK_access = 156,
-      TK_extends = 157,
-      TK_blackbox = 158,
-      TK_abstract = 159,
-      TK_static = 160,
+      TK_modeltype = 150,
+      TK_uses = 151,
+      TK_where = 152,
+      TK_refines = 153,
+      TK_enforcing = 154,
+      TK_access = 155,
+      TK_extends = 156,
+      TK_blackbox = 157,
+      TK_abstract = 158,
+      TK_static = 159,
       TK_result = 28,
       TK_main = 128,
       TK_this = 33,
-      TK_rename = 161,
-      TK_inherits = 162,
-      TK_merges = 163,
-      TK_disjuncts = 164,
+      TK_rename = 160,
+      TK_inherits = 161,
+      TK_merges = 162,
+      TK_disjuncts = 163,
       TK_IDENTIFIER = 2,
       TK_ERROR_TOKEN = 4,
-      TK_whileDeclaratorCS = 129,
-      TK_INTEGER_RANGE_START = 108,
-      TK_EOF_TOKEN = 130;
+      TK_EOF_TOKEN = 129;
 
       public final static String orderedTerminalSymbols[] = {
                  "",
@@ -311,8 +310,8 @@ public interface LightweightTypeParsersym {
                  "SEMICOLON",
                  "RBRACE",
                  "BAR",
-                 "COLONCOLON",
                  "COLON",
+                 "COLONCOLON",
                  "RESET_ASSIGN",
                  "LBRACKET",
                  "log",
@@ -325,10 +324,10 @@ public interface LightweightTypeParsersym {
                  "QUESTIONMARK",
                  "EXCLAMATION_MARK",
                  "ADD_ASSIGN",
+                 "INTEGER_RANGE_START",
                  "else",
                  "endif",
                  "in",
-                 "INTEGER_RANGE_START",
                  "ARROW",
                  "DOT",
                  "DOTDOT",
@@ -349,7 +348,6 @@ public interface LightweightTypeParsersym {
                  "forEach",
                  "forOne",
                  "main",
-                 "whileDeclaratorCS",
                  "EOF_TOKEN",
                  "QUOTE_STRING_LITERAL",
                  "inv",

@@ -55,7 +55,7 @@ public class QvtCompletionVisitorCS extends QvtOperationalVisitorCS {
 
     @Override
     protected void visitMappingMethodCS(MappingMethodCS methodCS, QvtOperationalEnv env, ImperativeOperation operation) throws SemanticException {
-        if ((methodCS.getMappingDeclarationCS() != null) && !methodCS.getMappingDeclarationCS().isBlackBox()) {
+        if ((methodCS.getMappingDeclarationCS() != null) && !methodCS.isBlackBox()) {
             super.visitMappingMethodCS(methodCS, env, operation);
             ASTNode astNode = ASTBindingHelper.resolveASTNode(methodCS);
             if (astNode != null) {
