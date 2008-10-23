@@ -41,7 +41,7 @@ import org.eclipse.ocl.util.TypeUtil;
  * <p>
  * Remark: It has come from the initial contribution.
  */
-class LegacyNativeLibSupport {
+public class LegacyNativeLibSupport {
 
 	public static final LegacyNativeLibSupport INSTANCE = createInstance(); 
 	
