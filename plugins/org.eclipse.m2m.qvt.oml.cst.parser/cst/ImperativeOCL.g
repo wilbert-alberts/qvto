@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.g,v 1.4 2008/10/23 20:09:12 aigdalov Exp $ 
+-- * $Id: ImperativeOCL.g,v 1.5 2008/10/25 10:07:05 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -304,7 +304,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: ImperativeOCL.g,v 1.4 2008/10/23 20:09:12 aigdalov Exp $
+ * $Id: ImperativeOCL.g,v 1.5 2008/10/25 10:07:05 aigdalov Exp $
  */
 	./
 $End
@@ -536,18 +536,6 @@ $Rules
 							null
 						);
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
-					$setResult(result);
-		  $EndJava
-		./
-	variableInitializationCS ::= var qvtErrorToken
-		/.$BeginJava
-					IToken errorToken = getIToken($getToken(2));
-					CSTNode result = createVariableInitializationCS(
-							new Token(errorToken.getStartOffset(), errorToken.getEndOffset(), QvtOpLPGParsersym.TK_ERROR_TOKEN),
-							null,
-							null
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
 					$setResult(result);
 		  $EndJava
 		./
