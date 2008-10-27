@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpKWLexer.java,v 1.14 2008/10/25 10:07:05 aigdalov Exp $
+* $Id: QvtOpKWLexer.java,v 1.15 2008/10/27 12:05:24 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,10 +29,11 @@
 *
 * </copyright>
 *
-* $Id: QvtOpKWLexer.java,v 1.14 2008/10/25 10:07:05 aigdalov Exp $
+* $Id: QvtOpKWLexer.java,v 1.15 2008/10/27 12:05:24 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
+
 
 
 public class QvtOpKWLexer extends QvtOpKWLexerprs implements QvtOpLPGParsersym
@@ -67,6 +68,7 @@ public class QvtOpKWLexer extends QvtOpKWLexerprs implements QvtOpLPGParsersym
     }
 
     public void setInputChars(char[] inputChars) { this.inputChars = inputChars; }
+
 
     final static int tokenKind[] = new int[128];
     static
@@ -132,6 +134,7 @@ public class QvtOpKWLexer extends QvtOpKWLexerprs implements QvtOpLPGParsersym
     {
         return (c < 128 ? tokenKind[c] : 0);
     }
+
 
     public QvtOpKWLexer(char[] inputChars, int identifierKind)
     {
@@ -822,6 +825,7 @@ public class QvtOpKWLexer extends QvtOpKWLexerprs implements QvtOpLPGParsersym
 		keywordKind[115] = (TK_compute);
 	  
 	
+
         for (int i = 0; i < keywordKind.length; i++)
         {
             if (keywordKind[i] == 0)

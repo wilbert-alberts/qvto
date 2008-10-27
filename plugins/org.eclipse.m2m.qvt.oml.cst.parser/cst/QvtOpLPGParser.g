@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.12 2008/10/23 20:09:13 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.13 2008/10/27 12:05:24 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -131,7 +131,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.12 2008/10/23 20:09:13 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.13 2008/10/27 12:05:24 aigdalov Exp $
  */
 	./
 $End
@@ -1005,6 +1005,119 @@ $Rules
 
 	-- // general purpose grammar rules (end)
 
+	-- // syntax for helper operations (start)
+
+	-- // syntax for helper operations (end)
+
+	_helper -> helper_decl
+	_helper -> helper_simple_def
+	_helper -> helper_compound_def
+
+	helper_header ::= helper_info scoped_identifier complete_signature 
+		/.$BeginJava
+					CompleteSignatureCS completeSignature = (CompleteSignatureCS)$getSym(3);
+					Object[] helperInfo = (Object[])$getSym(1);
+					MappingDeclarationCS mappingDeclarationCS = createMappingDeclarationCS(
+						null,
+						(ScopedNameCS)$getSym(2),
+						completeSignature.getSimpleSignature().getParams(),
+						completeSignature.getResultParams()
+					);
+					setOffsets(mappingDeclarationCS, (CSTNode)$getSym(2), (CSTNode)$getSym(3));
+
+					EList<SimpleNameCS> qualifiers = (EList<SimpleNameCS>) helperInfo[0];
+					if(!qualifiers.isEmpty()) {
+						mappingDeclarationCS.getQualifiers().addAll(createQualifiersListCS(qualifiers));
+					}
+
+					$setResult(mappingDeclarationCS);
+		  $EndJava
+		./
+
+	helper_header ::= helper_info qvtErrorToken
+		/.$BeginJava
+					Object[] helperInfo = (Object[])$getSym(1);
+					MappingDeclarationCS mappingDeclarationCS = createMappingDeclarationCS(
+						null,
+						createScopedNameCS(null, ""), //$NON-NLS-1$
+						$EMPTY_ELIST,
+						$EMPTY_ELIST
+					);
+					setOffsets(mappingDeclarationCS, (IToken) helperInfo[1]);
+
+					EList<SimpleNameCS> qualifiers = (EList<SimpleNameCS>) helperInfo[0];
+					if(!qualifiers.isEmpty()) {
+						mappingDeclarationCS.getQualifiers().addAll(createQualifiersListCS(qualifiers));
+					}
+
+					$setResult(mappingDeclarationCS);
+		  $EndJava
+		./
+
+	helper_info ::= qualifierList helper_kind
+		/.$BeginJava
+					$setResult(new Object[] {$getSym(1), getIToken($getToken(2))});
+		  $EndJava
+		./
+
+	helper_kind -> helper
+	helper_kind -> query
+
+	helper_decl ::= helper_header ';' 
+		/.$BeginJava
+					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(1);
+					MappingQueryCS result = createMappingQueryCS(
+							mappingDecl,
+							$EMPTY_ELIST
+						);
+					result.setBlackBox(true);
+					setOffsets(result, mappingDecl, getIToken($getToken(2)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	helper_decl ::= helper_header qvtErrorToken 
+		/.$BeginJava
+					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(1);
+					MappingQueryCS result = createMappingQueryCS(
+							mappingDecl,
+							$EMPTY_ELIST
+						);
+					result.setBlackBox(true);
+					setOffsets(result, mappingDecl);
+					$setResult(result);
+		  $EndJava
+		./
+
+	helper_simple_def ::= helper_header '=' statementCS ';' 
+		/.$BeginJava
+					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(1);
+					OCLExpressionCS expression = (OCLExpressionCS)$getSym(3);
+					EList<OCLExpressionCS> expressionList = new BasicEList();
+					expressionList.add(expression);
+					CSTNode result = createMappingQueryCS(
+							mappingDecl,
+							expressionList
+						);
+					setOffsets(result, mappingDecl, getIToken($getToken(4)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	helper_compound_def ::= helper_header expression_block semicolonOpt
+		/.$BeginJava
+					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(1);
+					BlockExpCS blockExpCS = (BlockExpCS)$getSym(2);
+					CSTNode result = createMappingQueryCS(
+							mappingDecl,
+							blockExpCS.getBodyExpressions()
+						);
+					setOffsets(result, mappingDecl, blockExpCS);
+					$setResult(result);
+		  $EndJava
+		./
+
+
 	-- // syntax for mapping operations (start)
 
 	_mapping -> mapping_decl
@@ -1105,8 +1218,8 @@ $Rules
 					MappingDeclarationCS mappingDeclarationCS = createMappingDeclarationCS(
 						directionKind,
 						(ScopedNameCS)$getSym(4),
-						new BasicEList(),
-						new BasicEList()
+						$EMPTY_ELIST,
+						$EMPTY_ELIST
 					);
 					mappingDeclarationCS.setStartOffset((directionKind == null ? (CSTNode)$getSym(4) : directionKind).getStartOffset());
 
@@ -1126,8 +1239,8 @@ $Rules
 					MappingDeclarationCS mappingDeclarationCS = createMappingDeclarationCS(
 						null,
 						createScopedNameCS(null, ""), //$NON-NLS-1$
-						new BasicEList(),
-						new BasicEList()
+						$EMPTY_ELIST,
+						$EMPTY_ELIST
 					);
 					setOffsets(mappingDeclarationCS, getIToken($getToken(2)), getIToken($getToken(2)));
 
@@ -1276,14 +1389,14 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./	
-	mappingRuleList ::= mappingQueryCS
+	mappingRuleList ::= _helper
 		/.$BeginJava
 					EList result = new BasicEList();
 					result.add($getSym(1));
 					$setResult(result);
 		  $EndJava
 		./
-	mappingRuleList ::= mappingRuleList mappingQueryCS
+	mappingRuleList ::= mappingRuleList _helper
 		/.$BeginJava
 					EList result = (EList)$getSym(1);
 					result.add($getSym(2));
@@ -1312,54 +1425,6 @@ $Rules
 		./
 		
 			
-	helperKindCS -> helper		
-	helperKindCS -> query	
-		
-	mappingQueryCS ::= helperKindCS mappingDeclarationCS '{' statementListOpt '}'  
-		/.$BeginJava
-					CSTNode result = createMappingQueryCS(
-							(MappingDeclarationCS)$getSym(2),
-							(EList)$getSym(4)
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
-					$setResult(result);
-		  $EndJava
-		./
-	mappingQueryCS ::= helperKindCS mappingDeclarationCS ';'  
-		/.$BeginJava
-					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(2);
-					MappingQueryCS result = createMappingQueryCS(
-							mappingDecl,
-							$EMPTY_ELIST
-						);
-					result.setBlackBox(true);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
-					$setResult(result);
-		  $EndJava
-		./
-	mappingQueryCS ::= helperKindCS mappingDeclarationCS qvtErrorToken  
-		/.$BeginJava
-					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(2);
-					MappingQueryCS result = createMappingQueryCS(
-							mappingDecl,
-							$EMPTY_ELIST
-						);
-					result.setBlackBox(true);
-					setOffsets(result, getIToken($getToken(1)), mappingDecl);
-					$setResult(result);
-		  $EndJava
-		./
-	mappingQueryCS ::= helperKindCS qvtErrorToken
-		/.$BeginJava
-					CSTNode result = createMappingQueryCS(
-							null,
-							$EMPTY_ELIST
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
-					$setResult(result);
-		  $EndJava
-		./
-
 	entryDeclarationCS ::= main '(' param_listOpt ')'
 		/.$BeginJava
 					IToken nameToken = getIToken(dtParser.getToken(1));				
@@ -1390,48 +1455,6 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-
-	mappingDeclarationCS ::= param_directionOpt scoped_identifier '(' param_listOpt ')' ':' param_list
-		/.$BeginJava
-					DirectionKindCS directionKind = (DirectionKindCS)$getSym(1);
-					CSTNode result = createMappingDeclarationCS(
-						directionKind,
-						(ScopedNameCS)$getSym(2),
-						(EList)$getSym(4),
-						(EList)$getSym(7)
-					);
-					result.setStartOffset((directionKind == null ? (CSTNode)$getSym(2) : directionKind).getStartOffset());
-					result.setEndOffset(getEndOffset(getIToken($getToken(7)), (EList)$getSym(7)));
-					$setResult(result);
-		  $EndJava
-		./
-	mappingDeclarationCS ::= param_directionOpt scoped_identifier '(' param_listOpt ')'
-		/.$BeginJava
-					DirectionKindCS directionKind = (DirectionKindCS)$getSym(1);
-					CSTNode result = createMappingDeclarationCS(
-							directionKind,
-							(ScopedNameCS)$getSym(2),
-							(EList)$getSym(4),
-							null
-						);
-					setOffsets(result, (CSTNode)(directionKind == null ? $getSym(2) : directionKind), getIToken($getToken(5)));
-					$setResult(result);
-		  $EndJava
-		./
-	mappingDeclarationCS ::= param_directionOpt scoped_identifier qvtErrorToken
-		/.$BeginJava
-					DirectionKindCS directionKind = (DirectionKindCS)$getSym(1);
-					CSTNode result = createMappingDeclarationCS(
-							directionKind,
-							(ScopedNameCS)$getSym(2),
-							$EMPTY_ELIST,
-							null
-						);
-					setOffsets(result, (CSTNode)(directionKind == null ? $getSym(2) : directionKind), (CSTNode)$getSym(2));
-					$setResult(result);
-		  $EndJava
-		./
-
 
 	expressionListOpt ::= $empty
 		/.$EmptyListAction./
