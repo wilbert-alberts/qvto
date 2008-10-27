@@ -24,8 +24,10 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
+import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
@@ -41,6 +43,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.PackageRef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
+import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
@@ -321,9 +324,12 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 				EList<OCLExpression<EClassifier>> content = operationBody.getContent();
 				if(operation.getResult().size() == 1 && 
 					(content.isEmpty() || content.get(content.size() - 1) instanceof ReturnExp == false)) {
-					ASTNode problemTarget = operation;
-					String message = ValidationMessages.useReturnExpForOperationResult;
-					fEnv.reportWarning(message, problemTarget.getStartPosition(), operationBody.getStartPosition());
+                    CSTNode operationCS = ASTBindingHelper.resolveCSTNode(operation);
+                    if (!((operationCS instanceof MappingQueryCS) && ((MappingQueryCS) operationCS).isIsSimpleDefinition())) {
+                        ASTNode problemTarget = operation;
+                        String message = ValidationMessages.useReturnExpForOperationResult;
+                        fEnv.reportWarning(message, problemTarget.getStartPosition(), operationBody.getStartPosition());
+                    }
 				}
 			}
 		}
