@@ -78,7 +78,8 @@ public class TransformTests {
     
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {
-        		new FileToFileData("compositetransf"), //$NON-NLS-1$        		
+                new FileToFileData("helperSimpleDef_252173"), //$NON-NLS-1$                
+                new FileToFileData("compositetransf"), //$NON-NLS-1$                
                 new FileToFileData("computeExp_250403"), //$NON-NLS-1$
                 new FileToFileData("forExp_245275"), //$NON-NLS-1$
                 new FileToFileData("bug244701"), //$NON-NLS-1$
