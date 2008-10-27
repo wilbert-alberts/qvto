@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.14 2008/10/27 14:26:30 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.15 2008/10/27 14:58:12 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -131,7 +131,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.14 2008/10/27 14:26:30 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.15 2008/10/27 14:58:12 aigdalov Exp $
  */
 	./
 $End
@@ -1820,7 +1820,7 @@ $Rules
         			IToken lateToken = getIToken($getToken(1));
                     CSTNode result = createResolveExpCS(
                             lateToken,
-                            new Token(lateToken.getEndOffset(), lateToken.getEndOffset(), QvtOpLPGParsersym.TK_resolve),
+                            new Token(lateToken.getEndOffset(), lateToken.getEndOffset(), $sym_type.TK_resolve),
                             null);
                             setOffsets(result, getIToken($getToken(1)));
                     $setResult(result);

@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.16 2008/10/27 14:26:31 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.17 2008/10/27 14:58:11 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.16 2008/10/27 14:26:31 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.17 2008/10/27 14:58:11 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.16 2008/10/27 14:26:31 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.17 2008/10/27 14:58:11 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -213,7 +213,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
     	int trailingEOFsAmount = 100;
     	int someHugeOffset = 100000;
     	for (int i  = 0; i < trailingEOFsAmount; i++) {
-            makeToken(lastT.getEndOffset() + i + someHugeOffset, lastT.getEndOffset() + i + someHugeOffset + 1, QvtOpLPGParserprs.TK_EOF_TOKEN);
+            makeToken(lastT.getEndOffset() + i + someHugeOffset, lastT.getEndOffset() + i + someHugeOffset + 1, QvtOpLPGParsersym.TK_EOF_TOKEN);
     	}
 	}
 
