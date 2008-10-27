@@ -11,12 +11,13 @@
  * 
  * 
  *
- * $Id: MappingQueryCSImpl.java,v 1.1 2008/04/06 10:18:39 sboyko Exp $
+ * $Id: MappingQueryCSImpl.java,v 1.2 2008/10/27 14:26:31 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -24,6 +25,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -40,6 +42,7 @@ import org.eclipse.ocl.cst.OCLExpressionCS;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingQueryCSImpl#getExpressions <em>Expressions</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingQueryCSImpl#isIsSimpleDefinition <em>Is Simple Definition</em>}</li>
  * </ul>
  * </p>
  *
@@ -62,6 +65,26 @@ public class MappingQueryCSImpl extends MappingMethodCSImpl implements MappingQu
 	 * @ordered
 	 */
 	protected EList<OCLExpressionCS> expressions;
+
+	/**
+	 * The default value of the '{@link #isIsSimpleDefinition() <em>Is Simple Definition</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsSimpleDefinition()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean IS_SIMPLE_DEFINITION_EDEFAULT = false;
+
+	/**
+	 * The flag representing the value of the '{@link #isIsSimpleDefinition() <em>Is Simple Definition</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsSimpleDefinition()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int IS_SIMPLE_DEFINITION_EFLAG = 1 << 9;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -99,6 +122,27 @@ public class MappingQueryCSImpl extends MappingMethodCSImpl implements MappingQu
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isIsSimpleDefinition() {
+		return (eFlags & IS_SIMPLE_DEFINITION_EFLAG) != 0;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIsSimpleDefinition(boolean newIsSimpleDefinition) {
+		boolean oldIsSimpleDefinition = (eFlags & IS_SIMPLE_DEFINITION_EFLAG) != 0;
+		if (newIsSimpleDefinition) eFlags |= IS_SIMPLE_DEFINITION_EFLAG; else eFlags &= ~IS_SIMPLE_DEFINITION_EFLAG;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION, oldIsSimpleDefinition, newIsSimpleDefinition));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -118,6 +162,8 @@ public class MappingQueryCSImpl extends MappingMethodCSImpl implements MappingQu
 		switch (featureID) {
 			case CSTPackage.MAPPING_QUERY_CS__EXPRESSIONS:
 				return getExpressions();
+			case CSTPackage.MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION:
+				return isIsSimpleDefinition() ? Boolean.TRUE : Boolean.FALSE;
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -135,6 +181,9 @@ public class MappingQueryCSImpl extends MappingMethodCSImpl implements MappingQu
 				getExpressions().clear();
 				getExpressions().addAll((Collection<? extends OCLExpressionCS>)newValue);
 				return;
+			case CSTPackage.MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION:
+				setIsSimpleDefinition(((Boolean)newValue).booleanValue());
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -150,6 +199,9 @@ public class MappingQueryCSImpl extends MappingMethodCSImpl implements MappingQu
 			case CSTPackage.MAPPING_QUERY_CS__EXPRESSIONS:
 				getExpressions().clear();
 				return;
+			case CSTPackage.MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION:
+				setIsSimpleDefinition(IS_SIMPLE_DEFINITION_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -164,8 +216,26 @@ public class MappingQueryCSImpl extends MappingMethodCSImpl implements MappingQu
 		switch (featureID) {
 			case CSTPackage.MAPPING_QUERY_CS__EXPRESSIONS:
 				return expressions != null && !expressions.isEmpty();
+			case CSTPackage.MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION:
+				return ((eFlags & IS_SIMPLE_DEFINITION_EFLAG) != 0) != IS_SIMPLE_DEFINITION_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (isSimpleDefinition: "); //$NON-NLS-1$
+		result.append((eFlags & IS_SIMPLE_DEFINITION_EFLAG) != 0);
+		result.append(')');
+		return result.toString();
 	}
 
 } //MappingQueryCSImpl

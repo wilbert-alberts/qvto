@@ -91,6 +91,7 @@
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingDeclarationCS/result"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingDeclarationCS/directionKindCS"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingDeclarationCS/mappingExtension"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/MappingDeclarationCS/isQuery"/>
       </genClasses>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/ParameterDeclarationCS">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ParameterDeclarationCS/simpleNameCS"/>
@@ -117,6 +118,7 @@
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/MappingQueryCS">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingQueryCS/expressions"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/MappingQueryCS/isSimpleDefinition"/>
       </genClasses>
       <genClasses image="false" ecoreClass="QVTOperationalCST.ecore#//cst/MappingSectionCS">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"

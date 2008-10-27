@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackage.java,v 1.8 2008/10/23 20:09:03 aigdalov Exp $
+ * $Id: CSTPackage.java,v 1.9 2008/10/27 14:26:30 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -799,13 +799,22 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_DECLARATION_CS__MAPPING_EXTENSION = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 7;
 
 	/**
+	 * The feature id for the '<em><b>Is Query</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_DECLARATION_CS__IS_QUERY = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 8;
+
+	/**
 	 * The number of structural features of the '<em>Mapping Declaration CS</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_DECLARATION_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 8;
+	int MAPPING_DECLARATION_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 9;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ParameterDeclarationCSImpl <em>Parameter Declaration CS</em>}' class.
@@ -1156,13 +1165,22 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_QUERY_CS__EXPRESSIONS = MAPPING_METHOD_CS_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Is Simple Definition</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION = MAPPING_METHOD_CS_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Mapping Query CS</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_QUERY_CS_FEATURE_COUNT = MAPPING_METHOD_CS_FEATURE_COUNT + 1;
+	int MAPPING_QUERY_CS_FEATURE_COUNT = MAPPING_METHOD_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingSectionCSImpl <em>Mapping Section CS</em>}' class.
@@ -4122,6 +4140,17 @@ public interface CSTPackage extends EPackage {
 	EReference getMappingDeclarationCS_MappingExtension();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#isIsQuery <em>Is Query</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Query</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#isIsQuery()
+	 * @see #getMappingDeclarationCS()
+	 * @generated
+	 */
+	EAttribute getMappingDeclarationCS_IsQuery();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS <em>Parameter Declaration CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4301,6 +4330,17 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getMappingQueryCS_Expressions();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS#isIsSimpleDefinition <em>Is Simple Definition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Simple Definition</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS#isIsSimpleDefinition()
+	 * @see #getMappingQueryCS()
+	 * @generated
+	 */
+	EAttribute getMappingQueryCS_IsSimpleDefinition();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionCS <em>Mapping Section CS</em>}'.
@@ -5880,6 +5920,14 @@ public interface CSTPackage extends EPackage {
 		EReference MAPPING_DECLARATION_CS__MAPPING_EXTENSION = eINSTANCE.getMappingDeclarationCS_MappingExtension();
 
 		/**
+		 * The meta object literal for the '<em><b>Is Query</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MAPPING_DECLARATION_CS__IS_QUERY = eINSTANCE.getMappingDeclarationCS_IsQuery();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ParameterDeclarationCSImpl <em>Parameter Declaration CS</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6026,6 +6074,14 @@ public interface CSTPackage extends EPackage {
 		 * @generated
 		 */
 		EReference MAPPING_QUERY_CS__EXPRESSIONS = eINSTANCE.getMappingQueryCS_Expressions();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Simple Definition</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION = eINSTANCE.getMappingQueryCS_IsSimpleDefinition();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingSectionCSImpl <em>Mapping Section CS</em>}' class.

@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.15 2008/10/27 12:05:23 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.16 2008/10/27 14:26:31 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.15 2008/10/27 12:05:23 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.16 2008/10/27 14:26:31 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.15 2008/10/27 12:05:23 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.16 2008/10/27 14:26:31 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -4480,6 +4480,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 					mappingDeclarationCS.getQualifiers().addAll(createQualifiersListCS(qualifiers));
 				}
 
+				IToken helperKind = (IToken) helperInfo[1];
+				mappingDeclarationCS.setIsQuery(helperKind.getKind() == QvtOpLPGParsersym.TK_query);
+
 				dtParser.setSym1(mappingDeclarationCS);
 	  		  break;
 			}
@@ -4502,6 +4505,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 				if(!qualifiers.isEmpty()) {
 					mappingDeclarationCS.getQualifiers().addAll(createQualifiersListCS(qualifiers));
 				}
+
+				IToken helperKind = (IToken) helperInfo[1];
+				mappingDeclarationCS.setIsQuery(helperKind.getKind() == QvtOpLPGParsersym.TK_query);
 
 				dtParser.setSym1(mappingDeclarationCS);
 	  		  break;
@@ -4557,10 +4563,11 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 				OCLExpressionCS expression = (OCLExpressionCS)dtParser.getSym(3);
 				EList<OCLExpressionCS> expressionList = new BasicEList();
 				expressionList.add(expression);
-				CSTNode result = createMappingQueryCS(
+				MappingQueryCS result = createMappingQueryCS(
 						mappingDecl,
 						expressionList
 					);
+				result.setIsSimpleDefinition(true);
 				setOffsets(result, mappingDecl, getIToken(dtParser.getToken(4)));
 				dtParser.setSym1(result);
 	  		  break;

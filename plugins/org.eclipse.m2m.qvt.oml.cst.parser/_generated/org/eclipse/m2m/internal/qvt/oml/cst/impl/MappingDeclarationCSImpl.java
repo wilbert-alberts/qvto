@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingDeclarationCSImpl.java,v 1.3 2008/10/23 20:09:10 aigdalov Exp $
+ * $Id: MappingDeclarationCSImpl.java,v 1.4 2008/10/27 14:26:31 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -51,6 +51,7 @@ import org.eclipse.ocl.cst.impl.CSTNodeImpl;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingDeclarationCSImpl#getResult <em>Result</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingDeclarationCSImpl#getDirectionKindCS <em>Direction Kind CS</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingDeclarationCSImpl#getMappingExtension <em>Mapping Extension</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingDeclarationCSImpl#isIsQuery <em>Is Query</em>}</li>
  * </ul>
  * </p>
  *
@@ -143,6 +144,26 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 	 * @ordered
 	 */
 	protected EList<MappingExtensionCS> mappingExtension;
+
+	/**
+	 * The default value of the '{@link #isIsQuery() <em>Is Query</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsQuery()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean IS_QUERY_EDEFAULT = false;
+
+	/**
+	 * The flag representing the value of the '{@link #isIsQuery() <em>Is Query</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsQuery()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int IS_QUERY_EFLAG = 1 << 8;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -388,6 +409,27 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isIsQuery() {
+		return (eFlags & IS_QUERY_EFLAG) != 0;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIsQuery(boolean newIsQuery) {
+		boolean oldIsQuery = (eFlags & IS_QUERY_EFLAG) != 0;
+		if (newIsQuery) eFlags |= IS_QUERY_EFLAG; else eFlags &= ~IS_QUERY_EFLAG;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.MAPPING_DECLARATION_CS__IS_QUERY, oldIsQuery, newIsQuery));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -433,6 +475,8 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 				return getDirectionKindCS();
 			case CSTPackage.MAPPING_DECLARATION_CS__MAPPING_EXTENSION:
 				return getMappingExtension();
+			case CSTPackage.MAPPING_DECLARATION_CS__IS_QUERY:
+				return isIsQuery() ? Boolean.TRUE : Boolean.FALSE;
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -474,6 +518,9 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 				getMappingExtension().clear();
 				getMappingExtension().addAll((Collection<? extends MappingExtensionCS>)newValue);
 				return;
+			case CSTPackage.MAPPING_DECLARATION_CS__IS_QUERY:
+				setIsQuery(((Boolean)newValue).booleanValue());
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -510,6 +557,9 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 			case CSTPackage.MAPPING_DECLARATION_CS__MAPPING_EXTENSION:
 				getMappingExtension().clear();
 				return;
+			case CSTPackage.MAPPING_DECLARATION_CS__IS_QUERY:
+				setIsQuery(IS_QUERY_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -538,6 +588,8 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 				return directionKindCS != null;
 			case CSTPackage.MAPPING_DECLARATION_CS__MAPPING_EXTENSION:
 				return mappingExtension != null && !mappingExtension.isEmpty();
+			case CSTPackage.MAPPING_DECLARATION_CS__IS_QUERY:
+				return ((eFlags & IS_QUERY_EFLAG) != 0) != IS_QUERY_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -554,6 +606,8 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (qualifiers: "); //$NON-NLS-1$
 		result.append(qualifiers);
+		result.append(", isQuery: "); //$NON-NLS-1$
+		result.append((eFlags & IS_QUERY_EFLAG) != 0);
 		result.append(')');
 		return result.toString();
 	}

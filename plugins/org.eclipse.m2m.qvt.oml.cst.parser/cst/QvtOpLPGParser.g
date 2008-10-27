@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.13 2008/10/27 12:05:24 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.14 2008/10/27 14:26:30 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -131,7 +131,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.13 2008/10/27 12:05:24 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.14 2008/10/27 14:26:30 aigdalov Exp $
  */
 	./
 $End
@@ -1030,6 +1030,9 @@ $Rules
 						mappingDeclarationCS.getQualifiers().addAll(createQualifiersListCS(qualifiers));
 					}
 
+					IToken helperKind = (IToken) helperInfo[1];
+					mappingDeclarationCS.setIsQuery(helperKind.getKind() == $sym_type.TK_query);
+
 					$setResult(mappingDeclarationCS);
 		  $EndJava
 		./
@@ -1049,6 +1052,9 @@ $Rules
 					if(!qualifiers.isEmpty()) {
 						mappingDeclarationCS.getQualifiers().addAll(createQualifiersListCS(qualifiers));
 					}
+
+					IToken helperKind = (IToken) helperInfo[1];
+					mappingDeclarationCS.setIsQuery(helperKind.getKind() == $sym_type.TK_query);
 
 					$setResult(mappingDeclarationCS);
 		  $EndJava
@@ -1095,10 +1101,11 @@ $Rules
 					OCLExpressionCS expression = (OCLExpressionCS)$getSym(3);
 					EList<OCLExpressionCS> expressionList = new BasicEList();
 					expressionList.add(expression);
-					CSTNode result = createMappingQueryCS(
+					MappingQueryCS result = createMappingQueryCS(
 							mappingDecl,
 							expressionList
 						);
+					result.setIsSimpleDefinition(true);
 					setOffsets(result, mappingDecl, getIToken($getToken(4)));
 					$setResult(result);
 		  $EndJava

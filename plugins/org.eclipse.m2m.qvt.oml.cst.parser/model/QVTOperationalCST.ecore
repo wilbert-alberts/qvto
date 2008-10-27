@@ -74,6 +74,7 @@
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="mappingExtension" upperBound="-1"
           eType="#//cst/MappingExtensionCS" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="isQuery" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ParameterDeclarationCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
       <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
@@ -113,6 +114,7 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="expressions" upperBound="-1"
           eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="isSimpleDefinition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="MappingSectionCS" abstract="true"
         eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode #//cst/ElementWithBody">

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingDeclarationCS.java,v 1.3 2008/10/23 20:09:06 aigdalov Exp $
+ * $Id: MappingDeclarationCS.java,v 1.4 2008/10/27 14:26:30 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -37,6 +37,7 @@ import org.eclipse.ocl.cst.TypeCS;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getResult <em>Result</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getDirectionKindCS <em>Direction Kind CS</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getMappingExtension <em>Mapping Extension</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#isIsQuery <em>Is Query</em>}</li>
  * </ul>
  * </p>
  *
@@ -221,5 +222,31 @@ public interface MappingDeclarationCS extends CSTNode {
 	 * @generated
 	 */
 	EList<MappingExtensionCS> getMappingExtension();
+
+	/**
+	 * Returns the value of the '<em><b>Is Query</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is Query</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is Query</em>' attribute.
+	 * @see #setIsQuery(boolean)
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getMappingDeclarationCS_IsQuery()
+	 * @model
+	 * @generated
+	 */
+	boolean isIsQuery();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#isIsQuery <em>Is Query</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Query</em>' attribute.
+	 * @see #isIsQuery()
+	 * @generated
+	 */
+	void setIsQuery(boolean value);
 
 } // MappingDeclarationCS

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingQueryCS.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: MappingQueryCS.java,v 1.2 2008/10/27 14:26:30 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -28,6 +28,7 @@ import org.eclipse.ocl.cst.OCLExpressionCS;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS#getExpressions <em>Expressions</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS#isIsSimpleDefinition <em>Is Simple Definition</em>}</li>
  * </ul>
  * </p>
  *
@@ -58,5 +59,31 @@ public interface MappingQueryCS extends MappingMethodCS {
 	 * @generated
 	 */
 	EList<OCLExpressionCS> getExpressions();
+
+	/**
+	 * Returns the value of the '<em><b>Is Simple Definition</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is Simple Definition</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is Simple Definition</em>' attribute.
+	 * @see #setIsSimpleDefinition(boolean)
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getMappingQueryCS_IsSimpleDefinition()
+	 * @model
+	 * @generated
+	 */
+	boolean isIsSimpleDefinition();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS#isIsSimpleDefinition <em>Is Simple Definition</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Simple Definition</em>' attribute.
+	 * @see #isIsSimpleDefinition()
+	 * @generated
+	 */
+	void setIsSimpleDefinition(boolean value);
 
 } // MappingQueryCS
