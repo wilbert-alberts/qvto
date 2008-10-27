@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.15 2008/10/27 12:06:24 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.16 2008/10/27 14:27:44 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.15 2008/10/27 12:06:24 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.16 2008/10/27 14:27:44 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.15 2008/10/27 12:06:24 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.16 2008/10/27 14:27:44 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -4485,6 +4485,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 					mappingDeclarationCS.getQualifiers().addAll(createQualifiersListCS(qualifiers));
 				}
 
+				IToken helperKind = (IToken) helperInfo[1];
+				mappingDeclarationCS.setIsQuery(helperKind.getKind() == LightweightParsersym.TK_query);
+
 				dtParser.setSym1(mappingDeclarationCS);
 	  		  break;
 			}
@@ -4507,6 +4510,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 				if(!qualifiers.isEmpty()) {
 					mappingDeclarationCS.getQualifiers().addAll(createQualifiersListCS(qualifiers));
 				}
+
+				IToken helperKind = (IToken) helperInfo[1];
+				mappingDeclarationCS.setIsQuery(helperKind.getKind() == LightweightParsersym.TK_query);
 
 				dtParser.setSym1(mappingDeclarationCS);
 	  		  break;
@@ -4562,10 +4568,11 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 				OCLExpressionCS expression = (OCLExpressionCS)dtParser.getSym(3);
 				EList<OCLExpressionCS> expressionList = new BasicEList();
 				expressionList.add(expression);
-				CSTNode result = createMappingQueryCS(
+				MappingQueryCS result = createMappingQueryCS(
 						mappingDecl,
 						expressionList
 					);
+				result.setIsSimpleDefinition(true);
 				setOffsets(result, mappingDecl, getIToken(dtParser.getToken(4)));
 				dtParser.setSym1(result);
 	  		  break;
