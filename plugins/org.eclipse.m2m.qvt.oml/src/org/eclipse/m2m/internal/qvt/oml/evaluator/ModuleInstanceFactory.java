@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
@@ -19,16 +21,34 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.util.CollectionUtil;
 	
 
 public class ModuleInstanceFactory extends EFactoryImpl {
 	
+	public interface PostCreateHandler {
+		void created(ModuleInstance moduleInstance);
+	}
+	
+	private List<PostCreateHandler> fPostCreateHandlers = Collections.emptyList();
+	
 	public ModuleInstanceFactory() {
 		super();
+	}
+	
+	public void addPostCreateHandler(PostCreateHandler postCreateHandler) {
+		if(postCreateHandler == null) {
+			throw new IllegalArgumentException();
+		}
+		
+		if(fPostCreateHandlers.isEmpty()) {
+			fPostCreateHandlers = new LinkedList<PostCreateHandler>();
+		}
+
+		fPostCreateHandlers.add(postCreateHandler);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -42,11 +62,15 @@ public class ModuleInstanceFactory extends EFactoryImpl {
 		}
 	}	
 	
-	  public EObject create(EClass eClass) 
+	@Override
+	public EObject create(EClass eClass) 
 	  {
 	    if (getEPackage() != eClass.getEPackage() || eClass.isAbstract())
 	    {
-	      //throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+	    	if(eClass instanceof Module == false) {
+	    		// relax the constraint for Module being also a package 
+	    		throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+	    	}
 	    }
 
 	    for (List<EClass> eSuperTypes = eClass.getESuperTypes(); !eSuperTypes.isEmpty(); )
@@ -65,22 +89,18 @@ public class ModuleInstanceFactory extends EFactoryImpl {
 	  }	
 	
 	@Override
-	protected EObject basicCreate(EClass eClass) {
-		ModuleInstance result = new ModuleInstance();
-		result.eSetClass(eClass);
-		initProperties(result);
-		return result;
-	}
-	
-	private static final class ModuleInstance extends DynamicEObjectImpl {
-
-		ModuleInstance() {
-			super();
+	protected EObject basicCreate(EClass eClass) {	
+		if (eClass instanceof Module) {
+			ModuleInstance result = new ModuleInstance((Module) eClass);
+			result.eSetClass(eClass);
+			initProperties(result);
+			
+			for (PostCreateHandler handler : fPostCreateHandlers) {
+				handler.created(result);
+			}
+			return result;
 		}
-				
-		@Override
-		public String toString() {
-			return eClass().getName() + " @" + this.hashCode(); //$NON-NLS-1$
-		}
+		
+		return super.basicCreate(eClass);
 	}
 }

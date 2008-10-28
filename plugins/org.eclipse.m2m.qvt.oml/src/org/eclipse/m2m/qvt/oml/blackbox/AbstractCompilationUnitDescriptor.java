@@ -13,6 +13,7 @@ package org.eclipse.m2m.qvt.oml.blackbox;
 
 
 
+
 public abstract class AbstractCompilationUnitDescriptor {
 
 	private String fQualifiedName;
@@ -44,7 +45,7 @@ public abstract class AbstractCompilationUnitDescriptor {
 	public String getQualifiedName() {
 		return fQualifiedName;
 	}
-			
+	
 	@Override
 	public String toString() {
 		return "Descriptor: " + fQualifiedName + " - " + getProvider().toString(); //$NON-NLS-1$ 

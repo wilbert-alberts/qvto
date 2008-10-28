@@ -11,11 +11,9 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
-import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
@@ -27,10 +25,8 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
-import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.TypeCS;
-import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.types.InvalidType;
 import org.eclipse.ocl.types.PrimitiveType;
 import org.eclipse.ocl.types.VoidType;
@@ -73,40 +69,11 @@ public class QvtOperationalUtil {
 	}
 
     public static boolean isMappingOperation(EOperation operation) {
-    	if(operation instanceof MappingOperation) { 
-    		return true;
-    	}
-        EAnnotation ann = operation != null ? operation.getEAnnotation(Environment.OCL_NAMESPACE_URI) : null;
-        if (ann != null && !ann.getContents().isEmpty()) {
-            for (EObject o : ann.getContents()) {
-                if (false == o instanceof Constraint) {
-                    continue;
-                }
-                if (QvtOperationalEnv.MAPPING_OPERATION_STEREOTYPE.equals(((Constraint) o).getStereotype())) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return operation instanceof MappingOperation;
     }
 
     public static boolean isImperativeOperation(EOperation operation) {
-    	if(operation instanceof ImperativeOperation) {
-    		return true;
-    	}    	
-        EAnnotation ann = operation.getEAnnotation(Environment.OCL_NAMESPACE_URI);
-        if ((ann != null) && !ann.getContents().isEmpty()) {
-            for (EObject o : ann.getContents()) {
-                if (false == o instanceof Constraint) {
-                    continue;
-                }
-                if (QvtOperationalEnv.MAPPING_OPERATION_STEREOTYPE.equals(((Constraint) o).getStereotype())
-                        || QvtOperationalEnv.IMPERATIVE_OPERATION_STEREOTYPE.equals(((Constraint) o).getStereotype())) {
-                    return true;
-                }
-            }
-        }
-        return false;
+    	return operation instanceof ImperativeOperation;
     }
 
 	public static boolean isModelParamEqual(ModelParameter param, ModelParameter importedParam, boolean isStrictCompare) {

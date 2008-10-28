@@ -3,7 +3,7 @@
 <schema targetNamespace="org.eclipse.m2m.qvt.oml" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="org.eclipse.m2m.qvt.oml" id="blackboxProvider" name="Black box provider"/>
+         <meta.schema plugin="org.eclipse.m2m.qvt.oml" id="blackboxProviders" name="Black box provider"/>
       </appinfo>
       <documentation>
          [Enter description of this extension point.]
@@ -48,11 +48,16 @@
    </element>
 
    <element name="provider">
+      <annotation>
+         <documentation>
+            Extension point to register black-box implementation providers
+         </documentation>
+      </annotation>
       <complexType>
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  The class representing a concrete QVT blackbox provider implementation
                </documentation>
                <appinfo>
                   <meta.attribute kind="java" basedOn=":org.eclipse.m2m.qvt.oml.blackbox.AbstractBlackboxProvider"/>

@@ -11,10 +11,12 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.blackbox;
 
-import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.BundleFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
+import org.osgi.framework.Bundle;
 
 public class ResolutionContextImpl implements ResolutionContext {
 	
@@ -32,17 +34,25 @@ public class ResolutionContextImpl implements ResolutionContext {
 		if(fFile == null) {
 			return null;
 		}
-		
-		if(adapterType == BundleFile.class) {
-			if(fFile instanceof EclipseFile) {
-				return adapterType.cast(fFile);
+
+		if(adapterType == Bundle.class) {
+			if(fFile instanceof BundleFile) {
+				BundleFile bundleFile = (BundleFile) fFile;
+				String bundleId = bundleFile.getBundleSymbolicName();
+				Bundle bundle = Platform.getBundle(bundleId);
+				return adapterType.cast(bundle);
 			}
 		}
-		else if(adapterType == IFile.class) {
+		else if(adapterType == IProject.class) {
 			if(fFile instanceof EclipseFile) {
-				return adapterType.cast(((EclipseFile)fFile).getFile());
+				return adapterType.cast(((EclipseFile)fFile).getFile().getProject());
 			}
 		} 
 		return null;
+	}
+	
+	@Override
+	public String toString() {	
+		return "Resolution context (" + fFile.toString() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }

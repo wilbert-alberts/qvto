@@ -20,17 +20,23 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
-import org.eclipse.m2m.qvt.oml.blackbox.AbstractBlackboxProvider.CompilationUnit;
 
 /*
  * TODO - handle collisions of multiple descriptors of the same qualified name
  */
 public class BlackboxRegistry {
 	
+	private static final String CLASS_ATTR = "class";
+
+	private static final String PROVIDER_ELEMENT = "provider";
+
+	private static final String BLACKBOX_PROVIDER_EXTENSION = "blackboxProvider";
+
 	public static BlackboxRegistry INSTANCE = new BlackboxRegistry();
-	
+
+	// instance fields
 	private List<AbstractBlackboxProvider> fProviders;
-	
+		
 	private BlackboxRegistry() {
 		try {
 			fProviders = readProviders();
@@ -77,15 +83,15 @@ public class BlackboxRegistry {
         
         IConfigurationElement[] configs =
             Platform.getExtensionRegistry().getConfigurationElementsFor(
-                QvtPlugin.ID, "blackboxProvider");
+                QvtPlugin.ID, BLACKBOX_PROVIDER_EXTENSION);
 
         for (IConfigurationElement element : configs) {
-            if (element.getName().equals("provider")) {
+            if (element.getName().equals(PROVIDER_ELEMENT)) {
                 try {
-                	Object extension = element.createExecutableExtension("class");
+                	Object extension = element.createExecutableExtension(CLASS_ATTR);
                 	if(extension instanceof AbstractBlackboxProvider == false) {
                 		QvtPlugin.log(QvtPlugin.createErrorStatus(
-                				"Provider must implement AbstractBlackboxProvider interace:" + extension, null));
+                				"Provider must implement AbstractBlackboxProvider interace:" + extension, null)); //$NON-NLS-1$
                 		continue;
                 	}
 

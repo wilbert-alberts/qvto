@@ -3,7 +3,8 @@
 <plugin>
 
    <extension-point id="importResolverFactory" name="importResolverFactory" schema="schema/importResolverFactory.exsd"/>
-   <extension-point id="blackboxProvider" name="Black box provider" schema="schema/blackboxProvider.exsd"/>
+   <extension-point id="blackboxProvider" name="Black box provider" schema="schema/blackboxProviders.exsd"/>
+   <extension-point id="javaBlackboxUnits" name="Java blackbox compilation units" schema="schema/javaBlackboxUnits.exsd"/>
     
    <extension
          id="QvtBuilder"
@@ -36,4 +37,12 @@
       genModel = "model/QVTOperational.genmodel" /> 
  </extension>
  
+ <extension
+       name="Java blackbox implementation provider"
+       point="org.eclipse.m2m.qvt.oml.blackboxProvider">
+    <provider
+          class="org.eclipse.m2m.internal.qvt.oml.blackbox.java.JavaBlackboxProvider">
+    </provider>
+ </extension>
+
 </plugin>
