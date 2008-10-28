@@ -1,0 +1,79 @@
+import library org.bar.Foo; 
+  
+modeltype UML uses 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';
+modeltype ECORE "strict" uses ecore('http://www.eclipse.org/emf/2002/Ecore');
+
+
+transformation blackboxlib_annotation_java(in source : ECORE, out target: ECORE);
+
+--
+main() {
+	var r : Sequence(OclAny);
+	r := primitiveTypeArgumentsHelper('String', 10, 1.5, true);
+	checkPrimitiveTypeArgResult(r);
+		
+	checkPrimitiveTypeArgResult(
+		primitiveTypeArgumentsQuery('String', 10, 1.5, true));	
+
+	checkPrimitiveTypeArgResult(
+		primitiveTypeArgumentsOperation('String', 10, 1.5, true));
+	 
+	checkPrimitiveTypeArgResult(
+		primitiveTypeArgumentsDefault('String', 10, 1.5, true));
+
+	var _self := object EAnnotation {};
+	r := _self.primitiveTypeArgumentsHelperContextual('String', 10, 1.5, true);
+	checkPrimitiveTypeArgResult(r);
+		
+	checkPrimitiveTypeArgResult(
+		_self.primitiveTypeArgumentsQueryContextual('String', 10, 1.5, true));	
+
+	checkPrimitiveTypeArgResult(
+		_self.primitiveTypeArgumentsOperationContextual('String', 10, 1.5, true));
+		
+		
+	-- test arguments of OclInvalid and java operation binary compatibility
+	assert fatal (testEchoArgument('aStr') = 'aStr');
+	assert fatal (testEchoArgument(null) = null);
+	assert fatal (testEchoArgument(OclInvalid) = null);
+	
+	-- test a static java operation in java module class
+
+	assert fatal (staticTestEchoArgument('aStr') = 'aStr');
+
+	var suffixedName := object EParameter { name := 'foo' }.testContextualSuffixedName('Suffix');
+	assert fatal (suffixedName = 'fooSuffix');
+	
+	-- test collection type args
+	var set : Set(Sequence(String)) := Sequence{ 's1' }->wrapInSet();
+	assert fatal (set->flatten()->exists(i | i = 's1'));
+	var realsInSet : Set(Collection(OclAny)) := Sequence{ 2.5, 3.5 }->commonCollectionInSet();
+	assert fatal (realsInSet->flatten()->sum() = 6);
+		
+	var intsInSet : Set(Collection(OclAny)) := Set{ 1, 2 }->commonCollectionInSet();
+	assert fatal (intsInSet->flatten()->sum() = 3);
+	 
+	
+	-- complex type
+	var complex : Set(OrderedSet(Sequence(Bag(String)))) := 
+		testComplexTypeCopy(Set{OrderedSet{Sequence{Bag{'String'}}}});
+	
+	assert fatal (complex->flatten()->exists(i | i='String'));
+
+	-- test resolve used model types
+	var umlModelParam := object UML::Model{};
+	var umlModel : UML::Model := testUsedSimpleUMLModelPackage(umlModelParam);
+	assert fatal (umlModel = umlModelParam);
+	
+	-- test void return type
+	var v : OclVoid := noReturnType('');
+}
+
+helper checkPrimitiveTypeArgResult(r : Sequence(OclAny)) : OclVoid {
+	assert fatal (r->at(1) = 'String');
+	assert fatal (r->at(2) = 10);
+	assert fatal (r->at(3) = 1.5);
+	assert fatal (r->at(4) = true);
+	
+	assert fatal (r->size() = 4);	 		
+}

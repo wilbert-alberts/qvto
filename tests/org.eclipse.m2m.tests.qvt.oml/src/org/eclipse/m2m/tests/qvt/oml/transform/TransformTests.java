@@ -77,7 +77,8 @@ public class TransformTests {
         
     
     public static ModelTestData[] createTestData() {
-        return new ModelTestData[] {
+        return new ModelTestData[] {        		
+        		new FileToFileData("blackboxlib_annotation_java"), //$NON-NLS-1$        		
                 new FileToFileData("helperSimpleDef_252173"), //$NON-NLS-1$                
                 new FileToFileData("compositetransf"), //$NON-NLS-1$                
                 new FileToFileData("computeExp_250403"), //$NON-NLS-1$
@@ -269,6 +270,7 @@ public class TransformTests {
             "egetcodegen", // java method can't be called//$NON-NLS-1$
             "bug214718", // platform protocol URI metamodel reference //$NON-NLS-1$
             "intermediateprop_import", "_while", "oclAllInstances", "bug216317", "simplestXCollectShorthand", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-            "bug2787", "bug2839", "bug2437_4", "bug2437_5" // uses getEClassifier() defined on ecore //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            "bug2787", "bug2839", "bug2437_4", "bug2437_5", // uses getEClassifier() defined on ecore //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            "blackboxlib_annotation_java", // generated ECORE models -> not applicable to dynamic models 
     }));
 }
