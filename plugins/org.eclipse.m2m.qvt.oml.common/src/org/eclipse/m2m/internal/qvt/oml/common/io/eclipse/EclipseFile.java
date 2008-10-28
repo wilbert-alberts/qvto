@@ -88,5 +88,10 @@ public class EclipseFile extends EclipseResource implements CFile {
 		return getFile().getLocalTimeStamp();
 	}
 	
+	@Override
+	public String toString() {
+		return getFile().toString();
+	}
+	
 	private String myUnitName;
 }

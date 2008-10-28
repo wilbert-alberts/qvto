@@ -32,6 +32,10 @@ public abstract class AbstractBundleResource implements CResource {
 		this.resourceRegistry = bundleRegistry;
 	}
 	
+	public String getBundleSymbolicName() {
+		return resourceRegistry.getBundleSymbolicName();
+	}
+	
 	protected IPath getPath() {
 		return resourcePath;
 	}	
