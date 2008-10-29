@@ -206,6 +206,7 @@ import org.eclipse.ocl.types.OrderedSetType;
 import org.eclipse.ocl.types.SequenceType;
 import org.eclipse.ocl.types.SetType;
 import org.eclipse.ocl.types.TypeType;
+import org.eclipse.ocl.util.OCLUtil;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.UMLReflection;
@@ -248,7 +249,9 @@ public class QvtOperationalVisitorCS
     	astNode.setEndPosition(cstNode.getEndOffset());
     }
     
-    protected InstantiationExp instantiationExpCS(NewRuleCallExpCS newCallExp, QvtOperationalEnv env) {
+    protected InstantiationExp instantiationExpCS(NewRuleCallExpCS newCallExp, 
+    		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+    		EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		InstantiationExp instantiationExp = ExpressionsFactory.eINSTANCE.createInstantiationExp();
 		initStartEndPositions(instantiationExp, newCallExp);
 
@@ -278,7 +281,7 @@ public class QvtOperationalVisitorCS
 		} catch (Exception e) {
 			// catch MDT OCL exception related to unresolved types used in Tuples, and report error
 			String message = NLS.bind(ValidationMessages.UnknownClassifierType, QvtOperationalParserUtil.getStringRepresentation(tupleTypeCS), tupleTypeCS);
-			((QvtOperationalEnv)env).reportError(message, tupleTypeCS);
+			QvtOperationalUtil.reportError(env, message, tupleTypeCS);
 		}
 		
 		return type;
@@ -308,7 +311,7 @@ public class QvtOperationalVisitorCS
 			if(collectionType.getElementType() == null) {
 				
 				CollectionTypeCS collectionTypeCS = (CollectionTypeCS)typeCS;				
-				((QvtOperationalEnv)env).reportError(NLS.bind(ValidationMessages.UnknownClassifierType, new Object[] {
+				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.UnknownClassifierType, new Object[] {
 						QvtOperationalParserUtil.getStringRepresentation(collectionTypeCS.getTypeCS())}),
 						collectionTypeCS.getTypeCS());
 			}
@@ -325,7 +328,9 @@ public class QvtOperationalVisitorCS
 		return type;
 	}
 	
-	private EClassifier visitTypeCS(TypeCS typeCS, DirectionKind directionKind, QvtOperationalEnv env) {
+	private EClassifier visitTypeCS(TypeCS typeCS, DirectionKind directionKind, 
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		EClassifier type = typeCS(typeCS, env);
 		if (type == null) {
 			// FIXME - M3.4 not needed, already reported above in #typeCS(typeCS, fEnv); 
@@ -353,7 +358,8 @@ public class QvtOperationalVisitorCS
 	}
 
 	private EClassifier visitTypeCSInModelType(TypeSpecCS typeSpecCS, ModelType modelType,
-			QvtOperationalEnv env) {
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		EClassifier type = typeCS(typeSpecCS.getTypeCS(), env);
 		if (type == null) {
 			// FIXME - M3.4 not needed, already reported above in #typeCS(typeCS, fEnv); 
@@ -364,7 +370,7 @@ public class QvtOperationalVisitorCS
 		return type;
 	}
 
-	private class TypeSpecPair {
+	private static class TypeSpecPair {
 		public EClassifier myType;
 		public ModelParameter myExtent;
 	}
@@ -397,7 +403,9 @@ public class QvtOperationalVisitorCS
 		return result;
 	}
 
-	private String visitLiteralExpCS(StringLiteralExpCS stringLiteralExpCS, QvtOperationalEnv env)
+	private String visitLiteralExpCS(StringLiteralExpCS stringLiteralExpCS, 
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env)
 			throws SemanticException {
 	    // stringLiteralExpCS() is not called directly for AST-CST binding creation done in literalExpCS()
 		OCLExpression<EClassifier> literalExpCS = literalExpCS(stringLiteralExpCS, env);
@@ -424,7 +432,7 @@ public class QvtOperationalVisitorCS
 		if (container instanceof PatternPropertyExpCS 
 				|| container instanceof VariableInitializationCS) {
 			if (isElseMissed) {
-				((QvtOperationalEnv)env).reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ifExpWithoutElseAssignment,
+				QvtOperationalUtil.reportWarning(env, NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ifExpWithoutElseAssignment,
 						new Object[] { }), ifExpCS);
 			}
 		}
@@ -435,7 +443,9 @@ public class QvtOperationalVisitorCS
 	/**
 	 * Produces AST Node from the given CST and performs validation on it.
 	 */
-	public OCLExpression<EClassifier> analyzeExpressionCS(OCLExpressionCS oclExpressionCS, QvtOperationalEnv env) throws SemanticException {
+	public OCLExpression<EClassifier> analyzeExpressionCS(OCLExpressionCS oclExpressionCS, 
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) throws SemanticException {
 		OCLExpression<EClassifier> result = oclExpressionCS(oclExpressionCS, env);	
 		validate(env);		
 		return result;
@@ -448,65 +458,65 @@ public class QvtOperationalVisitorCS
 	        Constraint, EClass, EObject> env) {
 	    try {
             if (oclExpressionCS instanceof BlockExpCS) {
-                return visitBlockExpCS((BlockExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+                return visitBlockExpCS((BlockExpCS) oclExpressionCS, env);
             }
             if (oclExpressionCS instanceof ComputeExpCS) {
-                return visitComputeExpCS((ComputeExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+                return visitComputeExpCS((ComputeExpCS) oclExpressionCS, env);
             }
 	        if (oclExpressionCS instanceof WhileExpCS) {
-	            return visitWhileExpCS((WhileExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+	            return visitWhileExpCS((WhileExpCS) oclExpressionCS, env);
 	        }
 	        if (oclExpressionCS instanceof SwitchExpCS) {
-	            return visitSwitchExpCS((SwitchExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+	            return visitSwitchExpCS((SwitchExpCS) oclExpressionCS, env);
 	        }
 	        if (oclExpressionCS instanceof OutExpCS) {
-	            return visitOutExpCS((OutExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+	            return visitOutExpCS((OutExpCS) oclExpressionCS, toQVTOperationalEnv(env));
 	        }
 	        if (oclExpressionCS instanceof PatternPropertyExpCS) {
-	            return visitPatternPropertyExpCS((PatternPropertyExpCS) oclExpressionCS, null, (QvtOperationalEnv) env);
+	            return visitPatternPropertyExpCS((PatternPropertyExpCS) oclExpressionCS, null, env);
 	        }
 	        if (oclExpressionCS instanceof AssignStatementCS) {
-	            return visitAssignStatementCS((AssignStatementCS) oclExpressionCS, (QvtOperationalEnv) env);
+	            return visitAssignStatementCS((AssignStatementCS) oclExpressionCS, env);
 	        }
 	        if (oclExpressionCS instanceof VariableInitializationCS) {
-	            return visitVariableInitializationCS((VariableInitializationCS) oclExpressionCS, (QvtOperationalEnv) env);
+	            return visitVariableInitializationCS((VariableInitializationCS) oclExpressionCS, env);
 	        }
 	        if (oclExpressionCS instanceof ExpressionStatementCS) {
-	            return visitExpressionStatementCS((ExpressionStatementCS) oclExpressionCS, (QvtOperationalEnv) env);
+	            return visitExpressionStatementCS((ExpressionStatementCS) oclExpressionCS, env);
 	        }
 	        if (oclExpressionCS instanceof ResolveInExpCS) {
-	            return visitResolveInExpCS((ResolveInExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+	            return visitResolveInExpCS((ResolveInExpCS) oclExpressionCS, toQVTOperationalEnv(env));
 	        }
 	        if (oclExpressionCS instanceof ResolveExpCS) {
-	            return visitResolveExpCS((ResolveExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+	            return visitResolveExpCS((ResolveExpCS) oclExpressionCS, toQVTOperationalEnv(env));
 	        }
 	        if(oclExpressionCS instanceof LogExpCS) {
-	            return logExp((LogExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+	            return logExp((LogExpCS) oclExpressionCS, env);
 	        }
 	        if(oclExpressionCS instanceof AssertExpCS) {
-	            return assertExp((AssertExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+	            return assertExp((AssertExpCS) oclExpressionCS, env);
 	        }
 
             if (oclExpressionCS instanceof ForExpCS) {
-                return visitForExp((ForExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+                return visitForExp((ForExpCS) oclExpressionCS, env);
             }
 
             if (oclExpressionCS instanceof ImperativeIterateExpCS) {
-	            return visitImperativeIterateExp((ImperativeIterateExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+	            return visitImperativeIterateExp((ImperativeIterateExpCS) oclExpressionCS, env);
 	        }
 
 	        if (oclExpressionCS instanceof ReturnExpCS) {
-	            return visitReturnExpCS((ReturnExpCS) oclExpressionCS, (QvtOperationalEnv) env);
+	            return visitReturnExpCS((ReturnExpCS) oclExpressionCS, env);
 	        }
 	        
 	        if(oclExpressionCS instanceof NewRuleCallExpCS) {
-	        	return instantiationExpCS((NewRuleCallExpCS)oclExpressionCS, (QvtOperationalEnv) env);
+	        	return instantiationExpCS((NewRuleCallExpCS)oclExpressionCS, env);
 	        }
 	        	
 	        if (oclExpressionCS instanceof TypeCS) {
 	            EClassifier type = typeCS((TypeCS) oclExpressionCS, env);
 	            if (type == null) {
-	                ((QvtOperationalEnv) env).reportError(OCLMessages.bind(
+	                QvtOperationalUtil.reportError(env, OCLMessages.bind(
 	                        OCLMessages.UnrecognizedType_ERROR_,
 	                        QvtOperationalUtil.getStringRepresentation((TypeCS) oclExpressionCS)), oclExpressionCS);
 	            }
@@ -523,12 +533,13 @@ public class QvtOperationalVisitorCS
 	    		if (oclExpressionCS instanceof OperationCallExpCS) {
 	    			if (result instanceof OperationCallExp) {
 		    			validateOperationCall((OperationCallExpCS) oclExpressionCS,
-		    					(OperationCallExp<EClassifier, EOperation>) result, (QvtOperationalEnv) env);
+		    					(OperationCallExp<EClassifier, EOperation>) result, env);
 	    			}
 	    			if (result instanceof IteratorExp 
 	    					&& ((IteratorExp<EClassifier, EOperation>) result).getBody() instanceof OperationCallExp) {
 		    			validateOperationCall((OperationCallExpCS) oclExpressionCS,
-		    					(OperationCallExp<EClassifier, EOperation>) ((IteratorExp<EClassifier, EOperation>) result).getBody(), (QvtOperationalEnv) env);
+		    					(OperationCallExp<EClassifier, EOperation>) ((IteratorExp<EClassifier, EOperation>) result).getBody(), 
+		    					env);
 	    			}
 	    		}
 	    		return result;
@@ -536,11 +547,11 @@ public class QvtOperationalVisitorCS
 	    }
 	    catch (NullPointerException ex) {
 	        QvtPlugin.log(ex);
-	        ((QvtOperationalEnv) env).reportError(ValidationMessages.QvtOperationalVisitorCS_oclParseNPE, oclExpressionCS);
+	        QvtOperationalUtil.reportError(env, ValidationMessages.QvtOperationalVisitorCS_oclParseNPE, oclExpressionCS);
 	    }
 	    catch (RuntimeException ex) {
 	        //QvtPlugin.log(ex);
-	        ((QvtOperationalEnv) env).reportError(ValidationMessages.QvtOperationalVisitorCS_oclParseNPE, oclExpressionCS);
+	    	QvtOperationalUtil.reportError(env, ValidationMessages.QvtOperationalVisitorCS_oclParseNPE, oclExpressionCS);
 	    }
 	    return null;
 	}
@@ -558,7 +569,9 @@ public class QvtOperationalVisitorCS
         return literalExp;
     }
         
-    protected AssertExp assertExp(AssertExpCS assertExpCS, QvtOperationalEnv env) {
+    protected AssertExp assertExp(AssertExpCS assertExpCS, 
+    		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
     	AssertExp assertAST = ExpressionsFactory.eINSTANCE.createAssertExp();
     	assertAST.setStartPosition(assertExpCS.getStartOffset());
     	assertAST.setEndPosition(assertExpCS.getEndOffset());
@@ -582,7 +595,7 @@ public class QvtOperationalVisitorCS
     				assertAST.setSeverity(actualSeverity);
     			} else {
     				CSTNode errorNode = assertExpCS.getSeverity();
-    				env.reportError(NLS.bind(ValidationMessages.UknownSeverityKindError, severityCSVal), errorNode);
+    				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.UknownSeverityKindError, severityCSVal), errorNode);
     			}
     		}
     	}
@@ -595,11 +608,13 @@ public class QvtOperationalVisitorCS
     	return assertAST;
     }
     
-    private void validateAssertExp(AssertExp assertExp, QvtOperationalEnv env) {
+    private void validateAssertExp(AssertExp assertExp, 
+    		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
     	EClassifier boolType = env.getOCLStandardLibrary().getBoolean();
     	if(assertExp.getAssertion() == null || assertExp.getAssertion().getType() != boolType) {
     		ASTNode errNode = assertExp.getAssertion() != null ? assertExp.getAssertion() : assertExp;
-    		env.reportError(ValidationMessages.BooleanTypeAssertConditionError, 
+    		QvtOperationalUtil.reportError(env, ValidationMessages.BooleanTypeAssertConditionError, 
     				errNode.getStartPosition(), errNode.getEndPosition());
     	}
     	
@@ -609,10 +624,12 @@ public class QvtOperationalVisitorCS
     	}
     }        
     
-    private void validateLogExp(LogExp logExp, QvtOperationalEnv env) {
+    private void validateLogExp(LogExp logExp, 
+    		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
     	EList<OCLExpression<EClassifier>> allArgs = logExp.getArgument();
     	if(allArgs.isEmpty()) {
-    		env.reportError(ValidationMessages.MissingMessageLogExpArgumentError, logExp.getStartPosition(), logExp.getEndPosition());
+    		QvtOperationalUtil.reportError(env, ValidationMessages.MissingMessageLogExpArgumentError, logExp.getStartPosition(), logExp.getEndPosition());
     	}
     	
     	int pos = 1;
@@ -621,7 +638,7 @@ public class QvtOperationalVisitorCS
 			case 1:
 				EClassifier stringType = env.getOCLStandardLibrary().getString();
 				if(stringType != arg.getType()) {
-					env.reportError(ValidationMessages.StringTypeMessageLogArgumentError, arg.getStartPosition(), arg.getEndPosition());
+					QvtOperationalUtil.reportError(env, ValidationMessages.StringTypeMessageLogArgumentError, arg.getStartPosition(), arg.getEndPosition());
 				}
 				break;
 			case 2:
@@ -630,25 +647,27 @@ public class QvtOperationalVisitorCS
 			case 3:
 				EClassifier intType = env.getOCLStandardLibrary().getInteger();
 				if(intType != arg.getType()) {
-					env.reportError(ValidationMessages.LogLevelNumberArgumentError, arg.getStartPosition(), arg.getEndPosition());
+					QvtOperationalUtil.reportError(env, ValidationMessages.LogLevelNumberArgumentError, arg.getStartPosition(), arg.getEndPosition());
 				}
 				
 				break;				
 
 			default:
-				env.reportError(NLS.bind(ValidationMessages.UnsupportedLogExpArgumentError, pos), arg.getStartPosition(), arg.getEndPosition());				
+				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.UnsupportedLogExpArgumentError, pos), arg.getStartPosition(), arg.getEndPosition());				
 			}
     		pos++;
 		}
     	
     	OCLExpression<EClassifier> condition = logExp.getCondition();
     	if(condition != null && condition.getType() != env.getOCLStandardLibrary().getBoolean()) {    		
-    		env.reportError(ValidationMessages.LogExpBooleanTypeConditionError, 
+    		QvtOperationalUtil.reportError(env, ValidationMessages.LogExpBooleanTypeConditionError, 
     				condition.getStartPosition(), condition.getEndPosition());
     	}
     }
         
-    protected LogExp logExp(LogExpCS logExpCS, QvtOperationalEnv env) {    	
+    protected LogExp logExp(LogExpCS logExpCS, Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+    	
     	LogExp logAST = ExpressionsFactory.eINSTANCE.createLogExp();
     	logAST.setStartPosition(logExpCS.getStartOffset());
     	logAST.setEndPosition(logExpCS.getEndOffset());
@@ -746,11 +765,11 @@ public class QvtOperationalVisitorCS
                             && (opCallExp.getReferredOperation() != null) 
                             && operations.contains(opCallExp.getReferredOperation());
                     if (!isStdOperation) {
-                        result = createImplicitXCollect(source, opCallExp, (QvtOperationalEnv) env, operationCallExpCS);
+                        result = createImplicitXCollect(source, opCallExp, env, operationCallExpCS);
                     }
                 }
     	    }
-            DeprecatedImplicitSourceCallHelper.validateCallExp(operationCallExpCS, opCallExp, (QvtOperationalEnv) env);
+            DeprecatedImplicitSourceCallHelper.validateCallExp(operationCallExpCS, opCallExp, env);
     	}
     	
     	return result;
@@ -786,7 +805,9 @@ public class QvtOperationalVisitorCS
      */
     protected ImperativeIterateExp createImplicitXCollect(OCLExpression<EClassifier> source,
             FeatureCallExp<EClassifier> propertyCall,
-            QvtOperationalEnv env,
+            Environment<EPackage, EClassifier, EOperation, EStructuralFeature,
+			EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint,
+			EClass, EObject> env,
             CSTNode cstNode) {
         
         @SuppressWarnings("unchecked") //$NON-NLS-1$
@@ -858,7 +879,7 @@ public class QvtOperationalVisitorCS
         OCLExpression<EClassifier> result = super.variableExpCS(variableExpCS, env);
         
         if(result instanceof PropertyCallExp) {
-        	DeprecatedImplicitSourceCallHelper.validateCallExp(variableExpCS, (PropertyCallExp<EClassifier, ?>)result, (QvtOperationalEnv)env);
+        	DeprecatedImplicitSourceCallHelper.validateCallExp(variableExpCS, (PropertyCallExp<EClassifier, ?>)result, env);
         }
         
         // AST binding      
@@ -869,7 +890,10 @@ public class QvtOperationalVisitorCS
         return result;
     }
 
-    private OCLExpression<EClassifier> visitOclExpressionCS(OCLExpressionCS expressionCS, QvtOperationalEnv env) {
+    private OCLExpression<EClassifier> visitOclExpressionCS(OCLExpressionCS expressionCS, 
+    		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+    	
 		OCLExpression<EClassifier> result = oclExpressionCS(expressionCS, env);
 		if (expressionCS instanceof MappingCallExpCS) {
 		    if (result instanceof OperationCallExp) {
@@ -892,14 +916,17 @@ public class QvtOperationalVisitorCS
 		            return imperativeIterateExp;
 		        }
 		    }
-			env.reportError(ValidationMessages.mappingOperationExpected, expressionCS);
+		    QvtOperationalUtil.reportError(env, ValidationMessages.mappingOperationExpected, expressionCS);
 			return null;
 		}
 
 		return result;
 	}
 
-    private OCLExpression<EClassifier> visitBlockExpCS(BlockExpCS expressionCS, QvtOperationalEnv env) {
+    private OCLExpression<EClassifier> visitBlockExpCS(BlockExpCS expressionCS, 
+    		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+    	
     	Collection<Variable<EClassifier, EParameter>> beginScopeVars = null;
     	if(expressionCS.eContainer() instanceof ImperativeOperation == false) {  
     		// variables defined in the scope of operation handled by environment scope		
@@ -927,7 +954,10 @@ public class QvtOperationalVisitorCS
     	}
     }
     
-    private OCLExpression<EClassifier> doVisitBlockExpCS(BlockExpCS expressionCS, QvtOperationalEnv env) {
+    private OCLExpression<EClassifier> doVisitBlockExpCS(BlockExpCS expressionCS, 
+    		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+    	
 		BlockExp result = ExpressionsFactory.eINSTANCE.createBlockExp();
 		result.setStartPosition(expressionCS.getStartOffset());
 		result.setEndPosition(expressionCS.getEndOffset());
@@ -943,7 +973,10 @@ public class QvtOperationalVisitorCS
 		return result;
     }
     
-    private OCLExpression<EClassifier> visitComputeExpCS(ComputeExpCS computeExpCS, QvtOperationalEnv env) {
+    private OCLExpression<EClassifier> visitComputeExpCS(ComputeExpCS computeExpCS, 
+    		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+    	
         ComputeExp result = ExpressionsFactory.eINSTANCE.createComputeExp();
         result.setStartPosition(computeExpCS.getStartOffset());
         result.setEndPosition(computeExpCS.getEndOffset());
@@ -957,7 +990,10 @@ public class QvtOperationalVisitorCS
         return result;
     }
     
-    private OCLExpression<EClassifier> visitSwitchExpCS(SwitchExpCS switchExpCS, QvtOperationalEnv env) {
+    private OCLExpression<EClassifier> visitSwitchExpCS(SwitchExpCS switchExpCS, 
+    		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+    	
 		SwitchExp switchExp = ExpressionsFactory.eINSTANCE.createSwitchExp();
 		switchExp.setStartPosition(switchExpCS.getStartOffset());
 		switchExp.setEndPosition(switchExpCS.getEndOffset());
@@ -997,7 +1033,10 @@ public class QvtOperationalVisitorCS
 		return switchExp;
     }
 
-	private AltExp visitSwitchAltExpCS(SwitchAltExpCS altExpCS, QvtOperationalEnv env) {
+	private AltExp visitSwitchAltExpCS(SwitchAltExpCS altExpCS, 
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+		
 	    AltExp altExp = ExpressionsFactory.eINSTANCE.createAltExp();
 	    altExp.setStartPosition(altExpCS.getStartOffset());
 	    altExp.setEndPosition(altExpCS.getEndOffset());
@@ -1009,7 +1048,9 @@ public class QvtOperationalVisitorCS
 	    return altExp;
     }
 
-    private OCLExpression<EClassifier> visitWhileExpCS(WhileExpCS expressionCS, QvtOperationalEnv env) {
+    private OCLExpression<EClassifier> visitWhileExpCS(WhileExpCS expressionCS, 
+    		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		WhileExp result = ExpressionsFactory.eINSTANCE.createWhileExp();
 		result.setStartPosition(expressionCS.getStartOffset());
 		result.setEndPosition(expressionCS.getEndOffset());
@@ -1019,7 +1060,7 @@ public class QvtOperationalVisitorCS
 			VariableCS varCS = expressionCS.getResultVar();
 			Variable<EClassifier, EParameter> var = null;
 
-			Variable prevVar = env.lookup(varCS.getName());			
+			Variable<EClassifier, EParameter> prevVar = env.lookup(varCS.getName());			
 			var = variableDeclarationCS(varCS, env, true);
 			if(prevVar != null) {
 				env.addElement(varCS.getName(), prevVar, true);
@@ -1032,7 +1073,7 @@ public class QvtOperationalVisitorCS
 			result.setType(var.getType());							
 		} else if(expressionCS.getResult() != null) {
 			// report usage of legacy while
-			env.reportWarning(ValidationMessages.QvtOperationalVisitorCS_deprecatedWhileExp, expressionCS);
+			QvtOperationalUtil.reportWarning(env, ValidationMessages.QvtOperationalVisitorCS_deprecatedWhileExp, expressionCS);
 			OCLExpression<EClassifier> resExp = visitOclExpressionCS(expressionCS.getResult(), env);
 			result.setType(resExp.getType());
 			result.setResult(resExp);
@@ -1050,10 +1091,10 @@ public class QvtOperationalVisitorCS
 				}
 				String message = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_booleanTypeExpressionExpected, env.getUMLReflection().getName(condType));
 				if(expressionCS.getResult() == null) {
-					env.reportError(message, expressionCS.getCondition());
+					QvtOperationalUtil.reportError(env, message, expressionCS.getCondition());
 				} else {
 					// warn for legacy code to keep compilable, as it was not reported at all
-					env.reportWarning(message, expressionCS.getCondition());
+					QvtOperationalUtil.reportWarning(env, message, expressionCS.getCondition());
 				}
 			}
 		}
@@ -1254,7 +1295,10 @@ public class QvtOperationalVisitorCS
 		return objectExp;
 	}
 
-	private AssignExp visitPatternPropertyExpCS(PatternPropertyExpCS propCS, ObjectExp owner, QvtOperationalEnv env) {
+	private AssignExp visitPatternPropertyExpCS(PatternPropertyExpCS propCS, ObjectExp owner,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+		
 		OCLExpression<EClassifier> propertyValue = visitOclExpressionCS(propCS.getOclExpressionCS(), env);
 		if (propertyValue == null) {
 			return null;
@@ -1294,13 +1338,13 @@ public class QvtOperationalVisitorCS
 		EStructuralFeature property = (outType != null) ? env.lookupProperty(outType, name) : null;
 		if (property == null) {
 			if(outType != null) {
-				env.reportError(NLS.bind(ValidationMessages.noPropertyInTypeError, name, QvtOperationalTypesUtil
+				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.noPropertyInTypeError, name, QvtOperationalTypesUtil
 						.getTypeFullName(outType)), variableName);
 			} else {
-				env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_NoOwningClassForPropertyInTheScope, name), variableName);
+				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.QvtOperationalVisitorCS_NoOwningClassForPropertyInTheScope, name), variableName);
 			}
 		} else if (!property.isChangeable()) {
-			env.reportError(NLS.bind(ValidationMessages.ReadOnlyProperty, name), variableName);
+			QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.ReadOnlyProperty, name), variableName);
 		} else {
 			QvtOperationalParserUtil.validateAssignment(property.getName(),
 					env.getUMLReflection().getOCLType(property), propertyValue, propCS.isIncremental(),
@@ -1808,7 +1852,10 @@ public class QvtOperationalVisitorCS
 		return metamodels;		
 	}
 
-	protected Rename visitRenameCS(RenameCS renameCS, QvtOperationalFileEnv env) throws SemanticException {
+	protected Rename visitRenameCS(RenameCS renameCS, 
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) throws SemanticException {
+		
 		EClassifier type = visitTypeCS(renameCS.getTypeCS(), null, env);
 		if (type == null) {
 			return null;
@@ -1818,14 +1865,14 @@ public class QvtOperationalVisitorCS
 
 		EStructuralFeature originalProperty = env.lookupProperty(type, originalName);
 		if (originalProperty == null) {
-			env.reportError(NLS.bind(ValidationMessages.noPropertyInTypeError, originalName, QvtOperationalTypesUtil
+			QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.noPropertyInTypeError, originalName, QvtOperationalTypesUtil
 					.getTypeFullName(type)), renameCS);
 			return null;
 		}
 
 		EStructuralFeature newProperty = env.lookupProperty(type, newName);
 		if (newProperty != null) {
-			env.reportError(NLS.bind(ValidationMessages.propertyAlreadyExistsInTypeError, newName,
+			QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.propertyAlreadyExistsInTypeError, newName,
 			        QvtOperationalTypesUtil.getTypeFullName(type)), renameCS);
 			return null;
 		}
@@ -2304,36 +2351,39 @@ public class QvtOperationalVisitorCS
 		return varResult;
 	}
 
-	private OCLExpression<EClassifier> visitAssignStatementCS(AssignStatementCS expressionCS, QvtOperationalEnv env) {
+	private OCLExpression<EClassifier> visitAssignStatementCS(AssignStatementCS expressionCS, 
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+		
 	    OCLExpressionCS lValueCS = expressionCS.getLValueCS();
 	    oclExpressionCS(lValueCS, env);
 	    PathNameCS pathNameCS = extractQualifiedName(lValueCS);
 		if (pathNameCS == null) {
-            env.reportError(ValidationMessages.notAnLValueError, lValueCS);
+			QvtOperationalUtil.reportError(env, ValidationMessages.notAnLValueError, lValueCS);
 			return null;
 		}
 		EList<String> qualifiedName = pathNameCS.getSequenceOfNames();
 		if (qualifiedName.size() > 2) {
-			env.reportError(ValidationMessages.cannotModifyNestedPropertiesError, lValueCS);
+			QvtOperationalUtil.reportError(env, ValidationMessages.cannotModifyNestedPropertiesError, lValueCS);
 			return null;
 		}
 
 		String lvalueName = qualifiedName.get(0);
 		if (qualifiedName.size() == 1 && Environment.SELF_VARIABLE_NAME.equals(lvalueName)) {
-			env.reportError(ValidationMessages.CantAssignToSelf, lValueCS);
+			QvtOperationalUtil.reportError(env, ValidationMessages.CantAssignToSelf, lValueCS);
 			return null;
 		}
 		
 
 		if (qualifiedName.size() == 1 && QvtOperationalEnv.THIS.equals(lvalueName)) {
-			env.reportError(ValidationMessages.CantAssignToThis, lValueCS);
+			QvtOperationalUtil.reportError(env, ValidationMessages.CantAssignToThis, lValueCS);
 			return null;
 		}
 		
 
 		Variable<EClassifier, EParameter> variable = env.lookup(lvalueName);
 		if (variable == null) {
-			env.reportError(NLS.bind(ValidationMessages.unresolvedNameError, new Object[] { lvalueName }),
+			QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.unresolvedNameError, new Object[] { lvalueName }),
 			        lValueCS);
 			return null;
 		}
@@ -2348,11 +2398,11 @@ public class QvtOperationalVisitorCS
 			leftProp = env.lookupProperty(variable.getType(), qualifiedName.get(1));
 			if (leftProp == null) {
 				String fullName = QvtOperationalParserUtil.getStringRepresentation(pathNameCS, "."); //$NON-NLS-1$ 
-				env.reportError(NLS.bind(ValidationMessages.invalidPropertyReferenceError,
+				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.invalidPropertyReferenceError,
 						new Object[] { fullName }), lValueCS);
 				return null;
 			} else if (!leftProp.isChangeable()) {
-				env.reportError(NLS.bind(ValidationMessages.ReadOnlyProperty, leftProp.getName()), lValueCS);
+				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.ReadOnlyProperty, leftProp.getName()), lValueCS);
 			}
 		}
 
@@ -2473,13 +2523,19 @@ public class QvtOperationalVisitorCS
 		return varParam;
 	}
 
-	private OCLExpression<EClassifier> visitVariableInitializationCS(VariableInitializationCS varInitCS, QvtOperationalEnv env) {
+	private OCLExpression<EClassifier> visitVariableInitializationCS(VariableInitializationCS varInitCS, 
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+		
         if (varInitCS instanceof ErrorVariableInitializationCS) {
             VariableInitExp result = ExpressionsFactory.eINSTANCE.createVariableInitExp();
             result.setStartPosition(varInitCS.getStartOffset());
             result.setEndPosition(varInitCS.getEndOffset());
             return result;
         }
+        
+     QvtOperationalEnv qvtEnv = OCLUtil.getAdapter(env, QvtOperationalEnv.class);
+     if(qvtEnv != null) {
         MappingMethodCS mappingMethod = null;
         if (varInitCS.eContainer().eContainer() instanceof MappingMethodCS) {
         	mappingMethod = (MappingMethodCS) varInitCS.eContainer().eContainer();
@@ -2487,6 +2543,7 @@ public class QvtOperationalVisitorCS
         else if (varInitCS.eContainer().eContainer().eContainer() instanceof MappingMethodCS) {
         	mappingMethod = (MappingMethodCS) varInitCS.eContainer().eContainer().eContainer();
         }
+        
         if (mappingMethod != null) {
 			MappingDeclarationCS mappingDeclCS = mappingMethod.getMappingDeclarationCS();
 			DirectionKind contextDirection = DirectionKind.IN;
@@ -2500,13 +2557,14 @@ public class QvtOperationalVisitorCS
 					mappingDeclCS.getContextType(), contextDirection, env) : env.getOCLStandardLibrary().getOclVoid();
 			for (ParameterDeclarationCS resultParam : mappingDeclCS.getResult()) {
 				EClassifier returnType = resultParam.getTypeSpecCS() != null ? visitTypeSpecCS(
-						resultParam.getTypeSpecCS(), DirectionKind.OUT, env).myType : env.getOCLStandardLibrary().getOclVoid();
+						resultParam.getTypeSpecCS(), DirectionKind.OUT, qvtEnv).myType : env.getOCLStandardLibrary().getOclVoid();
 				if (!QvtOperationalParserUtil.validateNameClashing(varInitCS.getSimpleNameCS().getValue(), returnType,
 						contextType, env, varInitCS)) {
 					return null;
 				}
 			}
         }
+     }
 
 		VariableInitExp result = ExpressionsFactory.eINSTANCE.createVariableInitExp();
 		result.setStartPosition(varInitCS.getStartOffset());
@@ -2531,7 +2589,10 @@ public class QvtOperationalVisitorCS
 		return result;
 	}
 			
-	private ReturnExp visitReturnExpCS(ReturnExpCS returnExpCS, QvtOperationalEnv env) {
+	private ReturnExp visitReturnExpCS(ReturnExpCS returnExpCS, 
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+		
 		ReturnExp result = ExpressionsFactory.eINSTANCE.createReturnExp();
 		initStartEndPositions(result, returnExpCS);
 		if(returnExpCS.getValue() != null) {
@@ -2689,7 +2750,10 @@ public class QvtOperationalVisitorCS
 		}
 	}
 
-	private OCLExpression<EClassifier> visitExpressionStatementCS(ExpressionStatementCS expressionCS, QvtOperationalEnv env) {
+	private OCLExpression<EClassifier> visitExpressionStatementCS(ExpressionStatementCS expressionCS, 
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+		
 		return visitOclExpressionCS(expressionCS.getOclExpressionCS(), env);
 	}
 
@@ -2840,11 +2904,13 @@ public class QvtOperationalVisitorCS
         return resolveExp;
     }
     
-    private void validateResolveExp(ResolveExp  resolveExp, QvtOperationalEnv env) {
+    private void validateResolveExp(ResolveExp  resolveExp, 
+    		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
     	if(resolveExp.isIsDeferred()) {    	
     		if(!QvtResolveUtil.isSuppportedAsDeferredAssigned(resolveExp)) {
     			int startPos = (resolveExp.getSource() != null) ? resolveExp.getSource().getEndPosition() : resolveExp.getStartPosition(); 
-    			env.reportWarning(ValidationMessages.lateResolveNotUsedInDeferredAssignment, startPos, resolveExp.getEndPosition());
+    			QvtOperationalUtil.reportWarning(env, ValidationMessages.lateResolveNotUsedInDeferredAssignment, startPos, resolveExp.getEndPosition());
     		}
 		}
     }
@@ -2981,7 +3047,10 @@ public class QvtOperationalVisitorCS
         return resolveExp;
     }
 
-    private OCLExpression<EClassifier> visitForExp(ForExpCS forExpCS, QvtOperationalEnv env) {
+    private OCLExpression<EClassifier> visitForExp(ForExpCS forExpCS, 
+    		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+    	
         OCLExpression<EClassifier> source =
             getCollectionSourceExpression(forExpCS.getSource(), env);
         if (!(source.getType() instanceof CollectionType)) {
@@ -3035,7 +3104,10 @@ public class QvtOperationalVisitorCS
         return astNode;
     }
     
-    private OCLExpression<EClassifier> visitImperativeIterateExp(ImperativeIterateExpCS imperativeIterateExpCS, QvtOperationalEnv env) {
+    private OCLExpression<EClassifier> visitImperativeIterateExp(ImperativeIterateExpCS imperativeIterateExpCS, 
+    		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+    	
         OCLExpression<EClassifier> source =
             getCollectionSourceExpression(imperativeIterateExpCS.getSource(), env);
         if (!(source.getType() instanceof CollectionType)) {
@@ -3101,7 +3173,7 @@ public class QvtOperationalVisitorCS
                     // equivalent to
                     // list->collectselect(i;res = i.prop | res.startswith("_"))
                     if (!isInnermostIteratorRelated(vdcl, bodyExp)) {
-                        env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_FeatureNotFoundForType,
+                    	QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.QvtOperationalVisitorCS_FeatureNotFoundForType,
                                 new Object[] {QvtOperationalTypesUtil.getTypeFullName(vdcl.getType())}),
                                 imperativeIterateExpCS.getBody());
                     }
@@ -3139,7 +3211,7 @@ public class QvtOperationalVisitorCS
                     resultElementType = typeType.getReferredType();
                 }
             } else if ((conditionExp != null) && (conditionExp.getType() != getBoolean())) {
-                env.reportError(ValidationMessages.QvtOperationalVisitorCS_WrongImperativeIteratorConditionType, 
+            	QvtOperationalUtil.reportError(env, ValidationMessages.QvtOperationalVisitorCS_WrongImperativeIteratorConditionType, 
                         conditionExp.getStartPosition(), conditionExp.getEndPosition());
             }
         }
@@ -3206,7 +3278,10 @@ public class QvtOperationalVisitorCS
 		return null;
 	}
 
-	private void validateOperationCall(OperationCallExpCS opCallCS, OperationCallExp<EClassifier, EOperation> operationCallExp, QvtOperationalEnv env) {
+	private void validateOperationCall(OperationCallExpCS opCallCS, OperationCallExp<EClassifier, EOperation> operationCallExp, 
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+		
 		if (QvtOperationalParserUtil.isTypeCast(operationCallExp.getReferredOperation())) {
 			if (operationCallExp.getSource() != null && operationCallExp.getArgument().size() == 1) {
 				EClassifier sourceType = operationCallExp.getSource().getType();
@@ -3215,13 +3290,13 @@ public class QvtOperationalVisitorCS
 				if (argumentType instanceof TypeType
 						&& QvtOperationalParserUtil.isIncorrectCast(sourceType,
 								((TypeType<EClassifier, EOperation>) argumentType).getReferredType())) {
-					env.reportWarning(ValidationMessages.incorrectCastWarning, opCallCS);
+					QvtOperationalUtil.reportWarning(env, ValidationMessages.incorrectCastWarning, opCallCS);
 				}
 			}
 		}
 		if (QvtOperationalUtil.isMappingOperation(operationCallExp.getReferredOperation())) {
 			if (false == opCallCS instanceof MappingCallExpCS) {
-				env.reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_mapKeywordNotUsed,
+				QvtOperationalUtil.reportWarning(env, NLS.bind(ValidationMessages.QvtOperationalVisitorCS_mapKeywordNotUsed,
 						operationCallExp.getReferredOperation().getName()), opCallCS);
 			}
 		}
@@ -3344,7 +3419,10 @@ public class QvtOperationalVisitorCS
 		return true;
 	}
 
-	private boolean validateInitializedValueCS(VariableInitializationCS varInitCS, VariableInitExp result, QvtOperationalEnv env) {
+	private boolean validateInitializedValueCS(VariableInitializationCS varInitCS, VariableInitExp result, 
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+		
 		result.setName(varInitCS.getSimpleNameCS().getValue());
 
 		EClassifier type;
@@ -3380,7 +3458,9 @@ public class QvtOperationalVisitorCS
 		return true;
 	}
 
-	private OCLExpression<EClassifier> createDefaultInitializationValue(EClassifier type, QvtOperationalEnv env) {
+	private OCLExpression<EClassifier> createDefaultInitializationValue(EClassifier type, 
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
         // 8.2.2.10 VariableInitExp
         // A variable may not declare an initialization value. In this case a default value is assumed (an empty collection for a collection,
         // zero for any numeric type, the empty string for a string and null for all other elements.
@@ -3446,7 +3526,8 @@ public class QvtOperationalVisitorCS
 		return myLateResolveExps != null ? myLateResolveExps : Collections.<ResolveExp>emptyList();
 	}
 
-	private void validate(QvtOperationalEnv env) {
+	private void validate(Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		for (ResolveExp lateResolve : getAllLateResolves()) {
 			validateResolveExp(lateResolve, env);
 		}
@@ -3651,7 +3732,7 @@ public class QvtOperationalVisitorCS
 		    CallExpCS callExpCS = (CallExpCS) simpleNameCS.eContainer();
 		    FeatureCallExp<EClassifier> featureCallExp = (FeatureCallExp<EClassifier>) astNode;
 		    astNode = isArrowAccessToCollection(callExpCS, source) ?
-		            createImplicitXCollect(source, featureCallExp, (QvtOperationalEnv) env, simpleNameCS)
+		            createImplicitXCollect(source, featureCallExp, env, simpleNameCS)
 		            : createImplicitCollect(source, featureCallExp, env, simpleNameCS);
 		}
 
@@ -3698,7 +3779,10 @@ public class QvtOperationalVisitorCS
 		return Collections.emptyList();
 	}
 	
-	private static void addInitVariable(QvtOperationalEnv env, VariableInitExp varInit) {
+	private static void addInitVariable(
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env, 
+			VariableInitExp varInit) {
 		if (varInit.getName() != null) {
 			Variable<EClassifier, EParameter> var = EcoreFactory.eINSTANCE.createVariable();
 			var.setName(varInit.getName());
@@ -3794,5 +3878,17 @@ public class QvtOperationalVisitorCS
 	
 	private static String wrappInSeeErrorLogMessage(String message) {
 		return NLS.bind(ValidationMessages.QvtOperationalVisitorCS_SeeErrorLogForDetails, message);
+	}
+	
+	private static QvtOperationalEnv toQVTOperationalEnv(Environment<EPackage, EClassifier, 
+			EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, 
+			CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) throws IllegalArgumentException {
+		
+		QvtOperationalEnv adapter = OCLUtil.getAdapter(env, QvtOperationalEnv.class);
+		if(adapter == null) {
+			throw new IllegalArgumentException("QVTOperationalEnv is required"); //$NON-NLS-1$
+		}
+		
+		return adapter;
 	}
 }

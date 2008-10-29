@@ -11,17 +11,25 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CallExpCS;
 import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.cst.VariableExpCS;
+import org.eclipse.ocl.ecore.CallOperationAction;
+import org.eclipse.ocl.ecore.Constraint;
+import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.CallExp;
 import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.PropertyCallExp;
@@ -53,7 +61,9 @@ class DeprecatedImplicitSourceCallHelper {
 	 * @param env
 	 *            the environment to receive validation problems
 	 */
-	static void validateCallExp(OCLExpressionCS callExpCS, CallExp<EClassifier> resultAST, QvtOperationalEnv env) {
+	static void validateCallExp(OCLExpressionCS callExpCS, CallExp<EClassifier> resultAST, Environment<EPackage, EClassifier, EOperation, EStructuralFeature,
+			EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint,
+			EClass, EObject> env) {
 	
 		CSTNode causeNode = null;
 		if(callExpCS instanceof CallExpCS) {
@@ -74,29 +84,32 @@ class DeprecatedImplicitSourceCallHelper {
 			if(resultAST instanceof CallExp) {
 				CallExp<EClassifier> call = (CallExp<EClassifier>) resultAST;
 				if(call.getSource() instanceof VariableExp) {
+					@SuppressWarnings("unchecked")
 					VariableExp<EClassifier, EParameter> varExp = (VariableExp<EClassifier, EParameter>) call.getSource();     				
 					Variable<EClassifier, EParameter> refVar = varExp.getReferredVariable();
 					
 					if(refVar != null && refVar.getName() != null) {
 						String refVarName = refVar.getName();
 						if(QvtOperationalEnv.SELF_VARIABLE_NAME.equals(refVarName)) {
-							env.reportError(ValidationMessages.DeprecatedImplicitSourceCall_contextualImplicitCall, causeNode);
+							QvtOperationalUtil.reportError(env, ValidationMessages.DeprecatedImplicitSourceCall_contextualImplicitCall, causeNode);
 						} 
 						else if(refVarName != null && refVarName.endsWith(QvtOperationalFileEnv.THIS_VAR_QNAME_SUFFIX)) {
 							if(resultAST instanceof OperationCallExp) {
+								@SuppressWarnings("unchecked")
 								OperationCallExp<EClassifier, EOperation> operCall = (OperationCallExp<EClassifier, EOperation>)resultAST;
 								EOperation referredOperation = operCall.getReferredOperation();
 								
 								if(referredOperation != null && !isModuleOperation(referredOperation, env)) {
-		    						env.reportWarning(ValidationMessages.DeprecatedImplicitSourceCall_moduleScopeImplicitCall, 
+									QvtOperationalUtil.reportWarning(env, ValidationMessages.DeprecatedImplicitSourceCall_moduleScopeImplicitCall, 
 		    								causeNode);
 								}
 							} else if(resultAST instanceof PropertyCallExp) {
+								@SuppressWarnings("unchecked")
 					        	PropertyCallExp<EClassifier, EStructuralFeature> propCall = (PropertyCallExp<EClassifier, EStructuralFeature>) resultAST;					        	
 								EStructuralFeature referredProperty = propCall.getReferredProperty();
 								
 								if(referredProperty != null && !isModuleProperty(referredProperty, env)) {
-		    						env.reportWarning(ValidationMessages.DeprecatedImplicitSourceCall_moduleScopeImplicitCall, 
+									QvtOperationalUtil.reportWarning(env, ValidationMessages.DeprecatedImplicitSourceCall_moduleScopeImplicitCall, 
 		    								causeNode);
 								}    				        	
 							}    						    						
@@ -108,12 +121,16 @@ class DeprecatedImplicitSourceCallHelper {
 		}
 	}
 
-	private static boolean isModuleOperation(EOperation operation, QvtOperationalEnv env) {
+	private static boolean isModuleOperation(EOperation operation, Environment<EPackage, EClassifier, EOperation, EStructuralFeature,
+			EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint,
+			EClass, EObject> env) {
 		EClassifier owningClassifier = env.getUMLReflection().getOwningClassifier(operation);
 		return owningClassifier instanceof Module;
 	}
 
-	private static boolean isModuleProperty(EStructuralFeature feature, QvtOperationalEnv env) {
+	private static boolean isModuleProperty(EStructuralFeature feature, Environment<EPackage, EClassifier, EOperation, EStructuralFeature,
+			EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint,
+			EClass, EObject> env) {
 		return env.getUMLReflection().getOwningClassifier(feature) instanceof Module;
 	}	
 }

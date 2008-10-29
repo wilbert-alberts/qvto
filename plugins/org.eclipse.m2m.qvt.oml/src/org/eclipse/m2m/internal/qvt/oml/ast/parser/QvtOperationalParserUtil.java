@@ -25,8 +25,10 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
@@ -54,6 +56,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VariableInitExp;
+import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CollectionTypeCS;
 import org.eclipse.ocl.cst.PathNameCS;
@@ -61,7 +64,10 @@ import org.eclipse.ocl.cst.PrimitiveTypeCS;
 import org.eclipse.ocl.cst.TupleTypeCS;
 import org.eclipse.ocl.cst.TypeCS;
 import org.eclipse.ocl.cst.VariableCS;
+import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.CollectionType;
+import org.eclipse.ocl.ecore.Constraint;
+import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.types.BagType;
@@ -219,7 +225,9 @@ public class QvtOperationalParserUtil {
 
 
 	public static boolean validateNameClashing(String name, EClassifier returnType, EClassifier contextType,
-			QvtOperationalEnv env, CSTNode cstNode) {
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env, 
+			CSTNode cstNode) {
 		if (env.lookupProperty(returnType, name) != null) {
 			// should report a warning
 			// fEnv.reportError(ValidationMessages.getString("SemanticUtil.11",
@@ -229,7 +237,7 @@ public class QvtOperationalParserUtil {
 
 		if (contextType != null) {
 			if (env.lookupProperty(contextType, name) != null) {
-				env.reportError(NLS.bind(ValidationMessages.SemanticUtil_13,
+				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.SemanticUtil_13,
 						new Object[] { name, QvtOperationalTypesUtil.getTypeFullName(contextType) }),
 						cstNode);
 				return false;
@@ -240,9 +248,12 @@ public class QvtOperationalParserUtil {
 	}
 
 
-	public static boolean validateInitVariable(VariableInitExp varInit, QvtOperationalEnv env) {
+	public static boolean validateInitVariable(VariableInitExp varInit, 
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+		
 		if (env.lookupLocal(varInit.getName()) != null) {
-			env.reportError(NLS.bind(ValidationMessages.SemanticUtil_15, new Object[] { varInit.getName() }),
+			QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.SemanticUtil_15, new Object[] { varInit.getName() }),
 					varInit.getStartPosition(), varInit.getEndPosition());
 			return false;
 		}
@@ -261,7 +272,7 @@ public class QvtOperationalParserUtil {
 		EClassifier realType = varInit.getValue().getType();
 		EClassifier declaredType = varInit.getType();
 		if (!isAssignableToFrom(env, declaredType, realType)) {
-			env.reportError(NLS.bind(ValidationMessages.SemanticUtil_17,
+			QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.SemanticUtil_17,
 					new Object[] { QvtOperationalTypesUtil.getTypeFullName(declaredType), QvtOperationalTypesUtil.getTypeFullName(realType) }),
 					varInit.getStartPosition(), varInit.getEndPosition());
 		}
@@ -269,8 +280,10 @@ public class QvtOperationalParserUtil {
 		return true;
 	}
 
-	public static boolean isAssignableToFrom(QvtOperationalEnv env, EClassifier variableType,
-			EClassifier initialiserType) {
+	public static boolean isAssignableToFrom(
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env, 
+			EClassifier variableType, EClassifier initialiserType) {
 		if (variableType == null)
 			return false;
 		if (initialiserType == null)
@@ -353,6 +366,8 @@ public class QvtOperationalParserUtil {
 		return false;
 	}
 
+	// FIXME - to be removed => use getRelationShip(t1, t2) operation
+	@SuppressWarnings("unchecked")
 	public static boolean isIncorrectCast(final EClassifier sourceType, final EClassifier targetType) {
 		if (sourceType == null || targetType == null) {
 			return false; // error should be reported in this case, not
@@ -379,10 +394,13 @@ public class QvtOperationalParserUtil {
 	}
 
 	public static boolean validateAssignment(String leftName, EClassifier leftType,
-			OCLExpression<EClassifier> right, boolean isIncremental, CSTNode cstNode, QvtOperationalEnv env) {
+			OCLExpression<EClassifier> right, boolean isIncremental, CSTNode cstNode, 
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+		
 		if (isIncremental) {
 			if (leftType instanceof CollectionType == false) {
-				env.reportError(NLS.bind(ValidationMessages.SemanticUtil_3, new Object[] { leftName }), cstNode);
+				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.SemanticUtil_3, new Object[] { leftName }), cstNode);
 				return false;
 			}
 
@@ -393,7 +411,7 @@ public class QvtOperationalParserUtil {
 			}
 
 			if (!QvtOperationalParserUtil.isAssignableToFrom(env, baseType, actualType)) {
-				env.reportError(NLS.bind(ValidationMessages.SemanticUtil_5, 
+				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.SemanticUtil_5, 
 						new Object[] { leftName, QvtOperationalTypesUtil.getTypeFullName(baseType),
 							QvtOperationalTypesUtil.getTypeFullName(actualType) }), cstNode);
 				return false;
@@ -401,7 +419,7 @@ public class QvtOperationalParserUtil {
 		} else {
 			EClassifier actualType = right.getType();
 			if (!QvtOperationalParserUtil.isAssignableToFrom(env, leftType, actualType)) {
-				env.reportError(NLS.bind(ValidationMessages.SemanticUtil_8, new Object[] { leftName,
+				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.SemanticUtil_8, new Object[] { leftName,
 				        QvtOperationalTypesUtil.getTypeFullName(leftType),
 				        QvtOperationalTypesUtil.getTypeFullName(actualType) }), cstNode);
 				return false;
@@ -427,7 +445,10 @@ public class QvtOperationalParserUtil {
 	 *         otherwise.
 	 */
 	public static boolean validateVariableModification(Variable<EClassifier, EParameter> variable,
-			PathNameCS varPathNameNodeCS, EStructuralFeature varPathNamePropertyASTopt, QvtOperationalEnv env) {
+			PathNameCS varPathNameNodeCS, EStructuralFeature varPathNamePropertyASTopt, 
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+		
 		EParameter representedParameter = variable.getRepresentedParameter();
 		if (representedParameter instanceof VarParameter) {
 			VarParameter parameter = (VarParameter) representedParameter;
@@ -436,19 +457,19 @@ public class QvtOperationalParserUtil {
 			boolean isContextualPropertyAccessed = varPathNamePropertyASTopt instanceof ContextualProperty;
 			
 			if(isDirectInoutModification) {
-				env.reportError(NLS.bind(ValidationMessages.QvtOperationalParserUtil_inoutParamAssignmentError, parameter.getName()),
+				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.QvtOperationalParserUtil_inoutParamAssignmentError, parameter.getName()),
 						varPathNameNodeCS);
 				return false;
 			}
 			
 			if (parameter.getKind() != DirectionKind.OUT && parameter.getKind() != DirectionKind.INOUT && isContextualPropertyAccessed == false) {
-				env.reportError(NLS.bind(ValidationMessages.inputParameterModificationError, variable.getName()),
+				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.inputParameterModificationError, variable.getName()),
 						varPathNameNodeCS);
 				return false;
 			}
 		}
 		if (representedParameter instanceof Property) {
-			env.reportError(NLS.bind(ValidationMessages.readOnlyPropertyModificationError, variable.getName()),
+			QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.readOnlyPropertyModificationError, variable.getName()),
 					varPathNameNodeCS);
 			return false;
 		}
