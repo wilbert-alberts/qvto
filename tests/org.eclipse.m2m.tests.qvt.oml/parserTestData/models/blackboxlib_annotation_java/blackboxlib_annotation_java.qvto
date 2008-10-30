@@ -2,11 +2,11 @@ import library org.bar.Foo;
   
 modeltype UML uses 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';
 modeltype ECORE "strict" uses ecore('http://www.eclipse.org/emf/2002/Ecore');
-
+modeltype QVTO "strict" uses qvtoperational('http://www.eclipse.org/QVT/1.0.0/Operational');
 
 transformation blackboxlib_annotation_java(in source : ECORE, out target: ECORE);
 
---
+
 main() {
 	var r : Sequence(OclAny);
 	r := primitiveTypeArgumentsHelper('String', 10, 1.5, true);
@@ -56,9 +56,9 @@ main() {
 	
 	-- complex type
 	var complex : Set(OrderedSet(Sequence(Bag(String)))) := 
-		testComplexTypeCopy(Set{OrderedSet{Sequence{Bag{'String'}}}});
-	
+		testComplexTypeCopy(Set{OrderedSet{Sequence{Bag{'String'}}}});	
 	assert fatal (complex->flatten()->exists(i | i='String'));
+
 
 	-- test resolve used model types
 	var umlModelParam := object UML::Model{};
@@ -67,6 +67,22 @@ main() {
 	
 	-- test void return type
 	var v : OclVoid := noReturnType('');
+	
+	-- test a generic operation on collection types	
+	var sourceOfStrings := Set{'aString'}->including(null);
+	assert fatal (sourceOfStrings->size() = 2);
+	var definedStringsCount := sourceOfStrings->countIgnoreUndefined();
+	assert fatal (definedStringsCount = 1); 
+
+	var sourceOfIntegers := Set{10, 20}->including(null);
+	assert fatal (sourceOfIntegers->size() = 3);
+	var i := sourceOfIntegers->countIgnoreUndefined();
+	assert fatal (i = 2);
+	
+	-- test enumeration
+	var kind := QVTO::expressions::DirectionKind::_inout;
+	var literalName := getEnumLiteralName(kind);
+	assert fatal (literalName = 'inout');	
 }
 
 helper checkPrimitiveTypeArgResult(r : Sequence(OclAny)) : OclVoid {

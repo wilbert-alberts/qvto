@@ -21,3 +21,7 @@ helper tupleFrom2Strings(s1:String, s2:String) : Tuple(name1 : String, name2 : S
 helper Collection(OclAny)::callOnCollection() : Collection(OclAny) {
 	return self;
 }
+
+helper createTestedInvalid() : Real {
+	return 1/0;
+}

@@ -43,10 +43,11 @@
    </extension>
    
 	<extension point="org.eclipse.m2m.qvt.oml.javaBlackboxUnits">
-   		<unit namespace="org.bar" name="Foo">
+   		<unit name="Foo" namespace="org.bar">
     		<library name="FooJavaLib" class="org.eclipse.m2m.tests.qvt.oml.blackbox.AnnotatedJavaLibrary">
 				<metamodel nsURI="http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml"/>	    		
     			<metamodel nsURI="http://www.eclipse.org/emf/2002/Ecore"/>
+				<metamodel nsURI="http://www.eclipse.org/qvt/1.0.0/Operational/Expressions"/>				
     		</library>
 		</unit>
 	</extension>

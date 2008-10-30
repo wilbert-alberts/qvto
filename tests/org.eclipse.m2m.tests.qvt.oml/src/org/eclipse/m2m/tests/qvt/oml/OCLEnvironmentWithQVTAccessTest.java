@@ -26,6 +26,7 @@ import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.OCL;
+import org.eclipse.ocl.ecore.OCL.Query;
 import org.eclipse.ocl.helper.OCLHelper;
 
 public class OCLEnvironmentWithQVTAccessTest extends TestCase {
@@ -84,7 +85,30 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 			fail("Additional operation should come from super type"); //$NON-NLS-1$
 		}		
 	}
+
+	public void testStdlibOperationAccess() throws ParserException {
+		OCLHelper<EClassifier, EOperation, EStructuralFeature, Constraint> helper = fOCL.createOCLHelper();		
+		helper.setContext(EcorePackage.eINSTANCE.getENamedElement());
 		
+		try {
+			helper.setValidating(true);
+			org.eclipse.ocl.expressions.OCLExpression<EClassifier> q = 
+				helper.createQuery("createTestedInvalid().oclIsUndefined()");
+								
+			assertNull(helper.getProblems());
+						
+			final Query createQuery = fOCL.createQuery(q);
+			
+			Object result = createQuery.evaluate(EcoreFactory.eINSTANCE.createEClass());			
+			assertEquals(Boolean.TRUE, result);
+			
+		} catch (ParserException e) {
+			e.printStackTrace();			
+			fail("Additional operation should come from super type"); //$NON-NLS-1$
+		}
+	}
+	
+	
 	public void testImportedModulePropertyAccess() throws ParserException {
 		OCLHelper<EClassifier, EOperation, EStructuralFeature, Constraint> helper = fOCL.createOCLHelper();		
 		helper.setContext(EcorePackage.eINSTANCE.getENamedElement());

@@ -2,13 +2,13 @@ package org.eclipse.m2m.tests.qvt.oml.blackbox;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.ENamedElement;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Operation;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Parameter;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Operation.Kind;
@@ -18,7 +18,11 @@ import org.eclipse.ocl.util.CollectionUtil;
 import simpleuml.Model;
 
 public class AnnotatedJavaLibrary {
-		
+	
+	public AnnotatedJavaLibrary() {
+		 super();
+	}
+
 	@Operation (kind=Kind.HELPER, contextual = false)
 	public ArrayList<Object> primitiveTypeArgumentsHelper(String strArg, Integer intArg, Double realArg, Boolean boolArg) {
 		ArrayList<Object> result = new ArrayList<Object>();
@@ -138,11 +142,48 @@ public class AnnotatedJavaLibrary {
 	}
 	
 	public void noReturnType(String str) {
-		
+		// do nothing, testing void return type
 	}
 	
 	public Model testUsedSimpleUMLModelPackage(Model model) {
 		return model;
 	}
-	 
+	
+	public String getEnumLiteralName(DirectionKind directionKind) {
+		return directionKind.getName();
+	}
+	
+	// TODO - add support for java big numbers
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Numeric types operation
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+/*	public BigInteger bigInteger(BigInteger bigInteger) {
+		return bigInteger == null ? new BigInteger("0") : bigInteger.add(new BigInteger("10"));
+	}
+	
+	public BigDecimal bigDecimal(BigDecimal bigDecimal) {
+		return bigDecimal == null ? new BigDecimal(0) : bigDecimal.add(new BigDecimal(10));
+	}
+*/
+	// TODO - MDT OCL does not support the type-checker extensibility fully yet to
+	// realize collection operations  
+	@Operation (kind=Kind.HELPER, contextual = true)
+	public static <T> int countIgnoreUndefined(Collection<T> self) {
+		int count = 0;
+		if(self != null) {
+			for (T element : self) {
+				if(element != null) {
+					count++;
+				}
+			}
+		}
+
+		return count;
+	}
+	
+	// tests T, T2 parameterized types together
+	@Operation (contextual = true)
+	public static <T, T2> Collection<T2> shrinkAnotherCollectionToMySize(Collection<T> self, Collection<T2> another) {
+		return new ArrayList<T2>(another).subList(0, self.size());
+	}	
 }
