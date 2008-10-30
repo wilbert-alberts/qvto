@@ -20,7 +20,8 @@ public class BlackboxException extends Exception {
 	private Diagnostic fDiagnostic;
 	
 	public BlackboxException(Diagnostic diagnostic) {
-		super(diagnostic.getMessage());
+		super();
+		fDiagnostic = diagnostic;
 	}
 
 	public BlackboxException(String message) {
@@ -33,6 +34,12 @@ public class BlackboxException extends Exception {
 
 	public BlackboxException(String message, Throwable throwable) {
 		super(message, throwable);
+	}
+	
+	@Override
+	public String getMessage() {
+		String message = super.getMessage();
+		return (message != null) ? message : fDiagnostic.getMessage();
 	}
 	
 	/** 

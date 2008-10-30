@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -3856,7 +3857,11 @@ public class QvtOperationalVisitorCS
 						// cache the newly loaded library globally
 						myLoadedBlackBoxLibraries.put(libId, libEnv);
 					} catch (BlackboxException e) {
-						QvtPlugin.logError(NLS.bind(ValidationMessages.FailedToLoadLibrary, new Object[] { libId }), e);
+						if(e.getDiagnostic() != null) {
+							QvtPlugin.log(BasicDiagnostic.toIStatus(e.getDiagnostic()));
+						} else {
+							QvtPlugin.logError(NLS.bind(ValidationMessages.FailedToLoadLibrary, new Object[] { libId }), e);
+						}
 						// set null to indicate a library load failure
 						myLoadedBlackBoxLibraries.put(libId, null);
 					}

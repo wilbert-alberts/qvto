@@ -13,25 +13,31 @@ package org.eclipse.m2m.internal.qvt.oml.blackbox.java;
 
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.common.util.DiagnosticChain;
 
 
 class DiagnosticUtil {
 
 	static final String DIAGNOSTIC_SOURCE = "org.eclipse.m2m.qvt.oml.blackbox.java"; //$NON-NLS-1$	
-
-	static final DiagnosticChain OK_INSTANCE = createRootDiagnostic("OK"); //$NON-NLS-1$
 	
 	// no instances
 	private DiagnosticUtil() {
 		super();
 	}
 	
-	public static DiagnosticChain createRootDiagnostic(String message) {
+	public static boolean isSuccess(Diagnostic diagnostic) {
+		int severity = diagnostic.getSeverity();
+		return severity == Diagnostic.OK || severity == Diagnostic.WARNING;
+	}
+		
+	public static BasicDiagnostic createRootDiagnostic(String message) {
 		return new BasicDiagnostic(DIAGNOSTIC_SOURCE, 0, message, null);
 	}
 	
-	public static Diagnostic createErrorDiagnostic(String message) {
+	public static BasicDiagnostic createErrorDiagnostic(String message, Exception exception) {
+		return new BasicDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0, message, new Object[] { exception });
+	}
+	
+	public static BasicDiagnostic createErrorDiagnostic(String message) {
 		return new BasicDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0, message, null);
 	}	
 }

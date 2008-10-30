@@ -26,13 +26,13 @@ class ModuleHandle {
 	private final List<String> usedPackages;
 	
 	ModuleHandle(String bundleId, String className, String moduleName, List<String> usedPackages) {
-		if(bundleId != null && className == null && usedPackages == null) {
+		if(bundleId == null || className == null || usedPackages == null) {
 			throw new IllegalArgumentException();
 		}
 		
 		this.bundleId = bundleId;
 		this.className = className;			
-		this.simpleName = (moduleName != null) ? moduleName : getSimpleNameFromJavaClass(this.className);
+		this.simpleName = moduleName;
 		this.usedPackages = Collections.unmodifiableList(new ArrayList<String>(usedPackages));
 	}
 
@@ -60,17 +60,8 @@ class ModuleHandle {
 		return null;
 	}
 	
-	static String getSimpleNameFromJavaClass(String className) {
-		int lastSeparatorPos = className.lastIndexOf(".");
-		if(lastSeparatorPos < 0) {
-			return className;
-		}
-
-		return className.substring(lastSeparatorPos);
-	}
-	
 	@Override
 	public String toString() {			
-		return simpleName + " - " + className + "bundle=" + bundleId; //$NON-NLS-1$ //$NON-NLS-2$   
+		return simpleName + " - " + className + "(bundle=" + bundleId + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$   
 	}		
 }

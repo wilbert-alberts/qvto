@@ -15,7 +15,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
-import org.eclipse.emf.common.util.DiagnosticChain;
+import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
@@ -35,21 +36,22 @@ import org.eclipse.osgi.util.NLS;
 class OperationBuilder {
 	
 	private Java2QVTTypeResolver fTypeResolver;
-	private DiagnosticChain fProblems;
+	private BasicDiagnostic fProblems;
 	
 	OperationBuilder(Java2QVTTypeResolver typeResolver) {
 		fTypeResolver = typeResolver;
 	}
 	
-	public DiagnosticChain getProblems() {
-		return fProblems != null ? fProblems : DiagnosticUtil.OK_INSTANCE;
-	}
-	
 	public EOperation buildOperation(Method javaMethod) {
+    	resetErrors();		
 		return createOperation(javaMethod);
-	}
+	}	
 	
-    private EOperation createOperation(Method method) {
+	public Diagnostic getDiagnostics() {
+		return fProblems != null ? fProblems : Diagnostic.OK_INSTANCE;
+	}
+		
+    private EOperation createOperation(Method method) {    	
     	EClassifier contextType = null;
     	String name = method.getName();
     	Type resultType = method.getGenericReturnType();
@@ -91,7 +93,7 @@ class OperationBuilder {
             
             eParameter.setEType(fTypeResolver.toEClassifier(paramType));
             if(eParameter.getEType() == null) {
-            	reportError(NLS.bind(JavaBlackboxMessages.UnresolvedOclTypeForJavaType, paramType, method));            	
+            	reportError(NLS.bind(JavaBlackboxMessages.UnresolvedOclTypeForJavaType, paramType, method), method);
             }
                       
             Parameter paramAnno = getParameterAnnotation(annotations[i]);
@@ -140,9 +142,13 @@ class OperationBuilder {
     	return null;
     }
     
-    private void reportError(String message) {
+    private void resetErrors() {
+    	fProblems = null;
+    }
+    
+    private void reportError(String message, Method problemMethod) {
     	if(fProblems == null) {
-    		fProblems = DiagnosticUtil.createRootDiagnostic(JavaBlackboxMessages.LoadOperationDiagnostics);
+    		fProblems = DiagnosticUtil.createRootDiagnostic(NLS.bind(JavaBlackboxMessages.LoadOperationDiagnostics, problemMethod));
     	}
     	
     	fProblems.add(DiagnosticUtil.createErrorDiagnostic(message));

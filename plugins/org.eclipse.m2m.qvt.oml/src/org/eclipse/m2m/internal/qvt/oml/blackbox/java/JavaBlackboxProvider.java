@@ -22,6 +22,8 @@ import java.util.Map;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
@@ -33,11 +35,14 @@ import org.eclipse.m2m.qvt.oml.blackbox.BlackboxException;
 import org.eclipse.m2m.qvt.oml.blackbox.CompilationUnit;
 import org.eclipse.m2m.qvt.oml.blackbox.LoadContext;
 import org.eclipse.m2m.qvt.oml.blackbox.ResolutionContext;
+import org.eclipse.osgi.util.NLS;
 
 
 public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 		
 	private static final String EXTENSION_POINT = "javaBlackboxUnits"; //$NON-NLS-1$
+	
+	private static final String CLASS_NAME_SEPARATOR = "."; //$NON-NLS-1$
 	
 	private static final String UNIT_ELEM = "unit";	//$NON-NLS-1$
 	private static final String LIBRARY_ELEM = "library"; //$NON-NLS-1$	
@@ -77,16 +82,32 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 
 		Descriptor libDescriptor = (Descriptor) descriptor;
 		JavaModuleLoader javaModuleLoader = createJavaModuleLoader();
-		
-		List<QvtOperationalModuleEnv> loadedModules = new LinkedList<QvtOperationalModuleEnv>();		
-		for (ModuleHandle nextModuleHandle : libDescriptor.modules) {
-			try {
-				javaModuleLoader.loadModule(nextModuleHandle);				
-			} catch (ClassNotFoundException e) {
-				throw new BlackboxException("Can not load the module implementation class", e);
-			}
 
-			loadedModules.add(javaModuleLoader.getLoadedModule());
+		BasicDiagnostic errors = null;
+		List<QvtOperationalModuleEnv> loadedModules = new LinkedList<QvtOperationalModuleEnv>();
+		
+		for (ModuleHandle nextModuleHandle : libDescriptor.modules) {
+			Diagnostic diagnostic = javaModuleLoader.loadModule(nextModuleHandle);
+			
+			if(DiagnosticUtil.isSuccess(diagnostic)) {
+				loadedModules.add(javaModuleLoader.getLoadedModule());
+				
+				if(diagnostic.getSeverity() != Diagnostic.OK) {
+					QvtPlugin.log(BasicDiagnostic.toIStatus(diagnostic));
+				}
+			} else {
+				if(errors == null) {
+					String message = NLS.bind(JavaBlackboxMessages.BlackboxUnitLoadFailed, descriptor.getQualifiedName());
+					errors = DiagnosticUtil.createErrorDiagnostic(message);
+				}
+				
+				errors.add(diagnostic);
+			}
+		}
+		
+		if(errors != null) {
+			assert errors.getSeverity() == Diagnostic.ERROR;
+			throw new BlackboxException(errors);
 		}
 
 		return createCompilationUnit(loadedModules);
@@ -106,10 +127,10 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 							return javaModuleClass.newInstance();
 						} catch (InstantiationException e) {
 							// FIXME - choose a better exception
-							throw new IllegalArgumentException("Illegal adapter instance", e);								
+							throw new IllegalArgumentException("Illegal adapter instance", e);								 //$NON-NLS-1$
 						} catch (IllegalAccessException e) {
 							// FIXME - choose a better exception
-							throw new IllegalArgumentException("Illegal adapter instance", e);
+							throw new IllegalArgumentException("Illegal adapter instance", e); //$NON-NLS-1$
 						}
 					}
 				});
@@ -151,14 +172,13 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 		}
 		
 		String description = configurationElement.getAttribute(DESC_ATTR);		
-		String qualifiedName = namespace + "." + name;
+		String qualifiedName = namespace + CLASS_NAME_SEPARATOR + name;
 		return new Descriptor(configurationElement, qualifiedName, description);
 	}
     
 	
 	private class Descriptor extends AbstractCompilationUnitDescriptor {		
 		private List<ModuleHandle> modules;		
-		private List<Class<?>> javaClasses;
 
 		Descriptor(IConfigurationElement configurationElement, String unitQualifiedName, String description) {
 			super(JavaBlackboxProvider.this, unitQualifiedName);
@@ -170,18 +190,22 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 				String bundleId = moduleElement.getContributor().getName();
 				String className = moduleElement.getAttribute(CLASS_ATTR);
 				String moduleName = moduleElement.getAttribute(NAME_ATTR);
+				if(moduleName == null) {
+					// derive the name from the java class name
+					className = getSimpleNameFromJavaClass(className);
+				}
 				
 				modules.add(new ModuleHandle(bundleId, className, moduleName, readUsedPackagesNsURIs(moduleElement)));
 			}
 		}
-				
-		List<Class<?>> createModuleJavaClasses() throws ClassNotFoundException {
-			javaClasses = new ArrayList<Class<?>>(modules.size()); 
-			for (ModuleHandle nextModule : modules) {
-				javaClasses.add(nextModule.getModuleJavaClass());
+
+		private String getSimpleNameFromJavaClass(String className) {
+			int lastSeparatorPos = className.lastIndexOf(CLASS_NAME_SEPARATOR);
+			if(lastSeparatorPos < 0) {
+				return className;
 			}
-			
-			return javaClasses;
+
+			return className.substring(lastSeparatorPos);
 		}
 	}
 	
