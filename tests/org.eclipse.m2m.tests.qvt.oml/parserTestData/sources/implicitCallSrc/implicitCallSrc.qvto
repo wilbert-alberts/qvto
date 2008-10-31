@@ -79,13 +79,13 @@ mapping ecore::EClass::myMapping() : ecore::EPackage {
 	end {
 		/*<error>*/resolve(EClass)/*</error>*/;
 		self.resolve();
-		Bag{ self }->any(resolve());	
+		Bag{ self }->any(resolve() <> null);	
 			
 		resolveIn(nonContextualMapping, e : EPackage | e <> null 
 				and /*<error>*/_abstract/*</error>*/ <> null);
 	
 		self.resolveoneIn(nonContextualMapping, e : EPackage | e <> null);		
-		Bag{ self }->any(resolveoneIn(nonContextualMapping, e:EPackage | true));				
+		Bag{ self }->any(resolveoneIn(nonContextualMapping, e:EPackage | true) <> null);				
 		
 		Bag{ }->any(/*<error>*/_abstract/*</error>*/);
 		Bag{ object EClass{} }->any(_abstract);

@@ -33,7 +33,7 @@ main() {
 	-- test iterator var links
 	Sequence{ p }->any(/*<region id="i.iter.var">*/i/*</region>*/ | 
 		i <> null and 
-			Bag { /*<link ref="i.iter.var">*/i/*</link>*/ }->exists(/*<region id="aa.iter.var">*/aa : EClass/*</region>*/ | 
+			Bag { /*<link ref="i.iter.var">*/i/*</link>*/ }->exists(/*<region id="aa.iter.var">*/aa : EPackage/*</region>*/ | 
 				/*<link ref="aa.iter.var">*/aa/*</link>*/ <> null));
 
 	-- test resolve
