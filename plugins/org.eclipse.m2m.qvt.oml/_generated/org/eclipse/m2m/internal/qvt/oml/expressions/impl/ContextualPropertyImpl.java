@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ContextualPropertyImpl.java,v 1.1 2008/04/24 12:14:54 sboyko Exp $
+ * $Id: ContextualPropertyImpl.java,v 1.2 2008/10/31 00:02:49 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -227,8 +227,14 @@ public class ContextualPropertyImpl extends PropertyImpl implements ContextualPr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
-		return ((ExtendedVisitor<T, ?, ?, ?, ?>) v).visitContextualProperty(this);
+		if(v instanceof ExtendedVisitor) {
+		  @SuppressWarnings("unchecked")    		
+		  ExtendedVisitor<T> visitorExt = (ExtendedVisitor) v;    	
+		  return visitorExt.visitContextualProperty(this);
+		}
+		return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);
 	}
 
 	/**

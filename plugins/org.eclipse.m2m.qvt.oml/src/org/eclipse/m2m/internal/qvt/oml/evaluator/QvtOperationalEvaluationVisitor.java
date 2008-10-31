@@ -27,8 +27,7 @@ import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
 
-public interface QvtOperationalEvaluationVisitor extends 
-	ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalAction, Constraint>,
+public interface QvtOperationalEvaluationVisitor extends ExtendedVisitor<Object>,
 	EvaluationVisitor<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, 
 		EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> {
 	

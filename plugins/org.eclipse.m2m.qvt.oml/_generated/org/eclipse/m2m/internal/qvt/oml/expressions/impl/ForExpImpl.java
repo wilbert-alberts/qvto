@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ForExpImpl.java,v 1.1 2008/09/25 17:35:23 aigdalov Exp $
+ * $Id: ForExpImpl.java,v 1.2 2008/10/31 00:02:48 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -61,8 +61,14 @@ public class ForExpImpl extends ImperativeLoopExpImpl implements ForExp {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
-		return ((ExtendedVisitor<T, ?, ?, ?, ?>) v).visitForExp(this);
+		if(v instanceof ExtendedVisitor) {
+		  @SuppressWarnings("unchecked")    		
+		  ExtendedVisitor<T> visitorExt = (ExtendedVisitor) v;    	
+		  return visitorExt.visitForExp(this);
+		}
+		return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);
 	}
 
 } //ForExpImpl

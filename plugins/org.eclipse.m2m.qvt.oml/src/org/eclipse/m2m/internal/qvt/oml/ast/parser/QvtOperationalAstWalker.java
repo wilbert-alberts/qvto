@@ -91,7 +91,7 @@ import org.eclipse.ocl.expressions.VariableExp;
 import org.eclipse.ocl.utilities.ExpressionInOCL;
 import org.eclipse.ocl.utilities.Visitable;
 
-public class QvtOperationalAstWalker implements ExtendedVisitor<Object, EObject, CallOperationAction, SendSignalAction, Constraint> {
+public class QvtOperationalAstWalker implements ExtendedVisitor<Object> {
     public static class StopException extends RuntimeException {
         private static final long serialVersionUID = -1386908042373844768L;
 

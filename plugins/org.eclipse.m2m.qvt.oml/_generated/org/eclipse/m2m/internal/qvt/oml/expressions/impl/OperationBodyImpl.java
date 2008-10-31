@@ -252,7 +252,12 @@ public class OperationBodyImpl extends EObjectImpl implements OperationBody {
 	 * @generated
 	 */
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
-		return ((ExtendedVisitor<T, ?, ?, ?, ?>) v).visitOperationBody(this);
+		if(v instanceof ExtendedVisitor) {
+		  @SuppressWarnings("unchecked")    		
+		  ExtendedVisitor<T> visitorExt = (ExtendedVisitor) v;    	
+		  return visitorExt.visitOperationBody(this);
+		}
+		return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);
 	}
 
 	/**

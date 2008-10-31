@@ -191,8 +191,14 @@ public class AssignExpImpl extends ImperativeExpressionImpl implements AssignExp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
-		return ((ExtendedVisitor<T, ?, ?, ?, ?>) v).visitAssignExp(this);
+		if(v instanceof ExtendedVisitor) {
+		  @SuppressWarnings("unchecked")    		
+		  ExtendedVisitor<T> visitorExt = (ExtendedVisitor) v;    	
+		  return visitorExt.visitAssignExp(this);
+		}
+		return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);
 	}
 
 	/**

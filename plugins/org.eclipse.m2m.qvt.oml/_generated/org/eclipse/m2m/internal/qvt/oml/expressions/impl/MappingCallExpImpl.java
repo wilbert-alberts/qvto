@@ -108,8 +108,14 @@ public class MappingCallExpImpl extends OperationCallExpImpl<EClassifier, EOpera
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
-		return ((ExtendedVisitor<T, ?, ?, ?, ?>) v).visitMappingCallExp(this);
+		if(v instanceof ExtendedVisitor) {
+		  @SuppressWarnings("unchecked")    		
+		  ExtendedVisitor<T> visitorExt = (ExtendedVisitor) v;    	
+		  return visitorExt.visitMappingCallExp(this);
+		}
+		return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);
 	}
 
 	/**

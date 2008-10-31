@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ExpressionsPackageImpl.java,v 1.11 2008/10/14 11:46:49 radvorak Exp $
+ * $Id: ExpressionsPackageImpl.java,v 1.12 2008/10/31 00:02:49 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -431,6 +431,7 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 	
 	static {
         class QVTOPackageImpl extends EPackageImpl {
+			@Override
 			protected Resource createResource(String uri) {
 				return super.createResource(uri);
 			}
@@ -1803,10 +1804,6 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 
 		// Create type parameters
 		ETypeParameter extendedVisitorEClass_T = addETypeParameter(extendedVisitorEClass, "T"); //$NON-NLS-1$
-		ETypeParameter extendedVisitorEClass_S = addETypeParameter(extendedVisitorEClass, "S"); //$NON-NLS-1$
-		ETypeParameter extendedVisitorEClass_COA = addETypeParameter(extendedVisitorEClass, "COA"); //$NON-NLS-1$
-		ETypeParameter extendedVisitorEClass_SSA = addETypeParameter(extendedVisitorEClass, "SSA"); //$NON-NLS-1$
-		ETypeParameter extendedVisitorEClass_CT = addETypeParameter(extendedVisitorEClass, "CT"); //$NON-NLS-1$
 
 		// Set bounds for type parameters
 
@@ -1865,13 +1862,13 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		g1.getETypeArguments().add(g2);
 		g2 = createEGenericType(theEcorePackage_1.getEParameter());
 		g1.getETypeArguments().add(g2);
-		g2 = createEGenericType(extendedVisitorEClass_S);
+		g2 = createEGenericType(theEcorePackage_1.getEObject());
 		g1.getETypeArguments().add(g2);
-		g2 = createEGenericType(extendedVisitorEClass_COA);
+		g2 = createEGenericType(theEcorePackage.getCallOperationAction());
 		g1.getETypeArguments().add(g2);
-		g2 = createEGenericType(extendedVisitorEClass_SSA);
+		g2 = createEGenericType(theEcorePackage.getSendSignalAction());
 		g1.getETypeArguments().add(g2);
-		g2 = createEGenericType(extendedVisitorEClass_CT);
+		g2 = createEGenericType(theEcorePackage.getConstraint());
 		g1.getETypeArguments().add(g2);
 		extendedVisitorEClass.getEGenericSuperTypes().add(g1);
 		visitableASTNodeEClass.getESuperTypes().add(theUtilitiesPackage.getVisitable());
@@ -3077,6 +3074,36 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		g1.getETypeArguments().add(g2);
 		initEReference(getLogExp_Condition(), g1, null, "condition", null, 0, 1, LogExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
+		op = addEOperation(logExpEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		t1 = addETypeParameter(op, "T"); //$NON-NLS-1$
+		t2 = addETypeParameter(op, "U"); //$NON-NLS-1$
+		g1 = createEGenericType(theUtilitiesPackage.getVisitor());
+		g2 = createEGenericType(t1);
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		t2.getEBounds().add(g1);
+		g1 = createEGenericType(t2);
+		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(t1);
+		initEOperation(op, g1);
+
 		initEClass(assertExpEClass, AssertExp.class, "AssertExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		g1 = createEGenericType(theExpressionsPackage_1.getOCLExpression());
 		g2 = createEGenericType(theEcorePackage_1.getEClassifier());
@@ -3085,6 +3112,36 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		initEReference(getAssertExp_Log(), this.getLogExp(), null, "log", null, 0, 1, AssertExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getAssertExp_Severity(), this.getSeverityKind(), "severity", "error", 1, 1, AssertExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(getAssertExp_Line(), theEcorePackage_1.getEInt(), "line", "-1", 0, 1, AssertExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		op = addEOperation(assertExpEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		t1 = addETypeParameter(op, "T"); //$NON-NLS-1$
+		t2 = addETypeParameter(op, "U"); //$NON-NLS-1$
+		g1 = createEGenericType(theUtilitiesPackage.getVisitor());
+		g2 = createEGenericType(t1);
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		t2.getEBounds().add(g1);
+		g1 = createEGenericType(t2);
+		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(t1);
+		initEOperation(op, g1);
 
 		initEClass(imperativeLoopExpEClass, ImperativeLoopExp.class, "ImperativeLoopExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		g1 = createEGenericType(theExpressionsPackage_1.getOCLExpression());

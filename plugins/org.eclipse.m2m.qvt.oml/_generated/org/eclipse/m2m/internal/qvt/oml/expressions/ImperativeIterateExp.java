@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ImperativeIterateExp.java,v 1.2 2008/09/26 17:05:08 radvorak Exp $
+ * $Id: ImperativeIterateExp.java,v 1.3 2008/10/31 00:02:45 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
@@ -71,7 +71,7 @@ public interface ImperativeIterateExp extends ImperativeLoopExp {
     /**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((<%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%><T, ?, ?, ?, ?>) v).visitImperativeIterateExp(this);'"
+	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='if(v instanceof ExtendedVisitor) {\r\n  @SuppressWarnings(\"unchecked\")    \t\t\r\n  ExtendedVisitor<T> visitorExt = (ExtendedVisitor) v;    \t\r\n  return visitorExt.visitImperativeIterateExp(this);\r\n}\r\nreturn org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);'"
 	 * @generated
 	 */
     <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v);

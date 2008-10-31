@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: SwitchExpImpl.java,v 1.1 2008/04/07 15:58:59 radvorak Exp $
+ * $Id: SwitchExpImpl.java,v 1.2 2008/10/31 00:02:49 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -152,8 +152,14 @@ public class SwitchExpImpl extends ImperativeExpressionImpl implements SwitchExp
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
-		return ((ExtendedVisitor<T, ?, ?, ?, ?>) v).visitSwitchExp(this);
+    @Override
+	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
+		if(v instanceof ExtendedVisitor) {
+		  @SuppressWarnings("unchecked")    		
+		  ExtendedVisitor<T> visitorExt = (ExtendedVisitor) v;    	
+		  return visitorExt.visitSwitchExp(this);
+		}
+		return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);
 	}
 
     /**

@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ImperativeIterateExpImpl.java,v 1.2 2008/09/26 17:05:08 radvorak Exp $
+ * $Id: ImperativeIterateExpImpl.java,v 1.3 2008/10/31 00:02:48 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -81,7 +81,6 @@ public class ImperativeIterateExpImpl extends ImperativeLoopExpImpl implements I
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    @SuppressWarnings("unchecked")
     public Variable<EClassifier, EParameter> getTarget() {
 		return target;
 	}
@@ -125,8 +124,14 @@ public class ImperativeIterateExpImpl extends ImperativeLoopExpImpl implements I
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
-		return ((ExtendedVisitor<T, ?, ?, ?, ?>) v).visitImperativeIterateExp(this);
+    @Override
+	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
+		if(v instanceof ExtendedVisitor) {
+		  @SuppressWarnings("unchecked")    		
+		  ExtendedVisitor<T> visitorExt = (ExtendedVisitor) v;    	
+		  return visitorExt.visitImperativeIterateExp(this);
+		}
+		return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);
 	}
 
     /**

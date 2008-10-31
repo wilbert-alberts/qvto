@@ -86,7 +86,8 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 				e.accept(myOclValidationVisitor);
 			}
 			catch (Throwable throwable) {
-				// FIXME - eliminate this !!!! 
+				// FIXME - eliminate this !!!!
+				int i = 0;
 			}
 		}
 		

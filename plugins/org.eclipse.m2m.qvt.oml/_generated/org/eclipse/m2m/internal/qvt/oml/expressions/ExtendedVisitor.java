@@ -13,9 +13,13 @@ package org.eclipse.m2m.internal.qvt.oml.expressions;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.ocl.ecore.CallOperationAction;
+import org.eclipse.ocl.ecore.Constraint;
+import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
@@ -33,7 +37,7 @@ import org.eclipse.ocl.utilities.Visitor;
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface ExtendedVisitor<T, S, COA, SSA, CT> extends Visitor<T, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, S, COA, SSA, CT> {
+public interface ExtendedVisitor<T> extends Visitor<T, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> {
 	/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

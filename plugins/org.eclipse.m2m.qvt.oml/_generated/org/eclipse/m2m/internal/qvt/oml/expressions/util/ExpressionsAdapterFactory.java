@@ -247,7 +247,7 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createAltExpAdapter();
 			}
 			@Override
-			public <T, S, COA, SSA, CT> Adapter caseExtendedVisitor(ExtendedVisitor<T, S, COA, SSA, CT> object) {
+			public <T> Adapter caseExtendedVisitor(ExtendedVisitor<T> object) {
 				return createExtendedVisitorAdapter();
 			}
 			@Override

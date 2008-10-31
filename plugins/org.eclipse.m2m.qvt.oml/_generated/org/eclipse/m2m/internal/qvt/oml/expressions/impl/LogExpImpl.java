@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: LogExpImpl.java,v 1.1 2008/04/07 15:58:59 radvorak Exp $
+ * $Id: LogExpImpl.java,v 1.2 2008/10/31 00:02:49 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -126,6 +126,21 @@ public class LogExpImpl extends OperationCallExpImpl<EClassifier, EOperation> im
 	 * @generated
 	 */
 	@Override
+	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
+		if(v instanceof ExtendedVisitor) {
+		  @SuppressWarnings("unchecked")    		
+		  ExtendedVisitor<T> visitorExt = (ExtendedVisitor) v;    	
+		  return visitorExt.visitLogExp(this);
+		}
+		return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case ExpressionsPackage.LOG_EXP__CONDITION:
@@ -191,19 +206,6 @@ public class LogExpImpl extends OperationCallExpImpl<EClassifier, EOperation> im
 				return condition != null;
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * @generated NOT
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
-		if(v instanceof ExtendedVisitor) {
-			ExtendedVisitor<T, ?, ?, ?, ?> extVisitor = (ExtendedVisitor) v;
-			return extVisitor.visitLogExp(this);
-		}
-		return super.accept(v);
 	}
 		
 } //LogExpImpl

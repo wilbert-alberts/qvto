@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: AssertExpImpl.java,v 1.1 2008/04/07 15:58:59 radvorak Exp $
+ * $Id: AssertExpImpl.java,v 1.2 2008/10/31 00:02:49 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -264,6 +264,21 @@ public class AssertExpImpl extends ImperativeExpressionImpl implements AssertExp
 	 * @generated
 	 */
 	@Override
+	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
+		if(v instanceof ExtendedVisitor) {
+		  @SuppressWarnings("unchecked")    		
+		  ExtendedVisitor<T> visitorExt = (ExtendedVisitor) v;    	
+		  return visitorExt.visitAssertExp(this);
+		}
+		return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case ExpressionsPackage.ASSERT_EXP__ASSERTION:
@@ -379,19 +394,6 @@ public class AssertExpImpl extends ImperativeExpressionImpl implements AssertExp
 		result.append(line);
 		result.append(')');
 		return result.toString();
-	}
-	
-	/**
-	 * @generated NOT
-	 */	
-	@SuppressWarnings("unchecked")	
-	@Override
-	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
-		if(v instanceof ExtendedVisitor) {
-			ExtendedVisitor<T, ?, ?, ?, ?> extVisitor = (ExtendedVisitor) v;
-			return extVisitor.visitAssertExp(this);
-		}
-		return super.accept(v);
 	}
 
 } //AssertExpImpl

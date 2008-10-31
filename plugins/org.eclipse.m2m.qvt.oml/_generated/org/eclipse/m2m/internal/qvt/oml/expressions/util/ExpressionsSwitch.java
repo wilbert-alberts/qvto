@@ -487,7 +487,7 @@ public class ExpressionsSwitch<T1> {
 				return result;
 			}
 			case ExpressionsPackage.EXTENDED_VISITOR: {
-				ExtendedVisitor<?, ?, ?, ?, ?> extendedVisitor = (ExtendedVisitor<?, ?, ?, ?, ?>)theEObject;
+				ExtendedVisitor<?> extendedVisitor = (ExtendedVisitor<?>)theEObject;
 				T1 result = caseExtendedVisitor(extendedVisitor);
 				if (result == null) result = caseVisitor(extendedVisitor);
 				if (result == null) result = defaultCase(theEObject);
@@ -1103,7 +1103,7 @@ public class ExpressionsSwitch<T1> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public <T, S, COA, SSA, CT> T1 caseExtendedVisitor(ExtendedVisitor<T, S, COA, SSA, CT> object) {
+	public <T> T1 caseExtendedVisitor(ExtendedVisitor<T> object) {
 		return null;
 	}
 

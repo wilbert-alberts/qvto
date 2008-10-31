@@ -14,7 +14,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="Module" eSuperTypes="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage #//expressions/VisitableASTNode">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitModule(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitModule(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/Module/accept/T"/>
         <eTypeParameters name="T"/>
@@ -54,7 +54,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="Library" eSuperTypes="#//expressions/Module">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitLibrary(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitLibrary(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/Library/accept/T"/>
         <eTypeParameters name="T"/>
@@ -80,7 +80,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="Rename" eSuperTypes="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//ETypedElement #//expressions/VisitableASTNode">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitRename(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitRename(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/Rename/accept/T"/>
         <eTypeParameters name="T"/>
@@ -107,7 +107,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="ModuleImport" eSuperTypes="#//expressions/VisitableASTNode">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitModuleImport(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitModuleImport(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/ModuleImport/accept/T"/>
         <eTypeParameters name="T"/>
@@ -137,7 +137,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="Property" eSuperTypes="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature #//expressions/VisitableASTNode">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitProperty(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitProperty(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/Property/accept/T"/>
         <eTypeParameters name="T"/>
@@ -163,7 +163,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="LocalProperty" eSuperTypes="#//expressions/Property">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitLocalProperty(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitLocalProperty(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/LocalProperty/accept/T"/>
         <eTypeParameters name="T"/>
@@ -194,7 +194,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="ConfigProperty" eSuperTypes="#//expressions/Property">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitConfigProperty(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitConfigProperty(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/ConfigProperty/accept/T"/>
         <eTypeParameters name="T"/>
@@ -220,7 +220,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="ContextualProperty" eSuperTypes="#//expressions/Property">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitContextualProperty(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitContextualProperty(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/ContextualProperty/accept/T"/>
         <eTypeParameters name="T"/>
@@ -254,7 +254,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="ImperativeOperation" eSuperTypes="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EOperation #//expressions/VisitableASTNode">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitImperativeOperation(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitImperativeOperation(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/ImperativeOperation/accept/T"/>
         <eTypeParameters name="T"/>
@@ -288,7 +288,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="VarParameter" eSuperTypes="platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/Variable platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EParameter">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitVarParameter(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitVarParameter(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/VarParameter/accept/T"/>
         <eTypeParameters name="T"/>
@@ -324,7 +324,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="OperationBody" eSuperTypes="#//expressions/VisitableASTNode">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitOperationBody(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitOperationBody(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/OperationBody/accept/T"/>
         <eTypeParameters name="T"/>
@@ -366,7 +366,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="MappingOperation" eSuperTypes="#//expressions/ImperativeOperation">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitMappingOperation(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitMappingOperation(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/MappingOperation/accept/T"/>
         <eTypeParameters name="T"/>
@@ -404,7 +404,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="Helper" eSuperTypes="#//expressions/ImperativeOperation">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitHelper(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitHelper(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/Helper/accept/T"/>
         <eTypeParameters name="T"/>
@@ -431,7 +431,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="MappingBody" eSuperTypes="#//expressions/OperationBody">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitMappingBody(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitMappingBody(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/MappingBody/accept/T"/>
         <eTypeParameters name="T"/>
@@ -474,7 +474,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="AssignExp" eSuperTypes="#//expressions/ImperativeExpression">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitAssignExp(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitAssignExp(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/AssignExp/accept/T"/>
         <eTypeParameters name="T"/>
@@ -513,7 +513,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="VariableInitExp" eSuperTypes="#//expressions/ImperativeExpression">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitVariableInitExp(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitVariableInitExp(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/VariableInitExp/accept/T"/>
         <eTypeParameters name="T"/>
@@ -544,7 +544,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="MappingCallExp">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitMappingCallExp(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitMappingCallExp(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/MappingCallExp/accept/T"/>
         <eTypeParameters name="T"/>
@@ -575,7 +575,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="BlockExp" eSuperTypes="#//expressions/ImperativeExpression">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitBlockExp(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitBlockExp(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/BlockExp/accept/T"/>
         <eTypeParameters name="T"/>
@@ -607,7 +607,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="ComputeExp" eSuperTypes="#//expressions/ImperativeExpression">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitComputeExp(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitComputeExp(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/ComputeExp/accept/T"/>
         <eTypeParameters name="T"/>
@@ -646,7 +646,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="ObjectExp" eSuperTypes="#//expressions/InstantiationExp">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitObjectExp(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitObjectExp(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/ObjectExp/accept/T"/>
         <eTypeParameters name="T"/>
@@ -680,7 +680,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="WhileExp" eSuperTypes="#//expressions/ImperativeExpression">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitWhileExp(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitWhileExp(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/WhileExp/accept/T"/>
         <eTypeParameters name="T"/>
@@ -729,7 +729,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="SwitchExp" eSuperTypes="#//expressions/ImperativeExpression">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitSwitchExp(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitSwitchExp(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/SwitchExp/accept/T"/>
         <eTypeParameters name="T"/>
@@ -762,7 +762,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="AltExp" eSuperTypes="#//expressions/ImperativeExpression">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitSwitchAltExp(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitSwitchAltExp(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/AltExp/accept/T"/>
         <eTypeParameters name="T"/>
@@ -799,10 +799,6 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ExtendedVisitor" abstract="true" interface="true">
       <eTypeParameters name="T"/>
-      <eTypeParameters name="S"/>
-      <eTypeParameters name="COA"/>
-      <eTypeParameters name="SSA"/>
-      <eTypeParameters name="CT"/>
       <eOperations name="visitModule">
         <eGenericType eTypeParameter="#//expressions/ExtendedVisitor/T"/>
         <eParameters name="module" lowerBound="1" eType="#//expressions/Module"/>
@@ -946,10 +942,10 @@
         <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
         <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EEnumLiteral"/>
         <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EParameter"/>
-        <eTypeArguments eTypeParameter="#//expressions/ExtendedVisitor/S"/>
-        <eTypeArguments eTypeParameter="#//expressions/ExtendedVisitor/COA"/>
-        <eTypeArguments eTypeParameter="#//expressions/ExtendedVisitor/SSA"/>
-        <eTypeArguments eTypeParameter="#//expressions/ExtendedVisitor/CT"/>
+        <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
+        <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/CallOperationAction"/>
+        <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/SendSignalAction"/>
+        <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/Constraint"/>
       </eGenericSuperTypes>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="VisitableASTNode" abstract="true"
@@ -957,7 +953,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="ResolveExp">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitResolveExp(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitResolveExp(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/ResolveExp/accept/T"/>
         <eTypeParameters name="T"/>
@@ -1002,7 +998,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="ResolveInExp" eSuperTypes="#//expressions/ResolveExp">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitResolveInExp(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitResolveInExp(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/ResolveInExp/accept/T"/>
         <eTypeParameters name="T"/>
@@ -1030,7 +1026,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="ModelType" eSuperTypes="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass #//expressions/VisitableASTNode">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitModelType(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitModelType(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/ModelType/accept/T"/>
         <eTypeParameters name="T"/>
@@ -1070,6 +1066,30 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="extent" eType="#//expressions/ModelParameter"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="LogExp">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitLogExp(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/LogExp/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/LogExp/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/LogExp/accept/U"/>
+        </eParameters>
+      </eOperations>
       <eStructuralFeatures xsi:type="ecore:EReference" name="condition" containment="true">
         <eGenericType eClassifier="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
           <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
@@ -1081,6 +1101,30 @@
       </eGenericSuperTypes>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="AssertExp" eSuperTypes="#//expressions/ImperativeExpression">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitAssertExp(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//expressions/AssertExp/accept/T"/>
+        <eTypeParameters name="T"/>
+        <eTypeParameters name="U">
+          <eBounds eClassifier="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCL.ecore#//utilities/Visitor">
+            <eTypeArguments eTypeParameter="#//expressions/AssertExp/accept/T"/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+            <eTypeArguments/>
+          </eBounds>
+        </eTypeParameters>
+        <eParameters name="v">
+          <eGenericType eTypeParameter="#//expressions/AssertExp/accept/U"/>
+        </eParameters>
+      </eOperations>
       <eStructuralFeatures xsi:type="ecore:EReference" name="assertion" lowerBound="1"
           containment="true">
         <eGenericType eClassifier="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
@@ -1102,7 +1146,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="ImperativeLoopExp">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitImperativeLoopExp(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitImperativeLoopExp(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/ImperativeLoopExp/accept/T"/>
         <eTypeParameters name="T"/>
@@ -1138,7 +1182,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="ForExp" eSuperTypes="#//expressions/ImperativeLoopExp">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitForExp(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitForExp(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/ForExp/accept/T"/>
         <eTypeParameters name="T"/>
@@ -1164,7 +1208,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="ImperativeIterateExp" eSuperTypes="#//expressions/ImperativeLoopExp">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitImperativeIterateExp(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitImperativeIterateExp(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/ImperativeIterateExp/accept/T"/>
         <eTypeParameters name="T"/>
@@ -1196,7 +1240,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="InstantiationExp" eSuperTypes="#//expressions/ImperativeExpression">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitInstantiationExp(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitInstantiationExp(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/InstantiationExp/accept/T"/>
         <eTypeParameters name="T"/>
@@ -1232,7 +1276,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="ReturnExp" eSuperTypes="#//expressions/ImperativeExpression">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitReturnExp(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitReturnExp(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/ReturnExp/accept/T"/>
         <eTypeParameters name="T"/>
@@ -1267,7 +1311,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="EntryOperation" eSuperTypes="#//expressions/ImperativeOperation">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="body" value="return ((&lt;%org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor%>&lt;T, ?, ?, ?, ?>) v).visitEntryOperation(this);"/>
+          <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitEntryOperation(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
         </eAnnotations>
         <eGenericType eTypeParameter="#//expressions/EntryOperation/accept/T"/>
         <eTypeParameters name="T"/>
