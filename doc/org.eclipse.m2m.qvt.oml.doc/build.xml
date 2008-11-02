@@ -68,7 +68,8 @@
 			<arg value="build/antJavadoc.sh"/>
 			<arg value="${eclipse.home}/../eclipse"/>
 		</exec>
-
+		
+		<antcall target="convertSchemaToHtml"/>		
 		<antcall target="build.index"/>
 
 	</target>
@@ -123,4 +124,9 @@
 		<delete dir="${temp.folder}"/>
 	</target>
 
+	<target name="convertSchemaToHtml">
+		<property name="schema-destination" value="./references/extension-points" />
+		<pde.convertSchemaToHTML manifest="../org.eclipse.m2m.qvt.oml/plugin.xml" destination="${schema-destination}"/>
+	</target>
+		
 </project>
