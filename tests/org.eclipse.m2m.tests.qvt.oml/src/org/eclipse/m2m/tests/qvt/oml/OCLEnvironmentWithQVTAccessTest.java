@@ -26,6 +26,7 @@ import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.OCL;
+import org.eclipse.ocl.ecore.Variable;
 import org.eclipse.ocl.ecore.OCL.Query;
 import org.eclipse.ocl.helper.OCLHelper;
 
@@ -66,6 +67,33 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 		fOCL = OCL.newInstance(new OCLEnvironmentWithQVTAccessFactory(fImportedModules, EPackage.Registry.INSTANCE));
 	}
 		
+	@SuppressWarnings("unchecked")
+	public void testUserDefinedVariables() throws Exception {
+		OCLHelper<EClassifier, EOperation, EStructuralFeature, Constraint> helper = fOCL.createOCLHelper();		
+		helper.setContext(EcorePackage.eINSTANCE.getENamedElement());
+		
+		try {
+			helper.setValidating(true);
+			Variable var = org.eclipse.ocl.ecore.EcoreFactory.eINSTANCE.createVariable();
+			var.setName("userVar");
+			var.setEType(helper.getEnvironment().getOCLStandardLibrary().getString());
+			var.setType(var.getEType());
+			
+			helper.getEnvironment().addElement(var.getName(), (org.eclipse.ocl.expressions.Variable)var, true);
+			org.eclipse.ocl.expressions.OCLExpression<EClassifier> q = helper.createQuery("userVar.concat(getModulePropertyValue())");
+
+			assertNull(helper.getProblems());
+						
+			Query query = fOCL.createQuery(q);
+			query.getEvaluationEnvironment().add(var.getName(), "userVarValue");
+			Object result = query.evaluate();			
+			assertEquals("userVarValuemoduleProperty_suffix_suffix", result);
+			
+		} catch (ParserException e) {
+			e.printStackTrace();			
+			fail("Additional operation should come from super type"); //$NON-NLS-1$
+		}		
+	}
 	
 	public void testImportedOperationAccessingModuleProperty() throws Exception {
 		OCLHelper<EClassifier, EOperation, EStructuralFeature, Constraint> helper = fOCL.createOCLHelper();		
