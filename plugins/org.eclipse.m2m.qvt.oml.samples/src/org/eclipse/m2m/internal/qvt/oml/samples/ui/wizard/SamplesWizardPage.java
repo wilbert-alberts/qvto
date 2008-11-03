@@ -11,7 +11,11 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.samples.ui.wizard;
 
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.m2m.internal.qvt.oml.samples.ui.Messages;
 import org.eclipse.m2m.internal.qvt.oml.samples.ui.SampleProject;
@@ -90,6 +94,12 @@ public class SamplesWizardPage extends WizardPage {
     private boolean projectExists(final String projectName) {
         return ResourcesPlugin.getWorkspace().getRoot().getProject(projectName).exists();
     }
+    
+    private IStatus validateProjectName(String projectName) {
+    	IPath projectPath = new Path(projectName).makeAbsolute();    	
+    	IStatus status = ResourcesPlugin.getWorkspace().validatePath(projectPath.toString(), IResource.PROJECT);
+    	return status;
+    }
 
 	protected boolean validatePage() {
         setMessage(null);
@@ -97,7 +107,12 @@ public class SamplesWizardPage extends WizardPage {
         
         for (int i = 0; i < myNames.length; i++) {
 			Text name = myNames[i];
-	        if (projectExists(name.getText())) {
+			IStatus projectPathStatus = validateProjectName(name.getText());
+			if(projectPathStatus.getSeverity() == IStatus.ERROR) {
+				setErrorMessage(projectPathStatus.getMessage());				
+				return false;
+			}
+			else if (projectExists(name.getText())) {
 	            setErrorMessage(NLS.bind(Messages.SamplesWizardPage_alreadyExists, name.getText()));
 	            return false;
 	        }

@@ -280,5 +280,33 @@
          </fileToOpen>
       </example>
    </extension>
+
+   <extension
+         id="org.eclipse.m2m.qvt.oml.examples.Blackbox"
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.eclipse.ui.Examples/org.eclipse.m2m.qvt.oml.samples.category"
+            class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
+            icon="icons/pr-MDA.gif"
+            id="org.eclipse.m2m.qvt.oml.examples.Blackbox"
+            name="%Blackbox_Examples_name"
+            project="true">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.emf.common.ui.examples">
+      <example
+            pageImage="icons/pr-MDA_wizard.gif"
+            wizardID="org.eclipse.m2m.qvt.oml.examples.Blackbox">
+         <projectDescriptor
+               contentURI="projects/org.eclipse.m2m.qvt.oml.examples.blackbox/"
+               description="%Blackbox_Examples_description"
+               name="org.eclipse.m2m.qvt.oml.examples.blackbox">
+         </projectDescriptor>
+         <fileToOpen
+               location="org.eclipse.m2m.qvt.oml.examples.blackbox/src/org/eclipse/m2m/qvt/oml/examples/blackbox/UtilitiesLibrary.java">
+         </fileToOpen>
+      </example>
+   </extension>
   
 </plugin>
