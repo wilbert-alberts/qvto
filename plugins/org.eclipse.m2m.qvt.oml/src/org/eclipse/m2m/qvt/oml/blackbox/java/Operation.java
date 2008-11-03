@@ -17,25 +17,57 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Library operation
+ * Indicates that the annotated Java operation is a QVT operation, typically
+ * owned by a <code>Module</code> (<code>Library</code>,
+ * <code>OperationalTransformation</code>).
+ * 
+ * @see Kind
  */
 @Retention(RetentionPolicy.RUNTIME)	
 @Target(ElementType.METHOD)
 public @interface Operation {
-	
+	/**
+	 * Indicates the <code>kind</code> of the annotated operation with respect
+	 * to semantics in the QVT Abstract Syntax meta-model.
+	 * 
+	 * @see Operation
+	 */
 	public enum Kind {
+		/**
+		 * The operation is defined as <code>helper</code>, an imperative operation with possible side-effect.  
+		 */
 		HELPER,
+		/**
+		 * The operation is defined as<code>query</code>, a side-effect free imperative operation.  
+		 */				
 		QUERY,
+		/**
+		 *  The operation is defined as normal operation. If the associated operation is defined as 
+		 *  <code>contextual</code>, the Typedef class is used to represent it as additional operation
+		 *  in the owning <code>Module</code> class.
+		 */
 		OPERATION
 	};
 
 	/**
-	 * Indicates whether this operation is contextual
-	 * @return 
+	 * Indicates whether the associated operation is <code>contextual</code> or
+	 * not.
+	 * 
+	 * @return <code>true</code> if the associated operation is
+	 *         <code>contextual</code>, otherwise <code>false</code>.
 	 */
 	boolean contextual() default false;		
 	
+	/**
+	 * Indicates the operation kind specified for the annotated Java operation 
+	 * @return the kind object
+	 */
 	Kind kind() default Kind.HELPER;
 
+	/**
+	 * The textual description for the annotated operation, typically representing the detail
+	 * semantics information, useful for a tooling support.
+	 * @return the String object (empty string if nothing has been explicitly specified)
+	 */
 	String description() default "";		
 }

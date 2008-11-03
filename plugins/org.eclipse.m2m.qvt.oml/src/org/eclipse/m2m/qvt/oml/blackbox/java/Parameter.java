@@ -16,9 +16,32 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Indicates that the annotated Java parameter element is parameter of QVT
+ * operation.
+ * 
+ * @see Operation
+ */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.PARAMETER)	
+@Target(ElementType.PARAMETER)
 public @interface Parameter {
+
+	/**
+	 * The parameter name in the namespace of its owning QVT operation. It
+	 * enables to associate a name to a parameter of Java
+	 * {@linkplain java.lang.reflect.Method Method} that is available in
+	 * runtime, typically useful in tooling support. Otherwise, a unique
+	 * synthetic name is generated and to be set in the QVT Abstract Syntax.
+	 */
 	String name();
-	String description() default ""; //$NON-NLS-1$			
+
+	/**
+	 * Gets the textual description for the annotated parameter, typically
+	 * representing the detail semantics information, useful for a tooling
+	 * support.
+	 * 
+	 * @return the String object (empty string if nothing has been explicitly
+	 *         specified)
+	 */
+	String description() default ""; //$NON-NLS-1$
 }
