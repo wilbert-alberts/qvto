@@ -2,5 +2,16 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 
 <toc label="QVT Operational Developer Guide">
+	
 	<topic label="Overview" href="references/overview.html"/>
+	<topic label="Blackbox support" href="references/blackboxing.html"/>	
+	<topic label="Reference">
+		<link toc="topics_Reference.xml"/>
+		<anchor id="reference-ext-pt-before"/>
+		<topic label="Extension Points Reference">
+			<topic label="org.eclipse.m2m.qvt.oml.javaBlackboxUnits" href="references/extension-points/org_eclipse_m2m_qvt_oml_javaBlackboxUnits.html"/>
+		</topic>
+		<anchor id="reference-ext-pt-after" />
+		<anchor id="other-reference"/>
+	</topic>	
 </toc>
