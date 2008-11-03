@@ -42,7 +42,7 @@ public interface Model extends Element{
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Elements</em>' containment reference list.
 	 * @see testqvt.TestqvtPackage#getModel_Elements()
-	 * @model type="testqvt.Element" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<Element> getElements();

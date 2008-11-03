@@ -16,4 +16,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isLargeBoolean" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="largeBoolean" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Numbers">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bigInteger100" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger"
+        defaultValueLiteral="100"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bigDecimal100" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"
+        defaultValueLiteral="100"/>
+  </eClassifiers>
 </ecore:EPackage>

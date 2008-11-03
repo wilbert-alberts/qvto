@@ -46,7 +46,7 @@ public class ModelImpl extends ElementImpl implements Model {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Element> elements = null;
+	protected EList<Element> elements;
 
 	/**
 	 * <!-- begin-user-doc -->

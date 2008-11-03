@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import testqvt.BooleanElement;
 import testqvt.Element;
 import testqvt.Model;
+import testqvt.Numbers;
 import testqvt.TestqvtFactory;
 import testqvt.TestqvtPackage;
 
@@ -50,6 +51,13 @@ public class TestqvtPackageImpl extends EPackageImpl implements TestqvtPackage {
 	 * @generated
 	 */
 	private EClass booleanElementEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass numbersEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -205,6 +213,33 @@ public class TestqvtPackageImpl extends EPackageImpl implements TestqvtPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getNumbers() {
+		return numbersEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNumbers_BigInteger100() {
+		return (EAttribute)numbersEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNumbers_BigDecimal100() {
+		return (EAttribute)numbersEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public TestqvtFactory getTestqvtFactory() {
 		return (TestqvtFactory)getEFactoryInstance();
 	}
@@ -239,6 +274,10 @@ public class TestqvtPackageImpl extends EPackageImpl implements TestqvtPackage {
 		createEAttribute(booleanElementEClass, BOOLEAN_ELEMENT__SMALL_BOOLEAN);
 		createEAttribute(booleanElementEClass, BOOLEAN_ELEMENT__IS_LARGE_BOOLEAN);
 		createEAttribute(booleanElementEClass, BOOLEAN_ELEMENT__LARGE_BOOLEAN);
+
+		numbersEClass = createEClass(NUMBERS);
+		createEAttribute(numbersEClass, NUMBERS__BIG_INTEGER100);
+		createEAttribute(numbersEClass, NUMBERS__BIG_DECIMAL100);
 	}
 
 	/**
@@ -285,6 +324,10 @@ public class TestqvtPackageImpl extends EPackageImpl implements TestqvtPackage {
 		initEAttribute(getBooleanElement_SmallBoolean(), ecorePackage.getEBoolean(), "smallBoolean", null, 0, 1, BooleanElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getBooleanElement_IsLargeBoolean(), ecorePackage.getEBooleanObject(), "isLargeBoolean", null, 0, 1, BooleanElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getBooleanElement_LargeBoolean(), ecorePackage.getEBooleanObject(), "largeBoolean", null, 0, 1, BooleanElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(numbersEClass, Numbers.class, "Numbers", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getNumbers_BigInteger100(), ecorePackage.getEBigInteger(), "bigInteger100", "100", 0, 1, Numbers.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNumbers_BigDecimal100(), ecorePackage.getEBigDecimal(), "bigDecimal100", "100", 0, 1, Numbers.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

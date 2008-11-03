@@ -195,6 +195,44 @@ public interface TestqvtPackage extends EPackage{
 
 
 	/**
+	 * The meta object id for the '{@link testqvt.impl.NumbersImpl <em>Numbers</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see testqvt.impl.NumbersImpl
+	 * @see testqvt.impl.TestqvtPackageImpl#getNumbers()
+	 * @generated
+	 */
+	int NUMBERS = 3;
+
+	/**
+	 * The feature id for the '<em><b>Big Integer100</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUMBERS__BIG_INTEGER100 = 0;
+
+	/**
+	 * The feature id for the '<em><b>Big Decimal100</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUMBERS__BIG_DECIMAL100 = 1;
+
+	/**
+	 * The number of structural features of the '<em>Numbers</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUMBERS_FEATURE_COUNT = 2;
+
+
+	/**
 	 * Returns the meta object for class '{@link testqvt.Model <em>Model</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -289,6 +327,38 @@ public interface TestqvtPackage extends EPackage{
 	 * @generated
 	 */
 	EAttribute getBooleanElement_LargeBoolean();
+
+	/**
+	 * Returns the meta object for class '{@link testqvt.Numbers <em>Numbers</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Numbers</em>'.
+	 * @see testqvt.Numbers
+	 * @generated
+	 */
+	EClass getNumbers();
+
+	/**
+	 * Returns the meta object for the attribute '{@link testqvt.Numbers#getBigInteger100 <em>Big Integer100</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Big Integer100</em>'.
+	 * @see testqvt.Numbers#getBigInteger100()
+	 * @see #getNumbers()
+	 * @generated
+	 */
+	EAttribute getNumbers_BigInteger100();
+
+	/**
+	 * Returns the meta object for the attribute '{@link testqvt.Numbers#getBigDecimal100 <em>Big Decimal100</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Big Decimal100</em>'.
+	 * @see testqvt.Numbers#getBigDecimal100()
+	 * @see #getNumbers()
+	 * @generated
+	 */
+	EAttribute getNumbers_BigDecimal100();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -389,6 +459,32 @@ public interface TestqvtPackage extends EPackage{
 		 * @generated
 		 */
 		EAttribute BOOLEAN_ELEMENT__LARGE_BOOLEAN = eINSTANCE.getBooleanElement_LargeBoolean();
+
+		/**
+		 * The meta object literal for the '{@link testqvt.impl.NumbersImpl <em>Numbers</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see testqvt.impl.NumbersImpl
+		 * @see testqvt.impl.TestqvtPackageImpl#getNumbers()
+		 * @generated
+		 */
+		EClass NUMBERS = eINSTANCE.getNumbers();
+
+		/**
+		 * The meta object literal for the '<em><b>Big Integer100</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUMBERS__BIG_INTEGER100 = eINSTANCE.getNumbers_BigInteger100();
+
+		/**
+		 * The meta object literal for the '<em><b>Big Decimal100</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUMBERS__BIG_DECIMAL100 = eINSTANCE.getNumbers_BigDecimal100();
 
 	}
 

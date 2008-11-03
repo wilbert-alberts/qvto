@@ -58,6 +58,15 @@ public interface TestqvtFactory extends EFactory {
 	BooleanElement createBooleanElement();
 
 	/**
+	 * Returns a new object of class '<em>Numbers</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Numbers</em>'.
+	 * @generated
+	 */
+	Numbers createNumbers();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

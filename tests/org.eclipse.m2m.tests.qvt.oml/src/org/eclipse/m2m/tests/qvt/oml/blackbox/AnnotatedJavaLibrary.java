@@ -1,13 +1,18 @@
 package org.eclipse.m2m.tests.qvt.oml.blackbox;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.ENamedElement;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Operation;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Parameter;
@@ -16,6 +21,7 @@ import org.eclipse.ocl.util.Bag;
 import org.eclipse.ocl.util.CollectionUtil;
 
 import simpleuml.Model;
+
 
 public class AnnotatedJavaLibrary {
 	
@@ -156,15 +162,94 @@ public class AnnotatedJavaLibrary {
 	// TODO - add support for java big numbers
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Numeric types operation
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////	
-/*	public BigInteger bigInteger(BigInteger bigInteger) {
-		return bigInteger == null ? new BigInteger("0") : bigInteger.add(new BigInteger("10"));
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public BigInteger createBigInteger(String value) {
+		return new BigInteger(value);
+	}
+		
+	public BigInteger addBigInteger(BigInteger self, BigInteger big2) {
+		return self.add(big2);
 	}
 	
-	public BigDecimal bigDecimal(BigDecimal bigDecimal) {
-		return bigDecimal == null ? new BigDecimal(0) : bigDecimal.add(new BigDecimal(10));
+	public BigDecimal createBigDecimal(String value) {
+		return new BigDecimal(value);
 	}
-*/
+	
+	public BigDecimal addBigDecimal(BigDecimal big1, BigDecimal big2) {
+		return big1.add(big2);
+	}
+
+	// test lower precision types 
+	public Long sumLowerPrecisions(Short s, Integer i, Long l) {
+		// Byte b,
+		return /*b.byteValue() + */ s.shortValue() + i.intValue() + l.longValue();		
+	}
+
+	// TODO - byte not mapped by MDT OCL, raise bugzilla 
+	public long sumLowerPrecisionWithoutWrappers(/*byte b, */short s, int i, long l) {
+		return /*b + */ s + i + l;
+	}
+	
+	public Double sumLowerPrecisionDoubles(Float f, Double d) {
+		return f.floatValue() + d.doubleValue();
+	}
+
+	public double sumLowerPrecisionDoublesWithoutWrappers(float f, double d) {
+		return f + d;
+	}
+	
+	@Operation(contextual=true)
+	public static boolean theSameJavaBigIntegerInstance(BigInteger self, BigInteger another) {
+		return self == another;
+	}
+	
+	@Operation(contextual=true)
+	public static String stringContextualEcho(String self) {
+		return self;
+	}
+
+	@Operation(contextual=true)
+	public static boolean nonObjectBoolContextualEcho(boolean self) {
+		return self;
+	}	
+	
+	@Operation(contextual=true)
+	public static int nonObjectIntContextualEcho(int self) {
+		return self;
+	}
+	
+	@Operation(contextual=true)
+	public static double nonObjectDoubleContextualEcho(double self) {
+		return self;
+	}
+	
+	@Operation(contextual=true)
+	public static boolean boolContextualEcho(boolean self) {
+		return self;
+	}	
+	
+	@Operation(contextual=true)
+	public static int intContextualEcho(int self) {
+		return self;
+	}
+	
+	@Operation(contextual=true)
+	public static double doubleContextualEcho(double self) {
+		return self;
+	}
+
+	// test data type not mapped by MDT OCL 
+	public Date createDate(String dateStr) {
+		return (Date)EcoreFactory.eINSTANCE.createFromString(EcorePackage.eINSTANCE.getEDate(), dateStr);
+	}
+	
+	@Operation(contextual=true)
+	public static boolean before(Date self, Date when) {
+		return self.before(when);
+	}		
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Collection type operation
 	// TODO - MDT OCL does not support the type-checker extensibility fully yet to
 	// realize collection operations  
 	@Operation (kind=Kind.HELPER, contextual = true)

@@ -1,11 +1,12 @@
 import library org.bar.Foo; 
-  
+
+modeltype TESTQVT "strict" uses testqvt('http://www.eclipse.org/m2m/qvt/oml/testqvt');  
 modeltype UML uses 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';
 modeltype ECORE "strict" uses ecore('http://www.eclipse.org/emf/2002/Ecore');
 modeltype QVTO "strict" uses qvtoperational('http://www.eclipse.org/QVT/1.0.0/Operational');
 
-transformation blackboxlib_annotation_java(in source : ECORE, out target: ECORE);
 
+transformation blackboxlib_annotation_java(in source : ECORE, out target: ECORE);
 
 main() {
 	var r : Sequence(OclAny);
@@ -82,7 +83,71 @@ main() {
 	-- test enumeration
 	var kind := QVTO::expressions::DirectionKind::_inout;
 	var literalName := getEnumLiteralName(kind);
-	assert fatal (literalName = 'inout');	
+	assert fatal (literalName = 'inout');
+	
+	-- test BigInteger	 
+	var bigInt := addBigInteger(createBigInteger('10'), 23);
+	assert fatal (bigInt = createBigInteger('33'));
+	assert fatal (33 = createBigInteger('33'));
+	var bigInt2 : Integer := createBigInteger('50');
+	assert fatal (bigInt2 = createBigInteger('50'));
+
+	var sharedBigInt := createBigInteger('10');  
+	assert fatal (sharedBigInt.theSameJavaBigIntegerInstance(sharedBigInt));	
+	
+	-- test BigDecimal
+	var bigDec := addBigDecimal(createBigDecimal('10.5'), 23.0);
+	assert fatal (bigDec = createBigDecimal('33.5'));
+	assert fatal (33.5 = createBigDecimal('33.5'));
+	var bigDec2 : Real := createBigDecimal('50.5');
+	assert fatal (bigDec2 = createBigDecimal('50.5'));
+	
+	assert fatal (sumLowerPrecisions(10, 10, 10) = 30);
+	assert fatal (sumLowerPrecisionDoubles(10.5, 10.5) = 21);
+
+	-- TODO: raise MDT OCL bug, a storage exception is raised	
+	-- var t : Tuple ( number : Integer ) := Tuple { number = createBigInteger('100') };
+	-- assert fatal (t.number = 100);
+
+-- test contextual operations on primitive type context	
+	assert fatal ((10).nonObjectIntContextualEcho() = 10);
+	assert fatal ((10).nonObjectDoubleContextualEcho() = 10);
+	assert fatal ((10.5).nonObjectDoubleContextualEcho() = 10.5);	
+		
+	assert fatal (true.nonObjectBoolContextualEcho() = true);	
+	assert fatal (false.nonObjectBoolContextualEcho() = false);
+	
+	assert fatal ('abc'.stringContextualEcho() = 'abc');
+	
+	assert fatal ((10).intContextualEcho() = 10);
+	assert fatal ((10).doubleContextualEcho() = 10);
+	assert fatal ((10.5).doubleContextualEcho() = 10.5);	
+		
+	assert fatal (true.boolContextualEcho() = true);	
+	assert fatal (false.boolContextualEcho() = false);
+
+-- testing object properties of big types
+	var numbers : Numbers := object Numbers {};
+	assert fatal (numbers.bigInteger100 = createBigInteger('100'));
+	var big150 := createBigInteger('150');
+	numbers.bigInteger100 := big150;
+	assert fatal (numbers.bigInteger100 = big150);
+	assert fatal (numbers.bigInteger100.theSameJavaBigIntegerInstance(big150));
+	numbers.bigInteger100 := 1000;
+	assert fatal (numbers.bigInteger100 = 1000);	
+--
+	assert fatal (numbers.bigDecimal100 = createBigDecimal('100'));
+	var bigDec150 := createBigDecimal('150');
+	numbers.bigDecimal100 := bigDec150;
+	assert fatal (numbers.bigDecimal100 = bigDec150);
+	numbers.bigDecimal100 := 1000;
+	assert fatal (numbers.bigDecimal100 = 1000);	
+--
+
+--  test data type not mapped by MDT OCL 
+	var date : EDate := createDate('2008-10-31');
+	assert fatal (date.before(createDate('2008-11-01')));
+
 }
 
 helper checkPrimitiveTypeArgResult(r : Sequence(OclAny)) : OclVoid {

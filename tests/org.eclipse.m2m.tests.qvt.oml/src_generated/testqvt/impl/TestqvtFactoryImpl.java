@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
+import testqvt.*;
 import testqvt.BooleanElement;
 import testqvt.Element;
 import testqvt.Model;
@@ -70,6 +71,7 @@ public class TestqvtFactoryImpl extends EFactoryImpl implements TestqvtFactory {
 			case TestqvtPackage.MODEL: return createModel();
 			case TestqvtPackage.ELEMENT: return createElement();
 			case TestqvtPackage.BOOLEAN_ELEMENT: return createBooleanElement();
+			case TestqvtPackage.NUMBERS: return createNumbers();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -103,6 +105,16 @@ public class TestqvtFactoryImpl extends EFactoryImpl implements TestqvtFactory {
 	public BooleanElement createBooleanElement() {
 		BooleanElementImpl booleanElement = new BooleanElementImpl();
 		return booleanElement;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Numbers createNumbers() {
+		NumbersImpl numbers = new NumbersImpl();
+		return numbers;
 	}
 
 	/**

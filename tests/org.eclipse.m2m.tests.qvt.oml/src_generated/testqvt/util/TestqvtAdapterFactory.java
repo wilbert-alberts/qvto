@@ -16,6 +16,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 
+import testqvt.*;
 import testqvt.BooleanElement;
 import testqvt.Element;
 import testqvt.Model;
@@ -70,7 +71,7 @@ public class TestqvtAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * The switch the delegates to the <code>createXXX</code> methods.
+	 * The switch that delegates to the <code>createXXX</code> methods.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -88,6 +89,10 @@ public class TestqvtAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseBooleanElement(BooleanElement object) {
 				return createBooleanElementAdapter();
+			}
+			@Override
+			public Adapter caseNumbers(Numbers object) {
+				return createNumbersAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -148,6 +153,20 @@ public class TestqvtAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createBooleanElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link testqvt.Numbers <em>Numbers</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see testqvt.Numbers
+	 * @generated
+	 */
+	public Adapter createNumbersAdapter() {
 		return null;
 	}
 
