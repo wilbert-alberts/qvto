@@ -7,7 +7,7 @@
       </appinfo>
       <documentation>
          This extension point provides a mechanism for contributing QVT black-box units. Conceptually, it corresponds to QVT compilation units (OMG spec 7.13.1), though it rather represents sort of deployment unit as there is no concrete syntax source file to compile. Instead, the source is represented by a Java class, which realizes the top level unit elements using Java language constructs mapped to corresponding QVT counterpart elements.&lt;/br&gt;&lt;/br&gt;
-See the details on the Java implementation class format at &lt;a href=&quot;../references/blackboxing.html&quot;&gt;Java black-box to QVT mappings&lt;/a&gt;.
+See the details on the Java implementation class format at &lt;a href=&quot;../blackboxing.html&quot;&gt;Java black-box to QVT mappings&lt;/a&gt;.
       </documentation>
    </annotation>
 
@@ -111,7 +111,7 @@ Along with the &lt;b&gt;name&lt;/b&gt;, it composes the qualified name of the un
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The implementation class of the library (see &lt;a href=&quot;../references/blackboxing.html&quot;&gt;Java black-box to QVT mappings&lt;/a&gt;)
+                  The implementation class of the library (see &lt;a href=&quot;../blackboxing.html&quot;&gt;Java black-box to QVT mappings&lt;/a&gt;)
                </documentation>
                <appinfo>
                   <meta.attribute kind="java"/>
