@@ -60,7 +60,12 @@ class OperationBuilder {
     	Annotation[][] annotations = method.getParameterAnnotations();
 
     	Operation operAnnotation = method.getAnnotation(Operation.class);
-    	boolean isContextual = operAnnotation != null && operAnnotation.contextual();    	
+    	boolean isContextual = operAnnotation != null && operAnnotation.contextual();
+    	if(isContextual && paramTypes.length == 0) {
+    		reportError(NLS.bind(JavaBlackboxMessages.FirstContextualOperationParameterRequired, 
+    				method), method);
+    	}
+    		
     	Operation.Kind operKind = (operAnnotation != null) ? operAnnotation.kind() : Operation.Kind.OPERATION;
     	if(operKind == Kind.OPERATION) {
     		operKind = Kind.HELPER;
@@ -138,7 +143,7 @@ class OperationBuilder {
 			// state, but currently the instance of the module associated with the 'self' contextual
 			// instance is not easy to retrieve =>
 			// For now, we pass null as the source object, and 'self' as the first argument
-			reportError(NLS.bind("Contextual operation must be defined ''static'', method=''{0}''", method), method);
+			reportError(NLS.bind("Contextual operation must be defined ''static'', method=''{0}''", method), method); //$NON-NLS-1$
 		}
 		
         return operation;
