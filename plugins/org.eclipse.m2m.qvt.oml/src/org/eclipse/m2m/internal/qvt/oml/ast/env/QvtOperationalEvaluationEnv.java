@@ -699,7 +699,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			return NumberConversions.convertNumber(value, expectedType);
 		}
 		
-		return null;
+		return value;
 	}
 
 	/**
