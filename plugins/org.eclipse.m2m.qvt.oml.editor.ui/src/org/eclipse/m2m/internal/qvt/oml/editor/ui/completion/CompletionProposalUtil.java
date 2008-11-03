@@ -13,6 +13,7 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,8 @@ import org.eclipse.jface.viewers.DecorationOverlayIcon;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
@@ -249,13 +251,8 @@ public class CompletionProposalUtil {
                 }
             }
         }
-        
-        
-        List<Module> libs = data.getEnvironment().getNativeLibs();
-        List<Module> allLibs = new ArrayList<Module>(libs.size() + 1);
-        allLibs.addAll(libs);
-        allLibs.add(QvtOperationalStdLibrary.INSTANCE.getStdLibModule());
-        
+                
+        List<Module> allLibs = getNativeLibraries(data);
         for (Module module : allLibs) {
         	for (EOperation nextLibOper : TypeUtil.getOperations(data.getEnvironment(), module)) {
         		if(data.getEnvironment().getUMLReflection().getOwningClassifier(nextLibOper) == module) {
@@ -264,6 +261,21 @@ public class CompletionProposalUtil {
         		}
 			}
 		}
+    }
+    
+    private static List<Module> getNativeLibraries(QvtCompletionData data) {
+    	List<Module> result = new LinkedList<Module>();
+    	for (Object sibling : data.getEnvironment().getSiblings()) {
+    		if(sibling instanceof QvtOperationalModuleEnv) {
+    			if(sibling instanceof QvtOperationalFileEnv) {
+    				// parsed concrete syntax from a file
+    				continue;
+    			}
+    			Module module = ((QvtOperationalModuleEnv)sibling).getModuleContextType();
+    			result.add(module);
+    		}
+		}    	    	
+    	return result;
     }
     
     public static final void addAllContextlessMappings(Collection<ICompletionProposal> proposals, QvtCompletionData data) {
