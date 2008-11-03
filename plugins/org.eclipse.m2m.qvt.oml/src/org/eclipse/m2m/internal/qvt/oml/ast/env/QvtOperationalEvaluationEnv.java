@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.modelparam.ResourceEObject;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.IntermediatePropertyModelAdapter;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.NumberConversions;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtChangeRecorder;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
@@ -692,7 +693,13 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		if (value == QvtOperationalUtil.getOclInvalid()) {
 			return null;
 		}
-		return value;
+		
+		if(expectedType != null) {
+			// perform the type conversion only the expected type is available 
+			return NumberConversions.convertNumber(value, expectedType);
+		}
+		
+		return null;
 	}
 
 	/**
