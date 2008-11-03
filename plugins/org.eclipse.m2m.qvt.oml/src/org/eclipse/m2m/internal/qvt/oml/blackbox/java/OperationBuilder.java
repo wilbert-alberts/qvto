@@ -13,6 +13,7 @@ package org.eclipse.m2m.internal.qvt.oml.blackbox.java;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 
 import org.eclipse.emf.common.util.BasicDiagnostic;
@@ -79,6 +80,9 @@ class OperationBuilder {
         
         operation.setName(name);
         operation.setEType(fTypeResolver.toEClassifier(resultType));
+        if(operation.getEType() == null) {
+        	reportError(NLS.bind(JavaBlackboxMessages.UnresolvedOclTypeForJavaType, method.getReturnType(), method), method);
+        }
         
         int i = 0;
         final QvtOperationalModuleEnv environment = fTypeResolver.getEnvironment();
@@ -129,6 +133,14 @@ class OperationBuilder {
 			environment.getTypeResolver().resolveAdditionalOperation(contextType, operation);			
 		}
 
+		if(isContextual && !Modifier.isStatic(method.getModifiers())) {
+			// FIXME - support non-static contextual operations, useful to access the library shared
+			// state, but currently the instance of the module associated with the 'self' contextual
+			// instance is not easy to retrieve =>
+			// For now, we pass null as the source object, and 'self' as the first argument
+			reportError(NLS.bind("Contextual operation must be defined ''static'', method=''{0}''", method), method);
+		}
+		
         return operation;
     }	
     

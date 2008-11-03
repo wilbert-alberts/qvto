@@ -14,7 +14,6 @@ package org.eclipse.m2m.internal.qvt.oml.blackbox.java;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -52,13 +51,14 @@ class Java2QVTTypeResolver {
 		EClassifier result = type2EClassifier(type);
 		if(result == null) {
 			if(type instanceof Class) {
-				EClassifier asEClassifier = asEClassifier((Class<?>) type);
-				EClassifier asOCLType = fEnv.getUMLReflection().asOCLType(asEClassifier);
-				if(asOCLType != asEClassifier) {
+				EClassifier eWrapper = asEClassifier((Class<?>) type);
+				EClassifier asOCLType = fEnv.getUMLReflection().asOCLType(eWrapper);
+				if(asOCLType != eWrapper) {
 					return asOCLType;
 				}
 			}
-			
+		} else {
+			return fEnv.getUMLReflection().asOCLType(result);
 		}
 		
 		return result;
@@ -85,16 +85,21 @@ class Java2QVTTypeResolver {
 		}
 
 		Type actualType = actualTypeArguments[0];
-		if(rawType == Set.class) {
-			return resolveCollectionType(CollectionKind.SET_LITERAL, actualType);			
+		if(rawType instanceof Class == false) {
+			return null;
 		}
-		else if(rawType == LinkedHashSet.class) {
+		
+		Class<?> rawClass = (Class<?>) rawType;		
+		if(rawClass == LinkedHashSet.class) {
 			return resolveCollectionType(CollectionKind.ORDERED_SET_LITERAL, actualType);			
 		}
-		else if(rawType == Bag.class) {
+		else if(Set.class.isAssignableFrom(rawClass)) {
+			return resolveCollectionType(CollectionKind.SET_LITERAL, actualType);			
+		}		
+		else if(rawClass == Bag.class) {
 			return resolveCollectionType(CollectionKind.BAG_LITERAL, actualType);
 		}
-		else if(rawType == ArrayList.class) {
+		else if(List.class.isAssignableFrom(rawClass)) {
 			return resolveCollectionType(CollectionKind.SEQUENCE_LITERAL, actualType);
 		}
 		else if(rawType == List.class) {
@@ -148,13 +153,13 @@ class Java2QVTTypeResolver {
 		else if(type == String.class) {
 			return stdLibrary.getString();
 		} 
-		else if(type == Boolean.class) {
+		else if(type == Boolean.class || type == boolean.class) {
 			return stdLibrary.getBoolean();
 		} 
-		else if(type == Integer.class) {
+		else if(type == Integer.class || type == int.class) {
 			return stdLibrary.getInteger();
 		} 
-		else if(type == Double.class) {
+		else if(type == Double.class || type == double.class) {
 			return stdLibrary.getReal();
 		}
 		else if(type == void.class) {

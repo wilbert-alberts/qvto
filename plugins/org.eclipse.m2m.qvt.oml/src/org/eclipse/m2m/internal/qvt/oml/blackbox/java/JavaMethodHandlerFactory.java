@@ -13,15 +13,16 @@ package org.eclipse.m2m.internal.qvt.oml.blackbox.java;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.NumberConversions;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandlerAdapter;
+import org.eclipse.m2m.qvt.oml.blackbox.java.Operation;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.osgi.util.NLS;
 
@@ -40,25 +41,30 @@ class JavaMethodHandlerFactory {
 			throw new IllegalArgumentException();
 		}
 		
-		return new Handler(method);
+		Operation opAnnotation = method.getAnnotation(Operation.class);		
+		return new Handler(method, opAnnotation != null && opAnnotation.contextual());
 	}
 	
 	private Object getInvalidResult() {
 		return fOclInvalid;
 	}
-	
+		
 	private class Handler implements CallHandler {
 				
-		private int fFatalErrorCount;
 		private Method fMethod;
+		private Class<?>[] fCachedParamTypes;
 		private Object[] fArgs;
 		private boolean fIsContextual;
+		private boolean fRequiresNumConversion;
+		private int fFatalErrorCount;		
 		
-		Handler(Method method) {
+		Handler(Method method, boolean isContextual) {
 			assert method != null;
 			
 			fMethod = method;
-			fIsContextual = Modifier.isStatic(method.getModifiers());
+			fCachedParamTypes = fMethod.getParameterTypes(); 			
+			fIsContextual = isContextual;
+			fRequiresNumConversion = requiresNumberConversion(); 
 			fFatalErrorCount = 0;
 		}		
 
@@ -126,6 +132,10 @@ class JavaMethodHandlerFactory {
 					// with the argument class incompatible to the method signature
 					nextArg = null;
 				}
+				// number have to converted as java binary compatible
+				if(fRequiresNumConversion) {
+					nextArg = NumberConversions.convertNumber(nextArg, fCachedParamTypes[destPos]);
+				}
 				fArgs[destPos++] = nextArg;
 			}
 			
@@ -136,6 +146,17 @@ class JavaMethodHandlerFactory {
 			if(fArgs != null) {
 				Arrays.fill(fArgs, null);
 			}
-		}	
+		}
+		
+		private boolean requiresNumberConversion() {
+			assert fMethod != null;
+			
+			for (Class<?> paramType : fMethod.getParameterTypes()) {
+				if(Number.class.isAssignableFrom(paramType)) {
+					return true;
+				}
+			}
+			return false;
+		}		
 	}	
 }
