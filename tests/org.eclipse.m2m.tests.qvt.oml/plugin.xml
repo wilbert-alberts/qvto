@@ -44,12 +44,17 @@
    
 	<extension point="org.eclipse.m2m.qvt.oml.javaBlackboxUnits">
    		<unit name="Foo" namespace="org.bar">
-    		<library name="FooJavaLib" class="org.eclipse.m2m.tests.qvt.oml.blackbox.AnnotatedJavaLibrary">
+    		<library name="FooJavaLib" class="org.eclipse.m2m.tests.qvt.oml.bbox.AnnotatedJavaLibrary">
 				<metamodel nsURI="http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml"/>	    		
     			<metamodel nsURI="http://www.eclipse.org/emf/2002/Ecore"/>
 				<metamodel nsURI="http://www.eclipse.org/qvt/1.0.0/Operational/Expressions"/>				
     		</library>
 		</unit>
+
+		<!-- Simple definition, with implicit unit -->
+    	<library class="org.eclipse.m2m.tests.qvt.oml.bbox.SimpleJavaLibrary"> 
+			<metamodel nsURI="http://www.eclipse.org/emf/2002/Ecore"/>
+    	</library>		
 	</extension>
 
 </plugin>

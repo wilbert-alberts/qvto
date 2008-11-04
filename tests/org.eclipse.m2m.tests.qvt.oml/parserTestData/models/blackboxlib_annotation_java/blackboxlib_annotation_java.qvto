@@ -1,4 +1,5 @@
 import library org.bar.Foo; 
+import library org.eclipse.m2m.tests.qvt.oml.bbox.SimpleJavaLibrary;
 
 modeltype TESTQVT "strict" uses testqvt('http://www.eclipse.org/m2m/qvt/oml/testqvt');  
 modeltype UML uses 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';
@@ -9,6 +10,9 @@ modeltype QVTO "strict" uses qvtoperational('http://www.eclipse.org/QVT/1.0.0/Op
 transformation blackboxlib_annotation_java(in source : ECORE, out target: ECORE);
 
 main() {
+	-- test the simplified definition
+	assert fatal (echoFromSimpleJavaLibrary('Hello') = 'Hello');
+
 	var r : Sequence(OclAny);
 	r := primitiveTypeArgumentsHelper('String', 10, 1.5, true);
 	checkPrimitiveTypeArgResult(r);
