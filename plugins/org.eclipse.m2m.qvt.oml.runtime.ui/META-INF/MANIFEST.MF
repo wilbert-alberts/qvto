@@ -23,3 +23,4 @@ Export-Package: org.eclipse.m2m.internal.qvt.oml.runtime.ui,
  org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.common,
  org.eclipse.m2m.qvt.oml.runtime.ui.wizards
 Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
