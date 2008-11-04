@@ -47,12 +47,13 @@ public class BlackboxRegistry {
 	}
 	
 	public AbstractCompilationUnitDescriptor getCompilationUnitDescriptor(String qualifiedName, ResolutionContext context) {
-		final List<AbstractCompilationUnitDescriptor> abstractCompilationUnitDescriptors = getCompilationUnitDescriptors(context);
-		for (AbstractCompilationUnitDescriptor abstractCompilationUnitDescriptor : abstractCompilationUnitDescriptors) {
-			if(abstractCompilationUnitDescriptor.getQualifiedName().equals(qualifiedName)) {
-				return abstractCompilationUnitDescriptor;
+		for (AbstractBlackboxProvider provider : fProviders) {
+			AbstractCompilationUnitDescriptor descriptor = provider.getModuleDescriptor(qualifiedName, context);
+			if(descriptor != null) {
+				return descriptor;
 			}
 		}
+		
 		return null;
 	}
 	

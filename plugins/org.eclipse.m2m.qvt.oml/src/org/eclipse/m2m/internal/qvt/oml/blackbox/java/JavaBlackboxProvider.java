@@ -155,58 +155,111 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
                 	Descriptor descriptor = createDescriptor(element);
                 	providers.put(descriptor.getQualifiedName(), descriptor);
                 } catch (CoreException e) {
-                	// TODO - better error handling
-                    QvtPlugin.log(e.getStatus());
+                	reportReadError(element, e);                    
                 }
             }
+            // process simple library definitions, not wrapped into a compilation but
+            // creating an implicit one
+            if (element.getName().equals(LIBRARY_ELEM)) {
+                try {
+                	Descriptor descriptor = createDescriptor(element);
+                	providers.put(descriptor.getQualifiedName(), descriptor);
+                } catch (CoreException e) {
+                    reportReadError(element, e);
+                }
+            }            
         }
 
         return providers;
     }
     
 	private Descriptor createDescriptor(IConfigurationElement configurationElement) throws CoreException {
-		String name = configurationElement.getAttribute(NAME_ATTR);
-		String namespace = configurationElement.getAttribute(NAMESPACE_ATTR);		
-		if(namespace == null) {
-			configurationElement.getContributor().getName();
+		if(UNIT_ELEM.equals(configurationElement.getName())) {
+			String name = configurationElement.getAttribute(NAME_ATTR);
+			String namespace = configurationElement.getAttribute(NAMESPACE_ATTR);		
+			if(namespace == null) {
+				configurationElement.getContributor().getName();
+			}
+			
+			String description = configurationElement.getAttribute(DESC_ATTR);		
+			String qualifiedName = namespace + CLASS_NAME_SEPARATOR + name;
+			return new Descriptor(configurationElement, qualifiedName, description);
+		} else if(LIBRARY_ELEM.equals(configurationElement.getName())) {
+			return new Descriptor(configurationElement);
 		}
 		
-		String description = configurationElement.getAttribute(DESC_ATTR);		
-		String qualifiedName = namespace + CLASS_NAME_SEPARATOR + name;
-		return new Descriptor(configurationElement, qualifiedName, description);
+		throw new CoreException(QvtPlugin.createErrorStatus(
+				"Unsupported configuration element " + configurationElement, null)); //$NON-NLS-1$		
 	}
     
+	private static void reportReadError(IConfigurationElement problemElement, CoreException e) {
+		QvtPlugin.logError("Failed to read java black-box definition: " + problemElement, e); //$NON-NLS-1$
+	}
+	
+	private String getSimpleNameFromJavaClass(String className) {
+		int lastSeparatorPos = className.lastIndexOf(CLASS_NAME_SEPARATOR);
+		if(lastSeparatorPos < 0) {
+			return className;
+		}
+
+		return className.substring(lastSeparatorPos + 1);
+	}
+	
+	private String getPackageNameFromJavaClass(String className) {
+		int lastSeparatorPos = className.lastIndexOf(CLASS_NAME_SEPARATOR);
+		if(lastSeparatorPos < 0) {
+			return null;
+		}
+
+		return className.substring(0, lastSeparatorPos);
+	}
+	
+	private String deriveQualifiedNameFromSimpleDefinition(IConfigurationElement moduleElement) {
+		String className = moduleElement.getAttribute(CLASS_ATTR);		
+		String name = moduleElement.getAttribute(NAME_ATTR);				
+		if(name == null) {
+			return className;
+		}
+		// name overriden in descriptor
+		String packageName = getPackageNameFromJavaClass(className);
+		if(packageName == null) {
+			return name; // default package
+		}
+		return packageName + CLASS_NAME_SEPARATOR + name;
+	}	
 	
 	private class Descriptor extends AbstractCompilationUnitDescriptor {		
-		private List<ModuleHandle> modules;		
+		private List<ModuleHandle> modules = Collections.emptyList();		
 
+		Descriptor(IConfigurationElement moduleElement) {			
+			super(JavaBlackboxProvider.this, deriveQualifiedNameFromSimpleDefinition(moduleElement));
+			addModuleHandle(moduleElement);
+		}
+		
 		Descriptor(IConfigurationElement configurationElement, String unitQualifiedName, String description) {
 			super(JavaBlackboxProvider.this, unitQualifiedName);
 			
 			IConfigurationElement[] libraries = configurationElement.getChildren(LIBRARY_ELEM);
-			modules = new ArrayList<ModuleHandle>(libraries.length);
-
 			for (IConfigurationElement moduleElement : libraries) {
-				String bundleId = moduleElement.getContributor().getName();
-				String className = moduleElement.getAttribute(CLASS_ATTR);
-				String moduleName = moduleElement.getAttribute(NAME_ATTR);
-				if(moduleName == null) {
-					// derive the name from the java class name
-					className = getSimpleNameFromJavaClass(className);
-				}
-				
-				modules.add(new ModuleHandle(bundleId, className, moduleName, readUsedPackagesNsURIs(moduleElement)));
+				addModuleHandle(moduleElement);
 			}
 		}
-
-		private String getSimpleNameFromJavaClass(String className) {
-			int lastSeparatorPos = className.lastIndexOf(CLASS_NAME_SEPARATOR);
-			if(lastSeparatorPos < 0) {
-				return className;
+		private void addModuleHandle(IConfigurationElement moduleElement) {
+			if(modules.isEmpty()) {
+				modules = new LinkedList<ModuleHandle>();
 			}
-
-			return className.substring(lastSeparatorPos);
-		}
+			
+			String bundleId = moduleElement.getContributor().getName();
+			String className = moduleElement.getAttribute(CLASS_ATTR);
+			String moduleName = moduleElement.getAttribute(NAME_ATTR);
+			if(moduleName == null) {
+				// derive the name from the java class name
+				moduleName = getSimpleNameFromJavaClass(className);
+			}
+			
+			ModuleHandle moduleHandle = new ModuleHandle(bundleId, className, moduleName, readUsedPackagesNsURIs(moduleElement));
+			modules.add(moduleHandle);
+		}		
 	}
 	
 	private List<String> readUsedPackagesNsURIs(IConfigurationElement moduleConfigElement) {

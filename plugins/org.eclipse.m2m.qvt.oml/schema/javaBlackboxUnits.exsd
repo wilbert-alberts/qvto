@@ -24,6 +24,7 @@ See the details on the Java implementation class format at &lt;a href=&quot;../b
          <sequence>
             <choice minOccurs="1" maxOccurs="unbounded">
                <element ref="unit"/>
+               <element ref="library"/>
             </choice>
          </sequence>
          <attribute name="point" type="string" use="required">
@@ -94,7 +95,9 @@ Along with the &lt;b&gt;name&lt;/b&gt;, it composes the qualified name of the un
    <element name="library">
       <annotation>
          <documentation>
-            Library module which defines its operations in the associated implementation class
+            A library module which defines its operations in the associated implementation class and is defined in a deployment unit.&lt;br/&gt;
+In order to facilitate the common case of a single library per unit, a simplified definition is supported to help in reducing verbosity. In this case no explicit owning unit needs to be defined and the library element can be defined as standalone.
+Corresponding implicit unit is synthesized based on the implementation class and inherits its qualified name.
          </documentation>
       </annotation>
       <complexType>
