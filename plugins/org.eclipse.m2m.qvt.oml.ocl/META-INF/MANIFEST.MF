@@ -13,3 +13,4 @@ Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.m2m.internal.qvt.oml.ocl,
  org.eclipse.m2m.internal.qvt.oml.ocl.metainfo,
  org.eclipse.m2m.internal.qvt.oml.ocl.transformations
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
