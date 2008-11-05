@@ -1,0 +1,28 @@
+1) String literal "" should be supported (currently only '' is allowed)
+
+2) self.attribute->object(a) Column {…}" as a shorthand for "self. attribute->xcollect(a| object Column {…})
+	is not supported
+
+3) Mapping post-conditions should be a list of expressions (not a single one) when {self.kind = 'persistent' /*;*/}
+
+4) Meta-model definition embedded in a compilation unit is not supported
+
+5) No implicit meta-model resolution by name, explicit modeltype definition is required
+
+6) Intermediate classes are not supported 
+
+7) isKindOf(), etc. aliases not supported, migrated to oclIsKindOf()
+
+8) The 'Encapsulation' example has been adjusted to oeg.uml2 metamodel
+	to leverage existing models as input
+
+9) merge, inherits do not support referencing by local name (qualified only)
+
+10) Composite assignments are not supported
+constraint := {
+	self.constraint[isStereotypedBy("precondition")]->map createPrecondition();
+	self.constraint[isStereotypedBy("goal")]->map createGoal();
+};
+
+11) supplier->resolveone(WorkDefinition) not supported, migrated as 
+	supplier.resolveone(WorkDefinition)
