@@ -18,6 +18,8 @@ public class JavaBlackboxMessages extends NLS {
 
 	public static String ModuleJavaClassNotFound;
 
+	public static String UnitAlreadyRegisteredContributionIgnored;
+
 	public static String UnresolvedMetamodelURI;
 
 	public static String UnresolvedOclTypeForJavaType;
