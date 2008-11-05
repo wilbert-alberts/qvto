@@ -86,7 +86,7 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 		BasicDiagnostic errors = null;
 		List<QvtOperationalModuleEnv> loadedModules = new LinkedList<QvtOperationalModuleEnv>();
 		
-		for (ModuleHandle nextModuleHandle : libDescriptor.modules) {
+		for (ModuleHandle nextModuleHandle : libDescriptor.fModules) {
 			Diagnostic diagnostic = javaModuleLoader.loadModule(nextModuleHandle);
 			
 			if(DiagnosticUtil.isSuccess(diagnostic)) {
@@ -150,29 +150,23 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
         		.getConfigurationElementsFor(QvtPlugin.ID, EXTENSION_POINT);
 
         for (IConfigurationElement element : configs) {
-            if (element.getName().equals(UNIT_ELEM)) {
-                try {
-                	Descriptor descriptor = createDescriptor(element);
-                	providers.put(descriptor.getQualifiedName(), descriptor);
-                } catch (CoreException e) {
-                	reportReadError(element, e);                    
-                }
+            try {
+            	Descriptor descriptor = createDescriptor(element);
+        		String id = descriptor.getQualifiedName();            	
+            	if(!providers.containsKey(id)) {
+					providers.put(id, descriptor);
+            	} else {
+            		String message = NLS.bind(JavaBlackboxMessages.UnitAlreadyRegisteredContributionIgnored, id, descriptor.getContributorId());
+					QvtPlugin.logError(message, null);
+            	}
+            } catch (CoreException e) {
+            	reportReadError(element, e);                    
             }
-            // process simple library definitions, not wrapped into a compilation but
-            // creating an implicit one
-            if (element.getName().equals(LIBRARY_ELEM)) {
-                try {
-                	Descriptor descriptor = createDescriptor(element);
-                	providers.put(descriptor.getQualifiedName(), descriptor);
-                } catch (CoreException e) {
-                    reportReadError(element, e);
-                }
-            }            
         }
 
         return providers;
     }
-    
+        
 	private Descriptor createDescriptor(IConfigurationElement configurationElement) throws CoreException {
 		if(UNIT_ELEM.equals(configurationElement.getName())) {
 			String name = configurationElement.getAttribute(NAME_ATTR);
@@ -229,11 +223,17 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 	}	
 	
 	private class Descriptor extends AbstractCompilationUnitDescriptor {		
-		private List<ModuleHandle> modules = Collections.emptyList();		
+		private List<ModuleHandle> fModules = Collections.emptyList();
+		private String fContributingBundleId; 
 
 		Descriptor(IConfigurationElement moduleElement) {			
 			super(JavaBlackboxProvider.this, deriveQualifiedNameFromSimpleDefinition(moduleElement));
-			addModuleHandle(moduleElement);
+			fContributingBundleId = moduleElement.getContributor().getName();
+			addModuleHandle(moduleElement);			
+		}
+		
+		String getContributorId() {
+			return fContributingBundleId;
 		}
 		
 		Descriptor(IConfigurationElement configurationElement, String unitQualifiedName, String description) {
@@ -245,8 +245,8 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 			}
 		}
 		private void addModuleHandle(IConfigurationElement moduleElement) {
-			if(modules.isEmpty()) {
-				modules = new LinkedList<ModuleHandle>();
+			if(fModules.isEmpty()) {
+				fModules = new LinkedList<ModuleHandle>();
 			}
 			
 			String bundleId = moduleElement.getContributor().getName();
@@ -258,7 +258,7 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 			}
 			
 			ModuleHandle moduleHandle = new ModuleHandle(bundleId, className, moduleName, readUsedPackagesNsURIs(moduleElement));
-			modules.add(moduleHandle);
+			fModules.add(moduleHandle);
 		}		
 	}
 	
