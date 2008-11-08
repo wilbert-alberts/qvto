@@ -54,7 +54,7 @@ public abstract class AbstractLateResolveTask implements Runnable, SavedSourceOb
 
         try {
             AssignExp assignExp = QvtResolveUtil.getDeferredAssignmentFor(myResolveExp);
-            if(assignExp != null) {
+            if(assignExp != null && myLvalue != null) {
             	myEvalEnv.callSetter(myLvalue.getEObject(), myLvalue.getEStructuralFeature(), 
             			resolveResult, QvtOperationalUtil.isUndefined(resolveResult), assignExp.isIsReset());
             	
