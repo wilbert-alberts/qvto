@@ -30,6 +30,9 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalU
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionProposal;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformationRegistry;
+import org.eclipse.m2m.qvt.oml.blackbox.AbstractCompilationUnitDescriptor;
+import org.eclipse.m2m.qvt.oml.blackbox.BlackboxRegistry;
+import org.eclipse.m2m.qvt.oml.blackbox.ResolutionContextImpl;
 
 /**
  * @author aigdalov
@@ -48,6 +51,13 @@ public class ImportModuleCollector extends AbstractCollector {
             QvtCompletionData data) {
         addLocalModulesProposals(proposals, data);
         addDeployedModulesProposals(proposals, data);
+        final ResolutionContextImpl loadContext = new ResolutionContextImpl(data.getCFile());
+        for (AbstractCompilationUnitDescriptor abstractCompilationUnitDescriptor : BlackboxRegistry.INSTANCE.getCompilationUnitDescriptors(loadContext)) {
+            String proposalString = abstractCompilationUnitDescriptor.getQualifiedName();
+            QvtCompletionProposal info = CompletionProposalUtil.createCompletionProposal(proposalString, CategoryImageConstants.MAPPING, data);
+            CompletionProposalUtil.addProposalIfNecessary(proposals, info, data);        	
+		}        
+        
     }
 
     private void addLocalModulesProposals(
