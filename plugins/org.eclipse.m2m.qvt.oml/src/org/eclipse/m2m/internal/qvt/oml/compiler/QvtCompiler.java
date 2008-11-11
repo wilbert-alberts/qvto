@@ -30,6 +30,7 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -53,6 +54,8 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.qvt.oml.blackbox.LoadContext;
+import org.eclipse.m2m.qvt.oml.blackbox.ResolutionContextImpl;
 import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.osgi.util.NLS;
 
@@ -67,6 +70,7 @@ public class QvtCompiler {
 
     private final Map<CFile, ParsedModuleCS> mySyntaxModules;
     private final Map<ParsedModuleCS, QvtCompilationResult> myCompilationResults;
+    private final BlackboxModuleHelper myModuleProvider;
     private ImportCompiler importCompiler;
     
     private final QvtCompilerKernel myKernel;
@@ -102,6 +106,8 @@ public class QvtCompiler {
     public QvtCompiler(IImportResolver importResolver, IMetamodelRegistryProvider metamodelRegistryProvider) {
 	    mySyntaxModules = new LinkedHashMap<CFile, ParsedModuleCS>();
 	    myCompilationResults = new IdentityHashMap<ParsedModuleCS, QvtCompilationResult>();
+	    myModuleProvider = new BlackboxModuleHelper();
+	    
         myKernel = new QvtCompilerKernel(importResolver, metamodelRegistryProvider);
         this.resourceSet = (metamodelRegistryProvider instanceof WorkspaceMetamodelRegistryProvider) ?
         		((WorkspaceMetamodelRegistryProvider) metamodelRegistryProvider).getResolutionResourceSet() : 
@@ -224,7 +230,7 @@ public class QvtCompiler {
         assert result != null;
         
         mySyntaxModules.put(source, result);
-    	parseImportedModules(result);
+    	parseImportedModules(source, result);
 
         return result;
     }
@@ -250,7 +256,11 @@ public class QvtCompiler {
         }
     }
     
-    private void parseImportedModules(ParsedModuleCS module) {
+    private void parseImportedModules(CFile importedFrom, ParsedModuleCS module) {
+    	myModuleProvider.setContext(
+    			new ResolutionContextImpl(importedFrom),
+    			new LoadContext(module.getEnvironment().getEPackageRegistry()));
+    	
     	Set<String> importedModules = new HashSet<String>();
     	for (ImportCS importCS : module.getModuleCS().getImports()) {
 			if (importCS instanceof LibraryImportCS) {
@@ -258,7 +268,8 @@ public class QvtCompiler {
 			}
 			PathNameCS importQName = importCS.getPathNameCS();
             if (importQName == null) {
-                module.getEnvironment().reportError(CompilerMessages.emptyImport, 0, 0);
+            	// FIXME - should be removed? should there be a syntax problem reported instead
+                module.getEnvironment().reportError(CompilerMessages.emptyImport, importCS);
                 continue;
             }
 
@@ -268,20 +279,24 @@ public class QvtCompiler {
         				importString), importQName);
         	} else {
             	ParsedModuleCS impResult = getImportedModule(module.getSource(), importString);
-                if (impResult == null) {
-                	module.getEnvironment().reportError(NLS.bind(CompilerMessages.importedModuleNotFound,
-                			importString), importQName);
-                } else {                	
-//                	if (importCS instanceof ModuleImportCS) {
-//                		((ModuleImportCS) importCS).setParsedModule(impResult);
-//                	}
+                if (impResult != null) {
                     module.addParsedImport(impResult, importQName);
-                    importedModules.add(importString);
+                } else {
+                	EList<String> unitQName = importQName.getSequenceOfNames();
+                	if(myModuleProvider.notFound(unitQName)) {
+                    	// check, it can't be resolved as a black-box unit                		
+                		module.getEnvironment().reportError(NLS.bind(CompilerMessages.importedModuleNotFound, importString), importQName);
+                	}
                 }
+                importedModules.add(importString);
         	}
         }    	
     }    
 
+    public BlackboxModuleHelper getBlackboxUnitHelper() {
+    	return myModuleProvider;
+    }
+    
     public QvtCompilationResult analyse(final ParsedModuleCS mma, QvtCompilerOptions options) {
         QvtCompilationResult result = myCompilationResults.get(mma);
         if (result != null && result.getModule() != null) {

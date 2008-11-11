@@ -122,8 +122,12 @@ public class QvtOperationalParserUtil {
 	}
 	
 	public static String getStringRepresentation(PathNameCS pathName, String pathSeparator) {
+		return getStringRepresentation(pathName.getSequenceOfNames(), pathSeparator);
+	}
+	
+	public static String getStringRepresentation(List<String> pathName, String pathSeparator) {
 		StringBuffer buffer = null;
-		for (Iterator<String> it = pathName.getSequenceOfNames().iterator(); it.hasNext();) {
+		for (Iterator<String> it = pathName.iterator(); it.hasNext();) {
 			String element = it.next();
 			if (buffer != null) {
 				buffer.append(pathSeparator);
@@ -133,7 +137,7 @@ public class QvtOperationalParserUtil {
 			buffer.append(element);
 		}
 		return buffer == null ? "" : buffer.toString(); //$NON-NLS-1$
-	}
+	}	
 
 	public static String getStringRepresentation(ScopedNameCS scopedNameCS) {
 		StringBuilder buf = new StringBuilder();

@@ -1721,7 +1721,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         
 	@Override
 	protected OCLExpression<EClassifier> getOperationBody(EOperation operation) {
-		if(OCLAnnotationSupport.isDynamicClassOperation(operation)) {			
+		if(operation != null && OCLAnnotationSupport.isDynamicClassOperation(operation)) {			
 			return getOCLAnnotationSupport().getBody(operation);
 		}
 		
