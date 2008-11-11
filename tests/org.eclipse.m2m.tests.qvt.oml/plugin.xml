@@ -54,7 +54,10 @@
 		<!-- Simple definition, with implicit unit -->
     	<library class="org.eclipse.m2m.tests.qvt.oml.bbox.SimpleJavaLibrary"> 
 			<metamodel nsURI="http://www.eclipse.org/emf/2002/Ecore"/>
-    	</library>		
+    	</library>
+    	
+    	<library class="org.eclipse.m2m.tests.qvt.oml.bbox.InvalidLibrary"/> 
+    	
 	</extension>
 
 </plugin>
