@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ExpressionsPackage.java,v 1.10 2008/10/14 11:46:49 radvorak Exp $
+ * $Id: ExpressionsPackage.java,v 1.11 2008/11/11 14:05:50 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
@@ -4584,22 +4584,13 @@ public interface ExpressionsPackage extends EPackage {
 	int MODEL_TYPE__END_POSITION = EcorePackage.ECLASS_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Metamodel</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODEL_TYPE__METAMODEL = EcorePackage.ECLASS_FEATURE_COUNT + 2;
-
-	/**
 	 * The feature id for the '<em><b>Additional Condition</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_TYPE__ADDITIONAL_CONDITION = EcorePackage.ECLASS_FEATURE_COUNT + 3;
+	int MODEL_TYPE__ADDITIONAL_CONDITION = EcorePackage.ECLASS_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Conformance Kind</b></em>' attribute.
@@ -4608,7 +4599,16 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_TYPE__CONFORMANCE_KIND = EcorePackage.ECLASS_FEATURE_COUNT + 4;
+	int MODEL_TYPE__CONFORMANCE_KIND = EcorePackage.ECLASS_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Metamodel</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_TYPE__METAMODEL = EcorePackage.ECLASS_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Model Type</em>' class.
@@ -6948,10 +6948,10 @@ public interface ExpressionsPackage extends EPackage {
 	EClass getModelType();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ModelType#getMetamodel <em>Metamodel</em>}'.
+	 * Returns the meta object for the reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ModelType#getMetamodel <em>Metamodel</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Metamodel</em>'.
+	 * @return the meta object for the reference list '<em>Metamodel</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ModelType#getMetamodel()
 	 * @see #getModelType()
 	 * @generated
@@ -8074,7 +8074,7 @@ public interface ExpressionsPackage extends EPackage {
 		EClass MODEL_TYPE = eINSTANCE.getModelType();
 
 		/**
-		 * The meta object literal for the '<em><b>Metamodel</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Metamodel</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

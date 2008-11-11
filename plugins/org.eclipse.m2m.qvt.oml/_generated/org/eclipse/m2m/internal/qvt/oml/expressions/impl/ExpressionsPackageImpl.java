@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ExpressionsPackageImpl.java,v 1.12 2008/10/31 00:02:49 radvorak Exp $
+ * $Id: ExpressionsPackageImpl.java,v 1.13 2008/11/11 14:05:50 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -1306,7 +1306,7 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 	 * @generated
 	 */
 	public EReference getModelType_Metamodel() {
-		return (EReference)modelTypeEClass.getEStructuralFeatures().get(0);
+		return (EReference)modelTypeEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -1315,7 +1315,7 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 	 * @generated
 	 */
 	public EReference getModelType_AdditionalCondition() {
-		return (EReference)modelTypeEClass.getEStructuralFeatures().get(1);
+		return (EReference)modelTypeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1324,7 +1324,7 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 	 * @generated
 	 */
 	public EAttribute getModelType_ConformanceKind() {
-		return (EAttribute)modelTypeEClass.getEStructuralFeatures().get(2);
+		return (EAttribute)modelTypeEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1727,9 +1727,9 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		createEReference(resolveInExpEClass, RESOLVE_IN_EXP__IN_MAPPINGS);
 
 		modelTypeEClass = createEClass(MODEL_TYPE);
-		createEReference(modelTypeEClass, MODEL_TYPE__METAMODEL);
 		createEReference(modelTypeEClass, MODEL_TYPE__ADDITIONAL_CONDITION);
 		createEAttribute(modelTypeEClass, MODEL_TYPE__CONFORMANCE_KIND);
+		createEReference(modelTypeEClass, MODEL_TYPE__METAMODEL);
 
 		packageRefEClass = createEClass(PACKAGE_REF);
 		createEAttribute(packageRefEClass, PACKAGE_REF__URI);
@@ -3024,12 +3024,12 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		initEOperation(op, g1);
 
 		initEClass(modelTypeEClass, ModelType.class, "ModelType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getModelType_Metamodel(), this.getPackageRef(), null, "metamodel", null, 1, -1, ModelType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(theExpressionsPackage_1.getOCLExpression());
 		g2 = createEGenericType(theEcorePackage_1.getEClassifier());
 		g1.getETypeArguments().add(g2);
 		initEReference(getModelType_AdditionalCondition(), g1, null, "additionalCondition", null, 0, -1, ModelType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getModelType_ConformanceKind(), theEcorePackage_1.getEString(), "conformanceKind", null, 0, 1, ModelType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getModelType_Metamodel(), theEcorePackage_1.getEPackage(), null, "metamodel", null, 1, -1, ModelType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		op = addEOperation(modelTypeEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "T"); //$NON-NLS-1$

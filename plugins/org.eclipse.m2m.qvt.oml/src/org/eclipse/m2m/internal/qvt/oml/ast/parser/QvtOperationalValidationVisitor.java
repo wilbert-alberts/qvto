@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
@@ -39,7 +40,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.PackageRef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
@@ -177,25 +177,25 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 	}
 
 	private boolean checkCompatibleModelType(ModelType modelType1, ModelType modelType2) {
-		EList<PackageRef> metamodel1 = modelType1.getMetamodel();
-		EList<PackageRef> metamodel2 = modelType2.getMetamodel();
+		EList<EPackage> metamodel1 = modelType1.getMetamodel();
+		EList<EPackage> metamodel2 = modelType2.getMetamodel();
 		if(metamodel1.size() < metamodel2.size()) {
 			return false;
 		}		
 
 		LinkedList<String> uris1 = new LinkedList<String>();
-		for (PackageRef pRef : metamodel1) {
-			if(pRef.getUri() != null) {
-				uris1.add(pRef.getUri());
+		for (EPackage ePackage : metamodel1) {
+			if(ePackage.getNsURI() != null) {
+				uris1.add(ePackage.getNsURI());
 			} else {
 				return false;
 			}
 		};
 		
 		LinkedList<String> uris2 = new LinkedList<String>();
-		for (PackageRef pRef : metamodel1) {
-			if(pRef.getUri() != null) {
-				uris2.add(pRef.getUri());
+		for (EPackage ePackage : metamodel1) {
+			if(ePackage.getNsURI() != null) {
+				uris2.add(ePackage.getNsURI());
 			} else {
 				return false;
 			}

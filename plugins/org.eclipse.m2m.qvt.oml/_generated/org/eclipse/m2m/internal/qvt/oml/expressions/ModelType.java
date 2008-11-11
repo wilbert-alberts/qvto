@@ -9,13 +9,14 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ModelType.java,v 1.2 2008/10/31 00:02:46 radvorak Exp $
+ * $Id: ModelType.java,v 1.3 2008/11/11 14:05:50 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.utilities.Visitor;
 
@@ -27,9 +28,9 @@ import org.eclipse.ocl.utilities.Visitor;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ModelType#getMetamodel <em>Metamodel</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ModelType#getAdditionalCondition <em>Additional Condition</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ModelType#getConformanceKind <em>Conformance Kind</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ModelType#getMetamodel <em>Metamodel</em>}</li>
  * </ul>
  * </p>
  *
@@ -46,20 +47,20 @@ public interface ModelType extends EClass, VisitableASTNode {
 	String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
 	/**
-	 * Returns the value of the '<em><b>Metamodel</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.expressions.PackageRef}.
+	 * Returns the value of the '<em><b>Metamodel</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.emf.ecore.EPackage}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Metamodel</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Metamodel</em>' containment reference list.
+	 * @return the value of the '<em>Metamodel</em>' reference list.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getModelType_Metamodel()
-	 * @model containment="true" required="true"
+	 * @model required="true"
 	 * @generated
 	 */
-	EList<PackageRef> getMetamodel();
+	EList<EPackage> getMetamodel();
 
 	/**
 	 * Returns the value of the '<em><b>Additional Condition</b></em>' containment reference list.

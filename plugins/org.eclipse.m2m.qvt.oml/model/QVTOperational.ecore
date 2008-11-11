@@ -1048,8 +1048,6 @@
           <eGenericType eTypeParameter="#//expressions/ModelType/accept/U"/>
         </eParameters>
       </eOperations>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="metamodel" lowerBound="1"
-          upperBound="-1" eType="#//expressions/PackageRef" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="additionalCondition"
           upperBound="-1" containment="true">
         <eGenericType eClassifier="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCL.ecore#//expressions/OCLExpression">
@@ -1057,6 +1055,8 @@
         </eGenericType>
       </eStructuralFeatures>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="conformanceKind" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="metamodel" lowerBound="1"
+          upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="PackageRef" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCL.ecore#//utilities/ASTNode">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="uri" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>

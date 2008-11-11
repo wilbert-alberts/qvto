@@ -16,7 +16,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
@@ -48,10 +47,8 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
-import org.eclipse.m2m.internal.qvt.oml.expressions.PackageRef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
@@ -502,24 +499,6 @@ public class QvtOperationalParserUtil {
 		}
 
 		return null;
-	}
-
-	public static PackageRef[] getRequiredMetamodelIds(Module module) {
-		class Traverser {
-			void getMetamodelIds(Module module, Set<PackageRef> ids) {
-				for (ModelType modelType : module.getUsedModelType()) {
-					ids.addAll(modelType.getMetamodel());
-				}
-
-				for (ModuleImport importedModule : module.getModuleImport()) {
-					getMetamodelIds(importedModule.getImportedModule(), ids);
-				}
-			}
-		}
-
-		final Set<PackageRef> ids = new LinkedHashSet<PackageRef>();
-		new Traverser().getMetamodelIds(module, ids);
-		return ids.toArray(new PackageRef[ids.size()]);
 	}
 
 	public static boolean isOverloadableMapping(final EOperation op, final QvtOperationalEnv env) {

@@ -126,7 +126,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.PackageRef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
@@ -1385,10 +1384,17 @@ public class QvtOperationalVisitorCS
 			}
 			module.getUsedModelType().add(modelType);
 			if (modelType.getName().length() > 0) {
-				env.registerModelType(modelType, true);
+				ModelType existingModelType = env.getModelType(Collections.singletonList(modelType.getName()));
+				if(existingModelType == null) {
+					env.registerModelType(modelType);
+				} else {
+					env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_modeltypeAlreadyDefined,
+								new Object[] { modelType.getName() }),
+								modelTypeCS.getIdentifierCS());
+				}
 			}
 			else {
-				env.registerModelType(modelType, false);
+				env.registerModelType(modelType);
 				env.reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_modeltypeDeprecatedSyntax, new Object[] { }),
 						modelTypeCS);
 			}
@@ -1728,15 +1734,11 @@ public class QvtOperationalVisitorCS
 		
 		for (int i = 0, n = modelTypeCS.getPackageRefs().size(); i < n; ++i) {
 			PackageRefCS packageRefCS = modelTypeCS.getPackageRefs().get(i);
-			PackageRef packageRef = ExpressionsFactory.eINSTANCE.createPackageRef();
-			packageRef.setStartPosition(packageRefCS.getStartOffset());
-			packageRef.setEndPosition(packageRefCS.getEndOffset());
 
 			EPackage resolvedMetamodel = null;
 
 			if (packageRefCS.getUriCS() != null) {
 				String metamodelUri = visitLiteralExpCS(packageRefCS.getUriCS(), env);
-				packageRef.setUri(metamodelUri);
 				resolvedMetamodel = resolveMetamodel(env, metamodelUri, Collections.<String>emptyList(), packageRefCS.getUriCS(), resolutionRS);
 			}
 			
@@ -1744,7 +1746,6 @@ public class QvtOperationalVisitorCS
 			if (pathNameCS != null && !pathNameCS.getSequenceOfNames().isEmpty()) {
 				String metamodelName = QvtOperationalParserUtil.getStringRepresentation(
 						pathNameCS, QvtOperationalTypesUtil.TYPE_NAME_SEPARATOR); 
-				packageRef.setName(metamodelName);
 
 				if (resolvedMetamodel == null) {
 					resolvedMetamodel = resolveMetamodel(env, null, pathNameCS.getSequenceOfNames(), pathNameCS, resolutionRS);
@@ -1756,7 +1757,7 @@ public class QvtOperationalVisitorCS
 			
 			if (resolvedMetamodel != null) {
 				validateMetamodel(env, resolvedMetamodel, modelType, module, packageRefCS);				
-				modelType.getMetamodel().add(packageRef);
+				modelType.getMetamodel().add(resolvedMetamodel);
 				
 				for (++i; i < n; ++i) {
 					packageRefCS = modelTypeCS.getPackageRefs().get(i);

@@ -394,19 +394,10 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	/**
 	 * Register given modeltype in the Environment. Modeltype's registry is used in
 	 * override {@link #lookupPackage(List)} and {@link #lookupClassifier(List)}
-	 *  
+	 * @return the previously registered model-type if any, otherwise <code>null</code>
 	 */
-	public void registerModelType(ModelType modelType, boolean isCheckDuplicates) {
-		if (myModelTypeRegistry.containsKey(modelType.getName())) {
-			if (isCheckDuplicates) {
-				reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_modeltypeAlreadyDefined,
-						new Object[] { modelType.getName() }),
-						modelType.getStartPosition(), modelType.getEndPosition());
-			}
-		}
-		else {
-			myModelTypeRegistry.put(modelType.getName(), modelType);
-		}
+	public ModelType registerModelType(ModelType modelType) {
+		return myModelTypeRegistry.put(modelType.getName(), modelType);
 	}
 
 	public ModelType getModelType(List<String> path) {

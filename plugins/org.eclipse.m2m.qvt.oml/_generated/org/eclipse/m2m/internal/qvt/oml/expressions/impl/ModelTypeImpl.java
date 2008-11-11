@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ModelTypeImpl.java,v 1.2 2008/10/31 00:02:48 radvorak Exp $
+ * $Id: ModelTypeImpl.java,v 1.3 2008/11/11 14:05:50 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -20,10 +20,12 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EClassImpl;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
@@ -45,9 +47,9 @@ import org.eclipse.ocl.utilities.Visitor;
  * <ul>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModelTypeImpl#getStartPosition <em>Start Position</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModelTypeImpl#getEndPosition <em>End Position</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModelTypeImpl#getMetamodel <em>Metamodel</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModelTypeImpl#getAdditionalCondition <em>Additional Condition</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModelTypeImpl#getConformanceKind <em>Conformance Kind</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModelTypeImpl#getMetamodel <em>Metamodel</em>}</li>
  * </ul>
  * </p>
  *
@@ -102,16 +104,6 @@ public class ModelTypeImpl extends EClassImpl implements ModelType {
 	protected int endPosition = END_POSITION_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getMetamodel() <em>Metamodel</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getMetamodel()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<PackageRef> metamodel;
-
-	/**
 	 * The cached value of the '{@link #getAdditionalCondition() <em>Additional Condition</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -140,6 +132,16 @@ public class ModelTypeImpl extends EClassImpl implements ModelType {
 	 * @ordered
 	 */
 	protected String conformanceKind = CONFORMANCE_KIND_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getMetamodel() <em>Metamodel</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMetamodel()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<EPackage> metamodel;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -207,9 +209,9 @@ public class ModelTypeImpl extends EClassImpl implements ModelType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<PackageRef> getMetamodel() {
+	public EList<EPackage> getMetamodel() {
 		if (metamodel == null) {
-			metamodel = new EObjectContainmentEList<PackageRef>(PackageRef.class, this, ExpressionsPackage.MODEL_TYPE__METAMODEL);
+			metamodel = new EObjectResolvingEList<EPackage>(EPackage.class, this, ExpressionsPackage.MODEL_TYPE__METAMODEL);
 		}
 		return metamodel;
 	}
@@ -269,8 +271,6 @@ public class ModelTypeImpl extends EClassImpl implements ModelType {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ExpressionsPackage.MODEL_TYPE__METAMODEL:
-				return ((InternalEList<?>)getMetamodel()).basicRemove(otherEnd, msgs);
 			case ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION:
 				return ((InternalEList<?>)getAdditionalCondition()).basicRemove(otherEnd, msgs);
 		}
@@ -289,12 +289,12 @@ public class ModelTypeImpl extends EClassImpl implements ModelType {
 				return new Integer(getStartPosition());
 			case ExpressionsPackage.MODEL_TYPE__END_POSITION:
 				return new Integer(getEndPosition());
-			case ExpressionsPackage.MODEL_TYPE__METAMODEL:
-				return getMetamodel();
 			case ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION:
 				return getAdditionalCondition();
 			case ExpressionsPackage.MODEL_TYPE__CONFORMANCE_KIND:
 				return getConformanceKind();
+			case ExpressionsPackage.MODEL_TYPE__METAMODEL:
+				return getMetamodel();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -314,16 +314,16 @@ public class ModelTypeImpl extends EClassImpl implements ModelType {
 			case ExpressionsPackage.MODEL_TYPE__END_POSITION:
 				setEndPosition(((Integer)newValue).intValue());
 				return;
-			case ExpressionsPackage.MODEL_TYPE__METAMODEL:
-				getMetamodel().clear();
-				getMetamodel().addAll((Collection<? extends PackageRef>)newValue);
-				return;
 			case ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION:
 				getAdditionalCondition().clear();
 				getAdditionalCondition().addAll((Collection<? extends OCLExpression<EClassifier>>)newValue);
 				return;
 			case ExpressionsPackage.MODEL_TYPE__CONFORMANCE_KIND:
 				setConformanceKind((String)newValue);
+				return;
+			case ExpressionsPackage.MODEL_TYPE__METAMODEL:
+				getMetamodel().clear();
+				getMetamodel().addAll((Collection<? extends EPackage>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -343,14 +343,14 @@ public class ModelTypeImpl extends EClassImpl implements ModelType {
 			case ExpressionsPackage.MODEL_TYPE__END_POSITION:
 				setEndPosition(END_POSITION_EDEFAULT);
 				return;
-			case ExpressionsPackage.MODEL_TYPE__METAMODEL:
-				getMetamodel().clear();
-				return;
 			case ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION:
 				getAdditionalCondition().clear();
 				return;
 			case ExpressionsPackage.MODEL_TYPE__CONFORMANCE_KIND:
 				setConformanceKind(CONFORMANCE_KIND_EDEFAULT);
+				return;
+			case ExpressionsPackage.MODEL_TYPE__METAMODEL:
+				getMetamodel().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -368,12 +368,12 @@ public class ModelTypeImpl extends EClassImpl implements ModelType {
 				return startPosition != START_POSITION_EDEFAULT;
 			case ExpressionsPackage.MODEL_TYPE__END_POSITION:
 				return endPosition != END_POSITION_EDEFAULT;
-			case ExpressionsPackage.MODEL_TYPE__METAMODEL:
-				return metamodel != null && !metamodel.isEmpty();
 			case ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION:
 				return additionalCondition != null && !additionalCondition.isEmpty();
 			case ExpressionsPackage.MODEL_TYPE__CONFORMANCE_KIND:
 				return CONFORMANCE_KIND_EDEFAULT == null ? conformanceKind != null : !CONFORMANCE_KIND_EDEFAULT.equals(conformanceKind);
+			case ExpressionsPackage.MODEL_TYPE__METAMODEL:
+				return metamodel != null && !metamodel.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
