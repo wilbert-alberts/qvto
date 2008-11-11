@@ -14,7 +14,6 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.jface.text.IRegion;
@@ -27,7 +26,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
-import org.eclipse.m2m.internal.qvt.oml.expressions.PackageRef;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.EnumLiteralExpCS;
 import org.eclipse.ocl.cst.PathNameCS;
@@ -140,16 +138,19 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 			
 			boolean isPackageReferred = namesToLookup.size() < pathName.getSequenceOfNames().size();			
 			EModelElement element = (isPackageReferred) ? env.lookupPackage(namesToLookup) : env.lookupClassifier(namesToLookup);
-			if(element == null) {
-				ModelType modelType = env.getModelType(namesToLookup);
-				if(modelType != null) {
-					EList<PackageRef> metamodels = modelType.getMetamodel();
-					if(!metamodels.isEmpty()) {
-						String uri = metamodels.get(0).getUri();
-						element = env.getEPackageRegistry().getEPackage(uri);
-					}
-				}
-			}
+// ? Not needed as the env lookup should resolve names qualified with modeltypes as well 
+//			if(element == null) {
+//				ModelType modelType = env.getModelType(namesToLookup);
+//				if(modelType != null) {
+//					EList<EPackage> metamodels = modelType.getMetamodel();
+//					if(!metamodels.isEmpty()) {
+//						for (EPackage nextPackage : metamodels) {
+//							String uri = nextPackage.getNsURI();
+//							element = env.getEPackageRegistry().getEPackage(uri);							
+//						}
+//					}
+//				}
+//			}
 
 			if(element != null) {
 				return new EModelElementRef(element, linkRegion);

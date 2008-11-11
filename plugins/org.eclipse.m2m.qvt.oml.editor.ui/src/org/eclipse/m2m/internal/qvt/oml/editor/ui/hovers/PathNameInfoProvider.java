@@ -12,12 +12,12 @@
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.hovers;
 
 import org.eclipse.emf.ecore.EModelElement;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks.PathNameHyperlinkDetector;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
-import org.eclipse.m2m.internal.qvt.oml.expressions.PackageRef;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 
@@ -32,17 +32,17 @@ public class PathNameInfoProvider implements IElementInfoProvider {
 				StringBuilder buf = new StringBuilder();
 				int counter = 0;
 				ModelType modelType = (ModelType) referencedElement;
-				for (PackageRef nextPackRef : modelType.getMetamodel()) {
+				for (EPackage nextPackage : modelType.getMetamodel()) {
 					if(counter > 0) {						
 						buf.append('\n');
 					}
 					
-					if(nextPackRef.getName() != null) {
-						buf.append(nextPackRef.getName());
+					if(nextPackage.getName() != null) {
+						buf.append(nextPackage.getName());
 					}
 					
-					if(nextPackRef.getUri() != null) {
-						buf.append(" - ").append(nextPackRef.getUri()); //$NON-NLS-1$
+					if(nextPackage.getNsURI() != null) {
+						buf.append(" - ").append(nextPackage.getNsURI()); //$NON-NLS-1$
 					}
 					
 					counter++;
