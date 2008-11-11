@@ -1,6 +1,6 @@
 transformation zzz;
 
-import library Strings;
+import Strings;
 	
 modeltype A uses ecore('http://www.eclipse.org/emf/2002/Ecore');
 

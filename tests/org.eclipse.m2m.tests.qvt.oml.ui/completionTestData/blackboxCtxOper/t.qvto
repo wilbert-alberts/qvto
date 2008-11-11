@@ -1,4 +1,4 @@
-import library org.bar.Foo;
+import org.bar.Foo;
 
 modeltype ecore uses ecore('http://www.eclipse.org/emf/2002/Ecore');
 

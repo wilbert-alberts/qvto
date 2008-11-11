@@ -1,6 +1,6 @@
 transformation Ecore_To_Uml(in dummy : ECORE, out a : ECORE, out b : ECORE);
 
-import library Strings;
+import Strings;
 	
 modeltype ECORE uses ecore('http://www.eclipse.org/emf/2002/Ecore');
 	

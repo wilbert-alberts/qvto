@@ -1,4 +1,5 @@
 .inclusive
+QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = org.bar.ImportedLib, displayString = org.bar.ImportedLib, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 19
 QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = Strings, displayString = Strings, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 7
 QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = emf.tools, displayString = emf.tools, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 9
 QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = org.bar.Foo, displayString = org.bar.Foo, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 11
