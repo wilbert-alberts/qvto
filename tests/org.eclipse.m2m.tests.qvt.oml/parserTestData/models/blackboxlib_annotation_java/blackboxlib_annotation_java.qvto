@@ -10,7 +10,7 @@ modeltype QVTO "strict" uses qvtoperational('http://www.eclipse.org/QVT/1.0.0/Op
 transformation blackboxlib_annotation_java(in source : ECORE, out target: ECORE);
 
 main() {
-	-- test the simplified definition
+	-- test the simplified library definition
 	assert fatal (echoFromSimpleJavaLibrary('Hello') = 'Hello');
 
 	var r : Sequence(OclAny);
