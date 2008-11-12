@@ -89,7 +89,7 @@ public class NewQVTTransformationWizard extends AbstractNewQVTElementWizard {
     	StringBuffer contents = new StringBuffer();
     	contents.append("transformation ").append(moduleName).append("();"); //$NON-NLS-1$ //$NON-NLS-2$
     	contents.append("\n\n"); //$NON-NLS-1$
-    	contents.append("mapping main() {\n\n}\n"); //$NON-NLS-1$    	    	
+    	contents.append("main() {\n\n}\n"); //$NON-NLS-1$    	    	
 
     	return contents.toString();
     }
