@@ -102,7 +102,7 @@ Corresponding implicit unit is synthesized based on the implementation class and
       </annotation>
       <complexType>
          <sequence>
-            <element ref="metamodel" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="metamodel" minOccurs="0" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="name" type="string">
             <annotation>
