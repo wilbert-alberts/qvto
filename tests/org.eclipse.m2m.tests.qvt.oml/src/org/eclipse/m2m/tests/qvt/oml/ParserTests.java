@@ -86,6 +86,7 @@ public class ParserTests {
     private static TestData[] ourData = new TestData[] {
         //new TestData("orderedsetdoesnotconformtoset", 1), //$NON-NLS-1$
     	new TestData("implicitsource_ocl_234354", 6, 0),
+    	TestData.createSourceChecked("duplicateModelTypeDef", 1, 0),    	
     	TestData.createSourceChecked("blackboxlib_annotation_java", 1, 1),
     	TestData.createSourceChecked("dupImportFileUnit", 0, 1),    	
     	TestData.createSourceChecked("dupImportLibrary", 0, 1),    	
