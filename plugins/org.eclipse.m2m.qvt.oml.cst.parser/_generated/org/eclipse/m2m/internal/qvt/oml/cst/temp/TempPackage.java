@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempPackage.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: TempPackage.java,v 1.2 2008/11/13 15:22:03 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.temp;
 
@@ -387,6 +387,15 @@ public interface TempPackage extends EPackage {
 	 * @ordered
 	 */
 	int ERROR_OUT_EXP_CS__EXPRESSIONS = org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage.OUT_EXP_CS__EXPRESSIONS;
+
+	/**
+	 * The feature id for the '<em><b>Is Implicit</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_OUT_EXP_CS__IS_IMPLICIT = org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage.OUT_EXP_CS__IS_IMPLICIT;
 
 	/**
 	 * The feature id for the '<em><b>Full Start Offset</b></em>' attribute.

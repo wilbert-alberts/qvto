@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingBodyCSImpl.java,v 1.1 2008/04/06 10:18:39 sboyko Exp $
+ * $Id: MappingBodyCSImpl.java,v 1.2 2008/11/13 15:22:02 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -44,15 +44,13 @@ import org.eclipse.ocl.cst.impl.OCLExpressionCSImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingBodyCSImpl#getContent <em>Content</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingBodyCSImpl#isHasImplicitObjectExp <em>Has Implicit Object Exp</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingBodyCSImpl#isHasPopulationSection <em>Has Population Section</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingBodyCSImpl#isHasPopulationKeyword <em>Has Population Keyword</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class MappingBodyCSImpl extends OCLExpressionCSImpl implements MappingBodyCS {
+public class MappingBodyCSImpl extends MappingSectionCSImpl implements MappingBodyCS {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -61,54 +59,24 @@ public class MappingBodyCSImpl extends OCLExpressionCSImpl implements MappingBod
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 	/**
-	 * The cached value of the '{@link #getContent() <em>Content</em>}' containment reference list.
+	 * The default value of the '{@link #isHasPopulationKeyword() <em>Has Population Keyword</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getContent()
+	 * @see #isHasPopulationKeyword()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<OCLExpressionCS> content;
+	protected static final boolean HAS_POPULATION_KEYWORD_EDEFAULT = false;
 
 	/**
-	 * The default value of the '{@link #isHasImplicitObjectExp() <em>Has Implicit Object Exp</em>}' attribute.
+	 * The flag representing the value of the '{@link #isHasPopulationKeyword() <em>Has Population Keyword</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isHasImplicitObjectExp()
+	 * @see #isHasPopulationKeyword()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean HAS_IMPLICIT_OBJECT_EXP_EDEFAULT = false;
-
-	/**
-	 * The flag representing the value of the '{@link #isHasImplicitObjectExp() <em>Has Implicit Object Exp</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isHasImplicitObjectExp()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int HAS_IMPLICIT_OBJECT_EXP_EFLAG = 1 << 8;
-
-	/**
-	 * The default value of the '{@link #isHasPopulationSection() <em>Has Population Section</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isHasPopulationSection()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean HAS_POPULATION_SECTION_EDEFAULT = false;
-
-	/**
-	 * The flag representing the value of the '{@link #isHasPopulationSection() <em>Has Population Section</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isHasPopulationSection()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int HAS_POPULATION_SECTION_EFLAG = 1 << 9;
+	protected static final int HAS_POPULATION_KEYWORD_EFLAG = 1 << 8;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -134,11 +102,8 @@ public class MappingBodyCSImpl extends OCLExpressionCSImpl implements MappingBod
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<OCLExpressionCS> getContent() {
-		if (content == null) {
-			content = new EObjectContainmentEList<OCLExpressionCS>(OCLExpressionCS.class, this, CSTPackage.MAPPING_BODY_CS__CONTENT);
-		}
-		return content;
+	public boolean isHasPopulationKeyword() {
+		return (eFlags & HAS_POPULATION_KEYWORD_EFLAG) != 0;
 	}
 
 	/**
@@ -146,55 +111,11 @@ public class MappingBodyCSImpl extends OCLExpressionCSImpl implements MappingBod
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isHasImplicitObjectExp() {
-		return (eFlags & HAS_IMPLICIT_OBJECT_EXP_EFLAG) != 0;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setHasImplicitObjectExp(boolean newHasImplicitObjectExp) {
-		boolean oldHasImplicitObjectExp = (eFlags & HAS_IMPLICIT_OBJECT_EXP_EFLAG) != 0;
-		if (newHasImplicitObjectExp) eFlags |= HAS_IMPLICIT_OBJECT_EXP_EFLAG; else eFlags &= ~HAS_IMPLICIT_OBJECT_EXP_EFLAG;
+	public void setHasPopulationKeyword(boolean newHasPopulationKeyword) {
+		boolean oldHasPopulationKeyword = (eFlags & HAS_POPULATION_KEYWORD_EFLAG) != 0;
+		if (newHasPopulationKeyword) eFlags |= HAS_POPULATION_KEYWORD_EFLAG; else eFlags &= ~HAS_POPULATION_KEYWORD_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.MAPPING_BODY_CS__HAS_IMPLICIT_OBJECT_EXP, oldHasImplicitObjectExp, newHasImplicitObjectExp));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isHasPopulationSection() {
-		return (eFlags & HAS_POPULATION_SECTION_EFLAG) != 0;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setHasPopulationSection(boolean newHasPopulationSection) {
-		boolean oldHasPopulationSection = (eFlags & HAS_POPULATION_SECTION_EFLAG) != 0;
-		if (newHasPopulationSection) eFlags |= HAS_POPULATION_SECTION_EFLAG; else eFlags &= ~HAS_POPULATION_SECTION_EFLAG;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.MAPPING_BODY_CS__HAS_POPULATION_SECTION, oldHasPopulationSection, newHasPopulationSection));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case CSTPackage.MAPPING_BODY_CS__CONTENT:
-				return ((InternalEList<?>)getContent()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.MAPPING_BODY_CS__HAS_POPULATION_KEYWORD, oldHasPopulationKeyword, newHasPopulationKeyword));
 	}
 
 	/**
@@ -205,12 +126,8 @@ public class MappingBodyCSImpl extends OCLExpressionCSImpl implements MappingBod
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CSTPackage.MAPPING_BODY_CS__CONTENT:
-				return getContent();
-			case CSTPackage.MAPPING_BODY_CS__HAS_IMPLICIT_OBJECT_EXP:
-				return isHasImplicitObjectExp() ? Boolean.TRUE : Boolean.FALSE;
-			case CSTPackage.MAPPING_BODY_CS__HAS_POPULATION_SECTION:
-				return isHasPopulationSection() ? Boolean.TRUE : Boolean.FALSE;
+			case CSTPackage.MAPPING_BODY_CS__HAS_POPULATION_KEYWORD:
+				return isHasPopulationKeyword() ? Boolean.TRUE : Boolean.FALSE;
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -224,15 +141,8 @@ public class MappingBodyCSImpl extends OCLExpressionCSImpl implements MappingBod
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CSTPackage.MAPPING_BODY_CS__CONTENT:
-				getContent().clear();
-				getContent().addAll((Collection<? extends OCLExpressionCS>)newValue);
-				return;
-			case CSTPackage.MAPPING_BODY_CS__HAS_IMPLICIT_OBJECT_EXP:
-				setHasImplicitObjectExp(((Boolean)newValue).booleanValue());
-				return;
-			case CSTPackage.MAPPING_BODY_CS__HAS_POPULATION_SECTION:
-				setHasPopulationSection(((Boolean)newValue).booleanValue());
+			case CSTPackage.MAPPING_BODY_CS__HAS_POPULATION_KEYWORD:
+				setHasPopulationKeyword(((Boolean)newValue).booleanValue());
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -246,14 +156,8 @@ public class MappingBodyCSImpl extends OCLExpressionCSImpl implements MappingBod
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CSTPackage.MAPPING_BODY_CS__CONTENT:
-				getContent().clear();
-				return;
-			case CSTPackage.MAPPING_BODY_CS__HAS_IMPLICIT_OBJECT_EXP:
-				setHasImplicitObjectExp(HAS_IMPLICIT_OBJECT_EXP_EDEFAULT);
-				return;
-			case CSTPackage.MAPPING_BODY_CS__HAS_POPULATION_SECTION:
-				setHasPopulationSection(HAS_POPULATION_SECTION_EDEFAULT);
+			case CSTPackage.MAPPING_BODY_CS__HAS_POPULATION_KEYWORD:
+				setHasPopulationKeyword(HAS_POPULATION_KEYWORD_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -267,12 +171,8 @@ public class MappingBodyCSImpl extends OCLExpressionCSImpl implements MappingBod
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CSTPackage.MAPPING_BODY_CS__CONTENT:
-				return content != null && !content.isEmpty();
-			case CSTPackage.MAPPING_BODY_CS__HAS_IMPLICIT_OBJECT_EXP:
-				return ((eFlags & HAS_IMPLICIT_OBJECT_EXP_EFLAG) != 0) != HAS_IMPLICIT_OBJECT_EXP_EDEFAULT;
-			case CSTPackage.MAPPING_BODY_CS__HAS_POPULATION_SECTION:
-				return ((eFlags & HAS_POPULATION_SECTION_EFLAG) != 0) != HAS_POPULATION_SECTION_EDEFAULT;
+			case CSTPackage.MAPPING_BODY_CS__HAS_POPULATION_KEYWORD:
+				return ((eFlags & HAS_POPULATION_KEYWORD_EFLAG) != 0) != HAS_POPULATION_KEYWORD_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -287,10 +187,8 @@ public class MappingBodyCSImpl extends OCLExpressionCSImpl implements MappingBod
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (hasImplicitObjectExp: "); //$NON-NLS-1$
-		result.append((eFlags & HAS_IMPLICIT_OBJECT_EXP_EFLAG) != 0);
-		result.append(", hasPopulationSection: "); //$NON-NLS-1$
-		result.append((eFlags & HAS_POPULATION_SECTION_EFLAG) != 0);
+		result.append(" (hasPopulationKeyword: "); //$NON-NLS-1$
+		result.append((eFlags & HAS_POPULATION_KEYWORD_EFLAG) != 0);
 		result.append(')');
 		return result.toString();
 	}

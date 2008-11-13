@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.9 2008/10/27 14:26:31 aigdalov Exp $
+ * $Id: CSTPackageImpl.java,v 1.10 2008/11/13 15:22:02 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -1281,26 +1281,8 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getMappingBodyCS_Content() {
-		return (EReference)mappingBodyCSEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getMappingBodyCS_HasImplicitObjectExp() {
-		return (EAttribute)mappingBodyCSEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getMappingBodyCS_HasPopulationSection() {
-		return (EAttribute)mappingBodyCSEClass.getEStructuralFeatures().get(2);
+	public EAttribute getMappingBodyCS_HasPopulationKeyword() {
+		return (EAttribute)mappingBodyCSEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1337,6 +1319,15 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 */
 	public EReference getOutExpCS_Expressions() {
 		return (EReference)outExpCSEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getOutExpCS_IsImplicit() {
+		return (EAttribute)outExpCSEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -2269,14 +2260,13 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(variableInitializationCSEClass, VARIABLE_INITIALIZATION_CS__TYPE_CS);
 
 		mappingBodyCSEClass = createEClass(MAPPING_BODY_CS);
-		createEReference(mappingBodyCSEClass, MAPPING_BODY_CS__CONTENT);
-		createEAttribute(mappingBodyCSEClass, MAPPING_BODY_CS__HAS_IMPLICIT_OBJECT_EXP);
-		createEAttribute(mappingBodyCSEClass, MAPPING_BODY_CS__HAS_POPULATION_SECTION);
+		createEAttribute(mappingBodyCSEClass, MAPPING_BODY_CS__HAS_POPULATION_KEYWORD);
 
 		outExpCSEClass = createEClass(OUT_EXP_CS);
 		createEReference(outExpCSEClass, OUT_EXP_CS__SIMPLE_NAME_CS);
 		createEReference(outExpCSEClass, OUT_EXP_CS__TYPE_SPEC_CS);
 		createEReference(outExpCSEClass, OUT_EXP_CS__EXPRESSIONS);
+		createEAttribute(outExpCSEClass, OUT_EXP_CS__IS_IMPLICIT);
 
 		patternPropertyExpCSEClass = createEClass(PATTERN_PROPERTY_EXP_CS);
 		createEReference(patternPropertyExpCSEClass, PATTERN_PROPERTY_EXP_CS__SIMPLE_NAME_CS);
@@ -2458,7 +2448,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		assignStatementCSEClass.getESuperTypes().add(this.getStatementCS());
 		expressionStatementCSEClass.getESuperTypes().add(this.getStatementCS());
 		variableInitializationCSEClass.getESuperTypes().add(this.getStatementCS());
-		mappingBodyCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
+		mappingBodyCSEClass.getESuperTypes().add(this.getMappingSectionCS());
 		outExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
 		outExpCSEClass.getESuperTypes().add(this.getElementWithBody());
 		patternPropertyExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
@@ -2592,14 +2582,13 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEReference(getVariableInitializationCS_TypeCS(), theCSTPackage_1.getTypeCS(), null, "typeCS", null, 0, 1, VariableInitializationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(mappingBodyCSEClass, MappingBodyCS.class, "MappingBodyCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getMappingBodyCS_Content(), theCSTPackage_1.getOCLExpressionCS(), null, "content", null, 0, -1, MappingBodyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getMappingBodyCS_HasImplicitObjectExp(), ecorePackage.getEBoolean(), "hasImplicitObjectExp", null, 0, 1, MappingBodyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getMappingBodyCS_HasPopulationSection(), ecorePackage.getEBoolean(), "hasPopulationSection", null, 0, 1, MappingBodyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getMappingBodyCS_HasPopulationKeyword(), ecorePackage.getEBoolean(), "hasPopulationKeyword", null, 0, 1, MappingBodyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(outExpCSEClass, OutExpCS.class, "OutExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getOutExpCS_SimpleNameCS(), theCSTPackage_1.getSimpleNameCS(), null, "simpleNameCS", null, 0, 1, OutExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getOutExpCS_TypeSpecCS(), this.getTypeSpecCS(), null, "typeSpecCS", null, 0, 1, OutExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getOutExpCS_Expressions(), theCSTPackage_1.getOCLExpressionCS(), null, "expressions", null, 0, -1, OutExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getOutExpCS_IsImplicit(), ecorePackage.getEBoolean(), "isImplicit", null, 0, 1, OutExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(patternPropertyExpCSEClass, PatternPropertyExpCS.class, "PatternPropertyExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getPatternPropertyExpCS_SimpleNameCS(), theCSTPackage_1.getSimpleNameCS(), null, "simpleNameCS", null, 0, 1, PatternPropertyExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

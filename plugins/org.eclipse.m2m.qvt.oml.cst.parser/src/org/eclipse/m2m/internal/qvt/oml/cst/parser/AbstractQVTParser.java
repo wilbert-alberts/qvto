@@ -11,8 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import lpg.lpgjavaruntime.IToken;
@@ -413,36 +411,6 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 				return result;
 			}
 	
-	public static List<OutExpCS> collectOutExpList(MappingBodyCS bodyCS) {
-		List<OutExpCS> result = null;
-		for (OCLExpressionCS nextExpCS : bodyCS.getContent()) {
-			if(nextExpCS instanceof OutExpCS) {
-				if(result == null) {
-					result = new ArrayList<OutExpCS>(bodyCS.getContent().size());
-				}
-				result.add((OutExpCS)nextExpCS);
-			}
-		}
-		return result != null ? result : Collections.<OutExpCS>emptyList();
-	}			
-	
-	protected final void updateMappingBodyPositions(MappingBodyCS mappingBody, int bodyLeft,
-			int bodyRight, int outBodyLeft, int outBodyRight) {
-				if (mappingBody != null && mappingBody.isHasImplicitObjectExp()) {
-					List<OutExpCS> outExpList = collectOutExpList(mappingBody);
-					if(outExpList.isEmpty()) {
-						return;
-					}
-					OutExpCS outExp = outExpList.get(0);
-					outExp.setStartOffset(bodyLeft);
-					outExp.setEndOffset(bodyRight);
-					outExp.setBodyStartLocation(outBodyLeft);
-					outExp.setBodyEndLocation(outBodyRight);
-					mappingBody.setStartOffset(bodyLeft);
-					mappingBody.setEndOffset(bodyRight);
-				}
-			}
-
 	protected final OutExpCS setupOutExpCS(OutExpCS result, EList<OCLExpressionCS> expressions, int startOffset, int endOffset) {
 				result.getExpressions().addAll(expressions);
 				result.setBodyStartLocation(startOffset);
@@ -483,18 +451,13 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 				return setupOutExpCS(result, expressions, startOffset, endOffset);
 			}
 	
-	protected final MappingBodyCS createMappingBodyCS(List<? extends OCLExpressionCS> expCS, boolean hasImplicitObjExp, boolean hasPopulationSection) {
+	protected final MappingBodyCS createMappingBodyCS(List<? extends OCLExpressionCS> expCS, boolean hasPopulationKeyword) {
 		MappingBodyCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingBodyCS();
-		result.getContent().addAll(expCS);
-		result.setHasImplicitObjectExp(hasImplicitObjExp);
-		result.setHasPopulationSection(hasPopulationSection);
+		result.getStatements().addAll(expCS);
+		result.setHasPopulationKeyword(hasPopulationKeyword);
 		return result;
 	}
 	
-	protected final MappingBodyCS createMappingBodyCS(OutExpCS outExpCS, boolean hasImplicitObjExp, boolean hasPopulationSection) {
-		return createMappingBodyCS(Collections.singletonList(outExpCS), hasImplicitObjExp, hasPopulationSection);
-	}
-
 	protected final CSTNode createMappingCallExpCS(SimpleNameCS sym, EList<OCLExpressionCS> arguments,
 			boolean b) {
 				MappingCallExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingCallExpCS();

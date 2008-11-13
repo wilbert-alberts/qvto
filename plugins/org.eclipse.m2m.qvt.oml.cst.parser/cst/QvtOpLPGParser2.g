@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.16 2008/11/13 15:22:02 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser2.g,v 1.1 2008/11/13 15:22:02 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -131,7 +131,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.16 2008/11/13 15:22:02 aigdalov Exp $
+ * $Id: QvtOpLPGParser2.g,v 1.1 2008/11/13 15:22:02 aigdalov Exp $
  */
 	./
 $End
@@ -1003,25 +1003,6 @@ $Rules
 		  $EndJava
 		./
 
-	semicolonOpt -> ';'
-	semicolonOpt -> $empty
-
-	expression_list -> expression_semi_list semicolonOpt
-	expression_semi_list ::= statementCS
-		/.$BeginJava
-					EList result = new BasicEList();
-					result.add($getSym(1));
-					$setResult(result);
-		  $EndJava
-		./
-	expression_semi_list ::= expression_semi_list ';' statementCS 
-		/.$BeginJava
-					EList result = (EList)$getSym(1);
-					result.add($getSym(3));
-					$setResult(result);
-		  $EndJava
-		./
-
 	-- // general purpose grammar rules (end)
 
 	-- // syntax for helper operations (start)
@@ -1163,20 +1144,24 @@ $Rules
 		  $EndJava
 		./
 
+	semicolonOpt -> ';'
+	semicolonOpt -> $empty
+
 	mapping_def ::= mapping_full_header '{' mapping_body '}' semicolonOpt
 		/.$BeginJava
 					MappingSectionsCS mappingSections = (MappingSectionsCS)$getSym(3);
-					setOffsets(mappingSections, getIToken($getToken(2)), getIToken($getToken(4)));
-
-					MappingBodyCS mappingBodyCS = mappingSections.getMappingBodyCS();
-					if (mappingBodyCS != null) {
-						if (mappingBodyCS.getStartOffset() < 0) {
-							mappingBodyCS.setStartOffset(mappingSections.getStartOffset());
-						}
-						if (mappingBodyCS.getEndOffset() < 0) {
-							mappingBodyCS.setEndOffset(mappingSections.getEndOffset());
-						}
+					MappingInitCS mappingInit = mappingSections.getMappingInitCS();
+					MappingBodyCS mappingBody = mappingSections.getMappingBodyCS();
+					MappingEndCS mappingEnd = mappingSections.getMappingEndCS();
+					int bodyLeft = (mappingInit == null ?  getIToken($getToken(2)).getEndOffset() : mappingInit.getEndOffset());
+					int bodyRight = (mappingEnd == null ?  getIToken($getToken(4)).getEndOffset() : mappingEnd.getStartOffset());
+					int outBodyRight = (mappingEnd == null ?  getIToken($getToken(4)).getStartOffset() : mappingEnd.getStartOffset());
+					if (mappingBody != null) {
+						bodyLeft = mappingBody.getStartOffset();
+						bodyRight = mappingBody.getEndOffset();
 					}
+
+					updateMappingBodyPositions(mappingBody, bodyLeft, bodyRight, bodyLeft, outBodyRight);
 
 		                        Object[] mappingFullHeader = (Object[])$getSym(1);
 					MappingRuleCS result = createMappingRuleCS(
@@ -1319,26 +1304,10 @@ $Rules
 
 	mapping_body ::= init_sectionOpt population_sectionOpt end_sectionOpt
 		/.$BeginJava
-		                        MappingInitCS mappingInitCS = (MappingInitCS)$getSym(1);
-					MappingBodyCS mappingBodyCS = (MappingBodyCS)$getSym(2);
-					MappingEndCS mappingEndCS = (MappingEndCS)$getSym(3);
-
-					if (mappingBodyCS != null) {
-						if ((mappingBodyCS.getStartOffset() < 0) && (mappingInitCS != null)) {
-							mappingBodyCS.setStartOffset(mappingInitCS.getEndOffset() + 1);
-						}
-						if ((mappingBodyCS.getEndOffset() < 0) && (mappingEndCS != null)) {
-							mappingBodyCS.setEndOffset(mappingEndCS.getStartOffset() - 1);
-						}
-						if (mappingBodyCS.getStartOffset() > mappingBodyCS.getEndOffset()) {
-							mappingBodyCS.setEndOffset(mappingBodyCS.getStartOffset());
-						}
-					}
-					
 					CSTNode result = createMappingSectionsCS(
-							mappingInitCS,
-							mappingBodyCS,
-							mappingEndCS
+							(MappingInitCS)$getSym(1),
+							(MappingBodyCS)$getSym(2),
+							(MappingEndCS)$getSym(3)
 						);
 					$setResult(result);
 		  $EndJava
@@ -1374,57 +1343,9 @@ $Rules
 		./
 
 	
-	population_sectionOpt ::= $empty
-		/.$BeginJava
-					MappingBodyCS result = createMappingBodyCS(
-							$EMPTY_ELIST,
-							false
-						);
-					// offsets will be updated further in parent non-terminals
-					result.setStartOffset(-1); 
-					result.setEndOffset(-1);
-					$setResult(result);
-		  $EndJava
-		./
-	population_sectionOpt -> population_section
+	population_sectionOpt -> mappingBodyOpt
 
-	population_section ::= expression_list 
-		/.$BeginJava
-					EList<OCLExpressionCS> expressionList = (EList<OCLExpressionCS>) $getSym(1);
-					MappingBodyCS result = createMappingBodyCS(
-							expressionList,
-							false
-						);
-					CSTNode startExp = expressionList.get(0);
-					CSTNode endExp = expressionList.get(expressionList.size() - 1);
-					setOffsets(result, startExp, endExp);
-					$setResult(result);
-		  $EndJava
-		./
-
-	population_section ::= population expression_block 
-		/.$BeginJava
-					BlockExpCS blockExpCS = (BlockExpCS) $getSym(2);
-					MappingBodyCS result = createMappingBodyCS(
-							blockExpCS.getBodyExpressions(),
-							true
-						);
-					setOffsets(result, getIToken($getToken(1)), blockExpCS);
-					$setResult(result);
-		  $EndJava
-		./
 	
-	population_section ::= population qvtErrorToken
-		/.$BeginJava
-					CSTNode result = createMappingBodyCS(
-							$EMPTY_ELIST,
-							true
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
-					$setResult(result);
-		  $EndJava
-		./
-
 	end_sectionOpt ::= $empty
 		/.$NullAction./
 	end_sectionOpt -> end_section
@@ -1542,6 +1463,151 @@ $Rules
 		  $EndJava
 		./
 
+	expressionListOpt ::= $empty
+		/.$EmptyListAction./
+	expressionListOpt -> expressionList
+		
+	expressionList ::= oclExpressionCS
+		/.$BeginJava
+					EList result = new BasicEList();
+					result.add($getSym(1));
+					$setResult(result);
+		  $EndJava
+		./
+	expressionList ::= expressionList ';' oclExpressionCS
+		/.$BeginJava
+					EList result = (EList)$getSym(1);
+					result.add($getSym(3));
+					$setResult(result);
+		  $EndJava
+		./
+	expressionList -> expressionList ';'
+	expressionList -> expressionList qvtErrorToken
+	expressionList ::= qvtErrorToken
+		/.$EmptyListAction./
+		
+		
+	mappingBodyOpt ::= population '{' expressionListOpt '}'
+		/.$BeginJava
+				MappingBodyCS result = createMappingBodyCS(
+						(EList<OCLExpressionCS>)dtParser.getSym(3),
+						false, true
+					);
+				setOffsets(result, getIToken(dtParser.getToken(2)), getIToken(dtParser.getToken(4)));
+				dtParser.setSym1(result);
+		  $EndJava
+		./
+		
+	mappingBodyOpt ::= outExpCS
+		/.$BeginJava
+					MappingBodyCS result = createMappingBodyCS(
+							(OutExpCS)dtParser.getSym(1),
+							false, false
+						);
+					setOffsets(result, (CSTNode)$getSym(1));
+					$setResult(result);
+		  $EndJava
+		./
+	mappingBodyOpt ::= patternPropertyOrAdditionList
+		/.$BeginJava
+					EList props = (EList)$getSym(1);
+					OutExpCS outExp = createOutExpCS(props, getIToken($getToken(1)).getStartOffset(), getIToken($getToken(1)).getEndOffset());
+					if (!props.isEmpty()) {
+						CSTNode head = (CSTNode) props.get(0);
+						CSTNode tail = (CSTNode) props.get(props.size()-1);
+						setOffsets(outExp, head, tail);
+					}
+					MappingBodyCS result = createMappingBodyCS(
+							outExp,
+							true, false
+						);
+					setOffsets(result, outExp);
+					$setResult(result);
+		  $EndJava
+		./
+	
+	patternPropertyOrAdditionList ::= $empty
+		/.$EmptyListAction./
+	patternPropertyOrAdditionList -> patternPropertyOrAdditionInnerList
+	patternPropertyOrAdditionList -> patternPropertyOrAdditionList ';'
+	
+	patternPropertyOrAdditionInnerList ::= patternPropertyOrAddition2
+		/.$BeginJava
+					EList result = new BasicEList();
+					result.add($getSym(1));
+					$setResult(result);
+		  $EndJava
+		./
+	patternPropertyOrAdditionInnerList ::= patternPropertyOrAdditionList ';' patternPropertyOrAddition2
+		/.$BeginJava
+					EList result = (EList)$getSym(1);
+					result.add($getSym(3));
+					$setResult(result);
+		  $EndJava
+		./
+	patternPropertyOrAddition2 -> patternPropertyOrAddition
+	patternPropertyOrAddition2 ::= qvtErrorToken patternPropertyOrAddition
+		/.$BeginJava
+					$setResult($getSym(2));
+		  $EndJava
+		./
+	patternPropertyOrAddition ::= IDENTIFIER ':=' oclExpressionCS
+		/.$BeginJava
+					CSTNode result = createPatternPropertyCS(
+							getIToken($getToken(1)),
+							(OCLExpressionCS)$getSym(3),
+							false
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(3));
+					$setResult(result);
+		  $EndJava
+		./
+	patternPropertyOrAddition ::= IDENTIFIER ':=' qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createPatternPropertyCS(
+							getIToken($getToken(1)),
+							createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, ""), //$NON-NLS-1$
+							false
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(2)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	patternPropertyOrAddition ::= IDENTIFIER '+=' oclExpressionCS
+		/.$BeginJava
+					CSTNode result = createPatternPropertyCS(
+							getIToken($getToken(1)),
+							(OCLExpressionCS)$getSym(3),
+							true
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(3));
+					$setResult(result);
+		  $EndJava
+		./
+	patternPropertyOrAddition ::= IDENTIFIER '+=' qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createPatternPropertyCS(
+							getIToken($getToken(1)),
+							createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, ""), //$NON-NLS-1$
+							true
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(2)));
+					$setResult(result);
+		  $EndJava
+		./
+	patternPropertyOrAddition ::= IDENTIFIER qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createPatternPropertyCS(
+							getIToken($getToken(1)),
+							createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, ""), //$NON-NLS-1$
+							true
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+	
 	typespecOpt ::= $empty
 		/.$NullAction./
 	typespecOpt -> typespec
@@ -1566,17 +1632,38 @@ $Rules
 		  $EndJava
 		./
 	
-	outExpCS ::= object objectDeclCS expression_block
+	outExpCS ::= object objectDeclCS '{' patternPropertyOrAdditionList '}' 
 		/.$BeginJava
-					BlockExpCS blockExpCS = (BlockExpCS) $getSym(3);
 					CSTNode result = setupOutExpCS(
 							(OutExpCS)$getSym(2),					
-							blockExpCS.getBodyExpressions(),
+							(EList)$getSym(4),
 							// passing body positions
-							blockExpCS.getStartOffset(),
-							blockExpCS.getEndOffset()
+							getIToken($getToken(3)).getEndOffset(),
+							getIToken($getToken(5)).getStartOffset()
 						); 
-					setOffsets(result, getIToken($getToken(1)), blockExpCS);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
+					$setResult(result);
+		  $EndJava
+		./
+	outExpCS ::= object objectDeclCS '{' patternPropertyOrAdditionList qvtErrorToken
+		/.$BeginJava
+					OutExpCS outExpCS = ((OutExpCS)dtParser.getSym(2));
+					EList<CSTNode> patternPropertyOrAdditionList = (EList<CSTNode>)$getSym(4);
+					CSTNode result = createErrorOutExpCS(
+							outExpCS.getSimpleNameCS(),						
+							outExpCS.getTypeSpecCS(),
+							(EList)dtParser.getSym(4),						
+							getIToken($getToken(3)).getEndOffset(),
+							getIToken($getToken(5)).getStartOffset(),
+							getIToken($getToken(1)).getStartOffset(),
+							getIToken($getToken(5)).getStartOffset()
+						);
+					if (patternPropertyOrAdditionList.isEmpty()) {
+					    setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
+					} else {
+					    CSTNode lastNode = patternPropertyOrAdditionList.get(patternPropertyOrAdditionList.size() - 1);
+					    setOffsets(result, getIToken($getToken(1)), lastNode);
+					}
 					$setResult(result);
 		  $EndJava
 		./

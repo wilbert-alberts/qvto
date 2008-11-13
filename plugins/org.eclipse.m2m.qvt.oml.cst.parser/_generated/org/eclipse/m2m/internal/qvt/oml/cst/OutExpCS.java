@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: OutExpCS.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: OutExpCS.java,v 1.2 2008/11/13 15:22:02 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -31,6 +31,7 @@ import org.eclipse.ocl.cst.SimpleNameCS;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS#getSimpleNameCS <em>Simple Name CS</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS#getTypeSpecCS <em>Type Spec CS</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS#getExpressions <em>Expressions</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS#isIsImplicit <em>Is Implicit</em>}</li>
  * </ul>
  * </p>
  *
@@ -113,5 +114,31 @@ public interface OutExpCS extends OCLExpressionCS, ElementWithBody {
 	 * @generated
 	 */
 	EList<OCLExpressionCS> getExpressions();
+
+	/**
+	 * Returns the value of the '<em><b>Is Implicit</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is Implicit</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is Implicit</em>' attribute.
+	 * @see #setIsImplicit(boolean)
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getOutExpCS_IsImplicit()
+	 * @model
+	 * @generated
+	 */
+	boolean isIsImplicit();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS#isIsImplicit <em>Is Implicit</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Implicit</em>' attribute.
+	 * @see #isIsImplicit()
+	 * @generated
+	 */
+	void setIsImplicit(boolean value);
 
 } // OutExpCS

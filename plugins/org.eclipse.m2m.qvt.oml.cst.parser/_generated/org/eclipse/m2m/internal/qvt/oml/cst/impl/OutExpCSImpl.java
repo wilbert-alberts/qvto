@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: OutExpCSImpl.java,v 1.1 2008/04/06 10:18:39 sboyko Exp $
+ * $Id: OutExpCSImpl.java,v 1.2 2008/11/13 15:22:02 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -52,6 +52,7 @@ import org.eclipse.ocl.cst.impl.OCLExpressionCSImpl;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.OutExpCSImpl#getSimpleNameCS <em>Simple Name CS</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.OutExpCSImpl#getTypeSpecCS <em>Type Spec CS</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.OutExpCSImpl#getExpressions <em>Expressions</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.OutExpCSImpl#isIsImplicit <em>Is Implicit</em>}</li>
  * </ul>
  * </p>
  *
@@ -134,6 +135,26 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 	 * @ordered
 	 */
 	protected EList<OCLExpressionCS> expressions;
+
+	/**
+	 * The default value of the '{@link #isIsImplicit() <em>Is Implicit</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsImplicit()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean IS_IMPLICIT_EDEFAULT = false;
+
+	/**
+	 * The flag representing the value of the '{@link #isIsImplicit() <em>Is Implicit</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsImplicit()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int IS_IMPLICIT_EFLAG = 1 << 8;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -299,6 +320,27 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isIsImplicit() {
+		return (eFlags & IS_IMPLICIT_EFLAG) != 0;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIsImplicit(boolean newIsImplicit) {
+		boolean oldIsImplicit = (eFlags & IS_IMPLICIT_EFLAG) != 0;
+		if (newIsImplicit) eFlags |= IS_IMPLICIT_EFLAG; else eFlags &= ~IS_IMPLICIT_EFLAG;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.OUT_EXP_CS__IS_IMPLICIT, oldIsImplicit, newIsImplicit));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -330,6 +372,8 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 				return getTypeSpecCS();
 			case CSTPackage.OUT_EXP_CS__EXPRESSIONS:
 				return getExpressions();
+			case CSTPackage.OUT_EXP_CS__IS_IMPLICIT:
+				return isIsImplicit() ? Boolean.TRUE : Boolean.FALSE;
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -359,6 +403,9 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 				getExpressions().clear();
 				getExpressions().addAll((Collection<? extends OCLExpressionCS>)newValue);
 				return;
+			case CSTPackage.OUT_EXP_CS__IS_IMPLICIT:
+				setIsImplicit(((Boolean)newValue).booleanValue());
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -386,6 +433,9 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 			case CSTPackage.OUT_EXP_CS__EXPRESSIONS:
 				getExpressions().clear();
 				return;
+			case CSTPackage.OUT_EXP_CS__IS_IMPLICIT:
+				setIsImplicit(IS_IMPLICIT_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -408,6 +458,8 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 				return typeSpecCS != null;
 			case CSTPackage.OUT_EXP_CS__EXPRESSIONS:
 				return expressions != null && !expressions.isEmpty();
+			case CSTPackage.OUT_EXP_CS__IS_IMPLICIT:
+				return ((eFlags & IS_IMPLICIT_EFLAG) != 0) != IS_IMPLICIT_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -460,6 +512,8 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 		result.append(bodyStartLocation);
 		result.append(", bodyEndLocation: "); //$NON-NLS-1$
 		result.append(bodyEndLocation);
+		result.append(", isImplicit: "); //$NON-NLS-1$
+		result.append((eFlags & IS_IMPLICIT_EFLAG) != 0);
 		result.append(')');
 		return result.toString();
 	}

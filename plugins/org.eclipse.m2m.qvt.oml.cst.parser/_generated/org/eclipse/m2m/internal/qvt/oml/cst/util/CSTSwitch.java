@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTSwitch.java,v 1.6 2008/10/23 20:09:17 aigdalov Exp $
+ * $Id: CSTSwitch.java,v 1.7 2008/11/13 15:22:03 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -308,8 +308,9 @@ public class CSTSwitch<T> {
 			case CSTPackage.MAPPING_BODY_CS: {
 				MappingBodyCS mappingBodyCS = (MappingBodyCS)theEObject;
 				T result = caseMappingBodyCS(mappingBodyCS);
-				if (result == null) result = caseOCLExpressionCS(mappingBodyCS);
+				if (result == null) result = caseMappingSectionCS(mappingBodyCS);
 				if (result == null) result = caseCSTNode(mappingBodyCS);
+				if (result == null) result = caseElementWithBody(mappingBodyCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackage.java,v 1.9 2008/10/27 14:26:30 aigdalov Exp $
+ * $Id: CSTPackage.java,v 1.10 2008/11/13 15:22:02 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -1693,7 +1693,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_BODY_CS__START_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_OFFSET;
+	int MAPPING_BODY_CS__START_OFFSET = MAPPING_SECTION_CS__START_OFFSET;
 
 	/**
 	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
@@ -1702,34 +1702,52 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_BODY_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_OFFSET;
+	int MAPPING_BODY_CS__END_OFFSET = MAPPING_SECTION_CS__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Content</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Body Start Location</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_BODY_CS__CONTENT = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 0;
+	int MAPPING_BODY_CS__BODY_START_LOCATION = MAPPING_SECTION_CS__BODY_START_LOCATION;
 
 	/**
-	 * The feature id for the '<em><b>Has Implicit Object Exp</b></em>' attribute.
+	 * The feature id for the '<em><b>Body End Location</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_BODY_CS__HAS_IMPLICIT_OBJECT_EXP = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 1;
+	int MAPPING_BODY_CS__BODY_END_LOCATION = MAPPING_SECTION_CS__BODY_END_LOCATION;
 
 	/**
-	 * The feature id for the '<em><b>Has Population Section</b></em>' attribute.
+	 * The feature id for the '<em><b>Statements</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_BODY_CS__HAS_POPULATION_SECTION = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 2;
+	int MAPPING_BODY_CS__STATEMENTS = MAPPING_SECTION_CS__STATEMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Mapping Rule CS</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_BODY_CS__MAPPING_RULE_CS = MAPPING_SECTION_CS__MAPPING_RULE_CS;
+
+	/**
+	 * The feature id for the '<em><b>Has Population Keyword</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_BODY_CS__HAS_POPULATION_KEYWORD = MAPPING_SECTION_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Mapping Body CS</em>' class.
@@ -1738,7 +1756,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_BODY_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 3;
+	int MAPPING_BODY_CS_FEATURE_COUNT = MAPPING_SECTION_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.OutExpCSImpl <em>Out Exp CS</em>}' class.
@@ -1814,13 +1832,22 @@ public interface CSTPackage extends EPackage {
 	int OUT_EXP_CS__EXPRESSIONS = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 4;
 
 	/**
+	 * The feature id for the '<em><b>Is Implicit</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OUT_EXP_CS__IS_IMPLICIT = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 5;
+
+	/**
 	 * The number of structural features of the '<em>Out Exp CS</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int OUT_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 5;
+	int OUT_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 6;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.PatternPropertyExpCSImpl <em>Pattern Property Exp CS</em>}' class.
@@ -4565,37 +4592,15 @@ public interface CSTPackage extends EPackage {
 	EClass getMappingBodyCS();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS#getContent <em>Content</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS#isHasPopulationKeyword <em>Has Population Keyword</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Content</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS#getContent()
+	 * @return the meta object for the attribute '<em>Has Population Keyword</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS#isHasPopulationKeyword()
 	 * @see #getMappingBodyCS()
 	 * @generated
 	 */
-	EReference getMappingBodyCS_Content();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS#isHasImplicitObjectExp <em>Has Implicit Object Exp</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Has Implicit Object Exp</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS#isHasImplicitObjectExp()
-	 * @see #getMappingBodyCS()
-	 * @generated
-	 */
-	EAttribute getMappingBodyCS_HasImplicitObjectExp();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS#isHasPopulationSection <em>Has Population Section</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Has Population Section</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS#isHasPopulationSection()
-	 * @see #getMappingBodyCS()
-	 * @generated
-	 */
-	EAttribute getMappingBodyCS_HasPopulationSection();
+	EAttribute getMappingBodyCS_HasPopulationKeyword();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS <em>Out Exp CS</em>}'.
@@ -4639,6 +4644,17 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getOutExpCS_Expressions();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS#isIsImplicit <em>Is Implicit</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Implicit</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS#isIsImplicit()
+	 * @see #getOutExpCS()
+	 * @generated
+	 */
+	EAttribute getOutExpCS_IsImplicit();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.PatternPropertyExpCS <em>Pattern Property Exp CS</em>}'.
@@ -6270,28 +6286,12 @@ public interface CSTPackage extends EPackage {
 		EClass MAPPING_BODY_CS = eINSTANCE.getMappingBodyCS();
 
 		/**
-		 * The meta object literal for the '<em><b>Content</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Has Population Keyword</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference MAPPING_BODY_CS__CONTENT = eINSTANCE.getMappingBodyCS_Content();
-
-		/**
-		 * The meta object literal for the '<em><b>Has Implicit Object Exp</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute MAPPING_BODY_CS__HAS_IMPLICIT_OBJECT_EXP = eINSTANCE.getMappingBodyCS_HasImplicitObjectExp();
-
-		/**
-		 * The meta object literal for the '<em><b>Has Population Section</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute MAPPING_BODY_CS__HAS_POPULATION_SECTION = eINSTANCE.getMappingBodyCS_HasPopulationSection();
+		EAttribute MAPPING_BODY_CS__HAS_POPULATION_KEYWORD = eINSTANCE.getMappingBodyCS_HasPopulationKeyword();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.OutExpCSImpl <em>Out Exp CS</em>}' class.
@@ -6326,6 +6326,14 @@ public interface CSTPackage extends EPackage {
 		 * @generated
 		 */
 		EReference OUT_EXP_CS__EXPRESSIONS = eINSTANCE.getOutExpCS_Expressions();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Implicit</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute OUT_EXP_CS__IS_IMPLICIT = eINSTANCE.getOutExpCS_IsImplicit();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.PatternPropertyExpCSImpl <em>Pattern Property Exp CS</em>}' class.
