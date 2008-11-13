@@ -88,7 +88,7 @@ public class QvtOperationalEnvFactory extends EcoreEnvironmentFactory {
         return createEnvironment((QvtOperationalEnv) parent);
     }
 
-    protected QvtOperationalEnv createEnvironment(final QvtOperationalEnv parent) {
+    public QvtOperationalEnv createEnvironment(final QvtOperationalEnv parent) {
 		QvtOperationalEnv env = new QvtOperationalEnv(parent);
 		env.setFactory(this);
 		return env;

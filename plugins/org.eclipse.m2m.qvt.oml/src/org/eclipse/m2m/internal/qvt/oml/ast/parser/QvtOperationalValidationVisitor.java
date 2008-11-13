@@ -45,6 +45,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.ecore.CallOperationAction;
+import org.eclipse.ocl.ecore.CollectionType;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.OCLExpression;
@@ -346,7 +347,9 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 		EClassifier paramType = resultParam.getEType();
 		if(paramType != null) {
 			if(QVTUMLReflection.isModelTypeInstance(paramType) ||
-				QVTUMLReflection.isModuleInstance(paramType)) {
+				QVTUMLReflection.isModuleInstance(paramType)
+				|| (!QVTUMLReflection.isUserModelElement(paramType)
+				        && (paramType != null) && !(paramType instanceof CollectionType))) {
 				result = false;
 				fEnv.reportError(NLS.bind(ValidationMessages.nonModelTypeError, 
 									QvtOperationalParserUtil.safeGetQualifiedName(fEnv, paramType)), 

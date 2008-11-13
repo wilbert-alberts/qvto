@@ -21,11 +21,13 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
+import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CallExpCS;
 import org.eclipse.ocl.cst.OCLExpressionCS;
+import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.VariableExpCS;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
@@ -91,7 +93,24 @@ class DeprecatedImplicitSourceCallHelper {
 					if(refVar != null && refVar.getName() != null) {
 						String refVarName = refVar.getName();
 						if(QvtOperationalEnv.SELF_VARIABLE_NAME.equals(refVarName)) {
-							QvtOperationalUtil.reportError(env, ValidationMessages.DeprecatedImplicitSourceCall_contextualImplicitCall, causeNode);
+						    boolean isImplicitSelfOk = false;
+						    EObject tempCS = callExpCS;
+						    while (tempCS != null) {
+						        if (tempCS instanceof OutExpCS) {
+						            OutExpCS objectExpCS = (OutExpCS) tempCS;
+						            SimpleNameCS referredObject = objectExpCS.getSimpleNameCS();
+                                    if (referredObject != null) {
+                                        if (QvtOperationalEnv.SELF_VARIABLE_NAME.equals(referredObject.getValue())) {
+                                            isImplicitSelfOk = true;
+                                            break;
+                                        }
+						            }
+						        }
+						        tempCS = tempCS.eContainer();
+						    }
+						    if (!isImplicitSelfOk) {
+						        QvtOperationalUtil.reportError(env, ValidationMessages.DeprecatedImplicitSourceCall_contextualImplicitCall, causeNode);
+						    }
 						} 
 						else if(refVarName != null && refVarName.endsWith(QvtOperationalFileEnv.THIS_VAR_QNAME_SUFFIX)) {
 							if(resultAST instanceof OperationCallExp) {

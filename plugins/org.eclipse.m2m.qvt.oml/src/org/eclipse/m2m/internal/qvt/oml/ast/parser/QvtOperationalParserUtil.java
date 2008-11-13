@@ -134,7 +134,7 @@ public class QvtOperationalParserUtil {
 			buffer.append(element);
 		}
 		return buffer == null ? "" : buffer.toString(); //$NON-NLS-1$
-	}	
+	}
 
 	public static String getStringRepresentation(ScopedNameCS scopedNameCS) {
 		StringBuilder buf = new StringBuilder();
@@ -223,31 +223,6 @@ public class QvtOperationalParserUtil {
 			result.add(imp.getImportedModule());
 		}
 	}
-
-
-	public static boolean validateNameClashing(String name, EClassifier returnType, EClassifier contextType,
-			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
-			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env, 
-			CSTNode cstNode) {
-		if (env.lookupProperty(returnType, name) != null) {
-			// should report a warning
-			// fEnv.reportError(ValidationMessages.getString("SemanticUtil.11",
-			// new Object[] {name, returnType}), cstNode); //$NON-NLS-1$
-			// return false;
-		}
-
-		if (contextType != null) {
-			if (env.lookupProperty(contextType, name) != null) {
-				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.SemanticUtil_13,
-						new Object[] { name, QvtOperationalTypesUtil.getTypeFullName(contextType) }),
-						cstNode);
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 
 	public static boolean validateInitVariable(VariableInitExp varInit, 
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
@@ -448,13 +423,13 @@ public class QvtOperationalParserUtil {
 	public static boolean validateVariableModification(Variable<EClassifier, EParameter> variable,
 			PathNameCS varPathNameNodeCS, EStructuralFeature varPathNamePropertyASTopt, 
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
-			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
-		
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
+			boolean isDirectModification) {
 		EParameter representedParameter = variable.getRepresentedParameter();
 		if (representedParameter instanceof VarParameter) {
 			VarParameter parameter = (VarParameter) representedParameter;
 			// detect whether an [inout] parameter variable is to be assigned a new value 
-			boolean isDirectInoutModification = parameter.getKind() == DirectionKind.INOUT && varPathNameNodeCS.getSequenceOfNames().size() == 1;
+			boolean isDirectInoutModification = parameter.getKind() == DirectionKind.INOUT && isDirectModification;
 			boolean isContextualPropertyAccessed = varPathNamePropertyASTopt instanceof ContextualProperty;
 			
 			if(isDirectInoutModification) {

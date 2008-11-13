@@ -53,13 +53,12 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 	
 	@Override
 	protected void addedVariable(String name, Variable<EClassifier, EParameter> elem, boolean isExplicit) {
+        super.addedVariable(name, elem, isExplicit);
 		if(name != null && name.endsWith(THIS_VAR_QNAME_SUFFIX)) {
 			if(myContextModule != null) {
 				myContextModule.getOwnedVariable().add((org.eclipse.ocl.ecore.Variable)elem);
-				return;
 			}
 		}
-		super.addedVariable(name, elem, isExplicit);
 	}
 			    
     public void setContextModule(Module module) {

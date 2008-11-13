@@ -50,7 +50,6 @@ public final class ValidationMessages extends NLS {
 	public static String QvtOperationalVisitorCS_duplicateMappingRereferenceInExtensionKind;
 	public static String QvtOperationalVisitorCS_duplicateQualifierOnOperation;
 	public static String QvtOperationalVisitorCS_instatiatedTypeDoesNotConformToReferredType;
-	public static String QvtOperationalVisitorCS_missingObjectExpInPopulationSection;
     public static String QvtOperationalVisitorCS_ResolveInMappingNotFound;
     public static String QvtOperationalVisitorCS_ResolveInSeveralMappingsFound;
 	public static String QvtOperationalVisitorCS_unresolvedMappingOperationReference;
@@ -82,8 +81,6 @@ public final class ValidationMessages extends NLS {
 	public static String QvtOperationalVisitorCS_resultParamNameNotAllowed;
 	public static String QvtOperationalVisitorCS_SeeErrorLogForDetails;
 	public static String QvtOperationalVisitorCS_unsupportedQualifierOnOperation;
-	public static String QvtOperationalVisitorCS_useImplicitObjectExpOrPopulationSection;
-	public static String QvtOperationalVisitorCS_userVariableForReferredObject;
     public static String QvtOperationalVisitorCS_WrongImperativeIteratorConditionType;
     
 	public static String readOnlyPropertyModificationError;
@@ -122,7 +119,6 @@ public final class ValidationMessages extends NLS {
 	public static String inputParameterModificationError;
 	public static String UnknownClassifierType;
 	public static String invalidPropertyReferenceError;
-	public static String objectExpressionExpectedError;
 	public static String ConfigPropertyMustHaveType;
 	public static String ConfigPropertyTypeUnsupported;
 
@@ -135,7 +131,6 @@ public final class ValidationMessages extends NLS {
 	public static String SemanticUtil_5;
 	public static String SemanticUtil_8;
 	
-	public static String SemanticUtil_13;
 	public static String SemanticUtil_15;
 	public static String SemanticUtil_17;
 	

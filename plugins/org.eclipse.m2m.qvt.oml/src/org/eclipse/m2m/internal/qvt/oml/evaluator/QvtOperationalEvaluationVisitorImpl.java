@@ -136,6 +136,7 @@ import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.PropertyCallExp;
 import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.expressions.VariableExp;
 import org.eclipse.ocl.internal.OCLPlugin;
 import org.eclipse.ocl.internal.evaluation.EvaluationVisitorImpl;
 import org.eclipse.ocl.internal.l10n.OCLMessages;
@@ -267,11 +268,11 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         
     	boolean isDeferred = false;    	
         // TODO: modify the following code for more complex l-values
+        OCLExpression<EClassifier> lValue = assignExp.getLeft();
         if (assignExp.getValue().size() == 1) {
         	isDeferred = QvtResolveUtil.hasDeferredRightSideValue(assignExp);
             if(isDeferred) {
-            	String ownerName = assignExp.getLeft().getName();        	
-                Object ownerObj = (ownerName == null ? internEnv.peekObjectExpOwner() : getRuntimeValue(ownerName));
+                Object ownerObj = getAssignExpLValueOwner(lValue);
                 if (ownerObj instanceof EObject) {
                     PropertyCallExp<EClassifier, EStructuralFeature> lvalueExp = (PropertyCallExp<EClassifier, EStructuralFeature>) assignExp.getLeft();
                     EStructuralFeature referredProperty = getRenamedProperty(lvalueExp.getReferredProperty());
@@ -291,59 +292,72 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         	return null;
         }        
         
-        String ownerName = assignExp.getLeft().getName();
-        if (false == assignExp.getLeft() instanceof PropertyCallExp) {
-            EClassifier variableType = assignExp.getLeft().getType();
-            Object oldValue = getRuntimeValue(ownerName);
-            if (variableType instanceof CollectionType && !(variableType instanceof VoidType)
-                    && oldValue instanceof Collection) {
-                Collection<Object> oldOclCollection = (Collection<Object>) oldValue;
-                Collection<Object> leftOclCollection;
-                if (assignExp.isIsReset()) {
-                    leftOclCollection = CollectionUtil.createNewCollectionOfSameKind(oldOclCollection);
-                } else {
-                    leftOclCollection = oldOclCollection;
-                }
+        if (lValue instanceof VariableExp) {
+            @SuppressWarnings("unchecked")
+            VariableExp<EClassifier, EParameter> varExp = (VariableExp<EClassifier, EParameter>) lValue;
+            Variable<EClassifier, EParameter> referredVariable = varExp.getReferredVariable();
+            if (referredVariable != null) {
+                String varName = referredVariable.getName();
+                Object oldValue = getRuntimeValue(varName);
+                EClassifier variableType = lValue.getType();
+                if ((variableType instanceof CollectionType) && (oldValue instanceof Collection)) {
+                    @SuppressWarnings("unchecked")
+                    Collection<Object> oldOclCollection = (Collection<Object>) oldValue;
+                    Collection<Object> leftOclCollection;
+                    if (assignExp.isIsReset()) {
+                        leftOclCollection = CollectionUtil.createNewCollectionOfSameKind(oldOclCollection);
+                    } else {
+                        leftOclCollection = oldOclCollection;
+                    }
 
-                if (exprValue instanceof Collection) {
-                	if(getCollectionKind(leftOclCollection) == CollectionKind.ORDERED_SET_LITERAL) {
-                    	// can't use CollectionUtil.union(), the result type is not OrderedSet                		
-                		LinkedHashSet<Object> values = new LinkedHashSet<Object>();
-                		values.addAll(leftOclCollection);
-                		values.addAll((Collection<Object>)exprValue);
-                		leftOclCollection = CollectionUtil.createNewCollection(((CollectionType)variableType).getKind(), values);
-                	} else {
-                    leftOclCollection = CollectionUtil.union(leftOclCollection, (Collection<?>) exprValue);
-                	}
-                } else if (getCollectionKind(leftOclCollection) == CollectionKind.ORDERED_SET_LITERAL
-                        || getCollectionKind(leftOclCollection) == CollectionKind.SEQUENCE_LITERAL) {
-                    leftOclCollection = CollectionUtil.append(leftOclCollection, exprValue);
-                } else {
-                    leftOclCollection = CollectionUtil.including(leftOclCollection, exprValue);
-                }
+                    if (exprValue instanceof Collection) {
+                        if(getCollectionKind(leftOclCollection) == CollectionKind.ORDERED_SET_LITERAL) {
+                            // can't use CollectionUtil.union(), the result type is not OrderedSet                      
+                            LinkedHashSet<Object> values = new LinkedHashSet<Object>();
+                            values.addAll(leftOclCollection);
+                            values.addAll((Collection<Object>)exprValue);
+                            leftOclCollection = CollectionUtil.createNewCollection(((CollectionType)variableType).getKind(), values);
+                        } else {
+                        leftOclCollection = CollectionUtil.union(leftOclCollection, (Collection<?>) exprValue);
+                        }
+                    } else if (getCollectionKind(leftOclCollection) == CollectionKind.ORDERED_SET_LITERAL
+                            || getCollectionKind(leftOclCollection) == CollectionKind.SEQUENCE_LITERAL) {
+                        leftOclCollection = CollectionUtil.append(leftOclCollection, exprValue);
+                    } else {
+                        leftOclCollection = CollectionUtil.including(leftOclCollection, exprValue);
+                    }
 
-                replaceInEnv(ownerName, leftOclCollection, variableType);
-            } else {
-            	replaceInEnv(ownerName, exprValue, variableType);
+                    replaceInEnv(varName, leftOclCollection, variableType);
+                } else {
+                    replaceInEnv(varName, exprValue, variableType);
+                }
             }
-        } else {
-			Object ownerObj = (ownerName == null ? internEnv.peekObjectExpOwner() : getRuntimeValue(ownerName));
+        } else if (lValue instanceof PropertyCallExp) {
+            Object ownerObj = getAssignExpLValueOwner(lValue);
             if (ownerObj instanceof EObject) {
                 int oldIpPos = setCurrentEnvInstructionPointer(assignExp);
-                final EObject owner = (EObject) ownerObj;
-                //	            runSafe(new IRunnable() {
-                //	                public void run() throws Exception {
                 env.callSetter(
-                        owner,
-                        getRenamedProperty(((PropertyCallExp<EClassifier, EStructuralFeature>) assignExp.getLeft()).getReferredProperty()),
+                        (EObject) ownerObj,
+                        getRenamedProperty(((PropertyCallExp<EClassifier, EStructuralFeature>) lValue).getReferredProperty()),
                         exprValue, isUndefined(exprValue), assignExp.isIsReset());
-                //	                }
-                //	            });
                 setCurrentEnvInstructionPointer(oldIpPos);
             }
+        } else {
+            throw new UnsupportedOperationException("Unsupported LValue type: " + ((lValue == null) ? null : lValue.getType())); //$NON-NLS-1$
         }
 
         return exprValue;
+    }
+    
+    private Object getAssignExpLValueOwner(OCLExpression<EClassifier> lValue) {
+        if (lValue instanceof PropertyCallExp<?, ?>) {
+            @SuppressWarnings("unchecked")
+            PropertyCallExp<EClassifier, EParameter> propertyCallExp = (PropertyCallExp<EClassifier, EParameter>) lValue;
+            OCLExpression<EClassifier> sourceExp = propertyCallExp.getSource();
+            Object owner = sourceExp.accept(getVisitor());
+            return owner;
+        }
+        return null;
     }
 
     public Object visitConfigProperty(ConfigProperty configProperty) {
@@ -812,6 +826,10 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     	}
     	
         internEnv.popObjectExpOwner();
+        
+        if (getOperationalEnv().isTemporaryElement(objectExp.getName())) {
+            getOperationalEvaluationEnv().remove(objectExp.getName());
+        }
 
         return owner;
     }

@@ -13,6 +13,7 @@ package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
 import static org.eclipse.ocl.utilities.UMLReflection.SAME_TYPE;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -29,8 +30,11 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
+import org.eclipse.ocl.LookupException;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
@@ -68,6 +72,15 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 		}
 	}	
 	
+    private static final String TEMPORARY_NAME_GENERATOR_UNIQUE_PREFIX = "@@@temp_"; //$NON-NLS-1$
+    private int myTemporaryNameGeneratorInt = 0;
+    /*
+     * List of declared variables and implicit variables, including "self".
+     * Implicit variables are generated when there is an iterator without any
+     * iteration variable specified.
+     */
+    private List<Variable<EClassifier, EParameter>> myImplicitVars = new LinkedList<Variable<EClassifier, EParameter>>();
+
     private QVTUMLReflection fQVUMLReflection;
 	private List<QvtEnvironmentBase> siblings;
 	private Set<EOperation> fOperationsHolder;	
@@ -86,6 +99,46 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 	
 	public abstract Module getModuleContextType();	
 	
+	public void addImplicitVariableForProperties(String name, Variable<EClassifier, EParameter> elem) {
+        getUMLReflection().setName(elem, name);
+	    addedVariable(name, elem, false);
+	}
+	
+    @Override
+    protected void addedVariable(String name, Variable<EClassifier, EParameter> elem, boolean isExplicit) {
+        if(!isExplicit) {
+            myImplicitVars.add(elem);
+        }
+        
+        if(elem instanceof VarParameter == false) {
+            if(getContextOperation() instanceof ImperativeOperation) {
+                ImperativeOperation imperativeOperation = (ImperativeOperation) getContextOperation();
+                if(elem.eContainer() == null) {
+                    if (imperativeOperation.getBody() != null) {
+                        imperativeOperation.getBody().getVariable().add(elem);
+                    } else {
+                        super.addedVariable(name, elem, isExplicit);
+                    }
+                }
+            } else {
+                super.addedVariable(name, elem, isExplicit);
+            }
+        } 
+    }
+    
+    @Override
+    protected void removedVariable(String name, Variable<EClassifier, EParameter> variable, boolean isExplicit) {
+        if(!isExplicit) {
+            myImplicitVars.remove(variable);
+        }
+
+        super.removedVariable(name, variable, isExplicit);
+    }
+    
+    public Collection<Variable<EClassifier, EParameter>> getImplicitVariables() {
+        return Collections.unmodifiableCollection(myImplicitVars);
+    }
+
 	@Override
 	public Variable<EClassifier, EParameter> lookupImplicitSourceForOperation(String name, List<? extends TypedElement<EClassifier>> args) {
 		Variable<EClassifier, EParameter> result = super.lookupImplicitSourceForOperation(name, args);
@@ -106,9 +159,61 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 		return result;
 	}
 	
+    // implements the interface method
+    public Variable<EClassifier, EParameter> lookupImplicitSourceForPropertyInternal(String name) {
+        Variable<EClassifier, EParameter> vdcl;
+        
+        for (int i = myImplicitVars.size() - 1; i >= 0; i--) {
+            vdcl = myImplicitVars.get(i);
+            EClassifier owner = vdcl.getType();
+            
+            if (owner != null) {
+                EStructuralFeature property = safeTryLookupPropertyInternal(owner, name);
+                if (property != null) {
+                    return vdcl;
+                }
+            }
+
+        }
+        
+        // try the "self" variable, last
+        vdcl = getSelfVariable();
+        if (vdcl != null) {
+            EClassifier owner = vdcl.getType();
+            if (owner != null) {
+                EStructuralFeature property = safeTryLookupPropertyInternal(owner, name);
+                if (property != null) {
+                    return vdcl;
+                }
+            }
+        }
+        
+        return null;
+
+    }
+    
+    /**
+     * Wrapper for the "try" operation that doesn't throw, but just returns the
+     * first ambiguous match in case of ambiguity.
+     */
+    @SuppressWarnings("unchecked")
+    private EStructuralFeature safeTryLookupPropertyInternal(EClassifier owner, String name) {
+        EStructuralFeature result = null;
+        
+        try {
+            result = tryLookupProperty(owner, name);
+        } catch (LookupException e) {
+            if (!e.getAmbiguousMatches().isEmpty()) {
+                result = (EStructuralFeature) e.getAmbiguousMatches().get(0);
+            }
+        }
+        
+        return result;
+    }
+    
 	@Override
 	public Variable<EClassifier, EParameter> lookupImplicitSourceForProperty(String name) {
-		Variable<EClassifier, EParameter> result = super.lookupImplicitSourceForProperty(name);
+		Variable<EClassifier, EParameter> result = lookupImplicitSourceForPropertyInternal(name);
 		if(result == null) {
 			QvtEnvironmentBase rootEnv = getRootEnv();
 			if(rootEnv != this) {
@@ -321,4 +426,23 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 		}
 		return root;
 	}
+	
+    public String generateTemporaryName() {
+        QvtEnvironmentBase rootEnv = getRootEnv();
+        String name;
+        do {
+            name = rootEnv.generateTemporaryNameInternal();
+        } while (lookup(name) != null);
+        return name;
+    }
+
+    
+    public boolean isTemporaryElement(String name) {
+        return (name != null) && name.startsWith(TEMPORARY_NAME_GENERATOR_UNIQUE_PREFIX);
+    }
+    
+    private String generateTemporaryNameInternal() {
+        myTemporaryNameGeneratorInt++;
+        return TEMPORARY_NAME_GENERATOR_UNIQUE_PREFIX + myTemporaryNameGeneratorInt;
+    }
 }

@@ -77,12 +77,6 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	
 	public static final String METAMODEL_COMPLIANCE_KIND_STRICT = "strict"; //$NON-NLS-1$
 	
-    /*
-     * List of declared variables and implicit variables, including "self".
-     * Implicit variables are generated when there is an iterator without any
-     * iteration variable specified.
-     */
-    private List<Variable<EClassifier, EParameter>> myImplicitVars = new LinkedList<Variable<EClassifier, EParameter>>();
     private EPackage.Registry myPackageRegistry;    
 	private final List<QvtMessage> myWarningsList = new ArrayList<QvtMessage>(2);
 	private final List<QvtMessage> myErrorsList = new ArrayList<QvtMessage>(2);
@@ -258,59 +252,6 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
         return result;
     }
     
-    @Override
-    protected void addedVariable(String name, Variable<EClassifier, EParameter> elem, boolean isExplicit) {
-    	if(!isExplicit) {
-    		myImplicitVars.add(elem);
-    	}
-    	
-        if(elem instanceof VarParameter == false) {
-        	if(getContextOperation() instanceof ImperativeOperation) {
-        		ImperativeOperation imperativeOperation = (ImperativeOperation) getContextOperation();
-         		if(imperativeOperation.getBody() != null && elem.eContainer() == null) {        			
-        			imperativeOperation.getBody().getVariable().add(elem);
-        		}
-        	} else {
-        		super.addedVariable(name, elem, isExplicit);
-        	}
-        } 
-    }
-    
-    @Override
-    protected void removedVariable(String name, Variable<EClassifier, EParameter> variable, boolean isExplicit) {
-    	if(!isExplicit) {
-    		myImplicitVars.remove(variable);
-    	}
-
-    	super.removedVariable(name, variable, isExplicit);
-    }
-    
-    public Collection<Variable<EClassifier, EParameter>> getImplicitVariables() {
-    	return Collections.unmodifiableCollection(myImplicitVars);
-    }
-    
-    public Variable<EClassifier, EParameter> lookupAnyImplicitSource() {
-        for (int i = myImplicitVars.size() - 1; i >= 0; i--) {
-        	Variable<EClassifier, EParameter> vdcl = myImplicitVars.get(i);
-            return vdcl;
-        }
-        
-        if (getInternalParent() instanceof QvtOperationalEnv) {
-            QvtOperationalEnv parentEnv = (QvtOperationalEnv) getInternalParent();
-            return parentEnv.lookupAnyImplicitSource();
-        }
-        return null;
-    }
-    
-    public Variable<EClassifier, EParameter> lookupImplicitSourceForResolveExp() {
-        Variable<EClassifier,EParameter> implicitSource = lookupAnyImplicitSource();
-        if ((implicitSource != null) && (implicitSource.getType() == getModuleContextType() || 
-        		SELF_VARIABLE_NAME.equals(implicitSource.getName()) )) {
-            return null;
-        }
-        return implicitSource;
-    }
-        
 	public void reportError(String message, int startOffset, int endOffset) {
 		if ((myCompilerOptions != null) && !myCompilerOptions.isReportErrors()) {
 			return;
