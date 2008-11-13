@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.18 2008/11/13 15:22:03 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.19 2008/11/13 17:32:56 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.18 2008/11/13 15:22:03 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.19 2008/11/13 17:32:56 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.18 2008/11/13 15:22:03 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.19 2008/11/13 17:32:56 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -235,7 +235,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 	 * QVT Operational specific part
 	 *
 	 */
-	private static final boolean DEBUG = false;
+	
 	
 	@SuppressWarnings("unchecked")
 	private static final EList ourEmptyEList = new BasicEList.UnmodifiableEList(0, new Object[0]);								
@@ -255,14 +255,11 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 		dtParser.setSym1(null);
 	}
 
-	@SuppressWarnings("unchecked")	
-    public void ruleAction(int ruleNumber)
-    {
-        if (DEBUG) {
-           System.out.println("RULE[" + ruleNumber + "]:   " + ruleTexts.get(ruleNumber)); //$NON-NLS-1$
-        }
-        switch(ruleNumber)
-        {
+	@SuppressWarnings("unchecked")
+	public void ruleAction(int ruleNumber)
+	{
+		switch (ruleNumber) {
+		
  
 			//
 			// Rule 28:  impliesExpCS ::= impliesExpCS implies andOrXorExpCS

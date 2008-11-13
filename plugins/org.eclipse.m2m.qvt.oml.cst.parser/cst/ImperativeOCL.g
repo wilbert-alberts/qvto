@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.g,v 1.6 2008/10/27 14:58:12 aigdalov Exp $ 
+-- * $Id: ImperativeOCL.g,v 1.7 2008/11/13 17:32:57 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -77,50 +77,54 @@ $Define
 	--
 	$EMPTY_ELIST /.ourEmptyEList./
 
-	$DebugModeOn /.private static final boolean DEBUG = true;
-			static {
-				if (DEBUG) {
-					ruleTexts = Collections.synchronizedMap(new HashMap<Integer, String>());
-					try {
-						InputStream inputStream = FileLocator.openStream(QvtPlugin.getDefault().getBundle(),
-										new Path("cst/QvtOpLPGParser.l"), false); //$NON-NLS-1$
-						BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-						String line;
-						while ((line = reader.readLine()) != null) {
-							if ("Rules:".equals(line)) {
-								reader.readLine();
-								break;
-							}
-						}
-						while ((line = reader.readLine()) != null) {
-							if (line.trim().length() == 0) {
-								break;
-							}
-							int wsIndex = line.indexOf(' ');
-							String ruleNumberText = line.substring(0, wsIndex);
-							Integer ruleNumber = new Integer(ruleNumberText);
-							String ruleText = line.substring(wsIndex).trim();
-							ruleTexts.put(ruleNumber, ruleText);
-						}
-					} catch (IOException e) {
-						throw new RuntimeException(e);
-					}
-				}
-			}
+	-- QVTO Debugging facility (start)
+	$DebugMode /../
 
-	./
-	$DebugModeOff /.private static final boolean DEBUG = false;./
-
-	$BeginActions    
-	/.
-		@SuppressWarnings("unchecked")	
-        public void ruleAction(int ruleNumber)
-        {
-            if (DEBUG) {
-               System.out.println("RULE[" + ruleNumber + "]:   " + ruleTexts.get(ruleNumber)); //$NON-NLS-1$
-            }
-            switch(ruleNumber)
-            {./
+	-- (to be uncommented for use in DEBUG mode)
+	--$DebugMode /.private static final boolean DEBUG = true;
+	--		static {
+	--			if (DEBUG) {
+	--				ruleTexts = Collections.synchronizedMap(new HashMap<Integer, String>());
+	--				try {
+	--					InputStream inputStream = FileLocator.openStream(QvtPlugin.getDefault().getBundle(),
+	--									new Path("cst/QvtOpLPGParser.l"), false); //$NON-NLS-1$
+	--					BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+	--					String line;
+	--					while ((line = reader.readLine()) != null) {
+	--						if ("Rules:".equals(line)) {
+	--							reader.readLine();
+	--							break;
+	--						}
+	--					}
+	--					while ((line = reader.readLine()) != null) {
+	--						if (line.trim().length() == 0) {
+	--							break;
+	--						}
+	--						int wsIndex = line.indexOf(' ');
+	--						String ruleNumberText = line.substring(0, wsIndex);
+	--						Integer ruleNumber = new Integer(ruleNumberText);
+	--						String ruleText = line.substring(wsIndex).trim();
+	--						ruleTexts.put(ruleNumber, ruleText);
+	--					}
+	--				} catch (IOException e) {
+	--					throw new RuntimeException(e);
+	--				}
+	--			}
+	--		}
+	--
+	--./
+	--
+	--$BeginActions    
+	--/.
+	--	@SuppressWarnings("unchecked")	
+        --public void ruleAction(int ruleNumber)
+        --{
+        --    if (DEBUG) {
+        --       System.out.println("RULE[" + ruleNumber + "]:   " + ruleTexts.get(ruleNumber)); //$NON-NLS-1$
+        --    }
+        --    switch(ruleNumber)
+        --    {./
+	-- QVTO Debugging facility (end)
 
 
 	-- copied from OCLLPGParser.g
@@ -304,7 +308,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: ImperativeOCL.g,v 1.6 2008/10/27 14:58:12 aigdalov Exp $
+ * $Id: ImperativeOCL.g,v 1.7 2008/11/13 17:32:57 aigdalov Exp $
  */
 	./
 $End
@@ -316,7 +320,7 @@ $Headers
 		 * QVT Operational specific part
 		 *
 		 */
-		$DebugModeOff
+		$DebugMode
 		
 		@SuppressWarnings("unchecked")
 		private static final EList ourEmptyEList = new BasicEList.UnmodifiableEList(0, new Object[0]);								
