@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.18 2008/11/13 15:21:49 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.19 2008/11/13 17:32:49 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.18 2008/11/13 15:21:49 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.19 2008/11/13 17:32:49 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.18 2008/11/13 15:21:49 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.19 2008/11/13 17:32:49 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -240,7 +240,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 	 * QVT Operational specific part
 	 *
 	 */
-	private static final boolean DEBUG = false;
+	
 	
 	@SuppressWarnings("unchecked")
 	private static final EList ourEmptyEList = new BasicEList.UnmodifiableEList(0, new Object[0]);								
@@ -260,14 +260,11 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 		dtParser.setSym1(null);
 	}
 
-	@SuppressWarnings("unchecked")	
-    public void ruleAction(int ruleNumber)
-    {
-        if (DEBUG) {
-           System.out.println("RULE[" + ruleNumber + "]:   " + ruleTexts.get(ruleNumber)); //$NON-NLS-1$
-        }
-        switch(ruleNumber)
-        {
+	@SuppressWarnings("unchecked")
+	public void ruleAction(int ruleNumber)
+	{
+		switch (ruleNumber) {
+		
  
 			//
 			// Rule 28:  impliesExpCS ::= impliesExpCS implies andOrXorExpCS
@@ -4830,10 +4827,13 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 
 				if (mappingBodyCS != null) {
 					if ((mappingBodyCS.getStartOffset() < 0) && (mappingInitCS != null)) {
-						mappingBodyCS.setStartOffset(mappingInitCS.getEndOffset());
+						mappingBodyCS.setStartOffset(mappingInitCS.getEndOffset() + 1);
 					}
 					if ((mappingBodyCS.getEndOffset() < 0) && (mappingEndCS != null)) {
-						mappingBodyCS.setEndOffset(mappingEndCS.getStartOffset());
+						mappingBodyCS.setEndOffset(mappingEndCS.getStartOffset() - 1);
+					}
+					if (mappingBodyCS.getStartOffset() > mappingBodyCS.getEndOffset()) {
+						mappingBodyCS.setEndOffset(mappingBodyCS.getStartOffset());
 					}
 				}
 				
