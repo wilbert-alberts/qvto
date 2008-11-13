@@ -75,8 +75,8 @@ main() {
 	assert fatal (not ePropStrOrderedSet->includesAll(ePropStrSeq));
 }
 
-mapping foo(in name : String, in values : Collection(String)) : EClass {
-	name := name;
+mapping foo(in pName : String, in values : Collection(String)) : EClass {
+	name := pName;
 	eStructuralFeatures += values->collect(s | object EAttribute { name := s });
 }
 

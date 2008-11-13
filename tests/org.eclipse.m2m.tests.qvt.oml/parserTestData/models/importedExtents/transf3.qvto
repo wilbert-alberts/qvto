@@ -4,5 +4,5 @@ modeltype Ecore uses "http://www.eclipse.org/emf/2002/Ecore";
 transformation transf3(inout uml : Uml);
 
 mapping createUmlClass(name : String) : Class {
-	name := name;
+	result.name := name;
 }

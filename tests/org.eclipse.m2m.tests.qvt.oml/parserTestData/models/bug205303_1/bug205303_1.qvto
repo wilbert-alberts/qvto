@@ -12,8 +12,8 @@ mapping main(in model : EPackage) : EPackage {
     	var e1 := resolveIn(EClass::a, EClass);
 	--    var e2 := resolve(EClass::a, EClass);
     	var f := d->collect(aa | resolveIn(EClass::a, EClass));
-    	var f1 := d->collect(resolveIn(EClass::a, EClass));
-    	var f2 := d->collect(resolve(EClass));
+    	var f1 := d->collect(i | i.resolveIn(EClass::a, EClass));
+    	var f2 := d->collect(i | i.resolve(EClass));
     }
     	name := 'root';
     	eSubpackages += object EPackage {

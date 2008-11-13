@@ -99,7 +99,7 @@ public class ParserTests {
         TestData.createSourceChecked("bug2732_wrongcondition", 1, 1), //$NON-NLS-1$      
         TestData.createSourceChecked("varscope", 10, 0), //$NON-NLS-1$      
     	TestData.createSourceChecked("_while", 10, 1), //$NON-NLS-1$
-    	TestData.createSourceChecked("implicitCallSrc", 22, 4), //$NON-NLS-1$    	
+    	TestData.createSourceChecked("implicitCallSrc", 20, 4), //$NON-NLS-1$    	
     	new TestData("assert_log", 0), //$NON-NLS-1$    	
         new TestData("opersignatureparamclash", 1), //$NON-NLS-1$    	
         new TestData("collectreturntype", 0), //$NON-NLS-1$
@@ -127,11 +127,11 @@ public class ParserTests {
         new TestData("missingvariablereference", 1), //$NON-NLS-1$
         new TestData("optionalout", 0), //$NON-NLS-1$
         new TestData("abstractout", 1), //$NON-NLS-1$
-        new TestData("nonassignableout", 2), //$NON-NLS-1$
+        new TestData("nonassignableout", 1), //$NON-NLS-1$
         TestData.createSourceChecked("wrongout", 3, 0), //$NON-NLS-1$
         new TestData("outininitvar", 0), //$NON-NLS-1$
         new TestData("modifyfeature", 0), //$NON-NLS-1$
-        new TestData("missingout", 1), //$NON-NLS-1$
+        new TestData("missingout", 2), //$NON-NLS-1$
         new TestData("modifyfeatureerror", 2), //$NON-NLS-1$
         new TestData("bodywithsemicolon", 0), //$NON-NLS-1$
         new TestData("modifyparam", 0), //$NON-NLS-1$
@@ -178,6 +178,6 @@ public class ParserTests {
         new TestData("mm_header7", 1), //$NON-NLS-1$
         new TestData("entryOpDupl", 1), //$NON-NLS-1$
         new TestData("resolveIn_ambiguity", 0, "Mappings referred in resolveIn must not be overloaded! Several 'ENamedElement::createEClass' mappings found. All of them will participate in the resolution."), //$NON-NLS-1$ //$NON-NLS-2$
-        new TestData("bug205303_2", 2), //$NON-NLS-1$
+        new TestData("bug205303_2", 3), //$NON-NLS-1$
     };
 }

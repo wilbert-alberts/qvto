@@ -60,13 +60,13 @@ mapping ecore::EClass::myMapping() : ecore::EPackage {
 		self.map myMapping();
 				
 		object EPackage {
-			name := /*<error>*/name/*</error>*/;
+			name := name;
 			name := self.name;
 			name := map /*<error>*/importedMyMapping/*</error>*/().name;
 		};
 	}
 
-	name := /*<error>*/name/*</error>*/;
+	name := name;
 	name := self.name;
 	name := localProp;
 	name := this.localProp;
@@ -79,7 +79,7 @@ mapping ecore::EClass::myMapping() : ecore::EPackage {
 	end {
 		/*<error>*/resolve(EClass)/*</error>*/;
 		self.resolve();
-		Bag{ self }->any(resolve() <> null);	
+		Bag{ self }->any(/*<error>*/resolve()/*</error>*/  <> null);	
 			
 		resolveIn(nonContextualMapping, e : EPackage | e <> null 
 				and /*<error>*/_abstract/*</error>*/ <> null);
@@ -158,8 +158,8 @@ mapping EAnnotation::fooMapping() : EParameter {
 		s:= this.source;	
 		var a := /*<error>*/eAnnotations/*</error>*/;
 		object EAnnotation {
-			eAnnotations := /*<error>*/eAnnotations/*</error>*/;
-			eAnnotations := self.eAnnotations;		
+			eAnnotations := eAnnotations;
+			eAnnotations := self.eAnnotations;	 	
 		}		
 	}
 }
