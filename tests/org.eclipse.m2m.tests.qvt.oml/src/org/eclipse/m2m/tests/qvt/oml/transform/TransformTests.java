@@ -78,7 +78,9 @@ public class TransformTests {
     
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {        		
-        		new FileToFileData("blackboxlib_annotation_java"), //$NON-NLS-1$        		
+                new FileToFileData("objectExpBodyExpressions_253051"), //$NON-NLS-1$                
+                new FileToFileData("mappingBodyExpressions_252358"), //$NON-NLS-1$                
+                new FileToFileData("blackboxlib_annotation_java"), //$NON-NLS-1$                
                 new FileToFileData("helperSimpleDef_252173"), //$NON-NLS-1$                
                 new FileToFileData("compositetransf"), //$NON-NLS-1$                
                 new FileToFileData("computeExp_250403"), //$NON-NLS-1$
