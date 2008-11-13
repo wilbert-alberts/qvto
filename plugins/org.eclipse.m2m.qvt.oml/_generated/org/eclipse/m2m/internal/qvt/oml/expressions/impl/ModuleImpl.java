@@ -65,7 +65,6 @@ import org.eclipse.ocl.utilities.Visitor;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getConfigProperty <em>Config Property</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getOwnedRenaming <em>Owned Renaming</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getEntry <em>Entry</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getIntermediateProperty <em>Intermediate Property</em>}</li>
  * </ul>
  * </p>
  *
@@ -248,16 +247,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * @ordered
 	 */
 	protected EntryOperation entry;
-
-	/**
-	 * The cached value of the '{@link #getIntermediateProperty() <em>Intermediate Property</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getIntermediateProperty()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Property> intermediateProperty;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -516,18 +505,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Property> getIntermediateProperty() {
-		if (intermediateProperty == null) {
-			intermediateProperty = new EObjectResolvingEList<Property>(Property.class, this, ExpressionsPackage.MODULE__INTERMEDIATE_PROPERTY);
-		}
-		return intermediateProperty;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EList<EStructuralFeature> getConfigProperty() {
 		if (configProperty == null) {
 			configProperty = new EObjectResolvingEList<EStructuralFeature>(EStructuralFeature.class, this, ExpressionsPackage.MODULE__CONFIG_PROPERTY);
@@ -695,8 +672,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 			case ExpressionsPackage.MODULE__ENTRY:
 				if (resolve) return getEntry();
 				return basicGetEntry();
-			case ExpressionsPackage.MODULE__INTERMEDIATE_PROPERTY:
-				return getIntermediateProperty();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -756,10 +731,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 			case ExpressionsPackage.MODULE__ENTRY:
 				setEntry((EntryOperation)newValue);
 				return;
-			case ExpressionsPackage.MODULE__INTERMEDIATE_PROPERTY:
-				getIntermediateProperty().clear();
-				getIntermediateProperty().addAll((Collection<? extends Property>)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -811,9 +782,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 			case ExpressionsPackage.MODULE__ENTRY:
 				setEntry((EntryOperation)null);
 				return;
-			case ExpressionsPackage.MODULE__INTERMEDIATE_PROPERTY:
-				getIntermediateProperty().clear();
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -854,8 +822,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 				return ownedRenaming != null && !ownedRenaming.isEmpty();
 			case ExpressionsPackage.MODULE__ENTRY:
 				return entry != null;
-			case ExpressionsPackage.MODULE__INTERMEDIATE_PROPERTY:
-				return intermediateProperty != null && !intermediateProperty.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

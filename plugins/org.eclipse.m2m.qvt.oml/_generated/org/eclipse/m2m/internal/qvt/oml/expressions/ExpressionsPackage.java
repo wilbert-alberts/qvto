@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ExpressionsPackage.java,v 1.11 2008/11/11 14:05:50 radvorak Exp $
+ * $Id: ExpressionsPackage.java,v 1.12 2008/11/13 11:34:15 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
@@ -683,22 +683,13 @@ public interface ExpressionsPackage extends EPackage {
 	int MODULE__ENTRY = EcorePackage.ECLASS_FEATURE_COUNT + 13;
 
 	/**
-	 * The feature id for the '<em><b>Intermediate Property</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODULE__INTERMEDIATE_PROPERTY = EcorePackage.ECLASS_FEATURE_COUNT + 14;
-
-	/**
 	 * The number of structural features of the '<em>Module</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE_FEATURE_COUNT = EcorePackage.ECLASS_FEATURE_COUNT + 15;
+	int MODULE_FEATURE_COUNT = EcorePackage.ECLASS_FEATURE_COUNT + 14;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.LibraryImpl <em>Library</em>}' class.
@@ -1051,15 +1042,6 @@ public interface ExpressionsPackage extends EPackage {
 	 * @ordered
 	 */
 	int LIBRARY__ENTRY = MODULE__ENTRY;
-
-	/**
-	 * The feature id for the '<em><b>Intermediate Property</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIBRARY__INTERMEDIATE_PROPERTY = MODULE__INTERMEDIATE_PROPERTY;
 
 	/**
 	 * The number of structural features of the '<em>Library</em>' class.
@@ -5745,13 +5727,22 @@ public interface ExpressionsPackage extends EPackage {
 	int OPERATIONAL_TRANSFORMATION__ENTRY = MODULE__ENTRY;
 
 	/**
+	 * The feature id for the '<em><b>Intermediate Class</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__INTERMEDIATE_CLASS = MODULE_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Intermediate Property</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATIONAL_TRANSFORMATION__INTERMEDIATE_PROPERTY = MODULE__INTERMEDIATE_PROPERTY;
+	int OPERATIONAL_TRANSFORMATION__INTERMEDIATE_PROPERTY = MODULE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Model Parameter</b></em>' containment reference list.
@@ -5760,7 +5751,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATIONAL_TRANSFORMATION__MODEL_PARAMETER = MODULE_FEATURE_COUNT + 0;
+	int OPERATIONAL_TRANSFORMATION__MODEL_PARAMETER = MODULE_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Operational Transformation</em>' class.
@@ -5769,7 +5760,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATIONAL_TRANSFORMATION_FEATURE_COUNT = MODULE_FEATURE_COUNT + 1;
+	int OPERATIONAL_TRANSFORMATION_FEATURE_COUNT = MODULE_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.EntryOperationImpl <em>Entry Operation</em>}' class.
@@ -6107,17 +6098,6 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getModule_Entry();
-
-	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getIntermediateProperty <em>Intermediate Property</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Intermediate Property</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.Module#getIntermediateProperty()
-	 * @see #getModule()
-	 * @generated
-	 */
-	EReference getModule_IntermediateProperty();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Library <em>Library</em>}'.
@@ -7235,6 +7215,28 @@ public interface ExpressionsPackage extends EPackage {
 	EClass getOperationalTransformation();
 
 	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation#getIntermediateClass <em>Intermediate Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Intermediate Class</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation#getIntermediateClass()
+	 * @see #getOperationalTransformation()
+	 * @generated
+	 */
+	EReference getOperationalTransformation_IntermediateClass();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation#getIntermediateProperty <em>Intermediate Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Intermediate Property</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation#getIntermediateProperty()
+	 * @see #getOperationalTransformation()
+	 * @generated
+	 */
+	EReference getOperationalTransformation_IntermediateProperty();
+
+	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation#getModelParameter <em>Model Parameter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7380,14 +7382,6 @@ public interface ExpressionsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference MODULE__ENTRY = eINSTANCE.getModule_Entry();
-
-		/**
-		 * The meta object literal for the '<em><b>Intermediate Property</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference MODULE__INTERMEDIATE_PROPERTY = eINSTANCE.getModule_IntermediateProperty();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.LibraryImpl <em>Library</em>}' class.
@@ -8308,6 +8302,22 @@ public interface ExpressionsPackage extends EPackage {
 		 * @generated
 		 */
 		EClass OPERATIONAL_TRANSFORMATION = eINSTANCE.getOperationalTransformation();
+
+		/**
+		 * The meta object literal for the '<em><b>Intermediate Class</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference OPERATIONAL_TRANSFORMATION__INTERMEDIATE_CLASS = eINSTANCE.getOperationalTransformation_IntermediateClass();
+
+		/**
+		 * The meta object literal for the '<em><b>Intermediate Property</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference OPERATIONAL_TRANSFORMATION__INTERMEDIATE_PROPERTY = eINSTANCE.getOperationalTransformation_IntermediateProperty();
 
 		/**
 		 * The meta object literal for the '<em><b>Model Parameter</b></em>' containment reference list feature.

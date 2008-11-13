@@ -1574,7 +1574,9 @@ public class QvtOperationalVisitorCS
 					// being redefined (thus no collision would be detectable)
 					HiddenElementAdapter.markAsHidden(prop);
 				}
-				module.getIntermediateProperty().add(prop);
+				if (module instanceof OperationalTransformation) {
+					((OperationalTransformation) module).getIntermediateProperty().add(prop);
+				}
 				eFeature = prop;
 				// using AST-CST map as this mapping is not optional but always required
 				env.getASTNodeToCSTNodeMap().put(prop, propCS); 
@@ -1594,28 +1596,30 @@ public class QvtOperationalVisitorCS
 			module.getEStructuralFeatures().add(eFeature);						
 		}
 
-		IntermediatePropertyHierarchy intermPropDefHierarchy = module.getIntermediateProperty().isEmpty() ? null : new IntermediatePropertyHierarchy(module, env);				
-		for (Property prop : module.getIntermediateProperty()) {			
-			if (prop instanceof ContextualProperty) {
-				ContextualProperty ctxProperty = (ContextualProperty) prop;				
-				EClass ctxType = ctxProperty.getContext();
-				EStructuralFeature lookupProperty = ctxType != null ? env.lookupProperty(ctxType, prop.getName()) : null;
-				
-				boolean isAlreadyDefined = (lookupProperty != null && lookupProperty != ctxProperty) |
-										HiddenElementAdapter.isMarkedAsHidden(ctxProperty);				
-				if(isAlreadyDefined || intermPropDefHierarchy.hasHierarchyClashes(ctxProperty)) {
-					HiddenElementAdapter.markAsHidden(ctxProperty);											
-					String message = NLS.bind(ValidationMessages.IntermediatePropertyAlreadyDefined, prop.getName());
+		if (module instanceof OperationalTransformation) {
+			IntermediatePropertyHierarchy intermPropDefHierarchy = ((OperationalTransformation) module).getIntermediateProperty().isEmpty() ? null : new IntermediatePropertyHierarchy(module, env);				
+			for (Property prop : ((OperationalTransformation) module).getIntermediateProperty()) {			
+				if (prop instanceof ContextualProperty) {
+					ContextualProperty ctxProperty = (ContextualProperty) prop;				
+					EClass ctxType = ctxProperty.getContext();
+					EStructuralFeature lookupProperty = ctxType != null ? env.lookupProperty(ctxType, prop.getName()) : null;
 					
-					int startPos = prop.getStartPosition();
-					int endPos = prop.getEndPosition();
-					CSTNode cstNode = QvtOperationalParserUtil.getPropertyProblemNode(prop, env);
-					if(cstNode != null) {
-						startPos = cstNode.getStartOffset();
-						endPos = cstNode.getEndOffset();
-					}
-					env.reportError(message, startPos, endPos);
-				}				
+					boolean isAlreadyDefined = (lookupProperty != null && lookupProperty != ctxProperty) |
+											HiddenElementAdapter.isMarkedAsHidden(ctxProperty);				
+					if(isAlreadyDefined || intermPropDefHierarchy.hasHierarchyClashes(ctxProperty)) {
+						HiddenElementAdapter.markAsHidden(ctxProperty);											
+						String message = NLS.bind(ValidationMessages.IntermediatePropertyAlreadyDefined, prop.getName());
+						
+						int startPos = prop.getStartPosition();
+						int endPos = prop.getEndPosition();
+						CSTNode cstNode = QvtOperationalParserUtil.getPropertyProblemNode(prop, env);
+						if(cstNode != null) {
+							startPos = cstNode.getStartOffset();
+							endPos = cstNode.getEndOffset();
+						}
+						env.reportError(message, startPos, endPos);
+					}				
+				}
 			}
 		}
 	}

@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ExpressionsPackageImpl.java,v 1.13 2008/11/11 14:05:50 radvorak Exp $
+ * $Id: ExpressionsPackageImpl.java,v 1.14 2008/11/13 11:34:14 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -587,15 +587,6 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 	 */
 	public EReference getModule_Entry() {
 		return (EReference)moduleEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getModule_IntermediateProperty() {
-		return (EReference)moduleEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -1548,8 +1539,26 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getOperationalTransformation_ModelParameter() {
+	public EReference getOperationalTransformation_IntermediateClass() {
 		return (EReference)operationalTransformationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getOperationalTransformation_IntermediateProperty() {
+		return (EReference)operationalTransformationEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getOperationalTransformation_ModelParameter() {
+		return (EReference)operationalTransformationEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -1618,7 +1627,6 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		createEReference(moduleEClass, MODULE__CONFIG_PROPERTY);
 		createEReference(moduleEClass, MODULE__OWNED_RENAMING);
 		createEReference(moduleEClass, MODULE__ENTRY);
-		createEReference(moduleEClass, MODULE__INTERMEDIATE_PROPERTY);
 
 		libraryEClass = createEClass(LIBRARY);
 
@@ -1764,6 +1772,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		createEReference(returnExpEClass, RETURN_EXP__VALUE);
 
 		operationalTransformationEClass = createEClass(OPERATIONAL_TRANSFORMATION);
+		createEReference(operationalTransformationEClass, OPERATIONAL_TRANSFORMATION__INTERMEDIATE_CLASS);
+		createEReference(operationalTransformationEClass, OPERATIONAL_TRANSFORMATION__INTERMEDIATE_PROPERTY);
 		createEReference(operationalTransformationEClass, OPERATIONAL_TRANSFORMATION__MODEL_PARAMETER);
 
 		entryOperationEClass = createEClass(ENTRY_OPERATION);
@@ -1916,7 +1926,6 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		initEReference(getModule_ConfigProperty(), theEcorePackage_1.getEStructuralFeature(), null, "configProperty", null, 0, -1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getModule_OwnedRenaming(), this.getRename(), null, "ownedRenaming", null, 0, -1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getModule_Entry(), this.getEntryOperation(), null, "entry", null, 0, 1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(getModule_IntermediateProperty(), this.getProperty(), null, "intermediateProperty", null, 0, -1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		EOperation op = addEOperation(moduleEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		ETypeParameter t1 = addETypeParameter(op, "T"); //$NON-NLS-1$
@@ -3324,6 +3333,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		initEOperation(op, g1);
 
 		initEClass(operationalTransformationEClass, OperationalTransformation.class, "OperationalTransformation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getOperationalTransformation_IntermediateClass(), theEcorePackage_1.getEClass(), null, "intermediateClass", null, 0, -1, OperationalTransformation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getOperationalTransformation_IntermediateProperty(), this.getProperty(), null, "intermediateProperty", null, 0, -1, OperationalTransformation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getOperationalTransformation_ModelParameter(), this.getModelParameter(), null, "modelParameter", null, 0, -1, OperationalTransformation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(entryOperationEClass, EntryOperation.class, "EntryOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$

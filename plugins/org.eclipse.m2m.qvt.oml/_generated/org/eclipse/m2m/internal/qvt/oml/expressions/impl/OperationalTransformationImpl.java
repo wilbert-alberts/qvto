@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: OperationalTransformationImpl.java,v 1.1 2008/08/19 10:31:44 radvorak Exp $
+ * $Id: OperationalTransformationImpl.java,v 1.2 2008/11/13 11:34:14 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -20,10 +20,12 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,6 +34,8 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.OperationalTransformationImpl#getIntermediateClass <em>Intermediate Class</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.OperationalTransformationImpl#getIntermediateProperty <em>Intermediate Property</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.OperationalTransformationImpl#getModelParameter <em>Model Parameter</em>}</li>
  * </ul>
  * </p>
@@ -45,6 +49,26 @@ public class OperationalTransformationImpl extends ModuleImpl implements Operati
 	 * @generated
 	 */
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
+
+	/**
+	 * The cached value of the '{@link #getIntermediateClass() <em>Intermediate Class</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIntermediateClass()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<EClass> intermediateClass;
+
+	/**
+	 * The cached value of the '{@link #getIntermediateProperty() <em>Intermediate Property</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIntermediateProperty()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Property> intermediateProperty;
 
 	/**
 	 * The cached value of the '{@link #getModelParameter() <em>Model Parameter</em>}' containment reference list.
@@ -73,6 +97,30 @@ public class OperationalTransformationImpl extends ModuleImpl implements Operati
 	@Override
 	protected EClass eStaticClass() {
 		return ExpressionsPackage.Literals.OPERATIONAL_TRANSFORMATION;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<EClass> getIntermediateClass() {
+		if (intermediateClass == null) {
+			intermediateClass = new EObjectResolvingEList<EClass>(EClass.class, this, ExpressionsPackage.OPERATIONAL_TRANSFORMATION__INTERMEDIATE_CLASS);
+		}
+		return intermediateClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Property> getIntermediateProperty() {
+		if (intermediateProperty == null) {
+			intermediateProperty = new EObjectResolvingEList<Property>(Property.class, this, ExpressionsPackage.OPERATIONAL_TRANSFORMATION__INTERMEDIATE_PROPERTY);
+		}
+		return intermediateProperty;
 	}
 
 	/**
@@ -109,6 +157,10 @@ public class OperationalTransformationImpl extends ModuleImpl implements Operati
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case ExpressionsPackage.OPERATIONAL_TRANSFORMATION__INTERMEDIATE_CLASS:
+				return getIntermediateClass();
+			case ExpressionsPackage.OPERATIONAL_TRANSFORMATION__INTERMEDIATE_PROPERTY:
+				return getIntermediateProperty();
 			case ExpressionsPackage.OPERATIONAL_TRANSFORMATION__MODEL_PARAMETER:
 				return getModelParameter();
 		}
@@ -124,6 +176,14 @@ public class OperationalTransformationImpl extends ModuleImpl implements Operati
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case ExpressionsPackage.OPERATIONAL_TRANSFORMATION__INTERMEDIATE_CLASS:
+				getIntermediateClass().clear();
+				getIntermediateClass().addAll((Collection<? extends EClass>)newValue);
+				return;
+			case ExpressionsPackage.OPERATIONAL_TRANSFORMATION__INTERMEDIATE_PROPERTY:
+				getIntermediateProperty().clear();
+				getIntermediateProperty().addAll((Collection<? extends Property>)newValue);
+				return;
 			case ExpressionsPackage.OPERATIONAL_TRANSFORMATION__MODEL_PARAMETER:
 				getModelParameter().clear();
 				getModelParameter().addAll((Collection<? extends ModelParameter>)newValue);
@@ -140,6 +200,12 @@ public class OperationalTransformationImpl extends ModuleImpl implements Operati
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case ExpressionsPackage.OPERATIONAL_TRANSFORMATION__INTERMEDIATE_CLASS:
+				getIntermediateClass().clear();
+				return;
+			case ExpressionsPackage.OPERATIONAL_TRANSFORMATION__INTERMEDIATE_PROPERTY:
+				getIntermediateProperty().clear();
+				return;
 			case ExpressionsPackage.OPERATIONAL_TRANSFORMATION__MODEL_PARAMETER:
 				getModelParameter().clear();
 				return;
@@ -155,6 +221,10 @@ public class OperationalTransformationImpl extends ModuleImpl implements Operati
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case ExpressionsPackage.OPERATIONAL_TRANSFORMATION__INTERMEDIATE_CLASS:
+				return intermediateClass != null && !intermediateClass.isEmpty();
+			case ExpressionsPackage.OPERATIONAL_TRANSFORMATION__INTERMEDIATE_PROPERTY:
+				return intermediateProperty != null && !intermediateProperty.isEmpty();
 			case ExpressionsPackage.OPERATIONAL_TRANSFORMATION__MODEL_PARAMETER:
 				return modelParameter != null && !modelParameter.isEmpty();
 		}
