@@ -30,7 +30,7 @@
       <import plugin="org.eclipse.ui.workbench.texteditor" version="3.5.0" match="compatible"/>
       <import plugin="org.eclipse.ui.ide" version="3.4.0" match="compatible"/>
       <import plugin="org.eclipse.jdt.ui" version="3.5.0" match="compatible"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.ocl" version="1.0.0" match="compatible"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.ocl" version="2.0.0" match="compatible"/>
       <import plugin="org.eclipse.m2m.qvt.oml.common" version="1.0.0" match="compatible"/>
       <import plugin="org.eclipse.m2m.qvt.oml.common.ui" version="1.0.0" match="compatible"/>
       <import plugin="org.eclipse.m2m.qvt.oml" version="2.0.0" match="compatible"/>
