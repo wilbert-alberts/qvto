@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.16 2008/11/13 15:22:02 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.17 2008/11/17 14:48:26 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -131,7 +131,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.16 2008/11/13 15:22:02 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.17 2008/11/17 14:48:26 aigdalov Exp $
  */
 	./
 $End
@@ -653,43 +653,6 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	
-	renamingListOpt ::= $empty
-		/.$EmptyListAction./
-	renamingListOpt -> renamingList
-	
-	renamingList ::= renamingCS
-		/.$BeginJava
-					EList result = new BasicEList();
-					result.add($getSym(1));
-					$setResult(result);
-		  $EndJava
-		./
-	renamingList ::= renamingList renamingCS
-		/.$BeginJava
-					EList result = (EList)$getSym(1);
-					result.add($getSym(2));
-					$setResult(result);
-		  $EndJava
-		./
-	renamingList ::= renamingList qvtErrorToken
-		/.$BeginJava
-					EList result = (EList)$getSym(1);
-					$setResult(result);
-		  $EndJava
-		./
-
-	renamingCS ::= rename typeCS '.' qvtIdentifierCS '=' stringLiteralExpCS ';' 
-		/.$BeginJava
-					CSTNode result = createRenameCS(
-							(TypeCS)$getSym(2),
-							getIToken($getToken(4)),
-							(StringLiteralExpCS)$getSym(6)
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
-					$setResult(result);
-		  $EndJava
-		./
 
 	propertyListOpt ::= $empty
 		/.$EmptyListAction./
@@ -780,249 +743,6 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	-- // general purpose grammar rules (start)
-
-	qualifierList ::= $empty
-		/.$EmptyListAction./
-	qualifierList ::= qualifierList qualifier
-		/.$BeginJava
-					EList result = (EList) $getSym(1);
-					result.add($getSym(2));
-					$setResult(result);
-		  $EndJava
-		./
-		
-	qualifier ::= blackbox
-		/.$NewCase./
-	qualifier ::= abstract
-		/.$NewCase./
-	qualifier ::= static
-		/.$BeginJava
-					CSTNode result = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, getTokenText(dtParser.getToken(1)));
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
-		  $EndJava
-		./
-
-	colon_param_listOpt ::= $empty	 
-		/.$EmptyListAction./
-	colon_param_listOpt ::= ':' param_list
-		/.$BeginJava
-					$setResult($getSym(2));
-		  $EndJava
-		./
-
-	complete_signature ::= simple_signature colon_param_listOpt
-		/.$BeginJava
-					SimpleSignatureCS simpleSignatureCS = (SimpleSignatureCS)$getSym(1);
-					EList<ParameterDeclarationCS> resultList = (EList<ParameterDeclarationCS>)$getSym(2);
-					CSTNode result = createCompleteSignatureCS(simpleSignatureCS, resultList);
-					result.setStartOffset(simpleSignatureCS.getStartOffset());
-					result.setEndOffset(getEndOffset(simpleSignatureCS.getEndOffset(), resultList));
-					$setResult(result);
-		  $EndJava
-		./
-
-	simple_signature ::= '(' param_listOpt ')' 
-		/.$BeginJava
-					CSTNode result = createSimpleSignatureCS((EList<ParameterDeclarationCS>)$getSym(2));
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
-					$setResult(result);
-		  $EndJava
-		./
-
-	param_listOpt ::= $empty
-		/.$EmptyListAction./
-	param_listOpt -> param_list
-
-	param_list ::= param_list ',' param
-		/.$BeginJava
-					EList result = (EList)$getSym(1);
-					result.add($getSym(3));
-					$setResult(result);
-		  $EndJava
-		./
-	param_list ::= param
-		/.$BeginJava
-					EList result = new BasicEList();
-					result.add($getSym(1));
-					$setResult(result);
-		  $EndJava
-		./
-
-	param ::= param_directionOpt IDENTIFIER ':' typespec
-		/.$BeginJava
-					CSTNode result = createParameterDeclarationCS(
-							(DirectionKindCS)$getSym(1),
-							getIToken($getToken(2)),
-							(TypeSpecCS)$getSym(4)
-						);
-					setOffsets(result, getIToken($getToken(2)), (CSTNode)$getSym(4));
-					$setResult(result);
-		  $EndJava
-		./
-		
-	param ::= typespec
-		/.$BeginJava
-					CSTNode result = createParameterDeclarationCS(
-							null, null, (TypeSpecCS)$getSym(1)
-						);
-					setOffsets(result, (CSTNode)$getSym(1));
-					$setResult(result);
-		  $EndJava
-		./
-
-	typespec ::= typeCS
-		/.$BeginJava
-					CSTNode result = createTypeSpecCS(
-						(TypeCS)$getSym(1),
-						null
-						);
-					$setResult(result);
-		  $EndJava
-		./
-	typespec ::= typeCS '@' IDENTIFIER
-		/.$BeginJava
-					CSTNode result = createTypeSpecCS(
-						(TypeCS)$getSym(1),
-						getIToken($getToken(3))
-						);
-					$setResult(result);
-		  $EndJava
-		./
-
-	param_directionOpt ::= $empty
-		/.$NullAction./
-	param_directionOpt -> param_direction
-	
-	param_direction ::= in
-		/.$BeginJava
-					CSTNode result = createDirectionKindCS(
-							DirectionKindEnum.IN
-						);
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
-		  $EndJava
-		./
-	param_direction ::= out
-		/.$BeginJava
-					CSTNode result = createDirectionKindCS(
-							DirectionKindEnum.OUT
-						);
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
-		  $EndJava
-		./
-	param_direction ::= inout
-		/.$BeginJava
-					CSTNode result = createDirectionKindCS(
-							DirectionKindEnum.INOUT
-						);
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
-		  $EndJava
-		./
-
-
-	typeCS2 -> primitiveTypeCS
-	typeCS2 -> tupleTypeCS
-	typeCS2 -> collectionTypeCS
-	
-	scoped_identifier ::= typeCS2 '::' IDENTIFIER
-		/.$BeginJava
-					ScopedNameCS result = createScopedNameCS((TypeCS)$getSym(1), getTokenText($getToken(3)));		
-					setOffsets(result, (CSTNode) $getSym(1), getIToken($getToken(3)));
-					$setResult(result);
-		  $EndJava
-		./
-	scoped_identifier ::= typeCS2 '::' qvtErrorToken
-		/.$BeginJava
-					ScopedNameCS result = createScopedNameCS((TypeCS)$getSym(1), ""); //$NON-NLS-1$		
-					setOffsets(result, (CSTNode) $getSym(1), getIToken($getToken(2)));
-					$setResult(result);
-		  $EndJava
-		./
-	scoped_identifier ::= scoped_identifier2
-		/.$BeginJava
-					PathNameCS pathNameCS = (PathNameCS)$getSym(1);
-                                        String name = pathNameCS.getSequenceOfNames().remove(pathNameCS.getSequenceOfNames().size() - 1);
-					TypeCS typeCS = pathNameCS.getSequenceOfNames().isEmpty() ? null : pathNameCS;
-
-					ScopedNameCS result = createScopedNameCS(typeCS, name);		
-
-					setOffsets(result, pathNameCS);
-
-                                        // reduce the region by the removed name element
-					pathNameCS.setEndOffset(pathNameCS.getEndOffset() - (name != null ? name.length() : 0) - 2);
-					
-					$setResult(result);
-		  $EndJava
-		./
-	scoped_identifier2 ::= IDENTIFIER
-		/.$BeginJava
-					CSTNode result = createPathNameCS(getTokenText($getToken(1)));
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
-		  $EndJava
-		./
-	scoped_identifier2 ::= main
-		/.$BeginJava
-					CSTNode result = createPathNameCS(getTokenText($getToken(1)));
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
-		  $EndJava
-		./
-	scoped_identifier2 ::= scoped_identifier2 '::' IDENTIFIER
-		/.$BeginJava
-					PathNameCS result = (PathNameCS)$getSym(1);
-					result = extendPathNameCS(result, getTokenText($getToken(3)));
-					setOffsets(result, result, getIToken($getToken(3)));
-					$setResult(result);
-		  $EndJava
-		./
-	scoped_identifier2 ::= scoped_identifier2 '::' qvtErrorToken
-		/.$BeginJava
-					PathNameCS result = (PathNameCS)$getSym(1);
-					result = extendPathNameCS(result, "");
-					setOffsets(result, result, getIToken($getToken(2)));
-					$setResult(result);
-		  $EndJava
-		./
-	scoped_identifier_list ::= scoped_identifier
-		/.$BeginJava
-					EList result = new BasicEList();
-					result.add($getSym(1));
-					$setResult(result);
-		  $EndJava
-		./
-	scoped_identifier_list ::= scoped_identifier_list ',' scoped_identifier
-		/.$BeginJava
-					EList result = (EList)$getSym(1);
-					result.add($getSym(3));
-					$setResult(result);
-		  $EndJava
-		./
-
-	semicolonOpt -> ';'
-	semicolonOpt -> $empty
-
-	expression_list -> expression_semi_list semicolonOpt
-	expression_semi_list ::= statementCS
-		/.$BeginJava
-					EList result = new BasicEList();
-					result.add($getSym(1));
-					$setResult(result);
-		  $EndJava
-		./
-	expression_semi_list ::= expression_semi_list ';' statementCS 
-		/.$BeginJava
-					EList result = (EList)$getSym(1);
-					result.add($getSym(3));
-					$setResult(result);
-		  $EndJava
-		./
-
-	-- // general purpose grammar rules (end)
 
 	-- // syntax for helper operations (start)
 
@@ -1863,6 +1583,25 @@ $Rules
 		  $EndJava
 		./
 		
+	complianceKindCSOpt ::= $empty
+		/.$BeginJava
+					CSTNode result = createStringLiteralExpCS("''");
+					setOffsets(result, getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+	complianceKindCSOpt -> qvtStringLiteralExpCS
+    
+	
+	qvtStringLiteralExpCS -> stringLiteralExpCS
+	qvtStringLiteralExpCS ::= QUOTE_STRING_LITERAL
+		/.$BeginJava
+					CSTNode result = createStringLiteralExpCS("'" + unquote(getTokenText($getToken(1))) + "'"); //$NON-NLS-1$ //$NON-NLS-2$
+					setOffsets(result, getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+
 	modelTypeExpCS ::= modeltype IDENTIFIER complianceKindCSOpt uses packageRefList modelTypeWhereCSOpt ;
 		/.$BeginJava
 					EList whereList = (EList)$getSym(6);
