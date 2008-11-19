@@ -100,7 +100,7 @@ public abstract class TestTransformation extends TestCase {
     
     @Override
 	public void tearDown() throws Exception {
-        //+myProject.delete();
+    	getData().dispose();
     }
     
     public static interface IChecker {
@@ -129,7 +129,7 @@ public abstract class TestTransformation extends TestCase {
         		// reload in the same resource set
         		actualExtentObjects = rs.getResource(actualResultURI, true).getContents();
         		data.compareWithExpected(expectedResource.getContents(), actualExtentObjects);
-			}
+			}        	
         }
         
         private final ITransformer  myTransformer;

@@ -42,6 +42,7 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.URIMapping;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.library.QvtConfiguration;
+import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.m2m.tests.qvt.oml.TestProject;
 import org.eclipse.m2m.tests.qvt.oml.api.framework.comparator.TreeComparator;
 import org.eclipse.m2m.tests.qvt.oml.api.framework.comparator.edit.TreeEdit;
@@ -109,6 +110,14 @@ public abstract class ModelTestData {
     
     public IContext getContext() { 
         return myContext; 
+    }
+    
+    public void dispose() {
+    	Trace trace = getContext().getTrace();
+		trace.getTraceRecords().clear();
+    	trace.getTraceRecordMap().clear();
+    	trace.getSourceToTraceRecordMap().clear();
+    	trace.getTargetToTraceRecordMap().clear();
     }
     
     abstract public List<URI> getIn(IProject project); 
