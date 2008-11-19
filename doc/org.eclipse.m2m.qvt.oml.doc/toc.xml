@@ -4,7 +4,9 @@
 <toc label="QVT Operational Developer Guide">
 	
 	<topic label="Overview" href="references/overview.html"/>
-	<topic label="Blackbox support" href="references/blackboxing.html"/>	
+	<topic label="Blackbox support" href="references/blackboxing.html"/>
+ <topic href="references/breakingChangesInQVTOImplementation.html" label="Breaking Changes In QVTO Implementation">
+ </topic>	
 	<topic label="Reference">
 		<link toc="topics_Reference.xml"/>
 		<anchor id="reference-ext-pt-before"/>
