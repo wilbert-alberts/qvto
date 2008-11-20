@@ -20,9 +20,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.cst.LocalPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.PatternPropertyExpCS;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
-import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
@@ -90,17 +88,7 @@ public class ObjectPropertyHyperlinkDetector implements IHyperlinkDetectorHelper
 	
 	@SuppressWarnings("unchecked")
 	private static EStructuralFeature findDefinition(SimpleNameCS nameCS) {
-		if(nameCS.eContainer() instanceof PatternPropertyExpCS) {
-			ASTNode astNode = ASTBindingHelper.resolveASTNode((PatternPropertyExpCS)nameCS.eContainer());			
-			if(astNode instanceof AssignExp) {
-				AssignExp assignExp  = (AssignExp) astNode;
-				PropertyCallExp<EClassifier, EStructuralFeature> pcall = (PropertyCallExp<EClassifier, EStructuralFeature>)assignExp.getLeft();
-				if(pcall instanceof PropertyCallExp) {
-					return pcall.getReferredProperty();
-				}				
-			}
-		} 
-		else if(nameCS.eContainer() instanceof FeatureCallExpCS) {				
+		if(nameCS.eContainer() instanceof FeatureCallExpCS) {				
 			FeatureCallExpCS featureCallExpCS = (FeatureCallExpCS) nameCS.eContainer();
 			ASTNode featureASTNode = ASTBindingHelper.resolveASTNode(featureCallExpCS);
 			
