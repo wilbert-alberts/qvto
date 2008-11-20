@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempSwitch.java,v 1.3 2008/11/20 17:41:15 aigdalov Exp $
+ * $Id: TempSwitch.java,v 1.4 2008/11/20 17:54:26 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.temp.util;
 
@@ -135,12 +135,6 @@ public class TempSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case TempPackage.ERROR_CST_NODE: {
-				ErrorCSTNode errorCSTNode = (ErrorCSTNode)theEObject;
-				T result = caseErrorCSTNode(errorCSTNode);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -187,21 +181,6 @@ public class TempSwitch<T> {
 	 * @generated
 	 */
 	public T caseScopedNameCS(ScopedNameCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Error CST Node</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Error CST Node</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseErrorCSTNode(ErrorCSTNode object) {
 		return null;
 	}
 

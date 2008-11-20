@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempPackageImpl.java,v 1.3 2008/11/20 17:41:15 aigdalov Exp $
+ * $Id: TempPackageImpl.java,v 1.4 2008/11/20 17:54:26 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.temp.impl;
 
@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl;
-import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCSTNode;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ResolveOpArgsExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
@@ -63,13 +62,6 @@ public class TempPackageImpl extends EPackageImpl implements TempPackage {
 	 * @generated
 	 */
 	private EClass scopedNameCSEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass errorCSTNodeEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -215,33 +207,6 @@ public class TempPackageImpl extends EPackageImpl implements TempPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getErrorCSTNode() {
-		return errorCSTNodeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getErrorCSTNode_FullStartOffset() {
-		return (EAttribute)errorCSTNodeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getErrorCSTNode_FullEndOffset() {
-		return (EAttribute)errorCSTNodeEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public TempFactory getTempFactory() {
 		return (TempFactory)getEFactoryInstance();
 	}
@@ -274,10 +239,6 @@ public class TempPackageImpl extends EPackageImpl implements TempPackage {
 		scopedNameCSEClass = createEClass(SCOPED_NAME_CS);
 		createEReference(scopedNameCSEClass, SCOPED_NAME_CS__TYPE_CS);
 		createEAttribute(scopedNameCSEClass, SCOPED_NAME_CS__NAME);
-
-		errorCSTNodeEClass = createEClass(ERROR_CST_NODE);
-		createEAttribute(errorCSTNodeEClass, ERROR_CST_NODE__FULL_START_OFFSET);
-		createEAttribute(errorCSTNodeEClass, ERROR_CST_NODE__FULL_END_OFFSET);
 	}
 
 	/**
@@ -325,10 +286,6 @@ public class TempPackageImpl extends EPackageImpl implements TempPackage {
 		initEClass(scopedNameCSEClass, ScopedNameCS.class, "ScopedNameCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getScopedNameCS_TypeCS(), theCSTPackage.getTypeCS(), null, "typeCS", null, 0, 1, ScopedNameCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getScopedNameCS_Name(), ecorePackage.getEString(), "name", null, 1, 1, ScopedNameCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(errorCSTNodeEClass, ErrorCSTNode.class, "ErrorCSTNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(getErrorCSTNode_FullStartOffset(), ecorePackage.getEInt(), "fullStartOffset", null, 0, 1, ErrorCSTNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getErrorCSTNode_FullEndOffset(), ecorePackage.getEInt(), "fullEndOffset", null, 0, 1, ErrorCSTNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 	}
 
 } //TempPackageImpl

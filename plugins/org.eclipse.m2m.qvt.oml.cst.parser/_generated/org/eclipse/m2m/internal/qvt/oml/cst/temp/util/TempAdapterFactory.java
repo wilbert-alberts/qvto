@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempAdapterFactory.java,v 1.3 2008/11/20 17:41:15 aigdalov Exp $
+ * $Id: TempAdapterFactory.java,v 1.4 2008/11/20 17:54:26 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.temp.util;
 
@@ -109,10 +109,6 @@ public class TempAdapterFactory extends AdapterFactoryImpl {
 				return createScopedNameCSAdapter();
 			}
 			@Override
-			public Adapter caseErrorCSTNode(ErrorCSTNode object) {
-				return createErrorCSTNodeAdapter();
-			}
-			@Override
 			public Adapter caseCSTNode(CSTNode object) {
 				return createCSTNodeAdapter();
 			}
@@ -183,20 +179,6 @@ public class TempAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createScopedNameCSAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCSTNode <em>Error CST Node</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCSTNode
-	 * @generated
-	 */
-	public Adapter createErrorCSTNodeAdapter() {
 		return null;
 	}
 

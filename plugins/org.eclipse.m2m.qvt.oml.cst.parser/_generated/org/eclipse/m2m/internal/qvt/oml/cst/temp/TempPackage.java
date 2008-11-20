@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempPackage.java,v 1.4 2008/11/20 17:41:15 aigdalov Exp $
+ * $Id: TempPackage.java,v 1.5 2008/11/20 17:54:26 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.temp;
 
@@ -252,44 +252,6 @@ public interface TempPackage extends EPackage {
 	int SCOPED_NAME_CS_FEATURE_COUNT = CSTPackage.CST_NODE_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.impl.ErrorCSTNodeImpl <em>Error CST Node</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.impl.ErrorCSTNodeImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.impl.TempPackageImpl#getErrorCSTNode()
-	 * @generated
-	 */
-	int ERROR_CST_NODE = 3;
-
-	/**
-	 * The feature id for the '<em><b>Full Start Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ERROR_CST_NODE__FULL_START_OFFSET = 0;
-
-	/**
-	 * The feature id for the '<em><b>Full End Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ERROR_CST_NODE__FULL_END_OFFSET = 1;
-
-	/**
-	 * The number of structural features of the '<em>Error CST Node</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ERROR_CST_NODE_FEATURE_COUNT = 2;
-
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCallExpCS <em>Error Call Exp CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -362,38 +324,6 @@ public interface TempPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getScopedNameCS_Name();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCSTNode <em>Error CST Node</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Error CST Node</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCSTNode
-	 * @generated
-	 */
-	EClass getErrorCSTNode();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCSTNode#getFullStartOffset <em>Full Start Offset</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Full Start Offset</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCSTNode#getFullStartOffset()
-	 * @see #getErrorCSTNode()
-	 * @generated
-	 */
-	EAttribute getErrorCSTNode_FullStartOffset();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCSTNode#getFullEndOffset <em>Full End Offset</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Full End Offset</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCSTNode#getFullEndOffset()
-	 * @see #getErrorCSTNode()
-	 * @generated
-	 */
-	EAttribute getErrorCSTNode_FullEndOffset();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -478,32 +408,6 @@ public interface TempPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SCOPED_NAME_CS__NAME = eINSTANCE.getScopedNameCS_Name();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.impl.ErrorCSTNodeImpl <em>Error CST Node</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.impl.ErrorCSTNodeImpl
-		 * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.impl.TempPackageImpl#getErrorCSTNode()
-		 * @generated
-		 */
-		EClass ERROR_CST_NODE = eINSTANCE.getErrorCSTNode();
-
-		/**
-		 * The meta object literal for the '<em><b>Full Start Offset</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ERROR_CST_NODE__FULL_START_OFFSET = eINSTANCE.getErrorCSTNode_FullStartOffset();
-
-		/**
-		 * The meta object literal for the '<em><b>Full End Offset</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ERROR_CST_NODE__FULL_END_OFFSET = eINSTANCE.getErrorCSTNode_FullEndOffset();
 
 	}
 

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempFactory.java,v 1.3 2008/11/20 17:41:15 aigdalov Exp $
+ * $Id: TempFactory.java,v 1.4 2008/11/20 17:54:26 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.temp;
 
@@ -67,15 +67,6 @@ public interface TempFactory extends EFactory {
 	 * @generated
 	 */
 	ScopedNameCS createScopedNameCS();
-
-	/**
-	 * Returns a new object of class '<em>Error CST Node</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Error CST Node</em>'.
-	 * @generated
-	 */
-	ErrorCSTNode createErrorCSTNode();
 
 	/**
 	 * Returns the package supported by this factory.
