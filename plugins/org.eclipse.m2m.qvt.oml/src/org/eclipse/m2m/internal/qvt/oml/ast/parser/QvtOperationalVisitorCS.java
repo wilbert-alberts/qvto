@@ -77,7 +77,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.PatternPropertyExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.RenameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveExpCS;
@@ -421,8 +420,7 @@ public class QvtOperationalVisitorCS
 		IfExp<EClassifier> ifExp = super.ifExpCS(ifExpCS, env);
 		
 		EObject container = ifExpCS.eContainer();
-		if (container instanceof PatternPropertyExpCS 
-				|| container instanceof VariableInitializationCS) {
+		if (container instanceof VariableInitializationCS) {
 			if (isElseMissed) {
 				QvtOperationalUtil.reportWarning(env, NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ifExpWithoutElseAssignment,
 						new Object[] { }), ifExpCS);
@@ -463,9 +461,6 @@ public class QvtOperationalVisitorCS
 	        }
 	        if (oclExpressionCS instanceof OutExpCS) {
                 return visitOutExpCS((OutExpCS) oclExpressionCS, toQVTOperationalEnv(env), true);
-	        }
-	        if (oclExpressionCS instanceof PatternPropertyExpCS) {
-	            return visitPatternPropertyExpCS((PatternPropertyExpCS) oclExpressionCS, null, env);
 	        }
 	        if (oclExpressionCS instanceof AssignStatementCS) {
 	            return visitAssignStatementCS((AssignStatementCS) oclExpressionCS, env);
@@ -1255,78 +1250,6 @@ public class QvtOperationalVisitorCS
         return objectExp;
         }
 		
-	private AssignExp visitPatternPropertyExpCS(PatternPropertyExpCS propCS, ObjectExp owner,
-			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
-			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
-		
-		OCLExpression<EClassifier> propertyValue = visitOclExpressionCS(propCS.getOclExpressionCS(), env);
-		if (propertyValue == null) {
-			return null;
-		}
-
-		AssignExp result = ExpressionsFactory.eINSTANCE.createAssignExp();
-		result.setStartPosition(propCS.getStartOffset());
-		result.setEndPosition(propCS.getEndOffset());
-
-		result.getValue().add(propertyValue);
-		result.setType(propertyValue.getType());
-		result.setIsReset(!propCS.isIncremental());
-
-		EClassifier outType = null;
-		if(owner == null) {
-			// FIXME - should allways be owned by objectExp
-/*			EObject eParent = propCS.eContainer();
-			if (eParent instanceof OutExpCS) {
-				OutExpCS outExpCS = (OutExpCS) eParent;
-				TypeSpecCS typeSpecCS = getOutExpCSType(outExpCS);
-				if(typeSpecCS != null) {
-					outType = visitTypeSpecCS(typeSpecCS, DirectionKind.OUT, fEnv).myType;
-				} else {
-					if ((outExpCS.eContainer() instanceof MappingBodyCS)
-							&& (outExpCS.eContainer().eContainer() instanceof MappingRuleCS)) {
-						MappingRuleCS mappingRuleCS = (MappingRuleCS) outExpCS.eContainer().eContainer();
-						outType = visitTypeCS(mappingRuleCS.getMappingDeclarationCS().getContextType(), DirectionKind.INOUT, fEnv);
-					}
-				}
-			} */
-		} else {
-			outType = owner.getType();
-		}
-
-		SimpleNameCS variableName = propCS.getSimpleNameCS();
-		String name = variableName.getValue();
-		EStructuralFeature property = (outType != null) ? env.lookupProperty(outType, name) : null;
-		if (property == null) {
-			if(outType != null) {
-				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.noPropertyInTypeError, name, QvtOperationalTypesUtil
-						.getTypeFullName(outType)), variableName);
-			} else {
-				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.QvtOperationalVisitorCS_NoOwningClassForPropertyInTheScope, name), variableName);
-			}
-		} else if (!property.isChangeable()) {
-			QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.ReadOnlyProperty, name), variableName);
-		} else {
-			QvtOperationalParserUtil.validateAssignment(property.getName(),
-					env.getUMLReflection().getOCLType(property), propertyValue, propCS.isIncremental(),
-					propCS.getSimpleNameCS(), env);
-		}
-
-		PropertyCallExp<EClassifier, EStructuralFeature> sourceExp =
-			org.eclipse.ocl.expressions.ExpressionsFactory.eINSTANCE.createPropertyCallExp();
-		sourceExp.setReferredProperty(property);
-		initStartEndPositions(sourceExp, variableName);
-		initPropertyPositions(sourceExp, variableName);
-		result.setLeft(sourceExp);
-
-        // AST binding
-        if(myCompilerOptions.isGenerateCompletionData()) {		
-        	ASTBindingHelper.createCST2ASTBinding(propCS, result);
-        }
-		//		
-		
-		return result;
-	}
-
 	public Module visitMappingModule(ParsedModuleCS parsedModuleCS, QvtOperationalFileEnv env, QvtCompiler compiler) throws SemanticException {
 		MappingModuleCS moduleCS = parsedModuleCS.getModuleCS();
         Module module = env.getKernel().getModule(moduleCS);
