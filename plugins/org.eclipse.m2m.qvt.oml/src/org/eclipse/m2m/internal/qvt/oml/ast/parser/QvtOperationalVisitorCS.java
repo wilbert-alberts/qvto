@@ -91,7 +91,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCallExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorVariableInitializationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.EmfMmUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
@@ -2449,13 +2448,6 @@ public class QvtOperationalVisitorCS
 	private OCLExpression<EClassifier> visitVariableInitializationCS(VariableInitializationCS varInitCS, 
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
-		
-        if (varInitCS instanceof ErrorVariableInitializationCS) {
-            VariableInitExp result = ExpressionsFactory.eINSTANCE.createVariableInitExp();
-            result.setStartPosition(varInitCS.getStartOffset());
-            result.setEndPosition(varInitCS.getEndOffset());
-            return result;
-        }
         MappingMethodCS mappingMethod = null;
         EObject tempContainer = varInitCS;
         do {
