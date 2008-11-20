@@ -75,12 +75,14 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 		try {
 			helper.setValidating(true);
 			Variable var = org.eclipse.ocl.ecore.EcoreFactory.eINSTANCE.createVariable();
-			var.setName("userVar");
+			// name it 'this' intentionally, as it also tests, that non-QVT execution context
+			// has now predefined this variable and it brings now collision with QVT
+			var.setName("this");
 			var.setEType(helper.getEnvironment().getOCLStandardLibrary().getString());
 			var.setType(var.getEType());
 			
 			helper.getEnvironment().addElement(var.getName(), (org.eclipse.ocl.expressions.Variable)var, true);
-			org.eclipse.ocl.expressions.OCLExpression<EClassifier> q = helper.createQuery("userVar.concat(getModulePropertyValue())");
+			org.eclipse.ocl.expressions.OCLExpression<EClassifier> q = helper.createQuery("this.concat(getModulePropertyValue())");
 
 			assertNull(helper.getProblems());
 						
