@@ -169,7 +169,6 @@ import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.ecore.StringLiteralExp;
-import org.eclipse.ocl.expressions.AssociationClassCallExp;
 import org.eclipse.ocl.expressions.BooleanLiteralExp;
 import org.eclipse.ocl.expressions.CollectionKind;
 import org.eclipse.ocl.expressions.CollectionLiteralExp;
@@ -729,7 +728,7 @@ public class QvtOperationalVisitorCS
     		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
     		OCLExpression<EClassifier> source) {
     	
-    	OCLExpression<EClassifier> result = fixed_1_2_simpleNameCSsimpleNameCS(simpleNameCS, env, source); // super.simpleNameCS(simpleNameCS, fEnv, source);
+    	OCLExpression<EClassifier> result = customSimpleNameCS(simpleNameCS, env, source);
 
         // AST binding    	
         if(myCompilerOptions.isGenerateCompletionData()) {    	
@@ -3511,29 +3510,23 @@ public class QvtOperationalVisitorCS
 	
 	/**
 	 * SimpleNameCS
-	 * FIXME - OCL 1.2 migration workaround
 	 * @param simpleNameCS the <code>SimpleNameCS</code> <code>CSTNode</code>
 	 * @param fEnv the OCL environment
 	 * @param source the source of the <code>SimpleNameCS</code>
-	 * @return the parsed <code>OCLExpression</code>
-	 * @throws TerminateException 
+	 * @return the parsed <code>OCLExpression</code> 
 	 */
-	protected OCLExpression<EClassifier> fixed_1_2_simpleNameCSsimpleNameCS(
+	private OCLExpression<EClassifier> customSimpleNameCS(
     		SimpleNameCS simpleNameCS,
     		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
     		OCLExpression<EClassifier> source) {
 
-        OCLExpression<EClassifier> astNode;
+		if ((source != null) && isErrorNode(source)) {
+			// don't attempt to parse navigation from an unparseable source
+			return source; // return the same unparseable token
+		}
 		
 		String simpleName = null;		
-
-        astNode = null;
-        EStructuralFeature property = null;
 		EClassifier classifier = null;
-        PropertyCallExp<EClassifier, EStructuralFeature> propertyCall = null;
-        EClassifier assocClass = null;
-        AssociationClassCallExp<EClassifier, EStructuralFeature> acref = null;
-        Variable<EClassifier, EParameter> vdcl = null;
 
 		/* A name can be a variable defined by a Variable declaration, the special
 		  variable "self", an attribute or a reference to another object.
@@ -3578,133 +3571,38 @@ public class QvtOperationalVisitorCS
 		if (source != null) {
 			sourceElementType = source.getType();
 			if (sourceElementType instanceof CollectionType) {
-                @SuppressWarnings("unchecked") //$NON-NLS-1$
+				@SuppressWarnings("unchecked")
 				CollectionType<EClassifier, EOperation> ct = (CollectionType<EClassifier, EOperation>) sourceElementType;
 				
 				sourceElementType = ct.getElementType();
 			} 
 		}
 		
-        List<String> names = new java.util.ArrayList<String>();
-        names.add(simpleName);
-
-        // if we have a source, then this is a feature call
-        if ((classifier == null) && (source == null)) {
-            classifier = lookupClassifier(simpleNameCS, env, names);
+		// cascaded alternatives for a simpleNameCS
+		OCLExpression<EClassifier> astNode = simpleTypeName(simpleNameCS, env, source,
+			classifier, simpleName);
+		if (astNode == null) {
+			astNode = simpleVariableName(simpleNameCS, env, source, simpleName);
 		}
-
-        if (classifier != null) {
-            /* Variable is a classifier. Classifiers are used in
-             * allInstances, isKindOf, isTypeOf, asTypeOf operations
-             */
-
-            TypeExp<EClassifier> texp = typeCS(simpleNameCS, env, classifier);
-            astNode = texp;         
-        } else if (source == null && (vdcl = env.lookup(simpleName)) != null)  { 
-            // Either a use of a declared variable or self
-
-            TRACE("variableExpCS", "Variable Expression: " + simpleName);//$NON-NLS-2$//$NON-NLS-1$
-
-            VariableExp<EClassifier, EParameter> vexp = oclFactory.createVariableExp(); 
-            initASTMapping(env, vexp, simpleNameCS);
-            vexp.setReferredVariable(vdcl);
-            vexp.setName(vdcl.getName());
-            vexp.setType(vdcl.getType());
-            astNode = vexp;
-        } else if ((property = lookupProperty(simpleNameCS, env, sourceElementType, simpleName)) != null) {
-
-            TRACE("variableExpCS", "Property: " + simpleName);//$NON-NLS-2$//$NON-NLS-1$
-            propertyCall = oclFactory.createPropertyCallExp();
-            initASTMapping(env, propertyCall, simpleNameCS);
-            propertyCall.setReferredProperty(property);
-            propertyCall.setType(
-                    TypeUtil.getPropertyType(env, sourceElementType, property));
-            if (source != null) {
-                propertyCall.setSource(source);
-            } else {
-                VariableExp<EClassifier, EParameter> src = oclFactory.createVariableExp();
-                initASTMapping(env, src, simpleNameCS);
-                Variable<EClassifier, EParameter> implicitSource =
-                    env.lookupImplicitSourceForProperty(simpleName);
-                src.setType(implicitSource.getType());
-                src.setReferredVariable(implicitSource);
-                src.setName(implicitSource.getName());
-                propertyCall.setSource(src);
+		if (astNode == null) {
+			astNode = simplePropertyName(simpleNameCS, env, source,
+				sourceElementType, simpleName);
 		}
-
-            initPropertyPositions(propertyCall, simpleNameCS);
-            astNode = propertyCall;
-
-        } else if ((assocClass = lookupAssociationClassReference(simpleNameCS, env, sourceElementType, simpleName)) != null) {
-            TRACE("variableExpCS", "Association class: " + simpleName);//$NON-NLS-2$//$NON-NLS-1$
-            acref = oclFactory.createAssociationClassCallExp();
-            initASTMapping(env, acref, simpleNameCS);
-            acref.setReferredAssociationClass(assocClass);
-
-            if (source != null) {
-                acref.setSource(source);
-            } else {
-                VariableExp<EClassifier, EParameter> src = oclFactory.createVariableExp();
-                initASTMapping(env, src, simpleNameCS);
-                Variable<EClassifier, EParameter> implicitSource =
-                    env.lookupImplicitSourceForAssociationClass(simpleName);
-                src.setType(implicitSource.getType());
-                src.setReferredVariable(implicitSource);
-                src.setName(implicitSource.getName());
-                acref.setSource(src);
+		if (astNode == null) {
+			astNode = simpleAssociationClassName(simpleNameCS, env, source,
+				sourceElementType, simpleName);
 		}
-
-            // infer the navigation source and type of the association class
-            //   call expression from the association class end that is
-            //   implicitly navigated (in case it is not explicit as a qualifier)
-            EClassifier acrefType = null;
-            EClassifier sourceType = getElementType(acref.getSource().getType());
-            List<EStructuralFeature> ends = uml.getMemberEnds(assocClass);
-            List<EStructuralFeature> available = uml.getAttributes(sourceType);
-
-            for (EStructuralFeature end : ends) {
-                if (available.contains(end)) {
-                    // this is the navigation source
-                    acref.setNavigationSource(end);
-
-                    CollectionKind kind = getCollectionKind(uml.getOCLType(end));
-                    if (kind != null) {
-                        acrefType = getCollectionType(env, kind, assocClass);
-                    } else {
-                        acrefType = assocClass;
+		if (astNode == null) {
+			astNode = simpleUndefinedName(simpleNameCS, env, source, simpleName);
 		}
-                }
-            }
 		
-            if (acrefType == null) {
-                // for non-navigable association classes, assume set type
-                acrefType = getSetType(simpleNameCS, env, assocClass);
-            }
-            acref.setType(acrefType);
-
-            initPropertyPositions(acref, simpleNameCS);
-            astNode = acref;
-        } else {
-            if ((source != null) && (vdcl = env.lookup(simpleName)) != null) {
-                String message = OCLMessages.bind(
-                        OCLMessages.VarInNavExp_ERROR_,
-                        simpleName);
-                ERROR(simpleNameCS, "variableExpCS", message);//$NON-NLS-1$
-            } else {
-                String message = OCLMessages.bind(
-                        OCLMessages.UnrecognizedVar_ERROR_,
-                        simpleName);
-                ERROR(simpleNameCS, "variableExpCS", message);//$NON-NLS-1$
-            }
-
-            return createDummyInvalidLiteralExp();
-        }
-
+		// FIXME - we should ask MDT OCL for a support to handle this in a better way
 		/*
 		 * If the source type is a collection, then need there is an implicit COLLECT 
 		 * or imperative COLLECT operator.
 		 */
-        if ((source != null) && source.getType() instanceof CollectionType) {
+		if ((source != null) && (source.getType() instanceof CollectionType)
+				&& (astNode instanceof FeatureCallExp)) {
 		    CallExpCS callExpCS = (CallExpCS) simpleNameCS.eContainer();
 		    FeatureCallExp<EClassifier> featureCallExp = (FeatureCallExp<EClassifier>) astNode;
 		    astNode = isArrowAccessToCollection(callExpCS, source) ?
