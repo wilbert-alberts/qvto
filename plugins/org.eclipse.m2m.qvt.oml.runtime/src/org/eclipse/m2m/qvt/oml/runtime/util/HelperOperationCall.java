@@ -156,7 +156,7 @@ public class HelperOperationCall {
 		}
 		
 		QvtOperationalEvaluationVisitorImpl evaluator = fContext.getEvaluator();
-		Object thisObject = evaluator.getModuleDefaultInstance(fOwningModule, evaluator.getOperationalEvaluationEnv());
+		Object thisObject = evaluator.getCurrentThisOfType(this.fOwningModule);
 		assert thisObject != null;
 		return doInvoke(thisObject, arguments);
 	}
