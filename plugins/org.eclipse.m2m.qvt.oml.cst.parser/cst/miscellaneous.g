@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.1 2008/11/17 14:48:26 aigdalov Exp $ 
+-- * $Id: miscellaneous.g,v 1.2 2008/11/20 18:04:18 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -40,18 +40,6 @@ $DropRules
 	operationCallExpCS ::= oclAsType isMarkedPreCS '(' argumentsCSopt ')'
 	operationCallExpCS ::= oclIsKindOf isMarkedPreCS '(' argumentsCSopt ')'
 	operationCallExpCS ::= oclIsTypeOf isMarkedPreCS '(' argumentsCSopt ')'
-
-	iteratorExpCS ::= forAll '(' iterContents ')'
-	iteratorExpCS ::= exists '(' iterContents ')'
-	iteratorExpCS ::= isUnique '(' iterContents ')'
-	iteratorExpCS ::= one '(' iterContents ')'
-	iteratorExpCS ::= any '(' iterContents ')'
-	iteratorExpCS ::= collect '(' iterContents ')'
-	iteratorExpCS ::= select '(' iterContents ')'
-	iteratorExpCS ::= reject '(' iterContents ')'
-	iteratorExpCS ::= collectNested '(' iterContents ')'
-	iteratorExpCS ::= sortedBy '(' iterContents ')'
-	iteratorExpCS ::= closure '(' iterContents ')'
 
 	-- Dropped due to 13.2 (OCL spec) and 6.4 (QVT spec). These rules conflict with imperative iterator shorthands
 	attrOrNavCallExpCS ::= simpleNameCS '[' argumentsCS ']' isMarkedPreCS
@@ -267,7 +255,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.1 2008/11/17 14:48:26 aigdalov Exp $
+ * $Id: miscellaneous.g,v 1.2 2008/11/20 18:04:18 aigdalov Exp $
  */
 	./
 $End
@@ -863,50 +851,6 @@ $Rules
 	iteratorExpCSToken -> sortedBy
 	iteratorExpCSToken -> closure
 
-	iteratorExpCS ::= iteratorExpCSToken '(' iterContents ')'
-		/.$BeginJava
-					SimpleNameCS simpleNameCS = createSimpleNameCS(
-								SimpleTypeEnum.KEYWORD_LITERAL,
-								getTokenText($getToken(1))
-							);
-					setOffsets(simpleNameCS, getIToken($getToken(1)));
-					Object[] iterContents = (Object[])$getSym(3);
-					CSTNode result = createIteratorExpCS(
-							simpleNameCS,
-							(VariableCS)iterContents[0],
-							(VariableCS)iterContents[1],
-							(OCLExpressionCS)iterContents[2]
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
-					$setResult(result);
-		  $EndJava
-		./
-
-	iteratorExpCS ::= iteratorExpCSToken '(' iterContents qvtErrorToken
-		/.$BeginJava
-					SimpleNameCS simpleNameCS = createSimpleNameCS(
-								SimpleTypeEnum.KEYWORD_LITERAL,
-								getTokenText($getToken(1))
-							);
-					setOffsets(simpleNameCS, getIToken($getToken(1)));
-					Object[] iterContents = (Object[])$getSym(3);
-					CSTNode result = createIteratorExpCS(
-							simpleNameCS,
-							(VariableCS)iterContents[0],
-							(VariableCS)iterContents[1],
-							(OCLExpressionCS)iterContents[2]
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(2)));
-			        for (int i = iterContents.length - 1; i >= 0; i--) {
-			        	if (iterContents[i] instanceof CSTNode) {
-			        		setOffsets(result, getIToken($getToken(1)), (CSTNode) iterContents[i]);
-			        		break;
-			        	}
-			        }
-					$setResult(result);
-		  $EndJava
-		./
-		
 	iteratorExpCS ::= iteratorExpCSToken '(' qvtErrorToken
 		/.$BeginJava
 					SimpleNameCS simpleNameCS = createSimpleNameCS(
