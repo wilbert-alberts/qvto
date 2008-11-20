@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempSwitch.java,v 1.1 2008/04/06 10:18:41 sboyko Exp $
+ * $Id: TempSwitch.java,v 1.2 2008/11/20 17:28:48 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.temp.util;
 
@@ -135,16 +135,6 @@ public class TempSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case TempPackage.ERROR_VARIABLE_INITIALIZATION_CS: {
-				ErrorVariableInitializationCS errorVariableInitializationCS = (ErrorVariableInitializationCS)theEObject;
-				T result = caseErrorVariableInitializationCS(errorVariableInitializationCS);
-				if (result == null) result = caseVariableInitializationCS(errorVariableInitializationCS);
-				if (result == null) result = caseStatementCS(errorVariableInitializationCS);
-				if (result == null) result = caseOCLExpressionCS(errorVariableInitializationCS);
-				if (result == null) result = caseCSTNode(errorVariableInitializationCS);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case TempPackage.ERROR_OUT_EXP_CS: {
 				ErrorOutExpCS errorOutExpCS = (ErrorOutExpCS)theEObject;
 				T result = caseErrorOutExpCS(errorOutExpCS);
@@ -208,21 +198,6 @@ public class TempSwitch<T> {
 	 * @generated
 	 */
 	public T caseScopedNameCS(ScopedNameCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Error Variable Initialization CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Error Variable Initialization CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseErrorVariableInitializationCS(ErrorVariableInitializationCS object) {
 		return null;
 	}
 
@@ -298,36 +273,6 @@ public class TempSwitch<T> {
 	 * @generated
 	 */
 	public T caseCallExpCS(CallExpCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Statement CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Statement CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseStatementCS(StatementCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Variable Initialization CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Variable Initialization CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseVariableInitializationCS(VariableInitializationCS object) {
 		return null;
 	}
 

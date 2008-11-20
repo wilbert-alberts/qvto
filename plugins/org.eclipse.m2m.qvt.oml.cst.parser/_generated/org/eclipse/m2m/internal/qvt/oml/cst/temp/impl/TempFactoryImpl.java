@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempFactoryImpl.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: TempFactoryImpl.java,v 1.2 2008/11/20 17:28:48 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.temp.impl;
 
@@ -79,7 +79,6 @@ public class TempFactoryImpl extends EFactoryImpl implements TempFactory {
 			case TempPackage.ERROR_CALL_EXP_CS: return createErrorCallExpCS();
 			case TempPackage.RESOLVE_OP_ARGS_EXP_CS: return createResolveOpArgsExpCS();
 			case TempPackage.SCOPED_NAME_CS: return createScopedNameCS();
-			case TempPackage.ERROR_VARIABLE_INITIALIZATION_CS: return createErrorVariableInitializationCS();
 			case TempPackage.ERROR_OUT_EXP_CS: return createErrorOutExpCS();
 			case TempPackage.ERROR_CST_NODE: return createErrorCSTNode();
 			default:
@@ -115,16 +114,6 @@ public class TempFactoryImpl extends EFactoryImpl implements TempFactory {
 	public ScopedNameCS createScopedNameCS() {
 		ScopedNameCSImpl scopedNameCS = new ScopedNameCSImpl();
 		return scopedNameCS;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ErrorVariableInitializationCS createErrorVariableInitializationCS() {
-		ErrorVariableInitializationCSImpl errorVariableInitializationCS = new ErrorVariableInitializationCSImpl();
-		return errorVariableInitializationCS;
 	}
 
 	/**

@@ -285,7 +285,6 @@
               ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/temp/ScopedNameCS/typeCS"/>
           <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/temp/ScopedNameCS/name"/>
         </genClasses>
-        <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/temp/ErrorVariableInitializationCS"/>
         <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/temp/ErrorOutExpCS"/>
         <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/temp/ErrorCSTNode">
           <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/temp/ErrorCSTNode/fullStartOffset"/>

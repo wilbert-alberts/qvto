@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempAdapterFactory.java,v 1.1 2008/04/06 10:18:41 sboyko Exp $
+ * $Id: TempAdapterFactory.java,v 1.2 2008/11/20 17:28:48 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.temp.util;
 
@@ -109,10 +109,6 @@ public class TempAdapterFactory extends AdapterFactoryImpl {
 				return createScopedNameCSAdapter();
 			}
 			@Override
-			public Adapter caseErrorVariableInitializationCS(ErrorVariableInitializationCS object) {
-				return createErrorVariableInitializationCSAdapter();
-			}
-			@Override
 			public Adapter caseErrorOutExpCS(ErrorOutExpCS object) {
 				return createErrorOutExpCSAdapter();
 			}
@@ -131,14 +127,6 @@ public class TempAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseCallExpCS(CallExpCS object) {
 				return createCallExpCSAdapter();
-			}
-			@Override
-			public Adapter caseStatementCS(StatementCS object) {
-				return createStatementCSAdapter();
-			}
-			@Override
-			public Adapter caseVariableInitializationCS(VariableInitializationCS object) {
-				return createVariableInitializationCSAdapter();
 			}
 			@Override
 			public Adapter caseElementWithBody(ElementWithBody object) {
@@ -211,20 +199,6 @@ public class TempAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorVariableInitializationCS <em>Error Variable Initialization CS</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorVariableInitializationCS
-	 * @generated
-	 */
-	public Adapter createErrorVariableInitializationCSAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorOutExpCS <em>Error Out Exp CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -291,34 +265,6 @@ public class TempAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCallExpCSAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.StatementCS <em>Statement CS</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.StatementCS
-	 * @generated
-	 */
-	public Adapter createStatementCSAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS <em>Variable Initialization CS</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS
-	 * @generated
-	 */
-	public Adapter createVariableInitializationCSAdapter() {
 		return null;
 	}
 

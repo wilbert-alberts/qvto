@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempPackage.java,v 1.2 2008/11/13 15:22:03 aigdalov Exp $
+ * $Id: TempPackage.java,v 1.3 2008/11/20 17:28:48 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.temp;
 
@@ -252,70 +252,6 @@ public interface TempPackage extends EPackage {
 	int SCOPED_NAME_CS_FEATURE_COUNT = CSTPackage.CST_NODE_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.impl.ErrorVariableInitializationCSImpl <em>Error Variable Initialization CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.impl.ErrorVariableInitializationCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.impl.TempPackageImpl#getErrorVariableInitializationCS()
-	 * @generated
-	 */
-	int ERROR_VARIABLE_INITIALIZATION_CS = 3;
-
-	/**
-	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ERROR_VARIABLE_INITIALIZATION_CS__START_OFFSET = org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage.VARIABLE_INITIALIZATION_CS__START_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ERROR_VARIABLE_INITIALIZATION_CS__END_OFFSET = org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage.VARIABLE_INITIALIZATION_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Ocl Expression CS</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ERROR_VARIABLE_INITIALIZATION_CS__OCL_EXPRESSION_CS = org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage.VARIABLE_INITIALIZATION_CS__OCL_EXPRESSION_CS;
-
-	/**
-	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ERROR_VARIABLE_INITIALIZATION_CS__SIMPLE_NAME_CS = org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage.VARIABLE_INITIALIZATION_CS__SIMPLE_NAME_CS;
-
-	/**
-	 * The feature id for the '<em><b>Type CS</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ERROR_VARIABLE_INITIALIZATION_CS__TYPE_CS = org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS;
-
-	/**
-	 * The number of structural features of the '<em>Error Variable Initialization CS</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ERROR_VARIABLE_INITIALIZATION_CS_FEATURE_COUNT = org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage.VARIABLE_INITIALIZATION_CS_FEATURE_COUNT + 0;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.impl.ErrorOutExpCSImpl <em>Error Out Exp CS</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -323,7 +259,7 @@ public interface TempPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.impl.TempPackageImpl#getErrorOutExpCS()
 	 * @generated
 	 */
-	int ERROR_OUT_EXP_CS = 4;
+	int ERROR_OUT_EXP_CS = 3;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -432,7 +368,7 @@ public interface TempPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.impl.TempPackageImpl#getErrorCSTNode()
 	 * @generated
 	 */
-	int ERROR_CST_NODE = 5;
+	int ERROR_CST_NODE = 4;
 
 	/**
 	 * The feature id for the '<em><b>Full Start Offset</b></em>' attribute.
@@ -535,16 +471,6 @@ public interface TempPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getScopedNameCS_Name();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorVariableInitializationCS <em>Error Variable Initialization CS</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Error Variable Initialization CS</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorVariableInitializationCS
-	 * @generated
-	 */
-	EClass getErrorVariableInitializationCS();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorOutExpCS <em>Error Out Exp CS</em>}'.
@@ -671,16 +597,6 @@ public interface TempPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SCOPED_NAME_CS__NAME = eINSTANCE.getScopedNameCS_Name();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.impl.ErrorVariableInitializationCSImpl <em>Error Variable Initialization CS</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.impl.ErrorVariableInitializationCSImpl
-		 * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.impl.TempPackageImpl#getErrorVariableInitializationCS()
-		 * @generated
-		 */
-		EClass ERROR_VARIABLE_INITIALIZATION_CS = eINSTANCE.getErrorVariableInitializationCS();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.impl.ErrorOutExpCSImpl <em>Error Out Exp CS</em>}' class.

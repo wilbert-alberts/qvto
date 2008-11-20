@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempPackageImpl.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: TempPackageImpl.java,v 1.2 2008/11/20 17:28:48 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.temp.impl;
 
@@ -19,20 +19,15 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl;
-
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCSTNode;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorOutExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorVariableInitializationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ResolveOpArgsExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.TempFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.TempPackage;
-
 import org.eclipse.ocl.cst.CSTPackage;
 
 /**
@@ -69,13 +64,6 @@ public class TempPackageImpl extends EPackageImpl implements TempPackage {
 	 * @generated
 	 */
 	private EClass scopedNameCSEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass errorVariableInitializationCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -235,15 +223,6 @@ public class TempPackageImpl extends EPackageImpl implements TempPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getErrorVariableInitializationCS() {
-		return errorVariableInitializationCSEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getErrorOutExpCS() {
 		return errorOutExpCSEClass;
 	}
@@ -313,8 +292,6 @@ public class TempPackageImpl extends EPackageImpl implements TempPackage {
 		createEReference(scopedNameCSEClass, SCOPED_NAME_CS__TYPE_CS);
 		createEAttribute(scopedNameCSEClass, SCOPED_NAME_CS__NAME);
 
-		errorVariableInitializationCSEClass = createEClass(ERROR_VARIABLE_INITIALIZATION_CS);
-
 		errorOutExpCSEClass = createEClass(ERROR_OUT_EXP_CS);
 
 		errorCSTNodeEClass = createEClass(ERROR_CST_NODE);
@@ -357,7 +334,6 @@ public class TempPackageImpl extends EPackageImpl implements TempPackage {
 		errorCallExpCSEClass.getESuperTypes().add(theCSTPackage.getCallExpCS());
 		resolveOpArgsExpCSEClass.getESuperTypes().add(theCSTPackage.getCSTNode());
 		scopedNameCSEClass.getESuperTypes().add(theCSTPackage.getCSTNode());
-		errorVariableInitializationCSEClass.getESuperTypes().add(theCSTPackage_1.getVariableInitializationCS());
 		errorOutExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOutExpCS());
 		errorOutExpCSEClass.getESuperTypes().add(this.getErrorCSTNode());
 
@@ -371,8 +347,6 @@ public class TempPackageImpl extends EPackageImpl implements TempPackage {
 		initEClass(scopedNameCSEClass, ScopedNameCS.class, "ScopedNameCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getScopedNameCS_TypeCS(), theCSTPackage.getTypeCS(), null, "typeCS", null, 0, 1, ScopedNameCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getScopedNameCS_Name(), ecorePackage.getEString(), "name", null, 1, 1, ScopedNameCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(errorVariableInitializationCSEClass, ErrorVariableInitializationCS.class, "ErrorVariableInitializationCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(errorOutExpCSEClass, ErrorOutExpCS.class, "ErrorOutExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
