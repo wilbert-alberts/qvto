@@ -33,14 +33,12 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnumLiteral;
-import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.IVirtualOperationTable;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
@@ -49,7 +47,6 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtEvaluationResult;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
@@ -180,6 +177,28 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 		return new QvtOperationalEvaluationVisitorImpl(parent, nestedEvalEnv); 
 	}
 	
+	@Override
+    public Object visitVariableExp(VariableExp<EClassifier, EParameter> v) {
+		Variable<EClassifier, EParameter> vd = v.getReferredVariable();
+		String varName = vd.getName();
+		Object value = getEvaluationEnvironment().getValueOf(varName);
+		
+		if(QvtOperationalEnv.THIS.equals(varName)) {
+			EClassifier varType = v.getType();
+			if(varType instanceof Module) {
+				Module referredThisModule = (Module)varType;
+				ModuleInstance thisObj = getCurrentThisOfType(referredThisModule);
+				// only if not null, the variables is part of the QVT type system.
+				// otherwise, it may be a custom variable in non-QVT execution context, like ImperativeOCL 
+				if(thisObj != null) {
+					return thisObj;
+				}
+			}
+		}
+		
+		return value;
+	}
+	
     /**
 	 * Creates evaluation visitor for an non-transformation execution client.
 	 * <p>
@@ -191,27 +210,32 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 	 * 
 	 * @see #executeHelperOperation(Helper, Object, List)
 	 */
-    public static QvtOperationalEvaluationVisitorImpl createNonTransformationExecutionContextVisitor(Context context, Set<Module> libraryImports) {
-    	// Create a special top-level environment, which does not represent a
-    	// compilation unit file (as no-one exist    	
-		QvtOperationalEnv rootEnv = (QvtOperationalEnv)QvtOperationalEnvFactory.INSTANCE.createEnvironment();
+    public static QvtOperationalEvaluationVisitorImpl createNonTransformationExecutionContextVisitor(Context context, Set<Module> libraryImports) {    	
+		QvtOperationalEnv env = (QvtOperationalEnv)QvtOperationalEnvFactory.INSTANCE.createEnvironment();
 		QvtOperationalEvaluationEnv evalEnv = QvtOperationalEnvFactory.INSTANCE.createEvaluationEnvironment(context, null);
-    	
-    	QvtOperationalEvaluationVisitorImpl visitor = new QvtOperationalEvaluationVisitorImpl(rootEnv, evalEnv);
-    	// create StdLib instance by default
-    	visitor.createModuleDefaultInstance(
-    				QvtOperationalStdLibrary.INSTANCE.getStdLibModule(), 
-    				visitor.getOperationalEvaluationEnv());
-    	
-    	// initialize all explicit import instances
-		for (Module library : libraryImports) {
-			visitor.initAllModuleDefaultInstances(library, visitor.getOperationalEvaluationEnv());
-			visitor.initModuleProperties(library);			
-		}
-    	
-    	return visitor;
+    	return createNonTransformationExecutionContextVisitor(env, evalEnv, libraryImports);
     }
     
+    public static QvtOperationalEvaluationVisitorImpl createNonTransformationExecutionContextVisitor(
+    		QvtOperationalEnv env, QvtOperationalEvaluationEnv evalEnv, Set<Module> libraryImports) {
+    	
+    	QvtOperationalEvaluationVisitorImpl visitor = new QvtOperationalEvaluationVisitorImpl(env, evalEnv);    	
+    	ModuleInstanceFactory moduleInstanceFactory = setupModuleInstanceFactory(evalEnv, visitor, new ModuleInstanceFactory());
+    	InternalEvaluationEnv internalEvalEnv = evalEnv.getAdapter(InternalEvaluationEnv.class);
+		internalEvalEnv.setThisResolver(moduleInstanceFactory.instantiateImportsByAccess(libraryImports, true));
+		return visitor;
+    }
+    
+    public ModuleInstance getCurrentThisOfType(Module module) {
+    	QvtOperationalEvaluationEnv evalEnv = getOperationalEvaluationEnv();
+    	InternalEvaluationEnv internalEvalEnv = evalEnv.getAdapter(InternalEvaluationEnv.class);    	
+    	assert internalEvalEnv != null;
+
+    	ThisInstanceResolver thisResolver = internalEvalEnv.getThisResolver();
+    	assert thisResolver != null;
+    	
+		return thisResolver.getThisInstanceOf(module);
+    }
     
     public static QvtOperationalEvaluationVisitor createVisitor(QvtOperationalEnv env, QvtOperationalEvaluationEnv evalEnv) {
     	return new QvtOperationalEvaluationVisitorImpl(env, evalEnv).createInterruptibleVisitor();
@@ -727,17 +751,15 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 		}
 	}
 	
-	private ModuleInstance callModuleImplicitConstructor(Module moduleType) {
-		QvtOperationalEvaluationEnv evaluationEnv = getOperationalEvaluationEnv();
+	private ModuleInstance callModuleImplicitConstructor(Module moduleClass) {
+    	ModuleInstanceFactory eFactory = (ModuleInstanceFactory)moduleClass.getEFactoryInstance();
+		assert eFactory != null : "Module class must have factory"; //$NON-NLS-1$
+		setupModuleInstanceFactory(getOperationalEvaluationEnv(), this, eFactory);
 		
-		createModuleDefaultInstance(QvtOperationalStdLibrary.INSTANCE.getStdLibModule(), evaluationEnv);
-		ModuleInstance moduleInstance = initAllModuleDefaultInstances(moduleType, evaluationEnv);
-        
-        initModuleProperties(moduleType);
-		
-		return moduleInstance;
-	}
-	
+		ModuleInstance instance = (ModuleInstance)eFactory.create(moduleClass);
+		getEvaluationEnvironment().add(QvtOperationalEnv.THIS, instance);
+		return instance;
+	}	
 	
 	Object doVisitModule(Module module) {
     	isInTerminatingState = false;
@@ -1205,10 +1227,8 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         return "__qvtresult__" + tempCounter++;//$NON-NLS-1$
     }
 
-    private void initModuleProperties(Module module) {
-        for (ModuleImport imp : module.getModuleImport()) {
-            initModuleProperties(imp.getImportedModule());
-        }
+    private void initModuleProperties(ModuleInstance moduleInstance) {
+    	Module module = moduleInstance.getModule();
 
         QvtOperationalEvaluationEnv env = getOperationalEvaluationEnv();
         for (EStructuralFeature feature : module.getEStructuralFeatures()) {
@@ -1222,7 +1242,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
             	setCurrentEnvInstructionPointer(prop);            	
             	propValue = ((PropertyImpl) prop).accept(getVisitor());
             }
-            EObject moduleInstance = getModuleDefaultInstance(module, env);
+            
             env.callSetter(moduleInstance, feature, propValue, isUndefined(propValue), true);
             
         	setCurrentEnvInstructionPointer(null);
@@ -1232,32 +1252,24 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
             ((RenameImpl) rename).accept(getVisitor());
         }
     }
-    
-    public EObject getModuleDefaultInstance(Module moduleClass, QvtOperationalEvaluationEnv env) {
-    	return (EObject)env.getValueOf(moduleClass.getName() + QvtOperationalFileEnv.THIS_VAR_QNAME_SUFFIX);
-    }
-    
-    private ModuleInstance createModuleDefaultInstance(Module moduleClass, QvtOperationalEvaluationEnv env) {
-    	EFactory eFactory = moduleClass.getEFactoryInstance();
-		assert eFactory != null : "Module class must have factory"; //$NON-NLS-1$
-    	
-		ModuleInstance instance = (ModuleInstance)eFactory.create(moduleClass);
-    	// use replace as multiple imports of the same module might happen
-    	env.replace(moduleClass.getName() + QvtOperationalFileEnv.THIS_VAR_QNAME_SUFFIX, instance);
-    	return instance;
-    }    
-
-    private ModuleInstance initAllModuleDefaultInstances(Module module, QvtOperationalEvaluationEnv env) {
-    	ModuleInstance moduleInstance = createModuleDefaultInstance(module, env);
-		for (ModuleImport moduleImport : module.getModuleImport()) {
-			if(moduleImport.getModule() != null) {
-				Module importedModule = moduleImport.getImportedModule();
-				initAllModuleDefaultInstances(importedModule, getOperationalEvaluationEnv());
+        
+	private static ModuleInstanceFactory setupModuleInstanceFactory(
+			final QvtOperationalEvaluationEnv env,
+			final QvtOperationalEvaluationVisitorImpl visitor, 
+			final ModuleInstanceFactory factory) 
+	{
+		factory.addPostCreateHandler(new ModuleInstanceFactory.PostCreateHandler() {
+			public void created(ModuleInstance moduleInstance) {
+				// FIXME - better to do this in separate evaluation env representing a constructor
+				// call to an extended module 
+		    	visitor.addToEnv(QvtOperationalEnv.THIS, moduleInstance, moduleInstance.getModule());
+				visitor.initModuleProperties(moduleInstance);
+				env.remove(QvtOperationalEnv.THIS);
 			}
-		}
+		});
 		
-		return moduleInstance;
-    }        
+		return factory;
+	}    
     
 	private IVirtualOperationTable getVirtualTable(EOperation operation) {
 		return IVirtualOperationTable.Access.INSTANCE.getVirtualTable(operation);
@@ -1334,9 +1346,6 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         return candidateObject.equals(traceObject); // Overridden equals() is implied
     }
     
-    private static boolean isNullOrVoidType(ETypedElement eTypedElement) {
-        return (eTypedElement == null) || (eTypedElement.getEType() instanceof Module);
-    }
 
     private TraceRecord addTraces(MappingOperation mappingOperation) {
         TraceRecord traceRecord = TraceFactory.eINSTANCE.createTraceRecord();
@@ -1523,7 +1532,16 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         	mapOperationOutAndResultParams(oldEvalEnv, nestedEnv);
         }
                         
+        // setup 'this' module variable  
+        Module targetModule = QvtOperationalParserUtil.getOwningModule(method);
+        assert targetModule != null;
+        // Resolves the target module instance to call from the currently executed module 'this'
+        ModuleInstance calledThisInstance = getCurrentThisOfType(targetModule);        
+        assert calledThisInstance != null;
+        
         setOperationalEvaluationEnv(nestedEnv);
+        // add 'this' to the nested environment
+        addToEnv(QvtOperationalEnv.THIS, calledThisInstance, targetModule);        
         
         // set IP initially to the method header
         setCurrentEnvInstructionPointer(method); 
@@ -2157,8 +2175,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     // allow to redefine "entry" point
     private ImperativeOperation myEntryPoint;
     private Module myRootModule;
-    private QvtOperationalEvaluationEnv myEvalEnv;
-    
+    private QvtOperationalEvaluationEnv myEvalEnv;   
     private OCLAnnotationSupport oclAnnotationSupport;
     private boolean isInTerminatingState = false;
 }

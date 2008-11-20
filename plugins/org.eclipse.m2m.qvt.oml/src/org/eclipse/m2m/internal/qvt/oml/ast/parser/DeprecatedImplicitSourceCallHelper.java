@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.Environment;
@@ -112,7 +111,7 @@ class DeprecatedImplicitSourceCallHelper {
 						        QvtOperationalUtil.reportError(env, ValidationMessages.DeprecatedImplicitSourceCall_contextualImplicitCall, causeNode);
 						    }
 						} 
-						else if(refVarName != null && refVarName.endsWith(QvtOperationalFileEnv.THIS_VAR_QNAME_SUFFIX)) {
+						else if(refVarName != null && refVarName.equals(QvtOperationalEnv.THIS)) {
 							if(resultAST instanceof OperationCallExp) {
 								@SuppressWarnings("unchecked")
 								OperationCallExp<EClassifier, EOperation> operCall = (OperationCallExp<EClassifier, EOperation>)resultAST;

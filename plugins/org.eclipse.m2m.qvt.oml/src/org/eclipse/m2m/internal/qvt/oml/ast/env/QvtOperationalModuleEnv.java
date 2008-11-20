@@ -34,10 +34,14 @@ import org.eclipse.ocl.lpg.ProblemHandler;
 import org.eclipse.ocl.options.ProblemOption;
 
 public class QvtOperationalModuleEnv extends QvtOperationalEnv {
-
+	/**
+	 * Name mangling of <code>this</code> variables by name of module types 
+	 * is not longer used, <code>this</code> variable is directly defined instead in each module 
+	 * environment 
+	 */
+	@Deprecated
     public static final String THIS_VAR_QNAME_SUFFIX = "." + THIS; //$NON-NLS-1$
 
-	private String myQualifiedThisName;
 	private Module myContextModule;	
 	private List<Module> myLibs;
 	private List<Variable<EClassifier, EParameter>> myModelParameters = Collections.emptyList();    
@@ -54,7 +58,7 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 	@Override
 	protected void addedVariable(String name, Variable<EClassifier, EParameter> elem, boolean isExplicit) {
         super.addedVariable(name, elem, isExplicit);
-		if(name != null && name.endsWith(THIS_VAR_QNAME_SUFFIX)) {
+		if(name != null && name.equals(THIS)) {
 			if(myContextModule != null) {
 				myContextModule.getOwnedVariable().add((org.eclipse.ocl.ecore.Variable)elem);
 			}
@@ -62,21 +66,16 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 	}
 			    
     public void setContextModule(Module module) {
-    	if(myQualifiedThisName != null) {
-    		deleteElement(myQualifiedThisName);    	
-    	}
+    	deleteElement(THIS);
     	
-    	myQualifiedThisName = null;
 		myContextModule = null;    	
 
     	if(module != null) {
     		myContextModule = module;
-    		myQualifiedThisName = getThisVariableName(module);
-    		
     		org.eclipse.ocl.ecore.Variable thisVar = EcoreFactory.eINSTANCE.createVariable();
-    		thisVar.setName(myQualifiedThisName);
+    		thisVar.setName(THIS);
     		thisVar.setType(module);    		
-            addElement(myQualifiedThisName, thisVar, false);    		
+            addElement(THIS, thisVar, false);    		
     	}
     	
     	if(module instanceof OperationalTransformation) {
@@ -184,18 +183,6 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 		return null;
 	}    
     
-    private static String getThisVariableName(Module module) {
-    	String prefix = module.getName() != null ? module.getName() : ""; //$NON-NLS-1$    	
-    	return prefix + THIS_VAR_QNAME_SUFFIX;    	
-    }
-
-    @Override
-    public Variable<EClassifier, EParameter> lookup(String name) {
-    	if(THIS.equals(name)) {
-    		return super.lookup(myQualifiedThisName);
-    	}
-    	return super.lookup(name);
-    }
     
 	@Override
 	public final Module getModuleContextType() {

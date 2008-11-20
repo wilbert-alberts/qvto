@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ThisInstanceResolver;
+
 
 /**
  * This interface separates the internals of QVT Evaluation Environments that 
@@ -29,4 +31,8 @@ public interface InternalEvaluationEnv {
 	void popObjectExpOwner();
 
 	Object peekObjectExpOwner();
+	
+	ThisInstanceResolver getThisResolver();
+
+	void setThisResolver(ThisInstanceResolver myThisResolver);
 }

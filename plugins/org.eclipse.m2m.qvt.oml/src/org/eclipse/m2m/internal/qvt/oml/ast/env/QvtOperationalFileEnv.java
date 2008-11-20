@@ -17,6 +17,12 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerKernel;
 
 public class QvtOperationalFileEnv extends QvtOperationalModuleEnv {
 
+	/**
+	 * Name mangling of <code>this</code> variables by name of module types 
+	 * is not longer used, <code>this</code> variable is directly defined instead in each module 
+	 * environment 
+	 */
+	@Deprecated
     public static final String THIS_VAR_QNAME_SUFFIX = "." + THIS; //$NON-NLS-1$
 	
     private final QvtCompilerKernel myKernel;

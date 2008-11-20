@@ -51,6 +51,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Typedef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VariableInitExp;
 import org.eclipse.ocl.Environment;
@@ -198,7 +199,34 @@ public class QvtOperationalParserUtil {
 		}
 		return null; 
 	}
-	
+
+	public static Module getOwningModule(EOperation operation) {
+		EClass containingClass = operation.getEContainingClass();
+		if(containingClass != null) {
+			EPackage owningPackage = containingClass.getEPackage();
+			if(containingClass instanceof Typedef) {							
+				if(owningPackage != null) {
+					// FIXME -
+					// our QVT AST meta-model contains the additional operation via
+					// typedef in 'additions' package, owned by the QVT module
+					// -> should be directly owned by the module
+					if(owningPackage.getESuperPackage() instanceof Module) {				
+						return (Module) owningPackage.getESuperPackage();
+					}
+				} 
+			} else if(owningPackage instanceof Module) {
+				// handles cases like plain EOperation on Model class in Stdlib
+				return (Module)owningPackage;
+			}
+		}
+		
+		// check for plain EOperation directly owned by a QVT module
+		if(containingClass instanceof Module) {
+			return (Module) containingClass;
+		}
+		
+		return null; 
+	}
 	
 	public static List<EOperation> getOwnedOperations(Module module) {
 		List<EOperation> result = new ArrayList<EOperation>(module.getEOperations().size());

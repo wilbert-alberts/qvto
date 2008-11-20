@@ -11,17 +11,10 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
-import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 
-public interface ModuleInstance extends EObject, ThisInstanceResolver {
+public interface ThisInstanceResolver {
 
-	public Module getModule();
-
-	// TODO - move entry operation handler to a Transformation instance only 
-	public void setEntryOperationHandler(CallHandler handler);
-	
-	public CallHandler getEntryOperationHandler();
+	public ModuleInstance getThisInstanceOf(Module module);
 
 }

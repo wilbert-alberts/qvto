@@ -26,7 +26,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Typedef;
 import org.eclipse.ocl.AbstractTypeResolver;
-import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.ecore.internal.TupleFactory;
 import org.eclipse.ocl.types.TupleType;
 import org.eclipse.ocl.util.TypeUtil;
@@ -38,11 +37,11 @@ import org.eclipse.ocl.util.TypeUtil;
 class BasicTypeResolverImpl
 	extends AbstractTypeResolver<EPackage, EClassifier, EOperation, EStructuralFeature, EParameter> {
 
-	BasicTypeResolverImpl(EcoreEnvironment env) {
+	BasicTypeResolverImpl(QvtEnvironmentBase env) {
 		super(env);
 	}
 	
-	BasicTypeResolverImpl(EcoreEnvironment env, Resource resource) {
+	BasicTypeResolverImpl(QvtEnvironmentBase env, Resource resource) {
 		super(env, resource);
 	}
     
@@ -50,11 +49,11 @@ class BasicTypeResolverImpl
 	protected Resource createResource() {
 		return new XMIResourceImpl(URI.createURI("ocl:///qvto.env.ecore")); //$NON-NLS-1$
 	}
-    
+        
     @Override
     protected EPackage createTuplePackage() {
         EPackage result = super.createTuplePackage();  
-        // FIXME - raise MDT OCL bug for access to tuple factory
+        // FIXME - MDT OCL already give access to the base ecore TypeResolver => we should extend that
         result.setEFactoryInstance(new TupleFactory());        
         return result;
     }
@@ -64,7 +63,14 @@ class BasicTypeResolverImpl
         EPackage result = EcoreFactory.eINSTANCE.createEPackage();
         
         result.setName(name);
-        getResource().getContents().add(result);
+        
+        QvtEnvironmentBase env = (QvtEnvironmentBase)getEnvironment();
+        Module module = env.getModuleContextType();
+    	if(module != null) {
+    		module.getESubpackages().add(result);
+    	} else {
+    		getResource().getContents().add(result);
+    	}
         
         return result;
     }

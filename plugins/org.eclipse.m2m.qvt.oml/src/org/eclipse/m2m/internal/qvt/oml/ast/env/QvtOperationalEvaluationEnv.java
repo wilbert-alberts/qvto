@@ -32,8 +32,10 @@ import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.modelparam.ResourceEObject;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.IntermediatePropertyModelAdapter;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.NumberConversions;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtChangeRecorder;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ThisInstanceResolver;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
@@ -57,9 +59,13 @@ import org.eclipse.osgi.util.NLS;
 
 public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	
-	protected QvtOperationalEvaluationEnv(IContext context,
-			QvtOperationalEvaluationEnv parent) {
+	protected QvtOperationalEvaluationEnv(IContext context, QvtOperationalEvaluationEnv parent) {
 		super(parent);
+		if(parent == null) {
+			myRootEnv = this;
+		} else {
+			myRootEnv = parent.myRootEnv;
+		}
 	    myBindings = new HashMap<String, Object>();
 		myOperationArgs = new ArrayList<Object>();
 		myContext = context;
@@ -70,6 +76,10 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			myModelExtents = Collections.emptyMap();
 			myMapImportedExtents = Collections.emptyMap();
 		}
+	}
+			
+	public QvtOperationalEvaluationEnv getRoot() {
+		return myRootEnv;
 	}
 	
 	@Override
@@ -169,7 +179,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			resolvedProperty = shadow.getProperty();
 		}
 		
-		// Remark: workaround for a issue of multiple typle type instances, possibly coming from 
+		// FIXME - workaround for a issue of multiple typle type instances, possibly coming from 
 		// imported modules. The super impl. looks for the property by feature instance, do it
 		// by name here to avoid lookup failure, IllegalArgExc...
 		if(target instanceof Tuple && target instanceof EObject) {
@@ -205,13 +215,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
      */
 	@Override
     public Object getValueOf(String name) {
-        Object result = myBindings.get(name);
-        if(result == null && name != null && !myBindings.containsKey(name)) {
-        	if(getParent() != null && (name.endsWith(QvtOperationalFileEnv.THIS_VAR_QNAME_SUFFIX))) {
-        		return getParent().getValueOf(name);
-        	}
-        }
-        
+        Object result = myBindings.get(name);        
         if(result instanceof TypedBinding) {
         	return ((TypedBinding)result).value;
         }
@@ -300,6 +304,16 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
      */
 	@Override
     public void add(String name, Object value) {
+		if(QvtOperationalEnv.THIS.equals(name)) {
+			Object thisValue = value;
+			if(thisValue != null && thisValue.getClass() == TypedBinding.class) {
+				thisValue = ((TypedBinding)thisValue).value;
+			}
+			if(thisValue instanceof ModuleInstance) {
+				internalEnv().setThisResolver((ModuleInstance) thisValue);
+			}
+		}
+
         if (myBindings.containsKey(name)) {
         	String message = NLS.bind("The name: ({0})  already has a binding: ({1})", name, myBindings.get(name)); 
             throw new IllegalArgumentException(message);
@@ -390,6 +404,8 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	}
 	
 	public void dispose() {
+		internalEnv().myThisResolver = null; 
+		
 		for (QvtChangeRecorder qvtChangeRecorder : myChangeRecorders) {
 			qvtChangeRecorder.dispose();
 		}
@@ -721,6 +737,8 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
     public QvtOperationalEvaluationEnv cloneEvaluationEnv() {
         QvtOperationalEvaluationEnv env = new QvtOperationalEvaluationEnv(getContext(), getParent());
         env.internalEnv().myObjectExpOwnerStack.addAll(internalEnv().myObjectExpOwnerStack);
+        env.internalEnv().myThisResolver = internalEnv().myThisResolver;
+        
         env.myOperationArgs.addAll(myOperationArgs);
         env.myOperationSelf = myOperationSelf;
         env.myBindings.putAll(myBindings);
@@ -744,6 +762,10 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		return myOperation;
 	}
 
+    /**
+     * The root evaluation environment, refers to <code>this</code> if this is the root environment
+     */
+    private QvtOperationalEvaluationEnv myRootEnv;    
     private Internal myInternal;
     private ImperativeOperation myOperation;    
 	private final List<Object> myOperationArgs;
@@ -767,6 +789,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	}
 	
 	private class Internal implements InternalEvaluationEnv {
+	    private ThisInstanceResolver myThisResolver;		
 	    private CallHandler myMainHandler;
 	    private int myCurrentASTOffset = -1;
 		private final Stack<Object> myObjectExpOwnerStack;
@@ -775,6 +798,14 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			myObjectExpOwnerStack = new Stack<Object>();			
 		}		
 	    
+		public void setThisResolver(ThisInstanceResolver myThisResolver) {
+			this.myThisResolver = myThisResolver;
+		}
+		
+		public ThisInstanceResolver getThisResolver() {
+			return myThisResolver;
+		}
+		
 		public Object getInvalid() {
 			return getInvalidResult();
 		}
