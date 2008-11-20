@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.20 2008/11/20 17:41:24 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.21 2008/11/20 18:04:27 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.20 2008/11/20 17:41:24 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.21 2008/11/20 18:04:27 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.20 2008/11/20 17:41:24 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.21 2008/11/20 18:04:27 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.20 2008/11/20 17:41:24 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.21 2008/11/20 18:04:27 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -85,7 +85,7 @@ public interface LightweightParsersym {
       TK_LESS_EQUAL = 24,
       TK_NOT_EQUAL = 25,
       TK_LPAREN = 1,
-      TK_RPAREN = 4,
+      TK_RPAREN = 3,
       TK_LBRACE = 88,
       TK_RBRACE = 89,
       TK_LBRACKET = 105,
@@ -231,15 +231,15 @@ public interface LightweightParsersym {
       TK_merges = 141,
       TK_disjuncts = 142,
       TK_IDENTIFIER = 2,
-      TK_ERROR_TOKEN = 3,
+      TK_ERROR_TOKEN = 4,
       TK_EOF_TOKEN = 95;
 
       public final static String orderedTerminalSymbols[] = {
                  "",
                  "LPAREN",
                  "IDENTIFIER",
-                 "ERROR_TOKEN",
                  "RPAREN",
+                 "ERROR_TOKEN",
                  "EQUAL",
                  "Set",
                  "Bag",

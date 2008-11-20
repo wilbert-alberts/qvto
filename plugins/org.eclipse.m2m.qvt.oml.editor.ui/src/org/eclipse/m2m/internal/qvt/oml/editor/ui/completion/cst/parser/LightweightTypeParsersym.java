@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.20 2008/11/20 17:41:24 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.21 2008/11/20 18:04:27 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.20 2008/11/20 17:41:24 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.21 2008/11/20 18:04:27 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.20 2008/11/20 17:41:24 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.21 2008/11/20 18:04:27 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.20 2008/11/20 17:41:24 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.21 2008/11/20 18:04:27 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -74,16 +74,16 @@ public interface LightweightTypeParsersym {
       TK_STRING_LITERAL = 66,
       TK_INTEGER_LITERAL = 67,
       TK_REAL_LITERAL = 68,
-      TK_PLUS = 34,
-      TK_MINUS = 35,
-      TK_MULTIPLY = 25,
-      TK_DIVIDE = 26,
-      TK_GREATER = 20,
-      TK_LESS = 21,
-      TK_EQUAL = 5,
-      TK_GREATER_EQUAL = 22,
-      TK_LESS_EQUAL = 23,
-      TK_NOT_EQUAL = 24,
+      TK_PLUS = 33,
+      TK_MINUS = 34,
+      TK_MULTIPLY = 24,
+      TK_DIVIDE = 25,
+      TK_GREATER = 19,
+      TK_LESS = 20,
+      TK_EQUAL = 4,
+      TK_GREATER_EQUAL = 21,
+      TK_LESS_EQUAL = 22,
+      TK_NOT_EQUAL = 23,
       TK_LPAREN = 1,
       TK_RPAREN = 2,
       TK_LBRACE = 86,
@@ -109,7 +109,7 @@ public interface LightweightTypeParsersym {
       TK_EXCLAMATION_MARK = 103,
       TK_NOT_EQUAL_EXEQ = 96,
       TK_INTEGER_RANGE_START = 104,
-      TK_self = 27,
+      TK_self = 26,
       TK_inv = 131,
       TK_pre = 132,
       TK_post = 133,
@@ -119,9 +119,9 @@ public interface LightweightTypeParsersym {
       TK_then = 114,
       TK_else = 105,
       TK_endif = 106,
-      TK_and = 29,
-      TK_or = 30,
-      TK_xor = 31,
+      TK_and = 28,
+      TK_or = 29,
+      TK_xor = 30,
       TK_not = 53,
       TK_implies = 115,
       TK_let = 77,
@@ -132,11 +132,11 @@ public interface LightweightTypeParsersym {
       TK_derive = 37,
       TK_init = 38,
       TK_null = 39,
-      TK_Set = 15,
-      TK_Bag = 16,
-      TK_Sequence = 17,
-      TK_Collection = 18,
-      TK_OrderedSet = 19,
+      TK_Set = 14,
+      TK_Bag = 15,
+      TK_Sequence = 16,
+      TK_Collection = 17,
+      TK_OrderedSet = 18,
       TK_iterate = 40,
       TK_forAll = 41,
       TK_exists = 42,
@@ -157,16 +157,16 @@ public interface LightweightTypeParsersym {
       TK_oclIsInvalid = 59,
       TK_oclIsInState = 60,
       TK_allInstances = 52,
-      TK_String = 6,
-      TK_Integer = 7,
-      TK_UnlimitedNatural = 8,
-      TK_Real = 9,
-      TK_Boolean = 10,
-      TK_Tuple = 32,
-      TK_OclAny = 11,
-      TK_OclVoid = 12,
-      TK_Invalid = 13,
-      TK_OclMessage = 14,
+      TK_String = 5,
+      TK_Integer = 6,
+      TK_UnlimitedNatural = 7,
+      TK_Real = 8,
+      TK_Boolean = 9,
+      TK_Tuple = 31,
+      TK_OclAny = 10,
+      TK_OclVoid = 11,
+      TK_Invalid = 12,
+      TK_OclMessage = 13,
       TK_OclInvalid = 72,
       TK_end = 136,
       TK_while = 73,
@@ -223,15 +223,15 @@ public interface LightweightTypeParsersym {
       TK_blackbox = 157,
       TK_abstract = 158,
       TK_static = 159,
-      TK_result = 28,
+      TK_result = 27,
       TK_main = 128,
-      TK_this = 33,
+      TK_this = 32,
       TK_rename = 160,
       TK_inherits = 161,
       TK_merges = 162,
       TK_disjuncts = 163,
       TK_IDENTIFIER = 3,
-      TK_ERROR_TOKEN = 4,
+      TK_ERROR_TOKEN = 35,
       TK_EOF_TOKEN = 129;
 
       public final static String orderedTerminalSymbols[] = {
@@ -239,7 +239,6 @@ public interface LightweightTypeParsersym {
                  "LPAREN",
                  "RPAREN",
                  "IDENTIFIER",
-                 "ERROR_TOKEN",
                  "EQUAL",
                  "String",
                  "Integer",
@@ -271,6 +270,7 @@ public interface LightweightTypeParsersym {
                  "this",
                  "PLUS",
                  "MINUS",
+                 "ERROR_TOKEN",
                  "body",
                  "derive",
                  "init",
