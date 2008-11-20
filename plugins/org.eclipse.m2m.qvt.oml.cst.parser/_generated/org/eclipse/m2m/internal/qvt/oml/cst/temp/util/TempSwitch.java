@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempSwitch.java,v 1.2 2008/11/20 17:28:48 aigdalov Exp $
+ * $Id: TempSwitch.java,v 1.3 2008/11/20 17:41:15 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.temp.util;
 
@@ -135,17 +135,6 @@ public class TempSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case TempPackage.ERROR_OUT_EXP_CS: {
-				ErrorOutExpCS errorOutExpCS = (ErrorOutExpCS)theEObject;
-				T result = caseErrorOutExpCS(errorOutExpCS);
-				if (result == null) result = caseOutExpCS(errorOutExpCS);
-				if (result == null) result = caseErrorCSTNode(errorOutExpCS);
-				if (result == null) result = caseOCLExpressionCS(errorOutExpCS);
-				if (result == null) result = caseElementWithBody(errorOutExpCS);
-				if (result == null) result = caseCSTNode(errorOutExpCS);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case TempPackage.ERROR_CST_NODE: {
 				ErrorCSTNode errorCSTNode = (ErrorCSTNode)theEObject;
 				T result = caseErrorCSTNode(errorCSTNode);
@@ -198,21 +187,6 @@ public class TempSwitch<T> {
 	 * @generated
 	 */
 	public T caseScopedNameCS(ScopedNameCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Error Out Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Error Out Exp CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseErrorOutExpCS(ErrorOutExpCS object) {
 		return null;
 	}
 
@@ -273,36 +247,6 @@ public class TempSwitch<T> {
 	 * @generated
 	 */
 	public T caseCallExpCS(CallExpCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Element With Body</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Element With Body</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseElementWithBody(ElementWithBody object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Out Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Out Exp CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseOutExpCS(OutExpCS object) {
 		return null;
 	}
 

@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.20 2008/11/17 14:48:26 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.21 2008/11/20 17:41:16 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.20 2008/11/17 14:48:26 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.21 2008/11/20 17:41:16 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.20 2008/11/17 14:48:26 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.21 2008/11/20 17:41:16 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.20 2008/11/17 14:48:26 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.21 2008/11/20 17:41:16 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -5139,14 +5139,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			case 544: {
 				
 				OutExpCS objectDeclCS = ((OutExpCS)dtParser.getSym(2));  
-				CSTNode result = createErrorOutExpCS(
+				CSTNode result = createOutExpCS(
 						objectDeclCS.getSimpleNameCS(),						
-						objectDeclCS.getTypeSpecCS(),
-						ourEmptyEList,
-						getIToken(dtParser.getToken(1)).getEndOffset(),
-						getIToken(dtParser.getToken(1)).getStartOffset(),
-						getIToken(dtParser.getToken(1)).getStartOffset(),
-						getIToken(dtParser.getToken(3)).getStartOffset()
+						objectDeclCS.getTypeSpecCS()
 					);
 				if (objectDeclCS  == null) {
 				    setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(1)));

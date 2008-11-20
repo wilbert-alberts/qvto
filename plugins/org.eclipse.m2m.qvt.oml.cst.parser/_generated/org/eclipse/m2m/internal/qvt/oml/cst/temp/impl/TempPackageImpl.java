@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempPackageImpl.java,v 1.2 2008/11/20 17:28:48 aigdalov Exp $
+ * $Id: TempPackageImpl.java,v 1.3 2008/11/20 17:41:15 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.temp.impl;
 
@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCSTNode;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCallExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorOutExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ResolveOpArgsExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.TempFactory;
@@ -64,13 +63,6 @@ public class TempPackageImpl extends EPackageImpl implements TempPackage {
 	 * @generated
 	 */
 	private EClass scopedNameCSEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass errorOutExpCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -223,15 +215,6 @@ public class TempPackageImpl extends EPackageImpl implements TempPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getErrorOutExpCS() {
-		return errorOutExpCSEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getErrorCSTNode() {
 		return errorCSTNodeEClass;
 	}
@@ -292,8 +275,6 @@ public class TempPackageImpl extends EPackageImpl implements TempPackage {
 		createEReference(scopedNameCSEClass, SCOPED_NAME_CS__TYPE_CS);
 		createEAttribute(scopedNameCSEClass, SCOPED_NAME_CS__NAME);
 
-		errorOutExpCSEClass = createEClass(ERROR_OUT_EXP_CS);
-
 		errorCSTNodeEClass = createEClass(ERROR_CST_NODE);
 		createEAttribute(errorCSTNodeEClass, ERROR_CST_NODE__FULL_START_OFFSET);
 		createEAttribute(errorCSTNodeEClass, ERROR_CST_NODE__FULL_END_OFFSET);
@@ -324,7 +305,6 @@ public class TempPackageImpl extends EPackageImpl implements TempPackage {
 
 		// Obtain other dependent packages
 		CSTPackage theCSTPackage = (CSTPackage)EPackage.Registry.INSTANCE.getEPackage(CSTPackage.eNS_URI);
-		org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage theCSTPackage_1 = (org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage)EPackage.Registry.INSTANCE.getEPackage(org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -334,8 +314,6 @@ public class TempPackageImpl extends EPackageImpl implements TempPackage {
 		errorCallExpCSEClass.getESuperTypes().add(theCSTPackage.getCallExpCS());
 		resolveOpArgsExpCSEClass.getESuperTypes().add(theCSTPackage.getCSTNode());
 		scopedNameCSEClass.getESuperTypes().add(theCSTPackage.getCSTNode());
-		errorOutExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOutExpCS());
-		errorOutExpCSEClass.getESuperTypes().add(this.getErrorCSTNode());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(errorCallExpCSEClass, ErrorCallExpCS.class, "ErrorCallExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -347,8 +325,6 @@ public class TempPackageImpl extends EPackageImpl implements TempPackage {
 		initEClass(scopedNameCSEClass, ScopedNameCS.class, "ScopedNameCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getScopedNameCS_TypeCS(), theCSTPackage.getTypeCS(), null, "typeCS", null, 0, 1, ScopedNameCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getScopedNameCS_Name(), ecorePackage.getEString(), "name", null, 1, 1, ScopedNameCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(errorOutExpCSEClass, ErrorOutExpCS.class, "ErrorOutExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(errorCSTNodeEClass, ErrorCSTNode.class, "ErrorCSTNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getErrorCSTNode_FullStartOffset(), ecorePackage.getEInt(), "fullStartOffset", null, 0, 1, ErrorCSTNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

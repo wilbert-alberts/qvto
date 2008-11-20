@@ -74,7 +74,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TransformationRefineCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorOutExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ResolveOpArgsExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.TempFactory;
@@ -424,21 +423,6 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 
-	protected final OutExpCS createOutExpCS(EList<OCLExpressionCS> expressions, int startOffset, int endOffset) {
-				OutExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createOutExpCS();
-				return setupOutExpCS(result, expressions, startOffset, endOffset);
-			}
-
-	protected final OutExpCS createErrorOutExpCS(SimpleNameCS varName, TypeSpecCS typeSpecCS, EList<OCLExpressionCS> expressions,
-			int startOffset, int endOffset, int fullStartOffset, int fullEndOffset) {
-				ErrorOutExpCS result = TempFactory.eINSTANCE.createErrorOutExpCS();
-				result.setSimpleNameCS(varName);
-				result.setTypeSpecCS(typeSpecCS);
-				result.setFullStartOffset(fullStartOffset);
-				result.setFullEndOffset(fullEndOffset);
-				return setupOutExpCS(result, expressions, startOffset, endOffset);
-			}
-	
 	protected final MappingBodyCS createMappingBodyCS(List<? extends OCLExpressionCS> expCS, boolean hasPopulationKeyword) {
 		MappingBodyCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingBodyCS();
 		result.getStatements().addAll(expCS);

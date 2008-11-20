@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.17 2008/11/17 14:48:26 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.18 2008/11/20 17:41:15 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -131,7 +131,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.17 2008/11/17 14:48:26 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.18 2008/11/20 17:41:15 aigdalov Exp $
  */
 	./
 $End
@@ -1303,14 +1303,9 @@ $Rules
 	outExpCS ::= object objectDeclCS qvtErrorToken
 		/.$BeginJava
 					OutExpCS objectDeclCS = ((OutExpCS)dtParser.getSym(2));  
-					CSTNode result = createErrorOutExpCS(
+					CSTNode result = createOutExpCS(
 							objectDeclCS.getSimpleNameCS(),						
-							objectDeclCS.getTypeSpecCS(),
-							$EMPTY_ELIST,
-							getIToken($getToken(1)).getEndOffset(),
-							getIToken($getToken(1)).getStartOffset(),
-							getIToken($getToken(1)).getStartOffset(),
-							getIToken($getToken(3)).getStartOffset()
+							objectDeclCS.getTypeSpecCS()
 						);
 					if (objectDeclCS  == null) {
 					    setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));

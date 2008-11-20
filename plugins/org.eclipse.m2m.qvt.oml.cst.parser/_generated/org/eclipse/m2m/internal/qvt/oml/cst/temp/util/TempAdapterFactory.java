@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempAdapterFactory.java,v 1.2 2008/11/20 17:28:48 aigdalov Exp $
+ * $Id: TempAdapterFactory.java,v 1.3 2008/11/20 17:41:15 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.temp.util;
 
@@ -109,10 +109,6 @@ public class TempAdapterFactory extends AdapterFactoryImpl {
 				return createScopedNameCSAdapter();
 			}
 			@Override
-			public Adapter caseErrorOutExpCS(ErrorOutExpCS object) {
-				return createErrorOutExpCSAdapter();
-			}
-			@Override
 			public Adapter caseErrorCSTNode(ErrorCSTNode object) {
 				return createErrorCSTNodeAdapter();
 			}
@@ -127,14 +123,6 @@ public class TempAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseCallExpCS(CallExpCS object) {
 				return createCallExpCSAdapter();
-			}
-			@Override
-			public Adapter caseElementWithBody(ElementWithBody object) {
-				return createElementWithBodyAdapter();
-			}
-			@Override
-			public Adapter caseOutExpCS(OutExpCS object) {
-				return createOutExpCSAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -199,20 +187,6 @@ public class TempAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorOutExpCS <em>Error Out Exp CS</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorOutExpCS
-	 * @generated
-	 */
-	public Adapter createErrorOutExpCSAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCSTNode <em>Error CST Node</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -265,34 +239,6 @@ public class TempAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCallExpCSAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ElementWithBody <em>Element With Body</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ElementWithBody
-	 * @generated
-	 */
-	public Adapter createElementWithBodyAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS <em>Out Exp CS</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS
-	 * @generated
-	 */
-	public Adapter createOutExpCSAdapter() {
 		return null;
 	}
 
