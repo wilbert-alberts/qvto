@@ -60,7 +60,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.PatternPropertyExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.RenameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveExpCS;
@@ -390,17 +389,6 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		}
 		return result;
 	}
-
-	protected final CSTNode createPatternPropertyCS(IToken tokenText, OCLExpressionCS sym,
-			boolean b) {
-				PatternPropertyExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createPatternPropertyExpCS();
-				SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, tokenText.toString());
-				setOffsets(nameCS, tokenText);
-				result.setSimpleNameCS(nameCS);
-				result.setOclExpressionCS(sym);
-				result.setIncremental(b);
-				return result;
-			}
 
 	protected final CSTNode createAssignStatementCS(OCLExpressionCS sym, OCLExpressionCS sym2,
 			boolean b) {

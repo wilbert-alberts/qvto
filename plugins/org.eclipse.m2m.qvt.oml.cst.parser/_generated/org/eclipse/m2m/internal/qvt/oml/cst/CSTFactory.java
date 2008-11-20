@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactory.java,v 1.6 2008/10/23 20:09:05 aigdalov Exp $
+ * $Id: CSTFactory.java,v 1.7 2008/11/20 17:22:22 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -238,15 +238,6 @@ public interface CSTFactory extends EFactory {
 	 * @generated
 	 */
 	OutExpCS createOutExpCS();
-
-	/**
-	 * Returns a new object of class '<em>Pattern Property Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Pattern Property Exp CS</em>'.
-	 * @generated
-	 */
-	PatternPropertyExpCS createPatternPropertyExpCS();
 
 	/**
 	 * Returns a new object of class '<em>Mapping Call Exp CS</em>'.

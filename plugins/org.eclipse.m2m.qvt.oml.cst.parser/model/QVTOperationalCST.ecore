@@ -168,13 +168,6 @@
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImplicit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="PatternPropertyExpCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
-          containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="oclExpressionCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
-          containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="incremental" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="MappingCallExpCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OperationCallExpCS">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="strict" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     </eClassifiers>

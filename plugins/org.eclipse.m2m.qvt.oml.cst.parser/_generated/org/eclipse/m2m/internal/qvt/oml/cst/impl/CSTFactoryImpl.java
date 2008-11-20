@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactoryImpl.java,v 1.6 2008/10/23 20:09:08 aigdalov Exp $
+ * $Id: CSTFactoryImpl.java,v 1.7 2008/11/20 17:22:22 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -99,7 +99,6 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 			case CSTPackage.VARIABLE_INITIALIZATION_CS: return createVariableInitializationCS();
 			case CSTPackage.MAPPING_BODY_CS: return createMappingBodyCS();
 			case CSTPackage.OUT_EXP_CS: return createOutExpCS();
-			case CSTPackage.PATTERN_PROPERTY_EXP_CS: return createPatternPropertyExpCS();
 			case CSTPackage.MAPPING_CALL_EXP_CS: return createMappingCallExpCS();
 			case CSTPackage.WHILE_EXP_CS: return createWhileExpCS();
 			case CSTPackage.SWITCH_EXP_CS: return createSwitchExpCS();
@@ -394,16 +393,6 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	public OutExpCS createOutExpCS() {
 		OutExpCSImpl outExpCS = new OutExpCSImpl();
 		return outExpCS;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public PatternPropertyExpCS createPatternPropertyExpCS() {
-		PatternPropertyExpCSImpl patternPropertyExpCS = new PatternPropertyExpCSImpl();
-		return patternPropertyExpCS;
 	}
 
 	/**

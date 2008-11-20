@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTAdapterFactory.java,v 1.6 2008/10/23 20:09:18 aigdalov Exp $
+ * $Id: CSTAdapterFactory.java,v 1.7 2008/11/20 17:22:22 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -201,10 +201,6 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseOutExpCS(OutExpCS object) {
 				return createOutExpCSAdapter();
-			}
-			@Override
-			public Adapter casePatternPropertyExpCS(PatternPropertyExpCS object) {
-				return createPatternPropertyExpCSAdapter();
 			}
 			@Override
 			public Adapter caseMappingCallExpCS(MappingCallExpCS object) {
@@ -729,20 +725,6 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createOutExpCSAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.PatternPropertyExpCS <em>Pattern Property Exp CS</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.PatternPropertyExpCS
-	 * @generated
-	 */
-	public Adapter createPatternPropertyExpCSAdapter() {
 		return null;
 	}
 

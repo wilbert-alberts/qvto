@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTSwitch.java,v 1.7 2008/11/13 15:22:03 aigdalov Exp $
+ * $Id: CSTSwitch.java,v 1.8 2008/11/20 17:22:22 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -320,14 +320,6 @@ public class CSTSwitch<T> {
 				if (result == null) result = caseOCLExpressionCS(outExpCS);
 				if (result == null) result = caseElementWithBody(outExpCS);
 				if (result == null) result = caseCSTNode(outExpCS);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CSTPackage.PATTERN_PROPERTY_EXP_CS: {
-				PatternPropertyExpCS patternPropertyExpCS = (PatternPropertyExpCS)theEObject;
-				T result = casePatternPropertyExpCS(patternPropertyExpCS);
-				if (result == null) result = caseOCLExpressionCS(patternPropertyExpCS);
-				if (result == null) result = caseCSTNode(patternPropertyExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -955,21 +947,6 @@ public class CSTSwitch<T> {
 	 * @generated
 	 */
 	public T caseOutExpCS(OutExpCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Pattern Property Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Pattern Property Exp CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T casePatternPropertyExpCS(PatternPropertyExpCS object) {
 		return null;
 	}
 

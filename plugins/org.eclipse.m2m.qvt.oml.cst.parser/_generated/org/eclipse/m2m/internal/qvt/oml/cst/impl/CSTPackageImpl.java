@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.10 2008/11/13 15:22:02 aigdalov Exp $
+ * $Id: CSTPackageImpl.java,v 1.11 2008/11/20 17:22:22 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -20,9 +20,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
@@ -69,7 +67,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.PatternPropertyExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.RenameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveExpCS;
@@ -84,9 +81,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TransformationRefineCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS;
-
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.TempPackage;
-
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.impl.TempPackageImpl;
 
 /**
@@ -291,13 +286,6 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * @generated
 	 */
 	private EClass outExpCSEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass patternPropertyExpCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1335,42 +1323,6 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getPatternPropertyExpCS() {
-		return patternPropertyExpCSEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getPatternPropertyExpCS_SimpleNameCS() {
-		return (EReference)patternPropertyExpCSEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getPatternPropertyExpCS_OclExpressionCS() {
-		return (EReference)patternPropertyExpCSEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getPatternPropertyExpCS_Incremental() {
-		return (EAttribute)patternPropertyExpCSEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getMappingCallExpCS() {
 		return mappingCallExpCSEClass;
 	}
@@ -2268,11 +2220,6 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(outExpCSEClass, OUT_EXP_CS__EXPRESSIONS);
 		createEAttribute(outExpCSEClass, OUT_EXP_CS__IS_IMPLICIT);
 
-		patternPropertyExpCSEClass = createEClass(PATTERN_PROPERTY_EXP_CS);
-		createEReference(patternPropertyExpCSEClass, PATTERN_PROPERTY_EXP_CS__SIMPLE_NAME_CS);
-		createEReference(patternPropertyExpCSEClass, PATTERN_PROPERTY_EXP_CS__OCL_EXPRESSION_CS);
-		createEAttribute(patternPropertyExpCSEClass, PATTERN_PROPERTY_EXP_CS__INCREMENTAL);
-
 		mappingCallExpCSEClass = createEClass(MAPPING_CALL_EXP_CS);
 		createEAttribute(mappingCallExpCSEClass, MAPPING_CALL_EXP_CS__STRICT);
 
@@ -2451,7 +2398,6 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		mappingBodyCSEClass.getESuperTypes().add(this.getMappingSectionCS());
 		outExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
 		outExpCSEClass.getESuperTypes().add(this.getElementWithBody());
-		patternPropertyExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
 		mappingCallExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOperationCallExpCS());
 		whileExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
 		switchExpCSEClass.getESuperTypes().add(this.getStatementCS());
@@ -2589,11 +2535,6 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEReference(getOutExpCS_TypeSpecCS(), this.getTypeSpecCS(), null, "typeSpecCS", null, 0, 1, OutExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getOutExpCS_Expressions(), theCSTPackage_1.getOCLExpressionCS(), null, "expressions", null, 0, -1, OutExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getOutExpCS_IsImplicit(), ecorePackage.getEBoolean(), "isImplicit", null, 0, 1, OutExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(patternPropertyExpCSEClass, PatternPropertyExpCS.class, "PatternPropertyExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getPatternPropertyExpCS_SimpleNameCS(), theCSTPackage_1.getSimpleNameCS(), null, "simpleNameCS", null, 0, 1, PatternPropertyExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(getPatternPropertyExpCS_OclExpressionCS(), theCSTPackage_1.getOCLExpressionCS(), null, "oclExpressionCS", null, 0, 1, PatternPropertyExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getPatternPropertyExpCS_Incremental(), ecorePackage.getEBoolean(), "incremental", null, 0, 1, PatternPropertyExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(mappingCallExpCSEClass, MappingCallExpCS.class, "MappingCallExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getMappingCallExpCS_Strict(), ecorePackage.getEBoolean(), "strict", null, 0, 1, MappingCallExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

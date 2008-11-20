@@ -161,12 +161,6 @@
             ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/OutExpCS/expressions"/>
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/OutExpCS/isImplicit"/>
       </genClasses>
-      <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/PatternPropertyExpCS">
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/PatternPropertyExpCS/simpleNameCS"/>
-        <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/PatternPropertyExpCS/oclExpressionCS"/>
-        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/PatternPropertyExpCS/incremental"/>
-      </genClasses>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/MappingCallExpCS">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/MappingCallExpCS/strict"/>
       </genClasses>
