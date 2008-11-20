@@ -161,5 +161,63 @@ See bug 253051 (<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=253051">h
 </p>
 <p>
 <h2><a name="bug254482">ResolveExp/ResolveInExp implicit source resolution disablement</a></h2>
-TODO
+QVTO 1.x performed implicit source lookup for ResolveExp/ResolveInExp expressions. If such lookup was
+successful ResolveExp (consequently, ResolveInExp) was considered to be used with implicit source.
+In this way, the following code was allowed:
+<pre class="Code">
+main() {
+		var a := object EPackage{name := 'a'};
+		var b := object EPackage{name := 'b'};
+		var c := object EPackage{name := 'c'};
+		a.map toEClass(); -- creates a trace record for 'a'
+		b.map toEClass(); -- creates a trace record for 'b'
+		c.map toEClass(); -- creates a trace record for 'c'
+		var x := Bag {a, b} -> collect(resolve()); -- in QVTO 1.x the source of resolve() is the implicit iterator
+		                                           -- of the collect expression
+		                                           -- 'x' becomes a collection of 2 elements
+		var y := Bag {a, b} -> collect(resolveIn(EPackage::toEClass)); -- in QVTO 1.x the source of resolveIn() is the implicit iterator
+		                                                               -- of the collect expression
+		                                                               -- note: this is not a resolveIn() call without source
+		                                                               -- as in the next line.
+		                                                               -- 'y' becomes a collection of 2 elements
+		var z := resolveIn(EPackage::toEClass); -- no implicit source found
+		                                        -- 'z' becomes a collection of 3 elements
+		--var z1 := resolve(); -- implicit source for resolve() not found => compilation error                                                       
+}
+ 
+mapping EPackage::toEClass() : EClass {
+}
+</pre>
+
+However, no proof of this concept was found in the specification. Thus, QVTO 2.0 disallowed implicit
+source resolution for ResolveExp/ResolveInExp. Consequently, usage of ResolveExp (not ResolveInExp)
+without source is prohibited and usage of ResolveInExp without source is always considered a search
+though all objects created or updated by the referred mapping (8.2.1.23):
+<pre class="Code">
+main() {
+		var a := object EPackage{name := 'a'};
+		var b := object EPackage{name := 'b'};
+		var c := object EPackage{name := 'c'};
+		a.map toEClass(); -- creates a trace record for 'a'
+		b.map toEClass(); -- creates a trace record for 'b'
+		c.map toEClass(); -- creates a trace record for 'c'
+		--var x := Bag {a, b} -> collect(resolve()); -- in QVTO 2.0 resolve() without source is prohibited
+		var y := Bag {a, b} -> collect(resolveIn(EPackage::toEClass)); -- in QVTO 2.0 this is a resolveIn() call without source
+		                                                               -- as in the next line.
+		                                                               -- 'y' becomes a collection of 6 elements
+		var z := resolveIn(EPackage::toEClass); -- a resolveIn() call without source
+		                                        -- 'z' becomes a collection of 3 elements
+		--var z1 := resolve(); -- in QVTO 2.0 resolve() without source is prohibited                                                       
+}
+ 
+mapping EPackage::toEClass() : EClass {
+}
+</pre>
+
+Note that the behaviour changes only in case when ResolveExp/ResolveInExp is used without source and
+there are implicit variables in the corresponding scope (e.g. within collect, select, etc. with
+implicit iterator). Thus the majority of ResolveExp/ResolveInExp expressions written in QVTO 1.x 
+are to be executed in QVTO 2.0 the same way as before.<br>
+
+See bug 254482 (<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=254482">https://bugs.eclipse.org/bugs/show_bug.cgi?id=254482</a>).
 </p>
