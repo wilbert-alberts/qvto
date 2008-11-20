@@ -20,7 +20,7 @@ describe these changes.
 </p>
 <p>
 <h2><a name="bug252358">Expressions in mapping population section</a></h2>
-Usage of expresions within the population section of mappings was highly limited in QVTO 1.x.
+Usage of expressions within the population section of mappings was highly limited in QVTO 1.x.
 This was significantly improved in QVTO 2.0.
 According to the specification (sections 8.4.7.1, 8.2.1.19, 8.2.1.18 and 8.1.5), it is possible
 to have arbitrary expressions (assignments, variable declarations, if-expressions, etc.) in 
@@ -65,7 +65,7 @@ mapping EPackage::toEClass() : EClass {
 </pre>
 An important difference between the previous and the new versions is not only the ability to
 use expressions within the mapping population section but also the <b>name clashing resolution</b>.
-As already mentioned the previous implementation considered the left part of the assignment as a
+As already mentioned, the previous implementation considered the left part of the assignment as a
 property name while the right part was considered to be an ordinary OCL expression where properties
 could not be accessed directly. Therefore, the code below was correct and sensible.
 <pre class="Code">
@@ -101,7 +101,63 @@ See bug 252358 (<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=252358">h
 </p>
 <p>
 <h2><a name="bug253051">Expressions in ObjectExp body</a></h2>
-TODO
+In QVTO 1.x ObjectExp body could only contain assignments to the target object properties.
+In accordance with the specification (sections 8.4.7.1, 8.2.1.18 and 8.1.5), QVTO 2.0 allows
+to have arbitrary expressions (assignments, variable declarations, if-expressions, etc.) in 
+an ObjectExp body. Furthermore, within the ObjectExp body properties of the referred
+object can be accessed directly.
+<pre class="Code">
+object a : EClass {
+	var x := 'ifExp'; -- local variable 'x'
+	if x = 'ifExp' then {
+		name := x; -- assignment to 'name' property of the referred object 'a' of type EClass 
+		           -- same as: a.name := x;
+		name := name + name; -- 'name' property can be directly accessed in any parts of the expression
+		                     -- same as: a.name := a.name + a.name;
+	} else {
+		name := 'wrong'; -- same as: a.name := 'wrong';
+	} endif;
+}
+</pre>
+As regards the previous implementation, ObjectExp body could only consist of assignments to properties
+of the referred object. Moreover, the left part of such assignments must have been a property name
+(direct assignment without source). The direct access to properties in the right part was unavailable.
+Thus the ObjectExp below caused a compilation error:
+<pre class="Code">
+object a : EClass {
+	name := name; -- in QVTO 1.x this line produced a compilation error
+	              -- since properties in the right part could not be accessed directly
+}
+</pre>
+An important difference between the previous and the new versions is not only the ability to
+use expressions within ObjectExp body but also the <b>name clashing resolution</b>.
+As already mentioned, the previous implementation considered the left part of the assignment as a
+property name while the right part was considered to be an ordinary OCL expression where properties
+could not be accessed directly. Therefore, the code below was correct and sensible.
+<pre class="Code">
+var name := 'a';
+object a : EClass {
+	name := name + 'b'; -- in QVTO 1.x this line was the same as: a.name := name;
+	                    -- where 'name' in the right part resolved to the parameter
+}
+</pre>
+The current implementation treats properties in the left part of the assignment the same way as in
+the right part. Moreover, name clashes are resolved to local variables/parameters. Thus name clashes
+in ObjectExp body and in mapping population section are treated the way.  Thus in QVTO 2.0 the code 
+above compiles but produces a completely different result since it updates a local variable:
+<pre class="Code">
+var name := 'a';
+object a : EClass {
+	name := name + 'b'; -- in QVTO 2.0 this line is the same as: name := name;
+	                    -- where 'name' in the expression resolves to the local variable
+	                    -- a.name remains unchanged
+}
+</pre>
+
+Note that the behaviour changes only in cases of name clashing and the majority of object expressions
+written in QVTO 1.x are to be executed in QVTO 2.0 the same way as before.<br>
+
+See bug 253051 (<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=253051">https://bugs.eclipse.org/bugs/show_bug.cgi?id=253051</a>).
 </p>
 <p>
 <h2><a name="bug254482">ResolveExp/ResolveInExp implicit source resolution disablement</a></h2>
