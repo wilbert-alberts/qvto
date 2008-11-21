@@ -27,8 +27,8 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
-import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandlerAdapter;
 import org.eclipse.ocl.expressions.ExpressionsFactory;
@@ -109,13 +109,13 @@ public class LegacyNativeLibSupport {
 			fReturnClass = returnClass;
 		}
 		
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {		
-			return callOperation(evalEnv, context, fOperation, source, args, fReturnClass);
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {		
+			return callOperation(evalEnv, fOperation, source, args, fReturnClass);
 		}
 	}
 	
 
-	private static Object callOperation(QvtOperationalEvaluationEnv evalEnv, IContext context, 
+	private static Object callOperation(QvtOperationalEvaluationEnv evalEnv,
 			LibraryOperation libOp, Object source, Object[] args, Class<?> returnClass) {
 		
 		if(source == null || source == CallHandlerAdapter.getInvalidResult(evalEnv)) {
