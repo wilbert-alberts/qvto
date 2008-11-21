@@ -34,6 +34,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
@@ -309,7 +310,10 @@ public final class OCLEnvironmentWithQVTAccessFactory extends EcoreEnvironmentFa
 				
 				IContext qvtContext = fExecCtx.getEvaluator().getContext();
 				QvtOperationalEvaluationEnv qvtEvalEnv = fExecCtx.getEvaluator().getOperationalEvaluationEnv();
-				return callHandler.invoke(source, args, qvtEvalEnv, qvtContext);
+
+				ModuleInstance moduleInstance = qvtEvalEnv.getThisOfType(QvtOperationalParserUtil.getOwningModule(operation));
+				assert moduleInstance != null;
+				return callHandler.invoke(moduleInstance, source, args, qvtEvalEnv);
 			}			
 			
 			if(operation instanceof Helper) {
