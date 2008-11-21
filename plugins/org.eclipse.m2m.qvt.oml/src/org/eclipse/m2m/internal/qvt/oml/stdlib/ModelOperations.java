@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
-import org.eclipse.m2m.internal.qvt.oml.library.IContext;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.util.TypeUtil;
@@ -55,7 +55,7 @@ public class ModelOperations extends AbstractContextualOperations {
 	}
 	
 	private static final  CallHandler OBJECTS = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			Set<Object> instances = new LinkedHashSet<Object>();
 			instances.addAll(((ModelParameterExtent) source).getAllObjects());
 			return instances;
@@ -63,7 +63,7 @@ public class ModelOperations extends AbstractContextualOperations {
 	};
 
 	private static final CallHandler ROOT_OBJECTS = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			Set<Object> instances = new LinkedHashSet<Object>();
 			instances.addAll(((ModelParameterExtent) source).getRootObjects());
 			return instances;
@@ -71,7 +71,7 @@ public class ModelOperations extends AbstractContextualOperations {
 	};
 
 	private static final CallHandler OBJECTS_OF_TYPE = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 	        Set<Object> instances = new LinkedHashSet<Object>();
 	        List<Object> objects = ((ModelParameterExtent) source).getAllObjects();
 			for (Object obj : objects) {
@@ -84,7 +84,7 @@ public class ModelOperations extends AbstractContextualOperations {
 	};
 	
 	private static final CallHandler REMOVE_ELEMENT = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			if(source instanceof ModelParameterExtent == false) {
 				throw new IllegalArgumentException();
 			}

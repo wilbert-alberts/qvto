@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
-import org.eclipse.m2m.internal.qvt.oml.library.IContext;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 
 public class StatusOperations extends AbstractContextualOperations {
 	
@@ -66,7 +66,7 @@ public class StatusOperations extends AbstractContextualOperations {
 	}
 	
 	private static final CallHandler SUCCESS = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			if(source instanceof Status) {
 				return Boolean.valueOf(((Status)source).fIsSuccess);
 			}
@@ -75,7 +75,7 @@ public class StatusOperations extends AbstractContextualOperations {
 	};
 
 	private static final CallHandler FAILED = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			if(source instanceof Status) {
 				return Boolean.valueOf(((Status)source).fIsSuccess == false);
 			}
@@ -84,7 +84,7 @@ public class StatusOperations extends AbstractContextualOperations {
 	};
 
 	private static final CallHandler RAISED_EXCEPTION = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			if(source instanceof Status) {
 				return ((Status)source).fException;
 			}

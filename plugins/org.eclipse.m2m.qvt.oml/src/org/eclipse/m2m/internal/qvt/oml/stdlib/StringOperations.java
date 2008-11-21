@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
-import org.eclipse.m2m.internal.qvt.oml.library.IContext;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.utilities.PredefinedType;
 
@@ -70,7 +70,7 @@ public class StringOperations extends AbstractContextualOperations {
 	}
 	
 	static CallHandler STRING_CONCAT = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			// TODO - return OCLInvalid if arg is null of invalid
 			return ((String) source).concat(String.valueOf(args[0]));
 		}
@@ -79,7 +79,7 @@ public class StringOperations extends AbstractContextualOperations {
 	static final String LENGTH_NAME = "length"; //$NON-NLS-1$
 	
 	static final CallHandler LENGTH = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			return ((String) source).length();
 		}
 	};	
@@ -87,7 +87,7 @@ public class StringOperations extends AbstractContextualOperations {
 	static final String SUBSTRING_BEFORE_NAME = "substringBefore"; //$NON-NLS-1$
 	
 	static final CallHandler SUBSTRING_BEFORE = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			Object leftVal = args[0];
 			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return CallHandlerAdapter.getInvalidResult(evalEnv);
@@ -105,7 +105,7 @@ public class StringOperations extends AbstractContextualOperations {
 	
 	static final String SUBSTRING_AFTER_NAME = "substringAfter"; //$NON-NLS-1$	
 	static final CallHandler SUBSTRING_AFTER = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			Object leftVal = args[0];
 			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return CallHandlerAdapter.getInvalidResult(evalEnv);
@@ -123,7 +123,7 @@ public class StringOperations extends AbstractContextualOperations {
 
 	static final String FIRST_TO_UPPER_NAME = "firstToUpper"; //$NON-NLS-1$
 	static final CallHandler FIRST_TO_UPPER = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			String self = (String) source;
 			if(self.length() == 0) {
 				return self;
@@ -136,7 +136,7 @@ public class StringOperations extends AbstractContextualOperations {
 	
 	static final String LAST_TO_UPPER_NAME = "lastToUpper"; //$NON-NLS-1$
 	static final CallHandler LAST_TO_UPPER = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			String self = (String) source;
 			if(self.length() == 0) {
 				return self;
@@ -150,7 +150,7 @@ public class StringOperations extends AbstractContextualOperations {
 	
 	static final String INDEX_OF_NAME = "indexOf"; //$NON-NLS-1$
 	static final CallHandler INDEX_OF = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			String self = (String) source;
 			Object leftVal = args[0];
 			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
@@ -164,7 +164,7 @@ public class StringOperations extends AbstractContextualOperations {
 
 	static final String ENDS_WITH_NAME = "endsWith"; //$NON-NLS-1$
 	static final CallHandler ENDS_WITH = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			String self = (String) source;
 			Object leftVal = args[0];
 			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
@@ -177,7 +177,7 @@ public class StringOperations extends AbstractContextualOperations {
 
 	static final String STARTS_WITH_NAME = "startsWith"; //$NON-NLS-1$
 	static final CallHandler STARTS_WITH = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			String self = (String) source;
 			Object leftVal = args[0];
 			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
@@ -190,7 +190,7 @@ public class StringOperations extends AbstractContextualOperations {
 
 	static final String TRIME_NAME = "trim"; //$NON-NLS-1$
 	static final CallHandler TRIM = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			String self = (String) source;
 			return self.trim();
 		}
@@ -198,7 +198,7 @@ public class StringOperations extends AbstractContextualOperations {
 
 	static final String NORMALIZE_SPACE_NAME = "normalizeSpace"; //$NON-NLS-1$
 	static final CallHandler NORMALIZE = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			String self = (String) source;
 			self = self.trim();
 			StringBuilder buf = new StringBuilder(self.length());
@@ -224,7 +224,7 @@ public class StringOperations extends AbstractContextualOperations {
 	
 	static final String REPLACE_NAME = "replace"; //$NON-NLS-1$
 	static final CallHandler REPLACE = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			String self = (String) source;
 			Object arg0 = args[0];
 			if(arg0 == null && arg0 == CallHandlerAdapter.getInvalidResult(evalEnv)) {
@@ -242,7 +242,7 @@ public class StringOperations extends AbstractContextualOperations {
 
 	static final String MATCH_NAME = "match"; //$NON-NLS-1$
 	static final CallHandler MATCH = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			String self = (String) source;
 			Object leftVal = args[0];
 			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
@@ -255,7 +255,7 @@ public class StringOperations extends AbstractContextualOperations {
 	
 	static final String EQUALS_IGNORE_CASE_NAME = "equalsIgnoreCase"; //$NON-NLS-1$
 	static final CallHandler EQUALS_IGNORE_CASE = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			String self = (String) source;
 			Object leftVal = args[0];
 			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
@@ -268,7 +268,7 @@ public class StringOperations extends AbstractContextualOperations {
 
 	static final String FIND_NAME = "find"; //$NON-NLS-1$
 	static final CallHandler FIND = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			String self = (String) source;
 			Object leftVal = args[0];
 			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
@@ -281,7 +281,7 @@ public class StringOperations extends AbstractContextualOperations {
 	
 	static final String RFIND_NAME = "rfind"; //$NON-NLS-1$
 	static final CallHandler RFIND = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			String self = (String) source;
 			Object leftVal = args[0];
 			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
@@ -294,7 +294,7 @@ public class StringOperations extends AbstractContextualOperations {
 	
 	static final String IS_QUOTED_NAME = "isQuoted"; //$NON-NLS-1$
 	static final CallHandler IS_QUOTED = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {			
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {			
 			Object leftVal = args[0];
 			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return false;
@@ -307,7 +307,7 @@ public class StringOperations extends AbstractContextualOperations {
 	
 	static final String QUOTIFY_NAME = "quotify"; //$NON-NLS-1$
 	static final CallHandler QUOTIFY = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			Object leftVal = args[0];
 			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return source;
@@ -320,8 +320,8 @@ public class StringOperations extends AbstractContextualOperations {
 	
 	static final String UNQUOTIFY_NAME = "unquotify"; //$NON-NLS-1$
 	static final CallHandler UNQUOTIFY = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
-			if(!Boolean.TRUE.equals(IS_QUOTED.invoke(source, args, evalEnv, context))) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
+			if(!Boolean.TRUE.equals(IS_QUOTED.invoke(module, source, args, evalEnv))) {
 				return source;
 			}
 			Object leftVal = args[0];
@@ -336,42 +336,42 @@ public class StringOperations extends AbstractContextualOperations {
 
 	static final String MATCH_BOOLEAN_NAME = "matchBoolean"; //$NON-NLS-1$
 	static final CallHandler MATCH_BOOLEAN = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			Object leftVal = args[0];
 			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return false;
 			}		
 
 			Boolean arg = (Boolean) leftVal;
-			Object self = AS_BOOLEAN.invoke(source, args, evalEnv, context);  
+			Object self = AS_BOOLEAN.invoke(module, source, args, evalEnv);  
 			return Boolean.valueOf(arg.equals(self));
 		}
 	};
 	
 	static final String MATCH_INTEGER_NAME = "matchInteger"; //$NON-NLS-1$
 	static final CallHandler MATCH_INTEGER = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			Object leftVal = args[0];
 			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return false;
 			}		
 
 			Integer arg = (Integer) leftVal;
-			Object self = AS_INTEGER.invoke(source, args, evalEnv, context);  
+			Object self = AS_INTEGER.invoke(module, source, args, evalEnv);  
 			return Boolean.valueOf(arg.equals(self));
 		}
 	};
 	
 	static final String MATCH_FLOAT_NAME = "matchFloat"; //$NON-NLS-1$
 	static final CallHandler MATCH_FLOAT = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			Object leftVal = args[0];
 			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return false;
 			}		
 
 			Number arg = (Number) leftVal;
-			Object self = AS_FLOAT.invoke(source, args, evalEnv, context);
+			Object self = AS_FLOAT.invoke(module, source, args, evalEnv);
 			if(self != null) {
 				return arg.doubleValue() == ((Number)self).doubleValue();
 			}
@@ -381,7 +381,7 @@ public class StringOperations extends AbstractContextualOperations {
 	
 	static final String MATCH_IDENTIFIER_NAME = "matchIdentifier"; //$NON-NLS-1$
 	static final CallHandler MATCH_IDENTIFIER = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			Object leftVal = args[0];
 			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return false;
@@ -402,7 +402,7 @@ public class StringOperations extends AbstractContextualOperations {
 	
 	static final String AS_BOOLEAN_NAME = "asBoolean"; //$NON-NLS-1$
 	static final CallHandler AS_BOOLEAN = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {			
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {			
 			String self = (String) source;
 			if(self.equals("1") || self.equalsIgnoreCase("true")) { //$NON-NLS-1$ //$NON-NLS-2$
 				return Boolean.TRUE;
@@ -416,7 +416,7 @@ public class StringOperations extends AbstractContextualOperations {
 
 	static final String AS_INTEGER_NAME = "asInteger"; //$NON-NLS-1$
 	static final CallHandler AS_INTEGER = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {			
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {			
 			String self = (String) source;
 			Integer result = null;
 			try {
@@ -430,7 +430,7 @@ public class StringOperations extends AbstractContextualOperations {
 	
 	static final String AS_FLOAT_NAME = "asFloat"; //$NON-NLS-1$
 	static final CallHandler AS_FLOAT = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {			
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {			
 			String self = (String) source;
 			Double result = null;
 			try {
@@ -445,7 +445,7 @@ public class StringOperations extends AbstractContextualOperations {
 	
 	static final String START_STR_COUNTER_NAME = "startStrCounter"; //$NON-NLS-1$
 	static final CallHandler START_STR_COUNTER = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {			
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {			
 			Object leftVal = args[0];
 			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return false;
@@ -459,7 +459,7 @@ public class StringOperations extends AbstractContextualOperations {
 		
 	static final String GET_STR_COUNTER_NAME = "getStrCounter"; //$NON-NLS-1$
 	static final CallHandler GET_STR_COUNTER = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {			
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {			
 			Object leftVal = args[0];
 			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return false;
@@ -472,7 +472,7 @@ public class StringOperations extends AbstractContextualOperations {
 	
 	static final String INCR_STR_COUNTER_NAME = "incrStrCounter"; //$NON-NLS-1$
 	static final CallHandler INCR_STR_COUNTER = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {			
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {			
 			Object leftVal = args[0];
 			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
 				return false;
@@ -485,7 +485,7 @@ public class StringOperations extends AbstractContextualOperations {
 
 	static final String RESTART_ALL_STR_COUNTER_NAME = "restartAllStrCounter"; //$NON-NLS-1$
 	static final CallHandler RESTART_ALL_STR_COUNTER = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {			
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {			
 			StringCounter.getInstance(evalEnv).restartAll();
 			return null;
 		}
@@ -493,7 +493,7 @@ public class StringOperations extends AbstractContextualOperations {
 	
 	static final String ADD_SUFFIX_NUMBER_NAME = "addSuffixNumber"; //$NON-NLS-1$
 	static final CallHandler ADD_SUFFIX_NUMBER = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {			
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {			
 			String self = (String) source;			
 			StringCounter counters = StringCounter.getInstance(evalEnv);
 			Integer currentValue = counters.value(self);

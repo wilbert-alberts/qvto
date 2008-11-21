@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
-import org.eclipse.m2m.internal.qvt.oml.library.IContext;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.util.TypeUtil;
 
@@ -61,7 +61,7 @@ public class ElementOperations extends AbstractContextualOperations {
 	}
 
 	private static final CallHandler DEEP_CLONE = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			if(source instanceof EObject) {
 				EObject eObject = (EObject) source;
 				EObject result = EcoreUtil.copy(eObject);
@@ -84,7 +84,7 @@ public class ElementOperations extends AbstractContextualOperations {
 	
 	private static final CallHandler CLONE = new CallHandler() {
 		@SuppressWarnings("serial")
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			if(source instanceof EObject) {
 				EObject eObject = (EObject) source;
 			    EcoreUtil.Copier copier = new EcoreUtil.Copier() {			    	
@@ -114,7 +114,7 @@ public class ElementOperations extends AbstractContextualOperations {
 
 	private static final String CONTAINER_NAME = "container"; //$NON-NLS-1$  
 	private static final CallHandler CONTAINER = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			if(source instanceof EObject) {
 				EObject eObject = (EObject) source;
 				return eObject.eContainer();
@@ -125,7 +125,7 @@ public class ElementOperations extends AbstractContextualOperations {
 
 	private static final String METACLASS_NAME = "metaClassName"; //$NON-NLS-1$  
 	private static final CallHandler METACLASS = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			if(source instanceof EObject) {
 				EObject eObject = (EObject) source;
 				return eObject.eClass().getName();
@@ -136,7 +136,7 @@ public class ElementOperations extends AbstractContextualOperations {
 
 	private static final String SUBOBJECTS_NAME = "subobjects"; //$NON-NLS-1$  
 	private static final CallHandler SUBOBJECTS = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			if(source instanceof EObject) {
 				EObject eObject = (EObject) source;
 				return getSubObjects(eObject, null, FILTER_ALL, evalEnv);
@@ -147,7 +147,7 @@ public class ElementOperations extends AbstractContextualOperations {
 	
 	private static final String SUBOBJECTS_OF_TYPE_NAME = "subobjectsOfType"; //$NON-NLS-1$  
 	private static final CallHandler SUBOBJECTS_OF_TYPE = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			if(source instanceof EObject) {
 				EObject eObject = (EObject) source;
 				return getSubObjects(eObject, getTypeFilterArg(args), FILTER_OF_TYPE, evalEnv);
@@ -158,7 +158,7 @@ public class ElementOperations extends AbstractContextualOperations {
 
 	private static final String SUBOBJECTS_OF_KIND_NAME = "subobjectsOfKind"; //$NON-NLS-1$  
 	private static final CallHandler SUBOBJECTS_OF_KIND = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			if(source instanceof EObject) {
 				EObject eObject = (EObject) source;
 				return getSubObjects(eObject, getTypeFilterArg(args), FILTER_OF_KIND, evalEnv);
@@ -170,7 +170,7 @@ public class ElementOperations extends AbstractContextualOperations {
 	
 	private static final String ALL_SUBOBJECTS_NAME = "allSubobjects"; //$NON-NLS-1$  
 	private static final CallHandler ALL_SUBOBJECTS = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			if(source instanceof EObject) {
 				EObject eObject = (EObject) source;				
 				return getAllSubObjects(eObject, null, FILTER_ALL, evalEnv);
@@ -181,7 +181,7 @@ public class ElementOperations extends AbstractContextualOperations {
 	
 	private static final String ALL_SUBOBJECTS_OF_TYPE_NAME = "allSubobjectsOfType"; //$NON-NLS-1$  
 	private static final CallHandler ALL_SUBOBJECTS_OF_TYPE = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			if(source instanceof EObject) {
 				EObject eObject = (EObject) source;
 				EClassifier type = getTypeFilterArg(args);				
@@ -193,7 +193,7 @@ public class ElementOperations extends AbstractContextualOperations {
 
 	private static final String ALL_SUBOBJECTS_OF_KIND_NAME = "allSubobjectsOfKind"; //$NON-NLS-1$  
 	private static final CallHandler ALL_SUBOBJECTS_OF_KIND = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			if(source instanceof EObject) {
 				EObject eObject = (EObject) source;
 				EClassifier type = getTypeFilterArg(args);				

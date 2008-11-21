@@ -14,12 +14,12 @@ package org.eclipse.m2m.internal.qvt.oml.stdlib;
 
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
-import org.eclipse.m2m.internal.qvt.oml.library.IContext;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 
 
 public interface CallHandler {
 			
-	Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context);
+	Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv);
 	
 	public static class Access {
 		public static CallHandler getHandler(EOperation operation) {

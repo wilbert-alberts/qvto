@@ -17,7 +17,7 @@ import java.io.PrintWriter;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
-import org.eclipse.m2m.internal.qvt.oml.library.IContext;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.util.TypeUtil;
@@ -45,8 +45,8 @@ public class StdlibModuleOperations extends AbstractContextualOperations {
 	}
 	
 	static final CallHandler DUMP = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
-			PrintWriter printWriter = (PrintWriter) context.get(QvtOperationalStdLibrary.OUT_PRINT_WRITER);
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
+			PrintWriter printWriter = (PrintWriter) evalEnv.getContext().get(QvtOperationalStdLibrary.OUT_PRINT_WRITER);
 			Object toPrint = source;
 			if (args.length == 1) {
 				toPrint = args[0];

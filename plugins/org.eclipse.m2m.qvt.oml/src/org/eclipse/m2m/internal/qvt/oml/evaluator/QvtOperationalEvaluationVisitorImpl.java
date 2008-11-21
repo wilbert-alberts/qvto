@@ -179,15 +179,16 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 	
 	@Override
     public Object visitVariableExp(VariableExp<EClassifier, EParameter> v) {
+		QvtOperationalEvaluationEnv evalEnv = getOperationalEvaluationEnv();		
 		Variable<EClassifier, EParameter> vd = v.getReferredVariable();
-		String varName = vd.getName();
-		Object value = getEvaluationEnvironment().getValueOf(varName);
+		String varName = vd.getName();		
+		Object value = evalEnv.getValueOf(varName);
 		
 		if(QvtOperationalEnv.THIS.equals(varName)) {
 			EClassifier varType = v.getType();
 			if(varType instanceof Module) {
 				Module referredThisModule = (Module)varType;
-				ModuleInstance thisObj = getCurrentThisOfType(referredThisModule);
+				ModuleInstance thisObj = evalEnv.getThisOfType(referredThisModule);
 				// only if not null, the variables is part of the QVT type system.
 				// otherwise, it may be a custom variable in non-QVT execution context, like ImperativeOCL 
 				if(thisObj != null) {
@@ -225,18 +226,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 		internalEvalEnv.setThisResolver(moduleInstanceFactory.instantiateImportsByAccess(libraryImports, true));
 		return visitor;
     }
-    
-    public ModuleInstance getCurrentThisOfType(Module module) {
-    	QvtOperationalEvaluationEnv evalEnv = getOperationalEvaluationEnv();
-    	InternalEvaluationEnv internalEvalEnv = evalEnv.getAdapter(InternalEvaluationEnv.class);    	
-    	assert internalEvalEnv != null;
-
-    	ThisInstanceResolver thisResolver = internalEvalEnv.getThisResolver();
-    	assert thisResolver != null;
-    	
-		return thisResolver.getThisInstanceOf(module);
-    }
-    
+        
     public static QvtOperationalEvaluationVisitor createVisitor(QvtOperationalEnv env, QvtOperationalEvaluationEnv evalEnv) {
     	return new QvtOperationalEvaluationVisitorImpl(env, evalEnv).createInterruptibleVisitor();
     }
@@ -744,7 +734,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 		setOperationalEvaluationEnv(nestedEvalEnv);
 		try {
 			ModuleInstance moduleInstance = callModuleImplicitConstructor(targetTransf);
-			moduleInstance.setEntryOperationHandler(createEntryOperationHandler(nestedVisitor));
+			moduleInstance.getAdapter(ModuleInstance.Internal.class).setEntryOperationHandler(createEntryOperationHandler(nestedVisitor));
 			return moduleInstance;
 		} finally {
 			setOperationalEvaluationEnv(currentEval);
@@ -784,14 +774,14 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         	
         	ModuleInstance moduleInstance = callModuleImplicitConstructor(module);
         	CallHandler entryOperationHandler = createEntryOperationHandler(this);
-			moduleInstance.setEntryOperationHandler(entryOperationHandler);
+			moduleInstance.getAdapter(ModuleInstance.Internal.class).setEntryOperationHandler(entryOperationHandler);
 	        
 	        setCurrentEnvInstructionPointer(myEntryPoint); // initialize IP to the main entry header	        
 	        // call main entry operation
 	        OperationCallResult callResult = (OperationCallResult) entryOperationHandler.invoke(
-	        		moduleInstance, makeEntryOperationArgs(myEntryPoint, 
-	        		(OperationalTransformation)myRootModule).toArray(),
-	        		evaluationEnv, evaluationEnv.getContext());
+	        		null, moduleInstance,
+	        		makeEntryOperationArgs(myEntryPoint, 
+	        		(OperationalTransformation)myRootModule).toArray(), evaluationEnv);
 	        
 	        evalResult = callResult.myEvalEnv.createEvaluationResult(myEntryPoint);
 	        if (evalResult.getModelExtents().isEmpty()) {
@@ -813,7 +803,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 
 	private static CallHandler createEntryOperationHandler(final QvtOperationalEvaluationVisitorImpl evaluator) {
 		return new CallHandler() {
-			public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+			public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 				OperationalTransformation transformation = (OperationalTransformation)((EObject)source).eClass();
 				ImperativeOperation entry = QvtOperationalParserUtil.getMainOperation(transformation);
 				OperationCallResult result = evaluator.executeImperativeOperation(entry, null, Arrays.asList(args), false);        	        
@@ -1536,7 +1526,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         Module targetModule = QvtOperationalParserUtil.getOwningModule(method);
         assert targetModule != null;
         // Resolves the target module instance to call from the currently executed module 'this'
-        ModuleInstance calledThisInstance = getCurrentThisOfType(targetModule);        
+        ModuleInstance calledThisInstance = oldEvalEnv.getThisOfType(targetModule);        
         assert calledThisInstance != null;
         
         setOperationalEvaluationEnv(nestedEnv);

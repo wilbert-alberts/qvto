@@ -13,13 +13,14 @@ package org.eclipse.m2m.internal.qvt.oml.blackbox.java;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.NumberConversions;
-import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandlerAdapter;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Operation;
@@ -68,22 +69,23 @@ class JavaMethodHandlerFactory {
 			fFatalErrorCount = 0;
 		}		
 
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			try {
 				if(isDisabled()) {
 					return getInvalidResult();
 				}
 							
 				Object[] actualArgs = prepareArguments(source, args, evalEnv);
-				Object actualSource;
-				if(actualArgs.length == args.length) {
-					actualSource = source; 
-				} else {
-					// a static call with actual source moved to arguments				
-					actualSource = null;
-				}
+				Object javaCallSource = null;
 				
-				return fMethod.invoke(actualSource, actualArgs);
+				boolean isStatic = Modifier.isStatic(fMethod.getModifiers());
+				if(!isStatic) {
+					Class<?> moduleJavaClass = fMethod.getDeclaringClass();					
+					javaCallSource = module.getAdapter(moduleJavaClass);
+					assert javaCallSource != null;
+				}
+								
+				return fMethod.invoke(javaCallSource, actualArgs);
 			}
 			catch (IllegalArgumentException e) {
 				fFatalErrorCount++;

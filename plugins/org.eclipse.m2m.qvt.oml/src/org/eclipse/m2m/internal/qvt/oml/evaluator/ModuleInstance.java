@@ -17,11 +17,24 @@ import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 
 public interface ModuleInstance extends EObject, ThisInstanceResolver {
 
-	public Module getModule();
+	Module getModule();
 
-	// TODO - move entry operation handler to a Transformation instance only 
-	public void setEntryOperationHandler(CallHandler handler);
+	/**
+	 * Obtains an adapter for the specified interface type.
+	 * 
+	 * @param <T> the requested adapter interface
+	 * 
+	 * @param adapterType the requested adapter interface
+	 * @return an instance of the requested interface, or <code>null</code>
+	 *     if this module instance does not adapt to it
+	 */
+	<T> T getAdapter(Class<T> adapterType);
+ 
+	interface Internal {
+		void addAdapter(Object adapter);
+
+		void setEntryOperationHandler(CallHandler handler);
 	
-	public CallHandler getEntryOperationHandler();
-
+		CallHandler getEntryOperationHandler();
+	}
 }

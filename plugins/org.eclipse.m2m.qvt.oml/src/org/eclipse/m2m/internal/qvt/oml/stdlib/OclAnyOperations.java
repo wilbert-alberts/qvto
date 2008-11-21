@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
-import org.eclipse.m2m.internal.qvt.oml.library.IContext;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.util.TypeUtil;
@@ -52,7 +52,7 @@ public class OclAnyOperations extends AbstractContextualOperations {
 	}
 	
 	private static final CallHandler REPR = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {			
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {			
 		    return String.valueOf(source);
 		}
 	};
@@ -60,7 +60,7 @@ public class OclAnyOperations extends AbstractContextualOperations {
 
 	// non-std - legacy
 	private static final CallHandler ALL_INSTANCES = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 	        Set<Object> instances = new LinkedHashSet<Object>();	        
 	        for (Iterator<EObject> it = ((EObject) source).eAllContents(); it.hasNext(); ) {
 	            EObject contained = it.next();

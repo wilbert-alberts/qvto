@@ -13,7 +13,7 @@ package org.eclipse.m2m.internal.qvt.oml.stdlib;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
-import org.eclipse.m2m.internal.qvt.oml.library.IContext;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 
 
@@ -22,7 +22,7 @@ public class IntegerOperations extends AbstractContextualOperations {
 	public static final String TO_STRING_NAME = "toString"; //$NON-NLS-1$
 	
 	static CallHandler TO_STRING = new CallHandler() {
-		public Object invoke(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv, IContext context) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			return String.valueOf(source);
 		}
 	};	

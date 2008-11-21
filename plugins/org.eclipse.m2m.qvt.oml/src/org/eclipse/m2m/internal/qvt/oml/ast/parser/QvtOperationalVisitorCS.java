@@ -57,6 +57,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LocalPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LogExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS;
@@ -1411,7 +1412,7 @@ public class QvtOperationalVisitorCS
 				moduleImport.setStartPosition(cstImport.getStartOffset());
 				moduleImport.setEndPosition(cstImport.getEndOffset());
 			}
-			
+			 
 			if(module instanceof OperationalTransformation && importedModule  instanceof OperationalTransformation) {
 				validateImportedSignature(env, (OperationalTransformation) module, (OperationalTransformation) importedModule, moduleImport);
 			}
@@ -1425,16 +1426,26 @@ public class QvtOperationalVisitorCS
 				new LoadContext(env.getEPackageRegistry()));
 		
 		for (ImportCS importCS : importsToProcessCopy) {
+			if(importCS instanceof LibraryImportCS) {
+				continue;
+			}
 			PathNameCS pathNameCS = importCS.getPathNameCS();
 			if(pathNameCS != null) {
 				List<Module> bboxModules = blackboxUnitHelper.getModules(pathNameCS.getSequenceOfNames());
-				if(bboxModules != null) {					
-					for (Module nextBboxModule : bboxModules) {
+				if(bboxModules != null) {
+					for (Module nextBboxModule : bboxModules) {						
 						QvtOperationalModuleEnv bboxModuleEnv = blackboxUnitHelper.getModuleEnvironment(nextBboxModule);
 						assert bboxModuleEnv != null;
-						if(!env.getSiblings().contains(bboxModuleEnv)) {
+						if(!env.getSiblings().contains(bboxModuleEnv)) {							
 							env.addSibling(bboxModuleEnv);
 						}
+						// FIXME - module import bellow should not represent the CST import statement
+						// but rather module_access_decl (access, extends), which is not yet supported
+						ModuleImport moduleImport = ExpressionsFactory.eINSTANCE.createModuleImport();
+						moduleImport.setImportedModule(nextBboxModule);
+						module.getModuleImport().add(moduleImport);
+						module.setStartPosition(pathNameCS.getStartOffset());
+						module.setEndPosition(pathNameCS.getEndOffset());						
 					}
 				} else if(blackboxUnitHelper.loadFailed(pathNameCS.getSequenceOfNames())) {
 					env.reportError(wrappInSeeErrorLogMessage(NLS.bind(ValidationMessages.FailedToLoadLibrary, 

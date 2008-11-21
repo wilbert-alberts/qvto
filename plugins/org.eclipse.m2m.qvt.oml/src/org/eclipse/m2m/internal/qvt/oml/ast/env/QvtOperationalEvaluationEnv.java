@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.modelparam.ResourceEObject;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.IntermediatePropertyModelAdapter;
@@ -81,6 +82,12 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	public QvtOperationalEvaluationEnv getRoot() {
 		return myRootEnv;
 	}
+	
+    public ModuleInstance getThisOfType(Module module) {
+    	ThisInstanceResolver thisResolver = internalEnv().getThisResolver();
+    	assert thisResolver != null;    	
+		return thisResolver.getThisInstanceOf(module);
+    }	
 	
 	@Override
 	public <T> T getAdapter(Class<T> adapterType) {
@@ -162,7 +169,11 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			if(source == null || source == getInvalidResult()) {
 				return getInvalidResult();
 			}
-			return callHandler.invoke(source, args, this, getContext());
+			
+			Module targetModule = QvtOperationalParserUtil.getOwningModule(operation);
+			ModuleInstance targetModuleInstance = getThisOfType(targetModule);
+			assert targetModuleInstance != null;
+			return callHandler.invoke(targetModuleInstance, source, args, this);
 		}
 			
 		return super.callOperation(operation, opcode, source, args);
