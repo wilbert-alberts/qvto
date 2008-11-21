@@ -16,8 +16,10 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EAnnotation;
@@ -81,6 +83,27 @@ public class AnnotatedJavaLibrary {
 	
 	
 	// contextual operations
+	private Map<String, Integer> fCounters = new HashMap<String, Integer>();
+	
+	@Operation (contextual = true)
+	public int getStrCounterX(String self) {
+		Integer val = fCounters.get(self);
+		if(val == null) {
+			return 0;
+		}
+		return fCounters.get(self);
+	}
+
+	@Operation (contextual = true)
+	public int incStrCounterX(String self) {
+		Integer val = fCounters.get(self);
+		if(val == null) {
+			fCounters.put(self, 1);
+		} else {
+			fCounters.put(self, ++val);
+		}
+		return fCounters.get(self);
+	}	
 	
 	@Operation (kind=Kind.HELPER, contextual = true)
 	public static ArrayList<Object> primitiveTypeArgumentsHelperContextual(EAnnotation self, String strArg, Integer intArg, Double realArg, Boolean boolArg) {

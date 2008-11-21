@@ -1,4 +1,5 @@
-import library org.bar.Foo; 
+import org.bar.Foo;
+-- test the deprecated 'import library'
 import library org.eclipse.m2m.tests.qvt.oml.bbox.SimpleJavaLibrary;
 
 modeltype TESTQVT "strict" uses testqvt('http://www.eclipse.org/m2m/qvt/oml/testqvt');  
@@ -10,6 +11,16 @@ modeltype QVTO "strict" uses qvtoperational('http://www.eclipse.org/QVT/1.0.0/Op
 transformation blackboxlib_annotation_java(in source : ECORE, out target: ECORE);
 
 main() {
+	-- test stateful operation (counter state per module instance)
+	var strCounter := 'c1'.getStrCounterX();
+	assert fatal (strCounter = 0);
+	strCounter := 'c1'.incStrCounterX();
+	assert fatal (strCounter = 1);	
+	strCounter := 'c1'.getStrCounterX();
+	assert fatal (strCounter = 1);	
+	assert fatal ('c1'.incStrCounterX() = 2);
+	--
+	
 	-- test the simplified library definition
 	assert fatal (echoFromSimpleJavaLibrary('Hello') = 'Hello');
 
