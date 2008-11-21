@@ -974,6 +974,10 @@ public class QvtOperationalVisitorCS
         
         OCLExpression<EClassifier> bodyExp = visitOclExpressionCS(computeExpCS.getBody(), env);
         result.setBody(bodyExp);
+        
+        if (returnedElementExp != null) {
+            env.deleteElement(returnedElementExp.getName());
+        }
         return result;
     }
     

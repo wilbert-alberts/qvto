@@ -956,7 +956,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         
         computeExp.getBody().accept(getVisitor());
 
-        return getEvaluationEnvironment().getValueOf(returnedElement.getName());
+        return getEvaluationEnvironment().remove(returnedElement.getName());
     }
 
     public Object visitWhileExp(WhileExp whileExp) {
