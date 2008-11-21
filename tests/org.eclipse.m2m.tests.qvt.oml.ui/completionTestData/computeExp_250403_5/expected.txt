@@ -1,7 +1,6 @@
 QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = self, displayString = self : EPackage, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 4
 QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = s, displayString = s : String, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 1
 QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = result, displayString = result : EPackage, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 6
-QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = s1, displayString = s1 : String, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 2
 QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = model, displayString = model : ecore, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 5
 QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = main(), displayString = main(in inModel : ecore::EPackage), replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 5
 QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = dump(), displayString = dump(OclAny : OclAny) : OclVoid, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 5
