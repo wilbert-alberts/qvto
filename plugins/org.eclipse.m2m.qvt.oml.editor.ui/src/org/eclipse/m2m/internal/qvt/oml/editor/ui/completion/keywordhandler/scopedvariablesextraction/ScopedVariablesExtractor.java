@@ -81,27 +81,6 @@ public class ScopedVariablesExtractor {
                 }
                 nextToken = extractVarVariableResult.getEndToken();
                 varScope.addVariable(extractVarVariableResult.getString());
-            } else if (QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_compute)) {
-                IToken computeToken = nextToken;
-                nextToken = getNextToken(nextToken, data);
-                if (nextToken == null) {
-                    break;
-                }
-                if (!QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_LPAREN)) {
-                    return new Result(startToken, computeToken, null, scope);
-                }
-                currentToken = nextToken;
-                nextToken = getNextToken(nextToken, data);
-                if (nextToken == null) {
-                    break;
-                }
-                Result extractVarVariableResult = extractVariable(nextToken, null, data, varScope, 
-                        new int[] {QvtOpLPGParsersym.TK_RESET_ASSIGN, QvtOpLPGParsersym.TK_EQUAL}, NOT_A_TOKEN, QvtOpLPGParsersym.TK_RBRACE);
-                if (extractVarVariableResult.getScope() != varScope) {
-                    return extractVarVariableResult;
-                }
-                nextToken = extractVarVariableResult.getEndToken();
-                varScope.addVariable(extractVarVariableResult.getString());
             } else {
                 Result innerScopeResult = analyseVariableDeclaringExpressions(nextToken, data, varScope);
                 if (innerScopeResult != null) {
@@ -133,10 +112,7 @@ public class ScopedVariablesExtractor {
         } else if (QvtCompletionData.isKindOf(currentToken, QvtOpLPGParsersym.TK_LBRACE)) {
             return analyseScopedVarVariables(currentToken, data, scope, false);
         } else if (QvtCompletionData.isKindOf(currentToken, QvtOpLPGParsersym.TK_compute)) {
-            IToken previousToken = LightweightParserUtil.getPreviousToken(currentToken);
-            if (previousToken != null) {
-                return analyseScopedVarVariables(previousToken, data, scope, false);
-            }
+            return analyseComputeExpression(currentToken, data, scope);
         }
         return null;
     }
@@ -168,6 +144,34 @@ public class ScopedVariablesExtractor {
         }
         
         return new Result(startToken, lastKnownGoodToken, null, whileLikeScope);        
+    }
+
+    // starting from 'compute'
+    private Result analyseComputeExpression(IToken startToken, QvtCompletionData data, Scope scope) {        
+        IToken nextToken = getNextToken(startToken, data);
+        if (nextToken == null) {
+            return new Result(startToken, startToken, null, new Scope(null));
+        }
+        if  (!QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_LPAREN)) {
+            return null;
+        }
+        IToken currentToken = nextToken;
+        nextToken = getNextToken(nextToken, data);
+        if (nextToken == null) {
+            return new Result(startToken, currentToken, null, new Scope(null));
+        }
+
+        Scope computeExpScope = new Scope(scope);
+        Result extractVarVariableResult = extractVariable(nextToken, null, data, computeExpScope, 
+                new int[] {QvtOpLPGParsersym.TK_RESET_ASSIGN, QvtOpLPGParsersym.TK_EQUAL}, NOT_A_TOKEN, QvtOpLPGParsersym.TK_RBRACE);
+        if (extractVarVariableResult.getScope() != computeExpScope) {
+            return extractVarVariableResult;
+        }
+        
+        computeExpScope.addVariable(extractVarVariableResult.getString());
+        nextToken = extractVarVariableResult.getEndToken();
+        
+        return analyseWhileLikeBody(startToken, nextToken, nextToken, data, computeExpScope);
     }
 
     // starting from 'forEach' or 'forOne'
