@@ -1,6 +1,6 @@
 QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = eAnnotations, displayString = eAnnotations : OrderedSet(EAnnotation), replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 12
 QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = name, displayString = name : EString, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 4
-QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = ordered, displayString = ordered : EBoolean, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 7
+QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = _ordered, displayString = _ordered : EBoolean, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 8
 QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = unique, displayString = unique : EBoolean, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 6
 QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = lowerBound, displayString = lowerBound : EInt, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 10
 QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = upperBound, displayString = upperBound : EInt, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 10
