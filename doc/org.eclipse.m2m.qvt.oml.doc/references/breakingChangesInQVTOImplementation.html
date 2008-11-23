@@ -16,6 +16,7 @@ describe these changes.
   <li><a href="#bug252358">Expressions in mapping population section</a></li>
   <li><a href="#bug253051">Expressions in ObjectExp body</a></li>
   <li><a href="#bug254482">ResolveExp/ResolveInExp implicit source resolution disablement</a></li>
+  <li><a href="#bug251064">Keyword reservation</a></li>
 </ul> 
 </p>
 <p>
@@ -220,4 +221,14 @@ implicit iterator). Thus the majority of ResolveExp/ResolveInExp expressions wri
 are to be executed in QVTO 2.0 the same way as before.<br>
 
 See bug 254482 (<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=254482">https://bugs.eclipse.org/bugs/show_bug.cgi?id=254482</a>).
+</p>
+<p>
+<h2><a name="bug251064">Keyword reservation</a></h2>
+QVTO 2.0 reserves all keywords mentioned in the specification (8.4.7.1 Syntax for module definitions, keywords section).
+In addition, QVTO 2.0 also reserves the keyword <i>List</i> mistakenly forgotten in the section and the keyword <i>invalid</i>
+which is not present in the OCL implementation (where <i>Invalid</i> starting from the capital <i>I</i> is used).<br>
+To refer to a named element in case of clashing with keywords, use an underscore prefix "<i>_</i>" as described in the
+<a href="http://www.omg.org/docs/formal/06-05-01.pdf">OCL specification</a> (9.3)<br> 
+
+See bug 251064 (<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=251064">https://bugs.eclipse.org/bugs/show_bug.cgi?id=251064</a>).
 </p>
