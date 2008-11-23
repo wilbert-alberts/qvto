@@ -6,11 +6,11 @@ rename ecore::EPackage.implements = 'name';
 
 mapping main(in model: ecore::EPackage): ecore::EPackage {
     init {
-		var class := 'class';    	
-		var _extends := class;
+		var _class := 'class';    	
+		var _extends := _class;
     }
     	implements := 'foo';
 }
 
-mapping class(in model: ecore::EPackage): ecore::EPackage {
+mapping _class(in model: ecore::EPackage): ecore::EPackage {
 }

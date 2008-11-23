@@ -9,11 +9,11 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
     	name := 'all';
     	eAnnotations += object ecore::EAnnotation {
     	          
-    		references += selectionSort(resolveIn(main, ecore::ENamedElement)->union(resolveIn(ecore::EPackage::toEClass, ecore::ENamedElement))->union(resolveIn(ecore::EPackage::toAttribute, ecore::ENamedElement))->asOrderedSet());
+    		_references += selectionSort(resolveIn(main, ecore::ENamedElement)->union(resolveIn(ecore::EPackage::toEClass, ecore::ENamedElement))->union(resolveIn(ecore::EPackage::toAttribute, ecore::ENamedElement))->asOrderedSet());
     		source := 'resolveAll(ecore::EObject)';
     	};
     	eAnnotations += object ecore::EAnnotation {
-    		references += selectionSort(resolveIn(ecore::EPackage::toAttribute, ecore::EAttribute)->asOrderedSet());
+    		_references += selectionSort(resolveIn(ecore::EPackage::toAttribute, ecore::EAttribute)->asOrderedSet());
     		source := 'resolveAllByRule(''toAttribute'', ecore::EAttribute)';
     	};
     	eClassifiers += cl;
