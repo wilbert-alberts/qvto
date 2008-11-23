@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpKWLexer.java,v 1.22 2008/11/20 18:04:18 aigdalov Exp $
+* $Id: QvtOpKWLexer.java,v 1.23 2008/11/23 19:29:02 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpKWLexer.java,v 1.22 2008/11/20 18:04:18 aigdalov Exp $
+* $Id: QvtOpKWLexer.java,v 1.23 2008/11/23 19:29:02 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -39,7 +39,7 @@ package org.eclipse.m2m.internal.qvt.oml.cst.parser;
 public class QvtOpKWLexer extends QvtOpKWLexerprs implements QvtOpLPGParsersym
 {
     private char[] inputChars;
-    private final int keywordKind[] = new int[115 + 1];
+    private final int keywordKind[] = new int[142 + 1];
 
     public int[] getKeywordKinds() { return keywordKind; }
 
@@ -823,6 +823,168 @@ public class QvtOpKWLexer extends QvtOpKWLexerprs implements QvtOpLPGParsersym
         // Rule 115:  QVTKeyWord ::= c o m p u t e
         //
 		keywordKind[115] = (TK_compute);
+	  
+	
+        //
+        // Rule 116:  QVTKeyWord ::= D i c t
+        //
+		keywordKind[116] = (TK_Dict);
+	  
+	
+        //
+        // Rule 117:  QVTKeyWord ::= L i s t
+        //
+		keywordKind[117] = (TK_List);
+	  
+	
+        //
+        // Rule 118:  QVTKeyWord ::= b r e a k
+        //
+		keywordKind[118] = (TK_break);
+	  
+	
+        //
+        // Rule 119:  QVTKeyWord ::= c l a s s
+        //
+		keywordKind[119] = (TK_class);
+	  
+	
+        //
+        // Rule 120:  QVTKeyWord ::= c o m p o s e s
+        //
+		keywordKind[120] = (TK_composes);
+	  
+	
+        //
+        // Rule 121:  QVTKeyWord ::= c o n s t r u c t o r
+        //
+		keywordKind[121] = (TK_constructor);
+	  
+	
+        //
+        // Rule 122:  QVTKeyWord ::= c o n t i n u e
+        //
+		keywordKind[122] = (TK_continue);
+	  
+	
+        //
+        // Rule 123:  QVTKeyWord ::= d a t a t y p e
+        //
+		keywordKind[123] = (TK_datatype);
+	  
+	
+        //
+        // Rule 124:  QVTKeyWord ::= d e f a u l t
+        //
+		keywordKind[124] = (TK_default);
+	  
+	
+        //
+        // Rule 125:  QVTKeyWord ::= d e r i v e d
+        //
+		keywordKind[125] = (TK_derived);
+	  
+	
+        //
+        // Rule 126:  QVTKeyWord ::= d o
+        //
+		keywordKind[126] = (TK_do);
+	  
+	
+        //
+        // Rule 127:  QVTKeyWord ::= e l i f
+        //
+		keywordKind[127] = (TK_elif);
+	  
+	
+        //
+        // Rule 128:  QVTKeyWord ::= e n u m
+        //
+		keywordKind[128] = (TK_enum);
+	  
+	
+        //
+        // Rule 129:  QVTKeyWord ::= e x c e p t
+        //
+		keywordKind[129] = (TK_except);
+	  
+	
+        //
+        // Rule 130:  QVTKeyWord ::= e x c e p t i o n
+        //
+		keywordKind[130] = (TK_exception);
+	  
+	
+        //
+        // Rule 131:  QVTKeyWord ::= f r o m
+        //
+		keywordKind[131] = (TK_from);
+	  
+	
+        //
+        // Rule 132:  QVTKeyWord ::= l i t e r a l
+        //
+		keywordKind[132] = (TK_literal);
+	  
+	
+        //
+        // Rule 133:  QVTKeyWord ::= o r d e r e d
+        //
+		keywordKind[133] = (TK_ordered);
+	  
+	
+        //
+        // Rule 134:  QVTKeyWord ::= p r i m i t i v e
+        //
+		keywordKind[134] = (TK_primitive);
+	  
+	
+        //
+        // Rule 135:  QVTKeyWord ::= r a i s e
+        //
+		keywordKind[135] = (TK_raise);
+	  
+	
+        //
+        // Rule 136:  QVTKeyWord ::= r e a d o n l y
+        //
+		keywordKind[136] = (TK_readonly);
+	  
+	
+        //
+        // Rule 137:  QVTKeyWord ::= r e f e r e n c e s
+        //
+		keywordKind[137] = (TK_references);
+	  
+	
+        //
+        // Rule 138:  QVTKeyWord ::= t a g
+        //
+		keywordKind[138] = (TK_tag);
+	  
+	
+        //
+        // Rule 139:  QVTKeyWord ::= t r y
+        //
+		keywordKind[139] = (TK_try);
+	  
+	
+        //
+        // Rule 140:  QVTKeyWord ::= t y p e d e f
+        //
+		keywordKind[140] = (TK_typedef);
+	  
+	
+        //
+        // Rule 141:  QVTKeyWord ::= u n l i m i t e d
+        //
+		keywordKind[141] = (TK_unlimited);
+	  
+	
+        //
+        // Rule 142:  QVTKeyWord ::= i n v a l i d
+        //
+		keywordKind[142] = (TK_invalid);
 	  
 	
 

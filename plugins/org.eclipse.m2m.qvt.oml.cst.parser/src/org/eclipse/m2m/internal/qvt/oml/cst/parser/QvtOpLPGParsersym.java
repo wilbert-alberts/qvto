@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.22 2008/11/20 18:04:18 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.23 2008/11/23 19:29:02 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.22 2008/11/20 18:04:18 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.23 2008/11/23 19:29:02 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.22 2008/11/20 18:04:18 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.23 2008/11/23 19:29:02 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.22 2008/11/20 18:04:18 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.23 2008/11/23 19:29:02 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -109,14 +109,41 @@ public interface QvtOpLPGParsersym {
       TK_EXCLAMATION_MARK = 118,
       TK_NOT_EQUAL_EXEQ = 115,
       TK_INTEGER_RANGE_START = 135,
+      TK_Dict = 159,
+      TK_List = 160,
+      TK_break = 161,
+      TK_class = 162,
+      TK_composes = 163,
+      TK_constructor = 164,
+      TK_continue = 165,
+      TK_datatype = 166,
+      TK_default = 167,
+      TK_derived = 168,
+      TK_do = 169,
+      TK_elif = 170,
+      TK_enum = 171,
+      TK_except = 172,
+      TK_exception = 173,
+      TK_from = 174,
+      TK_literal = 175,
+      TK_ordered = 176,
+      TK_primitive = 177,
+      TK_raise = 178,
+      TK_readonly = 179,
+      TK_references = 180,
+      TK_tag = 181,
+      TK_try = 182,
+      TK_typedef = 183,
+      TK_unlimited = 184,
+      TK_invalid = 185,
       TK_self = 28,
-      TK_inv = 159,
-      TK_pre = 160,
-      TK_post = 161,
-      TK_context = 162,
-      TK_package = 163,
-      TK_endpackage = 164,
-      TK_def = 165,
+      TK_inv = 186,
+      TK_pre = 187,
+      TK_post = 188,
+      TK_context = 189,
+      TK_package = 190,
+      TK_endpackage = 191,
+      TK_def = 192,
       TK_if = 69,
       TK_then = 144,
       TK_else = 136,
@@ -134,8 +161,8 @@ public interface QvtOpLPGParsersym {
       TK_derive = 33,
       TK_init = 34,
       TK_null = 53,
-      TK_attr = 166,
-      TK_oper = 167,
+      TK_attr = 193,
+      TK_oper = 194,
       TK_Set = 6,
       TK_Bag = 7,
       TK_Sequence = 8,
@@ -398,6 +425,33 @@ public interface QvtOpLPGParsersym {
                  "collectselectOne",
                  "forEach",
                  "forOne",
+                 "Dict",
+                 "List",
+                 "break",
+                 "class",
+                 "composes",
+                 "constructor",
+                 "continue",
+                 "datatype",
+                 "default",
+                 "derived",
+                 "do",
+                 "elif",
+                 "enum",
+                 "except",
+                 "exception",
+                 "from",
+                 "literal",
+                 "ordered",
+                 "primitive",
+                 "raise",
+                 "readonly",
+                 "references",
+                 "tag",
+                 "try",
+                 "typedef",
+                 "unlimited",
+                 "invalid",
                  "inv",
                  "pre",
                  "post",

@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.2 2008/11/20 18:04:18 aigdalov Exp $ 
+-- * $Id: miscellaneous.g,v 1.3 2008/11/23 19:29:06 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -237,7 +237,34 @@ $Terminals
 	EXCLAMATION_MARK ::= '!'
 	NOT_EQUAL_EXEQ   ::= '!='
 	INTEGER_RANGE_START
-	
+
+	Dict
+	List
+        break
+        class
+        composes
+        constructor
+        continue
+        datatype
+        default
+        derived
+        do
+        elif
+        enum
+        except
+        exception
+        from
+        literal
+        ordered
+        primitive
+        raise
+        readonly
+        references
+        tag
+        try
+        typedef
+        unlimited
+        invalid
 $End
 
 $Notice
@@ -255,7 +282,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.2 2008/11/20 18:04:18 aigdalov Exp $
+ * $Id: miscellaneous.g,v 1.3 2008/11/23 19:29:06 aigdalov Exp $
  */
 	./
 $End

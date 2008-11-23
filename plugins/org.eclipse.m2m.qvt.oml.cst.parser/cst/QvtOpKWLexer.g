@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpKWLexer.g,v 1.6 2008/10/14 11:46:37 radvorak Exp $ 
+-- * $Id: QvtOpKWLexer.g,v 1.7 2008/11/23 19:29:05 aigdalov Exp $ 
 -- */
 --
 -- The QVT KeyWord Lexer
@@ -53,7 +53,6 @@ $DropSymbols
 	pre
 	post
 	context
-	package
 	endpackage
 	def
 	attr
@@ -77,7 +76,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpKWLexer.g,v 1.6 2008/10/14 11:46:37 radvorak Exp $
+ * $Id: QvtOpKWLexer.g,v 1.7 2008/11/23 19:29:05 aigdalov Exp $
  */
 	./
 $End
@@ -145,6 +144,34 @@ $Export
 	forEach
 	forOne
 	compute
+
+	Dict
+	List
+        break
+        class
+        composes
+        constructor
+        continue
+        datatype
+        default
+        derived
+        do
+        elif
+        enum
+        except
+        exception
+        from
+        literal
+        ordered
+        primitive
+        raise
+        readonly
+        references
+        tag
+        try
+        typedef
+        unlimited
+        invalid
 $End
 
 $Rules
@@ -523,6 +550,168 @@ $Rules
 		| c o m p u t e
 		/.$BeginAction
 			$setResult($_compute);
+		  $EndAction
+		./
+		
+		| D i c t 
+		/.$BeginAction
+			$setResult($_Dict);
+		  $EndAction
+		./
+		
+		| L i s t 
+		/.$BeginAction
+			$setResult($_List);
+		  $EndAction
+		./
+		
+		| b r e a k 
+		/.$BeginAction
+			$setResult($_break);
+		  $EndAction
+		./
+		
+		| c l a s s 
+		/.$BeginAction
+			$setResult($_class);
+		  $EndAction
+		./
+		
+		| c o m p o s e s 
+		/.$BeginAction
+			$setResult($_composes);
+		  $EndAction
+		./
+		
+		| c o n s t r u c t o r 
+		/.$BeginAction
+			$setResult($_constructor);
+		  $EndAction
+		./
+		
+		| c o n t i n u e 
+		/.$BeginAction
+			$setResult($_continue);
+		  $EndAction
+		./
+		
+		| d a t a t y p e 
+		/.$BeginAction
+			$setResult($_datatype);
+		  $EndAction
+		./
+		
+		| d e f a u l t 
+		/.$BeginAction
+			$setResult($_default);
+		  $EndAction
+		./
+		
+		| d e r i v e d 
+		/.$BeginAction
+			$setResult($_derived);
+		  $EndAction
+		./
+		
+		| d o 
+		/.$BeginAction
+			$setResult($_do);
+		  $EndAction
+		./
+		
+		| e l i f 
+		/.$BeginAction
+			$setResult($_elif);
+		  $EndAction
+		./
+		
+		| e n u m 
+		/.$BeginAction
+			$setResult($_enum);
+		  $EndAction
+		./
+		
+		| e x c e p t 
+		/.$BeginAction
+			$setResult($_except);
+		  $EndAction
+		./
+		
+		| e x c e p t i o n 
+		/.$BeginAction
+			$setResult($_exception);
+		  $EndAction
+		./
+		
+		| f r o m 
+		/.$BeginAction
+			$setResult($_from);
+		  $EndAction
+		./
+		
+		| l i t e r a l 
+		/.$BeginAction
+			$setResult($_literal);
+		  $EndAction
+		./
+		
+		| o r d e r e d 
+		/.$BeginAction
+			$setResult($_ordered);
+		  $EndAction
+		./
+		
+		| p r i m i t i v e 
+		/.$BeginAction
+			$setResult($_primitive);
+		  $EndAction
+		./
+		
+		| r a i s e 
+		/.$BeginAction
+			$setResult($_raise);
+		  $EndAction
+		./
+		
+		| r e a d o n l y 
+		/.$BeginAction
+			$setResult($_readonly);
+		  $EndAction
+		./
+		
+		| r e f e r e n c e s 
+		/.$BeginAction
+			$setResult($_references);
+		  $EndAction
+		./
+		
+		| t a g 
+		/.$BeginAction
+			$setResult($_tag);
+		  $EndAction
+		./
+		
+		| t r y 
+		/.$BeginAction
+			$setResult($_try);
+		  $EndAction
+		./
+		
+		| t y p e d e f 
+		/.$BeginAction
+			$setResult($_typedef);
+		  $EndAction
+		./
+		
+		| u n l i m i t e d 
+		/.$BeginAction
+			$setResult($_unlimited);
+		  $EndAction
+		./
+		
+		| i n v a l i d 
+		/.$BeginAction
+			$setResult($_invalid);
 		  $EndAction
 		./
 		
