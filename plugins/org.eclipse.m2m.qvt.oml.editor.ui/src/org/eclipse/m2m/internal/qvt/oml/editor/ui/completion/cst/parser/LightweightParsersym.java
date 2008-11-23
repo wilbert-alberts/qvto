@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.21 2008/11/20 18:04:27 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.22 2008/11/23 19:30:32 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.21 2008/11/20 18:04:27 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.22 2008/11/23 19:30:32 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.21 2008/11/20 18:04:27 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.22 2008/11/23 19:30:32 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.21 2008/11/20 18:04:27 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.22 2008/11/23 19:30:32 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -109,12 +109,39 @@ public interface LightweightParsersym {
       TK_EXCLAMATION_MARK = 121,
       TK_NOT_EQUAL_EXEQ = 115,
       TK_INTEGER_RANGE_START = 135,
+      TK_Dict = 159,
+      TK_List = 160,
+      TK_break = 161,
+      TK_class = 162,
+      TK_composes = 163,
+      TK_constructor = 164,
+      TK_continue = 165,
+      TK_datatype = 166,
+      TK_default = 167,
+      TK_derived = 168,
+      TK_do = 169,
+      TK_elif = 170,
+      TK_enum = 171,
+      TK_except = 172,
+      TK_exception = 173,
+      TK_from = 174,
+      TK_literal = 175,
+      TK_ordered = 176,
+      TK_primitive = 177,
+      TK_raise = 178,
+      TK_readonly = 179,
+      TK_references = 180,
+      TK_tag = 181,
+      TK_try = 182,
+      TK_typedef = 183,
+      TK_unlimited = 184,
+      TK_invalid = 185,
       TK_self = 28,
-      TK_inv = 159,
-      TK_pre = 160,
-      TK_post = 161,
-      TK_endpackage = 162,
-      TK_def = 163,
+      TK_inv = 186,
+      TK_pre = 187,
+      TK_post = 188,
+      TK_endpackage = 189,
+      TK_def = 190,
       TK_if = 69,
       TK_then = 144,
       TK_else = 136,
@@ -394,6 +421,33 @@ public interface LightweightParsersym {
                  "uses",
                  "where",
                  "enforcing",
+                 "Dict",
+                 "List",
+                 "break",
+                 "class",
+                 "composes",
+                 "constructor",
+                 "continue",
+                 "datatype",
+                 "default",
+                 "derived",
+                 "do",
+                 "elif",
+                 "enum",
+                 "except",
+                 "exception",
+                 "from",
+                 "literal",
+                 "ordered",
+                 "primitive",
+                 "raise",
+                 "readonly",
+                 "references",
+                 "tag",
+                 "try",
+                 "typedef",
+                 "unlimited",
+                 "invalid",
                  "inv",
                  "pre",
                  "post",

@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.21 2008/11/20 18:04:27 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.22 2008/11/23 19:30:31 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.21 2008/11/20 18:04:27 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.22 2008/11/23 19:30:31 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.21 2008/11/20 18:04:27 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.22 2008/11/23 19:30:31 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.21 2008/11/20 18:04:27 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.22 2008/11/23 19:30:31 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -109,12 +109,39 @@ public interface LightweightTypeParsersym {
       TK_EXCLAMATION_MARK = 103,
       TK_NOT_EQUAL_EXEQ = 96,
       TK_INTEGER_RANGE_START = 104,
+      TK_Dict = 131,
+      TK_List = 132,
+      TK_break = 133,
+      TK_class = 134,
+      TK_composes = 135,
+      TK_constructor = 136,
+      TK_continue = 137,
+      TK_datatype = 138,
+      TK_default = 139,
+      TK_derived = 140,
+      TK_do = 141,
+      TK_elif = 142,
+      TK_enum = 143,
+      TK_except = 144,
+      TK_exception = 145,
+      TK_from = 146,
+      TK_literal = 147,
+      TK_ordered = 148,
+      TK_primitive = 149,
+      TK_raise = 150,
+      TK_readonly = 151,
+      TK_references = 152,
+      TK_tag = 153,
+      TK_try = 154,
+      TK_typedef = 155,
+      TK_unlimited = 156,
+      TK_invalid = 157,
       TK_self = 26,
-      TK_inv = 131,
-      TK_pre = 132,
-      TK_post = 133,
-      TK_endpackage = 134,
-      TK_def = 135,
+      TK_inv = 158,
+      TK_pre = 159,
+      TK_post = 160,
+      TK_endpackage = 161,
+      TK_def = 162,
       TK_if = 69,
       TK_then = 114,
       TK_else = 105,
@@ -168,7 +195,7 @@ public interface LightweightTypeParsersym {
       TK_Invalid = 12,
       TK_OclMessage = 13,
       TK_OclInvalid = 72,
-      TK_end = 136,
+      TK_end = 163,
       TK_while = 73,
       TK_when = 118,
       TK_var = 97,
@@ -188,20 +215,20 @@ public interface LightweightTypeParsersym {
       TK_forOne = 127,
       TK_compute = 74,
       TK_new = 75,
-      TK_out = 137,
+      TK_out = 164,
       TK_object = 76,
-      TK_transformation = 138,
-      TK_import = 139,
-      TK_library = 140,
-      TK_metamodel = 141,
-      TK_mapping = 142,
-      TK_query = 143,
-      TK_helper = 144,
-      TK_inout = 145,
-      TK_configuration = 146,
-      TK_intermediate = 147,
-      TK_property = 148,
-      TK_population = 149,
+      TK_transformation = 165,
+      TK_import = 166,
+      TK_library = 167,
+      TK_metamodel = 168,
+      TK_mapping = 169,
+      TK_query = 170,
+      TK_helper = 171,
+      TK_inout = 172,
+      TK_configuration = 173,
+      TK_intermediate = 174,
+      TK_property = 175,
+      TK_population = 176,
       TK_map = 61,
       TK_xmap = 62,
       TK_late = 64,
@@ -213,23 +240,23 @@ public interface LightweightTypeParsersym {
       TK_invresolveone = 83,
       TK_invresolveIn = 84,
       TK_invresolveoneIn = 85,
-      TK_modeltype = 150,
-      TK_uses = 151,
-      TK_where = 152,
-      TK_refines = 153,
-      TK_enforcing = 154,
-      TK_access = 155,
-      TK_extends = 156,
-      TK_blackbox = 157,
-      TK_abstract = 158,
-      TK_static = 159,
+      TK_modeltype = 177,
+      TK_uses = 178,
+      TK_where = 179,
+      TK_refines = 180,
+      TK_enforcing = 181,
+      TK_access = 182,
+      TK_extends = 183,
+      TK_blackbox = 184,
+      TK_abstract = 185,
+      TK_static = 186,
       TK_result = 27,
       TK_main = 128,
       TK_this = 32,
-      TK_rename = 160,
-      TK_inherits = 161,
-      TK_merges = 162,
-      TK_disjuncts = 163,
+      TK_rename = 187,
+      TK_inherits = 188,
+      TK_merges = 189,
+      TK_disjuncts = 190,
       TK_IDENTIFIER = 3,
       TK_ERROR_TOKEN = 35,
       TK_EOF_TOKEN = 129;
@@ -366,6 +393,33 @@ public interface LightweightTypeParsersym {
                  "main",
                  "EOF_TOKEN",
                  "QUOTE_STRING_LITERAL",
+                 "Dict",
+                 "List",
+                 "break",
+                 "class",
+                 "composes",
+                 "constructor",
+                 "continue",
+                 "datatype",
+                 "default",
+                 "derived",
+                 "do",
+                 "elif",
+                 "enum",
+                 "except",
+                 "exception",
+                 "from",
+                 "literal",
+                 "ordered",
+                 "primitive",
+                 "raise",
+                 "readonly",
+                 "references",
+                 "tag",
+                 "try",
+                 "typedef",
+                 "unlimited",
+                 "invalid",
                  "inv",
                  "pre",
                  "post",
