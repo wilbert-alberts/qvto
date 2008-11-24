@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.18 2008/11/20 17:41:15 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.19 2008/11/24 10:21:21 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -85,6 +85,7 @@ $KeyWords
 	configuration
 	intermediate
 	property
+	class
 	population
 	map
 	xmap
@@ -131,7 +132,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.18 2008/11/20 17:41:15 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.19 2008/11/24 10:21:21 sboyko Exp $
  */
 	./
 $End
@@ -145,24 +146,25 @@ $Rules
 	QVTgoal -> mappingModuleCS
 	QVTgoal -> libraryCS
 
-	mappingModuleCS ::= moduleImportListOpt metamodelListOpt transformationCS moduleImportListOpt metamodelListOpt renamingListOpt propertyListOpt mappingRuleListOpt
+	mappingModuleCS ::= moduleImportListOpt metamodelListOpt transformationCS moduleImportListOpt metamodelListOpt classifierListOpt renamingListOpt propertyListOpt mappingRuleListOpt
 		/.$BeginJava
 					EList metamodels = (EList)$getSym(2);
 					metamodels.addAll((EList)$getSym(5));
 					EList imports = (EList)$getSym(1);
 					imports.addAll((EList)$getSym(4));
 					CSTNode header = (CSTNode) $getSym(3);
-					CSTNode result = createMappingModuleCS(
+					org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS result = createMappingModuleCS(
 							(TransformationHeaderCS) header,
 							imports,
 							metamodels,
-							(EList)$getSym(6),
 							(EList)$getSym(7),
-							(EList)$getSym(8)
+							(EList)$getSym(8),
+							(EList)$getSym(9)
 						);
+					result.getClassifierDefCS().addAll((EList) $getSym(6));
 					IToken headerToken = new Token(header.getStartOffset(), header.getEndOffset(), 0);
-					int endOffset = getEndOffset(headerToken, (EList)$getSym(4),
-							(EList)$getSym(5), (EList)$getSym(6), (EList)$getSym(7), (EList)$getSym(8)); 
+					int endOffset = getEndOffset(headerToken, (EList)$getSym(4), (EList)$getSym(5), 
+							(EList)$getSym(6), (EList)$getSym(7), (EList)$getSym(8), (EList)$getSym(9)); 
 					setOffsets(result, header);
 					result.setEndOffset(endOffset);
 					$setResult(result);
@@ -437,24 +439,23 @@ $Rules
 		  $EndJava
 		./
 		
-	libraryCS ::= moduleImportListOpt metamodelListOpt library qualifiedNameCS ';' 
-				moduleImportListOpt metamodelListOpt renamingListOpt
-				propertyListOpt mappingRuleListOpt
+	libraryCS ::= moduleImportListOpt metamodelListOpt library qualifiedNameCS ';' moduleImportListOpt metamodelListOpt classifierListOpt renamingListOpt propertyListOpt mappingRuleListOpt
 		/.$BeginJava
 					EList metamodels = (EList)$getSym(2);
 					metamodels.addAll((EList)$getSym(7));
 					EList imports = (EList)$getSym(1);
 					imports.addAll((EList)$getSym(6));
-					CSTNode result = createLibraryCS(
+					org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS result = createLibraryCS(
 							(PathNameCS)$getSym(4),
 							imports,
 							metamodels,
-							(EList)$getSym(8),
 							(EList)$getSym(9),
-							(EList)$getSym(10)
+							(EList)$getSym(10),
+							(EList)$getSym(11)
 						);
+					result.getClassifierDefCS().addAll((EList) $getSym(8));
 					int endOffset = getEndOffset(getIToken($getToken(5)), (EList)$getSym(6),
-							(EList)$getSym(7), (EList)$getSym(8), (EList)$getSym(9), (EList)$getSym(10)); 
+							(EList)$getSym(7), (EList)$getSym(8), (EList)$getSym(9), (EList)$getSym(10), (EList)$getSym(11)); 
 					setOffsets(result, getIToken($getToken(3)), new Token(0, endOffset, 0));
 					$setResult(result);
 		  $EndJava
@@ -654,6 +655,98 @@ $Rules
 		  $EndJava
 		./
 
+
+	classifierListOpt ::= $empty
+		/.$EmptyListAction./
+	classifierListOpt -> classifierList
+	
+	classifierList ::= classifierDefCS
+		/.$BeginJava
+					EList result = new BasicEList();
+					result.add($getSym(1));
+					$setResult(result);
+		  $EndJava
+		./
+	classifierList ::= classifierList classifierDefCS
+		/.$BeginJava
+					EList result = (EList)$getSym(1);
+					result.add($getSym(2));
+					$setResult(result);
+		  $EndJava
+		./
+	classifierList ::= classifierList qvtErrorToken
+		/.$BeginJava
+					EList result = (EList)$getSym(1);
+					$setResult(result);
+		  $EndJava
+		./
+
+	classifierDefCS ::= intermediate class qvtIdentifierCS classifierExtensionOpt '{' classifierFeatureListOpt '}' semicolonOpt 
+		/.$BeginJava
+					SimpleNameCS classifierName = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, getTokenText(getToken(3)));
+					setOffsets(classifierName, getIToken(getToken(3)));
+					CSTNode result = createClassifierDefCS(
+							classifierName,
+							(EList) $getSym(4),
+							(EList) $getSym(6)
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	classifierExtensionOpt ::= $empty
+		/.$EmptyListAction./
+	classifierExtensionOpt -> extends scoped_identifier_list
+	
+	classifierFeatureListOpt ::= $empty
+		/.$EmptyListAction./
+	classifierFeatureListOpt -> classifierFeatureList
+	
+	classifierFeatureList ::= classifierFeatureCS semicolonOpt
+		/.$BeginJava
+					EList result = new BasicEList();
+					result.add($getSym(1));
+					$setResult(result);
+		  $EndJava
+		./
+	classifierFeatureList ::= classifierFeatureList ';' classifierFeatureCS semicolonOpt
+		/.$BeginJava
+					EList result = (EList)$getSym(1);
+					result.add($getSym(3));
+					$setResult(result);
+		  $EndJava
+		./
+	classifierFeatureList ::= classifierFeatureList qvtErrorToken
+		/.$BeginJava
+					EList result = (EList)$getSym(1);
+					$setResult(result);
+		  $EndJava
+		./
+
+	classifierFeatureCS ::= qvtIdentifierCS ':' typeCS
+		/.$BeginJava
+					CSTNode result = createLocalPropertyCS(
+							getIToken($getToken(1)),
+							(TypeCS) $getSym(3),
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode) $getSym(3));
+					$setResult(result);
+		  $EndJava
+		./
+	classifierFeatureCS ::= qvtIdentifierCS ':' typeCS '=' oclExpressionCS
+		/.$BeginJava
+					CSTNode result = createLocalPropertyCS(
+							getIToken($getToken(1)),
+							(TypeCS) $getSym(3),
+							(OCLExpressionCS) $getSym(5)
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode) $getSym(5));
+					$setResult(result);
+		  $EndJava
+		./
+	
 	propertyListOpt ::= $empty
 		/.$EmptyListAction./
 	propertyListOpt -> propertyList
@@ -1233,8 +1326,8 @@ $Rules
 			
 	entryDeclarationCS ::= main '(' param_listOpt ')'
 		/.$BeginJava
-					IToken nameToken = getIToken(dtParser.getToken(1));				
-					ScopedNameCS nameCS = createScopedNameCS(null, getTokenText(dtParser.getToken(1)));								
+					IToken nameToken = getIToken($getToken(1));				
+					ScopedNameCS nameCS = createScopedNameCS(null, getTokenText($getToken(1)));								
 					nameCS.setStartOffset(nameToken.getStartOffset());
 					nameCS.setEndOffset(nameToken.getEndOffset());
 		
@@ -1279,9 +1372,9 @@ $Rules
 	
 	objectDeclCS ::= objectIdentifierCS ':' typespecOpt
 		/.$BeginJava
-				SimpleNameCS varName = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, getTokenText(dtParser.getToken(1)));
-				setOffsets(varName, getIToken(dtParser.getToken(1)));
-				CSTNode result = createOutExpCS(varName,(TypeSpecCS)dtParser.getSym(3));					
+				SimpleNameCS varName = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, getTokenText($getToken(1)));
+				setOffsets(varName, getIToken($getToken(1)));
+				CSTNode result = createOutExpCS(varName,(TypeSpecCS)$getSym(3));					
 				$setResult(result);
 		  $EndJava
 		./
@@ -1302,7 +1395,7 @@ $Rules
 		./
 	outExpCS ::= object objectDeclCS qvtErrorToken
 		/.$BeginJava
-					OutExpCS objectDeclCS = ((OutExpCS)dtParser.getSym(2));  
+					OutExpCS objectDeclCS = ((OutExpCS)$getSym(2));  
 					CSTNode result = createOutExpCS(
 							objectDeclCS.getSimpleNameCS(),						
 							objectDeclCS.getTypeSpecCS()

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactory.java,v 1.7 2008/11/20 17:22:22 aigdalov Exp $
+ * $Id: CSTFactory.java,v 1.8 2008/11/24 10:21:21 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -112,6 +112,15 @@ public interface CSTFactory extends EFactory {
 	 * @generated
 	 */
 	ContextualPropertyCS createContextualPropertyCS();
+
+	/**
+	 * Returns a new object of class '<em>Classifier Def CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Classifier Def CS</em>'.
+	 * @generated
+	 */
+	ClassifierDefCS createClassifierDefCS();
 
 	/**
 	 * Returns a new object of class '<em>Mapping Declaration CS</em>'.

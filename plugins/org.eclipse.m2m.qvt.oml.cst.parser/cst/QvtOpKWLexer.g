@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpKWLexer.g,v 1.7 2008/11/23 19:29:05 aigdalov Exp $ 
+-- * $Id: QvtOpKWLexer.g,v 1.8 2008/11/24 10:21:21 sboyko Exp $ 
 -- */
 --
 -- The QVT KeyWord Lexer
@@ -76,7 +76,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpKWLexer.g,v 1.7 2008/11/23 19:29:05 aigdalov Exp $
+ * $Id: QvtOpKWLexer.g,v 1.8 2008/11/24 10:21:21 sboyko Exp $
  */
 	./
 $End
@@ -99,6 +99,7 @@ $Export
 	configuration
 	intermediate
 	property
+	class
 	population	
 	map
 	new
@@ -148,7 +149,6 @@ $Export
 	Dict
 	List
         break
-        class
         composes
         constructor
         continue
@@ -316,6 +316,12 @@ $Rules
 		| p r o p e r t y
 		/.$BeginAction
 			$setResult($_property);
+		  $EndAction
+		./
+		
+		| c l a s s
+		/.$BeginAction
+			$setResult($_class);
 		  $EndAction
 		./
 		
@@ -568,12 +574,6 @@ $Rules
 		| b r e a k 
 		/.$BeginAction
 			$setResult($_break);
-		  $EndAction
-		./
-		
-		| c l a s s 
-		/.$BeginAction
-			$setResult($_class);
 		  $EndAction
 		./
 		

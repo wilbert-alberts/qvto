@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingModuleCS.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: MappingModuleCS.java,v 1.2 2008/11/24 10:21:21 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -33,6 +33,7 @@ import org.eclipse.ocl.cst.CSTNode;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS#getRenamings <em>Renamings</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS#getProperties <em>Properties</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS#getMethods <em>Methods</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS#getClassifierDefCS <em>Classifier Def CS</em>}</li>
  * </ul>
  * </p>
  *
@@ -153,5 +154,21 @@ public interface MappingModuleCS extends CSTNode {
 	 * @generated
 	 */
 	EList<MappingMethodCS> getMethods();
+
+	/**
+	 * Returns the value of the '<em><b>Classifier Def CS</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Classifier Def CS</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Classifier Def CS</em>' containment reference list.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getMappingModuleCS_ClassifierDefCS()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<ClassifierDefCS> getClassifierDefCS();
 
 } // MappingModuleCS

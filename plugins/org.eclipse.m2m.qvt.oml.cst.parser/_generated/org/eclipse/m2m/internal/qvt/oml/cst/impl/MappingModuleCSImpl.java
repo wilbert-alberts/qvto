@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingModuleCSImpl.java,v 1.1 2008/04/06 10:18:39 sboyko Exp $
+ * $Id: MappingModuleCSImpl.java,v 1.2 2008/11/24 10:21:20 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
+import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
@@ -54,6 +55,7 @@ import org.eclipse.ocl.cst.impl.CSTNodeImpl;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingModuleCSImpl#getRenamings <em>Renamings</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingModuleCSImpl#getProperties <em>Properties</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingModuleCSImpl#getMethods <em>Methods</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingModuleCSImpl#getClassifierDefCS <em>Classifier Def CS</em>}</li>
  * </ul>
  * </p>
  *
@@ -126,6 +128,16 @@ public class MappingModuleCSImpl extends CSTNodeImpl implements MappingModuleCS 
 	 * @ordered
 	 */
 	protected EList<MappingMethodCS> methods;
+
+	/**
+	 * The cached value of the '{@link #getClassifierDefCS() <em>Classifier Def CS</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getClassifierDefCS()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<ClassifierDefCS> classifierDefCS;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -254,6 +266,18 @@ public class MappingModuleCSImpl extends CSTNodeImpl implements MappingModuleCS 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<ClassifierDefCS> getClassifierDefCS() {
+		if (classifierDefCS == null) {
+			classifierDefCS = new EObjectContainmentEList<ClassifierDefCS>(ClassifierDefCS.class, this, CSTPackage.MAPPING_MODULE_CS__CLASSIFIER_DEF_CS);
+		}
+		return classifierDefCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -269,6 +293,8 @@ public class MappingModuleCSImpl extends CSTNodeImpl implements MappingModuleCS 
 				return ((InternalEList<?>)getProperties()).basicRemove(otherEnd, msgs);
 			case CSTPackage.MAPPING_MODULE_CS__METHODS:
 				return ((InternalEList<?>)getMethods()).basicRemove(otherEnd, msgs);
+			case CSTPackage.MAPPING_MODULE_CS__CLASSIFIER_DEF_CS:
+				return ((InternalEList<?>)getClassifierDefCS()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -293,6 +319,8 @@ public class MappingModuleCSImpl extends CSTNodeImpl implements MappingModuleCS 
 				return getProperties();
 			case CSTPackage.MAPPING_MODULE_CS__METHODS:
 				return getMethods();
+			case CSTPackage.MAPPING_MODULE_CS__CLASSIFIER_DEF_CS:
+				return getClassifierDefCS();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -329,6 +357,10 @@ public class MappingModuleCSImpl extends CSTNodeImpl implements MappingModuleCS 
 				getMethods().clear();
 				getMethods().addAll((Collection<? extends MappingMethodCS>)newValue);
 				return;
+			case CSTPackage.MAPPING_MODULE_CS__CLASSIFIER_DEF_CS:
+				getClassifierDefCS().clear();
+				getClassifierDefCS().addAll((Collection<? extends ClassifierDefCS>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -359,6 +391,9 @@ public class MappingModuleCSImpl extends CSTNodeImpl implements MappingModuleCS 
 			case CSTPackage.MAPPING_MODULE_CS__METHODS:
 				getMethods().clear();
 				return;
+			case CSTPackage.MAPPING_MODULE_CS__CLASSIFIER_DEF_CS:
+				getClassifierDefCS().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -383,6 +418,8 @@ public class MappingModuleCSImpl extends CSTNodeImpl implements MappingModuleCS 
 				return properties != null && !properties.isEmpty();
 			case CSTPackage.MAPPING_MODULE_CS__METHODS:
 				return methods != null && !methods.isEmpty();
+			case CSTPackage.MAPPING_MODULE_CS__CLASSIFIER_DEF_CS:
+				return classifierDefCS != null && !classifierDefCS.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

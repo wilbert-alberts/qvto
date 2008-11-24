@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.11 2008/11/20 17:22:22 aigdalov Exp $
+ * $Id: CSTPackageImpl.java,v 1.12 2008/11/24 10:21:20 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -26,6 +26,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
+import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
@@ -167,6 +168,13 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * @generated
 	 */
 	private EClass contextualPropertyCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass classifierDefCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -648,6 +656,15 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getMappingModuleCS_ClassifierDefCS() {
+		return (EReference)mappingModuleCSEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getLibraryCS() {
 		return libraryCSEClass;
 	}
@@ -821,6 +838,42 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 */
 	public EReference getContextualPropertyCS_OclExpressionCS() {
 		return (EReference)contextualPropertyCSEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getClassifierDefCS() {
+		return classifierDefCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getClassifierDefCS_SimpleNameCS() {
+		return (EReference)classifierDefCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getClassifierDefCS_Extends() {
+		return (EReference)classifierDefCSEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getClassifierDefCS_Properties() {
+		return (EReference)classifierDefCSEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -2118,6 +2171,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(mappingModuleCSEClass, MAPPING_MODULE_CS__RENAMINGS);
 		createEReference(mappingModuleCSEClass, MAPPING_MODULE_CS__PROPERTIES);
 		createEReference(mappingModuleCSEClass, MAPPING_MODULE_CS__METHODS);
+		createEReference(mappingModuleCSEClass, MAPPING_MODULE_CS__CLASSIFIER_DEF_CS);
 
 		libraryCSEClass = createEClass(LIBRARY_CS);
 
@@ -2147,6 +2201,11 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(contextualPropertyCSEClass, CONTEXTUAL_PROPERTY_CS__SCOPED_NAME_CS);
 		createEReference(contextualPropertyCSEClass, CONTEXTUAL_PROPERTY_CS__TYPE_CS);
 		createEReference(contextualPropertyCSEClass, CONTEXTUAL_PROPERTY_CS__OCL_EXPRESSION_CS);
+
+		classifierDefCSEClass = createEClass(CLASSIFIER_DEF_CS);
+		createEReference(classifierDefCSEClass, CLASSIFIER_DEF_CS__SIMPLE_NAME_CS);
+		createEReference(classifierDefCSEClass, CLASSIFIER_DEF_CS__EXTENDS);
+		createEReference(classifierDefCSEClass, CLASSIFIER_DEF_CS__PROPERTIES);
 
 		mappingDeclarationCSEClass = createEClass(MAPPING_DECLARATION_CS);
 		createEAttribute(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__QUALIFIERS);
@@ -2379,6 +2438,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		configPropertyCSEClass.getESuperTypes().add(this.getModulePropertyCS());
 		localPropertyCSEClass.getESuperTypes().add(this.getModulePropertyCS());
 		contextualPropertyCSEClass.getESuperTypes().add(this.getModulePropertyCS());
+		classifierDefCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		mappingDeclarationCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		parameterDeclarationCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		simpleSignatureCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
@@ -2434,6 +2494,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEReference(getMappingModuleCS_Renamings(), this.getRenameCS(), null, "renamings", null, 0, -1, MappingModuleCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getMappingModuleCS_Properties(), this.getModulePropertyCS(), null, "properties", null, 0, -1, MappingModuleCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getMappingModuleCS_Methods(), this.getMappingMethodCS(), null, "methods", null, 0, -1, MappingModuleCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getMappingModuleCS_ClassifierDefCS(), this.getClassifierDefCS(), null, "classifierDefCS", null, 0, -1, MappingModuleCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(libraryCSEClass, LibraryCS.class, "LibraryCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
@@ -2463,6 +2524,11 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEReference(getContextualPropertyCS_ScopedNameCS(), theTempPackage.getScopedNameCS(), null, "scopedNameCS", null, 0, 1, ContextualPropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getContextualPropertyCS_TypeCS(), theCSTPackage_1.getTypeCS(), null, "typeCS", null, 0, 1, ContextualPropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getContextualPropertyCS_OclExpressionCS(), theCSTPackage_1.getOCLExpressionCS(), null, "oclExpressionCS", null, 0, 1, ContextualPropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(classifierDefCSEClass, ClassifierDefCS.class, "ClassifierDefCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getClassifierDefCS_SimpleNameCS(), theCSTPackage_1.getSimpleNameCS(), null, "simpleNameCS", null, 1, 1, ClassifierDefCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getClassifierDefCS_Extends(), theTempPackage.getScopedNameCS(), null, "extends", null, 0, -1, ClassifierDefCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getClassifierDefCS_Properties(), this.getLocalPropertyCS(), null, "properties", null, 0, -1, ClassifierDefCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(mappingDeclarationCSEClass, MappingDeclarationCS.class, "MappingDeclarationCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getMappingDeclarationCS_Qualifiers(), this.getQualifierKindCS(), "qualifiers", null, 0, -1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

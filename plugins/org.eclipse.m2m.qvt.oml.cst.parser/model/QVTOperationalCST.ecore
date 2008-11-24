@@ -18,6 +18,8 @@
           eType="#//cst/ModulePropertyCS" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="methods" upperBound="-1"
           eType="#//cst/MappingMethodCS" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="classifierDefCS" upperBound="-1"
+          eType="#//cst/ClassifierDefCS" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="LibraryCS" eSuperTypes="#//cst/MappingModuleCS"/>
     <eClassifiers xsi:type="ecore:EClass" name="ImportCS" abstract="true" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
@@ -56,6 +58,15 @@
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="oclExpressionCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ClassifierDefCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" lowerBound="1"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="extends" upperBound="-1"
+          eType="#//cst/temp/ScopedNameCS" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
+          eType="#//cst/LocalPropertyCS" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="MappingDeclarationCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="qualifiers" unique="false"

@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.3 2008/11/23 19:29:06 aigdalov Exp $ 
+-- * $Id: miscellaneous.g,v 1.4 2008/11/24 10:21:21 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -72,7 +72,8 @@ $Define
 		public class $action_class extends $prs_stream_class implements RuleAction$additional_interfaces {
 		protected static ParseTable prs = new $prs_type();
 		private BacktrackingParser dtParser;
-		private static Map<Integer, String> ruleTexts;
+		// (to be uncommented for use in DEBUG mode)
+		//private static Map<Integer, String> ruleTexts;
 
 		public $action_class($lex_stream_class lexer) {
 			super(lexer);
@@ -282,7 +283,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.3 2008/11/23 19:29:06 aigdalov Exp $
+ * $Id: miscellaneous.g,v 1.4 2008/11/24 10:21:21 sboyko Exp $
  */
 	./
 $End

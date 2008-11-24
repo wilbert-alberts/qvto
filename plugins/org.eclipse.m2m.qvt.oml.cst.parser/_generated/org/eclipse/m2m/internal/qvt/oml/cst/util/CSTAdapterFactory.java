@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTAdapterFactory.java,v 1.7 2008/11/20 17:22:22 aigdalov Exp $
+ * $Id: CSTAdapterFactory.java,v 1.8 2008/11/24 10:21:21 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -133,6 +133,10 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseContextualPropertyCS(ContextualPropertyCS object) {
 				return createContextualPropertyCSAdapter();
+			}
+			@Override
+			public Adapter caseClassifierDefCS(ClassifierDefCS object) {
+				return createClassifierDefCSAdapter();
 			}
 			@Override
 			public Adapter caseMappingDeclarationCS(MappingDeclarationCS object) {
@@ -487,6 +491,20 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createContextualPropertyCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS <em>Classifier Def CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS
+	 * @generated
+	 */
+	public Adapter createClassifierDefCSAdapter() {
 		return null;
 	}
 

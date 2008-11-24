@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactoryImpl.java,v 1.7 2008/11/20 17:22:22 aigdalov Exp $
+ * $Id: CSTFactoryImpl.java,v 1.8 2008/11/24 10:21:20 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -85,6 +85,7 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 			case CSTPackage.CONFIG_PROPERTY_CS: return createConfigPropertyCS();
 			case CSTPackage.LOCAL_PROPERTY_CS: return createLocalPropertyCS();
 			case CSTPackage.CONTEXTUAL_PROPERTY_CS: return createContextualPropertyCS();
+			case CSTPackage.CLASSIFIER_DEF_CS: return createClassifierDefCS();
 			case CSTPackage.MAPPING_DECLARATION_CS: return createMappingDeclarationCS();
 			case CSTPackage.PARAMETER_DECLARATION_CS: return createParameterDeclarationCS();
 			case CSTPackage.SIMPLE_SIGNATURE_CS: return createSimpleSignatureCS();
@@ -253,6 +254,16 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	public ContextualPropertyCS createContextualPropertyCS() {
 		ContextualPropertyCSImpl contextualPropertyCS = new ContextualPropertyCSImpl();
 		return contextualPropertyCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ClassifierDefCS createClassifierDefCS() {
+		ClassifierDefCSImpl classifierDefCS = new ClassifierDefCSImpl();
+		return classifierDefCS;
 	}
 
 	/**

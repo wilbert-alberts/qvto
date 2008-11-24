@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTSwitch.java,v 1.8 2008/11/20 17:22:22 aigdalov Exp $
+ * $Id: CSTSwitch.java,v 1.9 2008/11/24 10:21:21 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -183,6 +183,13 @@ public class CSTSwitch<T> {
 				T result = caseContextualPropertyCS(contextualPropertyCS);
 				if (result == null) result = caseModulePropertyCS(contextualPropertyCS);
 				if (result == null) result = caseCSTNode(contextualPropertyCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.CLASSIFIER_DEF_CS: {
+				ClassifierDefCS classifierDefCS = (ClassifierDefCS)theEObject;
+				T result = caseClassifierDefCS(classifierDefCS);
+				if (result == null) result = caseCSTNode(classifierDefCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -692,6 +699,21 @@ public class CSTSwitch<T> {
 	 * @generated
 	 */
 	public T caseContextualPropertyCS(ContextualPropertyCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Classifier Def CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Classifier Def CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseClassifierDefCS(ClassifierDefCS object) {
 		return null;
 	}
 

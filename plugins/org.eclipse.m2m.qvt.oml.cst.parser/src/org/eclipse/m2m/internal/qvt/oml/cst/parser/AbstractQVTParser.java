@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
@@ -165,7 +166,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return imp;
 	}
 
-	protected final CSTNode createLibraryCS(PathNameCS name, EList<ImportCS> imports, EList<ModelTypeCS> metamodels,
+	protected final LibraryCS createLibraryCS(PathNameCS name, EList<ImportCS> imports, EList<ModelTypeCS> metamodels,
 			EList<RenameCS> renamings, EList<ModulePropertyCS> properties, EList<MappingMethodCS> methods) {
 				LibraryCS imp = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createLibraryCS();
 				TransformationHeaderCS headerCS = createTransformationHeaderCS(
@@ -177,7 +178,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 				return imp;
 			}
 
-	protected final CSTNode createMappingModuleCS(PathNameCS name, EList<ImportCS> imports,
+	protected final MappingModuleCS createMappingModuleCS(PathNameCS name, EList<ImportCS> imports,
 			EList<ModelTypeCS> metamodels, EList<RenameCS> renamings, EList<ModulePropertyCS> properties, 
 				EList<MappingMethodCS> methods) {
 				MappingModuleCS imp = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingModuleCS();
@@ -190,7 +191,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 				return imp;
 			}
 
-	protected final CSTNode createMappingModuleCS(TransformationHeaderCS header, EList<ImportCS> imports,
+	protected final MappingModuleCS createMappingModuleCS(TransformationHeaderCS header, EList<ImportCS> imports,
 			EList<ModelTypeCS> metamodels, EList<RenameCS> renamings, EList<ModulePropertyCS> properties, 
 			EList<MappingMethodCS> methods) {
 				MappingModuleCS imp = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingModuleCS();
@@ -765,4 +766,13 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		}
 		return result;
 	}
+
+	protected CSTNode createClassifierDefCS(SimpleNameCS classifierName, EList<ScopedNameCS> extentionList, EList<LocalPropertyCS> featureList) {
+		ClassifierDefCS classifierDef = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createClassifierDefCS();
+		classifierDef.setSimpleNameCS(classifierName);
+		classifierDef.getExtends().addAll(extentionList);
+		classifierDef.getProperties().addAll(featureList);
+		return classifierDef;
+	}
+
 }

@@ -46,6 +46,7 @@
             ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingModuleCS/properties"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingModuleCS/methods"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingModuleCS/classifierDefCS"/>
       </genClasses>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/LibraryCS"/>
       <genClasses image="false" ecoreClass="QVTOperationalCST.ecore#//cst/ImportCS">
@@ -78,6 +79,11 @@
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ContextualPropertyCS/scopedNameCS"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ContextualPropertyCS/typeCS"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ContextualPropertyCS/oclExpressionCS"/>
+      </genClasses>
+      <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/ClassifierDefCS">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ClassifierDefCS/simpleNameCS"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ClassifierDefCS/extends"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ClassifierDefCS/properties"/>
       </genClasses>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/MappingDeclarationCS">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/MappingDeclarationCS/qualifiers"/>
