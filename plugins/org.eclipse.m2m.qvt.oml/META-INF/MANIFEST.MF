@@ -23,7 +23,8 @@ Export-Package: org.eclipse.m2m.internal.qvt.oml,
  org.eclipse.m2m.internal.qvt.oml.trace,
  org.eclipse.m2m.internal.qvt.oml.trace.util,
  org.eclipse.m2m.qvt.oml.blackbox,
- org.eclipse.m2m.qvt.oml.blackbox.java
+ org.eclipse.m2m.qvt.oml.blackbox.java,
+ org.eclipse.m2m.qvt.oml.util
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.resources;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.5.0,3.0.0)",

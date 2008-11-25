@@ -12,6 +12,7 @@
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,7 +48,6 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtEvaluationResult;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
@@ -117,6 +117,7 @@ import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.m2m.internal.qvt.oml.trace.TraceFactory;
 import org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord;
 import org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue;
+import org.eclipse.m2m.qvt.oml.util.Log;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.EnvironmentFactory;
 import org.eclipse.ocl.EvaluationEnvironment;
@@ -290,7 +291,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
                 if (ownerObj instanceof EObject) {
                     PropertyCallExp<EClassifier, EStructuralFeature> lvalueExp = (PropertyCallExp<EClassifier, EStructuralFeature>) assignExp.getLeft();
                     EStructuralFeature referredProperty = getRenamedProperty(lvalueExp.getReferredProperty());
-                    getContext().setLastAssignmentLvalueEval(new EObjectEStructuralFeaturePair((EObject) ownerObj, referredProperty));
+                    internEnv.setLastAssignmentLvalueEval(new EObjectEStructuralFeaturePair((EObject) ownerObj, referredProperty));
                 }        	
             }        	
         }
@@ -657,12 +658,10 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 			return doVisitModule(module);
 		} 
 		catch (QvtRuntimeException e) {
-			PrintWriter printWriter = QvtOperationalStdLibrary.getLogger(getContext());
-			if(printWriter == null) {
-				printWriter = new PrintWriter(System.err);
-			}
-			
+			StringWriter strWriter = new StringWriter();
+			PrintWriter printWriter = new PrintWriter(strWriter);
 			e.printQvtStackTrace(printWriter);
+			getContext().getLog().log(strWriter.getBuffer().toString());
 			throw e;
 		}
     }
@@ -817,7 +816,8 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 	}
 
 	protected void processDeferredTasks() {
-		getContext().processDeferredTasks();
+		InternalEvaluationEnv internalEvalEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);
+		internalEvalEnv.processDeferredTasks();
 	}
 
 	public Object visitModuleImport(ModuleImport moduleImport) {
@@ -1007,18 +1007,20 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     /* resolve expressions family */
 
     public Object visitResolveExp(ResolveExp resolveExp) {
-    	if (resolveExp.isIsDeferred() && !isInTerminatingState) {    	
-            LateResolveTask lateResolveTask = new LateResolveTask(resolveExp, getContext().getLastAssignmentLvalueEval(), getQVTVisitor(), getOperationalEvaluationEnv(), this);
-            lateResolveTask.schedule();
+    	if (resolveExp.isIsDeferred() && !isInTerminatingState) {
+        	InternalEvaluationEnv internalEvalEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);
+            LateResolveTask lateResolveTask = new LateResolveTask(resolveExp, internalEvalEnv.getLastAssignmentLvalueEval(), getQVTVisitor(), getOperationalEvaluationEnv(), this);
+            internalEvalEnv.addDeferredTask(lateResolveTask);
             return null;
         }
         return QvtResolveUtil.resolveNow(resolveExp, this, getOperationalEvaluationEnv());
     }
     
     public Object visitResolveInExp(ResolveInExp resolveInExp) {
-        if (resolveInExp.isIsDeferred() && !isInTerminatingState) {        	
-            LateResolveInTask lateResolveInTask = new LateResolveInTask(resolveInExp, getContext().getLastAssignmentLvalueEval(), getQVTVisitor(), getOperationalEvaluationEnv(), this);
-            lateResolveInTask.schedule();
+        if (resolveInExp.isIsDeferred() && !isInTerminatingState) {
+        	InternalEvaluationEnv internalEvalEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);        	
+            LateResolveInTask lateResolveInTask = new LateResolveInTask(resolveInExp, internalEvalEnv.getLastAssignmentLvalueEval(), getQVTVisitor(), getOperationalEvaluationEnv(), this);
+            internalEvalEnv.addDeferredTask(lateResolveInTask);            
             return null;
         }        
         return QvtResolveUtil.resolveInNow(resolveInExp, this, getOperationalEvaluationEnv());
@@ -1029,83 +1031,107 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 	}
     
 	public Object visitLogExp(LogExp logExp) {
-		PrintWriter logger = QvtOperationalStdLibrary.getLogger(getContext());
-		if(logger != null) {
-			if(doVisitLogExp(logExp, logger)) {
-				logger.println();
-			}
-		}
+		doVisitLogExp(logExp, getContext().getLog(), null);
 		return null;
 	}
 	
-	private boolean doVisitLogExp(LogExp logExp, PrintWriter logger) {
-		if(logExp.getCondition() != null && 
-			!Boolean.TRUE.equals(logExp.getCondition().accept(getVisitor()))) {
+	private boolean doVisitLogExp(LogExp logExp, Log logger, String messagePrefix) {
+		if(logExp.getCondition() != null && !Boolean.TRUE.equals(logExp.getCondition().accept(getVisitor()))) {
 			return false;
 		}
+		InternalEvaluationEnv internalEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);		
+		Object invalid = internalEnv.getInvalid();
+		String invalidRepr = "<Invalid>"; //$NON-NLS-1$
 		
+		Integer level = null;
 		EList<OCLExpression<EClassifier>> args = logExp.getArgument();
 		if(args.size() > 2) {
-			Object level = args.get(2).accept(getVisitor());
-			logger.print("Level " + level + " - "); //$NON-NLS-1$ //$NON-NLS-2$
+			Object levelObj = args.get(2).accept(getVisitor());
+			level = NumberConversions.strictConvertNumber(levelObj, Integer.class);
+		}
+
+		Object message = args.get(0).accept(getVisitor());
+		if(message == null) {
+			message = "<null>"; //$NON-NLS-1$
+		} else if(message == invalid) {
+			message = invalidRepr;
 		}
 		
-		Object message = args.get(0).accept(getVisitor());
-		logger.print(message);
+		if(messagePrefix != null) {
+			message = messagePrefix + " : " + message;
+		}
 
+		Object element = null;
 		if(args.size() > 1) {
-			Object element = args.get(1).accept(getVisitor());
-			logger.print(", data: "); //$NON-NLS-1$
-			logger.print(String.valueOf(element));
+			element = args.get(1).accept(getVisitor());
+			if(element == invalid) {
+				element = invalidRepr; //$NON-NLS-1$
+			}
+		}
+
+		if(level == null) {
+			if(element == null) {
+				logger.log(String.valueOf(message));
+			} else {		
+				logger.log(String.valueOf(message), element);
+			}
+		} else {
+			if(element == null) {
+				logger.log(level, String.valueOf(message));
+			} else {		
+				logger.log(level, String.valueOf(message), element);
+			}			
 		}
 		
 		return true;
 	}
 	
 	public Object visitAssertExp(AssertExp assertExp) {
-		if(assertExp.getAssertion() != null && 
-				!Boolean.TRUE.equals(assertExp.getAssertion().accept(getVisitor()))) {
+		if(assertExp.getAssertion() != null && !Boolean.TRUE.equals(assertExp.getAssertion().accept(getVisitor()))) {
 			setCurrentEnvInstructionPointer(assertExp);			
-		
-			PrintWriter logger = QvtOperationalStdLibrary.getLogger(getContext());
-			if(logger != null) {
-				EObject parent = assertExp;				
-				while(parent != null && !(parent instanceof Module)) {
-					parent = parent.eContainer();
-					if(parent instanceof ImperativeOperation) {
-						parent = QvtOperationalParserUtil.getOwningModule((ImperativeOperation) parent);
-					}
-				}
-				
-				String source = EvaluationMessages.UknownSourceLabel;				
-				if(parent != null) {
-					String moduleName = ((Module)parent).getName();
-					if(moduleName != null) {
-						source = moduleName;
-					}
-				}
-				
-				StringBuilder locationBuf = new StringBuilder(source);
-				if(assertExp.getLine() >= 0) {
-					locationBuf.append(':').append(assertExp.getLine());
-				}
-				String message = NLS.bind(EvaluationMessages.AssertFailedMessage, assertExp.getSeverity(), locationBuf.toString());
-				logger.print(message);
-				if(assertExp.getLog() != null) {
-					logger.print(" : "); //$NON-NLS-1$
-					doVisitLogExp(assertExp.getLog(), logger);
-				}
-				
-				logger.println();
-				if(SeverityKind.FATAL.equals(assertExp.getSeverity())) {
-					logger.println(EvaluationMessages.TerminatingExecution);
+			EObject parent = assertExp;				
+			while(parent != null && !(parent instanceof Module)) {
+				parent = parent.eContainer();
+				if(parent instanceof ImperativeOperation) {
+					parent = QvtOperationalParserUtil.getOwningModule((ImperativeOperation) parent);
 				}
 			}
 			
+			String source = EvaluationMessages.UknownSourceLabel;				
+			if(parent != null) {
+				String moduleName = ((Module)parent).getName();
+				if(moduleName != null) {
+					source = moduleName;
+				}
+			}
+
+			StringBuilder locationBuf = new StringBuilder(source);
+			if(assertExp.getLine() >= 0) {
+				locationBuf.append(':').append(assertExp.getLine());
+			}
+							
+			String message = NLS.bind(EvaluationMessages.AssertFailedMessage, assertExp.getSeverity(), locationBuf.toString());				
+			Log logger = getContext().getLog();
+			
+			//logger.print(message);
+			if(assertExp.getLog() != null) {
+				//logger.print(" : "); //$NON-NLS-1$
+				doVisitLogExp(assertExp.getLog(), logger, message);
+			} else {
+				logger.log(message);				
+			}
+			
+			//logger.println();
+			if(SeverityKind.FATAL.equals(assertExp.getSeverity())) {
+				logger.log(EvaluationMessages.TerminatingExecution);
+			}
+				
 			if(SeverityKind.FATAL.equals(assertExp.getSeverity())) {				
 				throwQvtException(new QvtAssertionFailed(EvaluationMessages.FatalAssertionFailed));
-			}
+			}		
+				
 		}
+			
 		
 		return null;
 	}

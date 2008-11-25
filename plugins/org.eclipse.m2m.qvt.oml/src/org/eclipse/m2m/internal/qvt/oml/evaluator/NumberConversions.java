@@ -76,4 +76,20 @@ public class NumberConversions {
 
 		return value; // NFE fill be raised in further processing
 	}
+	
+	/**
+	 * Converts the given value to a compatible number value for assignment to the
+	 * target type.
+	 * 
+	 * @param value
+	 *            the value to be converted
+	 * @param targetClass
+	 *            the target type as a potential left side of assignment
+	 * @return A new value compatible to the required type if the conversion is
+	 *         possible. Otherwise, <code>null</code> is returned
+	 */
+	public static <T extends Number> T strictConvertNumber(Object value, Class<T> targetClass) {
+		Object converted = convertNumber(value, targetClass);
+		return targetClass.isInstance(converted) ? targetClass.cast(converted) : null;
+	}
 }

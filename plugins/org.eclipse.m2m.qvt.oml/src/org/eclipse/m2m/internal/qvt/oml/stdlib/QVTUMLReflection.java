@@ -75,6 +75,8 @@ public class QVTUMLReflection
 	public static boolean isUserModelElement(EClassifier classifier) {
 		if(classifier instanceof EClass) {
 			EClass eClass = (EClass) classifier;
+			// FIXME - eliminate the dependency on MDT OCL shadow classes, as we
+			// do not need it anymore, Typedef is used instead 
 			EClassifier realClassifier = OCLStandardLibraryImpl.getRealClassifier(eClass);
 			if(eClass != realClassifier && realClassifier != null) {
 				return false;

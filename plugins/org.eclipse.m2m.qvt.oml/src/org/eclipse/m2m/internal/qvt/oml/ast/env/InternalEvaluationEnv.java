@@ -12,6 +12,7 @@
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ThisInstanceResolver;
+import org.eclipse.m2m.internal.qvt.oml.library.EObjectEStructuralFeaturePair;
 
 
 /**
@@ -35,4 +36,12 @@ public interface InternalEvaluationEnv {
 	ThisInstanceResolver getThisResolver();
 
 	void setThisResolver(ThisInstanceResolver myThisResolver);
+	    
+    void addDeferredTask(Runnable task);
+    
+    void processDeferredTasks();
+    
+    EObjectEStructuralFeaturePair getLastAssignmentLvalueEval();
+    
+    void setLastAssignmentLvalueEval(EObjectEStructuralFeaturePair lvalue);
 }

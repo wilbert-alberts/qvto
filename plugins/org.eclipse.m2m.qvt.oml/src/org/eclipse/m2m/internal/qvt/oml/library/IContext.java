@@ -14,18 +14,15 @@ package org.eclipse.m2m.internal.qvt.oml.library;
 import java.util.Map;
 
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
+import org.eclipse.m2m.qvt.oml.util.Log;
 
 
 public interface IContext {
-    Trace getTrace();
+	Log getLog();
     IConfiguration getConfiguration();
     Object get(String name);
-    void put(String name, Object value);
-    void addDeferredTask(Runnable task);
-    void processDeferredTasks();
+    void put(String name, Object value);    
     Map<String, Object> getProperties();
-    boolean isDebug();
-    void setDebug(boolean debug);
-    EObjectEStructuralFeaturePair getLastAssignmentLvalueEval();
-    void setLastAssignmentLvalueEval(EObjectEStructuralFeaturePair lvalue);
+    
+    Trace getTrace();
 }

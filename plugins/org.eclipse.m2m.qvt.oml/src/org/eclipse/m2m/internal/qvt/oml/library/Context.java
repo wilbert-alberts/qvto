@@ -11,23 +11,20 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.library;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.m2m.internal.qvt.oml.trace.TraceFactory;
+import org.eclipse.m2m.qvt.oml.util.Log;
 
 public class Context implements IContext {
-    private List<Runnable> myDeferredTasks;
     private final Trace myTrace;
     private final IConfiguration  myConfiguration;
     private final Map<String, Object> myData;
 
-    private boolean myIsDebug = false;
-    private EObjectEStructuralFeaturePair myLastAssignLvalue;
+    private Log myLog;
 
     public Context() {
         this(new QvtConfiguration(Collections.<String, String>emptyMap()));
@@ -39,9 +36,17 @@ public class Context implements IContext {
     
     private Context(Map<String, Object> data, Trace trace, IConfiguration configuration) {
         myData = data;
-    	myTrace = trace;
+    	myTrace = trace;    	
     	myConfiguration = configuration;
-    	myDeferredTasks = null;
+    	myLog = Log.NULL_LOG;    	
+    }
+    
+    public void setLog(Log log) {
+		this.myLog = log != null ? log : Log.NULL_LOG;
+	}
+    
+    public Log getLog() {    	
+    	return myLog;
     }
             
     public Trace getTrace() {
@@ -62,40 +67,5 @@ public class Context implements IContext {
     
     public Map<String, Object> getProperties() {
     	return Collections.unmodifiableMap(myData);
-    }
-    
-    public void addDeferredTask(Runnable task) {
-    	if (myDeferredTasks == null) {
-    		myDeferredTasks = new ArrayList<Runnable>();
-    	}
-    	myDeferredTasks.add(task);
-    }
-    
-    public void processDeferredTasks() {
-    	if (myDeferredTasks != null) {
-    		// make me re-entrant in case of errorenous call to #addDeferredTask() 
-    		// from running the task => concurrent modification exception
-    		// This error condition should be handled elsewhere
-    		List<Runnable> tasksCopy = new ArrayList<Runnable>(myDeferredTasks);
-    	    for (Runnable task : tasksCopy) {
-                task.run();
-            }
-    	}
-    }
-    
-	public boolean isDebug() {
-		return myIsDebug;
-	}
-
-	public void setDebug(boolean debug) {
-		myIsDebug = debug;
-	}
-
-    public EObjectEStructuralFeaturePair getLastAssignmentLvalueEval() {
-        return myLastAssignLvalue;
-    }
-
-    public void setLastAssignmentLvalueEval(EObjectEStructuralFeaturePair lvalue) {
-        myLastAssignLvalue = lvalue;
     }
 }

@@ -75,9 +75,12 @@ public class QvtRuntimeException extends RuntimeException {
     public void printQvtStackTrace(PrintWriter pw) {
        synchronized (pw) {
             pw.println(this);
-            
+            int counter = 0;
             for(StackTraceElement trace : getQvtStackTrace()) {
-            	pw.println("\tat " + trace); //$NON-NLS-1$
+            	if(counter++ > 0) {
+            		pw.println();
+            	}
+            	pw.print("\tat " + trace); //$NON-NLS-1$
             }
        }
     }	

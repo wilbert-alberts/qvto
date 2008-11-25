@@ -68,11 +68,7 @@ public abstract class AbstractLateResolveTask implements Runnable, SavedSourceOb
         	myVisitor.setOperationalEvaluationEnv(oldEvalEnv);
         }
     }
-    
-    public void schedule() {
-        myVisitor.getContext().addDeferredTask(this);
-    }
-    
+        
     protected abstract Object getResolveResult();
     
     public ResolveExp getResolveExp() {

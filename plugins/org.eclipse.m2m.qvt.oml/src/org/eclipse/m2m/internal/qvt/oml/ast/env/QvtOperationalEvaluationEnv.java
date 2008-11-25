@@ -46,6 +46,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
+import org.eclipse.m2m.internal.qvt.oml.library.EObjectEStructuralFeaturePair;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
@@ -64,12 +65,14 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		super(parent);
 		if(parent == null) {
 			myRootEnv = this;
+			myInternal = new RootInternal(context);			
 		} else {
 			myRootEnv = parent.myRootEnv;
+			myInternal = new Internal();
 		}
 	    myBindings = new HashMap<String, Object>();
 		myOperationArgs = new ArrayList<Object>();
-		myContext = context;
+		 
 		if (parent instanceof QvtOperationalEvaluationEnv) {
 			setModelParameterExtents(((QvtOperationalEvaluationEnv) parent).myModelExtents, ((QvtOperationalEvaluationEnv) parent).myMapImportedExtents);
 		}
@@ -99,9 +102,6 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	}
 
 	private Internal internalEnv() {
-		if(myInternal == null) {
-			myInternal = new Internal();				
-		}
 		return myInternal;
 	}
 		
@@ -151,7 +151,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	}
 	
 	public IContext getContext() {
-		return myContext;
+		return internalEnv().getContext();
 	}
 		
 	@Override
@@ -415,12 +415,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	}
 	
 	public void dispose() {
-		internalEnv().myThisResolver = null; 
-		
-		for (QvtChangeRecorder qvtChangeRecorder : myChangeRecorders) {
-			qvtChangeRecorder.dispose();
-		}
-		myChangeRecorders.clear();
+		internalEnv().dispose(); 
 	}
 
     public void setCallerModelParameters(List<ModelParameterExtent> modelParamValues, OperationalTransformation module) {
@@ -468,7 +463,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         	if (modelParam.getKind() == DirectionKind.IN) {
         		QvtChangeRecorder qvtChangeRecorder = new QvtChangeRecorder(modelParam);
         		qvtChangeRecorder.beginRecording(argValues);
-        		myChangeRecorders.add(qvtChangeRecorder);
+        		internalEnv().addChangeRecorder(qvtChangeRecorder);
         	}
         	
         	argIndex++;
@@ -747,8 +742,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 
     public QvtOperationalEvaluationEnv cloneEvaluationEnv() {
         QvtOperationalEvaluationEnv env = new QvtOperationalEvaluationEnv(getContext(), getParent());
-        env.internalEnv().myObjectExpOwnerStack.addAll(internalEnv().myObjectExpOwnerStack);
-        env.internalEnv().myThisResolver = internalEnv().myThisResolver;
+        env.myInternal = internalEnv().clone();
         
         env.myOperationArgs.addAll(myOperationArgs);
         env.myOperationSelf = myOperationSelf;
@@ -781,9 +775,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
     private ImperativeOperation myOperation;    
 	private final List<Object> myOperationArgs;
 	private Object myOperationSelf;
-	private final IContext myContext;
     private final Map<String, Object> myBindings;
-    private final List<QvtChangeRecorder> myChangeRecorders = new ArrayList<QvtChangeRecorder>(2);
 	private Map<ModelParameter, ModelParameterExtent> myModelExtents;
 	private Map<ModelParameter, ModelParameter> myMapImportedExtents;
 	private static final ModelParameter UNBOUND_MODEL_EXTENT = null;
@@ -799,16 +791,123 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		}
 	}
 	
+	private class RootInternal extends Internal {
+		private IContext myContext;		
+		private List<Runnable> myDeferredTasks;
+	    private CallHandler myMainHandler;
+	    private EObjectEStructuralFeaturePair myLastAssignLvalue;	    
+	    private List<QvtChangeRecorder> myChangeRecorders = new ArrayList<QvtChangeRecorder>(2);	    
+
+	    RootInternal(IContext context) {
+	    	assert context != null;
+	    	myContext = context;
+	    }
+
+	    RootInternal(RootInternal another) {
+	    	super(another);
+			myLastAssignLvalue = another.myLastAssignLvalue;
+			myDeferredTasks = another.myDeferredTasks;
+			myMainHandler = another.myMainHandler;
+			myChangeRecorders = another.myChangeRecorders;
+			myContext = another.myContext;
+		}
+
+	    @Override
+	    IContext getContext() {
+	    	return myContext;
+	    }
+	    
+	    @Override
+	    void addChangeRecorder(QvtChangeRecorder changeRecorder) {
+	    	assert changeRecorder != null;
+	    	myChangeRecorders.add(changeRecorder);
+	    }
+	    
+	    @Override
+		void dispose() {
+			super.dispose(); 
+			
+			for (QvtChangeRecorder qvtChangeRecorder : myChangeRecorders) {
+				qvtChangeRecorder.dispose();
+			}
+			
+			myChangeRecorders.clear();
+		}	    
+	    
+	    @Override
+	    public Internal clone() {
+	    	return new RootInternal(this);
+	    }
+	    
+	    @Override
+	    public void setEntryOperationHandler(CallHandler mainHandler) {	   
+	    	myMainHandler = mainHandler;
+	    }
+	    
+	    @Override
+	    public void addDeferredTask(Runnable task) {
+	    	if (myDeferredTasks == null) {
+	    		myDeferredTasks = new ArrayList<Runnable>();
+	    	}
+	    	myDeferredTasks.add(task);
+	    }
+	    
+	    @Override
+	    public EObjectEStructuralFeaturePair getLastAssignmentLvalueEval() {
+	        return myLastAssignLvalue;
+	    }
+
+	    @Override
+	    public void setLastAssignmentLvalueEval(EObjectEStructuralFeaturePair lvalue) {
+	        myLastAssignLvalue = lvalue;
+	    }
+	    	    
+	    @Override
+	    public void processDeferredTasks() {
+	    	if (myDeferredTasks != null) {
+	    		// make me re-entrant in case of errorenous call to #addDeferredTask() 
+	    		// from running the task => concurrent modification exception
+	    		// This error condition should be handled elsewhere
+	    		List<Runnable> tasksCopy = new ArrayList<Runnable>(myDeferredTasks);
+	    	    for (Runnable task : tasksCopy) {
+	                task.run();
+	            }
+	    	}
+	    }	    
+	}
+	
 	private class Internal implements InternalEvaluationEnv {
 	    private ThisInstanceResolver myThisResolver;		
-	    private CallHandler myMainHandler;
 	    private int myCurrentASTOffset = -1;
 		private final Stack<Object> myObjectExpOwnerStack;
 	    
 		Internal() {
 			myObjectExpOwnerStack = new Stack<Object>();			
 		}		
+		
+		Internal(Internal another) {
+			this();
+			myObjectExpOwnerStack.addAll(another.myObjectExpOwnerStack);
+			myThisResolver = another.myThisResolver;
+		}
+		
+	    void addChangeRecorder(QvtChangeRecorder changeRecorder) {
+	    	getRoot().internalEnv().addChangeRecorder(changeRecorder);
+	    }
 	    
+	    IContext getContext() {
+	    	return getRoot().internalEnv().getContext();
+	    }			    
+
+		void dispose() {
+			myThisResolver = null; 
+		}
+
+	    @Override
+	    public Internal clone() {
+	    	return new Internal(this);
+	    }
+ 		
 		public void setThisResolver(ThisInstanceResolver myThisResolver) {
 			this.myThisResolver = myThisResolver;
 		}
@@ -822,11 +921,27 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		}
 		
 	    public CallHandler getEntryOperationHandler() {
-	    	return myMainHandler;
+	    	return getRoot().internalEnv().getEntryOperationHandler();
 	    }
 	    
 	    public void setEntryOperationHandler(CallHandler mainHandler) {
-	    	myMainHandler = mainHandler;
+	    	getRoot().internalEnv().setEntryOperationHandler(mainHandler);	    	
+	    }
+	    
+	    public EObjectEStructuralFeaturePair getLastAssignmentLvalueEval() {	    
+	    	return getRoot().internalEnv().getLastAssignmentLvalueEval();
+	    }
+	    
+	    public void setLastAssignmentLvalueEval(EObjectEStructuralFeaturePair lvalue) {
+	    	getRoot().internalEnv().setLastAssignmentLvalueEval(lvalue);
+	    }
+	    
+	    public void processDeferredTasks() {
+	    	getRoot().internalEnv().processDeferredTasks();
+	    }
+
+	    public void addDeferredTask(Runnable task) {
+	    	getRoot().internalEnv().addDeferredTask(task);
 	    }
 	    
 		public void popObjectExpOwner() {

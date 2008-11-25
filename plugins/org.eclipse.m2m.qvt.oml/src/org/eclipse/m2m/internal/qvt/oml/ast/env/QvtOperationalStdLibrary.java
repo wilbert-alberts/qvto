@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
-import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +29,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl;
-import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.AbstractContextualOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.AbstractQVTStdlib;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.ElementOperations;
@@ -50,8 +48,6 @@ import org.eclipse.ocl.utilities.TypedElement;
 
 
 public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
-	// FIXME - replace this hack by a reasonable solution
-	public static final String OUT_PRINT_WRITER = "@out_print_writer"; //$NON-NLS-1$
 	
 	public static final String QVT_STDLIB_MODULE_NAME = "Stdlib"; //$NON-NLS-1$
 	
@@ -248,22 +244,7 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 		
 		return null;
 	}
-		
-	/**
-	 * Gets the print writer for a logger associated with the given context.
-	 * 
-	 * @return the print writer object or <code>null</code> if no logger is
-	 *         available.
-	 */
-	public static PrintWriter getLogger(IContext context) {
-		Object loggerObject = context.get(QvtOperationalStdLibrary.OUT_PRINT_WRITER);
-		if(loggerObject instanceof PrintWriter == false) {
-			return null;
-		}
-		
-		return (PrintWriter) loggerObject;
-	}
- 
+		 
 	private void define(AbstractContextualOperations typeOperations) {
 		typeOperations.define(fEnv);
 	}	
