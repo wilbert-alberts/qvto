@@ -11,8 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.launch;
 
-import java.io.PrintWriter;
-
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -26,7 +24,6 @@ import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.IStatusHandler;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.ShallowProcess;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.StreamsProxy;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
@@ -34,10 +31,10 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.EvaluationContextProperties;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.EvaluationMonitor;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
-import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
+import org.eclipse.m2m.qvt.oml.util.WriterLog;
 
 public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelegateBase {
 
@@ -54,8 +51,8 @@ public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelega
             final QvtTransformation qvtTransformation = new QvtInterpretedTransformation(getQvtModule(configuration));
             final EvaluationMonitor execMonitor = createMonitor();
                                     
-            StreamsProxy streamsProxy = new StreamsProxy();
-            final PrintWriter printWriter = new PrintWriter(streamsProxy.getOutputWriter());   
+            final StreamsProxy streamsProxy = new StreamsProxy();
+   
             ShallowProcess.IRunnable r = new ShallowProcess.IRunnable() {
                 
                 public void run() throws Exception { 
@@ -64,8 +61,8 @@ public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelega
                     	throw new CoreException(status);
                     }      	
                 	
-                	IContext context = new Context(QvtLaunchUtil.getConfiguration(configuration));
-                    context.put(QvtOperationalStdLibrary.OUT_PRINT_WRITER, printWriter);
+                	Context context = new Context(QvtLaunchUtil.getConfiguration(configuration));
+                    context.setLog(new WriterLog(streamsProxy.getOutputWriter()));
                     context.put(EvaluationContextProperties.MONITOR, execMonitor);
                     
                 	QvtLaunchConfigurationDelegateBase.doLaunch(qvtTransformation, configuration, context);

@@ -12,7 +12,6 @@
 package org.eclipse.m2m.internal.qvt.oml.runtime.launch;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,7 +32,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.BaseProcess;
@@ -58,6 +56,7 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.Transf
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
+import org.eclipse.m2m.qvt.oml.util.WriterLog;
 import org.eclipse.osgi.util.NLS;
 
 public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigurationDelegate {
@@ -155,7 +154,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
     	Context context = new Context(configuration);    	
 
     		final StringWriter consoleLogger = new StringWriter();
-            context.put(QvtOperationalStdLibrary.OUT_PRINT_WRITER, new PrintWriter(consoleLogger));
+    		context.setLog(new WriterLog(consoleLogger));
 	    	
 	        TransformationRunner.In in = new TransformationRunner.In(inObjs.toArray(new EObject[inObjs.size()]), context);
 	        TransformationRunner.Out out = transformation.run(in);

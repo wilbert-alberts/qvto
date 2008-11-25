@@ -26,7 +26,6 @@ import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.LaunchConfigurationDelegate;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.BaseProcess;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
@@ -37,13 +36,13 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
-import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtModule;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
+import org.eclipse.m2m.qvt.oml.util.WriterLog;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.externaltools.internal.model.ExternalToolBuilder;
 import org.eclipse.ui.externaltools.internal.model.IExternalToolConstants;
@@ -100,8 +99,8 @@ public class QvtBuilderLaunchConfigurationDelegate extends LaunchConfigurationDe
                     return;
                 }
 
-            	IContext context = new Context(QvtLaunchUtil.getConfiguration(configuration));
-                context.put(QvtOperationalStdLibrary.OUT_PRINT_WRITER, printWriter);
+            	Context context = new Context(QvtLaunchUtil.getConfiguration(configuration));
+                context.setLog(new WriterLog(printWriter));
 
                 QvtLaunchConfigurationDelegateBase.doLaunch(transformation, configuration, context);
                 
