@@ -14,7 +14,6 @@ package org.eclipse.m2m.tests.qvt.oml.transform;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.CharBuffer;
 import java.util.ArrayList;
@@ -28,7 +27,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
@@ -37,6 +35,7 @@ import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.library.QvtConfiguration;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
+import org.eclipse.m2m.qvt.oml.util.WriterLog;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 
 public abstract class AbstractStackTraceTest extends TestTransformation {
@@ -111,7 +110,7 @@ public abstract class AbstractStackTraceTest extends TestTransformation {
 
 	private ITransformer createTransformer() {
 		return new ITransformer() {
-	        public LinkedHashMap<ModelExtentContents, URI> transform(IFile transformation, List<URI> inUris, IContext qvtContext) throws Exception {
+	        public LinkedHashMap<ModelExtentContents, URI> transform(IFile transformation, List<URI> inUris, IContext context) throws Exception {
 	        	QvtInterpretedTransformation transf = new QvtInterpretedTransformation(transformation);
 	        	
 	        	QvtCompilerOptions options = new QvtCompilerOptions();
@@ -119,8 +118,8 @@ public abstract class AbstractStackTraceTest extends TestTransformation {
 	        	options.setSourceLineNumbersEnabled(fEnableLineNumbers);	        	
 	        	transf.setQvtCompilerOptions(options);
 	        	
-	        	// avoid messy System.err printouts
-	        	qvtContext.put(QvtOperationalStdLibrary.OUT_PRINT_WRITER, new PrintWriter(fLogger));
+	        	Context qvtContext = new Context(context.getConfiguration());
+	        	qvtContext.setLog(new WriterLog(fLogger));
 	            
 	        	List<EObject> inputs = new ArrayList<EObject>(inUris.size());
 	        	for (URI uri : inUris) {

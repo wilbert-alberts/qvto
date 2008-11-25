@@ -29,7 +29,7 @@ import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 
 public class TestQvtInterpreter extends TestTransformation {
 	
-	private static final String PREFIX = "interpret_"; //$NON-NLS-1$
+	static final String PREFIX = "interpret_"; //$NON-NLS-1$
 	
 	public TestQvtInterpreter(String testName) {
 		this(TestDataMapper.getTestDataByTestNameWithPrefix(PREFIX, testName));

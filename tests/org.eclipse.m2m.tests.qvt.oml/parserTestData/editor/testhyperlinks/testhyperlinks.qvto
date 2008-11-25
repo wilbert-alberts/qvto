@@ -46,7 +46,7 @@ main() {
 	var b:Boolean := let /*<region id="letVar">*/letVar : String = null/*</region>*/ in /*<link ref="letVar">*/letVar/*</link>*/ <> null;
 
 	-- test Enums and complex name path
-	var enum : /*<link elementUri="http://www.eclipse.org/QVT/1.0.0/Operational#/">*/qvtoperational/*</link>*/::/*<link elementUri="http://www.eclipse.org/QVT/1.0.0/Operational#//expressions">*/expressions/*</link>*/::/*<link elementUri="http://www.eclipse.org/QVT/1.0.0/Operational#//expressions/DirectionKind">*/DirectionKind/*</link>*/
+	var enumVar : /*<link elementUri="http://www.eclipse.org/QVT/1.0.0/Operational#/">*/qvtoperational/*</link>*/::/*<link elementUri="http://www.eclipse.org/QVT/1.0.0/Operational#//expressions">*/expressions/*</link>*/::/*<link elementUri="http://www.eclipse.org/QVT/1.0.0/Operational#//expressions/DirectionKind">*/DirectionKind/*</link>*/
 		:= QVT::expressions::DirectionKind::/*<link elementUri="http://www.eclipse.org/QVT/1.0.0/Operational#//expressions/DirectionKind/out">*/_out/*</link>*/;
 		
 		

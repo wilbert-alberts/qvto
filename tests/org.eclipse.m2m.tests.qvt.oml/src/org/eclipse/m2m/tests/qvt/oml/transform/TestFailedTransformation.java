@@ -2,22 +2,26 @@ package org.eclipse.m2m.tests.qvt.oml.transform;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.common.io.IOFile;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
+import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
+import org.eclipse.m2m.qvt.oml.util.WriterLog;
 
 public class TestFailedTransformation extends TestTransformation {
 
     public TestFailedTransformation(ModelTestData data) {
         super(data);
-        setName("interpret_" + data.getName()); //$NON-NLS-1$
+        setName(TestQvtInterpreter.PREFIX + data.getName()); //$NON-NLS-1$
     }
 	
+	public TestFailedTransformation(String testName) {
+		this(new FileToFileData(TestDataMapper.getActualTestName(TestQvtInterpreter.PREFIX, testName)));
+	}    
+    
     @Override
 	public void runTest() throws Exception {
 		runTransformation();
@@ -26,13 +30,14 @@ public class TestFailedTransformation extends TestTransformation {
 	
 	private QvtRuntimeException runTransformation() throws Exception {
         ITransformer transformer = TestQvtInterpreter.TRANSFORMER;
-		try {	
+		try {
 			IContext context = getData().getContext();
-			context.put(QvtOperationalStdLibrary.OUT_PRINT_WRITER, new PrintWriter(myLogger));
+			Context newContext = new Context(context.getConfiguration());
+			newContext.setLog(new WriterLog(myLogger));
 			
 			transformer.transform(
 					getIFile(getData().getTransformation(getProject())),
-					getData().getIn(getProject()), context);
+					getData().getIn(getProject()), newContext);
 		} catch (QvtRuntimeException e) {
 			return e;			
 		}
