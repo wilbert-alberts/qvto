@@ -76,7 +76,7 @@ calls. It is defined as a ordinary public Java operation.
 
 <h4>Contextual operation</h4>
 Operation 'physically' owned by the defining library but having a contextual type to be used as the source object of operation
-calls. It is defined as a <code>static</code> public Java operation of which the first argument is reserved for passing the source <code>object</code>
+calls. It is defined as a public Java operation of which the first argument is reserved for passing the source <code>object</code>
 (contextual instance) of the call. This is indicated by marking the operation by the predefined annotation <code>@Operation(contextual=true)</code>.
 <b>Remark:</b>At the moment, the java operation is required to be <code>static</code>, however in the future, the non-static variant will be support as well,
 thus offering the benefit of access to a state shared per library instance.
