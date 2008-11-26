@@ -37,9 +37,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
-import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.EnvironmentFactory;
@@ -291,10 +289,9 @@ public final class OCLEnvironmentWithQVTAccessFactory extends EcoreEnvironmentFa
 		
 		@Override
 		public boolean overrides(EOperation operation, int opcode) {
-			if(operation instanceof ImperativeOperation) {
-				if (QvtOperationalParserUtil.getOwningModule((ImperativeOperation) operation) != null) {
-					return true;
-				}
+			if(QvtOperationalParserUtil.getOwningModule(operation) != null) {
+				// the operation must have come from QVT
+				return true;
 			}
 			
 			return false;
@@ -308,9 +305,7 @@ public final class OCLEnvironmentWithQVTAccessFactory extends EcoreEnvironmentFa
 					return getInvalidResult();
 				}
 				
-				IContext qvtContext = fExecCtx.getEvaluator().getContext();
 				QvtOperationalEvaluationEnv qvtEvalEnv = fExecCtx.getEvaluator().getOperationalEvaluationEnv();
-
 				ModuleInstance moduleInstance = qvtEvalEnv.getThisOfType(QvtOperationalParserUtil.getOwningModule(operation));
 				assert moduleInstance != null;
 				return callHandler.invoke(moduleInstance, source, args, qvtEvalEnv);
