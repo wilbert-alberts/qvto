@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2008 Borland Software Corporation
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     Borland Software Corporation - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml;
 
 import java.util.HashSet;
@@ -25,6 +36,7 @@ import org.eclipse.m2m.qvt.oml.runtime.util.OCLEnvironmentWithQVTAccessFactory;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.ecore.Constraint;
+import org.eclipse.ocl.ecore.EcoreEvaluationEnvironment;
 import org.eclipse.ocl.ecore.OCL;
 import org.eclipse.ocl.ecore.Variable;
 import org.eclipse.ocl.ecore.OCL.Query;
@@ -37,6 +49,30 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 	private OCL fOCL;
 	private Set<Module> fImportedModules;
 
+	public OCLEnvironmentWithQVTAccessTest() {
+		super();
+	}
+	
+	protected Set<Module> getImportedModules() {
+		return fImportedModules;
+	}
+	
+	protected EcoreEvaluationEnvironment getEvaluationEnv(Query query) {
+		return (EcoreEvaluationEnvironment)query.getEvaluationEnvironment();
+	}
+	
+	protected final Object evaluate(Query query) {
+		return evaluate(getEvaluationEnv(query), query);
+	}
+		
+	protected Object evaluate(EcoreEvaluationEnvironment evalEnv, Query query) {
+		return query.evaluate();
+	}
+
+	protected Object evaluate(EcoreEvaluationEnvironment evalEnv, Query query, Object self) {
+		return query.evaluate(self);
+	}	
+	
 	@Override
 	protected void setUp() {
 		final Set<CompiledModule> compileModules = TestUtil.compileModules(SRC_CONTAINER,
@@ -66,7 +102,13 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 		
 		fOCL = OCL.newInstance(new OCLEnvironmentWithQVTAccessFactory(fImportedModules, EPackage.Registry.INSTANCE));
 	}
-		
+	
+	@Override
+	protected void tearDown() throws Exception {	
+		this.fImportedModules = null;
+		this.fOCL = null;
+	}
+			
 	@SuppressWarnings("unchecked")
 	public void testUserDefinedVariables() throws Exception {
 		OCLHelper<EClassifier, EOperation, EStructuralFeature, Constraint> helper = fOCL.createOCLHelper();		
@@ -87,8 +129,10 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 			assertNull(helper.getProblems());
 						
 			Query query = fOCL.createQuery(q);
-			query.getEvaluationEnvironment().add(var.getName(), "userVarValue");
-			Object result = query.evaluate();			
+			EcoreEvaluationEnvironment evalEnv = getEvaluationEnv(query); 			
+			evalEnv.add(var.getName(), "userVarValue");
+
+			Object result = evaluate(evalEnv, query);
 			assertEquals("userVarValuemoduleProperty_suffix_suffix", result);
 			
 		} catch (ParserException e) {
@@ -96,7 +140,7 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 			fail("Additional operation should come from super type"); //$NON-NLS-1$
 		}		
 	}
-	
+		
 	public void testImportedOperationAccessingModuleProperty() throws Exception {
 		OCLHelper<EClassifier, EOperation, EStructuralFeature, Constraint> helper = fOCL.createOCLHelper();		
 		helper.setContext(EcorePackage.eINSTANCE.getENamedElement());
@@ -107,7 +151,7 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 
 			assertNull(helper.getProblems());
 						
-			Object result = fOCL.createQuery(q).evaluate();			
+			Object result = evaluate(fOCL.createQuery(q));			
 			assertEquals("moduleProperty_suffix_suffix", result);
 			
 		} catch (ParserException e) {
@@ -127,9 +171,10 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 								
 			assertNull(helper.getProblems());
 						
-			final Query createQuery = fOCL.createQuery(q);
+			Query query = fOCL.createQuery(q);
+			Object result = evaluate(getEvaluationEnv(query), 
+					query, EcoreFactory.eINSTANCE.createEClass());
 			
-			Object result = createQuery.evaluate(EcoreFactory.eINSTANCE.createEClass());			
 			assertEquals(Boolean.TRUE, result);
 			
 		} catch (ParserException e) {
@@ -171,7 +216,7 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 
 			assertNull(helper.getProblems());
 						
-			Object result = fOCL.createQuery(q).evaluate();			
+			Object result = evaluate(fOCL.createQuery(q));			
 			assertEquals("name = xxxAb1", result);
 			
 		} catch (ParserException e) {
@@ -193,7 +238,7 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 
 			assertNull(helper.getProblems());
 						
-			Object result = fOCL.createQuery(q).evaluate();			
+			Object result = evaluate(fOCL.createQuery(q));			
 			assertEquals(Boolean.TRUE, result);
 			
 		} catch (ParserException e) {
@@ -244,7 +289,7 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 
 			assertNull(helper.getProblems());
 						
-			Object result = fOCL.createQuery(q).evaluate();			
+			Object result = evaluate(fOCL.createQuery(q));			
 			assertEquals(Boolean.TRUE, result);
 			
 		} catch (ParserException e) {
@@ -278,6 +323,5 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 		} catch (ParserException e) {
 			assertNotNull(helper.getProblems() != null);			
 		}
-	}		
-			
+	}			
 }

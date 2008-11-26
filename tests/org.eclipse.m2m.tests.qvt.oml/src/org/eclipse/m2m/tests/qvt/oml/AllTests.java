@@ -45,6 +45,7 @@ public class AllTests {
 		//$JUnit-BEGIN$
 		suite.addTestSuite(QVTOperationalEnvTest.class);
 		suite.addTestSuite(OCLEnvironmentWithQVTAccessTest.class);
+		suite.addTestSuite(ExtOCLEnvironmentWithQVTAccessTest.class);
 		suite.addTestSuite(TestExternHelperCall.class);
 		suite.addTest(AllEditorTests.suite());
 		suite.addTest(AllEmfTests.suite());
