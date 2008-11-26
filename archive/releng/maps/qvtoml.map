@@ -8,17 +8,17 @@ feature@org.eclipse.m2m.qvt.oml.editor=v20081117-1100,:pserver:anonymous@dev.ecl
 feature@org.eclipse.m2m.qvt.oml.runtime=v20080930-1000,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/features/org.eclipse.m2m.qvt.oml.runtime.feature
 
 !*** QVT plug-ins ***************************************************************************
-plugin@org.eclipse.m2m.qvt.oml=v20081112-2330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml
+plugin@org.eclipse.m2m.qvt.oml=v20081126-1330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml
 plugin@org.eclipse.m2m.qvt.oml.common=v20081112-2330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.common
 plugin@org.eclipse.m2m.qvt.oml.common.ui=v20081112-2330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.common.ui
-plugin@org.eclipse.m2m.qvt.oml.cst.parser=v20081112-2330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.cst.parser
-plugin@org.eclipse.m2m.qvt.oml.editor.ui=v20081112-2330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.editor.ui
+plugin@org.eclipse.m2m.qvt.oml.cst.parser=v20081126-1330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.cst.parser
+plugin@org.eclipse.m2m.qvt.oml.editor.ui=v20081126-1330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.editor.ui
 plugin@org.eclipse.m2m.qvt.oml.emf.util=v20081112-2330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.emf.util
 plugin@org.eclipse.m2m.qvt.oml.emf.util.ui=v20081112-2330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.emf.util.ui
-plugin@org.eclipse.m2m.qvt.oml.ocl=v20081112-2330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.ocl
+plugin@org.eclipse.m2m.qvt.oml.ocl=v20081126-1330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.ocl
 plugin@org.eclipse.m2m.qvt.oml.ocl.emf.libraries=v20081112-2330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.ocl.emf.libraries
 plugin@org.eclipse.m2m.qvt.oml.project=v20081112-2330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.project
-plugin@org.eclipse.m2m.qvt.oml.runtime=v20081112-2330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.runtime
+plugin@org.eclipse.m2m.qvt.oml.runtime=v20081126-1330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.runtime
 plugin@org.eclipse.m2m.qvt.oml.runtime.ui=v20081112-2330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.runtime.ui
 plugin@org.eclipse.m2m.qvt.oml.ui=v20081112-2330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.ui
 plugin@org.eclipse.m2m.qvt.oml.trace.edit=v20080930-1000,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.trace.edit
@@ -29,7 +29,7 @@ plugin@org.eclipse.m2m.qvt.oml.samples=v20081112-2330,:pserver:anonymous@dev.ecl
 
 !*** QVTO tests ******************************************************************************
 feature@org.eclipse.m2m.qvt.oml.tests=v20081103-1908,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/features/org.eclipse.m2m.qvt.oml.tests-feature
-plugin@org.eclipse.m2m.tests.qvt.oml=v20081112-2330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/tests/org.eclipse.m2m.tests.qvt.oml
+plugin@org.eclipse.m2m.tests.qvt.oml=v20081126-1330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/tests/org.eclipse.m2m.tests.qvt.oml
 plugin@org.eclipse.m2m.tests.qvt.oml.ui=HEAD,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/tests/org.eclipse.m2m.tests.qvt.oml.ui
 
 !*** Special entries from eclipse  
@@ -38,4 +38,4 @@ fragment@org.eclipse.ant.optional.junit=v20070202,:pserver:anonymous@dev.eclipse
 
 !*** QVTO Docs ***************************************************************************
 feature@org.eclipse.m2m.qvt.oml.doc=v20080930-1000,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/doc/org.eclipse.m2m.qvt.oml.doc-feature
-plugin@org.eclipse.m2m.qvt.oml.doc=v20081112-2330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/doc/org.eclipse.m2m.qvt.oml.doc
+plugin@org.eclipse.m2m.qvt.oml.doc=v20081126-1330,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/doc/org.eclipse.m2m.qvt.oml.doc
