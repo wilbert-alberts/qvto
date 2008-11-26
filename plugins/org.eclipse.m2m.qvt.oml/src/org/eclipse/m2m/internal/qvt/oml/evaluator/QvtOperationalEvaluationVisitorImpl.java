@@ -1278,9 +1278,16 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 			public void created(ModuleInstance moduleInstance) {
 				// FIXME - better to do this in separate evaluation env representing a constructor
 				// call to an extended module 
-		    	visitor.addToEnv(QvtOperationalEnv.THIS, moduleInstance, moduleInstance.getModule());
-				visitor.initModuleProperties(moduleInstance);
-				env.remove(QvtOperationalEnv.THIS);
+				QvtOperationalEnv env = (QvtOperationalEnv) visitor.getEnvironment();
+				QvtOperationalEvaluationEnv nestedEvalEnv = (QvtOperationalEvaluationEnv) env.getFactory().createEvaluationEnvironment(visitor.getOperationalEvaluationEnv());
+				try {
+					visitor.setOperationalEvaluationEnv(nestedEvalEnv);				
+					
+					visitor.addToEnv(QvtOperationalEnv.THIS, moduleInstance, moduleInstance.getModule());
+					visitor.initModuleProperties(moduleInstance);
+				} finally {
+					visitor.setOperationalEvaluationEnv(nestedEvalEnv.getParent());
+				}
 			}
 		});
 		
