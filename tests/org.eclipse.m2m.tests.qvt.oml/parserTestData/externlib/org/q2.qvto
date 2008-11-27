@@ -19,3 +19,7 @@ query ENamedElement::getUpperName() : String {
 query EClass::getUpperName() : String {
 	return 'EClass-' + self.name.toUpper();
 }
+
+helper callImportedQvtFileWhichCallsJavaLibrary(aStringToEcho : String) : String {
+	return callImportedJavaLibrary(aStringToEcho);
+}

@@ -1,3 +1,5 @@
+import org.eclipse.m2m.tests.qvt.oml.bbox.SimpleJavaLibrary;
+
 library q1;
 
 modeltype Ecore1 uses 'http://www.eclipse.org/emf/2002/Ecore';
@@ -24,4 +26,8 @@ helper Collection(OclAny)::callOnCollection() : Collection(OclAny) {
 
 helper createTestedInvalid() : Real {
 	return 1/0;
+}
+
+helper callImportedJavaLibrary(aStringToEcho : String) : String {
+	return echoFromSimpleJavaLibrary(aStringToEcho);
 }

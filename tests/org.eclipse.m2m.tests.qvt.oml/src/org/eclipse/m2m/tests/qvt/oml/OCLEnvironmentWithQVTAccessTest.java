@@ -298,6 +298,25 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 		}
 	}
 	
+	public void testCallImportedQvtFileWhichCallsJavaLibrary() throws ParserException {
+		OCLHelper<EClassifier, EOperation, EStructuralFeature, Constraint> helper = fOCL.createOCLHelper();		
+		helper.setContext(EcorePackage.eINSTANCE.getENamedElement());
+		
+		try {
+			helper.setValidating(true);
+			org.eclipse.ocl.expressions.OCLExpression<EClassifier> q = helper.createQuery(
+					"callImportedQvtFileWhichCallsJavaLibrary('Hello!')");
+
+			assertNull(helper.getProblems());
+						
+			Object result = evaluate(fOCL.createQuery(q));			
+			assertEquals("Hello!", result);
+			
+		} catch (ParserException e) {
+			e.printStackTrace();			
+			fail(e.getLocalizedMessage());
+		}
+	}
 	
 	public void testValidationProblems() throws Exception {
 		OCLHelper<EClassifier, EOperation, EStructuralFeature, Constraint> helper = fOCL.createOCLHelper();		
