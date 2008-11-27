@@ -27,7 +27,9 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
+import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
+import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.blackbox.AbstractBlackboxProvider;
 import org.eclipse.m2m.qvt.oml.blackbox.AbstractCompilationUnitDescriptor;
@@ -120,7 +122,11 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 			protected void loadModule(QvtOperationalModuleEnv moduleEnv, final Class<?> javaModuleClass) {
 				handlerFactory = new JavaMethodHandlerFactory(moduleEnv.getOCLStandardLibrary());
 				
-				Module module = moduleEnv.getModuleContextType();				
+				Module module = moduleEnv.getModuleContextType();
+				// FIXME - workaround to make Environment available with the module for
+				// non-transformation execution context
+				ASTBindingHelper.createCST2ASTBinding(CSTFactory.eINSTANCE.createLibraryCS(), module, moduleEnv);		
+
 				setInstanceAdapterFactory(module, new InstanceAdapterFactory() {												
 					public Object createAdapter(EObject moduleInstance) {
 						try {

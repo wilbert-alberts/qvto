@@ -93,7 +93,6 @@ public class QvtStackTraceBuilder {
     }
     
     private StackTraceElement createStackElement(QvtOperationalEvaluationEnv env, int stackPos) {
-    	boolean isMainEnv = env.getParent() == null;
     	
     	String fileName = null;    	
     	String declClassName = UNKNOWN_NAME;    	
@@ -104,20 +103,23 @@ public class QvtStackTraceBuilder {
     	int resultOffset = fOffset;
     	EOperation operation = env.getOperation();
     	    	
-    	InternalEvaluationEnv internEnv = env.getAdapter(InternalEvaluationEnv.class);
-		if(isMainEnv) {
+    	InternalEvaluationEnv internEvalEnv = env.getAdapter(InternalEvaluationEnv.class);
+		if(operation == null) {
 	    	operName = INITIALIZER_NAME;
-	    	module = fMainModule;
+
+	    	ModuleInstance thisInstance = (ModuleInstance) env.getValueOf("this");
+	    	module = thisInstance.getModule();
+	    	
 	    	if(module != null && module.getName() != null) {
 	    		declClassName = module.getName(); 
 	    	}
-	    	resultOffset = internEnv.getCurrentASTOffset();
+	    	resultOffset = internEvalEnv.getCurrentASTOffset();
 	    	ImperativeOperation mainMethod = QvtOperationalParserUtil.getMainOperation(fMainModule);
 			if(resultOffset < 0 && mainMethod != null) {
 	    		resultOffset = mainMethod.getStartPosition();
 	    	}
     	}
-    	else if(operation != null) {
+    	else {
     		if(operation.getName() != null) {
     			operName = operation.getName();
     		}
@@ -135,7 +137,7 @@ public class QvtStackTraceBuilder {
 	    		declClassName = fUML.getName(owner);
 			}
     		
-    		resultOffset = (stackPos == 0) ? fOffset : internEnv.getCurrentASTOffset();
+    		resultOffset = (stackPos == 0) ? fOffset : internEvalEnv.getCurrentASTOffset();
     	}   
 
 

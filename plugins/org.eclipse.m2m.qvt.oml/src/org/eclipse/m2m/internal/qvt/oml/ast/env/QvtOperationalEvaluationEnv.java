@@ -181,6 +181,11 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 
 	@Override
 	public Object navigateProperty(EStructuralFeature property, List<?> qualifiers, Object target) throws IllegalArgumentException {
+		if(target instanceof ModuleInstance) {
+			ModuleInstance moduleTarget = (ModuleInstance) target;			
+			target = getThisOfType(moduleTarget.getModule());
+		}
+
 		EStructuralFeature resolvedProperty = property;		
 
 		if (property instanceof ContextualProperty) {

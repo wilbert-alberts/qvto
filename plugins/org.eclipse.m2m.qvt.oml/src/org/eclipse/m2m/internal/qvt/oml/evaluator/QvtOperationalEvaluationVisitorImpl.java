@@ -224,7 +224,16 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     	QvtOperationalEvaluationVisitorImpl visitor = new QvtOperationalEvaluationVisitorImpl(env, evalEnv);    	
     	ModuleInstanceFactory moduleInstanceFactory = setupModuleInstanceFactory(evalEnv, visitor, new ModuleInstanceFactory());
     	InternalEvaluationEnv internalEvalEnv = evalEnv.getAdapter(InternalEvaluationEnv.class);
-		internalEvalEnv.setThisResolver(moduleInstanceFactory.instantiateImportsByAccess(libraryImports, true));
+		
+    	ThisInstanceResolver importsByAccess = moduleInstanceFactory.instantiateImportsByAccess(libraryImports, true);
+		internalEvalEnv.setThisResolver(importsByAccess);
+		
+		HashSet<ModuleInstance> processedModules = new HashSet<ModuleInstance>();
+		for (Module nextImport : libraryImports) {
+			ModuleInstance nextImportInstance = importsByAccess.getThisInstanceOf(nextImport); 
+			visitor.initModuleProperties(nextImportInstance, processedModules, false);
+		}
+		
 		return visitor;
     }
         
@@ -747,6 +756,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 		
 		ModuleInstance instance = (ModuleInstance)eFactory.create(moduleClass);
 		getEvaluationEnvironment().add(QvtOperationalEnv.THIS, instance);
+		initModuleProperties(instance, new HashSet<ModuleInstance>(), true);
 		return instance;
 	}	
 	
@@ -1243,6 +1253,38 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         return "__qvtresult__" + tempCounter++;//$NON-NLS-1$
     }
 
+    /**
+     * Initializes the properties of the given module instance and its associated instances via import.
+     * @param moduleInstance the instance to initialize
+     * @param processedModules the cached set of modules already process, an empty set should be passed
+     * @param useCurrentEnv indicates whether the the module instance is to initialized using the current
+     * evaluation environment or create its private (nested) one 
+     */
+    private void initModuleProperties(ModuleInstance moduleInstance, Set<ModuleInstance> processedModules, boolean useCurrentEnv) {
+    	Module type = moduleInstance.getModule();
+    	for (ModuleImport moduleImport : type.getModuleImport()) {
+    		Module importedModule = moduleImport.getImportedModule();
+			initModuleProperties(moduleInstance.getThisInstanceOf(importedModule), processedModules, false);
+		}
+    	
+    	if(!processedModules.contains(moduleInstance)) {
+    		if(!useCurrentEnv) {
+    			QvtOperationalEnv env = (QvtOperationalEnv) getEnvironment();
+    			QvtOperationalEvaluationEnv nestedEvalEnv = (QvtOperationalEvaluationEnv) env.getFactory().createEvaluationEnvironment(getOperationalEvaluationEnv());
+    			nestedEvalEnv.add(QvtOperationalEnv.THIS, moduleInstance);
+    			setOperationalEvaluationEnv(nestedEvalEnv);
+    		}
+    		try {	    		
+    			initModuleProperties(moduleInstance);
+    		} finally {
+    			processedModules.add(moduleInstance);
+    			if(!useCurrentEnv) {    			
+    				setOperationalEvaluationEnv(getOperationalEvaluationEnv().getParent());
+    			}
+    		}
+    	}
+    }
+    
     private void initModuleProperties(ModuleInstance moduleInstance) {
     	Module module = moduleInstance.getModule();
 
@@ -1276,18 +1318,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 	{
 		factory.addPostCreateHandler(new ModuleInstanceFactory.PostCreateHandler() {
 			public void created(ModuleInstance moduleInstance) {
-				// FIXME - better to do this in separate evaluation env representing a constructor
-				// call to an extended module 
-				QvtOperationalEnv env = (QvtOperationalEnv) visitor.getEnvironment();
-				QvtOperationalEvaluationEnv nestedEvalEnv = (QvtOperationalEvaluationEnv) env.getFactory().createEvaluationEnvironment(visitor.getOperationalEvaluationEnv());
-				try {
-					visitor.setOperationalEvaluationEnv(nestedEvalEnv);				
-					
-					visitor.addToEnv(QvtOperationalEnv.THIS, moduleInstance, moduleInstance.getModule());
-					visitor.initModuleProperties(moduleInstance);
-				} finally {
-					visitor.setOperationalEvaluationEnv(nestedEvalEnv.getParent());
-				}
+				// FIXME - handle model instance creation extent associtation here
 			}
 		});
 		
