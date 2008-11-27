@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.24 2008/11/24 10:21:20 sboyko Exp $
+* $Id: QvtOpLPGParser.java,v 1.25 2008/11/27 14:24:57 sboyko Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.24 2008/11/24 10:21:20 sboyko Exp $
+* $Id: QvtOpLPGParser.java,v 1.25 2008/11/27 14:24:57 sboyko Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.24 2008/11/24 10:21:20 sboyko Exp $
+* $Id: QvtOpLPGParser.java,v 1.25 2008/11/27 14:24:57 sboyko Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.24 2008/11/24 10:21:20 sboyko Exp $
+* $Id: QvtOpLPGParser.java,v 1.25 2008/11/27 14:24:57 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -4416,8 +4416,8 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 			//
 			case 482: {
 				
-				SimpleNameCS classifierName = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, getTokenText(getToken(3)));
-				setOffsets(classifierName, getIToken(getToken(3)));
+				SimpleNameCS classifierName = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, getTokenText(dtParser.getToken(3)));
+				setOffsets(classifierName, getIToken(dtParser.getToken(3)));
 				CSTNode result = createClassifierDefCS(
 						classifierName,
 						(EList) dtParser.getSym(4),
@@ -4435,6 +4435,16 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 				dtParser.setSym1(new BasicEList());
 				break;
  
+			//
+			// Rule 484:  classifierExtensionOpt ::= extends scoped_identifier_list
+			//
+			case 484: {
+				
+				EList result = (EList)dtParser.getSym(2);
+				dtParser.setSym1(result);
+	  		  break;
+			}
+	 
 			//
 			// Rule 485:  classifierFeatureListOpt ::= $Empty
 			//

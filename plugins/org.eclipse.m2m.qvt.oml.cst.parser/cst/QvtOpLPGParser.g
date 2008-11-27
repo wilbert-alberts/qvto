@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.19 2008/11/24 10:21:21 sboyko Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.20 2008/11/27 14:24:58 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -132,7 +132,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.19 2008/11/24 10:21:21 sboyko Exp $
+ * $Id: QvtOpLPGParser.g,v 1.20 2008/11/27 14:24:58 sboyko Exp $
  */
 	./
 $End
@@ -683,8 +683,8 @@ $Rules
 
 	classifierDefCS ::= intermediate class qvtIdentifierCS classifierExtensionOpt '{' classifierFeatureListOpt '}' semicolonOpt 
 		/.$BeginJava
-					SimpleNameCS classifierName = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, getTokenText(getToken(3)));
-					setOffsets(classifierName, getIToken(getToken(3)));
+					SimpleNameCS classifierName = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, getTokenText($getToken(3)));
+					setOffsets(classifierName, getIToken($getToken(3)));
 					CSTNode result = createClassifierDefCS(
 							classifierName,
 							(EList) $getSym(4),
@@ -697,7 +697,12 @@ $Rules
 
 	classifierExtensionOpt ::= $empty
 		/.$EmptyListAction./
-	classifierExtensionOpt -> extends scoped_identifier_list
+	classifierExtensionOpt ::= extends scoped_identifier_list
+		/.$BeginJava
+					EList result = (EList)$getSym(2);
+					$setResult(result);
+		  $EndJava
+		./
 	
 	classifierFeatureListOpt ::= $empty
 		/.$EmptyListAction./
