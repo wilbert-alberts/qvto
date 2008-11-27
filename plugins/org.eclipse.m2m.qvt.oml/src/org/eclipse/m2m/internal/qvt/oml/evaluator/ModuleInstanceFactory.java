@@ -49,7 +49,7 @@ public class ModuleInstanceFactory extends EFactoryImpl {
 		}
 
 		for (Module module : importedByAccess) {
-			basicCreateModuleInstance(module, instanceMap);
+			createModuleInstance(module, instanceMap);
 		}
 		
 		return new ThisInstanceResolver() {					
