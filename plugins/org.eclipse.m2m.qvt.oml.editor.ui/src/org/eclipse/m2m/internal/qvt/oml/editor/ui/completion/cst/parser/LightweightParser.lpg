@@ -33,9 +33,9 @@ $End
 $Rules
 	QvtLwGoal -> oclExpressionCS
 
-	QvtLwGoal -> QVTgoal
+	QvtLwGoal -> topLevel
 
-	mappingRuleCS ::= entryDeclarationCS ';'
+	entry ::= entryDeclarationCS ';'
 		/.$BeginJava
 					MappingQueryCS result = createMappingQueryCS(
 							(MappingDeclarationCS)$getSym(1),
