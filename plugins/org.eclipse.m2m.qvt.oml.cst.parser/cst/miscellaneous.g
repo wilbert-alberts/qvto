@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.4 2008/11/24 10:21:21 sboyko Exp $ 
+-- * $Id: miscellaneous.g,v 1.5 2008/11/28 14:36:54 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -221,7 +221,6 @@ $Define
         --    {./
 	----- QVTO Debugging facility (end) -----
 
-
 $End
 
 $Globals
@@ -283,7 +282,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.4 2008/11/24 10:21:21 sboyko Exp $
+ * $Id: miscellaneous.g,v 1.5 2008/11/28 14:36:54 aigdalov Exp $
  */
 	./
 $End
@@ -968,6 +967,30 @@ $Rules
 	--=== Miscellaneous QVTO grammar rules (start) ===--
 
 	--=== Non-standard extensions and legacy support (start) ===--
+	_import ::= import library unit ';'
+		/.$BeginJava
+					CSTNode result = createLibraryImportCS(
+							(PathNameCS)$getSym(3)
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
+					$setResult(result);
+		  $EndJava
+		./
+
+        unit_element -> renaming
+	renaming ::= rename typeCS '.' qvtIdentifierCS '=' stringLiteralExpCS ';' 
+		/.$BeginJava
+					CSTNode result = createRenameCS(
+							(TypeCS)$getSym(2),
+							getIToken($getToken(4)),
+							(StringLiteralExpCS)$getSym(6)
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	oclExpCS -> legacyWhileExpCS
 	legacyWhileExpCS ::= while '(' oclExpressionCS ';' oclExpressionCS ')' whileBodyCS
 		/.$BeginJava
 					CSTNode result = createLegacyWhileExpCS(
@@ -980,45 +1003,6 @@ $Rules
 		  $EndJava
 		./
 
-	oclExpCS -> legacyWhileExpCS
-
-	
-	renamingListOpt ::= $empty
-		/.$EmptyListAction./
-	renamingListOpt -> renamingList
-	
-	renamingList ::= renamingCS
-		/.$BeginJava
-					EList result = new BasicEList();
-					result.add($getSym(1));
-					$setResult(result);
-		  $EndJava
-		./
-	renamingList ::= renamingList renamingCS
-		/.$BeginJava
-					EList result = (EList)$getSym(1);
-					result.add($getSym(2));
-					$setResult(result);
-		  $EndJava
-		./
-	renamingList ::= renamingList qvtErrorToken
-		/.$BeginJava
-					EList result = (EList)$getSym(1);
-					$setResult(result);
-		  $EndJava
-		./
-
-	renamingCS ::= rename typeCS '.' qvtIdentifierCS '=' stringLiteralExpCS ';' 
-		/.$BeginJava
-					CSTNode result = createRenameCS(
-							(TypeCS)$getSym(2),
-							getIToken($getToken(4)),
-							(StringLiteralExpCS)$getSym(6)
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
-					$setResult(result);
-		  $EndJava
-		./
 	--=== Non-standard extensions and legacy support (end) ===--
 
 $End

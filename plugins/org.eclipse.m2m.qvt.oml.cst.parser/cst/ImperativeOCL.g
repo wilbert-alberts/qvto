@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.g,v 1.8 2008/11/17 14:48:26 aigdalov Exp $ 
+-- * $Id: ImperativeOCL.g,v 1.9 2008/11/28 14:36:54 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -24,7 +24,6 @@ $Globals
 	/.	
 	import org.eclipse.ocl.cst.StringLiteralExpCS;
 	import org.eclipse.ocl.ParserException;		
-	import java.util.Map;
 	import lpg.lpgjavaruntime.Token;
 	import lpg.lpgjavaruntime.BacktrackingParser;
 	import lpg.lpgjavaruntime.PrsStream;
@@ -81,7 +80,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: ImperativeOCL.g,v 1.8 2008/11/17 14:48:26 aigdalov Exp $
+ * $Id: ImperativeOCL.g,v 1.9 2008/11/28 14:36:54 aigdalov Exp $
  */
 	./
 $End

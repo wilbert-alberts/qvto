@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.20 2008/11/27 14:24:58 sboyko Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.21 2008/11/28 14:36:54 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -35,7 +35,7 @@
 %options include_directory=".;../lpg"
 
 $Start
-    QVTgoal
+    topLevel
 $End
 
 $Import
@@ -46,6 +46,7 @@ $Globals
 	import org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
+	import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.MappingEndCS;
@@ -132,7 +133,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.20 2008/11/27 14:24:58 sboyko Exp $
+ * $Id: QvtOpLPGParser.g,v 1.21 2008/11/28 14:36:54 aigdalov Exp $
  */
 	./
 $End
@@ -142,72 +143,93 @@ $Rules
 	-- opt = optional
 	-- m = multiple
 	
-	-- QVTgoal -> goal
-	QVTgoal -> mappingModuleCS
-	QVTgoal -> libraryCS
+	--=== // start rule (start) ===--
+	-- to support legacy usage of imports after transformation header
+	topLevel ::= unit_elementList
+		/.$BeginJava
+					EList<CSTNode> unitElements = (EList<CSTNode>)$getSym(1);
+					$setResult(createTopLevel(unitElements));
+		  $EndJava
+		./
 
-	mappingModuleCS ::= moduleImportListOpt metamodelListOpt transformationCS moduleImportListOpt metamodelListOpt classifierListOpt renamingListOpt propertyListOpt mappingRuleListOpt
+	unit_element -> _import
+
+	_import ::= import unit ';'
 		/.$BeginJava
-					EList metamodels = (EList)$getSym(2);
-					metamodels.addAll((EList)$getSym(5));
-					EList imports = (EList)$getSym(1);
-					imports.addAll((EList)$getSym(4));
-					CSTNode header = (CSTNode) $getSym(3);
-					org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS result = createMappingModuleCS(
-							(TransformationHeaderCS) header,
-							imports,
-							metamodels,
-							(EList)$getSym(7),
-							(EList)$getSym(8),
-							(EList)$getSym(9)
+					CSTNode result = createModuleImportCS(
+							(PathNameCS)$getSym(2)
 						);
-					result.getClassifierDefCS().addAll((EList) $getSym(6));
-					IToken headerToken = new Token(header.getStartOffset(), header.getEndOffset(), 0);
-					int endOffset = getEndOffset(headerToken, (EList)$getSym(4), (EList)$getSym(5), 
-							(EList)$getSym(6), (EList)$getSym(7), (EList)$getSym(8), (EList)$getSym(9)); 
-					setOffsets(result, header);
-					result.setEndOffset(endOffset);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
 					$setResult(result);
 		  $EndJava
 		./
-	mappingModuleCS ::= moduleImportListOpt metamodelListOpt transformationCS qvtErrorToken
+
+	_import ::= import qvtErrorToken
 		/.$BeginJava
-					CSTNode result = createMappingModuleCS(
-							(TransformationHeaderCS)$getSym(3),
-							$EMPTY_ELIST,
-							$EMPTY_ELIST,
-							$EMPTY_ELIST,
-							$EMPTY_ELIST,
-							$EMPTY_ELIST
+					CSTNode result = createLibraryImportCS(
+							createPathNameCS()
 						);
-					setOffsets(result, (CSTNode)$getSym(3));
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
 					$setResult(result);
 		  $EndJava
 		./
-	mappingModuleCS ::= moduleImportListOpt metamodelListOpt qualifierList transformation qvtErrorToken
-		/.$BeginJava
-					CSTNode result = createMappingModuleCS(
-							createPathNameCS(),
-							$EMPTY_ELIST,
-							$EMPTY_ELIST,
-							$EMPTY_ELIST,
-							$EMPTY_ELIST,
-							$EMPTY_ELIST
-						);
-					setOffsets(result, getIToken($getToken(4)));
-					$setResult(result);
-		  $EndJava
-		./
+
+	unit -> qualifiedNameCS
 		
-	transformationCS ::= transformationHeaderCS ';'
+        identifier_list ::= IDENTIFIER
+		/.$BeginJava
+					EList result = new BasicEList();
+					result.add(getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	identifier_list ::= identifier_list ',' IDENTIFIER
+		/.$BeginJava
+					EList result = (EList) $getSym(1);
+					result.add(getIToken($getToken(3)));
+					$setResult(result);
+		  $EndJava
+		./
+	--=== // start rule (end) ===--
+
+	--=== // definitions in a compilation unit (start) ===--
+	unit_elementList ::= unit_elementList unit_element
+		/.$BeginJava
+					EList list = (EList)$getSym(1);
+					list.add($getSym(2));
+					$setResult(list);
+		  $EndJava
+		./
+
+	unit_elementList ::= $empty
+		/.$EmptyListAction./
+
+	unit_element -> _transformation
+        unit_element -> _library
+        unit_element -> _modeltype
+        unit_element -> _classifier
+        unit_element -> _property
+        unit_element -> _helper
+        unit_element -> entry
+        unit_element -> _mapping
+
+	--=== // definitions in a compilation unit (end) ===--
+
+	--=== // Transformation and library definitions (start) ===--
+	_transformation ::= transformationHeaderCS ';'
 		/.$BeginJava
 					TransformationHeaderCS result = (TransformationHeaderCS) $getSym(1);
 					setOffsets(result, result, getIToken($getToken(2)));
 					$setResult(result);
 		  $EndJava
 		./
-	-- transformationCS -> transformationHeaderCS '{' moduleDefinitionCS '}' semicolonOpt
+	_library -> libraryHeaderCS ';'
 
+	--=== // Transformation and library definitions (end) ===--
+
+
+	--=== // Transformation header (start) ===--
 	transformationHeaderCS ::= qualifierList transformation qualifiedNameCS
 		/.$BeginJava
 					EList qualifierList = (EList) $getSym(1);
@@ -272,7 +294,42 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
+	--=== // Transformation header (end) ===--
 
+
+	--=== // Library header (start) ===--
+
+	libraryHeaderCS ::= library qualifiedNameCS
+		/.$BeginJava
+					org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS result = createLibraryCS(
+							(PathNameCS)$getSym(2),
+							$EMPTY_ELIST,
+							$EMPTY_ELIST,
+							$EMPTY_ELIST,
+							$EMPTY_ELIST,
+							$EMPTY_ELIST
+						);
+					setOffsets(result, getIToken($getToken(1)), (PathNameCS)$getSym(2));
+					$setResult(result);
+		  $EndJava
+		./
+	libraryHeaderCS ::= library qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createLibraryCS(
+							createPathNameCS(),
+							$EMPTY_ELIST,
+							$EMPTY_ELIST,
+							$EMPTY_ELIST,
+							$EMPTY_ELIST,
+							$EMPTY_ELIST
+						);
+					setOffsets(result, getIToken($getToken(3)), getIToken($getToken(3)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	--=== // Library header (end) ===--
+	
 	moduleUsageListOpt ::= $empty
 		/.$EmptyListAction./
 	moduleUsageListOpt -> moduleUsageList
@@ -439,69 +496,6 @@ $Rules
 		  $EndJava
 		./
 		
-	libraryCS ::= moduleImportListOpt metamodelListOpt library qualifiedNameCS ';' moduleImportListOpt metamodelListOpt classifierListOpt renamingListOpt propertyListOpt mappingRuleListOpt
-		/.$BeginJava
-					EList metamodels = (EList)$getSym(2);
-					metamodels.addAll((EList)$getSym(7));
-					EList imports = (EList)$getSym(1);
-					imports.addAll((EList)$getSym(6));
-					org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS result = createLibraryCS(
-							(PathNameCS)$getSym(4),
-							imports,
-							metamodels,
-							(EList)$getSym(9),
-							(EList)$getSym(10),
-							(EList)$getSym(11)
-						);
-					result.getClassifierDefCS().addAll((EList) $getSym(8));
-					int endOffset = getEndOffset(getIToken($getToken(5)), (EList)$getSym(6),
-							(EList)$getSym(7), (EList)$getSym(8), (EList)$getSym(9), (EList)$getSym(10), (EList)$getSym(11)); 
-					setOffsets(result, getIToken($getToken(3)), new Token(0, endOffset, 0));
-					$setResult(result);
-		  $EndJava
-		./
-	libraryCS ::= moduleImportListOpt metamodelListOpt library qualifiedNameCS ';' qvtErrorToken
-		/.$BeginJava
-					CSTNode result = createLibraryCS(
-							createPathNameCS(),
-							$EMPTY_ELIST,
-							$EMPTY_ELIST,
-							$EMPTY_ELIST,
-							$EMPTY_ELIST,
-							$EMPTY_ELIST
-						);
-					setOffsets(result, getIToken($getToken(3)), getIToken($getToken(5)));
-					$setResult(result);
-		  $EndJava
-		./
-	libraryCS ::= moduleImportListOpt metamodelListOpt library qualifiedNameCS qvtErrorToken
-		/.$BeginJava
-					CSTNode result = createLibraryCS(
-							createPathNameCS(),
-							$EMPTY_ELIST,
-							$EMPTY_ELIST,
-							$EMPTY_ELIST,
-							$EMPTY_ELIST,
-							$EMPTY_ELIST
-						);
-					setOffsets(result, getIToken($getToken(3)), getIToken($getToken(4)));
-					$setResult(result);
-		  $EndJava
-		./
-	libraryCS ::= moduleImportListOpt metamodelListOpt library qvtErrorToken
-		/.$BeginJava
-					CSTNode result = createLibraryCS(
-							createPathNameCS(),
-							$EMPTY_ELIST,
-							$EMPTY_ELIST,
-							$EMPTY_ELIST,
-							$EMPTY_ELIST,
-							$EMPTY_ELIST
-						);
-					setOffsets(result, getIToken($getToken(3)), getIToken($getToken(3)));
-					$setResult(result);
-		  $EndJava
-		./
 		
 	qualifiedNameCS ::= qvtIdentifierCS
 		/.$BeginJava
@@ -534,95 +528,9 @@ $Rules
 		./
 
 	
-	moduleImportListOpt ::= $empty
-		/.$EmptyListAction./
-	moduleImportListOpt -> moduleImportList
-	
-	moduleImportList ::= importCS
-		/.$BeginJava
-					EList result = new BasicEList();
-					result.add($getSym(1));
-					$setResult(result);
-		  $EndJava
-		./
-	moduleImportList ::= moduleImportList importCS
-		/.$BeginJava
-					EList result = (EList)$getSym(1);
-					result.add($getSym(2));
-					$setResult(result);
-		  $EndJava
-		./
-	moduleImportList ::= moduleImportList qvtErrorToken
-		/.$BeginJava
-					EList result = (EList)$getSym(1);
-					$setResult(result);
-		  $EndJava
-		./
-	 
-	importCS ::= import qualifiedNameCS ';' 
-		/.$BeginJava
-					CSTNode result = createModuleImportCS(
-							(PathNameCS)$getSym(2)
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
-					$setResult(result);
-		  $EndJava
-		./
-	importCS ::= import library qualifiedNameCS ';'
-		/.$BeginJava
-					CSTNode result = createLibraryImportCS(
-							(PathNameCS)$getSym(3)
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
-					$setResult(result);
-		  $EndJava
-		./
-	importCS ::= import qvtErrorToken
-		/.$BeginJava
-					CSTNode result = createLibraryImportCS(
-							createPathNameCS()
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
-					$setResult(result);
-		  $EndJava
-		./
-	importCS ::= import library qvtErrorToken
-		/.$BeginJava
-					CSTNode result = createLibraryImportCS(
-							createPathNameCS()
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(2)));
-					$setResult(result);
-		  $EndJava
-		./
-
-	metamodelListOpt ::= $empty
-		/.$EmptyListAction./
-	metamodelListOpt -> metamodelList
-
-	metamodelList ::= metamodelCS
-		/.$BeginJava
-					EList result = new BasicEList();
-					result.add($getSym(1));
-					$setResult(result);
-		  $EndJava
-		./
-	metamodelList ::= metamodelList metamodelCS
-		/.$BeginJava
-					EList result = (EList)$getSym(1);
-					result.add($getSym(2));
-					$setResult(result);
-		  $EndJava
-		./
-	metamodelList ::= metamodelList qvtErrorToken
-		/.$BeginJava
-					EList result = (EList)$getSym(1);
-					$setResult(result);
-		  $EndJava
-		./
-		
-	metamodelCS -> modelTypeExpCS
-	metamodelCS ::= metamodel stringLiteralExpCS ';'
+	--=== // model types compliance and metamodel declarations (start) ===--
+	_modeltype -> modelTypeExpCS
+	_modeltype ::= metamodel stringLiteralExpCS ';'
 		/.$BeginJava
 					CSTNode packageRefCS = createPackageRefCS(
 							null,
@@ -642,7 +550,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	metamodelCS ::= metamodel qvtErrorToken
+	_modeltype ::= metamodel qvtErrorToken
 		/.$BeginJava
 					ModelTypeCS result = createModelTypeCS(
 							new Token(0, 0, 0),
@@ -655,31 +563,118 @@ $Rules
 		  $EndJava
 		./
 
-
-	classifierListOpt ::= $empty
-		/.$EmptyListAction./
-	classifierListOpt -> classifierList
+	complianceKindCSOpt ::= $empty
+		/.$BeginJava
+					CSTNode result = createStringLiteralExpCS("''");
+					setOffsets(result, getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+	complianceKindCSOpt -> qvtStringLiteralExpCS
+    
 	
-	classifierList ::= classifierDefCS
+	qvtStringLiteralExpCS -> stringLiteralExpCS
+	qvtStringLiteralExpCS ::= QUOTE_STRING_LITERAL
+		/.$BeginJava
+					CSTNode result = createStringLiteralExpCS("'" + unquote(getTokenText($getToken(1))) + "'"); //$NON-NLS-1$ //$NON-NLS-2$
+					setOffsets(result, getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	modelTypeExpCS ::= modeltype IDENTIFIER complianceKindCSOpt uses packageRefList modelTypeWhereCSOpt ;
+		/.$BeginJava
+					EList whereList = (EList)$getSym(6);
+					EList packageRefList = (EList)$getSym(5);
+					ModelTypeCS result = createModelTypeCS(
+							getIToken($getToken(2)),
+							(StringLiteralExpCS)$getSym(3),
+							packageRefList,
+							whereList
+						);
+					if (whereList.isEmpty()) {
+						setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
+					}
+					else {
+						CSTNode lastPackageRefCS = (CSTNode)packageRefList.get(packageRefList.size()-1);
+						setOffsets(result, getIToken($getToken(1)), lastPackageRefCS);
+						setBodyOffsets(result, lastPackageRefCS, getIToken($getToken(7)));
+					}
+					$setResult(result);
+		  $EndJava
+		./
+	modelTypeExpCS ::= modeltype qvtErrorToken
+		/.$BeginJava
+					ModelTypeCS result = createModelTypeCS(
+							new Token(0, 0, 0),
+							createStringLiteralExpCS(""),
+							$EMPTY_ELIST,
+							$EMPTY_ELIST
+						);
+					setOffsets(result, getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+		
+	packageRefList ::= packageRefCS
 		/.$BeginJava
 					EList result = new BasicEList();
 					result.add($getSym(1));
 					$setResult(result);
 		  $EndJava
 		./
-	classifierList ::= classifierList classifierDefCS
+	packageRefList ::= packageRefList ',' packageRefCS
 		/.$BeginJava
 					EList result = (EList)$getSym(1);
-					result.add($getSym(2));
+					result.add($getSym(3));
 					$setResult(result);
 		  $EndJava
 		./
-	classifierList ::= classifierList qvtErrorToken
+
+	packageRefCS ::= pathNameCS
 		/.$BeginJava
-					EList result = (EList)$getSym(1);
+					CSTNode result = createPackageRefCS(
+							(PathNameCS)$getSym(1),
+							null
+						);
+					setOffsets(result, (CSTNode)$getSym(1));
 					$setResult(result);
 		  $EndJava
 		./
+	packageRefCS ::= pathNameCS '(' qvtStringLiteralExpCS ')'
+		/.$BeginJava
+					CSTNode result = createPackageRefCS(
+							(PathNameCS)$getSym(1),
+							(StringLiteralExpCS)$getSym(3)
+						);
+					setOffsets(result, (CSTNode)$getSym(1), getIToken($getToken(4)));
+					$setResult(result);
+		  $EndJava
+		./
+	packageRefCS ::= qvtStringLiteralExpCS
+		/.$BeginJava
+					CSTNode result = createPackageRefCS(
+							null,
+							(StringLiteralExpCS)$getSym(1)
+						);
+					setOffsets(result, (CSTNode)$getSym(1));
+					$setResult(result);
+		  $EndJava
+		./
+		
+
+	modelTypeWhereCSOpt ::= $empty
+		/.$EmptyListAction./
+	modelTypeWhereCSOpt ::= where '{' statementListOpt '}'
+		/.$BeginJava
+					EList result = (EList)$getSym(3);
+					$setResult(result);
+		  $EndJava
+		./
+
+	--=== // model types compliance and metamodel declarations (start) ===--
+
+	_classifier ->  classifierDefCS
 
 	classifierDefCS ::= intermediate class qvtIdentifierCS classifierExtensionOpt '{' classifierFeatureListOpt '}' semicolonOpt 
 		/.$BeginJava
@@ -752,30 +747,7 @@ $Rules
 		  $EndJava
 		./
 	
-	propertyListOpt ::= $empty
-		/.$EmptyListAction./
-	propertyListOpt -> propertyList
-	
-	propertyList ::= modulePropertyCS
-		/.$BeginJava
-					EList result = new BasicEList();
-					result.add($getSym(1));
-					$setResult(result);
-		  $EndJava
-		./
-	propertyList ::= propertyList modulePropertyCS
-		/.$BeginJava
-					EList result = (EList)$getSym(1);
-					result.add($getSym(2));
-					$setResult(result);
-		  $EndJava
-		./
-	propertyList ::= propertyList qvtErrorToken
-		/.$BeginJava
-					EList result = (EList)$getSym(1);
-					$setResult(result);
-		  $EndJava
-		./
+	_property -> modulePropertyCS
 	
 	modulePropertyCS ::= configuration property qvtIdentifierCS ':' typeCS ';' 
 		/.$BeginJava
@@ -1275,49 +1247,7 @@ $Rules
 
 	-- // syntax for mapping operations (end)
 
-	mappingRuleListOpt ::= $empty
-		/.$EmptyListAction./
-	mappingRuleListOpt -> mappingRuleList
-	
-	mappingRuleList ::= mappingRuleCS
-		/.$BeginJava
-					EList result = new BasicEList();
-					result.add($getSym(1));
-					$setResult(result);
-		  $EndJava
-		./
-	mappingRuleList ::= mappingRuleList mappingRuleCS
-		/.$BeginJava
-					EList result = (EList)$getSym(1);
-					result.add($getSym(2));
-					$setResult(result);
-		  $EndJava
-		./	
-	mappingRuleList ::= _helper
-		/.$BeginJava
-					EList result = new BasicEList();
-					result.add($getSym(1));
-					$setResult(result);
-		  $EndJava
-		./
-	mappingRuleList ::= mappingRuleList _helper
-		/.$BeginJava
-					EList result = (EList)$getSym(1);
-					result.add($getSym(2));
-					$setResult(result);
-		  $EndJava
-		./
-	mappingRuleList ::= mappingRuleList qvtErrorToken
-		/.$BeginJava
-					EList result = (EList)$getSym(1);
-					$setResult(result);
-		  $EndJava
-		./
-
-	-- TODO: Change to module_element
-	mappingRuleCS -> _mapping
-	
-	mappingRuleCS ::= entryDeclarationCS '{' statementListOpt '}'
+	entry ::= entryDeclarationCS '{' statementListOpt '}'
 		/.$BeginJava
 					MappingQueryCS result = createMappingQueryCS(
 							(MappingDeclarationCS)$getSym(1),
@@ -1676,115 +1606,6 @@ $Rules
 		  $EndJava
 		./
 		
-	complianceKindCSOpt ::= $empty
-		/.$BeginJava
-					CSTNode result = createStringLiteralExpCS("''");
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
-		  $EndJava
-		./
-	complianceKindCSOpt -> qvtStringLiteralExpCS
-    
-	
-	qvtStringLiteralExpCS -> stringLiteralExpCS
-	qvtStringLiteralExpCS ::= QUOTE_STRING_LITERAL
-		/.$BeginJava
-					CSTNode result = createStringLiteralExpCS("'" + unquote(getTokenText($getToken(1))) + "'"); //$NON-NLS-1$ //$NON-NLS-2$
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
-		  $EndJava
-		./
-
-	modelTypeExpCS ::= modeltype IDENTIFIER complianceKindCSOpt uses packageRefList modelTypeWhereCSOpt ;
-		/.$BeginJava
-					EList whereList = (EList)$getSym(6);
-					EList packageRefList = (EList)$getSym(5);
-					ModelTypeCS result = createModelTypeCS(
-							getIToken($getToken(2)),
-							(StringLiteralExpCS)$getSym(3),
-							packageRefList,
-							whereList
-						);
-					if (whereList.isEmpty()) {
-						setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
-					}
-					else {
-						CSTNode lastPackageRefCS = (CSTNode)packageRefList.get(packageRefList.size()-1);
-						setOffsets(result, getIToken($getToken(1)), lastPackageRefCS);
-						setBodyOffsets(result, lastPackageRefCS, getIToken($getToken(7)));
-					}
-					$setResult(result);
-		  $EndJava
-		./
-	modelTypeExpCS ::= modeltype qvtErrorToken
-		/.$BeginJava
-					ModelTypeCS result = createModelTypeCS(
-							new Token(0, 0, 0),
-							createStringLiteralExpCS(""),
-							$EMPTY_ELIST,
-							$EMPTY_ELIST
-						);
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
-		  $EndJava
-		./
-		
-	packageRefList ::= packageRefCS
-		/.$BeginJava
-					EList result = new BasicEList();
-					result.add($getSym(1));
-					$setResult(result);
-		  $EndJava
-		./
-	packageRefList ::= packageRefList ',' packageRefCS
-		/.$BeginJava
-					EList result = (EList)$getSym(1);
-					result.add($getSym(3));
-					$setResult(result);
-		  $EndJava
-		./
-
-	packageRefCS ::= pathNameCS
-		/.$BeginJava
-					CSTNode result = createPackageRefCS(
-							(PathNameCS)$getSym(1),
-							null
-						);
-					setOffsets(result, (CSTNode)$getSym(1));
-					$setResult(result);
-		  $EndJava
-		./
-	packageRefCS ::= pathNameCS '(' qvtStringLiteralExpCS ')'
-		/.$BeginJava
-					CSTNode result = createPackageRefCS(
-							(PathNameCS)$getSym(1),
-							(StringLiteralExpCS)$getSym(3)
-						);
-					setOffsets(result, (CSTNode)$getSym(1), getIToken($getToken(4)));
-					$setResult(result);
-		  $EndJava
-		./
-	packageRefCS ::= qvtStringLiteralExpCS
-		/.$BeginJava
-					CSTNode result = createPackageRefCS(
-							null,
-							(StringLiteralExpCS)$getSym(1)
-						);
-					setOffsets(result, (CSTNode)$getSym(1));
-					$setResult(result);
-		  $EndJava
-		./
-		
-
-    modelTypeWhereCSOpt ::= $empty
-		/.$EmptyListAction./
-    modelTypeWhereCSOpt ::= where '{' statementListOpt '}'
-		/.$BeginJava
-					EList result = (EList)$getSym(3);
-					$setResult(result);
-		  $EndJava
-		./
-
 $End
 
 	
