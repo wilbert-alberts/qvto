@@ -62,7 +62,9 @@ public class ResourceSetProviderRegistry {
     static {
         refresh();
         Platform.getExtensionRegistry().addRegistryChangeListener(ourRegistryChangeListener, CommonPlugin.ID);
-        PlatformUI.getWorkbench().getActivitySupport().getActivityManager().addActivityManagerListener(ourActivityChangeListener);
+        if(PlatformUI.isWorkbenchRunning()) {
+        	PlatformUI.getWorkbench().getActivitySupport().getActivityManager().addActivityManagerListener(ourActivityChangeListener);
+        }
     }
     
     public static final ResourceSetResourceSetProviderPair getResourceSetResourceSetProviderPair(CFile script) {
