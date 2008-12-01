@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.26 2008/11/28 14:36:55 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.27 2008/12/01 15:07:46 sboyko Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.26 2008/11/28 14:36:55 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.27 2008/12/01 15:07:46 sboyko Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.26 2008/11/28 14:36:55 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.27 2008/12/01 15:07:46 sboyko Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.26 2008/11/28 14:36:55 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.27 2008/12/01 15:07:46 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;

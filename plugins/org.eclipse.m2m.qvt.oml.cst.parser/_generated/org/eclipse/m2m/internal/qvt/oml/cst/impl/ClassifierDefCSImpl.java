@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ClassifierDefCSImpl.java,v 1.1 2008/11/24 10:21:20 sboyko Exp $
+ * $Id: ClassifierDefCSImpl.java,v 1.2 2008/12/01 15:07:47 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -38,6 +38,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
 
+import org.eclipse.ocl.cst.TypeCS;
 import org.eclipse.ocl.cst.impl.CSTNodeImpl;
 
 /**
@@ -81,7 +82,7 @@ public class ClassifierDefCSImpl extends CSTNodeImpl implements ClassifierDefCS 
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ScopedNameCS> extends_;
+	protected EList<TypeCS> extends_;
 
 	/**
 	 * The cached value of the '{@link #getProperties() <em>Properties</em>}' containment reference list.
@@ -160,9 +161,9 @@ public class ClassifierDefCSImpl extends CSTNodeImpl implements ClassifierDefCS 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ScopedNameCS> getExtends() {
+	public EList<TypeCS> getExtends() {
 		if (extends_ == null) {
-			extends_ = new EObjectContainmentEList<ScopedNameCS>(ScopedNameCS.class, this, CSTPackage.CLASSIFIER_DEF_CS__EXTENDS);
+			extends_ = new EObjectContainmentEList<TypeCS>(TypeCS.class, this, CSTPackage.CLASSIFIER_DEF_CS__EXTENDS);
 		}
 		return extends_;
 	}
@@ -229,7 +230,7 @@ public class ClassifierDefCSImpl extends CSTNodeImpl implements ClassifierDefCS 
 				return;
 			case CSTPackage.CLASSIFIER_DEF_CS__EXTENDS:
 				getExtends().clear();
-				getExtends().addAll((Collection<? extends ScopedNameCS>)newValue);
+				getExtends().addAll((Collection<? extends TypeCS>)newValue);
 				return;
 			case CSTPackage.CLASSIFIER_DEF_CS__PROPERTIES:
 				getProperties().clear();

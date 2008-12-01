@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.21 2008/11/28 14:36:54 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.22 2008/12/01 15:07:47 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -133,7 +133,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.21 2008/11/28 14:36:54 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.22 2008/12/01 15:07:47 sboyko Exp $
  */
 	./
 $End
@@ -692,9 +692,23 @@ $Rules
 
 	classifierExtensionOpt ::= $empty
 		/.$EmptyListAction./
-	classifierExtensionOpt ::= extends scoped_identifier_list
+	classifierExtensionOpt ::= extends type_list
 		/.$BeginJava
 					EList result = (EList)$getSym(2);
+					$setResult(result);
+		  $EndJava
+		./	
+	type_list ::= typeCS
+		/.$BeginJava
+					EList result = new BasicEList();
+					result.add($getSym(1));
+					$setResult(result);
+		  $EndJava
+		./
+	type_list ::= type_list ',' typeCS
+		/.$BeginJava
+					EList result = (EList)$getSym(1);
+					result.add($getSym(3));
 					$setResult(result);
 		  $EndJava
 		./

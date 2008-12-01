@@ -64,7 +64,8 @@
           eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="extends" upperBound="-1"
-          eType="#//cst/temp/ScopedNameCS" containment="true"/>
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
+          containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
           eType="#//cst/LocalPropertyCS" containment="true"/>
     </eClassifiers>

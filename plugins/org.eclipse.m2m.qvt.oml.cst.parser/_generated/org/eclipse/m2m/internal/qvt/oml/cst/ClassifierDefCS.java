@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ClassifierDefCS.java,v 1.1 2008/11/24 10:21:21 sboyko Exp $
+ * $Id: ClassifierDefCS.java,v 1.2 2008/12/01 15:07:47 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -21,6 +21,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
+import org.eclipse.ocl.cst.TypeCS;
 
 /**
  * <!-- begin-user-doc -->
@@ -76,7 +77,7 @@ public interface ClassifierDefCS extends CSTNode {
 
 	/**
 	 * Returns the value of the '<em><b>Extends</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS}.
+	 * The list contents are of type {@link org.eclipse.ocl.cst.TypeCS}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Extends</em>' containment reference list isn't clear,
@@ -88,7 +89,7 @@ public interface ClassifierDefCS extends CSTNode {
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<ScopedNameCS> getExtends();
+	EList<TypeCS> getExtends();
 
 	/**
 	 * Returns the value of the '<em><b>Properties</b></em>' containment reference list.

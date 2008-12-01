@@ -823,7 +823,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 
-	protected CSTNode createClassifierDefCS(SimpleNameCS classifierName, EList<ScopedNameCS> extentionList, EList<LocalPropertyCS> featureList) {
+	protected CSTNode createClassifierDefCS(SimpleNameCS classifierName, EList<TypeCS> extentionList, EList<LocalPropertyCS> featureList) {
 		ClassifierDefCS classifierDef = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createClassifierDefCS();
 		classifierDef.setSimpleNameCS(classifierName);
 		classifierDef.getExtends().addAll(extentionList);
