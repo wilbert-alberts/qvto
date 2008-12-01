@@ -183,6 +183,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	        moduleCS.getMethods().addAll(helpers);
 	        moduleCS.getMethods().addAll(mappings);
 	        moduleCS.getRenamings().addAll(renamings);
+	        moduleCS.getClassifierDefCS().addAll(classifiers);
 
 	        setOffsets(moduleCS, unitElements.get(0), unitElements.get(unitElements.size() - 1));
 	        return moduleCS;
