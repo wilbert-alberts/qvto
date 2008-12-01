@@ -1309,6 +1309,27 @@ public class QvtOperationalVisitorCS
 			EClass classifer = visitClassifierDefCS(classifierDefCS, module, env);
 			createdClasses.put(classifer.getName(), classifer);
 		}
+		for (ClassifierDefCS classifierDefCS : moduleCS.getClassifierDefCS()) {
+			EClass rootClass = createdClasses.get(classifierDefCS.getSimpleNameCS().getValue());
+			for (TypeCS typeCS : classifierDefCS.getExtends()) {
+				
+				if (typeCS instanceof PathNameCS && ((PathNameCS) typeCS).getSequenceOfNames().size() == 1) {
+					EClass extClass = createdClasses.get(((PathNameCS) typeCS).getSequenceOfNames().get(0));
+					if (extClass != null) {
+						rootClass.getESuperTypes().add(extClass);
+						continue;
+					}
+				}
+				
+				EClassifier extendType = visitTypeCS(typeCS, null, env);
+				if (false == extendType instanceof EClass) {
+					// report error
+				}
+				else {
+					rootClass.getESuperTypes().add((EClass) extendType);
+				}
+			}
+		}
 		if (!createdClasses.isEmpty()) {
 			IntermediateClassFactory.getFactory(module).registerModelType(env);
 		}
