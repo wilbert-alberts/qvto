@@ -19,6 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
@@ -41,6 +42,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFolder;
 import org.eclipse.m2m.internal.qvt.oml.compiler.BlackboxModuleHelper;
+import org.eclipse.m2m.internal.qvt.oml.compiler.IntermediateClassFactory;
 import org.eclipse.m2m.internal.qvt.oml.compiler.ParsedModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerKernel;
@@ -48,6 +50,7 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
@@ -148,7 +151,6 @@ import org.eclipse.ocl.cst.CollectionTypeCS;
 import org.eclipse.ocl.cst.DotOrArrowEnum;
 import org.eclipse.ocl.cst.FeatureCallExpCS;
 import org.eclipse.ocl.cst.IfExpCS;
-import org.eclipse.ocl.cst.InvalidLiteralExpCS;
 import org.eclipse.ocl.cst.IteratorExpCS;
 import org.eclipse.ocl.cst.LiteralExpCS;
 import org.eclipse.ocl.cst.NullLiteralExpCS;
@@ -1213,7 +1215,9 @@ public class QvtOperationalVisitorCS
 		}
 		
 		if (objectExp.getExtent() == null && module != null && !getModelParameter(module).isEmpty()) {
-			boolean isInvalidForExtentResolve = objectExp.getReferredObject() == null && objectExp.getType() == null;
+			QvtOperationalModuleEnv moduleEnv = getModuleContextEnv(env);				
+			boolean isInvalidForExtentResolve = objectExp.getReferredObject() == null 
+					&& (objectExp.getType() == null || !moduleEnv.isMayBelongToExtent(objectExp.getType()));
 			if(!isInvalidForExtentResolve) {
 				env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentFailToInfer,
 						QvtOperationalTypesUtil.getTypeFullName(objectExp.getType())),
@@ -1293,6 +1297,20 @@ public class QvtOperationalVisitorCS
 				env.reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_modeltypeDeprecatedSyntax, new Object[] { }),
 						modelTypeCS);
 			}
+		}
+		
+		Map<String, EClass> createdClasses = new LinkedHashMap<String, EClass>(moduleCS.getClassifierDefCS().size());
+		for (ClassifierDefCS classifierDefCS : moduleCS.getClassifierDefCS()) {
+			if (createdClasses.containsKey(classifierDefCS.getSimpleNameCS().getValue())) {
+	            env.reportError(NLS.bind(ValidationMessages.DuplicateClassifier,
+	            		new Object[] { classifierDefCS.getSimpleNameCS().getValue() }), classifierDefCS.getSimpleNameCS());
+				continue;
+			}
+			EClass classifer = visitClassifierDefCS(classifierDefCS, module, env);
+			createdClasses.put(classifer.getName(), classifer);
+		}
+		if (!createdClasses.isEmpty()) {
+			IntermediateClassFactory.getFactory(module).registerModelType(env);
 		}
 		
 		if(module instanceof OperationalTransformation) {
@@ -1383,6 +1401,60 @@ public class QvtOperationalVisitorCS
 		validate(env);
 		
 		return module;
+	}
+
+	private EClass visitClassifierDefCS(ClassifierDefCS classifierDefCS, Module module, QvtOperationalEnv env) throws SemanticException {
+		org.eclipse.m2m.internal.qvt.oml.expressions.Class eClassifier = IntermediateClassFactory.getFactory(module).createIntermediateClassifier();
+		eClassifier.setStartPosition(classifierDefCS.getStartOffset());
+		eClassifier.setEndPosition(classifierDefCS.getEndOffset());
+		
+		eClassifier.setName(classifierDefCS.getSimpleNameCS().getValue());
+
+		class PropertyPair {
+			final EStructuralFeature myEFeature;
+			final LocalPropertyCS myPropCS;
+			
+			PropertyPair(EStructuralFeature eFeature, LocalPropertyCS propCS) {
+				myEFeature = eFeature;
+				myPropCS = propCS;
+			}
+		}
+
+		Map<String, List<PropertyPair>> classifierProperties = new LinkedHashMap<String, List<PropertyPair>>(classifierDefCS.getProperties().size());
+		
+		for (LocalPropertyCS propCS : classifierDefCS.getProperties()) {
+			LocalProperty prop = visitLocalPropertyCS(propCS, env);
+			if (prop == null) {
+				continue;
+			}
+			
+			EStructuralFeature eFeature = env.getUMLReflection().createProperty(prop.getName(), prop.getEType());
+			eClassifier.getEStructuralFeatures().add(eFeature);
+			if (prop.getExpression() != null) {
+				IntermediateClassFactory.getFactory(module).addClassifierPropertyInit(eClassifier, eFeature, prop.getExpression());
+			}
+
+			List<PropertyPair> properties = classifierProperties.get(prop.getName());
+			if (properties == null) {
+				properties = new ArrayList<PropertyPair>(2);
+				classifierProperties.put(prop.getName(), properties);
+			}
+			properties.add(new PropertyPair(eFeature, propCS));
+		}
+		
+		for (String propName : classifierProperties.keySet()) {
+			List<PropertyPair> properties = classifierProperties.get(propName);
+			if (properties.size() == 1) {
+				continue;
+			}
+			for (PropertyPair propPair : properties) {
+				HiddenElementAdapter.markAsHidden(propPair.myEFeature);
+	            env.reportError(NLS.bind(ValidationMessages.DuplicateProperty,
+	            		new Object[] { eClassifier.getName() + '.' + propPair.myEFeature.getName() }), propPair.myPropCS.getSimpleNameCS());
+			}
+		}
+		
+		return eClassifier;
 	}
 
 	private void importsCS(ParsedModuleCS parsedModuleCS, Module module, QvtOperationalFileEnv env, QvtCompiler compiler) {
@@ -2692,7 +2764,7 @@ public class QvtOperationalVisitorCS
 		return property;
 	}
 
-	private Property visitLocalPropertyCS(LocalPropertyCS propCS, QvtOperationalFileEnv env)
+	private LocalProperty visitLocalPropertyCS(LocalPropertyCS propCS, QvtOperationalEnv env)
 			throws SemanticException {
 		LocalProperty prop = ExpressionsFactory.eINSTANCE.createLocalProperty();
 		prop.setStartPosition(propCS.getStartOffset());
@@ -3313,7 +3385,7 @@ public class QvtOperationalVisitorCS
         }
     }
     
-	private boolean validateLocalPropertyCS(LocalPropertyCS propCS, LocalProperty prop, QvtOperationalFileEnv env)
+	private boolean validateLocalPropertyCS(LocalPropertyCS propCS, LocalProperty prop, QvtOperationalEnv env)
 			throws SemanticException {
 
 		if(prop.getExpression() != null) {

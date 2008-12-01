@@ -50,6 +50,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.m2m.internal.qvt.oml.compiler.IntermediateClassFactory;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.iterators.QvtIterationTemplateCollectSelect;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.iterators.QvtIterationTemplateForExp;
@@ -59,6 +60,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Class;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
@@ -894,7 +896,11 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         return null;
     }
 
-    public Object visitRename(Rename rename) {
+	public Object visitClass(Class class_) {
+		return null;
+	}
+
+	public Object visitRename(Rename rename) {
     	// nothing to do in runtime, all should be resolved during parsing time.
     	// https://bugs.eclipse.org/bugs/show_bug.cgi?id=230175    	
     	return null;
@@ -2098,6 +2104,9 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 				}
 			} else {
 				newInstance = getOperationalEvaluationEnv().createInstance(type, extent);
+				if (newInstance != null) {
+					IntermediateClassFactory.getFactory(myRootModule).doInstancePropertyInit(newInstance, this);
+				}
 			}
 
 		} catch (IllegalArgumentException e) {
@@ -2232,4 +2241,5 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     private QvtOperationalEvaluationEnv myEvalEnv;   
     private OCLAnnotationSupport oclAnnotationSupport;
     private boolean isInTerminatingState = false;
+
 }

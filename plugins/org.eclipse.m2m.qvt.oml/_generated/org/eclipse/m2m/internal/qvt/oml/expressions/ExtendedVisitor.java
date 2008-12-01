@@ -88,6 +88,14 @@ public interface ExtendedVisitor<T> extends Visitor<T, EClassifier, EOperation, 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @model class_Required="true"
+	 * @generated
+	 */
+	T visitClass(org.eclipse.m2m.internal.qvt.oml.expressions.Class class_);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @model localPropertyRequired="true"
 	 * @generated
 	 */

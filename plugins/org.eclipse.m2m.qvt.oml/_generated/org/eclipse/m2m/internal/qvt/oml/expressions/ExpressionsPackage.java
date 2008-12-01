@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ExpressionsPackage.java,v 1.12 2008/11/13 11:34:15 sboyko Exp $
+ * $Id: ExpressionsPackage.java,v 1.13 2008/12/01 09:37:58 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
@@ -1196,7 +1196,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getVisitableASTNode()
 	 * @generated
 	 */
-	int VISITABLE_AST_NODE = 28;
+	int VISITABLE_AST_NODE = 29;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -1480,6 +1480,259 @@ public interface ExpressionsPackage extends EPackage {
 	int PROPERTY_FEATURE_COUNT = EcorePackage.ESTRUCTURAL_FEATURE_FEATURE_COUNT + 2;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ClassImpl <em>Class</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ClassImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getClass_()
+	 * @generated
+	 */
+	int CLASS = 6;
+
+	/**
+	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__EANNOTATIONS = EcorePackage.ECLASS__EANNOTATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__NAME = EcorePackage.ECLASS__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Instance Class Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__INSTANCE_CLASS_NAME = EcorePackage.ECLASS__INSTANCE_CLASS_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Instance Class</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__INSTANCE_CLASS = EcorePackage.ECLASS__INSTANCE_CLASS;
+
+	/**
+	 * The feature id for the '<em><b>Default Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__DEFAULT_VALUE = EcorePackage.ECLASS__DEFAULT_VALUE;
+
+	/**
+	 * The feature id for the '<em><b>Instance Type Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__INSTANCE_TYPE_NAME = EcorePackage.ECLASS__INSTANCE_TYPE_NAME;
+
+	/**
+	 * The feature id for the '<em><b>EPackage</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__EPACKAGE = EcorePackage.ECLASS__EPACKAGE;
+
+	/**
+	 * The feature id for the '<em><b>EType Parameters</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__ETYPE_PARAMETERS = EcorePackage.ECLASS__ETYPE_PARAMETERS;
+
+	/**
+	 * The feature id for the '<em><b>Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__ABSTRACT = EcorePackage.ECLASS__ABSTRACT;
+
+	/**
+	 * The feature id for the '<em><b>Interface</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__INTERFACE = EcorePackage.ECLASS__INTERFACE;
+
+	/**
+	 * The feature id for the '<em><b>ESuper Types</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__ESUPER_TYPES = EcorePackage.ECLASS__ESUPER_TYPES;
+
+	/**
+	 * The feature id for the '<em><b>EOperations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__EOPERATIONS = EcorePackage.ECLASS__EOPERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>EAll Attributes</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__EALL_ATTRIBUTES = EcorePackage.ECLASS__EALL_ATTRIBUTES;
+
+	/**
+	 * The feature id for the '<em><b>EAll References</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__EALL_REFERENCES = EcorePackage.ECLASS__EALL_REFERENCES;
+
+	/**
+	 * The feature id for the '<em><b>EReferences</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__EREFERENCES = EcorePackage.ECLASS__EREFERENCES;
+
+	/**
+	 * The feature id for the '<em><b>EAttributes</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__EATTRIBUTES = EcorePackage.ECLASS__EATTRIBUTES;
+
+	/**
+	 * The feature id for the '<em><b>EAll Containments</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__EALL_CONTAINMENTS = EcorePackage.ECLASS__EALL_CONTAINMENTS;
+
+	/**
+	 * The feature id for the '<em><b>EAll Operations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__EALL_OPERATIONS = EcorePackage.ECLASS__EALL_OPERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>EAll Structural Features</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__EALL_STRUCTURAL_FEATURES = EcorePackage.ECLASS__EALL_STRUCTURAL_FEATURES;
+
+	/**
+	 * The feature id for the '<em><b>EAll Super Types</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__EALL_SUPER_TYPES = EcorePackage.ECLASS__EALL_SUPER_TYPES;
+
+	/**
+	 * The feature id for the '<em><b>EID Attribute</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__EID_ATTRIBUTE = EcorePackage.ECLASS__EID_ATTRIBUTE;
+
+	/**
+	 * The feature id for the '<em><b>EStructural Features</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__ESTRUCTURAL_FEATURES = EcorePackage.ECLASS__ESTRUCTURAL_FEATURES;
+
+	/**
+	 * The feature id for the '<em><b>EGeneric Super Types</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__EGENERIC_SUPER_TYPES = EcorePackage.ECLASS__EGENERIC_SUPER_TYPES;
+
+	/**
+	 * The feature id for the '<em><b>EAll Generic Super Types</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__EALL_GENERIC_SUPER_TYPES = EcorePackage.ECLASS__EALL_GENERIC_SUPER_TYPES;
+
+	/**
+	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__START_POSITION = EcorePackage.ECLASS_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>End Position</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__END_POSITION = EcorePackage.ECLASS_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Class</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS_FEATURE_COUNT = EcorePackage.ECLASS_FEATURE_COUNT + 2;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.LocalPropertyImpl <em>Local Property</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1487,7 +1740,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getLocalProperty()
 	 * @generated
 	 */
-	int LOCAL_PROPERTY = 6;
+	int LOCAL_PROPERTY = 7;
 
 	/**
 	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
@@ -1695,7 +1948,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getConfigProperty()
 	 * @generated
 	 */
-	int CONFIG_PROPERTY = 7;
+	int CONFIG_PROPERTY = 8;
 
 	/**
 	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
@@ -1894,7 +2147,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getContextualProperty()
 	 * @generated
 	 */
-	int CONTEXTUAL_PROPERTY = 8;
+	int CONTEXTUAL_PROPERTY = 9;
 
 	/**
 	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
@@ -2120,7 +2373,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getImperativeOperation()
 	 * @generated
 	 */
-	int IMPERATIVE_OPERATION = 9;
+	int IMPERATIVE_OPERATION = 10;
 
 	/**
 	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
@@ -2328,7 +2581,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getVarParameter()
 	 * @generated
 	 */
-	int VAR_PARAMETER = 11;
+	int VAR_PARAMETER = 12;
 
 	/**
 	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
@@ -2527,7 +2780,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getModelParameter()
 	 * @generated
 	 */
-	int MODEL_PARAMETER = 10;
+	int MODEL_PARAMETER = 11;
 
 	/**
 	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
@@ -2726,7 +2979,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getOperationBody()
 	 * @generated
 	 */
-	int OPERATION_BODY = 12;
+	int OPERATION_BODY = 13;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -2790,7 +3043,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getConstructorBody()
 	 * @generated
 	 */
-	int CONSTRUCTOR_BODY = 13;
+	int CONSTRUCTOR_BODY = 14;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -2854,7 +3107,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getMappingOperation()
 	 * @generated
 	 */
-	int MAPPING_OPERATION = 14;
+	int MAPPING_OPERATION = 15;
 
 	/**
 	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
@@ -3098,7 +3351,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getHelper()
 	 * @generated
 	 */
-	int HELPER = 15;
+	int HELPER = 16;
 
 	/**
 	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
@@ -3315,7 +3568,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getMappingBody()
 	 * @generated
 	 */
-	int MAPPING_BODY = 16;
+	int MAPPING_BODY = 17;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -3397,7 +3650,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getImperativeExpression()
 	 * @generated
 	 */
-	int IMPERATIVE_EXPRESSION = 17;
+	int IMPERATIVE_EXPRESSION = 18;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -3434,7 +3687,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getAssignExp()
 	 * @generated
 	 */
-	int ASSIGN_EXP = 18;
+	int ASSIGN_EXP = 19;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -3498,7 +3751,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getVariableInitExp()
 	 * @generated
 	 */
-	int VARIABLE_INIT_EXP = 19;
+	int VARIABLE_INIT_EXP = 20;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -3544,7 +3797,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getMappingCallExp()
 	 * @generated
 	 */
-	int MAPPING_CALL_EXP = 20;
+	int MAPPING_CALL_EXP = 21;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -3653,7 +3906,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getBlockExp()
 	 * @generated
 	 */
-	int BLOCK_EXP = 21;
+	int BLOCK_EXP = 22;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -3699,7 +3952,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getComputeExp()
 	 * @generated
 	 */
-	int COMPUTE_EXP = 22;
+	int COMPUTE_EXP = 23;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -3754,7 +4007,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getInstantiationExp()
 	 * @generated
 	 */
-	int INSTANTIATION_EXP = 39;
+	int INSTANTIATION_EXP = 40;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -3818,7 +4071,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getObjectExp()
 	 * @generated
 	 */
-	int OBJECT_EXP = 23;
+	int OBJECT_EXP = 24;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -3900,7 +4153,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getWhileExp()
 	 * @generated
 	 */
-	int WHILE_EXP = 24;
+	int WHILE_EXP = 25;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -3973,7 +4226,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getSwitchExp()
 	 * @generated
 	 */
-	int SWITCH_EXP = 25;
+	int SWITCH_EXP = 26;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -4028,7 +4281,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getAltExp()
 	 * @generated
 	 */
-	int ALT_EXP = 26;
+	int ALT_EXP = 27;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -4083,7 +4336,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getExtendedVisitor()
 	 * @generated
 	 */
-	int EXTENDED_VISITOR = 27;
+	int EXTENDED_VISITOR = 28;
 
 	/**
 	 * The number of structural features of the '<em>Extended Visitor</em>' class.
@@ -4102,7 +4355,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getResolveExp()
 	 * @generated
 	 */
-	int RESOLVE_EXP = 29;
+	int RESOLVE_EXP = 30;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -4211,7 +4464,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getResolveInExp()
 	 * @generated
 	 */
-	int RESOLVE_IN_EXP = 30;
+	int RESOLVE_IN_EXP = 31;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -4329,7 +4582,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getModelType()
 	 * @generated
 	 */
-	int MODEL_TYPE = 31;
+	int MODEL_TYPE = 32;
 
 	/**
 	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
@@ -4609,7 +4862,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getPackageRef()
 	 * @generated
 	 */
-	int PACKAGE_REF = 32;
+	int PACKAGE_REF = 33;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -4664,7 +4917,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getMappingParameter()
 	 * @generated
 	 */
-	int MAPPING_PARAMETER = 33;
+	int MAPPING_PARAMETER = 34;
 
 	/**
 	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
@@ -4872,7 +5125,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getLogExp()
 	 * @generated
 	 */
-	int LOG_EXP = 34;
+	int LOG_EXP = 35;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -4981,7 +5234,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getAssertExp()
 	 * @generated
 	 */
-	int ASSERT_EXP = 35;
+	int ASSERT_EXP = 36;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -5054,7 +5307,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getImperativeLoopExp()
 	 * @generated
 	 */
-	int IMPERATIVE_LOOP_EXP = 36;
+	int IMPERATIVE_LOOP_EXP = 37;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -5145,7 +5398,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getForExp()
 	 * @generated
 	 */
-	int FOR_EXP = 37;
+	int FOR_EXP = 38;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -5236,7 +5489,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getImperativeIterateExp()
 	 * @generated
 	 */
-	int IMPERATIVE_ITERATE_EXP = 38;
+	int IMPERATIVE_ITERATE_EXP = 39;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -5336,7 +5589,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getReturnExp()
 	 * @generated
 	 */
-	int RETURN_EXP = 40;
+	int RETURN_EXP = 41;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -5382,7 +5635,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getOperationalTransformation()
 	 * @generated
 	 */
-	int OPERATIONAL_TRANSFORMATION = 41;
+	int OPERATIONAL_TRANSFORMATION = 42;
 
 	/**
 	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
@@ -5770,7 +6023,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getEntryOperation()
 	 * @generated
 	 */
-	int ENTRY_OPERATION = 42;
+	int ENTRY_OPERATION = 43;
 
 	/**
 	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
@@ -5978,7 +6231,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getDirectionKind()
 	 * @generated
 	 */
-	int DIRECTION_KIND = 43;
+	int DIRECTION_KIND = 44;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.SeverityKind <em>Severity Kind</em>}' enum.
@@ -5988,7 +6241,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getSeverityKind()
 	 * @generated
 	 */
-	int SEVERITY_KIND = 44;
+	int SEVERITY_KIND = 45;
 
 
 	/**
@@ -6171,6 +6424,16 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getProperty();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Class <em>Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Class</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.Class
+	 * @generated
+	 */
+	EClass getClass_();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty <em>Local Property</em>}'.
@@ -7446,6 +7709,16 @@ public interface ExpressionsPackage extends EPackage {
 		 * @generated
 		 */
 		EClass PROPERTY = eINSTANCE.getProperty();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ClassImpl <em>Class</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ClassImpl
+		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getClass_()
+		 * @generated
+		 */
+		EClass CLASS = eINSTANCE.getClass_();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.LocalPropertyImpl <em>Local Property</em>}' class.

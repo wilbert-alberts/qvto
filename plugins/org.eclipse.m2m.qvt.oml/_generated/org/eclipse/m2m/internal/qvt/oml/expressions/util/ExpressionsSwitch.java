@@ -28,10 +28,14 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
+import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ForExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeExpression;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp;
@@ -51,6 +55,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
+import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.PackageRef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Rename;
@@ -58,6 +63,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.SwitchExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Typedef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VariableInitExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VisitableASTNode;
@@ -225,6 +231,19 @@ public class ExpressionsSwitch<T1> {
 				if (result == null) result = caseASTNode(property);
 				if (result == null) result = caseENamedElement(property);
 				if (result == null) result = caseEModelElement(property);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ExpressionsPackage.CLASS: {
+				org.eclipse.m2m.internal.qvt.oml.expressions.Class class_ = (org.eclipse.m2m.internal.qvt.oml.expressions.Class)theEObject;
+				T1 result = caseClass(class_);
+				if (result == null) result = caseEClass(class_);
+				if (result == null) result = caseVisitableASTNode(class_);
+				if (result == null) result = caseEClassifier(class_);
+				if (result == null) result = caseVisitable(class_);
+				if (result == null) result = caseASTNode(class_);
+				if (result == null) result = caseENamedElement(class_);
+				if (result == null) result = caseEModelElement(class_);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -774,6 +793,21 @@ public class ExpressionsSwitch<T1> {
 	 * @generated
 	 */
 	public T1 caseProperty(Property object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Class</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Class</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseClass(org.eclipse.m2m.internal.qvt.oml.expressions.Class object) {
 		return null;
 	}
 

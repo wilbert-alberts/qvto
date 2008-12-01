@@ -391,6 +391,10 @@ abstract class QvtGenericEvaluationVisitor
 		return getQVTDelegate().visitProperty(property);
 	}
 
+	public Object visitClass(org.eclipse.m2m.internal.qvt.oml.expressions.Class class_) {
+		return getQVTDelegate().visitClass(class_);
+	}
+
 	public Object visitRename(Rename rename) {
 		return getQVTDelegate().visitRename(rename);
 	}

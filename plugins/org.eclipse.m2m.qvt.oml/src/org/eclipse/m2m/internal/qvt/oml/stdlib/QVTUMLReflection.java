@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.HiddenElementAdapter;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
+import org.eclipse.m2m.internal.qvt.oml.compiler.IntermediateClassFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
@@ -75,6 +76,11 @@ public class QVTUMLReflection
 	public static boolean isUserModelElement(EClassifier classifier) {
 		if(classifier instanceof EClass) {
 			EClass eClass = (EClass) classifier;
+			
+			if (IntermediateClassFactory.isIntermediateClass(eClass)) {
+				return true;
+			}
+			
 			// FIXME - eliminate the dependency on MDT OCL shadow classes, as we
 			// do not need it anymore, Typedef is used instead 
 			EClassifier realClassifier = OCLStandardLibraryImpl.getRealClassifier(eClass);

@@ -22,11 +22,15 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
+import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ForExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp;
@@ -45,6 +49,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
+import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.PackageRef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Rename;
@@ -53,6 +58,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.SeverityKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.SwitchExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Typedef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VariableInitExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.WhileExp;
@@ -114,6 +120,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 			case ExpressionsPackage.RENAME: return createRename();
 			case ExpressionsPackage.MODULE_IMPORT: return createModuleImport();
 			case ExpressionsPackage.PROPERTY: return createProperty();
+			case ExpressionsPackage.CLASS: return createClass();
 			case ExpressionsPackage.LOCAL_PROPERTY: return createLocalProperty();
 			case ExpressionsPackage.CONFIG_PROPERTY: return createConfigProperty();
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY: return createContextualProperty();
@@ -245,6 +252,16 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	public Property createProperty() {
 		PropertyImpl property = new PropertyImpl();
 		return property;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public org.eclipse.m2m.internal.qvt.oml.expressions.Class createClass() {
+		ClassImpl class_ = new ClassImpl();
+		return class_;
 	}
 
 	/**

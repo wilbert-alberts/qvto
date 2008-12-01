@@ -91,6 +91,15 @@ public interface ExpressionsFactory extends EFactory {
 	Property createProperty();
 
 	/**
+	 * Returns a new object of class '<em>Class</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Class</em>'.
+	 * @generated
+	 */
+	org.eclipse.m2m.internal.qvt.oml.expressions.Class createClass();
+
+	/**
 	 * Returns a new object of class '<em>Local Property</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

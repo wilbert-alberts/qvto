@@ -74,6 +74,13 @@
           <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/Property/accept/U"/>
         </genOperations>
       </genClasses>
+      <genClasses ecoreClass="QVTOperational.ecore#//expressions/Class">
+        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/Class/accept">
+          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/Class/accept/v"/>
+          <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/Class/accept/T"/>
+          <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/Class/accept/U"/>
+        </genOperations>
+      </genClasses>
       <genClasses ecoreClass="QVTOperational.ecore#//expressions/LocalProperty">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference QVTOperational.ecore#//expressions/LocalProperty/expression"/>
@@ -265,6 +272,9 @@
         </genOperations>
         <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitProperty">
           <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitProperty/property"/>
+        </genOperations>
+        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitClass">
+          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitClass/class_"/>
         </genOperations>
         <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitLocalProperty">
           <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitLocalProperty/localProperty"/>

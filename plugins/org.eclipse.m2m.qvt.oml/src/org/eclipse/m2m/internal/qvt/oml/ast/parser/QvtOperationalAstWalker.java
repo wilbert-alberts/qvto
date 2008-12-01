@@ -26,6 +26,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Class;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
@@ -245,7 +246,10 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object> {
         return null;
     }
 
-
+	public Object visitClass(Class class_) {
+		return null;
+	}
+	
     public Object visitRename(Rename rename) {
         return null;
     }
@@ -566,5 +570,5 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object> {
     public Object visitForExp(ForExp forExp) {
         return visitImperativeLoopExp(forExp);
     }
-	
+
 }

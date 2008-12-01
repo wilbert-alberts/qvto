@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
+import org.eclipse.m2m.internal.qvt.oml.compiler.IntermediateClassFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
@@ -202,8 +203,9 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
     	return super.toString();
     }
     
-	private boolean isMayBelongToExtent(EClassifier myType) {
+	public boolean isMayBelongToExtent(EClassifier myType) {
 		return myType != null 
+			&& !IntermediateClassFactory.isIntermediateClass(myType)
 			&& getOCLStandardLibrary().getOclVoid() != myType
 			&& getOCLStandardLibrary().getOclInvalid() != myType;
 	}

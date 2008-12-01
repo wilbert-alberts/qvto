@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ExpressionsPackageImpl.java,v 1.14 2008/11/13 11:34:14 sboyko Exp $
+ * $Id: ExpressionsPackageImpl.java,v 1.15 2008/12/01 09:37:58 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -128,6 +128,13 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 	 * @generated
 	 */
 	private EClass propertyEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass classEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -650,6 +657,15 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 	 */
 	public EClass getProperty() {
 		return propertyEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getClass_() {
+		return classEClass;
 	}
 
 	/**
@@ -1639,6 +1655,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 
 		propertyEClass = createEClass(PROPERTY);
 
+		classEClass = createEClass(CLASS);
+
 		localPropertyEClass = createEClass(LOCAL_PROPERTY);
 		createEReference(localPropertyEClass, LOCAL_PROPERTY__EXPRESSION);
 
@@ -1828,6 +1846,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		moduleImportEClass.getESuperTypes().add(this.getVisitableASTNode());
 		propertyEClass.getESuperTypes().add(theEcorePackage_1.getEStructuralFeature());
 		propertyEClass.getESuperTypes().add(this.getVisitableASTNode());
+		classEClass.getESuperTypes().add(theEcorePackage_1.getEClass());
+		classEClass.getESuperTypes().add(this.getVisitableASTNode());
 		localPropertyEClass.getESuperTypes().add(this.getProperty());
 		configPropertyEClass.getESuperTypes().add(this.getProperty());
 		contextualPropertyEClass.getESuperTypes().add(this.getProperty());
@@ -2059,6 +2079,38 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		initEClass(propertyEClass, Property.class, "Property", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		op = addEOperation(propertyEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		t1 = addETypeParameter(op, "T"); //$NON-NLS-1$
+		t2 = addETypeParameter(op, "U"); //$NON-NLS-1$
+		g1 = createEGenericType(theUtilitiesPackage.getVisitor());
+		g2 = createEGenericType(t1);
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		t2.getEBounds().add(g1);
+		g1 = createEGenericType(t2);
+		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(t1);
+		initEOperation(op, g1);
+
+		initEClass(classEClass, org.eclipse.m2m.internal.qvt.oml.expressions.Class.class, "Class", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		op = addEOperation(classEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "T"); //$NON-NLS-1$
 		t2 = addETypeParameter(op, "U"); //$NON-NLS-1$
 		g1 = createEGenericType(theUtilitiesPackage.getVisitor());
@@ -2804,6 +2856,11 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 
 		op = addEOperation(extendedVisitorEClass, null, "visitProperty", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getProperty(), "property", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(extendedVisitorEClass_T);
+		initEOperation(op, g1);
+
+		op = addEOperation(extendedVisitorEClass, null, "visitClass", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getClass_(), "class_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(extendedVisitorEClass_T);
 		initEOperation(op, g1);
 
