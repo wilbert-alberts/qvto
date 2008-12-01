@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Copyright (c) 2007 Borland Software Corporation
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     Borland Software Corporation - initial API and implementation
+ *******************************************************************************/
+
 package org.eclipse.m2m.internal.qvt.oml.compiler;
 
 import java.util.LinkedHashMap;
@@ -18,12 +30,15 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisito
 import org.eclipse.m2m.internal.qvt.oml.expressions.Class;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
-import org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.ocl.expressions.OCLExpression;
 
+/**
+ * @author sboyko
+ *
+ */
 public class IntermediateClassFactory extends EFactoryImpl {
 	
 	public static IntermediateClassFactory getFactory(Module module) {
