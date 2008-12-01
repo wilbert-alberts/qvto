@@ -27,6 +27,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.HiddenElementAdapter;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IntermediateClassFactory;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Class;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
@@ -196,9 +197,9 @@ public class QVTUMLReflection
 	}
 
 	public List<EStructuralFeature> getAttributes(EClassifier classifier) {
-		List<EStructuralFeature> result = fUmlReflection.getAttributes(classifier);		
+		List<EStructuralFeature> result = fUmlReflection.getAttributes(classifier);
 		
-		if(classifier instanceof Module) {
+		if(classifier instanceof Module || classifier instanceof Class) {
 			List<EStructuralFeature> nonContextuals = new ArrayList<EStructuralFeature>(result != null ? result.size() : 5);
 			for (EStructuralFeature nextFeature : result) {
 				if(nextFeature instanceof ContextualProperty == false && 
