@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -299,10 +300,25 @@ public class AnnotatedJavaLibrary {
 
 		return count;
 	}
-	
+		
 	// tests T, T2 parameterized types together
 	@Operation (contextual = true)
 	public static <T, T2> Collection<T2> shrinkAnotherCollectionToMySize(Collection<T> self, Collection<T2> another) {
 		return new ArrayList<T2>(another).subList(0, self.size());
 	}	
+	
+	public String foo() {
+		return null;
+	}
+	
+	
+	@Operation (kind=Kind.HELPER, contextual = true)
+	public static <T> T anyElement(Collection<T> self) {
+		return self.iterator().next();
+	}
+	
+	@Operation (kind=Kind.OPERATION, contextual = true)
+	public static <T> Set<T> echoAsSet(Collection<T> self) {
+		return new HashSet<T>(self);
+	}
 }

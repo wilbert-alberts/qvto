@@ -48,6 +48,9 @@ main() {
 	
 	assert fatal (y.objects()->isEmpty());
 	assert fatal (x.objects()->notEmpty());
+	
+	var objectsOfType : Set(Element):= x.objectsOfType(EPackage);
+	assert fatal (objectsOfType->notEmpty());
 }
 
 
