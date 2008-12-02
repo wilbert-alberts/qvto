@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
-import org.eclipse.m2m.internal.qvt.oml.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CategoryImageConstants;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
@@ -63,7 +62,7 @@ public class ColonColonCollector extends AbstractCollector {
 		if (pathName.size() == 1) {
 		    ModelType modelType = env.getModelType(pathName);
 		    if (modelType != null) {
-		        List<EPackage> metamodels = ModelTypeMetamodelsAdapter.getMetamodels(modelType);
+		        List<EPackage> metamodels = modelType.getMetamodel();
                 for (EPackage pack : metamodels) {
                     QvtCompletionProposal info = CompletionProposalUtil.createCompletionProposal(pack.getName(), CategoryImageConstants.PACKAGE, data);
                     CompletionProposalUtil.addProposalIfNecessary(proposals, info, data);

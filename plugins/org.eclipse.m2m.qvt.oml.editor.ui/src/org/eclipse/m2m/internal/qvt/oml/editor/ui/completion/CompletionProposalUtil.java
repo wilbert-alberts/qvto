@@ -45,7 +45,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtKeywords;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
@@ -181,7 +180,7 @@ public class CompletionProposalUtil {
             }
         }
         for (ModelType modelType : data.getEnvironment().getModelTypeRegistry().values()) {
-            List<EPackage> metamodels = ModelTypeMetamodelsAdapter.getMetamodels(modelType);
+            List<EPackage> metamodels = modelType.getMetamodel();
             for (EPackage pack : metamodels) {
                 addPackageContentsProposals(proposals, data, pack);
             }
