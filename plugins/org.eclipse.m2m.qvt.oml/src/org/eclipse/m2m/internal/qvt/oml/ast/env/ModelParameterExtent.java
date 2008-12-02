@@ -27,21 +27,13 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.UsageCrossReferencer;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 
 /**
  * @author sboyko
  *
  */
 public class ModelParameterExtent {
-	
-	public ModelParameterExtent(ModelParameter modelParameter, ModelParameterExtent referencedExtent) {
-		setModelParameter(modelParameter);
 		
-		myInitialEObjects = referencedExtent.myInitialEObjects;
-		myAdditionalEObjects = referencedExtent.myAdditionalEObjects;
-	}
-	
 	public ModelParameterExtent() {
 		this(Collections.<EObject>emptyList());
 	}	
@@ -56,25 +48,7 @@ public class ModelParameterExtent {
 	public ModelParameterExtent(EObject initialEObj) {
 		this(Collections.singletonList(initialEObj));
 	}
-	
-	/*
-	 * TODO - perhaps, it should not be optional, however now it's must be due to special
-	 * 'unbound extents', which should be reviewed as an object should always be created in 
-	 * an extent, presumably in an extent of an existing model parameter
-	 */
-	void setModelParameter(ModelParameter modelParameter) {
-		myModelParameter = modelParameter;
-	}
-	
-	/**
-	 * Gets the model parameter, if there is any associated with this extent.
-	 * 
-	 * @return the model parameter object or <code>null</code>
-	 */
-	public ModelParameter getModelParameter() {
-		return myModelParameter;
-	}
-	
+			
 	public boolean isEmpty() {
 		return myInitialEObjects.isEmpty() && myAdditionalEObjects.isEmpty();
 	}
@@ -221,7 +195,7 @@ public class ModelParameterExtent {
 	private static final int PURGE_LIMIT_SIZE = 300;
 	private int myCountAddedAfterPurge = 0;
 	
-	private ModelParameter myModelParameter;
+	
 	private final List<EObject> myInitialEObjects;
 	private final List<EObject> myAdditionalEObjects; 
 

@@ -11,7 +11,9 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ThisInstanceResolver;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance;
 import org.eclipse.m2m.internal.qvt.oml.library.EObjectEStructuralFeaturePair;
 
 
@@ -21,6 +23,25 @@ import org.eclipse.m2m.internal.qvt.oml.library.EObjectEStructuralFeaturePair;
  */
 public interface InternalEvaluationEnv {
 
+	/**
+	 * Retrieves the currently executed transformation, if one is available.
+	 * 
+	 * @return the transformation object or <code>null</code>, if the current
+	 *         evaluation environment is not part of a transformation execution,
+	 *         but for instance Imperative OCL. 
+	 */
+	TransformationInstance getCurrentTransformation();
+
+	/**
+	 * Retrieves the module in which the current evaluation occurs, if one is available.
+	 * Note: The current module may be transformation or library
+	 * 
+	 * @return the module instance or <code>null</code>, if the current
+	 *         evaluation environment is not part of a transformation execution,
+	 *         but for instance Imperative OCL. 
+	 */	
+	ModuleInstance getCurrentModule();	
+	
 	Object getInvalid();
 	    	
     int setCurrentASTOffset(int currentASTOffset);
@@ -31,6 +52,8 @@ public interface InternalEvaluationEnv {
     
 	void popObjectExpOwner();
 
+    // FIXME - never called, only push/popObjectExpOwner(...) is used, 
+	// -> review this
 	Object peekObjectExpOwner();
 	
 	ThisInstanceResolver getThisResolver();
@@ -44,4 +67,6 @@ public interface InternalEvaluationEnv {
     EObjectEStructuralFeaturePair getLastAssignmentLvalueEval();
     
     void setLastAssignmentLvalueEval(EObjectEStructuralFeaturePair lvalue);
+    
+    ModelParameterExtent getUnboundExtent();
 }

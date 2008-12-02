@@ -23,11 +23,11 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
-import org.eclipse.m2m.internal.qvt.oml.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.cst.CSTNode;
@@ -98,8 +98,19 @@ public class QvtOperationalUtil {
 		if (!isStrictCompare) {
 			return true;
 		}
-		return ModelTypeMetamodelsAdapter.getMetamodels(param.getEType()).equals(
-				ModelTypeMetamodelsAdapter.getMetamodels(importedParam.getEType()));
+
+		ModelType modelType = getModelType(param);
+		ModelType importedModelType = getModelType(importedParam);
+		if(modelType == null || importedModelType == null) {
+			return false;
+		}
+		
+		return modelType.getMetamodel().containsAll(importedModelType.getMetamodel());
+	}
+	
+	public static ModelType getModelType(ModelParameter modelParameter) {
+		EClassifier eType = modelParameter.getEType();
+		return (eType instanceof ModelType) ? (ModelType) eType : null;
 	}
 	
     public static final Boolean oclIsKindOf(Object value, EClassifier type, QvtOperationalEvaluationEnv env) {

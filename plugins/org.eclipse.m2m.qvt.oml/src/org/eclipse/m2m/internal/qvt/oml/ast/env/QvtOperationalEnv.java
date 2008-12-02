@@ -36,7 +36,6 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.ValidationMessages;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
-import org.eclipse.m2m.internal.qvt.oml.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
@@ -475,7 +474,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
     private <T extends EObject> T lookupPackageableElement(ModelType modelType, List<String> path, LookupPackageableElementDelegate<T> lookupPackageableElementDelegate) {
         EPackage oldContext = super.getContextPackage();
         T result = null;
-        List<EPackage> metamodels = ModelTypeMetamodelsAdapter.getMetamodels(modelType);
+        List<EPackage> metamodels = modelType.getMetamodel();
         for (EPackage pkg : metamodels) {
             super.setContextPackage(pkg);
             result = lookupPackageableElementDelegate.lookupPackageableElement(path);

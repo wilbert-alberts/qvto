@@ -208,7 +208,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 	protected EList<ModuleImport> moduleImport;
 
 	/**
-	 * The cached value of the '{@link #getUsedModelType() <em>Used Model Type</em>}' containment reference list.
+	 * The cached value of the '{@link #getUsedModelType() <em>Used Model Type</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getUsedModelType()
@@ -530,7 +530,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 */
 	public EList<ModelType> getUsedModelType() {
 		if (usedModelType == null) {
-			usedModelType = new EObjectContainmentEList<ModelType>(ModelType.class, this, ExpressionsPackage.MODULE__USED_MODEL_TYPE);
+			usedModelType = new EObjectResolvingEList<ModelType>(ModelType.class, this, ExpressionsPackage.MODULE__USED_MODEL_TYPE);
 		}
 		return usedModelType;
 	}
@@ -611,8 +611,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 				return ((InternalEList<?>)getOwnedVariable()).basicRemove(otherEnd, msgs);
 			case ExpressionsPackage.MODULE__MODULE_IMPORT:
 				return ((InternalEList<?>)getModuleImport()).basicRemove(otherEnd, msgs);
-			case ExpressionsPackage.MODULE__USED_MODEL_TYPE:
-				return ((InternalEList<?>)getUsedModelType()).basicRemove(otherEnd, msgs);
 			case ExpressionsPackage.MODULE__OWNED_RENAMING:
 				return ((InternalEList<?>)getOwnedRenaming()).basicRemove(otherEnd, msgs);
 		}

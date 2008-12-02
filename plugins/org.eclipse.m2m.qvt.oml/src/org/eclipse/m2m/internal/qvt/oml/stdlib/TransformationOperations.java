@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance.InternalTransformation;
 
 public class TransformationOperations extends AbstractContextualOperations {
 
@@ -35,7 +36,7 @@ public class TransformationOperations extends AbstractContextualOperations {
 			public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 				// FIXME - add validation code!!!
 				ModuleInstance moduleInstance = (ModuleInstance) source;
-				CallHandler mainHandler = moduleInstance.getAdapter(ModuleInstance.Internal.class).getEntryOperationHandler();
+				CallHandler mainHandler = moduleInstance.getAdapter(InternalTransformation.class).getEntryOperationHandler();
 				if(mainHandler == null) {
 					// module has no main operation => return invalid
 					return CallHandlerAdapter.getInvalidResult(evalEnv);

@@ -13,7 +13,6 @@ package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
-import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 
 public interface ModuleInstance extends EObject, ThisInstanceResolver {
 
@@ -32,9 +31,5 @@ public interface ModuleInstance extends EObject, ThisInstanceResolver {
  
 	interface Internal {
 		void addAdapter(Object adapter);
-
-		void setEntryOperationHandler(CallHandler handler);
-	
-		CallHandler getEntryOperationHandler();
 	}
 }

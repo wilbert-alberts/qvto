@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.types.OCLStandardLibrary;
@@ -56,24 +57,43 @@ public class ModelOperations extends AbstractContextualOperations {
 	
 	private static final  CallHandler OBJECTS = new CallHandler() {
 		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
-			Set<Object> instances = new LinkedHashSet<Object>();
-			instances.addAll(((ModelParameterExtent) source).getAllObjects());
+			if(source instanceof ModelInstance == false) {
+				throw new IllegalArgumentException();
+			}
+
+			Set<Object> instances = new LinkedHashSet<Object>();			
+			ModelInstance model = (ModelInstance) source;
+			ModelParameterExtent modelParam = model.getExtent();
+			
+			instances.addAll(modelParam.getAllObjects());
 			return instances;
 		}
 	};
 
 	private static final CallHandler ROOT_OBJECTS = new CallHandler() {
 		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
-			Set<Object> instances = new LinkedHashSet<Object>();
-			instances.addAll(((ModelParameterExtent) source).getRootObjects());
+			if(source instanceof ModelInstance == false) {
+				throw new IllegalArgumentException();
+			}
+			
+			Set<Object> instances = new LinkedHashSet<Object>();			
+			ModelInstance model = (ModelInstance) source;
+			ModelParameterExtent modelParam = model.getExtent();			
+			instances.addAll(modelParam.getRootObjects());
 			return instances;
 		}
 	};
 
 	private static final CallHandler OBJECTS_OF_TYPE = new CallHandler() {
 		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
-	        Set<Object> instances = new LinkedHashSet<Object>();
-	        List<Object> objects = ((ModelParameterExtent) source).getAllObjects();
+			if(source instanceof ModelInstance == false) {
+				throw new IllegalArgumentException();
+			}
+			
+	        Set<Object> instances = new LinkedHashSet<Object>();	       
+			ModelInstance model = (ModelInstance) source;
+			ModelParameterExtent modelParam = model.getExtent();	        
+	        List<Object> objects = modelParam.getAllObjects();
 			for (Object obj : objects) {
 	            if (AbstractQVTStdlib.clsFilter.matches(obj, args[0])) {
 	                instances.add(obj);
@@ -85,11 +105,11 @@ public class ModelOperations extends AbstractContextualOperations {
 	
 	private static final CallHandler REMOVE_ELEMENT = new CallHandler() {
 		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
-			if(source instanceof ModelParameterExtent == false) {
+			if(source instanceof ModelInstance == false) {
 				throw new IllegalArgumentException();
 			}
-			
-			ModelParameterExtent modelParam = (ModelParameterExtent) source;
+			ModelInstance model = (ModelInstance) source;
+			ModelParameterExtent modelParam = model.getExtent();
 			Object elementObject = args[0];
 			if(elementObject instanceof EObject) {
 				modelParam.removeElement((EObject) elementObject);

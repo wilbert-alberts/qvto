@@ -92,7 +92,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
@@ -1281,6 +1280,7 @@ public class QvtOperationalVisitorCS
 			if (modelType == null) {
 				continue;
 			}
+			module.getEClassifiers().add(modelType);
 			module.getUsedModelType().add(modelType);
 			if (modelType.getName().length() > 0) {
 				ModelType existingModelType = env.getModelType(Collections.singletonList(modelType.getName()));
@@ -1297,41 +1297,6 @@ public class QvtOperationalVisitorCS
 				env.reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_modeltypeDeprecatedSyntax, new Object[] { }),
 						modelTypeCS);
 			}
-		}
-		
-		Map<String, EClass> createdClasses = new LinkedHashMap<String, EClass>(moduleCS.getClassifierDefCS().size());
-		for (ClassifierDefCS classifierDefCS : moduleCS.getClassifierDefCS()) {
-			if (createdClasses.containsKey(classifierDefCS.getSimpleNameCS().getValue())) {
-	            env.reportError(NLS.bind(ValidationMessages.DuplicateClassifier,
-	            		new Object[] { classifierDefCS.getSimpleNameCS().getValue() }), classifierDefCS.getSimpleNameCS());
-				continue;
-			}
-			EClass classifer = visitClassifierDefCS(classifierDefCS, module, env);
-			createdClasses.put(classifer.getName(), classifer);
-		}
-		for (ClassifierDefCS classifierDefCS : moduleCS.getClassifierDefCS()) {
-			EClass rootClass = createdClasses.get(classifierDefCS.getSimpleNameCS().getValue());
-			for (TypeCS typeCS : classifierDefCS.getExtends()) {
-				
-				if (typeCS instanceof PathNameCS && ((PathNameCS) typeCS).getSequenceOfNames().size() == 1) {
-					EClass extClass = createdClasses.get(((PathNameCS) typeCS).getSequenceOfNames().get(0));
-					if (extClass != null) {
-						rootClass.getESuperTypes().add(extClass);
-						continue;
-					}
-				}
-				
-				EClassifier extendType = visitTypeCS(typeCS, null, env);
-				if (false == extendType instanceof EClass) {
-					// report error
-				}
-				else {
-					rootClass.getESuperTypes().add((EClass) extendType);
-				}
-			}
-		}
-		if (!createdClasses.isEmpty()) {
-			IntermediateClassFactory.getFactory(module).registerModelType(env);
 		}
 		
 		if(module instanceof OperationalTransformation) {
@@ -1375,6 +1340,10 @@ public class QvtOperationalVisitorCS
 				}
 			}
 		}
+		
+		// Handle the case of legacy constructs which allows for signature-less 
+		// transformation definition
+		DeprecatedSignaturelessTransf.patchModule(module);			
 		
 		boolean moduleEntryFound = false;
 		for (MappingMethodCS methodCS : methodMap.keySet()) {
@@ -1420,10 +1389,10 @@ public class QvtOperationalVisitorCS
 		}
 
 		validate(env);
-		
+
 		return module;
 	}
-
+	
 	private EClass visitClassifierDefCS(ClassifierDefCS classifierDefCS, Module module, QvtOperationalEnv env) throws SemanticException {
 		org.eclipse.m2m.internal.qvt.oml.expressions.Class eClassifier = IntermediateClassFactory.getFactory(module).createIntermediateClassifier();
 		eClassifier.setStartPosition(classifierDefCS.getStartOffset());
@@ -1477,7 +1446,7 @@ public class QvtOperationalVisitorCS
 		
 		return eClassifier;
 	}
-
+	
 	private void importsCS(ParsedModuleCS parsedModuleCS, Module module, QvtOperationalFileEnv env, QvtCompiler compiler) {
 		List<ImportCS> importsToProcessCopy = new ArrayList<ImportCS>(parsedModuleCS.getModuleCS().getImports());
 		for (ParsedModuleCS importedModuleCS : parsedModuleCS.getParsedImports()) {
@@ -1830,16 +1799,15 @@ public class QvtOperationalVisitorCS
 			ModelType modelType, Module module, CSTNode cstNode) throws SemanticException {
 
 		String metamodelName = (resolvedMetamodel.getNsURI() == null ? resolvedMetamodel.getName() : resolvedMetamodel.getNsURI());
-		if (ModelTypeMetamodelsAdapter.getMetamodels(modelType).contains(resolvedMetamodel)) {
+		List<EPackage> metamodels = modelType.getMetamodel();
+		if (metamodels.contains(resolvedMetamodel)) {
 			env.reportWarning(NLS.bind(ValidationMessages.DuplicateMetamodelImport,
 					new Object[] { metamodelName }), cstNode);
 		}
-		if (getUsedMetamodels(module).contains(resolvedMetamodel)) {
+		if (module.getUsedModelType().contains(resolvedMetamodel)) {
 			env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_metamodelAlreadyUsed,
 					new Object[] { metamodelName }), cstNode);
-		}
-		
-		ModelTypeMetamodelsAdapter.addMetamodel(modelType, resolvedMetamodel);
+		}		
 	}
 	
 	private EPackage resolveMetamodel(QvtOperationalFileEnv env, String metamodelUri, List<String> packagePath,
@@ -1877,14 +1845,6 @@ public class QvtOperationalVisitorCS
 		return resolvedMetamodel;
 	}
 	
-	private Set<EPackage> getUsedMetamodels(Module module) {
-		Set<EPackage> metamodels = new LinkedHashSet<EPackage>();		
-		for (ModelType modelType : module.getUsedModelType()) {
-			metamodels.addAll(ModelTypeMetamodelsAdapter.getMetamodels(modelType));
-		}
-		return metamodels;		
-	}
-
 	protected Rename visitRenameCS(RenameCS renameCS, 
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) throws SemanticException {
@@ -3359,9 +3319,11 @@ public class QvtOperationalVisitorCS
 			}
 			
 			if (varParam.getExtent() == null) {
-                env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentFailToInfer,
-                		QvtOperationalTypesUtil.getTypeFullName(varParam.getEType())),  
-                		varParam.getStartPosition(), varParam.getEndPosition());
+				if(varParam.getKind() != DirectionKind.IN) {
+					env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentFailToInfer,
+							QvtOperationalTypesUtil.getTypeFullName(varParam.getEType())),  
+							varParam.getStartPosition(), varParam.getEndPosition());
+				}
 			}
 			else if (varParam.getExtent().getKind() == DirectionKind.IN) {
 				if (varParam.getKind() != DirectionKind.IN) {

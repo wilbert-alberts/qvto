@@ -42,7 +42,7 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="moduleImport" upperBound="-1"
           eType="#//expressions/ModuleImport" containment="true" eOpposite="#//expressions/ModuleImport/module"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="usedModelType" upperBound="-1"
-          eType="#//expressions/ModelType" containment="true"/>
+          eType="#//expressions/ModelType"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="configProperty" upperBound="-1"
           eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="ownedRenaming" upperBound="-1"

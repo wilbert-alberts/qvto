@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
+import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.util.CollectionUtil;
 
@@ -118,7 +119,12 @@ public class ModuleInstanceFactory extends EFactoryImpl {
 	}
 
 	private ModuleInstanceImpl basicCreateModuleInstance(Module module, Map<Module, ModuleInstance> instanceMap) {
-		ModuleInstanceImpl moduleInstance = new ModuleInstanceImpl(module);
+		ModuleInstanceImpl moduleInstance;
+		if(module instanceof OperationalTransformation) {
+			moduleInstance = new TransformationInstanceImpl((OperationalTransformation) module);			
+		} else {
+			moduleInstance = new ModuleInstanceImpl(module);
+		}
 		moduleInstance.setInstanceMap(instanceMap);
 		instanceMap.put(module, moduleInstance);
 		

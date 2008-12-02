@@ -23,10 +23,11 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IntermediateClassFactory;
-import org.eclipse.m2m.internal.qvt.oml.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.ocl.ecore.EcoreFactory;
@@ -45,7 +46,6 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 
 	private Module myContextModule;	
 	private List<Module> myLibs;
-	private List<Variable<EClassifier, EParameter>> myModelParameters = Collections.emptyList();    
 	
 	public QvtOperationalModuleEnv(EPackage.Registry registry) {
 		super(registry,  new XMIResourceImpl(URI.createURI("qvto:/module.env"))); //$NON-NLS-1$
@@ -92,8 +92,8 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 			return null;
 		}
 		
-		for (Variable<EClassifier, EParameter> var : myModelParameters) {
-			ModelParameter modelParam = (ModelParameter) var.getRepresentedParameter();
+		List<ModelParameter> myModelParameters = getModelParameters();
+		for (ModelParameter modelParam : myModelParameters) {
 			if (directionKind == DirectionKind.OUT) {
 				if (modelParam.getKind() == DirectionKind.IN) {
 					continue;
@@ -121,9 +121,9 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 	 * @return list of corresponding model parameter names
 	 */
 	public List<String> getAllExtentNames(DirectionKind directionKind) {
-		List<String> result = new ArrayList<String>(myModelParameters.size());
-		for (Variable<EClassifier, EParameter> var : myModelParameters) {
-			ModelParameter modelParam = (ModelParameter) var.getRepresentedParameter();
+		List<ModelParameter> modelParameters = getModelParameters();
+		List<String> result = new ArrayList<String>(modelParameters.size());
+		for (ModelParameter modelParam : modelParameters) {
 			if (directionKind == DirectionKind.OUT) {
 				if (modelParam.getKind() == DirectionKind.IN) {
 					continue;
@@ -138,15 +138,7 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 		
 		return Collections.unmodifiableList(result);
 	}
-	
-	private List<ModelParameter> getModelParameters() {
-		List<ModelParameter> result = new ArrayList<ModelParameter>(myModelParameters.size());
-		for (Variable<EClassifier, EParameter> modelParamVar : myModelParameters) {
-			result.add((ModelParameter)modelParamVar.getRepresentedParameter());
-		}
-		return result;
-	}
-	
+		
 	public ModelParameter resolveModelParameter(EClassifier type, DirectionKind directionKind) {
 		if (!isMayBelongToExtent(type)) {
 			return null;
@@ -165,9 +157,13 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 					continue;
 				}
 			}
-			List<EPackage> metamodels = ModelTypeMetamodelsAdapter.getMetamodels(modelParam.getEType());
-			if (!metamodels.isEmpty() && rootContainer == metamodels.get(0)) {
-				return modelParam;
+			
+			ModelType modelType = QvtOperationalUtil.getModelType(modelParam);
+			if(modelType != null) {
+				List<EPackage> metamodels = modelType.getMetamodel();
+				if (!metamodels.isEmpty() && rootContainer == metamodels.get(0)) {
+					return modelParam;
+				}
 			}
 		}
 		
@@ -203,6 +199,15 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
     	return super.toString();
     }
     
+	private List<ModelParameter> getModelParameters() {
+		if(getModuleContextType() instanceof OperationalTransformation == false) {
+			return Collections.emptyList();
+		}
+		OperationalTransformation transformation = (OperationalTransformation) getModuleContextType();
+		List<ModelParameter> myModelParameters = transformation.getModelParameter();
+		return myModelParameters;
+	}    
+    
 	public boolean isMayBelongToExtent(EClassifier myType) {
 		return myType != null 
 			&& !IntermediateClassFactory.isIntermediateClass(myType)
@@ -212,13 +217,8 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 	
     
 	private void registerModelParameters(OperationalTransformation module) {
-		List<Variable<EClassifier, EParameter>> modelParameters = new ArrayList<Variable<EClassifier,EParameter>>(module.getModelParameter().size());
 		for (ModelParameter modelParam : module.getModelParameter()) {
 			addElement(modelParam.getName(), modelParam, true);
-            modelParameters.add(modelParam);
 		}
-
-		myModelParameters = modelParameters;		
-	}
-	
+	}	
 }

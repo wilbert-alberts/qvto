@@ -11,9 +11,13 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
-import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 
-public interface ThisInstanceResolver {
-	public ModuleInstance getThisInstanceOf(Module module);
+public interface ModelInstance extends EObject {
 
+	ModelType getModelType();
+	
+	ModelParameterExtent getExtent();
 }

@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ExpressionsPackage.java,v 1.13 2008/12/01 09:37:58 sboyko Exp $
+ * $Id: ExpressionsPackage.java,v 1.14 2008/12/02 01:06:30 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
@@ -647,7 +647,7 @@ public interface ExpressionsPackage extends EPackage {
 	int MODULE__MODULE_IMPORT = EcorePackage.ECLASS_FEATURE_COUNT + 9;
 
 	/**
-	 * The feature id for the '<em><b>Used Model Type</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Used Model Type</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -1008,7 +1008,7 @@ public interface ExpressionsPackage extends EPackage {
 	int LIBRARY__MODULE_IMPORT = MODULE__MODULE_IMPORT;
 
 	/**
-	 * The feature id for the '<em><b>Used Model Type</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Used Model Type</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -5944,7 +5944,7 @@ public interface ExpressionsPackage extends EPackage {
 	int OPERATIONAL_TRANSFORMATION__MODULE_IMPORT = MODULE__MODULE_IMPORT;
 
 	/**
-	 * The feature id for the '<em><b>Used Model Type</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Used Model Type</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -6309,10 +6309,10 @@ public interface ExpressionsPackage extends EPackage {
 	EReference getModule_ModuleImport();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getUsedModelType <em>Used Model Type</em>}'.
+	 * Returns the meta object for the reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getUsedModelType <em>Used Model Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Used Model Type</em>'.
+	 * @return the meta object for the reference list '<em>Used Model Type</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.Module#getUsedModelType()
 	 * @see #getModule()
 	 * @generated
@@ -7615,7 +7615,7 @@ public interface ExpressionsPackage extends EPackage {
 		EReference MODULE__MODULE_IMPORT = eINSTANCE.getModule_ModuleImport();
 
 		/**
-		 * The meta object literal for the '<em><b>Used Model Type</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Used Model Type</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

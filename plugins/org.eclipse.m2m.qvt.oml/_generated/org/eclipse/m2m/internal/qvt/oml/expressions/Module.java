@@ -140,7 +140,7 @@ public interface Module extends EClass, EPackage, VisitableASTNode {
 	EList<ModuleImport> getModuleImport();
 
 	/**
-	 * Returns the value of the '<em><b>Used Model Type</b></em>' containment reference list.
+	 * Returns the value of the '<em><b>Used Model Type</b></em>' reference list.
 	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.expressions.ModelType}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -148,9 +148,9 @@ public interface Module extends EClass, EPackage, VisitableASTNode {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Used Model Type</em>' containment reference list.
+	 * @return the value of the '<em>Used Model Type</em>' reference list.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getModule_UsedModelType()
-	 * @model containment="true"
+	 * @model
 	 * @generated
 	 */
 	EList<ModelType> getUsedModelType();

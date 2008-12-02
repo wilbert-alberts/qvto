@@ -12,10 +12,7 @@ package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -26,26 +23,22 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.modelparam.ResourceEObject;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.IntermediatePropertyModelAdapter;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.NumberConversions;
-import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtChangeRecorder;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ThisInstanceResolver;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.MappingParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.library.EObjectEStructuralFeaturePair;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
@@ -72,16 +65,8 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		}
 	    myBindings = new HashMap<String, Object>();
 		myOperationArgs = new ArrayList<Object>();
-		 
-		if (parent instanceof QvtOperationalEvaluationEnv) {
-			setModelParameterExtents(((QvtOperationalEvaluationEnv) parent).myModelExtents, ((QvtOperationalEvaluationEnv) parent).myMapImportedExtents);
-		}
-		else {
-			myModelExtents = Collections.emptyMap();
-			myMapImportedExtents = Collections.emptyMap();
-		}
 	}
-			
+	
 	public QvtOperationalEvaluationEnv getRoot() {
 		return myRootEnv;
 	}
@@ -104,38 +89,10 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	private Internal internalEnv() {
 		return myInternal;
 	}
-		
+
 	@Override
 	public Map<EClass, Set<EObject>> createExtentMap(Object object) {
-    	return new HashMap<EClass, Set<EObject>>() {    		
-    		private static final long serialVersionUID = -4634238504663823715L;
-
-    		@Override
-    		public Set<EObject> get(Object key) {
-    			if(key instanceof EClass) {
-    				return collectInstances((EClass) key);
-    			}
-    			return Collections.emptySet();
-    		}
-    		
-			Set<EObject> collectInstances(EClass context) {
-    			HashSet<EObject> result = new HashSet<EObject>();    			
-    			Map<ModelParameter, ModelParameterExtent> modelExtents = QvtOperationalEvaluationEnv.this.myModelExtents;
-    			if(modelExtents == null) {
-    				return result;
-    			}
-    			
-				Collection<ModelParameterExtent> extents = modelExtents.values();
-    			for (ModelParameterExtent nextExtent : extents) {
-					for (Object nextObj : nextExtent.getAllObjects()) {
-						if(nextObj instanceof EObject && isKindOf(nextObj, context)) {
-							result.add((EObject)nextObj);
-						}
-					}
-				}
-    			return result;
-    		}
-    	};
+		return new QVTExtentMap(this);
 	}
 	
 	public List<Object> getOperationArgs() {
@@ -423,169 +380,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		internalEnv().dispose(); 
 	}
 
-    public void setCallerModelParameters(List<ModelParameterExtent> modelParamValues, OperationalTransformation module) {
-    	EList<ModelParameter> modelParameters = module.getModelParameter();
-    	if(modelParameters.size() != modelParamValues.size()) {
-    		throw new IllegalArgumentException();
-    	}
-    	
-    	LinkedHashMap<ModelParameter, ModelParameterExtent> param2ExtentMap = new LinkedHashMap<ModelParameter, ModelParameterExtent>(2);
-        param2ExtentMap.put(UNBOUND_MODEL_EXTENT, new ModelParameterExtent());
-		
-		int i = 0;
-		for (ModelParameterExtent nextExtent : modelParamValues) {			
-			ModelParameter nextModelParam = modelParameters.get(i++);
-			nextExtent.setModelParameter(nextModelParam);
-			
-			param2ExtentMap.put(nextModelParam, new ModelParameterExtent(nextModelParam, nextExtent));
-		}
-
-		setModelParameterExtents(param2ExtentMap, Collections.<ModelParameter, ModelParameter>emptyMap());
-    }
-	
-    public LinkedHashMap<ModelParameter, ModelParameterExtent> createModuleParameterExtents(OperationalTransformation module) {        
-    	LinkedHashMap<ModelParameter, ModelParameterExtent> modelExtents = new LinkedHashMap<ModelParameter, ModelParameterExtent>(module.getModelParameter().size());
-        modelExtents.put(UNBOUND_MODEL_EXTENT, new ModelParameterExtent());
-        int argIndex = 0;
-        for (ModelParameter modelParam : module.getModelParameter()) {
-        	if (modelParam.getKind() == DirectionKind.OUT) {
-        		ModelParameterExtent outExtent = new ModelParameterExtent();
-        		outExtent.setModelParameter(modelParam);
-				modelExtents.put(modelParam, outExtent);
-        		continue;
-        	}
-        	if (argIndex >= getOperationArgs().size()
-        			|| false == getOperationArgs().get(argIndex) instanceof EObject) {
-                throw new IllegalArgumentException("Missed argument for model parameter: " + modelParam.getName()); //$NON-NLS-1$
-        	}
-
-        	Object argument = getOperationArgs().get(argIndex);
-        	List<EObject> argValues = argument instanceof ResourceEObject ? ((ResourceEObject) argument).getChildren() 
-        			: Collections.singletonList((EObject) argument);
-			ModelParameterExtent inOrInoutExtent = new ModelParameterExtent(argValues);
-			inOrInoutExtent.setModelParameter(modelParam);
-			modelExtents.put(modelParam, inOrInoutExtent);
-        	if (modelParam.getKind() == DirectionKind.IN) {
-        		QvtChangeRecorder qvtChangeRecorder = new QvtChangeRecorder(modelParam);
-        		qvtChangeRecorder.beginRecording(argValues);
-        		internalEnv().addChangeRecorder(qvtChangeRecorder);
-        	}
-        	
-        	argIndex++;
-        }
-		
-        Map<ModelParameter, ModelParameter> mapImportedExtents = createImportedExtentMap(module, module);
-        setModelParameterExtents(modelExtents, mapImportedExtents);
-        
-        return modelExtents;
-	}
-    
-	private Map<ModelParameter, ModelParameter> createImportedExtentMap(OperationalTransformation rootModule, OperationalTransformation importedModule) {
-		Map<ModelParameter, ModelParameter> mapImportedExtents = new HashMap<ModelParameter, ModelParameter>();
-		for (ModuleImport moduleImport : importedModule.getModuleImport()) {
-			if(moduleImport.getModule() != null) {
-				Module nextModule = moduleImport.getImportedModule();
-				if(nextModule instanceof OperationalTransformation) {
-					OperationalTransformation nextTransfModule = (OperationalTransformation) nextModule;
-					mapImportedExtents.putAll(getExtentMap(rootModule, nextTransfModule));
-					mapImportedExtents.putAll(createImportedExtentMap(rootModule, nextTransfModule));
-				}
-			}
-		}
-		return mapImportedExtents;
-	}
-
-	private Map<ModelParameter, ModelParameter> getExtentMap(OperationalTransformation rootModule, OperationalTransformation importedModule) {
-		Map<ModelParameter, ModelParameter> mapImportedModelParams = new HashMap<ModelParameter, ModelParameter>();
-		Set<ModelParameter> consideredParams = new HashSet<ModelParameter>();
-		
-		for (ModelParameter importedParam : importedModule.getModelParameter()) {
-			for (ModelParameter param : rootModule.getModelParameter()) {
-				if (consideredParams.contains(param)) {
-					continue;
-				}
-				if (QvtOperationalUtil.isModelParamEqual(param, importedParam, true)) {
-					consideredParams.add(param);
-					mapImportedModelParams.put(importedParam, param);
-					break;
-				}
-			}
-		}
-
-		for (ModelParameter importedParam : importedModule.getModelParameter()) {
-			if (mapImportedModelParams.containsKey(importedParam)) {
-				continue;
-			}
-			for (ModelParameter param : rootModule.getModelParameter()) {
-				if (consideredParams.contains(param)) {
-					continue;
-				}
-				if (QvtOperationalUtil.isModelParamEqual(param, importedParam, false)) {
-					consideredParams.add(param);
-					mapImportedModelParams.put(importedParam, param);
-					break;
-				}
-			}
-		}
-		return mapImportedModelParams;
-	}
-
-    private void setModelParameterExtents(Map<ModelParameter, ModelParameterExtent> modelExtents, Map<ModelParameter, ModelParameter> mapImportedExtents) {
-		myModelExtents = modelExtents;
-		myMapImportedExtents = mapImportedExtents;
-		for (Map.Entry<ModelParameter, ModelParameterExtent> entry : modelExtents.entrySet()) {
-			if (entry.getKey() != UNBOUND_MODEL_EXTENT && entry.getKey().getName().length() > 0) {
-				add(entry.getKey().getName(), entry.getValue(), entry.getKey().getEType());
-			}
-		}
-	}
-
-	/**
-	 * - Creates list of output resources (model extents) for each 'inout' and 'out' parameters of
-	 *   transformation. For non-changed 'inout' model parameter corresponding resource is empty.
-	 * @return ordered list of model extents
-	 */
-	public QvtEvaluationResult createEvaluationResult(ImperativeOperation entryPoint) {
-		List<ModelExtentContents> extents = new ArrayList<ModelExtentContents>();
-		for (Map.Entry<ModelParameter, ModelParameterExtent> entry : myModelExtents.entrySet()) {
-			if (entry.getKey() != UNBOUND_MODEL_EXTENT 
-					&& entry.getKey().getKind() != DirectionKind.IN) {
-	        	extents.add(entry.getValue().getContents());
-			}
-		}
-		
-        List<Object> outParamValues = makeOutParamValues(entryPoint);
-		
-		return new QvtEvaluationResult(extents,
-				myModelExtents.get(UNBOUND_MODEL_EXTENT).getRootObjects(), outParamValues);
-	}
-	
-	private List<Object> makeOutParamValues(ImperativeOperation entryPoint) {
-		List<Object> outParamValues = new ArrayList<Object>();
-		for (EParameter param : entryPoint.getEParameters()) {
-			MappingParameter mappingParam  = (MappingParameter) param;
-			if (mappingParam.getKind() == DirectionKind.IN) {
-				continue;
-			}
-			Object valueOf = getValueOf(mappingParam.getName());
-			if (valueOf != null) {
-				outParamValues.add(valueOf);
-			}
-		}
-		for (VarParameter param : entryPoint.getResult()) {
-			MappingParameter mappingParam  = (MappingParameter) param;
-			if (mappingParam.getKind() == DirectionKind.IN) {
-				continue;
-			}
-			Object valueOf = getValueOf(mappingParam.getName());
-			if (valueOf != null) {
-				outParamValues.add(valueOf);
-			}
-		}
-		return outParamValues;
-	}
-
-	public EObject createInstance(EClassifier type, ModelParameter extent) {
+	public EObject createInstance(EClassifier type, ModelParameter modelParam) {
         if (type instanceof EClass == false) {
             throw new IllegalArgumentException("Expected EClass, got " + type); //$NON-NLS-1$
         }
@@ -595,36 +390,48 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		}
 		
 		EObject newObject = impl.getEPackage().getEFactoryInstance().create(impl);
-		if (myModelExtents.containsKey(extent)) {
-			myModelExtents.get(extent).addObject(newObject);
+		
+		TransformationInstance mainTransfInstance = internalEnv().getCurrentTransformation();
+		if(mainTransfInstance == null) {
+			assert modelParam == null;
+			// not running in a transformation, ignore extent
+			return newObject;
 		}
-		else if (myMapImportedExtents.containsKey(extent)) {
-			ModelParameter mappedExtent = myMapImportedExtents.get(extent);
-			if (myModelExtents.containsKey(mappedExtent)) {
-				myModelExtents.get(mappedExtent).addObject(newObject);
+		
+		ModelParameterExtent targetExtent;
+		if(modelParam == null) {
+			targetExtent = getDefaultInstantiationExtent(impl);
+			//targetExtent = internalEnv().getUnboundExtent();
+		} else {
+			OperationalTransformation targetTransf = (OperationalTransformation)modelParam.eContainer();
+			assert targetTransf != null;
+
+			TransformationInstance targetThis = mainTransfInstance;
+			if(mainTransfInstance.getTransformation() != targetTransf) {
+				targetThis = (TransformationInstance)mainTransfInstance.getThisInstanceOf(targetTransf);				
 			}
-			else {
-				myModelExtents.get(UNBOUND_MODEL_EXTENT).addObject(newObject);
-			}
+
+			ModelInstance model = targetThis.getModel(modelParam);
+			assert model != null;
+			targetExtent = model.getExtent();			
 		}
-		else {
-			myModelExtents.get(UNBOUND_MODEL_EXTENT).addObject(newObject);
-		}
+				
+		targetExtent.addObject(newObject);
 		return newObject;
 	}
-	
+
 	public ModelParameterExtent getDefaultInstantiationExtent(EClassifier type) {
-		List<ModelParameter> params = new ArrayList<ModelParameter>(myModelExtents.keySet().size());
-		for (ModelParameter modelParameter : myModelExtents.keySet()) {
-			if(modelParameter != UNBOUND_MODEL_EXTENT) {
-				params.add(modelParameter);
-			}
+		TransformationInstance mainTransfInstance = internalEnv().getCurrentTransformation();
+		if(mainTransfInstance != null) {
+			EList<ModelParameter> modelParameters = mainTransfInstance.getTransformation().getModelParameter();
+			ModelParameter modelParam = QvtOperationalModuleEnv.findModelParameter(type, DirectionKind.OUT, modelParameters);						
+			ModelInstance model = mainTransfInstance.getModel(modelParam);
+			
+			assert model != null;
+			return model.getExtent();
 		}
-		ModelParameter modelParameter = QvtOperationalModuleEnv.findModelParameter(type, DirectionKind.OUT, params);
-		if(modelParameter != null) {
-			return myModelExtents.get(modelParameter);
-		}
-		return myModelExtents.get(UNBOUND_MODEL_EXTENT);
+		
+		return internalEnv().getUnboundExtent();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -780,11 +587,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
     private ImperativeOperation myOperation;    
 	private final List<Object> myOperationArgs;
 	private Object myOperationSelf;
-    private final Map<String, Object> myBindings;
-	private Map<ModelParameter, ModelParameterExtent> myModelExtents;
-	private Map<ModelParameter, ModelParameter> myMapImportedExtents;
-	private static final ModelParameter UNBOUND_MODEL_EXTENT = null;
-	
+    private final Map<String, Object> myBindings;	
 	
 	private static class TypedBinding {
 		final Object value;
@@ -800,8 +603,9 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		private IContext myContext;		
 		private List<Runnable> myDeferredTasks;
 	    private CallHandler myMainHandler;
-	    private EObjectEStructuralFeaturePair myLastAssignLvalue;	    
-	    private List<QvtChangeRecorder> myChangeRecorders = new ArrayList<QvtChangeRecorder>(2);	    
+	    private EObjectEStructuralFeaturePair myLastAssignLvalue;	  
+	    private ModelParameterExtent myUnboundExtent;
+	    private TransformationInstance myThisTransformation;
 
 	    RootInternal(IContext context) {
 	    	assert context != null;
@@ -813,7 +617,6 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			myLastAssignLvalue = another.myLastAssignLvalue;
 			myDeferredTasks = another.myDeferredTasks;
 			myMainHandler = another.myMainHandler;
-			myChangeRecorders = another.myChangeRecorders;
 			myContext = another.myContext;
 		}
 
@@ -823,25 +626,35 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	    }
 	    
 	    @Override
-	    void addChangeRecorder(QvtChangeRecorder changeRecorder) {
-	    	assert changeRecorder != null;
-	    	myChangeRecorders.add(changeRecorder);
+	    public TransformationInstance getCurrentTransformation() {	    
+	    	return myThisTransformation;
 	    }
 	    
 	    @Override
+	    public void setThisResolver(ThisInstanceResolver thisResolver) {
+	    	if(thisResolver instanceof TransformationInstance) {
+	    		myThisTransformation = (TransformationInstance) thisResolver; 
+	    	}
+
+	    	super.setThisResolver(thisResolver);
+	    }
+	    	    
+	    @Override
 		void dispose() {
 			super.dispose(); 
-			
-			for (QvtChangeRecorder qvtChangeRecorder : myChangeRecorders) {
-				qvtChangeRecorder.dispose();
-			}
-			
-			myChangeRecorders.clear();
 		}	    
 	    
 	    @Override
 	    public Internal clone() {
 	    	return new RootInternal(this);
+	    }
+	    
+	    @Override
+	    public ModelParameterExtent getUnboundExtent() {
+	    	if(myUnboundExtent == null) {
+	    		myUnboundExtent = new ModelParameterExtent();
+	    	}
+	    	return myUnboundExtent;
 	    }
 	    
 	    @Override
@@ -896,10 +709,6 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			myThisResolver = another.myThisResolver;
 		}
 		
-	    void addChangeRecorder(QvtChangeRecorder changeRecorder) {
-	    	getRoot().internalEnv().addChangeRecorder(changeRecorder);
-	    }
-	    
 	    IContext getContext() {
 	    	return getRoot().internalEnv().getContext();
 	    }			    
@@ -912,9 +721,21 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	    public Internal clone() {
 	    	return new Internal(this);
 	    }
+	    
+		public TransformationInstance getCurrentTransformation() {
+			return getRoot().internalEnv().getCurrentTransformation();
+		}
+	    
+		public ModuleInstance getCurrentModule() {		
+			return (myThisResolver instanceof ModuleInstance) ? (ModuleInstance)myThisResolver : null;
+		}
+		
+		public ModelParameterExtent getUnboundExtent() {
+			return getRoot().internalEnv().getUnboundExtent();
+		}	    
  		
-		public void setThisResolver(ThisInstanceResolver myThisResolver) {
-			this.myThisResolver = myThisResolver;
+		public void setThisResolver(ThisInstanceResolver thisResolver) {
+			this.myThisResolver = thisResolver;
 		}
 		
 		public ThisInstanceResolver getThisResolver() {

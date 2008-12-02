@@ -21,9 +21,13 @@ import org.eclipse.osgi.util.NLS;
  * @author sboyko
  */
 public class QvtChangeRecorder extends ChangeRecorder {
+
+	private final String fModelParamName;
+	private final String fModelTypeName;
 	
 	public QvtChangeRecorder(ModelParameter modelParam) {
-		myModelParam = modelParam;
+		fModelParamName = modelParam.getName();
+		fModelTypeName = QvtOperationalTypesUtil.getTypeFullName(modelParam.getEType());		
 	}
 	
 	@Override
@@ -38,11 +42,9 @@ public class QvtChangeRecorder extends ChangeRecorder {
 			case Notification.REMOVE_MANY:
 			case Notification.MOVE:				
 				throw new RuntimeException(NLS.bind(EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_ReadOnlyInputModel,
-					myModelParam.getName() + " : " + QvtOperationalTypesUtil.getTypeFullName(myModelParam.getEType()))); //$NON-NLS-1$
+					fModelParamName + " : " + fModelTypeName)); //$NON-NLS-1$
 			}
 		}
 		//super.notifyChanged(notification);
 	}
-
-	private final ModelParameter myModelParam;
 }

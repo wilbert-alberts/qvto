@@ -22,7 +22,10 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelInstance;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstanceFactory;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
@@ -168,19 +171,22 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 	public ModelType createModel(String name) {
 		ModelType modelType = ExpressionsFactory.eINSTANCE.createModelType();
 		modelType.setName(name);
+		modelType.setInstanceClass(ModelInstance.class);		
 		modelType.getESuperTypes().add(QvtOperationalStdLibrary.INSTANCE.getModelClass());		
 		return modelType;
 	}
 
-	public static Library createLibrary(String name) {	
-		Library transf = ExpressionsFactory.eINSTANCE.createLibrary();
-		transf.setEFactoryInstance(new ModuleInstanceFactory());
-		transf.setName(name);		
-		return transf;
+	public static Library createLibrary(String name) {
+		Library lib = ExpressionsFactory.eINSTANCE.createLibrary();
+		lib.setInstanceClass(ModuleInstance.class);
+		lib.setEFactoryInstance(new ModuleInstanceFactory());
+		lib.setName(name);
+		return lib;
 	}
 	
 	public OperationalTransformation createTransformation(String name) {	
 		OperationalTransformation transf = ExpressionsFactory.eINSTANCE.createOperationalTransformation();
+		transf.setInstanceClass(TransformationInstance.class);
 		transf.setEFactoryInstance(new ModuleInstanceFactory());
 		transf.setName(name);
 		

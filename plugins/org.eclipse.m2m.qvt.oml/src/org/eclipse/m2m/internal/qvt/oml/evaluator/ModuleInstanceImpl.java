@@ -18,11 +18,9 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
-import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 
-final class ModuleInstanceImpl extends DynamicEObjectImpl implements ModuleInstance, ModuleInstance.Internal {
+class ModuleInstanceImpl extends DynamicEObjectImpl implements ModuleInstance, ModuleInstance.Internal {
 	
-	private CallHandler fEntryHandler;
 	private Map<Module, ModuleInstance> fInstanceMap;
 	private List<Object> fAdapters = Collections.emptyList();	
 	
@@ -55,29 +53,14 @@ final class ModuleInstanceImpl extends DynamicEObjectImpl implements ModuleInsta
 		return (Module)eClass();
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance#setEntryOperationHandler(org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler)
-	 */
-	public void setEntryOperationHandler(CallHandler handler) {
-		fEntryHandler = handler;
-	}	
-	
-	/* (non-Javadoc)
-	 * @see org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance#getEntryOperationHandler()
-	 */
-	public CallHandler getEntryOperationHandler() {
-		return fEntryHandler;
-	}
-	
 	void setInstanceMap(Map<Module, ModuleInstance> instanceMap) {
 		fInstanceMap = instanceMap;
 	}	
 	
 	public <T> T getAdapter(Class<T> adapterType) {
-		if(adapterType == ModuleInstance.Internal.class) {
-			@SuppressWarnings("unchecked")
-			T result = (T)this;
-			return result;
+		if(adapterType == ModuleInstance.Internal.class ||
+			adapterType == ModuleInstance.class) {			
+			return adapterType.cast(this);
 		}
 		
 		for (Object nextAdapter : fAdapters) {

@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.cst.adapters.AbstractGenericAdapter;
-import org.eclipse.m2m.internal.qvt.oml.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Class;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
@@ -86,7 +85,9 @@ public class IntermediateClassFactory extends EFactoryImpl {
 		module.getUsedModelType().add(myIntermediateModelType); // usedModelType : ModelType [0..*] {ordered}
 		module.getEClassifiers().add(myIntermediateModelType);  // /ownedType : Type [0..*] (from Package) {composes,ordered}
 		
-		ModelTypeMetamodelsAdapter.addMetamodel(myIntermediateModelType, myIntermediatePackage);
+		myIntermediateModelType.getMetamodel().add(myIntermediatePackage);
+		// No need to use a metamodel adapter, the package is referenced by the modeltype directly
+		//ModelTypeMetamodelsAdapter.addMetamodel(myIntermediateModelType, myIntermediatePackage);
 	}
 
 	@Override
