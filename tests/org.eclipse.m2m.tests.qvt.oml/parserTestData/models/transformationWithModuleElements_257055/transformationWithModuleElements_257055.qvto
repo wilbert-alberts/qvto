@@ -16,9 +16,6 @@ transformation transformationWithModuleElements_257055(in inModel: ECORE, out ou
 		name := self.bar() + '_foo';
 		result.myProperty := 'intermProp';
 		nsURI := result.bar2();
-		nsPrefix := object MyEPackage {
-			myName := 'myName'
-		}.myName;
 	}
 
 	query EPackage::bar() : String {
