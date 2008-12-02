@@ -48,6 +48,10 @@ import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 
 
 public abstract class TestTransformation extends TestCase {
+    private ModelTestData myData;
+    private TestProject myProject;
+    private File myDestFolder;
+
     public TestTransformation(ModelTestData data) {
         super(data.getName());
         
@@ -101,6 +105,21 @@ public abstract class TestTransformation extends TestCase {
     @Override
 	public void tearDown() throws Exception {
     	getData().dispose();
+        if (myDestFolder.exists()) {
+            delete(myDestFolder);
+        }
+    	myData = null;
+    }
+    
+    public static void delete(File file) {
+        if(file.isDirectory()) {
+            File[] children = file.listFiles();
+            for(int i = 0; i < children.length; i++) {
+                delete(children[i]);
+            }
+        }
+        
+        file.delete();
     }
     
     public static interface IChecker {
@@ -146,9 +165,9 @@ public abstract class TestTransformation extends TestCase {
     
     private void copyModelData() throws Exception {
         File srcFolder = TestUtil.getPluginRelativeFolder("parserTestData/models/" + myData.getName()); //$NON-NLS-1$
-        File destFolder = new File(getProject().getLocation().toString() + "/models/" + myData.getName()); //$NON-NLS-1$
-        destFolder.mkdirs();
-        FileUtil.copyFolder(srcFolder, destFolder);
+        myDestFolder = new File(getProject().getLocation().toString() + "/models/" + myData.getName()); //$NON-NLS-1$
+        myDestFolder.mkdirs();
+        FileUtil.copyFolder(srcFolder, myDestFolder);
         getProject().refreshLocal(IResource.DEPTH_INFINITE, null);
     }
     
@@ -223,7 +242,4 @@ public abstract class TestTransformation extends TestCase {
     	}
     	return EmfUtil.getRootPackage(ePackage).getName();
     }
-
-	private final ModelTestData myData;
-    private TestProject myProject;
 }

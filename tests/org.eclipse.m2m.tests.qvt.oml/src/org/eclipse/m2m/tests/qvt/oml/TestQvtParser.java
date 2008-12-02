@@ -93,7 +93,22 @@ public class TestQvtParser extends TestCase {
 	@Override
 	public void tearDown() throws Exception {
 		myCompiled = null;
+        File destinationFolder = getDestinationFolder();
+        if (destinationFolder.exists()) {
+            delete(destinationFolder);
+        }		
 	}
+	    
+    public static void delete(File file) {
+        if(file.isDirectory()) {
+            File[] children = file.listFiles();
+            for(int i = 0; i < children.length; i++) {
+                delete(children[i]);
+            }
+        }
+        
+        file.delete();
+    }	
 	
     public TestProject getTestProject() {
         return myProject;
