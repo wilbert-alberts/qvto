@@ -78,6 +78,7 @@ public class TransformTests {
     
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {        		
+                new FileToFileData("libraryWithModuleElements_257184"), //$NON-NLS-1$                
                 new FileToFileData("transformationWithModuleElements_257055"), //$NON-NLS-1$                
                 new FileToFileData("objectExpBodyExpressions_253051"), //$NON-NLS-1$                
                 new FileToFileData("mappingBodyExpressions_252358"), //$NON-NLS-1$                
