@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.23 2008/12/02 12:00:20 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.24 2008/12/02 14:47:34 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -134,7 +134,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.23 2008/12/02 12:00:20 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.24 2008/12/02 14:47:34 aigdalov Exp $
  */
 	./
 $End
@@ -240,7 +240,28 @@ $Rules
 		  $EndJava
 		./
 	 
-	_library -> libraryHeaderCS ';'
+	_library -> library_decl
+	_library -> library_def
+
+	library_decl ::= library_h ';'
+		/.$BeginJava
+					TransformationHeaderCS headerCS = (TransformationHeaderCS) $getSym(1);
+					setOffsets(headerCS, headerCS, getIToken($getToken(2)));
+					MappingModuleCS moduleCS = createLibraryCS(headerCS, $EMPTY_ELIST);
+					setOffsets(moduleCS, headerCS);
+					$setResult(moduleCS);
+		  $EndJava
+		./
+
+	library_def ::= library_h '{' module_elementList '}' semicolonOpt
+		/.$BeginJava
+					TransformationHeaderCS headerCS = (TransformationHeaderCS) $getSym(1);
+					MappingModuleCS moduleCS = createLibraryCS(headerCS, (EList) $getSym(3));
+					setOffsets(moduleCS, headerCS, getIToken($getToken(4)));
+					$setResult(moduleCS);
+		  $EndJava
+		./
+
 
 	--=== // Transformation and library definitions (end) ===--
 
@@ -315,31 +336,29 @@ $Rules
 
 	--=== // Library header (start) ===--
 
-	libraryHeaderCS ::= library qualifiedNameCS
+	library_h ::= library qualifiedNameCS
 		/.$BeginJava
-					org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS result = createLibraryCS(
+					CSTNode result = createTransformationHeaderCS(
+							$EMPTY_ELIST,
 							(PathNameCS)$getSym(2),
 							$EMPTY_ELIST,
 							$EMPTY_ELIST,
-							$EMPTY_ELIST,
-							$EMPTY_ELIST,
-							$EMPTY_ELIST
+							null
 						);
 					setOffsets(result, getIToken($getToken(1)), (PathNameCS)$getSym(2));
 					$setResult(result);
 		  $EndJava
 		./
-	libraryHeaderCS ::= library qvtErrorToken
+	library_h ::= library qvtErrorToken
 		/.$BeginJava
-					CSTNode result = createLibraryCS(
+					CSTNode result = createTransformationHeaderCS(
+							$EMPTY_ELIST,
 							createPathNameCS(),
 							$EMPTY_ELIST,
 							$EMPTY_ELIST,
-							$EMPTY_ELIST,
-							$EMPTY_ELIST,
-							$EMPTY_ELIST
+							null
 						);
-					setOffsets(result, getIToken($getToken(3)), getIToken($getToken(3)));
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
 					$setResult(result);
 		  $EndJava
 		./

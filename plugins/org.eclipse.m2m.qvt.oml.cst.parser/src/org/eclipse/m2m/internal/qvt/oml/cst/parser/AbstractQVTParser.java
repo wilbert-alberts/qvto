@@ -46,7 +46,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingEndCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionKindCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingInitCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;
@@ -230,22 +229,19 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return imp;
 	}
 
-	protected final LibraryCS createLibraryCS(PathNameCS name, EList<ImportCS> imports, EList<ModelTypeCS> metamodels,
-			EList<RenameCS> renamings, EList<ModulePropertyCS> properties, EList<MappingMethodCS> methods) {
-				LibraryCS imp = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createLibraryCS();
-				TransformationHeaderCS headerCS = createTransformationHeaderCS(
-						Empty.<StringLiteralExpCS>list(), name, 
-						Empty.<ParameterDeclarationCS>list(), 
-						Empty.<ModuleUsageCS>list(), null);
-				setOffsets(headerCS, name);
-				initializeModule(imp, headerCS, imports, metamodels, renamings, properties, methods);
-				return imp;
-			}
+	protected final MappingModuleCS createLibraryCS(TransformationHeaderCS header, EList<CSTNode> moduleElements) {
+	    LibraryCS libraryCS = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createLibraryCS();
+	    return initializeModule(libraryCS, header, moduleElements);
+	}
 
 	protected final MappingModuleCS createMappingModuleCS(TransformationHeaderCS header, EList<CSTNode> moduleElements) {
 	    MappingModuleCS moduleCS = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingModuleCS();
-	    moduleCS.setHeaderCS(header);
-	    
+	    return initializeModule(moduleCS, header, moduleElements);
+	}
+
+	private MappingModuleCS initializeModule(MappingModuleCS moduleCS, TransformationHeaderCS header, EList<CSTNode> moduleElements) {
+        moduleCS.setHeaderCS(header);
+        
         List<ClassifierDefCS> classifiers = new ArrayList<ClassifierDefCS>();
         List<ModulePropertyCS> properties = new ArrayList<ModulePropertyCS>();
         List<MappingQueryCS> helpers = new ArrayList<MappingQueryCS>();
@@ -269,19 +265,8 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
         moduleCS.getProperties().addAll(properties);
         moduleCS.getMethods().addAll(helpers);
         moduleCS.getMethods().addAll(mappings);
-	    return moduleCS;
+        return moduleCS;
 	}
-
-	private void initializeModule(MappingModuleCS result, TransformationHeaderCS header, EList<ImportCS> imports,
-			EList<ModelTypeCS> metamodels, EList<RenameCS> renamings, EList<ModulePropertyCS> properties, 
-			EList<MappingMethodCS> methods) {
-				result.setHeaderCS(header);
-				result.getImports().addAll(imports);
-				result.getMetamodels().addAll(metamodels);
-				result.getRenamings().addAll(renamings);
-				result.getProperties().addAll(properties);
-				result.getMethods().addAll(methods);
-			}
 
 	protected final MappingQueryCS createMappingQueryCS(MappingDeclarationCS sym, EList<OCLExpressionCS> sym2) {
 		MappingQueryCS query = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingQueryCS();
