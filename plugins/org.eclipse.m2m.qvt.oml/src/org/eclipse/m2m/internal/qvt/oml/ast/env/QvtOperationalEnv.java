@@ -44,6 +44,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.EnvironmentFactory;
+import org.eclipse.ocl.TypeChecker;
 import org.eclipse.ocl.TypeResolver;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.ecore.CallOperationAction;
@@ -133,6 +134,11 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		return new QvtTypeResolverImpl(this, resource);
 	}
 	
+	@Override
+	protected TypeChecker<EClassifier, EOperation, EStructuralFeature> createTypeChecker() {
+		return new TypeCheckerImpl(this);
+	}
+	
     public List<Module> getNativeLibs() {
     	if(getInternalParent() instanceof QvtOperationalEnv) {
     		return ((QvtOperationalEnv)getInternalParent()).getNativeLibs();
@@ -198,12 +204,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	}
 		
 	@Override
-	public EOperation lookupOperation(EClassifier owner, String name,
-			List<? extends TypedElement<EClassifier>> args) {
-		EOperation o = getQVTStandardLibrary().resolveGenericOperationsIfNeeded(this, owner, name, args);
-		if(o != null) {
-	 		return o;
-		}
+	public EOperation lookupOperation(EClassifier owner, String name, List<? extends TypedElement<EClassifier>> args) {
 		// first try to lookup imperative operation with param's exact matching  
         UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> uml = getUMLReflection();
 		List<EOperation> lookupMappingOperations = lookupMappingOperations(owner, name);

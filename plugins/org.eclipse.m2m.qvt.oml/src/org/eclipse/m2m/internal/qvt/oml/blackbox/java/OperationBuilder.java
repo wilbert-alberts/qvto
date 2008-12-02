@@ -67,6 +67,7 @@ class OperationBuilder {
     		
     	Operation.Kind operKind = (operAnnotation != null) ? operAnnotation.kind() : Operation.Kind.OPERATION;
     	if(operKind == Kind.OPERATION) {
+    		// FIXME - avoid this, create typedef on the keeping this operation instead
     		operKind = Kind.HELPER;
     	}
     	

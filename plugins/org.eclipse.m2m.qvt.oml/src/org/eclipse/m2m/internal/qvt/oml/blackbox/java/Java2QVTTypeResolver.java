@@ -71,6 +71,16 @@ class Java2QVTTypeResolver {
 		} 
 		else if(type instanceof Class) {
 			return handleType((Class<?>)type);
+		} else if(type instanceof TypeVariable) {
+			TypeVariable<?> typeVariable = (TypeVariable<?>) type;
+			OCLStandardLibrary<EClassifier> stdLib = fEnv.getOCLStandardLibrary();
+			if(stdLib.getT().getName().equals(typeVariable.getName())) {
+				return getEnvironment().getOCLStandardLibrary().getT();
+				//return paramType;
+			} else if(stdLib.getT2().getName().equals(typeVariable.getName())) {
+				throw new IllegalArgumentException();
+				//return QvtOperationalStdLibrary.INSTANCE.getListE_Type();
+			}
 		}
 		
 		return null;

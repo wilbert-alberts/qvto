@@ -44,10 +44,14 @@ public class OclAnyOperations extends AbstractContextualOperations {
 		EcoreEnvironment env = getStdlib().getEnvironment();
 		OCLStandardLibrary<EClassifier> oclStdlib = env.getOCLStandardLibrary();
 		
+		EClassifier createTypeType = getStdlib().getOCLStdLib().getOclType();
 		return new OperationProvider[] {
-			new OperationProvider(REPR, REPR_NAME, oclStdlib.getString()),				
+			new OperationProvider(REPR, REPR_NAME, oclStdlib.getString()),
 			new OperationProvider(StdlibModuleOperations.DUMP, 
-					StdlibModuleOperations.DUMP_NAME, oclStdlib.getOclVoid())
+					StdlibModuleOperations.DUMP_NAME, oclStdlib.getOclVoid()),
+			new OperationProvider(ALL_INSTANCES, PredefinedType.ALL_INSTANCES_NAME,
+					TypeUtil.resolveSetType(env, getStdlib().getOCLStdLib().getT()), 
+					TypeUtil.resolveType(env, createTypeType))
 		};
 	}
 	

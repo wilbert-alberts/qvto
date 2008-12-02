@@ -597,6 +597,16 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			this.value = value;
 			this.type = type;
 		}
+		
+		@Override
+		public String toString() {
+			StringBuilder buf = new StringBuilder();
+			if(type != null) {
+				buf.append(type).append(" : "); //$NON-NLS-1$
+			}
+			buf.append(value);
+			return buf.toString();
+		}
 	}
 	
 	private class RootInternal extends Internal {

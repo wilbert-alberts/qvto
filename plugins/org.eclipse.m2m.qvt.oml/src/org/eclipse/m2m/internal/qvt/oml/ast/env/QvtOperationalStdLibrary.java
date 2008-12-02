@@ -44,9 +44,7 @@ import org.eclipse.m2m.internal.qvt.oml.stdlib.StdlibModuleOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.StringOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.TransformationOperations;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
-import org.eclipse.ocl.types.TypeType;
 import org.eclipse.ocl.util.TypeUtil;
-import org.eclipse.ocl.utilities.PredefinedType;
 import org.eclipse.ocl.utilities.TypedElement;
 
 
@@ -218,38 +216,7 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 		return null;
 	}
 					
-	/**
-	 * Note: Necessary until MDT OCL solves custom generic operations [#192907]  
-	 */
-	@SuppressWarnings("unchecked")
-	public EOperation resolveGenericOperationsIfNeeded(QvtOperationalEnv env, EClassifier owner, String name,
-			List<? extends TypedElement<EClassifier>> args) {
-		
-		// TODO waiting for resolution of OCL bug [#192907]
-		if (PredefinedType.ALL_INSTANCES_NAME.equals(name) && args.size() == 1) {
-			EClassifier resultType = args.get(0).getType();
-			if (resultType instanceof TypeType) {
-				TypeType<EClassifier, EOperation> typeType = (TypeType<EClassifier, EOperation>) resultType;
-				resultType = typeType.getReferredType();
-			}
-			if(resultType != null) {
-				return env.getTypeResolver().resolveAdditionalOperation(
-						owner, this.anyOperations.defineNonStdAllInstances(env, resultType));
-			}
-		} else if (ModelOperations.OBJECTS_OF_TYPE_NAME.equals(name) && args.size() == 1) {
-			EClassifier resultType = args.get(0).getType();
-			if (resultType instanceof TypeType) {
-				TypeType<EClassifier, EOperation> typeType = (TypeType<EClassifier, EOperation>) resultType;				
-				resultType = typeType.getReferredType();
-			}
-			if(resultType != null) {
-				return env.getTypeResolver().resolveAdditionalOperation(
-						owner, this.modelOperations.defineGenericObjectsOfType(env, resultType));
-			}
-		}
-		
-		return null;
-	}
+
 		 
 	private void define(AbstractContextualOperations typeOperations) {
 		typeOperations.define(fEnv);

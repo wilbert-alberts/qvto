@@ -44,14 +44,17 @@ public class ModelOperations extends AbstractContextualOperations {
 	}	
 	
 	@Override
-	protected OperationProvider[] getOperations() {		
+	protected OperationProvider[] getOperations() {
+		OCLStandardLibrary<EClassifier> oclStdLibrary = getStdlib().getEnvironment().getOCLStandardLibrary();		
 		EClassifier setOfElements = TypeUtil.resolveSetType(getStdlib().getEnvironment(), getStdlib().getElementType());
-		OCLStandardLibrary<EClassifier> oclStdLib = getStdlib().getEnvironment().getOCLStandardLibrary();
+		EClassifier setOfT = TypeUtil.resolveSetType(getStdlib().getEnvironment(), oclStdLibrary.getT());
 		return new OwnedOperationProvider[] {
 			new OwnedOperationProvider(OBJECTS, OBJECTS_NAME, setOfElements),
 			new OwnedOperationProvider(ROOT_OBJECTS, ROOT_OBJECTS_NAME, setOfElements),
-			new OwnedOperationProvider(OBJECTS_OF_TYPE, OBJECTS_OF_TYPE_NAME, setOfElements, oclStdLib.getOclType()),
-			new OwnedOperationProvider(REMOVE_ELEMENT, REMOVE_ELEMENT_NAME, oclStdLib.getOclVoid(), getStdlib().getElementType())
+			new OwnedOperationProvider(OBJECTS_OF_TYPE, OBJECTS_OF_TYPE_NAME, 
+					setOfT, oclStdLibrary.getOclType()),
+			new OwnedOperationProvider(REMOVE_ELEMENT, REMOVE_ELEMENT_NAME, 
+					oclStdLibrary.getOclVoid(), getStdlib().getElementType())
 		};
 	}
 	
