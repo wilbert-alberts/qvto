@@ -87,6 +87,6 @@ class ModuleInstanceImpl extends DynamicEObjectImpl implements ModuleInstance, M
 	
 	@Override
 	public String toString() {
-		return eClass().getName() + "@" + Integer.toHexString(System.identityHashCode(this)); //$NON-NLS-1$
+		return eClass().getName() + " @" + Integer.toHexString(System.identityHashCode(this)); //$NON-NLS-1$
 	}
 }

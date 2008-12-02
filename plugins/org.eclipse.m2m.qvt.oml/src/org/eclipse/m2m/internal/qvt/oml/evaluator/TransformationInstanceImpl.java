@@ -14,6 +14,7 @@ package org.eclipse.m2m.internal.qvt.oml.evaluator;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance.InternalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
@@ -73,6 +74,27 @@ class TransformationInstanceImpl extends ModuleInstanceImpl implements Transform
 	
 	@Override
 	public String toString() {
-		return "transformation " + super.toString(); //$NON-NLS-1$
+		OperationalTransformation transformation = getTransformation();
+		
+		StringBuilder buf = new StringBuilder();
+		buf.append("transformation ").append(transformation.getName()).append("("); //$NON-NLS-1$ //$NON-NLS-2$
+		
+		int pos = 0;
+		for (ModelParameter modelParameter : transformation.getModelParameter()) {
+			if(pos++ > 0) {
+				buf.append(',').append(' ');
+			}
+			buf.append(modelParameter.getKind()).append(' ')
+				.append(modelParameter.getName())
+				.append(" : "); //$NON-NLS-1$
+			
+			EClassifier type = modelParameter.getEType();
+			if(type != null) {
+				buf.append(type.getName());
+			}
+		}
+		
+		buf.append(") @").append(System.identityHashCode(transformation)); //$NON-NLS-1$
+		return buf.toString();
 	}
 }

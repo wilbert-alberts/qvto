@@ -1314,7 +1314,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         QvtOperationalEvaluationEnv env = getOperationalEvaluationEnv();
         
 		if(modelParameters != null && module.eClass() == ExpressionsPackage.eINSTANCE.getOperationalTransformation()) {
-			modelParameters.initModelParameters((TransformationInstance) moduleInstance);
+			modelParameters.bindModelParameters((TransformationInstance) moduleInstance);
 		}
         
         for (EStructuralFeature feature : module.getEStructuralFeatures()) {

@@ -23,73 +23,152 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 
+/**
+ * This class encapsulates the logic of model extent binding for imported transformation.
+ * </p>
+ * The QVT <code>1.0</code> model parameter binding is implemented here, taking the following strategy.
+ * <ul>
+ *  <li>1. Try binding model parameters that are strictly compatible by modeltype and direction kind</li>
+
+ *  <li>2. Try binding (not yet bound) model parameters by the first available of a compatible direction kind</li>  
+ *  
+ *  <li>3. Create empty model extent for all unbound model parameter</li>  
+ * </ul>
+ * @author dvorak
+ */
 class ModelParameterHelper {
 
-	private OperationalTransformation fTransformation;
+	private OperationalTransformation fMainTransformation;
 	private List<ModelParameterExtent> fModelArguments;	
 
-	
-	ModelParameterHelper(OperationalTransformation transformation, List<Object> arguments) {
-		if(transformation == null || arguments == null) {
+	/**
+	 * Constructs model parameter helper for the given main transformation.
+	 * 
+	 * @param mainTransformation
+	 *            the transformation of which the <code>main</code> operation is
+	 *            to be executed
+	 * @param modelArguments
+	 *            the models that are passed to transformation execution
+	 */
+	// FIXME - use typed ModelParameterExtent directly, a better way how it gets to the evaluation environment
+	// should be provided
+	ModelParameterHelper(OperationalTransformation mainTransformation, List<Object> modelArguments) {
+		if(mainTransformation == null || modelArguments == null) {
 			throw new IllegalArgumentException();
 		}
 
-		List<ModelParameterExtent> modelArguments = new ArrayList<ModelParameterExtent>(arguments.size());		
-		for (Object nextArg : arguments) {
+		List<ModelParameterExtent> modelExtentArguments = new ArrayList<ModelParameterExtent>(modelArguments.size());		
+		for (Object nextArg : modelArguments) {
 			if(nextArg instanceof ModelParameterExtent) {
-				modelArguments.add((ModelParameterExtent) nextArg);
+				modelExtentArguments.add((ModelParameterExtent) nextArg);
 			}
 		}
 		
-		fTransformation = transformation;
-		fModelArguments = modelArguments;
-		if(fModelArguments.size() != fTransformation.getModelParameter().size()) {
+		fMainTransformation = mainTransformation;
+		fModelArguments = modelExtentArguments;
+		if(fModelArguments.size() != fMainTransformation.getModelParameter().size()) {
 			throw new IllegalArgumentException("Invalid number of transformation arguments"); //$NON-NLS-1$
 		}
 	}
-	
-	private ModelParameterExtent findCompatibleExtent(ModelParameter modelParam, Collection<ModelParameterExtent> alreadyBound) {
+
+	/**
+	 * Binds model extents to model parameters of the given imported
+	 * transformation in the context of the main transformation and its model
+	 * arguments assigned to this helper.
+	 * 
+	 * @param importedTransformation
+	 *            a transformation to be bind with its model parameters
+	 */
+	public void bindModelParameters(TransformationInstance importedTransformation) {
+		if(importedTransformation == null) {
+			throw new IllegalArgumentException();
+		}
+		
+		boolean isMainTransformation = importedTransformation.getTransformation() == fMainTransformation;		
+		OperationalTransformation transformationType = importedTransformation.getTransformation(); 				
+		Collection<ModelParameterExtent> alreadyBound = new UniqueEList.FastCompare<ModelParameterExtent>();
+		
 		int pos = 0;
-		for (ModelParameter nextParam : fTransformation.getModelParameter()) {
-			if(QvtOperationalUtil.isModelParamEqual(nextParam, modelParam, true)) {
+		for (ModelParameter modelParam : transformationType.getModelParameter()) {
+			ModelParameterExtent extent;
+			if(isMainTransformation) {
+				extent = fModelArguments.get(pos);
+			} else {
+				extent = findAvailableStrictlyCompatibleExtent(modelParam, alreadyBound);			
+			}
+			
+			if(extent == null) {
+				continue;
+			}
+			
+			importedTransformation.setModel(modelParam, createModel(modelParam, extent));			
+			pos++;
+		}
+		
+		if(isMainTransformation) {
+			return;
+		}
+		
+		// second pass
+		for (ModelParameter modelParam : transformationType.getModelParameter()) {
+			if(importedTransformation.getModel(modelParam) == null) {
+				ModelParameterExtent extent = findFirstDirectionCompatibleExtent(modelParam, alreadyBound);			
+				if(extent == null) {
+					// can't a any proper extent, just create an empty one
+					extent = new ModelParameterExtent();				
+				}
+				
+				importedTransformation.setModel(modelParam, createModel(modelParam, extent));				
+			}
+		}
+	}
+		
+	private ModelParameterExtent findFirstDirectionCompatibleExtent(ModelParameter modelParam, Collection<ModelParameterExtent> alreadyBound) {
+		int pos = 0;
+		for (ModelParameter nextParam : fMainTransformation.getModelParameter()) {
+			if(QvtOperationalUtil.isModelParamEqual(nextParam, modelParam, false)) {
 				ModelParameterExtent extent = fModelArguments.get(pos);
-				if(!alreadyBound.contains(extent)) {				
+				if(!alreadyBound.contains(extent)) {
+					alreadyBound.add(extent);					
 					return extent;
 				}
 			}
 			
-			pos++;			
+			pos++;
+		}
+
+		return null;
+	}	
+	
+	private ModelParameterExtent findAvailableStrictlyCompatibleExtent(ModelParameter modelParam, Collection<ModelParameterExtent> alreadyBound) {
+		int pos = 0;
+		for (ModelParameter nextParam : fMainTransformation.getModelParameter()) {
+			if(QvtOperationalUtil.isModelParamEqual(nextParam, modelParam, true)) {
+				ModelParameterExtent extent = fModelArguments.get(pos);
+				if(!alreadyBound.contains(extent)) {
+					alreadyBound.add(extent);
+					return extent;
+				}
+			}
+			
+			pos++;
 		}
 		
 		return null;
 	}
-
-	public void initModelParameters(TransformationInstance transformation) {		
-		OperationalTransformation transformationType = transformation.getTransformation(); 				
-		Collection<ModelParameterExtent> alreadyBound = new UniqueEList.FastCompare<ModelParameterExtent>();
-		int pos = 0;
-		for (ModelParameter modelParam : transformationType.getModelParameter()) {
-			ModelParameterExtent extent;
-			
-			if(transformation.getTransformation() == fTransformation) {
-				extent = fModelArguments.get(pos);
-			} else {
-				extent = findCompatibleExtent(modelParam, alreadyBound);			
-				if(extent == null) {
-					extent = new ModelParameterExtent();				
-				}
-			}
-			
-			ModelType modelType = (ModelType) modelParam.getEType();
-			ModelInstance model = new ModelInstanceImpl(modelType, extent);			
-	    	if (modelParam.getKind() == DirectionKind.IN) {
-	    		// TODO - make this optional ?	    		
-	    		QvtChangeRecorder qvtChangeRecorder = new QvtChangeRecorder(modelParam);
-	    		qvtChangeRecorder.beginRecording(extent.getInitialObjects());
-	    	}
-			
-			transformation.setModel(modelParam, model);
-			pos++;
-		}
-	}		
+	
+	private ModelInstance createModel(ModelParameter modelParam, ModelParameterExtent extent) {
+		assert modelParam != null;
+		assert extent != null;
+		
+		ModelType modelType = (ModelType) modelParam.getEType();
+		ModelInstance model = new ModelInstanceImpl(modelType, extent);			
+    	if (modelParam.getKind() == DirectionKind.IN) {
+    		// TODO - make this optional ?	    		
+    		QvtChangeRecorder qvtChangeRecorder = new QvtChangeRecorder(modelParam);
+    		qvtChangeRecorder.beginRecording(extent.getInitialObjects());
+    	}
+		
+    	return model;
+	}	
 }
