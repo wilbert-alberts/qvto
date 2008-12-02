@@ -1,8 +1,8 @@
-transformation exec3_withImport();
-
 import exec3_lib;
 
 modeltype Ecore uses 'http://www.eclipse.org/emf/2002/Ecore';
+
+transformation exec3_withImport(out output : Ecore);
 
 main() {
 	var v := object EClass{}.map toEClass();

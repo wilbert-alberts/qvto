@@ -19,9 +19,11 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
+import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
@@ -94,16 +96,29 @@ public class TestQvtInterpreter extends TestTransformation {
 				throw e;
 			}
 
-            List<ModelExtentContents> extents = output.getExtents();
-            LinkedHashMap<ModelExtentContents, URI> result = new LinkedHashMap<ModelExtentContents, URI>(); 
-            int i = 0;
-            for (ModelExtentContents outExtent : extents) {
-                URI extentURI = saveModel("extent" + (++i), outExtent, new EclipseFile(transformation));
-                result.put(outExtent, extentURI);
+            OperationalTransformation transformationModule = (OperationalTransformation) trans.getModule().getModule().getModule();            
+            LinkedHashMap<ModelExtentContents, URI> result = new LinkedHashMap<ModelExtentContents, URI>();            
+            if(output.getOutParamValues().isEmpty() || !returnMainOperationOutput()) {            
+            	List<ModelExtentContents> extents = output.getExtents(); 
+            	int i = 0;
+            	for (ModelExtentContents outExtent : extents) {
+            		URI extentURI = saveModel("extent" + (++i), outExtent, new EclipseFile(transformation));
+            		result.put(outExtent, extentURI);
+            	}            
+            } else {
+            	int i = 0;            	
+            	for (Object object : output.getOutParamValues()) {
+            		ModelExtentContents outExtent = new ModelParameterExtent((EObject)object).getContents();            		
+            		URI extentURI = saveModel("extent.param" + (++i), outExtent, new EclipseFile(transformation));            		
+					result.put(outExtent, extentURI);
+            	}
             }
-            
             saveTraceData(output.getTrace(), new EclipseFile(transformation));
             return result;
-        }
-    };
+		}
+		
+		protected boolean returnMainOperationOutput() {
+			return true;
+		}
+	}
 }

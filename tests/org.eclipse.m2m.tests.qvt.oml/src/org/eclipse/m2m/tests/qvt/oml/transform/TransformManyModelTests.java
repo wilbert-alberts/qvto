@@ -31,7 +31,20 @@ public class TransformManyModelTests {
     	ModelTestData[] datas = createTestData();
     	
     	for (ModelTestData data : datas) {
-            suite.addTest(new TestQvtInterpreter(data));
+            suite.addTest(new TestQvtInterpreter(data) {
+            	@Override
+            	protected ITransformer getTransformer() {            	
+            		// FIXME - forces to save the model param extents
+            		// instead of main operation outputs
+            		// => should be solved by test refactoring
+            		return new DefaultTransformer() {
+            			@Override
+            			protected boolean returnMainOperationOutput() {            	
+            				return false;
+            			}
+            		};
+            	}
+            });
         }
 
         return suite;

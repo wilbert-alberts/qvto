@@ -2,17 +2,20 @@ transformation removeclassesinwhile;
 
 metamodel 'http://www.eclipse.org/emf/2002/Ecore';
 
-query main(model: ecore::EPackage): ecore::EPackage {
-    while_expr(model);
-    return model;
+mapping main(model: ecore::EPackage) : ecore::EPackage {
+	init {
+		result := model.deepclone().oclAsType(ecore::EPackage);
+    	while_expr(result);
+	}
+	
 }
 
 query while_expr(model: ecore::EPackage): OclVoid {
 
-    while (model.eClassifiers->size() > 0; 'anything') {
-        dump(model.eClassifiers);
-        patch(model, model.eClassifiers->size());
-    };
+    while (model.eClassifiers->size() > 0) {
+        --dump(model.eClassifiers);
+        map patch(model, model.eClassifiers->size());
+    }; 
 
     return null;
 }
