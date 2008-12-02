@@ -37,7 +37,6 @@ import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
-import org.eclipse.m2m.internal.qvt.oml.cst.adapters.ModelTypeMetamodelsAdapter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
@@ -170,7 +169,7 @@ public abstract class QvtModule {
             }
 
             public List<EPackage> getMetamodels() {
-                return ModelTypeMetamodelsAdapter.getMetamodels(modelParam.getEType());
+            	return ((ModelType)modelParam.getType()).getMetamodel();
             }
 
             public String getModelTypeName() {

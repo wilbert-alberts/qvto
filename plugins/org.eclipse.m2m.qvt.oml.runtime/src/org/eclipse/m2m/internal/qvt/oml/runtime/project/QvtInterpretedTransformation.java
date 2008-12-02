@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtEvaluationResult;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
@@ -39,6 +40,9 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.modelparam.ResourceEObject;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
+import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner.In;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner.Out;
@@ -144,7 +148,7 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 		QvtOperationalEnvFactory factory = getEnvironmentFactory();
 
 		QvtOperationalEvaluationEnv evaluationEnv = factory.createEvaluationEnvironment(context, null);
-		evaluationEnv.getOperationArgs().addAll(args);
+		setArguments(evaluationEnv, (OperationalTransformation) module.getModule(), args);
 		
 		QvtOperationalFileEnv rootEnv = factory.createEnvironment(module.getSource(), compiler.getKernel());
 
@@ -154,6 +158,35 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 		return module.getModule().accept(evaluator);
 	}
 
+	private static void setArguments(QvtOperationalEvaluationEnv evalEnv, OperationalTransformation module, List<Object> args) {
+		List<Object> operationArgs = evalEnv.getOperationArgs();
+
+		int argCount = 0;
+		for (ModelParameter modelParam : module.getModelParameter()) {
+			ModelParameterExtent extent;			
+			if(modelParam.getKind() != org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind.OUT) {
+				if(argCount >= args.size()) {
+					throw new IllegalArgumentException("Invalid count of input arguments"); //$NON-NLS-1$ 
+				}
+
+				Object nextArg = args.get(argCount++);
+			
+				if(nextArg instanceof EObject == false) {
+					throw new IllegalArgumentException("EObject argument required"); //$NON-NLS-1$
+				} else if(nextArg instanceof ResourceEObject) {
+		    		extent = new ModelParameterExtent(((ResourceEObject) nextArg).getChildren()); 
+		    	} else {
+		    		extent = new ModelParameterExtent((EObject) nextArg);
+		    	}
+				
+			} else {
+				extent = new ModelParameterExtent();
+			}
+			
+	    	operationArgs.add(extent);			
+		}
+	}
+	
 	@Override
 	public String toString() {
 		try {
