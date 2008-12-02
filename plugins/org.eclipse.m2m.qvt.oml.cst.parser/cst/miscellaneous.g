@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.5 2008/11/28 14:36:54 aigdalov Exp $ 
+-- * $Id: miscellaneous.g,v 1.6 2008/12/02 12:00:20 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -282,7 +282,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.5 2008/11/28 14:36:54 aigdalov Exp $
+ * $Id: miscellaneous.g,v 1.6 2008/12/02 12:00:20 aigdalov Exp $
  */
 	./
 $End
@@ -626,6 +626,36 @@ $Rules
 	expressionStatementCS -> expression_block
 	expressionStatementCS -> expression_block ';'
 
+	
+	qualifiedNameCS ::= qvtIdentifierCS
+		/.$BeginJava
+					CSTNode result = createPathNameCS(getTokenText($getToken(1)));
+					setOffsets(result, getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+	qualifiedNameCS ::= qualifiedNameCS '.' qvtIdentifierCS
+		/.$BeginJava
+					PathNameCS result = (PathNameCS)$getSym(1);
+					result = extendPathNameCS(result, getTokenText($getToken(3)));
+					setOffsets(result, result, getIToken($getToken(3)));
+					$setResult(result);
+		  $EndJava
+		./
+	qualifiedNameCS ::= qualifiedNameCS '.' qvtErrorToken
+		/.$BeginJava
+					PathNameCS result = (PathNameCS)$getSym(1);
+					result = extendPathNameCS(result, "");
+					setOffsets(result, result, getIToken($getToken(2)));
+					$setResult(result);
+		  $EndJava
+		./
+	qualifiedNameCS ::= qualifiedNameCS qvtErrorToken
+		/.$BeginJava
+					PathNameCS result = (PathNameCS)$getSym(1);
+					$setResult(result);
+		  $EndJava	
+		./	
 	--=== // general purpose grammar rules (end) ===--
 	
 	--=== // Expressions (start) ===--

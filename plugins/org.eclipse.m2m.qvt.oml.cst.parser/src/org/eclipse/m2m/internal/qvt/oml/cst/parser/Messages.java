@@ -27,5 +27,6 @@ public class Messages extends NLS {
 	private Messages() {
 	}
 
-    public static String QvtOpLPGParser_MultipleModulesExtraUnitElements;
+    public static String AbstractQVTParser_NoModulesDeclared;
+    public static String AbstractQVTParser_MultipleModulesExtraUnitElements;
 }

@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.22 2008/12/01 15:07:47 sboyko Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.23 2008/12/02 12:00:20 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -51,7 +51,8 @@ $Globals
 	import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.MappingEndCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.MappingInitCS;
-	import org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionCS;	
+	import org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionCS;
+	import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;	
 	import org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS;
@@ -133,7 +134,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.22 2008/12/01 15:07:47 sboyko Exp $
+ * $Id: QvtOpLPGParser.g,v 1.23 2008/12/02 12:00:20 aigdalov Exp $
  */
 	./
 $End
@@ -148,7 +149,7 @@ $Rules
 	topLevel ::= unit_elementList
 		/.$BeginJava
 					EList<CSTNode> unitElements = (EList<CSTNode>)$getSym(1);
-					$setResult(createTopLevel(unitElements));
+					$setResult(setupTopLevel(unitElements));
 		  $EndJava
 		./
 
@@ -208,7 +209,7 @@ $Rules
 	unit_element -> _transformation
         unit_element -> _library
         unit_element -> _modeltype
-        unit_element -> _classifier
+        unit_element -> classifier
         unit_element -> _property
         unit_element -> _helper
         unit_element -> entry
@@ -217,20 +218,35 @@ $Rules
 	--=== // definitions in a compilation unit (end) ===--
 
 	--=== // Transformation and library definitions (start) ===--
-	_transformation ::= transformationHeaderCS ';'
+	_transformation -> transformation_decl
+	_transformation -> transformation_def 
+	
+	transformation_decl ::= transformation_h ';' 
 		/.$BeginJava
-					TransformationHeaderCS result = (TransformationHeaderCS) $getSym(1);
-					setOffsets(result, result, getIToken($getToken(2)));
-					$setResult(result);
+					TransformationHeaderCS headerCS = (TransformationHeaderCS) $getSym(1);
+					setOffsets(headerCS, headerCS, getIToken($getToken(2)));
+					MappingModuleCS moduleCS = createMappingModuleCS(headerCS, $EMPTY_ELIST);
+					setOffsets(moduleCS, headerCS);
+					$setResult(moduleCS);
 		  $EndJava
 		./
+
+	transformation_def ::= transformation_h '{' module_elementList '}' semicolonOpt
+		/.$BeginJava
+					TransformationHeaderCS headerCS = (TransformationHeaderCS) $getSym(1);
+					MappingModuleCS moduleCS = createMappingModuleCS(headerCS, (EList) $getSym(3));
+					setOffsets(moduleCS, headerCS, getIToken($getToken(4)));
+					$setResult(moduleCS);
+		  $EndJava
+		./
+	 
 	_library -> libraryHeaderCS ';'
 
 	--=== // Transformation and library definitions (end) ===--
 
 
 	--=== // Transformation header (start) ===--
-	transformationHeaderCS ::= qualifierList transformation qualifiedNameCS
+	transformation_h ::= qualifierList transformation qualifiedNameCS
 		/.$BeginJava
 					EList qualifierList = (EList) $getSym(1);
 					CSTNode result = createTransformationHeaderCS(
@@ -249,7 +265,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	transformationHeaderCS ::= qualifierList transformation qualifiedNameCS '(' transfParamListOpt ')' moduleUsageListOpt transformationRefineCSOpt
+	transformation_h ::= qualifierList transformation qualifiedNameCS '(' transfParamListOpt ')' moduleUsageListOpt transformationRefineCSOpt
 		/.$BeginJava
 					EList qualifierList = (EList) $getSym(1);
 					EList transfUsages = (EList) $getSym(7);
@@ -330,6 +346,7 @@ $Rules
 
 	--=== // Library header (end) ===--
 	
+	--=== // import of transformation and library (start) ===--
 	moduleUsageListOpt ::= $empty
 		/.$EmptyListAction./
 	moduleUsageListOpt -> moduleUsageList
@@ -495,38 +512,28 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-		
-		
-	qualifiedNameCS ::= qvtIdentifierCS
+	--=== // import of transformation and library (end) ===--
+	
+	--=== // module definitions (start) ===--
+
+	module_elementList ::= module_elementList module_element
 		/.$BeginJava
-					CSTNode result = createPathNameCS(getTokenText($getToken(1)));
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
+					EList list = (EList)$getSym(1);
+					list.add($getSym(2));
+					$setResult(list);
 		  $EndJava
-		./
-	qualifiedNameCS ::= qualifiedNameCS '.' qvtIdentifierCS
-		/.$BeginJava
-					PathNameCS result = (PathNameCS)$getSym(1);
-					result = extendPathNameCS(result, getTokenText($getToken(3)));
-					setOffsets(result, result, getIToken($getToken(3)));
-					$setResult(result);
-		  $EndJava
-		./
-	qualifiedNameCS ::= qualifiedNameCS '.' qvtErrorToken
-		/.$BeginJava
-					PathNameCS result = (PathNameCS)$getSym(1);
-					result = extendPathNameCS(result, "");
-					setOffsets(result, result, getIToken($getToken(2)));
-					$setResult(result);
-		  $EndJava
-		./
-	qualifiedNameCS ::= qualifiedNameCS qvtErrorToken
-		/.$BeginJava
-					PathNameCS result = (PathNameCS)$getSym(1);
-					$setResult(result);
-		  $EndJava	
 		./
 
+	module_elementList ::= $empty
+		/.$EmptyListAction./
+
+	module_element -> classifier
+	module_element -> _property
+	module_element -> _helper
+	module_element -> entry
+	module_element -> _mapping
+
+	--=== // module definitions (end) ===--
 	
 	--=== // model types compliance and metamodel declarations (start) ===--
 	_modeltype -> modelTypeExpCS
@@ -674,7 +681,7 @@ $Rules
 
 	--=== // model types compliance and metamodel declarations (start) ===--
 
-	_classifier ->  classifierDefCS
+	classifier ->  classifierDefCS
 
 	classifierDefCS ::= intermediate class qvtIdentifierCS classifierExtensionOpt '{' classifierFeatureListOpt '}' semicolonOpt 
 		/.$BeginJava

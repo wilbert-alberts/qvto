@@ -124,9 +124,8 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		element.setBodyEndLocation(end.getStartOffset());
 	}
 	
-	protected final Object createTopLevel(EList<CSTNode> unitElements) {
-	    List<TransformationHeaderCS> transformationHeaders = new ArrayList<TransformationHeaderCS>();
-	    List<LibraryCS> libraries = new ArrayList<LibraryCS>();
+	protected final Object setupTopLevel(EList<CSTNode> unitElements) {
+	    List<MappingModuleCS> modules = new ArrayList<MappingModuleCS>();
 	    List<ModelTypeCS> modeltypes = new ArrayList<ModelTypeCS>();
 	    List<ClassifierDefCS> classifiers = new ArrayList<ClassifierDefCS>();
 	    List<ModulePropertyCS> properties = new ArrayList<ModulePropertyCS>();
@@ -135,12 +134,9 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	    List<RenameCS> renamings = new ArrayList<RenameCS>();
 	    List<ImportCS> imports = new ArrayList<ImportCS>();
 
-
 	    for (CSTNode unitElement : unitElements) {
-	        if (unitElement instanceof TransformationHeaderCS) {
-	            transformationHeaders.add((TransformationHeaderCS) unitElement);
-	        } else if (unitElement instanceof LibraryCS) {
-	            libraries.add((LibraryCS) unitElement);
+	        if (unitElement instanceof MappingModuleCS) {
+	            modules.add((MappingModuleCS) unitElement);
 	        } else if (unitElement instanceof ModelTypeCS) {
 	            modeltypes.add((ModelTypeCS) unitElement);
 	        } else if (unitElement instanceof ClassifierDefCS) {
@@ -156,41 +152,38 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	        } else if (unitElement instanceof ImportCS) {
 	            imports.add((ImportCS) unitElement);
 	        } else {
-	            throw new RuntimeException("Unknown unit_element: " + unitElement);
+	            throw new RuntimeException("Unknown unit_element: " + unitElement); //$NON-NLS-1$
 	        }
 	    }
-	    MappingModuleCS moduleCS = null;
-	    if (((transformationHeaders.size() > 1) && (unitElements.size() != transformationHeaders.size()))
-	            || ((libraries.size() > 1) && (unitElements.size() != libraries.size()))) {
+	    if (modules.isEmpty()) {
+            reportError(ParseErrorCodes.INVALID_CODE, "",  //$NON-NLS-1$
+                    Messages.AbstractQVTParser_NoModulesDeclared);
+            return null;
+	    }
+	    if ((modules.size() > 1) && (unitElements.size() != modules.size() + imports.size() + modeltypes.size())) {
 	        reportError(ParseErrorCodes.INVALID_CODE, "",  //$NON-NLS-1$
-	                Messages.QvtOpLPGParser_MultipleModulesExtraUnitElements);
-	        moduleCS = createMappingModuleCS(
-	                transformationHeaders.get(0)
-	        );
-	    } else if ((transformationHeaders.size() == 1) && (libraries.size() == 1)) {
-	        moduleCS = null;
-	    } else if (transformationHeaders.size() == 1) {
-	        moduleCS = createMappingModuleCS(
-	                transformationHeaders.get(0)
-	        );
-	    } else if (libraries.size() == 1) {
-	        moduleCS = libraries.get(0);
+	                Messages.AbstractQVTParser_MultipleModulesExtraUnitElements);
 	    }
-	    if (moduleCS != null) {
-	        moduleCS.getImports().addAll(imports);
-	        moduleCS.getMetamodels().addAll(modeltypes);
-	        moduleCS.getProperties().addAll(properties);
-	        moduleCS.getMethods().addAll(helpers);
-	        moduleCS.getMethods().addAll(mappings);
-	        moduleCS.getRenamings().addAll(renamings);
-	        moduleCS.getClassifierDefCS().addAll(classifiers);
-
-	        setOffsets(moduleCS, unitElements.get(0), unitElements.get(unitElements.size() - 1));
-	        return moduleCS;
+        // TODO: support multiple modules
+	    if (modules.size() > 1) {
+	        reportError(ParseErrorCodes.INVALID_CODE, "", "Multiple modules are unsupported yet!"); //$NON-NLS-1$ //$NON-NLS-2$
 	    }
-	    reportError(ParseErrorCodes.INVALID_CODE, "",  //$NON-NLS-1$
-	            "Multiple modules are unsupported yet!"); //$NON-NLS-1$
-	            return null;
+        for (MappingModuleCS moduleCS : modules) {
+            // FIXME: clone imports and modeltypes for multiple modules
+            moduleCS.getImports().addAll(imports);
+            moduleCS.getMetamodels().addAll(modeltypes);
+        }
+	    if (modules.size() == 1) {
+	        MappingModuleCS moduleCS = modules.get(0);
+            moduleCS.getProperties().addAll(properties);
+            moduleCS.getMethods().addAll(helpers);
+            moduleCS.getMethods().addAll(mappings);
+            moduleCS.getRenamings().addAll(renamings);
+            moduleCS.getClassifierDefCS().addAll(classifiers);
+            setOffsets(moduleCS, unitElements.get(0), unitElements.get(unitElements.size() - 1));
+            return moduleCS;
+	    }
+	    return null; // TODO: support multiple modules
 	}
 	
 	protected final CSTNode createLocalPropertyCS(IToken tokenText, TypeCS sym, OCLExpressionCS sym2) {
@@ -249,10 +242,34 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 				return imp;
 			}
 
-	protected final MappingModuleCS createMappingModuleCS(TransformationHeaderCS header) {
+	protected final MappingModuleCS createMappingModuleCS(TransformationHeaderCS header, EList<CSTNode> moduleElements) {
 	    MappingModuleCS moduleCS = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingModuleCS();
 	    moduleCS.setHeaderCS(header);
-        return moduleCS;
+	    
+        List<ClassifierDefCS> classifiers = new ArrayList<ClassifierDefCS>();
+        List<ModulePropertyCS> properties = new ArrayList<ModulePropertyCS>();
+        List<MappingQueryCS> helpers = new ArrayList<MappingQueryCS>();
+        List<MappingRuleCS> mappings = new ArrayList<MappingRuleCS>();
+
+        for (CSTNode moduleElement : moduleElements) {
+            if (moduleElement instanceof ClassifierDefCS) {
+                classifiers.add((ClassifierDefCS) moduleElement);
+            } else if (moduleElement instanceof ModulePropertyCS) {
+                properties.add((ModulePropertyCS) moduleElement);
+            } else if (moduleElement instanceof MappingQueryCS) {
+                helpers.add((MappingQueryCS) moduleElement);
+            } else if (moduleElement instanceof MappingRuleCS) {
+                mappings.add((MappingRuleCS) moduleElement);
+            } else {
+                throw new RuntimeException("Unknown module_element: " + moduleElement); //$NON-NLS-1$
+            }
+        }
+
+        moduleCS.getClassifierDefCS().addAll(classifiers);
+        moduleCS.getProperties().addAll(properties);
+        moduleCS.getMethods().addAll(helpers);
+        moduleCS.getMethods().addAll(mappings);
+	    return moduleCS;
 	}
 
 	private void initializeModule(MappingModuleCS result, TransformationHeaderCS header, EList<ImportCS> imports,
