@@ -31,5 +31,6 @@ public interface ModuleInstance extends EObject, ThisInstanceResolver {
  
 	interface Internal {
 		void addAdapter(Object adapter);
+		void dispose();
 	}
 }

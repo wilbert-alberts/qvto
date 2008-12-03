@@ -20,12 +20,16 @@ import org.eclipse.osgi.util.NLS;
 /**
  * @author sboyko
  */
-public class QvtChangeRecorder extends ChangeRecorder {
+class QvtChangeRecorder extends ChangeRecorder {
 
 	private final String fModelParamName;
 	private final String fModelTypeName;
 	
-	public QvtChangeRecorder(ModelParameter modelParam) {
+	QvtChangeRecorder(ModelParameter modelParam) {
+		if(modelParam == null) {
+			throw new IllegalArgumentException();
+		}
+		
 		fModelParamName = modelParam.getName();
 		fModelTypeName = QvtOperationalTypesUtil.getTypeFullName(modelParam.getEType());		
 	}

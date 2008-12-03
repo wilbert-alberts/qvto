@@ -12,10 +12,13 @@
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance.InternalTransformation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
@@ -25,6 +28,7 @@ class TransformationInstanceImpl extends ModuleInstanceImpl implements Transform
 
 	private final Map<ModelParameter, ModelInstance> fModelParams;	
 	private CallHandler fEntryHandler;
+	private List<QvtChangeRecorder> fChangeGuards;
 	
 	TransformationInstanceImpl(OperationalTransformation type) {
 		super(type);
@@ -37,6 +41,20 @@ class TransformationInstanceImpl extends ModuleInstanceImpl implements Transform
 		}
 
 		fModelParams.put(parameter, extent);
+		
+    	if (parameter.getKind() == DirectionKind.IN) {
+    		// setup protection against changes    	
+    		// TODO - make this optional ? not allways desirable, especially for huge models
+    		// as it results in adapters attached to every objects in the in model
+    		// => provide an evaluation option 
+    		if(fChangeGuards == null) {
+    			fChangeGuards = new LinkedList<QvtChangeRecorder>();
+    		}
+    		
+			QvtChangeRecorder changeRecorder = new QvtChangeRecorder(parameter);
+			fChangeGuards.add(changeRecorder);
+			changeRecorder.beginRecording(extent.getExtent().getInitialObjects());
+    	}
 	}
 
 	public OperationalTransformation getTransformation() {	
@@ -72,6 +90,17 @@ class TransformationInstanceImpl extends ModuleInstanceImpl implements Transform
 		fEntryHandler = handler;
 	}
 	
+	@Override
+	public void dispose() {	
+		super.dispose();
+		
+		if(fChangeGuards != null) {
+			for (QvtChangeRecorder nextRecorder : fChangeGuards) {
+				nextRecorder.dispose();
+			}
+		}
+	}
+
 	@Override
 	public String toString() {
 		OperationalTransformation transformation = getTransformation();

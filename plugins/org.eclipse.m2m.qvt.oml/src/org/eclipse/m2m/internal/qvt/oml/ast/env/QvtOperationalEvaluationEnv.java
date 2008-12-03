@@ -376,10 +376,6 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		return super.isKindOf(object, classifier);
 	}
 	
-	public void dispose() {
-		internalEnv().dispose(); 
-	}
-
 	public EObject createInstance(EClassifier type, ModelParameter modelParam) {
         if (type instanceof EClass == false) {
             throw new IllegalArgumentException("Expected EClass, got " + type); //$NON-NLS-1$
@@ -648,12 +644,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 
 	    	super.setThisResolver(thisResolver);
 	    }
-	    	    
-	    @Override
-		void dispose() {
-			super.dispose(); 
-		}	    
-	    
+	    	    	    
 	    @Override
 	    public Internal clone() {
 	    	return new RootInternal(this);
@@ -722,10 +713,6 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	    IContext getContext() {
 	    	return getRoot().internalEnv().getContext();
 	    }			    
-
-		void dispose() {
-			myThisResolver = null; 
-		}
 
 	    @Override
 	    public Internal clone() {

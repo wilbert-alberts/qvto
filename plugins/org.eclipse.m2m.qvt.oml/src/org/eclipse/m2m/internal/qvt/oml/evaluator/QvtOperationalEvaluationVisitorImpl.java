@@ -791,35 +791,30 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 
         QvtOperationalEvaluationEnv evaluationEnv = getOperationalEvaluationEnv();
         QvtEvaluationResult evalResult = null;
-        try {
-        	OperationalTransformation operationalTransfModule = (OperationalTransformation)module;
-    		        	
-        	ModuleInstance moduleInstance = callModuleImplicitConstructor(operationalTransfModule);
-        	
-        	CallHandler entryOperationHandler = createEntryOperationHandler(this);
-			moduleInstance.getAdapter(InternalTransformation.class).setEntryOperationHandler(entryOperationHandler);
-	        
-	        setCurrentEnvInstructionPointer(myEntryPoint); // initialize IP to the main entry header	        
-	        // call main entry operation
-	        OperationCallResult callResult = (OperationCallResult) entryOperationHandler.invoke(
-	        		null, moduleInstance,
-	        		makeEntryOperationArgs(myEntryPoint, 
-	        		operationalTransfModule).toArray(), evaluationEnv);
+    	OperationalTransformation operationalTransfModule = (OperationalTransformation)module;
+		        	
+    	ModuleInstance moduleInstance = callModuleImplicitConstructor(operationalTransfModule);
+    	
+    	CallHandler entryOperationHandler = createEntryOperationHandler(this);
+		moduleInstance.getAdapter(InternalTransformation.class).setEntryOperationHandler(entryOperationHandler);
+        
+        setCurrentEnvInstructionPointer(myEntryPoint); // initialize IP to the main entry header	        
+        // call main entry operation
+        OperationCallResult callResult = (OperationCallResult) entryOperationHandler.invoke(
+        		null, moduleInstance,
+        		makeEntryOperationArgs(myEntryPoint, 
+        		operationalTransfModule).toArray(), evaluationEnv);
 
-	        evalResult = EvaluationUtil.createEvaluationResult(callResult.myEvalEnv);
-	        
-	        if (evalResult.getModelExtents().isEmpty()) {
-	            if (callResult.myResult instanceof EObject) {
-	                // compatibility reason, make the main() operation return value available in an extent
-	            	ModelParameterExtent modelParameter = new ModelParameterExtent((EObject) callResult.myResult);
-	                evalResult.getModelExtents().add(modelParameter.getContents());
-	            } else {
-	                return callResult.myResult;
-	            }
-	        }
-        }
-        finally {
-        	evaluationEnv.dispose();
+        evalResult = EvaluationUtil.createEvaluationResult(callResult.myEvalEnv);
+        
+        if (evalResult.getModelExtents().isEmpty()) {
+            if (callResult.myResult instanceof EObject) {
+                // compatibility reason, make the main() operation return value available in an extent
+            	ModelParameterExtent modelParameter = new ModelParameterExtent((EObject) callResult.myResult);
+                evalResult.getModelExtents().add(modelParameter.getContents());
+            } else {
+                return callResult.myResult;
+            }
         }
         
         return evalResult;
@@ -828,14 +823,18 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 	private static CallHandler createEntryOperationHandler(final QvtOperationalEvaluationVisitorImpl evaluator) {
 		return new CallHandler() {
 			public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
-				OperationalTransformation transformation = (OperationalTransformation)((EObject)source).eClass();
-				ImperativeOperation entry = QvtOperationalParserUtil.getMainOperation(transformation);
-				OperationCallResult result = evaluator.executeImperativeOperation(entry, null, Arrays.asList(args), false);        	        
-				
-				evaluator.isInTerminatingState = true;
-				evaluator.processDeferredTasks();
-		        
-		        return result;
+				TransformationInstance transformation = (TransformationInstance) source;				
+				try {
+					OperationalTransformation transformationType = transformation.getTransformation();
+					ImperativeOperation entryOperation = QvtOperationalParserUtil.getMainOperation(transformationType);
+					OperationCallResult result = evaluator.executeImperativeOperation(entryOperation, null, Arrays.asList(args), false);        	        
+					
+					evaluator.isInTerminatingState = true;
+					evaluator.processDeferredTasks();
+					return result;
+				} finally {
+					transformation.getAdapter(InternalTransformation.class).dispose();
+				}
 			}
 		};
 	}

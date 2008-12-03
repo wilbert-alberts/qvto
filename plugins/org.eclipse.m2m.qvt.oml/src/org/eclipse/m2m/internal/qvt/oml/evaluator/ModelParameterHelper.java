@@ -18,7 +18,6 @@ import java.util.List;
 import org.eclipse.emf.common.util.UniqueEList;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
-import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
@@ -162,13 +161,7 @@ class ModelParameterHelper {
 		assert extent != null;
 		
 		ModelType modelType = (ModelType) modelParam.getEType();
-		ModelInstance model = new ModelInstanceImpl(modelType, extent);			
-    	if (modelParam.getKind() == DirectionKind.IN) {
-    		// TODO - make this optional ?	    		
-    		QvtChangeRecorder qvtChangeRecorder = new QvtChangeRecorder(modelParam);
-    		qvtChangeRecorder.beginRecording(extent.getInitialObjects());
-    	}
-		
+		ModelInstance model = new ModelInstanceImpl(modelType, extent);
     	return model;
 	}	
 }

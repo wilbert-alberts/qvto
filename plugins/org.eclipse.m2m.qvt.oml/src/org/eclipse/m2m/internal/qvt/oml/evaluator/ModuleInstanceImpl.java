@@ -84,6 +84,10 @@ class ModuleInstanceImpl extends DynamicEObjectImpl implements ModuleInstance, M
 		
 		fAdapters.add(adapter);
 	}
+
+	public void dispose() {
+		// do nothing by default
+	};
 	
 	@Override
 	public String toString() {
