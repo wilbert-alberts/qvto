@@ -113,7 +113,8 @@ public class NonTransformationExecutionContext {
 	 * Frees any resources acquired by this context during execution
 	 */
 	public void dispose() {
-		getEvaluator().getOperationalEvaluationEnv().dispose();
+		// TODO - remove me
+		//getEvaluator().getOperationalEvaluationEnv().dispose();
 	}
 	
 	/**
