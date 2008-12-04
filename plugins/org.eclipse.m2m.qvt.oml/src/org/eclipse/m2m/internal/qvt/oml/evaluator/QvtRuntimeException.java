@@ -16,29 +16,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
-
 /**
 * Represents a runtime (unchecked) exception possibly thrown during QVT code execution.
 */
 public class QvtRuntimeException extends RuntimeException {
 
-	/**
-	 * A helper interface providing stack trace details.
-	 */
-	public interface StackInfoProvider {
-		List<StackTraceElement> getStackTraceElements();
-	}
+	private static final long serialVersionUID = -8903219155434276631L;
 	
-	private static final long serialVersionUID = -8903219155434276631L;	
+	private List<QVTStackTraceElement> fQVTStackTrace;
 	
-	private List<StackTraceElement> fStackTrace;
 	
-
 	public QvtRuntimeException() {
 		super();
-	}
-	
+	}	
 	
 	public QvtRuntimeException(String message) {
 		super(message);
@@ -51,51 +41,35 @@ public class QvtRuntimeException extends RuntimeException {
 	public QvtRuntimeException(String message, Throwable cause) {
 		super(message, cause);
 	}	
-	
-	/**
-	 * Throws the given instance of QVT exception.
-	 * 
-	 * @param exception
-	 *            the exception to be thrown
-	 * @param stackInfoProvider
-	 *            helper providing stack details
-	 * @throws QvtRuntimeException
-	 *             the instance passed in <code>exception</code>
-	 */
-	public static void doThrow(QvtRuntimeException exception, StackInfoProvider stackInfoProvider) throws QvtRuntimeException {
-		try {
-			exception.setStackQvtTrace(stackInfoProvider.getStackTraceElements());
-		} catch (Exception e) {
-			QvtPlugin.log(QvtPlugin.createErrorStatus("Failed to build QVT stack trace", e)); //$NON-NLS-1$
-		}
 		
-		throw exception;
-	}	
-	
     public void printQvtStackTrace(PrintWriter pw) {
        synchronized (pw) {
             pw.println(this);
             int counter = 0;
-            for(StackTraceElement trace : getQvtStackTrace()) {
+            for(QVTStackTraceElement trace : getQvtStackTrace()) {
             	if(counter++ > 0) {
             		pw.println();
             	}
             	pw.print("\tat " + trace); //$NON-NLS-1$
             }
        }
-    }	
+    }
 	
-	public List<StackTraceElement> getQvtStackTrace() {		
-		if(fStackTrace != null) {
-			return Collections.unmodifiableList(fStackTrace);
+	public List<QVTStackTraceElement> getQvtStackTrace() {		
+		if(fQVTStackTrace != null) {
+			return Collections.unmodifiableList(fQVTStackTrace);
 		}
 		return Collections.emptyList();
 	}
 	
-	void setStackQvtTrace(List<StackTraceElement> stackTrace) {
-		fStackTrace = null;
+	public void setStackQvtTrace(List<QVTStackTraceElement> stackTrace) {
+		if(fQVTStackTrace != null) {
+			throw new IllegalStateException("Can't reassign stack elements");
+		}
+		
+		fQVTStackTrace = null;
 		if(stackTrace != null) {
-			fStackTrace = new ArrayList<StackTraceElement>(stackTrace);
+			fQVTStackTrace = new ArrayList<QVTStackTraceElement>(stackTrace);
 		}
 	}		
 }

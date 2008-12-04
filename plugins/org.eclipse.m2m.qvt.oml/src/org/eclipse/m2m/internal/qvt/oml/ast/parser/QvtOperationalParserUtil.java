@@ -21,10 +21,12 @@ import java.util.ListIterator;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -756,8 +758,9 @@ public class QvtOperationalParserUtil {
 	
 	public static Module createModule(MappingModuleCS moduleCS) {
         String name = null; //$NON-NLS-1$
-        if(moduleCS.getHeaderCS() != null && moduleCS.getHeaderCS().getPathNameCS() != null) {
-        	EList<String> sequenceOfNames = moduleCS.getHeaderCS().getPathNameCS().getSequenceOfNames();
+        TransformationHeaderCS headerCS = moduleCS.getHeaderCS();
+		if(headerCS != null && headerCS.getPathNameCS() != null) {
+        	EList<String> sequenceOfNames = headerCS.getPathNameCS().getSequenceOfNames();
         	if(!sequenceOfNames.isEmpty()) {
         		name = sequenceOfNames.get(0);
         	}
@@ -770,6 +773,41 @@ public class QvtOperationalParserUtil {
         	module = QvtOperationalStdLibrary.INSTANCE.createTransformation(name);
         }
  
+        if(headerCS != null) {
+        	setElementPositions(module, headerCS.getStartOffset(), headerCS.getEndOffset());
+        }
+        		
         return module;
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
+	// FIXME - 
+	// Defines AST positions helper operations not non-AST intrinsic element
+	// as a temporary solution to support QVT AST migration to OMG until
+	// https://bugs.eclipse.org/bugs/show_bug.cgi?id=257527 is resolved.
+	////////////////////////////////////////////////////////////////////////////////////////	
+	private static final String AST_POS_SOURCE = "org.eclipse.m2m.qvt.oml/temp/ASTPosition"; //$NON-NLS-1$
+	private static final String START_POS_KEY = "startPos"; //$NON-NLS-1$
+	private static final String END_POS_KEY = "endPos"; //$NON-NLS-2$
+	
+	public static int[] getElementPositions(EModelElement element) {
+		EAnnotation eAnnotation = element.getEAnnotation(AST_POS_SOURCE);
+		if(eAnnotation != null) {
+			EMap<String, String> details = eAnnotation.getDetails();
+			
+			String startPos = details.get(START_POS_KEY); //$NON-NLS-1$
+			String endPos = details.get(END_POS_KEY); //$NON-NLS-1$
+			return new int[] { Integer.valueOf(startPos), Integer.valueOf(endPos) };
+		}
+		return null;
+	}
+	
+	public static void setElementPositions(EModelElement element, int startPos, int endPos) {
+		EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+		eAnnotation.setSource(AST_POS_SOURCE);
+		EMap<String, String> details = eAnnotation.getDetails();
+		details.put(START_POS_KEY, String.valueOf(startPos)); //$NON-NLS-1$
+		details.put(END_POS_KEY, String.valueOf(endPos)); //$NON-NLS-1$
+		element.getEAnnotations().add(eAnnotation);
 	}
 }

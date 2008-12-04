@@ -14,6 +14,7 @@ package org.eclipse.m2m.internal.qvt.oml.evaluator;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
@@ -27,6 +28,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.MappingParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
+import org.eclipse.ocl.Environment;
 
 /**
  * @author dvorak
@@ -90,4 +92,39 @@ class EvaluationUtil {
 		return outParamValues;
 	}
 
+    static void mapOperationOutAndResultParams(QvtOperationalEvaluationEnv sourceEnv, QvtOperationalEvaluationEnv targetEnv) {
+    	ImperativeOperation sourceOper = (ImperativeOperation)sourceEnv.getOperation();
+    	ImperativeOperation targetOper = (ImperativeOperation)targetEnv.getOperation();
+    	EList<? extends EParameter> sourceParams = sourceOper.getResult();
+    	EList<? extends EParameter> targetParams = targetOper.getResult();
+    	
+    	if(sourceParams.size() != targetParams.size()) {
+    		throw new IllegalArgumentException("Source/Target environment operations have incompatible signatures"); //$NON-NLS-1$
+    	}
+
+    	for (int i = 0; i < sourceParams.size(); i++) {
+    		EParameter sourceParam = sourceParams.get(i);
+    		EParameter targetParam = targetParams.get(i);
+    		targetEnv.copyVariableValueFrom(sourceEnv, sourceParam.getName(), targetParam.getName());
+		}
+    	
+    	if(sourceParams.size() > 1) {
+    		// copy result variable explicitly as in case of many result parameters, there is no 'name=result' parameter 
+    		targetEnv.copyVariableValueFrom(sourceEnv, Environment.RESULT_VARIABLE_NAME, Environment.RESULT_VARIABLE_NAME);
+    	}
+
+    	sourceParams = sourceOper.getEParameters();
+    	targetParams = targetOper.getEParameters();
+    	if(sourceParams.size() != targetParams.size()) {
+    		throw new IllegalArgumentException("Source/Target environment operations have incompatible signatures"); //$NON-NLS-1$
+    	}
+    	
+    	for (int i = 0; i < sourceParams.size(); i++) {
+    		VarParameter sourceParam = (VarParameter) sourceParams.get(i);
+    		if(sourceParam.getKind() == DirectionKind.OUT) {
+    			EParameter targetParam = targetParams.get(i);
+    			targetEnv.copyVariableValueFrom(sourceEnv, sourceParam.getName(), targetParam.getName());    			
+    		}
+		}
+    }	
 }

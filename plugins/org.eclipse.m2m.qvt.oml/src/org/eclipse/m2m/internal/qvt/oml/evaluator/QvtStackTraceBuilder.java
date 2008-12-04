@@ -16,12 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EParameter;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.IModuleSourceInfo;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
@@ -29,129 +24,119 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
-import org.eclipse.ocl.ecore.CallOperationAction;
-import org.eclipse.ocl.ecore.Constraint;
-import org.eclipse.ocl.ecore.SendSignalAction;
-import org.eclipse.ocl.utilities.UMLReflection;
+import org.eclipse.ocl.utilities.ASTNode;
 
 /**
  * Helps to build QVT stack trace from a given state of QVT code execution.
  */
 public class QvtStackTraceBuilder {
 	
+	private static final String NAME_SEPARATOR = "::"; //$NON-NLS-1$
 	private static final String UNKNOWN_NAME = "<Unknown>"; //$NON-NLS-1$
 	private static final String INITIALIZER_NAME = "<init>"; //$NON-NLS-1$
 	private static final int UNKNOWN_LINE_NUM = -1;
 	
-	private QvtOperationalEvaluationEnv fEnv;
-	private Module fMainModule;
-	private int fOffset;
-	private UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
-		EObject, CallOperationAction, SendSignalAction, Constraint> fUML;
+	private QvtOperationalEvaluationEnv fEvalEnv;
 
 	/**
 	 * Constructs stack trace builder for the given evaluation environment.
 	 * 
-	 * @param env
+	 * @param evalEnv
 	 *            the evaluation environment representing the top stack trace
-	 * @param uml
-	 *            UML reflection instance, used for constructing model elements
-	 *            names
-	 * @param mainModule
-	 *            the module containing the main entry point or
-	 *            <code>null</code> if no entry point is available.
 	 *            
 	 * @param astNodeIPOffset explicit the AST node offset representing the current instruction 
 	 *		pointer of execution in a QVT module
 	 */
-	public QvtStackTraceBuilder(QvtOperationalEvaluationEnv env, UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
-			EObject, CallOperationAction, SendSignalAction, Constraint> uml, 
-			Module mainModule, int astNodeIPOffset) {
-		if(env == null || uml == null) {
+	public QvtStackTraceBuilder(QvtOperationalEvaluationEnv evalEnv) {
+		if(evalEnv == null) {
 			throw new IllegalArgumentException();
 		}
 		
-		fEnv = env;
-		fUML = uml;
-		fOffset = astNodeIPOffset;
-		fMainModule = mainModule;
+		fEvalEnv = evalEnv;
 	}
 	
 	/**
-	 * Builds the stack trace corresponding to evaluation environmnets hierarchy associated 
-	 * with this builder.
-	 * @return 
+	 * Builds the stack trace corresponding to evaluation environments hierarchy
+	 * associated with this builder.
+	 * 
+	 * @return list of QVT stack elements
 	 */
-    public List<StackTraceElement> buildStackTrace() {
-    	List<StackTraceElement> elements = new LinkedList<StackTraceElement>();
-    	int pos = 0;
-    	for(QvtOperationalEvaluationEnv nextEnv = fEnv; nextEnv != null; nextEnv = nextEnv.getParent()) { 
-    		elements.add(createStackElement(nextEnv, pos++));
+    public List<QVTStackTraceElement> buildStackTrace() {
+    	LinkedList<QVTStackTraceElement> elements = new LinkedList<QVTStackTraceElement>();
+    	int depth = 0;
+    	for(QvtOperationalEvaluationEnv parentEnv = fEvalEnv; parentEnv != null; parentEnv = parentEnv.getParent()) {    		    		
+    		elements.addLast(createStackElement(parentEnv));
+    		depth++;    		
     	}
-    	    	
+    	
     	return Collections.unmodifiableList(elements);
     }
-    
-    private StackTraceElement createStackElement(QvtOperationalEvaluationEnv env, int stackPos) {
-    	
-    	String fileName = null;    	
-    	String declClassName = UNKNOWN_NAME;    	
+
+    private QVTStackTraceElement createStackElement(QvtOperationalEvaluationEnv env) {
+    	String unitName = null;
+    	String moduleName = UNKNOWN_NAME;
     	String operName = UNKNOWN_NAME;
     	int lineNumber = UNKNOWN_LINE_NUM;    	
     	
     	Module module = null;
-    	int resultOffset = fOffset;
-    	EOperation operation = env.getOperation();
-    	    	
+    	ImperativeOperation operation = env.getOperation();
+
     	InternalEvaluationEnv internEvalEnv = env.getAdapter(InternalEvaluationEnv.class);
-		if(operation == null) {
-	    	operName = INITIALIZER_NAME;
-
-	    	ModuleInstance thisInstance = (ModuleInstance) env.getValueOf("this");
-	    	module = thisInstance.getModule();
+    	int resultOffset = getCurrentASTOffset(internEvalEnv);
+		boolean isRunningInTransformation = internEvalEnv.getCurrentTransformation() != null;
+		
+		if(isRunningInTransformation) {
+	    	ModuleInstance thisInstance = internEvalEnv.getCurrentModule();
+	    	assert thisInstance != null;
 	    	
-	    	if(module != null && module.getName() != null) {
-	    		declClassName = module.getName(); 
-	    	}
-	    	resultOffset = internEvalEnv.getCurrentASTOffset();
-	    	ImperativeOperation mainMethod = QvtOperationalParserUtil.getMainOperation(fMainModule);
-			if(resultOffset < 0 && mainMethod != null) {
-	    		resultOffset = mainMethod.getStartPosition();
-	    	}
-    	}
-    	else {
-    		if(operation.getName() != null) {
-    			operName = operation.getName();
-    		}
-
-    		if(operation instanceof ImperativeOperation) {
-    			module = QvtOperationalParserUtil.getOwningModule((ImperativeOperation)operation);
-    		}
-
-    		EClassifier owner = fUML.getOwningClassifier(operation);
-    		if(owner == null && operation.getEContainingClass() != null) {
-    			owner = operation.getEContainingClass();
-    		}
-    		
-			if(owner != null) {
-	    		declClassName = fUML.getName(owner);
+	    	module = thisInstance.getModule();
+	    	moduleName = module.getName();
+	    	
+			if(operation == null) {
+				// we must be executing a module instance initialization - synthetic constructor
+		    	operName = INITIALIZER_NAME;
+		    	
+		    	if(internEvalEnv.getCurrentIP() == module || resultOffset < -1) {
+			    	// FIXME - a temporary solution to get header positions
+			    	int[] positions = QvtOperationalParserUtil.getElementPositions(module);
+			    	if(positions != null) {
+			    		resultOffset = positions[0];
+			    	}
+		    	}
+			} else {
+	    		operName = operation.getName();	    		
+	    		EClassifier contextType = QvtOperationalParserUtil.getContextualType(operation);
+	    		if(contextType != null) {
+	    			operName = contextType.getName() + NAME_SEPARATOR + operName;
+	    		}
 			}
-    		
-    		resultOffset = (stackPos == 0) ? fOffset : internEvalEnv.getCurrentASTOffset();
-    	}   
+		} else { 
+			// TODO - non-transformation execution context 
+    	}
 
-
-    	if(module != null) {
+		if(module != null) {
 			IModuleSourceInfo sourceInfo = ASTBindingHelper.getModuleSourceBinding(module);
 			if(sourceInfo != null) {
-				fileName = sourceInfo.getFileName();
-				
+				unitName = sourceInfo.getFileName();
 				if(resultOffset >= 0) {
 					lineNumber = sourceInfo.getLineNumberProvider().getLineNumber(resultOffset);
 				}
 			}
+		}
+    	
+    	return new QVTStackTraceElement(moduleName, operName, unitName, lineNumber);
+    }
+    
+    private static int getCurrentASTOffset(InternalEvaluationEnv evalEnv) {
+    	// TODO - for cases that AST does not fill all offset
+    	// traverse up to the enclosing operation scope, taking the closest 
+    	// offset which has been initialized    	
+    	EObject currentIPObject = evalEnv.getCurrentIP();
+    	if(currentIPObject instanceof ASTNode) {
+    		ASTNode astNode = (ASTNode) currentIPObject;
+    		return astNode.getStartPosition();
     	}
     	
-    	return new StackTraceElement(declClassName, operName, fileName, lineNumber);
-    }	
+    	return -1;
+    }
 }

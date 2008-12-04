@@ -25,12 +25,16 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
+import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.IntermediatePropertyModelAdapter;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.NumberConversions;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QVTStackTraceElement;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtStackTraceBuilder;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ThisInstanceResolver;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
@@ -378,11 +382,13 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	
 	public EObject createInstance(EClassifier type, ModelParameter modelParam) {
         if (type instanceof EClass == false) {
-            throw new IllegalArgumentException("Expected EClass, got " + type); //$NON-NLS-1$
+            internalEnv().throwQVTException(
+                	new QvtRuntimeException("Expected EClass, got " + type)); //$NON-NLS-1$
         }
 		EClass impl = (EClass) type;
 		if (!QvtOperationalUtil.isInstantiable(impl)) {
-            throw new IllegalArgumentException("Cannot instantiate type " + impl.getName()); //$NON-NLS-1$
+            internalEnv().throwQVTException(
+            	new QvtRuntimeException("Cannot instantiate type " + impl.getName())); //$NON-NLS-1$
 		}
 		
 		EObject newObject = impl.getEPackage().getEFactoryInstance().create(impl);
@@ -574,7 +580,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
     public ImperativeOperation getOperation() {
 		return myOperation;
 	}
-
+    
     /**
      * The root evaluation environment, refers to <code>this</code> if this is the root environment
      */
@@ -697,7 +703,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	
 	private class Internal implements InternalEvaluationEnv {
 	    private ThisInstanceResolver myThisResolver;		
-	    private int myCurrentASTOffset = -1;
+	    private EObject myCurrentIP;
 		private final Stack<Object> myObjectExpOwnerStack;
 	    
 		Internal() {
@@ -779,14 +785,28 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			myObjectExpOwnerStack.push(owner);
 		}
 		
-	    public int setCurrentASTOffset(int currentASTOffset) {
-	    	int prevValue = myCurrentASTOffset;
-	    	myCurrentASTOffset = currentASTOffset;
+	    public EObject setCurrentIP(EObject currentIPObject) {
+	    	EObject prevValue = myCurrentIP;
+	    	myCurrentIP = currentIPObject;
 	    	return prevValue;
 		}
 	    
-	    public int getCurrentASTOffset() {
-			return myCurrentASTOffset;
-		}		
+	    public EObject getCurrentIP() {
+			return myCurrentIP;
+		}
+	    
+		public void throwQVTException(QvtRuntimeException exception) throws QvtRuntimeException {
+			try {
+				exception.setStackQvtTrace(getStackTraceElements());
+			} catch (Exception e) {
+				QvtPlugin.log(QvtPlugin.createErrorStatus("Failed to build QVT stack trace", e)); //$NON-NLS-1$
+			}
+			
+			throw exception;
+		}
+		
+	    public List<QVTStackTraceElement> getStackTraceElements() {
+	    	return new QvtStackTraceBuilder(QvtOperationalEvaluationEnv.this).buildStackTrace();
+	    }		
 	}
 }

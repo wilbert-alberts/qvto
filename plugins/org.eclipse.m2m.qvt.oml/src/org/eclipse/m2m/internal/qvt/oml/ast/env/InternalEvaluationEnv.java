@@ -11,7 +11,12 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
+import java.util.List;
+
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QVTStackTraceElement;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ThisInstanceResolver;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance;
 import org.eclipse.m2m.internal.qvt.oml.library.EObjectEStructuralFeaturePair;
@@ -40,14 +45,44 @@ public interface InternalEvaluationEnv {
 	 *         evaluation environment is not part of a transformation execution,
 	 *         but for instance Imperative OCL. 
 	 */	
-	ModuleInstance getCurrentModule();	
+	ModuleInstance getCurrentModule();
+		
+	/**
+	 * Sets the instruction pointer object, representing the current point of
+	 * execution using this evaluation environment
+	 * 
+	 * @param currentIPObj
+	 *            the current instruction pointer object
+	 * @return the previously set object
+	 * @see #getCurrentIP()
+	 */
+	EObject setCurrentIP(EObject currentIPObj);
+
+	/**
+	 * Gets the instruction pointer object, representing the current point of
+	 * execution using this evaluation environment
+	 * 
+	 * @return the current IP object or <code>null</code> if no object has been
+	 *         set the current instruction pointer object
+	 * @see #setCurrentIP(EObject)
+	 */
+	EObject getCurrentIP();	
+	
+	/**
+	 * Throws the given runtime exception, filling it with the current stack trace elements.
+	 * Gets list of stack elements representing the current stack trace.
+	 * @see #getStackTraceElements()
+	 */
+	void throwQVTException(QvtRuntimeException exception) throws QvtRuntimeException;
+
+	/**
+	 * Gets list of stack elements representing the current stack trace.
+	 * @see #throwQVTException(QvtRuntimeException) 
+	 */
+	List<QVTStackTraceElement> getStackTraceElements();	
 	
 	Object getInvalid();
-	    	
-    int setCurrentASTOffset(int currentASTOffset);
-    
-    int getCurrentASTOffset();
-        
+	    	        
 	void pushObjectExpOwner(Object owner);
     
 	void popObjectExpOwner();
