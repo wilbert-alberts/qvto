@@ -36,13 +36,6 @@ import org.eclipse.ocl.lpg.ProblemHandler;
 import org.eclipse.ocl.options.ProblemOption;
 
 public class QvtOperationalModuleEnv extends QvtOperationalEnv {
-	/**
-	 * Name mangling of <code>this</code> variables by name of module types 
-	 * is not longer used, <code>this</code> variable is directly defined instead in each module 
-	 * environment 
-	 */
-	@Deprecated
-    public static final String THIS_VAR_QNAME_SUFFIX = "." + THIS; //$NON-NLS-1$
 
 	private Module myContextModule;	
 	private List<Module> myLibs;
