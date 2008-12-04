@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.24 2008/12/02 14:47:34 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.25 2008/12/04 16:26:22 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -104,7 +104,6 @@ $KeyWords
 	uses
 	where
 	refines
-	enforcing
 	access
 	extends
 	blackbox
@@ -134,7 +133,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.24 2008/12/02 14:47:34 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.25 2008/12/04 16:26:22 aigdalov Exp $
  */
 	./
 $End
@@ -267,67 +266,59 @@ $Rules
 
 
 	--=== // Transformation header (start) ===--
-	transformation_h ::= qualifierList transformation qualifiedNameCS
+	transformation_h ::= qualifierList transformation qualifiedNameCS transformation_signature transformation_usage_refineOpt
 		/.$BeginJava
 					EList qualifierList = (EList) $getSym(1);
+					EList transfUsages = $EMPTY_ELIST;
+					TransformationRefineCS transfRefine = null;
+					Object transformation_usage_refineOpt = (SimpleSignatureCS)$getSym(5);
+					if (transformation_usage_refineOpt instanceof TransformationRefineCS) {
+						transfRefine = (TransformationRefineCS) transformation_usage_refineOpt;
+					} else if (transformation_usage_refineOpt instanceof EList) {
+						transfUsages = (EList) transformation_usage_refineOpt;
+					}
 					CSTNode result = createTransformationHeaderCS(
 							qualifierList,
 							(PathNameCS)$getSym(3),
-							$EMPTY_ELIST,
-							$EMPTY_ELIST,
-							null
-						);
-					if (qualifierList.isEmpty()) {
-						setOffsets(result, getIToken($getToken(2)), getIToken($getToken(4)));
-					}
-					else {
-						setOffsets(result, (CSTNode) qualifierList.get(qualifierList.size()-1), getIToken($getToken(4)));
-					}
-					$setResult(result);
-		  $EndJava
-		./
-	transformation_h ::= qualifierList transformation qualifiedNameCS '(' transfParamListOpt ')' moduleUsageListOpt transformationRefineCSOpt
-		/.$BeginJava
-					EList qualifierList = (EList) $getSym(1);
-					EList transfUsages = (EList) $getSym(7);
-					TransformationRefineCS transfRefine = (TransformationRefineCS) $getSym(8);
-					CSTNode result = createTransformationHeaderCS(
-							qualifierList,
-							(PathNameCS)$getSym(3),
-							(EList)$getSym(5),
+							(SimpleSignatureCS)$getSym(4),
 							transfUsages,
 							transfRefine
 						);
 					if (qualifierList.isEmpty()) {
 						setOffsets(result, getIToken($getToken(2)));
-					}
-					else {
-						setOffsets(result, (CSTNode) qualifierList.get(qualifierList.size()-1));
+					} else {
+						setOffsets(result, (CSTNode) qualifierList.get(0));
 					}
 					if (transfRefine == null) {
 						if (transfUsages.isEmpty()) {
-							setOffsets(result, result, getIToken($getToken(6)));
+							setOffsets(result, result, (SimpleSignatureCS)$getSym(4));
 						}
 						else {
 							setOffsets(result, result, (CSTNode) transfUsages.get(transfUsages.size()-1));
 						}
-					}
-					else {
+					} else {
 						setOffsets(result, result, transfRefine);
 					}
 					$setResult(result);
 		  $EndJava
 		./
-	
-	transformationRefineCSOpt ::= $empty
+
+
+	transformation_usage_refineOpt ::= $empty
 		/.$NullAction./
-	transformationRefineCSOpt ::= refines moduleRefCS enforcing IDENTIFIER
+	transformation_usage_refineOpt -> transformation_usage_refine
+
+	transformation_usage_refine -> module_usageList
+	transformation_usage_refine -> transformation_refine
+
+	transformation_signature -> simple_signature
+
+	transformation_refine ::= refines moduleref
 		/.$BeginJava
 					CSTNode result = createTransformationRefineCS(
-							(ModuleRefCS)$getSym(2),
-							getIToken($getToken(4))
+							(ModuleRefCS)$getSym(2)
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
+					setOffsets(result, (ModuleRefCS)$getSym(2));
 					$setResult(result);
 		  $EndJava
 		./
@@ -341,7 +332,7 @@ $Rules
 					CSTNode result = createTransformationHeaderCS(
 							$EMPTY_ELIST,
 							(PathNameCS)$getSym(2),
-							$EMPTY_ELIST,
+							createSimpleSignatureCS($EMPTY_ELIST),
 							$EMPTY_ELIST,
 							null
 						);
@@ -354,7 +345,7 @@ $Rules
 					CSTNode result = createTransformationHeaderCS(
 							$EMPTY_ELIST,
 							createPathNameCS(),
-							$EMPTY_ELIST,
+							createSimpleSignatureCS($EMPTY_ELIST),
 							$EMPTY_ELIST,
 							null
 						);
@@ -366,26 +357,25 @@ $Rules
 	--=== // Library header (end) ===--
 	
 	--=== // import of transformation and library (start) ===--
-	moduleUsageListOpt ::= $empty
-		/.$EmptyListAction./
-	moduleUsageListOpt -> moduleUsageList
-	
-	moduleUsageList ::= moduleUsageCS
+	module_usageList ::= module_usage
 		/.$BeginJava
 					EList result = new BasicEList();
 					result.add($getSym(1));
 					$setResult(result);
 		  $EndJava
 		./
-	moduleUsageList ::= moduleUsageList moduleUsageCS
+	module_usageList ::= module_usageList module_usage
 		/.$BeginJava
 					EList result = (EList) $getSym(1);
 					result.add($getSym(2));
 					$setResult(result);
 		  $EndJava
 		./
+
+	module_usage -> access_usage
+	module_usage -> extends_usage
 	
-	moduleUsageCS ::= access moduleKindOpt moduleRefList
+	access_usage ::= access module_kindOpt moduleref_list
 		/.$BeginJava
 					EList moduleRefList = (EList)$getSym(3);
 					CSTNode result = createModuleUsageCS(
@@ -397,7 +387,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	moduleUsageCS ::= extends moduleKindOpt moduleRefList
+	extends_usage ::= extends module_kindOpt moduleref_list
 		/.$BeginJava
 					EList moduleRefList = (EList)$getSym(3);
 					CSTNode result = createModuleUsageCS(
@@ -410,11 +400,11 @@ $Rules
 		  $EndJava
 		./
 	
-	moduleKindOpt ::= $empty
+	module_kindOpt ::= $empty
 		/.$NullAction./
-	moduleKindOpt -> moduleKindCS
+	module_kindOpt -> module_kind
 	
-	moduleKindCS ::= transformation
+	module_kind ::= transformation
 		/.$BeginJava
 					CSTNode result = createModuleKindCS(
 							ModuleKindEnum.TRANSFORMATION
@@ -423,7 +413,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	moduleKindCS ::= library
+	module_kind ::= library
 		/.$BeginJava
 					CSTNode result = createModuleKindCS(
 							ModuleKindEnum.LIBRARY
@@ -433,101 +423,36 @@ $Rules
 		  $EndJava
 		./
 	
-	moduleRefList ::= moduleRefCS
+	moduleref_list ::= moduleref
 		/.$BeginJava
 					EList result = new BasicEList();
 					result.add($getSym(1));
 					$setResult(result);
 		  $EndJava
 		./
-	moduleRefList ::= moduleRefList ',' moduleRefCS
+	moduleref_list ::= moduleref_list ',' moduleref
 		/.$BeginJava
 					EList result = (EList) $getSym(1);
 					result.add($getSym(3));
 					$setResult(result);
 		  $EndJava
 		./
-	moduleRefList ::= moduleRefList qvtErrorToken
+	moduleref_list ::= moduleref_list qvtErrorToken
 		/.$BeginJava
 					EList result = (EList) $getSym(1);
 					$setResult(result);
 		  $EndJava
 		./
 	
-	moduleRefCS ::= pathNameCS
+	moduleref ::= pathNameCS simple_signatureOpt
 		/.$BeginJava
+					SimpleSignatureCS signature = (SimpleSignatureCS)$getSym(2);
 					CSTNode result = createModuleRefCS(
 							(PathNameCS)$getSym(1),
-							$EMPTY_ELIST
+							signature 
 						);
-					setOffsets(result, (CSTNode)$getSym(1));
-					$setResult(result);
-		  $EndJava
-		./
-	moduleRefCS ::= pathNameCS '(' transfParamListOpt ')'
-		/.$BeginJava
-					CSTNode result = createModuleRefCS(
-							(PathNameCS)$getSym(1),
-							(EList)$getSym(3)
-						);
-					setOffsets(result, (CSTNode)$getSym(1), getIToken($getToken(4)));
-					$setResult(result);
-		  $EndJava
-		./
-	
-	transfParamListOpt ::= $empty
-		/.$EmptyListAction./
-	transfParamListOpt -> transfParamList
-	
-	transfParamList ::= transfParamCS
-		/.$BeginJava
-					EList result = new BasicEList();
-					result.add($getSym(1));
-					$setResult(result);
-		  $EndJava
-		./
-	transfParamList ::= transfParamList ',' transfParamCS
-		/.$BeginJava
-					EList result = (EList) $getSym(1);
-					result.add($getSym(3));
-					$setResult(result);
-		  $EndJava
-		./
-	transfParamList ::= transfParamList qvtErrorToken
-		/.$BeginJava
-					EList result = (EList) $getSym(1);
-					$setResult(result);
-		  $EndJava
-		./
-		
-	transfParamCS ::= param_directionOpt pathNameCS
-		/.$BeginJava
-					DirectionKindCS directionKind = (DirectionKindCS) $getSym(1);
-					TypeSpecCS typeSpecCS = createTypeSpecCS((PathNameCS)$getSym(2), null);
-					CSTNode result = createParameterDeclarationCS(
-							directionKind,
-							null,
-							typeSpecCS
-						);
-					setOffsets(result, directionKind == null ? (CSTNode)$getSym(2) : directionKind, (CSTNode)$getSym(2));
-					$setResult(result);
-		  $EndJava
-		./
-	transfParamCS ::= param_directionOpt IDENTIFIER ':' pathNameCS 
-		/.$BeginJava
-					DirectionKindCS directionKind = (DirectionKindCS) $getSym(1);
-					TypeSpecCS typeSpecCS = createTypeSpecCS((PathNameCS)$getSym(4), null);
-					CSTNode result = createParameterDeclarationCS(
-							directionKind,
-							getIToken($getToken(2)),
-							typeSpecCS
-						);
-					if (directionKind == null) {
-						setOffsets(result, getIToken($getToken(2)), (CSTNode)$getSym(4));
-					}
-					else {
-						setOffsets(result, directionKind, (CSTNode)$getSym(4));
-					}
+					CSTNode rightNode = (signature == null) ? (CSTNode)$getSym(1) : signature;
+					setOffsets(result, (CSTNode)$getSym(1), rightNode);
 					$setResult(result);
 		  $EndJava
 		./

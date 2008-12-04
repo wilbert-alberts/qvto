@@ -403,7 +403,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
         return result;
     }
 
-    protected final CSTNode createSimpleSignatureCS(EList<ParameterDeclarationCS> paramsCS) {
+    protected final SimpleSignatureCS createSimpleSignatureCS(EList<ParameterDeclarationCS> paramsCS) {
         SimpleSignatureCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createSimpleSignatureCS();
         result.getParams().addAll(paramsCS);
         return result;
@@ -704,10 +704,12 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return moduleKindCS;
 	}
 
-	protected final CSTNode createModuleRefCS(PathNameCS pathNameCS, EList<ParameterDeclarationCS> params) {
+	protected final CSTNode createModuleRefCS(PathNameCS pathNameCS, SimpleSignatureCS signature) {
 		ModuleRefCS moduleRefCS = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createModuleRefCS();
 		moduleRefCS.setPathNameCS(pathNameCS);
-		moduleRefCS.getParameters().addAll(params);
+		if (signature != null) {
+	        moduleRefCS.getParameters().addAll(signature.getParams());
+		}
 		return moduleRefCS;
 	}
 
@@ -719,19 +721,18 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 
-	protected final CSTNode createTransformationRefineCS(ModuleRefCS moduleRefCS, IToken token) {
+	protected final CSTNode createTransformationRefineCS(ModuleRefCS moduleRefCS) {
 		TransformationRefineCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createTransformationRefineCS();
 		result.setModuleRefCS(moduleRefCS);
-		result.setSimpleNameCS(createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, token.toString()));
 		return result;
 	}
 
 	protected final TransformationHeaderCS createTransformationHeaderCS(EList<StringLiteralExpCS> qualifiers, 
-			PathNameCS pathNameCS, EList<ParameterDeclarationCS> params, EList<ModuleUsageCS> transfUsages, 
+			PathNameCS pathNameCS, SimpleSignatureCS simpleSignatureCS, EList<ModuleUsageCS> transfUsages, 
 			TransformationRefineCS transfRefineCS) {
 				TransformationHeaderCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createTransformationHeaderCS();
 				result.getQualifiers().addAll(qualifiers);
-				result.getParameters().addAll(params);
+				result.getParameters().addAll(simpleSignatureCS.getParams());
 				result.getModuleUsages().addAll(transfUsages);
 				result.setTransformationRefineCS(transfRefineCS);
 				result.setPathNameCS(pathNameCS);

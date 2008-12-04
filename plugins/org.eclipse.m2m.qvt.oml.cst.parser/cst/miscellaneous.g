@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.6 2008/12/02 12:00:20 aigdalov Exp $ 
+-- * $Id: miscellaneous.g,v 1.7 2008/12/04 16:26:22 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -282,7 +282,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.6 2008/12/02 12:00:20 aigdalov Exp $
+ * $Id: miscellaneous.g,v 1.7 2008/12/04 16:26:22 aigdalov Exp $
  */
 	./
 $End
@@ -361,6 +361,10 @@ $Rules
 		  $EndJava
 		./
 
+	simple_signatureOpt ::= $empty
+		/.$NullAction./
+	simple_signatureOpt -> simple_signature
+
 	simple_signature ::= '(' param_listOpt ')' 
 		/.$BeginJava
 					CSTNode result = createSimpleSignatureCS((EList<ParameterDeclarationCS>)$getSym(2));
@@ -373,6 +377,12 @@ $Rules
 		/.$EmptyListAction./
 	param_listOpt -> param_list
 
+	param_list ::= param_list qvtErrorToken
+		/.$BeginJava
+					EList result = (EList)$getSym(1);
+					$setResult(result);
+		  $EndJava
+		./
 	param_list ::= param_list ',' param
 		/.$BeginJava
 					EList result = (EList)$getSym(1);
@@ -400,12 +410,14 @@ $Rules
 		  $EndJava
 		./
 		
-	param ::= typespec
+	param ::= param_directionOpt typespec
 		/.$BeginJava
 					CSTNode result = createParameterDeclarationCS(
-							null, null, (TypeSpecCS)$getSym(1)
+							(DirectionKindCS)$getSym(1),
+							null,
+							(TypeSpecCS)$getSym(2)
 						);
-					setOffsets(result, (CSTNode)$getSym(1));
+					setOffsets(result, (CSTNode)$getSym(2));
 					$setResult(result);
 		  $EndJava
 		./
@@ -1003,6 +1015,26 @@ $Rules
 							(PathNameCS)$getSym(3)
 						);
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	transformation_h ::= qualifierList transformation qualifiedNameCS
+		/.$BeginJava
+					EList qualifierList = (EList) $getSym(1);
+					CSTNode result = createTransformationHeaderCS(
+							qualifierList,
+							(PathNameCS)$getSym(3),
+							createSimpleSignatureCS($EMPTY_ELIST),
+							$EMPTY_ELIST,
+							null
+						);
+					if (qualifierList.isEmpty()) {
+						setOffsets(result, getIToken($getToken(2)), getIToken($getToken(4)));
+					}
+					else {
+						setOffsets(result, (CSTNode) qualifierList.get(qualifierList.size()-1), getIToken($getToken(4)));
+					}
 					$setResult(result);
 		  $EndJava
 		./

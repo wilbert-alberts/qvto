@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpKWLexer.g,v 1.8 2008/11/24 10:21:21 sboyko Exp $ 
+-- * $Id: QvtOpKWLexer.g,v 1.9 2008/12/04 16:26:22 aigdalov Exp $ 
 -- */
 --
 -- The QVT KeyWord Lexer
@@ -76,7 +76,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpKWLexer.g,v 1.8 2008/11/24 10:21:21 sboyko Exp $
+ * $Id: QvtOpKWLexer.g,v 1.9 2008/12/04 16:26:22 aigdalov Exp $
  */
 	./
 $End
@@ -120,7 +120,6 @@ $Export
 	uses
 	where
 	refines
-	enforcing
 	access
 	extends
 	blackbox
@@ -436,12 +435,6 @@ $Rules
 		| r e f i n e s
 		/.$BeginAction
 			$setResult($_refines);
-		  $EndAction
-		./
-		
-		| e n f o r c i n g
-		/.$BeginAction
-			$setResult($_enforcing);
 		  $EndAction
 		./
 		
