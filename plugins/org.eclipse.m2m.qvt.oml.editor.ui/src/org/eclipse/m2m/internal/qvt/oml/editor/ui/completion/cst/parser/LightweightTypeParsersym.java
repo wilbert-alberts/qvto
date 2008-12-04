@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.25 2008/12/02 14:47:27 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.26 2008/12/04 16:26:14 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.25 2008/12/02 14:47:27 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.26 2008/12/04 16:26:14 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.25 2008/12/02 14:47:27 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.26 2008/12/04 16:26:14 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.25 2008/12/02 14:47:27 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.26 2008/12/04 16:26:14 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -244,19 +244,18 @@ public interface LightweightTypeParsersym {
       TK_uses = 178,
       TK_where = 179,
       TK_refines = 180,
-      TK_enforcing = 181,
-      TK_access = 182,
-      TK_extends = 183,
-      TK_blackbox = 184,
-      TK_abstract = 185,
-      TK_static = 186,
+      TK_access = 181,
+      TK_extends = 182,
+      TK_blackbox = 183,
+      TK_abstract = 184,
+      TK_static = 185,
       TK_result = 27,
       TK_main = 128,
       TK_this = 32,
-      TK_rename = 187,
-      TK_inherits = 188,
-      TK_merges = 189,
-      TK_disjuncts = 190,
+      TK_rename = 186,
+      TK_inherits = 187,
+      TK_merges = 188,
+      TK_disjuncts = 189,
       TK_IDENTIFIER = 3,
       TK_ERROR_TOKEN = 35,
       TK_EOF_TOKEN = 129;
@@ -443,7 +442,6 @@ public interface LightweightTypeParsersym {
                  "uses",
                  "where",
                  "refines",
-                 "enforcing",
                  "access",
                  "extends",
                  "blackbox",
