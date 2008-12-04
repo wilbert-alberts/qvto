@@ -14,6 +14,7 @@ package org.eclipse.m2m.tests.qvt.oml.transform;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QVTStackTraceElement;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtAssertionFailed;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtStackOverFlowError;
@@ -68,13 +69,13 @@ public class TestStackTrace extends AbstractStackTraceTest {
 		assertEquals(StackOverflowError.class, e.getCause().getClass());
 		
 		int elementCount = 10;	
-		for (StackTraceElement element : e.getQvtStackTrace()) {
+		for (QVTStackTraceElement element : e.getQvtStackTrace()) {
 			if(--elementCount == 0) {
 				break;
 			}
-			assertEquals("causeStackOverFlow", element.getMethodName());
-			assertEquals("auxtransf", element.getClassName());			
-			assertEquals("auxtransf.qvto", element.getFileName());			
+			assertEquals("causeStackOverFlow", element.getOperationName());
+			assertEquals("auxtransf", element.getModuleName());			
+			assertEquals("auxtransf.qvto", element.getUnitName());			
 			assertEquals(6, element.getLineNumber());			
 		}
 	}
