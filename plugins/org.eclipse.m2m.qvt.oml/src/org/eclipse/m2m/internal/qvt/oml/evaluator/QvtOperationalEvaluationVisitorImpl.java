@@ -17,7 +17,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -26,9 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -109,17 +106,7 @@ import org.eclipse.m2m.internal.qvt.oml.library.LateResolveInTask;
 import org.eclipse.m2m.internal.qvt.oml.library.LateResolveTask;
 import org.eclipse.m2m.internal.qvt.oml.library.QvtResolveUtil;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
-import org.eclipse.m2m.internal.qvt.oml.trace.EDirectionKind;
-import org.eclipse.m2m.internal.qvt.oml.trace.EMappingContext;
-import org.eclipse.m2m.internal.qvt.oml.trace.EMappingOperation;
-import org.eclipse.m2m.internal.qvt.oml.trace.EMappingParameters;
-import org.eclipse.m2m.internal.qvt.oml.trace.EMappingResults;
-import org.eclipse.m2m.internal.qvt.oml.trace.ETuplePartValue;
-import org.eclipse.m2m.internal.qvt.oml.trace.EValue;
-import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
-import org.eclipse.m2m.internal.qvt.oml.trace.TraceFactory;
 import org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord;
-import org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue;
 import org.eclipse.m2m.qvt.oml.util.Log;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.EnvironmentFactory;
@@ -233,9 +220,9 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     		QvtOperationalEnv env, QvtOperationalEvaluationEnv evalEnv, Set<Module> libraryImports) {
     	
     	QvtOperationalEvaluationVisitorImpl visitor = new QvtOperationalEvaluationVisitorImpl(env, evalEnv);    	
-    	ModuleInstanceFactory moduleInstanceFactory = setupModuleInstanceFactory(evalEnv, visitor, new ModuleInstanceFactory());
     	InternalEvaluationEnv internalEvalEnv = evalEnv.getAdapter(InternalEvaluationEnv.class);
-		
+    	
+    	ModuleInstanceFactory moduleInstanceFactory = new ModuleInstanceFactory();		
     	ThisInstanceResolver importsByAccess = moduleInstanceFactory.instantiateImportsByAccess(libraryImports, true);
 		internalEvalEnv.setThisResolver(importsByAccess);
 		
@@ -370,12 +357,12 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         } else if (lValue instanceof PropertyCallExp) {
             Object ownerObj = getAssignExpLValueOwner(lValue);
             if (ownerObj instanceof EObject) {
-                int oldIpPos = setCurrentEnvInstructionPointer(assignExp);
+                EObject oldIP = setCurrentEnvInstructionPointer(assignExp);
                 env.callSetter(
                         (EObject) ownerObj,
                         getRenamedProperty(((PropertyCallExp<EClassifier, EStructuralFeature>) lValue).getReferredProperty()),
                         exprValue, isUndefined(exprValue), assignExp.isIsReset());
-                setCurrentEnvInstructionPointer(oldIpPos);
+                setCurrentEnvInstructionPointer(oldIP);
             }
         } else {
             throw new UnsupportedOperationException("Unsupported LValue type: " + ((lValue == null) ? null : lValue.getType())); //$NON-NLS-1$
@@ -401,7 +388,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         Object value = createFromString(configProperty.getEType(), stringValue);
         if(value == getOclInvalid()) {
         	// we failed to parse the value
-        	throwQvtException(new QvtRuntimeException(NLS.bind(EvaluationMessages.QvtOperationalEvaluationVisitorImpl_invalidConfigPropertyValue, configProperty.getName(), stringValue)));
+        	throwQVTException(new QvtRuntimeException(NLS.bind(EvaluationMessages.QvtOperationalEvaluationVisitorImpl_invalidConfigPropertyValue, configProperty.getName(), stringValue)));
         }
         
         return value;
@@ -548,12 +535,13 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 
     @Override
     public Object visitOperationCallExp(OperationCallExp<EClassifier, EOperation> operationCallExp) {
+    	// TODO - review the note bellow
     	// set IP of the current stack (represented by the top operation fEnv)
     	// to the this operation call in order to refeflect this call position 
     	// in possible QVT stack, in case an exception is thrown 
-        int oldIpPos = setCurrentEnvInstructionPointer(operationCallExp);
+        EObject oldIP = setCurrentEnvInstructionPointer(operationCallExp);
         Object result = doVisitOperationCallExp(operationCallExp);    	        
-        setCurrentEnvInstructionPointer(oldIpPos);
+        setCurrentEnvInstructionPointer(oldIP);
         return result;
     }    
     
@@ -651,12 +639,13 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     public Object visitMappingOperation(MappingOperation mappingOperation) {
         visitImperativeOperation(mappingOperation);
 
-        if (!isWhenPreconditionSatisfied(mappingOperation)) {
+        QvtOperationalEvaluationEnv evalEnv = getOperationalEvaluationEnv();
+		if (!isWhenPreconditionSatisfied(mappingOperation)) {
         	// return Invalid, to indicate precondition failure to the caller. It is used instead of
         	// of 'null' as it is a legal value for no result inout mapping, even
         	// the precondition holds
  
-        	return new MappingCallResult(null, getOperationalEvaluationEnv(), MappingCallResult.PRECOND_FAILED);
+        	return new MappingCallResult(null, evalEnv, MappingCallResult.PRECOND_FAILED);
         }
         
 		if(!mappingOperation.getDisjunct().isEmpty()) {
@@ -664,13 +653,13 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 		}
 
         // check the traces whether the relation already holds
-        TraceRecord traceRecord = getTrace(getContext().getTrace(), mappingOperation);
+        TraceRecord traceRecord = TraceUtil.getTraceRecord(evalEnv, mappingOperation);
         if (traceRecord != null) {
-        	return new MappingCallResult(fetchResultFromTrace(traceRecord), getOperationalEvaluationEnv(), MappingCallResult.FETCHED_FROM_TRACE);
+        	return new MappingCallResult(TraceUtil.fetchResultFromTrace(evalEnv, traceRecord), evalEnv, MappingCallResult.FETCHED_FROM_TRACE);
         }
 
         return new MappingCallResult(((OperationBodyImpl) mappingOperation.getBody()).accept(getVisitor()),
-        				getOperationalEvaluationEnv(), MappingCallResult.BODY_EXECUTED);
+        				evalEnv, MappingCallResult.BODY_EXECUTED);
     }
 
     public Object visitModule(Module module) {
@@ -764,13 +753,15 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 		assert eFactory != null : "Module class must have factory"; //$NON-NLS-1$
 		
 		QvtOperationalEvaluationEnv evalEnv = getOperationalEvaluationEnv();
-		setupModuleInstanceFactory(evalEnv, this, eFactory);
 		
 		ModuleInstance instance = (ModuleInstance)eFactory.create(moduleClass);
 		getEvaluationEnvironment().add(QvtOperationalEnv.THIS, instance);
+		setCurrentEnvInstructionPointer(moduleClass);
 		 
 		ModelParameterHelper modelParameters = new ModelParameterHelper(moduleClass, evalEnv.getOperationArgs());
 		initModuleProperties(instance, new HashSet<ModuleInstance>(), true, modelParameters);
+		// we are initialized set back the pointer to the module 
+		setCurrentEnvInstructionPointer(moduleClass);		
 		return instance;
 	}	
 	
@@ -798,7 +789,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     	CallHandler entryOperationHandler = createEntryOperationHandler(this);
 		moduleInstance.getAdapter(InternalTransformation.class).setEntryOperationHandler(entryOperationHandler);
         
-        setCurrentEnvInstructionPointer(myEntryPoint); // initialize IP to the main entry header	        
+//setCurrentEnvInstructionPointer(myEntryPoint); // initialize IP to the main entry header	        
         // call main entry operation
         OperationCallResult callResult = (OperationCallResult) entryOperationHandler.invoke(
         		null, moduleInstance,
@@ -1155,7 +1146,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 			}
 				
 			if(SeverityKind.FATAL.equals(assertExp.getSeverity())) {				
-				throwQvtException(new QvtAssertionFailed(EvaluationMessages.FatalAssertionFailed));
+				throwQVTException(new QvtAssertionFailed(EvaluationMessages.FatalAssertionFailed));
 			}		
 				
 		}
@@ -1337,21 +1328,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
             ((RenameImpl) rename).accept(getVisitor());
         }
     }
-        
-	private static ModuleInstanceFactory setupModuleInstanceFactory(
-			final QvtOperationalEvaluationEnv env,
-			final QvtOperationalEvaluationVisitorImpl visitor, 
-			final ModuleInstanceFactory factory) 
-	{
-		factory.addPostCreateHandler(new ModuleInstanceFactory.PostCreateHandler() {
-			public void created(ModuleInstance moduleInstance) {
-				// FIXME - handle model instance creation extent associtation here
-			}
-		});
-		
-		return factory;
-	}    
-    
+            
 	private IVirtualOperationTable getVirtualTable(EOperation operation) {
 		return IVirtualOperationTable.Access.INSTANCE.getVirtualTable(operation);
 	}
@@ -1373,194 +1350,8 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
             
             replaceInEnv(Environment.RESULT_VARIABLE_NAME, result, mappingOperation.getEType());
         }
-        addTraces(mappingOperation);
+        TraceUtil.addTraceRecord(getOperationalEvaluationEnv(), mappingOperation);
         return result;
-    }
-
-    private TraceRecord getTrace(Trace trace, MappingOperation mappingOperation) {
-        EMap<MappingOperation, EList<TraceRecord>> allTraceRecordMap = trace.getTraceRecordMap();
-        EList<TraceRecord> traceRecords = allTraceRecordMap.get(mappingOperation);
-        if (traceRecords == null) {
-            return null;
-        }
-
-        QvtOperationalEvaluationEnv env = getOperationalEvaluationEnv();
-
-        traceCheckCycle:
-            for (TraceRecord traceRecord : traceRecords) {
-                if (QvtOperationalParserUtil.isContextual(mappingOperation)) {
-                    if (traceRecord.getContext().getContext() == null) {
-                        continue;
-                    }
-                    Object context = env.getValueOf(Environment.SELF_VARIABLE_NAME);
-                    if (!isOclEqual(context, traceRecord.getContext().getContext().getValue().getOclObject())) {
-                        continue;
-                    }
-                }
-                int candidateParamSize = mappingOperation.getEParameters().size();
-                if (traceRecord.getParameters().getParameters().size() != candidateParamSize) {
-                    continue;
-                }
-                for (int i = 0; i < candidateParamSize; i++) {
-                    EParameter param = mappingOperation.getEParameters().get(i);
-                    Object paramValue = env.getValueOf(param.getName());
-                    VarParameterValue traceParamVal = (VarParameterValue) traceRecord.getParameters().getParameters().get(i);
-                    if (!isOclEqual(paramValue, traceParamVal.getValue().getOclObject())) {
-                        continue traceCheckCycle;
-                    }
-                }
-                return traceRecord;
-            }
-        return null;
-    }
-
-    private static boolean isOclEqual(Object candidateObject, Object traceObject) {
-        if (candidateObject == traceObject) {
-            return true;
-        }
-        if (QvtOperationalUtil.isUndefined(candidateObject)) {
-            return QvtOperationalUtil.isUndefined(traceObject);
-        }
-        if ((candidateObject == null) || (traceObject == null)) {
-            return false;
-        }
-        return candidateObject.equals(traceObject); // Overridden equals() is implied
-    }
-    
-
-    private TraceRecord addTraces(MappingOperation mappingOperation) {
-        TraceRecord traceRecord = TraceFactory.eINSTANCE.createTraceRecord();
-        Trace trace = getContext().getTrace();
-        EList<TraceRecord> list = createOrGetListElementFromMap(trace.getTraceRecordMap(), mappingOperation);
-        list.add(traceRecord);
-        trace.getTraceRecords().add(traceRecord);
-        EMappingOperation eMappingOperation = TraceFactory.eINSTANCE.createEMappingOperation();
-        traceRecord.setMappingOperation(eMappingOperation);
-        eMappingOperation.setName(mappingOperation.getName());
-        Module module = QvtOperationalParserUtil.getOwningModule(mappingOperation);
-        eMappingOperation.setPackage(module.getNsPrefix());
-        eMappingOperation.setModule(module.getName());
-        eMappingOperation.setRuntimeMappingOperation(mappingOperation);
-
-        EMappingContext eMappingContext = TraceFactory.eINSTANCE.createEMappingContext();
-        traceRecord.setContext(eMappingContext);
-        if(QvtOperationalParserUtil.isContextual(mappingOperation)) {
-            VarParameter operContext = mappingOperation.getContext();
-            VarParameterValue contextVPV = createVarParameterValue(mappingOperation,
-                    operContext.getKind(), operContext.getEType(), Environment.SELF_VARIABLE_NAME);
-            eMappingContext.setContext(contextVPV);
-            EList<TraceRecord> contextMappings = createOrGetListElementFromMap(trace.getSourceToTraceRecordMap(), contextVPV.getValue().getOclObject());
-            contextMappings.add(traceRecord);
-        }
-        else if(!mappingOperation.getEParameters().isEmpty()) {
-        	// make the first in parameter as the mapping source object
-        	for (EParameter nextEParam : mappingOperation.getEParameters()) {
-        		if(nextEParam instanceof VarParameter) {
-        			VarParameter firstInVarParam = (VarParameter) nextEParam;
-        			if((firstInVarParam.getEType() instanceof PredefinedType == false) && (firstInVarParam.getKind() == DirectionKind.IN || firstInVarParam.getKind() == DirectionKind.INOUT)) {
-        				Object val = createVarParameterValue(mappingOperation, firstInVarParam.getKind() ,
-        							firstInVarParam.getEType(), firstInVarParam.getName()).getValue().getOclObject();        	
-        				EList<TraceRecord> sourceMappings = createOrGetListElementFromMap(trace.getSourceToTraceRecordMap(), val);
-        				sourceMappings.add(traceRecord);
-        				break;
-        				
-        			}
-        		}
-			}
-        }
-        
-        EMappingParameters eMappingParameters = TraceFactory.eINSTANCE.createEMappingParameters();
-        traceRecord.setParameters(eMappingParameters);
-        for (EParameter param : mappingOperation.getEParameters()) {
-            VarParameter varParameter = (VarParameter) param;
-            VarParameterValue paramVPV = createVarParameterValue(mappingOperation, varParameter.getKind(),
-                    varParameter.getEType(), varParameter.getName());
-            eMappingParameters.getParameters().add(paramVPV);
-        }
-
-        EMappingResults eMappingResults = TraceFactory.eINSTANCE.createEMappingResults();
-        traceRecord.setResult(eMappingResults);
-
-        EList<VarParameter> results = mappingOperation.getResult();
-		if (!results.isEmpty()) {
-            for(VarParameter resultPar : results) {
-                String resultVarName = resultPar.getName();
-                EClassifier resultElementType = resultPar.getEType();
-            	
-                VarParameterValue resultVPV = createVarParameterValue(mappingOperation, DirectionKind.OUT, resultElementType, resultVarName);
-                eMappingResults.getResult().add(resultVPV);
-                EList<TraceRecord> resultMappings = createOrGetListElementFromMap(trace.getTargetToTraceRecordMap(), resultVPV.getValue().getOclObject());
-                resultMappings.add(traceRecord);
-            }
-        }
-
-        return traceRecord;
-    }
-
-    private VarParameterValue createVarParameterValue(MappingOperation mappingOperation, DirectionKind kind, EClassifier type, String name) {
-        VarParameterValue varParameterValue = TraceFactory.eINSTANCE.createVarParameterValue();
-        varParameterValue.setKind(getDirectionKind(kind));
-        varParameterValue.setName(name);
-        varParameterValue.setType(type.getName());
-        Object oclObject = getEvaluationEnvironment().getValueOf(name);
-        varParameterValue.setValue(createEValue(oclObject));
-        return varParameterValue;
-    }
-
-    @SuppressWarnings("unchecked") //$NON-NLS-1$
-    private EValue createEValue(Object oclObject) {
-        EValue value = TraceFactory.eINSTANCE.createEValue();
-        value.setOclObject(oclObject);
-        if (oclObject != null) {
-            if (oclObject instanceof Collection) {
-                Collection<Object> oclCollection = (Collection<Object>) oclObject;
-                // TODO: Write a test for checking collections
-                value.setCollectionType("OclCollection"); //$NON-NLS-1$
-                for (Object collectionElement : oclCollection) {
-                    value.getCollection().add(createEValue(collectionElement));
-                }
-            } else if (oclObject instanceof Tuple) {
-                Tuple<EOperation, EStructuralFeature> tuple = (Tuple<EOperation, EStructuralFeature>) oclObject;
-                value.setCollectionType("Tuple"); //$NON-NLS-1$
-                TupleType<EOperation, EStructuralFeature> tupleType = tuple.getTupleType();
-                for (EStructuralFeature part : tupleType.oclProperties()) {
-                    Object partValue = tuple.getValue(part);
-                    ETuplePartValue tuplePartValue = TraceFactory.eINSTANCE.createETuplePartValue();
-                    tuplePartValue.setName(part.getName());
-                    EValue partEValue = createEValue(partValue);
-                    tuplePartValue.setValue(partEValue);
-                    value.getCollection().add(tuplePartValue);
-                }
-            } else if (oclObject instanceof EObject) {
-                value.setModelElement((EObject) oclObject);
-            } else {
-                if (oclObject != null) {
-                    value.setPrimitiveValue(oclObject.toString());
-                }
-            }
-        }
-        return value;
-    }
-
-    private static EDirectionKind getDirectionKind(DirectionKind kind) {
-        if (kind == DirectionKind.IN) {
-            return EDirectionKind.IN;
-        } else if (kind == DirectionKind.INOUT) {
-            return EDirectionKind.INOUT;
-        } else if (kind == DirectionKind.OUT) {
-            return EDirectionKind.OUT;
-        }
-        throw new RuntimeException("Wrong DirectionKind: " + kind.name()); //$NON-NLS-1$
-    }
-    
-    private static <K, T> EList<T> createOrGetListElementFromMap(EMap<K, EList<T>> map, K key) {
-        EList<T> list = map.get(key);
-        if (list == null) {
-            list = new BasicEList<T>();
-            map.put(key, list);
-            list = map.get(key);
-        }
-        return list;
     }
 
     private static class OperationCallResult {
@@ -1610,7 +1401,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         
         if(isReusingMappingCall) {
         	// let the reused mapping see the reusing caller's out/result parameters
-        	mapOperationOutAndResultParams(oldEvalEnv, nestedEnv);
+        	EvaluationUtil.mapOperationOutAndResultParams(oldEvalEnv, nestedEnv);
         }
                         
         // setup 'this' module variable  
@@ -1639,7 +1430,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         	callResult = e.getResult();
         }
         catch (StackOverflowError e) {
-        	throwQvtException(new QvtStackOverFlowError(e));
+        	throwQVTException(new QvtStackOverFlowError(e));
         }
         catch (QvtRuntimeException e) {
        		throw e;
@@ -1651,17 +1442,17 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         		QvtPlugin.log(e);
         	}
         	if (e.getLocalizedMessage() != null) {
-        		throwQvtException(new QvtRuntimeException(e.getLocalizedMessage()));
+        		throwQVTException(new QvtRuntimeException(e.getLocalizedMessage()));
         	}
         	else {
-        		throwQvtException(new QvtRuntimeException(e));
+        		throwQVTException(new QvtRuntimeException(e));
         	}
         }
         finally {
             if(isMapping && isReusingMappingCall && callResult != null) {
             	// reflect our output in the reusing mapping caller
             	if(((MappingCallResult)callResult).isBodyExecuted()) {
-            		mapOperationOutAndResultParams(nestedEnv, oldEvalEnv);
+            		EvaluationUtil.mapOperationOutAndResultParams(nestedEnv, oldEvalEnv);
             	}
             }        	
 
@@ -1670,43 +1461,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         
     	return callResult;
     }
-        
-    private static void mapOperationOutAndResultParams(QvtOperationalEvaluationEnv sourceEnv, QvtOperationalEvaluationEnv targetEnv) {
-    	ImperativeOperation sourceOper = (ImperativeOperation)sourceEnv.getOperation();
-    	ImperativeOperation targetOper = (ImperativeOperation)targetEnv.getOperation();
-    	EList<? extends EParameter> sourceParams = sourceOper.getResult();
-    	EList<? extends EParameter> targetParams = targetOper.getResult();
-    	
-    	if(sourceParams.size() != targetParams.size()) {
-    		throw new IllegalArgumentException("Source/Target environment operations have incompatible signatures"); //$NON-NLS-1$
-    	}
-
-    	for (int i = 0; i < sourceParams.size(); i++) {
-    		EParameter sourceParam = sourceParams.get(i);
-    		EParameter targetParam = targetParams.get(i);
-    		targetEnv.copyVariableValueFrom(sourceEnv, sourceParam.getName(), targetParam.getName());
-		}
-    	
-    	if(sourceParams.size() > 1) {
-    		// copy result variable explicitly as in case of many result parameters, there is no 'name=result' parameter 
-    		targetEnv.copyVariableValueFrom(sourceEnv, Environment.RESULT_VARIABLE_NAME, Environment.RESULT_VARIABLE_NAME);
-    	}
-
-    	sourceParams = sourceOper.getEParameters();
-    	targetParams = targetOper.getEParameters();
-    	if(sourceParams.size() != targetParams.size()) {
-    		throw new IllegalArgumentException("Source/Target environment operations have incompatible signatures"); //$NON-NLS-1$
-    	}
-    	
-    	for (int i = 0; i < sourceParams.size(); i++) {
-    		VarParameter sourceParam = (VarParameter) sourceParams.get(i);
-    		if(sourceParam.getKind() == DirectionKind.OUT) {
-    			EParameter targetParam = targetParams.get(i);
-    			targetEnv.copyVariableValueFrom(sourceEnv, sourceParam.getName(), targetParam.getName());    			
-    		}
-		}
-    }
-        
+                
     private MappingCallResult dispatchDisjuctMapping(MappingOperation method) {
     	QvtOperationalEvaluationEnv evalEnv = getOperationalEvaluationEnv();
     	Object source = evalEnv.getOperationSelf();
@@ -1756,12 +1511,9 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     	return exception instanceof ReturnExpEvent;
     }
     
-    protected final void throwQvtException(QvtRuntimeException exception) throws QvtRuntimeException {
-		throwQvtException(exception, null);
-    }
-
-    protected final void throwQvtException(QvtRuntimeException exception, ASTNode causingASTNode) throws QvtRuntimeException {
-		QvtRuntimeException.doThrow(exception, createStackInfoProvider(getOperationalEvaluationEnv(), causingASTNode));
+    protected final void throwQVTException(QvtRuntimeException exception) throws QvtRuntimeException {
+		getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class)
+				.throwQVTException(exception);
     }
     
     @SuppressWarnings("unchecked") //$NON-NLS-1$
@@ -1964,43 +1716,6 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     	return evalEnv.createTuple(operation.getEType(), values);
     }
     
-    private Object fetchResultFromTrace(TraceRecord trace) {
-    	MappingOperation operation = trace.getMappingOperation().getRuntimeMappingOperation();
-    	EList<VarParameter> resultParams = operation.getResult();    	
-    	if (resultParams.isEmpty()) {
-            return null;
-        }
-
-    	EList<VarParameterValue> traceResult = trace.getResult().getResult();    	
-		if(resultParams.size() == 1) {
-    		return traceResult.get(0).getValue().getOclObject();
-    	}
-
-		assert resultParams.size() > 1 && operation.getEType() instanceof TupleType;
-    	@SuppressWarnings("unchecked")
-    	TupleType<EClassifier, EStructuralFeature> tupleType = (TupleType<EClassifier, EStructuralFeature>)operation.getEType();
-    	
-    	HashMap<EStructuralFeature, Object> partValues = new HashMap<EStructuralFeature, Object>(2);		 
-    	for (EStructuralFeature property : tupleType.oclProperties()) {
-    		VarParameterValue paramValue = null;
-    		for (VarParameterValue nextParamValue : traceResult) {
-    			if(property.getName().equals(nextParamValue.getName())) {
-    				paramValue = nextParamValue;
-    				break;
-    			}
-    		}
-    		
-    		Object value = null;
-    		if(paramValue != null && paramValue.getValue() != null) {
-				value = paramValue.getValue().getOclObject();    				
-    		}
-    		partValues.put(property, value);
-		}
-    	
-    	return getOperationalEvaluationEnv().createTuple(operation.getEType(), partValues);
-    }
-    
-
     private static CollectionKind getCollectionKind(Collection<?> collection) {
         if (collection instanceof ArrayList) {
             return CollectionKind.SEQUENCE_LITERAL;
@@ -2092,28 +1807,6 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     	return property;
     }
     
-    private QvtRuntimeException.StackInfoProvider createStackInfoProvider(final QvtOperationalEvaluationEnv topStackEnv, final ASTNode causingASTNode) {    	    	
-    	return new QvtRuntimeException.StackInfoProvider() {    		
-    		private List<StackTraceElement> elements;
-    		
-    		public List<StackTraceElement> getStackTraceElements() {
-    			if(elements == null) {
-    		    	int offset = (causingASTNode != null) ? 
-    		    			causingASTNode.getStartPosition() : 
-    		    				topStackEnv.getAdapter(InternalEvaluationEnv.class).getCurrentASTOffset();
-    		    	if(offset < 0) {
-    		    		offset = -1;
-    		    	}
-    				
-    				elements = new QvtStackTraceBuilder(topStackEnv, getOperationalEnv().getUMLReflection(), myRootModule, offset).buildStackTrace();
-    				return Collections.unmodifiableList(elements);
-    			}
-    			
-    			return Collections.emptyList();
-    		}
-    	};
-    }
-
     /**
 	* Wraps the environment's creatInstance() and transforms failures to QVT exception
 	*/    
@@ -2136,23 +1829,18 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 			}
 
 		} catch (IllegalArgumentException e) {
-			throwQvtException(new QvtRuntimeException(e));
+			throwQVTException(new QvtRuntimeException(e));
 		}
 		
 		return newInstance;
-	}    
+	}
    
-    private int setCurrentEnvInstructionPointer(ASTNode node) {
+    private EObject setCurrentEnvInstructionPointer(EObject node) {
+    	InternalEvaluationEnv internEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);
     	if(node != null) {
-    		return setCurrentEnvInstructionPointer(node.getStartPosition());
-    	} else {
-    		return setCurrentEnvInstructionPointer(-1);
+    		return internEnv.setCurrentIP(node);
     	}
-    }
-
-    private int setCurrentEnvInstructionPointer(int pos) {
-    	InternalEvaluationEnv internEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);    	
-    	return internEnv.setCurrentASTOffset(pos);
+    	return internEnv.getCurrentIP();
     }
     
     protected QvtOperationalEvaluationVisitor createInterruptibleVisitor() {
@@ -2176,9 +1864,9 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     		protected void genericVisitAny(Object object) {
     			if(monitor != null && monitor.isCanceled()) {
     				if(object instanceof ASTNode) {
-    					throwQvtException(new QvtInterruptedExecutionException(), (ASTNode)object);
+    					throwQVTException(new QvtInterruptedExecutionException());
     				} else {
-    					throwQvtException(new QvtInterruptedExecutionException());
+    					throwQVTException(new QvtInterruptedExecutionException());
     				}
     			}
     		}    		
