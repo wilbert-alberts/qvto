@@ -1215,8 +1215,13 @@ public class QvtOperationalVisitorCS
 		
 		if (objectExp.getExtent() == null && module != null && !getModelParameter(module).isEmpty()) {
 			QvtOperationalModuleEnv moduleEnv = getModuleContextEnv(env);				
-			boolean isInvalidForExtentResolve = objectExp.getReferredObject() == null 
-					&& (objectExp.getType() == null || !moduleEnv.isMayBelongToExtent(objectExp.getType()));
+			boolean isInvalidForExtentResolve = false;
+			if (objectExp.getReferredObject() == null) { 
+				isInvalidForExtentResolve = (objectExp.getType() == null || !moduleEnv.isMayBelongToExtent(objectExp.getType()));
+			}
+			else {
+				isInvalidForExtentResolve = IntermediateClassFactory.isIntermediateClass(objectExp.getReferredObject().getType());
+			}
 			if(!isInvalidForExtentResolve) {
 				env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentFailToInfer,
 						QvtOperationalTypesUtil.getTypeFullName(objectExp.getType())),
@@ -1305,7 +1310,86 @@ public class QvtOperationalVisitorCS
 		}
 		
         env.setContextModule(module);
+        
+		Map<String, EClass> createdIntermClasses = new LinkedHashMap<String, EClass>(moduleCS.getClassifierDefCS().size());
+		final Map<EClass, CSTNode> cstIntermClassesMap = new HashMap<EClass, CSTNode>();
+		for (ClassifierDefCS classifierDefCS : moduleCS.getClassifierDefCS()) {
+			if (createdIntermClasses.containsKey(classifierDefCS.getSimpleNameCS().getValue())) {
+	            env.reportError(NLS.bind(ValidationMessages.DuplicateClassifier,
+	            		new Object[] { classifierDefCS.getSimpleNameCS().getValue() }), classifierDefCS.getSimpleNameCS());
+				continue;
+			}
+			EClass classifer = visitClassifierDefCS(classifierDefCS, module, env);
+			createdIntermClasses.put(classifer.getName(), classifer);
+			cstIntermClassesMap.put(classifer, classifierDefCS.getSimpleNameCS());
+		}
+		for (ClassifierDefCS classifierDefCS : moduleCS.getClassifierDefCS()) {
+			EClass rootClass = createdIntermClasses.get(classifierDefCS.getSimpleNameCS().getValue());			
+			for (TypeCS typeCS : classifierDefCS.getExtends()) {
+				
+				if (typeCS instanceof PathNameCS && ((PathNameCS) typeCS).getSequenceOfNames().size() == 1) {
+					EClass extClass = createdIntermClasses.get(((PathNameCS) typeCS).getSequenceOfNames().get(0));
+					if (extClass != null) {
+						rootClass.getESuperTypes().add(extClass);
+						continue;
+					}
+				}
+				
+				EClassifier extendType = visitTypeCS(typeCS, null, env);
+				if (extendType == null) {
+					// error reported by visitTypeCS(..)
+					continue;
+				}
+				else if (!QVTUMLReflection.isUserModelElement(extendType)) {
+					env.reportError(NLS.bind(ValidationMessages.InvalidClassifierForExtend,
+							QvtOperationalTypesUtil.getTypeFullName(extendType)),
+							typeCS);
+				}
+				else {
+					rootClass.getESuperTypes().add((EClass) extendType);
+				}
+			}
+		}
+
+		class CycleChecker {
+			boolean checkClass(EClass cls) {
+				myVisitedClasses.clear();
+				return checkClassImpl(cls);
+			}
+			
+			private boolean checkClassImpl(EClass cls) {
+				myVisitedClasses.add(cls);
+				for (EClass superCls : cls.getESuperTypes()) {
+					// check only interm hierarchy
+					if (!cstIntermClassesMap.containsKey(superCls)) {
+						continue;
+					}
+					if (myVisitedClasses.contains(superCls)) {
+						return false;
+					}
+					if (!checkClassImpl(superCls)) {
+						return false;
+					}
+				}
+				return true;
+			}
+			
+			final Set<EClass> myVisitedClasses = new HashSet<EClass>(2);
+		}
+		CycleChecker cycleChecker = new CycleChecker();
+		for (EClass nextClass : cstIntermClassesMap.keySet()) {
+			if (!cycleChecker.checkClass(nextClass)) {
+				env.reportError(NLS.bind(ValidationMessages.CycleInIntermHierarchy,
+						QvtOperationalTypesUtil.getTypeFullName(nextClass)),
+						cstIntermClassesMap.get(nextClass));
+			}
+		}
 		
+		if (!createdIntermClasses.isEmpty()) {
+			IntermediateClassFactory.getFactory(module).registerModelType(env);
+		}
+		
+
 		importsCS(parsedModuleCS, module, env, compiler);
 
 		for (RenameCS renameCS : moduleCS.getRenamings()) {

@@ -12,7 +12,10 @@
 
 package org.eclipse.m2m.internal.qvt.oml.compiler;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
@@ -138,11 +141,29 @@ public class IntermediateClassFactory extends EFactoryImpl {
 	}
 
 	public static boolean isIntermediateClass(EClassifier class_) {
+		if (class_ == null) {
+			return false;
+		}
 		EPackage ePackage = class_.getEPackage();
 		if (ePackage != null && INTERMEDIATE_MODELTYPE_NAME.equals(ePackage.getName())) {
 			return true;
 		}
 		return false;
+	}
+
+	public static List<EStructuralFeature> getHiddenFeatures(Class classifier) {
+		Map<String, EStructuralFeature> ownFeatures = new HashMap<String, EStructuralFeature>(classifier.getEStructuralFeatures().size());
+		for (EStructuralFeature nextFeature : classifier.getEStructuralFeatures()) {
+			ownFeatures.put(nextFeature.getName(), nextFeature);
+		}
+		List<EStructuralFeature> hiddenFeatures = new ArrayList<EStructuralFeature>(2);
+		for (EStructuralFeature nextFeature : classifier.getEAllStructuralFeatures()) {
+			EStructuralFeature ownFeature = ownFeatures.get(nextFeature.getName());
+			if (ownFeature != null && ownFeature != nextFeature) {
+				hiddenFeatures.add(nextFeature);
+			}
+		}
+		return hiddenFeatures;
 	}
 
 	public void addClassifierPropertyInit(Class classifier, EStructuralFeature feature, OCLExpression<EClassifier> expression) {
