@@ -97,7 +97,8 @@ public class QvtStackTraceBuilder {
 		    	operName = INITIALIZER_NAME;
 		    	
 		    	if(internEvalEnv.getCurrentIP() == module || resultOffset < -1) {
-			    	// FIXME - a temporary solution to get header positions
+			    	// FIXME - a temporary solution to get header positions until
+		    		// https://bugs.eclipse.org/bugs/show_bug.cgi?id=257527 is resolved.		    		
 			    	int[] positions = QvtOperationalParserUtil.getElementPositions(module);
 			    	if(positions != null) {
 			    		resultOffset = positions[0];
