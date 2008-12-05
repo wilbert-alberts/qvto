@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.27 2008/12/04 16:26:14 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.28 2008/12/05 12:24:41 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.27 2008/12/04 16:26:14 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.28 2008/12/05 12:24:41 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.27 2008/12/04 16:26:14 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.28 2008/12/05 12:24:41 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.27 2008/12/04 16:26:14 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.28 2008/12/05 12:24:41 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -2871,10 +2871,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 						null
 					);
 				if (qualifierList.isEmpty()) {
-					setOffsets(result, getIToken(dtParser.getToken(2)), getIToken(dtParser.getToken(4)));
-				}
-				else {
-					setOffsets(result, (CSTNode) qualifierList.get(qualifierList.size()-1), getIToken(dtParser.getToken(4)));
+					setOffsets(result, getIToken(dtParser.getToken(2)), (PathNameCS)dtParser.getSym(3));
+				} else {
+					setOffsets(result, (CSTNode) qualifierList.get(0), (PathNameCS)dtParser.getSym(3));
 				}
 				dtParser.setSym1(result);
 	  		  break;
@@ -3892,7 +3891,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 				EList qualifierList = (EList) dtParser.getSym(1);
 				EList transfUsages = ourEmptyEList;
 				TransformationRefineCS transfRefine = null;
-				Object transformation_usage_refineOpt = (SimpleSignatureCS)dtParser.getSym(5);
+				Object transformation_usage_refineOpt = dtParser.getSym(5);
 				if (transformation_usage_refineOpt instanceof TransformationRefineCS) {
 					transfRefine = (TransformationRefineCS) transformation_usage_refineOpt;
 				} else if (transformation_usage_refineOpt instanceof EList) {
