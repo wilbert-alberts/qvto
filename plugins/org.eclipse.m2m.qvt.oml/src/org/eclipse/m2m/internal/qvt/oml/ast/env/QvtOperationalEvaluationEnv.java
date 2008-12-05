@@ -430,8 +430,9 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			ModelParameter modelParam = QvtOperationalModuleEnv.findModelParameter(type, DirectionKind.OUT, modelParameters);						
 			ModelInstance model = mainTransfInstance.getModel(modelParam);
 			
-			assert model != null;
-			return model.getExtent();
+			if (model != null) {
+				return model.getExtent();
+			}
 		}
 		
 		return internalEnv().getUnboundExtent();
