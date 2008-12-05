@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
@@ -1220,7 +1221,12 @@ public class QvtOperationalVisitorCS
 				isInvalidForExtentResolve = (objectExp.getType() == null || !moduleEnv.isMayBelongToExtent(objectExp.getType()));
 			}
 			else {
-				isInvalidForExtentResolve = IntermediateClassFactory.isIntermediateClass(objectExp.getReferredObject().getType());
+				if (IntermediateClassFactory.isIntermediateClass(objectExp.getReferredObject().getType())) {
+					isInvalidForExtentResolve = true;
+				}
+				else {
+					isInvalidForExtentResolve = !QVTUMLReflection.isUserModelElement(objectExp.getReferredObject().getType());
+				}
 			}
 			if(!isInvalidForExtentResolve) {
 				env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extentFailToInfer,
@@ -1311,84 +1317,7 @@ public class QvtOperationalVisitorCS
 		
         env.setContextModule(module);
         
-		Map<String, EClass> createdIntermClasses = new LinkedHashMap<String, EClass>(moduleCS.getClassifierDefCS().size());
-		final Map<EClass, CSTNode> cstIntermClassesMap = new HashMap<EClass, CSTNode>();
-		for (ClassifierDefCS classifierDefCS : moduleCS.getClassifierDefCS()) {
-			if (createdIntermClasses.containsKey(classifierDefCS.getSimpleNameCS().getValue())) {
-	            env.reportError(NLS.bind(ValidationMessages.DuplicateClassifier,
-	            		new Object[] { classifierDefCS.getSimpleNameCS().getValue() }), classifierDefCS.getSimpleNameCS());
-				continue;
-			}
-			EClass classifer = visitClassifierDefCS(classifierDefCS, module, env);
-			createdIntermClasses.put(classifer.getName(), classifer);
-			cstIntermClassesMap.put(classifer, classifierDefCS.getSimpleNameCS());
-		}
-		for (ClassifierDefCS classifierDefCS : moduleCS.getClassifierDefCS()) {
-			EClass rootClass = createdIntermClasses.get(classifierDefCS.getSimpleNameCS().getValue());			
-			for (TypeCS typeCS : classifierDefCS.getExtends()) {
-				
-				if (typeCS instanceof PathNameCS && ((PathNameCS) typeCS).getSequenceOfNames().size() == 1) {
-					EClass extClass = createdIntermClasses.get(((PathNameCS) typeCS).getSequenceOfNames().get(0));
-					if (extClass != null) {
-						rootClass.getESuperTypes().add(extClass);
-						continue;
-					}
-				}
-				
-				EClassifier extendType = visitTypeCS(typeCS, null, env);
-				if (extendType == null) {
-					// error reported by visitTypeCS(..)
-					continue;
-				}
-				else if (!QVTUMLReflection.isUserModelElement(extendType)) {
-					env.reportError(NLS.bind(ValidationMessages.InvalidClassifierForExtend,
-							QvtOperationalTypesUtil.getTypeFullName(extendType)),
-							typeCS);
-				}
-				else {
-					rootClass.getESuperTypes().add((EClass) extendType);
-				}
-			}
-		}
-
-		class CycleChecker {
-			boolean checkClass(EClass cls) {
-				myVisitedClasses.clear();
-				return checkClassImpl(cls);
-			}
-			
-			private boolean checkClassImpl(EClass cls) {
-				myVisitedClasses.add(cls);
-				for (EClass superCls : cls.getESuperTypes()) {
-					// check only interm hierarchy
-					if (!cstIntermClassesMap.containsKey(superCls)) {
-						continue;
-					}
-					if (myVisitedClasses.contains(superCls)) {
-						return false;
-					}
-					if (!checkClassImpl(superCls)) {
-						return false;
-					}
-				}
-				return true;
-			}
-			
-			final Set<EClass> myVisitedClasses = new HashSet<EClass>(2);
-		}
-		CycleChecker cycleChecker = new CycleChecker();
-		for (EClass nextClass : cstIntermClassesMap.keySet()) {
-			if (!cycleChecker.checkClass(nextClass)) {
-				env.reportError(NLS.bind(ValidationMessages.CycleInIntermHierarchy,
-						QvtOperationalTypesUtil.getTypeFullName(nextClass)),
-						cstIntermClassesMap.get(nextClass));
-			}
-		}
-		
-		if (!createdIntermClasses.isEmpty()) {
-			IntermediateClassFactory.getFactory(module).registerModelType(env);
-		}
-		
+		visitIntermediateClassesCS(env, moduleCS, module);		
 
 		importsCS(parsedModuleCS, module, env, compiler);
 
@@ -1476,13 +1405,127 @@ public class QvtOperationalVisitorCS
 
 		return module;
 	}
-	
-	private EClass visitClassifierDefCS(ClassifierDefCS classifierDefCS, Module module, QvtOperationalEnv env) throws SemanticException {
-		org.eclipse.m2m.internal.qvt.oml.expressions.Class eClassifier = IntermediateClassFactory.getFactory(module).createIntermediateClassifier();
-		eClassifier.setStartPosition(classifierDefCS.getStartOffset());
-		eClassifier.setEndPosition(classifierDefCS.getEndOffset());
+
+	private void visitIntermediateClassesCS(QvtOperationalEnv env, MappingModuleCS moduleCS, Module module) throws SemanticException {
 		
-		eClassifier.setName(classifierDefCS.getSimpleNameCS().getValue());
+		Map<String, EClass> createdIntermClasses = new LinkedHashMap<String, EClass>(moduleCS.getClassifierDefCS().size());
+		final Map<EClass, CSTNode> cstIntermClassesMap = new LinkedHashMap<EClass, CSTNode>();
+		for (ClassifierDefCS classifierDefCS : moduleCS.getClassifierDefCS()) {
+			if (createdIntermClasses.containsKey(classifierDefCS.getSimpleNameCS().getValue())) {
+	            env.reportError(NLS.bind(ValidationMessages.DuplicateClassifier,
+	            		new Object[] { classifierDefCS.getSimpleNameCS().getValue() }), classifierDefCS.getSimpleNameCS());
+				continue;
+			}
+
+			org.eclipse.m2m.internal.qvt.oml.expressions.Class eClassifier = IntermediateClassFactory.getFactory(module).createIntermediateClassifier();
+			eClassifier.setStartPosition(classifierDefCS.getStartOffset());
+			eClassifier.setEndPosition(classifierDefCS.getEndOffset());
+			
+			eClassifier.setName(classifierDefCS.getSimpleNameCS().getValue());
+			
+			createdIntermClasses.put(eClassifier.getName(), eClassifier);
+			cstIntermClassesMap.put(eClassifier, classifierDefCS.getSimpleNameCS());
+		}
+
+		if (!createdIntermClasses.isEmpty()) {
+			IntermediateClassFactory.getFactory(module).registerModelType(env);
+		}
+
+		for (ClassifierDefCS classifierDefCS : moduleCS.getClassifierDefCS()) {
+			String className = classifierDefCS.getSimpleNameCS().getValue();
+			EClass rootClass = createdIntermClasses.get(className);			
+			for (TypeCS typeCS : classifierDefCS.getExtends()) {
+				
+				if (typeCS instanceof PathNameCS && ((PathNameCS) typeCS).getSequenceOfNames().size() == 1) {
+					EClass extClass = createdIntermClasses.get(((PathNameCS) typeCS).getSequenceOfNames().get(0));
+					if (extClass != null) {
+						rootClass.getESuperTypes().add(extClass);
+						continue;
+					}
+				}
+				
+				EClassifier extendType = visitTypeCS(typeCS, null, env);
+				if (extendType == null) {
+					// error reported by visitTypeCS(..)
+					continue;
+				}
+				else if (!QVTUMLReflection.isUserModelElement(extendType)) {
+					env.reportError(NLS.bind(ValidationMessages.InvalidClassifierForExtend,
+							QvtOperationalTypesUtil.getTypeFullName(extendType)),
+							typeCS);
+				}
+				else {
+					rootClass.getESuperTypes().add((EClass) extendType);
+				}
+			}
+		}
+
+		for (ClassifierDefCS classifierDefCS : moduleCS.getClassifierDefCS()) {
+			String className = classifierDefCS.getSimpleNameCS().getValue();
+			if (!createdIntermClasses.containsKey(className)) {
+				continue;
+			}
+			visitClassifierDefCS(classifierDefCS, createdIntermClasses.get(className), module, env);
+		}
+		
+		class CycleChecker {
+			boolean checkClass(EClass cls) {
+				myVisitedClasses.clear();
+				return checkClassImpl(cls);
+			}
+			
+			private boolean checkClassImpl(EClass cls) {
+				myVisitedClasses.add(cls);
+				for (EClass superCls : cls.getESuperTypes()) {
+					// check only intermediate hierarchy
+					if (!cstIntermClassesMap.containsKey(superCls)) {
+						continue;
+					}
+					if (myVisitedClasses.contains(superCls)) {
+						return false;
+					}
+					if (!checkClassImpl(superCls)) {
+						return false;
+					}
+				}
+				return true;
+			}
+			
+			final Set<EClass> myVisitedClasses = new HashSet<EClass>(2);
+		}
+		
+		CycleChecker cycleChecker = new CycleChecker();
+		for (EClass nextClass : cstIntermClassesMap.keySet()) {
+			if (!cycleChecker.checkClass(nextClass)) {
+				env.reportError(NLS.bind(ValidationMessages.CycleInIntermHierarchy,
+						QvtOperationalTypesUtil.getTypeFullName(nextClass)),
+						cstIntermClassesMap.get(nextClass));
+			}
+
+			nextClass.getESuperTypes().add(EcorePackage.Literals.ECLASS);
+			
+			Map<String, EStructuralFeature> ownFeatures = new HashMap<String, EStructuralFeature>(nextClass.getEStructuralFeatures().size());
+			for (EStructuralFeature nextFeature : nextClass.getEStructuralFeatures()) {
+				ownFeatures.put(nextFeature.getName(), nextFeature);
+			}
+			for (EStructuralFeature nextFeature : nextClass.getEAllStructuralFeatures()) {
+				EStructuralFeature ownFeature = ownFeatures.get(nextFeature.getName());
+				if (ownFeature != null && ownFeature != nextFeature) {
+					env.reportError(NLS.bind(ValidationMessages.HidingProperty,
+							nextFeature.getName()),
+							cstIntermClassesMap.get(nextClass));
+				}
+			}
+			
+//			org.eclipse.emf.common.util.Diagnostic validate = new org.eclipse.emf.ecore.util.Diagnostician().validate(nextClass);
+//			if (validate.getSeverity() != org.eclipse.emf.common.util.Diagnostic.OK) {
+//				System.err.println(validate.getMessage());
+//			}
+		}
+		
+	}
+	
+	private EClass visitClassifierDefCS(ClassifierDefCS classifierDefCS, EClass eClassifier, Module module, QvtOperationalEnv env) throws SemanticException {
 
 		class PropertyPair {
 			final EStructuralFeature myEFeature;

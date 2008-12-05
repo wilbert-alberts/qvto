@@ -199,15 +199,7 @@ public class QVTUMLReflection
 	public List<EStructuralFeature> getAttributes(EClassifier classifier) {
 		List<EStructuralFeature> result = fUmlReflection.getAttributes(classifier);
 		
-		if (classifier instanceof Class) {
-			List<EStructuralFeature> hiddenFeatures = IntermediateClassFactory.getHiddenFeatures((Class) classifier);
-			if (!hiddenFeatures.isEmpty()) {
-				List<EStructuralFeature> reducedResult = new ArrayList<EStructuralFeature>(result);
-				reducedResult.removeAll(hiddenFeatures);
-				result = reducedResult;
-			}
-		}
-		if(classifier instanceof Module) {
+		if(classifier instanceof Module || classifier instanceof Class) {
 			List<EStructuralFeature> nonContextuals = new ArrayList<EStructuralFeature>(result != null ? result.size() : 5);
 			for (EStructuralFeature nextFeature : result) {
 				if(nextFeature instanceof ContextualProperty == false && 

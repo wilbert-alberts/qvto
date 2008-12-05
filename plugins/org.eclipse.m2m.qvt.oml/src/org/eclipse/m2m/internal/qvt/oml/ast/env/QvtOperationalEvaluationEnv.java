@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.m2m.internal.qvt.oml.compiler.IntermediateClassFactory;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.IntermediatePropertyModelAdapter;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
@@ -424,7 +425,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 
 	public ModelParameterExtent getDefaultInstantiationExtent(EClassifier type) {
 		TransformationInstance mainTransfInstance = internalEnv().getCurrentTransformation();
-		if(mainTransfInstance != null) {
+		if(mainTransfInstance != null && !IntermediateClassFactory.isIntermediateClass(type) && QVTUMLReflection.isUserModelElement(type)) {
 			EList<ModelParameter> modelParameters = mainTransfInstance.getTransformation().getModelParameter();
 			ModelParameter modelParam = QvtOperationalModuleEnv.findModelParameter(type, DirectionKind.OUT, modelParameters);						
 			ModelInstance model = mainTransfInstance.getModel(modelParam);

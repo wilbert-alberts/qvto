@@ -13,23 +13,24 @@
 package org.eclipse.m2m.internal.qvt.oml.compiler;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.cst.adapters.AbstractGenericAdapter;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitor;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Class;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
@@ -95,7 +96,14 @@ public class IntermediateClassFactory extends EFactoryImpl {
 
 	@Override
 	public EObject create(EClass class_) {
-		return super.create(class_);
+		if (myIsInitInProgress > 0) {
+			if (myInstantiatedClasses.contains(class_)) {
+				return null;
+			}
+			myInstantiatedClasses.add(class_);
+		}
+		//return super.create(class_);
+		return new IntermediateClassInstance(class_);
 	}
 	
 	@Override
@@ -151,22 +159,7 @@ public class IntermediateClassFactory extends EFactoryImpl {
 		return false;
 	}
 
-	public static List<EStructuralFeature> getHiddenFeatures(Class classifier) {
-		Map<String, EStructuralFeature> ownFeatures = new HashMap<String, EStructuralFeature>(classifier.getEStructuralFeatures().size());
-		for (EStructuralFeature nextFeature : classifier.getEStructuralFeatures()) {
-			ownFeatures.put(nextFeature.getName(), nextFeature);
-		}
-		List<EStructuralFeature> hiddenFeatures = new ArrayList<EStructuralFeature>(2);
-		for (EStructuralFeature nextFeature : classifier.getEAllStructuralFeatures()) {
-			EStructuralFeature ownFeature = ownFeatures.get(nextFeature.getName());
-			if (ownFeature != null && ownFeature != nextFeature) {
-				hiddenFeatures.add(nextFeature);
-			}
-		}
-		return hiddenFeatures;
-	}
-
-	public void addClassifierPropertyInit(Class classifier, EStructuralFeature feature, OCLExpression<EClassifier> expression) {
+	public void addClassifierPropertyInit(EClass classifier, EStructuralFeature feature, OCLExpression<EClassifier> expression) {
 		Map<EStructuralFeature, OCLExpression<EClassifier>> clsFeatures = myClassifierInitializations.get(classifier);
 		if (clsFeatures == null) {
 			clsFeatures = new LinkedHashMap<EStructuralFeature, OCLExpression<EClassifier>>(2);
@@ -181,21 +174,48 @@ public class IntermediateClassFactory extends EFactoryImpl {
 		}
 		EObject eInstance = (EObject) instance;
 		
-		Map<EStructuralFeature, OCLExpression<EClassifier>> clsFeatures = myClassifierInitializations.get(eInstance.eClass());
-		if (clsFeatures == null) {
-			return;
+		try {
+			myIsInitInProgress++;
+			
+			List<EClass> allSuperClasses = new ArrayList<EClass>(2);
+			allSuperClasses.add(eInstance.eClass());
+			allSuperClasses.addAll(eInstance.eClass().getEAllSuperTypes());
+			
+			for (EClass nextClass : allSuperClasses) {
+				Map<EStructuralFeature, OCLExpression<EClassifier>> clsFeatures = myClassifierInitializations.get(nextClass);
+				if (clsFeatures == null) {
+					continue;
+				}
+				for (EStructuralFeature eFeature : clsFeatures.keySet()) {
+					OCLExpression<EClassifier> expression = clsFeatures.get(eFeature);
+					Object evalResult = evalEnv.visitExpression(expression);
+					eInstance.eSet(eFeature, evalResult);
+				}
+			}
 		}
-		for (EStructuralFeature eFeature : clsFeatures.keySet()) {
-			OCLExpression<EClassifier> expression = clsFeatures.get(eFeature);
-			Object evalResult = evalEnv.visitExpression(expression);
-			eInstance.eSet(eFeature, evalResult);
+		finally {
+			myIsInitInProgress--;
+			if (myIsInitInProgress == 0) {
+				myInstantiatedClasses.clear();
+			}
 		}
-		
 	}	
 	
 	private static class IntermediatePackage extends EPackageImpl {
 		IntermediatePackage(EFactoryImpl factory) {
 			super(factory);
+		}
+	}
+	
+	
+	private static class IntermediateClassInstance extends DynamicEObjectImpl {
+		IntermediateClassInstance(EClass eClass) {
+			super(eClass);
+		}
+		
+		@Override
+		public String toString() {
+			return eClass().getName();
 		}
 	}
 	
@@ -235,8 +255,10 @@ public class IntermediateClassFactory extends EFactoryImpl {
 	
 	private final ModelType myIntermediateModelType;
 	
-	private final Map<Class, Map<EStructuralFeature, OCLExpression<EClassifier>>> myClassifierInitializations 
-			= new LinkedHashMap<Class, Map<EStructuralFeature,OCLExpression<EClassifier>>>(2);
+	private final Map<EClass, Map<EStructuralFeature, OCLExpression<EClassifier>>> myClassifierInitializations 
+			= new LinkedHashMap<EClass, Map<EStructuralFeature,OCLExpression<EClassifier>>>(2);
+	private int myIsInitInProgress = 0;
+	private final Set<EClass> myInstantiatedClasses = new HashSet<EClass>(2);
 
 	private static final String INTERMEDIATE_MODELTYPE_NAME = "_INTERMEDIATE";
 

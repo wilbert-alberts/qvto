@@ -140,6 +140,7 @@ public final class ValidationMessages extends NLS {
 	public static String DuplicateClassifier;
 	public static String InvalidClassifierForExtend;
 	public static String CycleInIntermHierarchy;
+	public static String HidingProperty;
 
     public static String LibOperationAnalyser_ParametersOsReturnTypeNotFound;
     public static String LibOperationAnalyser_OperationParsingError;
