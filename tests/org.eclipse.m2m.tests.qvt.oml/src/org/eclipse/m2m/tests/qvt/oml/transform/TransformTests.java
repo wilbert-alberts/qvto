@@ -78,6 +78,10 @@ public class TransformTests {
     
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {        		
+                new FileToFileData("intermSimple"), //$NON-NLS-1$                
+        		new FilesToFilesData("intermWithCrossRefs", Collections.<String>emptyList(), Arrays.asList("intermWithCrossRefs.ecore")),        		
+        		new FilesToFilesData("intermWithExtends", Collections.<String>emptyList(), Arrays.asList("intermWithExtends.ecore")),        		
+        		new FilesToFilesData("intermWithoutExtent", Collections.singletonList("in.ecore"), Collections.<String>emptyList()),        		
                 new FileToFileData("libraryWithModuleElements_257184"), //$NON-NLS-1$                
                 new FileToFileData("transformationWithModuleElements_257055"), //$NON-NLS-1$                
                 new FileToFileData("objectExpBodyExpressions_253051"), //$NON-NLS-1$                
