@@ -13,7 +13,7 @@
      A. Sanchez-Barbudo  - initial API and implementation
  </copyright>
 
- $Id: plugin.xml,v 1.1 2008/09/02 20:01:45 radvorak Exp $
+ $Id: plugin.xml,v 1.2 2008/12/05 10:20:48 radvorak Exp $
 -->
 
 <plugin>
@@ -31,7 +31,7 @@
             class="org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl"/>
    </extension>
 
-   <extension point="org.eclipse.core.runtime.contentTypes">
+   <extension point="org.eclipse.core.contenttype.contentTypes">
       <content-type
             base-type="org.eclipse.emf.ecore"
             file-extensions="eimperativeocl"
