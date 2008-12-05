@@ -14,33 +14,36 @@
  
  </copyright>
 
- $Id: plugin.xml,v 1.1 2008/09/02 20:02:27 radvorak Exp $
+ $Id: plugin.xml,v 1.2 2008/12/05 10:20:43 radvorak Exp $
 -->
 
 <plugin>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
-      <package uri="http://www.eclipse.org/qvt/1.0/QVToperational"
+      <package
+            uri="http://www.eclipse.org/qvt/1.0/QVTOperational"
             class="org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage"
             genModel="model/QVTOperational.genmodel"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.content_parser">
-      <parser contentTypeIdentifier="org.eclipse.m2m.qvt.oml.ecore.qvtoperational"
+      <parser
+            contentTypeIdentifier="org.eclipse.m2m.qvt.oml.ecore.qvtoperational"
             class="org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl"/>
    </extension>
 
-   <extension point="org.eclipse.core.runtime.contentTypes">
-     <content-type id="org.eclipse.m2m.qvt.oml.ecore.qvtoperational"
-           base-type="org.eclipse.emf.ecore"
-           file-extensions="eqvtoperational"          
-           name="%_UI_QVTOperational_content_type"
-           priority="normal">
-        <describer class="org.eclipse.emf.ecore.xmi.impl.RootXMLContentHandlerImpl$Describer">
-           <parameter name="namespace" value="http://www.eclipse.org/gmt/umlx/EQVToperational"/>
-           <parameter name="kind" value="xmi"/>
-        </describer>
-     </content-type>
+   <extension point="org.eclipse.core.contenttype.contentTypes">
+      <content-type
+            base-type="org.eclipse.emf.ecore.xmi"
+            file-extensions="eqvtoperational"
+            id="org.eclipse.m2m.qvt.oml.ecore.qvtoperational"
+            name="%_UI_QVTOperational_content_type"
+            priority="normal">
+         <describer class="org.eclipse.emf.ecore.xmi.impl.RootXMLContentHandlerImpl$Describer">
+            <parameter name="namespace" value="http://www.eclipse.org/qvt/1.0/QVTOperational"/>
+            <parameter name="kind" value="xmi"/>
+         </describer>
+      </content-type>
    </extension>
 
 </plugin>
