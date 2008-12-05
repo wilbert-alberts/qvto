@@ -5,7 +5,7 @@
  <copyright>
  </copyright>
 
- $Id: plugin.xml,v 1.1 2008/09/02 20:36:01 radvorak Exp $
+ $Id: plugin.xml,v 1.2 2008/12/05 10:20:46 radvorak Exp $
 -->
 
 <plugin>
@@ -21,7 +21,7 @@
             class="org.eclipse.m2m.qvt.oml.emof.QVTOperational.util.QVTOperationalResourceFactoryImpl"/>
    </extension>
 
-   <extension point="org.eclipse.core.runtime.contentTypes">
+   <extension point="org.eclipse.core.contenttype.contentTypes">
      <content-type id="org.eclipse.m2m.qvt.oml.emof.qvtoperational"
            base-type="org.eclipse.emf.emof"
            file-extensions="qvtoperational,xmi,xml"          
