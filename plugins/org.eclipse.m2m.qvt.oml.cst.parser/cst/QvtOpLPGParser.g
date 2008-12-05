@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.25 2008/12/04 16:26:22 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.26 2008/12/05 12:36:57 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -133,7 +133,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.25 2008/12/04 16:26:22 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.26 2008/12/05 12:36:57 aigdalov Exp $
  */
 	./
 $End
@@ -271,7 +271,7 @@ $Rules
 					EList qualifierList = (EList) $getSym(1);
 					EList transfUsages = $EMPTY_ELIST;
 					TransformationRefineCS transfRefine = null;
-					Object transformation_usage_refineOpt = (SimpleSignatureCS)$getSym(5);
+					Object transformation_usage_refineOpt = $getSym(5);
 					if (transformation_usage_refineOpt instanceof TransformationRefineCS) {
 						transfRefine = (TransformationRefineCS) transformation_usage_refineOpt;
 					} else if (transformation_usage_refineOpt instanceof EList) {

@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.7 2008/12/04 16:26:22 aigdalov Exp $ 
+-- * $Id: miscellaneous.g,v 1.8 2008/12/05 12:36:57 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -282,7 +282,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.7 2008/12/04 16:26:22 aigdalov Exp $
+ * $Id: miscellaneous.g,v 1.8 2008/12/05 12:36:57 aigdalov Exp $
  */
 	./
 $End
@@ -1030,10 +1030,9 @@ $Rules
 							null
 						);
 					if (qualifierList.isEmpty()) {
-						setOffsets(result, getIToken($getToken(2)), getIToken($getToken(4)));
-					}
-					else {
-						setOffsets(result, (CSTNode) qualifierList.get(qualifierList.size()-1), getIToken($getToken(4)));
+						setOffsets(result, getIToken($getToken(2)), (PathNameCS)$getSym(3));
+					} else {
+						setOffsets(result, (CSTNode) qualifierList.get(0), (PathNameCS)$getSym(3));
 					}
 					$setResult(result);
 		  $EndJava
