@@ -8,8 +8,11 @@ intermediate class LeafAttribute {
 };
 
 main() {
-	var v := srcModel.objects()[EClass]->collect(eAllAttributes->map attr2LeafAttrs('p_'));
-	object EClass {name := 'cls'; eStructuralFeatures += v->collect(_attr); }
+    -- remark: use eStructuralFeatures[EAttribute], to make javaless unittest work, as 
+    -- eAllAttributes derivation is not defined in the dynamic ecore model copy
+	var v := srcModel.objects()[EClass]->collect(eStructuralFeatures[EAttribute]->map attr2LeafAttrs('p_'));
+	-- sort by name as collect() resulted in Bag
+	object EClass {name := 'cls'; eStructuralFeatures += v._attr->sortedBy(name); }
 }
 
 mapping EAttribute::attr2LeafAttrs(in prefix:String) : Sequence(LeafAttribute) {
