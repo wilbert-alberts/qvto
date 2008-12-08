@@ -247,6 +247,13 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 	public void setOperationalEvaluationEnv(QvtOperationalEvaluationEnv evalEnv) {
 		myEvalEnv = evalEnv;
     }
+	
+	protected void pushedStack(QvtOperationalEvaluationEnv env) {
+	}	
+	
+	protected void poppedStack() {
+	}
+	
 
     public IContext getContext() {
         return getOperationalEvaluationEnv().getContext();
@@ -431,7 +438,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
             addToEnv(Environment.SELF_VARIABLE_NAME, env.getOperationSelf(), contextType);
         }
 
-
+		pushedStack(getOperationalEvaluationEnv());
         return null;
     }
 
@@ -739,12 +746,14 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 		
 		QvtOperationalEvaluationEnv currentEval = getOperationalEvaluationEnv();
 		setOperationalEvaluationEnv(nestedEvalEnv);
+		pushedStack(nestedEvalEnv);
 		try {
 			ModuleInstance moduleInstance = callModuleImplicitConstructor(targetTransf);
 			moduleInstance.getAdapter(InternalTransformation.class).setEntryOperationHandler(createEntryOperationHandler(nestedVisitor));
 			return moduleInstance;
 		} finally {
 			setOperationalEvaluationEnv(currentEval);
+			poppedStack();
 		}
 	}
 	
@@ -759,9 +768,11 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
 		setCurrentEnvInstructionPointer(moduleClass);
 		 
 		ModelParameterHelper modelParameters = new ModelParameterHelper(moduleClass, evalEnv.getOperationArgs());
+    	pushedStack(evalEnv);
+    	
 		initModuleProperties(instance, new HashSet<ModuleInstance>(), true, modelParameters);
 		// we are initialized set back the pointer to the module 
-		setCurrentEnvInstructionPointer(moduleClass);		
+		setCurrentEnvInstructionPointer(moduleClass);
 		return instance;
 	}	
 	
@@ -796,6 +807,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
         		makeEntryOperationArgs(myEntryPoint, 
         		operationalTransfModule).toArray(), evaluationEnv);
 
+        poppedStack();
         evalResult = EvaluationUtil.createEvaluationResult(callResult.myEvalEnv);
         
         if (evalResult.getModelExtents().isEmpty()) {
@@ -1284,8 +1296,9 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     			QvtOperationalEvaluationEnv nestedEvalEnv = (QvtOperationalEvaluationEnv) env.getFactory().createEvaluationEnvironment(getOperationalEvaluationEnv());
     			nestedEvalEnv.add(QvtOperationalEnv.THIS, moduleInstance);
     			nestedEvalEnv.getOperationArgs().addAll(currentEvalEnv.getOperationArgs());
-    			
+    			nestedEvalEnv.getAdapter(InternalEvaluationEnv.class).setCurrentIP(type);
     			setOperationalEvaluationEnv(nestedEvalEnv);
+    			pushedStack(nestedEvalEnv);
     		}
     		try {	    		
     			initModuleProperties(moduleInstance, modelParameters);
@@ -1293,6 +1306,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
     			processedModules.add(moduleInstance);
     			if(!useCurrentEnv) {    			
     				setOperationalEvaluationEnv(getOperationalEvaluationEnv().getParent());
+    				poppedStack();
     			}
     		}
     	}
@@ -1457,6 +1471,7 @@ implements QvtOperationalEvaluationVisitor, DeferredAssignmentListener {
             }        	
 
         	setOperationalEvaluationEnv(oldEvalEnv);
+        	poppedStack();
         }
         
     	return callResult;

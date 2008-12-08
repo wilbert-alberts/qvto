@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
@@ -118,7 +119,8 @@ public class QvtStackTraceBuilder {
 		if(module != null) {
 			IModuleSourceInfo sourceInfo = ASTBindingHelper.getModuleSourceBinding(module);
 			if(sourceInfo != null) {
-				unitName = sourceInfo.getFileName();
+				URI uri = sourceInfo.getSourceURI();
+				unitName = uri.lastSegment();
 				if(resultOffset >= 0) {
 					lineNumber = sourceInfo.getLineNumberProvider().getLineNumber(resultOffset);
 				}

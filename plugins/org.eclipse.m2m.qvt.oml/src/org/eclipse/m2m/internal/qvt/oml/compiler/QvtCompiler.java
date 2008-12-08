@@ -31,11 +31,13 @@ import java.util.Set;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
@@ -45,6 +47,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFileUtil;
+import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.AbstractBundleResource;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.WorkspaceMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
@@ -179,8 +182,20 @@ public class QvtCompiler {
 	private void addSourceLineNumberInfo(ParsedModuleCS parsedModuleCS, Module moduleAST) {
 		QvtOpLexer lexer = parsedModuleCS.getParser().getLexer();
 		if (lexer != null) {
-			String fileName = parsedModuleCS.getSource().getName();
-			ASTBindingHelper.createModuleSourceBinding(moduleAST, fileName, new String(lexer.getInputChars()));
+			CFile source = parsedModuleCS.getSource();
+			URI sourceURI;
+			try {
+				if(source instanceof AbstractBundleResource == false) {
+					// FIXME - 
+					sourceURI = URI.createURI(source.getFileStore().toURI().toString());
+				} else {
+					sourceURI = URI.createURI(source.getFullPath());
+				}
+				
+				ASTBindingHelper.createModuleSourceBinding(moduleAST, sourceURI, new String(lexer.getInputChars()));				
+			} catch (IOException e) {
+				QvtPlugin.logError("Can't get QVT source URI", e); //$NON-NLS-1$
+			}
 		}
 	}
     

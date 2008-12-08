@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.binding;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.common.util.LineNumberProvider;
 
 /**
@@ -21,7 +22,7 @@ public interface IModuleSourceInfo {
 	 * Gets the name of the module source file.
 	 * @return the name string
 	 */
-	String getFileName();
+	URI getSourceURI();
 	
 	/**
 	 * Gets the contents the module source file

@@ -17,6 +17,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
@@ -31,8 +32,8 @@ import org.eclipse.ocl.utilities.ASTNode;
 
 public class ASTBindingHelper {
 	
-	public static void createModuleSourceBinding(EObject target, String fileName, String contents) {
-		target.eAdapters().add(new ModuleSourceAdapter(fileName, contents));
+	public static void createModuleSourceBinding(EObject target, URI sourceURI, String contents) {
+		target.eAdapters().add(new ModuleSourceAdapter(sourceURI, contents));
 	}
 				
 	public static IModuleSourceInfo getModuleSourceBinding(Module astModule) {
@@ -224,20 +225,20 @@ public class ASTBindingHelper {
 	}	
 
 	private static class ModuleSourceAdapter extends AdapterImpl implements IModuleSourceInfo {
-		private String fFileName;
+		private URI fSourceURI;
 		private String fContents;
 		private LineNumberProvider lineNumberProvider;
 		
-		protected ModuleSourceAdapter(String fileName, String contents) {
-			if(fileName == null || contents == null) {
+		protected ModuleSourceAdapter(URI sourceURI, String contents) {
+			if(sourceURI == null || contents == null) {
 				throw new IllegalArgumentException();
 			}
-			fFileName = fileName;
+			fSourceURI = sourceURI;
 			fContents = contents;
 		}
 		
-		public String getFileName() {
-			return fFileName;
+		public URI getSourceURI() {
+			return fSourceURI;
 		}
 		
 		public String getContents() {

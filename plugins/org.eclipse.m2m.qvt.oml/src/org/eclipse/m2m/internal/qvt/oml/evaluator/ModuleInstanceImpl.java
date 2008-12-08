@@ -11,13 +11,16 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 
 class ModuleInstanceImpl extends DynamicEObjectImpl implements ModuleInstance, ModuleInstance.Internal {
 	
@@ -30,6 +33,26 @@ class ModuleInstanceImpl extends DynamicEObjectImpl implements ModuleInstance, M
 		}
 		
 		eSetClass(moduleType);
+	}
+	
+	public List<ModuleInstance> getImportedModules() {
+		Module thisModule = getModule();
+		EList<ModuleImport> moduleImports = thisModule.getModuleImport();
+		List<ModuleInstance> result = null;
+		
+		for (ModuleImport nextImport : moduleImports) {
+			Module importedModule = nextImport.getImportedModule();
+			if(importedModule != null) {
+				if(result == null) {
+					result = new ArrayList<ModuleInstance>(moduleImports.size());
+				}
+
+				result.add(getThisInstanceOf(importedModule));
+			}
+		}
+		
+		return (result != null) ? Collections.<ModuleInstance>unmodifiableList(result) : 
+			Collections.<ModuleInstance>emptyList();
 	}
 	
 	/* (non-Javadoc)
