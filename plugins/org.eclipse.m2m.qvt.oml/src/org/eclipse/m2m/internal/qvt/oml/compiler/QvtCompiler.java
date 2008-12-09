@@ -186,13 +186,18 @@ public class QvtCompiler {
 			URI sourceURI;
 			try {
 				if(source instanceof AbstractBundleResource == false) {
-					// FIXME - 
+					// FIXME - solve the the source URI related anomalies
 					sourceURI = URI.createURI(source.getFileStore().toURI().toString());
-				} else {
-					sourceURI = URI.createURI(source.getFullPath());
+				} else {					
+					try {
+						sourceURI = URI.createURI(source.getFullPath());
+						ASTBindingHelper.createModuleSourceBinding(moduleAST, sourceURI, new String(lexer.getInputChars()));						
+					} catch (IllegalArgumentException e) {
+						// there is no contract on the path being a URI, 
+						// catch if not a valid URI, should not affect normal RUN model QVT execution
+					}
 				}
-				
-				ASTBindingHelper.createModuleSourceBinding(moduleAST, sourceURI, new String(lexer.getInputChars()));				
+								
 			} catch (IOException e) {
 				QvtPlugin.logError("Can't get QVT source URI", e); //$NON-NLS-1$
 			}
