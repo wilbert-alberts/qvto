@@ -140,7 +140,7 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object> {
 
 
     public Object visitLibrary(Library library) {
-        return null;
+        return visitModule(library);
     }
 
 

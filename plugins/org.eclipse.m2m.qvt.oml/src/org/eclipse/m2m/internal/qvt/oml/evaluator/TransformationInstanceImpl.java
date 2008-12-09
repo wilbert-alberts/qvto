@@ -17,22 +17,27 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
+import org.eclipse.m2m.internal.qvt.oml.compiler.IntermediateClassFactory;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance.InternalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 
 
 class TransformationInstanceImpl extends ModuleInstanceImpl implements TransformationInstance, InternalTransformation {
 
-	private final Map<ModelParameter, ModelInstance> fModelParams;	
+	private final Map<ModelParameter, ModelInstance> fModelParams;
+	private ModelInstance fIntermediateData;
 	private CallHandler fEntryHandler;
 	private List<QvtChangeRecorder> fChangeGuards;
 	
 	TransformationInstanceImpl(OperationalTransformation type) {
 		super(type);
 		fModelParams = new HashMap<ModelParameter, ModelInstance>(3);
+		initIntermediateExtentIfRequired();		
 	}
 	
 	public void setModel(ModelParameter parameter, ModelInstance extent) {
@@ -55,6 +60,10 @@ class TransformationInstanceImpl extends ModuleInstanceImpl implements Transform
 			fChangeGuards.add(changeRecorder);
 			changeRecorder.beginRecording(extent.getExtent().getInitialObjects());
     	}
+	}
+	
+	public ModelInstance getIntermediateExtent() {	
+		return fIntermediateData;
 	}
 
 	public OperationalTransformation getTransformation() {	
@@ -125,5 +134,17 @@ class TransformationInstanceImpl extends ModuleInstanceImpl implements Transform
 		
 		buf.append(") @").append(System.identityHashCode(transformation)); //$NON-NLS-1$
 		return buf.toString();
+	}
+
+	private void initIntermediateExtentIfRequired() {
+		for (EClassifier ownedType : getTransformation().getEClassifiers()) {
+			if(ownedType instanceof ModelType) {
+				ModelType modelType = (ModelType) ownedType;			
+				if(IntermediateClassFactory.isIntermediateModelType(modelType)) {
+					fIntermediateData = new ModelInstanceImpl(modelType, new ModelParameterExtent());
+					return;
+				}
+			}
+		}
 	}
 }

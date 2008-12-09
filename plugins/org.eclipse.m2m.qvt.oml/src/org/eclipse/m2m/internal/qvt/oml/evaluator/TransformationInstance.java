@@ -20,25 +20,30 @@ public interface TransformationInstance extends ModuleInstance, ThisInstanceReso
 	OperationalTransformation getTransformation();
 	
 	ModelInstance getModel(ModelParameter modelParam);
-	
-	/**
-	 * Binds a model extent with a model parameter of this transformation.
-	 * 
-	 * @param parameter
-	 *            the model parameter to be bound with the given extent
-	 * @param model
-	 *            the model instance to be associated with the given
-	 *            model parameter
-	 * 
-	 * @throws IllegalArgumentException
-	 *             in any argument is <code>null</code> or the given parameter
-	 *             is not a model parameter of this transformation
-	 */
-	void setModel(ModelParameter parameter, ModelInstance model);
- 
-	
+	 
 	interface InternalTransformation extends Internal {
 
+		/**
+		 * Binds a model extent with a model parameter of this transformation.
+		 * 
+		 * @param parameter
+		 *            the model parameter to be bound with the given extent
+		 * @param model
+		 *            the model instance to be associated with the given
+		 *            model parameter
+		 * 
+		 * @throws IllegalArgumentException
+		 *             in any argument is <code>null</code> or the given parameter
+		 *             is not a model parameter of this transformation
+		 */
+		void setModel(ModelParameter parameter, ModelInstance model);		
+		
+		/**
+		* Get the model instance associated with intermedatiate extent, 
+		* in case that this transformation defines intermediate classes
+		*/
+		ModelInstance getIntermediateExtent();
+		
 		void setEntryOperationHandler(CallHandler handler);
 	
 		CallHandler getEntryOperationHandler();

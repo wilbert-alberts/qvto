@@ -18,6 +18,7 @@ import java.util.List;
 import org.eclipse.emf.common.util.UniqueEList;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance.InternalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
@@ -100,7 +101,9 @@ class ModelParameterHelper {
 				continue;
 			}
 			
-			importedTransformation.setModel(modelParam, createModel(modelParam, extent));			
+			importedTransformation.getAdapter(InternalTransformation.class)
+				.setModel(modelParam, createModel(modelParam, extent));
+			
 			pos++;
 		}
 		
@@ -116,8 +119,9 @@ class ModelParameterHelper {
 					// can't a any proper extent, just create an empty one
 					extent = new ModelParameterExtent();				
 				}
-				
-				importedTransformation.setModel(modelParam, createModel(modelParam, extent));				
+								
+				importedTransformation.getAdapter(InternalTransformation.class)
+					.setModel(modelParam, createModel(modelParam, extent));				
 			}
 		}
 	}

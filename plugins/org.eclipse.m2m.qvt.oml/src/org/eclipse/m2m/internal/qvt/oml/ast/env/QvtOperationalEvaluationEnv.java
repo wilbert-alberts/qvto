@@ -38,6 +38,7 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtStackTraceBuilder;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ThisInstanceResolver;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance.InternalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
@@ -404,7 +405,6 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		ModelParameterExtent targetExtent;
 		if(modelParam == null) {
 			targetExtent = getDefaultInstantiationExtent(impl);
-			//targetExtent = internalEnv().getUnboundExtent();
 		} else {
 			OperationalTransformation targetTransf = (OperationalTransformation)modelParam.eContainer();
 			assert targetTransf != null;
@@ -425,13 +425,21 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 
 	public ModelParameterExtent getDefaultInstantiationExtent(EClassifier type) {
 		TransformationInstance mainTransfInstance = internalEnv().getCurrentTransformation();
-		if(mainTransfInstance != null && !IntermediateClassFactory.isIntermediateClass(type) && QVTUMLReflection.isUserModelElement(type)) {
-			EList<ModelParameter> modelParameters = mainTransfInstance.getTransformation().getModelParameter();
-			ModelParameter modelParam = QvtOperationalModuleEnv.findModelParameter(type, DirectionKind.OUT, modelParameters);						
-			ModelInstance model = mainTransfInstance.getModel(modelParam);
+		if(mainTransfInstance != null) {
+			if(IntermediateClassFactory.isIntermediateClass(type)) {
+				InternalTransformation internTransf = mainTransfInstance.getAdapter(InternalTransformation.class);
+				ModelInstance intermExtent = internTransf.getIntermediateExtent();
+				if(intermExtent != null) {
+					return intermExtent.getExtent();
+				}
+			} else if(QVTUMLReflection.isUserModelElement(type)) {			
+				EList<ModelParameter> modelParameters = mainTransfInstance.getTransformation().getModelParameter();
+				ModelParameter modelParam = QvtOperationalModuleEnv.findModelParameter(type, DirectionKind.OUT, modelParameters);						
+				ModelInstance model = mainTransfInstance.getModel(modelParam);
 			
-			if (model != null) {
-				return model.getExtent();
+				if (model != null) {
+					return model.getExtent();
+				}
 			}
 		}
 		

@@ -148,6 +148,11 @@ public class IntermediateClassFactory extends EFactoryImpl {
 		env.registerModelType(myIntermediateModelType);
 	}
 
+	public static boolean isIntermediateModelType(ModelType modelType) { 
+		return modelType.eContainer() instanceof OperationalTransformation &&
+				INTERMEDIATE_MODELTYPE_NAME.equals(modelType.getName());
+	}
+
 	public static boolean isIntermediateClass(EClassifier class_) {
 		if (class_ == null) {
 			return false;
