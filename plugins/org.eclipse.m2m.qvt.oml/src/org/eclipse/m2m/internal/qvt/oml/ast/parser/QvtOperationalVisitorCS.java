@@ -1502,7 +1502,7 @@ public class QvtOperationalVisitorCS
 						cstIntermClassesMap.get(nextClass));
 			}
 
-			nextClass.getESuperTypes().add(EcorePackage.Literals.ECLASS);
+			//nextClass.getESuperTypes().add(EcorePackage.Literals.ECLASS);
 			
 			Map<String, EStructuralFeature> ownFeatures = new HashMap<String, EStructuralFeature>(nextClass.getEStructuralFeatures().size());
 			for (EStructuralFeature nextFeature : nextClass.getEStructuralFeatures()) {
