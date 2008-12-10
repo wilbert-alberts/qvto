@@ -4,4 +4,5 @@
   <ecore:EClass name="intermediateprop_import"/>
   <ecore:EClass name="intermediateprop_imported"/>
   <ecore:EClass name="intermediateprop_imported"/>
+  <ecore:EClass name="intermediate_model_property"/>  
 </xmi:XMI>

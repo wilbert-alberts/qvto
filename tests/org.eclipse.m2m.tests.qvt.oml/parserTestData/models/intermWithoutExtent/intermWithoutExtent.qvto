@@ -15,7 +15,7 @@ main() {
 mapping EAttribute::attr2LeafAttrs(in prefix:String) : Sequence(LeafAttribute) {
 	init {
 		result := Sequence {
-			object LeafAttribute {_attr:=object EAttribute{name := self.name}; name:=prefix+self.name}
+			object LeafAttribute {_attr:=object EAttribute{name := self.name}; _name:=prefix+self.name}
 		}
 	}
 }
