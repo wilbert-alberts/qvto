@@ -30,6 +30,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
+import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
@@ -96,7 +97,7 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 			EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> myOclValidationVisitor;
 		
 	}
-	
+		
 	@Override
 	public Object visitInstantiationExp(InstantiationExp instantiationExp) {
 		Boolean result = Boolean.TRUE;
@@ -108,6 +109,13 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 					instantiationExp.getStartPosition(), 
 					instantiationExp.getEndPosition());
 			result = Boolean.FALSE;
+		} else {
+			ImperativeOperation mainOperation = QvtOperationalParserUtil.getMainOperation((Module) instantiatedClass);
+			if(mainOperation instanceof EntryOperation == false || 
+				mainOperation.getEParameters().isEmpty() == false) {
+				String message = NLS.bind("''{0}'' requires parameter-less main() entry operation for explicit instantiation", instantiatedClass.getName());
+				fEnv.reportError(message, instantiationExp.getStartPosition(), instantiationExp.getEndPosition());
+			}
 		}
 		
 		if(instantiatedClass instanceof OperationalTransformation) {
