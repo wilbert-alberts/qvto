@@ -22,6 +22,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.util.TypeUtil;
@@ -48,13 +49,16 @@ public class ModelOperations extends AbstractContextualOperations {
 		OCLStandardLibrary<EClassifier> oclStdLibrary = getStdlib().getEnvironment().getOCLStandardLibrary();		
 		EClassifier setOfElements = TypeUtil.resolveSetType(getStdlib().getEnvironment(), getStdlib().getElementType());
 		EClassifier setOfT = TypeUtil.resolveSetType(getStdlib().getEnvironment(), oclStdLibrary.getT());
-		return new OwnedOperationProvider[] {
+		return new OperationProvider[] {
 			new OwnedOperationProvider(OBJECTS, OBJECTS_NAME, setOfElements),
 			new OwnedOperationProvider(ROOT_OBJECTS, ROOT_OBJECTS_NAME, setOfElements),
 			new OwnedOperationProvider(OBJECTS_OF_TYPE, OBJECTS_OF_TYPE_NAME, 
 					setOfT, oclStdLibrary.getOclType()),
 			new OwnedOperationProvider(REMOVE_ELEMENT, REMOVE_ELEMENT_NAME, 
-					oclStdLibrary.getOclVoid(), getStdlib().getElementType())
+					oclStdLibrary.getOclVoid(), getStdlib().getElementType()),
+			createStaticOperationProvider(CREATE_EMPTY_MODEL, CREATE_EMPTY_MODEL_NAME, 
+							getStdlib().getModelClass())
+					
 		};
 	}
 	
@@ -120,4 +124,21 @@ public class ModelOperations extends AbstractContextualOperations {
 	        return null;
 		}
 	};
+		
+	private static final String CREATE_EMPTY_MODEL_NAME = "createEmptyModel"; //$NON-NLS-1$
+	
+	private static final CallHandler CREATE_EMPTY_MODEL = new CallHandler() {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
+			if(source instanceof ModelType == false) {
+				throw new IllegalArgumentException();
+			}
+			
+			ModelType modelType = (ModelType) source;
+			// TODO - user typed factory, beware of special handling with top-level model types 
+			// as these do not have 
+			EObject modelObj = modelType.getEPackage().getEFactoryInstance().create(modelType);
+			assert modelObj instanceof ModelInstance : "model must implement ModelInstance interface"; //$NON-NLS-1$
+	        return modelObj;
+		}
+	};	
 }
