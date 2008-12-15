@@ -3,4 +3,3 @@ org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException: Cannot instantia
 	at stacktrace::EClassifier::mapCreateInstaceFailure2(Unknown Source)
 	at stacktrace::EClassifier::mapCreateInstaceFailure(Unknown Source)
 	at stacktrace::main(Unknown Source)
-	at stacktrace::<init>(Unknown Source)

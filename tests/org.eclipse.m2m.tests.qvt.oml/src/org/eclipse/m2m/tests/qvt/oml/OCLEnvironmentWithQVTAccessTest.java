@@ -46,7 +46,7 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 
 	private static final String SRC_CONTAINER = "parserTestData/externlib"; //$NON-NLS-1$
 	
-	private OCL fOCL;
+	protected OCL fOCL;
 	private Set<Module> fImportedModules;
 
 	public OCLEnvironmentWithQVTAccessTest() {
@@ -342,5 +342,6 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 		} catch (ParserException e) {
 			assertNotNull(helper.getProblems() != null);			
 		}
-	}			
+	}
+
 }

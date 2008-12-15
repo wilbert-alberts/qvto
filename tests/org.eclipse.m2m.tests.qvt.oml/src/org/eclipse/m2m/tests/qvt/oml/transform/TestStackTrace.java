@@ -65,8 +65,12 @@ public class TestStackTrace extends AbstractStackTraceTest {
 		QvtRuntimeException e = runQvtModuleTestCase("stackOverFlow");				
 		
 		assertValidQVTRuntimeException(e);
-		assertEquals(QvtStackOverFlowError.class, e.getClass());		
-		assertEquals(StackOverflowError.class, e.getCause().getClass());
+		assertEquals(QvtStackOverFlowError.class, e.getClass());
+		if(e.getCause() != null) {
+			// in case java VM provoked the stack over flow, check the
+			// cause is appropriate exception
+			assertEquals(StackOverflowError.class, e.getCause().getClass());
+		} 
 		
 		int elementCount = 10;	
 		for (QVTStackTraceElement element : e.getQvtStackTrace()) {

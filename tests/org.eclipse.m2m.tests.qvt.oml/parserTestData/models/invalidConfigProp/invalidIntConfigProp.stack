@@ -1,2 +1,2 @@
 org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException: Failed to get 'intProp' configuration property value from 'xxx' string
-	at invalidConfigProp::<init>(invalidConfigProp.qvto:5)
+	at invalidConfigProp::invalidConfigProp(invalidConfigProp.qvto:5)

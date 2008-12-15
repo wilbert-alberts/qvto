@@ -23,3 +23,7 @@ query EClass::getUpperName() : String {
 helper callImportedQvtFileWhichCallsJavaLibrary(aStringToEcho : String) : String {
 	return callImportedJavaLibrary(aStringToEcho);
 }
+
+helper callQueryThrowingException() : Boolean {
+	return throwingException();
+}

@@ -11,13 +11,24 @@
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml;
 
+import java.util.List;
+
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QVTStackTraceElement;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitorImpl;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.ocl.Environment;
+import org.eclipse.ocl.ParserException;
+import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreEvaluationEnvironment;
 import org.eclipse.ocl.ecore.OCL.Query;
+import org.eclipse.ocl.helper.OCLHelper;
 
 public class ExtOCLEnvironmentWithQVTAccessTest extends OCLEnvironmentWithQVTAccessTest {
 
@@ -44,5 +55,34 @@ public class ExtOCLEnvironmentWithQVTAccessTest extends OCLEnvironmentWithQVTAcc
 	protected Object evaluate(EcoreEvaluationEnvironment evalEnv, Query query, Object self) {
 		evalEnv.add(Environment.SELF_VARIABLE_NAME, self);		
 		return evaluate(evalEnv, query);
-	}		
+	}
+	
+	public void testcallQueryThrowingException() throws Exception {
+		OCLHelper<EClassifier, EOperation, EStructuralFeature, Constraint> helper = fOCL.createOCLHelper();		
+		try {					
+			helper.setContext(EcorePackage.eINSTANCE.getENamedElement());			
+			helper.setValidating(true);
+			
+			org.eclipse.ocl.expressions.OCLExpression<EClassifier> q = helper.createQuery("callQueryThrowingException()");
+			assertNull(helper.getProblems());
+			try {
+				evaluate(fOCL.createQuery(q));
+				fail("QVT exception expected");
+			} catch(QvtRuntimeException e) {
+				List<QVTStackTraceElement> stackElements = e.getQvtStackTrace();
+				assertEquals(stackElements.size(), 2);
+				QVTStackTraceElement e1 = stackElements.get(0);
+				assertEquals(e1.getModuleName(), "q1");
+				assertEquals(e1.getOperationName(), "throwingException");
+				assertEquals(e1.getLineNumber(), 37);
+				
+				QVTStackTraceElement e2 = stackElements.get(1);
+				assertEquals(e2.getModuleName(), "q2");
+				assertEquals(e2.getOperationName(), "callQueryThrowingException");
+				assertEquals(e2.getLineNumber(), 28);
+			}
+		} catch (ParserException e) {
+			assertNotNull(helper.getProblems() != null);			
+		}
+	}	
 }

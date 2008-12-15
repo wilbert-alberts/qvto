@@ -31,3 +31,12 @@ helper createTestedInvalid() : Real {
 helper callImportedJavaLibrary(aStringToEcho : String) : String {
 	return echoFromSimpleJavaLibrary(aStringToEcho);
 }
+
+helper throwingException() : Boolean {
+	var eType : EClassifier;
+	object eType: {
+		name := 'name';
+	};
+	
+	return false;
+}

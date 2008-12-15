@@ -1,2 +1,2 @@
 org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException: Failed to get 'realProp' configuration property value from 'xxx' string
-	at invalidConfigProp::<init>(invalidConfigProp.qvto:6)
+	at invalidConfigProp::invalidConfigProp(invalidConfigProp.qvto:6)
