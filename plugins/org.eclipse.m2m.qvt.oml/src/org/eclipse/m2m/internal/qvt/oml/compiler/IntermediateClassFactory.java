@@ -159,6 +159,9 @@ public class IntermediateClassFactory extends EFactoryImpl {
 		}
 		EPackage ePackage = class_.getEPackage();
 		if (ePackage != null && INTERMEDIATE_MODELTYPE_NAME.equals(ePackage.getName())) {
+			// FIXME - add check if the owning intermediate package is owned by a module
+			// as any meta-model package of identical name might cause its classes to 
+			// be recognized as intermediate
 			return true;
 		}
 		return false;

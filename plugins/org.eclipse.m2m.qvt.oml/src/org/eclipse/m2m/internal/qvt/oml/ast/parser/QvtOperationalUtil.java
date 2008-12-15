@@ -105,6 +105,9 @@ public class QvtOperationalUtil {
 			return false;
 		}
 		
+		if(modelType == importedModelType) {
+			return true;
+		}
 		return modelType.getMetamodel().containsAll(importedModelType.getMetamodel());
 	}
 	

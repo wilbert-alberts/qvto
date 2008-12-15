@@ -11,46 +11,12 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.stdlib;
 
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.model.StatusInstance;
 
 public class StatusOperations extends AbstractContextualOperations {
 	
-	static class Status extends EObjectImpl {
-		private boolean fIsSuccess = true;
-		private EClass fException;
-		
-		private Status(boolean isSuccess, EClass exception) {
-			fException = exception;
-			fIsSuccess = isSuccess;
-		}
-		
-		
-		@Override
-		public String toString() {
-			StringBuilder buf = new StringBuilder(); 
-			buf.append(fIsSuccess ? "SUCCESS" : "FAILED"); //$NON-NLS-1$ //$NON-NLS-1$
-			if(fException != null) {
-				buf.append(fException.getName());
-			}
-			return buf.toString();
-		}
-	}
-	
-	static EObject createSuccess(EClass statusClass) {
-		Status status = new Status(true, null);
-		status.eSetClass(statusClass);
-		return status;
-	}
-	
-	static EObject createFailed(EClass statusClass, EClass raisedException) {
-		Status status = new Status(false, raisedException);
-		status.eSetClass(statusClass);
-		return status;
-	}
 	
     public StatusOperations(AbstractQVTStdlib library) {
 		super(library, library.getStatusClass());
@@ -67,28 +33,29 @@ public class StatusOperations extends AbstractContextualOperations {
 	
 	private static final CallHandler SUCCESS = new CallHandler() {
 		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
-			if(source instanceof Status) {
-				return Boolean.valueOf(((Status)source).fIsSuccess);
+			if(source instanceof StatusInstance) {
+				return ((StatusInstance) source).succeeded();
 			}
-			return Boolean.FALSE; 
+			return CallHandlerAdapter.getInvalidResult(evalEnv); 
 		}
 	};
 
 	private static final CallHandler FAILED = new CallHandler() {
 		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
-			if(source instanceof Status) {
-				return Boolean.valueOf(((Status)source).fIsSuccess == false);
+			if(source instanceof StatusInstance) {
+				return ((StatusInstance) source).failed();
 			}
-			return Boolean.TRUE; 
+			return CallHandlerAdapter.getInvalidResult(evalEnv); 
 		}
 	};
 
 	private static final CallHandler RAISED_EXCEPTION = new CallHandler() {
 		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
-			if(source instanceof Status) {
-				return ((Status)source).fException;
+			if(source instanceof StatusInstance) {
+				return ((StatusInstance) source).raisedException();
 			}
-			return null; 
+			
+			return CallHandlerAdapter.getInvalidResult(evalEnv); 
 		}
 	};	
 }

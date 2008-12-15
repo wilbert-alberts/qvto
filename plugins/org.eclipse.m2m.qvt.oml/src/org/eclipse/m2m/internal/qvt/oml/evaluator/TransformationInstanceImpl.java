@@ -132,7 +132,7 @@ class TransformationInstanceImpl extends ModuleInstanceImpl implements Transform
 			}
 		}
 		
-		buf.append(") @").append(System.identityHashCode(transformation)); //$NON-NLS-1$
+		buf.append(") @").append(Integer.toHexString(System.identityHashCode(this))); //$NON-NLS-1$
 		return buf.toString();
 	}
 

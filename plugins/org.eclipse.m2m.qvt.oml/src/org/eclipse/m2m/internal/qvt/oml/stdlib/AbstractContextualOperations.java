@@ -66,6 +66,7 @@ public abstract class AbstractContextualOperations {
 			super(dispatcher, name, returnType, paramTypes);
 		}
 
+		@Override
 		public EOperation define(EcoreEnvironment env) {
 			EOperation eOperation = EcoreFactory.eINSTANCE.createEOperation();
 			eOperation.setName(fName);

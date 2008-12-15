@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.util.UniqueEList;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance.InternalTransformation;
@@ -32,77 +33,115 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 
  *  <li>2. Try binding (not yet bound) model parameters by the first available of a compatible direction kind</li>  
  *  
- *  <li>3. Create empty model extent for all unbound model parameter</li>  
+ *  <li>3. Create empty model extent for all model parameter remaining unbound</li>  
  * </ul>
+ * 
  * @author dvorak
  */
-class ModelParameterHelper {
+public class ModelParameterHelper {
 
 	private OperationalTransformation fMainTransformation;
-	private List<ModelParameterExtent> fModelArguments;	
+	private List<ModelInstance> fModelArguments;	
 
 	/**
-	 * Constructs model parameter helper for the given main transformation.
+	 * Create actual model arguments for the given transformation.
 	 * 
-	 * @param mainTransformation
+	 * @param transformation
 	 *            the transformation of which the <code>main</code> operation is
 	 *            to be executed
-	 * @param modelArguments
-	 *            the models that are passed to transformation execution
+	 * @param modelExtentArgs
+	 *            the model extents that are passed to transformation execution
 	 */
-	// FIXME - use typed ModelParameterExtent directly, a better way how it gets to the evaluation environment
-	// should be provided
-	ModelParameterHelper(OperationalTransformation mainTransformation, List<Object> modelArguments) {
-		if(mainTransformation == null || modelArguments == null) {
+	public static List<ModelInstance> createModelArguments(OperationalTransformation transformation, List<ModelParameterExtent> modelExtentArgs) {
+		if(transformation == null || modelExtentArgs == null) {
 			throw new IllegalArgumentException();
 		}
 
-		List<ModelParameterExtent> modelExtentArguments = new ArrayList<ModelParameterExtent>(modelArguments.size());		
-		for (Object nextArg : modelArguments) {
-			if(nextArg instanceof ModelParameterExtent) {
-				modelExtentArguments.add((ModelParameterExtent) nextArg);
+		if(modelExtentArgs.size() != transformation.getModelParameter().size()) {
+			throw new IllegalArgumentException("Invalid number of transformation arguments"); //$NON-NLS-1$
+		}		
+		
+		List<ModelInstance> modelArgs = new ArrayList<ModelInstance>(modelExtentArgs.size()); 
+		int pos = 0;
+		for (ModelParameterExtent nextExtent : modelExtentArgs) {
+			if(nextExtent == null) {
+				throw new IllegalArgumentException("null model extent argument"); //$NON-NLS-1$
 			}
+			ModelParameter modelParam = transformation.getModelParameter().get(pos++);
+			modelArgs.add(createModel(modelParam, nextExtent));
 		}
 		
-		fMainTransformation = mainTransformation;
-		fModelArguments = modelExtentArguments;
-		if(fModelArguments.size() != fMainTransformation.getModelParameter().size()) {
-			throw new IllegalArgumentException("Invalid number of transformation arguments"); //$NON-NLS-1$
+		return modelArgs;
+	}
+	
+	ModelParameterHelper(OperationalTransformation mainTransformation, List<ModelInstance> modelArgs) {
+		if(mainTransformation == null || modelArgs == null) {
+			throw new IllegalArgumentException();
 		}
+		
+		if(modelArgs.size() != mainTransformation.getModelParameter().size()) {
+			throw new IllegalArgumentException("Invalid number of transformation arguments"); //$NON-NLS-1$
+		}		
+		
+		int pos = 0;
+		for (ModelInstance nextModel : modelArgs) {
+			if(nextModel == null) {
+				throw new IllegalArgumentException("null model argument"); //$NON-NLS-1$
+			}
+			
+			ModelParameter modelParam = mainTransformation.getModelParameter().get(pos++);
+			EClassifier modelType = modelParam.getEType();
+			if(nextModel.eClass().isInstance(modelType)) {
+				throw new IllegalArgumentException("Invalid model for parameter: " + modelParam); //$NON-NLS-1$
+			}
+		}
+
+		fMainTransformation = mainTransformation;
+		fModelArguments = new ArrayList<ModelInstance>(modelArgs);
 	}
 
 	/**
-	 * Binds model extents to model parameters of the given imported
-	 * transformation in the context of the main transformation and its model
-	 * arguments assigned to this helper.
+	 * Binds model extents to model parameters of the given
+	 * transformation in the context of the main transformation and its imported transformations.
 	 * 
-	 * @param importedTransformation
-	 *            a transformation to be bind with its model parameters
+	 * @param transformation
+	 *            the transformation to be bind with its model parameters. It must be the trasnformation
+	 *            assigned to this helper or one of its imported transformations 
 	 */
-	public void bindModelParameters(TransformationInstance importedTransformation) {
-		if(importedTransformation == null) {
+	void initModelParameters(TransformationInstance transformation) {
+		if(transformation == null) {
 			throw new IllegalArgumentException();
 		}
 		
-		boolean isMainTransformation = importedTransformation.getTransformation() == fMainTransformation;		
-		OperationalTransformation transformationType = importedTransformation.getTransformation(); 				
-		Collection<ModelParameterExtent> alreadyBound = new UniqueEList.FastCompare<ModelParameterExtent>();
+		boolean isMainTransformation = transformation.getTransformation() == fMainTransformation;		
+		OperationalTransformation transformationType = transformation.getTransformation(); 				
+		Collection<ModelInstance> alreadyBound = new UniqueEList.FastCompare<ModelInstance>();
 		
 		int pos = 0;
 		for (ModelParameter modelParam : transformationType.getModelParameter()) {
-			ModelParameterExtent extent;
+			ModelInstance passedModel;
 			if(isMainTransformation) {
-				extent = fModelArguments.get(pos);
+				passedModel = fModelArguments.get(pos);
 			} else {
-				extent = findAvailableStrictlyCompatibleExtent(modelParam, alreadyBound);			
+				passedModel = findAvailableStrictlyCompatibleExtent(modelParam, alreadyBound);			
 			}
 			
-			if(extent == null) {
+			if(passedModel == null) {
 				continue;
 			}
 			
-			importedTransformation.getAdapter(InternalTransformation.class)
-				.setModel(modelParam, createModel(modelParam, extent));
+			ModelInstance actualModel;
+			if(passedModel.getModelType() == modelParam.getEType()) {
+				// model parameter refer the same modeltype as the model instance
+				// => reuse the model instance for passing as model argument
+				actualModel = passedModel;
+			} else {
+				// we are just compatible by referred metamodels, so create
+				// new model instance of a specific modeltype
+				actualModel = createModel(modelParam, passedModel.getExtent());
+			}
+			
+			transformation.getAdapter(InternalTransformation.class).setModel(modelParam, actualModel);
 			
 			pos++;
 		}
@@ -112,25 +151,33 @@ class ModelParameterHelper {
 		}
 		
 		// second pass
+		// 1) try resolving by compatible direction only		
+		// 2) create unbound extents to capture the contents for not yet bound model parameters
 		for (ModelParameter modelParam : transformationType.getModelParameter()) {
-			if(importedTransformation.getModel(modelParam) == null) {
-				ModelParameterExtent extent = findFirstDirectionCompatibleExtent(modelParam, alreadyBound);			
-				if(extent == null) {
-					// can't a any proper extent, just create an empty one
-					extent = new ModelParameterExtent();				
+			// process only not set parameters
+			if(transformation.getModel(modelParam) == null) {
+				ModelInstance resolvedModel = findFirstDirectionCompatibleExtent(modelParam, alreadyBound);
+				
+				ModelInstance actualModel;
+				if(resolvedModel == null) {
+					// can't find any compatible model parameter, just create an empty extent
+					actualModel = createModel(modelParam, new ModelParameterExtent());	
+				} else {
+					// take just the content as we have not found strictly compatible model parameter
+					// in the 1. pass, we have to create new model instance but reusing the extent
+					actualModel = createModel(modelParam, resolvedModel.getExtent());
 				}
-								
-				importedTransformation.getAdapter(InternalTransformation.class)
-					.setModel(modelParam, createModel(modelParam, extent));				
+
+				transformation.getAdapter(InternalTransformation.class).setModel(modelParam, actualModel);				
 			}
 		}
 	}
 		
-	private ModelParameterExtent findFirstDirectionCompatibleExtent(ModelParameter modelParam, Collection<ModelParameterExtent> alreadyBound) {
+	private ModelInstance findFirstDirectionCompatibleExtent(ModelParameter modelParam, Collection<ModelInstance> alreadyBound) {
 		int pos = 0;
 		for (ModelParameter nextParam : fMainTransformation.getModelParameter()) {
 			if(QvtOperationalUtil.isModelParamEqual(nextParam, modelParam, false)) {
-				ModelParameterExtent extent = fModelArguments.get(pos);
+				ModelInstance extent = fModelArguments.get(pos);
 				if(!alreadyBound.contains(extent)) {
 					alreadyBound.add(extent);					
 					return extent;
@@ -143,11 +190,11 @@ class ModelParameterHelper {
 		return null;
 	}	
 	
-	private ModelParameterExtent findAvailableStrictlyCompatibleExtent(ModelParameter modelParam, Collection<ModelParameterExtent> alreadyBound) {
+	private ModelInstance findAvailableStrictlyCompatibleExtent(ModelParameter modelParam, Collection<ModelInstance> alreadyBound) {
 		int pos = 0;
 		for (ModelParameter nextParam : fMainTransformation.getModelParameter()) {
 			if(QvtOperationalUtil.isModelParamEqual(nextParam, modelParam, true)) {
-				ModelParameterExtent extent = fModelArguments.get(pos);
+				ModelInstance extent = fModelArguments.get(pos);
 				if(!alreadyBound.contains(extent)) {
 					alreadyBound.add(extent);
 					return extent;
@@ -160,7 +207,7 @@ class ModelParameterHelper {
 		return null;
 	}
 	
-	private ModelInstance createModel(ModelParameter modelParam, ModelParameterExtent extent) {
+	private static ModelInstance createModel(ModelParameter modelParam, ModelParameterExtent extent) {
 		assert modelParam != null;
 		assert extent != null;
 		

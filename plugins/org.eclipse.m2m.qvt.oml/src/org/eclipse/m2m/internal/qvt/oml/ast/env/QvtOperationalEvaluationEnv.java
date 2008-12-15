@@ -60,21 +60,31 @@ import org.eclipse.osgi.util.NLS;
 
 public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	
+	// TODO - make this optional settings for execution
+	public static final int MAX_STACK_DEPTH = 300;
+	
 	protected QvtOperationalEvaluationEnv(IContext context, QvtOperationalEvaluationEnv parent) {
 		super(parent);
 		if(parent == null) {
 			myRootEnv = this;
-			myInternal = new RootInternal(context);			
+			myInternal = new RootInternal(context);
+			myStackDepth = 1;
 		} else {
 			myRootEnv = parent.myRootEnv;
 			myInternal = new Internal();
+			myStackDepth = parent.myStackDepth + 1;
 		}
+		
 	    myBindings = new HashMap<String, Object>();
 		myOperationArgs = new ArrayList<Object>();
 	}
 	
 	public QvtOperationalEvaluationEnv getRoot() {
 		return myRootEnv;
+	}
+	
+	public int getDepth() {
+		return myStackDepth;
 	}
 	
     public ModuleInstance getThisOfType(Module module) {
@@ -145,8 +155,8 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	@Override
 	public Object navigateProperty(EStructuralFeature property, List<?> qualifiers, Object target) throws IllegalArgumentException {
 		if(target instanceof ModuleInstance) {
-			ModuleInstance moduleTarget = (ModuleInstance) target;			
-			target = getThisOfType(moduleTarget.getModule());
+			ModuleInstance moduleTarget = (ModuleInstance) target;
+			target = moduleTarget.getThisInstanceOf(moduleTarget.getModule());
 		}
 
 		EStructuralFeature resolvedProperty = property;		
@@ -447,12 +457,17 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void callSetter(EObject owner, EStructuralFeature eStructuralFeature, Object exprValue,
-			boolean valueIsUndefined, boolean isReset) {
-		if(getInvalidResult() == owner) {
+	public void callSetter(EObject target, EStructuralFeature eStructuralFeature, Object exprValue, boolean valueIsUndefined, boolean isReset) {
+		if(getInvalidResult() == target) {
 			// call performed on OclInvalid, can not continue
 			return;
 		}
+		
+		EObject owner = target;
+		if(target instanceof ModuleInstance) {
+			ModuleInstance moduleTarget = (ModuleInstance) target;
+			owner = moduleTarget.getThisInstanceOf(moduleTarget.getModule());
+		}		
 		
 		if (eStructuralFeature instanceof ContextualProperty) {
 			IntermediatePropertyModelAdapter.ShadowEntry shadow = IntermediatePropertyModelAdapter.getPropertyHolder(
@@ -564,12 +579,25 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		return !type.isPrimitive();
 	}
 
-    public QvtOperationalEvaluationEnv cloneEvaluationEnv() {
-        QvtOperationalEvaluationEnv env = new QvtOperationalEvaluationEnv(getContext(), getParent());
+	public QvtOperationalEvaluationEnv cloneEvaluationEnv() {
+		QvtOperationalEvaluationEnv env = new QvtOperationalEvaluationEnv(getContext(), getParent());
+		return copyEnv(env);
+	}
+
+	// just running under the root transformation execution environment,
+	// so cut me off the whole execution stack hierarchy
+	public QvtOperationalEvaluationEnv createDeferredExecutionEnvironment() {
+		QvtOperationalEvaluationEnv parent = (getRoot() == this) ? parent = null : getRoot();
+		QvtOperationalEvaluationEnv result = new QvtOperationalEvaluationEnv(getContext(), parent);		
+		return copyEnv(result);
+	}	
+    
+	private QvtOperationalEvaluationEnv copyEnv(QvtOperationalEvaluationEnv env) {
         env.myInternal = internalEnv().clone();
         
         env.myOperationArgs.addAll(myOperationArgs);
         env.myOperationSelf = myOperationSelf;
+        env.myOperation = myOperation; 
         env.myBindings.putAll(myBindings);
         return env;
     }
@@ -591,15 +619,27 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		return myOperation;
 	}
     
+    private void saveThrownException(QvtRuntimeException exception) {
+    	assert exception != null;
+    	
+    	QvtOperationalEvaluationEnv rootEnv = getRoot();
+    	Internal internRootEnv = rootEnv.internalEnv();    	
+    	assert internRootEnv instanceof RootInternal : "Internal env of root evaluation env must be RootInternal"; //$NON-NLS-1$
+
+    	RootInternal root = (RootInternal)  internRootEnv;
+    	root.myException = exception;
+    }
+    
     /**
      * The root evaluation environment, refers to <code>this</code> if this is the root environment
      */
-    private QvtOperationalEvaluationEnv myRootEnv;    
+    private QvtOperationalEvaluationEnv myRootEnv;
     private Internal myInternal;
     private ImperativeOperation myOperation;    
 	private final List<Object> myOperationArgs;
 	private Object myOperationSelf;
-    private final Map<String, Object> myBindings;	
+    private final Map<String, Object> myBindings;
+    private final int myStackDepth;    
 	
 	private static class TypedBinding {
 		final Object value;
@@ -628,10 +668,13 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	    private EObjectEStructuralFeaturePair myLastAssignLvalue;	  
 	    private ModelParameterExtent myUnboundExtent;
 	    private TransformationInstance myThisTransformation;
+	    private boolean myIsDefferedExecution;
+	    private QvtRuntimeException myException;
 
 	    RootInternal(IContext context) {
 	    	assert context != null;
 	    	myContext = context;
+	    	myIsDefferedExecution = false;
 	    }
 
 	    RootInternal(RootInternal another) {
@@ -645,6 +688,11 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	    @Override
 	    IContext getContext() {
 	    	return myContext;
+	    }
+	    
+	    @Override
+	    public QvtRuntimeException getException() {
+	    	return myException;
 	    }
 	    
 	    @Override
@@ -700,15 +748,25 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	    @Override
 	    public void processDeferredTasks() {
 	    	if (myDeferredTasks != null) {
-	    		// make me re-entrant in case of errorenous call to #addDeferredTask() 
-	    		// from running the task => concurrent modification exception
-	    		// This error condition should be handled elsewhere
-	    		List<Runnable> tasksCopy = new ArrayList<Runnable>(myDeferredTasks);
-	    	    for (Runnable task : tasksCopy) {
-	                task.run();
-	            }
+	    		try {
+		    		myIsDefferedExecution = true;	    			
+		    		// make me re-entrant in case of errorenous call to #addDeferredTask() 
+		    		// from running the task => concurrent modification exception
+		    		// This error condition should be handled elsewhere
+		    		List<Runnable> tasksCopy = new ArrayList<Runnable>(myDeferredTasks);
+		    	    for (Runnable task : tasksCopy) {
+		                task.run();
+		            }
+	    		} finally {
+		    		myIsDefferedExecution = false;	    			
+	    		}
 	    	}
-	    }	    
+	    }
+
+	    @Override
+		public boolean isDeferredExecution() {
+			return myIsDefferedExecution;
+		}
 	}
 	
 	private class Internal implements InternalEvaluationEnv {
@@ -724,17 +782,26 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			this();
 			myObjectExpOwnerStack.addAll(another.myObjectExpOwnerStack);
 			myThisResolver = another.myThisResolver;
+			myCurrentIP = another.myCurrentIP;
 		}
 		
 	    IContext getContext() {
 	    	return getRoot().internalEnv().getContext();
 	    }			    
-
+	    
 	    @Override
 	    public Internal clone() {
 	    	return new Internal(this);
 	    }
-	    
+
+	    public QvtRuntimeException getException() {
+	    	return getRoot().internalEnv().getException();
+	    }
+
+	    public void setException(QvtRuntimeException exception) {
+	    	saveThrownException(exception);
+	    }
+	    	    
 		public TransformationInstance getCurrentTransformation() {
 			return getRoot().internalEnv().getCurrentTransformation();
 		}
@@ -778,6 +845,10 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	    public void processDeferredTasks() {
 	    	getRoot().internalEnv().processDeferredTasks();
 	    }
+	    
+		public boolean isDeferredExecution() {
+			return getRoot().internalEnv().isDeferredExecution();
+		}
 
 	    public void addDeferredTask(Runnable task) {
 	    	getRoot().internalEnv().addDeferredTask(task);
@@ -807,6 +878,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	    
 		public void throwQVTException(QvtRuntimeException exception) throws QvtRuntimeException {
 			try {
+				saveThrownException(exception);
 				exception.setStackQvtTrace(getStackTraceElements());
 			} catch (Exception e) {
 				QvtPlugin.log(QvtPlugin.createErrorStatus("Failed to build QVT stack trace", e)); //$NON-NLS-1$

@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +30,9 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.MappingParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
+import org.eclipse.m2m.internal.qvt.oml.library.Context;
+import org.eclipse.m2m.internal.qvt.oml.library.IContext;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.model.ExceptionInstance;
 import org.eclipse.ocl.Environment;
 
 /**
@@ -126,5 +131,60 @@ class EvaluationUtil {
     			targetEnv.copyVariableValueFrom(sourceEnv, sourceParam.getName(), targetParam.getName());    			
     		}
 		}
-    }	
+    }
+    
+    static String formatLoggedElement(Object element) {
+    	if(element instanceof ExceptionInstance) {
+    		ExceptionInstance exception = (ExceptionInstance) element;    		
+    		
+    		StringWriter contents = new StringWriter();
+			PrintWriter pw = new PrintWriter(contents);
+			pw.println(exception);
+			QvtRuntimeException.printQvtStackTrace(pw, exception.getStackElements());
+			
+			return contents.toString(); 
+    	}
+    	
+    	return String.valueOf(element);
+    }
+    
+    static void checkCurrentStackDepth(QvtOperationalEvaluationEnv env) throws QvtStackOverFlowError {
+		int depth = env.getDepth();
+		if(depth >= QvtOperationalEvaluationEnv.MAX_STACK_DEPTH) {
+			InternalEvaluationEnv iternEnv = env.getAdapter(InternalEvaluationEnv.class);
+			iternEnv.throwQVTException(new QvtStackOverFlowError("Stack depth: " + depth)); //$NON-NLS-1$
+		}    	
+    }
+    
+	static List<ModelInstance> getTransfromationModelArguments(QvtOperationalEvaluationEnv rootEnvironment, OperationalTransformation transformation) throws IllegalArgumentException {
+		List<Object> args = rootEnvironment.getOperationArgs();
+		List<ModelInstance> transformArgs = new ArrayList<ModelInstance>(args.size());
+		for (Object nextArg : args) {
+			if(nextArg instanceof ModelInstance) {
+				transformArgs.add((ModelInstance) nextArg);
+			} else {
+				throw new IllegalArgumentException(
+					"transformation requires arguments of ModelInstance type"); //$NON-NLS-1$
+			}
+		}
+		
+		return transformArgs;
+	}
+	
+	static Context createAggregatedContext(QvtOperationalEvaluationEnv evalEnv) {			
+		Context nestedContext = new Context();
+		IContext parentContext = evalEnv.getContext();
+		nestedContext.setLog(parentContext.getLog());
+    	EvaluationMonitor monitor = (EvaluationMonitor)parentContext.getProperties().get(EvaluationContextProperties.MONITOR);
+		if(monitor != null) {
+			nestedContext.put(EvaluationContextProperties.MONITOR, monitor);
+		}
+		
+		nestedContext.put("trasnformation.aggregating.rootEnv", evalEnv); //$NON-NLS-1$
+		return nestedContext;
+	}
+	
+	static QvtOperationalEvaluationEnv getAggregatingContext(QvtOperationalEvaluationEnv evalEnv) {
+		return (QvtOperationalEvaluationEnv) (evalEnv.getContext().get("trasnformation.aggregating.rootEnv")); //$NON-NLS-1$
+	}	
 }

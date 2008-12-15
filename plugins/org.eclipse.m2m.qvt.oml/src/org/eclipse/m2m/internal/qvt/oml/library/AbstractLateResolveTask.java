@@ -37,8 +37,7 @@ public abstract class AbstractLateResolveTask implements Runnable, SavedSourceOb
                 myResolveExp = resolveExp;
                 myLvalue = lvalue;
                 myVisitor = visitor;
-                myEvalEnv = evalEnv.cloneEvaluationEnv();
-                
+                myEvalEnv = evalEnv.createDeferredExecutionEnvironment();
                 if(myResolveExp.getSource() != null) {                	
                 	mySourceObj = myResolveExp.getSource().accept(visitor);
                 }             
@@ -47,8 +46,7 @@ public abstract class AbstractLateResolveTask implements Runnable, SavedSourceOb
     }
     
     public void run() {
-        QvtOperationalEvaluationEnv oldEvalEnv = 
-            myVisitor.getOperationalEvaluationEnv();
+        QvtOperationalEvaluationEnv oldEvalEnv = myVisitor.getOperationalEvaluationEnv();
         myVisitor.setOperationalEvaluationEnv(myEvalEnv);
         Object resolveResult = getResolveResult();
 

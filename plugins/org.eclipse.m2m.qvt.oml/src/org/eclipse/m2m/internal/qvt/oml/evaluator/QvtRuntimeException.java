@@ -45,15 +45,21 @@ public class QvtRuntimeException extends RuntimeException {
     public void printQvtStackTrace(PrintWriter pw) {
        synchronized (pw) {
             pw.println(this);
-            int counter = 0;
-            for(QVTStackTraceElement trace : getQvtStackTrace()) {
-            	if(counter++ > 0) {
-            		pw.println();
-            	}
-            	pw.print("\tat " + trace); //$NON-NLS-1$
-            }
+            printQvtStackTrace(pw, getQvtStackTrace());
        }
     }
+    
+    static void printQvtStackTrace(PrintWriter pw, List<QVTStackTraceElement> elements) {
+        synchronized (pw) {
+             int counter = 0;
+             for(QVTStackTraceElement trace : elements) {
+             	if(counter++ > 0) {
+             		pw.println();
+             	}
+             	pw.print("\tat " + trace); //$NON-NLS-1$
+             }
+        }
+     }    
 	
 	public List<QVTStackTraceElement> getQvtStackTrace() {		
 		if(fQVTStackTrace != null) {

@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,7 +35,6 @@ public class QvtStackTraceBuilder {
 	
 	private static final String NAME_SEPARATOR = "::"; //$NON-NLS-1$
 	private static final String UNKNOWN_NAME = "<Unknown>"; //$NON-NLS-1$
-	private static final String INITIALIZER_NAME = "<init>"; //$NON-NLS-1$
 	private static final int UNKNOWN_LINE_NUM = -1;
 	
 	private QvtOperationalEvaluationEnv fEvalEnv;
@@ -64,12 +64,29 @@ public class QvtStackTraceBuilder {
 	 */
     public List<QVTStackTraceElement> buildStackTrace() {
     	LinkedList<QVTStackTraceElement> elements = new LinkedList<QVTStackTraceElement>();
-    	int depth = 0;
-    	for(QvtOperationalEvaluationEnv parentEnv = fEvalEnv; parentEnv != null; parentEnv = parentEnv.getParent()) {    		    		
-    		elements.addLast(createStackElement(parentEnv));
-    		depth++;    		
+    	for(QvtOperationalEvaluationEnv nextEnv = fEvalEnv; nextEnv != null; nextEnv = nextEnv.getParent()) {
+    		// skip all the root execution environments as they 
+    		// are not bound to any module code locations
+    		QvtOperationalEvaluationEnv parent = nextEnv.getParent();
+			if(parent != null) {
+        		InternalEvaluationEnv internalEnv = nextEnv.getAdapter(InternalEvaluationEnv.class);
+        		// skip all stack frames not running in a module, 
+        		// IOW possible non QVT transformation clients
+        		if(internalEnv.getCurrentModule() != null) {		
+        			elements.addLast(createStackElement(nextEnv));
+        		}
+    		}
     	}
     	
+    	QvtOperationalEvaluationEnv rootEnv = fEvalEnv.getRoot();
+		QvtOperationalEvaluationEnv aggregatingEnv = EvaluationUtil.getAggregatingContext(rootEnv);
+		if(aggregatingEnv != null) {
+			List<QVTStackTraceElement> aggregatedStackTrace = new QvtStackTraceBuilder(aggregatingEnv).buildStackTrace();			
+			List<QVTStackTraceElement> result = new ArrayList<QVTStackTraceElement>(elements.size() + aggregatedStackTrace.size());
+			result.addAll(elements);
+			result.addAll(aggregatedStackTrace);
+			return result;
+		}
     	return Collections.unmodifiableList(elements);
     }
 
@@ -84,46 +101,42 @@ public class QvtStackTraceBuilder {
 
     	InternalEvaluationEnv internEvalEnv = env.getAdapter(InternalEvaluationEnv.class);
     	int resultOffset = getCurrentASTOffset(internEvalEnv);
-		boolean isRunningInTransformation = internEvalEnv.getCurrentTransformation() != null;
 		
-		if(isRunningInTransformation) {
-	    	ModuleInstance thisInstance = internEvalEnv.getCurrentModule();
-	    	assert thisInstance != null;
-	    	
-	    	module = thisInstance.getModule();
-	    	moduleName = module.getName();
-	    	
-			if(operation == null) {
-				// we must be executing a module instance initialization - synthetic constructor
-		    	operName = INITIALIZER_NAME;
-		    	
-		    	if(internEvalEnv.getCurrentIP() == module || resultOffset < -1) {
-			    	// FIXME - a temporary solution to get header positions until
-		    		// https://bugs.eclipse.org/bugs/show_bug.cgi?id=257527 is resolved.		    		
-			    	int[] positions = QvtOperationalParserUtil.getElementPositions(module);
-			    	if(positions != null) {
-			    		resultOffset = positions[0];
-			    	}
-		    	}
-			} else {
-	    		operName = operation.getName();	    		
-	    		EClassifier contextType = QvtOperationalParserUtil.getContextualType(operation);
-	    		if(contextType != null) {
-	    			operName = contextType.getName() + NAME_SEPARATOR + operName;
-	    		}
-			}
-		} else { 
-			// TODO - non-transformation execution context 
+    	ModuleInstance thisInstance = internEvalEnv.getCurrentModule();
+    	if(thisInstance == null) {
+    		throw new IllegalArgumentException("Currently executed model is not set in environment"); //$NON-NLS-1$
     	}
+    	
+    	module = thisInstance.getModule();
+    	assert module != null;
+    	moduleName = module.getName();
+    	
+		if(operation == null) {
+			// we must be executing a module instance initialization - synthetic constructor
+	    	operName = moduleName;
+	    	
+	    	if(internEvalEnv.getCurrentIP() == module || resultOffset < -1) {
+		    	// FIXME - a temporary solution to get header positions until
+	    		// https://bugs.eclipse.org/bugs/show_bug.cgi?id=257527 is resolved.		    		
+		    	int[] positions = QvtOperationalParserUtil.getElementPositions(module);
+		    	if(positions != null) {
+		    		resultOffset = positions[0];
+		    	}
+	    	}
+		} else {
+    		operName = operation.getName();	    		
+    		EClassifier contextType = QvtOperationalParserUtil.getContextualType(operation);
+    		if(contextType != null) {
+    			operName = contextType.getName() + NAME_SEPARATOR + operName;
+    		}
+		}
 
-		if(module != null) {
-			IModuleSourceInfo sourceInfo = ASTBindingHelper.getModuleSourceBinding(module);
-			if(sourceInfo != null) {
-				URI uri = sourceInfo.getSourceURI();
-				unitName = uri.lastSegment();
-				if(resultOffset >= 0) {
-					lineNumber = sourceInfo.getLineNumberProvider().getLineNumber(resultOffset);
-				}
+		IModuleSourceInfo sourceInfo = ASTBindingHelper.getModuleSourceBinding(module);
+		if(sourceInfo != null) {
+			URI uri = sourceInfo.getSourceURI();
+			unitName = uri.lastSegment();
+			if(resultOffset >= 0) {
+				lineNumber = sourceInfo.getLineNumberProvider().getLineNumber(resultOffset);
 			}
 		}
     	

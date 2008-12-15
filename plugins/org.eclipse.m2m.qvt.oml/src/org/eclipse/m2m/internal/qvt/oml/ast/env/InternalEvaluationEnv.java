@@ -41,9 +41,10 @@ public interface InternalEvaluationEnv {
 	 * Retrieves the module in which the current evaluation occurs, if one is available.
 	 * Note: The current module may be transformation or library
 	 * 
-	 * @return the module instance or <code>null</code>, if the current
-	 *         evaluation environment is not part of a transformation execution,
-	 *         but for instance Imperative OCL. 
+	 * @return the module instance or may be null <code>null</code>, if the current
+	 *         evaluation environment is not part of a transformation execution
+	 *         and is to be executes outside the scope of any module, for instance 
+	 *         Imperative OCL. 
 	 */	
 	ModuleInstance getCurrentModule();
 		
@@ -99,9 +100,37 @@ public interface InternalEvaluationEnv {
     
     void processDeferredTasks();
     
+    /**
+     * Indicates whether this environment is used during deferred execution (late resolutions)
+     */
+	boolean isDeferredExecution();    
+    
     EObjectEStructuralFeaturePair getLastAssignmentLvalueEval();
     
     void setLastAssignmentLvalueEval(EObjectEStructuralFeaturePair lvalue);
     
     ModelParameterExtent getUnboundExtent();
+
+	/**
+	 * Gets the exception thrown in the context of the current evaluation
+	 * environment stack
+	 * 
+	 * @return the exception or <code>null</code>, if no exception has been set.
+	 * 
+	 * @see #setException(QvtRuntimeException)
+	 */
+	QvtRuntimeException getException();	
+
+	/**
+	 * Sets the exception thrown in the context of the current evaluation
+	 * environment stack.</p> Single exception can be assigned per the whole
+	 * stack.</br> Note: This is used to workaround exception catches in the MDT
+	 * OCL operation call processing, which swallows all exceptions as failure
+	 * and returns invalid object.
+	 * 
+	 * @return the exception or <code>null</code>, if no exception has been set.
+	 * 
+	 * @see #getException(QvtRuntimeException)
+	 */
+	void setException(QvtRuntimeException exception);	
 }

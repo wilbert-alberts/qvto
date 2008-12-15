@@ -24,7 +24,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
@@ -42,7 +44,7 @@ public class ModuleInstanceFactory extends EFactoryImpl {
 	public ModuleInstanceFactory() {
 		super();
 	}
-	
+		
 	public ThisInstanceResolver instantiateImportsByAccess(Set<Module> importedByAccess, boolean includeStdLib) {
 		final HashMap<Module, ModuleInstance> instanceMap = new HashMap<Module, ModuleInstance>(3);
 		if(includeStdLib) {
@@ -95,6 +97,8 @@ public class ModuleInstanceFactory extends EFactoryImpl {
 			ModuleInstance result = createModuleInstance(module, instanceMap);			
 
 			return result;
+		} else if(eClass instanceof ModelType) {
+			return new ModelInstanceImpl((ModelType) eClass, new ModelParameterExtent());
 		}
 
 		return super.basicCreate(eClass);
