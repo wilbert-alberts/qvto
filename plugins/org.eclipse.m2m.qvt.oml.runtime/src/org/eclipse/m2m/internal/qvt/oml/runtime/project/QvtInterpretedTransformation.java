@@ -41,6 +41,8 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.modelparam.ResourceEObject;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelInstance;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelParameterHelper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
@@ -158,11 +160,10 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 		return module.getModule().accept(evaluator);
 	}
 
-	private static void setArguments(QvtOperationalEvaluationEnv evalEnv, OperationalTransformation module, List<Object> args) {
-		List<Object> operationArgs = evalEnv.getOperationArgs();
-
+	private static void setArguments(QvtOperationalEvaluationEnv evalEnv, OperationalTransformation transformation, List<Object> args) {
+		List<ModelParameterExtent> tranformArgs = new ArrayList<ModelParameterExtent>(); 
 		int argCount = 0;
-		for (ModelParameter modelParam : module.getModelParameter()) {
+		for (ModelParameter modelParam : transformation.getModelParameter()) {
 			ModelParameterExtent extent;			
 			if(modelParam.getKind() != org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind.OUT) {
 				if(argCount >= args.size()) {
@@ -183,8 +184,11 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 				extent = new ModelParameterExtent();
 			}
 			
-	    	operationArgs.add(extent);			
+	    	tranformArgs.add(extent);			
 		}
+
+		List<ModelInstance> modelArgs = ModelParameterHelper.createModelArguments(transformation, tranformArgs);
+		evalEnv.getOperationArgs().addAll(modelArgs);		
 	}
 	
 	@Override
