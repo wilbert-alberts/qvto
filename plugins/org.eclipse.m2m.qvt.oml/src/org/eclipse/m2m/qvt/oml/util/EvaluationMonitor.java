@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.internal.qvt.oml.evaluator;
+package org.eclipse.m2m.qvt.oml.util;
 
 public interface EvaluationMonitor {
 	/**

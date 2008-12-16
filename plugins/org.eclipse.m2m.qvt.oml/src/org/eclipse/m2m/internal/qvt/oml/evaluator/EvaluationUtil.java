@@ -32,6 +32,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
+import org.eclipse.m2m.internal.qvt.oml.library.ISessionData;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.model.ExceptionInstance;
 import org.eclipse.ocl.Environment;
 
@@ -171,20 +172,27 @@ class EvaluationUtil {
 		return transformArgs;
 	}
 	
-	static Context createAggregatedContext(QvtOperationalEvaluationEnv evalEnv) {			
-		Context nestedContext = new Context();
-		IContext parentContext = evalEnv.getContext();
-		nestedContext.setLog(parentContext.getLog());
-    	EvaluationMonitor monitor = (EvaluationMonitor)parentContext.getProperties().get(EvaluationContextProperties.MONITOR);
-		if(monitor != null) {
-			nestedContext.put(EvaluationContextProperties.MONITOR, monitor);
-		}
+	// TODO - this is a temp solution, consider this reference going into internal environment 
+	static final ISessionData.Entry<QvtOperationalEvaluationEnv> AGGREGATING_ROOT_ENV = new ISessionData.SimpleEntry<QvtOperationalEvaluationEnv>(); 
+	
+	static Context createAggregatedContext(QvtOperationalEvaluationEnv evalEnv) {
+		final IContext parentContext = evalEnv.getContext();
 		
-		nestedContext.put("trasnformation.aggregating.rootEnv", evalEnv); //$NON-NLS-1$
+		Context nestedContext = new Context() {
+			@Override
+			protected ISessionData createSessionData() {
+				return (ISessionData) parentContext.getSessionData();
+			}
+		};
+
+		nestedContext.setLog(parentContext.getLog());
+		nestedContext.setMonitor(parentContext.getMonitor());
+		nestedContext.getSessionData().setValue(AGGREGATING_ROOT_ENV, evalEnv);
+
 		return nestedContext;
 	}
-	
+		
 	static QvtOperationalEvaluationEnv getAggregatingContext(QvtOperationalEvaluationEnv evalEnv) {
-		return (QvtOperationalEvaluationEnv) (evalEnv.getContext().get("trasnformation.aggregating.rootEnv")); //$NON-NLS-1$
+		return evalEnv.getContext().getSessionData().getValue(AGGREGATING_ROOT_ENV); //$NON-NLS-1$
 	}	
 }

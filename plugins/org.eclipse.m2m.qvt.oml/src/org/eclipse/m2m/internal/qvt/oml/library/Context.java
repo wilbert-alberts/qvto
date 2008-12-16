@@ -15,57 +15,109 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
-import org.eclipse.m2m.internal.qvt.oml.trace.TraceFactory;
+import org.eclipse.m2m.qvt.oml.util.EvaluationMonitor;
 import org.eclipse.m2m.qvt.oml.util.Log;
 
+/**
+ * @noextend
+ */
 public class Context implements IContext {
-    private final Trace myTrace;
-    private final IConfiguration  myConfiguration;
-    private final Map<String, Object> myData;
+
+    private final Map<String, Object>  myConfiguration;
+    private ISessionData myData;
 
     private Log myLog;
-
+    private EvaluationMonitor myMonitor;
+    
     public Context() {
-        this(new QvtConfiguration(Collections.<String, String>emptyMap()));
+    	myConfiguration = new HashMap<String, Object>();
+    	myLog = Log.NULL_LOG;
+		myMonitor = new DefaultMonitor();
+		myData = createSessionData();
     }
-    
-    public Context(IConfiguration configuration) {
-        this(new HashMap<String, Object>(), TraceFactory.eINSTANCE.createTrace(), configuration);
+
+    protected ISessionData createSessionData() {
+    	return new SessionDataImpl();
     }
+
+    public void setMonitor(EvaluationMonitor monitor) {
+    	if(monitor == null) {
+    		throw new IllegalArgumentException("Non-null monitor required"); //$NON-NLS-1$
+    	}
+
+		this.myMonitor = monitor;
+	}
     
-    private Context(Map<String, Object> data, Trace trace, IConfiguration configuration) {
-        myData = data;
-    	myTrace = trace;    	
-    	myConfiguration = configuration;
-    	myLog = Log.NULL_LOG;    	
+    public EvaluationMonitor getMonitor() {    
+    	return myMonitor;
     }
     
     public void setLog(Log log) {
-		this.myLog = log != null ? log : Log.NULL_LOG;
+    	if(log == null) {
+    		throw new IllegalArgumentException("Non-null logger required"); //$NON-NLS-1$
+    	}
+		this.myLog = log;
 	}
     
     public Log getLog() {    	
     	return myLog;
     }
             
-    public Trace getTrace() {
-        return myTrace;
-    }
-
-    public IConfiguration getConfiguration() {
-        return myConfiguration;
-    }
-
-    public Object get(String name) {
-        return myData.get(name);
-    }
-
-    public void put(String name, Object value) {
-        myData.put(name, value);
+    public ISessionData getSessionData() {    
+    	return myData;
     }
     
-    public Map<String, Object> getProperties() {
-    	return Collections.unmodifiableMap(myData);
+    public Map<String, Object> getConfigProperties() {    
+    	return Collections.unmodifiableMap(myConfiguration);
     }
+    
+    public Object getConfigProperty(String name) {
+    	if(name == null) {
+    		throw new IllegalArgumentException("null config property name"); //$NON-NLS-1$
+    	}
+    	return myConfiguration.get(name);
+    }
+    
+    public void setConfigProperty(String name, Object value) {    
+    	if(name == null) {
+    		throw new IllegalArgumentException("null config property name"); //$NON-NLS-1$
+    	}
+    	myConfiguration.put(name, value);
+    }
+    
+            
+    private static class DefaultMonitor implements EvaluationMonitor {
+    	
+		private boolean myIsCancelled;
+
+		public void cancel() {
+			myIsCancelled = true;
+		}
+
+		public boolean isCanceled() {
+			return myIsCancelled;
+		}
+	}
+    
+    private static class SessionDataImpl implements ISessionData {
+    	
+    	private HashMap<Object, Object> fData;
+    		
+    	SessionDataImpl() {
+    		fData = new HashMap<Object, Object>();
+    	}
+    	
+    	
+        @SuppressWarnings("unchecked")
+    	public <T> T getValue(Entry<T> entry) {
+        	if(fData.containsKey(entry)) {
+        		return (T) fData.get(entry);
+        	}
+        	return entry.defaultValue();
+        }
+        
+        public <T> void setValue(Entry<T> key, T value) {
+        	fData.put(key, value);
+        }
+    }    
 }

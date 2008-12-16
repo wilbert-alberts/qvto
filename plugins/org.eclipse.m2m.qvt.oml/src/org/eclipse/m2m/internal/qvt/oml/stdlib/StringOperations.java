@@ -16,7 +16,9 @@ import java.util.regex.Pattern;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
+import org.eclipse.m2m.internal.qvt.oml.library.ISessionData;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.utilities.PredefinedType;
 
@@ -208,10 +210,10 @@ public class StringOperations extends AbstractContextualOperations {
 				if(Character.isWhitespace(c)) {
 					if(isWhiteArea) {
 						continue;
-					} else {
-						isWhiteArea = true;
-						buf.append(c);
-					}
+					} 
+					
+					isWhiteArea = true;
+					buf.append(c);					
 				} else {
 					isWhiteArea = false;
 					buf.append(c);
@@ -511,19 +513,22 @@ public class StringOperations extends AbstractContextualOperations {
 	
 	private static class StringCounter {
 		
-		static final String DATA_KEY = StringCounter.class.getName(); 
+		static final ISessionData.SimpleEntry<StringCounter> DATA_KEY = new ISessionData.SimpleEntry<StringCounter>(); 
 		
 		HashMap<String, CounterValue> counters = new HashMap<String, CounterValue>();
 		
-		static StringCounter getInstance(QvtOperationalEvaluationEnv env) {			
-			StringCounter counters = (StringCounter)env.getContext().get(DATA_KEY);
+		static StringCounter getInstance(QvtOperationalEvaluationEnv env) {
+			 env.getThisOfType(QvtOperationalStdLibrary.INSTANCE.getStdLibModule());
+			// FIXME - this way we have String counters in global only, should be done 
+			// per Stdlib instance (every aggregated transformation)
+			StringCounter counters = (StringCounter)env.getContext().getSessionData().getValue(DATA_KEY);
 			if(counters == null) {
 				counters = new StringCounter() ;
-				env.getContext().put(DATA_KEY, counters);
+				env.getContext().getSessionData().setValue(DATA_KEY, counters);
 			}
 			
 			return counters;
-		}		
+		}
 
 		void restartAll() {
 			for (CounterValue nextCounter : counters.values()) {

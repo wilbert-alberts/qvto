@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
@@ -52,7 +53,8 @@ class TraceUtil {
 	}
 
     static TraceRecord getTraceRecord(QvtOperationalEvaluationEnv evalEnv, MappingOperation mappingOperation) {
-    	Trace trace = evalEnv.getContext().getTrace();
+    	InternalEvaluationEnv internEnv = evalEnv.getAdapter(InternalEvaluationEnv.class);    	
+    	Trace trace = internEnv.getTraces();
     	
         EMap<MappingOperation, EList<TraceRecord>> allTraceRecordMap = trace.getTraceRecordMap();
         EList<TraceRecord> traceRecords = allTraceRecordMap.get(mappingOperation);
@@ -91,7 +93,8 @@ class TraceUtil {
     static TraceRecord addTraceRecord(QvtOperationalEvaluationEnv evalEnv, MappingOperation mappingOperation) {
         TraceRecord traceRecord = TraceFactory.eINSTANCE.createTraceRecord();
         
-        Trace trace = evalEnv.getContext().getTrace();
+        InternalEvaluationEnv internEnv = evalEnv.getAdapter(InternalEvaluationEnv.class);
+        Trace trace = internEnv.getTraces();
         EList<TraceRecord> list = createOrGetListElementFromMap(trace.getTraceRecordMap(), mappingOperation);
         list.add(traceRecord);
         trace.getTraceRecords().add(traceRecord);

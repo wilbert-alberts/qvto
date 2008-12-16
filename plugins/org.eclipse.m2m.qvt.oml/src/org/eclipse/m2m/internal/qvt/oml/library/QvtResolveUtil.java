@@ -22,6 +22,7 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
@@ -244,7 +245,8 @@ public class QvtResolveUtil {
     static final Object resolveNow(ResolveExp resolveExp, QvtOperationalEvaluationVisitor visitor, QvtOperationalEvaluationEnv env, SavedSourceObjectHolder savedSrcObj) {
         OCLExpression<EClassifier> source = resolveExp.getSource();
         if (source != null) {
-            Trace trace = visitor.getContext().getTrace();
+        	InternalEvaluationEnv internEnv = env.getAdapter(InternalEvaluationEnv.class);
+            Trace trace = internEnv.getTraces();
             EMap<Object, EList<TraceRecord>> map = chooseKeyToTraceRecordMap(resolveExp, trace);
             Object sourceEval = (savedSrcObj == null) ? source.accept(visitor) : savedSrcObj.getSourceObj();
             List<TraceRecord> traceRecords = lookupTraceRecordsBySource(sourceEval, source.getType(), map);
@@ -280,9 +282,11 @@ public class QvtResolveUtil {
 	 * @return resolved object or collection of objects
 	 */
     static final Object resolveInNow(ResolveInExp resolveInExp, QvtOperationalEvaluationVisitor visitor, QvtOperationalEvaluationEnv env, SavedSourceObjectHolder savedSrcObj) {
+    	InternalEvaluationEnv internEnv = env.getAdapter(InternalEvaluationEnv.class);
+    	
         OCLExpression<EClassifier> source = resolveInExp.getSource();
         List<TraceRecord> selectedTraceRecords = new ArrayList<TraceRecord>();
-        Trace trace = visitor.getContext().getTrace();
+        Trace trace = internEnv.getTraces();
         if (source == null) {
             List<TraceRecord> traceRecords = new ArrayList<TraceRecord>();
             for (MappingOperation inMapping : resolveInExp.getInMappings()) {

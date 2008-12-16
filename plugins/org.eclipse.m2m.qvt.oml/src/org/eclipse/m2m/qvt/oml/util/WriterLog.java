@@ -7,7 +7,7 @@ import java.text.MessageFormat;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 
 /**
- * A basic log objects backed-up with {@link Writer}. 
+ * A basic logger backed-up with {@link Writer}. 
  * 
  * @author dvorak
  */

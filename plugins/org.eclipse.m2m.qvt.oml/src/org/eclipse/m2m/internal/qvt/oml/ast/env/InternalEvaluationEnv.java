@@ -20,6 +20,7 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ThisInstanceResolver;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance;
 import org.eclipse.m2m.internal.qvt.oml.library.EObjectEStructuralFeaturePair;
+import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 
 
 /**
@@ -132,5 +133,13 @@ public interface InternalEvaluationEnv {
 	 * 
 	 * @see #getException(QvtRuntimeException)
 	 */
-	void setException(QvtRuntimeException exception);	
+	void setException(QvtRuntimeException exception);
+	
+	/**
+	 * Get traces for the transformation execution associated with this
+	 * environment.
+	 * 
+	 * @return the trace object
+	 */
+	Trace getTraces();	
 }

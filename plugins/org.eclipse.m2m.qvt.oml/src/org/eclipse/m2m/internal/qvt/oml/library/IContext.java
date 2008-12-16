@@ -13,16 +13,38 @@ package org.eclipse.m2m.internal.qvt.oml.library;
 
 import java.util.Map;
 
-import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
+import org.eclipse.m2m.qvt.oml.util.EvaluationMonitor;
 import org.eclipse.m2m.qvt.oml.util.Log;
 
-
+/**
+ * @noimplement
+ * @noextend
+ */
 public interface IContext {
+
+	/**
+	 * Retrieve the logger associated with this context.
+	 * <p>
+	 * It is used to capture the output of QVT <code>log expression</code>
+	 * or various execution diagnostic messages.
+	 * 
+	 * @return the log object, never <code>null</code>
+	 */
 	Log getLog();
-    IConfiguration getConfiguration();
-    Object get(String name);
-    void put(String name, Object value);    
-    Map<String, Object> getProperties();
+
+	/**
+	 * Retrieve the monitor associated with this context.
+	 * <p>
+	 * It can be used to interrupt execution from another thread then the
+	 * execution thread.
+	 * 
+	 * @return the monitor object, never <code>null</code>
+	 */
+    EvaluationMonitor getMonitor();
+		
+    Map<String, Object> getConfigProperties();
     
-    Trace getTrace();
+    Object getConfigProperty(String name);
+    
+    ISessionData getSessionData();    
 }

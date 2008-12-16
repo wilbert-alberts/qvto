@@ -106,6 +106,7 @@ import org.eclipse.m2m.internal.qvt.oml.library.LateResolveTask;
 import org.eclipse.m2m.internal.qvt.oml.library.QvtResolveUtil;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord;
+import org.eclipse.m2m.qvt.oml.util.EvaluationMonitor;
 import org.eclipse.m2m.qvt.oml.util.Log;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.EnvironmentFactory;
@@ -386,12 +387,19 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     }
 
     public Object visitConfigProperty(ConfigProperty configProperty) {
-    	IContext context = getOperationalEvaluationEnv().getContext();   	
-        String stringValue = context.getConfiguration().getProperty(configProperty.getName());
-        Object value = createFromString(configProperty.getEType(), stringValue);
+    	IContext context = getOperationalEvaluationEnv().getContext();
+
+        Object rawValue = context.getConfigProperty(configProperty.getName());
+        EClassifier propertyType = configProperty.getEType();
+        
+        Object value = rawValue;        
+        if(rawValue instanceof String && propertyType != getEnvironment().getOCLStandardLibrary().getString()) {
+			value = createFromString(propertyType, (String) rawValue);
+        }
+
         if(value == getOclInvalid()) {
         	// we failed to parse the value
-        	throwQVTException(new QvtRuntimeException(NLS.bind(EvaluationMessages.QvtOperationalEvaluationVisitorImpl_invalidConfigPropertyValue, configProperty.getName(), stringValue)));
+        	throwQVTException(new QvtRuntimeException(NLS.bind(EvaluationMessages.QvtOperationalEvaluationVisitorImpl_invalidConfigPropertyValue, configProperty.getName(), rawValue)));
         }
         
         return value;
@@ -1871,7 +1879,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     }
     
     private InternalEvaluator createInterruptibleVisitor() {
-    	final EvaluationMonitor monitor = (EvaluationMonitor)getContext().getProperties().get(EvaluationContextProperties.MONITOR);
+    	final EvaluationMonitor monitor = (EvaluationMonitor)getContext().getMonitor();
     	    
     	class InterruptVisitor extends QvtGenericEvaluationVisitor.Any implements InternalEvaluator {
     		public InterruptVisitor() {

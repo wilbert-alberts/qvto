@@ -49,6 +49,8 @@ import org.eclipse.m2m.internal.qvt.oml.library.EObjectEStructuralFeaturePair;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
+import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
+import org.eclipse.m2m.internal.qvt.oml.trace.TraceFactory;
 import org.eclipse.ocl.ecore.EcoreEvaluationEnvironment;
 import org.eclipse.ocl.ecore.EcorePackage;
 import org.eclipse.ocl.types.AnyType;
@@ -662,27 +664,31 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	}
 	
 	private class RootInternal extends Internal {
-		private IContext myContext;		
+		private IContext myContext;
 		private List<Runnable> myDeferredTasks;
-	    private CallHandler myMainHandler;
 	    private EObjectEStructuralFeaturePair myLastAssignLvalue;	  
 	    private ModelParameterExtent myUnboundExtent;
 	    private TransformationInstance myThisTransformation;
 	    private boolean myIsDefferedExecution;
 	    private QvtRuntimeException myException;
+	    private Trace myTraces;
 
 	    RootInternal(IContext context) {
 	    	assert context != null;
 	    	myContext = context;
 	    	myIsDefferedExecution = false;
+	    	myTraces = TraceFactory.eINSTANCE.createTrace();
 	    }
 
 	    RootInternal(RootInternal another) {
 	    	super(another);
 			myLastAssignLvalue = another.myLastAssignLvalue;
 			myDeferredTasks = another.myDeferredTasks;
-			myMainHandler = another.myMainHandler;
 			myContext = another.myContext;
+			myUnboundExtent = another.myUnboundExtent;
+			myThisTransformation = another.myThisTransformation;
+			myIsDefferedExecution = another.myIsDefferedExecution;
+			myException = another.myException;
 		}
 
 	    @Override
@@ -721,12 +727,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	    	}
 	    	return myUnboundExtent;
 	    }
-	    
-	    @Override
-	    public void setEntryOperationHandler(CallHandler mainHandler) {	   
-	    	myMainHandler = mainHandler;
-	    }
-	    
+	    	    
 	    @Override
 	    public void addDeferredTask(Runnable task) {
 	    	if (myDeferredTasks == null) {
@@ -767,6 +768,11 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		public boolean isDeferredExecution() {
 			return myIsDefferedExecution;
 		}
+	    
+	    @Override
+	    public Trace getTraces() {
+	    	return myTraces; 
+	    }	    
 	}
 	
 	private class Internal implements InternalEvaluationEnv {
@@ -825,15 +831,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		public Object getInvalid() {
 			return getInvalidResult();
 		}
-		
-	    public CallHandler getEntryOperationHandler() {
-	    	return getRoot().internalEnv().getEntryOperationHandler();
-	    }
-	    
-	    public void setEntryOperationHandler(CallHandler mainHandler) {
-	    	getRoot().internalEnv().setEntryOperationHandler(mainHandler);	    	
-	    }
-	    
+			    
 	    public EObjectEStructuralFeaturePair getLastAssignmentLvalueEval() {	    
 	    	return getRoot().internalEnv().getLastAssignmentLvalueEval();
 	    }
@@ -852,6 +850,10 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 
 	    public void addDeferredTask(Runnable task) {
 	    	getRoot().internalEnv().addDeferredTask(task);
+	    }
+
+	    public Trace getTraces() {
+	    	return getRoot().internalEnv().getTraces();
 	    }
 	    
 		public void popObjectExpOwner() {
