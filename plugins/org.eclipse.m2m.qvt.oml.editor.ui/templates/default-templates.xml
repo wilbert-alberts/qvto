@@ -6,7 +6,7 @@
           context="org.eclipse.m2m.qvt.oml.templates"
           id="org.eclipse.m2m.qvt.oml.template.transformation"
           name="%code_template_transformation"
-          description="%code_template_transformation_desc">transformation ${name}();
+          description="%code_template_transformation_desc">transformation ${name}(in input : ${modeltype1}, out output : ${modeltype2});
 </template>
     <template
           autoinsert="true"
@@ -69,11 +69,19 @@
 	${cursor}
 }</template>
     <template
-          autoinsert="true"
+          autoinsert="false"
           context="org.eclipse.m2m.qvt.oml.templates"
           id="org.eclipse.m2m.qvt.oml.template.query"
           name="%code_template_query"
-          description="%code_template_query_desc">query ${ContextType}::${name}() : ${OutputType} {
+          description="%code_template_query_desc">query ${ContextType}::${name}() : ${ReturnType} {
+	${cursor}
+}</template>
+    <template
+          autoinsert="false"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.helper"
+          name="%code_template_helper"
+          description="%code_template_helper_desc">query ${ContextType}::${name}() : ${ReturnType} {
 	${cursor}
 }</template>
     <template
@@ -108,11 +116,18 @@
 	</template>
 	
     <template
-          autoinsert="true"
+          autoinsert="false"
           context="org.eclipse.m2m.qvt.oml.templates"
           id="org.eclipse.m2m.qvt.oml.template.config_property"
           name="%code_template_config_property"
           description="%code_template_config_property_desc">configuration property ${name} : ${Type};
+	</template>
+    <template
+          autoinsert="false"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.interm_property"
+          name="%code_template_interm_property"
+          description="%code_template_interm_property_desc">intermediate property ${ContextClass}::${name} : ${Type};
 	</template>
 	
     <template
@@ -128,15 +143,7 @@
           context="org.eclipse.m2m.qvt.oml.templates"
           id="org.eclipse.m2m.qvt.oml.template.import"
           name="%code_template_import"
-          description="%code_template_import_desc">import ${name};
-	</template>
-
-    <template
-          autoinsert="true"
-          context="org.eclipse.m2m.qvt.oml.templates"
-          id="org.eclipse.m2m.qvt.oml.template.import_library"
-          name="%code_template_import_library"
-          description="%code_template_import_library_desc">import library ${name};
+          description="%code_template_import_desc">import ${compilationUnit};
 	</template>
 
     <template
@@ -197,6 +204,13 @@
           name="%code_template_tupleType"
           description="%code_template_tupleType_desc">Tuple(${part1} : ${Type1}; ${part2} : ${Type2})
 	</template>
+    <template
+          autoinsert="true"
+          context="org.eclipse.m2m.qvt.oml.templates"
+          id="org.eclipse.m2m.qvt.oml.template.tupleLiteral"
+          name="%code_template_tupleLiteral"
+          description="%code_template_tupleLiteral_desc">Tuple {${part1} = ${val1}; ${part2} : ${val2}}
+	</template>
 
     <template
           autoinsert="true"
@@ -208,5 +222,37 @@
 	case (${condition2}) ${expression2};
 	else ${expression3};
 };</template>
+
+<template
+	autoinsert="false"
+	context="org.eclipse.m2m.qvt.oml.templates"
+	id="org.eclipse.m2m.qvt.oml.template.if_statement"
+	name="%code_template_if_statement"
+	description="%code_template_if_statement_desc">if(${condition}) then {
+	${cursor}
+} endif;
+</template>
+
+<template
+	autoinsert="false"
+	context="org.eclipse.m2m.qvt.oml.templates"
+	id="org.eclipse.m2m.qvt.oml.template.if_else_statement"
+	name="%code_template_if_else_statement"
+	description="%code_template_if_else_statement_desc">if(${condition}) then {
+	${cursor}
+} else {
+	
+} endif;
+</template>
+
+<template
+	autoinsert="false"
+	context="org.eclipse.m2m.qvt.oml.templates"
+	id="org.eclipse.m2m.qvt.oml.template.compute"
+	name="%code_template_compute"
+	description="%code_template_compute_desc">compute(${result} : ${type}) {
+	${cursor}
+};
+</template>
 
 </templates>
