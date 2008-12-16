@@ -32,8 +32,8 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
-import org.eclipse.m2m.internal.qvt.oml.library.QvtConfiguration;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
+import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.qvt.oml.util.WriterLog;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
@@ -52,13 +52,13 @@ public abstract class AbstractStackTraceTest extends TestTransformation {
 		return runQvtModuleTestCase(testCaseName, null);
 	}
 	
-	protected QvtRuntimeException runQvtModuleTestCase(String testCaseName, Map<String, String> configProperties) throws Exception {
+	protected QvtRuntimeException runQvtModuleTestCase(String testCaseName, Map<String, Object> configProperties) throws Exception {
 	    ITransformer transformer = createTransformer();
 		try {
-			Map<String, String> passedProps = (configProperties == null) ? Collections.<String, String>emptyMap() : configProperties;
-			Map<String, String> extProps = new HashMap<String, String>(passedProps);
+			Map<String, Object> passedProps = (configProperties == null) ? Collections.<String, Object>emptyMap() : configProperties;
+			Map<String, Object> extProps = new HashMap<String, Object>(passedProps);
 			extProps.put("testcase", testCaseName);		//$NON-NLS-1$		
-			IContext context = new Context(new QvtConfiguration(extProps));
+			IContext context = QvtLaunchUtil.createContext(extProps);
 			
 			transformer.transform(
 					getIFile(getData().getTransformation(getProject())),
@@ -118,7 +118,7 @@ public abstract class AbstractStackTraceTest extends TestTransformation {
 	        	options.setSourceLineNumbersEnabled(fEnableLineNumbers);	        	
 	        	transf.setQvtCompilerOptions(options);
 	        	
-	        	Context qvtContext = new Context(context.getConfiguration());
+	        	Context qvtContext = QvtLaunchUtil.createContext(context.getConfigProperties());
 	        	qvtContext.setLog(new WriterLog(fLogger));
 	            
 	        	List<EObject> inputs = new ArrayList<EObject>(inUris.size());

@@ -8,6 +8,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.io.IOFile;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
+import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
 import org.eclipse.m2m.qvt.oml.util.WriterLog;
 
@@ -32,7 +33,7 @@ public class TestFailedTransformation extends TestTransformation {
         ITransformer transformer = TestQvtInterpreter.TRANSFORMER;
 		try {
 			IContext context = getData().getContext();
-			Context newContext = new Context(context.getConfiguration());
+			Context newContext = QvtLaunchUtil.createContext(context.getConfigProperties());
 			newContext.setLog(new WriterLog(myLogger));
 			
 			transformer.transform(

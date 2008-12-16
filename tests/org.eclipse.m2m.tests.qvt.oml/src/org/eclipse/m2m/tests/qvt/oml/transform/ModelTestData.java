@@ -41,8 +41,8 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MetamodelURIMappingHelpe
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.URIMapping;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
-import org.eclipse.m2m.internal.qvt.oml.library.QvtConfiguration;
-import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
+import org.eclipse.m2m.internal.qvt.oml.library.ISessionData;
+import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
 import org.eclipse.m2m.tests.qvt.oml.TestProject;
 import org.eclipse.m2m.tests.qvt.oml.api.framework.comparator.TreeComparator;
 import org.eclipse.m2m.tests.qvt.oml.api.framework.comparator.edit.TreeEdit;
@@ -112,12 +112,12 @@ public abstract class ModelTestData {
         return myContext; 
     }
     
-    public void dispose() {
-    	Trace trace = getContext().getTrace();
-		trace.getTraceRecords().clear();
-    	trace.getTraceRecordMap().clear();
-    	trace.getSourceToTraceRecordMap().clear();
-    	trace.getTargetToTraceRecordMap().clear();
+    public void dispose() {     	
+//    	Trace trace = getContext().getTrace();
+//		trace.getTraceRecords().clear();
+//    	trace.getTraceRecordMap().clear();
+//    	trace.getSourceToTraceRecordMap().clear();
+//    	trace.getTargetToTraceRecordMap().clear();
     }
     
     abstract public List<URI> getIn(IProject project); 
@@ -202,11 +202,11 @@ public abstract class ModelTestData {
     }
     
     protected static IContext makeFileContext(String[][] props) {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, Object> cfgMap = new HashMap<String, Object>();
         for (int i = 0; i < props.length; i++) {
-            map.put(props[i][0], props[i][1]);
+            cfgMap.put(props[i][0], props[i][1]);
         }
-        IContext context = new Context(new QvtConfiguration(map));
+        IContext context = QvtLaunchUtil.createContext(cfgMap);
         return context;
     }
     
@@ -217,7 +217,8 @@ public abstract class ModelTestData {
             throw new IllegalArgumentException("Project not found: " + destProjectName); //$NON-NLS-1$
         }
         
-        context.put("project", toProject); //$NON-NLS-1$
+        ISessionData.NamedEntry<IProject> projectData = new ISessionData.NamedEntry<IProject>("project");
+		context.getSessionData().setValue(projectData, toProject); //$NON-NLS-1$
         return context;
     }
     

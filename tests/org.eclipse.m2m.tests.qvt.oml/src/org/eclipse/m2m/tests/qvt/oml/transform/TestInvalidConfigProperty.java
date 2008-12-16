@@ -27,7 +27,7 @@ public class TestInvalidConfigProperty extends AbstractStackTraceTest {
 	public void testInvalidConfigProp() throws Exception {
 		String testCase = "invalidConfigProp"; //$NON-NLS-1$
 		
-		Map<String, String> configProps = new HashMap<String, String>();
+		Map<String, Object> configProps = new HashMap<String, Object>();
 		configProps.put("intProp", "xxx"); //$NON-NLS-1$ //$NON-NLS-2$
 		
 		QvtRuntimeException e = runQvtModuleTestCase(testCase, configProps);
@@ -44,7 +44,7 @@ public class TestInvalidConfigProperty extends AbstractStackTraceTest {
 	public void testInvalidRealConfigProp() throws Exception {
 		String testCase = "invalidConfigProp"; //$NON-NLS-1$
 		
-		Map<String, String> configProps = new HashMap<String, String>();
+		Map<String, Object> configProps = new HashMap<String, Object>();
 		configProps.put("realProp", "xxx"); //$NON-NLS-1$ //$NON-NLS-2$
 		
 		QvtRuntimeException e = runQvtModuleTestCase(testCase, configProps);
