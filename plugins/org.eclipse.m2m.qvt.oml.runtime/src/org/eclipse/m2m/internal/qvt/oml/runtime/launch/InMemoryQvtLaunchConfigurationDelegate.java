@@ -68,9 +68,9 @@ public class InMemoryQvtLaunchConfigurationDelegate extends QvtLaunchConfigurati
                 IStatus status = QvtLaunchConfigurationDelegateBase.validate(qvtTransformation, configuration);                    
                 if (status.getSeverity() > IStatus.WARNING) {
                 	throw new CoreException(status);
-                }                	
+                }
             	
-            	Context context = new Context(QvtLaunchUtil.getConfiguration(configuration));
+            	Context context = QvtLaunchUtil.createContext(configuration);
             	context.setLog(new WriterLog(streamsProxy.getOutputWriter()));
 
             	QvtLaunchConfigurationDelegateBase.doLaunch(qvtTransformation, configuration, context);

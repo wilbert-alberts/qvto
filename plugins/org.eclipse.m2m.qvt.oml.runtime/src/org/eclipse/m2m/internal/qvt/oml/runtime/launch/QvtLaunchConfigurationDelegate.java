@@ -27,13 +27,12 @@ import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.ShallowProcess;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.StreamsProxy;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
-import org.eclipse.m2m.internal.qvt.oml.evaluator.EvaluationContextProperties;
-import org.eclipse.m2m.internal.qvt.oml.evaluator.EvaluationMonitor;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
+import org.eclipse.m2m.qvt.oml.util.EvaluationMonitor;
 import org.eclipse.m2m.qvt.oml.util.WriterLog;
 
 public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelegateBase {
@@ -61,9 +60,9 @@ public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelega
                     	throw new CoreException(status);
                     }      	
                 	
-                	Context context = new Context(QvtLaunchUtil.getConfiguration(configuration));
+                	Context context = QvtLaunchUtil.createContext(configuration);
                     context.setLog(new WriterLog(streamsProxy.getOutputWriter()));
-                    context.put(EvaluationContextProperties.MONITOR, execMonitor);
+                    context.setMonitor(execMonitor);
                     
                 	QvtLaunchConfigurationDelegateBase.doLaunch(qvtTransformation, configuration, context);
                 	

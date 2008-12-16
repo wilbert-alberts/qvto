@@ -16,6 +16,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -45,7 +46,6 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.StatusUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
-import org.eclipse.m2m.internal.qvt.oml.library.IConfiguration;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TraceSerializer;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
@@ -131,19 +131,18 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
 			}
 		}
 
-        IConfiguration qvtConfiguration = QvtLaunchUtil.getConfiguration(configuration);
         boolean saveTrace = configuration.getAttribute(IQvtLaunchConstants.USE_TRACE_FILE, false);
         String traceFileName = saveTrace ? configuration.getAttribute(IQvtLaunchConstants.TRACE_FILE, "") : null; //$NON-NLS-1$
         
-        doLaunch(transformation, inObjects, targetData, qvtConfiguration, traceFileName, context);
+        doLaunch(transformation, inObjects, targetData, traceFileName, context);
     }
     
     public static List<URI> doLaunch(final QvtTransformation transformation, final List<EObject> inObjs,
-    		List<TargetUriData> targetData, IConfiguration configuration, final String traceFileName) throws Exception {
-    	return doLaunch(transformation, inObjs, targetData, configuration, traceFileName, new Context(configuration));
+    		List<TargetUriData> targetData, Map<String, Object> configProps, final String traceFileName) throws Exception {
+    	return doLaunch(transformation, inObjs, targetData, traceFileName, QvtLaunchUtil.createContext(configProps));
     }
 
-    public static void doLaunch(QvtTransformation transformation, List<EObject> inObjs, IConfiguration configuration,
+    public static void doLaunch(QvtTransformation transformation, List<EObject> inObjs, Map<String, Object> configProps,
     		List<ModelExtentContents> outExtents, List<EObject> outMainParams, List<Trace> outTraces, List<String> outConsole) throws MdaException {
 
         IStatus status = QvtValidator.validateTransformation(transformation, inObjs);                    
@@ -151,7 +150,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         	throw new MdaException(status);
         }      	
     	
-    	Context context = new Context(configuration);    	
+        Context context = QvtLaunchUtil.createContext(configProps);
 
     		final StringWriter consoleLogger = new StringWriter();
     		context.setLog(new WriterLog(consoleLogger));
@@ -177,7 +176,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
     }
         
     private static List<URI> doLaunch(final QvtTransformation transformation, final List<EObject> inObjs,
-    		List<TargetUriData> targetData, IConfiguration configuration, final String traceFileName, IContext context) throws Exception {
+    		List<TargetUriData> targetData, final String traceFileName, IContext context) throws Exception {
     	
         TransformationRunner.In in = new TransformationRunner.In(inObjs.toArray(new EObject[inObjs.size()]), context);
         TransformationRunner.Out out = transformation.run(in);

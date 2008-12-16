@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtEvaluationResult;
@@ -50,6 +51,7 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner.I
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner.Out;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.QvtConfigurationProperty;
+import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.ocl.EvaluationVisitor;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
@@ -111,15 +113,8 @@ public class QvtInterpretedTransformation implements QvtTransformation {
             	throw new MdaException(e.getCause());
             }
         }
-        Object outObj = evaluate(myModule.getCompiler(), module, inputs, in.getContext());
         
-        if (false == outObj instanceof QvtEvaluationResult) {
-            return new Out(Collections.<ModelExtentContents>emptyList(),
-            		Collections.emptyList(), in.getContext().getTrace());
-        }
-
-        return new Out(((QvtEvaluationResult) outObj).getModelExtents(),
-        		((QvtEvaluationResult) outObj).getOutParamValues(), in.getContext().getTrace());
+        return evaluate(myModule.getCompiler(), module, inputs, in.getContext());
     }
 	
 	public String getModuleName() throws MdaException {
@@ -146,7 +141,7 @@ public class QvtInterpretedTransformation implements QvtTransformation {
     	return new QvtOperationalEnvFactory();
     }
     
-	private Object evaluate(QvtCompiler compiler, CompiledModule module, List<Object> args, IContext context) {
+	private Out evaluate(QvtCompiler compiler, CompiledModule module, List<Object> args, IContext context) {
 		QvtOperationalEnvFactory factory = getEnvironmentFactory();
 
 		QvtOperationalEvaluationEnv evaluationEnv = factory.createEvaluationEnvironment(context, null);
@@ -157,7 +152,16 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 		EvaluationVisitor<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject>		
 			evaluator = factory.createEvaluationVisitor(rootEnv, evaluationEnv, null);
 		
-		return module.getModule().accept(evaluator);
+		Trace traces = evaluationEnv.getAdapter(InternalEvaluationEnv.class).getTraces(); 
+		Object outObj = module.getModule().accept(evaluator);
+		
+        if (false == outObj instanceof QvtEvaluationResult) {
+            return new Out(Collections.<ModelExtentContents>emptyList(),
+            		Collections.emptyList(), traces);
+        }
+
+        return new Out(((QvtEvaluationResult) outObj).getModelExtents(),
+        		((QvtEvaluationResult) outObj).getOutParamValues(), traces);
 	}
 
 	private static void setArguments(QvtOperationalEvaluationEnv evalEnv, OperationalTransformation transformation, List<Object> args) {

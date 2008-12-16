@@ -99,7 +99,7 @@ public class QvtBuilderLaunchConfigurationDelegate extends LaunchConfigurationDe
                     return;
                 }
 
-            	Context context = new Context(QvtLaunchUtil.getConfiguration(configuration));
+            	Context context = QvtLaunchUtil.createContext(configuration);
                 context.setLog(new WriterLog(printWriter));
 
                 QvtLaunchConfigurationDelegateBase.doLaunch(transformation, configuration, context);

@@ -134,7 +134,7 @@ public class QvtoTransformationHelper {
         	
             ShallowProcess.IRunnable r = new ShallowProcess.IRunnable() {
                 public void run() throws Exception {
-            		QvtLaunchConfigurationDelegateBase.doLaunch(transf, inObjects, getConfiguration(inConfigProperties),
+            		QvtLaunchConfigurationDelegateBase.doLaunch(transf, inObjects, inConfigProperties,
             				outExtents, outMainParams, outTraces, outConsole);
             		
             		transf.cleanup();

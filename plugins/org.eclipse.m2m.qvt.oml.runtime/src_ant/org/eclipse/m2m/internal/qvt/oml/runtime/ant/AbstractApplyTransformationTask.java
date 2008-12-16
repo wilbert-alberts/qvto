@@ -12,6 +12,7 @@
 package org.eclipse.m2m.internal.qvt.oml.runtime.ant;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -27,8 +28,6 @@ import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData.TargetType;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.StatusUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
-import org.eclipse.m2m.internal.qvt.oml.library.IConfiguration;
-import org.eclipse.m2m.internal.qvt.oml.library.QvtConfiguration;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchConfigurationDelegateBase;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
@@ -373,19 +372,14 @@ public abstract class AbstractApplyTransformationTask extends Task {
         }
     }
     
-    protected IConfiguration getConfiguration() {
-        if (myConfiguration == null) {
-            Map<String, String> props = new HashMap<String, String>();
-            for (ConfigurationProperty property : myConfigurationProperties) {
-                props.put(property.getName(), property.getValue());
-            }
-            myConfiguration = new QvtConfiguration(props);
+    protected Map<String, Object> getConfiguration() {
+        Map<String, Object> props = new HashMap<String, Object>();
+        for (ConfigurationProperty property : myConfigurationProperties) {
+            props.put(property.getName(), property.getValue());
         }
-        return myConfiguration;
+        return Collections.unmodifiableMap(props);
     }
-    
-    private IConfiguration myConfiguration;
-    
+        
     private String myTransformation;
     private String mySourceUri;
     
