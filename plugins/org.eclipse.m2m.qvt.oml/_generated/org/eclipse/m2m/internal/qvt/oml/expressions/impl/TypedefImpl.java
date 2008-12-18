@@ -9,23 +9,19 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: TypedefImpl.java,v 1.1 2008/09/30 14:12:00 radvorak Exp $
+ * $Id: TypedefImpl.java,v 1.2 2008/12/18 15:18:10 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.EClassImpl;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Typedef;
-
 import org.eclipse.ocl.ecore.OCLExpression;
 
 /**

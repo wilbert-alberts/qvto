@@ -9,13 +9,12 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: Typedef.java,v 1.1 2008/09/30 14:12:00 radvorak Exp $
+ * $Id: Typedef.java,v 1.2 2008/12/18 15:18:10 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-
 import org.eclipse.ocl.ecore.OCLExpression;
 
 /**

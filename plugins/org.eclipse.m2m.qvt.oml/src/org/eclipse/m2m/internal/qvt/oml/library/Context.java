@@ -24,7 +24,7 @@ import org.eclipse.m2m.qvt.oml.util.Log;
 public class Context implements IContext {
 
     private final Map<String, Object>  myConfiguration;
-    private ISessionData myData;
+    private SessionDataImpl myData;
 
     private Log myLog;
     private EvaluationMonitor myMonitor;
@@ -33,11 +33,15 @@ public class Context implements IContext {
     	myConfiguration = new HashMap<String, Object>();
     	myLog = Log.NULL_LOG;
 		myMonitor = new DefaultMonitor();
-		myData = createSessionData();
+		myData = new SessionDataImpl();
     }
 
     protected ISessionData createSessionData() {
-    	return new SessionDataImpl();
+    	return new SessionDataImpl(myData);
+    }
+    
+    protected ISessionData copySessionData() {
+    	return new SessionDataImpl(myData);
     }
 
     public void setMonitor(EvaluationMonitor monitor) {
@@ -107,6 +111,9 @@ public class Context implements IContext {
     		fData = new HashMap<Object, Object>();
     	}
     	
+    	SessionDataImpl(SessionDataImpl sessionData) {
+    		fData = new HashMap<Object, Object>(sessionData.fData);
+    	}
     	
         @SuppressWarnings("unchecked")
     	public <T> T getValue(Entry<T> entry) {

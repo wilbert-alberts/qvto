@@ -9,15 +9,16 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: OperationalTransformationImpl.java,v 1.2 2008/11/13 11:34:14 sboyko Exp $
+ * $Id: OperationalTransformationImpl.java,v 1.3 2008/12/18 15:18:10 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -25,7 +26,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 
 /**
  * <!-- begin-user-doc -->
@@ -68,7 +68,7 @@ public class OperationalTransformationImpl extends ModuleImpl implements Operati
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Property> intermediateProperty;
+	protected EList<EStructuralFeature> intermediateProperty;
 
 	/**
 	 * The cached value of the '{@link #getModelParameter() <em>Model Parameter</em>}' containment reference list.
@@ -116,9 +116,9 @@ public class OperationalTransformationImpl extends ModuleImpl implements Operati
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Property> getIntermediateProperty() {
+	public EList<EStructuralFeature> getIntermediateProperty() {
 		if (intermediateProperty == null) {
-			intermediateProperty = new EObjectResolvingEList<Property>(Property.class, this, ExpressionsPackage.OPERATIONAL_TRANSFORMATION__INTERMEDIATE_PROPERTY);
+			intermediateProperty = new EObjectResolvingEList<EStructuralFeature>(EStructuralFeature.class, this, ExpressionsPackage.OPERATIONAL_TRANSFORMATION__INTERMEDIATE_PROPERTY);
 		}
 		return intermediateProperty;
 	}
@@ -182,7 +182,7 @@ public class OperationalTransformationImpl extends ModuleImpl implements Operati
 				return;
 			case ExpressionsPackage.OPERATIONAL_TRANSFORMATION__INTERMEDIATE_PROPERTY:
 				getIntermediateProperty().clear();
-				getIntermediateProperty().addAll((Collection<? extends Property>)newValue);
+				getIntermediateProperty().addAll((Collection<? extends EStructuralFeature>)newValue);
 				return;
 			case ExpressionsPackage.OPERATIONAL_TRANSFORMATION__MODEL_PARAMETER:
 				getModelParameter().clear();

@@ -9,12 +9,13 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: OperationalTransformation.java,v 1.2 2008/11/13 11:34:15 sboyko Exp $
+ * $Id: OperationalTransformation.java,v 1.3 2008/12/18 15:18:10 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 
 /**
@@ -61,7 +62,7 @@ public interface OperationalTransformation extends Module {
 
 	/**
 	 * Returns the value of the '<em><b>Intermediate Property</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.expressions.Property}.
+	 * The list contents are of type {@link org.eclipse.emf.ecore.EStructuralFeature}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Intermediate Property</em>' reference list isn't clear,
@@ -73,7 +74,7 @@ public interface OperationalTransformation extends Module {
 	 * @model
 	 * @generated
 	 */
-	EList<Property> getIntermediateProperty();
+	EList<EStructuralFeature> getIntermediateProperty();
 
 	/**
 	 * Returns the value of the '<em><b>Model Parameter</b></em>' containment reference list.

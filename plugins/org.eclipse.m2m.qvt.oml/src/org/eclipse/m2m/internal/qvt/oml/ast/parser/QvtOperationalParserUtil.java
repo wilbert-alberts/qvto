@@ -51,7 +51,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Typedef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
@@ -89,8 +88,8 @@ public class QvtOperationalParserUtil {
 	private static final String QVT_NAMESPACE_URI = "http://www.eclipse.org/m2m/1.0.0/QVT"; //$NON-NLS-1$
 	private static final String QVT_IS_ABSTACT = "isAbstract"; //$NON-NLS-1$
 	private static final String QVT_IS_STATIC = "isStatic"; //$NON-NLS-1$	
-
-	private static final String QVT_LOCAL_PROPERTY_AST_URI = QVT_NAMESPACE_URI + "/localProperty"; //$NON-NLS-1$	
+	
+	private static final String QVT_INIT_EXPRESSION_URI = QVT_NAMESPACE_URI + "/initExp"; //$NON-NLS-1$	
 
 	private QvtOperationalParserUtil() {
 	}
@@ -175,26 +174,27 @@ public class QvtOperationalParserUtil {
 		
 		return ""; //$NON-NLS-1$
 	}
-
-	public static void addLocalPropertyAST(EStructuralFeature moduleFeature, Property propertyAST) {
+	
+	public static void setInitExpression(EStructuralFeature moduleFeature, OCLExpression<EClassifier> expression) {
 		EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
-		annotation.setSource(QVT_LOCAL_PROPERTY_AST_URI);
-		annotation.getContents().add(propertyAST);
+		annotation.setSource(QVT_INIT_EXPRESSION_URI);
+		annotation.getContents().add(expression);
 		moduleFeature.getEAnnotations().add(annotation);
 	}
 	
-	public static Property getLocalPropertyAST(EStructuralFeature feature) {
-		EAnnotation annotation = feature.getEAnnotation(QVT_LOCAL_PROPERTY_AST_URI);		
+	@SuppressWarnings("unchecked")
+	public static OCLExpression<EClassifier> getInitExpression(EStructuralFeature feature) {
+		EAnnotation annotation = feature.getEAnnotation(QVT_INIT_EXPRESSION_URI);		
 		if(annotation != null) {
 			for (EObject referredObj : annotation.getContents()) {
-				if(referredObj instanceof Property) {
-					return (Property)referredObj;
+				if(referredObj instanceof OCLExpression) {
+					return (OCLExpression<EClassifier>)referredObj;
 				}
 			}
 		}
 		return null; 
-	}	
-	
+	}
+		
 	public static Module getOwningModule(ImperativeOperation operation) {
 		if(operation.getEContainingClass() instanceof Module) {			
 			return (Module) operation.getEContainingClass();
@@ -474,7 +474,9 @@ public class QvtOperationalParserUtil {
 				return false;
 			}
 		}
-		if (representedParameter instanceof Property) {
+		
+		//FIXME - remove the code bellow, it has no effect
+		if (representedParameter instanceof EStructuralFeature) {
 			QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.readOnlyPropertyModificationError, variable.getName()),
 					varPathNameNodeCS);
 			return false;
@@ -717,8 +719,8 @@ public class QvtOperationalParserUtil {
 		return false;
 	}
 	
-	public static CSTNode getPropertyProblemNode(Property propertyAST, QvtOperationalEnv env) {
-		CSTNode cstNode = env.getASTMapping(propertyAST);
+	public static CSTNode getPropertyProblemNode(EStructuralFeature feature, QvtOperationalEnv env) {
+		CSTNode cstNode = env.getASTMapping(feature);
 		if(cstNode instanceof ModulePropertyCS) {
 			CSTNode nameCS = ((ModulePropertyCS)cstNode).getSimpleNameCS();
 			if(nameCS != null) {

@@ -24,7 +24,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ForExp;
@@ -34,7 +33,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
-import org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
@@ -44,7 +42,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
@@ -327,10 +324,6 @@ abstract class QvtGenericEvaluationVisitor
         return getQVTDelegate().visitComputeExp(computeExp);
     }
 
-    public Object visitConfigProperty(ConfigProperty configProperty) {		// 
-		return getQVTDelegate().visitConfigProperty(configProperty);
-	}
-
 	public Object visitHelper(Helper helper) {
 		return getQVTDelegate().visitHelper(helper);
 	}
@@ -341,10 +334,6 @@ abstract class QvtGenericEvaluationVisitor
 
 	public Object visitLibrary(Library library) {
 		return getQVTDelegate().visitLibrary(library);
-	}
-
-	public Object visitLocalProperty(LocalProperty localProperty) {
-		return getQVTDelegate().visitLocalProperty(localProperty);
 	}
 
 	public Object visitContextualProperty(ContextualProperty contextualProperty) {
@@ -385,10 +374,6 @@ abstract class QvtGenericEvaluationVisitor
 
 	public Object visitOperationBody(OperationBody operationBody) {
 		return getQVTDelegate().visitOperationBody(operationBody);
-	}
-
-	public Object visitProperty(Property property) {
-		return getQVTDelegate().visitProperty(property);
 	}
 
 	public Object visitClass(org.eclipse.m2m.internal.qvt.oml.expressions.Class class_) {

@@ -20,6 +20,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
+import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNode;
+import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNodeAccess;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.IModuleSourceInfo;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
@@ -152,6 +154,11 @@ public class QvtStackTraceBuilder {
     		ASTNode astNode = (ASTNode) currentIPObject;
     		return astNode.getStartPosition();
     	}
+    	
+		ASTSyntheticNode astNode = ASTSyntheticNodeAccess.getASTNode(currentIPObject);
+		if(astNode != null) {
+			return astNode.getStartPosition();
+		}
     	
     	return -1;
     }

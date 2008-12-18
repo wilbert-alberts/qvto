@@ -24,13 +24,11 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
-import org.eclipse.m2m.internal.qvt.oml.expressions.*;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
@@ -44,7 +42,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
-import org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
@@ -57,8 +54,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.PackageRef;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
@@ -165,20 +160,8 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createModuleImportAdapter();
 			}
 			@Override
-			public Adapter caseProperty(Property object) {
-				return createPropertyAdapter();
-			}
-			@Override
 			public Adapter caseClass(org.eclipse.m2m.internal.qvt.oml.expressions.Class object) {
 				return createClassAdapter();
-			}
-			@Override
-			public Adapter caseLocalProperty(LocalProperty object) {
-				return createLocalPropertyAdapter();
-			}
-			@Override
-			public Adapter caseConfigProperty(ConfigProperty object) {
-				return createConfigPropertyAdapter();
 			}
 			@Override
 			public Adapter caseContextualProperty(ContextualProperty object) {
@@ -275,10 +258,6 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseModelType(ModelType object) {
 				return createModelTypeAdapter();
-			}
-			@Override
-			public Adapter casePackageRef(PackageRef object) {
-				return createPackageRefAdapter();
 			}
 			@Override
 			public Adapter caseMappingParameter(MappingParameter object) {
@@ -499,20 +478,6 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Property <em>Property</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.Property
-	 * @generated
-	 */
-	public Adapter createPropertyAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Class <em>Class</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -523,34 +488,6 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createClassAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty <em>Local Property</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty
-	 * @generated
-	 */
-	public Adapter createLocalPropertyAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty <em>Config Property</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty
-	 * @generated
-	 */
-	public Adapter createConfigPropertyAdapter() {
 		return null;
 	}
 
@@ -887,20 +824,6 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createModelTypeAdapter() {
-		return null;
-	}
-
-				/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.PackageRef <em>Package Ref</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.PackageRef
-	 * @generated
-	 */
-	public Adapter createPackageRefAdapter() {
 		return null;
 	}
 

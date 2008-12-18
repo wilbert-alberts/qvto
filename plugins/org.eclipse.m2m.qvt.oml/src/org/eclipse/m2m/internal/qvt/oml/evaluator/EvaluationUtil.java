@@ -181,7 +181,7 @@ class EvaluationUtil {
 		Context nestedContext = new Context() {
 			@Override
 			protected ISessionData createSessionData() {
-				return (ISessionData) parentContext.getSessionData();
+				return copySessionData();
 			}
 		};
 

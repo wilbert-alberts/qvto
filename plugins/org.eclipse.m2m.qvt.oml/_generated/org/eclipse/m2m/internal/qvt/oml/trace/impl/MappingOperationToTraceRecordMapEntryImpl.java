@@ -9,29 +9,23 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: MappingOperationToTraceRecordMapEntryImpl.java,v 1.1 2008/04/07 19:00:39 aigdalov Exp $
+ * $Id: MappingOperationToTraceRecordMapEntryImpl.java,v 1.2 2008/12/18 15:18:11 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace.impl;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
-
 import org.eclipse.m2m.internal.qvt.oml.trace.TracePackage;
 import org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord;
 
@@ -51,249 +45,249 @@ import org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord;
  */
 public class MappingOperationToTraceRecordMapEntryImpl extends EObjectImpl implements BasicEMap.Entry<MappingOperation,EList<TraceRecord>> {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
 
     /**
-     * The cached value of the '{@link #getTypedValue() <em>Value</em>}' reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getTypedValue() <em>Value</em>}' reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getTypedValue()
-     * @generated
-     * @ordered
-     */
+	 * @see #getTypedValue()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<TraceRecord> value;
 
     /**
-     * The cached value of the '{@link #getTypedKey() <em>Key</em>}' reference.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getTypedKey() <em>Key</em>}' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getTypedKey()
-     * @generated
-     * @ordered
-     */
+	 * @see #getTypedKey()
+	 * @generated
+	 * @ordered
+	 */
     protected MappingOperation key;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected MappingOperationToTraceRecordMapEntryImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return TracePackage.Literals.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY;
-    }
+		return TracePackage.Literals.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<TraceRecord> getTypedValue() {
-        if (value == null) {
-            value = new EObjectResolvingEList<TraceRecord>(TraceRecord.class, this, TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__VALUE);
-        }
-        return value;
-    }
+		if (value == null) {
+			value = new EObjectResolvingEList<TraceRecord>(TraceRecord.class, this, TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__VALUE);
+		}
+		return value;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public MappingOperation getTypedKey() {
-        if (key != null && key.eIsProxy()) {
-            InternalEObject oldKey = (InternalEObject)key;
-            key = (MappingOperation)eResolveProxy(oldKey);
-            if (key != oldKey) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__KEY, oldKey, key));
-            }
-        }
-        return key;
-    }
+		if (key != null && key.eIsProxy()) {
+			InternalEObject oldKey = (InternalEObject)key;
+			key = (MappingOperation)eResolveProxy(oldKey);
+			if (key != oldKey) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__KEY, oldKey, key));
+			}
+		}
+		return key;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public MappingOperation basicGetTypedKey() {
-        return key;
-    }
+		return key;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setTypedKey(MappingOperation newKey) {
-        MappingOperation oldKey = key;
-        key = newKey;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__KEY, oldKey, key));
-    }
+		MappingOperation oldKey = key;
+		key = newKey;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__KEY, oldKey, key));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__VALUE:
-                return getTypedValue();
-            case TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__KEY:
-                if (resolve) return getTypedKey();
-                return basicGetTypedKey();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__VALUE:
+				return getTypedValue();
+			case TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__KEY:
+				if (resolve) return getTypedKey();
+				return basicGetTypedKey();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__VALUE:
-                getTypedValue().clear();
-                getTypedValue().addAll((Collection<? extends TraceRecord>)newValue);
-                return;
-            case TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__KEY:
-                setTypedKey((MappingOperation)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__VALUE:
+				getTypedValue().clear();
+				getTypedValue().addAll((Collection<? extends TraceRecord>)newValue);
+				return;
+			case TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__KEY:
+				setTypedKey((MappingOperation)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__VALUE:
-                getTypedValue().clear();
-                return;
-            case TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__KEY:
-                setTypedKey((MappingOperation)null);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__VALUE:
+				getTypedValue().clear();
+				return;
+			case TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__KEY:
+				setTypedKey((MappingOperation)null);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__VALUE:
-                return value != null && !value.isEmpty();
-            case TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__KEY:
-                return key != null;
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__VALUE:
+				return value != null && !value.isEmpty();
+			case TracePackage.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__KEY:
+				return key != null;
+		}
+		return super.eIsSet(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected int hash = -1;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public int getHash() {
-        if (hash == -1) {
-            Object theKey = getKey();
-            hash = (theKey == null ? 0 : theKey.hashCode());
-        }
-        return hash;
-    }
+		if (hash == -1) {
+			Object theKey = getKey();
+			hash = (theKey == null ? 0 : theKey.hashCode());
+		}
+		return hash;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setHash(int hash) {
-        this.hash = hash;
-    }
+		this.hash = hash;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public MappingOperation getKey() {
-        return getTypedKey();
-    }
+		return getTypedKey();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setKey(MappingOperation key) {
-        setTypedKey(key);
-    }
+		setTypedKey(key);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<TraceRecord> getValue() {
-        return getTypedValue();
-    }
+		return getTypedValue();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<TraceRecord> setValue(EList<TraceRecord> value) {
-        EList<TraceRecord> oldValue = getValue();
-        getTypedValue().clear();
-        getTypedValue().addAll(value);
-        return oldValue;
-    }
+		EList<TraceRecord> oldValue = getValue();
+		getTypedValue().clear();
+		getTypedValue().addAll(value);
+		return oldValue;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @SuppressWarnings("unchecked")
     public EMap<MappingOperation, EList<TraceRecord>> getEMap() {
-        EObject container = eContainer();
-        return container == null ? null : (EMap<MappingOperation, EList<TraceRecord>>)container.eGet(eContainmentFeature());
-    }
+		EObject container = eContainer();
+		return container == null ? null : (EMap<MappingOperation, EList<TraceRecord>>)container.eGet(eContainmentFeature());
+	}
 
 } //MappingOperationToTraceRecordMapEntryImpl

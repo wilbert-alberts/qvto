@@ -119,14 +119,15 @@ public class IntermediatePropertyHierarchy {
 				hierarchy = new LinkedList<ContextualProperty>();
 				hierarchy.add(property);
 				return true;
-			} else {
-				for (ContextualProperty contextualProperty : hierarchy) {
-					if(property != contextualProperty && isPartOfHierarchy(contextualProperty, property)) {
-						hierarchy.add(property);
-						return false;
-					}
+			} 
+
+			for (ContextualProperty contextualProperty : hierarchy) {
+				if(property != contextualProperty && isPartOfHierarchy(contextualProperty, property)) {
+					hierarchy.add(property);
+					return false;
 				}
-			}			
+			}
+			
 			return false;
 		}
 		

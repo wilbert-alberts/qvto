@@ -9,12 +9,11 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: EMappingOperation.java,v 1.1 2008/04/07 19:00:38 aigdalov Exp $
+ * $Id: EMappingOperation.java,v 1.2 2008/12/18 15:18:10 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace;
 
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 
 /**
@@ -38,114 +37,114 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
  */
 public interface EMappingOperation extends EObject {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
 
     /**
-     * Returns the value of the '<em><b>Name</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Name</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Name</em>' attribute.
-     * @see #setName(String)
-     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getEMappingOperation_Name()
-     * @model required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Name</em>' attribute.
+	 * @see #setName(String)
+	 * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getEMappingOperation_Name()
+	 * @model required="true"
+	 * @generated
+	 */
     String getName();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.EMappingOperation#getName <em>Name</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.EMappingOperation#getName <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Name</em>' attribute.
-     * @see #getName()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Name</em>' attribute.
+	 * @see #getName()
+	 * @generated
+	 */
     void setName(String value);
 
     /**
-     * Returns the value of the '<em><b>Package</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Package</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Package</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Package</em>' attribute.
-     * @see #setPackage(String)
-     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getEMappingOperation_Package()
-     * @model required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Package</em>' attribute.
+	 * @see #setPackage(String)
+	 * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getEMappingOperation_Package()
+	 * @model required="true"
+	 * @generated
+	 */
     String getPackage();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.EMappingOperation#getPackage <em>Package</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.EMappingOperation#getPackage <em>Package</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Package</em>' attribute.
-     * @see #getPackage()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Package</em>' attribute.
+	 * @see #getPackage()
+	 * @generated
+	 */
     void setPackage(String value);
 
     /**
-     * Returns the value of the '<em><b>Module</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Module</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Module</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Module</em>' attribute.
-     * @see #setModule(String)
-     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getEMappingOperation_Module()
-     * @model required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Module</em>' attribute.
+	 * @see #setModule(String)
+	 * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getEMappingOperation_Module()
+	 * @model required="true"
+	 * @generated
+	 */
     String getModule();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.EMappingOperation#getModule <em>Module</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.EMappingOperation#getModule <em>Module</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Module</em>' attribute.
-     * @see #getModule()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Module</em>' attribute.
+	 * @see #getModule()
+	 * @generated
+	 */
     void setModule(String value);
 
     /**
-     * Returns the value of the '<em><b>Runtime Mapping Operation</b></em>' reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Runtime Mapping Operation</b></em>' reference.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Runtime Mapping Operation</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Runtime Mapping Operation</em>' reference.
-     * @see #setRuntimeMappingOperation(MappingOperation)
-     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getEMappingOperation_RuntimeMappingOperation()
-     * @model required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Runtime Mapping Operation</em>' reference.
+	 * @see #setRuntimeMappingOperation(MappingOperation)
+	 * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getEMappingOperation_RuntimeMappingOperation()
+	 * @model required="true"
+	 * @generated
+	 */
     MappingOperation getRuntimeMappingOperation();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.EMappingOperation#getRuntimeMappingOperation <em>Runtime Mapping Operation</em>}' reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.EMappingOperation#getRuntimeMappingOperation <em>Runtime Mapping Operation</em>}' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Runtime Mapping Operation</em>' reference.
-     * @see #getRuntimeMappingOperation()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Runtime Mapping Operation</em>' reference.
+	 * @see #getRuntimeMappingOperation()
+	 * @generated
+	 */
     void setRuntimeMappingOperation(MappingOperation value);
 
 } // EMappingOperation

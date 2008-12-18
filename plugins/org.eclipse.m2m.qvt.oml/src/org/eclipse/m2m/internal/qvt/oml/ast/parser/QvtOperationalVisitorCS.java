@@ -31,11 +31,12 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
+import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNode;
+import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNodeAccess;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
@@ -103,7 +104,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
@@ -114,7 +114,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ForExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
@@ -127,7 +126,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
@@ -1540,15 +1538,16 @@ public class QvtOperationalVisitorCS
 		Map<String, List<PropertyPair>> classifierProperties = new LinkedHashMap<String, List<PropertyPair>>(classifierDefCS.getProperties().size());
 		
 		for (LocalPropertyCS propCS : classifierDefCS.getProperties()) {
-			LocalProperty prop = visitLocalPropertyCS(propCS, env);
+			EStructuralFeature prop = visitLocalPropertyCS(propCS, env);
 			if (prop == null) {
 				continue;
 			}
 			
 			EStructuralFeature eFeature = env.getUMLReflection().createProperty(prop.getName(), prop.getEType());
 			eClassifier.getEStructuralFeatures().add(eFeature);
-			if (prop.getExpression() != null) {
-				IntermediateClassFactory.getFactory(module).addClassifierPropertyInit(eClassifier, eFeature, prop.getExpression());
+			OCLExpression<EClassifier> initExp = QvtOperationalParserUtil.getInitExpression(prop);
+			if (initExp != null) {
+				IntermediateClassFactory.getFactory(module).addClassifierPropertyInit(eClassifier, eFeature, initExp);
 			}
 
 			List<PropertyPair> properties = classifierProperties.get(prop.getName());
@@ -1654,13 +1653,13 @@ public class QvtOperationalVisitorCS
 	private void createModuleProperties(Module module, MappingModuleCS moduleCS, QvtOperationalFileEnv env) throws SemanticException {
 		
 		for (ModulePropertyCS propCS : moduleCS.getProperties()) {
-			Property prop = visitModulePropertyCS(propCS, env);
+			EStructuralFeature prop = visitModulePropertyCS(propCS, env);
 			if (prop == null) {
 				continue;
 			}
 
 			EStructuralFeature eFeature = null;
-			if (prop instanceof ContextualProperty) {
+			if (propCS instanceof ContextualPropertyCS) {
 				EClass ctxType = ((ContextualProperty) prop).getContext();
 				if (ctxType != null && env.lookupProperty(ctxType, prop.getName()) != null) {
 					// need to check now for duplicates, as MDT OCL lookup now returns the most specific 
@@ -1675,14 +1674,15 @@ public class QvtOperationalVisitorCS
 				// using AST-CST map as this mapping is not optional but always required
 				env.getASTNodeToCSTNodeMap().put(prop, propCS); 
 			} else {
-				eFeature = env.getUMLReflection().createProperty(prop.getName(), prop.getEType());
-				QvtOperationalParserUtil.addLocalPropertyAST(eFeature, prop);				
+				//eFeature = env.getUMLReflection().createProperty(prop.getName(), prop.getEType());
+				eFeature = prop;				
+				//QvtOperationalParserUtil.addLocalPropertyAST(eFeature, prop);				
 		        if (env.lookupProperty(module, prop.getName()) != null) {
 		        	HiddenElementAdapter.markAsHidden(eFeature);
 		            env.reportError(NLS.bind(ValidationMessages.ModulePropertyAlreadyDefined, new Object[] { prop.getName() }), propCS.getSimpleNameCS());
 		        }
 				
-				if (prop instanceof ConfigProperty) {
+				if (propCS instanceof ConfigPropertyCS) {
 					module.getConfigProperty().add(eFeature);
 				} 
 			}
@@ -1692,7 +1692,7 @@ public class QvtOperationalVisitorCS
 
 		if (module instanceof OperationalTransformation) {
 			IntermediatePropertyHierarchy intermPropDefHierarchy = ((OperationalTransformation) module).getIntermediateProperty().isEmpty() ? null : new IntermediatePropertyHierarchy(module, env);				
-			for (Property prop : ((OperationalTransformation) module).getIntermediateProperty()) {			
+			for (EStructuralFeature prop : ((OperationalTransformation) module).getIntermediateProperty()) {			
 				if (prop instanceof ContextualProperty) {
 					ContextualProperty ctxProperty = (ContextualProperty) prop;				
 					EClass ctxType = ctxProperty.getContext();
@@ -1704,8 +1704,8 @@ public class QvtOperationalVisitorCS
 						HiddenElementAdapter.markAsHidden(ctxProperty);											
 						String message = NLS.bind(ValidationMessages.IntermediatePropertyAlreadyDefined, prop.getName());
 						
-						int startPos = prop.getStartPosition();
-						int endPos = prop.getEndPosition();
+						int startPos = ctxProperty.getStartPosition();
+						int endPos = ctxProperty.getEndPosition();
 						CSTNode cstNode = QvtOperationalParserUtil.getPropertyProblemNode(prop, env);
 						if(cstNode != null) {
 							startPos = cstNode.getStartOffset();
@@ -2847,18 +2847,21 @@ public class QvtOperationalVisitorCS
 		return visitOclExpressionCS(expressionCS.getOclExpressionCS(), env);
 	}
 
-	private Property visitConfigPropertyCS(ConfigPropertyCS propCS, QvtOperationalFileEnv env)
-			throws SemanticException {
-		Property property = ExpressionsFactory.eINSTANCE.createConfigProperty();
-		property.setStartPosition(propCS.getStartOffset());
-		property.setEndPosition(propCS.getEndOffset());
-		property.setName(propCS.getSimpleNameCS().getValue());
-
-		EClassifier type;
+	private static EStructuralFeature createESFeature(EClassifier type) {
+		if(type instanceof EClass) {
+			return org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.createEReference();
+		}
+		return org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.createEAttribute();
+	}
+	
+	private EStructuralFeature visitConfigPropertyCS(ConfigPropertyCS propCS, QvtOperationalFileEnv env) {
+		SimpleNameCS simpleNameCS = propCS.getSimpleNameCS();
+		String name = simpleNameCS != null ? simpleNameCS.getValue() : ""; //$NON-NLS-1$
+				
+		EClassifier type = null;
 		if (propCS.getTypeCS() != null) {
 			type = visitTypeCS(propCS.getTypeCS(), null, env);
-			if (type != null) {
-				property.setEType(type);
+			if (type != null) {				
 				if (!QvtOperationalUtil.isCreateFromStringSupported(type)) {
 					env.reportError(NLS.bind(ValidationMessages.ConfigPropertyTypeUnsupported, new Object[] { type
 							.getName() }), propCS.getTypeCS());
@@ -2866,48 +2869,62 @@ public class QvtOperationalVisitorCS
 			}
 		} else {
 			env.reportError(NLS.bind(ValidationMessages.ConfigPropertyMustHaveType,
-					new Object[] { property.getName() }), propCS);
+					new Object[] { name }), simpleNameCS != null ? simpleNameCS : propCS);
 		}
-
-		return property;
+		
+		EStructuralFeature feature = createESFeature(type);
+		feature.setName(name);
+		feature.setEType(type);
+		
+		ASTSyntheticNode astNode = ASTSyntheticNodeAccess.createASTNode(feature);
+		astNode.setStartPosition(propCS.getStartOffset());
+		astNode.setEndPosition(propCS.getEndOffset());
+		
+		return feature;
 	}
 
-	private LocalProperty visitLocalPropertyCS(LocalPropertyCS propCS, QvtOperationalEnv env)
-			throws SemanticException {
-		LocalProperty prop = ExpressionsFactory.eINSTANCE.createLocalProperty();
-		prop.setStartPosition(propCS.getStartOffset());
-		prop.setEndPosition(propCS.getEndOffset());
-
-		prop.setName(propCS.getSimpleNameCS().getValue());
-
+	private EStructuralFeature visitLocalPropertyCS(LocalPropertyCS propCS, QvtOperationalEnv env) {
 		EClassifier type = null;
 		if (propCS.getTypeCS() != null) {
 			type = visitTypeCS(propCS.getTypeCS(), null, env);
 		}
 
+		EStructuralFeature prop = createESFeature(type);
+		SimpleNameCS simpleNameCS = propCS.getSimpleNameCS();
+		prop.setName(simpleNameCS.getValue());		
 		prop.setEType(type);
 
+		ASTSyntheticNode astNode = ASTSyntheticNodeAccess.createASTNode(prop);
+		astNode.setStartPosition(propCS.getStartOffset());
+		astNode.setEndPosition(propCS.getEndOffset());
+		
 		OCLExpression<EClassifier> exp = null;
 		if (propCS.getOclExpressionCS() != null) {
 			exp = visitOclExpressionCS(propCS.getOclExpressionCS(), env);
+			QvtOperationalParserUtil.setInitExpression(prop, exp);			
 		}
 		
-		prop.setExpression(exp);
-		
-		if (prop.getEType() == null && prop.getExpression() != null) {
-			prop.setEType(prop.getExpression().getType());
+		if (prop.getEType() == null && exp != null) {
+			prop.setEType(exp.getType());
 		}
 
-		validateLocalPropertyCS(propCS, prop, env);
+		if(exp != null) {
+			EClassifier realType = exp.getType();
+			EClassifier declaredType = prop.getEType();
+			if (!QvtOperationalParserUtil.isAssignableToFrom(env, declaredType, realType)) {
+				env.reportError(NLS.bind(ValidationMessages.SemanticUtil_17,
+						new Object[] { QvtOperationalTypesUtil.getTypeFullName(declaredType), QvtOperationalTypesUtil.getTypeFullName(realType) }),
+						astNode.getStartPosition(), astNode.getEndPosition());
+			}
+		}
+		
 		return prop;
 	}
 
-	private Property visitContextualPropertyCS(ContextualPropertyCS propCS, QvtOperationalFileEnv env)
-			throws SemanticException {		
+	private ContextualProperty visitContextualPropertyCS(ContextualPropertyCS propCS, QvtOperationalFileEnv env) {
 		ContextualProperty prop = ExpressionsFactory.eINSTANCE.createContextualProperty();
 		prop.setStartPosition(propCS.getStartOffset());
 		prop.setEndPosition(propCS.getEndOffset());
-		
 		prop.setName(propCS.getScopedNameCS().getName());
 
 		EClassifier type = null;
@@ -2958,10 +2975,8 @@ public class QvtOperationalVisitorCS
 		return prop;
 	}
 		
-	protected Property visitModulePropertyCS(ModulePropertyCS propCS, QvtOperationalFileEnv env)
-			throws SemanticException {
-		
-		Property result = null;		
+	protected EStructuralFeature visitModulePropertyCS(ModulePropertyCS propCS, QvtOperationalFileEnv env) {
+		EStructuralFeature result = null;		
 		if (propCS instanceof ConfigPropertyCS) {
 			result = visitConfigPropertyCS((ConfigPropertyCS) propCS, env);
 		}
@@ -2976,8 +2991,15 @@ public class QvtOperationalVisitorCS
 		}
 		
         // AST binding
-        if (result != null && myCompilerOptions.isGenerateCompletionData()) {		
-        	ASTBindingHelper.createCST2ASTBinding(propCS, result, env);
+        if (myCompilerOptions.isGenerateCompletionData()) {
+        	propCS.setAst(result);
+
+        	if(result instanceof ASTNode) {
+        		ASTBindingHelper.createCST2ASTBinding(propCS, (ASTNode)result, env);
+        	} else {
+        		ASTSyntheticNode astNode = ASTSyntheticNodeAccess.getASTNode(result); 
+        		ASTSyntheticNodeAccess.setCST(astNode, propCS);
+        	}
         }
 		//
 		return result;
@@ -3495,22 +3517,6 @@ public class QvtOperationalVisitorCS
         }
     }
     
-	private boolean validateLocalPropertyCS(LocalPropertyCS propCS, LocalProperty prop, QvtOperationalEnv env)
-			throws SemanticException {
-
-		if(prop.getExpression() != null) {
-			EClassifier realType = prop.getExpression().getType();
-			EClassifier declaredType = prop.getEType();
-			if (!QvtOperationalParserUtil.isAssignableToFrom(env, declaredType, realType)) {
-				env.reportError(NLS.bind(ValidationMessages.SemanticUtil_17,
-						new Object[] { QvtOperationalTypesUtil.getTypeFullName(declaredType), QvtOperationalTypesUtil.getTypeFullName(realType) }),
-						prop.getStartPosition(), prop.getEndPosition());
-			}
-		}
-
-		return true;
-	}
-
 	private boolean validateInitializedValueCS(VariableInitializationCS varInitCS, VariableInitExp result, 
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {

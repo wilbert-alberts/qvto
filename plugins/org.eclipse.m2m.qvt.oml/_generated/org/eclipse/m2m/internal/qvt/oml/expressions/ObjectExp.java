@@ -13,7 +13,6 @@ package org.eclipse.m2m.internal.qvt.oml.expressions;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.utilities.Visitor;
 

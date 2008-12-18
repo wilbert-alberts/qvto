@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ETuplePartValue.java,v 1.1 2008/04/07 19:00:38 aigdalov Exp $
+ * $Id: ETuplePartValue.java,v 1.2 2008/12/18 15:18:10 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace;
 
@@ -33,62 +33,62 @@ package org.eclipse.m2m.internal.qvt.oml.trace;
  */
 public interface ETuplePartValue extends EValue {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
 
     /**
-     * Returns the value of the '<em><b>Name</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Name</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Name</em>' attribute.
-     * @see #setName(String)
-     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getETuplePartValue_Name()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>Name</em>' attribute.
+	 * @see #setName(String)
+	 * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getETuplePartValue_Name()
+	 * @model
+	 * @generated
+	 */
     String getName();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.ETuplePartValue#getName <em>Name</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.ETuplePartValue#getName <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Name</em>' attribute.
-     * @see #getName()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Name</em>' attribute.
+	 * @see #getName()
+	 * @generated
+	 */
     void setName(String value);
 
     /**
-     * Returns the value of the '<em><b>Value</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Value</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Value</em>' containment reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Value</em>' containment reference.
-     * @see #setValue(EValue)
-     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getETuplePartValue_Value()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Value</em>' containment reference.
+	 * @see #setValue(EValue)
+	 * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getETuplePartValue_Value()
+	 * @model containment="true"
+	 * @generated
+	 */
     EValue getValue();
 
     /**
-     * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.ETuplePartValue#getValue <em>Value</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.trace.ETuplePartValue#getValue <em>Value</em>}' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Value</em>' containment reference.
-     * @see #getValue()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Value</em>' containment reference.
+	 * @see #getValue()
+	 * @generated
+	 */
     void setValue(EValue value);
 
 } // ETuplePartValue

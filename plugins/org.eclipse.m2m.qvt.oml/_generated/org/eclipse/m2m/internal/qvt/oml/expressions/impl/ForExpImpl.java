@@ -9,12 +9,11 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ForExpImpl.java,v 1.2 2008/10/31 00:02:48 radvorak Exp $
+ * $Id: ForExpImpl.java,v 1.3 2008/12/18 15:18:10 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ForExp;

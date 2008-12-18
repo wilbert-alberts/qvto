@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 
 
 class RuntimePropertyShadowHelper {
@@ -42,7 +41,7 @@ class RuntimePropertyShadowHelper {
 		return addProperty(property, property.getContext());		
 	}
 	
-	private EStructuralFeature addProperty(Property property, EClass owner) {
+	private EStructuralFeature addProperty(ContextualProperty property, EClass owner) {
 		EClass shadowClass = getShadow(owner);
 		
 		EStructuralFeature shadowProperty;

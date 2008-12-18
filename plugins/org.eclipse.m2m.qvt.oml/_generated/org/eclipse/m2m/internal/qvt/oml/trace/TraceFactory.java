@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: TraceFactory.java,v 1.1 2008/04/07 19:00:38 aigdalov Exp $
+ * $Id: TraceFactory.java,v 1.2 2008/12/18 15:18:10 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace;
 
@@ -25,108 +25,108 @@ import org.eclipse.emf.ecore.EFactory;
  */
 public interface TraceFactory extends EFactory {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
 
     /**
-     * The singleton instance of the factory.
-     * <!-- begin-user-doc -->
+	 * The singleton instance of the factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     TraceFactory eINSTANCE = org.eclipse.m2m.internal.qvt.oml.trace.impl.TraceFactoryImpl.init();
 
     /**
-     * Returns a new object of class '<em>Trace</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Trace</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Trace</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Trace</em>'.
+	 * @generated
+	 */
     Trace createTrace();
 
     /**
-     * Returns a new object of class '<em>Record</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Record</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Record</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Record</em>'.
+	 * @generated
+	 */
     TraceRecord createTraceRecord();
 
     /**
-     * Returns a new object of class '<em>Var Parameter Value</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Var Parameter Value</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Var Parameter Value</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Var Parameter Value</em>'.
+	 * @generated
+	 */
     VarParameterValue createVarParameterValue();
 
     /**
-     * Returns a new object of class '<em>EMapping Operation</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>EMapping Operation</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>EMapping Operation</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>EMapping Operation</em>'.
+	 * @generated
+	 */
     EMappingOperation createEMappingOperation();
 
     /**
-     * Returns a new object of class '<em>EValue</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>EValue</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>EValue</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>EValue</em>'.
+	 * @generated
+	 */
     EValue createEValue();
 
     /**
-     * Returns a new object of class '<em>ETuple Part Value</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>ETuple Part Value</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>ETuple Part Value</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>ETuple Part Value</em>'.
+	 * @generated
+	 */
     ETuplePartValue createETuplePartValue();
 
     /**
-     * Returns a new object of class '<em>EMapping Context</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>EMapping Context</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>EMapping Context</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>EMapping Context</em>'.
+	 * @generated
+	 */
     EMappingContext createEMappingContext();
 
     /**
-     * Returns a new object of class '<em>EMapping Parameters</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>EMapping Parameters</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>EMapping Parameters</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>EMapping Parameters</em>'.
+	 * @generated
+	 */
     EMappingParameters createEMappingParameters();
 
     /**
-     * Returns a new object of class '<em>EMapping Results</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>EMapping Results</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>EMapping Results</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>EMapping Results</em>'.
+	 * @generated
+	 */
     EMappingResults createEMappingResults();
 
     /**
-     * Returns the package supported by this factory.
-     * <!-- begin-user-doc -->
+	 * Returns the package supported by this factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the package supported by this factory.
-     * @generated
-     */
+	 * @return the package supported by this factory.
+	 * @generated
+	 */
     TracePackage getTracePackage();
 
 } //TraceFactory

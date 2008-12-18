@@ -20,11 +20,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
-import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -80,34 +75,10 @@ public interface ExtendedVisitor<T> extends Visitor<T, EClassifier, EOperation, 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model propertyRequired="true"
-	 * @generated
-	 */
-	T visitProperty(Property property);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * @model class_Required="true"
 	 * @generated
 	 */
 	T visitClass(org.eclipse.m2m.internal.qvt.oml.expressions.Class class_);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model localPropertyRequired="true"
-	 * @generated
-	 */
-	T visitLocalProperty(LocalProperty localProperty);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model configPropertyRequired="true"
-	 * @generated
-	 */
-	T visitConfigProperty(ConfigProperty configProperty);
 
 	/**
 	 * <!-- begin-user-doc -->

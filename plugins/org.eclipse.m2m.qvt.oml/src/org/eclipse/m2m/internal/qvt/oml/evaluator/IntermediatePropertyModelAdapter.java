@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.cst.adapters.AbstractGenericAdapter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.util.CollectionUtil;
 
@@ -84,7 +83,7 @@ public class IntermediatePropertyModelAdapter extends AbstractGenericAdapter<Int
     	return null;
     }
 
-	private final Map<Property, ShadowEntry> myProp2HolderMap = new IdentityHashMap<Property, ShadowEntry>(2);
+	private final Map<ContextualProperty, ShadowEntry> myProp2HolderMap = new IdentityHashMap<ContextualProperty, ShadowEntry>(2);
 	private final RuntimePropertyShadowHelper myPropShadowHelper = new RuntimePropertyShadowHelper();
 	
 

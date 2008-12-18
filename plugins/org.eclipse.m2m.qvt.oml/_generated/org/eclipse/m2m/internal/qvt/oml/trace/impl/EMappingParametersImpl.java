@@ -9,24 +9,19 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: EMappingParametersImpl.java,v 1.1 2008/04/07 19:00:38 aigdalov Exp $
+ * $Id: EMappingParametersImpl.java,v 1.2 2008/12/18 15:18:10 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace.impl;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.m2m.internal.qvt.oml.trace.EMappingParameters;
 import org.eclipse.m2m.internal.qvt.oml.trace.TracePackage;
 import org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue;
@@ -46,125 +41,125 @@ import org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue;
  */
 public class EMappingParametersImpl extends EObjectImpl implements EMappingParameters {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
 
     /**
-     * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getParameters()
-     * @generated
-     * @ordered
-     */
+	 * @see #getParameters()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<VarParameterValue> parameters;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected EMappingParametersImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return TracePackage.Literals.EMAPPING_PARAMETERS;
-    }
+		return TracePackage.Literals.EMAPPING_PARAMETERS;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<VarParameterValue> getParameters() {
-        if (parameters == null) {
-            parameters = new EObjectContainmentEList<VarParameterValue>(VarParameterValue.class, this, TracePackage.EMAPPING_PARAMETERS__PARAMETERS);
-        }
-        return parameters;
-    }
+		if (parameters == null) {
+			parameters = new EObjectContainmentEList<VarParameterValue>(VarParameterValue.class, this, TracePackage.EMAPPING_PARAMETERS__PARAMETERS);
+		}
+		return parameters;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case TracePackage.EMAPPING_PARAMETERS__PARAMETERS:
-                return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case TracePackage.EMAPPING_PARAMETERS__PARAMETERS:
+				return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case TracePackage.EMAPPING_PARAMETERS__PARAMETERS:
-                return getParameters();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case TracePackage.EMAPPING_PARAMETERS__PARAMETERS:
+				return getParameters();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case TracePackage.EMAPPING_PARAMETERS__PARAMETERS:
-                getParameters().clear();
-                getParameters().addAll((Collection<? extends VarParameterValue>)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case TracePackage.EMAPPING_PARAMETERS__PARAMETERS:
+				getParameters().clear();
+				getParameters().addAll((Collection<? extends VarParameterValue>)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case TracePackage.EMAPPING_PARAMETERS__PARAMETERS:
-                getParameters().clear();
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case TracePackage.EMAPPING_PARAMETERS__PARAMETERS:
+				getParameters().clear();
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case TracePackage.EMAPPING_PARAMETERS__PARAMETERS:
-                return parameters != null && !parameters.isEmpty();
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case TracePackage.EMAPPING_PARAMETERS__PARAMETERS:
+				return parameters != null && !parameters.isEmpty();
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //EMappingParametersImpl

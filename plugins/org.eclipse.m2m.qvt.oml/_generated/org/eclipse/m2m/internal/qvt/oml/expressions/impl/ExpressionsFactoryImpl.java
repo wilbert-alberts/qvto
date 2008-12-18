@@ -17,13 +17,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.m2m.internal.qvt.oml.expressions.*;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
@@ -37,7 +35,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
-import org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
@@ -50,8 +47,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.PackageRef;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
@@ -119,10 +114,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 			case ExpressionsPackage.LIBRARY: return createLibrary();
 			case ExpressionsPackage.RENAME: return createRename();
 			case ExpressionsPackage.MODULE_IMPORT: return createModuleImport();
-			case ExpressionsPackage.PROPERTY: return createProperty();
 			case ExpressionsPackage.CLASS: return createClass();
-			case ExpressionsPackage.LOCAL_PROPERTY: return createLocalProperty();
-			case ExpressionsPackage.CONFIG_PROPERTY: return createConfigProperty();
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY: return createContextualProperty();
 			case ExpressionsPackage.IMPERATIVE_OPERATION: return createImperativeOperation();
 			case ExpressionsPackage.MODEL_PARAMETER: return createModelParameter();
@@ -144,7 +136,6 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 			case ExpressionsPackage.RESOLVE_EXP: return createResolveExp();
 			case ExpressionsPackage.RESOLVE_IN_EXP: return createResolveInExp();
 			case ExpressionsPackage.MODEL_TYPE: return createModelType();
-			case ExpressionsPackage.PACKAGE_REF: return createPackageRef();
 			case ExpressionsPackage.MAPPING_PARAMETER: return createMappingParameter();
 			case ExpressionsPackage.LOG_EXP: return createLogExp();
 			case ExpressionsPackage.ASSERT_EXP: return createAssertExp();
@@ -249,39 +240,9 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Property createProperty() {
-		PropertyImpl property = new PropertyImpl();
-		return property;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public org.eclipse.m2m.internal.qvt.oml.expressions.Class createClass() {
 		ClassImpl class_ = new ClassImpl();
 		return class_;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public LocalProperty createLocalProperty() {
-		LocalPropertyImpl localProperty = new LocalPropertyImpl();
-		return localProperty;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ConfigProperty createConfigProperty() {
-		ConfigPropertyImpl configProperty = new ConfigPropertyImpl();
-		return configProperty;
 	}
 
 	/**
@@ -492,16 +453,6 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	public ModelType createModelType() {
 		ModelTypeImpl modelType = new ModelTypeImpl();
 		return modelType;
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public PackageRef createPackageRef() {
-		PackageRefImpl packageRef = new PackageRefImpl();
-		return packageRef;
 	}
 
 				/**

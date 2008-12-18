@@ -23,13 +23,11 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
-import org.eclipse.m2m.internal.qvt.oml.expressions.*;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
@@ -43,7 +41,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
-import org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
@@ -56,8 +53,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.PackageRef;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
@@ -221,19 +216,6 @@ public class ExpressionsSwitch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ExpressionsPackage.PROPERTY: {
-				Property property = (Property)theEObject;
-				T1 result = caseProperty(property);
-				if (result == null) result = caseEStructuralFeature(property);
-				if (result == null) result = caseVisitableASTNode(property);
-				if (result == null) result = caseETypedElement(property);
-				if (result == null) result = caseVisitable(property);
-				if (result == null) result = caseASTNode(property);
-				if (result == null) result = caseENamedElement(property);
-				if (result == null) result = caseEModelElement(property);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case ExpressionsPackage.CLASS: {
 				org.eclipse.m2m.internal.qvt.oml.expressions.Class class_ = (org.eclipse.m2m.internal.qvt.oml.expressions.Class)theEObject;
 				T1 result = caseClass(class_);
@@ -247,38 +229,9 @@ public class ExpressionsSwitch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ExpressionsPackage.LOCAL_PROPERTY: {
-				LocalProperty localProperty = (LocalProperty)theEObject;
-				T1 result = caseLocalProperty(localProperty);
-				if (result == null) result = caseProperty(localProperty);
-				if (result == null) result = caseEStructuralFeature(localProperty);
-				if (result == null) result = caseVisitableASTNode(localProperty);
-				if (result == null) result = caseETypedElement(localProperty);
-				if (result == null) result = caseVisitable(localProperty);
-				if (result == null) result = caseASTNode(localProperty);
-				if (result == null) result = caseENamedElement(localProperty);
-				if (result == null) result = caseEModelElement(localProperty);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.CONFIG_PROPERTY: {
-				ConfigProperty configProperty = (ConfigProperty)theEObject;
-				T1 result = caseConfigProperty(configProperty);
-				if (result == null) result = caseProperty(configProperty);
-				if (result == null) result = caseEStructuralFeature(configProperty);
-				if (result == null) result = caseVisitableASTNode(configProperty);
-				if (result == null) result = caseETypedElement(configProperty);
-				if (result == null) result = caseVisitable(configProperty);
-				if (result == null) result = caseASTNode(configProperty);
-				if (result == null) result = caseENamedElement(configProperty);
-				if (result == null) result = caseEModelElement(configProperty);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY: {
 				ContextualProperty contextualProperty = (ContextualProperty)theEObject;
 				T1 result = caseContextualProperty(contextualProperty);
-				if (result == null) result = caseProperty(contextualProperty);
 				if (result == null) result = caseEStructuralFeature(contextualProperty);
 				if (result == null) result = caseVisitableASTNode(contextualProperty);
 				if (result == null) result = caseETypedElement(contextualProperty);
@@ -558,13 +511,6 @@ public class ExpressionsSwitch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ExpressionsPackage.PACKAGE_REF: {
-				PackageRef packageRef = (PackageRef)theEObject;
-				T1 result = casePackageRef(packageRef);
-				if (result == null) result = caseASTNode(packageRef);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case ExpressionsPackage.MAPPING_PARAMETER: {
 				MappingParameter mappingParameter = (MappingParameter)theEObject;
 				T1 result = caseMappingParameter(mappingParameter);
@@ -782,21 +728,6 @@ public class ExpressionsSwitch<T1> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Property</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Property</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseProperty(Property object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Class</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -808,36 +739,6 @@ public class ExpressionsSwitch<T1> {
 	 * @generated
 	 */
 	public T1 caseClass(org.eclipse.m2m.internal.qvt.oml.expressions.Class object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Local Property</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Local Property</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseLocalProperty(LocalProperty object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Config Property</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Config Property</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseConfigProperty(ConfigProperty object) {
 		return null;
 	}
 
@@ -1198,21 +1099,6 @@ public class ExpressionsSwitch<T1> {
 	 * @generated
 	 */
 	public T1 caseModelType(ModelType object) {
-		return null;
-	}
-
-				/**
-	 * Returns the result of interpreting the object as an instance of '<em>Package Ref</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Package Ref</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 casePackageRef(PackageRef object) {
 		return null;
 	}
 

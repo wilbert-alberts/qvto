@@ -28,7 +28,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Class;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
@@ -39,7 +38,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
-import org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
@@ -49,7 +47,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
@@ -118,12 +115,6 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object> {
         return null;
     }
 
-
-    public Object visitConfigProperty(ConfigProperty configProperty) {
-        return null;
-    }
-
-
     public Object visitHelper(Helper helper) {
         visitImperativeOperation(helper);
         return null;
@@ -141,12 +132,6 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object> {
 
     public Object visitLibrary(Library library) {
         return visitModule(library);
-    }
-
-
-    public Object visitLocalProperty(LocalProperty localProperty) {
-        doProcess(localProperty.getExpression(), localProperty);
-        return null;
     }
 
     public Object visitReturnExp(ReturnExp returnExp) {
@@ -197,15 +182,16 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object> {
         for (EOperation op : new ArrayList<EOperation>(QvtOperationalParserUtil.getOwnedOperations(module))) {
             doProcess((ImperativeOperation) op, module);
         }
-        for (EStructuralFeature prop : module.getEStructuralFeatures()) {
-        	Property propAST = null;
-        	if(prop instanceof Property) {
-        		propAST = (Property) prop;
+        for (EStructuralFeature feature : module.getEStructuralFeatures()) {
+        	if(feature instanceof ContextualProperty) {
+            	ContextualProperty ctxProp = (ContextualProperty) feature;
+        		doProcess(ctxProp, module);        		
         	} else {
-        		propAST = QvtOperationalParserUtil.getLocalPropertyAST(prop);
-        	}
-        	if(propAST != null) {
-        		doProcess(propAST, module);
+        		//propAST = QvtOperationalParserUtil.getLocalPropertyAST(prop);
+        		OCLExpression<EClassifier> initExp = QvtOperationalParserUtil.getInitExpression(feature);
+        		if(initExp != null) {
+        			doProcess(initExp, module);
+        		}
         	}
         }
         return null;
@@ -238,11 +224,6 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object> {
         for (OCLExpression<EClassifier> exp : operationBody.getContent()) {
             doProcess(exp, operationBody);
         }
-        return null;
-    }
-
-
-    public Object visitProperty(Property property) {
         return null;
     }
 

@@ -9,15 +9,13 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: Trace.java,v 1.1 2008/04/07 19:00:38 aigdalov Exp $
+ * $Id: Trace.java,v 1.2 2008/12/18 15:18:10 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 
 /**
@@ -41,77 +39,77 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
  */
 public interface Trace extends EObject {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
 
     /**
-     * Returns the value of the '<em><b>Trace Records</b></em>' containment reference list.
-     * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Trace Records</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord}.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Trace Records</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Trace Records</em>' containment reference list.
-     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getTrace_TraceRecords()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Trace Records</em>' containment reference list.
+	 * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getTrace_TraceRecords()
+	 * @model containment="true"
+	 * @generated
+	 */
     EList<TraceRecord> getTraceRecords();
 
     /**
-     * Returns the value of the '<em><b>Trace Record Map</b></em>' map.
-     * The key is of type {@link org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation},
-     * and the value is of type list of {@link org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord},
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Trace Record Map</b></em>' map.
+	 * The key is of type {@link org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation},
+	 * and the value is of type list of {@link org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord},
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Trace Record Map</em>' map isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Trace Record Map</em>' map.
-     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getTrace_TraceRecordMap()
-     * @model mapType="org.eclipse.m2m.internal.qvt.oml.trace.MappingOperationToTraceRecordMapEntry<org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation, org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord>" transient="true" ordered="false"
-     * @generated
-     */
+	 * @return the value of the '<em>Trace Record Map</em>' map.
+	 * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getTrace_TraceRecordMap()
+	 * @model mapType="org.eclipse.m2m.internal.qvt.oml.trace.MappingOperationToTraceRecordMapEntry<org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation, org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord>" transient="true" ordered="false"
+	 * @generated
+	 */
     EMap<MappingOperation, EList<TraceRecord>> getTraceRecordMap();
 
     /**
-     * Returns the value of the '<em><b>Source To Trace Record Map</b></em>' map.
-     * The key is of type {@link java.lang.Object},
-     * and the value is of type list of {@link org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord},
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Source To Trace Record Map</b></em>' map.
+	 * The key is of type {@link java.lang.Object},
+	 * and the value is of type list of {@link org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord},
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Source To Trace Record Map</em>' map isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Source To Trace Record Map</em>' map.
-     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getTrace_SourceToTraceRecordMap()
-     * @model mapType="org.eclipse.m2m.internal.qvt.oml.trace.ObjectToTraceRecordMapEntry<org.eclipse.emf.ecore.EJavaObject, org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord>" transient="true" ordered="false"
-     * @generated
-     */
+	 * @return the value of the '<em>Source To Trace Record Map</em>' map.
+	 * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getTrace_SourceToTraceRecordMap()
+	 * @model mapType="org.eclipse.m2m.internal.qvt.oml.trace.ObjectToTraceRecordMapEntry<org.eclipse.emf.ecore.EJavaObject, org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord>" transient="true" ordered="false"
+	 * @generated
+	 */
     EMap<Object, EList<TraceRecord>> getSourceToTraceRecordMap();
 
     /**
-     * Returns the value of the '<em><b>Target To Trace Record Map</b></em>' map.
-     * The key is of type {@link java.lang.Object},
-     * and the value is of type list of {@link org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord},
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Target To Trace Record Map</b></em>' map.
+	 * The key is of type {@link java.lang.Object},
+	 * and the value is of type list of {@link org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord},
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Target To Trace Record Map</em>' map isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Target To Trace Record Map</em>' map.
-     * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getTrace_TargetToTraceRecordMap()
-     * @model mapType="org.eclipse.m2m.internal.qvt.oml.trace.ObjectToTraceRecordMapEntry<org.eclipse.emf.ecore.EJavaObject, org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord>" transient="true" ordered="false"
-     * @generated
-     */
+	 * @return the value of the '<em>Target To Trace Record Map</em>' map.
+	 * @see org.eclipse.m2m.internal.qvt.oml.trace.TracePackage#getTrace_TargetToTraceRecordMap()
+	 * @model mapType="org.eclipse.m2m.internal.qvt.oml.trace.ObjectToTraceRecordMapEntry<org.eclipse.emf.ecore.EJavaObject, org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord>" transient="true" ordered="false"
+	 * @generated
+	 */
     EMap<Object, EList<TraceRecord>> getTargetToTraceRecordMap();
 
 } // Trace

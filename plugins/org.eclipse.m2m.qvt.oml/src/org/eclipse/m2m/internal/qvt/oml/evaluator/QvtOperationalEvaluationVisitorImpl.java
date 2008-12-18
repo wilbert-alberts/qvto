@@ -60,7 +60,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Class;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ConfigProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
@@ -72,7 +71,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
-import org.eclipse.m2m.internal.qvt.oml.expressions.LocalProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
@@ -85,7 +83,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Property;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
@@ -97,7 +94,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.VariableInitExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.WhileExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeOperationImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.impl.OperationBodyImpl;
-import org.eclipse.m2m.internal.qvt.oml.expressions.impl.PropertyImpl;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.library.EObjectEStructuralFeaturePair;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
@@ -386,7 +382,9 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         return null;
     }
 
-    public Object visitConfigProperty(ConfigProperty configProperty) {
+    private Object visitConfigProperty(EStructuralFeature configProperty) {
+		setCurrentEnvInstructionPointer(configProperty);
+		
     	IContext context = getOperationalEvaluationEnv().getContext();
 
         Object rawValue = context.getConfigProperty(configProperty.getName());
@@ -450,10 +448,12 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         return null;
     }
 
-    public Object visitLocalProperty(LocalProperty localProperty) {
-    	if(localProperty.getExpression() != null) {
-    		return localProperty.getExpression().accept(getVisitor());
+    public Object visitLocalProperty(EStructuralFeature property) {
+    	OCLExpression<EClassifier> initExp = QvtOperationalParserUtil.getInitExpression(property);
+    	if(initExp != null) {
+    		return initExp.accept(getVisitor());
     	}
+    	
     	return null;
     }
     
@@ -907,10 +907,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         return result;
     }
 
-    public Object visitProperty(Property property) {
-        return null;
-    }
-
 	public Object visitClass(Class class_) {
 		return null;
 	}
@@ -1334,21 +1330,25 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			modelParameters.initModelParameters((TransformationInstance) moduleInstance);
 		}
         
+		for (EStructuralFeature feature : module.getConfigProperty()) {			
+			Object propValue = visitConfigProperty(feature);
+			env.callSetter(moduleInstance, feature, propValue, isUndefined(propValue), true);			
+		}
+		
         for (EStructuralFeature feature : module.getEStructuralFeatures()) {
-        	if(feature instanceof ContextualProperty) {
+        	if(feature instanceof ContextualProperty || module.getConfigProperty().contains(feature)) {
         		continue;
         	}
-        	Property prop = QvtOperationalParserUtil.getLocalPropertyAST(feature);
+
+        	setCurrentEnvInstructionPointer(feature);
         	
-            Object propValue = null;
-            if(prop != null) {
-            	setCurrentEnvInstructionPointer(prop);            	
-            	propValue = ((PropertyImpl) prop).accept(getVisitor());
+        	OCLExpression<EClassifier> initExp = QvtOperationalParserUtil.getInitExpression(feature);
+			Object propValue = null;
+            if(initExp != null) {
+            	propValue = initExp.accept(getVisitor());                
             }
-            
-            env.callSetter(moduleInstance, feature, propValue, isUndefined(propValue), true);
-            
-        	setCurrentEnvInstructionPointer(null);
+			// FIXME - should not be set if no init expression is defined
+			env.callSetter(moduleInstance, feature, propValue, isUndefined(propValue), true);        
         }
         
 //        for (Rename rename : module.getOwnedRenaming()) {
