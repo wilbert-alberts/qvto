@@ -44,6 +44,7 @@ public abstract class AbstractStackTraceTest extends TestTransformation {
 	protected StringWriter fLogger = new StringWriter();
 	
 	protected static void assertValidQVTRuntimeException(QvtRuntimeException exception) {
+		assertNotNull(exception);
 		assertNotNull(exception.getQvtStackTrace());
 		assertTrue(exception.getQvtStackTrace().size() > 0);
 	}
