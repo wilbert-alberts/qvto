@@ -66,6 +66,7 @@ public class QvtStackTraceBuilder {
 	 */
     public List<QVTStackTraceElement> buildStackTrace() {
     	LinkedList<QVTStackTraceElement> elements = new LinkedList<QVTStackTraceElement>();
+    	
     	for(QvtOperationalEvaluationEnv nextEnv = fEvalEnv; nextEnv != null; nextEnv = nextEnv.getParent()) {
     		// skip all the root execution environments as they 
     		// are not bound to any module code locations
@@ -118,11 +119,9 @@ public class QvtStackTraceBuilder {
 	    	operName = moduleName;
 	    	
 	    	if(internEvalEnv.getCurrentIP() == module || resultOffset < -1) {
-		    	// FIXME - a temporary solution to get header positions until
-	    		// https://bugs.eclipse.org/bugs/show_bug.cgi?id=257527 is resolved.		    		
-		    	int[] positions = QvtOperationalParserUtil.getElementPositions(module);
-		    	if(positions != null) {
-		    		resultOffset = positions[0];
+	    		ASTSyntheticNode astNode = ASTSyntheticNodeAccess.getASTNode(module);
+		    	if(astNode != null) {
+		    		resultOffset = astNode.getStartPosition();
 		    	}
 	    	}
 		} else {
