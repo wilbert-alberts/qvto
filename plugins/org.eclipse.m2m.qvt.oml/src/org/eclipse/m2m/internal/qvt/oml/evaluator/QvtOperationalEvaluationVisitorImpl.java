@@ -23,7 +23,6 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAnnotation;
@@ -222,12 +221,16 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     	ThisInstanceResolver importsByAccess = importsProvider.createImportedInstanceResolver();
 		internalEvalEnv.setThisResolver(importsByAccess);
 		
-		HashSet<ModuleInstance> initializedModules = new HashSet<ModuleInstance>(importsProvider.getModuleInstances(true));
-		// initialize those module only	newly instantiated here
+		// initialize those module only	newly instantiated, therefore uninitialized yet
 		for (ModuleInstance nextModuleToInit : importsProvider.getModuleInstances(false)) {
-			// pass initialized as internal processed modules, so they are not re-initialized
-			// if a new dependency uses already initialized import
-			visitor.initModule(nextModuleToInit, initializedModules, null);
+			// the call bellow makes sure that all of its imported modules gets initialized 
+			// if not done already due to other dependent modules
+			ModuleInstance.Internal internalModule = nextModuleToInit.getAdapter(ModuleInstance.Internal.class);
+			// check if initialized as the module we iterate through might cross-refence, so 
+			// get initialized in the meantime
+			if(!internalModule.isInitialized()) {			
+				visitor.initModule(nextModuleToInit, null);
+			}
 		}
 		
 		return visitor;
@@ -786,7 +789,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		getEvaluationEnvironment().add(QvtOperationalEnv.THIS, instance);
 		
 		ModelParameterHelper modelParameters = new ModelParameterHelper(transformation, transfArgs);
-		initModule(instance, new HashSet<ModuleInstance>(), modelParameters);
+		initModule(instance, modelParameters);
 		// we are initialized set back the pointer to the module 
 		setCurrentEnvInstructionPointer(transformation);		
 		return instance;
@@ -1279,16 +1282,15 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     }
 
 	/**
-	 * Initializes the model parameters and properties of the given module instance 
-	 * and all instances associated via import.
+	 * Initializes the model parameters and properties of the given module
+	 * instance and all instances associated via import.
 	 * 
 	 * @param moduleInstance
 	 *            the instance to initialize
-	 * @param processedModules
-	 *            the cached set of modules already process, an empty set should
-	 *            be passed to the top-level call
+	 * @param modelParameters
+	 *            helper for binding transformation parameters
 	 */
-    private void initModule(ModuleInstance moduleInstance, Set<ModuleInstance> processedModules, ModelParameterHelper modelParameters) {
+    private void initModule(ModuleInstance moduleInstance, ModelParameterHelper modelParameters) {
     	Module type = moduleInstance.getModule();
 		QvtOperationalEnv env = (QvtOperationalEnv) getEnvironment();
 		QvtOperationalEvaluationEnv currentEvalEnv = getOperationalEvaluationEnv();	
@@ -1307,18 +1309,19 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			pushedStack(nestedEvalEnv);
     	
 	    	for (ModuleImport moduleImport : type.getModuleImport()) {
-	    		Module importedModule = moduleImport.getImportedModule();
-				initModule(moduleInstance.getThisInstanceOf(importedModule), processedModules, modelParameters);
+	    		Module importedModule = moduleImport.getImportedModule();	    		
+				ModuleInstance importedInstance = moduleInstance.getThisInstanceOf(importedModule);
+		    	
+				ModuleInstance.Internal importedInternal = importedInstance.getAdapter(ModuleInstance.Internal.class);
+				if(!importedInternal.isInitialized()) {
+					initModule(importedInstance, modelParameters);
+				}
 			}
-    	
-	    	if(!processedModules.contains(moduleInstance)) {
-   				doInitModule(moduleInstance, modelParameters);
-   				ModuleInstance.Internal internModule = moduleInstance.getAdapter(ModuleInstance.Internal.class);
-   				internModule.setInitialized();   				
-			}
+
+	    	doInitModule(moduleInstance, modelParameters);	    	
+	    	moduleInstance.getAdapter(ModuleInstance.Internal.class).setInitialized();   				
 	    	
 		} finally {
-			processedModules.add(moduleInstance);    			
 			setOperationalEvaluationEnv(getOperationalEvaluationEnv().getParent());
 			poppedStack();
 		}

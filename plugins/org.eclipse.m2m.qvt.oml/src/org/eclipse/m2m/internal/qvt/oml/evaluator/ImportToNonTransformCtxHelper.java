@@ -107,6 +107,14 @@ public class ImportToNonTransformCtxHelper {
 		return fModuleFactory.createImportedInstanceResolver();
 	}
 	
+	/**
+	 * Get instances of modules that are explicitly added to this helper.
+	 * 
+	 * @param initialized
+	 *            <code>true</code> if only initialized module instances should
+	 *            be return; <code>false</code> if only those uninitialized
+	 * @return module instances
+	 */
 	List<ModuleInstance> getModuleInstances(boolean initialized) {
 		List<ModuleInstance> result = new ArrayList<ModuleInstance>();
 		for (Module nextModule : fImportedModules) {
