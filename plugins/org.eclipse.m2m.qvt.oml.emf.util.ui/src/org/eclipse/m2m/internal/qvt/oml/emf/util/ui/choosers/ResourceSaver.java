@@ -29,7 +29,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.modelparam.ResourceEObject;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.EmfUtilUiPlugin;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IEditorDescriptor;
@@ -118,9 +117,6 @@ public class ResourceSaver implements IResultSaver{
             return true;
         }
         
-        if (obj instanceof ResourceEObject && !((ResourceEObject) obj).getChildren().isEmpty()) {
-        	obj = ((ResourceEObject) obj).getChildren().get(0);
-        }
         IGotoMarker gotoMarker = (IGotoMarker) part;
         gotoMarker.gotoMarker(makeMarker(obj));
 

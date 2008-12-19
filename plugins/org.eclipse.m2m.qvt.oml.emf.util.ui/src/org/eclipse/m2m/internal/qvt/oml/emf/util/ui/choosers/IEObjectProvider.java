@@ -12,9 +12,7 @@
 package org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 
 public interface IEObjectProvider {
-    EObject getObject();
     URI getUri();
 }

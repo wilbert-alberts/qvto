@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.controls.SelectUriControl;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.provider.EmfModelContentProvider;
@@ -37,12 +38,10 @@ public class ResourceSourceChooser extends ChooserAdapter implements ISourceChoo
         myControl.addSelectionListener(new SelectUriControl.ISelectionListener() {
             public void selectionChanged(URI uri) {
                 if(uri == null) {
-                    myObject = null;
                     myUri = null;
                 }
                 else {
                     myUri = uri;
-                    myObject = EmfUtil.safeLoadModel(myUri, myResourceSet);
                 }
                 
                 fireChangedEvent();
@@ -73,7 +72,8 @@ public class ResourceSourceChooser extends ChooserAdapter implements ISourceChoo
             return;
         }
 
-        EObject obj = EmfUtil.safeLoadModel(uri, myResourceSet);
+        ModelContent loadModel = EmfUtil.safeLoadModel(uri, myResourceSet);
+        EObject obj = (loadModel != null && !loadModel.getContent().isEmpty() ? loadModel.getContent().get(0) : null);
         if (obj != null) {
             myInitialSelection = new StructuredSelection(EmfModelContentProvider.makeEObjectNode(obj, null));
             return;
@@ -86,7 +86,8 @@ public class ResourceSourceChooser extends ChooserAdapter implements ISourceChoo
             initialSelection = new StructuredSelection(file);
         }
         else {
-	        EObject obj = EmfUtil.loadModel(uri);
+            ModelContent loadModel = EmfUtil.loadModel(uri);
+            EObject obj = (loadModel != null && !loadModel.getContent().isEmpty() ? loadModel.getContent().get(0) : null);
 	        if(obj == null) {
 	        	initialSelection = new StructuredSelection(file);        	
 	        }
@@ -102,10 +103,6 @@ public class ResourceSourceChooser extends ChooserAdapter implements ISourceChoo
         return Messages.EObjectResourceChooser_0;
     }
     
-    public EObject getObject() {
-        return myObject;
-    }
-    
     public URI getUri() {
         return myUri;
     }
@@ -116,7 +113,6 @@ public class ResourceSourceChooser extends ChooserAdapter implements ISourceChoo
     
     private SelectUriControl myControl;
     protected IStructuredSelection myInitialSelection;
-    private EObject myObject;
     private URI myUri;
     private final boolean myIsConsiderAdaptes;
     private final ResourceSet myResourceSet;
