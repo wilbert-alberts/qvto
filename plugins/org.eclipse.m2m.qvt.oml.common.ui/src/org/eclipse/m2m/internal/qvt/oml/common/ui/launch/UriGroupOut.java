@@ -23,6 +23,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData.TargetType;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.IModelParameterInfo;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.IChooser;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.IDestinationChooser;
@@ -237,7 +238,8 @@ public class UriGroupOut extends BaseUriGroup {
 			}
 			
 			try {
-				obj = EmfUtil.loadModel(uri, myValidationRS);
+				ModelContent loadModel = EmfUtil.loadModel(uri, myValidationRS);
+				obj = (loadModel != null && !loadModel.getContent().isEmpty() ? loadModel.getContent().get(0) : null);
 			}
 			catch(Exception e) {
 				obj = null;

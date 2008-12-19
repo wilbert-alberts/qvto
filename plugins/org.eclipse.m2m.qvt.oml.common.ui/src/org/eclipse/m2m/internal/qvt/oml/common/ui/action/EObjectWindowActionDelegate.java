@@ -15,9 +15,9 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 
 
 
@@ -25,36 +25,32 @@ public abstract class EObjectWindowActionDelegate extends WindowActionDelegate {
     @Override
 	public void selectionChanged(IAction action, ISelection selection) {
         super.selectionChanged(action, selection);
-        EObject sel = getSelectedEObject(false);
+        URI sel = getSelectedEObject(false);
         action.setEnabled(sel != null || getSelectedElement() instanceof IFile);
     }
 
-    protected EObject getSelectedEObject() {
+    protected URI getSelectedEObject() {
         return getSelectedEObject(true);
     }
     
-    private EObject getSelectedEObject(boolean considerFiles) {
+    private URI getSelectedEObject(boolean considerFiles) {
         Object sel = super.getSelectedElement();
         if(sel instanceof EObject) {
-            return (EObject)sel;
+            return EcoreUtil.getURI((EObject)sel);
         }
         
         if(sel instanceof IAdaptable) {
             IAdaptable adaptable = (IAdaptable)sel;
             EObject adapted = (EObject)adaptable.getAdapter(EObject.class);
             if(adapted != null) {
-                return adapted;
+                return EcoreUtil.getURI(adapted);
             }
         }
         
         if(sel instanceof IFile && considerFiles) {
             IFile file = (IFile)sel;
             try {
-            	URI resourceURI = URI.createPlatformResourceURI(file.getFullPath().toString(), false);
-                EObject model = EmfUtil.loadModel(resourceURI);
-                if(model != null) {
-                    return model;
-                }
+            	return URI.createPlatformResourceURI(file.getFullPath().toString(), false);
             }
             catch(Exception ignore) {
             }
