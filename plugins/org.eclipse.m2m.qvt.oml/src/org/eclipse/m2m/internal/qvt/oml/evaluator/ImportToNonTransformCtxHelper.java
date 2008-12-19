@@ -25,6 +25,9 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 /**
  * This class encapsulates the internal logic used import and initialize instance
  * of a given set of modules into QVT evaluation environment.
+ * <p>
+ * The motivation for this class is to isolate the non-transformation executors of 
+ * Imperative OCL code and calls to QVT libraries from internals.
  * 
  * @author dvorak
  */
@@ -62,9 +65,13 @@ public class ImportToNonTransformCtxHelper {
 	}
 
 	/**
+	 * Add another module to the set of modules already imported by this helper.
 	 * 
 	 * @param module
-	 * @return
+	 *            add another module to be imported (instantiated) into
+	 *            evaluation environment.
+	 * @return <code>true</code> if it was added; <code>false</code> if it was
+	 *         already imported
 	 */
 	public boolean addImportedModule(Module module) {
 		if(module == null) {
@@ -78,6 +85,11 @@ public class ImportToNonTransformCtxHelper {
 		return fImportedModules.add(module);
 	}
 
+	/**
+	 * Get set of modules imported by this helper.
+	 * 
+	 * @return set of modules
+	 */
 	public Set<Module> getModules() {
 		return Collections.unmodifiableSet(fImportedModules);
 	}
