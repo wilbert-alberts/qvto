@@ -22,10 +22,10 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.ShallowProcess;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData.TargetType;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.StatusUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchConfigurationDelegateBase;
@@ -186,7 +186,7 @@ public abstract class AbstractApplyTransformationTask extends Task {
         try {
             ShallowProcess.IRunnable r = new ShallowProcess.IRunnable() {
                 public void run() throws Exception {
-                	List<EObject> inObjects = new ArrayList<EObject>();
+                	List<ModelContent> inObjects = new ArrayList<ModelContent>();
                 	List<TargetUriData> targetData = new ArrayList<TargetUriData>();
                 	
             		Iterator<TargetUriData> itrTargetData = targetUris.iterator();
@@ -199,8 +199,8 @@ public abstract class AbstractApplyTransformationTask extends Task {
             			if (transfParam.getDirectionKind() == DirectionKind.IN || transfParam.getDirectionKind() == DirectionKind.INOUT) {
             		        URI inUri = resolveUri(nextUri.getUriString());
             		        inUris.add(inUri);
-            		        EObject inObj = transf.loadInput(inUri);
-            		        inObjects.add(inObj);
+            		        ModelContent inModel = transf.loadInput(inUri);
+            		        inObjects.add(inModel);
             			}
             			if (transfParam.getDirectionKind() == DirectionKind.OUT || transfParam.getDirectionKind() == DirectionKind.INOUT) {
             				targetData.add(nextUri);

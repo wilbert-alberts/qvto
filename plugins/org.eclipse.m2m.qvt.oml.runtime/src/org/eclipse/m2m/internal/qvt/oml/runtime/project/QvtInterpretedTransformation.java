@@ -41,7 +41,7 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.modelparam.ResourceEObject;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelParameterHelper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
@@ -74,7 +74,7 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 		return myModule;
 	}
 	
-    public EObject loadInput(URI inputObjectURI) throws MdaException {
+    public ModelContent loadInput(URI inputObjectURI) throws MdaException {
     	return EmfUtil.loadModel(inputObjectURI, myModule.getCompiler().getResourceSet());
     }
     
@@ -86,8 +86,8 @@ public class QvtInterpretedTransformation implements QvtTransformation {
         CompiledModule module = myModule.getModule();
 
         Iterator<TransformationParameter> itrParam = getParameters().iterator();
-        List<Object> inputs = new ArrayList<Object>(in.getSources().length);
-        for (EObject inObject : in.getSources()) {
+        List<ModelContent> inputs = new ArrayList<ModelContent>(in.getSources().length);
+        for (ModelContent inSource : in.getSources()) {
         	TransformationParameter transfParam = null;
         	while (itrParam.hasNext()) {
         		transfParam = itrParam.next();
@@ -106,8 +106,7 @@ public class QvtInterpretedTransformation implements QvtTransformation {
         		}
         	}
             try {
-            	EObject input = EmfUtil.resolveSource(inObject, mmClass);
-            	inputs.add(input);
+            	inputs.add(inSource.getResolvedContent(mmClass));
             }
             catch (WrappedException e) {
             	throw new MdaException(e.getCause());
@@ -141,7 +140,7 @@ public class QvtInterpretedTransformation implements QvtTransformation {
     	return new QvtOperationalEnvFactory();
     }
     
-	private Out evaluate(QvtCompiler compiler, CompiledModule module, List<Object> args, IContext context) {
+	private Out evaluate(QvtCompiler compiler, CompiledModule module, List<ModelContent> args, IContext context) {
 		QvtOperationalEnvFactory factory = getEnvironmentFactory();
 
 		QvtOperationalEvaluationEnv evaluationEnv = factory.createEvaluationEnvironment(context, null);
@@ -164,7 +163,7 @@ public class QvtInterpretedTransformation implements QvtTransformation {
         		((QvtEvaluationResult) outObj).getOutParamValues(), traces);
 	}
 
-	private static void setArguments(QvtOperationalEvaluationEnv evalEnv, OperationalTransformation transformation, List<Object> args) {
+	private static void setArguments(QvtOperationalEvaluationEnv evalEnv, OperationalTransformation transformation, List<ModelContent> args) {
 		List<ModelParameterExtent> tranformArgs = new ArrayList<ModelParameterExtent>(); 
 		int argCount = 0;
 		for (ModelParameter modelParam : transformation.getModelParameter()) {
@@ -174,14 +173,12 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 					throw new IllegalArgumentException("Invalid count of input arguments"); //$NON-NLS-1$ 
 				}
 
-				Object nextArg = args.get(argCount++);
+				ModelContent nextArg = args.get(argCount++);
 			
-				if(nextArg instanceof EObject == false) {
-					throw new IllegalArgumentException("EObject argument required"); //$NON-NLS-1$
-				} else if(nextArg instanceof ResourceEObject) {
-		    		extent = new ModelParameterExtent(((ResourceEObject) nextArg).getChildren()); 
+				if(nextArg == null || nextArg.getContent().isEmpty()) {
+					throw new IllegalArgumentException("Non-empty model argument is required"); //$NON-NLS-1$
 		    	} else {
-		    		extent = new ModelParameterExtent((EObject) nextArg);
+		    		extent = new ModelParameterExtent(nextArg.getContent());
 		    	}
 				
 			} else {

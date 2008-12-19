@@ -43,6 +43,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.launch.BaseProcess.IRunnable;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfException;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.StatusUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
@@ -110,7 +111,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
     }
     
     public static void doLaunch(QvtTransformation transformation, ILaunchConfiguration configuration, IContext context) throws Exception {
-    	List<EObject> inObjects = new ArrayList<EObject>();
+    	List<ModelContent> inObjects = new ArrayList<ModelContent>();
     	List<TargetUriData> targetData = new ArrayList<TargetUriData>();
 		List<TargetUriData> targetUris = QvtLaunchUtil.getTargetUris(configuration);
 		
@@ -123,8 +124,8 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
 			TargetUriData nextUri = itrTargetData.next();
 			if (transfParam.getDirectionKind() == DirectionKind.IN || transfParam.getDirectionKind() == DirectionKind.INOUT) {
 		        URI inUri = toUri(nextUri.getUriString());
-		        EObject inObj = transformation.loadInput(inUri);
-		        inObjects.add(inObj);
+		        ModelContent inModel = transformation.loadInput(inUri);
+		        inObjects.add(inModel);
 			}
 			if (transfParam.getDirectionKind() == DirectionKind.OUT || transfParam.getDirectionKind() == DirectionKind.INOUT) {
 				targetData.add(nextUri);
@@ -137,12 +138,12 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         doLaunch(transformation, inObjects, targetData, traceFileName, context);
     }
     
-    public static List<URI> doLaunch(final QvtTransformation transformation, final List<EObject> inObjs,
+    public static List<URI> doLaunch(final QvtTransformation transformation, final List<ModelContent> inObjs,
     		List<TargetUriData> targetData, Map<String, Object> configProps, final String traceFileName) throws Exception {
     	return doLaunch(transformation, inObjs, targetData, traceFileName, QvtLaunchUtil.createContext(configProps));
     }
 
-    public static void doLaunch(QvtTransformation transformation, List<EObject> inObjs, Map<String, Object> configProps,
+    public static void doLaunch(QvtTransformation transformation, List<ModelContent> inObjs, Map<String, Object> configProps,
     		List<ModelExtentContents> outExtents, List<EObject> outMainParams, List<Trace> outTraces, List<String> outConsole) throws MdaException {
 
         IStatus status = QvtValidator.validateTransformation(transformation, inObjs);                    
@@ -155,7 +156,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
     		final StringWriter consoleLogger = new StringWriter();
     		context.setLog(new WriterLog(consoleLogger));
 	    	
-	        TransformationRunner.In in = new TransformationRunner.In(inObjs.toArray(new EObject[inObjs.size()]), context);
+	        TransformationRunner.In in = new TransformationRunner.In(inObjs.toArray(new ModelContent[inObjs.size()]), context);
 	        TransformationRunner.Out out = transformation.run(in);
 	
 	        outExtents.addAll(out.getExtents());
@@ -175,19 +176,17 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
 	        outConsole.add(consoleLogger.getBuffer().toString());
     }
         
-    private static List<URI> doLaunch(final QvtTransformation transformation, final List<EObject> inObjs,
+    private static List<URI> doLaunch(final QvtTransformation transformation, final List<ModelContent> inObjs,
     		List<TargetUriData> targetData, final String traceFileName, IContext context) throws Exception {
     	
-        TransformationRunner.In in = new TransformationRunner.In(inObjs.toArray(new EObject[inObjs.size()]), context);
+        TransformationRunner.In in = new TransformationRunner.In(inObjs.toArray(new ModelContent[inObjs.size()]), context);
         TransformationRunner.Out out = transformation.run(in);
         
         ResourceSet resSet = null;
-        for (EObject inEObject : inObjs) {
-			if(inEObject.eResource() != null) {
-				resSet = inEObject.eResource().getResourceSet();
-				if(resSet != null) {
-					break;
-				}
+        for (ModelContent inModel : inObjs) {
+			resSet = inModel.getResourceSet();
+			if(resSet != null) {
+				break;
 			}
 		}
         
@@ -251,7 +250,8 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         	}
         	
         	case EXISTING_CONTAINER: {
-	        	EObject container = EmfUtil.loadModel(outUri, resSet);
+        		ModelContent loadModel = EmfUtil.loadModel(outUri, resSet);
+	        	EObject container = (loadModel != null && !loadModel.getContent().isEmpty() ? loadModel.getContent().get(0) : null);
 	            if(container == null) {
 	                throw new MdaException("No object at " + outUri); //$NON-NLS-1$
 	            }

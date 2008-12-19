@@ -29,11 +29,11 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.StatusUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
@@ -72,9 +72,9 @@ public class QvtValidator {
         return result;
 	}
 	
-	public static IStatus validateTransformation(QvtTransformation transformation, List<EObject> inObjs) throws MdaException {
+	public static IStatus validateTransformation(QvtTransformation transformation, List<ModelContent> inModels) throws MdaException {
         IStatus result = StatusUtil.makeOkStatus();
-        Iterator<EObject> itrInObjs = inObjs.iterator();
+        Iterator<ModelContent> itrInObjs = inModels.iterator();
 		for (TransformationParameter transfParam : transformation.getParameters()) {
 			if (transfParam.getDirectionKind() == DirectionKind.IN
 					|| transfParam.getDirectionKind() == DirectionKind.INOUT) {
@@ -95,7 +95,10 @@ public class QvtValidator {
 			if (superfluousParams.length() > 0) {
 				superfluousParams.append(", "); //$NON-NLS-1$
 			}
-			superfluousParams.append(EmfUtil.getFullName(itrInObjs.next().eClass()));
+			ModelContent obj = itrInObjs.next();
+			if (obj != null && !obj.getContent().isEmpty()) {
+				superfluousParams.append(EmfUtil.getFullName(obj.getContent().get(0).eClass()));
+			}
 		}
 		if (superfluousParams.length() > 0) {
 			return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_SuperfluousInputTransfParam, superfluousParams.toString()));
@@ -169,7 +172,8 @@ public class QvtValidator {
 	        EObject in = null;
 	        ResourceSet rs = (classifier.eResource() != null && classifier.eResource().getResourceSet() != null ? classifier.eResource().getResourceSet() : validationRS);
 	        try {
-	        	in = EmfUtil.loadModel(sourceUri, rs);
+	        	ModelContent loadModel = EmfUtil.loadModel(sourceUri, rs);
+	        	in = (loadModel != null && !loadModel.getContent().isEmpty() ? loadModel.getContent().get(0) : null);
 	        }
 	        catch (Exception e) {
 	        }
@@ -204,7 +208,7 @@ public class QvtValidator {
 			EPackage metamodel = transfParam.getMetamodels().get(0);
 
 			URI sourceUri = EmfUtil.makeUri(targetData.getUriString());
-	        EObject in = null;
+	        ModelContent in = null;
 	        ResourceSet rs = (metamodel.eResource() != null && metamodel.eResource().getResourceSet() != null ? metamodel.eResource().getResourceSet() : validationRS);
 	        try {
 	        	in = EmfUtil.loadModel(sourceUri, rs);
@@ -214,9 +218,9 @@ public class QvtValidator {
 	        if (in == null) {
 	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, targetData.getUriString(), transfParam.getName()));
 	        }
-	        ResourceSet inputRs = (rs == null ? in.eResource().getResourceSet() : null);
+	        ResourceSet inputRs = (rs == null ? in.getResourceSet() : null);
 	        try {
-	        	in = EmfUtil.resolveSource(in, metamodel);
+	        	in = in.getResolvedContent(metamodel);
 	        }
 	        catch (WrappedException e) {
 	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, targetData.getUriString(), transfParam.getName()));
@@ -244,7 +248,7 @@ public class QvtValidator {
 		return StatusUtil.makeOkStatus();
 	}
 
-	private static IStatus validateTransformationParameterIn(TransformationParameter transfParam, EObject in) {
+	private static IStatus validateTransformationParameterIn(TransformationParameter transfParam, ModelContent in) {
 		if (transfParam.getMetamodels().isEmpty()) {
             return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_EmptyInputTransfParam,
             		transfParam.getName()));
@@ -252,23 +256,30 @@ public class QvtValidator {
 
 		if (transfParam.getEntryType() != null) {
 			EClassifier classifier = transfParam.getEntryType();
+			EObject inObj = (in != null && !in.getContent().isEmpty() ? in.getContent().get(0) : null);
 
-	    	if (!EmfUtil.isAssignableFrom(classifier, in.eClass()) || !classifier.isInstance(in)) {
+	    	if (inObj == null) {
 	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputTypes, 
-	            		EmfUtil.getFullName(in.eClass()),
+	            		"<null>",
+	            		EmfUtil.getFullName(classifier)
+	            		));
+	    	}
+	    	else if (!EmfUtil.isAssignableFrom(classifier, inObj.eClass()) || !classifier.isInstance(inObj)) {
+	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputTypes, 
+	            		EmfUtil.getFullName(inObj.eClass()),
 	            		EmfUtil.getFullName(classifier)
 	            		));
 	    	}
 		}
 		else {
-			EPackage metamodel = transfParam.getMetamodels().get(0);
-
-	        if (EcoreUtil.getRootContainer(in.eClass()) != metamodel) {
-	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputMetamodels, 
-	            		EmfUtil.getFullName(in.eClass()),
-	            		EmfUtil.getMetamodelName(metamodel)
-	            		));
-	        }
+//			EPackage metamodel = transfParam.getMetamodels().get(0);
+//
+//	        if (EcoreUtil.getRootContainer(in.eClass()) != metamodel) {
+//	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputMetamodels, 
+//	            		EmfUtil.getFullName(in.eClass()),
+//	            		EmfUtil.getMetamodelName(metamodel)
+//	            		));
+//	        }
 		}
 		
 		return StatusUtil.makeOkStatus();
@@ -349,8 +360,9 @@ public class QvtValidator {
         }
 
         case EXISTING_CONTAINER: {
-        	EObject cont = EmfUtil.loadModel(destUri);
-        	if (cont == null) {
+        	ModelContent loadModel = EmfUtil.loadModel(destUri);
+        	EObject eContainer = (loadModel != null && !loadModel.getContent().isEmpty() ? loadModel.getContent().get(0) : null);
+        	if (eContainer == null) {
                 return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidTargetUri, destUri));
         	}
         	
@@ -373,7 +385,7 @@ public class QvtValidator {
                 }
         	}
         	else {
-	        	EStructuralFeature eFeature = cont.eClass().getEStructuralFeature(feature);
+	        	EStructuralFeature eFeature = eContainer.eClass().getEStructuralFeature(feature);
 	        	if (eFeature instanceof EReference == false) {
 	                return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidFeature, feature));
 	        	}

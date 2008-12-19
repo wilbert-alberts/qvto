@@ -16,8 +16,8 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.generator;
 
 import java.util.List;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 
@@ -31,12 +31,12 @@ public interface TransformationRunner {
          * @param sources {ordered} list of 'in' and 'inout' transformation params
          * @param context transformation context (external properties, etc.)
          */
-        public In(EObject[] sources, IContext context) {
+        public In(ModelContent[] sources, IContext context) {
             mySources = sources.clone();
             myContext = context;
         }
         
-        public EObject[] getSources() {
+        public ModelContent[] getSources() {
             return mySources;
         }
         
@@ -44,7 +44,7 @@ public interface TransformationRunner {
             return myContext;
         }
         
-        private final EObject[] mySources;
+        private final ModelContent[] mySources;
         private final IContext myContext;
     }
     

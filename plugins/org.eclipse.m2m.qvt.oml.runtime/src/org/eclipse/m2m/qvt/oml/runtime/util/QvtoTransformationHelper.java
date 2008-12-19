@@ -12,6 +12,7 @@
 package org.eclipse.m2m.qvt.oml.runtime.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.launch.ShallowProcess;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerFacade;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.library.IConfiguration;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
@@ -134,7 +136,11 @@ public class QvtoTransformationHelper {
         	
             ShallowProcess.IRunnable r = new ShallowProcess.IRunnable() {
                 public void run() throws Exception {
-            		QvtLaunchConfigurationDelegateBase.doLaunch(transf, inObjects, inConfigProperties,
+                	List<ModelContent> inModels = new ArrayList<ModelContent>(inObjects.size());
+                	for (EObject inObj : inObjects) {
+                		inModels.add(new ModelContent(Collections.singletonList(inObj)));
+                	}
+            		QvtLaunchConfigurationDelegateBase.doLaunch(transf, inModels, inConfigProperties,
             				outExtents, outMainParams, outTraces, outConsole);
             		
             		transf.cleanup();

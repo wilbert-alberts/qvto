@@ -16,11 +16,11 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.project.Transformation;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.QvtConfigurationProperty;
 
@@ -76,7 +76,7 @@ public interface QvtTransformation extends Transformation {
 
     TransformationRunner.Out run(TransformationRunner.In in) throws MdaException;
     
-    EObject loadInput(URI inputObjectURI) throws MdaException;
+    ModelContent loadInput(URI inputObjectURI) throws MdaException;
     
     void cleanup() throws MdaException;
     
