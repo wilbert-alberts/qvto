@@ -21,6 +21,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.m2m.internal.qvt.oml.common.emf.ExtendedEmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.common.TraceWorkbenchPart;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.presentation.EObjectNode;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
@@ -103,11 +104,12 @@ public class TraceEditorPart extends EditorPart implements IGotoMarker {
 	}
 	
     private Trace initTrace(IFile file) throws PartInitException {
-        EObject eObject = ExtendedEmfUtil.loadModel(new EclipseFile(file));
-        if(!(eObject instanceof Trace)) {
+        ModelContent traceModel = ExtendedEmfUtil.loadModel(new EclipseFile(file));
+        EObject traceObj = (traceModel != null && !traceModel.getContent().isEmpty() ? traceModel.getContent().get(0) : null);
+        if(false == traceObj instanceof Trace) {
             throw new PartInitException(NLS.bind(Messages.TraceEditorPart_LoadingFailed, file.getFullPath()));
         }
-        return (Trace) eObject;
+        return (Trace) traceObj;
     }
 
 }

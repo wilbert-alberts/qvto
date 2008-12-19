@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.IWizard;
@@ -33,7 +31,7 @@ public class RunInterpretedTransformationAction extends EObjectWindowActionDeleg
 
 	@Override
 	protected void runImpl(IAction action) throws Exception {
-		EObject source = getSelectedEObject();
+		URI source = getSelectedEObject();
 		
 		if (source == null) {
 			String title = Messages.RunInterpretedTransformationAction_title;
@@ -49,10 +47,10 @@ public class RunInterpretedTransformationAction extends EObjectWindowActionDeleg
 	 * Runs transformation wizard on source model
 	 * @param source source can't be null
 	 */
-	protected void invokeWizard(EObject source) {
+	protected void invokeWizard(URI source) {
 		URI transfUri = URI.createURI("/"); //$NON-NLS-1$
 		List<URI> paramUris = new ArrayList<URI>();
-		paramUris.add(EcoreUtil.getURI(source));
+		paramUris.add(source);
 
 		IWizard wizard = new RunInterpretedTransformationWizard(transfUri, paramUris);
 		WizardDialog wizardDialog = new WizardDialog(getShell(), wizard);

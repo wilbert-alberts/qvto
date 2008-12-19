@@ -19,7 +19,6 @@ import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.debug.ui.DebugUITools;
 import org.eclipse.debug.ui.IDebugUIConstants;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -34,6 +33,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.wizards.PersistedValuesWizard;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.IMetamodelHandler;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.MetamodelHandlerManager;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
@@ -183,12 +183,12 @@ public class RunInterpretedTransformationWizard extends PersistedValuesWizard {
 						}
 						
 						IMetamodelHandler handler = MetamodelHandlerManager.getInstance().getHandler(String.valueOf(targetData.getUri()));
-					    EObject result = EmfUtil.loadModel(targetData.getUri());
-					    if (result == null) {
+					    ModelContent result = EmfUtil.loadModel(targetData.getUri());
+					    if (result == null || result.getContent().isEmpty()) {
 					    	return;
 					    }
 					    try {
-							handler.getSaver().select(result, page);
+							handler.getSaver().select(result.getContent().get(0), page);
 						} catch (Exception e) {
 					        Logger.getLogger().log(Logger.SEVERE, Messages.LaunchWorkspaceTransformationWizard_ShowResultError, e); 
 						}
