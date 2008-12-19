@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -45,23 +44,6 @@ public class ModuleInstanceFactory extends EFactoryImpl {
 		super();
 	}
 		
-	public ThisInstanceResolver instantiateImportsByAccess(Set<Module> importedByAccess, boolean includeStdLib) {
-		final HashMap<Module, ModuleInstance> instanceMap = new HashMap<Module, ModuleInstance>(3);
-		if(includeStdLib) {
-			basicCreateModuleInstance(QvtOperationalStdLibrary.INSTANCE.getStdLibModule(), instanceMap);
-		}
-
-		for (Module module : importedByAccess) {
-			createModuleInstance(module, instanceMap);
-		}
-		
-		return new ThisInstanceResolver() {					
-			public ModuleInstance getThisInstanceOf(Module module) {			
-				return instanceMap.get(module);
-			}
-		};
-	}
-	
 	public void addPostCreateHandler(PostCreateHandler postCreateHandler) {
 		if (postCreateHandler == null) {
 			throw new IllegalArgumentException();
@@ -104,25 +86,19 @@ public class ModuleInstanceFactory extends EFactoryImpl {
 		return super.basicCreate(eClass);
 	}
 
-	private ModuleInstance createModuleInstance(Module module, Map<Module, ModuleInstance> instanceMap) {
-		List<ModuleInstanceImpl> importedInstances = Collections.emptyList();
-		for (ModuleImport moduleImport : module.getModuleImport()) {
-			if (importedInstances.isEmpty()) {
-				importedInstances = new LinkedList<ModuleInstanceImpl>();
-			}
-			Module importedModule = moduleImport.getImportedModule();
-			createModuleInstance(importedModule, instanceMap);
-		}
-
+	protected final ModuleInstance createModuleInstance(Module module, Map<Module, ModuleInstance> instanceMap) {
 		ModuleInstance moduleInstance = instanceMap.get(module);
 		if (moduleInstance == null) {
 			moduleInstance = basicCreateModuleInstance(module, instanceMap);
+			for (ModuleImport moduleImport : module.getModuleImport()) {
+				Module importedModule = moduleImport.getImportedModule();
+				createModuleInstance(importedModule, instanceMap);
+			}
 		}
-
 		return moduleInstance;
 	}
 
-	private ModuleInstanceImpl basicCreateModuleInstance(Module module, Map<Module, ModuleInstance> instanceMap) {
+	protected final ModuleInstanceImpl basicCreateModuleInstance(Module module, Map<Module, ModuleInstance> instanceMap) {
 		ModuleInstanceImpl moduleInstance;
 		if(module instanceof OperationalTransformation) {
 			moduleInstance = new TransformationInstanceImpl((OperationalTransformation) module);			

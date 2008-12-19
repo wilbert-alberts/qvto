@@ -23,9 +23,10 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 
 class ModuleInstanceImpl extends DynamicEObjectImpl implements ModuleInstance, ModuleInstance.Internal {
-	
+		
 	private Map<Module, ModuleInstance> fInstanceMap;
-	private List<Object> fAdapters = Collections.emptyList();	
+	private List<Object> fAdapters = Collections.emptyList();
+	private boolean fIsInitialized = false;	
 	
 	ModuleInstanceImpl(Module moduleType) {
 		if(moduleType == null) {
@@ -106,6 +107,18 @@ class ModuleInstanceImpl extends DynamicEObjectImpl implements ModuleInstance, M
 		}
 		
 		fAdapters.add(adapter);
+	}
+	
+	public boolean isInitialized() {	
+		return fIsInitialized;
+	}
+	
+	public void setInitialized() {
+		if(fIsInitialized == true) {
+			throw new IllegalStateException("module instance already initialized"); //$NON-NLS-1$
+		}
+		
+		fIsInitialized = true;
 	}
 
 	public void dispose() {

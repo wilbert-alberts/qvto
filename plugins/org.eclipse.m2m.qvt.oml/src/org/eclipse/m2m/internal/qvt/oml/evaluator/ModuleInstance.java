@@ -32,13 +32,18 @@ public interface ModuleInstance extends EObject, ThisInstanceResolver {
 	<T> T getAdapter(Class<T> adapterType);
  
  	/**
-	* Get module instanceof for imported moudules.
-	* @return module instanceof in preserving order of imports from AST
+	* Get instances of imported modules.
+	* @return module instances if the module of this instance defines any imports
 	*/
 	List<ModuleInstance> getImportedModules();
 	
 	interface Internal {
 		void addAdapter(Object adapter);
 		void dispose();
+		boolean isInitialized();
+		/**
+		 * @throws IllegalStateException in case this module instance has already been initialized
+		 */
+		void setInitialized();		
 	}
 }

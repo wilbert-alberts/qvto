@@ -207,26 +207,27 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	 * 
 	 * @see #executeHelperOperation(Helper, Object, List)
 	 */
-    public static QvtOperationalEvaluationVisitorImpl createNonTransformationExecutionContextVisitor(Context context, Set<Module> libraryImports) {    	
+    public static QvtOperationalEvaluationVisitorImpl createNonTransformationExecutionContextVisitor(Context context, ImportToNonTransformCtxHelper importProvider) {    	
 		QvtOperationalEnv env = (QvtOperationalEnv)QvtOperationalEnvFactory.INSTANCE.createEnvironment();
 		QvtOperationalEvaluationEnv evalEnv = QvtOperationalEnvFactory.INSTANCE.createEvaluationEnvironment(context, null);
-    	return createNonTransformationExecutionContextVisitor(env, evalEnv, libraryImports);
+    	return createNonTransformationExecutionContextVisitor(env, evalEnv, importProvider);
     }
     
     public static QvtOperationalEvaluationVisitorImpl createNonTransformationExecutionContextVisitor(
-    		QvtOperationalEnv env, QvtOperationalEvaluationEnv evalEnv, Set<Module> libraryImports) {
+    		QvtOperationalEnv env, QvtOperationalEvaluationEnv evalEnv, ImportToNonTransformCtxHelper importsProvider) {
     	
     	QvtOperationalEvaluationVisitorImpl visitor = new QvtOperationalEvaluationVisitorImpl(env, evalEnv);    	
     	InternalEvaluationEnv internalEvalEnv = evalEnv.getAdapter(InternalEvaluationEnv.class);
-    	
-    	ModuleInstanceFactory moduleInstanceFactory = new ModuleInstanceFactory();		
-    	ThisInstanceResolver importsByAccess = moduleInstanceFactory.instantiateImportsByAccess(libraryImports, true);
+		
+    	ThisInstanceResolver importsByAccess = importsProvider.createImportedInstanceResolver();
 		internalEvalEnv.setThisResolver(importsByAccess);
 		
-		HashSet<ModuleInstance> processedModules = new HashSet<ModuleInstance>();
-		for (Module nextImport : libraryImports) {
-			ModuleInstance nextImportInstance = importsByAccess.getThisInstanceOf(nextImport); 
-			visitor.initModule(nextImportInstance, processedModules, null);
+		HashSet<ModuleInstance> initializedModules = new HashSet<ModuleInstance>(importsProvider.getModuleInstances(true));
+		// initialize those module only	newly instantiated here
+		for (ModuleInstance nextModuleToInit : importsProvider.getModuleInstances(false)) {
+			// pass initialized as internal processed modules, so they are not re-initialized
+			// if a new dependency uses already initialized import
+			visitor.initModule(nextModuleToInit, initializedModules, null);
 		}
 		
 		return visitor;
@@ -1312,6 +1313,8 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     	
 	    	if(!processedModules.contains(moduleInstance)) {
    				doInitModule(moduleInstance, modelParameters);
+   				ModuleInstance.Internal internModule = moduleInstance.getAdapter(ModuleInstance.Internal.class);
+   				internModule.setInitialized();   				
 			}
 	    	
 		} finally {
