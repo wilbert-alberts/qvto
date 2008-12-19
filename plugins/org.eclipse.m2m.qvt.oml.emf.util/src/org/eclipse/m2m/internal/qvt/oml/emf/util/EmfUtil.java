@@ -11,14 +11,13 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.emf.util;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.common.notify.impl.NotificationChainImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -27,7 +26,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
@@ -39,8 +37,6 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.modelparam.ModelparamFactory;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.modelparam.ResourceEObject;
 import org.eclipse.osgi.util.NLS;
 
 
@@ -51,46 +47,39 @@ import org.eclipse.osgi.util.NLS;
 public class EmfUtil {
     private EmfUtil() {}
         
-    public static EObject loadModel(URI uri) {
-    	return loadModel(uri, getDefaultLoadOptions());
+    public static ModelContent loadModel(URI uri) {
+    	return loadModel(uri, getDefaultLoadOptions(), null);
     }
     
-    public static EObject loadModel(URI uri, ResourceSet rs) {
+    public static ModelContent loadModel(URI uri, ResourceSet rs) {
     	return loadModel(uri, getDefaultLoadOptions(), rs);
     }    
     
-    public static EObject loadModel(URI uri, Map options) {
-    	return loadModel(uri, options, null);
-    }
-    
-    public static EObject loadModel(URI uri, Map options, ResourceSet rs) {
+    public static ModelContent loadModel(URI uri, Map options, ResourceSet rs) {
         if(uri == null) {
             return null;
         }
         ResourceSet resourceSet = (rs != null) ? rs : createResourceSet(options);
         String fragment = uri.fragment();
         if (fragment != null && fragment.length() > 0) {
-            return resourceSet.getEObject(uri, true);
+            EObject eObject = resourceSet.getEObject(uri, true);
+            if (eObject == null) {
+            	return null;
+            }
+            return new ModelContent(Collections.singletonList(eObject));
         }
         Resource resource = resourceSet.getResource(uri.trimFragment(), true);
         if (resource == null || resource.getContents().isEmpty()) {
         	return null;
         }
-        if (resource.getContents().size() == 1) {
-        	return resource.getContents().get(0);
-        }
-        ResourceEObject resourceEObj = ModelparamFactory.eINSTANCE.createResourceEObject();
-        ((InternalEObject) resourceEObj).eSetResource((Resource.Internal) resource, new NotificationChainImpl());
-    	((InternalEObject) resourceEObj).eSetProxyURI(uri);
-        resourceEObj.getChildren().addAll(resource.getContents());
-		return resourceEObj;
+        return new ModelContent(resource.getContents());
     }
     
-    public static EObject safeLoadModel(URI uri, ResourceSet rs) {
+    public static ModelContent safeLoadModel(URI uri, ResourceSet rs) {
     	return safeLoadModel(uri, getDefaultLoadOptions(), rs);
     }
     
-    public static EObject safeLoadModel(URI uri, Map options, ResourceSet rs) {
+    public static ModelContent safeLoadModel(URI uri, Map options, ResourceSet rs) {
         try {
             return loadModel(uri, options, rs);
         }
@@ -135,21 +124,7 @@ public class EmfUtil {
 		return resourceSet;
 	}
     
-	public static EObject resolveSource(ResourceEObject in, EObject inputType) {
-		List<EObject> resolved = new ArrayList<EObject>(in.getChildren().size());
-		for (EObject eObj : in.getChildren()) {
-			resolved.add(resolveSource(eObj, inputType));
-		}
-		in.getChildren().clear();
-		in.getChildren().addAll(resolved);
-		return in;
-    }
-
 	public static EObject resolveSource(EObject in, EObject inputType) {
-		if (in instanceof ResourceEObject) {
-			return resolveSource((ResourceEObject) in, inputType);
-		}
-		
 		if (inputType == null) {
 			return in;
 		}
@@ -164,7 +139,7 @@ public class EmfUtil {
 	public static boolean isUriExisted(String textUri, ResourceSet rs) {
         URI destUri = makeUri(textUri);
         if (destUri != null) {
-        	EObject loadModel = null;
+        	ModelContent loadModel = null;
         	try {
         		loadModel = loadModel(destUri, rs);
         	}
