@@ -47,7 +47,6 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFileUtil;
-import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.AbstractBundleResource;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.WorkspaceMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
@@ -198,7 +197,9 @@ public class QvtCompiler {
 			}
 
 			if(sourceURI != null) {
-				ASTBindingHelper.createModuleSourceBinding(moduleAST, sourceURI, new String(lexer.getInputChars()));
+				//final String s = new String(lexer.getInputChars());
+				//ASTBindingHelper.createModuleSourceBinding(moduleAST, sourceURI, new StringLineNumberProvider(s));
+				ASTBindingHelper.createModuleSourceBinding(moduleAST, sourceURI, new BasicLineNumberProvider(lexer));				
 			}
 		}
 	}

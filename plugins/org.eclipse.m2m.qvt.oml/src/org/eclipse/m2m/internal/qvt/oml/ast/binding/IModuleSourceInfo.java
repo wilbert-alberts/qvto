@@ -23,12 +23,7 @@ public interface IModuleSourceInfo {
 	 * @return the name string
 	 */
 	URI getSourceURI();
-	
-	/**
-	 * Gets the contents the module source file
-	 */
-	String getContents();
-	
+		
 	/**
 	 * Gets the line number provider operating on the module source contents.
 	 * @return the provider instance

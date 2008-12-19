@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.util.LineNumberProvider;
-import org.eclipse.m2m.internal.qvt.oml.common.util.StringLineNumberProvider;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.Environment;
@@ -32,8 +31,8 @@ import org.eclipse.ocl.utilities.ASTNode;
 
 public class ASTBindingHelper {
 	
-	public static void createModuleSourceBinding(EObject target, URI sourceURI, String contents) {
-		target.eAdapters().add(new ModuleSourceAdapter(sourceURI, contents));
+	public static void createModuleSourceBinding(EObject target, URI sourceURI, LineNumberProvider lineNumberProvider) {
+		target.eAdapters().add(new ModuleSourceAdapter(sourceURI, lineNumberProvider));
 	}
 				
 	public static IModuleSourceInfo getModuleSourceBinding(Module astModule) {
@@ -227,14 +226,14 @@ public class ASTBindingHelper {
 	private static class ModuleSourceAdapter extends AdapterImpl implements IModuleSourceInfo {
 		private URI fSourceURI;
 		private String fContents;
-		private LineNumberProvider lineNumberProvider;
+		private LineNumberProvider fLineNumProvider;
 		
-		protected ModuleSourceAdapter(URI sourceURI, String contents) {
-			if(sourceURI == null || contents == null) {
+		protected ModuleSourceAdapter(URI sourceURI, LineNumberProvider lineNumberProvider) {
+			if(sourceURI == null || lineNumberProvider == null) {
 				throw new IllegalArgumentException();
 			}
 			fSourceURI = sourceURI;
-			fContents = contents;
+			fLineNumProvider = lineNumberProvider;
 		}
 		
 		public URI getSourceURI() {
@@ -246,10 +245,7 @@ public class ASTBindingHelper {
 		}
 		
 		public LineNumberProvider getLineNumberProvider() {
-			if(lineNumberProvider == null) {
-				lineNumberProvider = new StringLineNumberProvider(fContents);
-			}
-			return lineNumberProvider;
+			return fLineNumProvider; 
 		}
 		
 		@Override
