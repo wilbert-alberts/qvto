@@ -22,6 +22,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfException;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 
 
 /**
@@ -30,7 +31,7 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 public class ExtendedEmfUtil {
     private ExtendedEmfUtil() {}
     
-	public static EObject loadModel(CFile modelFile) {
+	public static ModelContent loadModel(CFile modelFile) {
 		try {
 			URI uri = URI.createURI(modelFile.getFileStore().toURI().toString());
 			return EmfUtil.loadModel(uri);
