@@ -25,10 +25,10 @@ import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
@@ -122,12 +122,12 @@ public abstract class AbstractStackTraceTest extends TestTransformation {
 	        	Context qvtContext = QvtLaunchUtil.createContext(context.getConfigProperties());
 	        	qvtContext.setLog(new WriterLog(fLogger));
 	            
-	        	List<EObject> inputs = new ArrayList<EObject>(inUris.size());
+	        	List<ModelContent> inputs = new ArrayList<ModelContent>(inUris.size());
 	        	for (URI uri : inUris) {
-	        		EObject in = transf.loadInput(uri);
+	        		ModelContent in = transf.loadInput(uri);
 	        		inputs.add(in);
 	        	}
-	            TransformationRunner.In input = new TransformationRunner.In(inputs.toArray(new EObject[inputs.size()]), qvtContext);	            
+	            TransformationRunner.In input = new TransformationRunner.In(inputs.toArray(new ModelContent[inputs.size()]), qvtContext);	            
 	            TransformationRunner.Out output = transf.run(input);
 
 	            List<ModelExtentContents> extents = output.getExtents();

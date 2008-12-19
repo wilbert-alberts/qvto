@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.internal.qvt.oml.common.emf.ExtendedEmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.m2m.tests.qvt.oml.transform.ModelTestData;
 import org.eclipse.m2m.tests.qvt.oml.transform.TestTransformation;
@@ -41,7 +42,8 @@ public class TraceUtil {
 	}
 	
 	public static Trace loadTraceModel(CFile file) {
-		EObject obj = ExtendedEmfUtil.loadModel(file);
+		ModelContent loadModel = ExtendedEmfUtil.loadModel(file);
+		EObject obj = (loadModel != null && !loadModel.getContent().isEmpty() ? loadModel.getContent().get(0) : null);
 	    if(obj instanceof Trace == false) {
 	        throw new RuntimeException("File does not contain trace model: " + file.getFullPath()); //$NON-NLS-1$	    
 	    }

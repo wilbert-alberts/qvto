@@ -39,6 +39,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.IOFile;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TraceSerializer;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
@@ -197,8 +198,11 @@ public abstract class TestTransformation extends TestCase {
         baseName = baseName.substring(0, baseName.length() - transformation.getFileExtension().length());
         File file = new File(transformation.getParent().getLocation().toFile(), baseName + getExtensionForEObject(out));
         ExtendedEmfUtil.saveModel(out, new IOFile(file));
-        return ExtendedEmfUtil.loadModel(new IOFile(file));
-//        return out;
+        ModelContent loadModel = ExtendedEmfUtil.loadModel(new IOFile(file));
+        if (loadModel != null && !loadModel.getContent().isEmpty()) {
+        	return loadModel.getContent().get(0);
+        }
+        return null;
     }
 
     

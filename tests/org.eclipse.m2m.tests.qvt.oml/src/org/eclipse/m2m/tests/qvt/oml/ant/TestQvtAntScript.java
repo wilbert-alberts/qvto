@@ -13,7 +13,6 @@ package org.eclipse.m2m.tests.qvt.oml.ant;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.List;
 
 import junit.framework.TestCase;
 
@@ -31,6 +30,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.tests.qvt.oml.TestProject;
 import org.eclipse.m2m.tests.qvt.oml.transform.ModelTestData;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
@@ -66,11 +66,12 @@ public class TestQvtAntScript extends TestCase {
     	int index = 0;
     	for (String strUri : content.split(FIELD_DELIM)) {
     		URI uri = URI.createURI(strUri);
-    		EObject loadModel = EmfUtil.loadModel(uri);
+    		ModelContent loadModel = EmfUtil.loadModel(uri);
+    		EObject loadObj = (loadModel != null && !loadModel.getContent().isEmpty() ? loadModel.getContent().get(0) : null);
     	
             URI expectedURI = myData.getExpected(getProject()).get(index);
-            EObject expectedObject = loadModel.eResource().getResourceSet().getResource(expectedURI, true).getContents().get(0);
-			myData.compareWithExpected(loadModel, expectedObject);
+            EObject expectedObject = loadObj.eResource().getResourceSet().getResource(expectedURI, true).getContents().get(0);
+			myData.compareWithExpected(loadObj, expectedObject);
             index++;
     	}
     }

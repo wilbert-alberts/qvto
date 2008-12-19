@@ -22,6 +22,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
@@ -82,12 +83,12 @@ public class TestQvtInterpreter extends TestTransformation {
         	
         	TestUtil.assertAllPersistableAST(trans.getModule().getModule());
             
-        	List<EObject> inputs = new ArrayList<EObject>(inUris.size());
+        	List<ModelContent> inputs = new ArrayList<ModelContent>(inUris.size());
         	for (URI uri : inUris) {
-        		EObject in = EmfUtil.loadModel(uri);
+        		ModelContent in = EmfUtil.loadModel(uri);
         		inputs.add(in);
         	}
-            TransformationRunner.In input = new TransformationRunner.In(inputs.toArray(new EObject[inputs.size()]), qvtContext);
+            TransformationRunner.In input = new TransformationRunner.In(inputs.toArray(new ModelContent[inputs.size()]), qvtContext);
             TransformationRunner.Out output = null;
             try {
             	output = trans.run(input);
