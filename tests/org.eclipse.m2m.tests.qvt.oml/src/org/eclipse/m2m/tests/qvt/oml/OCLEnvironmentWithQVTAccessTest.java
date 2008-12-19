@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import junit.framework.TestCase;
@@ -47,13 +47,13 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 	private static final String SRC_CONTAINER = "parserTestData/externlib"; //$NON-NLS-1$
 	
 	protected OCL fOCL;
-	private Set<Module> fImportedModules;
+	private LinkedHashSet<Module> fImportedModules;
 
 	public OCLEnvironmentWithQVTAccessTest() {
 		super();
 	}
 	
-	protected Set<Module> getImportedModules() {
+	protected LinkedHashSet<Module> getImportedModules() {
 		return fImportedModules;
 	}
 	
@@ -82,7 +82,7 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 			}
 		);
 		
-		fImportedModules = new HashSet<Module>();
+		fImportedModules = new LinkedHashSet<Module>();
 		for (CompiledModule compiledModule : compileModules) {
 			fImportedModules.add(compiledModule.getModule());
 		}

@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ImportToNonTransformCtxHelper;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QVTStackTraceElement;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitorImpl;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
@@ -45,8 +46,11 @@ public class ExtOCLEnvironmentWithQVTAccessTest extends OCLEnvironmentWithQVTAcc
 	protected Object evaluate(EcoreEvaluationEnvironment evalEnv, Query query) {	
 		QvtOperationalEvaluationVisitorImpl visitor = QvtOperationalEvaluationVisitorImpl
 				.createNonTransformationExecutionContextVisitor(
-						QvtOperationalEnvFactory.INSTANCE.createEnvironment(), 
-						(QvtOperationalEvaluationEnv)evalEnv, getImportedModules());
+						QvtOperationalEnvFactory.INSTANCE.createEnvironment(),
+						(QvtOperationalEvaluationEnv)evalEnv,
+						new ImportToNonTransformCtxHelper(getImportedModules(), true)
+						//getImportedModules(), new HashMap<Module, ModuleInstance>(3), new HashSet<ModuleInstance>()
+						);
 		
 		return visitor.visitExpression(query.getExpression());		
 	}
@@ -84,5 +88,5 @@ public class ExtOCLEnvironmentWithQVTAccessTest extends OCLEnvironmentWithQVTAcc
 		} catch (ParserException e) {
 			assertNotNull(helper.getProblems() != null);			
 		}
-	}	
+	}
 }
