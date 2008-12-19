@@ -11,11 +11,12 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.runtime.util;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ImportToNonTransformCtxHelper;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitorImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
@@ -53,7 +54,7 @@ import org.eclipse.m2m.internal.qvt.oml.library.Context;
 public class NonTransformationExecutionContext {
 	
 	private QvtOperationalEvaluationVisitorImpl fEvaluator;
-	private Set<Module> fLibraryImports;
+	private LinkedHashSet<Module> fLibraryImports;
 	
 	/**
 	 * Constructs new execution context and imports the given list of
@@ -70,10 +71,11 @@ public class NonTransformationExecutionContext {
 			throw new IllegalArgumentException();	
 		}
 		
-		fLibraryImports = new HashSet<Module>(libraryImports);
+		fLibraryImports = new LinkedHashSet<Module>(libraryImports);
 		
 		Context context = new Context();
-		fEvaluator = QvtOperationalEvaluationVisitorImpl.createNonTransformationExecutionContextVisitor(context, libraryImports);
+		ImportToNonTransformCtxHelper importProvider = new ImportToNonTransformCtxHelper(fLibraryImports, true);
+		fEvaluator = QvtOperationalEvaluationVisitorImpl.createNonTransformationExecutionContextVisitor(context, importProvider);
 	}
 	
 	/**
