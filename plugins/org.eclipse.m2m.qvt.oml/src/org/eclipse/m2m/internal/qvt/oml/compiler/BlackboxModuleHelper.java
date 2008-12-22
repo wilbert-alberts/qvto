@@ -18,6 +18,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
@@ -44,6 +45,7 @@ public class BlackboxModuleHelper {
 	
 	public BlackboxModuleHelper() {
 		super();
+		initDefaultContext();
 	}
 	
 	public void setContext(ResolutionContext resolutionContext, LoadContext loadContext) {
@@ -142,6 +144,20 @@ public class BlackboxModuleHelper {
 		return result;
     }
 
+	/**
+	 * FIXME - fixes a problem in the workaround of exposing black box
+	 * resolution via QVT compiler, as no source file may be passed to derive any
+	 * context, a default one is set
+	 */
+	private void initDefaultContext() {
+		setContext(new ResolutionContext() {
+			public <T> T getAdapter(Class<T> adapterType) {			
+				return null;
+			}
+		},
+		new LoadContext(EPackage.Registry.INSTANCE));
+	}    
+    
     private static Diagnostic createErrorStatus(int code, String message) {
     	return new BasicDiagnostic(Diagnostic.ERROR, BlackboxModuleHelper.class.getName(), code, message, null);
     }
