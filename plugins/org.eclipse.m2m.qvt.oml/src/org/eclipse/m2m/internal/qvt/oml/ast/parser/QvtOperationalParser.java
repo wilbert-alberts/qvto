@@ -40,15 +40,20 @@ public class QvtOperationalParser {
 	public QvtOperationalParser() {
 	}
 	
+	public static QvtOpLexer createLexer(final Reader is, final String name, QvtOperationalEnv env) throws ParserException {
+		QvtOpLexer lexer = new QvtOpLexer(env);
+		lexer.initialize(correctLineBreaks(new OCLInput(is)), name);
+		return lexer;
+	}
+	
 	public MappingModuleCS parse(final Reader is, final String name, QvtOperationalEnv env) {
 		MappingModuleCS result = null;
 
-		QvtOpLexer lexer = new QvtOpLexer(env);
-		myParser = new RunnableQVTParser(lexer);		
-		try {			
-		    lexer.initialize(new OCLInput(is).getContent(), name);
+		try {
+			QvtOpLexer lexer = createLexer(is, name, env);
+			myParser = new RunnableQVTParser(lexer);		
+			
 			lexer.lexToTokens(myParser);
-	
 			result = (MappingModuleCS) myParser.runParser(100);	
 		}
 		catch (ParserException ex) {
@@ -171,6 +176,25 @@ public class QvtOperationalParser {
     public AbstractQVTParser getParser() {
 		return myParser;
 	}
-	
+    
+    // See https://bugs.eclipse.org/bugs/show_bug.cgi?id=259486
+    private static char[] correctLineBreaks(OCLInput input) throws ParserException {
+    	char[] contents = input.getContentAsString().toCharArray();
+		for (int i = 0; i < contents.length; i++) {
+			char c = contents[i];
+			// check for single '\n' characters when MAC line breaks are used
+			if(c == '\r') {
+				// possibly the MAC new line char CR, check if not followed by LF, 
+				// as CR/LF is the newline on windows
+				int nextPos = i + 1;
+				if(nextPos == contents.length || contents[nextPos] != '\n') {				
+					// we found a single CR, consider it a line separator
+					contents[i] = '\n';
+				}
+			}
+		}
+		return contents;
+	}
+    	
     private RunnableQVTParser myParser;
 }
