@@ -114,6 +114,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ForExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
@@ -1308,10 +1309,7 @@ public class QvtOperationalVisitorCS
 			}
 		}
 		
-		if(module instanceof OperationalTransformation) {
-			// Remark: no header with signature for libraries yet
-			visitTransformationHeaderCS(moduleCS.getHeaderCS(), env, (OperationalTransformation) module, parsedModuleCS.getSource());
-		}
+		visitTransformationHeaderCS(moduleCS.getHeaderCS(), env, module, parsedModuleCS.getSource());
 		
         env.setContextModule(module);
         
@@ -1729,7 +1727,7 @@ public class QvtOperationalVisitorCS
 	} 
  
 	protected void visitTransformationHeaderCS(TransformationHeaderCS headerCS,
-			QvtOperationalFileEnv env, OperationalTransformation module, CFile sourceFile) {
+			QvtOperationalFileEnv env, Module module, CFile sourceFile) {
 		if (!headerCS.getQualifiers().isEmpty()) {
 			env.reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_transfQualifiersNotSupported,
 					new Object[] { }), 
@@ -1737,60 +1735,23 @@ public class QvtOperationalVisitorCS
 					headerCS.getQualifiers().get(headerCS.getQualifiers().size()-1).getEndOffset());
 		}
 		
-		String unitSimpleName = QvtOperationalParserUtil.getMappingModuleSimpleName(headerCS);
-		String unitNamespace = getExpectedPackageName(env.getKernel(), sourceFile);
-		
-		if (!unitSimpleName.equals(env.getUnitName())) {
-			env.reportWarning(NLS.bind(ValidationMessages.moduleNameMustMatchFileName,
-					new Object[] { unitSimpleName, env.getUnitName() }), headerCS.getPathNameCS());
-		}
 		if(!QvtOperationalParserUtil.hasSimpleName(headerCS)) {
 			env.reportError(NLS.bind(ValidationMessages.moduleNameMustBeSimpleIdentifierError, new Object[] { 
 					QvtOperationalParserUtil.getMappingModuleQualifiedName(headerCS) }), headerCS.getPathNameCS());
 		}		
 		
+        String unitSimpleName = QvtOperationalParserUtil.getMappingModuleSimpleName(headerCS);
+        String unitNamespace = getExpectedPackageName(env.getKernel(), sourceFile);
+        
 		module.setName(unitSimpleName);
 		module.setNsPrefix(unitNamespace);
 		
-		Set<String> paramNames = new LinkedHashSet<String>();
-		for (ParameterDeclarationCS paramCS : headerCS.getParameters()) {
-			EClassifier type = null;
-			TypeCS paramTypeCS = (paramCS.getTypeSpecCS() != null) ? paramCS.getTypeSpecCS().getTypeCS() : null;
-			boolean isSimpleName = false;
-			if (paramTypeCS instanceof PathNameCS) {
-				PathNameCS typePathNameCS = (PathNameCS) paramTypeCS;
-				isSimpleName = typePathNameCS.getSequenceOfNames().size() == 1;
-				type = env.getModelType(typePathNameCS.getSequenceOfNames());
-			}
-			if (type == null || !isSimpleName) {
-				env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_transfParamWrongType,
-						new Object[] { }), paramTypeCS);
-			}
-
-			ModelParameter varParam = ExpressionsFactory.eINSTANCE.createModelParameter();
-			varParam.setRepresentedParameter(varParam);
-			varParam.setStartPosition(paramCS.getStartOffset());
-			varParam.setEndPosition(paramCS.getEndOffset());
-			if(paramCS.getSimpleNameCS() != null) {
-				varParam.setName(paramCS.getSimpleNameCS().getValue());
-			} else {
-				varParam.setName(""); //$NON-NLS-1$
-			}
-			varParam.setEType(type);
-			varParam.setKind((DirectionKind) ExpressionsFactory.eINSTANCE.createFromString(
-					ExpressionsPackage.eINSTANCE.getDirectionKind(), paramCS.getDirectionKind().getLiteral()));
-
-			if (paramNames.contains(varParam.getName())) {
-				env.reportError(NLS.bind(ValidationMessages.SameParamName, new Object[] { varParam.getName() }),
-						(paramCS.getSimpleNameCS() == null || paramCS.getSimpleNameCS().getValue().length() == 0) ? paramCS : paramCS.getSimpleNameCS());
-			}
-			paramNames.add(varParam.getName());
-			
-	        module.getModelParameter().add(varParam);
-			
-	        if(myCompilerOptions.isGenerateCompletionData()) {
-				ASTBindingHelper.createCST2ASTBinding(paramCS, varParam);
-			}	        
+		if (module instanceof OperationalTransformation) {
+		    visitOperationalTransformationSignature(headerCS, env, (OperationalTransformation) module);
+		} else if (module instanceof Library) {
+            visitLibrarySignature(headerCS, env, (Library) module);
+		} else {
+		    throw new RuntimeException("Unknown module type: " + module); //$NON-NLS-1$
 		}
 		
 		if (headerCS.getTransformationRefineCS() != null) {
@@ -1805,7 +1766,89 @@ public class QvtOperationalVisitorCS
 		}		
 	}
 
-	protected ModelType visitModelTypeCS(ModelTypeCS modelTypeCS, QvtOperationalFileEnv env,
+    protected void visitOperationalTransformationSignature(TransformationHeaderCS headerCS,
+            QvtOperationalFileEnv env, OperationalTransformation module) {
+        Set<String> paramNames = new LinkedHashSet<String>();
+        for (ParameterDeclarationCS paramCS : headerCS.getParameters()) {
+            EClassifier type = null;
+            TypeCS paramTypeCS = (paramCS.getTypeSpecCS() != null) ? paramCS.getTypeSpecCS().getTypeCS() : null;
+            boolean isSimpleName = false;
+            if (paramTypeCS instanceof PathNameCS) {
+                PathNameCS typePathNameCS = (PathNameCS) paramTypeCS;
+                isSimpleName = typePathNameCS.getSequenceOfNames().size() == 1;
+                type = env.getModelType(typePathNameCS.getSequenceOfNames());
+            }
+            if (type == null || !isSimpleName) {
+                env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_transfParamWrongType,
+                        new Object[] { }), paramTypeCS);
+            }
+
+            ModelParameter varParam = ExpressionsFactory.eINSTANCE.createModelParameter();
+            varParam.setRepresentedParameter(varParam);
+            varParam.setStartPosition(paramCS.getStartOffset());
+            varParam.setEndPosition(paramCS.getEndOffset());
+            if(paramCS.getSimpleNameCS() != null) {
+                varParam.setName(paramCS.getSimpleNameCS().getValue());
+            } else {
+                varParam.setName(""); //$NON-NLS-1$
+            }
+            varParam.setEType(type);
+            DirectionKindEnum directionKind = paramCS.getDirectionKind();
+            if (directionKind == DirectionKindEnum.DEFAULT) {
+                directionKind = DirectionKindEnum.IN;
+            }
+            varParam.setKind((DirectionKind) ExpressionsFactory.eINSTANCE.createFromString(
+                    ExpressionsPackage.eINSTANCE.getDirectionKind(), directionKind.getLiteral()));
+
+            if (paramNames.contains(varParam.getName())) {
+                env.reportError(NLS.bind(ValidationMessages.SameParamName, new Object[] { varParam.getName() }),
+                        (paramCS.getSimpleNameCS() == null || paramCS.getSimpleNameCS().getValue().length() == 0) ? paramCS : paramCS.getSimpleNameCS());
+            }
+            paramNames.add(varParam.getName());
+            
+            module.getModelParameter().add(varParam);
+            
+            if(myCompilerOptions.isGenerateCompletionData()) {
+                ASTBindingHelper.createCST2ASTBinding(paramCS, varParam);
+            }           
+        }
+    }
+
+    private void visitLibrarySignature(TransformationHeaderCS headerCS,
+            QvtOperationalFileEnv env, Library module) {
+        Set<ModelType> usedModelTypes = new HashSet<ModelType>(); 
+        for (ParameterDeclarationCS paramCS : headerCS.getParameters()) {
+            TypeCS paramTypeCS = (paramCS.getTypeSpecCS() != null) ? paramCS.getTypeSpecCS().getTypeCS() : null;
+            if ((paramCS.getTypeSpecCS() != null) && (paramCS.getTypeSpecCS().getSimpleNameCS() != null)) {
+                env.reportError(ValidationMessages.QvtOperationalVisitorCS_LibrarySignatureErrorModelExtentSpecified, paramCS.getTypeSpecCS().getSimpleNameCS());
+            }
+            if ((paramCS.getDirectionKind() != null) && (paramCS.getDirectionKind() != DirectionKindEnum.DEFAULT)) {
+                env.reportError(ValidationMessages.QvtOperationalVisitorCS_LibrarySignatureErrorDirectionKindSpecified, paramCS);
+            }
+            if (paramCS.getSimpleNameCS() != null) {
+                env.reportError(ValidationMessages.QvtOperationalVisitorCS_LibrarySignatureErrorParameterNameSpecified, paramCS);
+            }
+            ModelType modelType = null;
+            if (paramTypeCS instanceof PathNameCS) {
+                PathNameCS typePathNameCS = (PathNameCS) paramTypeCS;
+                if (typePathNameCS.getSequenceOfNames().size() == 1) {
+                    modelType = env.getModelType(typePathNameCS.getSequenceOfNames());
+                    if (!usedModelTypes.add(modelType)) {
+                        env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_LibrarySignatureErrorDuplicateModelType, 
+                                new Object[] { typePathNameCS.getSequenceOfNames().get(0) }), paramCS);
+                    }
+                }
+            }
+            if (modelType == null) {
+                env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_transfParamWrongType,
+                        new Object[] { }), paramCS);
+            } else if (!module.getUsedModelType().contains(modelType)) {
+                module.getUsedModelType().add(modelType); // Normally, all used model types are
+                                                          // already present in the Library AST node
+            }
+        }
+    }
+    protected ModelType visitModelTypeCS(ModelTypeCS modelTypeCS, QvtOperationalFileEnv env,
 			Module module, ResourceSet resolutionRS) throws SemanticException {
 		if (modelTypeCS == null) {
 			return null;
@@ -2327,7 +2370,7 @@ public class QvtOperationalVisitorCS
 		operation.setName(mappingDeclarationCS.getSimpleNameCS().getValue());		
 
 		DirectionKind contextDirection = DirectionKind.IN;
-		if (mappingDeclarationCS.getDirectionKindCS() != null) {
+		if ((mappingDeclarationCS.getDirectionKindCS() != null) && (mappingDeclarationCS.getDirectionKindCS().getDirectionKind() != DirectionKindEnum.DEFAULT)) {
 			contextDirection = (DirectionKind) ExpressionsFactory.eINSTANCE.createFromString(
 					ExpressionsPackage.eINSTANCE.getDirectionKind(), mappingDeclarationCS.getDirectionKindCS()
 							.getDirectionKind().getLiteral());
@@ -2602,8 +2645,12 @@ public class QvtOperationalVisitorCS
 	
 	private VarParameter visitParameterDeclarationCS(ParameterDeclarationCS paramCS, boolean createMappingParam, 
 			QvtOperationalModuleEnv env, boolean isOutAllowed) throws SemanticException {
-		DirectionKind directionKind = (DirectionKind) ExpressionsFactory.eINSTANCE.createFromString(
-				ExpressionsPackage.eINSTANCE.getDirectionKind(), paramCS.getDirectionKind().getLiteral());
+		DirectionKindEnum directionKindEnum = paramCS.getDirectionKind();
+		if (directionKindEnum == DirectionKindEnum.DEFAULT) {
+		    directionKindEnum = DirectionKindEnum.IN;
+		}
+        DirectionKind directionKind = (DirectionKind) ExpressionsFactory.eINSTANCE.createFromString(
+				ExpressionsPackage.eINSTANCE.getDirectionKind(), directionKindEnum.getLiteral());
 		TypeSpecPair typeSpec = visitTypeSpecCS(paramCS.getTypeSpecCS(), directionKind, env);
 		if (typeSpec.myType == null) {
 			typeSpec.myType = env.getOCLStandardLibrary().getOclVoid();
@@ -2657,15 +2704,6 @@ public class QvtOperationalVisitorCS
                 break;
         }
         } while (tempContainer != null);
-        if (mappingMethod != null) {
-			MappingDeclarationCS mappingDeclCS = mappingMethod.getMappingDeclarationCS();
-			DirectionKind contextDirection = DirectionKind.IN;
-			if (mappingDeclCS.getDirectionKindCS() != null) {
-				contextDirection = (DirectionKind) ExpressionsFactory.eINSTANCE.createFromString(
-						ExpressionsPackage.eINSTANCE.getDirectionKind(), mappingDeclCS.getDirectionKindCS()
-								.getDirectionKind().getLiteral());
-			}
-     }
 
 		VariableInitExp result = ExpressionsFactory.eINSTANCE.createVariableInitExp();
 		result.setStartPosition(varInitCS.getStartOffset());
@@ -2857,11 +2895,11 @@ public class QvtOperationalVisitorCS
 	private EStructuralFeature visitConfigPropertyCS(ConfigPropertyCS propCS, QvtOperationalFileEnv env) {
 		SimpleNameCS simpleNameCS = propCS.getSimpleNameCS();
 		String name = simpleNameCS != null ? simpleNameCS.getValue() : ""; //$NON-NLS-1$
-				
+
 		EClassifier type = null;
 		if (propCS.getTypeCS() != null) {
 			type = visitTypeCS(propCS.getTypeCS(), null, env);
-			if (type != null) {				
+			if (type != null) {
 				if (!QvtOperationalUtil.isCreateFromStringSupported(type)) {
 					env.reportError(NLS.bind(ValidationMessages.ConfigPropertyTypeUnsupported, new Object[] { type
 							.getName() }), propCS.getTypeCS());
@@ -2871,15 +2909,15 @@ public class QvtOperationalVisitorCS
 			env.reportError(NLS.bind(ValidationMessages.ConfigPropertyMustHaveType,
 					new Object[] { name }), simpleNameCS != null ? simpleNameCS : propCS);
 		}
-		
+
 		EStructuralFeature feature = createESFeature(type);
 		feature.setName(name);
 		feature.setEType(type);
-		
+
 		ASTSyntheticNode astNode = ASTSyntheticNodeAccess.createASTNode(feature);
 		astNode.setStartPosition(propCS.getStartOffset());
 		astNode.setEndPosition(propCS.getEndOffset());
-		
+
 		return feature;
 	}
 
@@ -2907,7 +2945,7 @@ public class QvtOperationalVisitorCS
 		if (prop.getEType() == null && exp != null) {
 			prop.setEType(exp.getType());
 		}
-
+		
 		if(exp != null) {
 			EClassifier realType = exp.getType();
 			EClassifier declaredType = prop.getEType();
@@ -2917,7 +2955,7 @@ public class QvtOperationalVisitorCS
 						astNode.getStartPosition(), astNode.getEndPosition());
 			}
 		}
-		
+
 		return prop;
 	}
 
@@ -2925,6 +2963,7 @@ public class QvtOperationalVisitorCS
 		ContextualProperty prop = ExpressionsFactory.eINSTANCE.createContextualProperty();
 		prop.setStartPosition(propCS.getStartOffset());
 		prop.setEndPosition(propCS.getEndOffset());
+		
 		prop.setName(propCS.getScopedNameCS().getName());
 
 		EClassifier type = null;

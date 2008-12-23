@@ -75,6 +75,10 @@ public final class ValidationMessages extends NLS {
     public static String QvtOperationalVisitorCS_FeatureNotFoundForType;
     public static String QvtOperationalVisitorCS_ifExpWithoutElseAssignment;
     public static String QvtOperationalVisitorCS_incompatibleTransfSignature;
+    public static String QvtOperationalVisitorCS_LibrarySignatureErrorDirectionKindSpecified;
+    public static String QvtOperationalVisitorCS_LibrarySignatureErrorDuplicateModelType;
+    public static String QvtOperationalVisitorCS_LibrarySignatureErrorModelExtentSpecified;
+    public static String QvtOperationalVisitorCS_LibrarySignatureErrorParameterNameSpecified;
     public static String QvtOperationalVisitorCS_mapKeywordNotUsed;
 	public static String QvtOperationalVisitorCS_resultParamNameDirectionNotAllowed;
 	public static String QvtOperationalVisitorCS_resultParamNameNotAllowed;
@@ -104,7 +108,6 @@ public final class ValidationMessages extends NLS {
 	public static String ReturnTypeMismatch;
 	public static String DuplicateLibraryImport;
 	public static String DuplicateMetamodelImport;
-	public static String moduleNameMustMatchFileName;
 	public static String moduleNameMustBeSimpleIdentifierError;	
 	
 	public static String failedToResolveMetamodelError;
