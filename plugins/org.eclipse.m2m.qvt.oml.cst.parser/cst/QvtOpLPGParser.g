@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.26 2008/12/05 12:36:57 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.27 2008/12/23 15:28:10 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -56,6 +56,7 @@ $Globals
 	import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;	
 	import org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS;
+	import org.eclipse.m2m.internal.qvt.oml.cst.ModuleUsageCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.SimpleSignatureCS;
@@ -133,7 +134,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.26 2008/12/05 12:36:57 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.27 2008/12/23 15:28:10 aigdalov Exp $
  */
 	./
 $End
@@ -327,16 +328,25 @@ $Rules
 
 	--=== // Library header (start) ===--
 
-	library_h ::= library qualifiedNameCS
+	library_h ::= library qualifiedNameCS library_signatureOpt module_usageListOpt
 		/.$BeginJava
+					PathNameCS name = (PathNameCS)$getSym(2);
+					SimpleSignatureCS signature = ($getSym(3) == null) ? createSimpleSignatureCS($EMPTY_ELIST) : (SimpleSignatureCS)$getSym(3);
+					EList<ModuleUsageCS> moduleUsages = (EList<ModuleUsageCS>)$getSym(4);
 					CSTNode result = createTransformationHeaderCS(
 							$EMPTY_ELIST,
-							(PathNameCS)$getSym(2),
-							createSimpleSignatureCS($EMPTY_ELIST),
-							$EMPTY_ELIST,
+							name,
+							signature,
+							moduleUsages,
 							null
 						);
-					setOffsets(result, getIToken($getToken(1)), (PathNameCS)$getSym(2));
+					CSTNode rightNode = name;
+					if (!moduleUsages.isEmpty()) {
+						rightNode = moduleUsages.get(moduleUsages.size() - 1);
+					} else if ($getSym(3) != null) {
+						rightNode = signature;
+					}
+					setOffsets(result, getIToken($getToken(1)), rightNode);
 					$setResult(result);
 		  $EndJava
 		./
@@ -353,6 +363,12 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
+
+	library_signatureOpt ::= $empty
+		/.$NullAction./
+	library_signatureOpt -> library_signature
+
+	library_signature -> simple_signature
 
 	--=== // Library header (end) ===--
 	
@@ -371,6 +387,10 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
+
+	module_usageListOpt ::= $empty
+		/.$EmptyListAction./
+	module_usageListOpt -> module_usageList
 
 	module_usage -> access_usage
 	module_usage -> extends_usage

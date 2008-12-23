@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ParameterDeclarationCSImpl.java,v 1.2 2008/04/25 14:13:21 radvorak Exp $
+ * $Id: ParameterDeclarationCSImpl.java,v 1.3 2008/12/23 15:28:10 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -83,7 +83,7 @@ public class ParameterDeclarationCSImpl extends CSTNodeImpl implements Parameter
 	 * @generated
 	 * @ordered
 	 */
-	protected static final DirectionKindEnum DIRECTION_KIND_EDEFAULT = DirectionKindEnum.IN;
+	protected static final DirectionKindEnum DIRECTION_KIND_EDEFAULT = DirectionKindEnum.DEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getDirectionKind() <em>Direction Kind</em>}' attribute.

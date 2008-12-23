@@ -12,6 +12,7 @@
     <nestedGenPackages prefix="CST" basePackage="org.eclipse.m2m.internal.qvt.oml"
         disposableProviderFactory="true" ecorePackage="QVTOperationalCST.ecore#//cst">
       <genEnums typeSafeEnumCompatible="false" ecoreEnum="QVTOperationalCST.ecore#//cst/DirectionKindEnum">
+        <genEnumLiterals ecoreEnumLiteral="QVTOperationalCST.ecore#//cst/DirectionKindEnum/DEFAULT"/>
         <genEnumLiterals ecoreEnumLiteral="QVTOperationalCST.ecore#//cst/DirectionKindEnum/in"/>
         <genEnumLiterals ecoreEnumLiteral="QVTOperationalCST.ecore#//cst/DirectionKindEnum/out"/>
         <genEnumLiterals ecoreEnumLiteral="QVTOperationalCST.ecore#//cst/DirectionKindEnum/inout"/>

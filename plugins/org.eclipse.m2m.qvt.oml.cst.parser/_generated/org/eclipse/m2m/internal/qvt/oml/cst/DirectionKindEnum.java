@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: DirectionKindEnum.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: DirectionKindEnum.java,v 1.2 2008/12/23 15:28:10 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -32,6 +32,14 @@ import org.eclipse.emf.common.util.Enumerator;
  */
 public enum DirectionKindEnum implements Enumerator {
 	/**
+	 * The '<em><b>DEFAULT</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #DEFAULT_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	DEFAULT(0, "DEFAULT", "DEFAULT"), /**
 	 * The '<em><b>In</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -67,6 +75,21 @@ public enum DirectionKindEnum implements Enumerator {
 	 * @generated
 	 */
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
+
+	/**
+	 * The '<em><b>DEFAULT</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>DEFAULT</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #DEFAULT
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int DEFAULT_VALUE = 0;
 
 	/**
 	 * The '<em><b>In</b></em>' literal value.
@@ -121,6 +144,7 @@ public enum DirectionKindEnum implements Enumerator {
 	 */
 	private static final DirectionKindEnum[] VALUES_ARRAY =
 		new DirectionKindEnum[] {
+			DEFAULT,
 			IN,
 			OUT,
 			INOUT,
@@ -174,7 +198,7 @@ public enum DirectionKindEnum implements Enumerator {
 	 */
 	public static DirectionKindEnum get(int value) {
 		switch (value) {
-			case IN_VALUE: return IN;
+			case DEFAULT_VALUE: return DEFAULT;
 		}
 		return null;
 	}

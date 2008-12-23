@@ -97,6 +97,7 @@
           unsettable="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EEnum" name="DirectionKindEnum">
+      <eLiterals name="DEFAULT"/>
       <eLiterals name="in"/>
       <eLiterals name="out"/>
       <eLiterals name="inout"/>

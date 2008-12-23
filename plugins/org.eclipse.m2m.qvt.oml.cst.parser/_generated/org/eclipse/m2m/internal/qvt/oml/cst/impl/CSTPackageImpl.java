@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.13 2008/12/01 15:07:47 sboyko Exp $
+ * $Id: CSTPackageImpl.java,v 1.14 2008/12/23 15:28:11 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -2710,6 +2710,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
 		// Initialize enums and add enum literals
 		initEEnum(directionKindEnumEEnum, DirectionKindEnum.class, "DirectionKindEnum"); //$NON-NLS-1$
+		addEEnumLiteral(directionKindEnumEEnum, DirectionKindEnum.DEFAULT);
 		addEEnumLiteral(directionKindEnumEEnum, DirectionKindEnum.IN);
 		addEEnumLiteral(directionKindEnumEEnum, DirectionKindEnum.OUT);
 		addEEnumLiteral(directionKindEnumEEnum, DirectionKindEnum.INOUT);

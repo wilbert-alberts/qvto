@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: DirectionKindCSImpl.java,v 1.1 2008/04/06 10:18:39 sboyko Exp $
+ * $Id: DirectionKindCSImpl.java,v 1.2 2008/12/23 15:28:10 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -56,7 +56,7 @@ public class DirectionKindCSImpl extends CSTNodeImpl implements DirectionKindCS 
 	 * @generated
 	 * @ordered
 	 */
-	protected static final DirectionKindEnum DIRECTION_KIND_EDEFAULT = DirectionKindEnum.IN;
+	protected static final DirectionKindEnum DIRECTION_KIND_EDEFAULT = DirectionKindEnum.DEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getDirectionKind() <em>Direction Kind</em>}' attribute.
