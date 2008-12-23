@@ -28,9 +28,11 @@ import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.MutableListImpl;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Operation;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Parameter;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Operation.Kind;
+import org.eclipse.m2m.qvt.oml.util.MutableList;
 import org.eclipse.ocl.util.Bag;
 import org.eclipse.ocl.util.CollectionUtil;
 
@@ -43,6 +45,28 @@ public class AnnotatedJavaLibrary {
 		 super();
 	}
 
+	@Operation (kind=Kind.HELPER, contextual = true)
+	public <T> T genericListElementAt(MutableList<T> self, int index) {
+		return self.get(index - 1);
+	}
+	
+	@Operation (kind=Kind.HELPER, contextual = false)
+	public MutableList<Set<Boolean>> newListOfBooleanSetsFromBooleanCollection(Collection<Boolean> elements) {
+		final MutableListImpl<Set<Boolean>> result = new MutableListImpl<Set<Boolean>>();
+		result.add(new HashSet<Boolean>(elements));
+		return result;
+	}
+		
+	@Operation (kind=Kind.HELPER, contextual = false)
+	public MutableList<String> newList(Collection<String> elements) {
+		return new MutableListImpl<String>(elements);
+	}	
+	
+	@Operation (kind=Kind.HELPER, contextual = false)
+	public MutableList<String> echoList(MutableList<String> listType) {
+		return new MutableListImpl<String>(listType);
+	}
+	
 	@Operation (kind=Kind.HELPER, contextual = false)
 	public ArrayList<Object> primitiveTypeArgumentsHelper(String strArg, Integer intArg, Double realArg, Boolean boolArg) {
 		ArrayList<Object> result = new ArrayList<Object>();
