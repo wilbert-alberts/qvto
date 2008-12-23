@@ -78,6 +78,7 @@ public class TransformTests {
     
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {        		
+                new FileToFileData("libraryHeaderWithSignature_257575"), //$NON-NLS-1$                
                 new FileToFileData("intermSimple"), //$NON-NLS-1$                
         		new FilesToFilesData("intermWithCrossRefs", Collections.<String>emptyList(), Arrays.asList("intermWithCrossRefs.ecore")),        		
         		new FilesToFilesData("intermWithExtends", Collections.<String>emptyList(), Arrays.asList("intermWithExtends.ecore")),        		
@@ -273,7 +274,8 @@ public class TransformTests {
     		"compositetransf", // FIXME - make this included as java-less    		
     		"blackboxlib_237781", //$NON-NLS-1$ // imports java lib oper requiring generated ecore metamodel
             "primtypesecore", // uses getDataTypeInstance() defined on ecore //$NON-NLS-1$
-            "importedvirtuals", "imports_transformations", "imports", "virt", "full", "fqntraces", "libraryWithModuleElements_257184", // TODO import other files //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
+            "importedvirtuals", "imports_transformations", "imports", "virt", "full", "fqntraces", // TODO import other files //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+            "libraryWithModuleElements_257184", "libraryHeaderWithSignature_257575",// TODO import other files //$NON-NLS-1$ //$NON-NLS-2$
             "assigntonullowner", "resolveall", // reference not in required format: eSuperTypes = "#//NEW_Class1" insteand of "//@eClassifiers.0" //$NON-NLS-1$ //$NON-NLS-2$
             "egetcodegen", // java method can't be called//$NON-NLS-1$
             "bug214718", // platform protocol URI metamodel reference //$NON-NLS-1$
