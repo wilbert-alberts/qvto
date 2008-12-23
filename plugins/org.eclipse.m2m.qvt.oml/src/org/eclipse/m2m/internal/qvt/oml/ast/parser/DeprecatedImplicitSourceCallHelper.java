@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTParsingOptions;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
@@ -107,7 +108,7 @@ class DeprecatedImplicitSourceCallHelper {
 						        }
 						        tempCS = tempCS.eContainer();
 						    }
-						    if (!isImplicitSelfOk) {
+						    if (!isImplicitSelfOk && isExplicitSelfEnforced(env)) {
 						        QvtOperationalUtil.reportError(env, ValidationMessages.DeprecatedImplicitSourceCall_contextualImplicitCall, causeNode);
 						    }
 						} 
@@ -150,5 +151,10 @@ class DeprecatedImplicitSourceCallHelper {
 			EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint,
 			EClass, EObject> env) {
 		return env.getUMLReflection().getOwningClassifier(feature) instanceof Module;
-	}	
+	}
+	
+	private static boolean isExplicitSelfEnforced(Environment<EPackage, EClassifier, EOperation, EStructuralFeature,
+			EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+		return Boolean.TRUE.equals(QVTParsingOptions.getValue(env, QVTParsingOptions.ENFORCE_EXPLICIT_SELF_VARIABLE));
+	}
 }
