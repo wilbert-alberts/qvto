@@ -24,6 +24,9 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralPart;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
@@ -35,6 +38,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
@@ -109,6 +113,10 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
+			case ExpressionsPackage.LIST_TYPE: return createListType();
+			case ExpressionsPackage.DICT_LITERAL_EXP: return createDictLiteralExp();
+			case ExpressionsPackage.DICT_LITERAL_PART: return createDictLiteralPart();
+			case ExpressionsPackage.DICTIONARY_TYPE: return createDictionaryType();
 			case ExpressionsPackage.TYPEDEF: return createTypedef();
 			case ExpressionsPackage.MODULE: return createModule();
 			case ExpressionsPackage.LIBRARY: return createLibrary();
@@ -183,6 +191,46 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ListType createListType() {
+		ListTypeImpl listType = new ListTypeImpl();
+		return listType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DictLiteralExp createDictLiteralExp() {
+		DictLiteralExpImpl dictLiteralExp = new DictLiteralExpImpl();
+		return dictLiteralExp;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DictLiteralPart createDictLiteralPart() {
+		DictLiteralPartImpl dictLiteralPart = new DictLiteralPartImpl();
+		return dictLiteralPart;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DictionaryType createDictionaryType() {
+		DictionaryTypeImpl dictionaryType = new DictionaryTypeImpl();
+		return dictionaryType;
 	}
 
 	/**

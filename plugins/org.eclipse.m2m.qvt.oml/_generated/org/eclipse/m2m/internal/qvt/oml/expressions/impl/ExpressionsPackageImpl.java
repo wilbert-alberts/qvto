@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ExpressionsPackageImpl.java,v 1.17 2008/12/18 15:18:10 radvorak Exp $
+ * $Id: ExpressionsPackageImpl.java,v 1.18 2008/12/23 17:21:59 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -30,6 +30,9 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralPart;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
@@ -43,6 +46,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
@@ -82,6 +86,34 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 	 * @generated
 	 */
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass listTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass dictLiteralExpEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass dictLiteralPartEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass dictionaryTypeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -472,6 +504,78 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		theExpressionsPackage.freeze();
 
 		return theExpressionsPackage;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getListType() {
+		return listTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getDictLiteralExp() {
+		return dictLiteralExpEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDictLiteralExp_Part() {
+		return (EReference)dictLiteralExpEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getDictLiteralPart() {
+		return dictLiteralPartEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDictLiteralPart_Key() {
+		return (EReference)dictLiteralPartEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDictLiteralPart_Value() {
+		return (EReference)dictLiteralPartEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getDictionaryType() {
+		return dictionaryTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDictionaryType_KeyType() {
+		return (EReference)dictionaryTypeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1537,6 +1641,18 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		isCreated = true;
 
 		// Create classes and their features
+		listTypeEClass = createEClass(LIST_TYPE);
+
+		dictLiteralExpEClass = createEClass(DICT_LITERAL_EXP);
+		createEReference(dictLiteralExpEClass, DICT_LITERAL_EXP__PART);
+
+		dictLiteralPartEClass = createEClass(DICT_LITERAL_PART);
+		createEReference(dictLiteralPartEClass, DICT_LITERAL_PART__KEY);
+		createEReference(dictLiteralPartEClass, DICT_LITERAL_PART__VALUE);
+
+		dictionaryTypeEClass = createEClass(DICTIONARY_TYPE);
+		createEReference(dictionaryTypeEClass, DICTIONARY_TYPE__KEY_TYPE);
+
 		typedefEClass = createEClass(TYPEDEF);
 		createEReference(typedefEClass, TYPEDEF__BASE);
 		createEReference(typedefEClass, TYPEDEF__CONDITION);
@@ -1719,8 +1835,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		org.eclipse.emf.ecore.EcorePackage theEcorePackage_1 = (org.eclipse.emf.ecore.EcorePackage)EPackage.Registry.INSTANCE.getEPackage(org.eclipse.emf.ecore.EcorePackage.eNS_URI);
 		EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
+		org.eclipse.emf.ecore.EcorePackage theEcorePackage_1 = (org.eclipse.emf.ecore.EcorePackage)EPackage.Registry.INSTANCE.getEPackage(org.eclipse.emf.ecore.EcorePackage.eNS_URI);
 		UtilitiesPackage theUtilitiesPackage = (UtilitiesPackage)EPackage.Registry.INSTANCE.getEPackage(UtilitiesPackage.eNS_URI);
 		org.eclipse.ocl.expressions.ExpressionsPackage theExpressionsPackage_1 = (org.eclipse.ocl.expressions.ExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(org.eclipse.ocl.expressions.ExpressionsPackage.eNS_URI);
 
@@ -1730,6 +1846,10 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		listTypeEClass.getESuperTypes().add(theEcorePackage.getCollectionType());
+		dictLiteralExpEClass.getESuperTypes().add(theEcorePackage.getLiteralExp());
+		dictLiteralPartEClass.getESuperTypes().add(theEcorePackage_1.getEModelElement());
+		dictionaryTypeEClass.getESuperTypes().add(theEcorePackage.getCollectionType());
 		typedefEClass.getESuperTypes().add(theEcorePackage_1.getEClass());
 		moduleEClass.getESuperTypes().add(theEcorePackage_1.getEClass());
 		moduleEClass.getESuperTypes().add(theEcorePackage_1.getEPackage());
@@ -1825,6 +1945,18 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		entryOperationEClass.getESuperTypes().add(this.getImperativeOperation());
 
 		// Initialize classes and features; add operations and parameters
+		initEClass(listTypeEClass, ListType.class, "ListType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(dictLiteralExpEClass, DictLiteralExp.class, "DictLiteralExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getDictLiteralExp_Part(), this.getDictLiteralPart(), null, "part", null, 0, -1, DictLiteralExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(dictLiteralPartEClass, DictLiteralPart.class, "DictLiteralPart", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getDictLiteralPart_Key(), theEcorePackage.getOCLExpression(), null, "key", null, 1, 1, DictLiteralPart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getDictLiteralPart_Value(), theEcorePackage.getOCLExpression(), null, "value", null, 1, 1, DictLiteralPart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(dictionaryTypeEClass, DictionaryType.class, "DictionaryType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getDictionaryType_KeyType(), theEcorePackage_1.getEClassifier(), null, "keyType", null, 0, 1, DictionaryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
 		initEClass(typedefEClass, Typedef.class, "Typedef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getTypedef_Base(), theEcorePackage_1.getEClassifier(), null, "base", null, 1, 1, Typedef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getTypedef_Condition(), theEcorePackage.getOCLExpression(), null, "condition", null, 0, 1, Typedef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -3210,6 +3342,44 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 
 		// Create resource
 		createResource(eNS_URI);
+
+		// Create annotations
+		// http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName
+		createEmofAnnotations();
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createEmofAnnotations() {
+		String source = "http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName"; //$NON-NLS-1$		
+		addAnnotation
+		  (getDictLiteralExp_Part(), 
+		   source, 
+		   new String[] {
+			 "body", "partOwner" //$NON-NLS-1$ //$NON-NLS-2$
+		   });		
+		addAnnotation
+		  (getDictLiteralPart_Key(), 
+		   source, 
+		   new String[] {
+			 "body", "keyOwner" //$NON-NLS-1$ //$NON-NLS-2$
+		   });		
+		addAnnotation
+		  (getDictLiteralPart_Value(), 
+		   source, 
+		   new String[] {
+			 "body", "valOwner" //$NON-NLS-1$ //$NON-NLS-2$
+		   });		
+		addAnnotation
+		  (getDictionaryType_KeyType(), 
+		   source, 
+		   new String[] {
+			 "body", "keyDict" //$NON-NLS-1$ //$NON-NLS-2$
+		   });																																
 	}
 
 } //ExpressionsPackageImpl

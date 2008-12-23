@@ -57,6 +57,7 @@ public abstract class AbstractQVTStdlib {
 	
 	public abstract EcoreEnvironment getEnvironment();	
 	
+	public abstract EClassifier getList();
 	
 	public OCLStandardLibrary<EClassifier> getOCLStdLib() {
 		return getEnvironment().getOCLStandardLibrary();

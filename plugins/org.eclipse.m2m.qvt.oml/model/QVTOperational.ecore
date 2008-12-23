@@ -5,6 +5,37 @@
     nsURI="http://www.eclipse.org/qvt/1.0.0/Operational" nsPrefix="qvtoperational">
   <eSubpackages name="expressions" nsURI="http://www.eclipse.org/qvt/1.0.0/Operational/Expressions"
       nsPrefix="qvtoperational.expr">
+    <eClassifiers xsi:type="ecore:EClass" name="ListType" eSuperTypes="platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/CollectionType"/>
+    <eClassifiers xsi:type="ecore:EClass" name="DictLiteralExp" eSuperTypes="platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/LiteralExp">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="part" ordered="false"
+          upperBound="-1" eType="#//expressions/DictLiteralPart" containment="true">
+        <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+          <details key="body" value="partOwner"/>
+        </eAnnotations>
+      </eStructuralFeatures>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="DictLiteralPart" eSuperTypes="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EModelElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="key" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
+          containment="true">
+        <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+          <details key="body" value="keyOwner"/>
+        </eAnnotations>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="value" lowerBound="1"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
+          containment="true">
+        <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+          <details key="body" value="valOwner"/>
+        </eAnnotations>
+      </eStructuralFeatures>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="DictionaryType" eSuperTypes="platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/CollectionType">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="keyType" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier">
+        <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+          <details key="body" value="keyDict"/>
+        </eAnnotations>
+      </eStructuralFeatures>
+    </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Typedef" eSuperTypes="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass">
       <eStructuralFeatures xsi:type="ecore:EReference" name="base" lowerBound="1"
           eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>

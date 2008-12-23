@@ -16,6 +16,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
@@ -31,6 +32,9 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralPart;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
@@ -42,6 +46,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
@@ -66,12 +71,15 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.VisitableASTNode;
 import org.eclipse.m2m.internal.qvt.oml.expressions.WhileExp;
 import org.eclipse.ocl.expressions.CallExp;
 import org.eclipse.ocl.expressions.FeatureCallExp;
+import org.eclipse.ocl.expressions.LiteralExp;
 import org.eclipse.ocl.expressions.LoopExp;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.CallingASTNode;
+import org.eclipse.ocl.utilities.PredefinedType;
 import org.eclipse.ocl.utilities.TypedASTNode;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.Visitable;
@@ -139,6 +147,22 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 */
 	protected ExpressionsSwitch<Adapter> modelSwitch =
 		new ExpressionsSwitch<Adapter>() {
+			@Override
+			public Adapter caseListType(ListType object) {
+				return createListTypeAdapter();
+			}
+			@Override
+			public Adapter caseDictLiteralExp(DictLiteralExp object) {
+				return createDictLiteralExpAdapter();
+			}
+			@Override
+			public Adapter caseDictLiteralPart(DictLiteralPart object) {
+				return createDictLiteralPartAdapter();
+			}
+			@Override
+			public Adapter caseDictionaryType(DictionaryType object) {
+				return createDictionaryTypeAdapter();
+			}
 			@Override
 			public Adapter caseTypedef(Typedef object) {
 				return createTypedefAdapter();
@@ -312,6 +336,58 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createEClassifierAdapter();
 			}
 			@Override
+			public Adapter caseEDataType(EDataType object) {
+				return createEDataTypeAdapter();
+			}
+			@Override
+			public <O> Adapter casePredefinedType(PredefinedType<O> object) {
+				return createPredefinedTypeAdapter();
+			}
+			@Override
+			public Adapter caseASTNode(ASTNode object) {
+				return createASTNodeAdapter();
+			}
+			@Override
+			public Adapter caseTypedASTNode(TypedASTNode object) {
+				return createTypedASTNodeAdapter();
+			}
+			@Override
+			public <C, O> Adapter caseCollectionType(CollectionType<C, O> object) {
+				return createCollectionTypeAdapter();
+			}
+			@Override
+			public Adapter caseCollectionType_1(org.eclipse.ocl.ecore.CollectionType object) {
+				return createCollectionType_1Adapter();
+			}
+			@Override
+			public Adapter caseETypedElement(ETypedElement object) {
+				return createETypedElementAdapter();
+			}
+			@Override
+			public <C> Adapter caseTypedElement(TypedElement<C> object) {
+				return createTypedElementAdapter();
+			}
+			@Override
+			public Adapter caseVisitable(Visitable object) {
+				return createVisitableAdapter();
+			}
+			@Override
+			public <C> Adapter caseOCLExpression(OCLExpression<C> object) {
+				return createOCLExpressionAdapter();
+			}
+			@Override
+			public Adapter caseOCLExpression_1(org.eclipse.ocl.ecore.OCLExpression object) {
+				return createOCLExpression_1Adapter();
+			}
+			@Override
+			public <C> Adapter caseLiteralExp(LiteralExp<C> object) {
+				return createLiteralExpAdapter();
+			}
+			@Override
+			public Adapter caseLiteralExp_1(org.eclipse.ocl.ecore.LiteralExp object) {
+				return createLiteralExp_1Adapter();
+			}
+			@Override
 			public Adapter caseEClass(EClass object) {
 				return createEClassAdapter();
 			}
@@ -320,32 +396,12 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createEPackageAdapter();
 			}
 			@Override
-			public Adapter caseVisitable(Visitable object) {
-				return createVisitableAdapter();
-			}
-			@Override
-			public Adapter caseASTNode(ASTNode object) {
-				return createASTNodeAdapter();
-			}
-			@Override
-			public Adapter caseETypedElement(ETypedElement object) {
-				return createETypedElementAdapter();
-			}
-			@Override
 			public Adapter caseEStructuralFeature(EStructuralFeature object) {
 				return createEStructuralFeatureAdapter();
 			}
 			@Override
 			public Adapter caseEOperation(EOperation object) {
 				return createEOperationAdapter();
-			}
-			@Override
-			public <C> Adapter caseTypedElement(TypedElement<C> object) {
-				return createTypedElementAdapter();
-			}
-			@Override
-			public Adapter caseTypedASTNode(TypedASTNode object) {
-				return createTypedASTNodeAdapter();
 			}
 			@Override
 			public <C, PM> Adapter caseVariable(Variable<C, PM> object) {
@@ -358,10 +414,6 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseEParameter(EParameter object) {
 				return createEParameterAdapter();
-			}
-			@Override
-			public <C> Adapter caseOCLExpression(OCLExpression<C> object) {
-				return createOCLExpressionAdapter();
 			}
 			@Override
 			public Adapter caseCallingASTNode(CallingASTNode object) {
@@ -406,6 +458,62 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 		return modelSwitch.doSwitch((EObject)target);
 	}
 
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ListType <em>List Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ListType
+	 * @generated
+	 */
+	public Adapter createListTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralExp <em>Dict Literal Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralExp
+	 * @generated
+	 */
+	public Adapter createDictLiteralExpAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralPart <em>Dict Literal Part</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralPart
+	 * @generated
+	 */
+	public Adapter createDictLiteralPartAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType <em>Dictionary Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType
+	 * @generated
+	 */
+	public Adapter createDictionaryTypeAdapter() {
+		return null;
+	}
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Typedef <em>Typedef</em>}'.
@@ -1010,6 +1118,34 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecore.EDataType <em>EData Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecore.EDataType
+	 * @generated
+	 */
+	public Adapter createEDataTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.utilities.PredefinedType <em>Predefined Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.utilities.PredefinedType
+	 * @generated
+	 */
+	public Adapter createPredefinedTypeAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecore.EClass <em>EClass</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -1150,6 +1286,34 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.types.CollectionType <em>Collection Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.types.CollectionType
+	 * @generated
+	 */
+	public Adapter createCollectionTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.ecore.CollectionType <em>Collection Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.ecore.CollectionType
+	 * @generated
+	 */
+	public Adapter createCollectionType_1Adapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.expressions.Variable <em>Variable</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -1188,6 +1352,48 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createOCLExpressionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.ecore.OCLExpression <em>OCL Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.ecore.OCLExpression
+	 * @generated
+	 */
+	public Adapter createOCLExpression_1Adapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.expressions.LiteralExp <em>Literal Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.expressions.LiteralExp
+	 * @generated
+	 */
+	public Adapter createLiteralExpAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.ecore.LiteralExp <em>Literal Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.ecore.LiteralExp
+	 * @generated
+	 */
+	public Adapter createLiteralExp_1Adapter() {
 		return null;
 	}
 

@@ -23,12 +23,16 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Typedef;
 import org.eclipse.ocl.AbstractTypeResolver;
 import org.eclipse.ocl.ecore.internal.TupleFactory;
+import org.eclipse.ocl.expressions.CollectionKind;
+import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.types.TupleType;
 import org.eclipse.ocl.util.TypeUtil;
+import org.eclipse.ocl.utilities.UMLReflection;
 
 
 /**
@@ -45,6 +49,63 @@ class BasicTypeResolverImpl
 		super(env, resource);
 	}
     
+	@Override
+	public EClassifier resolve(EClassifier type) {
+		if(type instanceof ListType) {
+			return resolveListType(((ListType)type).getElementType());
+		}
+		return super.resolve(type);
+	}
+	
+	public ListType resolveListType(EClassifier elementType) {
+		ListType listType = findListType(elementType);
+		if(listType == null) {
+			// add this to QVT environment
+			ListType newList = QvtOperationalStdLibrary.INSTANCE.getStdlibFactory().createList(elementType);
+			getCollectionPackage().getEClassifiers().add(newList);
+			return newList;
+		}
+		
+		return listType;
+	}
+
+	private ListType findListType(EClassifier elementType) {
+		for (EClassifier next : getEnvironment().getUMLReflection().getClassifiers(getCollectionPackage())) {
+	        if (next instanceof ListType) {
+				ListType type = (ListType) next;
+				if (TypeUtil.getRelationship(
+							getEnvironment(),
+							type.getElementType(),
+							elementType) == UMLReflection.SAME_TYPE) {
+						return type;
+				}
+	        }
+		}
+		
+		return null;		
+	}
+
+	@Override
+	protected CollectionType<EClassifier, EOperation> findCollectionType(CollectionKind kind, EClassifier elementType) {
+		for (EClassifier next : getEnvironment().getUMLReflection().getClassifiers(getCollectionPackage())) {
+	        if (next instanceof CollectionType && next instanceof ListType == false) {	        	
+				@SuppressWarnings("unchecked")
+				CollectionType<EClassifier, EOperation> type =(CollectionType<EClassifier, EOperation>) next;
+				
+				if ((type.getKind() == kind) &&
+						(TypeUtil.getRelationship(
+							getEnvironment(),
+							type.getElementType(),
+							elementType) == UMLReflection.SAME_TYPE)) {
+						return type;
+				}
+	        }
+		}
+		
+		return null;
+	}
+
+	
     @Override
 	protected Resource createResource() {
 		return new XMIResourceImpl(URI.createURI("ocl:///qvto.env.ecore")); //$NON-NLS-1$
@@ -130,6 +191,7 @@ class BasicTypeResolverImpl
         return null;
 	}
     
+	@Override
 	protected EClassifier findShadowClass(EClassifier type) {
         EPackage pkg = hasAdditionalFeatures()? getAdditionalFeaturesPackage() : null;
         

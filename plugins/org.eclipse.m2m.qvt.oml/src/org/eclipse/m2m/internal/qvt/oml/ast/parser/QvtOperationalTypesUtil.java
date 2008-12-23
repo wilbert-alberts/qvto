@@ -71,8 +71,9 @@ public class QvtOperationalTypesUtil {
             sbName.append(SequenceType.SINGLETON_NAME);
             break;
         default:
-            sbName.append(org.eclipse.ocl.types.CollectionType.SINGLETON_NAME);
-        break;
+            sbName.append(collectionType.getName());
+        	return sbName.toString();
+        
         }
 
         sbName.append('(');

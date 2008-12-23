@@ -37,6 +37,42 @@ public interface ExpressionsFactory extends EFactory {
 	ExpressionsFactory eINSTANCE = org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsFactoryImpl.init();
 
 	/**
+	 * Returns a new object of class '<em>List Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>List Type</em>'.
+	 * @generated
+	 */
+	ListType createListType();
+
+	/**
+	 * Returns a new object of class '<em>Dict Literal Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Dict Literal Exp</em>'.
+	 * @generated
+	 */
+	DictLiteralExp createDictLiteralExp();
+
+	/**
+	 * Returns a new object of class '<em>Dict Literal Part</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Dict Literal Part</em>'.
+	 * @generated
+	 */
+	DictLiteralPart createDictLiteralPart();
+
+	/**
+	 * Returns a new object of class '<em>Dictionary Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Dictionary Type</em>'.
+	 * @generated
+	 */
+	DictionaryType createDictionaryType();
+
+	/**
 	 * Returns a new object of class '<em>Typedef</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

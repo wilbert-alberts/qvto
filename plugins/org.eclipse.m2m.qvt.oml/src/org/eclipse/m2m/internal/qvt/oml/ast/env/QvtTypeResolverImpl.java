@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.HiddenElementAdapter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.TypeResolver;
 import org.eclipse.ocl.ecore.CallOperationAction;
@@ -52,7 +53,7 @@ import org.eclipse.ocl.utilities.UMLReflection;
  */
 public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation, EStructuralFeature> {
 
-	private TypeResolver<EClassifier, EOperation, EStructuralFeature> fDelegate;
+	private BasicTypeResolverImpl fDelegate;
 	private QvtEnvironmentBase fOwner;
     private boolean fdefinesOclAnyFeatures;
     private Map<EClassifier, List<ImperativeOperation>> fCtx2OperationMap; 
@@ -70,19 +71,23 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 		fResource = resource;
 	}
 
-	protected TypeResolver<EClassifier, EOperation, EStructuralFeature> getDelegate() {
+	protected BasicTypeResolverImpl getDelegate() {
 		if(fDelegate == null) {
 			fDelegate = createDelegate();
 		}
 		return fDelegate;
 	}
 	
-	protected TypeResolver<EClassifier, EOperation, EStructuralFeature> createDelegate() {
+	protected BasicTypeResolverImpl createDelegate() {
 		return new BasicTypeResolverImpl(getOwner(), fResource);
 	}
 	
 	QvtEnvironmentBase getOwner() {
 		return fOwner;
+	}
+	
+	public ListType resolveListType(EClassifier elementType) {
+		return getDelegate().resolveListType(elementType);
 	}
 	
 	public void collectAdditionalOperationsInTypeHierarchy(EClassifier type, boolean subTypesOnly, Collection<EOperation> result) {

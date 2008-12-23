@@ -29,6 +29,7 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl;
@@ -36,6 +37,7 @@ import org.eclipse.m2m.internal.qvt.oml.stdlib.AbstractContextualOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.AbstractQVTStdlib;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.ElementOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.IntegerOperations;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.ListOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.ModelOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.OclAnyOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.RealOperations;
@@ -43,6 +45,7 @@ import org.eclipse.m2m.internal.qvt.oml.stdlib.StatusOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.StdlibModuleOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.StringOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.TransformationOperations;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.model.StdlibFactory;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.model.StdlibPackage;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.util.TypeUtil;
@@ -64,8 +67,11 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements Stdli
 	private EOperation TRANSFORM;
 	private EClass STATUS;
 	private EClass EXCEPTION;
+	private EClassifier LIST;
 	
 	private final Library fStdlibModule;
+	private StdlibFactory fFactory;
+	
 	private final QvtOperationalModuleEnv fEnv;
 	private final Map<String, EClassifier> fTypeAliasMap;
 	private final ModelOperations modelOperations;
@@ -87,6 +93,13 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements Stdli
 		STATUS = createClass("Status", false); //$NON-NLS-1$
 		EXCEPTION = createClass("Exception", false); //$NON-NLS-1$		
 		
+		ListType listType = ExpressionsFactory.eINSTANCE.createListType();
+		listType.setElementType(fEnv.getOCLStandardLibrary().getT());
+		fStdlibModule.getEClassifiers().add(listType);
+		LIST = listType;
+		
+		fFactory = new StdlibFactory(this);
+		
 		fTypeAliasMap = createTypeAliasMap(fEnv);		
 		
 		modelOperations = new ModelOperations(this);
@@ -107,6 +120,7 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements Stdli
 		assert TRANSFORM != null : "transform() operation mus be defined";
 		
 		define(new StatusOperations(this));
+		define(new ListOperations(this));
 		
 		((ModuleImpl)fStdlibModule).freeze();		
 	}
@@ -114,6 +128,10 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements Stdli
 	@Override
 	public EcoreEnvironment getEnvironment() {
 		return fEnv;
+	}
+	
+	public StdlibFactory getStdlibFactory() {
+		return fFactory;
 	}
 		
 	public List<EOperation> getOperations(EClassifier classifier) {
@@ -132,6 +150,10 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements Stdli
 	@Override
     public Library getStdLibModule() {
 		return fStdlibModule;
+	}
+	
+	public EClassifier getList() {
+		return LIST;
 	}
         		
 	/* (non-Javadoc)

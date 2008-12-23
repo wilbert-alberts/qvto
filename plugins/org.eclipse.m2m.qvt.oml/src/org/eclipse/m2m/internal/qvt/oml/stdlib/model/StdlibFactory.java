@@ -15,9 +15,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QVTStackTraceElement;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
 
 public class StdlibFactory {
 
@@ -29,6 +32,12 @@ public class StdlibFactory {
 		}
 		
 		fStdlibPackage = stdlibPackage;
+	}
+	
+	public ListType createList(EClassifier elementType) {
+		ListType listType = ExpressionsFactory.eINSTANCE.createListType();
+		listType.setElementType(elementType);
+		return listType;
 	}
 	
 	public StatusInstance createSuccess() {

@@ -46,7 +46,7 @@ public class TransformationOperations extends AbstractContextualOperations {
 					return CallHandlerAdapter.getInvalidResult(evalEnv);
 				}
 
-		    	StdlibFactory stdlibFactory = new StdlibFactory(QvtOperationalStdLibrary.INSTANCE);
+		    	StdlibFactory stdlibFactory = QvtOperationalStdLibrary.INSTANCE.getStdlibFactory();
 		    	// Note: !!!! exception throw from here is captured by MDT OCL and turned into OCLInvalid
 			    try {
 			    	mainHandler.invoke(moduleInstance, source, args, evalEnv);

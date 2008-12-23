@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
+import org.eclipse.m2m.qvt.oml.util.MutableList;
 import org.eclipse.ocl.TypeResolver;
 import org.eclipse.ocl.expressions.CollectionKind;
 import org.eclipse.ocl.types.CollectionType;
@@ -78,8 +79,7 @@ class Java2QVTTypeResolver {
 				return getEnvironment().getOCLStandardLibrary().getT();
 				//return paramType;
 			} else if(stdLib.getT2().getName().equals(typeVariable.getName())) {
-				throw new IllegalArgumentException();
-				//return QvtOperationalStdLibrary.INSTANCE.getListE_Type();
+				return getEnvironment().getOCLStandardLibrary().getT();			
 			}
 		}
 		
@@ -94,29 +94,34 @@ class Java2QVTTypeResolver {
 			return null;
 		}
 
-		Type actualType = actualTypeArguments[0];
+		Type actualElementType = actualTypeArguments[0];
 		if(rawType instanceof Class == false) {
 			return null;
 		}
 		
-		Class<?> rawClass = (Class<?>) rawType;		
-		if(rawClass == LinkedHashSet.class) {
-			return resolveCollectionType(CollectionKind.ORDERED_SET_LITERAL, actualType);			
+		Class<?> rawClass = (Class<?>) rawType;
+		if(rawClass == MutableList.class) {
+			EClassifier listElementType = toEClassifier(actualElementType);
+			if(listElementType != null) {
+				return fEnv.getQVTTypeResolver().resolveListType(listElementType);
+			}
+		} else if(rawClass == LinkedHashSet.class) {
+			return resolveCollectionType(CollectionKind.ORDERED_SET_LITERAL, actualElementType);			
 		}
 		else if(Set.class.isAssignableFrom(rawClass)) {
-			return resolveCollectionType(CollectionKind.SET_LITERAL, actualType);			
+			return resolveCollectionType(CollectionKind.SET_LITERAL, actualElementType);			
 		}		
 		else if(rawClass == Bag.class) {
-			return resolveCollectionType(CollectionKind.BAG_LITERAL, actualType);
+			return resolveCollectionType(CollectionKind.BAG_LITERAL, actualElementType);
 		}
 		else if(List.class.isAssignableFrom(rawClass)) {
-			return resolveCollectionType(CollectionKind.SEQUENCE_LITERAL, actualType);
+			return resolveCollectionType(CollectionKind.SEQUENCE_LITERAL, actualElementType);
 		}
 		else if(rawType == List.class) {
-			return resolveCollectionType(CollectionKind.SEQUENCE_LITERAL, actualType);			
+			return resolveCollectionType(CollectionKind.SEQUENCE_LITERAL, actualElementType);			
 		}
 		else if(rawType == Collection.class) {			
-			return resolveCollectionType(CollectionKind.COLLECTION_LITERAL, actualType);
+			return resolveCollectionType(CollectionKind.COLLECTION_LITERAL, actualElementType);
 		}
 		
 		return null;

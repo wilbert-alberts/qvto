@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
@@ -30,6 +31,9 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralPart;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
@@ -41,6 +45,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
@@ -65,12 +70,15 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.VisitableASTNode;
 import org.eclipse.m2m.internal.qvt.oml.expressions.WhileExp;
 import org.eclipse.ocl.expressions.CallExp;
 import org.eclipse.ocl.expressions.FeatureCallExp;
+import org.eclipse.ocl.expressions.LiteralExp;
 import org.eclipse.ocl.expressions.LoopExp;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.CallingASTNode;
+import org.eclipse.ocl.utilities.PredefinedType;
 import org.eclipse.ocl.utilities.TypedASTNode;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.Visitable;
@@ -156,6 +164,59 @@ public class ExpressionsSwitch<T1> {
 	 */
 	protected T1 doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
+			case ExpressionsPackage.LIST_TYPE: {
+				ListType listType = (ListType)theEObject;
+				T1 result = caseListType(listType);
+				if (result == null) result = caseCollectionType_1(listType);
+				if (result == null) result = caseEDataType(listType);
+				if (result == null) result = caseCollectionType(listType);
+				if (result == null) result = caseEClassifier(listType);
+				if (result == null) result = casePredefinedType(listType);
+				if (result == null) result = caseTypedASTNode(listType);
+				if (result == null) result = caseENamedElement(listType);
+				if (result == null) result = caseASTNode(listType);
+				if (result == null) result = caseEModelElement(listType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ExpressionsPackage.DICT_LITERAL_EXP: {
+				DictLiteralExp dictLiteralExp = (DictLiteralExp)theEObject;
+				T1 result = caseDictLiteralExp(dictLiteralExp);
+				if (result == null) result = caseLiteralExp_1(dictLiteralExp);
+				if (result == null) result = caseOCLExpression_1(dictLiteralExp);
+				if (result == null) result = caseLiteralExp(dictLiteralExp);
+				if (result == null) result = caseETypedElement(dictLiteralExp);
+				if (result == null) result = caseOCLExpression(dictLiteralExp);
+				if (result == null) result = caseENamedElement(dictLiteralExp);
+				if (result == null) result = caseTypedElement(dictLiteralExp);
+				if (result == null) result = caseVisitable(dictLiteralExp);
+				if (result == null) result = caseASTNode(dictLiteralExp);
+				if (result == null) result = caseEModelElement(dictLiteralExp);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ExpressionsPackage.DICT_LITERAL_PART: {
+				DictLiteralPart dictLiteralPart = (DictLiteralPart)theEObject;
+				T1 result = caseDictLiteralPart(dictLiteralPart);
+				if (result == null) result = caseEModelElement(dictLiteralPart);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ExpressionsPackage.DICTIONARY_TYPE: {
+				DictionaryType dictionaryType = (DictionaryType)theEObject;
+				T1 result = caseDictionaryType(dictionaryType);
+				if (result == null) result = caseCollectionType_1(dictionaryType);
+				if (result == null) result = caseEDataType(dictionaryType);
+				if (result == null) result = caseCollectionType(dictionaryType);
+				if (result == null) result = caseEClassifier(dictionaryType);
+				if (result == null) result = casePredefinedType(dictionaryType);
+				if (result == null) result = caseTypedASTNode(dictionaryType);
+				if (result == null) result = caseENamedElement(dictionaryType);
+				if (result == null) result = caseASTNode(dictionaryType);
+				if (result == null) result = caseEModelElement(dictionaryType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ExpressionsPackage.TYPEDEF: {
 				Typedef typedef = (Typedef)theEObject;
 				T1 result = caseTypedef(typedef);
@@ -650,6 +711,66 @@ public class ExpressionsSwitch<T1> {
 			}
 			default: return defaultCase(theEObject);
 		}
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>List Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>List Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseListType(ListType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Dict Literal Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Dict Literal Exp</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseDictLiteralExp(DictLiteralExp object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Dict Literal Part</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Dict Literal Part</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseDictLiteralPart(DictLiteralPart object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Dictionary Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Dictionary Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseDictionaryType(DictionaryType object) {
+		return null;
 	}
 
 	/**
@@ -1298,6 +1419,36 @@ public class ExpressionsSwitch<T1> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>EData Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>EData Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseEDataType(EDataType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Predefined Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Predefined Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <O> T1 casePredefinedType(PredefinedType<O> object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>EClass</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1448,6 +1599,36 @@ public class ExpressionsSwitch<T1> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Collection Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Collection Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <C, O> T1 caseCollectionType(CollectionType<C, O> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Collection Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Collection Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseCollectionType_1(org.eclipse.ocl.ecore.CollectionType object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Variable</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1489,6 +1670,51 @@ public class ExpressionsSwitch<T1> {
 	 * @generated
 	 */
 	public <C> T1 caseOCLExpression(OCLExpression<C> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>OCL Expression</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>OCL Expression</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseOCLExpression_1(org.eclipse.ocl.ecore.OCLExpression object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Literal Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Literal Exp</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <C> T1 caseLiteralExp(LiteralExp<C> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Literal Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Literal Exp</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseLiteralExp_1(org.eclipse.ocl.ecore.LiteralExp object) {
 		return null;
 	}
 
