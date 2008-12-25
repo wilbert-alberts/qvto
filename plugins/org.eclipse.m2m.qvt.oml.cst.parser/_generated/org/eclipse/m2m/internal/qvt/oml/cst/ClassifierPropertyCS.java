@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ClassifierPropertyCS.java,v 1.2 2008/12/25 19:24:05 sboyko Exp $
+ * $Id: ClassifierPropertyCS.java,v 1.3 2008/12/25 20:58:34 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -143,7 +143,7 @@ public interface ClassifierPropertyCS extends LocalPropertyCS {
 	 * @return the value of the '<em>Is Ordered</em>' attribute.
 	 * @see #setIsOrdered(boolean)
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getClassifierPropertyCS_IsOrdered()
-	 * @model default="true" required="true"
+	 * @model default="true"
 	 * @generated
 	 */
 	boolean isIsOrdered();

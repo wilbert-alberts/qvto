@@ -862,36 +862,6 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	}
 
 	protected CSTNode createMultiplicityDefCS(PrimitiveLiteralExpCS lowerBound, PrimitiveLiteralExpCS upperBound) {
-		/*
-		int lower = 0, upper = 1;
-		try {
-			lower = Integer.valueOf(lowerRange);
-			if ("*".equals(upperRange)) {
-				upper = -1;
-			}
-			else {
-				upper = Integer.valueOf(upperRange);
-			}
-			
-			// check UML constraints [7.3.32]
-			if (lower < 0) {
-				throw new NumberFormatException(Messages.AbstractQVTParser_MultiplicityInvalidLowerBound);
-			}
-			if (upper >= 0 && lower > upper) {
-				throw new NumberFormatException(Messages.AbstractQVTParser_MultiplicityInvalidRange);
-			}
-			if (upper == 0 && lower == 0) {
-				throw new NumberFormatException(Messages.AbstractQVTParser_MultiplicityEmptyRange);
-			}
-		}
-		catch (NumberFormatException ex) {
-            reportError(ParseErrorCodes.INVALID_CODE, "",  //$NON-NLS-1$
-            		ex.getLocalizedMessage());
-			// default multiplicity from specification [8.4.6]
-            lower = 0;
-			upper = 1;
-		}
-		*/
 		MultiplicityDefCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMultiplicityDefCS();
 		result.setLowerBound(lowerBound);
 		result.setUpperBound(upperBound);

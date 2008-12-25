@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: OppositePropertyCS.java,v 1.1 2008/12/25 09:13:38 sboyko Exp $
+ * $Id: OppositePropertyCS.java,v 1.2 2008/12/25 20:58:34 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -56,7 +56,7 @@ public interface OppositePropertyCS extends CSTNode {
 	 * @return the value of the '<em>Is Navigable</em>' attribute.
 	 * @see #setIsNavigable(boolean)
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getOppositePropertyCS_IsNavigable()
-	 * @model default="true" required="true"
+	 * @model default="true"
 	 * @generated
 	 */
 	boolean isIsNavigable();
