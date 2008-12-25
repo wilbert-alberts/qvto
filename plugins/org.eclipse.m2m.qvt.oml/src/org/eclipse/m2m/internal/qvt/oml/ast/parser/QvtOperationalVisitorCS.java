@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -53,6 +55,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
@@ -79,6 +82,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MultiplicityDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
@@ -1525,9 +1529,9 @@ public class QvtOperationalVisitorCS
 
 		class PropertyPair {
 			final EStructuralFeature myEFeature;
-			final LocalPropertyCS myPropCS;
+			final ClassifierPropertyCS myPropCS;
 			
-			PropertyPair(EStructuralFeature eFeature, LocalPropertyCS propCS) {
+			PropertyPair(EStructuralFeature eFeature, ClassifierPropertyCS propCS) {
 				myEFeature = eFeature;
 				myPropCS = propCS;
 			}
@@ -1535,23 +1539,22 @@ public class QvtOperationalVisitorCS
 
 		Map<String, List<PropertyPair>> classifierProperties = new LinkedHashMap<String, List<PropertyPair>>(classifierDefCS.getProperties().size());
 		
-		for (LocalPropertyCS propCS : classifierDefCS.getProperties()) {
-			EStructuralFeature prop = visitLocalPropertyCS(propCS, env);
-			if (prop == null) {
+		for (ClassifierPropertyCS propCS : classifierDefCS.getProperties()) {
+			EStructuralFeature eFeature = visitClassifierPropertyCS(propCS, env);
+			if (eFeature == null) {
 				continue;
 			}
 			
-			EStructuralFeature eFeature = env.getUMLReflection().createProperty(prop.getName(), prop.getEType());
 			eClassifier.getEStructuralFeatures().add(eFeature);
-			OCLExpression<EClassifier> initExp = QvtOperationalParserUtil.getInitExpression(prop);
+			OCLExpression<EClassifier> initExp = QvtOperationalParserUtil.getInitExpression(eFeature);
 			if (initExp != null) {
 				IntermediateClassFactory.getFactory(module).addClassifierPropertyInit(eClassifier, eFeature, initExp);
 			}
 
-			List<PropertyPair> properties = classifierProperties.get(prop.getName());
+			List<PropertyPair> properties = classifierProperties.get(eFeature.getName());
 			if (properties == null) {
 				properties = new ArrayList<PropertyPair>(2);
-				classifierProperties.put(prop.getName(), properties);
+				classifierProperties.put(eFeature.getName(), properties);
 			}
 			properties.add(new PropertyPair(eFeature, propCS));
 		}
@@ -1569,6 +1572,122 @@ public class QvtOperationalVisitorCS
 		}
 		
 		return eClassifier;
+	}
+
+	private EStructuralFeature visitClassifierPropertyCS(ClassifierPropertyCS propCS, QvtOperationalEnv env) {
+		EStructuralFeature eFeature = visitLocalPropertyCS(propCS, env);
+		
+		// handle stereotype qualifiers
+		Set<String> handledStereotypes = new HashSet<String>(2);
+		for (SimpleNameCS nameCS : propCS.getStereotypeQualifiers()) {
+			String qualifName = nameCS.getValue();
+			if ("id".equals(qualifName)) { //$NON-NLS-1$
+				if (eFeature instanceof EAttribute) {
+					((EAttribute) eFeature).setID(true);
+				}
+				else {
+		            env.reportError(NLS.bind(ValidationMessages.IntermClassifier_unapplicableStereotypeQualifier,
+		            		new Object[] { qualifName }), nameCS);
+				}
+			}
+			else {
+	            env.reportWarning(NLS.bind(ValidationMessages.IntermClassifier_unknownStereotypeQualifier,
+	            		new Object[] { qualifName }), nameCS);
+			}
+
+			if (handledStereotypes.contains(qualifName)) {
+	            env.reportWarning(NLS.bind(ValidationMessages.IntermClassifier_duplicatedStereotypeQualifier,
+	            		new Object[] { qualifName }), nameCS);
+			}
+			handledStereotypes.add(qualifName);
+		}
+		
+		// handle feature keys
+		Set<String> handledFeatureKeys = new HashSet<String>(2);
+		for (SimpleNameCS nameCS : propCS.getFeatureKeys()) {
+			String keyName = nameCS.getValue();
+			if ("composes".equals(keyName)) { //$NON-NLS-1$
+				if (eFeature instanceof EReference) {
+					((EReference) eFeature).setContainment(true);
+				}
+				else {
+		            env.reportError(NLS.bind(ValidationMessages.IntermClassifier_referenceOnlyFeatureKey,
+		            		new Object[] { keyName }), nameCS);
+				}
+			}
+			else if ("references".equals(keyName)) { //$NON-NLS-1$
+				if (eFeature instanceof EReference) {
+					((EReference) eFeature).setContainment(false);
+				}
+				else {
+		            env.reportError(NLS.bind(ValidationMessages.IntermClassifier_referenceOnlyFeatureKey,
+		            		new Object[] { keyName }), nameCS);
+				}
+			}
+			else if ("readonly".equals(keyName)) { //$NON-NLS-1$
+				eFeature.setChangeable(false);
+			}
+			else if ("derived".equals(keyName)) { //$NON-NLS-1$
+				
+			}
+			else if ("static".equals(keyName)) { //$NON-NLS-1$
+	            env.reportWarning(NLS.bind(ValidationMessages.IntermClassifier_unsupportedFeatureKey,
+	            		new Object[] { keyName }), nameCS);
+			}
+
+			if (handledFeatureKeys.contains(keyName)) {
+	            env.reportWarning(NLS.bind(ValidationMessages.IntermClassifier_duplicatedFeatureKey,
+	            		new Object[] { keyName }), nameCS);
+			}
+			handledFeatureKeys.add(keyName);
+		}
+		
+		if (propCS.getMultiplicity() != null) {
+			MultiplicityDef multiplcityDef = visitMultiplicityDefCS(propCS.getMultiplicity(), env);
+			eFeature.setLowerBound(multiplcityDef.lower);
+			eFeature.setUpperBound(multiplcityDef.upper);
+		}
+		
+		eFeature.setOrdered(propCS.isIsOrdered());
+		
+		return eFeature;
+	}
+	
+	private static class MultiplicityDef {
+		public int lower = 0;
+		public int upper = 1;
+	}
+	
+	private MultiplicityDef visitMultiplicityDefCS(MultiplicityDefCS multiplicityCS, QvtOperationalEnv env) {
+		MultiplicityDef multiplicityDef = new MultiplicityDef();
+
+		try {
+			multiplicityDef.lower = Integer.valueOf(multiplicityCS.getLowerBound().getSymbol());
+			if ("*".equals(multiplicityCS.getUpperBound().getSymbol())) {
+				multiplicityDef.upper = -1;
+			}
+			else {
+				multiplicityDef.upper = Integer.valueOf(multiplicityCS.getUpperBound().getSymbol());
+			}
+			
+			// check UML constraints [7.3.32]
+			if (multiplicityDef.lower < 0) {
+				throw new NumberFormatException(ValidationMessages.IntermClassifier_multiplicityInvalidLowerBound);
+			}
+			if (multiplicityDef.upper >= 0 && multiplicityDef.lower > multiplicityDef.upper) {
+				throw new NumberFormatException(ValidationMessages.IntermClassifier_multiplicityInvalidRange);
+			}
+			if (multiplicityDef.upper == 0 && multiplicityDef.lower == 0) {
+				throw new NumberFormatException(ValidationMessages.IntermClassifier_multiplicityEmptyRange);
+			}
+		}
+		catch (NumberFormatException ex) {
+            env.reportError(ex.getLocalizedMessage(), multiplicityCS);
+			// default multiplicity from specification [8.4.6]
+            multiplicityDef = new MultiplicityDef();
+		}
+		
+		return multiplicityDef;
 	}
 	
 	private void importsCS(ParsedModuleCS parsedModuleCS, Module module, QvtOperationalFileEnv env, QvtCompiler compiler) {

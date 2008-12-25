@@ -155,6 +155,16 @@ public final class ValidationMessages extends NLS {
     public static String missingReturnValueError;
     public static String returnNotAllowedInMappingYet;
     
+    public static String IntermClassifier_duplicatedStereotypeQualifier;
+    public static String IntermClassifier_unapplicableStereotypeQualifier;
+    public static String IntermClassifier_unknownStereotypeQualifier;
+    public static String IntermClassifier_referenceOnlyFeatureKey;
+    public static String IntermClassifier_duplicatedFeatureKey;
+    public static String IntermClassifier_unsupportedFeatureKey;
+    public static String IntermClassifier_multiplicityInvalidLowerBound;
+    public static String IntermClassifier_multiplicityInvalidRange;
+    public static String IntermClassifier_multiplicityEmptyRange;
+    
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, ValidationMessages.class);
 	}
