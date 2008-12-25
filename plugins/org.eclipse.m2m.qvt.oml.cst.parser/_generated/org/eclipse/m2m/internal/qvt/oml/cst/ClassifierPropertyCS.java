@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ClassifierPropertyCS.java,v 1.1 2008/12/25 09:13:38 sboyko Exp $
+ * $Id: ClassifierPropertyCS.java,v 1.2 2008/12/25 19:24:05 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -31,6 +31,7 @@ import org.eclipse.ocl.cst.SimpleNameCS;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS#getFeatureKeys <em>Feature Keys</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS#getMultiplicity <em>Multiplicity</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS#getOpposite <em>Opposite</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS#isIsOrdered <em>Is Ordered</em>}</li>
  * </ul>
  * </p>
  *
@@ -129,5 +130,32 @@ public interface ClassifierPropertyCS extends LocalPropertyCS {
 	 * @generated
 	 */
 	void setOpposite(OppositePropertyCS value);
+
+	/**
+	 * Returns the value of the '<em><b>Is Ordered</b></em>' attribute.
+	 * The default value is <code>"true"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is Ordered</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is Ordered</em>' attribute.
+	 * @see #setIsOrdered(boolean)
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getClassifierPropertyCS_IsOrdered()
+	 * @model default="true" required="true"
+	 * @generated
+	 */
+	boolean isIsOrdered();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS#isIsOrdered <em>Is Ordered</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Ordered</em>' attribute.
+	 * @see #isIsOrdered()
+	 * @generated
+	 */
+	void setIsOrdered(boolean value);
 
 } // ClassifierPropertyCS

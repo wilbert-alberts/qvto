@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ClassifierPropertyCSImpl.java,v 1.1 2008/12/25 09:13:38 sboyko Exp $
+ * $Id: ClassifierPropertyCSImpl.java,v 1.2 2008/12/25 19:24:05 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -48,6 +48,7 @@ import org.eclipse.ocl.cst.SimpleNameCS;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ClassifierPropertyCSImpl#getFeatureKeys <em>Feature Keys</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ClassifierPropertyCSImpl#getMultiplicity <em>Multiplicity</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ClassifierPropertyCSImpl#getOpposite <em>Opposite</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ClassifierPropertyCSImpl#isIsOrdered <em>Is Ordered</em>}</li>
  * </ul>
  * </p>
  *
@@ -102,12 +103,33 @@ public class ClassifierPropertyCSImpl extends LocalPropertyCSImpl implements Cla
 	protected OppositePropertyCS opposite;
 
 	/**
+	 * The default value of the '{@link #isIsOrdered() <em>Is Ordered</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsOrdered()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean IS_ORDERED_EDEFAULT = true;
+
+	/**
+	 * The flag representing the value of the '{@link #isIsOrdered() <em>Is Ordered</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsOrdered()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int IS_ORDERED_EFLAG = 1 << 8;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected ClassifierPropertyCSImpl() {
 		super();
+		eFlags |= IS_ORDERED_EFLAG;
 	}
 
 	/**
@@ -235,6 +257,27 @@ public class ClassifierPropertyCSImpl extends LocalPropertyCSImpl implements Cla
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isIsOrdered() {
+		return (eFlags & IS_ORDERED_EFLAG) != 0;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIsOrdered(boolean newIsOrdered) {
+		boolean oldIsOrdered = (eFlags & IS_ORDERED_EFLAG) != 0;
+		if (newIsOrdered) eFlags |= IS_ORDERED_EFLAG; else eFlags &= ~IS_ORDERED_EFLAG;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.CLASSIFIER_PROPERTY_CS__IS_ORDERED, oldIsOrdered, newIsOrdered));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -266,6 +309,8 @@ public class ClassifierPropertyCSImpl extends LocalPropertyCSImpl implements Cla
 				return getMultiplicity();
 			case CSTPackage.CLASSIFIER_PROPERTY_CS__OPPOSITE:
 				return getOpposite();
+			case CSTPackage.CLASSIFIER_PROPERTY_CS__IS_ORDERED:
+				return isIsOrdered() ? Boolean.TRUE : Boolean.FALSE;
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -293,6 +338,9 @@ public class ClassifierPropertyCSImpl extends LocalPropertyCSImpl implements Cla
 			case CSTPackage.CLASSIFIER_PROPERTY_CS__OPPOSITE:
 				setOpposite((OppositePropertyCS)newValue);
 				return;
+			case CSTPackage.CLASSIFIER_PROPERTY_CS__IS_ORDERED:
+				setIsOrdered(((Boolean)newValue).booleanValue());
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -317,6 +365,9 @@ public class ClassifierPropertyCSImpl extends LocalPropertyCSImpl implements Cla
 			case CSTPackage.CLASSIFIER_PROPERTY_CS__OPPOSITE:
 				setOpposite((OppositePropertyCS)null);
 				return;
+			case CSTPackage.CLASSIFIER_PROPERTY_CS__IS_ORDERED:
+				setIsOrdered(IS_ORDERED_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -337,8 +388,26 @@ public class ClassifierPropertyCSImpl extends LocalPropertyCSImpl implements Cla
 				return multiplicity != null;
 			case CSTPackage.CLASSIFIER_PROPERTY_CS__OPPOSITE:
 				return opposite != null;
+			case CSTPackage.CLASSIFIER_PROPERTY_CS__IS_ORDERED:
+				return ((eFlags & IS_ORDERED_EFLAG) != 0) != IS_ORDERED_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (isOrdered: "); //$NON-NLS-1$
+		result.append((eFlags & IS_ORDERED_EFLAG) != 0);
+		result.append(')');
+		return result.toString();
 	}
 
 } //ClassifierPropertyCSImpl

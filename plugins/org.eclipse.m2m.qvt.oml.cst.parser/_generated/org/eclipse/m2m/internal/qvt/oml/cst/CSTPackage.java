@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackage.java,v 1.14 2008/12/25 09:13:38 sboyko Exp $
+ * $Id: CSTPackage.java,v 1.15 2008/12/25 19:24:05 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -1196,13 +1196,22 @@ public interface CSTPackage extends EPackage {
 	int CLASSIFIER_PROPERTY_CS__OPPOSITE = LOCAL_PROPERTY_CS_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Is Ordered</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASSIFIER_PROPERTY_CS__IS_ORDERED = LOCAL_PROPERTY_CS_FEATURE_COUNT + 4;
+
+	/**
 	 * The number of structural features of the '<em>Classifier Property CS</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CLASSIFIER_PROPERTY_CS_FEATURE_COUNT = LOCAL_PROPERTY_CS_FEATURE_COUNT + 4;
+	int CLASSIFIER_PROPERTY_CS_FEATURE_COUNT = LOCAL_PROPERTY_CS_FEATURE_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.OppositePropertyCSImpl <em>Opposite Property CS</em>}' class.
@@ -5926,6 +5935,17 @@ public interface CSTPackage extends EPackage {
 	EReference getClassifierPropertyCS_Opposite();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS#isIsOrdered <em>Is Ordered</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Ordered</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS#isIsOrdered()
+	 * @see #getClassifierPropertyCS()
+	 * @generated
+	 */
+	EAttribute getClassifierPropertyCS_IsOrdered();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS <em>Opposite Property CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7833,6 +7853,14 @@ public interface CSTPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CLASSIFIER_PROPERTY_CS__OPPOSITE = eINSTANCE.getClassifierPropertyCS_Opposite();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Ordered</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CLASSIFIER_PROPERTY_CS__IS_ORDERED = eINSTANCE.getClassifierPropertyCS_IsOrdered();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.OppositePropertyCSImpl <em>Opposite Property CS</em>}' class.

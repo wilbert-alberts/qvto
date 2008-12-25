@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.28 2008/12/25 09:13:37 sboyko Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.29 2008/12/25 19:24:05 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -148,7 +148,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.28 2008/12/25 09:13:37 sboyko Exp $
+ * $Id: QvtOpLPGParser.g,v 1.29 2008/12/25 19:24:05 sboyko Exp $
  */
 	./
 $End
@@ -712,18 +712,19 @@ $Rules
 		  $EndJava
 		./
 
-	classifierFeatureCS ::= stereotype_qualifier_list feature_key_list qvtIdentifierCS ':' typeCS multiplicityOpt opposite_propertyOpt init_partOpt
+	classifierFeatureCS ::= stereotype_qualifier_list feature_key_list qvtIdentifierCS ':' typeCS multiplicityOpt ordered_prop opposite_propertyOpt init_partOpt
 		/.$BeginJava
 					EList stereotypeQualifiers = (EList) $getSym(1);
 					EList featureKeys = (EList) $getSym(2);
 					MultiplicityDefCS multiplicityDef = (MultiplicityDefCS) $getSym(6);
-					OppositePropertyCS oppositeProperty = (OppositePropertyCS) $getSym(7);
-					OCLExpressionCS initExpression = (OCLExpressionCS) $getSym(8);
+					OppositePropertyCS oppositeProperty = (OppositePropertyCS) $getSym(8);
+					OCLExpressionCS initExpression = (OCLExpressionCS) $getSym(9);
 					CSTNode result = createClassifierPropertyCS(
 							stereotypeQualifiers,
 							featureKeys,
 							getIToken($getToken(3)),
 							(TypeCS) $getSym(5),
+							((BooleanLiteralExpCS) $getSym(7)).getBooleanSymbol().booleanValue(),
 							initExpression,
 							multiplicityDef,
 							oppositeProperty
@@ -865,6 +866,20 @@ $Rules
 							(PrimitiveLiteralExpCS) $getSym(3)
 						);
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	ordered_prop ::= ordered
+		/.$BeginJava
+					CSTNode result = createBooleanLiteralExpCS(Boolean.TRUE.toString());
+					setOffsets(result, getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+	ordered_prop ::= $empty
+		/.$BeginJava
+					CSTNode result = createBooleanLiteralExpCS(Boolean.FALSE.toString());
 					$setResult(result);
 		  $EndJava
 		./

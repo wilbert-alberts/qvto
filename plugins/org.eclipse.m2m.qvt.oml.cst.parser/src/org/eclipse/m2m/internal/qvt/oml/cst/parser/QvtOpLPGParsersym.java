@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.34 2008/12/25 09:13:37 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.35 2008/12/25 19:24:04 sboyko Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.34 2008/12/25 09:13:37 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.35 2008/12/25 19:24:04 sboyko Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.34 2008/12/25 09:13:37 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.35 2008/12/25 19:24:04 sboyko Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.34 2008/12/25 09:13:37 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.35 2008/12/25 19:24:04 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -109,37 +109,37 @@ public interface QvtOpLPGParsersym {
       TK_EXCLAMATION_MARK = 109,
       TK_NOT_EQUAL_EXEQ = 104,
       TK_INTEGER_RANGE_START = 121,
-      TK_Dict = 168,
-      TK_List = 169,
-      TK_break = 170,
+      TK_Dict = 169,
+      TK_List = 170,
+      TK_break = 171,
       TK_class = 147,
       TK_composes = 148,
-      TK_constructor = 171,
-      TK_continue = 172,
-      TK_datatype = 173,
-      TK_default = 174,
+      TK_constructor = 172,
+      TK_continue = 173,
+      TK_datatype = 174,
+      TK_default = 175,
       TK_derived = 149,
-      TK_do = 175,
-      TK_elif = 176,
-      TK_enum = 177,
-      TK_except = 178,
-      TK_exception = 179,
-      TK_from = 180,
-      TK_literal = 181,
-      TK_ordered = 182,
+      TK_do = 176,
+      TK_elif = 177,
+      TK_enum = 178,
+      TK_except = 179,
+      TK_exception = 180,
+      TK_from = 181,
+      TK_literal = 182,
+      TK_ordered = 150,
       TK_primitive = 183,
       TK_raise = 184,
-      TK_readonly = 150,
-      TK_references = 151,
+      TK_readonly = 151,
+      TK_references = 152,
       TK_tag = 185,
       TK_try = 186,
       TK_typedef = 187,
       TK_unlimited = 188,
       TK_invalid = 189,
       TK_STEREOTYPE_QUALIFIER_OPEN = 138,
-      TK_STEREOTYPE_QUALIFIER_CLOSE = 152,
-      TK_MULTIPLICITY_RANGE = 153,
-      TK_TILDE_SIGN = 154,
+      TK_STEREOTYPE_QUALIFIER_CLOSE = 153,
+      TK_MULTIPLICITY_RANGE = 154,
+      TK_TILDE_SIGN = 155,
       TK_self = 44,
       TK_inv = 190,
       TK_pre = 191,
@@ -220,7 +220,7 @@ public interface QvtOpLPGParsersym {
       TK_configuration = 113,
       TK_intermediate = 114,
       TK_property = 106,
-      TK_opposites = 155,
+      TK_opposites = 156,
       TK_population = 142,
       TK_map = 62,
       TK_new = 75,
@@ -228,7 +228,7 @@ public interface QvtOpLPGParsersym {
       TK_late = 65,
       TK_log = 93,
       TK_assert = 95,
-      TK_with = 156,
+      TK_with = 157,
       TK_resolve = 78,
       TK_resolveone = 79,
       TK_resolveIn = 80,
@@ -238,9 +238,9 @@ public interface QvtOpLPGParsersym {
       TK_invresolveIn = 84,
       TK_invresolveoneIn = 85,
       TK_modeltype = 143,
-      TK_uses = 157,
-      TK_where = 158,
-      TK_refines = 159,
+      TK_uses = 158,
+      TK_where = 159,
+      TK_refines = 160,
       TK_access = 102,
       TK_extends = 99,
       TK_blackbox = 131,
@@ -251,19 +251,19 @@ public interface QvtOpLPGParsersym {
       TK_this = 52,
       TK_switch = 66,
       TK_case = 144,
-      TK_xselect = 160,
-      TK_xcollect = 161,
-      TK_selectOne = 162,
-      TK_collectOne = 163,
-      TK_collectselect = 164,
-      TK_collectselectOne = 165,
+      TK_xselect = 161,
+      TK_xcollect = 162,
+      TK_selectOne = 163,
+      TK_collectOne = 164,
+      TK_collectselect = 165,
+      TK_collectselectOne = 166,
       TK_return = 96,
       TK_rename = 145,
       TK_disjuncts = 133,
       TK_merges = 134,
       TK_inherits = 135,
-      TK_forEach = 166,
-      TK_forOne = 167,
+      TK_forEach = 167,
+      TK_forOne = 168,
       TK_compute = 76,
       TK_EOF_TOKEN = 136,
       TK_IDENTIFIER = 2,
@@ -420,6 +420,7 @@ public interface QvtOpLPGParsersym {
                  "class",
                  "composes",
                  "derived",
+                 "ordered",
                  "readonly",
                  "references",
                  "STEREOTYPE_QUALIFIER_CLOSE",
@@ -452,7 +453,6 @@ public interface QvtOpLPGParsersym {
                  "exception",
                  "from",
                  "literal",
-                 "ordered",
                  "primitive",
                  "raise",
                  "tag",

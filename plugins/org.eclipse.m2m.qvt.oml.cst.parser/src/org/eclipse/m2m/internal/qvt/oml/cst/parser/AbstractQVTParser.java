@@ -841,7 +841,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	}
 
 	protected CSTNode createClassifierPropertyCS(EList<IToken> stereotypeQualifieres, EList<SimpleNameCS> featureKeys,
-			IToken nameToken, TypeCS typeSpecCS, OCLExpressionCS initPartCS, MultiplicityDefCS multiplicityDefCS,
+			IToken nameToken, TypeCS typeSpecCS, boolean isOrdered, OCLExpressionCS initPartCS, MultiplicityDefCS multiplicityDefCS,
 			OppositePropertyCS oppositePropertyCS) {
 		ClassifierPropertyCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createClassifierPropertyCS();
 		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, nameToken.toString());
@@ -849,6 +849,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		result.setSimpleNameCS(nameCS);
 		result.setTypeCS(typeSpecCS);
 		result.setOclExpressionCS(initPartCS);
+		result.setIsOrdered(isOrdered);
 		result.setMultiplicity(multiplicityDefCS);
 		result.setOpposite(oppositePropertyCS);
 		result.getFeatureKeys().addAll(featureKeys);

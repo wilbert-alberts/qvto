@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.15 2008/12/25 09:13:38 sboyko Exp $
+ * $Id: CSTPackageImpl.java,v 1.16 2008/12/25 19:24:05 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -943,6 +943,15 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 */
 	public EReference getClassifierPropertyCS_Opposite() {
 		return (EReference)classifierPropertyCSEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getClassifierPropertyCS_IsOrdered() {
+		return (EAttribute)classifierPropertyCSEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -2344,6 +2353,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(classifierPropertyCSEClass, CLASSIFIER_PROPERTY_CS__FEATURE_KEYS);
 		createEReference(classifierPropertyCSEClass, CLASSIFIER_PROPERTY_CS__MULTIPLICITY);
 		createEReference(classifierPropertyCSEClass, CLASSIFIER_PROPERTY_CS__OPPOSITE);
+		createEAttribute(classifierPropertyCSEClass, CLASSIFIER_PROPERTY_CS__IS_ORDERED);
 
 		oppositePropertyCSEClass = createEClass(OPPOSITE_PROPERTY_CS);
 		createEAttribute(oppositePropertyCSEClass, OPPOSITE_PROPERTY_CS__IS_NAVIGABLE);
@@ -2685,6 +2695,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEReference(getClassifierPropertyCS_FeatureKeys(), theCSTPackage_1.getSimpleNameCS(), null, "featureKeys", null, 0, -1, ClassifierPropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getClassifierPropertyCS_Multiplicity(), this.getMultiplicityDefCS(), null, "multiplicity", null, 0, 1, ClassifierPropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getClassifierPropertyCS_Opposite(), this.getOppositePropertyCS(), null, "opposite", null, 0, 1, ClassifierPropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getClassifierPropertyCS_IsOrdered(), ecorePackage.getEBoolean(), "isOrdered", "true", 1, 1, ClassifierPropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(oppositePropertyCSEClass, OppositePropertyCS.class, "OppositePropertyCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getOppositePropertyCS_IsNavigable(), ecorePackage.getEBoolean(), "isNavigable", "true", 1, 1, OppositePropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$

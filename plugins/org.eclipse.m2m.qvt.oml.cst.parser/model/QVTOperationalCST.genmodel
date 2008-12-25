@@ -91,6 +91,7 @@
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ClassifierPropertyCS/featureKeys"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ClassifierPropertyCS/multiplicity"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ClassifierPropertyCS/opposite"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/ClassifierPropertyCS/isOrdered"/>
       </genClasses>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/OppositePropertyCS">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/OppositePropertyCS/isNavigable"/>
