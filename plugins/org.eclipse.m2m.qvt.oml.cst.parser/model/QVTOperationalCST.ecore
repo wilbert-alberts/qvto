@@ -67,7 +67,34 @@
           eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
-          eType="#//cst/LocalPropertyCS" containment="true"/>
+          eType="#//cst/ClassifierPropertyCS" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ClassifierPropertyCS" eSuperTypes="#//cst/LocalPropertyCS">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="stereotypeQualifiers"
+          upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="featureKeys" upperBound="-1"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="multiplicity" eType="#//cst/MultiplicityDefCS"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="opposite" eType="#//cst/OppositePropertyCS"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="OppositePropertyCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="isNavigable" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="multiplicity" eType="#//cst/MultiplicityDefCS"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MultiplicityDefCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="lowerBound" lowerBound="1"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/PrimitiveLiteralExpCS"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="upperBound" lowerBound="1"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/PrimitiveLiteralExpCS"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="MappingDeclarationCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="qualifiers" unique="false"

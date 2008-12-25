@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ClassifierDefCSImpl.java,v 1.2 2008/12/01 15:07:47 sboyko Exp $
+ * $Id: ClassifierDefCSImpl.java,v 1.3 2008/12/25 09:13:38 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LocalPropertyCS;
 
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
@@ -92,7 +93,7 @@ public class ClassifierDefCSImpl extends CSTNodeImpl implements ClassifierDefCS 
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<LocalPropertyCS> properties;
+	protected EList<ClassifierPropertyCS> properties;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -173,9 +174,9 @@ public class ClassifierDefCSImpl extends CSTNodeImpl implements ClassifierDefCS 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<LocalPropertyCS> getProperties() {
+	public EList<ClassifierPropertyCS> getProperties() {
 		if (properties == null) {
-			properties = new EObjectContainmentEList<LocalPropertyCS>(LocalPropertyCS.class, this, CSTPackage.CLASSIFIER_DEF_CS__PROPERTIES);
+			properties = new EObjectContainmentEList<ClassifierPropertyCS>(ClassifierPropertyCS.class, this, CSTPackage.CLASSIFIER_DEF_CS__PROPERTIES);
 		}
 		return properties;
 	}
@@ -234,7 +235,7 @@ public class ClassifierDefCSImpl extends CSTNodeImpl implements ClassifierDefCS 
 				return;
 			case CSTPackage.CLASSIFIER_DEF_CS__PROPERTIES:
 				getProperties().clear();
-				getProperties().addAll((Collection<? extends LocalPropertyCS>)newValue);
+				getProperties().addAll((Collection<? extends ClassifierPropertyCS>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactory.java,v 1.8 2008/11/24 10:21:21 sboyko Exp $
+ * $Id: CSTFactory.java,v 1.9 2008/12/25 09:13:38 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -121,6 +121,33 @@ public interface CSTFactory extends EFactory {
 	 * @generated
 	 */
 	ClassifierDefCS createClassifierDefCS();
+
+	/**
+	 * Returns a new object of class '<em>Classifier Property CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Classifier Property CS</em>'.
+	 * @generated
+	 */
+	ClassifierPropertyCS createClassifierPropertyCS();
+
+	/**
+	 * Returns a new object of class '<em>Opposite Property CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Opposite Property CS</em>'.
+	 * @generated
+	 */
+	OppositePropertyCS createOppositePropertyCS();
+
+	/**
+	 * Returns a new object of class '<em>Multiplicity Def CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Multiplicity Def CS</em>'.
+	 * @generated
+	 */
+	MultiplicityDefCS createMultiplicityDefCS();
 
 	/**
 	 * Returns a new object of class '<em>Mapping Declaration CS</em>'.

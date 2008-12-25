@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLexer.g,v 1.2 2008/10/08 19:41:58 aigdalov Exp $
+-- * $Id: QvtOpLexer.g,v 1.3 2008/12/25 09:13:37 sboyko Exp $
 -- */
 --
 -- The QVT Lexer
@@ -84,7 +84,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLexer.g,v 1.2 2008/10/08 19:41:58 aigdalov Exp $
+ * $Id: QvtOpLexer.g,v 1.3 2008/12/25 09:13:37 sboyko Exp $
  */
 	./
 $End
@@ -97,6 +97,10 @@ $Export
 	AT_SIGN
 	EXCLAMATION_MARK
 	NOT_EQUAL_EXEQ
+	STEREOTYPE_QUALIFIER_OPEN
+	STEREOTYPE_QUALIFIER_CLOSE
+	MULTIPLICITY_RANGE
+	TILDE_SIGN
 	
 $End
 
@@ -135,6 +139,30 @@ $Rules
 	Token ::= '!' '='
 		/.$BeginAction
 					makeToken($_NOT_EQUAL_EXEQ);
+		  $EndAction
+		./
+
+	Token ::= '<' '<'
+		/.$BeginAction
+					makeToken($_STEREOTYPE_QUALIFIER_OPEN);
+		  $EndAction
+		./
+
+	Token ::= '>' '>'
+		/.$BeginAction
+					makeToken($_STEREOTYPE_QUALIFIER_CLOSE);
+		  $EndAction
+		./
+
+	Token ::= '.' '.' '.'
+		/.$BeginAction
+					makeToken($_MULTIPLICITY_RANGE);
+		  $EndAction
+		./
+
+	Token ::= '~'
+		/.$BeginAction
+					makeToken($_TILDE_SIGN);
 		  $EndAction
 		./
 

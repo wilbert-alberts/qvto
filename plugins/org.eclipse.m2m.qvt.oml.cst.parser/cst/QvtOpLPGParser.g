@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.27 2008/12/23 15:28:10 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.28 2008/12/25 09:13:37 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -70,6 +70,10 @@ $Globals
 	import org.eclipse.m2m.internal.qvt.oml.cst.TransformationRefineCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
+	import org.eclipse.m2m.internal.qvt.oml.cst.MultiplicityDefCS;
+	import org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS;
+	import org.eclipse.ocl.cst.PrimitiveLiteralExpCS;
+	import org.eclipse.ocl.cst.BooleanLiteralExpCS;
 	./
 $End
 
@@ -88,6 +92,7 @@ $KeyWords
 	configuration
 	intermediate
 	property
+	opposites
 	class
 	population
 	map
@@ -119,6 +124,15 @@ $KeyWords
 	disjuncts
 $End
 
+$Terminals
+
+	STEREOTYPE_QUALIFIER_OPEN
+	STEREOTYPE_QUALIFIER_CLOSE
+	MULTIPLICITY_RANGE
+	TILDE_SIGN
+
+$End
+
 $Notice
 	/./**
  * <copyright>
@@ -134,7 +148,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.27 2008/12/23 15:28:10 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.28 2008/12/25 09:13:37 sboyko Exp $
  */
 	./
 $End
@@ -177,21 +191,6 @@ $Rules
 
 	unit -> qualifiedNameCS
 		
-        identifier_list ::= IDENTIFIER
-		/.$BeginJava
-					EList result = new BasicEList();
-					result.add(getIToken($getToken(1)));
-					$setResult(result);
-		  $EndJava
-		./
-
-	identifier_list ::= identifier_list ',' IDENTIFIER
-		/.$BeginJava
-					EList result = (EList) $getSym(1);
-					result.add(getIToken($getToken(3)));
-					$setResult(result);
-		  $EndJava
-		./
 	--=== // start rule (end) ===--
 
 	--=== // definitions in a compilation unit (start) ===--
@@ -649,10 +648,8 @@ $Rules
 
 	classifierDefCS ::= intermediate class qvtIdentifierCS classifierExtensionOpt '{' classifierFeatureListOpt '}' semicolonOpt 
 		/.$BeginJava
-					SimpleNameCS classifierName = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, getTokenText($getToken(3)));
-					setOffsets(classifierName, getIToken($getToken(3)));
 					CSTNode result = createClassifierDefCS(
-							classifierName,
+							getIToken($getToken(3)),
 							(EList) $getSym(4),
 							(EList) $getSym(6)
 						);
@@ -683,19 +680,25 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
+	type_list ::= type_list qvtErrorToken
+		/.$BeginJava
+					EList result = (EList)$getSym(1);
+					$setResult(result);
+		  $EndJava
+		./
 	
 	classifierFeatureListOpt ::= $empty
 		/.$EmptyListAction./
-	classifierFeatureListOpt -> classifierFeatureList
+	classifierFeatureListOpt -> classifierFeatureList semicolonOpt
 	
-	classifierFeatureList ::= classifierFeatureCS semicolonOpt
+	classifierFeatureList ::= classifierFeatureCS
 		/.$BeginJava
 					EList result = new BasicEList();
 					result.add($getSym(1));
 					$setResult(result);
 		  $EndJava
 		./
-	classifierFeatureList ::= classifierFeatureList ';' classifierFeatureCS semicolonOpt
+	classifierFeatureList ::= classifierFeatureList ';' classifierFeatureCS
 		/.$BeginJava
 					EList result = (EList)$getSym(1);
 					result.add($getSym(3));
@@ -709,29 +712,196 @@ $Rules
 		  $EndJava
 		./
 
-	classifierFeatureCS ::= qvtIdentifierCS ':' typeCS
+	classifierFeatureCS ::= stereotype_qualifier_list feature_key_list qvtIdentifierCS ':' typeCS multiplicityOpt opposite_propertyOpt init_partOpt
 		/.$BeginJava
-					CSTNode result = createLocalPropertyCS(
-							getIToken($getToken(1)),
-							(TypeCS) $getSym(3),
-							null
+					EList stereotypeQualifiers = (EList) $getSym(1);
+					EList featureKeys = (EList) $getSym(2);
+					MultiplicityDefCS multiplicityDef = (MultiplicityDefCS) $getSym(6);
+					OppositePropertyCS oppositeProperty = (OppositePropertyCS) $getSym(7);
+					OCLExpressionCS initExpression = (OCLExpressionCS) $getSym(8);
+					CSTNode result = createClassifierPropertyCS(
+							stereotypeQualifiers,
+							featureKeys,
+							getIToken($getToken(3)),
+							(TypeCS) $getSym(5),
+							initExpression,
+							multiplicityDef,
+							oppositeProperty
 						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode) $getSym(3));
+					
+					int startOffset = getIToken($getToken(3)).getStartOffset();
+					if (!featureKeys.isEmpty()) {
+						startOffset = ((CSTNode) featureKeys.get(0)).getStartOffset();
+					}
+					if (!stereotypeQualifiers.isEmpty()) {
+						startOffset = ((IToken) stereotypeQualifiers.get(0)).getStartOffset();
+					}
+					
+					CSTNode lastToken = (CSTNode) $getSym(5);
+					if (initExpression != null) {
+						lastToken = initExpression;
+					}
+					if (multiplicityDef != null) {
+						lastToken = multiplicityDef;
+					}
+					if (oppositeProperty != null) {
+						lastToken = oppositeProperty;
+					}
+					
+					setOffsets(result, lastToken);
+					result.setStartOffset(startOffset);
 					$setResult(result);
 		  $EndJava
 		./
-	classifierFeatureCS ::= qvtIdentifierCS ':' typeCS '=' oclExpressionCS
+
+	init_partOpt ::= $empty
+		/.$NullAction./
+	init_partOpt ::= '=' oclExpressionCS
 		/.$BeginJava
-					CSTNode result = createLocalPropertyCS(
-							getIToken($getToken(1)),
-							(TypeCS) $getSym(3),
-							(OCLExpressionCS) $getSym(5)
-						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode) $getSym(5));
+					CSTNode result = (CSTNode) $getSym(2);
 					$setResult(result);
 		  $EndJava
 		./
-	
+
+	stereotype_qualifier_list ::= $empty
+		/.$EmptyListAction./
+	stereotype_qualifier_list ::= STEREOTYPE_QUALIFIER_OPEN identifier_list STEREOTYPE_QUALIFIER_CLOSE
+		/.$BeginJava
+					EList result = (EList)$getSym(2);
+					$setResult(result);
+		  $EndJava
+		./
+
+	identifier_list ::= qvtIdentifierCS
+		/.$BeginJava
+					EList result = new BasicEList();
+					result.add(getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+	identifier_list ::= identifier_list ',' qvtIdentifierCS
+		/.$BeginJava
+					EList result = (EList) $getSym(1);
+					result.add(getIToken($getToken(3)));
+					$setResult(result);
+		  $EndJava
+		./
+	identifier_list ::= identifier_list qvtErrorToken
+		/.$BeginJava
+					EList result = (EList)$getSym(1);
+					$setResult(result);
+		  $EndJava
+		./
+
+	feature_key_list ::= $empty
+		/.$EmptyListAction./
+	feature_key_list ::= feature_key_list feature_key
+		/.$BeginJava
+					EList result = (EList) $getSym(1);
+					result.add($getSym(2));
+					$setResult(result);
+		  $EndJava
+		./
+	feature_key_list ::= feature_key_list qvtErrorToken
+		/.$BeginJava
+					EList result = (EList)$getSym(1);
+					$setResult(result);
+		  $EndJava
+		./
+		
+	feature_key ::= composes
+		/.$NewCase./
+	feature_key ::= references
+		/.$NewCase./
+	feature_key ::= readonly
+		/.$NewCase./
+	feature_key ::= derived
+		/.$NewCase./
+	feature_key ::= static
+		/.$BeginJava
+					CSTNode result = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, getTokenText($getToken(1)));
+					setOffsets(result, getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+		
+	multiplicityOpt ::= $empty
+		/.$NullAction./
+	multiplicityOpt ::= LBRACKET multiplicity_range RBRACKET
+		/.$BeginJava
+					CSTNode result = (CSTNode) $getSym(2);
+					$setResult(result);
+		  $EndJava
+		./
+		
+	multiplicity_range ::= integerLiteralExpCS
+		/.$BeginJava
+					CSTNode result = createMultiplicityDefCS(
+							(PrimitiveLiteralExpCS) $getSym(1),
+							(PrimitiveLiteralExpCS) $getSym(1)
+						);
+					setOffsets(result, getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+	multiplicity_range ::= unlimitedNaturalLiteralExpCS
+		/.$BeginJava
+					PrimitiveLiteralExpCS lowerBound = createIntegerLiteralExpCS(Integer.toString(0));
+					setOffsets(lowerBound, getIToken($getToken(1)));
+					CSTNode result = createMultiplicityDefCS(
+							lowerBound, 
+							(PrimitiveLiteralExpCS) $getSym(1)
+						);
+					setOffsets(result, getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+	multiplicity_range ::= integerLiteralExpCS MULTIPLICITY_RANGE integerLiteralExpCS
+		/.$NewCase./
+	multiplicity_range ::= integerLiteralExpCS MULTIPLICITY_RANGE unlimitedNaturalLiteralExpCS
+		/.$BeginJava
+					CSTNode result = createMultiplicityDefCS(
+							(PrimitiveLiteralExpCS) $getSym(1),
+							(PrimitiveLiteralExpCS) $getSym(3)
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
+					$setResult(result);
+		  $EndJava
+		./
+		
+	opposite_propertyOpt ::= $empty
+		/.$NullAction./
+	opposite_propertyOpt ::= opposites navigable_prop qvtIdentifierCS multiplicityOpt
+		/.$BeginJava
+					MultiplicityDefCS multiplicityDef = (MultiplicityDefCS) $getSym(4);
+					CSTNode result = createOppositePropertyCS(
+							getIToken($getToken(3)),
+							((BooleanLiteralExpCS) $getSym(2)).getBooleanSymbol().booleanValue(),
+							multiplicityDef
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
+					if (multiplicityDef != null) {
+						result.setEndOffset(multiplicityDef.getEndOffset());
+					}
+					$setResult(result);
+		  $EndJava
+		./
+
+	navigable_prop ::= TILDE_SIGN
+		/.$BeginJava
+					CSTNode result = createBooleanLiteralExpCS(Boolean.FALSE.toString());
+					setOffsets(result, getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+	navigable_prop ::= $empty
+		/.$BeginJava
+					CSTNode result = createBooleanLiteralExpCS(Boolean.TRUE.toString());
+					$setResult(result);
+		  $EndJava
+		./
+
+		
 	_property -> modulePropertyCS
 	
 	modulePropertyCS ::= configuration property qvtIdentifierCS ':' typeCS ';' 
@@ -1083,7 +1253,7 @@ $Rules
 	_whenOpt ::= $empty	 
 		/.$NullAction./
 
-	_when ::= when '{' oclExpressionCS '}'
+	_when ::= when '{' oclExpressionCS semicolonOpt '}'
 		/.$BeginJava
 					OCLExpressionCS result = (OCLExpressionCS)$getSym(3);
 					$setResult(result);

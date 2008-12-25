@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.14 2008/12/23 15:28:11 aigdalov Exp $
+ * $Id: CSTPackageImpl.java,v 1.15 2008/12/25 09:13:38 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -27,6 +27,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
@@ -64,7 +65,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleUsageCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MultiplicityDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
@@ -175,6 +178,27 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * @generated
 	 */
 	private EClass classifierDefCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass classifierPropertyCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass oppositePropertyCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass multiplicityDefCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -874,6 +898,114 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 */
 	public EReference getClassifierDefCS_Properties() {
 		return (EReference)classifierDefCSEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getClassifierPropertyCS() {
+		return classifierPropertyCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getClassifierPropertyCS_StereotypeQualifiers() {
+		return (EReference)classifierPropertyCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getClassifierPropertyCS_FeatureKeys() {
+		return (EReference)classifierPropertyCSEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getClassifierPropertyCS_Multiplicity() {
+		return (EReference)classifierPropertyCSEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getClassifierPropertyCS_Opposite() {
+		return (EReference)classifierPropertyCSEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getOppositePropertyCS() {
+		return oppositePropertyCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getOppositePropertyCS_IsNavigable() {
+		return (EAttribute)oppositePropertyCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getOppositePropertyCS_SimpleNameCS() {
+		return (EReference)oppositePropertyCSEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getOppositePropertyCS_Multiplicity() {
+		return (EReference)oppositePropertyCSEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getMultiplicityDefCS() {
+		return multiplicityDefCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getMultiplicityDefCS_LowerBound() {
+		return (EReference)multiplicityDefCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getMultiplicityDefCS_UpperBound() {
+		return (EReference)multiplicityDefCSEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -2207,6 +2339,21 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(classifierDefCSEClass, CLASSIFIER_DEF_CS__EXTENDS);
 		createEReference(classifierDefCSEClass, CLASSIFIER_DEF_CS__PROPERTIES);
 
+		classifierPropertyCSEClass = createEClass(CLASSIFIER_PROPERTY_CS);
+		createEReference(classifierPropertyCSEClass, CLASSIFIER_PROPERTY_CS__STEREOTYPE_QUALIFIERS);
+		createEReference(classifierPropertyCSEClass, CLASSIFIER_PROPERTY_CS__FEATURE_KEYS);
+		createEReference(classifierPropertyCSEClass, CLASSIFIER_PROPERTY_CS__MULTIPLICITY);
+		createEReference(classifierPropertyCSEClass, CLASSIFIER_PROPERTY_CS__OPPOSITE);
+
+		oppositePropertyCSEClass = createEClass(OPPOSITE_PROPERTY_CS);
+		createEAttribute(oppositePropertyCSEClass, OPPOSITE_PROPERTY_CS__IS_NAVIGABLE);
+		createEReference(oppositePropertyCSEClass, OPPOSITE_PROPERTY_CS__SIMPLE_NAME_CS);
+		createEReference(oppositePropertyCSEClass, OPPOSITE_PROPERTY_CS__MULTIPLICITY);
+
+		multiplicityDefCSEClass = createEClass(MULTIPLICITY_DEF_CS);
+		createEReference(multiplicityDefCSEClass, MULTIPLICITY_DEF_CS__LOWER_BOUND);
+		createEReference(multiplicityDefCSEClass, MULTIPLICITY_DEF_CS__UPPER_BOUND);
+
 		mappingDeclarationCSEClass = createEClass(MAPPING_DECLARATION_CS);
 		createEAttribute(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__QUALIFIERS);
 		createEReference(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__SIMPLE_NAME_CS);
@@ -2439,6 +2586,9 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		localPropertyCSEClass.getESuperTypes().add(this.getModulePropertyCS());
 		contextualPropertyCSEClass.getESuperTypes().add(this.getModulePropertyCS());
 		classifierDefCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
+		classifierPropertyCSEClass.getESuperTypes().add(this.getLocalPropertyCS());
+		oppositePropertyCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
+		multiplicityDefCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		mappingDeclarationCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		parameterDeclarationCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		simpleSignatureCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
@@ -2528,7 +2678,22 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEClass(classifierDefCSEClass, ClassifierDefCS.class, "ClassifierDefCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getClassifierDefCS_SimpleNameCS(), theCSTPackage_1.getSimpleNameCS(), null, "simpleNameCS", null, 1, 1, ClassifierDefCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getClassifierDefCS_Extends(), theCSTPackage_1.getTypeCS(), null, "extends", null, 0, -1, ClassifierDefCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(getClassifierDefCS_Properties(), this.getLocalPropertyCS(), null, "properties", null, 0, -1, ClassifierDefCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getClassifierDefCS_Properties(), this.getClassifierPropertyCS(), null, "properties", null, 0, -1, ClassifierDefCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(classifierPropertyCSEClass, ClassifierPropertyCS.class, "ClassifierPropertyCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getClassifierPropertyCS_StereotypeQualifiers(), theCSTPackage_1.getSimpleNameCS(), null, "stereotypeQualifiers", null, 0, -1, ClassifierPropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getClassifierPropertyCS_FeatureKeys(), theCSTPackage_1.getSimpleNameCS(), null, "featureKeys", null, 0, -1, ClassifierPropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getClassifierPropertyCS_Multiplicity(), this.getMultiplicityDefCS(), null, "multiplicity", null, 0, 1, ClassifierPropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getClassifierPropertyCS_Opposite(), this.getOppositePropertyCS(), null, "opposite", null, 0, 1, ClassifierPropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(oppositePropertyCSEClass, OppositePropertyCS.class, "OppositePropertyCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getOppositePropertyCS_IsNavigable(), ecorePackage.getEBoolean(), "isNavigable", "true", 1, 1, OppositePropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEReference(getOppositePropertyCS_SimpleNameCS(), theCSTPackage_1.getSimpleNameCS(), null, "simpleNameCS", null, 0, 1, OppositePropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getOppositePropertyCS_Multiplicity(), this.getMultiplicityDefCS(), null, "multiplicity", null, 0, 1, OppositePropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(multiplicityDefCSEClass, MultiplicityDefCS.class, "MultiplicityDefCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getMultiplicityDefCS_LowerBound(), theCSTPackage_1.getPrimitiveLiteralExpCS(), null, "lowerBound", null, 1, 1, MultiplicityDefCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getMultiplicityDefCS_UpperBound(), theCSTPackage_1.getPrimitiveLiteralExpCS(), null, "upperBound", null, 1, 1, MultiplicityDefCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(mappingDeclarationCSEClass, MappingDeclarationCS.class, "MappingDeclarationCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getMappingDeclarationCS_Qualifiers(), this.getQualifierKindCS(), "qualifiers", null, 0, -1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

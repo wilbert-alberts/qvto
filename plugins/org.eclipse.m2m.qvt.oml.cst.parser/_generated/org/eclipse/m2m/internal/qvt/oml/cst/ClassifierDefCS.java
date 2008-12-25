@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ClassifierDefCS.java,v 1.2 2008/12/01 15:07:47 sboyko Exp $
+ * $Id: ClassifierDefCS.java,v 1.3 2008/12/25 09:13:38 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -93,7 +93,7 @@ public interface ClassifierDefCS extends CSTNode {
 
 	/**
 	 * Returns the value of the '<em><b>Properties</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.cst.LocalPropertyCS}.
+	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Properties</em>' containment reference list isn't clear,
@@ -105,6 +105,6 @@ public interface ClassifierDefCS extends CSTNode {
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<LocalPropertyCS> getProperties();
+	EList<ClassifierPropertyCS> getProperties();
 
 } // ClassifierDefCS

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactoryImpl.java,v 1.8 2008/11/24 10:21:20 sboyko Exp $
+ * $Id: CSTFactoryImpl.java,v 1.9 2008/12/25 09:13:38 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -86,6 +86,9 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 			case CSTPackage.LOCAL_PROPERTY_CS: return createLocalPropertyCS();
 			case CSTPackage.CONTEXTUAL_PROPERTY_CS: return createContextualPropertyCS();
 			case CSTPackage.CLASSIFIER_DEF_CS: return createClassifierDefCS();
+			case CSTPackage.CLASSIFIER_PROPERTY_CS: return createClassifierPropertyCS();
+			case CSTPackage.OPPOSITE_PROPERTY_CS: return createOppositePropertyCS();
+			case CSTPackage.MULTIPLICITY_DEF_CS: return createMultiplicityDefCS();
 			case CSTPackage.MAPPING_DECLARATION_CS: return createMappingDeclarationCS();
 			case CSTPackage.PARAMETER_DECLARATION_CS: return createParameterDeclarationCS();
 			case CSTPackage.SIMPLE_SIGNATURE_CS: return createSimpleSignatureCS();
@@ -264,6 +267,36 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	public ClassifierDefCS createClassifierDefCS() {
 		ClassifierDefCSImpl classifierDefCS = new ClassifierDefCSImpl();
 		return classifierDefCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ClassifierPropertyCS createClassifierPropertyCS() {
+		ClassifierPropertyCSImpl classifierPropertyCS = new ClassifierPropertyCSImpl();
+		return classifierPropertyCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public OppositePropertyCS createOppositePropertyCS() {
+		OppositePropertyCSImpl oppositePropertyCS = new OppositePropertyCSImpl();
+		return oppositePropertyCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public MultiplicityDefCS createMultiplicityDefCS() {
+		MultiplicityDefCSImpl multiplicityDefCS = new MultiplicityDefCSImpl();
+		return multiplicityDefCS;
 	}
 
 	/**

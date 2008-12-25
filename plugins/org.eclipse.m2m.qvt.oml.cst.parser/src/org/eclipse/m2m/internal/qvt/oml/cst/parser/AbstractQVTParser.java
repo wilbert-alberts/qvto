@@ -23,6 +23,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
@@ -58,7 +59,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleUsageCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MultiplicityDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
@@ -83,6 +86,7 @@ import org.eclipse.ocl.cst.CSTFactory;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.cst.PathNameCS;
+import org.eclipse.ocl.cst.PrimitiveLiteralExpCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.SimpleTypeEnum;
 import org.eclipse.ocl.cst.StringLiteralExpCS;
@@ -826,12 +830,81 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 
-	protected CSTNode createClassifierDefCS(SimpleNameCS classifierName, EList<TypeCS> extentionList, EList<LocalPropertyCS> featureList) {
-		ClassifierDefCS classifierDef = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createClassifierDefCS();
-		classifierDef.setSimpleNameCS(classifierName);
-		classifierDef.getExtends().addAll(extentionList);
-		classifierDef.getProperties().addAll(featureList);
-		return classifierDef;
+	protected CSTNode createClassifierDefCS(IToken nameToken, EList<TypeCS> extentionList, EList<ClassifierPropertyCS> featureList) {
+		ClassifierDefCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createClassifierDefCS();
+		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, nameToken.toString());
+		setOffsets(nameCS, nameToken);
+		result.setSimpleNameCS(nameCS);
+		result.getExtends().addAll(extentionList);
+		result.getProperties().addAll(featureList);
+		return result;
 	}
 
+	protected CSTNode createClassifierPropertyCS(EList<IToken> stereotypeQualifieres, EList<SimpleNameCS> featureKeys,
+			IToken nameToken, TypeCS typeSpecCS, OCLExpressionCS initPartCS, MultiplicityDefCS multiplicityDefCS,
+			OppositePropertyCS oppositePropertyCS) {
+		ClassifierPropertyCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createClassifierPropertyCS();
+		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, nameToken.toString());
+		setOffsets(nameCS, nameToken);
+		result.setSimpleNameCS(nameCS);
+		result.setTypeCS(typeSpecCS);
+		result.setOclExpressionCS(initPartCS);
+		result.setMultiplicity(multiplicityDefCS);
+		result.setOpposite(oppositePropertyCS);
+		result.getFeatureKeys().addAll(featureKeys);
+		for (IToken token : stereotypeQualifieres) {
+			SimpleNameCS stereotypeQualifierCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, token.toString());
+			setOffsets(stereotypeQualifierCS, token);
+			result.getStereotypeQualifiers().add(stereotypeQualifierCS);
+		}
+		return result;
+	}
+
+	protected CSTNode createMultiplicityDefCS(PrimitiveLiteralExpCS lowerBound, PrimitiveLiteralExpCS upperBound) {
+		/*
+		int lower = 0, upper = 1;
+		try {
+			lower = Integer.valueOf(lowerRange);
+			if ("*".equals(upperRange)) {
+				upper = -1;
+			}
+			else {
+				upper = Integer.valueOf(upperRange);
+			}
+			
+			// check UML constraints [7.3.32]
+			if (lower < 0) {
+				throw new NumberFormatException(Messages.AbstractQVTParser_MultiplicityInvalidLowerBound);
+			}
+			if (upper >= 0 && lower > upper) {
+				throw new NumberFormatException(Messages.AbstractQVTParser_MultiplicityInvalidRange);
+			}
+			if (upper == 0 && lower == 0) {
+				throw new NumberFormatException(Messages.AbstractQVTParser_MultiplicityEmptyRange);
+			}
+		}
+		catch (NumberFormatException ex) {
+            reportError(ParseErrorCodes.INVALID_CODE, "",  //$NON-NLS-1$
+            		ex.getLocalizedMessage());
+			// default multiplicity from specification [8.4.6]
+            lower = 0;
+			upper = 1;
+		}
+		*/
+		MultiplicityDefCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMultiplicityDefCS();
+		result.setLowerBound(lowerBound);
+		result.setUpperBound(upperBound);
+		return result;
+	}
+
+	protected CSTNode createOppositePropertyCS(IToken nameToken, boolean isNavigable, MultiplicityDefCS multiplicityCS) {
+		OppositePropertyCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createOppositePropertyCS();
+		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, nameToken.toString());
+		setOffsets(nameCS, nameToken);
+		result.setSimpleNameCS(nameCS);
+		result.setIsNavigable(isNavigable);
+		result.setMultiplicity(multiplicityCS);
+		return result;
+	}
+	
 }

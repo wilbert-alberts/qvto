@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTAdapterFactory.java,v 1.8 2008/11/24 10:21:21 sboyko Exp $
+ * $Id: CSTAdapterFactory.java,v 1.9 2008/12/25 09:13:38 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -137,6 +137,18 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseClassifierDefCS(ClassifierDefCS object) {
 				return createClassifierDefCSAdapter();
+			}
+			@Override
+			public Adapter caseClassifierPropertyCS(ClassifierPropertyCS object) {
+				return createClassifierPropertyCSAdapter();
+			}
+			@Override
+			public Adapter caseOppositePropertyCS(OppositePropertyCS object) {
+				return createOppositePropertyCSAdapter();
+			}
+			@Override
+			public Adapter caseMultiplicityDefCS(MultiplicityDefCS object) {
+				return createMultiplicityDefCSAdapter();
 			}
 			@Override
 			public Adapter caseMappingDeclarationCS(MappingDeclarationCS object) {
@@ -505,6 +517,48 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createClassifierDefCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS <em>Classifier Property CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS
+	 * @generated
+	 */
+	public Adapter createClassifierPropertyCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS <em>Opposite Property CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS
+	 * @generated
+	 */
+	public Adapter createOppositePropertyCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.MultiplicityDefCS <em>Multiplicity Def CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MultiplicityDefCS
+	 * @generated
+	 */
+	public Adapter createMultiplicityDefCSAdapter() {
 		return null;
 	}
 

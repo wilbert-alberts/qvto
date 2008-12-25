@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTSwitch.java,v 1.9 2008/11/24 10:21:21 sboyko Exp $
+ * $Id: CSTSwitch.java,v 1.10 2008/12/25 09:13:38 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -190,6 +190,29 @@ public class CSTSwitch<T> {
 				ClassifierDefCS classifierDefCS = (ClassifierDefCS)theEObject;
 				T result = caseClassifierDefCS(classifierDefCS);
 				if (result == null) result = caseCSTNode(classifierDefCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.CLASSIFIER_PROPERTY_CS: {
+				ClassifierPropertyCS classifierPropertyCS = (ClassifierPropertyCS)theEObject;
+				T result = caseClassifierPropertyCS(classifierPropertyCS);
+				if (result == null) result = caseLocalPropertyCS(classifierPropertyCS);
+				if (result == null) result = caseModulePropertyCS(classifierPropertyCS);
+				if (result == null) result = caseCSTNode(classifierPropertyCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.OPPOSITE_PROPERTY_CS: {
+				OppositePropertyCS oppositePropertyCS = (OppositePropertyCS)theEObject;
+				T result = caseOppositePropertyCS(oppositePropertyCS);
+				if (result == null) result = caseCSTNode(oppositePropertyCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.MULTIPLICITY_DEF_CS: {
+				MultiplicityDefCS multiplicityDefCS = (MultiplicityDefCS)theEObject;
+				T result = caseMultiplicityDefCS(multiplicityDefCS);
+				if (result == null) result = caseCSTNode(multiplicityDefCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -714,6 +737,51 @@ public class CSTSwitch<T> {
 	 * @generated
 	 */
 	public T caseClassifierDefCS(ClassifierDefCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Classifier Property CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Classifier Property CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseClassifierPropertyCS(ClassifierPropertyCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Opposite Property CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Opposite Property CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseOppositePropertyCS(OppositePropertyCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Multiplicity Def CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Multiplicity Def CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseMultiplicityDefCS(MultiplicityDefCS object) {
 		return null;
 	}
 

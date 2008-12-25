@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpKWLexer.g,v 1.9 2008/12/04 16:26:22 aigdalov Exp $ 
+-- * $Id: QvtOpKWLexer.g,v 1.10 2008/12/25 09:13:37 sboyko Exp $ 
 -- */
 --
 -- The QVT KeyWord Lexer
@@ -76,7 +76,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpKWLexer.g,v 1.9 2008/12/04 16:26:22 aigdalov Exp $
+ * $Id: QvtOpKWLexer.g,v 1.10 2008/12/25 09:13:37 sboyko Exp $
  */
 	./
 $End
@@ -99,6 +99,7 @@ $Export
 	configuration
 	intermediate
 	property
+    opposites
 	class
 	population	
 	map
@@ -315,6 +316,12 @@ $Rules
 		| p r o p e r t y
 		/.$BeginAction
 			$setResult($_property);
+		  $EndAction
+		./
+		
+		| o p p o s i t e s
+		/.$BeginAction
+			$setResult($_opposites);
 		  $EndAction
 		./
 		

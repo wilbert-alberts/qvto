@@ -86,6 +86,23 @@
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ClassifierDefCS/extends"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ClassifierDefCS/properties"/>
       </genClasses>
+      <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/ClassifierPropertyCS">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ClassifierPropertyCS/stereotypeQualifiers"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ClassifierPropertyCS/featureKeys"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ClassifierPropertyCS/multiplicity"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ClassifierPropertyCS/opposite"/>
+      </genClasses>
+      <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/OppositePropertyCS">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/OppositePropertyCS/isNavigable"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/OppositePropertyCS/simpleNameCS"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/OppositePropertyCS/multiplicity"/>
+      </genClasses>
+      <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/MultiplicityDefCS">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MultiplicityDefCS/lowerBound"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MultiplicityDefCS/upperBound"/>
+      </genClasses>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/MappingDeclarationCS">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/MappingDeclarationCS/qualifiers"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingDeclarationCS/simpleNameCS"/>

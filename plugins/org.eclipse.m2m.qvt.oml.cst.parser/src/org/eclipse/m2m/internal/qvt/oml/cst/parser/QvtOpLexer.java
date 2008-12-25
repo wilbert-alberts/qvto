@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexer.java,v 1.33 2008/12/23 17:22:08 aigdalov Exp $
+* $Id: QvtOpLexer.java,v 1.34 2008/12/25 09:13:37 sboyko Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexer.java,v 1.33 2008/12/23 17:22:08 aigdalov Exp $
+* $Id: QvtOpLexer.java,v 1.34 2008/12/25 09:13:37 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -873,6 +873,38 @@ public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtO
             //
             case 331: { 
 				makeToken(TK_NOT_EQUAL_EXEQ);
+	            break;
+            }
+	 
+            //
+            // Rule 332:  Token ::= < <
+            //
+            case 332: { 
+				makeToken(TK_STEREOTYPE_QUALIFIER_OPEN);
+	            break;
+            }
+	 
+            //
+            // Rule 333:  Token ::= > >
+            //
+            case 333: { 
+				makeToken(TK_STEREOTYPE_QUALIFIER_CLOSE);
+	            break;
+            }
+	 
+            //
+            // Rule 334:  Token ::= . . .
+            //
+            case 334: { 
+				makeToken(TK_MULTIPLICITY_RANGE);
+	            break;
+            }
+	 
+            //
+            // Rule 335:  Token ::= ~
+            //
+            case 335: { 
+				makeToken(TK_TILDE_SIGN);
 	            break;
             }
 	
