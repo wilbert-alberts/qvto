@@ -12,12 +12,12 @@ transformation Uml2Rdb(in srcModel:UML,out dest:RDBMS);
 
 -- defining intermediate data to reference leaf attributes that may
 -- appear when struct data types are used
-/* Note: intermediate classes still not supported
 intermediate class LeafAttribute {
-  name:String;kind:String;attr:Attribute;
-};*/
-
-intermediate property UML::Class::leafAttributes : Sequence(Tuple(name:String, kind:String, attr:Attribute));
+  name:String;
+  kind:String;
+  attr:Attribute;
+};
+intermediate property UML::Class::leafAttributes : Sequence(LeafAttribute);
 
 -- defining specific helpers
 
@@ -43,10 +43,10 @@ main() {
 -- maps a class to a table, with a column per flattened leaf attribute
 
 mapping Class::class2table () : Table
-  when {self.kind = 'persistent' /*;*/}
+  when {self.kind = 'persistent';}
 {
   init { -- performs any needed intialization
-    self.leafAttributes +=/*:=*/ self.attribute->map attr2LeafAttrs('','')->flatten();
+    self.leafAttributes := self.attribute->map attr2LeafAttrs('','')->flatten();
   }
   -- population section for the table
   name := 't_' + self.name;
@@ -58,7 +58,7 @@ mapping Class::class2table () : Table
 
 -- Mapping that creates the intermediate leaf attributes data.
 
-mapping Attribute::attr2LeafAttrs(in prefix:String, in pkind:String) : Sequence(Tuple(name:String, kind:String, attr:Attribute)) {
+mapping Attribute::attr2LeafAttrs(in prefix:String, in pkind:String) : Sequence(LeafAttribute) {
   init {
     var k := if pkind='' then self.kind else pkind endif;
     
@@ -67,8 +67,7 @@ mapping Attribute::attr2LeafAttrs(in prefix:String, in pkind:String) : Sequence(
        if self.type.oclIsKindOf(PrimitiveDataType) 
        then -- creates a sequence with a LeafAttribute instance
          Sequence {
-           --//*object LeafAttribute {attr:=self;name:=prefix+self.name;kind:=k;}*/
-           Tuple{ name = prefix+self.name, kind = k, attr = self}
+           object LeafAttribute {attr:=self;name:=prefix+self.name;kind:=k;}
          }
        /*else self.type.asType(Class).attribute->map attr2LeafAttrs(self.name+"_",k)->flatten()*/
        else self.type.oclAsType(Class).attribute->map attr2LeafAttrs(self.name+'_',k)->flatten()
@@ -78,7 +77,7 @@ mapping Attribute::attr2LeafAttrs(in prefix:String, in pkind:String) : Sequence(
 
 -- Mapping that creates an ordinary column from a leaf attribute
 
-mapping Tuple(name:String, kind:String, attr:Attribute)::leafAttr2OrdinaryColumn (in prefix:String): Column { 
+mapping LeafAttribute::leafAttr2OrdinaryColumn (in prefix:String): Column { 
   name := prefix + self.name;
   kind := self.kind;
   type := if self.attr.type.name='int' then 'NUMBER' else 'VARCHAR' endif;
@@ -87,7 +86,7 @@ mapping Tuple(name:String, kind:String, attr:Attribute)::leafAttr2OrdinaryColumn
 -- mapping to update a Table with new columns of foreign keys
 
 mapping Association::asso2table() : Table  
-  when { self.isPersistent()/*;*/}
+  when {self.isPersistent();}
 {
   init {result := self.destination.resolveone(Table);}
   foreignKey /*:=*/ += self.map asso2ForeignKey();
@@ -107,7 +106,7 @@ mapping Association::asso2ForeignKey() : ForeignKey {
 -- Inheriting of leafAttr2OrdinaryColumn has the effect to call the
 -- inherited rule before entering the property population section
 
-mapping Tuple(name:String, kind:String, attr:Attribute)::leafAttr2ForeignColumn (in prefix:String) : Column 
-  inherits Tuple(name:String, kind:String, attr:Attribute)::leafAttr2OrdinaryColumn {
+mapping LeafAttribute::leafAttr2ForeignColumn (in prefix:String) : Column 
+  inherits LeafAttribute::leafAttr2OrdinaryColumn {
      kind := 'foreign';
-} 
+}
