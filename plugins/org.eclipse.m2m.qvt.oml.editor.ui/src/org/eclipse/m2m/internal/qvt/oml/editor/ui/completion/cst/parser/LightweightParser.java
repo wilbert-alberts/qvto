@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.30 2008/12/23 17:21:53 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.31 2008/12/25 09:14:33 sboyko Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.30 2008/12/23 17:21:53 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.31 2008/12/25 09:14:33 sboyko Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.30 2008/12/23 17:21:53 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.31 2008/12/25 09:14:33 sboyko Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.30 2008/12/23 17:21:53 aigdalov Exp $
+* $Id: LightweightParser.java,v 1.31 2008/12/25 09:14:33 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -118,6 +118,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.TempFactory;
 
+import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
@@ -4345,11 +4346,12 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 				
 				SimpleNameCS classifierName = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, getTokenText(dtParser.getToken(3)));
 				setOffsets(classifierName, getIToken(dtParser.getToken(3)));
-				CSTNode result = createClassifierDefCS(
-						classifierName,
-						(EList) dtParser.getSym(4),
-						(EList) dtParser.getSym(6)
-					);
+//				CSTNode result = createClassifierDefCS(
+//						classifierName,
+//						(EList) dtParser.getSym(4),
+//						(EList) dtParser.getSym(6)
+//					);
+				ClassifierDefCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createClassifierDefCS();
 				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(7)));
 				dtParser.setSym1(result);
 	  		  break;
