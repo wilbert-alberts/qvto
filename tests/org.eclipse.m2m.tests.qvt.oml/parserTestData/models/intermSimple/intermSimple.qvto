@@ -15,7 +15,9 @@ main() {
 	object EClass {name := 'cls'; eStructuralFeatures += v._attr->sortedBy(name); }
 }
 
-mapping EAttribute::attr2LeafAttrs(in prefix:String) : Sequence(LeafAttribute) {
+mapping EAttribute::attr2LeafAttrs(in prefix:String) : Sequence(LeafAttribute)
+	when {true;}
+{
 	init {
 		result := Sequence {
 			object LeafAttribute {_attr:=object EAttribute{name := prefix+self.name}; _name:=_attr.name;}
