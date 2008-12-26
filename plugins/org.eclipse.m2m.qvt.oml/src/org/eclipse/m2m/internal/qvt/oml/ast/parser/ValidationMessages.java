@@ -164,6 +164,9 @@ public final class ValidationMessages extends NLS {
     public static String IntermClassifier_multiplicityInvalidLowerBound;
     public static String IntermClassifier_multiplicityInvalidRange;
     public static String IntermClassifier_multiplicityEmptyRange;
+    public static String IntermClassifier_oppositeOnlyForReferences;
+    public static String IntermClassifier_invalideOppositeType;
+    public static String IntermClassifier_invalideOppositeName;
     
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, ValidationMessages.class);

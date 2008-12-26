@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -84,6 +85,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MultiplicityDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
@@ -1538,7 +1540,9 @@ public class QvtOperationalVisitorCS
 		}
 
 		Map<String, List<PropertyPair>> classifierProperties = new LinkedHashMap<String, List<PropertyPair>>(classifierDefCS.getProperties().size());
-		
+		Map<ClassifierPropertyCS, EStructuralFeature> createdProperties = new IdentityHashMap<ClassifierPropertyCS, EStructuralFeature>(classifierDefCS.getProperties().size());
+
+		// first pass for creation
 		for (ClassifierPropertyCS propCS : classifierDefCS.getProperties()) {
 			EStructuralFeature eFeature = visitClassifierPropertyCS(propCS, env);
 			if (eFeature == null) {
@@ -1546,10 +1550,6 @@ public class QvtOperationalVisitorCS
 			}
 			
 			eClassifier.getEStructuralFeatures().add(eFeature);
-			OCLExpression<EClassifier> initExp = QvtOperationalParserUtil.getInitExpression(eFeature);
-			if (initExp != null) {
-				IntermediateClassFactory.getFactory(module).addClassifierPropertyInit(eClassifier, eFeature, initExp);
-			}
 
 			List<PropertyPair> properties = classifierProperties.get(eFeature.getName());
 			if (properties == null) {
@@ -1557,6 +1557,20 @@ public class QvtOperationalVisitorCS
 				classifierProperties.put(eFeature.getName(), properties);
 			}
 			properties.add(new PropertyPair(eFeature, propCS));
+			
+			createdProperties.put(propCS, eFeature);
+		}
+		
+		// second pass for initialization parts and opposite properties
+		for (ClassifierPropertyCS propCS : createdProperties.keySet()) {
+			EStructuralFeature eFeature = createdProperties.get(propCS);
+			
+			initClassifierPropertyCS(propCS, eFeature, env);
+
+			OCLExpression<EClassifier> initExp = QvtOperationalParserUtil.getInitExpression(eFeature);
+			if (initExp != null) {
+				IntermediateClassFactory.getFactory(module).addClassifierPropertyInit(eClassifier, eFeature, initExp);
+			}
 		}
 		
 		for (String propName : classifierProperties.keySet()) {
@@ -1572,6 +1586,71 @@ public class QvtOperationalVisitorCS
 		}
 		
 		return eClassifier;
+	}
+
+	private void initClassifierPropertyCS(ClassifierPropertyCS propCS, EStructuralFeature eFeature, QvtOperationalEnv env) {
+		// handle initialization expression
+		OCLExpression<EClassifier> initExpression = null;
+		if (propCS.getOclExpressionCS() != null) {
+			initExpression = visitOclExpressionCS(propCS.getOclExpressionCS(), env);
+			QvtOperationalParserUtil.setInitExpression(eFeature, initExpression);			
+		}
+		
+		if (eFeature.getEType() == null && initExpression != null) {
+			eFeature.setEType(initExpression.getType());
+		}
+		
+		if (initExpression != null) {
+			EClassifier realType = initExpression.getType();
+			EClassifier declaredType = env.getUMLReflection().getOCLType(eFeature);
+			if (!QvtOperationalParserUtil.isAssignableToFrom(env, declaredType, realType)) {
+				env.reportError(NLS.bind(ValidationMessages.SemanticUtil_17,
+						new Object[] { QvtOperationalTypesUtil.getTypeFullName(declaredType), QvtOperationalTypesUtil.getTypeFullName(realType) }),
+						propCS.getStartOffset(), propCS.getEndOffset());
+			}
+		}
+		
+		// handle opposite property
+		OppositePropertyCS oppositeCS = propCS.getOpposite();
+		if (oppositeCS != null) {
+			if (eFeature instanceof EReference) {
+
+				if (oppositeCS.getMultiplicity() != null) {
+					MultiplicityDef multiplcityDef = visitMultiplicityDefCS(oppositeCS.getMultiplicity(), env);
+				}
+				
+				if (oppositeCS.getSimpleNameCS() != null) {
+					String oppositeName = oppositeCS.getSimpleNameCS().getValue();
+					EReference oppositeRef = null;
+					EClassifier eFeatureType = eFeature.getEType();
+					if (eFeatureType instanceof EClass) {
+						for (EReference nextRef : ((EClass) eFeatureType).getEAllReferences()) {
+							if (oppositeName.equals(nextRef.getName())) {
+								oppositeRef = nextRef;
+								break;
+							}							
+						}
+						
+						if (oppositeRef != null) {
+							((EReference) eFeature).setEOpposite(oppositeRef);
+						}
+						else {
+				            env.reportError(NLS.bind(ValidationMessages.IntermClassifier_invalideOppositeName,
+				            		new Object[] { oppositeName, QvtOperationalTypesUtil.getTypeFullName(eFeatureType) }),
+				            		oppositeCS.getSimpleNameCS());
+						}
+					}
+					else {
+			            env.reportError(NLS.bind(ValidationMessages.IntermClassifier_invalideOppositeType,
+			            		new Object[] { QvtOperationalTypesUtil.getTypeFullName(eFeatureType) }), oppositeCS);
+					}
+				}
+			}
+			else {
+	            env.reportError(NLS.bind(ValidationMessages.IntermClassifier_oppositeOnlyForReferences,
+	            		new Object[] { }), oppositeCS);
+			}
+		}
 	}
 
 	private EStructuralFeature visitClassifierPropertyCS(ClassifierPropertyCS propCS, QvtOperationalEnv env) {
@@ -1639,7 +1718,8 @@ public class QvtOperationalVisitorCS
 				eFeature.setChangeable(false);
 			}
 			else if ("derived".equals(keyName)) { //$NON-NLS-1$
-				
+	            env.reportWarning(NLS.bind(ValidationMessages.IntermClassifier_unsupportedFeatureKey,
+	            		new Object[] { keyName }), nameCS);
 			}
 			else if ("static".equals(keyName)) { //$NON-NLS-1$
 	            env.reportWarning(NLS.bind(ValidationMessages.IntermClassifier_unsupportedFeatureKey,
@@ -1660,27 +1740,6 @@ public class QvtOperationalVisitorCS
 		}
 		
 		eFeature.setOrdered(propCS.isIsOrdered());
-
-		// handle initialization expression
-		OCLExpression<EClassifier> initExpression = null;
-		if (propCS.getOclExpressionCS() != null) {
-			initExpression = visitOclExpressionCS(propCS.getOclExpressionCS(), env);
-			QvtOperationalParserUtil.setInitExpression(eFeature, initExpression);			
-		}
-		
-		if (eFeature.getEType() == null && initExpression != null) {
-			eFeature.setEType(initExpression.getType());
-		}
-		
-		if (initExpression != null) {
-			EClassifier realType = initExpression.getType();
-			EClassifier declaredType = env.getUMLReflection().getOCLType(eFeature);
-			if (!QvtOperationalParserUtil.isAssignableToFrom(env, declaredType, realType)) {
-				env.reportError(NLS.bind(ValidationMessages.SemanticUtil_17,
-						new Object[] { QvtOperationalTypesUtil.getTypeFullName(declaredType), QvtOperationalTypesUtil.getTypeFullName(realType) }),
-						astNode.getStartPosition(), astNode.getEndPosition());
-			}
-		}
 
 		return eFeature;
 	}
