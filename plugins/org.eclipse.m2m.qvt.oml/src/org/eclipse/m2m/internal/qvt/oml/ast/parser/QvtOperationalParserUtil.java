@@ -17,7 +17,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
@@ -42,9 +41,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
-import org.eclipse.m2m.internal.qvt.oml.evaluator.GraphWalker;
-import org.eclipse.m2m.internal.qvt.oml.evaluator.GraphWalker.NodeProvider;
-import org.eclipse.m2m.internal.qvt.oml.evaluator.GraphWalker.VertexProcessor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
@@ -520,97 +516,6 @@ public class QvtOperationalParserUtil {
 	public static boolean isTypeEquals(QvtOperationalEnv env, EClassifier type, EClassifier otherType) {
 		return isAssignableToFrom(env, type, otherType) && isAssignableToFrom(env, otherType, type);
 	}
-
-	private static boolean isOperationEquals(final ImperativeOperation imperativeOp, final EOperation otherOp,
-			final EClassifier context, final QvtOperationalEnv env) {
-        if (!imperativeOp.getName().equals(otherOp.getName())) {
-            return false;
-        }
-        List<EParameter> parameters1 = imperativeOp.getEParameters();
-        List<EParameter> parameters2 = otherOp.getEParameters();
-        if (parameters1.size() != parameters2.size()) {
-            return false;
-        }
-        
-        for (int i = 0; i < parameters1.size(); i++) {
-        	EClassifier type = parameters1.get(i).getEType();
-            EClassifier otherType = parameters2.get(i).getEType();
-            if (!isTypeEquals(env, type, otherType)) {
-                return false;
-            }
-        }
-        
-        EClassifier contextType = getContextualType(imperativeOp);
-        if(contextType == null) {
-        	return contextType == context;
-        }
-        return isTypeEquals(env, contextType, context);
-	}
-
-	public static Module getOutermostDefiningModule(final Module module, final EOperation ctxOp,
-			final EClassifier context, final QvtOperationalEnv env) {
-		final Module[] result = { null };
-		VertexProcessor processor = new VertexProcessor() {
-			public boolean process(Object node) {
-				Module module = (Module) node;
-				if (findMappingMethod(module, ctxOp, context, env) != null) {
-					result[0] = module;
-					return true;
-				}
-				return false;
-			}
-		};
-		new GraphWalker(IMPORT_NODE_PROVIDER).walkBreadthFirst(module, processor);
-		return result[0];
-	}
-
-	public static Module getInnermostDefiningModule(final Module module, final EOperation ctxOp,
-			final EClassifier context, final QvtOperationalEnv env) {
-		final Module[] result = { null };
-		VertexProcessor processor = new VertexProcessor() {
-			public boolean process(Object node) {
-				Module mod = (Module) node;
-				if (findMappingMethod(mod, ctxOp, context, env) != null) {
-					result[0] = mod;
-				}
-				return false;
-			}
-		};
-		new GraphWalker(IMPORT_NODE_PROVIDER).walkBreadthFirst(module, processor);
-		return result[0];
-	}
-
-	public static ImperativeOperation findMappingMethod(final Module module, final EOperation signature,
-			final EClassifier context, final QvtOperationalEnv env) {
-		for (EOperation op : QvtOperationalParserUtil.getOwnedOperations(module)) {
-			if(op instanceof ImperativeOperation == false) {
-				continue;
-			}
-			ImperativeOperation cur = (ImperativeOperation) op;
-			if (isOperationEquals(cur, signature, context, env)) {
-				return cur;
-			}
-		}
-		return null;
-	}
-
-	private static final NodeProvider IMPORT_NODE_PROVIDER = new NodeProvider() {
-		public Object[] getLinkedNodes(Object node) {
-			Module module = (Module) node;
-			if (module.getModuleImport().isEmpty()) {
-				return new Module[0];
-			}
-
-			List<Module> importedModules = new ArrayList<Module>();
-			for (ListIterator<ModuleImport> impIt = module.getModuleImport().listIterator(
-					module.getModuleImport().size()); impIt.hasPrevious();) {
-				ModuleImport importedModule = impIt.previous();
-				importedModules.add(importedModule.getImportedModule());
-			}
-
-			return importedModules.toArray(new Module[0]);
-		}
-	};
 
 	public static String safeGetMappingQualifiedName(QvtOperationalEnv env, MappingOperation mappingOperation) {
 		if(mappingOperation != null) {

@@ -13,6 +13,7 @@
 package org.eclipse.m2m.internal.qvt.oml.compiler;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -176,6 +177,7 @@ public class IntermediateClassFactory extends EFactoryImpl {
 		clsFeatures.put(feature, expression);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void doInstancePropertyInit(Object instance, QvtOperationalEvaluationVisitor evalEnv) {
 		if (false == instance instanceof EObject) {
 			return;
@@ -197,7 +199,25 @@ public class IntermediateClassFactory extends EFactoryImpl {
 				for (EStructuralFeature eFeature : clsFeatures.keySet()) {
 					OCLExpression<EClassifier> expression = clsFeatures.get(eFeature);
 					Object evalResult = evalEnv.visitExpression(expression);
-					eInstance.eSet(eFeature, evalResult);
+
+					// temporary switch off read-only property
+					boolean isChangeable = eFeature.isChangeable();
+					eFeature.setChangeable(true);
+					
+					Object eValue = eInstance.eGet(eFeature);
+					if (eValue instanceof Collection) {
+						if (evalResult instanceof Collection) {
+							((Collection<Object>) eValue).addAll((Collection<Object>) evalResult);
+						}
+						else {
+							((Collection<Object>) eValue).add(evalResult);
+						}
+					}
+					else {
+						eInstance.eSet(eFeature, evalResult);
+					}
+					
+					eFeature.setChangeable(isChangeable);
 				}
 			}
 		}

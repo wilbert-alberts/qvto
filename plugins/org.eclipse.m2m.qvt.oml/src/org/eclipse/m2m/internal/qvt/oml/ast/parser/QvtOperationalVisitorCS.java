@@ -1575,7 +1575,18 @@ public class QvtOperationalVisitorCS
 	}
 
 	private EStructuralFeature visitClassifierPropertyCS(ClassifierPropertyCS propCS, QvtOperationalEnv env) {
-		EStructuralFeature eFeature = visitLocalPropertyCS(propCS, env);
+		EClassifier propertyEType = null;
+		if (propCS.getTypeCS() != null) {
+			propertyEType = visitTypeCS(propCS.getTypeCS(), null, env);
+		}
+
+		EStructuralFeature eFeature = createESFeature(propertyEType);
+		eFeature.setName(propCS.getSimpleNameCS().getValue());		
+		eFeature.setEType(propertyEType);
+
+		ASTSyntheticNode astNode = ASTSyntheticNodeAccess.createASTNode(eFeature);
+		astNode.setStartPosition(propCS.getStartOffset());
+		astNode.setEndPosition(propCS.getEndOffset());
 		
 		// handle stereotype qualifiers
 		Set<String> handledStereotypes = new HashSet<String>(2);
@@ -1649,7 +1660,28 @@ public class QvtOperationalVisitorCS
 		}
 		
 		eFeature.setOrdered(propCS.isIsOrdered());
+
+		// handle initialization expression
+		OCLExpression<EClassifier> initExpression = null;
+		if (propCS.getOclExpressionCS() != null) {
+			initExpression = visitOclExpressionCS(propCS.getOclExpressionCS(), env);
+			QvtOperationalParserUtil.setInitExpression(eFeature, initExpression);			
+		}
 		
+		if (eFeature.getEType() == null && initExpression != null) {
+			eFeature.setEType(initExpression.getType());
+		}
+		
+		if (initExpression != null) {
+			EClassifier realType = initExpression.getType();
+			EClassifier declaredType = env.getUMLReflection().getOCLType(eFeature);
+			if (!QvtOperationalParserUtil.isAssignableToFrom(env, declaredType, realType)) {
+				env.reportError(NLS.bind(ValidationMessages.SemanticUtil_17,
+						new Object[] { QvtOperationalTypesUtil.getTypeFullName(declaredType), QvtOperationalTypesUtil.getTypeFullName(realType) }),
+						astNode.getStartPosition(), astNode.getEndPosition());
+			}
+		}
+
 		return eFeature;
 	}
 	
