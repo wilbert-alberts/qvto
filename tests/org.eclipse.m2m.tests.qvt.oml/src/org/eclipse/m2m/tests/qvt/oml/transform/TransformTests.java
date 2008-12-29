@@ -80,6 +80,7 @@ public class TransformTests {
         return new ModelTestData[] {        		
                 new FileToFileData("libraryHeaderWithSignature_257575"), //$NON-NLS-1$                
                 new FileToFileData("intermSimple"), //$NON-NLS-1$                
+        		new FilesToFilesData("intermProperties", Collections.<String>emptyList(), Arrays.asList("intermProperties.ecore")),        		
         		new FilesToFilesData("intermWithCrossRefs", Collections.<String>emptyList(), Arrays.asList("intermWithCrossRefs.ecore")),        		
         		new FilesToFilesData("intermWithExtends", Collections.<String>emptyList(), Arrays.asList("intermWithExtends.ecore")),        		
         		new FilesToFilesData("intermWithoutExtent", Collections.singletonList("in.ecore"), Collections.<String>emptyList()),        		
