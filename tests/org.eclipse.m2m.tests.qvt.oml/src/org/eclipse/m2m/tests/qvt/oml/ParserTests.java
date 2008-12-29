@@ -84,7 +84,8 @@ public class ParserTests {
     }
     
     private static TestData[] ourData = new TestData[] {
-    	TestData.createSourceChecked("listtype", 9, 0),    	
+    	TestData.createSourceChecked("listtype", 9, 0), //$NON-NLS-1$   	
+    	TestData.createSourceChecked("listtype2", 9, 0), //$NON-NLS-1$   	
         //new TestData("orderedsetdoesnotconformtoset", 1), //$NON-NLS-1$
         TestData.createSourceChecked("computeExp_252269", 3, 0), //$NON-NLS-1$       
     	new TestData("implicitsource_ocl_234354", 6, 0),
