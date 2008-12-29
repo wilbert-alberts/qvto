@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.30 2008/12/29 16:24:16 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.31 2008/12/29 19:07:52 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.30 2008/12/29 16:24:16 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.31 2008/12/29 19:07:52 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.30 2008/12/29 16:24:16 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.31 2008/12/29 19:07:52 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.30 2008/12/29 16:24:16 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.31 2008/12/29 19:07:52 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -88,7 +88,7 @@ public interface LightweightParsersym {
       TK_RPAREN = 3,
       TK_LBRACE = 87,
       TK_RBRACE = 88,
-      TK_LBRACKET = 97,
+      TK_LBRACKET = 94,
       TK_RBRACKET = 107,
       TK_ARROW = 117,
       TK_BAR = 92,
@@ -97,18 +97,18 @@ public interface LightweightParsersym {
       TK_COLONCOLON = 91,
       TK_SEMICOLON = 86,
       TK_DOT = 100,
-      TK_DOTDOT = 135,
+      TK_DOTDOT = 118,
       TK_ATPRE = 108,
-      TK_CARET = 118,
-      TK_CARETCARET = 119,
+      TK_CARET = 119,
+      TK_CARETCARET = 120,
       TK_QUESTIONMARK = 111,
-      TK_QUOTE_STRING_LITERAL = 120,
-      TK_ADD_ASSIGN = 121,
-      TK_RESET_ASSIGN = 98,
+      TK_QUOTE_STRING_LITERAL = 121,
+      TK_ADD_ASSIGN = 122,
+      TK_RESET_ASSIGN = 95,
       TK_AT_SIGN = 147,
       TK_EXCLAMATION_MARK = 109,
       TK_NOT_EQUAL_EXEQ = 104,
-      TK_INTEGER_RANGE_START = 122,
+      TK_INTEGER_RANGE_START = 123,
       TK_Dict = 170,
       TK_List = 110,
       TK_break = 171,
@@ -148,13 +148,13 @@ public interface LightweightParsersym {
       TK_def = 194,
       TK_if = 69,
       TK_then = 137,
-      TK_else = 123,
-      TK_endif = 124,
+      TK_else = 124,
+      TK_endif = 125,
       TK_and = 45,
       TK_or = 46,
       TK_xor = 47,
       TK_not = 54,
-      TK_implies = 125,
+      TK_implies = 126,
       TK_let = 77,
       TK_in = 105,
       TK_true = 70,
@@ -201,10 +201,10 @@ public interface LightweightParsersym {
       TK_OclInvalid = 72,
       TK_end = 101,
       TK_while = 73,
-      TK_when = 126,
-      TK_var = 94,
+      TK_when = 127,
+      TK_var = 96,
       TK_log = 93,
-      TK_assert = 95,
+      TK_assert = 97,
       TK_with = 157,
       TK_switch = 65,
       TK_case = 138,
@@ -214,21 +214,21 @@ public interface LightweightParsersym {
       TK_collectOne = 161,
       TK_collectselect = 162,
       TK_collectselectOne = 163,
-      TK_return = 96,
+      TK_return = 98,
       TK_forEach = 164,
       TK_forOne = 165,
       TK_compute = 74,
       TK_new = 75,
-      TK_out = 127,
+      TK_out = 128,
       TK_object = 76,
-      TK_transformation = 128,
+      TK_transformation = 129,
       TK_import = 139,
       TK_library = 112,
       TK_metamodel = 140,
-      TK_mapping = 129,
-      TK_query = 130,
-      TK_helper = 131,
-      TK_inout = 132,
+      TK_mapping = 130,
+      TK_query = 131,
+      TK_helper = 132,
+      TK_inout = 133,
       TK_configuration = 113,
       TK_intermediate = 114,
       TK_property = 106,
@@ -251,8 +251,8 @@ public interface LightweightParsersym {
       TK_refines = 169,
       TK_access = 102,
       TK_extends = 99,
-      TK_blackbox = 133,
-      TK_abstract = 134,
+      TK_blackbox = 134,
+      TK_abstract = 135,
       TK_static = 115,
       TK_result = 48,
       TK_main = 103,
@@ -360,11 +360,11 @@ public interface LightweightParsersym {
                  "COLONCOLON",
                  "BAR",
                  "log",
+                 "LBRACKET",
+                 "RESET_ASSIGN",
                  "var",
                  "assert",
                  "return",
-                 "LBRACKET",
-                 "RESET_ASSIGN",
                  "extends",
                  "DOT",
                  "end",
@@ -384,6 +384,7 @@ public interface LightweightParsersym {
                  "static",
                  "EOF_TOKEN",
                  "ARROW",
+                 "DOTDOT",
                  "CARET",
                  "CARETCARET",
                  "QUOTE_STRING_LITERAL",
@@ -401,7 +402,6 @@ public interface LightweightParsersym {
                  "inout",
                  "blackbox",
                  "abstract",
-                 "DOTDOT",
                  "STEREOTYPE_QUALIFIER_OPEN",
                  "then",
                  "case",

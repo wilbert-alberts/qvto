@@ -32,18 +32,5 @@ $End
 
 $Rules
 	QvtLwGoal -> oclExpressionCS
-
 	QvtLwGoal -> topLevel
-
-	entry ::= entryDeclarationCS ';'
-		/.$BeginJava
-					MappingQueryCS result = createMappingQueryCS(
-							(MappingDeclarationCS)$getSym(1),
-							$EMPTY_ELIST
-						);
-					setOffsets(result, (CSTNode)$getSym(1), getIToken($getToken(2)));
-					$setResult(result);
-		  $EndJava
-		./
-
 $End
