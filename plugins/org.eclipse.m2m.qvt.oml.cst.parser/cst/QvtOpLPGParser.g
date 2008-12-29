@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.29 2008/12/25 19:24:05 sboyko Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.30 2008/12/29 08:03:55 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -148,7 +148,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.29 2008/12/25 19:24:05 sboyko Exp $
+ * $Id: QvtOpLPGParser.g,v 1.30 2008/12/29 08:03:55 sboyko Exp $
  */
 	./
 $End
@@ -859,7 +859,11 @@ $Rules
 		./
 	multiplicity_range ::= integerLiteralExpCS MULTIPLICITY_RANGE integerLiteralExpCS
 		/.$NewCase./
+	multiplicity_range ::= integerLiteralExpCS DOTDOT integerLiteralExpCS
+		/.$NewCase./
 	multiplicity_range ::= integerLiteralExpCS MULTIPLICITY_RANGE unlimitedNaturalLiteralExpCS
+		/.$NewCase./
+	multiplicity_range ::= integerLiteralExpCS DOTDOT unlimitedNaturalLiteralExpCS
 		/.$BeginJava
 					CSTNode result = createMultiplicityDefCS(
 							(PrimitiveLiteralExpCS) $getSym(1),
