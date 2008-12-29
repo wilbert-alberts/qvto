@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTSwitch.java,v 1.10 2008/12/25 09:13:38 sboyko Exp $
+ * $Id: CSTSwitch.java,v 1.11 2008/12/29 16:24:29 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -25,9 +25,11 @@ import org.eclipse.m2m.internal.qvt.oml.cst.*;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CallExpCS;
 import org.eclipse.ocl.cst.FeatureCallExpCS;
+import org.eclipse.ocl.cst.LiteralExpCS;
 import org.eclipse.ocl.cst.LoopExpCS;
 import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.cst.OperationCallExpCS;
+import org.eclipse.ocl.cst.TypeCS;
 
 /**
  * <!-- begin-user-doc -->
@@ -568,6 +570,15 @@ public class CSTSwitch<T> {
 				T result = caseNewRuleCallExpCS(newRuleCallExpCS);
 				if (result == null) result = caseOCLExpressionCS(newRuleCallExpCS);
 				if (result == null) result = caseCSTNode(newRuleCallExpCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.LIST_TYPE_CS: {
+				ListTypeCS listTypeCS = (ListTypeCS)theEObject;
+				T result = caseListTypeCS(listTypeCS);
+				if (result == null) result = caseTypeCS(listTypeCS);
+				if (result == null) result = caseOCLExpressionCS(listTypeCS);
+				if (result == null) result = caseCSTNode(listTypeCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -1431,6 +1442,21 @@ public class CSTSwitch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>List Type CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>List Type CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseListTypeCS(ListTypeCS object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Node</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1517,6 +1543,21 @@ public class CSTSwitch<T> {
 	 * @generated
 	 */
 	public T caseLoopExpCS(LoopExpCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Type CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Type CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTypeCS(TypeCS object) {
 		return null;
 	}
 

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.17 2008/12/25 20:58:34 sboyko Exp $
+ * $Id: CSTPackageImpl.java,v 1.18 2008/12/29 16:24:29 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -43,6 +43,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ListTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LocalPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LogExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS;
@@ -500,6 +501,13 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * @generated
 	 */
 	private EClass newRuleCallExpCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass listTypeCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -2237,6 +2245,24 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getListTypeCS() {
+		return listTypeCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getListTypeCS_TypeCS() {
+		return (EReference)listTypeCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getDirectionKindEnum() {
 		return directionKindEnumEEnum;
 	}
@@ -2542,6 +2568,9 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(newRuleCallExpCSEClass, NEW_RULE_CALL_EXP_CS__SCOPED_IDENTIFIER);
 		createEReference(newRuleCallExpCSEClass, NEW_RULE_CALL_EXP_CS__ARGUMENTS);
 
+		listTypeCSEClass = createEClass(LIST_TYPE_CS);
+		createEReference(listTypeCSEClass, LIST_TYPE_CS__TYPE_CS);
+
 		// Create enums
 		directionKindEnumEEnum = createEEnum(DIRECTION_KIND_ENUM);
 		moduleKindEnumEEnum = createEEnum(MODULE_KIND_ENUM);
@@ -2645,6 +2674,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		returnExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
 		mappingExtensionCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		newRuleCallExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
+		listTypeCSEClass.getESuperTypes().add(theCSTPackage_1.getTypeCS());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(mappingModuleCSEClass, MappingModuleCS.class, "MappingModuleCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -2883,6 +2913,9 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEClass(newRuleCallExpCSEClass, NewRuleCallExpCS.class, "NewRuleCallExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getNewRuleCallExpCS_ScopedIdentifier(), theCSTPackage_1.getPathNameCS(), null, "scopedIdentifier", null, 1, 1, NewRuleCallExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getNewRuleCallExpCS_Arguments(), theCSTPackage_1.getOCLExpressionCS(), null, "arguments", null, 0, -1, NewRuleCallExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(listTypeCSEClass, ListTypeCS.class, "ListTypeCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getListTypeCS_TypeCS(), theCSTPackage_1.getTypeCS(), null, "typeCS", null, 0, 1, ListTypeCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Initialize enums and add enum literals
 		initEEnum(directionKindEnumEEnum, DirectionKindEnum.class, "DirectionKindEnum"); //$NON-NLS-1$

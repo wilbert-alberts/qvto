@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactory.java,v 1.9 2008/12/25 09:13:38 sboyko Exp $
+ * $Id: CSTFactory.java,v 1.10 2008/12/29 16:24:28 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -499,6 +499,15 @@ public interface CSTFactory extends EFactory {
 	 * @generated
 	 */
 	NewRuleCallExpCS createNewRuleCallExpCS();
+
+	/**
+	 * Returns a new object of class '<em>List Type CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>List Type CS</em>'.
+	 * @generated
+	 */
+	ListTypeCS createListTypeCS();
 
 	/**
 	 * Returns the package supported by this factory.

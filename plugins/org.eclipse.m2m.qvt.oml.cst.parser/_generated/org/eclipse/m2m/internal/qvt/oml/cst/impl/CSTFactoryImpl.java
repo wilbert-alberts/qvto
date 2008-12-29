@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactoryImpl.java,v 1.9 2008/12/25 09:13:38 sboyko Exp $
+ * $Id: CSTFactoryImpl.java,v 1.10 2008/12/29 16:24:29 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -128,6 +128,7 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 			case CSTPackage.RETURN_EXP_CS: return createReturnExpCS();
 			case CSTPackage.MAPPING_EXTENSION_CS: return createMappingExtensionCS();
 			case CSTPackage.NEW_RULE_CALL_EXP_CS: return createNewRuleCallExpCS();
+			case CSTPackage.LIST_TYPE_CS: return createListTypeCS();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -687,6 +688,16 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	public NewRuleCallExpCS createNewRuleCallExpCS() {
 		NewRuleCallExpCSImpl newRuleCallExpCS = new NewRuleCallExpCSImpl();
 		return newRuleCallExpCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ListTypeCS createListTypeCS() {
+		ListTypeCSImpl listTypeCS = new ListTypeCSImpl();
+		return listTypeCS;
 	}
 
 	/**

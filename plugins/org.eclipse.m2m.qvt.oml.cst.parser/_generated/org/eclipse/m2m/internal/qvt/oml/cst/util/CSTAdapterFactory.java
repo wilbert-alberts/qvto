@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTAdapterFactory.java,v 1.9 2008/12/25 09:13:38 sboyko Exp $
+ * $Id: CSTAdapterFactory.java,v 1.10 2008/12/29 16:24:29 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -27,9 +27,11 @@ import org.eclipse.m2m.internal.qvt.oml.cst.*;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CallExpCS;
 import org.eclipse.ocl.cst.FeatureCallExpCS;
+import org.eclipse.ocl.cst.LiteralExpCS;
 import org.eclipse.ocl.cst.LoopExpCS;
 import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.cst.OperationCallExpCS;
+import org.eclipse.ocl.cst.TypeCS;
 
 /**
  * <!-- begin-user-doc -->
@@ -323,6 +325,10 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 				return createNewRuleCallExpCSAdapter();
 			}
 			@Override
+			public Adapter caseListTypeCS(ListTypeCS object) {
+				return createListTypeCSAdapter();
+			}
+			@Override
 			public Adapter caseCSTNode(CSTNode object) {
 				return createCSTNodeAdapter();
 			}
@@ -345,6 +351,10 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseLoopExpCS(LoopExpCS object) {
 				return createLoopExpCSAdapter();
+			}
+			@Override
+			public Adapter caseTypeCS(TypeCS object) {
+				return createTypeCSAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -1165,6 +1175,20 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ListTypeCS <em>List Type CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ListTypeCS
+	 * @generated
+	 */
+	public Adapter createListTypeCSAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.cst.CSTNode <em>Node</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -1245,6 +1269,20 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createLoopExpCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.cst.TypeCS <em>Type CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.cst.TypeCS
+	 * @generated
+	 */
+	public Adapter createTypeCSAdapter() {
 		return null;
 	}
 

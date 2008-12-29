@@ -38,6 +38,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ListTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LocalPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LogExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS;
@@ -877,5 +878,10 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		result.setMultiplicity(multiplicityCS);
 		return result;
 	}
-	
-}
+
+	protected ListTypeCS createListTypeCS(TypeCS typeCS) {
+		ListTypeCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createListTypeCS();
+		result.setTypeCS(typeCS);
+		return result;
+	}
+}	

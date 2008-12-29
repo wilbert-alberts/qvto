@@ -296,6 +296,9 @@
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/NewRuleCallExpCS/scopedIdentifier"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/NewRuleCallExpCS/arguments"/>
       </genClasses>
+      <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/ListTypeCS">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ListTypeCS/typeCS"/>
+      </genClasses>
       <nestedGenPackages prefix="Temp" basePackage="org.eclipse.m2m.internal.qvt.oml.cst"
           disposableProviderFactory="true" ecorePackage="QVTOperationalCST.ecore#//cst/temp">
         <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/temp/ErrorCallExpCS"/>

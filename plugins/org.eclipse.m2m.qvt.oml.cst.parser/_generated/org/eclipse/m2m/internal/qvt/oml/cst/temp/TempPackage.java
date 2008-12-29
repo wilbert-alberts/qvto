@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempPackage.java,v 1.8 2008/12/25 09:13:38 sboyko Exp $
+ * $Id: TempPackage.java,v 1.9 2008/12/29 16:24:29 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.temp;
 
@@ -106,33 +106,6 @@ public interface TempPackage extends EPackage {
 	int ERROR_CALL_EXP_CS__END_OFFSET = CSTPackage.CALL_EXP_CS__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ERROR_CALL_EXP_CS__START_TOKEN = CSTPackage.CALL_EXP_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ERROR_CALL_EXP_CS__END_TOKEN = CSTPackage.CALL_EXP_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ERROR_CALL_EXP_CS__AST = CSTPackage.CALL_EXP_CS__AST;
-
-	/**
 	 * The feature id for the '<em><b>Source</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -197,33 +170,6 @@ public interface TempPackage extends EPackage {
 	int RESOLVE_OP_ARGS_EXP_CS__END_OFFSET = CSTPackage.CST_NODE__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RESOLVE_OP_ARGS_EXP_CS__START_TOKEN = CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RESOLVE_OP_ARGS_EXP_CS__END_TOKEN = CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RESOLVE_OP_ARGS_EXP_CS__AST = CSTPackage.CST_NODE__AST;
-
-	/**
 	 * The feature id for the '<em><b>Target</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -277,33 +223,6 @@ public interface TempPackage extends EPackage {
 	 * @ordered
 	 */
 	int SCOPED_NAME_CS__END_OFFSET = CSTPackage.CST_NODE__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SCOPED_NAME_CS__START_TOKEN = CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SCOPED_NAME_CS__END_TOKEN = CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SCOPED_NAME_CS__AST = CSTPackage.CST_NODE__AST;
 
 	/**
 	 * The feature id for the '<em><b>Type CS</b></em>' containment reference.

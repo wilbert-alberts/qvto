@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.8 2008/12/05 12:36:57 aigdalov Exp $ 
+-- * $Id: miscellaneous.g,v 1.9 2008/12/29 16:24:29 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -282,7 +282,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.8 2008/12/05 12:36:57 aigdalov Exp $
+ * $Id: miscellaneous.g,v 1.9 2008/12/29 16:24:29 aigdalov Exp $
  */
 	./
 $End
@@ -523,6 +523,19 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
+
+	typeCS -> listTypeCS
+	listTypeCS ::= List '(' typeCS ')'
+		/.$BeginJava
+					CSTNode result = createListTypeCS(
+							(TypeCS)$getSym(3)
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
+					$setResult(result);
+		  $EndJava
+		./
+
+
 
 	typeCS2 -> primitiveTypeCS
 	typeCS2 -> tupleTypeCS
