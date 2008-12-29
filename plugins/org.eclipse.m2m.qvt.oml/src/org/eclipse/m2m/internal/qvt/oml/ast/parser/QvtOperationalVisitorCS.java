@@ -1462,12 +1462,20 @@ public class QvtOperationalVisitorCS
 			}
 		}
 
+		Map<ClassifierPropertyCS, EStructuralFeature> createdProperties = new IdentityHashMap<ClassifierPropertyCS, EStructuralFeature>();
 		for (ClassifierDefCS classifierDefCS : moduleCS.getClassifierDefCS()) {
 			String className = classifierDefCS.getSimpleNameCS().getValue();
 			if (!createdIntermClasses.containsKey(className)) {
 				continue;
 			}
-			visitClassifierDefCS(classifierDefCS, createdIntermClasses.get(className), module, env);
+			visitClassifierDefCS(classifierDefCS, createdIntermClasses.get(className), module, createdProperties, env);
+		}
+		for (ClassifierDefCS classifierDefCS : moduleCS.getClassifierDefCS()) {
+			String className = classifierDefCS.getSimpleNameCS().getValue();
+			if (!createdIntermClasses.containsKey(className)) {
+				continue;
+			}
+			initClassifierDefCS(createdIntermClasses.get(className), module, createdProperties, env);
 		}
 		
 		class CycleChecker {
@@ -1527,7 +1535,8 @@ public class QvtOperationalVisitorCS
 		
 	}
 	
-	private EClass visitClassifierDefCS(ClassifierDefCS classifierDefCS, EClass eClassifier, Module module, QvtOperationalEnv env) throws SemanticException {
+	private EClass visitClassifierDefCS(ClassifierDefCS classifierDefCS, EClass eClassifier, Module module,
+			Map<ClassifierPropertyCS, EStructuralFeature> createdProperties, QvtOperationalEnv env) throws SemanticException {
 
 		class PropertyPair {
 			final EStructuralFeature myEFeature;
@@ -1540,7 +1549,6 @@ public class QvtOperationalVisitorCS
 		}
 
 		Map<String, List<PropertyPair>> classifierProperties = new LinkedHashMap<String, List<PropertyPair>>(classifierDefCS.getProperties().size());
-		Map<ClassifierPropertyCS, EStructuralFeature> createdProperties = new IdentityHashMap<ClassifierPropertyCS, EStructuralFeature>(classifierDefCS.getProperties().size());
 
 		// first pass for creation
 		for (ClassifierPropertyCS propCS : classifierDefCS.getProperties()) {
@@ -1561,18 +1569,6 @@ public class QvtOperationalVisitorCS
 			createdProperties.put(propCS, eFeature);
 		}
 		
-		// second pass for initialization parts and opposite properties
-		for (ClassifierPropertyCS propCS : createdProperties.keySet()) {
-			EStructuralFeature eFeature = createdProperties.get(propCS);
-			
-			initClassifierPropertyCS(propCS, eFeature, env);
-
-			OCLExpression<EClassifier> initExp = QvtOperationalParserUtil.getInitExpression(eFeature);
-			if (initExp != null) {
-				IntermediateClassFactory.getFactory(module).addClassifierPropertyInit(eClassifier, eFeature, initExp);
-			}
-		}
-		
 		for (String propName : classifierProperties.keySet()) {
 			List<PropertyPair> properties = classifierProperties.get(propName);
 			if (properties.size() == 1) {
@@ -1586,6 +1582,25 @@ public class QvtOperationalVisitorCS
 		}
 		
 		return eClassifier;
+	}
+
+	private void initClassifierDefCS(EClass eClassifier, Module module,
+			Map<ClassifierPropertyCS, EStructuralFeature> createdProperties, QvtOperationalEnv env) throws SemanticException {
+
+		// second pass for initialization parts and opposite properties
+		for (ClassifierPropertyCS propCS : createdProperties.keySet()) {
+			EStructuralFeature eFeature = createdProperties.get(propCS);
+			if (eClassifier != eFeature.eContainer()) {
+				continue;
+			}
+			
+			initClassifierPropertyCS(propCS, eFeature, env);
+
+			OCLExpression<EClassifier> initExp = QvtOperationalParserUtil.getInitExpression(eFeature);
+			if (initExp != null) {
+				IntermediateClassFactory.getFactory(module).addClassifierPropertyInit(eClassifier, eFeature, initExp);
+			}
+		}
 	}
 
 	private void initClassifierPropertyCS(ClassifierPropertyCS propCS, EStructuralFeature eFeature, QvtOperationalEnv env) {
