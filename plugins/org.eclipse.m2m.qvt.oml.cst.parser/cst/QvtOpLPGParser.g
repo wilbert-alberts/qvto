@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.30 2008/12/29 08:03:55 sboyko Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.31 2008/12/29 19:08:02 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -148,7 +148,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.30 2008/12/29 08:03:55 sboyko Exp $
+ * $Id: QvtOpLPGParser.g,v 1.31 2008/12/29 19:08:02 aigdalov Exp $
  */
 	./
 $End
@@ -990,8 +990,6 @@ $Rules
 
 	-- // syntax for helper operations (start)
 
-	-- // syntax for helper operations (end)
-
 	_helper -> helper_decl
 	_helper -> helper_simple_def
 	_helper -> helper_compound_def
@@ -1107,6 +1105,73 @@ $Rules
 		  $EndJava
 		./
 
+	-- // syntax for helper operations (end)
+
+
+	--=== // Syntax for entries (start) ===--
+
+	entry -> entry_decl
+	entry -> entry_def
+
+	entry_header ::= main simple_signature
+		/.$BeginJava
+					IToken nameToken = getIToken($getToken(1));				
+					ScopedNameCS nameCS = createScopedNameCS(null, getTokenText($getToken(1)));								
+					nameCS.setStartOffset(nameToken.getStartOffset());
+					nameCS.setEndOffset(nameToken.getEndOffset());
+		
+		                        SimpleSignatureCS signature = (SimpleSignatureCS)$getSym(2);
+					CSTNode result = createMappingDeclarationCS(
+							null,
+							nameCS,
+							signature.getParams(),
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)), signature);
+					$setResult(result);
+		  $EndJava
+		./
+
+	entry_header ::= main qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createMappingDeclarationCS(
+							null,
+							createScopedNameCS(null, getTokenText($getToken(1))),
+							$EMPTY_ELIST,
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	entry_decl ::= entry_header ';'
+		/.$BeginJava
+					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(1);
+					MappingQueryCS result = createMappingQueryCS(
+							mappingDecl,
+							$EMPTY_ELIST
+						);
+					result.setBlackBox(true);
+					setOffsets(result, mappingDecl, getIToken($getToken(2)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	entry_def ::= entry_header expression_block semicolonOpt 
+		/.$BeginJava
+					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(1);
+					BlockExpCS blockExpCS = (BlockExpCS)$getSym(2);
+					CSTNode result = createMappingQueryCS(
+							mappingDecl,
+							blockExpCS.getBodyExpressions()
+						);
+					setOffsets(result, mappingDecl, blockExpCS);
+					$setResult(result);
+		  $EndJava
+		./
+
+	--=== // Syntax for entries (end) ===--
 
 	-- // syntax for mapping operations (start)
 
@@ -1420,49 +1485,6 @@ $Rules
 
 
 	-- // syntax for mapping operations (end)
-
-	entry ::= entryDeclarationCS '{' statementListOpt '}'
-		/.$BeginJava
-					MappingQueryCS result = createMappingQueryCS(
-							(MappingDeclarationCS)$getSym(1),
-							(EList)$getSym(3)
-						);
-					setOffsets(result, (CSTNode)$getSym(1), getIToken($getToken(4)));
-					$setResult(result);
-		  $EndJava
-		./
-		
-			
-	entryDeclarationCS ::= main '(' param_listOpt ')'
-		/.$BeginJava
-					IToken nameToken = getIToken($getToken(1));				
-					ScopedNameCS nameCS = createScopedNameCS(null, getTokenText($getToken(1)));								
-					nameCS.setStartOffset(nameToken.getStartOffset());
-					nameCS.setEndOffset(nameToken.getEndOffset());
-		
-					CSTNode result = createMappingDeclarationCS(
-							null,
-							nameCS,
-							(EList)$getSym(3),
-							null
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
-					$setResult(result);
-		  $EndJava
-		./
-
-	entryDeclarationCS ::= main qvtErrorToken
-		/.$BeginJava
-					CSTNode result = createMappingDeclarationCS(
-							null,
-							createScopedNameCS(null, getTokenText($getToken(1))),
-							$EMPTY_ELIST,
-							null
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
-					$setResult(result);
-		  $EndJava
-		./
 
 	typespecOpt ::= $empty
 		/.$NullAction./

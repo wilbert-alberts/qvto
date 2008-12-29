@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.38 2008/12/29 16:24:28 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.39 2008/12/29 19:08:02 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.38 2008/12/29 16:24:28 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.39 2008/12/29 19:08:02 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.38 2008/12/29 16:24:28 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.39 2008/12/29 19:08:02 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.38 2008/12/29 16:24:28 aigdalov Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.39 2008/12/29 19:08:02 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -88,7 +88,7 @@ public interface QvtOpLPGParsersym {
       TK_RPAREN = 3,
       TK_LBRACE = 87,
       TK_RBRACE = 88,
-      TK_LBRACKET = 97,
+      TK_LBRACKET = 94,
       TK_RBRACKET = 107,
       TK_ARROW = 117,
       TK_BAR = 92,
@@ -104,7 +104,7 @@ public interface QvtOpLPGParsersym {
       TK_QUESTIONMARK = 111,
       TK_QUOTE_STRING_LITERAL = 121,
       TK_ADD_ASSIGN = 122,
-      TK_RESET_ASSIGN = 98,
+      TK_RESET_ASSIGN = 95,
       TK_AT_SIGN = 147,
       TK_EXCLAMATION_MARK = 109,
       TK_NOT_EQUAL_EXEQ = 104,
@@ -216,7 +216,7 @@ public interface QvtOpLPGParsersym {
       TK_helper = 131,
       TK_inout = 132,
       TK_when = 113,
-      TK_var = 94,
+      TK_var = 96,
       TK_configuration = 114,
       TK_intermediate = 115,
       TK_property = 106,
@@ -227,7 +227,7 @@ public interface QvtOpLPGParsersym {
       TK_xmap = 63,
       TK_late = 65,
       TK_log = 93,
-      TK_assert = 95,
+      TK_assert = 97,
       TK_with = 158,
       TK_resolve = 78,
       TK_resolveone = 79,
@@ -257,7 +257,7 @@ public interface QvtOpLPGParsersym {
       TK_collectOne = 165,
       TK_collectselect = 166,
       TK_collectselectOne = 167,
-      TK_return = 96,
+      TK_return = 98,
       TK_rename = 146,
       TK_disjuncts = 135,
       TK_merges = 136,
@@ -364,11 +364,11 @@ public interface QvtOpLPGParsersym {
                  "COLONCOLON",
                  "BAR",
                  "log",
+                 "LBRACKET",
+                 "RESET_ASSIGN",
                  "var",
                  "assert",
                  "return",
-                 "LBRACKET",
-                 "RESET_ASSIGN",
                  "extends",
                  "DOT",
                  "end",
