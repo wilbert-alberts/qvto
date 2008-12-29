@@ -30,6 +30,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.emf.ExtendedEmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
+import org.eclipse.m2m.internal.qvt.oml.compiler.IntermediateClassFactory;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.trace.EValue;
@@ -100,7 +101,8 @@ public class TraceSerializer {
             EObject modelElement = eValue.getModelElement();
             if (modelElement != null) {
                 if (modelElement.eResource() == null) {
-                    if (modelElement.eContainer() == null) {
+                    if (modelElement.eContainer() == null 
+                    		&& !IntermediateClassFactory.isIntermediateClass(modelElement.eClass())) {
                     	eValue.setIntermediateElement(modelElement);
                     	myUnboundObjects.add(modelElement);
                     }
