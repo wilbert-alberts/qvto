@@ -67,6 +67,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ListTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LocalPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LogExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS;
@@ -121,6 +122,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
@@ -287,6 +289,11 @@ public class QvtOperationalVisitorCS
 	@Override
 	protected EClassifier typeCS(TypeCS typeCS, Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		EClassifier type = super.typeCS(typeCS, env);
+		if (type == null) {
+			if (typeCS instanceof ListTypeCS) {
+				type = visitListTypeCS((ListTypeCS) typeCS, env);
+			}
+		}
 		if(type == getOclVoid() && typeCS instanceof PrimitiveTypeCS == false) { 
 			if(typeCS instanceof PathNameCS) {
 				// check whether Void synonym was used
@@ -4000,6 +4007,20 @@ public class QvtOperationalVisitorCS
 		return astNode;
 	}	
 
+	protected ListType visitListTypeCS(ListTypeCS listTypeCS,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+
+		EClassifier type = typeCS(listTypeCS.getTypeCS(), env);
+	
+		ListType result = QvtOperationalStdLibrary.INSTANCE.getStdlibFactory().createList(type); 
+		
+		@SuppressWarnings("unchecked")
+		CollectionType<EClassifier, EOperation> astNode = (CollectionType<EClassifier, EOperation>) result;
+		initTypePositions(astNode, listTypeCS.getTypeCS());
+		
+		return result;
+	}
+	
 	private static void createPropertyCallASTBinding(
 			CallExpCS propertyCallExpCS,
 			OCLExpression<EClassifier> result,
