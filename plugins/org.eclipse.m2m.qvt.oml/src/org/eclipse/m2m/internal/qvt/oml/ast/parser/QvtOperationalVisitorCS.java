@@ -1715,6 +1715,7 @@ public class QvtOperationalVisitorCS
 		}
 		
 		// handle feature keys
+		SimpleNameCS staticNameCS = null, composesNameCS = null;
 		Set<String> handledFeatureKeys = new HashSet<String>(2);
 		for (SimpleNameCS nameCS : propCS.getFeatureKeys()) {
 			String keyName = nameCS.getValue();
@@ -1726,6 +1727,7 @@ public class QvtOperationalVisitorCS
 		            env.reportError(NLS.bind(ValidationMessages.IntermClassifier_referenceOnlyFeatureKey,
 		            		new Object[] { keyName }), nameCS);
 				}
+				composesNameCS = nameCS;
 			}
 			else if ("references".equals(keyName)) { //$NON-NLS-1$
 				if (eFeature instanceof EReference) {
@@ -1744,8 +1746,8 @@ public class QvtOperationalVisitorCS
 	            		new Object[] { keyName }), nameCS);
 			}
 			else if ("static".equals(keyName)) { //$NON-NLS-1$
-	            env.reportWarning(NLS.bind(ValidationMessages.IntermClassifier_unsupportedFeatureKey,
-	            		new Object[] { keyName }), nameCS);
+				IntermediateClassFactory.markFeatureAsStatic(eFeature);
+				staticNameCS = nameCS;
 			}
 
 			if (handledFeatureKeys.contains(keyName)) {
@@ -1753,6 +1755,13 @@ public class QvtOperationalVisitorCS
 	            		new Object[] { keyName }), nameCS);
 			}
 			handledFeatureKeys.add(keyName);
+		}
+		
+		if (composesNameCS != null && staticNameCS != null) {
+            env.reportError(NLS.bind(ValidationMessages.IntermClassifier_incompatibleFeatureKeys,
+            		new Object[] { composesNameCS.getValue(), staticNameCS.getValue() }), composesNameCS);
+            env.reportError(NLS.bind(ValidationMessages.IntermClassifier_incompatibleFeatureKeys,
+            		new Object[] { composesNameCS.getValue(), staticNameCS.getValue() }), staticNameCS);
 		}
 		
 		if (propCS.getMultiplicity() != null) {

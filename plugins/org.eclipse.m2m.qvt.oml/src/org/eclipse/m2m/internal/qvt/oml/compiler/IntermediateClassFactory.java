@@ -197,6 +197,12 @@ public class IntermediateClassFactory extends EFactoryImpl {
 					continue;
 				}
 				for (EStructuralFeature eFeature : clsFeatures.keySet()) {
+					IntermediateStaticFieldAdapter adapter = (IntermediateStaticFieldAdapter) EcoreUtil.getAdapter(eFeature.eAdapters(),
+							IntermediateStaticFieldAdapter.class);
+			    	if (adapter != null && adapter.isInitialized()) {
+			    		continue;
+			    	}
+			    	
 					OCLExpression<EClassifier> expression = clsFeatures.get(eFeature);
 					Object evalResult = evalEnv.visitExpression(expression);
 
@@ -228,6 +234,16 @@ public class IntermediateClassFactory extends EFactoryImpl {
 			}
 		}
 	}	
+
+	public static void markFeatureAsStatic(EStructuralFeature eFeature) {
+		IntermediateStaticFieldAdapter adapter = (IntermediateStaticFieldAdapter) EcoreUtil.getAdapter(eFeature.eAdapters(),
+				IntermediateStaticFieldAdapter.class);
+    	if (adapter == null) {
+    		adapter = new IntermediateStaticFieldAdapter();
+    		eFeature.eAdapters().add(adapter);
+    	}
+	}
+
 	
 	private static class IntermediatePackage extends EPackageImpl {
 		IntermediatePackage(EFactoryImpl factory) {
@@ -239,6 +255,28 @@ public class IntermediateClassFactory extends EFactoryImpl {
 	private static class IntermediateClassInstance extends DynamicEObjectImpl {
 		IntermediateClassInstance(EClass eClass) {
 			super(eClass);
+		}
+		
+		@Override
+		public Object eGet(EStructuralFeature feature, boolean resolve, boolean coreType) {
+			IntermediateStaticFieldAdapter adapter = (IntermediateStaticFieldAdapter) EcoreUtil.getAdapter(feature.eAdapters(),
+					IntermediateStaticFieldAdapter.class);
+	    	if (adapter != null) {
+	    		return adapter.eGet(feature);
+	    	}
+	    	
+			return super.eGet(feature, resolve, coreType);
+		}
+		
+		@Override
+		public void eSet(EStructuralFeature feature, Object newValue) {
+			IntermediateStaticFieldAdapter adapter = (IntermediateStaticFieldAdapter) EcoreUtil.getAdapter(feature.eAdapters(),
+					IntermediateStaticFieldAdapter.class);
+	    	if (adapter != null) {
+	    		adapter.eSet(feature, newValue);
+	    	}
+	    	
+			super.eSet(feature, newValue);
 		}
 		
 		@Override
@@ -274,6 +312,41 @@ public class IntermediateClassFactory extends EFactoryImpl {
 	    
 	    private final IntermediateClassFactory myOwnedFactory;
 
+	}
+
+	
+	private static class IntermediateStaticFieldAdapter extends AbstractGenericAdapter<IntermediateStaticFieldAdapter> {
+		
+	    public Object eGet(EStructuralFeature eFeature) {
+	    	return myValue;
+	    }
+	    
+	    public void eSet(EStructuralFeature eFeature, Object value) {
+	    	myValue = value;
+	    	myIsInitialized = true;
+	    }
+	    
+	    public boolean isInitialized() {
+	    	return myIsInitialized;
+	    }
+
+		public boolean isAdapterForType(Object type) {	
+			return IntermediateStaticFieldAdapter.class == type;
+		}
+
+		@Override
+	    public boolean equals(Object obj) {
+	        return obj instanceof IntermediateStaticFieldAdapter;
+	    }
+
+	    @Override
+	    public int hashCode() {
+	        return IntermediateStaticFieldAdapter.class.hashCode();
+	    }
+	    
+	    private Object myValue = null;
+	    private boolean myIsInitialized = false;
+	    
 	}
 	
 	

@@ -167,6 +167,7 @@ public final class ValidationMessages extends NLS {
     public static String IntermClassifier_oppositeOnlyForReferences;
     public static String IntermClassifier_invalideOppositeType;
     public static String IntermClassifier_invalideOppositeName;
+    public static String IntermClassifier_incompatibleFeatureKeys;
     
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, ValidationMessages.class);
