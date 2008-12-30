@@ -17,6 +17,9 @@ intermediate class MyBaseClass {
 
 	composes containmentRef1 : MyBaseClass;
 	composes containmentRef2 : MyBaseClass;
+	
+	static staticData : String = '1';
+	static references staticRef : MyBaseClass; 
 }
 
 intermediate class MyDerived extends MyBaseClass {
@@ -28,9 +31,12 @@ intermediate class MyDerived extends MyBaseClass {
 
 main() {
 	var op := object MyOperation{};
-	var cls := object MyBaseClass{};
 	assert fatal (op.defStrings->includes('1'));
 	assert fatal (op.defIntegers->flatten()->sum() = 6);
+
+	var cls := object MyBaseClass{};
+	assert fatal (cls.staticData = '1');
+	assert fatal (cls.staticRef = null);
 
 	cls.operations += op;
 	assert fatal (op.refOwner = cls);
@@ -38,6 +44,13 @@ main() {
 	var v1 := object MyBaseClass{};
 	var v2 := object MyBaseClass{};
 	var vBase := object MyBaseClass{};
+	
+	vBase.staticData := '2';
+	vBase.staticRef := v1;
+	assert fatal (cls.staticData = '2');
+	assert fatal (cls.staticRef = v1);
+	assert fatal (vBase.staticData = '2');
+	assert fatal (vBase.staticRef = v1);
 
 	vBase.ref1 := v1;
 	vBase.ref2 := v1;
