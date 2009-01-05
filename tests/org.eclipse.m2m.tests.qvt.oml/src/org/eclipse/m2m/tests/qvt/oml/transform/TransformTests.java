@@ -77,7 +77,8 @@ public class TransformTests {
         
     
     public static ModelTestData[] createTestData() {
-        return new ModelTestData[] {        		
+        return new ModelTestData[] {
+        		new FileToFileData("stdlibList"), //$NON-NLS-1$        		
                 new FileToFileData("libraryHeaderWithSignature_257575"), //$NON-NLS-1$                
                 new FileToFileData("intermSimple"), //$NON-NLS-1$                
         		new FilesToFilesData("intermProperties", Collections.<String>emptyList(), Arrays.asList("intermProperties.ecore")),        		

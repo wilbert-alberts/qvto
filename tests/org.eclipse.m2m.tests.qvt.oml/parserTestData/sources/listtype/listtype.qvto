@@ -1,4 +1,5 @@
 import org.bar.Foo;
+import org.bar.Collections;
 
 library listtype;
 
@@ -32,5 +33,44 @@ helper testCase() : Boolean {
 	var element : String :=listElements->genericListElementAt(1);
 	element :=listElements->genericListElementAt(listElements->size());	
 
+	-- test element type conformance
+	var empty : List(String) := Bag {}->asList();    	  
+ 	var nonInitList : List(String);
+  	nonInitList:= OclInvalid;  
+
+	var listOfVoids : List(OclVoid) := null;
+	var voidElement : OclVoid := listOfVoids->genericListElementAt(1);
+	var aStr : String := listOfVoids->genericListElementAt(1);
+	listOfVoids->append(null);
+	-- can other element but 'null' into a list
+	/*<error>*/listOfVoids->append('')/*</error>*/;
+
+
+	-- test String collection specific operation
+	var strElement := c->stringCollectionAny();
+  
+    -- test common collection generic operation
+	c := c->commonCollectionOperation();
+	Bag { 'a' }->commonCollectionOperation();
+	Sequence { 10 }->commonCollectionOperation();
+	Set { true }->commonCollectionOperation();
+	OrderedSet { 'a' }->commonCollectionOperation();
+	
+	var strList : List(String);
+	-- test common collection opersation on a list
+	c := strList->commonCollectionOperation();
+	-- assign list to a collection
+   	c:=strList;
+	
+	strList := Bag { 'sd' }->asList(); 
+	strList := Sequence { 'sd' }->asList(); 
+	strList := Set { 'sd' }->asList();  
+	strList := OrderedSet { 'sd' }->asList();     
+	
+	var s : String := strList->genericListElementAt(1); 
+	
+	var setOfInt : Set(Integer) := Set{1}->setOperation();
+	var setOfAny : Set(OclAny) := OrderedSet {2}->setOperation();
+	
 	return true;
 }
