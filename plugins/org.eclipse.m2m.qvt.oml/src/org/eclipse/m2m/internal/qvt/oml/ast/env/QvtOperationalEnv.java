@@ -107,10 +107,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		
 		myCheckForDuplicateErrors = false;
 		
-		myModelTypeRegistry = parent != null ? parent.myModelTypeRegistry : new LinkedHashMap<String, ModelType>(1);
-		if (parent != null) {
-		    myCompilerOptions = parent.myCompilerOptions;
-		}
+		myModelTypeRegistry = parent.myModelTypeRegistry;
+		myCompilerOptions = parent.myCompilerOptions;
 	}
 	
 	protected QvtOperationalEnv(EPackage.Registry packageRegistry, Resource resource) {
@@ -173,10 +171,6 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
     public Map<String, ModelType> getModelTypeRegistry() {
         return myModelTypeRegistry;
     }
-
-	public QvtOperationalStdLibrary getQVTStandardLibrary() {
-		return QvtOperationalStdLibrary.INSTANCE;
-	}
 	
     @Override
 	public QvtOperationalEnvFactory getFactory() {

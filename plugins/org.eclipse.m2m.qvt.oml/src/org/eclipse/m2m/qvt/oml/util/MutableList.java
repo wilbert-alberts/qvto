@@ -38,7 +38,7 @@ public interface MutableList<E> extends List<E> {
 	 * 
 	 * @param element
 	 * @param at
-	 *            the zero based position (in compliance with OCL convention).
+	 *            the 1-based position (in compliance with OCL convention).
 	 */	
 	void insertAt(E element, int at);
 

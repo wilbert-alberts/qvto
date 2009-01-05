@@ -19,10 +19,8 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.ocl.TypeResolver;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.ocl.ecore.CollectionType;
-import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.types.TupleType;
 import org.eclipse.ocl.types.TypeType;
@@ -33,12 +31,12 @@ import org.eclipse.ocl.utilities.TypedElement;
 
 class GenericsResolver {
 
-	final private EcoreEnvironment fEnv;
+	final private QVTOEnvironment fEnv;
 	final private OCLStandardLibrary<EClassifier> fOCLStdLib;	
 	final private BindSwitch fBindSwitch;	
 	final private Map<EClassifier, EClassifier> formal2ActualBinding = new HashMap<EClassifier, EClassifier>(3);
 
-	GenericsResolver(EcoreEnvironment env) {
+	GenericsResolver(QVTOEnvironment env) {
 		if(env == null) {
 			throw new IllegalArgumentException();
 		}
@@ -47,7 +45,7 @@ class GenericsResolver {
 		this.fOCLStdLib = env.getOCLStandardLibrary();
 		this.fBindSwitch = new BindSwitch();
 	}
-	
+		
 	public boolean resolveGenericType(EClassifier owner, EClassifier formalType, EClassifier actualType) {
 		resolve(formalType, actualType);
 		EClassifier resolvedType = fBindSwitch.doSwitch(formalType);
@@ -120,7 +118,7 @@ class GenericsResolver {
 	}
 	
 	private class BindSwitch extends TypesSwitch<EClassifier> {
-		private TypeResolver<EClassifier, EOperation, EStructuralFeature> typeResolver = fEnv.getTypeResolver();
+		private QVTOTypeResolver typeResolver = fEnv.getTypeResolver();
 		
 		private EClassifier getBoundType(EClassifier type) {
 			EClassifier bound = formal2ActualBinding.get(type);
@@ -128,8 +126,12 @@ class GenericsResolver {
 		}
 		
 		@Override
-		public <C, O> EClassifier caseCollectionType(org.eclipse.ocl.types.CollectionType<C, O> object) {
-			EClassifier boundElementType = typeResolver.resolve(getBoundType((EClassifier) object.getElementType()));			
+		public <C, O> EClassifier caseCollectionType(org.eclipse.ocl.types.CollectionType<C, O> object) {			
+			EClassifier boundElementType = typeResolver.resolve(getBoundType((EClassifier) object.getElementType()));
+			if(object.eClass() == ExpressionsPackage.eINSTANCE.getListType()) {
+				return (EClassifier) typeResolver.resolveListType(boundElementType);
+			}
+			
 			return (EClassifier) typeResolver.resolveCollectionType(object.getKind(), boundElementType);
 		}
 		

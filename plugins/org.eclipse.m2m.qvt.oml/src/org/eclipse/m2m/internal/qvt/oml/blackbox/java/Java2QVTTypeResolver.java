@@ -103,7 +103,7 @@ class Java2QVTTypeResolver {
 		if(rawClass == MutableList.class) {
 			EClassifier listElementType = toEClassifier(actualElementType);
 			if(listElementType != null) {
-				return fEnv.getQVTTypeResolver().resolveListType(listElementType);
+				return fEnv.getTypeResolver().resolveListType(listElementType);
 			}
 		} else if(rawClass == LinkedHashSet.class) {
 			return resolveCollectionType(CollectionKind.ORDERED_SET_LITERAL, actualElementType);			

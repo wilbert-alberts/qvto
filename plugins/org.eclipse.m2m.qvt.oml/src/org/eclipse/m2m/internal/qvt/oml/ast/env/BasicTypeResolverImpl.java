@@ -11,6 +11,11 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -173,6 +178,31 @@ class BasicTypeResolverImpl
         ((EClass) owner).getEStructuralFeatures().add(property);
     }
 	
+	List<EOperation> getAllCompatibleAdditionalOperations(org.eclipse.ocl.ecore.CollectionType type) {
+		List<EOperation> result = null;
+        if (hasAdditionalFeatures()) {
+            EPackage pkg = getAdditionalFeaturesPackage();            
+            if (pkg != null) {
+        		UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, ?, EParameter, ?, ?, ?, ?> uml = getEnvironment().getUMLReflection();
+				List<EClassifier> shadowOwners = uml.getClassifiers(pkg);
+				for (EClassifier next : shadowOwners) {
+        			EClassifier shadowedType = getShadowedClassifier(next);
+
+        			if (shadowedType instanceof org.eclipse.ocl.ecore.CollectionType &&
+    					TypeUtil.compatibleTypeMatch(getEnvironment(), type, shadowedType)) {
+    					
+    					if(result == null) {
+    						result = new ArrayList<EOperation>();
+    					}
+        				result.addAll(uml.getOperations(next));
+        			}
+        		}
+            }
+        }
+        
+		return (result != null) ? Collections.<EOperation>unmodifiableList(result) : ECollections.<EOperation>emptyEList();
+	}    
+    
     @Override
 	protected EClass createShadowClass(EClassifier type) {
 		Typedef typeDef = ExpressionsFactory.eINSTANCE.createTypedef();
@@ -190,6 +220,7 @@ class BasicTypeResolverImpl
         
         return null;
 	}
+        
     
 	@Override
 	protected EClassifier findShadowClass(EClassifier type) {

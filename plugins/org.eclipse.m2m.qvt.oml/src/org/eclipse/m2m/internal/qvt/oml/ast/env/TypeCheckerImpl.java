@@ -19,12 +19,12 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
 import org.eclipse.ocl.AbstractTypeChecker;
-import org.eclipse.ocl.Environment;
-import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.expressions.CollectionKind;
 import org.eclipse.ocl.types.CollectionType;
+import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.types.TupleType;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.TypedElement;
@@ -33,12 +33,14 @@ import org.eclipse.ocl.utilities.UMLReflection;
 class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStructuralFeature, EParameter> {
 		
 	private final GenericsResolver fGenericResolver;
+	private final OCLStandardLibrary<EClassifier> fOCLStdlib;
 	
-	TypeCheckerImpl(Environment<?, EClassifier, EOperation, EStructuralFeature, ?, EParameter, ?, ?, ?, ?, ?, ?> env) {
+	TypeCheckerImpl(QVTOEnvironment env) {
 		super(env);
-		fGenericResolver = new GenericsResolver((EcoreEnvironment)env);
+		fGenericResolver = new GenericsResolver(env);
+		fOCLStdlib = getEnvironment().getOCLStandardLibrary();
 	}
-
+	
 	@Override
 	public boolean isStandardLibraryFeature(EClassifier owner, Object feature) {
 		if(feature instanceof EOperation && isQVTOperation((EOperation) feature)) {
@@ -67,18 +69,28 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 	protected EClassifier resolve(EClassifier type) {		
 		return TypeUtil.resolveType(getEnvironment(), type);
 	}
-
+	
 	@Override
-	public List<EOperation> getOperations(EClassifier owner) {
-		if(owner instanceof ListType) {			
-			EClassifier list = QvtOperationalStdLibrary.INSTANCE.getList();
-			if(owner != list) {
-				return TypeUtil.getOperations(getEnvironment(), list);
+	protected EClassifier resolveGenericType(EClassifier owner, EClassifier paramType, EClassifier argType) {
+		EClassifier result = super.resolveGenericType(owner, paramType, argType);
+
+		// MDT OCL takes OclVoid element type as applicable for any type, which causes
+		// problems to QVT mutable collection types. Consequently, List(OclVoid) should 
+		// allow succesful parsing of list->append('foo') 
+		EClassifier listMetaType = ExpressionsPackage.eINSTANCE.getListType();		
+		if(owner.eClass() == listMetaType) { 
+			if(fOCLStdlib.getT() == result) {
+				// super implementation resolved OclVoid to oclstdlib::T				
+				org.eclipse.ocl.ecore.CollectionType collectionType = (org.eclipse.ocl.ecore.CollectionType) owner;
+				if(collectionType.getElementType() == fOCLStdlib.getOclVoid()) {				
+					return fOCLStdlib.getOclVoid(); 
+				}
 			}
 		}
-		return super.getOperations(owner);
+		
+		return result;
 	}
-	
+
 	@Override
 	public EClassifier getResultType(Object problemObject,
 			EClassifier owner, EOperation operation,
@@ -122,6 +134,10 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 				}				
 			}
 			
+			if(isVoidOrInvalid(type1) || isVoidOrInvalid(type2)) {
+				return super.getRelationship(type1, type2);
+			}
+			
 			return UMLReflection.UNRELATED_TYPE;
 		} 
 		return super.getRelationship(type1, type2);
@@ -129,5 +145,9 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 	
 	private boolean isQVTOperation(EOperation operation) {
 		return QvtOperationalParserUtil.getOwningModule(operation) != null;
+	}
+	
+	private boolean isVoidOrInvalid(EClassifier type1) {
+		return type1 == fOCLStdlib.getOclVoid() || type1 == fOCLStdlib.getInvalid();
 	}
 }

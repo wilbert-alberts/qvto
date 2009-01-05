@@ -51,7 +51,7 @@ import org.eclipse.ocl.utilities.UMLReflection;
  * This type of resolver takes into account element resolutions with sibling environments to 
  * this owning environment. (sibling fEnv, stands for imported one)
  */
-public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation, EStructuralFeature> {
+public class QvtTypeResolverImpl implements QVTOTypeResolver {
 
 	private BasicTypeResolverImpl fDelegate;
 	private QvtEnvironmentBase fOwner;
@@ -86,6 +86,9 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 		return fOwner;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOTypeResolver#resolveListType(org.eclipse.emf.ecore.EClassifier)
+	 */
 	public ListType resolveListType(EClassifier elementType) {
 		return getDelegate().resolveListType(elementType);
 	}
@@ -174,21 +177,23 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 		
 	protected void getLocalAdditionalOperations(EClassifier owner, Collection<EOperation> result) {
 		extractContextualOperations(owner, result);
-		if(fdefinesOclAnyFeatures && (owner instanceof CollectionType == false) && (owner instanceof TupleType == false)) {
+		final boolean isCollectionTypeOwner = owner instanceof CollectionType;
+		
+		if(fdefinesOclAnyFeatures && (isCollectionTypeOwner == false) && (owner instanceof TupleType == false)) {
 			extractContextualOperations(fOwner.getOCLStandardLibrary().getOclAny(), result);
 		}
 		
 		result.addAll(getDelegate().getAdditionalOperations(owner));
-		if(fdefinesOclAnyFeatures && (owner instanceof CollectionType == false) && (owner instanceof TupleType == false)) {
+		if(fdefinesOclAnyFeatures && (isCollectionTypeOwner == false) && (owner instanceof TupleType == false)) {
 			result.addAll(getDelegate().getAdditionalOperations(fOwner.getOCLStandardLibrary().getOclAny()));
 		}
 		
 		if(owner == fOwner.getOCLStandardLibrary().getInteger()) {
 			EClassifier oclReal = fOwner.getOCLStandardLibrary().getReal();
 			this.getLocalAdditionalOperations(oclReal, result);
-		} else if(owner instanceof org.eclipse.ocl.ecore.CollectionType) {
-			getCollectionTypeAdditionalOperation((org.eclipse.ocl.ecore.CollectionType)owner, result);
-		}
+		} else if(isCollectionTypeOwner) {
+			getLocalCollectionAdditionalOperations((org.eclipse.ocl.ecore.CollectionType)owner, result, false);
+		}		
 	}	
 
 	public Resource getResource() {
@@ -270,18 +275,29 @@ public class QvtTypeResolverImpl implements TypeResolver<EClassifier, EOperation
 
 		fAdditionalTypes.add(type);
 	}
-	
-	
-	private void getCollectionTypeAdditionalOperation(org.eclipse.ocl.ecore.CollectionType collectionType, Collection<EOperation> result) {
+		
+	void getLocalCollectionAdditionalOperations(org.eclipse.ocl.ecore.CollectionType collectionType, Collection<EOperation> result, boolean includeSuperTypes) {		
 		if(fAdditionalTypes == null) {
 			return;
 		}
+		
 		for (EClassifier nextType : fAdditionalTypes) {
-			if(nextType != collectionType && nextType instanceof org.eclipse.ocl.ecore.CollectionType) {
-				if(TypeUtil.compatibleTypeMatch(fOwner, collectionType, nextType)) {
-					getLocalAdditionalOperations((org.eclipse.ocl.ecore.CollectionType)nextType, result);
+			if(nextType instanceof org.eclipse.ocl.ecore.CollectionType) {
+				boolean isMatchingType = (includeSuperTypes) ?
+						TypeUtil.compatibleTypeMatch(fOwner, collectionType, nextType) :
+						TypeUtil.exactTypeMatch(fOwner, collectionType, nextType);
+				
+				if(isMatchingType) {
+					extractContextualOperations(nextType, result);
+					result.addAll(fDelegate.getAllCompatibleAdditionalOperations(
+							(org.eclipse.ocl.ecore.CollectionType)nextType));
 				}
 			}
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + " : " + fOwner.toString();
 	}
 }

@@ -13,6 +13,7 @@ package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
 import static org.eclipse.ocl.utilities.UMLReflection.SAME_TYPE;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -30,22 +31,27 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
 import org.eclipse.ocl.LookupException;
 import org.eclipse.ocl.ecore.CallOperationAction;
+import org.eclipse.ocl.ecore.CollectionType;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
+import org.eclipse.ocl.ecore.EcorePackage;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.types.OCLStandardLibrary;
+import org.eclipse.ocl.util.OCLStandardLibraryUtil;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
 
 
-abstract class QvtEnvironmentBase extends EcoreEnvironment {
+abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVTOEnvironment {
 	
 	public static class CollisionStatus {
 		public static final int ALREADY_DEFINED = 1;		
@@ -196,7 +202,6 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
      * Wrapper for the "try" operation that doesn't throw, but just returns the
      * first ambiguous match in case of ambiguity.
      */
-    @SuppressWarnings("unchecked")
     private EStructuralFeature safeTryLookupPropertyInternal(EClassifier owner, String name) {
         EStructuralFeature result = null;
         
@@ -231,8 +236,78 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment {
 		
 	}
 
-	public final QvtTypeResolverImpl getQVTTypeResolver() {
+	// FIXME - refactore this out
+	final QvtTypeResolverImpl getQVTTypeResolver() {
 		return (QvtTypeResolverImpl)getTypeResolver();
+	}
+	
+	@Override
+	public QVTOTypeResolver getTypeResolver() {
+		return (QVTOTypeResolver)super.getTypeResolver();
+	}
+	
+	public QvtOperationalStdLibrary getQVTStandardLibrary() {
+		return QvtOperationalStdLibrary.INSTANCE;
+	}
+		
+	@Override
+	public List<EOperation> getAdditionalOperations(EClassifier classifier) {
+		if(classifier instanceof org.eclipse.ocl.ecore.CollectionType) {
+			org.eclipse.ocl.ecore.CollectionType collectionType = (org.eclipse.ocl.ecore.CollectionType) classifier;			
+			List<EOperation> result = new ArrayList<EOperation>();
+			getLocalAdditionalCollectionOperations(collectionType, result);
+			
+			// look for imported collection operations
+			for (QvtEnvironmentBase nextImportedEnv : getSiblings()) {
+				nextImportedEnv.getLocalAdditionalCollectionOperations(collectionType, result);
+			}
+			
+			return result;
+		}
+		
+		return super.getAdditionalOperations(classifier);
+	}
+	
+	private void getLocalAdditionalCollectionOperations(org.eclipse.ocl.ecore.CollectionType collectionType, List<EOperation> result) {
+		OCLStandardLibrary<EClassifier> oclstdlib = getOCLStandardLibrary();
+		
+		EcorePackage typePackage = EcorePackage.eINSTANCE;
+
+		EClass metaType = collectionType.eClass();
+		EClassifier genericBaseType = null;
+		
+		if(metaType == typePackage.getCollectionType() && collectionType != oclstdlib.getCollection()) {
+			genericBaseType = oclstdlib.getCollection();
+		} else if(metaType == typePackage.getBagType() && collectionType != oclstdlib.getBag()) {
+			genericBaseType = oclstdlib.getBag();
+		} else if(metaType == typePackage.getSequenceType() && collectionType != oclstdlib.getSequence()) {
+			genericBaseType = oclstdlib.getSequence();
+		} else if(metaType == typePackage.getSetType() && collectionType != oclstdlib.getSet()) {
+			genericBaseType = oclstdlib.getSet();
+		} else if(metaType == typePackage.getOrderedSetType() && collectionType != oclstdlib.getOrderedSet()) {
+			genericBaseType = oclstdlib.getOrderedSet();
+		} else if(metaType == ExpressionsPackage.eINSTANCE.getListType() && collectionType != getQVTStandardLibrary().getList()) {
+			genericBaseType = getQVTStandardLibrary().getList();
+		}
+		
+		QvtTypeResolverImpl thisResolver = getQVTTypeResolver();
+		if(genericBaseType != null) {
+			thisResolver.getLocalCollectionAdditionalOperations((CollectionType)genericBaseType, result, false);
+		}
+
+		thisResolver.getLocalCollectionAdditionalOperations(collectionType, result, true);
+		
+		Collection<EClassifier> allParents = OCLStandardLibraryUtil.getAllSupertypes(this, collectionType);
+		for (EClassifier general : allParents) {
+			org.eclipse.ocl.ecore.CollectionType generalCollection = (org.eclipse.ocl.ecore.CollectionType) general; 
+			thisResolver.getLocalCollectionAdditionalOperations(generalCollection, result, false);
+		}
+		
+		if(metaType == ExpressionsPackage.eINSTANCE.getListType()) {
+			// process the CollectionType super type
+			// TODO - better to have MDT OCL to support #getAllSupertypes(...) operation in TypeChecker
+			thisResolver.getLocalCollectionAdditionalOperations((CollectionType)oclstdlib.getCollection(), result, false);			
+		}
 	}
 	
 	@Override

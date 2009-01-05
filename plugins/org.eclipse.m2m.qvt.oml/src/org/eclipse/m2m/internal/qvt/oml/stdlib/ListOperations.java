@@ -62,8 +62,8 @@ public class ListOperations extends AbstractContextualOperations {
 		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			MutableList<Object> list = (MutableList<Object>) source;
 			
-			String begin = (String) args[0];
-			String sep = (String) args[1];			
+			String sep = (String) args[0];
+			String begin = (String) args[1];			
 			String end = (String) args[2];
 						
 			return list.joinfields(sep, begin, end);

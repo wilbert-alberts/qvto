@@ -40,9 +40,13 @@ public class MutableListImpl<E> extends ArrayList<E> implements MutableList<E> {
 
 	public String joinfields(String sep, String begin, String end) {
 		StringBuilder result = new StringBuilder();
-		result.append(sep);
+		result.append(begin);
 		
+		int pos = 0;
 		for (E nextElement : this) {
+			if(pos++ > 0) {
+				result.append(sep);
+			}
 			result.append(String.valueOf(nextElement));
 		}
 		
@@ -55,7 +59,7 @@ public class MutableListImpl<E> extends ArrayList<E> implements MutableList<E> {
 	}
 	
 	public void insertAt(E element, int at) {
-		add(at, element);
+		add(at - 1, element);
 	}
 	
 	public void prepend(E element) {

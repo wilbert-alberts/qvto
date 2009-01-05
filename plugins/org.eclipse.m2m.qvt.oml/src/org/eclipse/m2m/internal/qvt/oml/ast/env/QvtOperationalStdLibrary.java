@@ -35,6 +35,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.AbstractContextualOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.AbstractQVTStdlib;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.CollectionOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.ElementOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.IntegerOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.ListOperations;
@@ -121,6 +122,8 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements Stdli
 		
 		define(new StatusOperations(this));
 		define(new ListOperations(this));
+
+		define(CollectionOperations.getAllOperations(this));		
 		
 		((ModuleImpl)fStdlibModule).freeze();		
 	}
@@ -152,6 +155,7 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements Stdli
 		return fStdlibModule;
 	}
 	
+	@Override
 	public EClassifier getList() {
 		return LIST;
 	}
@@ -260,10 +264,12 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements Stdli
 					
 
 		 
-	private void define(AbstractContextualOperations typeOperations) {
-		typeOperations.define(fEnv);
-	}	
-	
+	private void define(AbstractContextualOperations... typeOperations) {
+		for (AbstractContextualOperations nextOperations : typeOperations) {
+			nextOperations.define(fEnv);	
+		}		
+	}
+		
 	private EClass createClass(String name, boolean isAbstract) {
 		assert fStdlibModule != null;
 		assert name != null;
