@@ -119,7 +119,23 @@ public class QvtCompiler {
 	public QvtCompiler(IImportResolver importResolver) {
 		this(importResolver, new WorkspaceMetamodelRegistryProvider());
     }	
-	
+
+	/**
+	 * Constructs QVT compiler using the given resolver and meta-model resource set.
+	 * 
+	 * @param importResolver
+	 *            resolver of compilation unit imports
+	 * @param metamodelResourceSet
+	 *            resource into meta-model nsURI mapped to a resource location
+	 *            are to be loaded.
+	 *            <p>
+	 *            Note: The meta-models already loaded in the resource set are
+	 *            reused
+	 */
+	public QvtCompiler(IImportResolver importResolver, ResourceSet metamodelResourceSet) {		
+		this(importResolver, new WorkspaceMetamodelRegistryProvider(metamodelResourceSet));
+    }
+		
 	public QvtCompilerKernel getKernel() {
 		return myKernel;
 	}
