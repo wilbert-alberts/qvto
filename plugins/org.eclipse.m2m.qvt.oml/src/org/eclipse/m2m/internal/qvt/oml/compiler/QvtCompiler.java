@@ -87,10 +87,17 @@ public class QvtCompiler {
 	 * 
 	 * @param importResolver
 	 *            resolver for other module imports
+	 * @param metamodelResourceSet
+	 *            the resource set into which meta-model nsURI mapped to a resource location
+	 *            are to be loaded. If it is <code>null</code>, a default resource set is created
+	 *            automatically.
+	 *            <p>
+	 *            Note: The meta-models already loaded in the resource set are
+	 *            reused                        
 	 * @return the compiler instance
 	 */
-    public static QvtCompiler createCompilerWithHistory(IImportResolver importResolver) { 
-    	return new QvtCompiler(importResolver) {
+    public static QvtCompiler createCompilerWithHistory(IImportResolver importResolver, ResourceSet metamodelResourceSet) { 
+    	return new QvtCompiler(importResolver, metamodelResourceSet) {
     		@Override
     		protected void afterCompileCleanup() {
     			// do nothing as we need to cross-reference cached modules on 
@@ -126,14 +133,18 @@ public class QvtCompiler {
 	 * @param importResolver
 	 *            resolver of compilation unit imports
 	 * @param metamodelResourceSet
-	 *            resource into meta-model nsURI mapped to a resource location
-	 *            are to be loaded.
+	 *            the resource set into which meta-model nsURI mapped to a resource location
+	 *            are to be loaded. If it is <code>null</code>, a default resource set is created
+	 *            automatically.
 	 *            <p>
 	 *            Note: The meta-models already loaded in the resource set are
 	 *            reused
 	 */
 	public QvtCompiler(IImportResolver importResolver, ResourceSet metamodelResourceSet) {		
-		this(importResolver, new WorkspaceMetamodelRegistryProvider(metamodelResourceSet));
+		this(importResolver, 
+			metamodelResourceSet != null ?
+					new WorkspaceMetamodelRegistryProvider(metamodelResourceSet) :
+						new WorkspaceMetamodelRegistryProvider());
     }
 		
 	public QvtCompilerKernel getKernel() {
