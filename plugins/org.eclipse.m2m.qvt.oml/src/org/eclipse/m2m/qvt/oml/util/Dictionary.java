@@ -11,30 +11,27 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.util;
 
-import java.io.StringWriter;
+import java.util.Collection;
+import java.util.List;
 
 /**
- * A convenience implementation of a String content based log, mainly
- * suitable for testing and debugging purposes.
+ * A hash-map based dictionary representing the <code>Stdlib::DictionaryType</code>.
  * 
  * @author dvorak
  */
-public class StringBufferLog extends WriterLog {
+public interface Dictionary<KeyT, T> extends Collection<T> {
 
-	/**
-	 * Constructs a default log object.
-	 */
-	public StringBufferLog() {
-		this(1024);
-	}
+	T get(KeyT k);
 
-	/**
-	 * Constructs a log object of the given initialize size.
-	 * 
-	 * @param initialsize
-	 *            the initial size of the string buffer associated with this log
-	 */	
-	public StringBufferLog(int initialsize) {
-		super(new StringWriter(initialsize));
-	}
+	void put(KeyT k, T v);
+
+	boolean hasKey(KeyT k);
+
+	T defaultget(KeyT k, T v);
+
+	List<KeyT> keys();
+
+	List<T> values();
+	
+    void clear();	
 }

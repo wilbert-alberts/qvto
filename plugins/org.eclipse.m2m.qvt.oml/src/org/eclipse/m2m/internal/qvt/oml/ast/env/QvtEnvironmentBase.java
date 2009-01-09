@@ -288,6 +288,8 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVTOEnviro
 			genericBaseType = oclstdlib.getOrderedSet();
 		} else if(metaType == ExpressionsPackage.eINSTANCE.getListType() && collectionType != getQVTStandardLibrary().getList()) {
 			genericBaseType = getQVTStandardLibrary().getList();
+		} else if(metaType == ExpressionsPackage.eINSTANCE.getDictionaryType() && collectionType != getQVTStandardLibrary().getDictionary()) {
+			genericBaseType = getQVTStandardLibrary().getDictionary();
 		}
 		
 		QvtTypeResolverImpl thisResolver = getQVTTypeResolver();

@@ -14,6 +14,7 @@ package org.eclipse.m2m.internal.qvt.oml.evaluator;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
@@ -33,8 +34,13 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.library.ISessionData;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.DictionaryImpl;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.MutableListImpl;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.model.ExceptionInstance;
+import org.eclipse.m2m.qvt.oml.util.Dictionary;
+import org.eclipse.m2m.qvt.oml.util.MutableList;
 import org.eclipse.ocl.Environment;
+import org.eclipse.ocl.util.CollectionUtil;
 
 /**
  * @author dvorak
@@ -194,5 +200,19 @@ class EvaluationUtil {
 		
 	static QvtOperationalEvaluationEnv getAggregatingContext(QvtOperationalEvaluationEnv evalEnv) {
 		return evalEnv.getContext().getSessionData().getValue(AGGREGATING_ROOT_ENV); //$NON-NLS-1$
-	}	
+	}
+	
+    public static <E> Collection<E> createNewCollectionOfSameKind(Collection<E> c) {
+    	Collection<E> result;
+    	
+    	if (c instanceof MutableList) {
+    		result = new MutableListImpl<E>();
+    	} else if (c instanceof Dictionary) {
+    		result = new DictionaryImpl<Object, E>();
+    	} else {
+    		result = CollectionUtil.createNewCollectionOfSameKind(c);
+    	}
+    	
+    	return result;
+    }	
 }

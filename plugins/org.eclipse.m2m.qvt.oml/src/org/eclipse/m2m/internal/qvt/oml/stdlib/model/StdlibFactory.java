@@ -19,11 +19,14 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QVTStackTraceElement;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
+import org.eclipse.m2m.qvt.oml.util.Dictionary;
+import org.eclipse.m2m.qvt.oml.util.MutableList;
 
 public class StdlibFactory {
-
+	
 	private StdlibPackage fStdlibPackage;
 	
 	public StdlibFactory(StdlibPackage stdlibPackage) {
@@ -34,9 +37,22 @@ public class StdlibFactory {
 		fStdlibPackage = stdlibPackage;
 	}
 	
+	public DictionaryType createDictionary(EClassifier keyType, EClassifier elementType) {
+		DictionaryType dictType = ExpressionsFactory.eINSTANCE.createDictionaryType();
+		dictType.setKeyType(keyType);
+		dictType.setElementType(elementType);
+		dictType.setName(getTypeName(dictType));
+		// Note: instanceClass is transient, will not be loaded from deserialization 
+		dictType.setInstanceClass(Dictionary.class);		
+		return dictType;
+	}
+	
 	public ListType createList(EClassifier elementType) {
 		ListType listType = ExpressionsFactory.eINSTANCE.createListType();
 		listType.setElementType(elementType);
+		listType.setName(getTypeName(listType));
+		// Note: instanceClass is transient, will not be loaded from deserialization		
+		listType.setInstanceClass(MutableList.class);		
 		return listType;
 	}
 	
@@ -118,5 +134,47 @@ public class StdlibFactory {
 			}
 			return buf.toString();
 		}
-	}	
+	}
+
+	private static String getTypeName(ListType type) {
+		StringBuffer nameBuf = new StringBuffer();
+		nameBuf.append("List("); //$NON-NLS-1$
+
+		EClassifier elementType = type.getElementType();
+		String elementTypeName;
+		if (elementType != null) {
+			elementTypeName = elementType.getName();
+		} else {
+			elementTypeName = ""; //$NON-NLS-1$
+		}
+
+		nameBuf.append(elementTypeName);
+		nameBuf.append(')');
+
+		return nameBuf.toString();		
+	}
+	
+	private static String getTypeName(DictionaryType dictionaryType) {
+		StringBuilder nameBuf = new StringBuilder();
+		nameBuf.append("Dictionary("); //$NON-NLS-1$
+		EClassifier keyType = dictionaryType.getKeyType();
+		EClassifier elementType = dictionaryType.getElementType();		
+		
+		if(keyType != null) {
+			nameBuf.append(keyType.getName());		
+		} else {
+			nameBuf.append("null"); //$NON-NLS-1$
+		}
+		
+		nameBuf.append(',').append(' ');
+		
+		if(elementType != null) {
+			nameBuf.append(elementType.getName());		
+		} else {
+			nameBuf.append("null"); //$NON-NLS-1$			
+		}
+
+		nameBuf.append(')');		
+		return nameBuf.toString();
+	}
 }

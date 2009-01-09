@@ -18,6 +18,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOEnvironment;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
@@ -41,7 +42,7 @@ public class OclAnyOperations extends AbstractContextualOperations {
 	
 	@Override
 	protected OperationProvider[] getOperations() {
-		EcoreEnvironment env = getStdlib().getEnvironment();
+		QVTOEnvironment env = getStdlib().getEnvironment();
 		OCLStandardLibrary<EClassifier> oclStdlib = env.getOCLStandardLibrary();
 		
 		EClassifier createTypeType = getStdlib().getOCLStdLib().getOclType();

@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ExpressionsPackageImpl.java,v 1.18 2008/12/23 17:21:59 radvorak Exp $
+ * $Id: ExpressionsPackageImpl.java,v 1.19 2009/01/09 15:59:39 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -65,6 +65,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.SeverityKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.SwitchExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.TemplateParameterType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Typedef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VariableInitExp;
@@ -107,6 +108,13 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 	 * @generated
 	 */
 	private EClass dictLiteralPartEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass templateParameterTypeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -558,6 +566,24 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 	 */
 	public EReference getDictLiteralPart_Value() {
 		return (EReference)dictLiteralPartEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getTemplateParameterType() {
+		return templateParameterTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTemplateParameterType_Specification() {
+		return (EAttribute)templateParameterTypeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1650,6 +1676,9 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		createEReference(dictLiteralPartEClass, DICT_LITERAL_PART__KEY);
 		createEReference(dictLiteralPartEClass, DICT_LITERAL_PART__VALUE);
 
+		templateParameterTypeEClass = createEClass(TEMPLATE_PARAMETER_TYPE);
+		createEAttribute(templateParameterTypeEClass, TEMPLATE_PARAMETER_TYPE__SPECIFICATION);
+
 		dictionaryTypeEClass = createEClass(DICTIONARY_TYPE);
 		createEReference(dictionaryTypeEClass, DICTIONARY_TYPE__KEY_TYPE);
 
@@ -1849,6 +1878,7 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		listTypeEClass.getESuperTypes().add(theEcorePackage.getCollectionType());
 		dictLiteralExpEClass.getESuperTypes().add(theEcorePackage.getLiteralExp());
 		dictLiteralPartEClass.getESuperTypes().add(theEcorePackage_1.getEModelElement());
+		templateParameterTypeEClass.getESuperTypes().add(theEcorePackage_1.getEClassifier());
 		dictionaryTypeEClass.getESuperTypes().add(theEcorePackage.getCollectionType());
 		typedefEClass.getESuperTypes().add(theEcorePackage_1.getEClass());
 		moduleEClass.getESuperTypes().add(theEcorePackage_1.getEClass());
@@ -1953,6 +1983,9 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		initEClass(dictLiteralPartEClass, DictLiteralPart.class, "DictLiteralPart", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getDictLiteralPart_Key(), theEcorePackage.getOCLExpression(), null, "key", null, 1, 1, DictLiteralPart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getDictLiteralPart_Value(), theEcorePackage.getOCLExpression(), null, "value", null, 1, 1, DictLiteralPart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(templateParameterTypeEClass, TemplateParameterType.class, "TemplateParameterType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getTemplateParameterType_Specification(), theEcorePackage_1.getEString(), "specification", null, 0, 1, TemplateParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(dictionaryTypeEClass, DictionaryType.class, "DictionaryType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getDictionaryType_KeyType(), theEcorePackage_1.getEClassifier(), null, "keyType", null, 0, 1, DictionaryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -2913,6 +2946,11 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 
 		op = addEOperation(extendedVisitorEClass, null, "visitEntryOperation", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getEntryOperation(), "entryOperation", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(extendedVisitorEClass_T);
+		initEOperation(op, g1);
+
+		op = addEOperation(extendedVisitorEClass, null, "visitDictLiteralExp", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getDictLiteralExp(), "dictLiteralExp", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(extendedVisitorEClass_T);
 		initEOperation(op, g1);
 

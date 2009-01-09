@@ -40,6 +40,7 @@ import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNode;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNodeAccess;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOEnvironment;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
@@ -60,6 +61,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralPartCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.DictionaryTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.ExpressionStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
@@ -113,6 +117,9 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralPart;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
@@ -291,7 +298,9 @@ public class QvtOperationalVisitorCS
 		EClassifier type = super.typeCS(typeCS, env);
 		if (type == null) {
 			if (typeCS instanceof ListTypeCS) {
-				type = visitListTypeCS((ListTypeCS) typeCS, env);
+				type = listTypeCS((ListTypeCS) typeCS, env);
+			} else if(typeCS instanceof DictionaryTypeCS) {
+				type = dictionaryTypeCS((DictionaryTypeCS) typeCS, env);
 			}
 		}
 		if(type == getOclVoid() && typeCS instanceof PrimitiveTypeCS == false) { 
@@ -559,10 +568,15 @@ public class QvtOperationalVisitorCS
 	}
 	
     @Override
-    protected OCLExpression<EClassifier> literalExpCS(
-            LiteralExpCS literalExpCS,
+    protected OCLExpression<EClassifier> literalExpCS(LiteralExpCS literalExpCS,
             Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
-        OCLExpression<EClassifier> literalExp = super.literalExpCS(literalExpCS, env);
+    	
+    	OCLExpression<EClassifier> literalExp = null;    	
+    	if(literalExpCS instanceof DictLiteralExpCS) {
+    		literalExp = dictionaryLiteralExp((DictLiteralExpCS)literalExpCS, env);
+    	} else {
+    		literalExp = super.literalExpCS(literalExpCS, env);
+    	}
         // AST binding 
         if(myCompilerOptions.isGenerateCompletionData()) {
             ASTBindingHelper.createCST2ASTBinding(literalExpCS, literalExp);
@@ -2936,7 +2950,8 @@ public class QvtOperationalVisitorCS
 	private OCLExpression<EClassifier> visitVariableInitializationCS(VariableInitializationCS varInitCS, 
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
-        MappingMethodCS mappingMethod = null;
+		// FIXME - remove the obsolete code bellow
+		MappingMethodCS mappingMethod = null;
         EObject tempContainer = varInitCS;
         do {
             tempContainer = tempContainer.eContainer();
@@ -4016,17 +4031,126 @@ public class QvtOperationalVisitorCS
 		return astNode;
 	}	
 
-	protected ListType visitListTypeCS(ListTypeCS listTypeCS,
+	protected EClassifier listTypeCS(ListTypeCS listTypeCS,
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 
-		EClassifier type = typeCS(listTypeCS.getTypeCS(), env);
-	
-		ListType result = QvtOperationalStdLibrary.INSTANCE.getStdlibFactory().createList(type); 
+		TypeCS elementTypeCS = listTypeCS.getTypeCS();
+		EClassifier elementType = typeCS(elementTypeCS, env);
+		elementTypeCS.setAst(elementType);
 		
-		@SuppressWarnings("unchecked")
+		ListType result = getListType(elementType, env);
+		if(result == null) {
+			return env.getOCLStandardLibrary().getOclVoid();
+		}
+		
+		
 		CollectionType<EClassifier, EOperation> astNode = (CollectionType<EClassifier, EOperation>) result;
-		initTypePositions(astNode, listTypeCS.getTypeCS());
+		initTypePositions(astNode, elementTypeCS);
 		
+		listTypeCS.setAst(result);		
+		return result;
+	}
+		
+	protected EClassifier dictionaryTypeCS(DictionaryTypeCS dictTypeCS,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+
+		TypeCS keyTypeCS = dictTypeCS.getKey();		
+		EClassifier keyType = typeCS(keyTypeCS, env);
+		keyTypeCS.setAst(keyType);
+
+		TypeCS valueTypeCS = dictTypeCS.getValue();
+		EClassifier valueType = typeCS(valueTypeCS, env);
+		valueTypeCS.setAst(valueType);
+
+		DictionaryType result = getDictionaryType(keyType, valueType, env);
+		if(result == null) {
+			return env.getOCLStandardLibrary().getOclVoid();
+		}
+				
+		initTypePositions((CollectionType<EClassifier, EOperation>) result, keyTypeCS);		
+		dictTypeCS.setAst(result);		
+		return result;
+	}	
+	
+	/**
+	 * Remark: Null argument safe operation
+	 */
+	protected DictionaryType getDictionaryType(EClassifier keyType, EClassifier valueType, 
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+		if(env instanceof QVTOEnvironment && keyType != null && valueType != null) {
+			QVTOEnvironment qvtEnv = (QVTOEnvironment) env;
+			return qvtEnv.getTypeResolver().resolveDictionaryType(keyType, valueType);
+		}
+		return null;
+	}
+
+	/**
+	 * Remark: Null argument safe operation
+	 */	
+	protected ListType getListType(EClassifier elementType, 
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+		if(env instanceof QVTOEnvironment && elementType != null) {
+			QVTOEnvironment qvtEnv = (QVTOEnvironment) env;
+			return qvtEnv.getTypeResolver().resolveListType(elementType);
+		}
+		return null;
+	}	
+	
+	protected DictLiteralExp dictionaryLiteralExp(DictLiteralExpCS dictLiteralExpCS,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+		DictLiteralExp result = ExpressionsFactory.eINSTANCE.createDictLiteralExp();		
+		
+		for (DictLiteralPartCS nextPartCS : dictLiteralExpCS.getParts()) {			
+			DictLiteralPart literalPartAST = dictionaryLiteralPart(nextPartCS, env);
+			result.getPart().add(literalPartAST);			
+		}		
+
+		EClassifier commonKeyType = null;
+		EClassifier commonnValueType = null;
+		boolean commonSuperTypeError = false;
+		
+		for (DictLiteralPart literalPartAST : result.getPart()) {
+			EClassifier nextKeyType = literalPartAST.getKey() != null ? literalPartAST.getKey().getType() : null;
+			EClassifier nextValueType = literalPartAST.getValue() != null ? literalPartAST.getValue().getType() : null;
+
+			if(nextKeyType != null && nextValueType != null) {
+				if(commonKeyType != null && commonnValueType != null) {
+					commonKeyType = TypeUtil.commonSuperType(dictLiteralExpCS, env, nextKeyType, commonKeyType);
+					if(commonKeyType != null) {
+						commonnValueType = TypeUtil.commonSuperType(dictLiteralExpCS, env, nextValueType, commonnValueType);
+					}
+				} else {
+					// first iteration, take the first types
+					commonKeyType = nextKeyType;
+					commonnValueType = nextValueType; 
+				}
+			} 
+			
+			commonSuperTypeError = commonKeyType == null || commonnValueType == null;
+			if(commonSuperTypeError) {
+				break;
+			}
+		}
+
+		EClassifier resultType = getDictionaryType(commonKeyType, commonnValueType, env);
+		if(resultType == null) {
+			resultType = env.getOCLStandardLibrary().getOclVoid();
+		}
+		
+		result.setType(resultType);		
+		
+		initStartEndPositions(result, dictLiteralExpCS);		
+		dictLiteralExpCS.setAst(result);		
+		return result;
+	}
+	
+	protected DictLiteralPart dictionaryLiteralPart(DictLiteralPartCS dictLiteralPartCS,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+		
+		DictLiteralPart result = ExpressionsFactory.eINSTANCE.createDictLiteralPart();	
+		result.setKey((org.eclipse.ocl.ecore.OCLExpression)oclExpressionCS(dictLiteralPartCS.getKey(), env));
+		result.setValue((org.eclipse.ocl.ecore.OCLExpression)oclExpressionCS(dictLiteralPartCS.getValue(), env));
+		dictLiteralPartCS.setAst(result);		
 		return result;
 	}
 	

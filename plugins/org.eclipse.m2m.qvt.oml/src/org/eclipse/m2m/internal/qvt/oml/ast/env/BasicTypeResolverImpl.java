@@ -27,7 +27,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Typedef;
@@ -58,7 +60,11 @@ class BasicTypeResolverImpl
 	public EClassifier resolve(EClassifier type) {
 		if(type instanceof ListType) {
 			return resolveListType(((ListType)type).getElementType());
+		} else if(type instanceof DictionaryType) {
+			DictionaryType dictType = (DictionaryType) type;
+			return resolveDictionaryType(dictType.getKeyType(), dictType.getElementType());
 		}
+		
 		return super.resolve(type);
 	}
 	
@@ -73,6 +79,19 @@ class BasicTypeResolverImpl
 		
 		return listType;
 	}
+	
+	public DictionaryType resolveDictionaryType(EClassifier keyType, EClassifier elementType) {
+		DictionaryType dictionaryType = findDictionaryType(keyType, elementType);
+		if(dictionaryType == null) {
+			DictionaryType newDictionary = QvtOperationalStdLibrary.INSTANCE
+					.getStdlibFactory().createDictionary(keyType, elementType);
+			
+			getCollectionPackage().getEClassifiers().add(newDictionary);
+			return newDictionary;
+		}
+		
+		return dictionaryType;
+	}	
 
 	private ListType findListType(EClassifier elementType) {
 		for (EClassifier next : getEnvironment().getUMLReflection().getClassifiers(getCollectionPackage())) {
@@ -90,10 +109,40 @@ class BasicTypeResolverImpl
 		return null;		
 	}
 
+	private DictionaryType findDictionaryType(EClassifier keyType, EClassifier valueType) {
+		for (EClassifier next : getEnvironment().getUMLReflection().getClassifiers(getCollectionPackage())) {
+	        if (next instanceof DictionaryType) {
+	        	DictionaryType type = (DictionaryType) next;
+				
+	        	boolean isKeyMatch = TypeUtil.getRelationship(
+							getEnvironment(),
+							type.getKeyType(),
+							keyType) == UMLReflection.SAME_TYPE;
+								
+				if (isKeyMatch) {;
+					if(TypeUtil.getRelationship(
+							getEnvironment(),
+							type.getElementType(),
+							valueType) == UMLReflection.SAME_TYPE) { 
+						return type;
+					}
+				}
+	        }
+		}
+		
+		return null;		
+	}	
+	
 	@Override
 	protected CollectionType<EClassifier, EOperation> findCollectionType(CollectionKind kind, EClassifier elementType) {
 		for (EClassifier next : getEnvironment().getUMLReflection().getClassifiers(getCollectionPackage())) {
-	        if (next instanceof CollectionType && next instanceof ListType == false) {	        	
+	        if (next instanceof CollectionType) {
+	        	if(next.eClass() == ExpressionsPackage.eINSTANCE.getDictionaryType() ||
+	        		next.eClass() == ExpressionsPackage.eINSTANCE.getListType()) {
+	        		// Note: QVT have unknown CollectionKind
+	        		continue;
+	        	}
+	        
 				@SuppressWarnings("unchecked")
 				CollectionType<EClassifier, EOperation> type =(CollectionType<EClassifier, EOperation>) next;
 				

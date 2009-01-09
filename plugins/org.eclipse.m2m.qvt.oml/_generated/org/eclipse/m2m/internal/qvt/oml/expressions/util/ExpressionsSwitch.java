@@ -63,6 +63,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.SwitchExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.TemplateParameterType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Typedef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VariableInitExp;
@@ -167,7 +168,7 @@ public class ExpressionsSwitch<T1> {
 			case ExpressionsPackage.LIST_TYPE: {
 				ListType listType = (ListType)theEObject;
 				T1 result = caseListType(listType);
-				if (result == null) result = caseCollectionType_1(listType);
+				if (result == null) result = caseEcore_CollectionType(listType);
 				if (result == null) result = caseEDataType(listType);
 				if (result == null) result = caseCollectionType(listType);
 				if (result == null) result = caseEClassifier(listType);
@@ -182,8 +183,8 @@ public class ExpressionsSwitch<T1> {
 			case ExpressionsPackage.DICT_LITERAL_EXP: {
 				DictLiteralExp dictLiteralExp = (DictLiteralExp)theEObject;
 				T1 result = caseDictLiteralExp(dictLiteralExp);
-				if (result == null) result = caseLiteralExp_1(dictLiteralExp);
-				if (result == null) result = caseOCLExpression_1(dictLiteralExp);
+				if (result == null) result = caseEcore_LiteralExp(dictLiteralExp);
+				if (result == null) result = caseEcore_OCLExpression(dictLiteralExp);
 				if (result == null) result = caseLiteralExp(dictLiteralExp);
 				if (result == null) result = caseETypedElement(dictLiteralExp);
 				if (result == null) result = caseOCLExpression(dictLiteralExp);
@@ -202,10 +203,19 @@ public class ExpressionsSwitch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ExpressionsPackage.TEMPLATE_PARAMETER_TYPE: {
+				TemplateParameterType templateParameterType = (TemplateParameterType)theEObject;
+				T1 result = caseTemplateParameterType(templateParameterType);
+				if (result == null) result = caseEClassifier(templateParameterType);
+				if (result == null) result = caseENamedElement(templateParameterType);
+				if (result == null) result = caseEModelElement(templateParameterType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ExpressionsPackage.DICTIONARY_TYPE: {
 				DictionaryType dictionaryType = (DictionaryType)theEObject;
 				T1 result = caseDictionaryType(dictionaryType);
-				if (result == null) result = caseCollectionType_1(dictionaryType);
+				if (result == null) result = caseEcore_CollectionType(dictionaryType);
 				if (result == null) result = caseEDataType(dictionaryType);
 				if (result == null) result = caseCollectionType(dictionaryType);
 				if (result == null) result = caseEClassifier(dictionaryType);
@@ -320,7 +330,7 @@ public class ExpressionsSwitch<T1> {
 				ModelParameter modelParameter = (ModelParameter)theEObject;
 				T1 result = caseModelParameter(modelParameter);
 				if (result == null) result = caseVarParameter(modelParameter);
-				if (result == null) result = caseVariable_1(modelParameter);
+				if (result == null) result = caseEcore_Variable(modelParameter);
 				if (result == null) result = caseEParameter(modelParameter);
 				if (result == null) result = caseETypedElement(modelParameter);
 				if (result == null) result = caseVariable(modelParameter);
@@ -336,7 +346,7 @@ public class ExpressionsSwitch<T1> {
 			case ExpressionsPackage.VAR_PARAMETER: {
 				VarParameter varParameter = (VarParameter)theEObject;
 				T1 result = caseVarParameter(varParameter);
-				if (result == null) result = caseVariable_1(varParameter);
+				if (result == null) result = caseEcore_Variable(varParameter);
 				if (result == null) result = caseEParameter(varParameter);
 				if (result == null) result = caseETypedElement(varParameter);
 				if (result == null) result = caseVariable(varParameter);
@@ -576,7 +586,7 @@ public class ExpressionsSwitch<T1> {
 				MappingParameter mappingParameter = (MappingParameter)theEObject;
 				T1 result = caseMappingParameter(mappingParameter);
 				if (result == null) result = caseVarParameter(mappingParameter);
-				if (result == null) result = caseVariable_1(mappingParameter);
+				if (result == null) result = caseEcore_Variable(mappingParameter);
 				if (result == null) result = caseEParameter(mappingParameter);
 				if (result == null) result = caseETypedElement(mappingParameter);
 				if (result == null) result = caseVariable(mappingParameter);
@@ -755,6 +765,21 @@ public class ExpressionsSwitch<T1> {
 	 * @generated
 	 */
 	public T1 caseDictLiteralPart(DictLiteralPart object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Template Parameter Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Template Parameter Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseTemplateParameterType(TemplateParameterType object) {
 		return null;
 	}
 
@@ -1624,7 +1649,7 @@ public class ExpressionsSwitch<T1> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T1 caseCollectionType_1(org.eclipse.ocl.ecore.CollectionType object) {
+	public T1 caseEcore_CollectionType(org.eclipse.ocl.ecore.CollectionType object) {
 		return null;
 	}
 
@@ -1654,7 +1679,7 @@ public class ExpressionsSwitch<T1> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T1 caseVariable_1(org.eclipse.ocl.ecore.Variable object) {
+	public T1 caseEcore_Variable(org.eclipse.ocl.ecore.Variable object) {
 		return null;
 	}
 
@@ -1684,7 +1709,7 @@ public class ExpressionsSwitch<T1> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T1 caseOCLExpression_1(org.eclipse.ocl.ecore.OCLExpression object) {
+	public T1 caseEcore_OCLExpression(org.eclipse.ocl.ecore.OCLExpression object) {
 		return null;
 	}
 
@@ -1714,7 +1739,7 @@ public class ExpressionsSwitch<T1> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T1 caseLiteralExp_1(org.eclipse.ocl.ecore.LiteralExp object) {
+	public T1 caseEcore_LiteralExp(org.eclipse.ocl.ecore.LiteralExp object) {
 		return null;
 	}
 

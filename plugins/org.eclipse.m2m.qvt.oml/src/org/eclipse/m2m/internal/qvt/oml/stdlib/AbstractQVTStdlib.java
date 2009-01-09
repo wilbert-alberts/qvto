@@ -13,53 +13,41 @@
 package org.eclipse.m2m.internal.qvt.oml.stdlib;
 
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOEnvironment;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
-import org.eclipse.ocl.ecore.EcoreEnvironment;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.model.StdlibFactory;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.model.StdlibPackage;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 
-public abstract class AbstractQVTStdlib {
+public abstract class AbstractQVTStdlib implements StdlibPackage {
 	/* FIXME -  */
 	static interface IFilter {
     	boolean matches(Object obj, Object type);
     }
-
+    
     static final IFilter clsFilter = new IFilter() {
 		public boolean matches(Object obj, Object type) {
 	    	if (type instanceof EClassifier) {
 	    		EClassifier classifier = (EClassifier) type;
 	    		return classifier.isInstance(obj);
 	    	}
-	    	else {
-	    		return false;
-	    	}
+	    	
+	    	return false;	    	
 		}			
 	};
-	
+    
 	protected AbstractQVTStdlib() {
 		super();
 	}	
 	
-	public abstract Library getStdLibModule();	
+	public abstract StdlibFactory getStdlibFactory();
 	
-	public abstract EClassifier getModelClass();
+	public abstract Library getStdLibModule();
 	
-	public abstract EClass getTransformationClass();
-	
-	public abstract EClass getStatusClass();
-
-	public abstract EClass getExceptionClass();	
-	
-	public abstract EClass getModuleType();
-	
-	public abstract EClassifier getElementType();
-	
-	public abstract EcoreEnvironment getEnvironment();	
-	
-	public abstract EClassifier getList();
-	
+	public abstract QVTOEnvironment getEnvironment();	
+		
 	public OCLStandardLibrary<EClassifier> getOCLStdLib() {
 		return getEnvironment().getOCLStandardLibrary();
-	}	
+	}
 }

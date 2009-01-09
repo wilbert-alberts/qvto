@@ -29,6 +29,8 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Class;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralPart;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ForExp;
@@ -107,6 +109,15 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object> {
         myProcessed = new HashSet<Visitable>();
     }
 
+    public Object visitDictLiteralExp(DictLiteralExp dictLiteralExp) {
+        for (DictLiteralPart part : dictLiteralExp.getPart()) {
+        	doProcess(part.getKey(), dictLiteralExp);
+        	doProcess(part.getValue(), dictLiteralExp);
+        }
+        
+    	return null;
+    }
+    
     public Object visitAssignExp(AssignExp assignExp) {
         doProcess(assignExp.getLeft(), assignExp);
         for (OCLExpression<EClassifier> exp : assignExp.getValue()) {

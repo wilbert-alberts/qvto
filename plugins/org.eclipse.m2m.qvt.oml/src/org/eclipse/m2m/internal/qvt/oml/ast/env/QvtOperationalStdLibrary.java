@@ -26,6 +26,7 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstanceFactory;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
@@ -36,6 +37,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.AbstractContextualOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.AbstractQVTStdlib;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CollectionOperations;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.DictionaryOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.ElementOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.IntegerOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.ListOperations;
@@ -47,13 +49,11 @@ import org.eclipse.m2m.internal.qvt.oml.stdlib.StdlibModuleOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.StringOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.TransformationOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.model.StdlibFactory;
-import org.eclipse.m2m.internal.qvt.oml.stdlib.model.StdlibPackage;
-import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.TypedElement;
 
 
-public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements StdlibPackage {
+public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 	
 	public static final String QVT_STDLIB_MODULE_NAME = "Stdlib"; //$NON-NLS-1$
 	
@@ -69,6 +69,8 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements Stdli
 	private EClass STATUS;
 	private EClass EXCEPTION;
 	private EClassifier LIST;
+	private EClassifier KEY_T;
+	private DictionaryType DICTIONARY;	
 	
 	private final Library fStdlibModule;
 	private StdlibFactory fFactory;
@@ -99,8 +101,14 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements Stdli
 		fStdlibModule.getEClassifiers().add(listType);
 		LIST = listType;
 		
-		fFactory = new StdlibFactory(this);
-		
+		KEY_T = ExpressionsFactory.eINSTANCE.createTemplateParameterType();
+		KEY_T.setName("KeyT"); //$NON-NLS-1$
+		fStdlibModule.getEClassifiers().add(KEY_T);
+
+		fFactory = new StdlibFactory(this);		
+		DICTIONARY = fFactory.createDictionary(KEY_T, fEnv.getOCLStandardLibrary().getT());
+		fStdlibModule.getEClassifiers().add(DICTIONARY);
+				
 		fTypeAliasMap = createTypeAliasMap(fEnv);		
 		
 		modelOperations = new ModelOperations(this);
@@ -122,6 +130,7 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements Stdli
 		
 		define(new StatusOperations(this));
 		define(new ListOperations(this));
+		define(new DictionaryOperations(this));
 
 		define(CollectionOperations.getAllOperations(this));		
 		
@@ -129,10 +138,11 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements Stdli
 	}
 		
 	@Override
-	public EcoreEnvironment getEnvironment() {
+	public QVTOEnvironment getEnvironment() {
 		return fEnv;
 	}
 	
+	@Override
 	public StdlibFactory getStdlibFactory() {
 		return fFactory;
 	}
@@ -155,39 +165,30 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements Stdli
 		return fStdlibModule;
 	}
 	
-	@Override
 	public EClassifier getList() {
 		return LIST;
 	}
-        		
-	/* (non-Javadoc)
-	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.StdlibPackage2#getModelClass()
-	 */
-	@Override
+		
+	public EClassifier getDictionary() {
+		return DICTIONARY;
+	}
+	
+	public EClassifier getKeyT() {		
+		return KEY_T;
+	};
+		
 	public EClass getModelClass() {	
 		return MODEL;
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.StdlibPackage2#getStatusClass()
-	 */
-	@Override
 	public EClass getStatusClass() {
 		return STATUS;
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.StdlibPackage2#getExceptionClass()
-	 */
-	@Override
 	public EClass getExceptionClass() {
 		return EXCEPTION;
 	}	
 	
-	/* (non-Javadoc)
-	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.StdlibPackage2#getTransformationClass()
-	 */
-	@Override
 	public EClass getTransformationClass() {	
 		return TRANSFORMATION;
 	}	
@@ -196,18 +197,10 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements Stdli
 		return TRANSFORM;
 	}	
 	
-	/* (non-Javadoc)
-	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.StdlibPackage2#getModuleType()
-	 */
-	@Override
 	public EClass getModuleType() {
 		return ExpressionsPackage.eINSTANCE.getModule();
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.StdlibPackage2#getElementType()
-	 */
-	@Override
 	public EClassifier getElementType() {
 		return ELEMENT;
 	}

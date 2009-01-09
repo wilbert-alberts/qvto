@@ -60,6 +60,8 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Class;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralPart;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
@@ -100,7 +102,9 @@ import org.eclipse.m2m.internal.qvt.oml.library.LateResolveInTask;
 import org.eclipse.m2m.internal.qvt.oml.library.LateResolveTask;
 import org.eclipse.m2m.internal.qvt.oml.library.QvtResolveUtil;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.DictionaryImpl;
 import org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord;
+import org.eclipse.m2m.qvt.oml.util.Dictionary;
 import org.eclipse.m2m.qvt.oml.util.EvaluationMonitor;
 import org.eclipse.m2m.qvt.oml.util.Log;
 import org.eclipse.ocl.Environment;
@@ -120,7 +124,6 @@ import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.PropertyCallExp;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.expressions.VariableExp;
-import org.eclipse.ocl.internal.OCLPlugin;
 import org.eclipse.ocl.internal.evaluation.EvaluationVisitorImpl;
 import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.types.BagType;
@@ -162,6 +165,18 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     
 	protected QvtOperationalEvaluationVisitorImpl createNestedEvaluationVisitor(QvtOperationalEvaluationVisitorImpl parent, QvtOperationalEvaluationEnv nestedEvalEnv) {
 		return new QvtOperationalEvaluationVisitorImpl(parent, nestedEvalEnv); 
+	}
+	
+	public Object visitDictLiteralExp(DictLiteralExp dictLiteralExp) {
+		Dictionary<Object, Object> result = new DictionaryImpl<Object, Object>();
+		for (DictLiteralPart part : dictLiteralExp.getPart()) {
+			Object key = part.getKey().accept(getVisitor());
+			Object value = part.getValue().accept(getVisitor());
+			if(key != getOclInvalid() && value != getOclInvalid())
+			result.put(key, value);
+		}
+		
+		return result;
 	}
 	
 	@Override
@@ -331,26 +346,33 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
                     Collection<Object> oldOclCollection = (Collection<Object>) oldValue;
                     Collection<Object> leftOclCollection;
                     if (assignExp.isIsReset()) {
-                        leftOclCollection = CollectionUtil.createNewCollectionOfSameKind(oldOclCollection);
+                        leftOclCollection = EvaluationUtil.createNewCollectionOfSameKind(oldOclCollection);
                     } else {
                         leftOclCollection = oldOclCollection;
                     }
 
-                    if (exprValue instanceof Collection) {
-                        if(getCollectionKind(leftOclCollection) == CollectionKind.ORDERED_SET_LITERAL) {
-                            // can't use CollectionUtil.union(), the result type is not OrderedSet                      
+                    final CollectionKind leftCollectionKind = getCollectionKind(leftOclCollection);
+					if (exprValue instanceof Collection) {
+                        if(leftCollectionKind == CollectionKind.ORDERED_SET_LITERAL) {
+                            // can't use CollectionUtil.union(), the result type is not OrderedSet              
                             LinkedHashSet<Object> values = new LinkedHashSet<Object>();
                             values.addAll(leftOclCollection);
-                            values.addAll((Collection<Object>)exprValue);
-                            leftOclCollection = CollectionUtil.createNewCollection(((CollectionType)variableType).getKind(), values);
+                            values.addAll((Collection<?>)exprValue);
+                            leftOclCollection = CollectionUtil.createNewCollection(((CollectionType<?, ?>)variableType).getKind(), values);
+                        } else if(leftCollectionKind != null){
+                        	leftOclCollection = CollectionUtil.union(leftOclCollection, (Collection<?>) exprValue);                        	
                         } else {
-                        leftOclCollection = CollectionUtil.union(leftOclCollection, (Collection<?>) exprValue);
+                        	// QVT mutable types
+                        	leftOclCollection.addAll((Collection<?>)exprValue);
                         }
-                    } else if (getCollectionKind(leftOclCollection) == CollectionKind.ORDERED_SET_LITERAL
-                            || getCollectionKind(leftOclCollection) == CollectionKind.SEQUENCE_LITERAL) {
+                    } else if (leftCollectionKind == CollectionKind.ORDERED_SET_LITERAL
+                            || leftCollectionKind == CollectionKind.SEQUENCE_LITERAL) {
                         leftOclCollection = CollectionUtil.append(leftOclCollection, exprValue);
-                    } else {
+                    } else if(leftCollectionKind != null) {
                         leftOclCollection = CollectionUtil.including(leftOclCollection, exprValue);
+                    } else {
+                    	// QVT mutable types
+                    	leftOclCollection.add(exprValue);
                     }
 
                     replaceInEnv(varName, leftOclCollection, variableType);
@@ -1767,12 +1789,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         if (collection instanceof Bag) {
             return CollectionKind.BAG_LITERAL;
         }
-
-        String message = OCLMessages.bind(OCLMessages.OCLCollectionKindNotImpl_ERROR_,
-                CollectionKind.COLLECTION_LITERAL);
-        IllegalArgumentException error = new IllegalArgumentException(message);
-        OCLPlugin.throwing(CollectionUtil.class, "getCollectionKind", error);//$NON-NLS-1$
-        throw error;
+        return null;
     }
 
     private List<Object> makeArgs(OperationCallExp<EClassifier, EOperation> operationCallExp) {

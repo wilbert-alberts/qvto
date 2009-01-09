@@ -90,17 +90,27 @@ public abstract class AbstractContextualOperations {
 	
 	protected class OperationProvider {
 		protected final String fName;
+		protected final String[] fParamNames;		
 		protected final EClassifier fReturnType;
 		protected final EClassifier[] fParamTypes;
 		protected final CallHandler fDispatcher;
 		protected boolean fIsStatic; 
 				
-		protected OperationProvider(CallHandler dispatcher, String name, EClassifier returnType, EClassifier... paramTypes) {
+		protected OperationProvider(CallHandler dispatcher, String name, String[] paramNames, EClassifier returnType, EClassifier... paramTypes) {
 			this.fName = name;
 			this.fReturnType = returnType;
 			this.fParamTypes = paramTypes;
 			this.fDispatcher = dispatcher;
 			this.fIsStatic = false;
+			
+			if(paramNames != null && paramNames.length != paramTypes.length) {
+				throw new IllegalArgumentException("Invalid number of parameter names"); //$NON-NLS-1$
+			}
+			this.fParamNames = paramNames; 
+		}
+		
+		protected OperationProvider(CallHandler dispatcher, String name, EClassifier returnType, EClassifier... paramTypes) {
+			this(dispatcher, name, null /*no parameter names*/, returnType, paramTypes);			
 		}
 		
 		public CallHandler callDispatcher() {
@@ -113,9 +123,15 @@ public abstract class AbstractContextualOperations {
 		
 		public EOperation define(EcoreEnvironment env) {
 			List<Variable<EClassifier, EParameter>> argList = new ArrayList<Variable<EClassifier, EParameter>>();
+			int pos = 0;
 			for (EClassifier cls : fParamTypes) {
 				Variable<EClassifier, EParameter> stringVariable = ExpressionsFactory.eINSTANCE.createVariable();
-				stringVariable.setName(cls.getName());
+				
+				String paramName = cls.getName();
+				if(fParamNames != null) {
+					paramName = fParamNames[pos++];
+				}
+				stringVariable.setName(paramName);
 				stringVariable.setType(cls);
 				argList.add(stringVariable);
 			}

@@ -9,38 +9,34 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: DictLiteralExpImpl.java,v 1.2 2009/01/09 15:59:39 radvorak Exp $
+ * $Id: TemplateParameterTypeImpl.java,v 1.1 2009/01/09 15:59:39 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
-import java.util.Collection;
+import org.eclipse.emf.common.notify.Notification;
 
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralPart;
+
+import org.eclipse.emf.ecore.impl.EClassifierImpl;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
-import org.eclipse.ocl.ecore.impl.LiteralExpImpl;
+import org.eclipse.m2m.internal.qvt.oml.expressions.TemplateParameterType;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Dict Literal Exp</b></em>'.
+ * An implementation of the model object '<em><b>Template Parameter Type</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.DictLiteralExpImpl#getPart <em>Part</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.TemplateParameterTypeImpl#getSpecification <em>Specification</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class DictLiteralExpImpl extends LiteralExpImpl implements DictLiteralExp {
+public class TemplateParameterTypeImpl extends EClassifierImpl implements TemplateParameterType {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -49,21 +45,31 @@ public class DictLiteralExpImpl extends LiteralExpImpl implements DictLiteralExp
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
 	/**
-	 * The cached value of the '{@link #getPart() <em>Part</em>}' containment reference list.
+	 * The default value of the '{@link #getSpecification() <em>Specification</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getPart()
+	 * @see #getSpecification()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<DictLiteralPart> part;
+	protected static final String SPECIFICATION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getSpecification() <em>Specification</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSpecification()
+	 * @generated
+	 * @ordered
+	 */
+	protected String specification = SPECIFICATION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected DictLiteralExpImpl() {
+	protected TemplateParameterTypeImpl() {
 		super();
 	}
 
@@ -74,35 +80,7 @@ public class DictLiteralExpImpl extends LiteralExpImpl implements DictLiteralExp
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ExpressionsPackage.Literals.DICT_LITERAL_EXP;
-	}
-	
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */	
-	@Override
-	public <T extends Object, U extends org.eclipse.ocl.utilities.Visitor<T,?,?,?,?,?,?,?,?,?>> T accept(U v) {
-		if (v instanceof ExtendedVisitor) {
-			@SuppressWarnings("unchecked")
-			ExtendedVisitor<T> visitorExt = (ExtendedVisitor) v;
-			return visitorExt.visitDictLiteralExp(this);
-		}
-		return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);			
-	};
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<DictLiteralPart> getPart() {
-		if (part == null) {
-			part = new EObjectContainmentEList<DictLiteralPart>(DictLiteralPart.class, this, ExpressionsPackage.DICT_LITERAL_EXP__PART);
-		}
-		return part;
+		return ExpressionsPackage.Literals.TEMPLATE_PARAMETER_TYPE;
 	}
 
 	/**
@@ -110,13 +88,20 @@ public class DictLiteralExpImpl extends LiteralExpImpl implements DictLiteralExp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case ExpressionsPackage.DICT_LITERAL_EXP__PART:
-				return ((InternalEList<?>)getPart()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
+	public String getSpecification() {
+		return specification;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSpecification(String newSpecification) {
+		String oldSpecification = specification;
+		specification = newSpecification;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.TEMPLATE_PARAMETER_TYPE__SPECIFICATION, oldSpecification, specification));
 	}
 
 	/**
@@ -127,8 +112,8 @@ public class DictLiteralExpImpl extends LiteralExpImpl implements DictLiteralExp
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ExpressionsPackage.DICT_LITERAL_EXP__PART:
-				return getPart();
+			case ExpressionsPackage.TEMPLATE_PARAMETER_TYPE__SPECIFICATION:
+				return getSpecification();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -138,13 +123,11 @@ public class DictLiteralExpImpl extends LiteralExpImpl implements DictLiteralExp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ExpressionsPackage.DICT_LITERAL_EXP__PART:
-				getPart().clear();
-				getPart().addAll((Collection<? extends DictLiteralPart>)newValue);
+			case ExpressionsPackage.TEMPLATE_PARAMETER_TYPE__SPECIFICATION:
+				setSpecification((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -158,8 +141,8 @@ public class DictLiteralExpImpl extends LiteralExpImpl implements DictLiteralExp
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.DICT_LITERAL_EXP__PART:
-				getPart().clear();
+			case ExpressionsPackage.TEMPLATE_PARAMETER_TYPE__SPECIFICATION:
+				setSpecification(SPECIFICATION_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -173,10 +156,26 @@ public class DictLiteralExpImpl extends LiteralExpImpl implements DictLiteralExp
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.DICT_LITERAL_EXP__PART:
-				return part != null && !part.isEmpty();
+			case ExpressionsPackage.TEMPLATE_PARAMETER_TYPE__SPECIFICATION:
+				return SPECIFICATION_EDEFAULT == null ? specification != null : !SPECIFICATION_EDEFAULT.equals(specification);
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //DictLiteralExpImpl
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (specification: "); //$NON-NLS-1$
+		result.append(specification);
+		result.append(')');
+		return result.toString();
+	}
+
+} //TemplateParameterTypeImpl

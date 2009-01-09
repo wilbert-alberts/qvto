@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.HiddenElementAdapter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
@@ -92,6 +93,10 @@ public class QvtTypeResolverImpl implements QVTOTypeResolver {
 	public ListType resolveListType(EClassifier elementType) {
 		return getDelegate().resolveListType(elementType);
 	}
+	
+	public DictionaryType resolveDictionaryType(EClassifier keyType, EClassifier elementType) {
+		return getDelegate().resolveDictionaryType(keyType, elementType);
+	}	
 	
 	public void collectAdditionalOperationsInTypeHierarchy(EClassifier type, boolean subTypesOnly, Collection<EOperation> result) {
 		if(fAdditionalTypes != null) {

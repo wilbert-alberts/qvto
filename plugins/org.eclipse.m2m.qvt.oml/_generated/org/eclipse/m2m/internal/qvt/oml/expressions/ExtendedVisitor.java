@@ -296,4 +296,12 @@ public interface ExtendedVisitor<T> extends Visitor<T, EClassifier, EOperation, 
 	 */
 	T visitEntryOperation(EntryOperation entryOperation);
 
+																/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model dictLiteralExpRequired="true"
+	 * @generated
+	 */
+	T visitDictLiteralExp(DictLiteralExp dictLiteralExp);
+
 } // ExtendedVisitor

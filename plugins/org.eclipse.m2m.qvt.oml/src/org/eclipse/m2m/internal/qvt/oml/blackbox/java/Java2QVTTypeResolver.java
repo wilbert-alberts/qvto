@@ -25,6 +25,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
+import org.eclipse.m2m.qvt.oml.util.Dictionary;
 import org.eclipse.m2m.qvt.oml.util.MutableList;
 import org.eclipse.ocl.TypeResolver;
 import org.eclipse.ocl.expressions.CollectionKind;
@@ -80,6 +82,8 @@ class Java2QVTTypeResolver {
 				//return paramType;
 			} else if(stdLib.getT2().getName().equals(typeVariable.getName())) {
 				return getEnvironment().getOCLStandardLibrary().getT();			
+			} else if(QvtOperationalStdLibrary.INSTANCE.getKeyT().getName().equals(typeVariable.getName())) {
+				return QvtOperationalStdLibrary.INSTANCE.getKeyT();
 			}
 		}
 		
@@ -99,8 +103,17 @@ class Java2QVTTypeResolver {
 			return null;
 		}
 		
+		Type actualElementType2 = actualTypeArguments.length > 1 ? actualTypeArguments[1] : null;
 		Class<?> rawClass = (Class<?>) rawType;
-		if(rawClass == MutableList.class) {
+		if(rawClass == Dictionary.class) {
+			EClassifier keyType = toEClassifier(actualElementType);
+			if(keyType != null && actualElementType2 != null) {
+				EClassifier elementType = toEClassifier(actualElementType2);
+				if(elementType != null) {
+					return fEnv.getTypeResolver().resolveDictionaryType(keyType, elementType);
+				}
+			}
+		} else if(rawClass == MutableList.class) {
 			EClassifier listElementType = toEClassifier(actualElementType);
 			if(listElementType != null) {
 				return fEnv.getTypeResolver().resolveListType(listElementType);

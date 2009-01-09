@@ -25,6 +25,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ForExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
@@ -438,5 +439,9 @@ abstract class QvtGenericEvaluationVisitor
     
     public Object visitEntryOperation(EntryOperation entryOperation) {    
     	return getQVTDelegate().visitEntryOperation(entryOperation);
+    }
+    
+    public Object visitDictLiteralExp(DictLiteralExp dictLiteralExp) {
+    	return getQVTDelegate().visitDictLiteralExp(dictLiteralExp);
     }
 }

@@ -32,7 +32,10 @@ public class ListOperations extends AbstractContextualOperations {
 		@SuppressWarnings("unchecked")
 		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			List<Object> list = (List<Object>) source;
-			list.add(args[0]);
+			final Object element = args[0];
+			if(element != CallHandlerAdapter.getInvalidResult(evalEnv)) {
+				list.add(element);
+			}
 			return null;
 		}
 	};
@@ -41,7 +44,10 @@ public class ListOperations extends AbstractContextualOperations {
 		@SuppressWarnings("unchecked")
 		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			List<Object> list = (List<Object>) source;
-			list.add(0, args[0]);
+			final Object element = args[0];
+			if(element != CallHandlerAdapter.getInvalidResult(evalEnv)) {			
+				list.add(0, element);
+			}
 			return null;
 		}
 	};
@@ -50,9 +56,11 @@ public class ListOperations extends AbstractContextualOperations {
 		@SuppressWarnings("unchecked")
 		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			MutableList<Object> list = (MutableList<Object>) source;
-			Object element = args[0];
-			Integer at = (Integer)args[1];
-			list.insertAt(element, at);
+			final Object element = args[0];
+			if(element != CallHandlerAdapter.getInvalidResult(evalEnv)) {				
+				Integer at = (Integer)args[1];
+				list.insertAt(element, at);
+			}
 			return null;
 		}
 	};

@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.ocl.ecore.CollectionType;
 import org.eclipse.ocl.types.OCLStandardLibrary;
@@ -32,7 +33,7 @@ import org.eclipse.ocl.utilities.TypedElement;
 class GenericsResolver {
 
 	final private QVTOEnvironment fEnv;
-	final private OCLStandardLibrary<EClassifier> fOCLStdLib;	
+	final private OCLStandardLibrary<EClassifier> fOCLStdLib;
 	final private BindSwitch fBindSwitch;	
 	final private Map<EClassifier, EClassifier> formal2ActualBinding = new HashMap<EClassifier, EClassifier>(3);
 
@@ -52,6 +53,7 @@ class GenericsResolver {
 		return TypeUtil.compatibleTypeMatch(fEnv, actualType, resolvedType);
 	}
 	
+	
 	public EClassifier resolveOperationReturnType(EClassifier source, EOperation operation, List<? extends TypedElement<EClassifier>> args) {
 		EClassifier owner = fEnv.getUMLReflection().getOwningClassifier(operation);		
 		resolve(owner, source);
@@ -60,7 +62,7 @@ class GenericsResolver {
 		for (EParameter eParameter : operation.getEParameters()) {
 			EClassifier paramFormalType = eParameter.getEType();
 			if(paramFormalType != null) {
-				EClassifier actualArgType = args.get(paramIndex).getType();
+				EClassifier actualArgType = args.get(paramIndex++).getType();
 				resolve(paramFormalType, actualArgType);
 			}
 		}
@@ -83,8 +85,6 @@ class GenericsResolver {
 		if(formalType == null || actualType == null) {
 			return;
 		}
-		
-		assert isGeneric(actualType) == false;
 			
 		if(formalType instanceof CollectionType && actualType instanceof CollectionType) {
 			resolveCollection((CollectionType) formalType, (CollectionType) actualType);
@@ -104,13 +104,18 @@ class GenericsResolver {
 		EClassifier formalElementType = formal.getElementType();
 		EClassifier actualElementType = actual.getElementType();
 		
-		if(isGeneric(formalElementType)) {
-			resolve(formalElementType, actualElementType);
+		resolve(formalElementType, actualElementType);
+		
+		if(formal instanceof DictionaryType && actual instanceof DictionaryType) {
+			DictionaryType formalDict = (DictionaryType) formal;
+			DictionaryType actualDict = (DictionaryType) actual;
+			resolve(formalDict.getKeyType(), actualDict.getKeyType());
 		}
 	}
 	
 	private boolean isGeneric(EClassifier type) {
-		return type == fOCLStdLib.getT() || type == fOCLStdLib.getT2(); 
+		return type == fOCLStdLib.getT() || type == fOCLStdLib.getT2() || 
+				type == fEnv.getQVTStandardLibrary().getKeyT();
 	}
 	
 	void bind(EClassifier generic, EClassifier actualBound) {
@@ -130,6 +135,11 @@ class GenericsResolver {
 			EClassifier boundElementType = typeResolver.resolve(getBoundType((EClassifier) object.getElementType()));
 			if(object.eClass() == ExpressionsPackage.eINSTANCE.getListType()) {
 				return (EClassifier) typeResolver.resolveListType(boundElementType);
+			} else if(object.eClass() == ExpressionsPackage.eINSTANCE.getDictionaryType()) {
+				DictionaryType dictionaryType = (DictionaryType) object;
+				EClassifier boundKeyType = getBoundType(dictionaryType.getKeyType());
+				QvtTypeResolverImpl qvtTypeResolve = (QvtTypeResolverImpl) typeResolver;
+				qvtTypeResolve.resolveDictionaryType(boundKeyType, boundElementType);
 			}
 			
 			return (EClassifier) typeResolver.resolveCollectionType(object.getKind(), boundElementType);

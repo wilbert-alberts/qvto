@@ -28,5 +28,9 @@ public interface StdlibPackage {
 
 	EClassifier getElementType();
 	
-	EClassifier getList();	
+	EClassifier getList();
+
+	EClassifier getDictionary();
+	
+	EClassifier getKeyT();
 }

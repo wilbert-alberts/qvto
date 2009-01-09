@@ -14,9 +14,9 @@ package org.eclipse.m2m.internal.qvt.oml.stdlib;
 import java.util.Collection;
 
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOEnvironment;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
-import org.eclipse.ocl.ecore.EcoreEnvironment;
 
 
 public class CollectionOperations extends AbstractContextualOperations {
@@ -44,7 +44,7 @@ public class CollectionOperations extends AbstractContextualOperations {
 	}
 
 	public static AbstractContextualOperations[] getAllOperations(AbstractQVTStdlib library) {
-		EcoreEnvironment environment = library.getEnvironment();
+		QVTOEnvironment environment = library.getEnvironment();
 		return new AbstractContextualOperations[] {
 			new CollectionOperations(library, environment.getOCLStandardLibrary().getBag()),
 			new CollectionOperations(library, environment.getOCLStandardLibrary().getSequence()),

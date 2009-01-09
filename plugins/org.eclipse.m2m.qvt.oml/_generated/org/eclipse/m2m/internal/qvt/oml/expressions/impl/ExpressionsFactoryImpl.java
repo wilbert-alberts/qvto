@@ -57,6 +57,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.SeverityKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.SwitchExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.TemplateParameterType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Typedef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VariableInitExp;
@@ -116,6 +117,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 			case ExpressionsPackage.LIST_TYPE: return createListType();
 			case ExpressionsPackage.DICT_LITERAL_EXP: return createDictLiteralExp();
 			case ExpressionsPackage.DICT_LITERAL_PART: return createDictLiteralPart();
+			case ExpressionsPackage.TEMPLATE_PARAMETER_TYPE: return createTemplateParameterType();
 			case ExpressionsPackage.DICTIONARY_TYPE: return createDictionaryType();
 			case ExpressionsPackage.TYPEDEF: return createTypedef();
 			case ExpressionsPackage.MODULE: return createModule();
@@ -221,6 +223,16 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	public DictLiteralPart createDictLiteralPart() {
 		DictLiteralPartImpl dictLiteralPart = new DictLiteralPartImpl();
 		return dictLiteralPart;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TemplateParameterType createTemplateParameterType() {
+		TemplateParameterTypeImpl templateParameterType = new TemplateParameterTypeImpl();
+		return templateParameterType;
 	}
 
 	/**

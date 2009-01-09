@@ -64,6 +64,15 @@ public interface ExpressionsFactory extends EFactory {
 	DictLiteralPart createDictLiteralPart();
 
 	/**
+	 * Returns a new object of class '<em>Template Parameter Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Template Parameter Type</em>'.
+	 * @generated
+	 */
+	TemplateParameterType createTemplateParameterType();
+
+	/**
 	 * Returns a new object of class '<em>Dictionary Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

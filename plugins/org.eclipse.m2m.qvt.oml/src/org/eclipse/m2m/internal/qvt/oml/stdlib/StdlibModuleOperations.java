@@ -13,10 +13,10 @@
 package org.eclipse.m2m.internal.qvt.oml.stdlib;
 
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOEnvironment;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.qvt.oml.util.Log;
-import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.util.TypeUtil;
 
@@ -29,7 +29,7 @@ public class StdlibModuleOperations extends AbstractContextualOperations {
 	
 	@Override
 	protected OperationProvider[] getOperations() {
-		EcoreEnvironment env = getStdlib().getEnvironment();
+		QVTOEnvironment env = getStdlib().getEnvironment();
 		OCLStandardLibrary<EClassifier> oclStdLib = env.getOCLStandardLibrary();
 		EClassifier genericCollectionType = TypeUtil.resolveType(env,
 				(EClassifier)env.getOCLFactory().createCollectionType(oclStdLib.getT2()));

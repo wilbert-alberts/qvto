@@ -64,6 +64,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.SwitchExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.TemplateParameterType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Typedef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VariableInitExp;
@@ -158,6 +159,10 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseDictLiteralPart(DictLiteralPart object) {
 				return createDictLiteralPartAdapter();
+			}
+			@Override
+			public Adapter caseTemplateParameterType(TemplateParameterType object) {
+				return createTemplateParameterTypeAdapter();
 			}
 			@Override
 			public Adapter caseDictionaryType(DictionaryType object) {
@@ -356,8 +361,8 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createCollectionTypeAdapter();
 			}
 			@Override
-			public Adapter caseCollectionType_1(org.eclipse.ocl.ecore.CollectionType object) {
-				return createCollectionType_1Adapter();
+			public Adapter caseEcore_CollectionType(org.eclipse.ocl.ecore.CollectionType object) {
+				return createEcore_CollectionTypeAdapter();
 			}
 			@Override
 			public Adapter caseETypedElement(ETypedElement object) {
@@ -376,16 +381,16 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createOCLExpressionAdapter();
 			}
 			@Override
-			public Adapter caseOCLExpression_1(org.eclipse.ocl.ecore.OCLExpression object) {
-				return createOCLExpression_1Adapter();
+			public Adapter caseEcore_OCLExpression(org.eclipse.ocl.ecore.OCLExpression object) {
+				return createEcore_OCLExpressionAdapter();
 			}
 			@Override
 			public <C> Adapter caseLiteralExp(LiteralExp<C> object) {
 				return createLiteralExpAdapter();
 			}
 			@Override
-			public Adapter caseLiteralExp_1(org.eclipse.ocl.ecore.LiteralExp object) {
-				return createLiteralExp_1Adapter();
+			public Adapter caseEcore_LiteralExp(org.eclipse.ocl.ecore.LiteralExp object) {
+				return createEcore_LiteralExpAdapter();
 			}
 			@Override
 			public Adapter caseEClass(EClass object) {
@@ -408,8 +413,8 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createVariableAdapter();
 			}
 			@Override
-			public Adapter caseVariable_1(org.eclipse.ocl.ecore.Variable object) {
-				return createVariable_1Adapter();
+			public Adapter caseEcore_Variable(org.eclipse.ocl.ecore.Variable object) {
+				return createEcore_VariableAdapter();
 			}
 			@Override
 			public Adapter caseEParameter(EParameter object) {
@@ -498,6 +503,20 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDictLiteralPartAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.TemplateParameterType <em>Template Parameter Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.TemplateParameterType
+	 * @generated
+	 */
+	public Adapter createTemplateParameterTypeAdapter() {
 		return null;
 	}
 
@@ -1309,7 +1328,7 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.ocl.ecore.CollectionType
 	 * @generated
 	 */
-	public Adapter createCollectionType_1Adapter() {
+	public Adapter createEcore_CollectionTypeAdapter() {
 		return null;
 	}
 
@@ -1337,7 +1356,7 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.ocl.ecore.Variable
 	 * @generated
 	 */
-	public Adapter createVariable_1Adapter() {
+	public Adapter createEcore_VariableAdapter() {
 		return null;
 	}
 
@@ -1365,7 +1384,7 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.ocl.ecore.OCLExpression
 	 * @generated
 	 */
-	public Adapter createOCLExpression_1Adapter() {
+	public Adapter createEcore_OCLExpressionAdapter() {
 		return null;
 	}
 
@@ -1393,7 +1412,7 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.ocl.ecore.LiteralExp
 	 * @generated
 	 */
-	public Adapter createLiteralExp_1Adapter() {
+	public Adapter createEcore_LiteralExpAdapter() {
 		return null;
 	}
 
