@@ -28,6 +28,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralPartCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.DictionaryTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.ElementWithBody;
@@ -85,6 +88,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.TempFactory;
 import org.eclipse.ocl.cst.CSTFactory;
 import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.cst.LiteralExpCS;
 import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.PrimitiveLiteralExpCS;
@@ -882,6 +886,26 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	protected ListTypeCS createListTypeCS(TypeCS typeCS) {
 		ListTypeCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createListTypeCS();
 		result.setTypeCS(typeCS);
+		return result;
+	}
+
+	protected DictionaryTypeCS createDictTypeCS(TypeCS keyTypeCS, TypeCS valueTypeCS) {
+		DictionaryTypeCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createDictionaryTypeCS();
+		result.setKey(keyTypeCS);
+		result.setValue(valueTypeCS);
+		return result;
+	}	
+	
+	protected DictLiteralExpCS createDictLiteralExpCS(EList<DictLiteralPartCS> parts) {		
+		DictLiteralExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createDictLiteralExpCS();
+		result.getParts().addAll(parts);
+		return result;
+	}
+	
+	protected DictLiteralPartCS createDictLiteralPartCS(LiteralExpCS keyLiteralCS, OCLExpressionCS valueExpCS) {
+		DictLiteralPartCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createDictLiteralPartCS();
+		result.setKey(keyLiteralCS);
+		result.setValue(valueExpCS);
 		return result;
 	}
 }	

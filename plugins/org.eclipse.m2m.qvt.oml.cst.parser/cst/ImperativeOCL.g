@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.g,v 1.9 2008/11/28 14:36:54 aigdalov Exp $ 
+-- * $Id: ImperativeOCL.g,v 1.10 2009/01/09 15:59:22 radvorak Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -63,6 +63,8 @@ $KeyWords
 	forOne
 	compute
 	new
+	List
+	Dict
 $End
 
 $Notice
@@ -80,7 +82,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: ImperativeOCL.g,v 1.9 2008/11/28 14:36:54 aigdalov Exp $
+ * $Id: ImperativeOCL.g,v 1.10 2009/01/09 15:59:22 radvorak Exp $
  */
 	./
 $End
@@ -89,6 +91,54 @@ $Rules
 
 	-- opt = optional
 	-- m = multiple
+
+	typeCS -> dictTypeCS
+	dictTypeCS ::= Dict '(' typeCS ',' typeCS ')'
+		/.$BeginJava
+					CSTNode result = createDictTypeCS((TypeCS)$getSym(3), (TypeCS)$getSym(5));
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(6)));
+					$setResult(result);
+		  $EndJava
+		./	
+
+	dictLiteralCS ::= Dict '{' dictLiteralPartListCSopt '}'
+		/.$BeginJava
+					CSTNode result = createDictLiteralExpCS((EList<DictLiteralPartCS>)$getSym(3));
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
+					$setResult(result);
+		  $EndJava
+		./ 
+	
+	literalSimpleCS -> primitiveLiteralExpCS
+	literalSimpleCS -> nullLiteralExpCS	
+	literalExpCS -> dictLiteralCS
+	
+	dictLiteralPartCS ::= literalSimpleCS '=' oclExpressionCS
+		/.$BeginJava
+					CSTNode result = createDictLiteralPartCS((LiteralExpCS)$getSym(1), (OCLExpressionCS)$getSym(3));
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
+					$setResult(result);
+		  $EndJava
+		./
+	
+	dictLiteralPartListCSopt -> dictLiteralPartListCS	
+	dictLiteralPartListCSopt ::= $empty
+		/.$EmptyListAction./
+		
+	dictLiteralPartListCS ::= dictLiteralPartCS
+		/.$BeginJava
+					EList result = new BasicEList();
+					result.add($getSym(1));
+					$setResult(result);
+		  $EndJava
+		./
+	dictLiteralPartListCS ::= dictLiteralPartListCS ',' dictLiteralPartCS
+		/.$BeginJava
+					EList result = (EList)$getSym(1);
+					result.add($getSym(3));
+					$setResult(result);
+		  $EndJava
+		./
 
 	statementCS -> returnExpCS 	
 	returnExpCS ::= return oclExpressionCSOpt

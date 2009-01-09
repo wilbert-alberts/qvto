@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTSwitch.java,v 1.11 2008/12/29 16:24:29 aigdalov Exp $
+ * $Id: CSTSwitch.java,v 1.12 2009/01/09 15:59:22 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -579,6 +579,31 @@ public class CSTSwitch<T> {
 				if (result == null) result = caseTypeCS(listTypeCS);
 				if (result == null) result = caseOCLExpressionCS(listTypeCS);
 				if (result == null) result = caseCSTNode(listTypeCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.DICTIONARY_TYPE_CS: {
+				DictionaryTypeCS dictionaryTypeCS = (DictionaryTypeCS)theEObject;
+				T result = caseDictionaryTypeCS(dictionaryTypeCS);
+				if (result == null) result = caseTypeCS(dictionaryTypeCS);
+				if (result == null) result = caseOCLExpressionCS(dictionaryTypeCS);
+				if (result == null) result = caseCSTNode(dictionaryTypeCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.DICT_LITERAL_EXP_CS: {
+				DictLiteralExpCS dictLiteralExpCS = (DictLiteralExpCS)theEObject;
+				T result = caseDictLiteralExpCS(dictLiteralExpCS);
+				if (result == null) result = caseLiteralExpCS(dictLiteralExpCS);
+				if (result == null) result = caseOCLExpressionCS(dictLiteralExpCS);
+				if (result == null) result = caseCSTNode(dictLiteralExpCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.DICT_LITERAL_PART_CS: {
+				DictLiteralPartCS dictLiteralPartCS = (DictLiteralPartCS)theEObject;
+				T result = caseDictLiteralPartCS(dictLiteralPartCS);
+				if (result == null) result = caseCSTNode(dictLiteralPartCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -1457,6 +1482,51 @@ public class CSTSwitch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Dictionary Type CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Dictionary Type CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDictionaryTypeCS(DictionaryTypeCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Dict Literal Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Dict Literal Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDictLiteralExpCS(DictLiteralExpCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Dict Literal Part CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Dict Literal Part CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDictLiteralPartCS(DictLiteralPartCS object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Node</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1558,6 +1628,21 @@ public class CSTSwitch<T> {
 	 * @generated
 	 */
 	public T caseTypeCS(TypeCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Literal Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Literal Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseLiteralExpCS(LiteralExpCS object) {
 		return null;
 	}
 

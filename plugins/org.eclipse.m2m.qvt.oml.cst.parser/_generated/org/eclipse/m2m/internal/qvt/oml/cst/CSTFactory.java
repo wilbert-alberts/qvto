@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactory.java,v 1.10 2008/12/29 16:24:28 aigdalov Exp $
+ * $Id: CSTFactory.java,v 1.11 2009/01/09 15:59:22 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -508,6 +508,33 @@ public interface CSTFactory extends EFactory {
 	 * @generated
 	 */
 	ListTypeCS createListTypeCS();
+
+	/**
+	 * Returns a new object of class '<em>Dictionary Type CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Dictionary Type CS</em>'.
+	 * @generated
+	 */
+	DictionaryTypeCS createDictionaryTypeCS();
+
+	/**
+	 * Returns a new object of class '<em>Dict Literal Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Dict Literal Exp CS</em>'.
+	 * @generated
+	 */
+	DictLiteralExpCS createDictLiteralExpCS();
+
+	/**
+	 * Returns a new object of class '<em>Dict Literal Part CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Dict Literal Part CS</em>'.
+	 * @generated
+	 */
+	DictLiteralPartCS createDictLiteralPartCS();
 
 	/**
 	 * Returns the package supported by this factory.

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactoryImpl.java,v 1.10 2008/12/29 16:24:29 aigdalov Exp $
+ * $Id: CSTFactoryImpl.java,v 1.11 2009/01/09 15:59:22 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -129,6 +129,9 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 			case CSTPackage.MAPPING_EXTENSION_CS: return createMappingExtensionCS();
 			case CSTPackage.NEW_RULE_CALL_EXP_CS: return createNewRuleCallExpCS();
 			case CSTPackage.LIST_TYPE_CS: return createListTypeCS();
+			case CSTPackage.DICTIONARY_TYPE_CS: return createDictionaryTypeCS();
+			case CSTPackage.DICT_LITERAL_EXP_CS: return createDictLiteralExpCS();
+			case CSTPackage.DICT_LITERAL_PART_CS: return createDictLiteralPartCS();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -698,6 +701,36 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	public ListTypeCS createListTypeCS() {
 		ListTypeCSImpl listTypeCS = new ListTypeCSImpl();
 		return listTypeCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DictionaryTypeCS createDictionaryTypeCS() {
+		DictionaryTypeCSImpl dictionaryTypeCS = new DictionaryTypeCSImpl();
+		return dictionaryTypeCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DictLiteralExpCS createDictLiteralExpCS() {
+		DictLiteralExpCSImpl dictLiteralExpCS = new DictLiteralExpCSImpl();
+		return dictLiteralExpCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DictLiteralPartCS createDictLiteralPartCS() {
+		DictLiteralPartCSImpl dictLiteralPartCS = new DictLiteralPartCSImpl();
+		return dictLiteralPartCS;
 	}
 
 	/**

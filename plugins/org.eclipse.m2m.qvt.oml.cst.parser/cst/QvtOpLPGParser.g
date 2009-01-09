@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.31 2008/12/29 19:08:02 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.32 2009/01/09 15:59:22 radvorak Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -44,9 +44,9 @@ $Import
 $Globals
 	/.	
 	import org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS;
+	import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralPartCS;	
 	import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
-	import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.MappingEndCS;
@@ -61,7 +61,6 @@ $Globals
 	import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.SimpleSignatureCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.temp.ResolveOpArgsExpCS;
-	import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindEnum;
 	import org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.ModuleRefCS;
@@ -74,6 +73,7 @@ $Globals
 	import org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS;
 	import org.eclipse.ocl.cst.PrimitiveLiteralExpCS;
 	import org.eclipse.ocl.cst.BooleanLiteralExpCS;
+	import org.eclipse.ocl.cst.LiteralExpCS;	
 	./
 $End
 
@@ -148,7 +148,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.31 2008/12/29 19:08:02 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.32 2009/01/09 15:59:22 radvorak Exp $
  */
 	./
 $End

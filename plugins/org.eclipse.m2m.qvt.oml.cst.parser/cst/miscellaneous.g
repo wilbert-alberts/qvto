@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.9 2008/12/29 16:24:29 aigdalov Exp $ 
+-- * $Id: miscellaneous.g,v 1.10 2009/01/09 15:59:22 radvorak Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -238,8 +238,6 @@ $Terminals
 	NOT_EQUAL_EXEQ   ::= '!='
 	INTEGER_RANGE_START
 
-	Dict
-	List
         break
         class
         composes
@@ -282,7 +280,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.9 2008/12/29 16:24:29 aigdalov Exp $
+ * $Id: miscellaneous.g,v 1.10 2009/01/09 15:59:22 radvorak Exp $
  */
 	./
 $End
@@ -881,7 +879,7 @@ $Rules
 							variables,
 							createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, "") //$NON-NLS-1$
 						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(3));
+					setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(3)));
 					$setResult(result);
 		  $EndJava
 		./

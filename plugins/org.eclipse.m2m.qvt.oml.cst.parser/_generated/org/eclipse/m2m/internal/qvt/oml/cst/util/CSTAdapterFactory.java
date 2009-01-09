@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTAdapterFactory.java,v 1.10 2008/12/29 16:24:29 aigdalov Exp $
+ * $Id: CSTAdapterFactory.java,v 1.11 2009/01/09 15:59:22 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -329,6 +329,18 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 				return createListTypeCSAdapter();
 			}
 			@Override
+			public Adapter caseDictionaryTypeCS(DictionaryTypeCS object) {
+				return createDictionaryTypeCSAdapter();
+			}
+			@Override
+			public Adapter caseDictLiteralExpCS(DictLiteralExpCS object) {
+				return createDictLiteralExpCSAdapter();
+			}
+			@Override
+			public Adapter caseDictLiteralPartCS(DictLiteralPartCS object) {
+				return createDictLiteralPartCSAdapter();
+			}
+			@Override
 			public Adapter caseCSTNode(CSTNode object) {
 				return createCSTNodeAdapter();
 			}
@@ -355,6 +367,10 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseTypeCS(TypeCS object) {
 				return createTypeCSAdapter();
+			}
+			@Override
+			public Adapter caseLiteralExpCS(LiteralExpCS object) {
+				return createLiteralExpCSAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -1189,6 +1205,48 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.DictionaryTypeCS <em>Dictionary Type CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.DictionaryTypeCS
+	 * @generated
+	 */
+	public Adapter createDictionaryTypeCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralExpCS <em>Dict Literal Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralExpCS
+	 * @generated
+	 */
+	public Adapter createDictLiteralExpCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralPartCS <em>Dict Literal Part CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralPartCS
+	 * @generated
+	 */
+	public Adapter createDictLiteralPartCSAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.cst.CSTNode <em>Node</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -1283,6 +1341,20 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTypeCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.cst.LiteralExpCS <em>Literal Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.cst.LiteralExpCS
+	 * @generated
+	 */
+	public Adapter createLiteralExpCSAdapter() {
 		return null;
 	}
 

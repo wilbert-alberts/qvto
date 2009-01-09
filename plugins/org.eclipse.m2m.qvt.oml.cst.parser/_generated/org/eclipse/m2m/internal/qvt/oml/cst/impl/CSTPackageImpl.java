@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.18 2008/12/29 16:24:29 aigdalov Exp $
+ * $Id: CSTPackageImpl.java,v 1.19 2009/01/09 15:59:22 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -32,6 +32,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralPartCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.DictionaryTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.ElementWithBody;
@@ -508,6 +511,27 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * @generated
 	 */
 	private EClass listTypeCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass dictionaryTypeCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass dictLiteralExpCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass dictLiteralPartCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -2263,6 +2287,78 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getDictionaryTypeCS() {
+		return dictionaryTypeCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDictionaryTypeCS_Key() {
+		return (EReference)dictionaryTypeCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDictionaryTypeCS_Value() {
+		return (EReference)dictionaryTypeCSEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getDictLiteralExpCS() {
+		return dictLiteralExpCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDictLiteralExpCS_Parts() {
+		return (EReference)dictLiteralExpCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getDictLiteralPartCS() {
+		return dictLiteralPartCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDictLiteralPartCS_Key() {
+		return (EReference)dictLiteralPartCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDictLiteralPartCS_Value() {
+		return (EReference)dictLiteralPartCSEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getDirectionKindEnum() {
 		return directionKindEnumEEnum;
 	}
@@ -2571,6 +2667,17 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		listTypeCSEClass = createEClass(LIST_TYPE_CS);
 		createEReference(listTypeCSEClass, LIST_TYPE_CS__TYPE_CS);
 
+		dictionaryTypeCSEClass = createEClass(DICTIONARY_TYPE_CS);
+		createEReference(dictionaryTypeCSEClass, DICTIONARY_TYPE_CS__KEY);
+		createEReference(dictionaryTypeCSEClass, DICTIONARY_TYPE_CS__VALUE);
+
+		dictLiteralExpCSEClass = createEClass(DICT_LITERAL_EXP_CS);
+		createEReference(dictLiteralExpCSEClass, DICT_LITERAL_EXP_CS__PARTS);
+
+		dictLiteralPartCSEClass = createEClass(DICT_LITERAL_PART_CS);
+		createEReference(dictLiteralPartCSEClass, DICT_LITERAL_PART_CS__KEY);
+		createEReference(dictLiteralPartCSEClass, DICT_LITERAL_PART_CS__VALUE);
+
 		// Create enums
 		directionKindEnumEEnum = createEEnum(DIRECTION_KIND_ENUM);
 		moduleKindEnumEEnum = createEEnum(MODULE_KIND_ENUM);
@@ -2675,6 +2782,9 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		mappingExtensionCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		newRuleCallExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
 		listTypeCSEClass.getESuperTypes().add(theCSTPackage_1.getTypeCS());
+		dictionaryTypeCSEClass.getESuperTypes().add(theCSTPackage_1.getTypeCS());
+		dictLiteralExpCSEClass.getESuperTypes().add(theCSTPackage_1.getLiteralExpCS());
+		dictLiteralPartCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(mappingModuleCSEClass, MappingModuleCS.class, "MappingModuleCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -2916,6 +3026,17 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
 		initEClass(listTypeCSEClass, ListTypeCS.class, "ListTypeCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getListTypeCS_TypeCS(), theCSTPackage_1.getTypeCS(), null, "typeCS", null, 0, 1, ListTypeCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(dictionaryTypeCSEClass, DictionaryTypeCS.class, "DictionaryTypeCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getDictionaryTypeCS_Key(), theCSTPackage_1.getTypeCS(), null, "key", null, 0, 1, DictionaryTypeCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getDictionaryTypeCS_Value(), theCSTPackage_1.getTypeCS(), null, "value", null, 0, 1, DictionaryTypeCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(dictLiteralExpCSEClass, DictLiteralExpCS.class, "DictLiteralExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getDictLiteralExpCS_Parts(), this.getDictLiteralPartCS(), null, "parts", null, 0, -1, DictLiteralExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(dictLiteralPartCSEClass, DictLiteralPartCS.class, "DictLiteralPartCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getDictLiteralPartCS_Key(), theCSTPackage_1.getLiteralExpCS(), null, "key", null, 0, 1, DictLiteralPartCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getDictLiteralPartCS_Value(), theCSTPackage_1.getOCLExpressionCS(), null, "value", null, 0, 1, DictLiteralPartCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Initialize enums and add enum literals
 		initEEnum(directionKindEnumEEnum, DirectionKindEnum.class, "DirectionKindEnum"); //$NON-NLS-1$
