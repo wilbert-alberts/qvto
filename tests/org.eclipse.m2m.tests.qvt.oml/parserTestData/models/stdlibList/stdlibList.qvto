@@ -28,4 +28,22 @@ main() {
 	var size : Integer := list->size();
 	list->insertAt('n', size);
 	assert fatal ('n' = list->genericListElementAt(size));
+	
+
+	-- OclInvalid not allowed in List 
+	var invalidValue := null.oclAsType(String).toUpper();	
+	assert fatal (invalidValue.oclIsInvalid());
+	
+	var listWithInvalidTest : List(String) := newList(Set { });
+	listWithInvalidTest->add(invalidValue);
+	assert fatal(listWithInvalidTest->isEmpty());
+
+	listWithInvalidTest->append(invalidValue);
+	assert fatal(listWithInvalidTest->isEmpty());
+	
+	listWithInvalidTest->prepend(invalidValue);
+	assert fatal(listWithInvalidTest->isEmpty());
+
+	listWithInvalidTest->insertAt(invalidValue, 0);
+	assert fatal(listWithInvalidTest->isEmpty());	
 }
