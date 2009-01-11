@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: EValueItemProvider.java,v 1.2 2008/12/18 15:18:17 radvorak Exp $
+ * $Id: EValueItemProvider.java,v 1.3 2009/01/11 23:22:19 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
@@ -33,6 +33,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLFactory;
 import org.eclipse.m2m.internal.qvt.oml.trace.EValue;
 import org.eclipse.m2m.internal.qvt.oml.trace.TraceFactory;
 import org.eclipse.m2m.internal.qvt.oml.trace.TracePackage;
@@ -402,6 +403,106 @@ public class EValueItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createListType()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createDictLiteralExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createDictLiteralPart()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createTemplateParameterType()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createDictionaryType()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createTypedef()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createAssignExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createVariableInitExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createWhileExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createSwitchExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createAltExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createLogExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createAssertExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createInstantiationExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createReturnExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createImperativeLoopExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createForExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createImperativeIterateExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createBlockExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createComputeExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
 				 TypesFactory.eINSTANCE.createAnyType()));
 
 		newChildDescriptors.add
@@ -593,191 +694,6 @@ public class EValueItemProvider
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
 				 ExpressionsFactory.eINSTANCE.createVariableExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createTypedef()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModule()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createLibrary()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createRename()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModuleImport()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createClass()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createContextualProperty()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createImperativeOperation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createVarParameter()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModelParameter()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createOperationBody()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createConstructorBody()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createMappingOperation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createHelper()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createMappingBody()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createAssignExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createVariableInitExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createMappingCallExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createBlockExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createComputeExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createInstantiationExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createObjectExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createWhileExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createSwitchExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createAltExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createResolveExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createResolveInExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModelType()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createMappingParameter()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createLogExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createAssertExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createImperativeLoopExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createForExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createImperativeIterateExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createReturnExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createOperationalTransformation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createEntryOperation()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -993,6 +909,116 @@ public class EValueItemProvider
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
 				 org.eclipse.ocl.ecore.EcoreFactory.eINSTANCE.createVariableExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModule()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createLibrary()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createRename()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModuleImport()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createClass()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createContextualProperty()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createImperativeOperation()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createVarParameter()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModelParameter()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createOperationBody()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createConstructorBody()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createMappingOperation()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createHelper()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createMappingBody()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createMappingCallExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createObjectExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createResolveExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createResolveInExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModelType()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createMappingParameter()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createOperationalTransformation()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createEntryOperation()));
 
 		newChildDescriptors.add
 			(createChildParameter

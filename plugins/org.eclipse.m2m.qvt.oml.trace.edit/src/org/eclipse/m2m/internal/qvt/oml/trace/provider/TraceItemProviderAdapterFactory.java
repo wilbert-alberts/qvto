@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: TraceItemProviderAdapterFactory.java,v 1.2 2008/12/18 15:18:17 radvorak Exp $
+ * $Id: TraceItemProviderAdapterFactory.java,v 1.3 2009/01/11 23:22:19 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
@@ -390,7 +390,7 @@ public class TraceItemProviderAdapterFactory extends TraceAdapterFactory impleme
 	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type)) {
 			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class) || (((Class<?>)type).isInstance(adapter))) {
+			if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
 				return adapter;
 			}
 		}
