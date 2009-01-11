@@ -9,20 +9,19 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: AltExpImpl.java,v 1.2 2008/10/31 00:02:48 radvorak Exp $
+ * $Id: AltExpImpl.java,v 1.3 2009/01/11 23:22:07 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
-import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage;
+import org.eclipse.ocl.ecore.OCLExpression;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -41,13 +40,6 @@ import org.eclipse.ocl.utilities.Visitor;
  */
 public class AltExpImpl extends ImperativeExpressionImpl implements AltExp {
     /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
-
-    /**
 	 * The cached value of the '{@link #getCondition() <em>Condition</em>}' containment reference.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -55,7 +47,7 @@ public class AltExpImpl extends ImperativeExpressionImpl implements AltExp {
 	 * @generated
 	 * @ordered
 	 */
-    protected OCLExpression<EClassifier> condition;
+    protected OCLExpression condition;
 
     /**
 	 * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
@@ -65,7 +57,7 @@ public class AltExpImpl extends ImperativeExpressionImpl implements AltExp {
 	 * @generated
 	 * @ordered
 	 */
-    protected OCLExpression<EClassifier> body;
+    protected OCLExpression body;
 
     /**
 	 * <!-- begin-user-doc -->
@@ -83,7 +75,7 @@ public class AltExpImpl extends ImperativeExpressionImpl implements AltExp {
 	 */
     @Override
     protected EClass eStaticClass() {
-		return ExpressionsPackage.Literals.ALT_EXP;
+		return ImperativeOCLPackage.Literals.ALT_EXP;
 	}
 
     /**
@@ -91,7 +83,7 @@ public class AltExpImpl extends ImperativeExpressionImpl implements AltExp {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public OCLExpression<EClassifier> getCondition() {
+    public OCLExpression getCondition() {
 		return condition;
 	}
 
@@ -100,11 +92,11 @@ public class AltExpImpl extends ImperativeExpressionImpl implements AltExp {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public NotificationChain basicSetCondition(OCLExpression<EClassifier> newCondition, NotificationChain msgs) {
-		OCLExpression<EClassifier> oldCondition = condition;
+    public NotificationChain basicSetCondition(OCLExpression newCondition, NotificationChain msgs) {
+		OCLExpression oldCondition = condition;
 		condition = newCondition;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpressionsPackage.ALT_EXP__CONDITION, oldCondition, newCondition);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLPackage.ALT_EXP__CONDITION, oldCondition, newCondition);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -115,18 +107,18 @@ public class AltExpImpl extends ImperativeExpressionImpl implements AltExp {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public void setCondition(OCLExpression<EClassifier> newCondition) {
+    public void setCondition(OCLExpression newCondition) {
 		if (newCondition != condition) {
 			NotificationChain msgs = null;
 			if (condition != null)
-				msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.ALT_EXP__CONDITION, null, msgs);
+				msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLPackage.ALT_EXP__CONDITION, null, msgs);
 			if (newCondition != null)
-				msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.ALT_EXP__CONDITION, null, msgs);
+				msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLPackage.ALT_EXP__CONDITION, null, msgs);
 			msgs = basicSetCondition(newCondition, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.ALT_EXP__CONDITION, newCondition, newCondition));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLPackage.ALT_EXP__CONDITION, newCondition, newCondition));
 	}
 
     /**
@@ -134,7 +126,7 @@ public class AltExpImpl extends ImperativeExpressionImpl implements AltExp {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public OCLExpression<EClassifier> getBody() {
+    public OCLExpression getBody() {
 		return body;
 	}
 
@@ -143,11 +135,11 @@ public class AltExpImpl extends ImperativeExpressionImpl implements AltExp {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public NotificationChain basicSetBody(OCLExpression<EClassifier> newBody, NotificationChain msgs) {
-		OCLExpression<EClassifier> oldBody = body;
+    public NotificationChain basicSetBody(OCLExpression newBody, NotificationChain msgs) {
+		OCLExpression oldBody = body;
 		body = newBody;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpressionsPackage.ALT_EXP__BODY, oldBody, newBody);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLPackage.ALT_EXP__BODY, oldBody, newBody);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -158,18 +150,18 @@ public class AltExpImpl extends ImperativeExpressionImpl implements AltExp {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public void setBody(OCLExpression<EClassifier> newBody) {
+    public void setBody(OCLExpression newBody) {
 		if (newBody != body) {
 			NotificationChain msgs = null;
 			if (body != null)
-				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.ALT_EXP__BODY, null, msgs);
+				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLPackage.ALT_EXP__BODY, null, msgs);
 			if (newBody != null)
-				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.ALT_EXP__BODY, null, msgs);
+				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLPackage.ALT_EXP__BODY, null, msgs);
 			msgs = basicSetBody(newBody, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.ALT_EXP__BODY, newBody, newBody));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLPackage.ALT_EXP__BODY, newBody, newBody));
 	}
 
     /**
@@ -195,9 +187,9 @@ public class AltExpImpl extends ImperativeExpressionImpl implements AltExp {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ExpressionsPackage.ALT_EXP__CONDITION:
+			case ImperativeOCLPackage.ALT_EXP__CONDITION:
 				return basicSetCondition(null, msgs);
-			case ExpressionsPackage.ALT_EXP__BODY:
+			case ImperativeOCLPackage.ALT_EXP__BODY:
 				return basicSetBody(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -211,9 +203,9 @@ public class AltExpImpl extends ImperativeExpressionImpl implements AltExp {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ExpressionsPackage.ALT_EXP__CONDITION:
+			case ImperativeOCLPackage.ALT_EXP__CONDITION:
 				return getCondition();
-			case ExpressionsPackage.ALT_EXP__BODY:
+			case ImperativeOCLPackage.ALT_EXP__BODY:
 				return getBody();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -224,15 +216,14 @@ public class AltExpImpl extends ImperativeExpressionImpl implements AltExp {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ExpressionsPackage.ALT_EXP__CONDITION:
-				setCondition((OCLExpression<EClassifier>)newValue);
+			case ImperativeOCLPackage.ALT_EXP__CONDITION:
+				setCondition((OCLExpression)newValue);
 				return;
-			case ExpressionsPackage.ALT_EXP__BODY:
-				setBody((OCLExpression<EClassifier>)newValue);
+			case ImperativeOCLPackage.ALT_EXP__BODY:
+				setBody((OCLExpression)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -246,11 +237,11 @@ public class AltExpImpl extends ImperativeExpressionImpl implements AltExp {
     @Override
     public void eUnset(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.ALT_EXP__CONDITION:
-				setCondition((OCLExpression<EClassifier>)null);
+			case ImperativeOCLPackage.ALT_EXP__CONDITION:
+				setCondition((OCLExpression)null);
 				return;
-			case ExpressionsPackage.ALT_EXP__BODY:
-				setBody((OCLExpression<EClassifier>)null);
+			case ImperativeOCLPackage.ALT_EXP__BODY:
+				setBody((OCLExpression)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -264,9 +255,9 @@ public class AltExpImpl extends ImperativeExpressionImpl implements AltExp {
     @Override
     public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.ALT_EXP__CONDITION:
+			case ImperativeOCLPackage.ALT_EXP__CONDITION:
 				return condition != null;
-			case ExpressionsPackage.ALT_EXP__BODY:
+			case ImperativeOCLPackage.ALT_EXP__BODY:
 				return body != null;
 		}
 		return super.eIsSet(featureID);

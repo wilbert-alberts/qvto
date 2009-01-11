@@ -9,13 +9,13 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ResolveExp.java,v 1.2 2008/10/31 00:02:48 radvorak Exp $
+ * $Id: ResolveExp.java,v 1.3 2009/01/11 23:22:05 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
-import org.eclipse.ocl.expressions.CallExp;
+import org.eclipse.ocl.ecore.CallExp;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.utilities.Visitor;
@@ -40,7 +40,7 @@ import org.eclipse.ocl.utilities.Visitor;
  * @model
  * @generated
  */
-public interface ResolveExp extends CallExp<EClassifier> {
+public interface ResolveExp extends CallExp {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -24,71 +24,17 @@ import org.eclipse.emf.ecore.EFactory;
 public interface ExpressionsFactory extends EFactory {
 	/**
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-    String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
-    /**
+	String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
+	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	ExpressionsFactory eINSTANCE = org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsFactoryImpl.init();
-
-	/**
-	 * Returns a new object of class '<em>List Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>List Type</em>'.
-	 * @generated
-	 */
-	ListType createListType();
-
-	/**
-	 * Returns a new object of class '<em>Dict Literal Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Dict Literal Exp</em>'.
-	 * @generated
-	 */
-	DictLiteralExp createDictLiteralExp();
-
-	/**
-	 * Returns a new object of class '<em>Dict Literal Part</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Dict Literal Part</em>'.
-	 * @generated
-	 */
-	DictLiteralPart createDictLiteralPart();
-
-	/**
-	 * Returns a new object of class '<em>Template Parameter Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Template Parameter Type</em>'.
-	 * @generated
-	 */
-	TemplateParameterType createTemplateParameterType();
-
-	/**
-	 * Returns a new object of class '<em>Dictionary Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Dictionary Type</em>'.
-	 * @generated
-	 */
-	DictionaryType createDictionaryType();
-
-	/**
-	 * Returns a new object of class '<em>Typedef</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Typedef</em>'.
-	 * @generated
-	 */
-	Typedef createTypedef();
 
 	/**
 	 * Returns a new object of class '<em>Module</em>'.
@@ -134,7 +80,6 @@ public interface ExpressionsFactory extends EFactory {
 	 * @generated
 	 */
 	org.eclipse.m2m.internal.qvt.oml.expressions.Class createClass();
-
 
 	/**
 	 * Returns a new object of class '<em>Contextual Property</em>'.
@@ -218,24 +163,6 @@ public interface ExpressionsFactory extends EFactory {
 	MappingBody createMappingBody();
 
 	/**
-	 * Returns a new object of class '<em>Assign Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Assign Exp</em>'.
-	 * @generated
-	 */
-	AssignExp createAssignExp();
-
-	/**
-	 * Returns a new object of class '<em>Variable Init Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Variable Init Exp</em>'.
-	 * @generated
-	 */
-	VariableInitExp createVariableInitExp();
-
-	/**
 	 * Returns a new object of class '<em>Mapping Call Exp</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -243,24 +170,6 @@ public interface ExpressionsFactory extends EFactory {
 	 * @generated
 	 */
 	MappingCallExp createMappingCallExp();
-
-	/**
-	 * Returns a new object of class '<em>Block Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Block Exp</em>'.
-	 * @generated
-	 */
-	BlockExp createBlockExp();
-
-	/**
-	 * Returns a new object of class '<em>Compute Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Compute Exp</em>'.
-	 * @generated
-	 */
-	ComputeExp createComputeExp();
 
 	/**
 	 * Returns a new object of class '<em>Object Exp</em>'.
@@ -272,51 +181,24 @@ public interface ExpressionsFactory extends EFactory {
 	ObjectExp createObjectExp();
 
 	/**
-	 * Returns a new object of class '<em>While Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>While Exp</em>'.
-	 * @generated
-	 */
-	WhileExp createWhileExp();
-
-	/**
-	 * Returns a new object of class '<em>Switch Exp</em>'.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Switch Exp</em>'.
-	 * @generated
-	 */
-    SwitchExp createSwitchExp();
-
-    /**
-	 * Returns a new object of class '<em>Alt Exp</em>'.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Alt Exp</em>'.
-	 * @generated
-	 */
-    AltExp createAltExp();
-
-    /**
 	 * Returns a new object of class '<em>Resolve Exp</em>'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @return a new object of class '<em>Resolve Exp</em>'.
 	 * @generated
 	 */
-    ResolveExp createResolveExp();
+	ResolveExp createResolveExp();
 
-    /**
+	/**
 	 * Returns a new object of class '<em>Resolve In Exp</em>'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @return a new object of class '<em>Resolve In Exp</em>'.
 	 * @generated
 	 */
-    ResolveInExp createResolveInExp();
+	ResolveInExp createResolveInExp();
 
-    /**
+	/**
 	 * Returns a new object of class '<em>Model Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -325,7 +207,7 @@ public interface ExpressionsFactory extends EFactory {
 	 */
 	ModelType createModelType();
 
-				/**
+	/**
 	 * Returns a new object of class '<em>Mapping Parameter</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -334,70 +216,7 @@ public interface ExpressionsFactory extends EFactory {
 	 */
 	MappingParameter createMappingParameter();
 
-				/**
-	 * Returns a new object of class '<em>Log Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Log Exp</em>'.
-	 * @generated
-	 */
-	LogExp createLogExp();
-
-				/**
-	 * Returns a new object of class '<em>Assert Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Assert Exp</em>'.
-	 * @generated
-	 */
-	AssertExp createAssertExp();
-
-				/**
-	 * Returns a new object of class '<em>Imperative Loop Exp</em>'.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Imperative Loop Exp</em>'.
-	 * @generated
-	 */
-    ImperativeLoopExp createImperativeLoopExp();
-
-                /**
-	 * Returns a new object of class '<em>For Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>For Exp</em>'.
-	 * @generated
-	 */
-	ForExp createForExp();
-
-																/**
-	 * Returns a new object of class '<em>Imperative Iterate Exp</em>'.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Imperative Iterate Exp</em>'.
-	 * @generated
-	 */
-    ImperativeIterateExp createImperativeIterateExp();
-
-                /**
-	 * Returns a new object of class '<em>Instantiation Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Instantiation Exp</em>'.
-	 * @generated
-	 */
-	InstantiationExp createInstantiationExp();
-
-																/**
-	 * Returns a new object of class '<em>Return Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Return Exp</em>'.
-	 * @generated
-	 */
-	ReturnExp createReturnExp();
-
-																/**
+	/**
 	 * Returns a new object of class '<em>Operational Transformation</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -406,7 +225,7 @@ public interface ExpressionsFactory extends EFactory {
 	 */
 	OperationalTransformation createOperationalTransformation();
 
-																/**
+	/**
 	 * Returns a new object of class '<em>Entry Operation</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -415,7 +234,7 @@ public interface ExpressionsFactory extends EFactory {
 	 */
 	EntryOperation createEntryOperation();
 
-																/**
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

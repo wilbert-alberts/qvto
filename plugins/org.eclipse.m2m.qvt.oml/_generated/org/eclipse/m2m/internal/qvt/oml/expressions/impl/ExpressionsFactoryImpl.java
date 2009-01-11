@@ -17,29 +17,15 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
-import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralPart;
-import org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ForExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
-import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
@@ -54,14 +40,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.SeverityKind;
-import org.eclipse.m2m.internal.qvt.oml.expressions.SwitchExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.TemplateParameterType;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Typedef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
-import org.eclipse.m2m.internal.qvt.oml.expressions.VariableInitExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.WhileExp;
 
 /**
  * <!-- begin-user-doc -->
@@ -72,12 +51,12 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.WhileExp;
 public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsFactory {
 	/**
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
+	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
-    /**
+	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -114,12 +93,6 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case ExpressionsPackage.LIST_TYPE: return createListType();
-			case ExpressionsPackage.DICT_LITERAL_EXP: return createDictLiteralExp();
-			case ExpressionsPackage.DICT_LITERAL_PART: return createDictLiteralPart();
-			case ExpressionsPackage.TEMPLATE_PARAMETER_TYPE: return createTemplateParameterType();
-			case ExpressionsPackage.DICTIONARY_TYPE: return createDictionaryType();
-			case ExpressionsPackage.TYPEDEF: return createTypedef();
 			case ExpressionsPackage.MODULE: return createModule();
 			case ExpressionsPackage.LIBRARY: return createLibrary();
 			case ExpressionsPackage.RENAME: return createRename();
@@ -134,26 +107,12 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 			case ExpressionsPackage.MAPPING_OPERATION: return createMappingOperation();
 			case ExpressionsPackage.HELPER: return createHelper();
 			case ExpressionsPackage.MAPPING_BODY: return createMappingBody();
-			case ExpressionsPackage.ASSIGN_EXP: return createAssignExp();
-			case ExpressionsPackage.VARIABLE_INIT_EXP: return createVariableInitExp();
 			case ExpressionsPackage.MAPPING_CALL_EXP: return createMappingCallExp();
-			case ExpressionsPackage.BLOCK_EXP: return createBlockExp();
-			case ExpressionsPackage.COMPUTE_EXP: return createComputeExp();
 			case ExpressionsPackage.OBJECT_EXP: return createObjectExp();
-			case ExpressionsPackage.WHILE_EXP: return createWhileExp();
-			case ExpressionsPackage.SWITCH_EXP: return createSwitchExp();
-			case ExpressionsPackage.ALT_EXP: return createAltExp();
 			case ExpressionsPackage.RESOLVE_EXP: return createResolveExp();
 			case ExpressionsPackage.RESOLVE_IN_EXP: return createResolveInExp();
 			case ExpressionsPackage.MODEL_TYPE: return createModelType();
 			case ExpressionsPackage.MAPPING_PARAMETER: return createMappingParameter();
-			case ExpressionsPackage.LOG_EXP: return createLogExp();
-			case ExpressionsPackage.ASSERT_EXP: return createAssertExp();
-			case ExpressionsPackage.IMPERATIVE_LOOP_EXP: return createImperativeLoopExp();
-			case ExpressionsPackage.FOR_EXP: return createForExp();
-			case ExpressionsPackage.IMPERATIVE_ITERATE_EXP: return createImperativeIterateExp();
-			case ExpressionsPackage.INSTANTIATION_EXP: return createInstantiationExp();
-			case ExpressionsPackage.RETURN_EXP: return createReturnExp();
 			case ExpressionsPackage.OPERATIONAL_TRANSFORMATION: return createOperationalTransformation();
 			case ExpressionsPackage.ENTRY_OPERATION: return createEntryOperation();
 			default:
@@ -171,8 +130,6 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 		switch (eDataType.getClassifierID()) {
 			case ExpressionsPackage.DIRECTION_KIND:
 				return createDirectionKindFromString(eDataType, initialValue);
-			case ExpressionsPackage.SEVERITY_KIND:
-				return createSeverityKindFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -188,71 +145,9 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 		switch (eDataType.getClassifierID()) {
 			case ExpressionsPackage.DIRECTION_KIND:
 				return convertDirectionKindToString(eDataType, instanceValue);
-			case ExpressionsPackage.SEVERITY_KIND:
-				return convertSeverityKindToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ListType createListType() {
-		ListTypeImpl listType = new ListTypeImpl();
-		return listType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public DictLiteralExp createDictLiteralExp() {
-		DictLiteralExpImpl dictLiteralExp = new DictLiteralExpImpl();
-		return dictLiteralExp;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public DictLiteralPart createDictLiteralPart() {
-		DictLiteralPartImpl dictLiteralPart = new DictLiteralPartImpl();
-		return dictLiteralPart;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public TemplateParameterType createTemplateParameterType() {
-		TemplateParameterTypeImpl templateParameterType = new TemplateParameterTypeImpl();
-		return templateParameterType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public DictionaryType createDictionaryType() {
-		DictionaryTypeImpl dictionaryType = new DictionaryTypeImpl();
-		return dictionaryType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Typedef createTypedef() {
-		TypedefImpl typedef = new TypedefImpl();
-		return typedef;
 	}
 
 	/**
@@ -400,49 +295,9 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public AssignExp createAssignExp() {
-		AssignExpImpl assignExp = new AssignExpImpl();
-		return assignExp;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public VariableInitExp createVariableInitExp() {
-		VariableInitExpImpl variableInitExp = new VariableInitExpImpl();
-		return variableInitExp;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public MappingCallExp createMappingCallExp() {
 		MappingCallExpImpl mappingCallExp = new MappingCallExpImpl();
 		return mappingCallExp;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public BlockExp createBlockExp() {
-		BlockExpImpl blockExp = new BlockExpImpl();
-		return blockExp;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ComputeExp createComputeExp() {
-		ComputeExpImpl computeExp = new ComputeExpImpl();
-		return computeExp;
 	}
 
 	/**
@@ -460,52 +315,22 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public WhileExp createWhileExp() {
-		WhileExpImpl whileExp = new WhileExpImpl();
-		return whileExp;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public SwitchExp createSwitchExp() {
-		SwitchExpImpl switchExp = new SwitchExpImpl();
-		return switchExp;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public AltExp createAltExp() {
-		AltExpImpl altExp = new AltExpImpl();
-		return altExp;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public ResolveExp createResolveExp() {
+	public ResolveExp createResolveExp() {
 		ResolveExpImpl resolveExp = new ResolveExpImpl();
 		return resolveExp;
 	}
 
-    /**
+	/**
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public ResolveInExp createResolveInExp() {
+	public ResolveInExp createResolveInExp() {
 		ResolveInExpImpl resolveInExp = new ResolveInExpImpl();
 		return resolveInExp;
 	}
 
-    /**
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -515,7 +340,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 		return modelType;
 	}
 
-				/**
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -525,77 +350,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 		return mappingParameter;
 	}
 
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public LogExp createLogExp() {
-		LogExpImpl logExp = new LogExpImpl();
-		return logExp;
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public AssertExp createAssertExp() {
-		AssertExpImpl assertExp = new AssertExpImpl();
-		return assertExp;
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public ImperativeLoopExp createImperativeLoopExp() {
-		ImperativeLoopExpImpl imperativeLoopExp = new ImperativeLoopExpImpl();
-		return imperativeLoopExp;
-	}
-
-                /**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ForExp createForExp() {
-		ForExpImpl forExp = new ForExpImpl();
-		return forExp;
-	}
-
-																/**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public ImperativeIterateExp createImperativeIterateExp() {
-		ImperativeIterateExpImpl imperativeIterateExp = new ImperativeIterateExpImpl();
-		return imperativeIterateExp;
-	}
-
-                /**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public InstantiationExp createInstantiationExp() {
-		InstantiationExpImpl instantiationExp = new InstantiationExpImpl();
-		return instantiationExp;
-	}
-
-																/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ReturnExp createReturnExp() {
-		ReturnExpImpl returnExp = new ReturnExpImpl();
-		return returnExp;
-	}
-
-																/**
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -605,7 +360,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 		return operationalTransformation;
 	}
 
-																/**
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -615,7 +370,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 		return entryOperation;
 	}
 
-																/**
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -632,26 +387,6 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	 * @generated
 	 */
 	public String convertDirectionKindToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public SeverityKind createSeverityKindFromString(EDataType eDataType, String initialValue) {
-		SeverityKind result = SeverityKind.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		return result;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertSeverityKindToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 

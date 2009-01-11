@@ -37,6 +37,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
+import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
+import org.eclipse.m2m.internal.qvt.oml.ast.binding.IModuleSourceInfo;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.IVirtualOperationTable;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
@@ -763,7 +765,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		EClass _class = objectExp.getInstantiatedClass();
 		assert _class instanceof OperationalTransformation; // do not support normal class constructor calls yet
 			
-		EList<OCLExpression<EClassifier>> formalArguments = objectExp.getArgument();		
+		EList<org.eclipse.ocl.ecore.OCLExpression> formalArguments = objectExp.getArgument();		
 		List<ModelInstance> actualArguments = new ArrayList<ModelInstance>(formalArguments.size());
 
 		for (OCLExpression<EClassifier> nextArg : formalArguments) {
@@ -884,7 +886,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         internEnv.pushObjectExpOwner(owner);
 
     	if(objectExp.getBody() != null) {
-    		EList<OCLExpression<EClassifier>> contents = objectExp.getBody().getContent();        
+    		EList<org.eclipse.ocl.ecore.OCLExpression> contents = objectExp.getBody().getContent();        
 	        for (OCLExpression<EClassifier> exp : contents) {
 	            exp.accept(getVisitor());
 	        }
@@ -908,7 +910,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     	
 		OperationBody body = QvtOperationalParserUtil.findParentElement(returnExp, OperationBody.class);
 		if(body != null) {
-			EList<OCLExpression<EClassifier>> content = body.getContent(); 
+			EList<org.eclipse.ocl.ecore.OCLExpression> content = body.getContent(); 
 			if(!content.isEmpty() && content.get(content.size() - 1) == returnExp) {
 				// return is the last expression in the body, simply return the value
 				return value;
@@ -1146,42 +1148,38 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		return true;
 	}
 	
-	public Object visitAssertExp(AssertExp assertExp) {
-		if(assertExp.getAssertion() != null && !Boolean.TRUE.equals(assertExp.getAssertion().accept(getVisitor()))) {
-			setCurrentEnvInstructionPointer(assertExp);			
-			EObject parent = assertExp;				
-			while(parent != null && !(parent instanceof Module)) {
-				parent = parent.eContainer();
-				if(parent instanceof ImperativeOperation) {
-					parent = QvtOperationalParserUtil.getOwningModule((ImperativeOperation) parent);
-				}
-			}
+	public Object visitAssertExp(AssertExp assertExp) {		
+		Object assertionValue = assertExp.getAssertion().accept(getVisitor());		
+		
+		if(Boolean.FALSE.equals(assertionValue)) {	
+			setCurrentEnvInstructionPointer(assertExp);
+
+			InternalEvaluationEnv internEvalEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);
+			Module currentModule = internEvalEnv.getCurrentModule().getModule();
+			IModuleSourceInfo moduleSource = ASTBindingHelper.getModuleSourceBinding(currentModule);
 			
-			String source = EvaluationMessages.UknownSourceLabel;				
-			if(parent != null) {
-				String moduleName = ((Module)parent).getName();
-				if(moduleName != null) {
-					source = moduleName;
-				}
+			String source;
+			if(moduleSource != null) {
+				source = moduleSource.getSourceURI().lastSegment();
+			} else {
+				source = EvaluationMessages.UknownSourceLabel;				
 			}
 
 			StringBuilder locationBuf = new StringBuilder(source);
-			if(assertExp.getLine() >= 0) {
-				locationBuf.append(':').append(assertExp.getLine());
+			if(assertExp.getStartPosition() >= 0 && moduleSource != null) {
+				int lineNum = moduleSource.getLineNumberProvider().getLineNumber(assertExp.getStartPosition());
+				locationBuf.append(':').append(lineNum);
 			}
 							
 			String message = NLS.bind(EvaluationMessages.AssertFailedMessage, assertExp.getSeverity(), locationBuf.toString());				
 			Log logger = getContext().getLog();
 			
-			//logger.print(message);
 			if(assertExp.getLog() != null) {
-				//logger.print(" : "); //$NON-NLS-1$
 				doVisitLogExp(assertExp.getLog(), logger, message);
 			} else {
 				logger.log(message);				
 			}
 			
-			//logger.println();
 			if(SeverityKind.FATAL.equals(assertExp.getSeverity())) {
 				logger.log(EvaluationMessages.TerminatingExecution);
 			}
@@ -1190,8 +1188,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 				throwQVTException(new QvtAssertionFailed(EvaluationMessages.FatalAssertionFailed));
 			}		
 				
-		}
-			
+		}			
 		
 		return null;
 	}
@@ -1726,7 +1723,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	            }
         	}
         } else {
-        	owner = createInstance(objectExp.getType(), objectExp.getExtent());
+        	owner = createInstance(objectExp.getType(), (ModelParameter) objectExp.getExtent());
         	if(objectExp.getName() != null) {
         		getOperationalEvaluationEnv().replace(objectExp.getName(), owner);
         	}

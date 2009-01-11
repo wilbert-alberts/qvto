@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: BlockExpImpl.java,v 1.2 2008/10/31 00:02:48 radvorak Exp $
+ * $Id: BlockExpImpl.java,v 1.3 2009/01/11 23:22:07 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -18,14 +18,13 @@ import java.util.Collection;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
-import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage;
+import org.eclipse.ocl.ecore.OCLExpression;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -43,13 +42,6 @@ import org.eclipse.ocl.utilities.Visitor;
  */
 public class BlockExpImpl extends ImperativeExpressionImpl implements BlockExp {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
-
-	/**
 	 * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -57,7 +49,7 @@ public class BlockExpImpl extends ImperativeExpressionImpl implements BlockExp {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<OCLExpression<EClassifier>> body;
+	protected EList<OCLExpression> body;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -75,7 +67,7 @@ public class BlockExpImpl extends ImperativeExpressionImpl implements BlockExp {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ExpressionsPackage.Literals.BLOCK_EXP;
+		return ImperativeOCLPackage.Literals.BLOCK_EXP;
 	}
 
 	/**
@@ -83,9 +75,9 @@ public class BlockExpImpl extends ImperativeExpressionImpl implements BlockExp {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<OCLExpression<EClassifier>> getBody() {
+	public EList<OCLExpression> getBody() {
 		if (body == null) {
-			body = new EObjectContainmentEList<OCLExpression<EClassifier>>(OCLExpression.class, this, ExpressionsPackage.BLOCK_EXP__BODY);
+			body = new EObjectContainmentEList<OCLExpression>(OCLExpression.class, this, ImperativeOCLPackage.BLOCK_EXP__BODY);
 		}
 		return body;
 	}
@@ -113,7 +105,7 @@ public class BlockExpImpl extends ImperativeExpressionImpl implements BlockExp {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ExpressionsPackage.BLOCK_EXP__BODY:
+			case ImperativeOCLPackage.BLOCK_EXP__BODY:
 				return ((InternalEList<?>)getBody()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -127,7 +119,7 @@ public class BlockExpImpl extends ImperativeExpressionImpl implements BlockExp {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ExpressionsPackage.BLOCK_EXP__BODY:
+			case ImperativeOCLPackage.BLOCK_EXP__BODY:
 				return getBody();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -142,9 +134,9 @@ public class BlockExpImpl extends ImperativeExpressionImpl implements BlockExp {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ExpressionsPackage.BLOCK_EXP__BODY:
+			case ImperativeOCLPackage.BLOCK_EXP__BODY:
 				getBody().clear();
-				getBody().addAll((Collection<? extends OCLExpression<EClassifier>>)newValue);
+				getBody().addAll((Collection<? extends OCLExpression>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -158,7 +150,7 @@ public class BlockExpImpl extends ImperativeExpressionImpl implements BlockExp {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.BLOCK_EXP__BODY:
+			case ImperativeOCLPackage.BLOCK_EXP__BODY:
 				getBody().clear();
 				return;
 		}
@@ -173,7 +165,7 @@ public class BlockExpImpl extends ImperativeExpressionImpl implements BlockExp {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.BLOCK_EXP__BODY:
+			case ImperativeOCLPackage.BLOCK_EXP__BODY:
 				return body != null && !body.isEmpty();
 		}
 		return super.eIsSet(featureID);

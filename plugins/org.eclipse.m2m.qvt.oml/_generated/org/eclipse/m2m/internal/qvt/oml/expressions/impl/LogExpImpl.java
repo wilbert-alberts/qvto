@@ -9,22 +9,20 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: LogExpImpl.java,v 1.2 2008/10/31 00:02:49 radvorak Exp $
+ * $Id: LogExpImpl.java,v 1.3 2009/01/11 23:22:09 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
-import org.eclipse.ocl.expressions.OCLExpression;
-import org.eclipse.ocl.expressions.impl.OperationCallExpImpl;
+import org.eclipse.ocl.ecore.OCLExpression;
+import org.eclipse.ocl.ecore.impl.OperationCallExpImpl;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -40,14 +38,7 @@ import org.eclipse.ocl.utilities.Visitor;
  *
  * @generated
  */
-public class LogExpImpl extends OperationCallExpImpl<EClassifier, EOperation> implements LogExp {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
-
+public class LogExpImpl extends OperationCallExpImpl implements LogExp {
 	/**
 	 * The cached value of the '{@link #getCondition() <em>Condition</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -56,7 +47,7 @@ public class LogExpImpl extends OperationCallExpImpl<EClassifier, EOperation> im
 	 * @generated
 	 * @ordered
 	 */
-	protected OCLExpression<EClassifier> condition;
+	protected OCLExpression condition;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -74,7 +65,7 @@ public class LogExpImpl extends OperationCallExpImpl<EClassifier, EOperation> im
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ExpressionsPackage.Literals.LOG_EXP;
+		return ImperativeOCLPackage.Literals.LOG_EXP;
 	}
 
 	/**
@@ -82,7 +73,7 @@ public class LogExpImpl extends OperationCallExpImpl<EClassifier, EOperation> im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public OCLExpression<EClassifier> getCondition() {
+	public OCLExpression getCondition() {
 		return condition;
 	}
 
@@ -91,11 +82,11 @@ public class LogExpImpl extends OperationCallExpImpl<EClassifier, EOperation> im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetCondition(OCLExpression<EClassifier> newCondition, NotificationChain msgs) {
-		OCLExpression<EClassifier> oldCondition = condition;
+	public NotificationChain basicSetCondition(OCLExpression newCondition, NotificationChain msgs) {
+		OCLExpression oldCondition = condition;
 		condition = newCondition;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpressionsPackage.LOG_EXP__CONDITION, oldCondition, newCondition);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLPackage.LOG_EXP__CONDITION, oldCondition, newCondition);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -106,18 +97,18 @@ public class LogExpImpl extends OperationCallExpImpl<EClassifier, EOperation> im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setCondition(OCLExpression<EClassifier> newCondition) {
+	public void setCondition(OCLExpression newCondition) {
 		if (newCondition != condition) {
 			NotificationChain msgs = null;
 			if (condition != null)
-				msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.LOG_EXP__CONDITION, null, msgs);
+				msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLPackage.LOG_EXP__CONDITION, null, msgs);
 			if (newCondition != null)
-				msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.LOG_EXP__CONDITION, null, msgs);
+				msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLPackage.LOG_EXP__CONDITION, null, msgs);
 			msgs = basicSetCondition(newCondition, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.LOG_EXP__CONDITION, newCondition, newCondition));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLPackage.LOG_EXP__CONDITION, newCondition, newCondition));
 	}
 
 	/**
@@ -143,7 +134,7 @@ public class LogExpImpl extends OperationCallExpImpl<EClassifier, EOperation> im
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ExpressionsPackage.LOG_EXP__CONDITION:
+			case ImperativeOCLPackage.LOG_EXP__CONDITION:
 				return basicSetCondition(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -157,7 +148,7 @@ public class LogExpImpl extends OperationCallExpImpl<EClassifier, EOperation> im
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ExpressionsPackage.LOG_EXP__CONDITION:
+			case ImperativeOCLPackage.LOG_EXP__CONDITION:
 				return getCondition();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -168,12 +159,11 @@ public class LogExpImpl extends OperationCallExpImpl<EClassifier, EOperation> im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ExpressionsPackage.LOG_EXP__CONDITION:
-				setCondition((OCLExpression<EClassifier>)newValue);
+			case ImperativeOCLPackage.LOG_EXP__CONDITION:
+				setCondition((OCLExpression)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -187,8 +177,8 @@ public class LogExpImpl extends OperationCallExpImpl<EClassifier, EOperation> im
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.LOG_EXP__CONDITION:
-				setCondition((OCLExpression<EClassifier>)null);
+			case ImperativeOCLPackage.LOG_EXP__CONDITION:
+				setCondition((OCLExpression)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -202,7 +192,7 @@ public class LogExpImpl extends OperationCallExpImpl<EClassifier, EOperation> im
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.LOG_EXP__CONDITION:
+			case ImperativeOCLPackage.LOG_EXP__CONDITION:
 				return condition != null;
 		}
 		return super.eIsSet(featureID);

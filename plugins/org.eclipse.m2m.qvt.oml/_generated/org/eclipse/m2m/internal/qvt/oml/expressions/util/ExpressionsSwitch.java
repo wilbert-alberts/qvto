@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
@@ -24,29 +23,17 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
-import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
-import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralPart;
-import org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ForExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeExpression;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
-import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
@@ -61,25 +48,15 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.SwitchExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.TemplateParameterType;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Typedef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
-import org.eclipse.m2m.internal.qvt.oml.expressions.VariableInitExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VisitableASTNode;
-import org.eclipse.m2m.internal.qvt.oml.expressions.WhileExp;
 import org.eclipse.ocl.expressions.CallExp;
 import org.eclipse.ocl.expressions.FeatureCallExp;
-import org.eclipse.ocl.expressions.LiteralExp;
-import org.eclipse.ocl.expressions.LoopExp;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.Variable;
-import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.CallingASTNode;
-import org.eclipse.ocl.utilities.PredefinedType;
 import org.eclipse.ocl.utilities.TypedASTNode;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.Visitable;
@@ -101,11 +78,11 @@ import org.eclipse.ocl.utilities.Visitor;
 public class ExpressionsSwitch<T1> {
 	/**
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
-    /**
+	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
+	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -165,78 +142,6 @@ public class ExpressionsSwitch<T1> {
 	 */
 	protected T1 doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case ExpressionsPackage.LIST_TYPE: {
-				ListType listType = (ListType)theEObject;
-				T1 result = caseListType(listType);
-				if (result == null) result = caseEcore_CollectionType(listType);
-				if (result == null) result = caseEDataType(listType);
-				if (result == null) result = caseCollectionType(listType);
-				if (result == null) result = caseEClassifier(listType);
-				if (result == null) result = casePredefinedType(listType);
-				if (result == null) result = caseTypedASTNode(listType);
-				if (result == null) result = caseENamedElement(listType);
-				if (result == null) result = caseASTNode(listType);
-				if (result == null) result = caseEModelElement(listType);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.DICT_LITERAL_EXP: {
-				DictLiteralExp dictLiteralExp = (DictLiteralExp)theEObject;
-				T1 result = caseDictLiteralExp(dictLiteralExp);
-				if (result == null) result = caseEcore_LiteralExp(dictLiteralExp);
-				if (result == null) result = caseEcore_OCLExpression(dictLiteralExp);
-				if (result == null) result = caseLiteralExp(dictLiteralExp);
-				if (result == null) result = caseETypedElement(dictLiteralExp);
-				if (result == null) result = caseOCLExpression(dictLiteralExp);
-				if (result == null) result = caseENamedElement(dictLiteralExp);
-				if (result == null) result = caseTypedElement(dictLiteralExp);
-				if (result == null) result = caseVisitable(dictLiteralExp);
-				if (result == null) result = caseASTNode(dictLiteralExp);
-				if (result == null) result = caseEModelElement(dictLiteralExp);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.DICT_LITERAL_PART: {
-				DictLiteralPart dictLiteralPart = (DictLiteralPart)theEObject;
-				T1 result = caseDictLiteralPart(dictLiteralPart);
-				if (result == null) result = caseEModelElement(dictLiteralPart);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.TEMPLATE_PARAMETER_TYPE: {
-				TemplateParameterType templateParameterType = (TemplateParameterType)theEObject;
-				T1 result = caseTemplateParameterType(templateParameterType);
-				if (result == null) result = caseEClassifier(templateParameterType);
-				if (result == null) result = caseENamedElement(templateParameterType);
-				if (result == null) result = caseEModelElement(templateParameterType);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.DICTIONARY_TYPE: {
-				DictionaryType dictionaryType = (DictionaryType)theEObject;
-				T1 result = caseDictionaryType(dictionaryType);
-				if (result == null) result = caseEcore_CollectionType(dictionaryType);
-				if (result == null) result = caseEDataType(dictionaryType);
-				if (result == null) result = caseCollectionType(dictionaryType);
-				if (result == null) result = caseEClassifier(dictionaryType);
-				if (result == null) result = casePredefinedType(dictionaryType);
-				if (result == null) result = caseTypedASTNode(dictionaryType);
-				if (result == null) result = caseENamedElement(dictionaryType);
-				if (result == null) result = caseASTNode(dictionaryType);
-				if (result == null) result = caseEModelElement(dictionaryType);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.TYPEDEF: {
-				Typedef typedef = (Typedef)theEObject;
-				T1 result = caseTypedef(typedef);
-				if (result == null) result = caseEClass(typedef);
-				if (result == null) result = caseEClassifier(typedef);
-				if (result == null) result = caseENamedElement(typedef);
-				if (result == null) result = caseEModelElement(typedef);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case ExpressionsPackage.MODULE: {
 				Module module = (Module)theEObject;
 				T1 result = caseModule(module);
@@ -416,71 +321,24 @@ public class ExpressionsSwitch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ExpressionsPackage.IMPERATIVE_EXPRESSION: {
-				ImperativeExpression imperativeExpression = (ImperativeExpression)theEObject;
-				T1 result = caseImperativeExpression(imperativeExpression);
-				if (result == null) result = caseOCLExpression(imperativeExpression);
-				if (result == null) result = caseTypedElement(imperativeExpression);
-				if (result == null) result = caseVisitable(imperativeExpression);
-				if (result == null) result = caseASTNode(imperativeExpression);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.ASSIGN_EXP: {
-				AssignExp assignExp = (AssignExp)theEObject;
-				T1 result = caseAssignExp(assignExp);
-				if (result == null) result = caseImperativeExpression(assignExp);
-				if (result == null) result = caseOCLExpression(assignExp);
-				if (result == null) result = caseTypedElement(assignExp);
-				if (result == null) result = caseVisitable(assignExp);
-				if (result == null) result = caseASTNode(assignExp);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.VARIABLE_INIT_EXP: {
-				VariableInitExp variableInitExp = (VariableInitExp)theEObject;
-				T1 result = caseVariableInitExp(variableInitExp);
-				if (result == null) result = caseImperativeExpression(variableInitExp);
-				if (result == null) result = caseOCLExpression(variableInitExp);
-				if (result == null) result = caseTypedElement(variableInitExp);
-				if (result == null) result = caseVisitable(variableInitExp);
-				if (result == null) result = caseASTNode(variableInitExp);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case ExpressionsPackage.MAPPING_CALL_EXP: {
 				MappingCallExp mappingCallExp = (MappingCallExp)theEObject;
 				T1 result = caseMappingCallExp(mappingCallExp);
+				if (result == null) result = caseEcore_OperationCallExp(mappingCallExp);
+				if (result == null) result = caseEcore_FeatureCallExp(mappingCallExp);
 				if (result == null) result = caseOperationCallExp(mappingCallExp);
+				if (result == null) result = caseEcore_CallExp(mappingCallExp);
 				if (result == null) result = caseFeatureCallExp(mappingCallExp);
+				if (result == null) result = caseEcore_OCLExpression(mappingCallExp);
 				if (result == null) result = caseCallExp(mappingCallExp);
+				if (result == null) result = caseETypedElement(mappingCallExp);
 				if (result == null) result = caseOCLExpression(mappingCallExp);
 				if (result == null) result = caseCallingASTNode(mappingCallExp);
+				if (result == null) result = caseENamedElement(mappingCallExp);
 				if (result == null) result = caseTypedElement(mappingCallExp);
 				if (result == null) result = caseVisitable(mappingCallExp);
 				if (result == null) result = caseASTNode(mappingCallExp);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.BLOCK_EXP: {
-				BlockExp blockExp = (BlockExp)theEObject;
-				T1 result = caseBlockExp(blockExp);
-				if (result == null) result = caseImperativeExpression(blockExp);
-				if (result == null) result = caseOCLExpression(blockExp);
-				if (result == null) result = caseTypedElement(blockExp);
-				if (result == null) result = caseVisitable(blockExp);
-				if (result == null) result = caseASTNode(blockExp);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.COMPUTE_EXP: {
-				ComputeExp computeExp = (ComputeExp)theEObject;
-				T1 result = caseComputeExp(computeExp);
-				if (result == null) result = caseImperativeExpression(computeExp);
-				if (result == null) result = caseOCLExpression(computeExp);
-				if (result == null) result = caseTypedElement(computeExp);
-				if (result == null) result = caseVisitable(computeExp);
-				if (result == null) result = caseASTNode(computeExp);
+				if (result == null) result = caseEModelElement(mappingCallExp);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -489,49 +347,21 @@ public class ExpressionsSwitch<T1> {
 				T1 result = caseObjectExp(objectExp);
 				if (result == null) result = caseInstantiationExp(objectExp);
 				if (result == null) result = caseImperativeExpression(objectExp);
+				if (result == null) result = caseEcore_OCLExpression(objectExp);
+				if (result == null) result = caseETypedElement(objectExp);
 				if (result == null) result = caseOCLExpression(objectExp);
+				if (result == null) result = caseENamedElement(objectExp);
 				if (result == null) result = caseTypedElement(objectExp);
 				if (result == null) result = caseVisitable(objectExp);
 				if (result == null) result = caseASTNode(objectExp);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.WHILE_EXP: {
-				WhileExp whileExp = (WhileExp)theEObject;
-				T1 result = caseWhileExp(whileExp);
-				if (result == null) result = caseImperativeExpression(whileExp);
-				if (result == null) result = caseOCLExpression(whileExp);
-				if (result == null) result = caseTypedElement(whileExp);
-				if (result == null) result = caseVisitable(whileExp);
-				if (result == null) result = caseASTNode(whileExp);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.SWITCH_EXP: {
-				SwitchExp switchExp = (SwitchExp)theEObject;
-				T1 result = caseSwitchExp(switchExp);
-				if (result == null) result = caseImperativeExpression(switchExp);
-				if (result == null) result = caseOCLExpression(switchExp);
-				if (result == null) result = caseTypedElement(switchExp);
-				if (result == null) result = caseVisitable(switchExp);
-				if (result == null) result = caseASTNode(switchExp);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.ALT_EXP: {
-				AltExp altExp = (AltExp)theEObject;
-				T1 result = caseAltExp(altExp);
-				if (result == null) result = caseImperativeExpression(altExp);
-				if (result == null) result = caseOCLExpression(altExp);
-				if (result == null) result = caseTypedElement(altExp);
-				if (result == null) result = caseVisitable(altExp);
-				if (result == null) result = caseASTNode(altExp);
+				if (result == null) result = caseEModelElement(objectExp);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case ExpressionsPackage.EXTENDED_VISITOR: {
 				ExtendedVisitor<?> extendedVisitor = (ExtendedVisitor<?>)theEObject;
 				T1 result = caseExtendedVisitor(extendedVisitor);
+				if (result == null) result = caseImperativeOCLVisitor(extendedVisitor);
 				if (result == null) result = caseVisitor(extendedVisitor);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -547,12 +377,17 @@ public class ExpressionsSwitch<T1> {
 			case ExpressionsPackage.RESOLVE_EXP: {
 				ResolveExp resolveExp = (ResolveExp)theEObject;
 				T1 result = caseResolveExp(resolveExp);
+				if (result == null) result = caseEcore_CallExp(resolveExp);
+				if (result == null) result = caseEcore_OCLExpression(resolveExp);
 				if (result == null) result = caseCallExp(resolveExp);
+				if (result == null) result = caseETypedElement(resolveExp);
 				if (result == null) result = caseOCLExpression(resolveExp);
 				if (result == null) result = caseCallingASTNode(resolveExp);
+				if (result == null) result = caseENamedElement(resolveExp);
 				if (result == null) result = caseTypedElement(resolveExp);
 				if (result == null) result = caseVisitable(resolveExp);
 				if (result == null) result = caseASTNode(resolveExp);
+				if (result == null) result = caseEModelElement(resolveExp);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -560,12 +395,17 @@ public class ExpressionsSwitch<T1> {
 				ResolveInExp resolveInExp = (ResolveInExp)theEObject;
 				T1 result = caseResolveInExp(resolveInExp);
 				if (result == null) result = caseResolveExp(resolveInExp);
+				if (result == null) result = caseEcore_CallExp(resolveInExp);
+				if (result == null) result = caseEcore_OCLExpression(resolveInExp);
 				if (result == null) result = caseCallExp(resolveInExp);
+				if (result == null) result = caseETypedElement(resolveInExp);
 				if (result == null) result = caseOCLExpression(resolveInExp);
 				if (result == null) result = caseCallingASTNode(resolveInExp);
+				if (result == null) result = caseENamedElement(resolveInExp);
 				if (result == null) result = caseTypedElement(resolveInExp);
 				if (result == null) result = caseVisitable(resolveInExp);
 				if (result == null) result = caseASTNode(resolveInExp);
+				if (result == null) result = caseEModelElement(resolveInExp);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -596,97 +436,6 @@ public class ExpressionsSwitch<T1> {
 				if (result == null) result = caseTypedASTNode(mappingParameter);
 				if (result == null) result = caseEModelElement(mappingParameter);
 				if (result == null) result = caseASTNode(mappingParameter);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.LOG_EXP: {
-				LogExp logExp = (LogExp)theEObject;
-				T1 result = caseLogExp(logExp);
-				if (result == null) result = caseOperationCallExp(logExp);
-				if (result == null) result = caseFeatureCallExp(logExp);
-				if (result == null) result = caseCallExp(logExp);
-				if (result == null) result = caseOCLExpression(logExp);
-				if (result == null) result = caseCallingASTNode(logExp);
-				if (result == null) result = caseTypedElement(logExp);
-				if (result == null) result = caseVisitable(logExp);
-				if (result == null) result = caseASTNode(logExp);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.ASSERT_EXP: {
-				AssertExp assertExp = (AssertExp)theEObject;
-				T1 result = caseAssertExp(assertExp);
-				if (result == null) result = caseImperativeExpression(assertExp);
-				if (result == null) result = caseOCLExpression(assertExp);
-				if (result == null) result = caseTypedElement(assertExp);
-				if (result == null) result = caseVisitable(assertExp);
-				if (result == null) result = caseASTNode(assertExp);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.IMPERATIVE_LOOP_EXP: {
-				ImperativeLoopExp imperativeLoopExp = (ImperativeLoopExp)theEObject;
-				T1 result = caseImperativeLoopExp(imperativeLoopExp);
-				if (result == null) result = caseLoopExp(imperativeLoopExp);
-				if (result == null) result = caseImperativeExpression(imperativeLoopExp);
-				if (result == null) result = caseCallExp(imperativeLoopExp);
-				if (result == null) result = caseOCLExpression(imperativeLoopExp);
-				if (result == null) result = caseCallingASTNode(imperativeLoopExp);
-				if (result == null) result = caseTypedElement(imperativeLoopExp);
-				if (result == null) result = caseVisitable(imperativeLoopExp);
-				if (result == null) result = caseASTNode(imperativeLoopExp);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.FOR_EXP: {
-				ForExp forExp = (ForExp)theEObject;
-				T1 result = caseForExp(forExp);
-				if (result == null) result = caseImperativeLoopExp(forExp);
-				if (result == null) result = caseLoopExp(forExp);
-				if (result == null) result = caseImperativeExpression(forExp);
-				if (result == null) result = caseCallExp(forExp);
-				if (result == null) result = caseOCLExpression(forExp);
-				if (result == null) result = caseCallingASTNode(forExp);
-				if (result == null) result = caseTypedElement(forExp);
-				if (result == null) result = caseVisitable(forExp);
-				if (result == null) result = caseASTNode(forExp);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.IMPERATIVE_ITERATE_EXP: {
-				ImperativeIterateExp imperativeIterateExp = (ImperativeIterateExp)theEObject;
-				T1 result = caseImperativeIterateExp(imperativeIterateExp);
-				if (result == null) result = caseImperativeLoopExp(imperativeIterateExp);
-				if (result == null) result = caseLoopExp(imperativeIterateExp);
-				if (result == null) result = caseImperativeExpression(imperativeIterateExp);
-				if (result == null) result = caseCallExp(imperativeIterateExp);
-				if (result == null) result = caseOCLExpression(imperativeIterateExp);
-				if (result == null) result = caseCallingASTNode(imperativeIterateExp);
-				if (result == null) result = caseTypedElement(imperativeIterateExp);
-				if (result == null) result = caseVisitable(imperativeIterateExp);
-				if (result == null) result = caseASTNode(imperativeIterateExp);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.INSTANTIATION_EXP: {
-				InstantiationExp instantiationExp = (InstantiationExp)theEObject;
-				T1 result = caseInstantiationExp(instantiationExp);
-				if (result == null) result = caseImperativeExpression(instantiationExp);
-				if (result == null) result = caseOCLExpression(instantiationExp);
-				if (result == null) result = caseTypedElement(instantiationExp);
-				if (result == null) result = caseVisitable(instantiationExp);
-				if (result == null) result = caseASTNode(instantiationExp);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.RETURN_EXP: {
-				ReturnExp returnExp = (ReturnExp)theEObject;
-				T1 result = caseReturnExp(returnExp);
-				if (result == null) result = caseImperativeExpression(returnExp);
-				if (result == null) result = caseOCLExpression(returnExp);
-				if (result == null) result = caseTypedElement(returnExp);
-				if (result == null) result = caseVisitable(returnExp);
-				if (result == null) result = caseASTNode(returnExp);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -721,96 +470,6 @@ public class ExpressionsSwitch<T1> {
 			}
 			default: return defaultCase(theEObject);
 		}
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>List Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>List Type</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseListType(ListType object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Dict Literal Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Dict Literal Exp</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseDictLiteralExp(DictLiteralExp object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Dict Literal Part</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Dict Literal Part</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseDictLiteralPart(DictLiteralPart object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Template Parameter Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Template Parameter Type</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseTemplateParameterType(TemplateParameterType object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Dictionary Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Dictionary Type</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseDictionaryType(DictionaryType object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Typedef</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Typedef</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseTypedef(Typedef object) {
-		return null;
 	}
 
 	/**
@@ -1024,51 +683,6 @@ public class ExpressionsSwitch<T1> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Imperative Expression</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Imperative Expression</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseImperativeExpression(ImperativeExpression object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Assign Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Assign Exp</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseAssignExp(AssignExp object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Variable Init Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Variable Init Exp</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseVariableInitExp(VariableInitExp object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Mapping Call Exp</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1080,36 +694,6 @@ public class ExpressionsSwitch<T1> {
 	 * @generated
 	 */
 	public T1 caseMappingCallExp(MappingCallExp object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Block Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Block Exp</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseBlockExp(BlockExp object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Compute Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Compute Exp</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseComputeExp(ComputeExp object) {
 		return null;
 	}
 
@@ -1129,51 +713,6 @@ public class ExpressionsSwitch<T1> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>While Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>While Exp</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseWhileExp(WhileExp object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Switch Exp</em>'.
-	 * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Switch Exp</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-    public T1 caseSwitchExp(SwitchExp object) {
-		return null;
-	}
-
-    /**
-	 * Returns the result of interpreting the object as an instance of '<em>Alt Exp</em>'.
-	 * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Alt Exp</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-    public T1 caseAltExp(AltExp object) {
-		return null;
-	}
-
-    /**
 	 * Returns the result of interpreting the object as an instance of '<em>Extended Visitor</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1206,34 +745,34 @@ public class ExpressionsSwitch<T1> {
 	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Resolve Exp</em>'.
 	 * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Resolve Exp</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-    public T1 caseResolveExp(ResolveExp object) {
+	public T1 caseResolveExp(ResolveExp object) {
 		return null;
 	}
 
-    /**
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Resolve In Exp</em>'.
 	 * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Resolve In Exp</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-    public T1 caseResolveInExp(ResolveInExp object) {
+	public T1 caseResolveInExp(ResolveInExp object) {
 		return null;
 	}
 
-    /**
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Model Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1248,7 +787,7 @@ public class ExpressionsSwitch<T1> {
 		return null;
 	}
 
-				/**
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Mapping Parameter</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1263,112 +802,7 @@ public class ExpressionsSwitch<T1> {
 		return null;
 	}
 
-				/**
-	 * Returns the result of interpreting the object as an instance of '<em>Log Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Log Exp</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseLogExp(LogExp object) {
-		return null;
-	}
-
-				/**
-	 * Returns the result of interpreting the object as an instance of '<em>Assert Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Assert Exp</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseAssertExp(AssertExp object) {
-		return null;
-	}
-
-				/**
-	 * Returns the result of interpreting the object as an instance of '<em>Imperative Loop Exp</em>'.
-	 * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Imperative Loop Exp</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-    public T1 caseImperativeLoopExp(ImperativeLoopExp object) {
-		return null;
-	}
-
-                /**
-	 * Returns the result of interpreting the object as an instance of '<em>For Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>For Exp</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseForExp(ForExp object) {
-		return null;
-	}
-
-																/**
-	 * Returns the result of interpreting the object as an instance of '<em>Imperative Iterate Exp</em>'.
-	 * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Imperative Iterate Exp</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-    public T1 caseImperativeIterateExp(ImperativeIterateExp object) {
-		return null;
-	}
-
-                /**
-	 * Returns the result of interpreting the object as an instance of '<em>Instantiation Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Instantiation Exp</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseInstantiationExp(InstantiationExp object) {
-		return null;
-	}
-
-																/**
-	 * Returns the result of interpreting the object as an instance of '<em>Return Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Return Exp</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseReturnExp(ReturnExp object) {
-		return null;
-	}
-
-																/**
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Operational Transformation</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1383,7 +817,7 @@ public class ExpressionsSwitch<T1> {
 		return null;
 	}
 
-																/**
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Entry Operation</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1395,6 +829,51 @@ public class ExpressionsSwitch<T1> {
 	 * @generated
 	 */
 	public T1 caseEntryOperation(EntryOperation object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Visitor</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Visitor</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <T> T1 caseImperativeOCLVisitor(ImperativeOCLVisitor<T> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Imperative Expression</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Imperative Expression</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseImperativeExpression(ImperativeExpression object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Instantiation Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Instantiation Exp</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseInstantiationExp(InstantiationExp object) {
 		return null;
 	}
 
@@ -1440,36 +919,6 @@ public class ExpressionsSwitch<T1> {
 	 * @generated
 	 */
 	public T1 caseEClassifier(EClassifier object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>EData Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>EData Type</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseEDataType(EDataType object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Predefined Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Predefined Type</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public <O> T1 casePredefinedType(PredefinedType<O> object) {
 		return null;
 	}
 
@@ -1564,21 +1013,6 @@ public class ExpressionsSwitch<T1> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>EParameter</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>EParameter</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseEParameter(EParameter object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>EOperation</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1624,36 +1058,6 @@ public class ExpressionsSwitch<T1> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Collection Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Collection Type</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public <C, O> T1 caseCollectionType(CollectionType<C, O> object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Collection Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Collection Type</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseEcore_CollectionType(org.eclipse.ocl.ecore.CollectionType object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Variable</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1680,6 +1084,21 @@ public class ExpressionsSwitch<T1> {
 	 * @generated
 	 */
 	public T1 caseEcore_Variable(org.eclipse.ocl.ecore.Variable object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>EParameter</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>EParameter</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseEParameter(EParameter object) {
 		return null;
 	}
 
@@ -1714,36 +1133,6 @@ public class ExpressionsSwitch<T1> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Literal Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Literal Exp</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public <C> T1 caseLiteralExp(LiteralExp<C> object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Literal Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Literal Exp</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseEcore_LiteralExp(org.eclipse.ocl.ecore.LiteralExp object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Calling AST Node</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1774,6 +1163,21 @@ public class ExpressionsSwitch<T1> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Call Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Call Exp</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseEcore_CallExp(org.eclipse.ocl.ecore.CallExp object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Feature Call Exp</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1785,6 +1189,21 @@ public class ExpressionsSwitch<T1> {
 	 * @generated
 	 */
 	public <C> T1 caseFeatureCallExp(FeatureCallExp<C> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Feature Call Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Feature Call Exp</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseEcore_FeatureCallExp(org.eclipse.ocl.ecore.FeatureCallExp object) {
 		return null;
 	}
 
@@ -1804,6 +1223,21 @@ public class ExpressionsSwitch<T1> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Operation Call Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Operation Call Exp</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseEcore_OperationCallExp(org.eclipse.ocl.ecore.OperationCallExp object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Visitor</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1819,21 +1253,6 @@ public class ExpressionsSwitch<T1> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Loop Exp</em>'.
-	 * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Loop Exp</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-    public <C, PM> T1 caseLoopExp(LoopExp<C, PM> object) {
-		return null;
-	}
-
-    /**
 	 * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;

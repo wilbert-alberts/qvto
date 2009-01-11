@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QVTStackTraceElement;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
 import org.eclipse.m2m.qvt.oml.util.Dictionary;
 import org.eclipse.m2m.qvt.oml.util.MutableList;
@@ -38,7 +38,7 @@ public class StdlibFactory {
 	}
 	
 	public DictionaryType createDictionary(EClassifier keyType, EClassifier elementType) {
-		DictionaryType dictType = ExpressionsFactory.eINSTANCE.createDictionaryType();
+		DictionaryType dictType = ImperativeOCLFactory.eINSTANCE.createDictionaryType();
 		dictType.setKeyType(keyType);
 		dictType.setElementType(elementType);
 		dictType.setName(getTypeName(dictType));
@@ -48,7 +48,7 @@ public class StdlibFactory {
 	}
 	
 	public ListType createList(EClassifier elementType) {
-		ListType listType = ExpressionsFactory.eINSTANCE.createListType();
+		ListType listType = ImperativeOCLFactory.eINSTANCE.createListType();
 		listType.setElementType(elementType);
 		listType.setName(getTypeName(listType));
 		// Note: instanceClass is transient, will not be loaded from deserialization		

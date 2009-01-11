@@ -9,22 +9,20 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ComputeExpImpl.java,v 1.3 2008/12/18 15:18:10 radvorak Exp $
+ * $Id: ComputeExpImpl.java,v 1.4 2009/01/11 23:22:07 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
-import org.eclipse.ocl.expressions.OCLExpression;
-import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage;
+import org.eclipse.ocl.ecore.OCLExpression;
+import org.eclipse.ocl.ecore.Variable;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -43,13 +41,6 @@ import org.eclipse.ocl.utilities.Visitor;
  */
 public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeExp {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
-
-	/**
 	 * The cached value of the '{@link #getReturnedElement() <em>Returned Element</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -57,7 +48,7 @@ public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeE
 	 * @generated
 	 * @ordered
 	 */
-	protected Variable<EClassifier, EParameter> returnedElement;
+	protected Variable returnedElement;
 
 	/**
 	 * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
@@ -67,7 +58,7 @@ public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeE
 	 * @generated
 	 * @ordered
 	 */
-	protected OCLExpression<EClassifier> body;
+	protected OCLExpression body;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -85,7 +76,7 @@ public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeE
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ExpressionsPackage.Literals.COMPUTE_EXP;
+		return ImperativeOCLPackage.Literals.COMPUTE_EXP;
 	}
 
 	/**
@@ -93,7 +84,7 @@ public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeE
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Variable<EClassifier, EParameter> getReturnedElement() {
+	public Variable getReturnedElement() {
 		return returnedElement;
 	}
 
@@ -102,11 +93,11 @@ public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeE
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetReturnedElement(Variable<EClassifier, EParameter> newReturnedElement, NotificationChain msgs) {
-		Variable<EClassifier, EParameter> oldReturnedElement = returnedElement;
+	public NotificationChain basicSetReturnedElement(Variable newReturnedElement, NotificationChain msgs) {
+		Variable oldReturnedElement = returnedElement;
 		returnedElement = newReturnedElement;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpressionsPackage.COMPUTE_EXP__RETURNED_ELEMENT, oldReturnedElement, newReturnedElement);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLPackage.COMPUTE_EXP__RETURNED_ELEMENT, oldReturnedElement, newReturnedElement);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -117,18 +108,18 @@ public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeE
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setReturnedElement(Variable<EClassifier, EParameter> newReturnedElement) {
+	public void setReturnedElement(Variable newReturnedElement) {
 		if (newReturnedElement != returnedElement) {
 			NotificationChain msgs = null;
 			if (returnedElement != null)
-				msgs = ((InternalEObject)returnedElement).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.COMPUTE_EXP__RETURNED_ELEMENT, null, msgs);
+				msgs = ((InternalEObject)returnedElement).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLPackage.COMPUTE_EXP__RETURNED_ELEMENT, null, msgs);
 			if (newReturnedElement != null)
-				msgs = ((InternalEObject)newReturnedElement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.COMPUTE_EXP__RETURNED_ELEMENT, null, msgs);
+				msgs = ((InternalEObject)newReturnedElement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLPackage.COMPUTE_EXP__RETURNED_ELEMENT, null, msgs);
 			msgs = basicSetReturnedElement(newReturnedElement, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.COMPUTE_EXP__RETURNED_ELEMENT, newReturnedElement, newReturnedElement));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLPackage.COMPUTE_EXP__RETURNED_ELEMENT, newReturnedElement, newReturnedElement));
 	}
 
 	/**
@@ -136,7 +127,7 @@ public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeE
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public OCLExpression<EClassifier> getBody() {
+	public OCLExpression getBody() {
 		return body;
 	}
 
@@ -145,11 +136,11 @@ public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeE
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetBody(OCLExpression<EClassifier> newBody, NotificationChain msgs) {
-		OCLExpression<EClassifier> oldBody = body;
+	public NotificationChain basicSetBody(OCLExpression newBody, NotificationChain msgs) {
+		OCLExpression oldBody = body;
 		body = newBody;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpressionsPackage.COMPUTE_EXP__BODY, oldBody, newBody);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLPackage.COMPUTE_EXP__BODY, oldBody, newBody);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -160,18 +151,18 @@ public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeE
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setBody(OCLExpression<EClassifier> newBody) {
+	public void setBody(OCLExpression newBody) {
 		if (newBody != body) {
 			NotificationChain msgs = null;
 			if (body != null)
-				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.COMPUTE_EXP__BODY, null, msgs);
+				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLPackage.COMPUTE_EXP__BODY, null, msgs);
 			if (newBody != null)
-				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.COMPUTE_EXP__BODY, null, msgs);
+				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLPackage.COMPUTE_EXP__BODY, null, msgs);
 			msgs = basicSetBody(newBody, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.COMPUTE_EXP__BODY, newBody, newBody));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLPackage.COMPUTE_EXP__BODY, newBody, newBody));
 	}
 
 	/**
@@ -197,9 +188,9 @@ public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeE
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ExpressionsPackage.COMPUTE_EXP__RETURNED_ELEMENT:
+			case ImperativeOCLPackage.COMPUTE_EXP__RETURNED_ELEMENT:
 				return basicSetReturnedElement(null, msgs);
-			case ExpressionsPackage.COMPUTE_EXP__BODY:
+			case ImperativeOCLPackage.COMPUTE_EXP__BODY:
 				return basicSetBody(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -213,9 +204,9 @@ public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeE
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ExpressionsPackage.COMPUTE_EXP__RETURNED_ELEMENT:
+			case ImperativeOCLPackage.COMPUTE_EXP__RETURNED_ELEMENT:
 				return getReturnedElement();
-			case ExpressionsPackage.COMPUTE_EXP__BODY:
+			case ImperativeOCLPackage.COMPUTE_EXP__BODY:
 				return getBody();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -226,15 +217,14 @@ public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeE
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ExpressionsPackage.COMPUTE_EXP__RETURNED_ELEMENT:
-				setReturnedElement((Variable<EClassifier, EParameter>)newValue);
+			case ImperativeOCLPackage.COMPUTE_EXP__RETURNED_ELEMENT:
+				setReturnedElement((Variable)newValue);
 				return;
-			case ExpressionsPackage.COMPUTE_EXP__BODY:
-				setBody((OCLExpression<EClassifier>)newValue);
+			case ImperativeOCLPackage.COMPUTE_EXP__BODY:
+				setBody((OCLExpression)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -248,11 +238,11 @@ public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeE
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.COMPUTE_EXP__RETURNED_ELEMENT:
-				setReturnedElement((Variable<EClassifier, EParameter>)null);
+			case ImperativeOCLPackage.COMPUTE_EXP__RETURNED_ELEMENT:
+				setReturnedElement((Variable)null);
 				return;
-			case ExpressionsPackage.COMPUTE_EXP__BODY:
-				setBody((OCLExpression<EClassifier>)null);
+			case ImperativeOCLPackage.COMPUTE_EXP__BODY:
+				setBody((OCLExpression)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -266,9 +256,9 @@ public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeE
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.COMPUTE_EXP__RETURNED_ELEMENT:
+			case ImperativeOCLPackage.COMPUTE_EXP__RETURNED_ELEMENT:
 				return returnedElement != null;
-			case ExpressionsPackage.COMPUTE_EXP__BODY:
+			case ImperativeOCLPackage.COMPUTE_EXP__BODY:
 				return body != null;
 		}
 		return super.eIsSet(featureID);

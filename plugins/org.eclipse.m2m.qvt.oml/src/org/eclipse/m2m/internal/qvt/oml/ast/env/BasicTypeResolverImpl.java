@@ -28,8 +28,8 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLFactory;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Typedef;
@@ -137,8 +137,8 @@ class BasicTypeResolverImpl
 	protected CollectionType<EClassifier, EOperation> findCollectionType(CollectionKind kind, EClassifier elementType) {
 		for (EClassifier next : getEnvironment().getUMLReflection().getClassifiers(getCollectionPackage())) {
 	        if (next instanceof CollectionType) {
-	        	if(next.eClass() == ExpressionsPackage.eINSTANCE.getDictionaryType() ||
-	        		next.eClass() == ExpressionsPackage.eINSTANCE.getListType()) {
+	        	if(next.eClass() == ImperativeOCLPackage.eINSTANCE.getDictionaryType() ||
+	        		next.eClass() == ImperativeOCLPackage.eINSTANCE.getListType()) {
 	        		// Note: QVT have unknown CollectionKind
 	        		continue;
 	        	}
@@ -254,7 +254,7 @@ class BasicTypeResolverImpl
     
     @Override
 	protected EClass createShadowClass(EClassifier type) {
-		Typedef typeDef = ExpressionsFactory.eINSTANCE.createTypedef();
+		Typedef typeDef = ImperativeOCLFactory.eINSTANCE.createTypedef();
 		typeDef.setName(type.getName());
 		typeDef.setBase(type);
 		return typeDef;

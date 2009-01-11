@@ -11,9 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.ocl.expressions.OperationCallExp;
+import org.eclipse.ocl.ecore.OperationCallExp;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -32,7 +30,7 @@ import org.eclipse.ocl.utilities.Visitor;
  * @model
  * @generated
  */
-public interface MappingCallExp extends OperationCallExp<EClassifier, EOperation> {
+public interface MappingCallExp extends OperationCallExp {
 	/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

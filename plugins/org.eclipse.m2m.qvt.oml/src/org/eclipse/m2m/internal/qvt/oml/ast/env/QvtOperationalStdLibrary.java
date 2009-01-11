@@ -29,6 +29,7 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
@@ -59,7 +60,11 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 	
 	public static final QvtOperationalStdLibrary INSTANCE = createLibrary();
 	static {
-		INSTANCE.defineStandardOperations();		
+		try {
+			INSTANCE.defineStandardOperations();
+		} catch(Error e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private EClassifier ELEMENT;	
@@ -96,12 +101,12 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 		STATUS = createClass("Status", false); //$NON-NLS-1$
 		EXCEPTION = createClass("Exception", false); //$NON-NLS-1$		
 		
-		ListType listType = ExpressionsFactory.eINSTANCE.createListType();
+		ListType listType = ImperativeOCLFactory.eINSTANCE.createListType();
 		listType.setElementType(fEnv.getOCLStandardLibrary().getT());
 		fStdlibModule.getEClassifiers().add(listType);
 		LIST = listType;
 		
-		KEY_T = ExpressionsFactory.eINSTANCE.createTemplateParameterType();
+		KEY_T = ImperativeOCLFactory.eINSTANCE.createTemplateParameterType();
 		KEY_T.setName("KeyT"); //$NON-NLS-1$
 		fStdlibModule.getEClassifiers().add(KEY_T);
 
@@ -276,8 +281,13 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 	}
 		
 	private static QvtOperationalStdLibrary createLibrary() {
-		QvtOperationalStdLibrary lib = new QvtOperationalStdLibrary();
-		return lib;
+		try {
+			QvtOperationalStdLibrary lib = new QvtOperationalStdLibrary();
+			return lib;
+		} catch(Error e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	private EClassifier getTypeAlias(String typeName) {

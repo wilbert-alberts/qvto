@@ -9,12 +9,11 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: DictLiteralPart.java,v 1.1 2008/12/23 17:22:00 radvorak Exp $
+ * $Id: DictLiteralPart.java,v 1.2 2009/01/11 23:22:04 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
 import org.eclipse.emf.ecore.EModelElement;
-
 import org.eclipse.ocl.ecore.OCLExpression;
 
 /**
@@ -30,18 +29,11 @@ import org.eclipse.ocl.ecore.OCLExpression;
  * </ul>
  * </p>
  *
- * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getDictLiteralPart()
+ * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getDictLiteralPart()
  * @model
  * @generated
  */
 public interface DictLiteralPart extends EModelElement {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
-
 	/**
 	 * Returns the value of the '<em><b>Key</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -52,7 +44,7 @@ public interface DictLiteralPart extends EModelElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Key</em>' containment reference.
 	 * @see #setKey(OCLExpression)
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getDictLiteralPart_Key()
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getDictLiteralPart_Key()
 	 * @model containment="true" required="true"
 	 *        annotation="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName body='keyOwner'"
 	 * @generated
@@ -79,7 +71,7 @@ public interface DictLiteralPart extends EModelElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Value</em>' containment reference.
 	 * @see #setValue(OCLExpression)
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getDictLiteralPart_Value()
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getDictLiteralPart_Value()
 	 * @model containment="true" required="true"
 	 *        annotation="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName body='valOwner'"
 	 * @generated

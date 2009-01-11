@@ -13,13 +13,11 @@ package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
-import org.eclipse.ocl.expressions.impl.OperationCallExpImpl;
+import org.eclipse.ocl.ecore.impl.OperationCallExpImpl;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -35,7 +33,7 @@ import org.eclipse.ocl.utilities.Visitor;
  *
  * @generated
  */
-public class MappingCallExpImpl extends OperationCallExpImpl<EClassifier, EOperation> implements MappingCallExp {
+public class MappingCallExpImpl extends OperationCallExpImpl implements MappingCallExp {
 	/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -61,7 +59,7 @@ public class MappingCallExpImpl extends OperationCallExpImpl<EClassifier, EOpera
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int IS_STRICT_EFLAG = 1 << 9;
+	protected static final int IS_STRICT_EFLAG = 1 << 10;
 
 	/**
 	 * <!-- begin-user-doc -->

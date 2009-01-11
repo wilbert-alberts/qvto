@@ -126,6 +126,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ForExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
@@ -258,7 +259,7 @@ public class QvtOperationalVisitorCS
     protected InstantiationExp instantiationExpCS(NewRuleCallExpCS newCallExp, 
     		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
     		EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
-		InstantiationExp instantiationExp = ExpressionsFactory.eINSTANCE.createInstantiationExp();
+		InstantiationExp instantiationExp = ImperativeOCLFactory.eINSTANCE.createInstantiationExp();
 		initStartEndPositions(instantiationExp, newCallExp);
 
 		PathNameCS scopedIdentifierCS = newCallExp.getScopedIdentifier();
@@ -273,7 +274,7 @@ public class QvtOperationalVisitorCS
 		for (OCLExpressionCS nextArgCS : newCallExp.getArguments()) {
 			OCLExpression<EClassifier> nextArgAST = oclExpressionCS(nextArgCS, env);
 			if(nextArgAST != null) {
-				instantiationExp.getArgument().add(nextArgAST);
+				instantiationExp.getArgument().add((org.eclipse.ocl.ecore.OCLExpression)nextArgAST);
 			}
 		}
 		return instantiationExp;
@@ -466,7 +467,7 @@ public class QvtOperationalVisitorCS
 	}
 
 	@Override
-	protected OCLExpression<EClassifier> oclExpressionCS(OCLExpressionCS oclExpressionCS,
+	protected org.eclipse.ocl.ecore.OCLExpression oclExpressionCS(OCLExpressionCS oclExpressionCS,
 	        Environment<EPackage, EClassifier, EOperation, EStructuralFeature, 
 	        EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction,
 	        Constraint, EClass, EObject> env) {
@@ -535,11 +536,11 @@ public class QvtOperationalVisitorCS
 	                TypeExp<EClassifier> typeExp = env.getOCLFactory().createTypeExp();
 	                typeExp.setReferredType(type);
 	                typeExp.setType(TypeUtil.resolveTypeType(env, type));
-	                return typeExp;
+	                return (org.eclipse.ocl.ecore.TypeExp)typeExp;
 	            }
 	        }
 	        else {
-	        	OCLExpression<EClassifier> result = super.oclExpressionCS(oclExpressionCS, env);
+	        	org.eclipse.ocl.ecore.OCLExpression result = (org.eclipse.ocl.ecore.OCLExpression)super.oclExpressionCS(oclExpressionCS, env);
 
 	    		if (oclExpressionCS instanceof OperationCallExpCS) {
 	    			if (result instanceof OperationCallExp) {
@@ -588,19 +589,12 @@ public class QvtOperationalVisitorCS
     protected AssertExp assertExp(AssertExpCS assertExpCS, 
     		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
-    	AssertExp assertAST = ExpressionsFactory.eINSTANCE.createAssertExp();
+    	AssertExp assertAST = ImperativeOCLFactory.eINSTANCE.createAssertExp();
     	assertAST.setStartPosition(assertExpCS.getStartOffset());
     	assertAST.setEndPosition(assertExpCS.getEndOffset());
-    	
-    	if(getCompilerOptions().isSourceLineNumbersEnabled()) {
- 			int startOffset = assertAST.getStartPosition();
- 			if(startOffset < getLexer().getInputChars().length) {
-     			assertAST.setLine(getLexer().getLineNumberOfCharAt(assertAST.getStartPosition()));    				
- 			}
-     	}
-    	
+    	    	
     	if(assertExpCS.getAssertion() != null) {
-    		assertAST.setAssertion(oclExpressionCS(assertExpCS.getAssertion(), env));
+    		assertAST.setAssertion((org.eclipse.ocl.ecore.OCLExpression)oclExpressionCS(assertExpCS.getAssertion(), env));
     	}
     	
     	if(assertExpCS.getSeverity() != null) {
@@ -684,7 +678,7 @@ public class QvtOperationalVisitorCS
     protected LogExp logExp(LogExpCS logExpCS, Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
     	
-    	LogExp logAST = ExpressionsFactory.eINSTANCE.createLogExp();
+    	LogExp logAST = ImperativeOCLFactory.eINSTANCE.createLogExp();
     	logAST.setStartPosition(logExpCS.getStartOffset());
     	logAST.setEndPosition(logExpCS.getEndOffset());
     	
@@ -831,7 +825,7 @@ public class QvtOperationalVisitorCS
         EClassifier sourceElementType = ((CollectionType<EClassifier, EOperation>) source.getType())
             .getElementType();
         
-        ImperativeIterateExp result = ExpressionsFactory.eINSTANCE.createImperativeIterateExp();
+        ImperativeIterateExp result = ImperativeOCLFactory.eINSTANCE.createImperativeIterateExp();
         initASTMapping(env, result, cstNode);       
         Variable<EClassifier, EParameter> itervar =
             genVariableDeclaration(cstNode, "modelPropertyCallCS", env,//$NON-NLS-1$
@@ -907,11 +901,11 @@ public class QvtOperationalVisitorCS
         return result;
     }
 
-    private OCLExpression<EClassifier> visitOclExpressionCS(OCLExpressionCS expressionCS, 
+    private org.eclipse.ocl.ecore.OCLExpression visitOclExpressionCS(OCLExpressionCS expressionCS, 
     		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
     	
-		OCLExpression<EClassifier> result = oclExpressionCS(expressionCS, env);
+    	org.eclipse.ocl.ecore.OCLExpression result = oclExpressionCS(expressionCS, env);
 		if (expressionCS instanceof MappingCallExpCS) {
 		    if (result instanceof OperationCallExp) {
 		        MappingCallExp mappingCallExp = createMappingCallExp((MappingCallExpCS) expressionCS, result);
@@ -923,7 +917,7 @@ public class QvtOperationalVisitorCS
 		        MappingCallExp mappingCallExp = createMappingCallExp((MappingCallExpCS) expressionCS, iteratorExp.getBody());
 		        if (mappingCallExp != null) {
 		            iteratorExp.setBody(mappingCallExp);
-		            return iteratorExp;
+		            return (org.eclipse.ocl.ecore.OCLExpression)iteratorExp;
 		        }
 		    } else if (result instanceof ImperativeIterateExp) {
 		        ImperativeIterateExp imperativeIterateExp = (ImperativeIterateExp) result;
@@ -940,7 +934,7 @@ public class QvtOperationalVisitorCS
 		return result;
 	}
 
-    private OCLExpression<EClassifier> visitBlockExpCS(BlockExpCS expressionCS, 
+    private org.eclipse.ocl.ecore.OCLExpression visitBlockExpCS(BlockExpCS expressionCS, 
     		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
     	
@@ -971,11 +965,11 @@ public class QvtOperationalVisitorCS
     	}
     }
     
-    private OCLExpression<EClassifier> doVisitBlockExpCS(BlockExpCS expressionCS, 
+    private org.eclipse.ocl.ecore.OCLExpression doVisitBlockExpCS(BlockExpCS expressionCS, 
     		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
     	
-		BlockExp result = ExpressionsFactory.eINSTANCE.createBlockExp();
+		BlockExp result = ImperativeOCLFactory.eINSTANCE.createBlockExp();
 		result.setStartPosition(expressionCS.getStartOffset());
 		result.setEndPosition(expressionCS.getEndOffset());
 		result.setType(env.getOCLStandardLibrary().getOclVoid());
@@ -983,27 +977,27 @@ public class QvtOperationalVisitorCS
 		for (OCLExpressionCS oclExpCS : expressionCS.getBodyExpressions()) {
 			OCLExpression<EClassifier> bodyExp = visitOclExpressionCS(oclExpCS, env);
 			if (bodyExp != null) {
-    				result.getBody().add(bodyExp);
+    				result.getBody().add((org.eclipse.ocl.ecore.OCLExpression)bodyExp);
 			}
 		}
 		
 		return result;
     }
     
-    private OCLExpression<EClassifier> visitComputeExpCS(ComputeExpCS computeExpCS, 
+    private org.eclipse.ocl.ecore.OCLExpression visitComputeExpCS(ComputeExpCS computeExpCS, 
     		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
     	
-        ComputeExp result = ExpressionsFactory.eINSTANCE.createComputeExp();
+        ComputeExp result = ImperativeOCLFactory.eINSTANCE.createComputeExp();
         result.setStartPosition(computeExpCS.getStartOffset());
         result.setEndPosition(computeExpCS.getEndOffset());
         
         Variable<EClassifier, EParameter> returnedElementExp = variableDeclarationCS(computeExpCS.getReturnedElement(), env, true);
-        result.setReturnedElement(returnedElementExp);
+        result.setReturnedElement((org.eclipse.ocl.ecore.Variable)returnedElementExp);
         result.setType(returnedElementExp.getType());
         
         OCLExpression<EClassifier> bodyExp = visitOclExpressionCS(computeExpCS.getBody(), env);
-        result.setBody(bodyExp);
+        result.setBody((org.eclipse.ocl.ecore.OCLExpression)bodyExp);
         
         if (returnedElementExp != null) {
             env.deleteElement(returnedElementExp.getName());
@@ -1011,11 +1005,11 @@ public class QvtOperationalVisitorCS
         return result;
     }
     
-    private OCLExpression<EClassifier> visitSwitchExpCS(SwitchExpCS switchExpCS, 
+    private org.eclipse.ocl.ecore.OCLExpression visitSwitchExpCS(SwitchExpCS switchExpCS, 
     		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
     	
-		SwitchExp switchExp = ExpressionsFactory.eINSTANCE.createSwitchExp();
+		SwitchExp switchExp = ImperativeOCLFactory.eINSTANCE.createSwitchExp();
 		switchExp.setStartPosition(switchExpCS.getStartOffset());
 		switchExp.setEndPosition(switchExpCS.getEndOffset());
 		
@@ -1028,7 +1022,7 @@ public class QvtOperationalVisitorCS
 		    }
 		}
 		if (switchExpCS.getElsePart() != null) {
-		    OCLExpression<EClassifier> elsePart = visitOclExpressionCS(switchExpCS.getElsePart(), env);
+			org.eclipse.ocl.ecore.OCLExpression elsePart = visitOclExpressionCS(switchExpCS.getElsePart(), env);
 		    switchExp.setElsePart(elsePart);
 		    allPartTypes.add(elsePart.getType());
 		}
@@ -1058,21 +1052,21 @@ public class QvtOperationalVisitorCS
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		
-	    AltExp altExp = ExpressionsFactory.eINSTANCE.createAltExp();
+	    AltExp altExp = ImperativeOCLFactory.eINSTANCE.createAltExp();
 	    altExp.setStartPosition(altExpCS.getStartOffset());
 	    altExp.setEndPosition(altExpCS.getEndOffset());
         
 	    OCLExpression<EClassifier> condition = visitOclExpressionCS(altExpCS.getCondition(), env);
-	    altExp.setCondition(condition);
+	    altExp.setCondition((org.eclipse.ocl.ecore.OCLExpression)condition);
 	    OCLExpression<EClassifier> body = visitOclExpressionCS(altExpCS.getBody(), env);
-	    altExp.setBody(body);
+	    altExp.setBody((org.eclipse.ocl.ecore.OCLExpression)body);
 	    return altExp;
     }
 
-    private OCLExpression<EClassifier> visitWhileExpCS(WhileExpCS expressionCS, 
+    private org.eclipse.ocl.ecore.OCLExpression visitWhileExpCS(WhileExpCS expressionCS, 
     		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
-		WhileExp result = ExpressionsFactory.eINSTANCE.createWhileExp();
+		WhileExp result = ImperativeOCLFactory.eINSTANCE.createWhileExp();
 		result.setStartPosition(expressionCS.getStartOffset());
 		result.setEndPosition(expressionCS.getEndOffset());
 		
@@ -1095,14 +1089,14 @@ public class QvtOperationalVisitorCS
 		} else if(expressionCS.getResult() != null) {
 			// report usage of legacy while
 			QvtOperationalUtil.reportWarning(env, ValidationMessages.QvtOperationalVisitorCS_deprecatedWhileExp, expressionCS);
-			OCLExpression<EClassifier> resExp = visitOclExpressionCS(expressionCS.getResult(), env);
+			org.eclipse.ocl.ecore.OCLExpression resExp = visitOclExpressionCS(expressionCS.getResult(), env);
 			result.setType(resExp.getType());
 			result.setResult(resExp);
 		} else {
 			result.setType(env.getOCLStandardLibrary().getOclVoid());
 		}
 
-		OCLExpression<EClassifier> condExp = visitOclExpressionCS(expressionCS.getCondition(), env);
+		org.eclipse.ocl.ecore.OCLExpression condExp = visitOclExpressionCS(expressionCS.getCondition(), env);
 		result.setCondition(condExp);		
 		if(condExp != null) {
 			EClassifier condType = condExp.getType();
@@ -1121,11 +1115,11 @@ public class QvtOperationalVisitorCS
 		}
 		
 		List<OCLExpressionCS> bodyCS = result.getBody() instanceof BlockExpCS ? ((BlockExpCS)result.getBody()).getBodyExpressions() : Collections.<OCLExpressionCS>singletonList(expressionCS.getBody());
-		BlockExp body = ExpressionsFactory.eINSTANCE.createBlockExp();
+		BlockExp body = ImperativeOCLFactory.eINSTANCE.createBlockExp();
 		for (OCLExpressionCS oclExpCS : bodyCS) {
 			OCLExpression<EClassifier> bodyExp = visitOclExpressionCS(oclExpCS, env);
 			if (bodyExp != null) {
-    				body.getBody().add(bodyExp);
+    				body.getBody().add((org.eclipse.ocl.ecore.OCLExpression)bodyExp);
 			}
 		}
 		
@@ -1278,11 +1272,11 @@ public class QvtOperationalVisitorCS
         tempEnv.addImplicitVariableForProperties(varName, elem);
 			
 		for (OCLExpressionCS expCS : outExpCS.getExpressions()) {
-            OCLExpression<EClassifier> exp = visitOclExpressionCS(expCS, tempEnv);
+            org.eclipse.ocl.ecore.OCLExpression exp = visitOclExpressionCS(expCS, tempEnv);
             if (exp != null) {
                 body.getContent().add(exp);
             }
-			}
+		}
 			
         if(myCompilerOptions.isGenerateCompletionData()) {
             ASTBindingHelper.createCST2ASTBinding(outExpCS, objectExp, env);
@@ -2315,15 +2309,15 @@ public class QvtOperationalVisitorCS
 		return rename;
 	}
 
-	private List<OCLExpression<EClassifier>> visitMappingSectionCS(MappingSectionCS mappingSectionCS,
+	private List<org.eclipse.ocl.ecore.OCLExpression> visitMappingSectionCS(MappingSectionCS mappingSectionCS,
 			QvtOperationalEnv env) throws SemanticException {
-		List<OCLExpression<EClassifier>> statements = new ArrayList<OCLExpression<EClassifier>>(mappingSectionCS
+		List<org.eclipse.ocl.ecore.OCLExpression> statements = new ArrayList<org.eclipse.ocl.ecore.OCLExpression>(mappingSectionCS
 				.getStatements().size());
 		for (OCLExpressionCS statementCS : mappingSectionCS.getStatements()) {
 			if (statementCS == null) {
 				continue;
 			}
-			OCLExpression<EClassifier> statement = visitOclExpressionCS(statementCS, env);
+			org.eclipse.ocl.ecore.OCLExpression statement = visitOclExpressionCS(statementCS, env);
 			if (statement != null) {
 				statements.add(statement);
 			}
@@ -2397,7 +2391,7 @@ public class QvtOperationalVisitorCS
 			guard = null;
 		}
 
-		List<OCLExpression<EClassifier>> inits = Collections.emptyList();
+		List<org.eclipse.ocl.ecore.OCLExpression> inits = Collections.emptyList();
 		if ((methodCS.getMappingBody() != null) && (methodCS.getMappingBody().getMappingInitCS() != null)) {
 			inits = visitMappingSectionCS(methodCS.getMappingBody().getMappingInitCS(), newEnv);
 		}
@@ -2426,7 +2420,7 @@ public class QvtOperationalVisitorCS
 			body.setEndPosition(mappingBodyCS == null ? methodCS.getEndOffset() : mappingBodyCS.getEndOffset());			
 		}
 
-		List<OCLExpression<EClassifier>> ends = Collections.emptyList();
+		List<org.eclipse.ocl.ecore.OCLExpression> ends = Collections.emptyList();
 		if ((methodCS.getMappingBody() != null) && (methodCS.getMappingBody().getMappingEndCS() != null)) {
 			ends = visitMappingSectionCS(methodCS.getMappingBody().getMappingEndCS(), newEnv);
 		}
@@ -2496,12 +2490,12 @@ public class QvtOperationalVisitorCS
 		body.setStartPosition(methodCS.getMappingDeclarationCS().getEndOffset());
 		body.setEndPosition(methodCS.getEndOffset());
         
-        List<OCLExpression<EClassifier>> expressions = new ArrayList<OCLExpression<EClassifier>>();
+        List<org.eclipse.ocl.ecore.OCLExpression> expressions = new ArrayList<org.eclipse.ocl.ecore.OCLExpression>();
 		for (OCLExpressionCS exprCS : methodCS.getExpressions()) {
 			if (exprCS == null) {
 				continue;
 			}
-			OCLExpression<EClassifier> expr = visitOclExpressionCS(exprCS, newEnv);
+			org.eclipse.ocl.ecore.OCLExpression expr = visitOclExpressionCS(exprCS, newEnv);
 			if (expr != null) {
 				expressions.add(expr);
 			}
@@ -2766,12 +2760,12 @@ public class QvtOperationalVisitorCS
 		return varResult;
 	}
 
-	private OCLExpression<EClassifier> visitAssignStatementCS(AssignStatementCS expressionCS, 
+	private org.eclipse.ocl.ecore.OCLExpression visitAssignStatementCS(AssignStatementCS expressionCS, 
 	        Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 	        EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 
 	    OCLExpressionCS lValueCS = expressionCS.getLValueCS();
-	    OCLExpression<EClassifier> lValue = oclExpressionCS(lValueCS, env);
+	    org.eclipse.ocl.ecore.OCLExpression lValue = oclExpressionCS(lValueCS, env);
 	    PathNameCS pathNameCS = extractQualifiedName(lValueCS);
 	    if (pathNameCS == null) {
 	        QvtOperationalUtil.reportError(env, ValidationMessages.notAnLValueError, lValueCS);
@@ -2795,7 +2789,7 @@ public class QvtOperationalVisitorCS
 	        return null;
 	    }
 
-	    OCLExpression<EClassifier> rightExpr = visitOclExpressionCS(expressionCS.getOclExpressionCS(), env);
+	    org.eclipse.ocl.ecore.OCLExpression rightExpr = visitOclExpressionCS(expressionCS.getOclExpressionCS(), env);
 	    if (rightExpr == null) {
 	        return null;
 	    }
@@ -2859,7 +2853,7 @@ public class QvtOperationalVisitorCS
 	        }
 	    }
 
-	    AssignExp result = ExpressionsFactory.eINSTANCE.createAssignExp();
+	    AssignExp result = ImperativeOCLFactory.eINSTANCE.createAssignExp();
 	    result.setStartPosition(expressionCS.getStartOffset());
 	    result.setEndPosition(expressionCS.getEndOffset());
 	    result.getValue().add(rightExpr);
@@ -2947,21 +2941,11 @@ public class QvtOperationalVisitorCS
 		return varParam;
 	}
 
-	private OCLExpression<EClassifier> visitVariableInitializationCS(VariableInitializationCS varInitCS, 
+	private org.eclipse.ocl.ecore.OCLExpression visitVariableInitializationCS(VariableInitializationCS varInitCS, 
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
-		// FIXME - remove the obsolete code bellow
-		MappingMethodCS mappingMethod = null;
-        EObject tempContainer = varInitCS;
-        do {
-            tempContainer = tempContainer.eContainer();
-            if (tempContainer instanceof MappingMethodCS) {
-                mappingMethod = (MappingMethodCS) tempContainer;
-                break;
-        }
-        } while (tempContainer != null);
 
-		VariableInitExp result = ExpressionsFactory.eINSTANCE.createVariableInitExp();
+		VariableInitExp result = ImperativeOCLFactory.eINSTANCE.createVariableInitExp();
 		result.setStartPosition(varInitCS.getStartOffset());
 		result.setEndPosition(varInitCS.getEndOffset());
 		if (validateInitializedValueCS(varInitCS, result, env)) {
@@ -2988,10 +2972,10 @@ public class QvtOperationalVisitorCS
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		
-		ReturnExp result = ExpressionsFactory.eINSTANCE.createReturnExp();
+		ReturnExp result = ImperativeOCLFactory.eINSTANCE.createReturnExp();
 		initStartEndPositions(result, returnExpCS);
 		if(returnExpCS.getValue() != null) {
-			OCLExpression<EClassifier> value = oclExpressionCS(returnExpCS.getValue(), env);
+			org.eclipse.ocl.ecore.OCLExpression value = oclExpressionCS(returnExpCS.getValue(), env);
 			result.setValue(value);
 			if(value != null) {
 				result.setType(value.getType());
@@ -3047,7 +3031,7 @@ public class QvtOperationalVisitorCS
 				}
 			}
 		}
-        List<OCLExpression<EClassifier>> expressions = visitMappingSectionCS(mappingBodyCS, env);
+        List<org.eclipse.ocl.ecore.OCLExpression> expressions = visitMappingSectionCS(mappingBodyCS, env);
         body.getContent().addAll(expressions);
 		
 		return body;
@@ -3134,7 +3118,7 @@ public class QvtOperationalVisitorCS
 		}
 	}
 
-	private OCLExpression<EClassifier> visitExpressionStatementCS(ExpressionStatementCS expressionCS, 
+	private org.eclipse.ocl.ecore.OCLExpression visitExpressionStatementCS(ExpressionStatementCS expressionCS, 
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		
@@ -3300,7 +3284,7 @@ public class QvtOperationalVisitorCS
 		return result;
 	}
 
-    private OCLExpression<EClassifier> visitResolveExpCS(ResolveExpCS resolveExpCS, QvtOperationalEnv env) {
+    private org.eclipse.ocl.ecore.OCLExpression visitResolveExpCS(ResolveExpCS resolveExpCS, QvtOperationalEnv env) {
         ResolveExp resolveExp = populateResolveExp(resolveExpCS, env, ExpressionsFactory.eINSTANCE.createResolveExp());
         if (resolveExp.getSource() == null) {
             env.reportError(NLS.bind(ValidationMessages.ResolveExpMustHaveASource, new Object[] { }), resolveExpCS);
@@ -3322,7 +3306,7 @@ public class QvtOperationalVisitorCS
 		}
     }
         
-    private OCLExpression<EClassifier> visitResolveInExpCS(ResolveInExpCS resolveInExpCS, QvtOperationalEnv env) {
+    private org.eclipse.ocl.ecore.OCLExpression visitResolveInExpCS(ResolveInExpCS resolveInExpCS, QvtOperationalEnv env) {
         ResolveInExp resolveInExp = ExpressionsFactory.eINSTANCE.createResolveInExp();
         TypeCS contextTypeCS = resolveInExpCS.getInMappingType();
         EClassifier eClassifier = (contextTypeCS == null) ? null : visitTypeCS(contextTypeCS, null, env); // mapping context type
@@ -3454,18 +3438,18 @@ public class QvtOperationalVisitorCS
         return resolveExp;
     }
 
-    private OCLExpression<EClassifier> visitForExp(ForExpCS forExpCS, 
+    private org.eclipse.ocl.ecore.OCLExpression visitForExp(ForExpCS forExpCS, 
     		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
     	
         OCLExpression<EClassifier> source =
             getCollectionSourceExpression(forExpCS.getSource(), env);
         if (!(source.getType() instanceof CollectionType)) {
-            return createDummyInvalidLiteralExp();
+            return (org.eclipse.ocl.ecore.OCLExpression)createDummyInvalidLiteralExp();
         }
         String name = forExpCS.getSimpleNameCS().getValue();
 
-        ForExp astNode = ExpressionsFactory.eINSTANCE.createForExp();
+        ForExp astNode = ImperativeOCLFactory.eINSTANCE.createForExp();
         initASTMapping(env, astNode, forExpCS);
         astNode.setName(name);
         astNode.setStartPosition(forExpCS.getStartOffset());
@@ -3491,7 +3475,7 @@ public class QvtOperationalVisitorCS
         
         if (forExpCS.getCondition() != null) { 
             OCLExpression<EClassifier> conditionExp = oclExpressionCS(forExpCS.getCondition(), env);
-            astNode.setCondition(conditionExp);
+            astNode.setCondition((org.eclipse.ocl.ecore.OCLExpression)conditionExp);
         }
         
         if (forExpCS.getBody() != null) {
@@ -3511,14 +3495,14 @@ public class QvtOperationalVisitorCS
         return astNode;
     }
     
-    private OCLExpression<EClassifier> visitImperativeIterateExp(ImperativeIterateExpCS imperativeIterateExpCS, 
+    private org.eclipse.ocl.ecore.OCLExpression visitImperativeIterateExp(ImperativeIterateExpCS imperativeIterateExpCS, 
     		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
     	
         OCLExpression<EClassifier> source =
             getCollectionSourceExpression(imperativeIterateExpCS.getSource(), env);
         if (!(source.getType() instanceof CollectionType)) {
-            return createDummyInvalidLiteralExp();
+            return (org.eclipse.ocl.ecore.OCLExpression)createDummyInvalidLiteralExp();
         }
         String name = imperativeIterateExpCS.getSimpleNameCS().getValue();
 
@@ -3533,7 +3517,7 @@ public class QvtOperationalVisitorCS
         if (imperativeIterateExpCS.getVariable1() != null) {
             vdcl = variableDeclarationCS(imperativeIterateExpCS.getVariable1(), env, true);
                 
-            astNode = ExpressionsFactory.eINSTANCE.createImperativeIterateExp();
+            astNode = ImperativeOCLFactory.eINSTANCE.createImperativeIterateExp();
             initASTMapping(env, astNode, imperativeIterateExpCS);
             astNode.setName(name);
             iterators = astNode.getIterator();  
@@ -3551,7 +3535,7 @@ public class QvtOperationalVisitorCS
                 iterators.add(vdcl1);
             }
         } else  {
-            astNode = ExpressionsFactory.eINSTANCE.createImperativeIterateExp();
+            astNode = ImperativeOCLFactory.eINSTANCE.createImperativeIterateExp();
             initASTMapping(env, astNode, imperativeIterateExpCS);
             astNode.setName(name);
             iterators = astNode.getIterator();  
@@ -3587,7 +3571,7 @@ public class QvtOperationalVisitorCS
                     if (imperativeIterateExpCS.getTarget() == null) {
                         Variable<EClassifier, EParameter> targetVdcl = genVariableDeclaration(imperativeIterateExpCS, "visitImperativeIterateExp", env, null, //$NON-NLS-1$
                                 bodyExp.getType(), null, false, true, false);
-                        astNode.setTarget(targetVdcl);
+                        astNode.setTarget((org.eclipse.ocl.ecore.Variable)targetVdcl);
                     }
                 }
             } 
@@ -3596,7 +3580,7 @@ public class QvtOperationalVisitorCS
                 if (targetVdcl.getInitExpression() != null) {
                     astNode.setBody(targetVdcl.getInitExpression()); // the body is transferred from the target variable due to containment
                 }
-                astNode.setTarget(targetVdcl);
+                astNode.setTarget((org.eclipse.ocl.ecore.Variable)targetVdcl);
             }
             if (astNode.getBody() != null) {
                 resultElementType = astNode.getBody().getType();
@@ -3607,7 +3591,7 @@ public class QvtOperationalVisitorCS
         }
         
         if (imperativeIterateExpCS.getCondition() != null) { 
-            OCLExpression<EClassifier> conditionExp = oclExpressionCS(imperativeIterateExpCS.getCondition(), env);
+        	org.eclipse.ocl.ecore.OCLExpression conditionExp = oclExpressionCS(imperativeIterateExpCS.getCondition(), env);
             astNode.setCondition(conditionExp);
             if (conditionExp instanceof TypeExp<?>) {
                 TypeExp<EClassifier> typedCondition = (TypeExp<EClassifier>) conditionExp;
@@ -3832,16 +3816,16 @@ public class QvtOperationalVisitorCS
 		    if (type == null) {
 		        return false;
 		    } else {
-		        OCLExpression<EClassifier> defaultInitializationValue = createDefaultInitializationValue(type, env);
+		    	org.eclipse.ocl.ecore.OCLExpression defaultInitializationValue = createDefaultInitializationValue(type, env);
 		        if (defaultInitializationValue == null) {
 		            NullLiteralExp<EClassifier> nullLiteralExp = oclFactory.createNullLiteralExp();
 		            nullLiteralExp.setType(getOclVoid());
-		            defaultInitializationValue = nullLiteralExp;
+		            defaultInitializationValue = (org.eclipse.ocl.ecore.NullLiteralExp)nullLiteralExp;
 		        }
 		        result.setValue(defaultInitializationValue);
 		    }
 		} else {
-	        OCLExpression<EClassifier> exp = visitOclExpressionCS(varInitCS.getOclExpressionCS(), env);
+	        org.eclipse.ocl.ecore.OCLExpression exp = visitOclExpressionCS(varInitCS.getOclExpressionCS(), env);
 	        if (exp == null) {
 	            return false;
 	        }
@@ -3851,7 +3835,8 @@ public class QvtOperationalVisitorCS
 		return true;
 	}
 
-	private OCLExpression<EClassifier> createDefaultInitializationValue(EClassifier type, 
+	// FIXME - should not be initialized at AST level but at evaluation level
+	private org.eclipse.ocl.ecore.OCLExpression createDefaultInitializationValue(EClassifier type, 
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
         // 8.2.2.10 VariableInitExp
@@ -3869,7 +3854,7 @@ public class QvtOperationalVisitorCS
             collectionLiteralExp.setKind(kind);
             EClassifier resultType = getCollectionType(env, kind, collectionType.getElementType());
             collectionLiteralExp.setType(resultType);
-            return collectionLiteralExp;
+            return (org.eclipse.ocl.ecore.CollectionLiteralExp)collectionLiteralExp;
         } else {
             EClassifier resolvedType = env.getTypeResolver().resolve(type);
             OCLStandardLibrary<EClassifier> oclStdLib = getStandardLibrary();
@@ -3877,31 +3862,31 @@ public class QvtOperationalVisitorCS
                 BooleanLiteralExp<EClassifier> booleanLiteralExp = oclFactory.createBooleanLiteralExp();
                 booleanLiteralExp.setBooleanSymbol(Boolean.FALSE);
                 booleanLiteralExp.setType(oclStdLib.getBoolean());
-                return booleanLiteralExp;
+                return (org.eclipse.ocl.ecore.BooleanLiteralExp)booleanLiteralExp;
             } else if (resolvedType == oclStdLib.getInteger()) {
                 IntegerLiteralExp<EClassifier> integerLiteralExp = oclFactory.createIntegerLiteralExp();
                 integerLiteralExp.setIntegerSymbol(0);
                 integerLiteralExp.setType(oclStdLib.getInteger());
-                return integerLiteralExp;
+                return (org.eclipse.ocl.ecore.IntegerLiteralExp)integerLiteralExp;
             } else if (resolvedType == oclStdLib.getReal()) {
                 RealLiteralExp<EClassifier> realLiteralExp = oclFactory.createRealLiteralExp();
                 realLiteralExp.setRealSymbol(0.0);
                 realLiteralExp.setType(oclStdLib.getReal());
-                return realLiteralExp;
+                return (org.eclipse.ocl.ecore.RealLiteralExp) realLiteralExp;
             } else if (resolvedType == oclStdLib.getUnlimitedNatural()) {
                 UnlimitedNaturalLiteralExp<EClassifier> unlimitedNaturalLiteralExp = oclFactory.createUnlimitedNaturalLiteralExp();
                 unlimitedNaturalLiteralExp.setIntegerSymbol(0);
                 unlimitedNaturalLiteralExp.setType(oclStdLib.getUnlimitedNatural());
-                return unlimitedNaturalLiteralExp;
+                return (org.eclipse.ocl.ecore.UnlimitedNaturalLiteralExp)unlimitedNaturalLiteralExp;
             } else if (resolvedType == oclStdLib.getInvalid()) {
                 InvalidLiteralExp<EClassifier> invalidLiteralExp = oclFactory.createInvalidLiteralExp();
                 invalidLiteralExp.setType(oclStdLib.getInvalid());
-                return invalidLiteralExp;
+                return (org.eclipse.ocl.ecore.InvalidLiteralExp)invalidLiteralExp;
             } else if (resolvedType == oclStdLib.getString()) {
                 org.eclipse.ocl.expressions.StringLiteralExp<EClassifier> stringLiteralExp = oclFactory.createStringLiteralExp();
                 stringLiteralExp.setStringSymbol(""); //$NON-NLS-1$
                 stringLiteralExp.setType(oclStdLib.getString());
-                return stringLiteralExp;
+                return (StringLiteralExp)stringLiteralExp;
             }
         }
 	    return null;
@@ -4098,7 +4083,7 @@ public class QvtOperationalVisitorCS
 	
 	protected DictLiteralExp dictionaryLiteralExp(DictLiteralExpCS dictLiteralExpCS,
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
-		DictLiteralExp result = ExpressionsFactory.eINSTANCE.createDictLiteralExp();		
+		DictLiteralExp result = ImperativeOCLFactory.eINSTANCE.createDictLiteralExp();		
 		
 		for (DictLiteralPartCS nextPartCS : dictLiteralExpCS.getParts()) {			
 			DictLiteralPart literalPartAST = dictionaryLiteralPart(nextPartCS, env);
@@ -4147,7 +4132,7 @@ public class QvtOperationalVisitorCS
 	protected DictLiteralPart dictionaryLiteralPart(DictLiteralPartCS dictLiteralPartCS,
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		
-		DictLiteralPart result = ExpressionsFactory.eINSTANCE.createDictLiteralPart();	
+		DictLiteralPart result = ImperativeOCLFactory.eINSTANCE.createDictLiteralPart();	
 		result.setKey((org.eclipse.ocl.ecore.OCLExpression)oclExpressionCS(dictLiteralPartCS.getKey(), env));
 		result.setValue((org.eclipse.ocl.ecore.OCLExpression)oclExpressionCS(dictLiteralPartCS.getValue(), env));
 		dictLiteralPartCS.setAst(result);		

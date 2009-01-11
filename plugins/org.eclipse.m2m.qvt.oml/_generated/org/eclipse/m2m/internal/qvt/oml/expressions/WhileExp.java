@@ -13,7 +13,7 @@ package org.eclipse.m2m.internal.qvt.oml.expressions;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
-import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.ecore.OCLExpression;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.utilities.Visitor;
 
@@ -32,19 +32,12 @@ import org.eclipse.ocl.utilities.Visitor;
  * </ul>
  * </p>
  *
- * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getWhileExp()
+ * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getWhileExp()
  * @model
  * @generated
  */
 public interface WhileExp extends ImperativeExpression {
 	/**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
-
-    /**
 	 * Returns the value of the '<em><b>Condition</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -54,11 +47,11 @@ public interface WhileExp extends ImperativeExpression {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Condition</em>' containment reference.
 	 * @see #setCondition(OCLExpression)
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getWhileExp_Condition()
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getWhileExp_Condition()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	OCLExpression<EClassifier> getCondition();
+	OCLExpression getCondition();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.WhileExp#getCondition <em>Condition</em>}' containment reference.
@@ -68,7 +61,7 @@ public interface WhileExp extends ImperativeExpression {
 	 * @see #getCondition()
 	 * @generated
 	 */
-	void setCondition(OCLExpression<EClassifier> value);
+	void setCondition(OCLExpression value);
 
 	/**
 	 * Returns the value of the '<em><b>Body</b></em>' containment reference.
@@ -80,11 +73,11 @@ public interface WhileExp extends ImperativeExpression {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Body</em>' containment reference.
 	 * @see #setBody(OCLExpression)
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getWhileExp_Body()
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getWhileExp_Body()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	OCLExpression<EClassifier> getBody();
+	OCLExpression getBody();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.WhileExp#getBody <em>Body</em>}' containment reference.
@@ -94,7 +87,7 @@ public interface WhileExp extends ImperativeExpression {
 	 * @see #getBody()
 	 * @generated
 	 */
-	void setBody(OCLExpression<EClassifier> value);
+	void setBody(OCLExpression value);
 
 	/**
 	 * Returns the value of the '<em><b>Result</b></em>' containment reference.
@@ -106,11 +99,11 @@ public interface WhileExp extends ImperativeExpression {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Result</em>' containment reference.
 	 * @see #setResult(OCLExpression)
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getWhileExp_Result()
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getWhileExp_Result()
 	 * @model containment="true"
 	 * @generated
 	 */
-	OCLExpression<EClassifier> getResult();
+	OCLExpression getResult();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.WhileExp#getResult <em>Result</em>}' containment reference.
@@ -120,7 +113,7 @@ public interface WhileExp extends ImperativeExpression {
 	 * @see #getResult()
 	 * @generated
 	 */
-	void setResult(OCLExpression<EClassifier> value);
+	void setResult(OCLExpression value);
 
 	/**
 	 * Returns the value of the '<em><b>Result Var</b></em>' containment reference.
@@ -132,7 +125,7 @@ public interface WhileExp extends ImperativeExpression {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Result Var</em>' containment reference.
 	 * @see #setResultVar(Variable)
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getWhileExp_ResultVar()
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getWhileExp_ResultVar()
 	 * @model containment="true"
 	 * @generated
 	 */

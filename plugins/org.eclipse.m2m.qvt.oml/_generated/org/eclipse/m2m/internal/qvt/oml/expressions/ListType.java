@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ListType.java,v 1.1 2008/12/23 17:22:00 radvorak Exp $
+ * $Id: ListType.java,v 1.2 2009/01/11 23:22:04 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
@@ -21,16 +21,10 @@ import org.eclipse.ocl.ecore.CollectionType;
  * <!-- end-user-doc -->
  *
  *
- * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getListType()
+ * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getListType()
  * @model
  * @generated
  */
 public interface ListType extends CollectionType {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
 } // ListType

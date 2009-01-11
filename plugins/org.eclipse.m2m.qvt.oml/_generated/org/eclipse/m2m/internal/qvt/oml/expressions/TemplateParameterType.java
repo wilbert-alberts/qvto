@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: TemplateParameterType.java,v 1.1 2009/01/09 15:59:40 radvorak Exp $
+ * $Id: TemplateParameterType.java,v 1.2 2009/01/11 23:22:04 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
@@ -27,18 +27,11 @@ import org.eclipse.emf.ecore.EClassifier;
  * </ul>
  * </p>
  *
- * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getTemplateParameterType()
+ * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getTemplateParameterType()
  * @model
  * @generated
  */
 public interface TemplateParameterType extends EClassifier {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
-
 	/**
 	 * Returns the value of the '<em><b>Specification</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -49,7 +42,7 @@ public interface TemplateParameterType extends EClassifier {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Specification</em>' attribute.
 	 * @see #setSpecification(String)
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getTemplateParameterType_Specification()
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getTemplateParameterType_Specification()
 	 * @model
 	 * @generated
 	 */

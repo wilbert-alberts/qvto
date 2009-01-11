@@ -9,13 +9,12 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: SwitchExp.java,v 1.2 2008/10/31 00:02:46 radvorak Exp $
+ * $Id: SwitchExp.java,v 1.3 2009/01/11 23:22:04 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.ecore.OCLExpression;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -31,18 +30,11 @@ import org.eclipse.ocl.utilities.Visitor;
  * </ul>
  * </p>
  *
- * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getSwitchExp()
+ * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getSwitchExp()
  * @model
  * @generated
  */
 public interface SwitchExp extends ImperativeExpression {
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
-
     /**
 	 * Returns the value of the '<em><b>Alternative Part</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.expressions.AltExp}.
@@ -53,7 +45,7 @@ public interface SwitchExp extends ImperativeExpression {
      * </p>
      * <!-- end-user-doc -->
 	 * @return the value of the '<em>Alternative Part</em>' containment reference list.
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getSwitchExp_AlternativePart()
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getSwitchExp_AlternativePart()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
@@ -69,11 +61,11 @@ public interface SwitchExp extends ImperativeExpression {
      * <!-- end-user-doc -->
 	 * @return the value of the '<em>Else Part</em>' containment reference.
 	 * @see #setElsePart(OCLExpression)
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getSwitchExp_ElsePart()
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getSwitchExp_ElsePart()
 	 * @model containment="true"
 	 * @generated
 	 */
-    OCLExpression<EClassifier> getElsePart();
+    OCLExpression getElsePart();
 
     /**
 	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.SwitchExp#getElsePart <em>Else Part</em>}' containment reference.
@@ -83,7 +75,7 @@ public interface SwitchExp extends ImperativeExpression {
 	 * @see #getElsePart()
 	 * @generated
 	 */
-    void setElsePart(OCLExpression<EClassifier> value);
+    void setElsePart(OCLExpression value);
 
     /**
 	 * <!-- begin-user-doc -->

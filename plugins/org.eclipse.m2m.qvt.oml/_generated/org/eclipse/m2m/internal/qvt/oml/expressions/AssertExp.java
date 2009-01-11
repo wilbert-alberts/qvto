@@ -9,12 +9,11 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: AssertExp.java,v 1.2 2008/10/31 00:02:44 radvorak Exp $
+ * $Id: AssertExp.java,v 1.3 2009/01/11 23:22:03 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.ecore.OCLExpression;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -28,22 +27,14 @@ import org.eclipse.ocl.utilities.Visitor;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp#getAssertion <em>Assertion</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp#getLog <em>Log</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp#getSeverity <em>Severity</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp#getLine <em>Line</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getAssertExp()
+ * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getAssertExp()
  * @model
  * @generated
  */
 public interface AssertExp extends ImperativeExpression {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
-
 	/**
 	 * Returns the value of the '<em><b>Assertion</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -54,11 +45,11 @@ public interface AssertExp extends ImperativeExpression {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Assertion</em>' containment reference.
 	 * @see #setAssertion(OCLExpression)
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getAssertExp_Assertion()
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getAssertExp_Assertion()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	OCLExpression<EClassifier> getAssertion();
+	OCLExpression getAssertion();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp#getAssertion <em>Assertion</em>}' containment reference.
@@ -68,7 +59,7 @@ public interface AssertExp extends ImperativeExpression {
 	 * @see #getAssertion()
 	 * @generated
 	 */
-	void setAssertion(OCLExpression<EClassifier> value);
+	void setAssertion(OCLExpression value);
 
 	/**
 	 * Returns the value of the '<em><b>Log</b></em>' containment reference.
@@ -80,7 +71,7 @@ public interface AssertExp extends ImperativeExpression {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Log</em>' containment reference.
 	 * @see #setLog(LogExp)
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getAssertExp_Log()
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getAssertExp_Log()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -109,7 +100,7 @@ public interface AssertExp extends ImperativeExpression {
 	 * @return the value of the '<em>Severity</em>' attribute.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.SeverityKind
 	 * @see #setSeverity(SeverityKind)
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getAssertExp_Severity()
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getAssertExp_Severity()
 	 * @model default="error" required="true"
 	 * @generated
 	 */
@@ -125,33 +116,6 @@ public interface AssertExp extends ImperativeExpression {
 	 * @generated
 	 */
 	void setSeverity(SeverityKind value);
-
-	/**
-	 * Returns the value of the '<em><b>Line</b></em>' attribute.
-	 * The default value is <code>"-1"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Line</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Line</em>' attribute.
-	 * @see #setLine(int)
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getAssertExp_Line()
-	 * @model default="-1"
-	 * @generated
-	 */
-	int getLine();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp#getLine <em>Line</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Line</em>' attribute.
-	 * @see #getLine()
-	 * @generated
-	 */
-	void setLine(int value);
 
 	/**
 	 * <!-- begin-user-doc -->

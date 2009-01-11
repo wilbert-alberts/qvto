@@ -9,21 +9,17 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: DictionaryTypeImpl.java,v 1.1 2008/12/23 17:21:59 radvorak Exp $
+ * $Id: DictionaryTypeImpl.java,v 1.2 2009/01/11 23:22:07 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
-
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage;
 import org.eclipse.ocl.ecore.impl.CollectionTypeImpl;
 
 /**
@@ -40,13 +36,6 @@ import org.eclipse.ocl.ecore.impl.CollectionTypeImpl;
  * @generated
  */
 public class DictionaryTypeImpl extends CollectionTypeImpl implements DictionaryType {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
-
 	/**
 	 * The cached value of the '{@link #getKeyType() <em>Key Type</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -73,7 +62,7 @@ public class DictionaryTypeImpl extends CollectionTypeImpl implements Dictionary
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ExpressionsPackage.Literals.DICTIONARY_TYPE;
+		return ImperativeOCLPackage.Literals.DICTIONARY_TYPE;
 	}
 
 	/**
@@ -87,7 +76,7 @@ public class DictionaryTypeImpl extends CollectionTypeImpl implements Dictionary
 			keyType = (EClassifier)eResolveProxy(oldKeyType);
 			if (keyType != oldKeyType) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ExpressionsPackage.DICTIONARY_TYPE__KEY_TYPE, oldKeyType, keyType));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ImperativeOCLPackage.DICTIONARY_TYPE__KEY_TYPE, oldKeyType, keyType));
 			}
 		}
 		return keyType;
@@ -111,7 +100,7 @@ public class DictionaryTypeImpl extends CollectionTypeImpl implements Dictionary
 		EClassifier oldKeyType = keyType;
 		keyType = newKeyType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.DICTIONARY_TYPE__KEY_TYPE, oldKeyType, keyType));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLPackage.DICTIONARY_TYPE__KEY_TYPE, oldKeyType, keyType));
 	}
 
 	/**
@@ -122,7 +111,7 @@ public class DictionaryTypeImpl extends CollectionTypeImpl implements Dictionary
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ExpressionsPackage.DICTIONARY_TYPE__KEY_TYPE:
+			case ImperativeOCLPackage.DICTIONARY_TYPE__KEY_TYPE:
 				if (resolve) return getKeyType();
 				return basicGetKeyType();
 		}
@@ -137,7 +126,7 @@ public class DictionaryTypeImpl extends CollectionTypeImpl implements Dictionary
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ExpressionsPackage.DICTIONARY_TYPE__KEY_TYPE:
+			case ImperativeOCLPackage.DICTIONARY_TYPE__KEY_TYPE:
 				setKeyType((EClassifier)newValue);
 				return;
 		}
@@ -152,7 +141,7 @@ public class DictionaryTypeImpl extends CollectionTypeImpl implements Dictionary
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.DICTIONARY_TYPE__KEY_TYPE:
+			case ImperativeOCLPackage.DICTIONARY_TYPE__KEY_TYPE:
 				setKeyType((EClassifier)null);
 				return;
 		}
@@ -167,7 +156,7 @@ public class DictionaryTypeImpl extends CollectionTypeImpl implements Dictionary
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.DICTIONARY_TYPE__KEY_TYPE:
+			case ImperativeOCLPackage.DICTIONARY_TYPE__KEY_TYPE:
 				return keyType != null;
 		}
 		return super.eIsSet(featureID);

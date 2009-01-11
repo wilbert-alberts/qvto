@@ -29,7 +29,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
-import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.ecore.OCLExpression;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.UtilitiesPackage;
@@ -108,7 +108,7 @@ public class OperationBodyImpl extends EObjectImpl implements OperationBody {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<OCLExpression<EClassifier>> content;
+	protected EList<OCLExpression> content;
 
 	/**
 	 * The cached value of the '{@link #getVariable() <em>Variable</em>}' containment reference list.
@@ -227,9 +227,9 @@ public class OperationBodyImpl extends EObjectImpl implements OperationBody {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<OCLExpression<EClassifier>> getContent() {
+	public EList<OCLExpression> getContent() {
 		if (content == null) {
-			content = new EObjectContainmentEList<OCLExpression<EClassifier>>(OCLExpression.class, this, ExpressionsPackage.OPERATION_BODY__CONTENT);
+			content = new EObjectContainmentEList<OCLExpression>(OCLExpression.class, this, ExpressionsPackage.OPERATION_BODY__CONTENT);
 		}
 		return content;
 	}
@@ -350,7 +350,7 @@ public class OperationBodyImpl extends EObjectImpl implements OperationBody {
 				return;
 			case ExpressionsPackage.OPERATION_BODY__CONTENT:
 				getContent().clear();
-				getContent().addAll((Collection<? extends OCLExpression<EClassifier>>)newValue);
+				getContent().addAll((Collection<? extends OCLExpression>)newValue);
 				return;
 			case ExpressionsPackage.OPERATION_BODY__VARIABLE:
 				getVariable().clear();

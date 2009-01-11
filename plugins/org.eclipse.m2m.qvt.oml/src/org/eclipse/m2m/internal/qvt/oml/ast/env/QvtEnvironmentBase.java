@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
@@ -286,9 +286,9 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVTOEnviro
 			genericBaseType = oclstdlib.getSet();
 		} else if(metaType == typePackage.getOrderedSetType() && collectionType != oclstdlib.getOrderedSet()) {
 			genericBaseType = oclstdlib.getOrderedSet();
-		} else if(metaType == ExpressionsPackage.eINSTANCE.getListType() && collectionType != getQVTStandardLibrary().getList()) {
+		} else if(metaType == ImperativeOCLPackage.eINSTANCE.getListType() && collectionType != getQVTStandardLibrary().getList()) {
 			genericBaseType = getQVTStandardLibrary().getList();
-		} else if(metaType == ExpressionsPackage.eINSTANCE.getDictionaryType() && collectionType != getQVTStandardLibrary().getDictionary()) {
+		} else if(metaType == ImperativeOCLPackage.eINSTANCE.getDictionaryType() && collectionType != getQVTStandardLibrary().getDictionary()) {
 			genericBaseType = getQVTStandardLibrary().getDictionary();
 		}
 		
@@ -305,7 +305,7 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVTOEnviro
 			thisResolver.getLocalCollectionAdditionalOperations(generalCollection, result, false);
 		}
 		
-		if(metaType == ExpressionsPackage.eINSTANCE.getListType()) {
+		if(metaType == ImperativeOCLPackage.eINSTANCE.getListType()) {
 			// process the CollectionType super type
 			// TODO - better to have MDT OCL to support #getAllSupertypes(...) operation in TypeChecker
 			thisResolver.getLocalCollectionAdditionalOperations((CollectionType)oclstdlib.getCollection(), result, false);			

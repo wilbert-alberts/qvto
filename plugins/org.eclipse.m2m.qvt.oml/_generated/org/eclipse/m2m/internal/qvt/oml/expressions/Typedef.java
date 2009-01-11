@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: Typedef.java,v 1.2 2008/12/18 15:18:10 radvorak Exp $
+ * $Id: Typedef.java,v 1.3 2009/01/11 23:22:03 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
@@ -30,18 +30,11 @@ import org.eclipse.ocl.ecore.OCLExpression;
  * </ul>
  * </p>
  *
- * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getTypedef()
+ * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getTypedef()
  * @model
  * @generated
  */
 public interface Typedef extends EClass {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
-
 	/**
 	 * Returns the value of the '<em><b>Base</b></em>' reference.
 	 * <!-- begin-user-doc -->
@@ -52,7 +45,7 @@ public interface Typedef extends EClass {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Base</em>' reference.
 	 * @see #setBase(EClassifier)
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getTypedef_Base()
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getTypedef_Base()
 	 * @model required="true"
 	 * @generated
 	 */
@@ -78,7 +71,7 @@ public interface Typedef extends EClass {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Condition</em>' containment reference.
 	 * @see #setCondition(OCLExpression)
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getTypedef_Condition()
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getTypedef_Condition()
 	 * @model containment="true"
 	 * @generated
 	 */

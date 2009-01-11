@@ -49,7 +49,6 @@ import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.CollectionType;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
-import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.lpg.FormattingHelper;
 import org.eclipse.ocl.parser.ValidationVisitor;
 import org.eclipse.ocl.util.TypeUtil;
@@ -89,7 +88,6 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 			}
 			catch (Throwable throwable) {
 				// FIXME - eliminate this !!!!
-				int i = 0;
 			}
 		}
 		
@@ -120,14 +118,14 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 		
 		if(instantiatedClass instanceof OperationalTransformation) {
 			OperationalTransformation transf = (OperationalTransformation) instantiatedClass;
-			List<OCLExpression<EClassifier>> actualArgs = instantiationExp.getArgument();
+			List<org.eclipse.ocl.ecore.OCLExpression> actualArgs = instantiationExp.getArgument();
 			EList<ModelParameter> formalArgs = transf.getModelParameter();
 			
 			if(actualArgs.size() == formalArgs.size()) {
 				int i = 0;
 				for (ModelParameter modelParameter : formalArgs) {
 					EClassifier paramType = modelParameter.getType();
-					OCLExpression<EClassifier> nextActualArg = actualArgs.get(i++);
+					org.eclipse.ocl.ecore.OCLExpression nextActualArg = actualArgs.get(i++);
 					EClassifier expectedType = nextActualArg.getType();
 					
 					boolean compatible = paramType instanceof ModelType && expectedType instanceof ModelType &&
@@ -331,7 +329,7 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 			if(operation.getEType() == null || operation.getEType() == fEnv.getOCLStandardLibrary().getOclVoid()) {
 				//return Boolean.TRUE; // continue to super type visit
 			} else {
-				EList<OCLExpression<EClassifier>> content = operationBody.getContent();
+				EList<org.eclipse.ocl.ecore.OCLExpression> content = operationBody.getContent();
 				if(operation.getResult().size() == 1 && 
 					(content.isEmpty() || content.get(content.size() - 1) instanceof ReturnExp == false)) {
                     CSTNode operationCS = ASTBindingHelper.resolveCSTNode(operation);

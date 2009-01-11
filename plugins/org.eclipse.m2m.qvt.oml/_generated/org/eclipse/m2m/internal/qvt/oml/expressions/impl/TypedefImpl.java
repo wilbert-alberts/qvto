@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: TypedefImpl.java,v 1.2 2008/12/18 15:18:10 radvorak Exp $
+ * $Id: TypedefImpl.java,v 1.3 2009/01/11 23:22:08 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EClassImpl;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Typedef;
 import org.eclipse.ocl.ecore.OCLExpression;
 
@@ -39,13 +39,6 @@ import org.eclipse.ocl.ecore.OCLExpression;
  * @generated
  */
 public class TypedefImpl extends EClassImpl implements Typedef {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
-
 	/**
 	 * The cached value of the '{@link #getBase() <em>Base</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -82,7 +75,7 @@ public class TypedefImpl extends EClassImpl implements Typedef {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ExpressionsPackage.Literals.TYPEDEF;
+		return ImperativeOCLPackage.Literals.TYPEDEF;
 	}
 
 	/**
@@ -96,7 +89,7 @@ public class TypedefImpl extends EClassImpl implements Typedef {
 			base = (EClassifier)eResolveProxy(oldBase);
 			if (base != oldBase) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ExpressionsPackage.TYPEDEF__BASE, oldBase, base));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ImperativeOCLPackage.TYPEDEF__BASE, oldBase, base));
 			}
 		}
 		return base;
@@ -120,7 +113,7 @@ public class TypedefImpl extends EClassImpl implements Typedef {
 		EClassifier oldBase = base;
 		base = newBase;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.TYPEDEF__BASE, oldBase, base));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLPackage.TYPEDEF__BASE, oldBase, base));
 	}
 
 	/**
@@ -141,7 +134,7 @@ public class TypedefImpl extends EClassImpl implements Typedef {
 		OCLExpression oldCondition = condition;
 		condition = newCondition;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpressionsPackage.TYPEDEF__CONDITION, oldCondition, newCondition);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLPackage.TYPEDEF__CONDITION, oldCondition, newCondition);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -156,14 +149,14 @@ public class TypedefImpl extends EClassImpl implements Typedef {
 		if (newCondition != condition) {
 			NotificationChain msgs = null;
 			if (condition != null)
-				msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.TYPEDEF__CONDITION, null, msgs);
+				msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLPackage.TYPEDEF__CONDITION, null, msgs);
 			if (newCondition != null)
-				msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.TYPEDEF__CONDITION, null, msgs);
+				msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLPackage.TYPEDEF__CONDITION, null, msgs);
 			msgs = basicSetCondition(newCondition, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.TYPEDEF__CONDITION, newCondition, newCondition));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLPackage.TYPEDEF__CONDITION, newCondition, newCondition));
 	}
 
 	/**
@@ -174,7 +167,7 @@ public class TypedefImpl extends EClassImpl implements Typedef {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ExpressionsPackage.TYPEDEF__CONDITION:
+			case ImperativeOCLPackage.TYPEDEF__CONDITION:
 				return basicSetCondition(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -188,10 +181,10 @@ public class TypedefImpl extends EClassImpl implements Typedef {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ExpressionsPackage.TYPEDEF__BASE:
+			case ImperativeOCLPackage.TYPEDEF__BASE:
 				if (resolve) return getBase();
 				return basicGetBase();
-			case ExpressionsPackage.TYPEDEF__CONDITION:
+			case ImperativeOCLPackage.TYPEDEF__CONDITION:
 				return getCondition();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -205,10 +198,10 @@ public class TypedefImpl extends EClassImpl implements Typedef {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ExpressionsPackage.TYPEDEF__BASE:
+			case ImperativeOCLPackage.TYPEDEF__BASE:
 				setBase((EClassifier)newValue);
 				return;
-			case ExpressionsPackage.TYPEDEF__CONDITION:
+			case ImperativeOCLPackage.TYPEDEF__CONDITION:
 				setCondition((OCLExpression)newValue);
 				return;
 		}
@@ -223,10 +216,10 @@ public class TypedefImpl extends EClassImpl implements Typedef {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.TYPEDEF__BASE:
+			case ImperativeOCLPackage.TYPEDEF__BASE:
 				setBase((EClassifier)null);
 				return;
-			case ExpressionsPackage.TYPEDEF__CONDITION:
+			case ImperativeOCLPackage.TYPEDEF__CONDITION:
 				setCondition((OCLExpression)null);
 				return;
 		}
@@ -241,9 +234,9 @@ public class TypedefImpl extends EClassImpl implements Typedef {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.TYPEDEF__BASE:
+			case ImperativeOCLPackage.TYPEDEF__BASE:
 				return base != null;
-			case ExpressionsPackage.TYPEDEF__CONDITION:
+			case ImperativeOCLPackage.TYPEDEF__CONDITION:
 				return condition != null;
 		}
 		return super.eIsSet(featureID);

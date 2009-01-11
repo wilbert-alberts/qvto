@@ -14,7 +14,7 @@ package org.eclipse.m2m.internal.qvt.oml.expressions;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
-import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.ecore.OCLExpression;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.utilities.Visitor;
 
@@ -74,7 +74,7 @@ public interface OperationBody extends VisitableASTNode {
 
 	/**
 	 * Returns the value of the '<em><b>Content</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.expressions.OCLExpression}&lt;org.eclipse.emf.ecore.EClassifier>.
+	 * The list contents are of type {@link org.eclipse.ocl.ecore.OCLExpression}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Content</em>' containment reference list isn't clear,
@@ -86,7 +86,7 @@ public interface OperationBody extends VisitableASTNode {
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<OCLExpression<EClassifier>> getContent();
+	EList<OCLExpression> getContent();
 
 	/**
 	 * Returns the value of the '<em><b>Variable</b></em>' containment reference list.

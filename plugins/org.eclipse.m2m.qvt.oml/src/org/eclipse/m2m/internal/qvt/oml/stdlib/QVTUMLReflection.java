@@ -30,6 +30,7 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.IntermediateClassFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Class;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
@@ -93,7 +94,8 @@ public class QVTUMLReflection
 			
 			return false == (eClass.getEPackage() == stdlibPackage || 
 					metaClass.getEPackage() == stdlibPackage ||
-					metaClass.getEPackage() == ExpressionsPackage.eINSTANCE);
+					metaClass.getEPackage() == ExpressionsPackage.eINSTANCE ||
+					metaClass == ImperativeOCLPackage.eINSTANCE.getTypedef());
 		}
 		
 		return false;
@@ -155,7 +157,7 @@ public class QVTUMLReflection
 		List<EOperation> result = fUmlReflection.getOperations(classifier);
 		if(isUserModelElement(classifier)) {
 			QvtOperationalStdLibrary stdlib = QvtOperationalStdLibrary.INSTANCE;
-			List<EOperation> elementOpers = stdlib.getOperations(stdlib.getElementType());			
+			List<EOperation> elementOpers = getOperations(stdlib.getElementType());			
 			List<EOperation> tmp = result;
 			result = new ArrayList<EOperation>(result.size() + elementOpers.size());
 			result.addAll(tmp);

@@ -9,18 +9,15 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: TemplateParameterTypeImpl.java,v 1.1 2009/01/09 15:59:39 radvorak Exp $
+ * $Id: TemplateParameterTypeImpl.java,v 1.2 2009/01/11 23:22:08 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.EClassifierImpl;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.TemplateParameterType;
 
 /**
@@ -37,13 +34,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.TemplateParameterType;
  * @generated
  */
 public class TemplateParameterTypeImpl extends EClassifierImpl implements TemplateParameterType {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
-
 	/**
 	 * The default value of the '{@link #getSpecification() <em>Specification</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -80,7 +70,7 @@ public class TemplateParameterTypeImpl extends EClassifierImpl implements Templa
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ExpressionsPackage.Literals.TEMPLATE_PARAMETER_TYPE;
+		return ImperativeOCLPackage.Literals.TEMPLATE_PARAMETER_TYPE;
 	}
 
 	/**
@@ -101,7 +91,7 @@ public class TemplateParameterTypeImpl extends EClassifierImpl implements Templa
 		String oldSpecification = specification;
 		specification = newSpecification;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.TEMPLATE_PARAMETER_TYPE__SPECIFICATION, oldSpecification, specification));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLPackage.TEMPLATE_PARAMETER_TYPE__SPECIFICATION, oldSpecification, specification));
 	}
 
 	/**
@@ -112,7 +102,7 @@ public class TemplateParameterTypeImpl extends EClassifierImpl implements Templa
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ExpressionsPackage.TEMPLATE_PARAMETER_TYPE__SPECIFICATION:
+			case ImperativeOCLPackage.TEMPLATE_PARAMETER_TYPE__SPECIFICATION:
 				return getSpecification();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -126,7 +116,7 @@ public class TemplateParameterTypeImpl extends EClassifierImpl implements Templa
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ExpressionsPackage.TEMPLATE_PARAMETER_TYPE__SPECIFICATION:
+			case ImperativeOCLPackage.TEMPLATE_PARAMETER_TYPE__SPECIFICATION:
 				setSpecification((String)newValue);
 				return;
 		}
@@ -141,7 +131,7 @@ public class TemplateParameterTypeImpl extends EClassifierImpl implements Templa
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.TEMPLATE_PARAMETER_TYPE__SPECIFICATION:
+			case ImperativeOCLPackage.TEMPLATE_PARAMETER_TYPE__SPECIFICATION:
 				setSpecification(SPECIFICATION_EDEFAULT);
 				return;
 		}
@@ -156,7 +146,7 @@ public class TemplateParameterTypeImpl extends EClassifierImpl implements Templa
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.TEMPLATE_PARAMETER_TYPE__SPECIFICATION:
+			case ImperativeOCLPackage.TEMPLATE_PARAMETER_TYPE__SPECIFICATION:
 				return SPECIFICATION_EDEFAULT == null ? specification != null : !SPECIFICATION_EDEFAULT.equals(specification);
 		}
 		return super.eIsSet(featureID);

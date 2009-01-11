@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ResolveExpImpl.java,v 1.2 2008/10/31 00:02:49 radvorak Exp $
+ * $Id: ResolveExpImpl.java,v 1.3 2009/01/11 23:22:09 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -23,9 +23,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
+import org.eclipse.ocl.ecore.impl.CallExpImpl;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.Variable;
-import org.eclipse.ocl.expressions.impl.CallExpImpl;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -45,7 +45,7 @@ import org.eclipse.ocl.utilities.Visitor;
  *
  * @generated
  */
-public class ResolveExpImpl extends CallExpImpl<EClassifier> implements ResolveExp {
+public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -71,7 +71,7 @@ public class ResolveExpImpl extends CallExpImpl<EClassifier> implements ResolveE
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int ONE_EFLAG = 1 << 8;
+	protected static final int ONE_EFLAG = 1 << 10;
 
 	/**
 	 * The default value of the '{@link #isIsInverse() <em>Is Inverse</em>}' attribute.
@@ -91,7 +91,7 @@ public class ResolveExpImpl extends CallExpImpl<EClassifier> implements ResolveE
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int IS_INVERSE_EFLAG = 1 << 9;
+	protected static final int IS_INVERSE_EFLAG = 1 << 11;
 
 	/**
 	 * The default value of the '{@link #isIsDeferred() <em>Is Deferred</em>}' attribute.
@@ -111,7 +111,7 @@ public class ResolveExpImpl extends CallExpImpl<EClassifier> implements ResolveE
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int IS_DEFERRED_EFLAG = 1 << 10;
+	protected static final int IS_DEFERRED_EFLAG = 1 << 12;
 
 	/**
 	 * The cached value of the '{@link #getTarget() <em>Target</em>}' containment reference.

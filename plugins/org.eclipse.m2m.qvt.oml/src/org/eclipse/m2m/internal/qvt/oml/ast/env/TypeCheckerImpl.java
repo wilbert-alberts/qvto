@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.TemplateParameterType;
 import org.eclipse.ocl.AbstractTypeChecker;
@@ -90,7 +90,7 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 	@Override
 	protected EClassifier resolveGenericType(EClassifier owner, EClassifier paramType, EClassifier argType) {		
 		if(paramType instanceof TemplateParameterType) {
-			if(owner.eClass() == ExpressionsPackage.eINSTANCE.getDictionaryType()) {
+			if(owner.eClass() == ImperativeOCLPackage.eINSTANCE.getDictionaryType()) {
 				DictionaryType dictionaryType = (DictionaryType) owner;
 				if(getQVTEnvironment().getQVTStandardLibrary().getKeyT() == paramType) {
 					return dictionaryType.getKeyType();
@@ -105,7 +105,7 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 		// MDT OCL takes OclVoid element type as applicable for any type, which causes
 		// problems to QVT mutable collection types. Consequently, List(OclVoid) should 
 		// allow successful parsing of list->append('foo') 
-		EClassifier listMetaType = ExpressionsPackage.eINSTANCE.getListType();		
+		EClassifier listMetaType = ImperativeOCLPackage.eINSTANCE.getListType();		
 		if(owner.eClass() == listMetaType) { 
 			if(fOCLStdlib.getT() == result) {
 				// super implementation resolved OclVoid to oclstdlib::T				

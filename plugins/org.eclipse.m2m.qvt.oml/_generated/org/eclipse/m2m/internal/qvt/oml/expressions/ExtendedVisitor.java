@@ -11,16 +11,9 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EEnumLiteral;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.emf.ecore.EParameter;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.ocl.ecore.CallOperationAction;
-import org.eclipse.ocl.ecore.Constraint;
-import org.eclipse.ocl.ecore.SendSignalAction;
-import org.eclipse.ocl.utilities.Visitor;
+
+
+
 
 /**
  * <!-- begin-user-doc -->
@@ -32,7 +25,7 @@ import org.eclipse.ocl.utilities.Visitor;
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface ExtendedVisitor<T> extends Visitor<T, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> {
+public interface ExtendedVisitor<T> extends ImperativeOCLVisitor<T> {
 	/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -139,22 +132,6 @@ public interface ExtendedVisitor<T> extends Visitor<T, EClassifier, EOperation, 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model assignExpRequired="true"
-	 * @generated
-	 */
-	T visitAssignExp(AssignExp assignExp);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model variableInitExpRequired="true"
-	 * @generated
-	 */
-	T visitVariableInitExp(VariableInitExp variableInitExp);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * @model mappingCallExpRequired="true"
 	 * @generated
 	 */
@@ -179,60 +156,12 @@ public interface ExtendedVisitor<T> extends Visitor<T, EClassifier, EOperation, 
     /**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model blockExpRequired="true"
-	 * @generated
-	 */
-	T visitBlockExp(BlockExp blockExp);
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model computeExpRequired="true"
-	 * @generated
-	 */
-	T visitComputeExp(ComputeExp computeExp);
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * @model objectExpRequired="true"
 	 * @generated
 	 */
 	T visitObjectExp(ObjectExp objectExp);
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model instantiationExpRequired="true"
-	 * @generated
-	 */
-	T visitInstantiationExp(InstantiationExp instantiationExp);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model whileExpRequired="true"
-	 * @generated
-	 */
-	T visitWhileExp(WhileExp whileExp);
-
-	/**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @model switchExpRequired="true"
-	 * @generated
-	 */
-    T visitSwitchExp(SwitchExp switchExp);
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @model switchAltExpRequired="true"
-	 * @generated
-	 */
-    T visitSwitchAltExp(AltExp switchAltExp);
-
-    /**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model modelTypeRequired="true"
@@ -243,65 +172,9 @@ public interface ExtendedVisitor<T> extends Visitor<T, EClassifier, EOperation, 
 				/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model logExpRequired="true"
-	 * @generated
-	 */
-	T visitLogExp(LogExp logExp);
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model assertExpRequired="true"
-	 * @generated
-	 */
-	T visitAssertExp(AssertExp assertExp);
-
-                /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @model imperativeLoopExpRequired="true"
-	 * @generated
-	 */
-    T visitImperativeLoopExp(ImperativeLoopExp imperativeLoopExp);
-
-                /**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model forExpRequired="true"
-	 * @generated
-	 */
-	T visitForExp(ForExp forExp);
-
-																/**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @model imperativeIterateExpRequired="true"
-	 * @generated
-	 */
-    T visitImperativeIterateExp(ImperativeIterateExp imperativeIterateExp);
-
-																/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model returnExpRequired="true"
-	 * @generated
-	 */
-	T visitReturnExp(ReturnExp returnExp);
-
-																/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * @model entryOperationRequired="true"
 	 * @generated
 	 */
 	T visitEntryOperation(EntryOperation entryOperation);
-
-																/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model dictLiteralExpRequired="true"
-	 * @generated
-	 */
-	T visitDictLiteralExp(DictLiteralExp dictLiteralExp);
 
 } // ExtendedVisitor

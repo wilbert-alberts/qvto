@@ -9,14 +9,12 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ComputeExp.java,v 1.3 2008/12/18 15:18:10 radvorak Exp $
+ * $Id: ComputeExp.java,v 1.4 2009/01/11 23:22:04 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EParameter;
-import org.eclipse.ocl.expressions.OCLExpression;
-import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.ecore.OCLExpression;
+import org.eclipse.ocl.ecore.Variable;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -32,18 +30,11 @@ import org.eclipse.ocl.utilities.Visitor;
  * </ul>
  * </p>
  *
- * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getComputeExp()
+ * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getComputeExp()
  * @model
  * @generated
  */
 public interface ComputeExp extends ImperativeExpression {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
-
 	/**
 	 * Returns the value of the '<em><b>Returned Element</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -54,11 +45,11 @@ public interface ComputeExp extends ImperativeExpression {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Returned Element</em>' containment reference.
 	 * @see #setReturnedElement(Variable)
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getComputeExp_ReturnedElement()
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getComputeExp_ReturnedElement()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	Variable<EClassifier, EParameter> getReturnedElement();
+	Variable getReturnedElement();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp#getReturnedElement <em>Returned Element</em>}' containment reference.
@@ -68,7 +59,7 @@ public interface ComputeExp extends ImperativeExpression {
 	 * @see #getReturnedElement()
 	 * @generated
 	 */
-	void setReturnedElement(Variable<EClassifier, EParameter> value);
+	void setReturnedElement(Variable value);
 
 	/**
 	 * Returns the value of the '<em><b>Body</b></em>' containment reference.
@@ -80,11 +71,11 @@ public interface ComputeExp extends ImperativeExpression {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Body</em>' containment reference.
 	 * @see #setBody(OCLExpression)
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getComputeExp_Body()
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getComputeExp_Body()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	OCLExpression<EClassifier> getBody();
+	OCLExpression getBody();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp#getBody <em>Body</em>}' containment reference.
@@ -94,7 +85,7 @@ public interface ComputeExp extends ImperativeExpression {
 	 * @see #getBody()
 	 * @generated
 	 */
-	void setBody(OCLExpression<EClassifier> value);
+	void setBody(OCLExpression value);
 
 	/**
 	 * <!-- begin-user-doc -->

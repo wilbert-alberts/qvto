@@ -9,12 +9,11 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ReturnExp.java,v 1.2 2008/10/31 00:02:47 radvorak Exp $
+ * $Id: ReturnExp.java,v 1.3 2009/01/11 23:22:04 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.ecore.OCLExpression;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -29,18 +28,11 @@ import org.eclipse.ocl.utilities.Visitor;
  * </ul>
  * </p>
  *
- * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getReturnExp()
+ * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getReturnExp()
  * @model
  * @generated
  */
 public interface ReturnExp extends ImperativeExpression {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
-
 	/**
 	 * Returns the value of the '<em><b>Value</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -51,11 +43,11 @@ public interface ReturnExp extends ImperativeExpression {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Value</em>' containment reference.
 	 * @see #setValue(OCLExpression)
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getReturnExp_Value()
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getReturnExp_Value()
 	 * @model containment="true"
 	 * @generated
 	 */
-	OCLExpression<EClassifier> getValue();
+	OCLExpression getValue();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp#getValue <em>Value</em>}' containment reference.
@@ -65,7 +57,7 @@ public interface ReturnExp extends ImperativeExpression {
 	 * @see #getValue()
 	 * @generated
 	 */
-	void setValue(OCLExpression<EClassifier> value);
+	void setValue(OCLExpression value);
 
 	/**
 	 * <!-- begin-user-doc -->

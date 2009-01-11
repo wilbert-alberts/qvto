@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: InstantiationExpImpl.java,v 1.4 2008/10/31 00:02:48 radvorak Exp $
+ * $Id: InstantiationExpImpl.java,v 1.5 2009/01/11 23:22:07 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -19,16 +19,15 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
-import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.ecore.OCLExpression;
+import org.eclipse.ocl.ecore.Variable;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -48,13 +47,6 @@ import org.eclipse.ocl.utilities.Visitor;
  */
 public class InstantiationExpImpl extends ImperativeExpressionImpl implements InstantiationExp {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
-
-	/**
 	 * The cached value of the '{@link #getArgument() <em>Argument</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -62,7 +54,7 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<OCLExpression<EClassifier>> argument;
+	protected EList<OCLExpression> argument;
 
 	/**
 	 * The cached value of the '{@link #getExtent() <em>Extent</em>}' reference.
@@ -72,7 +64,7 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 	 * @generated
 	 * @ordered
 	 */
-	protected ModelParameter extent;
+	protected Variable extent;
 
 	/**
 	 * The cached value of the '{@link #getInstantiatedClass() <em>Instantiated Class</em>}' reference.
@@ -100,7 +92,7 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ExpressionsPackage.Literals.INSTANTIATION_EXP;
+		return ImperativeOCLPackage.Literals.INSTANTIATION_EXP;
 	}
 
 	/**
@@ -108,9 +100,9 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<OCLExpression<EClassifier>> getArgument() {
+	public EList<OCLExpression> getArgument() {
 		if (argument == null) {
-			argument = new EObjectContainmentEList<OCLExpression<EClassifier>>(OCLExpression.class, this, ExpressionsPackage.INSTANTIATION_EXP__ARGUMENT);
+			argument = new EObjectContainmentEList<OCLExpression>(OCLExpression.class, this, ImperativeOCLPackage.INSTANTIATION_EXP__ARGUMENT);
 		}
 		return argument;
 	}
@@ -120,13 +112,13 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ModelParameter getExtent() {
+	public Variable getExtent() {
 		if (extent != null && extent.eIsProxy()) {
 			InternalEObject oldExtent = (InternalEObject)extent;
-			extent = (ModelParameter)eResolveProxy(oldExtent);
+			extent = (Variable)eResolveProxy(oldExtent);
 			if (extent != oldExtent) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ExpressionsPackage.INSTANTIATION_EXP__EXTENT, oldExtent, extent));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ImperativeOCLPackage.INSTANTIATION_EXP__EXTENT, oldExtent, extent));
 			}
 		}
 		return extent;
@@ -137,7 +129,7 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ModelParameter basicGetExtent() {
+	public Variable basicGetExtent() {
 		return extent;
 	}
 
@@ -146,11 +138,11 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setExtent(ModelParameter newExtent) {
-		ModelParameter oldExtent = extent;
+	public void setExtent(Variable newExtent) {
+		Variable oldExtent = extent;
 		extent = newExtent;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.INSTANTIATION_EXP__EXTENT, oldExtent, extent));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLPackage.INSTANTIATION_EXP__EXTENT, oldExtent, extent));
 	}
 
 	/**
@@ -164,7 +156,7 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 			instantiatedClass = (EClass)eResolveProxy(oldInstantiatedClass);
 			if (instantiatedClass != oldInstantiatedClass) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ExpressionsPackage.INSTANTIATION_EXP__INSTANTIATED_CLASS, oldInstantiatedClass, instantiatedClass));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ImperativeOCLPackage.INSTANTIATION_EXP__INSTANTIATED_CLASS, oldInstantiatedClass, instantiatedClass));
 			}
 		}
 		return instantiatedClass;
@@ -188,7 +180,7 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 		EClass oldInstantiatedClass = instantiatedClass;
 		instantiatedClass = newInstantiatedClass;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.INSTANTIATION_EXP__INSTANTIATED_CLASS, oldInstantiatedClass, instantiatedClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLPackage.INSTANTIATION_EXP__INSTANTIATED_CLASS, oldInstantiatedClass, instantiatedClass));
 	}
 
 	/**
@@ -214,7 +206,7 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ExpressionsPackage.INSTANTIATION_EXP__ARGUMENT:
+			case ImperativeOCLPackage.INSTANTIATION_EXP__ARGUMENT:
 				return ((InternalEList<?>)getArgument()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -228,12 +220,12 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ExpressionsPackage.INSTANTIATION_EXP__ARGUMENT:
+			case ImperativeOCLPackage.INSTANTIATION_EXP__ARGUMENT:
 				return getArgument();
-			case ExpressionsPackage.INSTANTIATION_EXP__EXTENT:
+			case ImperativeOCLPackage.INSTANTIATION_EXP__EXTENT:
 				if (resolve) return getExtent();
 				return basicGetExtent();
-			case ExpressionsPackage.INSTANTIATION_EXP__INSTANTIATED_CLASS:
+			case ImperativeOCLPackage.INSTANTIATION_EXP__INSTANTIATED_CLASS:
 				if (resolve) return getInstantiatedClass();
 				return basicGetInstantiatedClass();
 		}
@@ -249,14 +241,14 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ExpressionsPackage.INSTANTIATION_EXP__ARGUMENT:
+			case ImperativeOCLPackage.INSTANTIATION_EXP__ARGUMENT:
 				getArgument().clear();
-				getArgument().addAll((Collection<? extends OCLExpression<EClassifier>>)newValue);
+				getArgument().addAll((Collection<? extends OCLExpression>)newValue);
 				return;
-			case ExpressionsPackage.INSTANTIATION_EXP__EXTENT:
-				setExtent((ModelParameter)newValue);
+			case ImperativeOCLPackage.INSTANTIATION_EXP__EXTENT:
+				setExtent((Variable)newValue);
 				return;
-			case ExpressionsPackage.INSTANTIATION_EXP__INSTANTIATED_CLASS:
+			case ImperativeOCLPackage.INSTANTIATION_EXP__INSTANTIATED_CLASS:
 				setInstantiatedClass((EClass)newValue);
 				return;
 		}
@@ -271,13 +263,13 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.INSTANTIATION_EXP__ARGUMENT:
+			case ImperativeOCLPackage.INSTANTIATION_EXP__ARGUMENT:
 				getArgument().clear();
 				return;
-			case ExpressionsPackage.INSTANTIATION_EXP__EXTENT:
-				setExtent((ModelParameter)null);
+			case ImperativeOCLPackage.INSTANTIATION_EXP__EXTENT:
+				setExtent((Variable)null);
 				return;
-			case ExpressionsPackage.INSTANTIATION_EXP__INSTANTIATED_CLASS:
+			case ImperativeOCLPackage.INSTANTIATION_EXP__INSTANTIATED_CLASS:
 				setInstantiatedClass((EClass)null);
 				return;
 		}
@@ -292,11 +284,11 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.INSTANTIATION_EXP__ARGUMENT:
+			case ImperativeOCLPackage.INSTANTIATION_EXP__ARGUMENT:
 				return argument != null && !argument.isEmpty();
-			case ExpressionsPackage.INSTANTIATION_EXP__EXTENT:
+			case ImperativeOCLPackage.INSTANTIATION_EXP__EXTENT:
 				return extent != null;
-			case ExpressionsPackage.INSTANTIATION_EXP__INSTANTIATED_CLASS:
+			case ImperativeOCLPackage.INSTANTIATION_EXP__INSTANTIATED_CLASS:
 				return instantiatedClass != null;
 		}
 		return super.eIsSet(featureID);

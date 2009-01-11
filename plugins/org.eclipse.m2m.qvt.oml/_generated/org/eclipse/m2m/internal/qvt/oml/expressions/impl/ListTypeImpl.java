@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ListTypeImpl.java,v 1.1 2008/12/23 17:21:59 radvorak Exp $
+ * $Id: ListTypeImpl.java,v 1.2 2009/01/11 23:22:09 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -17,7 +17,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
 import org.eclipse.ocl.ecore.impl.CollectionTypeImpl;
 
@@ -31,13 +31,6 @@ import org.eclipse.ocl.ecore.impl.CollectionTypeImpl;
  * @generated
  */
 public class ListTypeImpl extends CollectionTypeImpl implements ListType {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -55,7 +48,7 @@ public class ListTypeImpl extends CollectionTypeImpl implements ListType {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ExpressionsPackage.Literals.LIST_TYPE;
+		return ImperativeOCLPackage.Literals.LIST_TYPE;
 	}
 	
 	/**

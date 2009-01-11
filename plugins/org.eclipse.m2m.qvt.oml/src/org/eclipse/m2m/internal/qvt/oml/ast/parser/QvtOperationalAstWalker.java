@@ -216,7 +216,7 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object> {
 
     public Object visitObjectExp(ObjectExp objectExp) {
     	if(objectExp.getBody() != null) {
-    		EList<OCLExpression<EClassifier>> contents = objectExp.getBody().getContent();
+    		EList<org.eclipse.ocl.ecore.OCLExpression> contents = objectExp.getBody().getContent();
 	        for (OCLExpression<EClassifier> exp : contents) {
 	            doProcess(exp, objectExp);
 	        }

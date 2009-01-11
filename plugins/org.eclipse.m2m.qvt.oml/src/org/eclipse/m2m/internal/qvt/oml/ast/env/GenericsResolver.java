@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage;
 import org.eclipse.ocl.ecore.CollectionType;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.types.TupleType;
@@ -133,9 +133,9 @@ class GenericsResolver {
 		@Override
 		public <C, O> EClassifier caseCollectionType(org.eclipse.ocl.types.CollectionType<C, O> object) {			
 			EClassifier boundElementType = typeResolver.resolve(getBoundType((EClassifier) object.getElementType()));
-			if(object.eClass() == ExpressionsPackage.eINSTANCE.getListType()) {
+			if(object.eClass() == ImperativeOCLPackage.eINSTANCE.getListType()) {
 				return (EClassifier) typeResolver.resolveListType(boundElementType);
-			} else if(object.eClass() == ExpressionsPackage.eINSTANCE.getDictionaryType()) {
+			} else if(object.eClass() == ImperativeOCLPackage.eINSTANCE.getDictionaryType()) {
 				DictionaryType dictionaryType = (DictionaryType) object;
 				EClassifier boundKeyType = getBoundType(dictionaryType.getKeyType());
 				QvtTypeResolverImpl qvtTypeResolve = (QvtTypeResolverImpl) typeResolver;
