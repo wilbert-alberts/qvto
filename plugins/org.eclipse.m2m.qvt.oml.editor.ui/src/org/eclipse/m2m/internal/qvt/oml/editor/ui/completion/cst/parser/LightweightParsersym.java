@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.32 2009/01/09 15:59:32 radvorak Exp $
+* $Id: LightweightParsersym.java,v 1.33 2009/01/12 11:40:40 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.32 2009/01/09 15:59:32 radvorak Exp $
+* $Id: LightweightParsersym.java,v 1.33 2009/01/12 11:40:40 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.32 2009/01/09 15:59:32 radvorak Exp $
+* $Id: LightweightParsersym.java,v 1.33 2009/01/12 11:40:40 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.32 2009/01/09 15:59:32 radvorak Exp $
+* $Id: LightweightParsersym.java,v 1.33 2009/01/12 11:40:40 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -88,7 +88,7 @@ public interface LightweightParsersym {
       TK_RPAREN = 3,
       TK_LBRACE = 88,
       TK_RBRACE = 90,
-      TK_LBRACKET = 95,
+      TK_LBRACKET = 94,
       TK_RBRACKET = 108,
       TK_ARROW = 118,
       TK_BAR = 93,
@@ -104,7 +104,7 @@ public interface LightweightParsersym {
       TK_QUESTIONMARK = 112,
       TK_QUOTE_STRING_LITERAL = 122,
       TK_ADD_ASSIGN = 123,
-      TK_RESET_ASSIGN = 96,
+      TK_RESET_ASSIGN = 95,
       TK_AT_SIGN = 148,
       TK_EXCLAMATION_MARK = 110,
       TK_NOT_EQUAL_EXEQ = 105,
@@ -201,7 +201,7 @@ public interface LightweightParsersym {
       TK_while = 74,
       TK_when = 128,
       TK_var = 97,
-      TK_log = 94,
+      TK_log = 96,
       TK_assert = 98,
       TK_with = 158,
       TK_switch = 69,
@@ -360,9 +360,9 @@ public interface LightweightParsersym {
                  "COLON",
                  "COLONCOLON",
                  "BAR",
-                 "log",
                  "LBRACKET",
                  "RESET_ASSIGN",
+                 "log",
                  "var",
                  "assert",
                  "return",
