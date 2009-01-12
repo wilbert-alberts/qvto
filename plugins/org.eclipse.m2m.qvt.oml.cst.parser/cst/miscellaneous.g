@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.10 2009/01/09 15:59:22 radvorak Exp $ 
+-- * $Id: miscellaneous.g,v 1.11 2009/01/12 11:41:21 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -280,7 +280,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.10 2009/01/09 15:59:22 radvorak Exp $
+ * $Id: miscellaneous.g,v 1.11 2009/01/12 11:41:21 aigdalov Exp $
  */
 	./
 $End
@@ -1049,6 +1049,41 @@ $Rules
 		  $EndJava
 		./
 
+	_modeltype -> legacyModeltype
+	legacyModeltype ::= metamodel stringLiteralExpCS ';'
+		/.$BeginJava
+					CSTNode packageRefCS = createPackageRefCS(
+							null,
+							(StringLiteralExpCS)$getSym(2)
+						);
+					setOffsets(packageRefCS, (CSTNode)$getSym(2));
+					
+					EList packageRefList = new BasicEList();
+					packageRefList.add(packageRefCS);
+					ModelTypeCS result = createModelTypeCS(
+							new Token(0, 0, 0),
+							createStringLiteralExpCS("'strict'"),
+							packageRefList,
+							$EMPTY_ELIST
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
+					$setResult(result);
+		  $EndJava
+		./
+	legacyModeltype ::= metamodel qvtErrorToken
+		/.$BeginJava
+					ModelTypeCS result = createModelTypeCS(
+							new Token(0, 0, 0),
+							createStringLiteralExpCS(""),
+							$EMPTY_ELIST,
+							$EMPTY_ELIST
+						);
+					setOffsets(result, getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+
+
         unit_element -> renaming
 	renaming ::= rename typeCS '.' qvtIdentifierCS '=' stringLiteralExpCS ';' 
 		/.$BeginJava
@@ -1062,6 +1097,7 @@ $Rules
 		  $EndJava
 		./
 
+
 	oclExpCS -> legacyWhileExpCS
 	legacyWhileExpCS ::= while '(' oclExpressionCS ';' oclExpressionCS ')' whileBodyCS
 		/.$BeginJava
@@ -1071,6 +1107,15 @@ $Rules
 							(BlockExpCS)$getSym(7)
 						);
 					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(7));
+					$setResult(result);
+		  $EndJava
+		./
+
+	qvtStringLiteralExpCS -> stringLiteralExpCS
+	qvtStringLiteralExpCS ::= QUOTE_STRING_LITERAL
+		/.$BeginJava
+					CSTNode result = createStringLiteralExpCS("'" + unquote(getTokenText($getToken(1))) + "'"); //$NON-NLS-1$ //$NON-NLS-2$
+					setOffsets(result, getIToken($getToken(1)));
 					$setResult(result);
 		  $EndJava
 		./

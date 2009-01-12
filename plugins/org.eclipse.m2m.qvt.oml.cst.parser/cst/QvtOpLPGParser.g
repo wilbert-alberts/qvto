@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.32 2009/01/09 15:59:22 radvorak Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.33 2009/01/12 11:41:21 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -148,7 +148,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.32 2009/01/09 15:59:22 radvorak Exp $
+ * $Id: QvtOpLPGParser.g,v 1.33 2009/01/12 11:41:21 aigdalov Exp $
  */
 	./
 $End
@@ -499,60 +499,7 @@ $Rules
 	--=== // module definitions (end) ===--
 	
 	--=== // model types compliance and metamodel declarations (start) ===--
-	_modeltype -> modelTypeExpCS
-	_modeltype ::= metamodel stringLiteralExpCS ';'
-		/.$BeginJava
-					CSTNode packageRefCS = createPackageRefCS(
-							null,
-							(StringLiteralExpCS)$getSym(2)
-						);
-					setOffsets(packageRefCS, (CSTNode)$getSym(2));
-					
-					EList packageRefList = new BasicEList();
-					packageRefList.add(packageRefCS);
-					ModelTypeCS result = createModelTypeCS(
-							new Token(0, 0, 0),
-							createStringLiteralExpCS("'strict'"),
-							packageRefList,
-							$EMPTY_ELIST
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
-					$setResult(result);
-		  $EndJava
-		./
-	_modeltype ::= metamodel qvtErrorToken
-		/.$BeginJava
-					ModelTypeCS result = createModelTypeCS(
-							new Token(0, 0, 0),
-							createStringLiteralExpCS(""),
-							$EMPTY_ELIST,
-							$EMPTY_ELIST
-						);
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
-		  $EndJava
-		./
-
-	complianceKindCSOpt ::= $empty
-		/.$BeginJava
-					CSTNode result = createStringLiteralExpCS("''");
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
-		  $EndJava
-		./
-	complianceKindCSOpt -> qvtStringLiteralExpCS
-    
-	
-	qvtStringLiteralExpCS -> stringLiteralExpCS
-	qvtStringLiteralExpCS ::= QUOTE_STRING_LITERAL
-		/.$BeginJava
-					CSTNode result = createStringLiteralExpCS("'" + unquote(getTokenText($getToken(1))) + "'"); //$NON-NLS-1$ //$NON-NLS-2$
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
-		  $EndJava
-		./
-
-	modelTypeExpCS ::= modeltype IDENTIFIER complianceKindCSOpt uses packageRefList modelTypeWhereCSOpt ;
+	_modeltype ::= modeltype IDENTIFIER compliance_kindOpt uses packageref_list modeltype_whereOpt ';'
 		/.$BeginJava
 					EList whereList = (EList)$getSym(6);
 					EList packageRefList = (EList)$getSym(5);
@@ -573,7 +520,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	modelTypeExpCS ::= modeltype qvtErrorToken
+	_modeltype ::= modeltype qvtErrorToken
 		/.$BeginJava
 					ModelTypeCS result = createModelTypeCS(
 							new Token(0, 0, 0),
@@ -586,14 +533,25 @@ $Rules
 		  $EndJava
 		./
 		
-	packageRefList ::= packageRefCS
+	modeltype_whereOpt ::= $empty
+		/.$EmptyListAction./
+	modeltype_whereOpt -> modeltype_where
+
+	modeltype_where ::= where expression_block
+		/.$BeginJava
+					BlockExpCS blockExpCS = (BlockExpCS) $getSym(2);
+					$setResult(blockExpCS.getBodyExpressions());
+		  $EndJava
+		./
+
+	packageref_list ::= packageref
 		/.$BeginJava
 					EList result = new BasicEList();
 					result.add($getSym(1));
 					$setResult(result);
 		  $EndJava
 		./
-	packageRefList ::= packageRefList ',' packageRefCS
+	packageref_list ::= packageref_list ',' packageref
 		/.$BeginJava
 					EList result = (EList)$getSym(1);
 					result.add($getSym(3));
@@ -601,7 +559,7 @@ $Rules
 		  $EndJava
 		./
 
-	packageRefCS ::= pathNameCS
+	packageref ::= pathNameCS
 		/.$BeginJava
 					CSTNode result = createPackageRefCS(
 							(PathNameCS)$getSym(1),
@@ -611,7 +569,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	packageRefCS ::= pathNameCS '(' qvtStringLiteralExpCS ')'
+	packageref ::= pathNameCS '(' uri ')'
 		/.$BeginJava
 					CSTNode result = createPackageRefCS(
 							(PathNameCS)$getSym(1),
@@ -621,7 +579,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	packageRefCS ::= qvtStringLiteralExpCS
+	packageref ::= uri
 		/.$BeginJava
 					CSTNode result = createPackageRefCS(
 							null,
@@ -631,18 +589,26 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-		
 
-	modelTypeWhereCSOpt ::= $empty
-		/.$EmptyListAction./
-	modelTypeWhereCSOpt ::= where '{' statementListOpt '}'
+	compliance_kindOpt ::= $empty
 		/.$BeginJava
-					EList result = (EList)$getSym(3);
+					CSTNode result = createStringLiteralExpCS("''");
+					setOffsets(result, getIToken($getToken(1)));
 					$setResult(result);
 		  $EndJava
 		./
+	compliance_kindOpt -> qvtStringLiteralExpCS
+    
+	--=== // model types compliance and metamodel declarations (end) ===--
 
-	--=== // model types compliance and metamodel declarations (start) ===--
+	--=== // like: "strict" and "effective" (start) ===--
+
+	uri -> qvtStringLiteralExpCS
+
+	--=== // like: "strict" and "effective" (end) ===--
+
+
+	--=== // Syntax for defining explicitly metamodel contents (start) ===--
 
 	classifier ->  classifierDefCS
 
@@ -920,6 +886,7 @@ $Rules
 		  $EndJava
 		./
 
+	--=== // Syntax for defining explicitly metamodel contents (end) ===--
 		
 	_property -> modulePropertyCS
 	
