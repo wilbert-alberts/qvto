@@ -13,7 +13,6 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks;
 
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.jface.text.IRegion;
-import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.views.MetamodelBrowserView;
 import org.eclipse.m2m.internal.qvt.oml.ui.QVTUIPlugin;
 import org.eclipse.ui.IWorkbenchPage;
@@ -24,7 +23,7 @@ import org.eclipse.ui.PlatformUI;
 /**
  * @author vrepeshko
  */
-public class MetamodelElementHyperlink extends AbstractHyperlink implements IHyperlink {
+public class MetamodelElementHyperlink extends AbstractHyperlink {
 
 	public MetamodelElementHyperlink(IRegion hyperlinkRegion, EModelElement metamodelElement) {
 		super(hyperlinkRegion);

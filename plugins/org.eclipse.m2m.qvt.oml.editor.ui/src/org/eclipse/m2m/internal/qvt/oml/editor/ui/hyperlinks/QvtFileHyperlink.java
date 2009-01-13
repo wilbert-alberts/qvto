@@ -17,7 +17,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.text.IRegion;
-import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtEditor;
@@ -31,7 +30,7 @@ import org.eclipse.ui.part.FileEditorInput;
 /**
  * @author vrepeshko
  */
-public class QvtFileHyperlink extends AbstractHyperlink implements IHyperlink {
+public class QvtFileHyperlink extends AbstractHyperlink {
 	
 	private final CFile myDestinationFile;
 	
