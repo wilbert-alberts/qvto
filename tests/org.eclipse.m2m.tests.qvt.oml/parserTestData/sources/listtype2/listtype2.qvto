@@ -5,10 +5,10 @@ library listtype;
 helper testCase() : Boolean {
 
 	var c : Collection(String) := Set { 'a', 'b'};
-	/*<error>*/var setElements : Set(String) := newList(c)/*</error>*/;
-	/*<error>*/var bagElements : Bag(String) := newList(c)/*</error>*/;
-	/*<error>*/var seqElements : Sequence(String) := newList(c)/*</error>*/;	
-	/*<error>*/var oSetElements : OrderedSet(String) := newList(c)/*</error>*/;	
+	var setElements : Set(String) := /*<error>*/newList(c)/*</error>*/;
+	var bagElements : Bag(String) := /*<error>*/newList(c)/*</error>*/;
+	var seqElements : Sequence(String) := /*<error>*/newList(c)/*</error>*/;	
+	var oSetElements : OrderedSet(String) := /*<error>*/newList(c)/*</error>*/;	
 	
 	var chars := OrderedSet{ 'a', 'b', 'c'  };
 	var listElements : List(String) := newList(chars);
@@ -19,7 +19,7 @@ helper testCase() : Boolean {
 
 	-- correct samples
 	var conformantCollection : Collection(OclAny) := listElements;
-	/*<error>*/var nonconFormantCollection : Collection(Real) := listElements/*</error>*/; 
+	var nonconFormantCollection : Collection(Real) := /*<error>*/listElements/*</error>*/; 
 	
 	var listCopy := echoList(listElements);
 	-- check List is conformant to Collection type 

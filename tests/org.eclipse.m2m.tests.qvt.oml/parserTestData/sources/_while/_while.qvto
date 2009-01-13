@@ -35,14 +35,21 @@ query testVarScope(in par1 : Integer) : OclAny {
 	};
 	
 	-- test result Var
-	/*<error>*/var _invalidResult : Integer := while(r : String:=10; false) {}/*</error>*/;
-	var _result : String := while(r : String:=10; false) {};
-	return _result
+	-- test result type mismatch
+	var _invalidResult : Integer := /*<error>*/while(r : String; false) {}/*</error>*/;
+	-- test wrong init value
+	var _result : String := while(/*<error>*/r : String:=10/*</error>*/; false) {};
+	var aStrResult := while(r : String; false) {};	-- OK
+	-- test plain while return type is void
+	var oclVoidVar1 : OclVoid := while(false) {};
+	var oclVoidVar2 : OclVoid := /*<error>*/while(s : String; false) {}/*</error>*/;
+
+	return _result;
 }
 
 query testWhileHeader() : OclAny {	
 	-- test legacy while deprecation warn
-	/*<warn>*/while(true; true) {}/*</warn>*/;
+	while(true; true) {};
 
 	-- test condition only variant
 	while(true) {};	
