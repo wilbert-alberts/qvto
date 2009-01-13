@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.34 2009/01/13 10:48:16 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.35 2009/01/13 16:42:07 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -148,7 +148,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.34 2009/01/13 10:48:16 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.35 2009/01/13 16:42:07 aigdalov Exp $
  */
 	./
 $End
@@ -1028,7 +1028,7 @@ $Rules
 		  $EndJava
 		./
 
-	helper_simple_def ::= helper_header '=' statementCS ';' 
+	helper_simple_def ::= helper_header '=' expression ';' 
 		/.$BeginJava
 					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(1);
 					OCLExpressionCS expression = (OCLExpressionCS)$getSym(3);

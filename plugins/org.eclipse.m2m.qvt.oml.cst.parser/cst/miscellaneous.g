@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.11 2009/01/12 11:41:21 aigdalov Exp $ 
+-- * $Id: miscellaneous.g,v 1.12 2009/01/13 16:42:07 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -280,7 +280,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.11 2009/01/12 11:41:21 aigdalov Exp $
+ * $Id: miscellaneous.g,v 1.12 2009/01/13 16:42:07 aigdalov Exp $
  */
 	./
 $End
@@ -315,9 +315,7 @@ $Headers
 $End
 
 $Rules
-
 	--=== // general purpose grammar rules (start) ===--
-
 	qualifierList ::= $empty
 		/.$EmptyListAction./
 	qualifierList ::= qualifierList qualifier
@@ -522,19 +520,6 @@ $Rules
 		  $EndJava
 		./
 
-	typeCS -> listTypeCS
-	listTypeCS ::= List '(' typeCS ')'
-		/.$BeginJava
-					CSTNode result = createListTypeCS(
-							(TypeCS)$getSym(3)
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
-					$setResult(result);
-		  $EndJava
-		./
-
-
-
 	typeCS2 -> primitiveTypeCS
 	typeCS2 -> tupleTypeCS
 	typeCS2 -> collectionTypeCS
@@ -618,14 +603,14 @@ $Rules
 	semicolonOpt -> $empty
 
 	expression_list -> expression_semi_list semicolonOpt
-	expression_semi_list ::= statementCS
+	expression_semi_list ::= expression
 		/.$BeginJava
 					EList result = new BasicEList();
 					result.add($getSym(1));
 					$setResult(result);
 		  $EndJava
 		./
-	expression_semi_list ::= expression_semi_list ';' statementCS 
+	expression_semi_list ::= expression_semi_list ';' expression 
 		/.$BeginJava
 					EList result = (EList)$getSym(1);
 					result.add($getSym(3));
@@ -645,10 +630,8 @@ $Rules
           $EndJava
 		./
 
-	expressionStatementCS -> statementCS ';'
-	expressionStatementCS -> expression_block
-	expressionStatementCS -> expression_block ';'
-
+	expression_statement -> expression ';'
+	expression_statement -> expression_block semicolonOpt
 	
 	qualifiedNameCS ::= qvtIdentifierCS
 		/.$BeginJava
@@ -700,14 +683,14 @@ $Rules
 	statementList -> statementInnerList
 	statementList -> statementInnerList ';'
 
-	statementInnerList ::= statementCS
+	statementInnerList ::= expression
 		/.$BeginJava
 					EList result = new BasicEList();
 					result.add($getSym(1));
 					$setResult(result);
 		  $EndJava
 		./
-	statementInnerList ::= statementInnerList ';' statementCS
+	statementInnerList ::= statementInnerList ';' expression
 		/.$BeginJava
 					EList result = (EList)$getSym(1);
 					result.add($getSym(3));
@@ -721,7 +704,7 @@ $Rules
 		  $EndJava
 		./
 		
-	statementCS ::= oclExpressionCS
+	expression ::= oclExpressionCS
 		/.$BeginJava
 					CSTNode result = createExpressionStatementCS(
 							(OCLExpressionCS)$getSym(1)
@@ -731,7 +714,7 @@ $Rules
 		  $EndJava
 		./
 		
-	statementCS ::= primaryOCLExpressionCS 
+	expression ::= primaryOCLExpressionCS 
 		/.$BeginJava
 					CSTNode result = createExpressionStatementCS(
 							(OCLExpressionCS)$getSym(1)
@@ -948,12 +931,10 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	
 	--=== OCL grammar error recovery extensions (end) ===--
 
 		
 	--=== OCL grammar workarounds (start) ===--
-
 	----- error in OCLLPGParser.g in definition of type-argued calls (start) -----
 	operationCallExpCS ::= oclAsType isMarkedPreCS '(' typeCS ')'
 		/.$NewCase./
@@ -978,11 +959,9 @@ $Rules
 		  $EndJava
 		./
 	----- error in OCLLPGParser.g in definition of type-argued calls (end) -----
-
 	--=== OCL grammar workarounds (end) ===--
 
 	--=== Miscellaneous QVTO grammar rules (start) ===--
-
 	qvtIdentifierCS -> IDENTIFIER
 	qvtIdentifierCS -> keywordAsIdentifier1
 	
@@ -991,7 +970,6 @@ $Rules
 					diagnozeErrorToken($getToken(1));
 		  $EndJava
 		./
-
 
 
         ----- '!=' - a synonym of '<>' (start) -----
@@ -1016,8 +994,7 @@ $Rules
 		  $EndJava
 		./
         ----- '!=' - a synonym of '<>' (end) -----
-
-	--=== Miscellaneous QVTO grammar rules (start) ===--
+	--=== Miscellaneous QVTO grammar rules (end) ===--
 
 	--=== Non-standard extensions and legacy support (start) ===--
 	_import ::= import library unit ';'
@@ -1119,7 +1096,5 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-
 	--=== Non-standard extensions and legacy support (end) ===--
-
 $End
