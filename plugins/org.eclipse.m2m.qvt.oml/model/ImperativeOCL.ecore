@@ -443,8 +443,15 @@
           <eGenericType eTypeParameter="#//expressions/VariableInitExp/accept/U"/>
         </eParameters>
       </eOperations>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
-          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="referredVariable" lowerBound="1"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/Variable"
+          containment="true">
+        <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+          <details key="body" value="declaration"/>
+        </eAnnotations>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="withResult" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
+          defaultValueLiteral="false"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="WhileExp" eSuperTypes="#//expressions/ImperativeExpression">
       <eOperations name="accept">
@@ -477,14 +484,6 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="body" lowerBound="1"
           eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="result" eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
-          containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="resultVar" containment="true">
-        <eGenericType eClassifier="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCL.ecore#//expressions/Variable">
-          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
-          <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EParameter"/>
-        </eGenericType>
-      </eStructuralFeatures>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ImperativeOCLVisitor" abstract="true"
         interface="true">

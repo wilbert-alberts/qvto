@@ -35,9 +35,9 @@ import org.eclipse.ocl.utilities.Visitor;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.AssignExpImpl#getDefaultValue <em>Default Value</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.AssignExpImpl#getValue <em>Value</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.AssignExpImpl#getLeft <em>Left</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.AssignExpImpl#isIsReset <em>Is Reset</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.AssignExpImpl#getLeft <em>Left</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.AssignExpImpl#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *
@@ -53,26 +53,6 @@ public class AssignExpImpl extends ImperativeExpressionImpl implements AssignExp
 	 * @ordered
 	 */
 	protected OCLExpression defaultValue;
-
-	/**
-	 * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getValue()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<OCLExpression> value;
-
-	/**
-	 * The cached value of the '{@link #getLeft() <em>Left</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getLeft()
-	 * @generated
-	 * @ordered
-	 */
-	protected OCLExpression left;
 
 	/**
 	 * The default value of the '{@link #isIsReset() <em>Is Reset</em>}' attribute.
@@ -93,6 +73,26 @@ public class AssignExpImpl extends ImperativeExpressionImpl implements AssignExp
 	 * @ordered
 	 */
 	protected boolean isReset = IS_RESET_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getLeft() <em>Left</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLeft()
+	 * @generated
+	 * @ordered
+	 */
+	protected OCLExpression left;
+
+	/**
+	 * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<OCLExpression> value;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -257,10 +257,10 @@ public class AssignExpImpl extends ImperativeExpressionImpl implements AssignExp
 		switch (featureID) {
 			case ImperativeOCLPackage.ASSIGN_EXP__DEFAULT_VALUE:
 				return basicSetDefaultValue(null, msgs);
-			case ImperativeOCLPackage.ASSIGN_EXP__VALUE:
-				return ((InternalEList<?>)getValue()).basicRemove(otherEnd, msgs);
 			case ImperativeOCLPackage.ASSIGN_EXP__LEFT:
 				return basicSetLeft(null, msgs);
+			case ImperativeOCLPackage.ASSIGN_EXP__VALUE:
+				return ((InternalEList<?>)getValue()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -275,12 +275,12 @@ public class AssignExpImpl extends ImperativeExpressionImpl implements AssignExp
 		switch (featureID) {
 			case ImperativeOCLPackage.ASSIGN_EXP__DEFAULT_VALUE:
 				return getDefaultValue();
-			case ImperativeOCLPackage.ASSIGN_EXP__VALUE:
-				return getValue();
-			case ImperativeOCLPackage.ASSIGN_EXP__LEFT:
-				return getLeft();
 			case ImperativeOCLPackage.ASSIGN_EXP__IS_RESET:
 				return isIsReset() ? Boolean.TRUE : Boolean.FALSE;
+			case ImperativeOCLPackage.ASSIGN_EXP__LEFT:
+				return getLeft();
+			case ImperativeOCLPackage.ASSIGN_EXP__VALUE:
+				return getValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -297,15 +297,15 @@ public class AssignExpImpl extends ImperativeExpressionImpl implements AssignExp
 			case ImperativeOCLPackage.ASSIGN_EXP__DEFAULT_VALUE:
 				setDefaultValue((OCLExpression)newValue);
 				return;
-			case ImperativeOCLPackage.ASSIGN_EXP__VALUE:
-				getValue().clear();
-				getValue().addAll((Collection<? extends OCLExpression>)newValue);
+			case ImperativeOCLPackage.ASSIGN_EXP__IS_RESET:
+				setIsReset(((Boolean)newValue).booleanValue());
 				return;
 			case ImperativeOCLPackage.ASSIGN_EXP__LEFT:
 				setLeft((OCLExpression)newValue);
 				return;
-			case ImperativeOCLPackage.ASSIGN_EXP__IS_RESET:
-				setIsReset(((Boolean)newValue).booleanValue());
+			case ImperativeOCLPackage.ASSIGN_EXP__VALUE:
+				getValue().clear();
+				getValue().addAll((Collection<? extends OCLExpression>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -322,14 +322,14 @@ public class AssignExpImpl extends ImperativeExpressionImpl implements AssignExp
 			case ImperativeOCLPackage.ASSIGN_EXP__DEFAULT_VALUE:
 				setDefaultValue((OCLExpression)null);
 				return;
-			case ImperativeOCLPackage.ASSIGN_EXP__VALUE:
-				getValue().clear();
+			case ImperativeOCLPackage.ASSIGN_EXP__IS_RESET:
+				setIsReset(IS_RESET_EDEFAULT);
 				return;
 			case ImperativeOCLPackage.ASSIGN_EXP__LEFT:
 				setLeft((OCLExpression)null);
 				return;
-			case ImperativeOCLPackage.ASSIGN_EXP__IS_RESET:
-				setIsReset(IS_RESET_EDEFAULT);
+			case ImperativeOCLPackage.ASSIGN_EXP__VALUE:
+				getValue().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -345,12 +345,12 @@ public class AssignExpImpl extends ImperativeExpressionImpl implements AssignExp
 		switch (featureID) {
 			case ImperativeOCLPackage.ASSIGN_EXP__DEFAULT_VALUE:
 				return defaultValue != null;
-			case ImperativeOCLPackage.ASSIGN_EXP__VALUE:
-				return value != null && !value.isEmpty();
-			case ImperativeOCLPackage.ASSIGN_EXP__LEFT:
-				return left != null;
 			case ImperativeOCLPackage.ASSIGN_EXP__IS_RESET:
 				return isReset != IS_RESET_EDEFAULT;
+			case ImperativeOCLPackage.ASSIGN_EXP__LEFT:
+				return left != null;
+			case ImperativeOCLPackage.ASSIGN_EXP__VALUE:
+				return value != null && !value.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

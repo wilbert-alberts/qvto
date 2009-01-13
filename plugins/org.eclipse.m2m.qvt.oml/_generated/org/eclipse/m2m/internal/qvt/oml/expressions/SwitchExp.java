@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: SwitchExp.java,v 1.3 2009/01/11 23:22:04 radvorak Exp $
+ * $Id: SwitchExp.java,v 1.4 2009/01/13 16:51:21 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
@@ -46,7 +46,7 @@ public interface SwitchExp extends ImperativeExpression {
      * <!-- end-user-doc -->
 	 * @return the value of the '<em>Alternative Part</em>' containment reference list.
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage#getSwitchExp_AlternativePart()
-	 * @model containment="true" required="true"
+	 * @model containment="true"
 	 * @generated
 	 */
     EList<AltExp> getAlternativePart();

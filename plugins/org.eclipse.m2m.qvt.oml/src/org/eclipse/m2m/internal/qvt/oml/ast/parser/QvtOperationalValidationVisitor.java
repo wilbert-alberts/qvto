@@ -406,7 +406,7 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 			T sameNameParam = findParamByName(nextParam.getName(), scopeParameters);
 			if(sameNameParam != null && sameNameParam != nextParam) {
 				result = false;
-	            fEnv.reportError(NLS.bind(ValidationMessages.SemanticUtil_15,	            		 
+	            fEnv.reportError(NLS.bind(ValidationMessages.NameAlreadyDefinedError,	            		 
 	                     new Object[] { nextParam.getName() }),
 	                     ((VarParameter) nextParam).getStartPosition(), 
 	                     ((VarParameter) nextParam).getEndPosition());				

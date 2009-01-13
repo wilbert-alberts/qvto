@@ -491,7 +491,7 @@ public class QvtOperationalVisitorCS
 	            return visitAssignStatementCS((AssignStatementCS) oclExpressionCS, env);
 	        }
 	        if (oclExpressionCS instanceof VariableInitializationCS) {
-	            return visitVariableInitializationCS((VariableInitializationCS) oclExpressionCS, env);
+	            return variableInitializationCS((VariableInitializationCS) oclExpressionCS, env);
 	        }
 	        if (oclExpressionCS instanceof ExpressionStatementCS) {
 	            return visitExpressionStatementCS((ExpressionStatementCS) oclExpressionCS, env);
@@ -999,9 +999,8 @@ public class QvtOperationalVisitorCS
         OCLExpression<EClassifier> bodyExp = visitOclExpressionCS(computeExpCS.getBody(), env);
         result.setBody((org.eclipse.ocl.ecore.OCLExpression)bodyExp);
         
-        if (returnedElementExp != null) {
-            env.deleteElement(returnedElementExp.getName());
-        }
+        env.deleteElement(returnedElementExp.getName());
+        
         return result;
     }
     
@@ -1063,41 +1062,43 @@ public class QvtOperationalVisitorCS
 	    return altExp;
     }
 
-    private org.eclipse.ocl.ecore.OCLExpression visitWhileExpCS(WhileExpCS expressionCS, 
+    private org.eclipse.ocl.ecore.OCLExpression visitWhileExpCS(WhileExpCS whileCS, 
     		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
-		WhileExp result = ImperativeOCLFactory.eINSTANCE.createWhileExp();
-		result.setStartPosition(expressionCS.getStartOffset());
-		result.setEndPosition(expressionCS.getEndOffset());
+		WhileExp whileExp = ImperativeOCLFactory.eINSTANCE.createWhileExp();
+		org.eclipse.ocl.ecore.OCLExpression result = whileExp;
 		
-		String resultVarName = null;
-		if(expressionCS.getResultVar() != null) {
-			VariableCS varCS = expressionCS.getResultVar();
-			Variable<EClassifier, EParameter> var = null;
-
-			Variable<EClassifier, EParameter> prevVar = env.lookup(varCS.getName());			
-			var = variableDeclarationCS(varCS, env, true);
-			if(prevVar != null) {
-				env.addElement(varCS.getName(), prevVar, true);
-			} else {
-				resultVarName = varCS.getName();				
-			}
+		whileExp.setStartPosition(whileCS.getStartOffset());
+		whileExp.setEndPosition(whileCS.getEndOffset());
+		
+		String resultVarInEnv = null;
+		// if result variable is declared, wrap WhileExp into ComputeExp
+		if(whileCS.getResultVar() != null) {
+	        ComputeExp embeddedComputeExp = ImperativeOCLFactory.eINSTANCE.createComputeExp();
+	        result = embeddedComputeExp;
+	        embeddedComputeExp.setStartPosition(whileCS.getStartOffset());
+	        embeddedComputeExp.setEndPosition(whileCS.getEndOffset());
+	        // define result variable in environment
+			org.eclipse.ocl.ecore.Variable resultVar = (org.eclipse.ocl.ecore.Variable) 
+					variableDeclarationCS(whileCS.getResultVar(), env, true);
+	        // check if the variable was successfully added into environment			
+			resultVarInEnv = (resultVar != null && env.lookup(resultVar.getName()) == resultVar) ? resultVar.getName() : null;
 			
-			
-			result.setResultVar(var);
-			result.setType(var.getType());							
-		} else if(expressionCS.getResult() != null) {
-			// report usage of legacy while
-			QvtOperationalUtil.reportWarning(env, ValidationMessages.QvtOperationalVisitorCS_deprecatedWhileExp, expressionCS);
-			org.eclipse.ocl.ecore.OCLExpression resExp = visitOclExpressionCS(expressionCS.getResult(), env);
-			result.setType(resExp.getType());
-			result.setResult(resExp);
-		} else {
-			result.setType(env.getOCLStandardLibrary().getOclVoid());
+	        embeddedComputeExp.setReturnedElement(resultVar);
+	        embeddedComputeExp.setType(resultVar.getType());
+	        // actual body to execute is while expression itself
+	        // we just define the result variable and its initial value
+	        embeddedComputeExp.setBody(whileExp);	        	        			
+	        embeddedComputeExp.setReturnedElement(resultVar);	        	        
+	        // the wrapped while expression still need to return null, according to QVT specification
 		}
 
-		org.eclipse.ocl.ecore.OCLExpression condExp = visitOclExpressionCS(expressionCS.getCondition(), env);
-		result.setCondition(condExp);		
+		// while expression itself has  
+		whileExp.setType(env.getOCLStandardLibrary().getOclVoid());
+		
+		// analyze the condition of while		
+		org.eclipse.ocl.ecore.OCLExpression condExp = visitOclExpressionCS(whileCS.getCondition(), env);
+		whileExp.setCondition(condExp);
 		if(condExp != null) {
 			EClassifier condType = condExp.getType();
 			if(env.getOCLStandardLibrary().getBoolean() != condExp.getType()) {
@@ -1105,28 +1106,21 @@ public class QvtOperationalVisitorCS
 					condType = env.getOCLStandardLibrary().getOclVoid();
 				}
 				String message = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_booleanTypeExpressionExpected, env.getUMLReflection().getName(condType));
-				if(expressionCS.getResult() == null) {
-					QvtOperationalUtil.reportError(env, message, expressionCS.getCondition());
+				if(whileCS.getResult() == null) {
+					QvtOperationalUtil.reportError(env, message, whileCS.getCondition());
 				} else {
 					// warn for legacy code to keep compilable, as it was not reported at all
-					QvtOperationalUtil.reportWarning(env, message, expressionCS.getCondition());
+					QvtOperationalUtil.reportWarning(env, message, whileCS.getCondition());
 				}
 			}
 		}
-		
-		List<OCLExpressionCS> bodyCS = result.getBody() instanceof BlockExpCS ? ((BlockExpCS)result.getBody()).getBodyExpressions() : Collections.<OCLExpressionCS>singletonList(expressionCS.getBody());
-		BlockExp body = ImperativeOCLFactory.eINSTANCE.createBlockExp();
-		for (OCLExpressionCS oclExpCS : bodyCS) {
-			OCLExpression<EClassifier> bodyExp = visitOclExpressionCS(oclExpCS, env);
-			if (bodyExp != null) {
-    				body.getBody().add((org.eclipse.ocl.ecore.OCLExpression)bodyExp);
-			}
-		}
-		
-		result.setBody(body);
 
-		if(resultVarName != null) {
-			env.deleteElement(resultVarName);
+		// analyze the body of while
+		whileExp.setBody(oclExpressionCS(whileCS.getBody(), env));
+		
+		// cleanup result variable in environment, if it was added
+		if(resultVarInEnv != null) {
+			env.deleteElement(resultVarInEnv);
 		}
 		
 		return result;
@@ -1634,7 +1628,7 @@ public class QvtOperationalVisitorCS
 			EClassifier realType = initExpression.getType();
 			EClassifier declaredType = env.getUMLReflection().getOCLType(eFeature);
 			if (!QvtOperationalParserUtil.isAssignableToFrom(env, declaredType, realType)) {
-				env.reportError(NLS.bind(ValidationMessages.SemanticUtil_17,
+				env.reportError(NLS.bind(ValidationMessages.TypeMismatchError,
 						new Object[] { QvtOperationalTypesUtil.getTypeFullName(declaredType), QvtOperationalTypesUtil.getTypeFullName(realType) }),
 						propCS.getStartOffset(), propCS.getEndOffset());
 			}
@@ -2941,19 +2935,72 @@ public class QvtOperationalVisitorCS
 		return varParam;
 	}
 
-	private org.eclipse.ocl.ecore.OCLExpression visitVariableInitializationCS(VariableInitializationCS varInitCS, 
+	protected VariableInitExp variableInitializationCS(VariableInitializationCS varInitCS, 
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 
+		boolean hasExplicitInitExpression = varInitCS.getOclExpressionCS() != null;
+		boolean hasDeclType = varInitCS.getTypeCS() != null;
+		String varName = varInitCS.getSimpleNameCS().getValue();		
+		
 		VariableInitExp result = ImperativeOCLFactory.eINSTANCE.createVariableInitExp();
 		result.setStartPosition(varInitCS.getStartOffset());
-		result.setEndPosition(varInitCS.getEndOffset());
-		if (validateInitializedValueCS(varInitCS, result, env)) {
-			if (QvtOperationalParserUtil.validateInitVariable(result, env)) {
-				addInitVariable(env, result);
-			}
+		result.setEndPosition(varInitCS.getEndOffset());		
+		
+		result.setName(varName);
+		
+		org.eclipse.ocl.ecore.Variable referredVar = EcoreFactory.eINSTANCE.createVariable();
+		result.setReferredVariable(referredVar);
+		
+		referredVar.setName(varName);
+		
+		EClassifier declaredType = null;		
+		EClassifier derivedInitType = null;		
+		if (hasDeclType) {
+			// Note: visiting typeCS reports a type resolution issue  
+			declaredType = visitTypeCS(varInitCS.getTypeCS(), null, env);
+		}
+		
+		if(hasExplicitInitExpression) {
+			org.eclipse.ocl.ecore.OCLExpression exp = visitOclExpressionCS(varInitCS.getOclExpressionCS(), env);
+		    referredVar.setInitExpression(exp);
+		    if(exp != null) {
+		    	derivedInitType = referredVar.getInitExpression().getType();
+		    }
 		}
 
+		referredVar.setType(declaredType != null ? declaredType : derivedInitType);
+		result.setType(referredVar.getType());
+		
+		if (!hasExplicitInitExpression && declaredType != null) {
+			// FIXME - should not be initialized at AST level but at evaluation level			
+	    	org.eclipse.ocl.ecore.OCLExpression defaultInitializationValue = createDefaultInitializationValue(declaredType, env);
+	        if (defaultInitializationValue == null) {
+	            NullLiteralExp<EClassifier> nullLiteralExp = oclFactory.createNullLiteralExp();
+	            nullLiteralExp.setType(getOclVoid());
+	            defaultInitializationValue = (org.eclipse.ocl.ecore.NullLiteralExp)nullLiteralExp;
+	        }
+	        
+	        referredVar.setInitExpression(defaultInitializationValue);
+		}
+				
+		OCLExpression<EClassifier> initExpression = referredVar.getInitExpression();		
+		if (declaredType != null && derivedInitType != null) {
+			if(!QvtOperationalParserUtil.isAssignableToFrom(env, declaredType, derivedInitType)) {
+				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.TypeMismatchError, new Object[] { 
+							QvtOperationalTypesUtil.getTypeFullName(declaredType),  
+							QvtOperationalTypesUtil.getTypeFullName(derivedInitType) 
+				}), initExpression.getStartPosition(), initExpression.getEndPosition());
+			}
+		}
+		
+		if (env.lookupLocal(varName) != null) {
+			QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.NameAlreadyDefinedError, 
+					new Object[] { varName }), result.getStartPosition(), result.getEndPosition());
+		} else {
+			env.addElement(referredVar.getName(), referredVar, true);
+		}			
+		
         // AST binding
         if(myCompilerOptions.isGenerateCompletionData()) {
 			if(result.getName() != null) {
@@ -3190,7 +3237,7 @@ public class QvtOperationalVisitorCS
 			EClassifier realType = exp.getType();
 			EClassifier declaredType = prop.getEType();
 			if (!QvtOperationalParserUtil.isAssignableToFrom(env, declaredType, realType)) {
-				env.reportError(NLS.bind(ValidationMessages.SemanticUtil_17,
+				env.reportError(NLS.bind(ValidationMessages.TypeMismatchError,
 						new Object[] { QvtOperationalTypesUtil.getTypeFullName(declaredType), QvtOperationalTypesUtil.getTypeFullName(realType) }),
 						astNode.getStartPosition(), astNode.getEndPosition());
 			}
@@ -3235,7 +3282,7 @@ public class QvtOperationalVisitorCS
 			EClassifier realType = exp.getType();
 			EClassifier declaredType = prop.getEType();
 			if (!QvtOperationalParserUtil.isAssignableToFrom(env, declaredType, realType)) {
-				env.reportError(NLS.bind(ValidationMessages.SemanticUtil_17,
+				env.reportError(NLS.bind(ValidationMessages.TypeMismatchError,
 						new Object[] { QvtOperationalTypesUtil.getTypeFullName(declaredType), QvtOperationalTypesUtil.getTypeFullName(realType) }),
 						prop.getStartPosition(), prop.getEndPosition());
 			}
@@ -3379,7 +3426,7 @@ public class QvtOperationalVisitorCS
         		if (env.lookupLocal(targetVarName) != null) {
         			isTargetVarClashing = true;
         			
-        			env.reportError(NLS.bind(ValidationMessages.SemanticUtil_15, new Object[] { targetVarName }),
+        			env.reportError(NLS.bind(ValidationMessages.NameAlreadyDefinedError, new Object[] { targetVarName }),
         					resolveExpCS.getTarget().getStartOffset(), resolveExpCS.getTarget().getEndOffset());
         		}
     			variable.setName(targetVarName);
@@ -3796,44 +3843,44 @@ public class QvtOperationalVisitorCS
         }
     }
     
-	private boolean validateInitializedValueCS(VariableInitializationCS varInitCS, VariableInitExp result, 
-			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
-			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
-		
-		result.setName(varInitCS.getSimpleNameCS().getValue());
-
-		EClassifier type;
-		if (varInitCS.getTypeCS() != null) {
-			type = visitTypeCS(varInitCS.getTypeCS(), null, env);
-			if (type == null) {
-				return false;
-			}
-		} else {
-			type = null;
-		}
-
-		if (varInitCS.getOclExpressionCS() == null) {
-		    if (type == null) {
-		        return false;
-		    } else {
-		    	org.eclipse.ocl.ecore.OCLExpression defaultInitializationValue = createDefaultInitializationValue(type, env);
-		        if (defaultInitializationValue == null) {
-		            NullLiteralExp<EClassifier> nullLiteralExp = oclFactory.createNullLiteralExp();
-		            nullLiteralExp.setType(getOclVoid());
-		            defaultInitializationValue = (org.eclipse.ocl.ecore.NullLiteralExp)nullLiteralExp;
-		        }
-		        result.setValue(defaultInitializationValue);
-		    }
-		} else {
-	        org.eclipse.ocl.ecore.OCLExpression exp = visitOclExpressionCS(varInitCS.getOclExpressionCS(), env);
-	        if (exp == null) {
-	            return false;
-	        }
-	        result.setValue(exp);
-		}
-		result.setType(type);
-		return true;
-	}
+//	private boolean validateInitializedValueCS(VariableInitializationCS varInitCS, VariableInitExp result, 
+//			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+//			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+//		
+//		result.setName(varInitCS.getSimpleNameCS().getValue());
+//
+//		EClassifier type;
+//		if (varInitCS.getTypeCS() != null) {
+//			type = visitTypeCS(varInitCS.getTypeCS(), null, env);
+//			if (type == null) {
+//				return false;
+//			}
+//		} else {
+//			type = null;
+//		}
+//
+//		if (varInitCS.getOclExpressionCS() == null) {
+//		    if (type == null) {
+//		        return false;
+//		    } else {
+//		    	org.eclipse.ocl.ecore.OCLExpression defaultInitializationValue = createDefaultInitializationValue(type, env);
+//		        if (defaultInitializationValue == null) {
+//		            NullLiteralExp<EClassifier> nullLiteralExp = oclFactory.createNullLiteralExp();
+//		            nullLiteralExp.setType(getOclVoid());
+//		            defaultInitializationValue = (org.eclipse.ocl.ecore.NullLiteralExp)nullLiteralExp;
+//		        }
+//		        result.setValue(defaultInitializationValue);
+//		    }
+//		} else {
+//	        org.eclipse.ocl.ecore.OCLExpression exp = visitOclExpressionCS(varInitCS.getOclExpressionCS(), env);
+//	        if (exp == null) {
+//	            return false;
+//	        }
+//	        result.setValue(exp);
+//		}
+//		result.setType(type);
+//		return true;
+//	}
 
 	// FIXME - should not be initialized at AST level but at evaluation level
 	private org.eclipse.ocl.ecore.OCLExpression createDefaultInitializationValue(EClassifier type, 
@@ -4139,6 +4186,7 @@ public class QvtOperationalVisitorCS
 		return result;
 	}
 	
+
 	private static void createPropertyCallASTBinding(
 			CallExpCS propertyCallExpCS,
 			OCLExpression<EClassifier> result,
@@ -4146,6 +4194,7 @@ public class QvtOperationalVisitorCS
 		ASTNode boundAST = result;
 		CSTNode boundCST = propertyCallExpCS;            	
 		if(result instanceof IteratorExp) {
+			@SuppressWarnings("unchecked")			
 			IteratorExp<EClassifier, EParameter> itExpAST = (IteratorExp<EClassifier, EParameter>) result;
 			if(propertyCallExpCS instanceof IteratorExpCS) {
 				IteratorExpCS itExpCST = (IteratorExpCS) propertyCallExpCS;
@@ -4177,18 +4226,6 @@ public class QvtOperationalVisitorCS
 			return operationalTransformation.getModelParameter();
 		}
 		return Collections.emptyList();
-	}
-	
-	private static void addInitVariable(
-			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
-			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env, 
-			VariableInitExp varInit) {
-		if (varInit.getName() != null) {
-			Variable<EClassifier, EParameter> var = EcoreFactory.eINSTANCE.createVariable();
-			var.setName(varInit.getName());
-			var.setType(varInit.getType());
-			env.addElement(varInit.getName(), var, true);
-		}
 	}
 	
 	private static QvtOperationalModuleEnv getModuleContextEnv(QvtOperationalEnv env) {

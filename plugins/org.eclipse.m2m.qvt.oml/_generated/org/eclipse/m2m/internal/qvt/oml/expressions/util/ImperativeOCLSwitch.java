@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ImperativeOCLSwitch.java,v 1.1 2009/01/11 23:22:10 radvorak Exp $
+ * $Id: ImperativeOCLSwitch.java,v 1.2 2009/01/13 16:51:21 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.util;
 
@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.ETypedElement;
+import org.eclipse.m2m.internal.qvt.oml.expressions.*;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
@@ -268,42 +269,6 @@ public class ImperativeOCLSwitch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ImperativeOCLPackage.LIST_TYPE: {
-				ListType listType = (ListType)theEObject;
-				T1 result = caseListType(listType);
-				if (result == null) result = caseEcore_CollectionType(listType);
-				if (result == null) result = caseEDataType(listType);
-				if (result == null) result = caseCollectionType(listType);
-				if (result == null) result = caseEClassifier(listType);
-				if (result == null) result = casePredefinedType(listType);
-				if (result == null) result = caseTypedASTNode(listType);
-				if (result == null) result = caseENamedElement(listType);
-				if (result == null) result = caseASTNode(listType);
-				if (result == null) result = caseEModelElement(listType);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ImperativeOCLPackage.LOG_EXP: {
-				LogExp logExp = (LogExp)theEObject;
-				T1 result = caseLogExp(logExp);
-				if (result == null) result = caseEcore_OperationCallExp(logExp);
-				if (result == null) result = caseEcore_FeatureCallExp(logExp);
-				if (result == null) result = caseOperationCallExp(logExp);
-				if (result == null) result = caseEcore_CallExp(logExp);
-				if (result == null) result = caseFeatureCallExp(logExp);
-				if (result == null) result = caseEcore_OCLExpression(logExp);
-				if (result == null) result = caseCallExp(logExp);
-				if (result == null) result = caseETypedElement(logExp);
-				if (result == null) result = caseOCLExpression(logExp);
-				if (result == null) result = caseCallingASTNode(logExp);
-				if (result == null) result = caseENamedElement(logExp);
-				if (result == null) result = caseTypedElement(logExp);
-				if (result == null) result = caseVisitable(logExp);
-				if (result == null) result = caseASTNode(logExp);
-				if (result == null) result = caseEModelElement(logExp);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case ImperativeOCLPackage.IMPERATIVE_EXPRESSION: {
 				ImperativeExpression imperativeExpression = (ImperativeExpression)theEObject;
 				T1 result = caseImperativeExpression(imperativeExpression);
@@ -371,6 +336,42 @@ public class ImperativeOCLSwitch<T1> {
 				if (result == null) result = caseVisitable(instantiationExp);
 				if (result == null) result = caseASTNode(instantiationExp);
 				if (result == null) result = caseEModelElement(instantiationExp);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ImperativeOCLPackage.LIST_TYPE: {
+				ListType listType = (ListType)theEObject;
+				T1 result = caseListType(listType);
+				if (result == null) result = caseEcore_CollectionType(listType);
+				if (result == null) result = caseEDataType(listType);
+				if (result == null) result = caseCollectionType(listType);
+				if (result == null) result = caseEClassifier(listType);
+				if (result == null) result = casePredefinedType(listType);
+				if (result == null) result = caseTypedASTNode(listType);
+				if (result == null) result = caseENamedElement(listType);
+				if (result == null) result = caseASTNode(listType);
+				if (result == null) result = caseEModelElement(listType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ImperativeOCLPackage.LOG_EXP: {
+				LogExp logExp = (LogExp)theEObject;
+				T1 result = caseLogExp(logExp);
+				if (result == null) result = caseEcore_OperationCallExp(logExp);
+				if (result == null) result = caseEcore_FeatureCallExp(logExp);
+				if (result == null) result = caseOperationCallExp(logExp);
+				if (result == null) result = caseEcore_CallExp(logExp);
+				if (result == null) result = caseFeatureCallExp(logExp);
+				if (result == null) result = caseEcore_OCLExpression(logExp);
+				if (result == null) result = caseCallExp(logExp);
+				if (result == null) result = caseETypedElement(logExp);
+				if (result == null) result = caseOCLExpression(logExp);
+				if (result == null) result = caseCallingASTNode(logExp);
+				if (result == null) result = caseENamedElement(logExp);
+				if (result == null) result = caseTypedElement(logExp);
+				if (result == null) result = caseVisitable(logExp);
+				if (result == null) result = caseASTNode(logExp);
+				if (result == null) result = caseEModelElement(logExp);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ImperativeOCLAdapterFactory.java,v 1.1 2009/01/11 23:22:10 radvorak Exp $
+ * $Id: ImperativeOCLAdapterFactory.java,v 1.2 2009/01/13 16:51:21 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.util;
 
@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.ETypedElement;
+import org.eclipse.m2m.internal.qvt.oml.expressions.*;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
@@ -154,14 +155,6 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 				return createForExpAdapter();
 			}
 			@Override
-			public Adapter caseListType(ListType object) {
-				return createListTypeAdapter();
-			}
-			@Override
-			public Adapter caseLogExp(LogExp object) {
-				return createLogExpAdapter();
-			}
-			@Override
 			public Adapter caseImperativeExpression(ImperativeExpression object) {
 				return createImperativeExpressionAdapter();
 			}
@@ -176,6 +169,14 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseInstantiationExp(InstantiationExp object) {
 				return createInstantiationExpAdapter();
+			}
+			@Override
+			public Adapter caseListType(ListType object) {
+				return createListTypeAdapter();
+			}
+			@Override
+			public Adapter caseLogExp(LogExp object) {
+				return createLogExpAdapter();
 			}
 			@Override
 			public Adapter caseReturnExp(ReturnExp object) {

@@ -253,7 +253,7 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object> {
 
 
     public Object visitVariableInitExp(VariableInitExp variableInitExp) {
-        doProcess(variableInitExp.getValue(), variableInitExp);
+        doProcess(variableInitExp.getReferredVariable().getInitExpression(), variableInitExp);
         return null;
     }
 
@@ -272,18 +272,11 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object> {
     }
 
     public Object visitWhileExp(WhileExp whileExp) {
-        doProcess(whileExp.getBody(), whileExp);
-
         if (whileExp.getCondition() != null) {
             doProcess(whileExp.getCondition(), whileExp);
         }
-        if (whileExp.getResult() != null) {
-            doProcess(whileExp.getResult(), whileExp);
-        }
-
-        if (whileExp.getResultVar() != null) {
-            doProcess(whileExp.getResult(), whileExp);
-        }
+    	
+        doProcess(whileExp.getBody(), whileExp);
 
         return null;
     }

@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: SeverityKind.java,v 1.2 2009/01/11 23:22:06 radvorak Exp $
+ * $Id: SeverityKind.java,v 1.3 2009/01/13 16:51:21 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
@@ -29,7 +29,17 @@ import org.eclipse.emf.common.util.Enumerator;
  * @generated
  */
 public enum SeverityKind implements Enumerator {
+	//$NON-NLS-1$ //$NON-NLS-2$
+
 	/**
+	 * The '<em><b>Error</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #ERROR_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	ERROR(0, "error", "error"), /**
 	 * The '<em><b>Warning</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -40,16 +50,6 @@ public enum SeverityKind implements Enumerator {
 	WARNING(1, "warning", "warning"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
-	 * The '<em><b>Error</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #ERROR_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	ERROR(2, "error", "error"), //$NON-NLS-1$ //$NON-NLS-2$
-
-	/**
 	 * The '<em><b>Fatal</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -57,7 +57,22 @@ public enum SeverityKind implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	FATAL(3, "fatal", "fatal"); //$NON-NLS-1$ //$NON-NLS-2$
+	FATAL(2, "fatal", "fatal"); //$NON-NLS-1$ //$NON-NLS-2$
+
+	/**
+	 * The '<em><b>Error</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>Error</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #ERROR
+	 * @model name="error"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ERROR_VALUE = 0;
 
 	/**
 	 * The '<em><b>Warning</b></em>' literal value.
@@ -75,21 +90,6 @@ public enum SeverityKind implements Enumerator {
 	public static final int WARNING_VALUE = 1;
 
 	/**
-	 * The '<em><b>Error</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Error</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #ERROR
-	 * @model name="error"
-	 * @generated
-	 * @ordered
-	 */
-	public static final int ERROR_VALUE = 2;
-
-	/**
 	 * The '<em><b>Fatal</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -102,7 +102,7 @@ public enum SeverityKind implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int FATAL_VALUE = 3;
+	public static final int FATAL_VALUE = 2;
 
 	/**
 	 * An array of all the '<em><b>Severity Kind</b></em>' enumerators.
@@ -112,8 +112,8 @@ public enum SeverityKind implements Enumerator {
 	 */
 	private static final SeverityKind[] VALUES_ARRAY =
 		new SeverityKind[] {
-			WARNING,
 			ERROR,
+			WARNING,
 			FATAL,
 		};
 
@@ -165,8 +165,8 @@ public enum SeverityKind implements Enumerator {
 	 */
 	public static SeverityKind get(int value) {
 		switch (value) {
-			case WARNING_VALUE: return WARNING;
 			case ERROR_VALUE: return ERROR;
+			case WARNING_VALUE: return WARNING;
 			case FATAL_VALUE: return FATAL;
 		}
 		return null;

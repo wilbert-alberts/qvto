@@ -50,7 +50,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Typedef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
-import org.eclipse.m2m.internal.qvt.oml.expressions.VariableInitExp;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CollectionTypeCS;
@@ -250,38 +249,10 @@ public class QvtOperationalParserUtil {
 		}
 	}
 
-	public static boolean validateInitVariable(VariableInitExp varInit, 
-			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
-			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
-		
-		if (env.lookupLocal(varInit.getName()) != null) {
-			QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.SemanticUtil_15, new Object[] { varInit.getName() }),
-					varInit.getStartPosition(), varInit.getEndPosition());
-			return false;
-		}
-
-		if (varInit.getType() == null) {
-			varInit.setType(varInit.getValue().getType());
-		}
-
-		// TODO
-		// if (!validateNameClashing(varInit.getName(),
-		// mapping.getDeclaration().getContextType(),
-		// mapping.getDeclaration().getReturnType(), log, pos)) {
-		// return;
-		// }
-
-		EClassifier realType = varInit.getValue().getType();
-		EClassifier declaredType = varInit.getType();
-		if (!isAssignableToFrom(env, declaredType, realType)) {
-			QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.SemanticUtil_17,
-					new Object[] { QvtOperationalTypesUtil.getTypeFullName(declaredType), QvtOperationalTypesUtil.getTypeFullName(realType) }),
-					varInit.getStartPosition(), varInit.getEndPosition());
-		}
-
-		return true;
-	}
-
+	/**
+	 * Remark: accepts null types, but always returns <code>false</code> if any
+	 * of the type argument is <code>null</code>
+	 */
 	public static boolean isAssignableToFrom(
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env, 
@@ -293,6 +264,8 @@ public class QvtOperationalParserUtil {
 		
 		// handle primitive types
 		if (variableType == env.getOCLStandardLibrary().getUnlimitedNatural()) {
+			// FIXME - we should not have any special handling of OCL types
+			// See related, https://bugs.eclipse.org/bugs/show_bug.cgi?id=260403		
 			if (initialiserType == env.getOCLStandardLibrary().getInteger()) {
 				return true;
 			}

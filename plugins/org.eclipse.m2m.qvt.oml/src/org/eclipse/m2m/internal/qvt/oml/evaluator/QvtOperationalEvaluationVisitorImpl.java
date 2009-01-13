@@ -130,6 +130,7 @@ import org.eclipse.ocl.internal.evaluation.EvaluationVisitorImpl;
 import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.types.BagType;
 import org.eclipse.ocl.types.CollectionType;
+import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.types.PrimitiveType;
 import org.eclipse.ocl.types.SetType;
 import org.eclipse.ocl.types.TupleType;
@@ -959,9 +960,29 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     }
 
     public Object visitVariableInitExp(VariableInitExp variableInitExp) {
-        Object varValue = variableInitExp.getValue().accept(getVisitor());
-        replaceInEnv(variableInitExp.getName(), varValue, variableInitExp.getType());
-        return varValue;
+        org.eclipse.ocl.ecore.Variable referredVariable = variableInitExp.getReferredVariable();
+        OCLExpression<EClassifier> initExpression = referredVariable.getInitExpression();
+        Object value = null;
+		if(initExpression != null) {
+			value = initExpression.accept(getVisitor());
+		} else { 
+			OCLStandardLibrary<EClassifier> oclstdlib = getEnvironment().getOCLStandardLibrary();
+			EClassifier varDeclType = referredVariable.getType();			
+			
+			if(varDeclType == oclstdlib.getString()) {
+				value = ""; //$NON-NLS-1$
+			} else if(varDeclType == oclstdlib.getBoolean()) {
+				value = Boolean.FALSE;
+			} else if(varDeclType == oclstdlib.getInteger()) {
+				value = Integer.valueOf(0);
+			} else if(varDeclType == oclstdlib.getReal()) {
+				value = Double.valueOf(0);
+			}
+		}
+		
+        replaceInEnv(referredVariable.getName(), value, variableInitExp.getType());
+        
+        return variableInitExp.isWithResult() ? value : null;
     }
 
     public Object visitBlockExp(BlockExp blockExp) {
@@ -1005,10 +1026,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     }
 
     public Object visitWhileExp(WhileExp whileExp) {
-    	Variable<EClassifier, EParameter> resultVar = whileExp.getResultVar();
-		if(resultVar != null) {
-    		resultVar.accept(getVisitor());
-    	}
         while (true) {
             Object condition = whileExp.getCondition().accept(getVisitor());
             if (Boolean.TRUE.equals(condition)) {
@@ -1016,12 +1033,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
             } else {
                 break;
             }
-        }
-
-        if(resultVar != null) {
-        	return getEvaluationEnvironment().remove(resultVar.getName());
-        } else if(whileExp.getResult() != null) {
-        	return whileExp.getResult().accept(getVisitor());
         }
         
         return null;

@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ComputeExpImpl.java,v 1.4 2009/01/11 23:22:07 radvorak Exp $
+ * $Id: ComputeExpImpl.java,v 1.5 2009/01/13 16:51:21 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -32,24 +32,14 @@ import org.eclipse.ocl.utilities.Visitor;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ComputeExpImpl#getReturnedElement <em>Returned Element</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ComputeExpImpl#getBody <em>Body</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ComputeExpImpl#getReturnedElement <em>Returned Element</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeExp {
-	/**
-	 * The cached value of the '{@link #getReturnedElement() <em>Returned Element</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getReturnedElement()
-	 * @generated
-	 * @ordered
-	 */
-	protected Variable returnedElement;
-
 	/**
 	 * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -59,6 +49,16 @@ public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeE
 	 * @ordered
 	 */
 	protected OCLExpression body;
+
+	/**
+	 * The cached value of the '{@link #getReturnedElement() <em>Returned Element</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getReturnedElement()
+	 * @generated
+	 * @ordered
+	 */
+	protected Variable returnedElement;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -188,10 +188,10 @@ public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeE
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ImperativeOCLPackage.COMPUTE_EXP__RETURNED_ELEMENT:
-				return basicSetReturnedElement(null, msgs);
 			case ImperativeOCLPackage.COMPUTE_EXP__BODY:
 				return basicSetBody(null, msgs);
+			case ImperativeOCLPackage.COMPUTE_EXP__RETURNED_ELEMENT:
+				return basicSetReturnedElement(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -204,10 +204,10 @@ public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeE
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ImperativeOCLPackage.COMPUTE_EXP__RETURNED_ELEMENT:
-				return getReturnedElement();
 			case ImperativeOCLPackage.COMPUTE_EXP__BODY:
 				return getBody();
+			case ImperativeOCLPackage.COMPUTE_EXP__RETURNED_ELEMENT:
+				return getReturnedElement();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -220,11 +220,11 @@ public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeE
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ImperativeOCLPackage.COMPUTE_EXP__RETURNED_ELEMENT:
-				setReturnedElement((Variable)newValue);
-				return;
 			case ImperativeOCLPackage.COMPUTE_EXP__BODY:
 				setBody((OCLExpression)newValue);
+				return;
+			case ImperativeOCLPackage.COMPUTE_EXP__RETURNED_ELEMENT:
+				setReturnedElement((Variable)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -238,11 +238,11 @@ public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeE
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ImperativeOCLPackage.COMPUTE_EXP__RETURNED_ELEMENT:
-				setReturnedElement((Variable)null);
-				return;
 			case ImperativeOCLPackage.COMPUTE_EXP__BODY:
 				setBody((OCLExpression)null);
+				return;
+			case ImperativeOCLPackage.COMPUTE_EXP__RETURNED_ELEMENT:
+				setReturnedElement((Variable)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -256,10 +256,10 @@ public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeE
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ImperativeOCLPackage.COMPUTE_EXP__RETURNED_ELEMENT:
-				return returnedElement != null;
 			case ImperativeOCLPackage.COMPUTE_EXP__BODY:
 				return body != null;
+			case ImperativeOCLPackage.COMPUTE_EXP__RETURNED_ELEMENT:
+				return returnedElement != null;
 		}
 		return super.eIsSet(featureID);
 	}

@@ -133,8 +133,8 @@ public final class ValidationMessages extends NLS {
 	public static String SemanticUtil_5;
 	public static String SemanticUtil_8;
 	
-	public static String SemanticUtil_15;
-	public static String SemanticUtil_17;
+	public static String NameAlreadyDefinedError;
+	public static String TypeMismatchError;
 	
 	public static String ModulePropertyAlreadyDefined;
 	public static String IntermediatePropertiesInitNotSupported;

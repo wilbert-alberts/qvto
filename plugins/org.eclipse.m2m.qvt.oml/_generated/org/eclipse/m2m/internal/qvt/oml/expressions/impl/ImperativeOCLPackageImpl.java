@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ImperativeOCLPackageImpl.java,v 1.1 2009/01/11 23:22:09 radvorak Exp $
+ * $Id: ImperativeOCLPackageImpl.java,v 1.2 2009/01/13 16:51:21 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -48,7 +48,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Typedef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VariableInitExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.WhileExp;
 import org.eclipse.ocl.ecore.EcorePackage;
-import org.eclipse.ocl.expressions.ExpressionsPackage;
 import org.eclipse.ocl.utilities.UtilitiesPackage;
 
 /**
@@ -440,7 +439,7 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 * @generated
 	 */
 	public EReference getAssignExp_Value() {
-		return (EReference)assignExpEClass.getEStructuralFeatures().get(1);
+		return (EReference)assignExpEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -458,7 +457,7 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 * @generated
 	 */
 	public EAttribute getAssignExp_IsReset() {
-		return (EAttribute)assignExpEClass.getEStructuralFeatures().get(3);
+		return (EAttribute)assignExpEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -475,8 +474,17 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getVariableInitExp_Value() {
+	public EReference getVariableInitExp_ReferredVariable() {
 		return (EReference)variableInitExpEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getVariableInitExp_WithResult() {
+		return (EAttribute)variableInitExpEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -504,24 +512,6 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 */
 	public EReference getWhileExp_Body() {
 		return (EReference)whileExpEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getWhileExp_Result() {
-		return (EReference)whileExpEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getWhileExp_ResultVar() {
-		return (EReference)whileExpEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -764,7 +754,7 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 * @generated
 	 */
 	public EReference getComputeExp_ReturnedElement() {
-		return (EReference)computeExpEClass.getEStructuralFeatures().get(0);
+		return (EReference)computeExpEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -773,7 +763,7 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 * @generated
 	 */
 	public EReference getComputeExp_Body() {
-		return (EReference)computeExpEClass.getEStructuralFeatures().get(1);
+		return (EReference)computeExpEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -833,16 +823,16 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 
 		assignExpEClass = createEClass(ASSIGN_EXP);
 		createEReference(assignExpEClass, ASSIGN_EXP__DEFAULT_VALUE);
-		createEReference(assignExpEClass, ASSIGN_EXP__VALUE);
-		createEReference(assignExpEClass, ASSIGN_EXP__LEFT);
 		createEAttribute(assignExpEClass, ASSIGN_EXP__IS_RESET);
+		createEReference(assignExpEClass, ASSIGN_EXP__LEFT);
+		createEReference(assignExpEClass, ASSIGN_EXP__VALUE);
 
 		blockExpEClass = createEClass(BLOCK_EXP);
 		createEReference(blockExpEClass, BLOCK_EXP__BODY);
 
 		computeExpEClass = createEClass(COMPUTE_EXP);
-		createEReference(computeExpEClass, COMPUTE_EXP__RETURNED_ELEMENT);
 		createEReference(computeExpEClass, COMPUTE_EXP__BODY);
+		createEReference(computeExpEClass, COMPUTE_EXP__RETURNED_ELEMENT);
 
 		dictLiteralExpEClass = createEClass(DICT_LITERAL_EXP);
 		createEReference(dictLiteralExpEClass, DICT_LITERAL_EXP__PART);
@@ -856,11 +846,6 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 
 		forExpEClass = createEClass(FOR_EXP);
 
-		listTypeEClass = createEClass(LIST_TYPE);
-
-		logExpEClass = createEClass(LOG_EXP);
-		createEReference(logExpEClass, LOG_EXP__CONDITION);
-
 		imperativeExpressionEClass = createEClass(IMPERATIVE_EXPRESSION);
 
 		imperativeIterateExpEClass = createEClass(IMPERATIVE_ITERATE_EXP);
@@ -873,6 +858,11 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		createEReference(instantiationExpEClass, INSTANTIATION_EXP__ARGUMENT);
 		createEReference(instantiationExpEClass, INSTANTIATION_EXP__EXTENT);
 		createEReference(instantiationExpEClass, INSTANTIATION_EXP__INSTANTIATED_CLASS);
+
+		listTypeEClass = createEClass(LIST_TYPE);
+
+		logExpEClass = createEClass(LOG_EXP);
+		createEReference(logExpEClass, LOG_EXP__CONDITION);
 
 		returnExpEClass = createEClass(RETURN_EXP);
 		createEReference(returnExpEClass, RETURN_EXP__VALUE);
@@ -889,13 +879,12 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		createEReference(typedefEClass, TYPEDEF__CONDITION);
 
 		variableInitExpEClass = createEClass(VARIABLE_INIT_EXP);
-		createEReference(variableInitExpEClass, VARIABLE_INIT_EXP__VALUE);
+		createEReference(variableInitExpEClass, VARIABLE_INIT_EXP__REFERRED_VARIABLE);
+		createEAttribute(variableInitExpEClass, VARIABLE_INIT_EXP__WITH_RESULT);
 
 		whileExpEClass = createEClass(WHILE_EXP);
 		createEReference(whileExpEClass, WHILE_EXP__CONDITION);
 		createEReference(whileExpEClass, WHILE_EXP__BODY);
-		createEReference(whileExpEClass, WHILE_EXP__RESULT);
-		createEReference(whileExpEClass, WHILE_EXP__RESULT_VAR);
 
 		imperativeOCLVisitorEClass = createEClass(IMPERATIVE_OCL_VISITOR);
 
@@ -930,7 +919,6 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
 		UtilitiesPackage theUtilitiesPackage = (UtilitiesPackage)EPackage.Registry.INSTANCE.getEPackage(UtilitiesPackage.eNS_URI);
 		org.eclipse.emf.ecore.EcorePackage theEcorePackage_1 = (org.eclipse.emf.ecore.EcorePackage)EPackage.Registry.INSTANCE.getEPackage(org.eclipse.emf.ecore.EcorePackage.eNS_URI);
-		ExpressionsPackage theExpressionsPackage = (ExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(ExpressionsPackage.eNS_URI);
 
 		// Create type parameters
 		ETypeParameter imperativeOCLVisitorEClass_T = addETypeParameter(imperativeOCLVisitorEClass, "T"); //$NON-NLS-1$
@@ -947,13 +935,13 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		dictLiteralPartEClass.getESuperTypes().add(theEcorePackage_1.getEModelElement());
 		dictionaryTypeEClass.getESuperTypes().add(theEcorePackage.getCollectionType());
 		forExpEClass.getESuperTypes().add(this.getImperativeLoopExp());
-		listTypeEClass.getESuperTypes().add(theEcorePackage.getCollectionType());
-		logExpEClass.getESuperTypes().add(theEcorePackage.getOperationCallExp());
 		imperativeExpressionEClass.getESuperTypes().add(theEcorePackage.getOCLExpression());
 		imperativeIterateExpEClass.getESuperTypes().add(this.getImperativeLoopExp());
 		imperativeLoopExpEClass.getESuperTypes().add(this.getImperativeExpression());
 		imperativeLoopExpEClass.getESuperTypes().add(theEcorePackage.getLoopExp());
 		instantiationExpEClass.getESuperTypes().add(this.getImperativeExpression());
+		listTypeEClass.getESuperTypes().add(theEcorePackage.getCollectionType());
+		logExpEClass.getESuperTypes().add(theEcorePackage.getOperationCallExp());
 		returnExpEClass.getESuperTypes().add(this.getImperativeExpression());
 		switchExpEClass.getESuperTypes().add(this.getImperativeExpression());
 		templateParameterTypeEClass.getESuperTypes().add(theEcorePackage_1.getEClassifier());
@@ -1055,9 +1043,9 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 
 		initEClass(assignExpEClass, AssignExp.class, "AssignExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getAssignExp_DefaultValue(), theEcorePackage.getOCLExpression(), null, "defaultValue", null, 0, 1, AssignExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(getAssignExp_Value(), theEcorePackage.getOCLExpression(), null, "value", null, 0, -1, AssignExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(getAssignExp_Left(), theEcorePackage.getOCLExpression(), null, "left", null, 1, 1, AssignExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getAssignExp_IsReset(), theEcorePackage_1.getEBoolean(), "isReset", null, 0, 1, AssignExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getAssignExp_Left(), theEcorePackage.getOCLExpression(), null, "left", null, 1, 1, AssignExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getAssignExp_Value(), theEcorePackage.getOCLExpression(), null, "value", null, 0, -1, AssignExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		op = addEOperation(assignExpEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "T"); //$NON-NLS-1$
@@ -1123,8 +1111,8 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		initEOperation(op, g1);
 
 		initEClass(computeExpEClass, ComputeExp.class, "ComputeExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getComputeExp_ReturnedElement(), theEcorePackage.getVariable(), null, "returnedElement", null, 1, 1, ComputeExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getComputeExp_Body(), theEcorePackage.getOCLExpression(), null, "body", null, 1, 1, ComputeExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getComputeExp_ReturnedElement(), theEcorePackage.getVariable(), null, "returnedElement", null, 1, 1, ComputeExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		op = addEOperation(computeExpEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "T"); //$NON-NLS-1$
@@ -1169,41 +1157,6 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		initEClass(forExpEClass, ForExp.class, "ForExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		op = addEOperation(forExpEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		t1 = addETypeParameter(op, "T"); //$NON-NLS-1$
-		t2 = addETypeParameter(op, "U"); //$NON-NLS-1$
-		g1 = createEGenericType(theUtilitiesPackage.getVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		g2 = createEGenericType();
-		g1.getETypeArguments().add(g2);
-		g2 = createEGenericType();
-		g1.getETypeArguments().add(g2);
-		g2 = createEGenericType();
-		g1.getETypeArguments().add(g2);
-		g2 = createEGenericType();
-		g1.getETypeArguments().add(g2);
-		g2 = createEGenericType();
-		g1.getETypeArguments().add(g2);
-		g2 = createEGenericType();
-		g1.getETypeArguments().add(g2);
-		g2 = createEGenericType();
-		g1.getETypeArguments().add(g2);
-		g2 = createEGenericType();
-		g1.getETypeArguments().add(g2);
-		g2 = createEGenericType();
-		g1.getETypeArguments().add(g2);
-		t2.getEBounds().add(g1);
-		g1 = createEGenericType(t2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
-		initEClass(listTypeEClass, ListType.class, "ListType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(logExpEClass, LogExp.class, "LogExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getLogExp_Condition(), theEcorePackage.getOCLExpression(), null, "condition", null, 0, 1, LogExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		op = addEOperation(logExpEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "T"); //$NON-NLS-1$
 		t2 = addETypeParameter(op, "U"); //$NON-NLS-1$
 		g1 = createEGenericType(theUtilitiesPackage.getVisitor());
@@ -1336,6 +1289,41 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
 
+		initEClass(listTypeEClass, ListType.class, "ListType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(logExpEClass, LogExp.class, "LogExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getLogExp_Condition(), theEcorePackage.getOCLExpression(), null, "condition", null, 0, 1, LogExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		op = addEOperation(logExpEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		t1 = addETypeParameter(op, "T"); //$NON-NLS-1$
+		t2 = addETypeParameter(op, "U"); //$NON-NLS-1$
+		g1 = createEGenericType(theUtilitiesPackage.getVisitor());
+		g2 = createEGenericType(t1);
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		t2.getEBounds().add(g1);
+		g1 = createEGenericType(t2);
+		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(t1);
+		initEOperation(op, g1);
+
 		initEClass(returnExpEClass, ReturnExp.class, "ReturnExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getReturnExp_Value(), theEcorePackage.getOCLExpression(), null, "value", null, 0, 1, ReturnExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
@@ -1370,7 +1358,7 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		initEOperation(op, g1);
 
 		initEClass(switchExpEClass, SwitchExp.class, "SwitchExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getSwitchExp_AlternativePart(), this.getAltExp(), null, "alternativePart", null, 1, -1, SwitchExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getSwitchExp_AlternativePart(), this.getAltExp(), null, "alternativePart", null, 0, -1, SwitchExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getSwitchExp_ElsePart(), theEcorePackage.getOCLExpression(), null, "elsePart", null, 0, 1, SwitchExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		op = addEOperation(switchExpEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -1411,7 +1399,8 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		initEReference(getTypedef_Condition(), theEcorePackage.getOCLExpression(), null, "condition", null, 0, 1, Typedef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(variableInitExpEClass, VariableInitExp.class, "VariableInitExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getVariableInitExp_Value(), theEcorePackage.getOCLExpression(), null, "value", null, 0, 1, VariableInitExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getVariableInitExp_ReferredVariable(), theEcorePackage.getVariable(), null, "referredVariable", null, 1, 1, VariableInitExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getVariableInitExp_WithResult(), theEcorePackage_1.getEBoolean(), "withResult", "false", 0, 1, VariableInitExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		op = addEOperation(variableInitExpEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "T"); //$NON-NLS-1$
@@ -1446,13 +1435,6 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		initEClass(whileExpEClass, WhileExp.class, "WhileExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getWhileExp_Condition(), theEcorePackage.getOCLExpression(), null, "condition", null, 1, 1, WhileExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getWhileExp_Body(), theEcorePackage.getOCLExpression(), null, "body", null, 1, 1, WhileExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(getWhileExp_Result(), theEcorePackage.getOCLExpression(), null, "result", null, 0, 1, WhileExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		g1 = createEGenericType(theExpressionsPackage.getVariable());
-		g2 = createEGenericType(theEcorePackage_1.getEClassifier());
-		g1.getETypeArguments().add(g2);
-		g2 = createEGenericType(theEcorePackage_1.getEParameter());
-		g1.getETypeArguments().add(g2);
-		initEReference(getWhileExp_ResultVar(), g1, null, "resultVar", null, 0, 1, WhileExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		op = addEOperation(whileExpEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "T"); //$NON-NLS-1$
@@ -1563,8 +1545,8 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 
 		// Initialize enums and add enum literals
 		initEEnum(severityKindEEnum, SeverityKind.class, "SeverityKind"); //$NON-NLS-1$
-		addEEnumLiteral(severityKindEEnum, SeverityKind.WARNING);
 		addEEnumLiteral(severityKindEEnum, SeverityKind.ERROR);
+		addEEnumLiteral(severityKindEEnum, SeverityKind.WARNING);
 		addEEnumLiteral(severityKindEEnum, SeverityKind.FATAL);
 
 		// Create resource
@@ -1612,7 +1594,13 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		   source, 
 		   new String[] {
 			 "body", "keyDict" //$NON-NLS-1$ //$NON-NLS-2$
-		   });									
+		   });										
+		addAnnotation
+		  (getVariableInitExp_ReferredVariable(), 
+		   source, 
+		   new String[] {
+			 "body", "declaration" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
 	}
 
 } //ImperativeOCLPackageImpl

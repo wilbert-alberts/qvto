@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
@@ -56,11 +55,7 @@ public class QvtOperationalUtil {
 	public static String getStringRepresentation(TypeCS typeCS) {
 		return QvtOperationalParserUtil.getStringRepresentation(typeCS);
 	}
-	    
-    public static boolean isAssignableToFrom(QvtOperationalEnv env, EClassifier to, EClassifier from) {
-        return QvtOperationalParserUtil.isAssignableToFrom(env, to, from);
-    }
-    
+	        
 	public static boolean isUndefined(Object value) {
 		return value == null || value == getOclInvalid();
 	}

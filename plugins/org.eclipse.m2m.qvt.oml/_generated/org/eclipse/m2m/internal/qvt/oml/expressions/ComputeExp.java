@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ComputeExp.java,v 1.4 2009/01/11 23:22:04 radvorak Exp $
+ * $Id: ComputeExp.java,v 1.5 2009/01/13 16:51:21 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
@@ -25,8 +25,8 @@ import org.eclipse.ocl.utilities.Visitor;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp#getReturnedElement <em>Returned Element</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp#getBody <em>Body</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp#getReturnedElement <em>Returned Element</em>}</li>
  * </ul>
  * </p>
  *

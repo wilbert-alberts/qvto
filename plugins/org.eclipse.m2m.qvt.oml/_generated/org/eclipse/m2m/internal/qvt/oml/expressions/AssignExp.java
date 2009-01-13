@@ -24,9 +24,9 @@ import org.eclipse.ocl.utilities.Visitor;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp#getDefaultValue <em>Default Value</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp#getValue <em>Value</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp#getLeft <em>Left</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp#isIsReset <em>Is Reset</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp#getLeft <em>Left</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *
