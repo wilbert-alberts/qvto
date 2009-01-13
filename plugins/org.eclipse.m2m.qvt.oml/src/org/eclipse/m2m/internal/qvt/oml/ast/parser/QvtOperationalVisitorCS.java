@@ -1106,12 +1106,7 @@ public class QvtOperationalVisitorCS
 					condType = env.getOCLStandardLibrary().getOclVoid();
 				}
 				String message = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_booleanTypeExpressionExpected, env.getUMLReflection().getName(condType));
-				if(whileCS.getResult() == null) {
-					QvtOperationalUtil.reportError(env, message, whileCS.getCondition());
-				} else {
-					// warn for legacy code to keep compilable, as it was not reported at all
-					QvtOperationalUtil.reportWarning(env, message, whileCS.getCondition());
-				}
+				QvtOperationalUtil.reportError(env, message, whileCS.getCondition());
 			}
 		}
 

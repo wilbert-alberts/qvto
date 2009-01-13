@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ImperativeOCLAdapterFactory.java,v 1.2 2009/01/13 16:51:21 radvorak Exp $
+ * $Id: ImperativeOCLAdapterFactory.java,v 1.3 2009/01/13 20:21:46 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.util;
 
@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.ETypedElement;
-import org.eclipse.m2m.internal.qvt.oml.expressions.*;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
