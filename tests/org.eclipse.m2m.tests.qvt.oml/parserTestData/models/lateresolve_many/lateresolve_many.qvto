@@ -47,7 +47,7 @@ main() {
 	root.ownedElements += late resolveoneIn(ECORE::EPackage::toPackage, p : UML::Package | p.owner = null and p <> root);
 	
 	this.counter := 0;
-	eClasses.resolve(c:Class | while(counter = 0; counter = 0) { this.counter:= counter+1; } <> null)
+	eClasses.resolve(c:Class | while(counter = 0) { this.counter:= counter+1; } <> null)
 		.late resolve(c:UML::Class | failure('should never get here as its 2nd late resolve'));		
 	eClasses.late resolve(c:Class | if counter <= 0 then failure('counter has invalid value') else true endif);
 	

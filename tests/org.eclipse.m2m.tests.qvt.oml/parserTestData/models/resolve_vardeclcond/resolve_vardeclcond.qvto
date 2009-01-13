@@ -10,7 +10,7 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 		var i := 1;
 		var n := all1->size();
 		var resAll : OrderedSet(ecore::EPackage) := OrderedSet{};
-	    while (i <= n; 'anything') {
+	    while (i <= n) {
 	    	resAll += all->at(i).resolve(t : ecore::EPackage | true);
 	    	i := i + 1;
     	};
@@ -44,7 +44,7 @@ query min(in ar: OrderedSet(ecore::EPackage)): ecore::EPackage {
 			i = 2,
 			n = ar->size(),
 			min = ar->at(1),
-			res = while (i <= n; 'anything') {
+			res = while (i <= n) {
 				min := if (min.name <= ar->at(i).name) then min else ar->at(i) endif;
 				i := i + 1;
     		} 

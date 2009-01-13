@@ -48,8 +48,6 @@ query testVarScope(in par1 : Integer) : OclAny {
 }
 
 query testWhileHeader() : OclAny {	
-	-- test legacy while deprecation warn
-	while(true; true) {};
 
 	-- test condition only variant
 	while(true) {};	
