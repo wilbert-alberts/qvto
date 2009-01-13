@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.33 2009/01/12 11:41:21 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.34 2009/01/13 10:48:16 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -148,7 +148,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.33 2009/01/12 11:41:21 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.34 2009/01/13 10:48:16 aigdalov Exp $
  */
 	./
 $End
@@ -190,7 +190,6 @@ $Rules
 		./
 
 	unit -> qualifiedNameCS
-		
 	--=== // start rule (end) ===--
 
 	--=== // definitions in a compilation unit (start) ===--
@@ -213,7 +212,6 @@ $Rules
         unit_element -> _helper
         unit_element -> entry
         unit_element -> _mapping
-
 	--=== // definitions in a compilation unit (end) ===--
 
 	--=== // Transformation and library definitions (start) ===--
@@ -260,8 +258,6 @@ $Rules
 					$setResult(moduleCS);
 		  $EndJava
 		./
-
-
 	--=== // Transformation and library definitions (end) ===--
 
 
@@ -326,7 +322,6 @@ $Rules
 
 
 	--=== // Library header (start) ===--
-
 	library_h ::= library qualifiedNameCS library_signatureOpt module_usageListOpt
 		/.$BeginJava
 					PathNameCS name = (PathNameCS)$getSym(2);
@@ -368,7 +363,6 @@ $Rules
 	library_signatureOpt -> library_signature
 
 	library_signature -> simple_signature
-
 	--=== // Library header (end) ===--
 	
 	--=== // import of transformation and library (start) ===--
@@ -478,7 +472,6 @@ $Rules
 	--=== // import of transformation and library (end) ===--
 	
 	--=== // module definitions (start) ===--
-
 	module_elementList ::= module_elementList module_element
 		/.$BeginJava
 					EList list = (EList)$getSym(1);
@@ -495,7 +488,6 @@ $Rules
 	module_element -> _helper
 	module_element -> entry
 	module_element -> _mapping
-
 	--=== // module definitions (end) ===--
 	
 	--=== // model types compliance and metamodel declarations (start) ===--
@@ -598,18 +590,13 @@ $Rules
 		  $EndJava
 		./
 	compliance_kindOpt -> qvtStringLiteralExpCS
-    
 	--=== // model types compliance and metamodel declarations (end) ===--
 
 	--=== // like: "strict" and "effective" (start) ===--
-
 	uri -> qvtStringLiteralExpCS
-
 	--=== // like: "strict" and "effective" (end) ===--
 
-
 	--=== // Syntax for defining explicitly metamodel contents (start) ===--
-
 	classifier ->  classifierDefCS
 
 	classifierDefCS ::= intermediate class qvtIdentifierCS classifierExtensionOpt '{' classifierFeatureListOpt '}' semicolonOpt 
@@ -885,12 +872,10 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-
 	--=== // Syntax for defining explicitly metamodel contents (end) ===--
 		
-	_property -> modulePropertyCS
-	
-	modulePropertyCS ::= configuration property qvtIdentifierCS ':' typeCS ';' 
+	--=== // Properties in transformation (start) ===--
+	_property ::= configuration property qvtIdentifierCS ':' typeCS ';' 
 		/.$BeginJava
 					CSTNode result = createConfigPropertyCS(
 							getIToken($getToken(3)),
@@ -900,7 +885,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	modulePropertyCS ::= configuration property qvtIdentifierCS ':' typeCS qvtErrorToken
+	_property ::= configuration property qvtIdentifierCS ':' typeCS qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createConfigPropertyCS(
 							getIToken($getToken(3)),
@@ -910,7 +895,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	modulePropertyCS ::= property qvtIdentifierCS ':' typeCS '=' oclExpressionCS ';' 
+	_property ::= property qvtIdentifierCS ':' typeCS '=' oclExpressionCS ';' 
 		/.$BeginJava
 					CSTNode result = createLocalPropertyCS(
 							getIToken($getToken(2)),
@@ -921,7 +906,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	modulePropertyCS ::= property qvtIdentifierCS '=' oclExpressionCS ';' 
+	_property ::= property qvtIdentifierCS '=' oclExpressionCS ';' 
 		/.$BeginJava
 					CSTNode result = createLocalPropertyCS(
 							getIToken($getToken(2)),
@@ -932,7 +917,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	modulePropertyCS ::= intermediate property scoped_identifier : typeCS ';' 
+	_property ::= intermediate property scoped_identifier : typeCS ';' 
 		/.$BeginJava
 					CSTNode result = createContextualPropertyCS(
 							(ScopedNameCS)$getSym(3),
@@ -943,7 +928,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	modulePropertyCS ::= intermediate property scoped_identifier : typeCS '=' oclExpressionCS ';' 
+	_property ::= intermediate property scoped_identifier : typeCS '=' oclExpressionCS ';' 
 		/.$BeginJava
 					CSTNode result = createContextualPropertyCS(
 							(ScopedNameCS)$getSym(3),
@@ -954,9 +939,9 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
+	--=== // Properties in transformation (end) ===--
 
-	-- // syntax for helper operations (start)
-
+	--=== // Syntax for helper operations (start) ===--
 	_helper -> helper_decl
 	_helper -> helper_simple_def
 	_helper -> helper_compound_def
@@ -1071,12 +1056,9 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-
-	-- // syntax for helper operations (end)
-
+	--=== // Syntax for helper operations (end) ===--
 
 	--=== // Syntax for entries (start) ===--
-
 	entry -> entry_decl
 	entry -> entry_def
 
@@ -1137,11 +1119,9 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-
 	--=== // Syntax for entries (end) ===--
 
-	-- // syntax for mapping operations (start)
-
+	--=== // syntax for mapping operations (start) ===--
 	_mapping -> mapping_decl
 	_mapping -> mapping_def
 
@@ -1449,10 +1429,9 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
+	--=== // syntax for mapping operations (end) ===--
 
-
-	-- // syntax for mapping operations (end)
-
+	--=== // Expressions (start) ===--
 	typespecOpt ::= $empty
 		/.$NullAction./
 	typespecOpt -> typespec
@@ -1553,180 +1532,180 @@ $Rules
 		  $EndJava
 		./
 
-    -- Resolve family starts here
+	-- Resolve family starts here
 
-    resolveConditionOpt ::= $empty
-        /.$NullAction./
+	resolveConditionOpt ::= $empty
+	    /.$NullAction./
+	    
+	resolveConditionOpt ::= '|' oclExpressionCS
+	    /.$BeginJava
+	                $setResult((OCLExpressionCS)$getSym(2));
+	      $EndJava
+	    ./
+	
+	resolveConditionOpt ::= '|' qvtErrorToken
+	    /.$NullAction./
         
-    resolveConditionOpt ::= '|' oclExpressionCS
-        /.$BeginJava
-                    $setResult((OCLExpressionCS)$getSym(2));
-          $EndJava
-        ./
-
-    resolveConditionOpt ::= '|' qvtErrorToken
-        /.$NullAction./
-
-	IDENTIFIEROpt ::= $empty
-        /.$NullAction./
-
-	IDENTIFIEROpt ::= IDENTIFIER ':'
-        /.$BeginJava
-                    $setResult(getIToken($getToken(1)));
-          $EndJava
-        ./
-
-    resolveOpArgsExpCSOpt ::= $empty
-        /.$NullAction./
-        
-    resolveOpArgsExpCSOpt -> resolveOpArgsExpCS
-        
-    resolveOpArgsExpCS ::= IDENTIFIEROpt typeCS resolveConditionOpt
-        /.$BeginJava
-                    CSTNode result = createResolveOpArgsExpCS(
-                            getIToken($getToken(1)),      // target_type_variable?
-                            (TypeCS)$getSym(2),           // type?
-                            (OCLExpressionCS)$getSym(3)); // condition?
-                            setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
-                    $setResult(result);
-          $EndJava
-        ./
-    
-    resolveOp -> resolve
-    resolveOp -> invresolve
-    resolveOp -> resolveone
-    resolveOp -> invresolveone
-    
-    lateOpt ::= $empty
-        /.$NullAction./
-    lateOpt -> late
-    
-    resolveExpCS ::= lateOpt resolveOp '(' resolveOpArgsExpCSOpt ')'
-        /.$BeginJava
-                    CSTNode result = createResolveExpCS(
-                            getIToken($getToken(1)),
-                            getIToken($getToken(2)),
-                            (ResolveOpArgsExpCS)$getSym(4));
-                            setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
-                    $setResult(result);
-          $EndJava
-        ./
-        
-    resolveExpCS ::= lateOpt resolveOp '(' resolveOpArgsExpCSOpt qvtErrorToken
-        /.$BeginJava
-                    CSTNode result = createResolveExpCS(
-                            getIToken($getToken(1)),
-                            getIToken($getToken(2)),
-                            (ResolveOpArgsExpCS)$getSym(4));
-                            setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
-                    $setResult(result);
-          $EndJava
-        ./
-        
-    resolveExpCS ::= lateOpt resolveOp qvtErrorToken
-        /.$BeginJava
-                    CSTNode result = createResolveExpCS(
-                            getIToken($getToken(1)),
-                            getIToken($getToken(2)),
-                            null);
-                            setOffsets(result, getIToken($getToken(1)), getIToken($getToken(2)));
-                    $setResult(result);
-          $EndJava
-        ./
-        
-    resolveExpCS ::= late qvtErrorToken    
-        /.$BeginJava
-        			IToken lateToken = getIToken($getToken(1));
-                    CSTNode result = createResolveExpCS(
-                            lateToken,
-                            new Token(lateToken.getEndOffset(), lateToken.getEndOffset(), $sym_type.TK_resolve),
-                            null);
-                            setOffsets(result, getIToken($getToken(1)));
-                    $setResult(result);
-          $EndJava
-        ./
-
-    resolveInOp -> resolveIn
-    resolveInOp -> invresolveIn
-    resolveInOp -> resolveoneIn
-    resolveInOp -> invresolveoneIn
-    
-    resolveInExpCS ::= lateOpt resolveInOp '(' scoped_identifier ',' resolveOpArgsExpCS ')'
-        /.$BeginJava
-                    CSTNode result = createResolveInExpCS(
-                            getIToken($getToken(1)),
-                            getIToken($getToken(2)),
-                            (ScopedNameCS)$getSym(4),
-                            (ResolveOpArgsExpCS)$getSym(6));
-                            setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
-                    $setResult(result);
-          $EndJava
-        ./
-        
-    resolveInExpCS ::= lateOpt resolveInOp '(' scoped_identifier ')'
-        /.$BeginJava
-                    CSTNode result = createResolveInExpCS(
-                            getIToken($getToken(1)),
-                            getIToken($getToken(2)),
-                            (ScopedNameCS)$getSym(4),
-                            null);
-                            setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
-                    $setResult(result);
-          $EndJava
-        ./
-        
-        
-    resolveInExpCS ::= lateOpt resolveInOp '(' scoped_identifier ',' resolveOpArgsExpCSOpt qvtErrorToken
-        /.$BeginJava
-                    CSTNode result = createResolveInExpCS(
-                            getIToken($getToken(1)),
-                            getIToken($getToken(2)),
-                            (ScopedNameCS)$getSym(4),
-                            (ResolveOpArgsExpCS)$getSym(6));
-                            setOffsets(result, getIToken($getToken(1)), getIToken($getToken(6)));
-                    $setResult(result);
-          $EndJava
-        ./
-        
-    resolveInExpCS ::= lateOpt resolveInOp '(' scoped_identifier qvtErrorToken
-        /.$BeginJava
-                    CSTNode result = createResolveInExpCS(
-                            getIToken($getToken(1)),
-                            getIToken($getToken(2)),
-                            (ScopedNameCS)$getSym(4),
-                            null);
-                            setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
-                    $setResult(result);
-          $EndJava
-        ./
-        
-    resolveInExpCS ::= lateOpt resolveInOp '(' qvtErrorToken
-        /.$BeginJava
-                    CSTNode result = createResolveInExpCS(
-                            getIToken($getToken(1)),
-                            getIToken($getToken(2)),
-							createScopedNameCS(null, ""), //$NON-NLS-1$
-                            null);
-                            setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
-                    $setResult(result);
-          $EndJava
-        ./
-        
-    resolveInExpCS ::= lateOpt resolveInOp qvtErrorToken
-        /.$BeginJava
-                    CSTNode result = createResolveInExpCS(
-                            getIToken($getToken(1)),
-                            getIToken($getToken(2)),
-							createScopedNameCS(null, ""), //$NON-NLS-1$
-                            null);
-                            setOffsets(result, getIToken($getToken(1)), getIToken($getToken(2)));
-                    $setResult(result);
-          $EndJava
-        ./
-        
-    resolveResolveInExpCS -> resolveExpCS
-    resolveResolveInExpCS -> resolveInExpCS
-
+		IDENTIFIEROpt ::= $empty
+            /.$NullAction./
+	
+		IDENTIFIEROpt ::= IDENTIFIER ':'
+	    /.$BeginJava
+	                $setResult(getIToken($getToken(1)));
+	      $EndJava
+	    ./
+	
+	resolveOpArgsExpCSOpt ::= $empty
+	    /.$NullAction./
+            
+	resolveOpArgsExpCSOpt -> resolveOpArgsExpCS
+	    
+	resolveOpArgsExpCS ::= IDENTIFIEROpt typeCS resolveConditionOpt
+	    /.$BeginJava
+	                CSTNode result = createResolveOpArgsExpCS(
+	                        getIToken($getToken(1)),      // target_type_variable?
+	                        (TypeCS)$getSym(2),           // type?
+	                        (OCLExpressionCS)$getSym(3)); // condition?
+	                        setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
+                        $setResult(result);
+	      $EndJava
+	    ./
+	
+        resolveOp -> resolve
+	resolveOp -> invresolve
+	resolveOp -> resolveone
+	resolveOp -> invresolveone
+	
+	lateOpt ::= $empty
+	    /.$NullAction./
+	lateOpt -> late
+	
+        resolveExpCS ::= lateOpt resolveOp '(' resolveOpArgsExpCSOpt ')'
+	    /.$BeginJava
+	                CSTNode result = createResolveExpCS(
+                                getIToken($getToken(1)),
+	                        getIToken($getToken(2)),
+                                (ResolveOpArgsExpCS)$getSym(4));
+                                setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
+                        $setResult(result);
+              $EndJava
+            ./
+            
+        resolveExpCS ::= lateOpt resolveOp '(' resolveOpArgsExpCSOpt qvtErrorToken
+            /.$BeginJava
+	                CSTNode result = createResolveExpCS(
+                                getIToken($getToken(1)),
+	                        getIToken($getToken(2)),
+	                        (ResolveOpArgsExpCS)$getSym(4));
+	                        setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
+	                $setResult(result);
+	      $EndJava
+	    ./
+	    
+	resolveExpCS ::= lateOpt resolveOp qvtErrorToken
+	    /.$BeginJava
+	                CSTNode result = createResolveExpCS(
+	                        getIToken($getToken(1)),
+	                        getIToken($getToken(2)),
+	                        null);
+                                setOffsets(result, getIToken($getToken(1)), getIToken($getToken(2)));
+	                $setResult(result);
+	      $EndJava
+	    ./
+	    
+	resolveExpCS ::= late qvtErrorToken    
+	    /.$BeginJava
+	    			IToken lateToken = getIToken($getToken(1));
+	                CSTNode result = createResolveExpCS(
+	                        lateToken,
+	                        new Token(lateToken.getEndOffset(), lateToken.getEndOffset(), $sym_type.TK_resolve),
+	                        null);
+                                setOffsets(result, getIToken($getToken(1)));
+	                $setResult(result);
+	      $EndJava
+	    ./
+	
+	resolveInOp -> resolveIn
+	resolveInOp -> invresolveIn
+	resolveInOp -> resolveoneIn
+	resolveInOp -> invresolveoneIn
+	
+        resolveInExpCS ::= lateOpt resolveInOp '(' scoped_identifier ',' resolveOpArgsExpCS ')'
+	    /.$BeginJava
+	                CSTNode result = createResolveInExpCS(
+	                        getIToken($getToken(1)),
+	                        getIToken($getToken(2)),
+	                        (ScopedNameCS)$getSym(4),
+	                        (ResolveOpArgsExpCS)$getSym(6));
+	                        setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
+	                $setResult(result);
+              $EndJava
+            ./
+	    
+        resolveInExpCS ::= lateOpt resolveInOp '(' scoped_identifier ')'
+            /.$BeginJava
+	                CSTNode result = createResolveInExpCS(
+	                        getIToken($getToken(1)),
+	                        getIToken($getToken(2)),
+	                        (ScopedNameCS)$getSym(4),
+	                        null);
+	                        setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
+	                $setResult(result);
+	      $EndJava
+	    ./
+	    
+	    
+	resolveInExpCS ::= lateOpt resolveInOp '(' scoped_identifier ',' resolveOpArgsExpCSOpt qvtErrorToken
+	    /.$BeginJava
+	                CSTNode result = createResolveInExpCS(
+	                        getIToken($getToken(1)),
+	                        getIToken($getToken(2)),
+	                        (ScopedNameCS)$getSym(4),
+	                        (ResolveOpArgsExpCS)$getSym(6));
+	                        setOffsets(result, getIToken($getToken(1)), getIToken($getToken(6)));
+	                $setResult(result);
+	      $EndJava
+	    ./
+	    
+	resolveInExpCS ::= lateOpt resolveInOp '(' scoped_identifier qvtErrorToken
+	    /.$BeginJava
+	                CSTNode result = createResolveInExpCS(
+	                        getIToken($getToken(1)),
+	                        getIToken($getToken(2)),
+	                        (ScopedNameCS)$getSym(4),
+	                        null);
+	                        setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
+	                $setResult(result);
+	      $EndJava
+	    ./
+	    
+	resolveInExpCS ::= lateOpt resolveInOp '(' qvtErrorToken
+	    /.$BeginJava
+                        CSTNode result = createResolveInExpCS(
+                                getIToken($getToken(1)),
+	                        getIToken($getToken(2)),
+								createScopedNameCS(null, ""), //$NON-NLS-1$
+	                        null);
+                                setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
+	                $setResult(result);
+	      $EndJava
+            ./
+	    
+        resolveInExpCS ::= lateOpt resolveInOp qvtErrorToken
+	    /.$BeginJava
+	                CSTNode result = createResolveInExpCS(
+	                        getIToken($getToken(1)),
+	                        getIToken($getToken(2)),
+								createScopedNameCS(null, ""), //$NON-NLS-1$
+	                        null);
+	                        setOffsets(result, getIToken($getToken(1)), getIToken($getToken(2)));
+	                $setResult(result);
+	      $EndJava
+	    ./
+            
+        resolveResolveInExpCS -> resolveExpCS
+	resolveResolveInExpCS -> resolveInExpCS
+            
 	-- commented out since the spec is not clear about the return type of this expression       
 	-- callExpCS ::= '->' resolveResolveInExpCS
 	--	/.$BeginJava
@@ -1742,33 +1721,29 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-        
-    -- case with no source of resolveIn
+	        
+	-- case with no source of resolveIn
 	oclExpCS -> resolveResolveInExpCS
+    
+	-- Resolve family ends here
 
 	-- operation call and expression extension in QVT
 	featureCallExpCS -> featureMappingCallExpCS
 	oclExpCS -> mappingCallExpCS
-
+    
 	oclExpCS -> outExpCS 
-
-
-
-    -- Resolve family ends here
-		
+			
 	simpleNameCS ::= this
 		/.$NewCase./
 	simpleNameCS ::= result
 		/.$BeginJava
 					CSTNode result = createSimpleNameCS(
 							SimpleTypeEnum.IDENTIFIER_LITERAL,
-							getTokenText($getToken(1))
+       							getTokenText($getToken(1))
 						);
 					setOffsets(result, getIToken($getToken(1)));
 					$setResult(result);
-		  $EndJava
+       		  $EndJava
 		./
-		
+	--=== // Expressions (end) ===--
 $End
-
-	
