@@ -11,29 +11,18 @@
  * 
  * 
  *
- * $Id: MappingMethodCSImpl.java,v 1.2 2008/10/23 20:09:10 aigdalov Exp $
+ * $Id: MappingMethodCSImpl.java,v 1.3 2009/01/13 20:23:48 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
-import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import org.eclipse.emf.ecore.util.EDataTypeEList;
-
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS;
-
 import org.eclipse.ocl.cst.impl.CSTNodeImpl;
 
 /**
@@ -206,7 +195,6 @@ public abstract class MappingMethodCSImpl extends CSTNodeImpl implements Mapping
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {

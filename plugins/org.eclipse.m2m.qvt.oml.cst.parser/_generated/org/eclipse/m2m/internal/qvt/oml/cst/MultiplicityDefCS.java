@@ -11,13 +11,12 @@
  * 
  * 
  *
- * $Id: MultiplicityDefCS.java,v 1.1 2008/12/25 09:13:38 sboyko Exp $
+ * $Id: MultiplicityDefCS.java,v 1.2 2009/01/13 20:23:41 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.PrimitiveLiteralExpCS;
-import org.eclipse.ocl.cst.StringLiteralExpCS;
 
 /**
  * <!-- begin-user-doc -->

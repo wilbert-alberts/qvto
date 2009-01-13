@@ -11,15 +11,13 @@
  * 
  * 
  *
- * $Id: ErrorCallExpCSImpl.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: ErrorCallExpCSImpl.java,v 1.2 2009/01/13 20:23:50 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.temp.impl;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.TempPackage;
-
 import org.eclipse.ocl.cst.impl.CallExpCSImpl;
 
 /**

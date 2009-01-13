@@ -11,17 +11,13 @@
  * 
  * 
  *
- * $Id: NewRuleCallExpCS.java,v 1.1 2008/10/14 11:46:37 radvorak Exp $
+ * $Id: NewRuleCallExpCS.java,v 1.2 2009/01/13 20:23:41 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.ocl.cst.CSTNode;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.cst.PathNameCS;
-import org.eclipse.ocl.cst.OperationCallExpCS;
-import org.eclipse.ocl.cst.SimpleNameCS;
 
 /**
  * <!-- begin-user-doc -->

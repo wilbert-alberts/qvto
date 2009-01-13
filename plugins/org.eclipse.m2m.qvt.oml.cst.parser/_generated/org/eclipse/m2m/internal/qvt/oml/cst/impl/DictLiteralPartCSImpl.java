@@ -11,24 +11,19 @@
  * 
  * 
  *
- * $Id: DictLiteralPartCSImpl.java,v 1.1 2009/01/09 15:59:22 radvorak Exp $
+ * $Id: DictLiteralPartCSImpl.java,v 1.2 2009/01/13 20:23:44 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralPartCS;
-
 import org.eclipse.ocl.cst.LiteralExpCS;
 import org.eclipse.ocl.cst.OCLExpressionCS;
-
 import org.eclipse.ocl.cst.impl.CSTNodeImpl;
 
 /**

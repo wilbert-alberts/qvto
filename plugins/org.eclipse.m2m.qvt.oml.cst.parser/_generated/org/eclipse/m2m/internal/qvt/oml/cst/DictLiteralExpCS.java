@@ -11,12 +11,11 @@
  * 
  * 
  *
- * $Id: DictLiteralExpCS.java,v 1.1 2009/01/09 15:59:22 radvorak Exp $
+ * $Id: DictLiteralExpCS.java,v 1.2 2009/01/13 20:23:41 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.ocl.cst.LiteralExpCS;
 
 /**

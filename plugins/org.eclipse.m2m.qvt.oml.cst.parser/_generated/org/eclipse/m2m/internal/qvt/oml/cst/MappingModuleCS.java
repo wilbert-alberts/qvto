@@ -11,12 +11,11 @@
  * 
  * 
  *
- * $Id: MappingModuleCS.java,v 1.2 2008/11/24 10:21:21 sboyko Exp $
+ * $Id: MappingModuleCS.java,v 1.3 2009/01/13 20:23:39 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.ocl.cst.CSTNode;
 
 /**

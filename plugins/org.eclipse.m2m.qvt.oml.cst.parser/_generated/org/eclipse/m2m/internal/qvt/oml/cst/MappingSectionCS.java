@@ -11,12 +11,11 @@
  * 
  * 
  *
- * $Id: MappingSectionCS.java,v 1.2 2008/10/23 20:09:04 aigdalov Exp $
+ * $Id: MappingSectionCS.java,v 1.3 2009/01/13 20:23:41 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.OCLExpressionCS;
 

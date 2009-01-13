@@ -11,12 +11,11 @@
  * 
  * 
  *
- * $Id: OutExpCS.java,v 1.2 2008/11/13 15:22:02 aigdalov Exp $
+ * $Id: OutExpCS.java,v 1.3 2009/01/13 20:23:40 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
 

@@ -11,24 +11,19 @@
  * 
  * 
  *
- * $Id: WhileExpCSImpl.java,v 1.1 2008/04/06 10:18:39 sboyko Exp $
+ * $Id: WhileExpCSImpl.java,v 1.2 2009/01/13 20:23:49 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS;
-
 import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.cst.VariableCS;
-
 import org.eclipse.ocl.cst.impl.OCLExpressionCSImpl;
 
 /**
@@ -40,7 +35,6 @@ import org.eclipse.ocl.cst.impl.OCLExpressionCSImpl;
  * <ul>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.WhileExpCSImpl#getBody <em>Body</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.WhileExpCSImpl#getCondition <em>Condition</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.WhileExpCSImpl#getResult <em>Result</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.WhileExpCSImpl#getResultVar <em>Result Var</em>}</li>
  * </ul>
  * </p>
@@ -74,16 +68,6 @@ public class WhileExpCSImpl extends OCLExpressionCSImpl implements WhileExpCS {
 	 * @ordered
 	 */
 	protected OCLExpressionCS condition;
-
-	/**
-	 * The cached value of the '{@link #getResult() <em>Result</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getResult()
-	 * @generated
-	 * @ordered
-	 */
-	protected OCLExpressionCS result;
 
 	/**
 	 * The cached value of the '{@link #getResultVar() <em>Result Var</em>}' containment reference.
@@ -205,49 +189,6 @@ public class WhileExpCSImpl extends OCLExpressionCSImpl implements WhileExpCS {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public OCLExpressionCS getResult() {
-		return result;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetResult(OCLExpressionCS newResult, NotificationChain msgs) {
-		OCLExpressionCS oldResult = result;
-		result = newResult;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.WHILE_EXP_CS__RESULT, oldResult, newResult);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setResult(OCLExpressionCS newResult) {
-		if (newResult != result) {
-			NotificationChain msgs = null;
-			if (result != null)
-				msgs = ((InternalEObject)result).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.WHILE_EXP_CS__RESULT, null, msgs);
-			if (newResult != null)
-				msgs = ((InternalEObject)newResult).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.WHILE_EXP_CS__RESULT, null, msgs);
-			msgs = basicSetResult(newResult, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.WHILE_EXP_CS__RESULT, newResult, newResult));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public VariableCS getResultVar() {
 		return resultVar;
 	}
@@ -298,8 +239,6 @@ public class WhileExpCSImpl extends OCLExpressionCSImpl implements WhileExpCS {
 				return basicSetBody(null, msgs);
 			case CSTPackage.WHILE_EXP_CS__CONDITION:
 				return basicSetCondition(null, msgs);
-			case CSTPackage.WHILE_EXP_CS__RESULT:
-				return basicSetResult(null, msgs);
 			case CSTPackage.WHILE_EXP_CS__RESULT_VAR:
 				return basicSetResultVar(null, msgs);
 		}
@@ -318,8 +257,6 @@ public class WhileExpCSImpl extends OCLExpressionCSImpl implements WhileExpCS {
 				return getBody();
 			case CSTPackage.WHILE_EXP_CS__CONDITION:
 				return getCondition();
-			case CSTPackage.WHILE_EXP_CS__RESULT:
-				return getResult();
 			case CSTPackage.WHILE_EXP_CS__RESULT_VAR:
 				return getResultVar();
 		}
@@ -339,9 +276,6 @@ public class WhileExpCSImpl extends OCLExpressionCSImpl implements WhileExpCS {
 				return;
 			case CSTPackage.WHILE_EXP_CS__CONDITION:
 				setCondition((OCLExpressionCS)newValue);
-				return;
-			case CSTPackage.WHILE_EXP_CS__RESULT:
-				setResult((OCLExpressionCS)newValue);
 				return;
 			case CSTPackage.WHILE_EXP_CS__RESULT_VAR:
 				setResultVar((VariableCS)newValue);
@@ -364,9 +298,6 @@ public class WhileExpCSImpl extends OCLExpressionCSImpl implements WhileExpCS {
 			case CSTPackage.WHILE_EXP_CS__CONDITION:
 				setCondition((OCLExpressionCS)null);
 				return;
-			case CSTPackage.WHILE_EXP_CS__RESULT:
-				setResult((OCLExpressionCS)null);
-				return;
 			case CSTPackage.WHILE_EXP_CS__RESULT_VAR:
 				setResultVar((VariableCS)null);
 				return;
@@ -386,8 +317,6 @@ public class WhileExpCSImpl extends OCLExpressionCSImpl implements WhileExpCS {
 				return body != null;
 			case CSTPackage.WHILE_EXP_CS__CONDITION:
 				return condition != null;
-			case CSTPackage.WHILE_EXP_CS__RESULT:
-				return result != null;
 			case CSTPackage.WHILE_EXP_CS__RESULT_VAR:
 				return resultVar != null;
 		}

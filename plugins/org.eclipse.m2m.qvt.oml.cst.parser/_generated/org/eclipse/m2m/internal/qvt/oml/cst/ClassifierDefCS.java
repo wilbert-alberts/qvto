@@ -11,15 +11,12 @@
  * 
  * 
  *
- * $Id: ClassifierDefCS.java,v 1.3 2008/12/25 09:13:38 sboyko Exp $
+ * $Id: ClassifierDefCS.java,v 1.4 2009/01/13 20:23:40 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.emf.common.util.EList;
-
-import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 import org.eclipse.ocl.cst.CSTNode;
-import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.TypeCS;
 

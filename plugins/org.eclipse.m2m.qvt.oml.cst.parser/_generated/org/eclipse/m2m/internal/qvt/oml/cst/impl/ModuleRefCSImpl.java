@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ModuleRefCSImpl.java,v 1.1 2008/04/06 10:18:39 sboyko Exp $
+ * $Id: ModuleRefCSImpl.java,v 1.2 2009/01/13 20:23:43 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -19,23 +19,16 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
-
 import org.eclipse.ocl.cst.PathNameCS;
-
 import org.eclipse.ocl.cst.impl.CSTNodeImpl;
 
 /**

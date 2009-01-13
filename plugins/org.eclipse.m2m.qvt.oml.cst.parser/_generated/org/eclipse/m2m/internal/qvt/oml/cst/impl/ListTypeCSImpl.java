@@ -11,23 +11,18 @@
  * 
  * 
  *
- * $Id: ListTypeCSImpl.java,v 1.1 2008/12/29 16:24:29 aigdalov Exp $
+ * $Id: ListTypeCSImpl.java,v 1.2 2009/01/13 20:23:44 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.ListTypeCS;
-
 import org.eclipse.ocl.cst.TypeCS;
-
 import org.eclipse.ocl.cst.impl.TypeCSImpl;
 
 /**

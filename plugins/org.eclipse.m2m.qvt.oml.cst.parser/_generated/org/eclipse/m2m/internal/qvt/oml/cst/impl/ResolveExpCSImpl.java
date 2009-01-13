@@ -11,24 +11,19 @@
  * 
  * 
  *
- * $Id: ResolveExpCSImpl.java,v 1.1 2008/04/06 10:18:39 sboyko Exp $
+ * $Id: ResolveExpCSImpl.java,v 1.2 2009/01/13 20:23:47 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveExpCS;
-
 import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.cst.VariableCS;
-
 import org.eclipse.ocl.cst.impl.CallExpCSImpl;
 
 /**

@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.12 2009/01/13 16:42:07 aigdalov Exp $ 
+-- * $Id: miscellaneous.g,v 1.13 2009/01/13 20:23:51 radvorak Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -280,7 +280,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.12 2009/01/13 16:42:07 aigdalov Exp $
+ * $Id: miscellaneous.g,v 1.13 2009/01/13 20:23:51 radvorak Exp $
  */
 	./
 $End
@@ -1070,20 +1070,6 @@ $Rules
 							(StringLiteralExpCS)$getSym(6)
 						);
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
-					$setResult(result);
-		  $EndJava
-		./
-
-
-	oclExpCS -> legacyWhileExpCS
-	legacyWhileExpCS ::= while '(' oclExpressionCS ';' oclExpressionCS ')' whileBodyCS
-		/.$BeginJava
-					CSTNode result = createLegacyWhileExpCS(
-							(OCLExpressionCS)$getSym(3),
-							(OCLExpressionCS)$getSym(5),
-							(BlockExpCS)$getSym(7)
-						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(7));
 					$setResult(result);
 		  $EndJava
 		./

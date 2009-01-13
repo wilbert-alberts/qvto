@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: WhileExpCS.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: WhileExpCS.java,v 1.2 2009/01/13 20:23:40 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -28,7 +28,6 @@ import org.eclipse.ocl.cst.VariableCS;
  * <ul>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS#getBody <em>Body</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS#getCondition <em>Condition</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS#getResult <em>Result</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS#getResultVar <em>Result Var</em>}</li>
  * </ul>
  * </p>
@@ -96,32 +95,6 @@ public interface WhileExpCS extends OCLExpressionCS {
 	 * @generated
 	 */
 	void setCondition(OCLExpressionCS value);
-
-	/**
-	 * Returns the value of the '<em><b>Result</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Result</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Result</em>' containment reference.
-	 * @see #setResult(OCLExpressionCS)
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getWhileExpCS_Result()
-	 * @model containment="true"
-	 * @generated
-	 */
-	OCLExpressionCS getResult();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS#getResult <em>Result</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Result</em>' containment reference.
-	 * @see #getResult()
-	 * @generated
-	 */
-	void setResult(OCLExpressionCS value);
 
 	/**
 	 * Returns the value of the '<em><b>Result Var</b></em>' containment reference.

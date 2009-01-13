@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactoryImpl.java,v 1.11 2009/01/09 15:59:22 radvorak Exp $
+ * $Id: CSTFactoryImpl.java,v 1.12 2009/01/13 20:23:43 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -19,12 +19,70 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
-import org.eclipse.m2m.internal.qvt.oml.cst.*;
+import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
+import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
+import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralPartCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.DictionaryTypeCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
+import org.eclipse.m2m.internal.qvt.oml.cst.ExpressionStatementCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeLoopExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum;
+import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ListTypeCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.LocalPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.LogExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingCallExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingEndCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionKindCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingInitCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ModuleImportCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindEnum;
+import org.eclipse.m2m.internal.qvt.oml.cst.ModuleRefCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ModuleUsageCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MultiplicityDefCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.RenameCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ResolveExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ResolveInExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ReturnExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.SimpleSignatureCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.SwitchExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.TransformationRefineCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS;
 
 /**
  * <!-- begin-user-doc -->

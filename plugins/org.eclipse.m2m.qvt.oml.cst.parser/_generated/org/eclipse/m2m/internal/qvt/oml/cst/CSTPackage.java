@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackage.java,v 1.17 2009/01/09 15:59:22 radvorak Exp $
+ * $Id: CSTPackage.java,v 1.18 2009/01/13 20:23:39 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -3188,22 +3188,13 @@ public interface CSTPackage extends EPackage {
 	int WHILE_EXP_CS__CONDITION = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Result</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WHILE_EXP_CS__RESULT = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 2;
-
-	/**
 	 * The feature id for the '<em><b>Result Var</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WHILE_EXP_CS__RESULT_VAR = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 3;
+	int WHILE_EXP_CS__RESULT_VAR = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>While Exp CS</em>' class.
@@ -3212,7 +3203,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WHILE_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 4;
+	int WHILE_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.SwitchExpCSImpl <em>Switch Exp CS</em>}' class.
@@ -6972,17 +6963,6 @@ public interface CSTPackage extends EPackage {
 	EReference getWhileExpCS_Condition();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS#getResult <em>Result</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Result</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS#getResult()
-	 * @see #getWhileExpCS()
-	 * @generated
-	 */
-	EReference getWhileExpCS_Result();
-
-	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS#getResultVar <em>Result Var</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8855,14 +8835,6 @@ public interface CSTPackage extends EPackage {
 		 * @generated
 		 */
 		EReference WHILE_EXP_CS__CONDITION = eINSTANCE.getWhileExpCS_Condition();
-
-		/**
-		 * The meta object literal for the '<em><b>Result</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference WHILE_EXP_CS__RESULT = eINSTANCE.getWhileExpCS_Result();
 
 		/**
 		 * The meta object literal for the '<em><b>Result Var</b></em>' containment reference feature.

@@ -11,12 +11,11 @@
  * 
  * 
  *
- * $Id: CompleteSignatureCS.java,v 1.1 2008/10/23 20:09:03 aigdalov Exp $
+ * $Id: CompleteSignatureCS.java,v 1.2 2009/01/13 20:23:39 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.ocl.cst.CSTNode;
 
 /**

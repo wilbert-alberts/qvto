@@ -598,14 +598,6 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		}
 		return result;
 	}
-
-	protected CSTNode createLegacyWhileExpCS(OCLExpressionCS cond, OCLExpressionCS res, BlockExpCS body) {
-		WhileExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createWhileExpCS();
-		result.setCondition(cond);
-		result.setResult(res);
-		result.setBody(body);
-		return result;
-	}
 	
 	protected CSTNode createWhileExpCS(VariableCS resultVar, OCLExpressionCS cond, BlockExpCS body) {
 		WhileExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createWhileExpCS();

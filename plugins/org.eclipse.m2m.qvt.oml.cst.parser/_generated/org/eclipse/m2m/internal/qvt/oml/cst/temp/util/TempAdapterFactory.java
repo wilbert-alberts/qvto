@@ -11,24 +11,18 @@
  * 
  * 
  *
- * $Id: TempAdapterFactory.java,v 1.4 2008/11/20 17:54:26 aigdalov Exp $
+ * $Id: TempAdapterFactory.java,v 1.5 2009/01/13 20:23:50 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.temp.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
-
-import org.eclipse.m2m.internal.qvt.oml.cst.ElementWithBody;
-import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.StatementCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS;
-
-import org.eclipse.m2m.internal.qvt.oml.cst.temp.*;
-
+import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCallExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.temp.ResolveOpArgsExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.temp.TempPackage;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CallExpCS;
 import org.eclipse.ocl.cst.OCLExpressionCS;

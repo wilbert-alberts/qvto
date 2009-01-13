@@ -11,12 +11,11 @@
  * 
  * 
  *
- * $Id: ClassifierPropertyCS.java,v 1.3 2008/12/25 20:58:34 sboyko Exp $
+ * $Id: ClassifierPropertyCS.java,v 1.4 2009/01/13 20:23:41 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.ocl.cst.SimpleNameCS;
 
 /**
