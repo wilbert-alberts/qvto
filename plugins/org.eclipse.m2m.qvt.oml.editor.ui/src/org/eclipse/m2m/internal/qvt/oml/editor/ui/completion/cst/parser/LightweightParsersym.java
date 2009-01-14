@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.36 2009/01/13 20:22:20 radvorak Exp $
+* $Id: LightweightParsersym.java,v 1.37 2009/01/14 13:04:53 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.36 2009/01/13 20:22:20 radvorak Exp $
+* $Id: LightweightParsersym.java,v 1.37 2009/01/14 13:04:53 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.36 2009/01/13 20:22:20 radvorak Exp $
+* $Id: LightweightParsersym.java,v 1.37 2009/01/14 13:04:53 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.36 2009/01/13 20:22:20 radvorak Exp $
+* $Id: LightweightParsersym.java,v 1.37 2009/01/14 13:04:53 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -80,7 +80,7 @@ public interface LightweightParsersym {
       TK_DIVIDE = 28,
       TK_GREATER = 21,
       TK_LESS = 22,
-      TK_EQUAL = 5,
+      TK_EQUAL = 4,
       TK_GREATER_EQUAL = 23,
       TK_LESS_EQUAL = 24,
       TK_NOT_EQUAL = 25,
@@ -105,47 +105,48 @@ public interface LightweightParsersym {
       TK_QUOTE_STRING_LITERAL = 122,
       TK_ADD_ASSIGN = 123,
       TK_RESET_ASSIGN = 95,
-      TK_AT_SIGN = 148,
+      TK_AT_SIGN = 149,
       TK_EXCLAMATION_MARK = 110,
       TK_NOT_EQUAL_EXEQ = 105,
       TK_INTEGER_RANGE_START = 124,
-      TK_break = 171,
-      TK_class = 149,
-      TK_composes = 150,
-      TK_constructor = 172,
-      TK_continue = 173,
-      TK_datatype = 174,
-      TK_default = 175,
-      TK_derived = 151,
-      TK_do = 176,
-      TK_elif = 177,
-      TK_enum = 178,
-      TK_except = 179,
-      TK_exception = 180,
-      TK_from = 181,
-      TK_literal = 182,
-      TK_ordered = 152,
-      TK_primitive = 183,
-      TK_raise = 184,
-      TK_readonly = 153,
-      TK_references = 154,
-      TK_tag = 185,
-      TK_try = 186,
-      TK_typedef = 187,
-      TK_unlimited = 188,
-      TK_invalid = 189,
-      TK_STEREOTYPE_QUALIFIER_OPEN = 137,
-      TK_STEREOTYPE_QUALIFIER_CLOSE = 155,
-      TK_MULTIPLICITY_RANGE = 156,
-      TK_TILDE_SIGN = 157,
+      TK_break = 172,
+      TK_class = 150,
+      TK_composes = 151,
+      TK_constructor = 173,
+      TK_continue = 174,
+      TK_datatype = 175,
+      TK_default = 176,
+      TK_derived = 152,
+      TK_do = 177,
+      TK_elif = 178,
+      TK_enum = 179,
+      TK_except = 180,
+      TK_exception = 181,
+      TK_from = 182,
+      TK_literal = 183,
+      TK_ordered = 153,
+      TK_primitive = 184,
+      TK_raise = 185,
+      TK_readonly = 154,
+      TK_references = 155,
+      TK_tag = 186,
+      TK_try = 187,
+      TK_typedef = 188,
+      TK_unlimited = 189,
+      TK_invalid = 190,
+      TK_COLONCOLONEQUAL = 137,
+      TK_STEREOTYPE_QUALIFIER_OPEN = 138,
+      TK_STEREOTYPE_QUALIFIER_CLOSE = 156,
+      TK_MULTIPLICITY_RANGE = 157,
+      TK_TILDE_SIGN = 158,
       TK_self = 45,
-      TK_inv = 190,
-      TK_pre = 191,
-      TK_post = 192,
-      TK_endpackage = 193,
-      TK_def = 194,
+      TK_inv = 191,
+      TK_pre = 192,
+      TK_post = 193,
+      TK_endpackage = 194,
+      TK_def = 195,
       TK_if = 72,
-      TK_then = 138,
+      TK_then = 139,
       TK_else = 125,
       TK_endif = 126,
       TK_and = 46,
@@ -203,18 +204,18 @@ public interface LightweightParsersym {
       TK_var = 97,
       TK_log = 96,
       TK_assert = 98,
-      TK_with = 158,
+      TK_with = 159,
       TK_switch = 69,
-      TK_case = 139,
-      TK_xselect = 159,
-      TK_xcollect = 160,
-      TK_selectOne = 161,
-      TK_collectOne = 162,
-      TK_collectselect = 163,
-      TK_collectselectOne = 164,
+      TK_case = 140,
+      TK_xselect = 160,
+      TK_xcollect = 161,
+      TK_selectOne = 162,
+      TK_collectOne = 163,
+      TK_collectselect = 164,
+      TK_collectselectOne = 165,
       TK_return = 99,
-      TK_forEach = 165,
-      TK_forOne = 166,
+      TK_forEach = 166,
+      TK_forOne = 167,
       TK_compute = 75,
       TK_new = 76,
       TK_List = 111,
@@ -222,9 +223,9 @@ public interface LightweightParsersym {
       TK_out = 129,
       TK_object = 77,
       TK_transformation = 130,
-      TK_import = 140,
+      TK_import = 141,
       TK_library = 113,
-      TK_metamodel = 141,
+      TK_metamodel = 142,
       TK_mapping = 131,
       TK_query = 132,
       TK_helper = 133,
@@ -232,8 +233,8 @@ public interface LightweightParsersym {
       TK_configuration = 114,
       TK_intermediate = 115,
       TK_property = 107,
-      TK_opposites = 167,
-      TK_population = 142,
+      TK_opposites = 168,
+      TK_population = 143,
       TK_map = 67,
       TK_xmap = 68,
       TK_late = 70,
@@ -245,10 +246,10 @@ public interface LightweightParsersym {
       TK_invresolveone = 84,
       TK_invresolveIn = 85,
       TK_invresolveoneIn = 86,
-      TK_modeltype = 143,
-      TK_uses = 168,
-      TK_where = 169,
-      TK_refines = 170,
+      TK_modeltype = 144,
+      TK_uses = 169,
+      TK_where = 170,
+      TK_refines = 171,
       TK_access = 103,
       TK_extends = 100,
       TK_blackbox = 135,
@@ -257,12 +258,12 @@ public interface LightweightParsersym {
       TK_result = 49,
       TK_main = 104,
       TK_this = 54,
-      TK_rename = 144,
-      TK_inherits = 145,
-      TK_merges = 146,
-      TK_disjuncts = 147,
+      TK_rename = 145,
+      TK_inherits = 146,
+      TK_merges = 147,
+      TK_disjuncts = 148,
       TK_IDENTIFIER = 2,
-      TK_ERROR_TOKEN = 4,
+      TK_ERROR_TOKEN = 5,
       TK_EOF_TOKEN = 117;
 
       public final static String orderedTerminalSymbols[] = {
@@ -270,8 +271,8 @@ public interface LightweightParsersym {
                  "LPAREN",
                  "IDENTIFIER",
                  "RPAREN",
-                 "ERROR_TOKEN",
                  "EQUAL",
+                 "ERROR_TOKEN",
                  "Set",
                  "Bag",
                  "Sequence",
@@ -403,6 +404,7 @@ public interface LightweightParsersym {
                  "inout",
                  "blackbox",
                  "abstract",
+                 "COLONCOLONEQUAL",
                  "STEREOTYPE_QUALIFIER_OPEN",
                  "then",
                  "case",
