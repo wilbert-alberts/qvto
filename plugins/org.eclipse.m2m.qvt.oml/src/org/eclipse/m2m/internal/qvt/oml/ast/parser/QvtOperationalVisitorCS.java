@@ -2943,6 +2943,7 @@ public class QvtOperationalVisitorCS
 		result.setEndPosition(varInitCS.getEndOffset());		
 		
 		result.setName(varName);
+		result.setWithResult(varInitCS.isWithResult());
 		
 		org.eclipse.ocl.ecore.Variable referredVar = EcoreFactory.eINSTANCE.createVariable();
 		result.setReferredVariable(referredVar);
