@@ -78,6 +78,7 @@ public class TransformTests {
     
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {
+        		new FileToFileData("varInitExpWithResult_260985"), //$NON-NLS-1$
         		new FileToFileData("stdlibList"), //$NON-NLS-1$
         		new FileToFileData("stdlibDict"), //$NON-NLS-1$        		        		
                 new FileToFileData("libraryHeaderWithSignature_257575"), //$NON-NLS-1$                
