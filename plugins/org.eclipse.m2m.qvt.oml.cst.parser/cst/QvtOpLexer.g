@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLexer.g,v 1.3 2008/12/25 09:13:37 sboyko Exp $
+-- * $Id: QvtOpLexer.g,v 1.4 2009/01/14 13:04:41 aigdalov Exp $
 -- */
 --
 -- The QVT Lexer
@@ -84,7 +84,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLexer.g,v 1.3 2008/12/25 09:13:37 sboyko Exp $
+ * $Id: QvtOpLexer.g,v 1.4 2009/01/14 13:04:41 aigdalov Exp $
  */
 	./
 $End
@@ -101,6 +101,7 @@ $Export
 	STEREOTYPE_QUALIFIER_CLOSE
 	MULTIPLICITY_RANGE
 	TILDE_SIGN
+	COLONCOLONEQUAL
 	
 $End
 
@@ -163,6 +164,12 @@ $Rules
 	Token ::= '~'
 		/.$BeginAction
 					makeToken($_TILDE_SIGN);
+		  $EndAction
+		./
+
+	Token ::= ':' ':' '='
+		/.$BeginAction
+					makeToken($_COLONCOLONEQUAL);
 		  $EndAction
 		./
 

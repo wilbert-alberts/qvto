@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackage.java,v 1.18 2009/01/13 20:23:39 radvorak Exp $
+ * $Id: CSTPackage.java,v 1.19 2009/01/14 13:04:40 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -103,33 +103,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int MAPPING_MODULE_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_MODULE_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_MODULE_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_MODULE_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
 
 	/**
 	 * The feature id for the '<em><b>Header CS</b></em>' containment reference.
@@ -232,33 +205,6 @@ public interface CSTPackage extends EPackage {
 	int LIBRARY_CS__END_OFFSET = MAPPING_MODULE_CS__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIBRARY_CS__START_TOKEN = MAPPING_MODULE_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIBRARY_CS__END_TOKEN = MAPPING_MODULE_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIBRARY_CS__AST = MAPPING_MODULE_CS__AST;
-
-	/**
 	 * The feature id for the '<em><b>Header CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -359,33 +305,6 @@ public interface CSTPackage extends EPackage {
 	int IMPORT_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPORT_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPORT_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPORT_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
-
-	/**
 	 * The feature id for the '<em><b>Path Name CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -430,33 +349,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int MODULE_IMPORT_CS__END_OFFSET = IMPORT_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODULE_IMPORT_CS__START_TOKEN = IMPORT_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODULE_IMPORT_CS__END_TOKEN = IMPORT_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODULE_IMPORT_CS__AST = IMPORT_CS__AST;
 
 	/**
 	 * The feature id for the '<em><b>Path Name CS</b></em>' containment reference.
@@ -505,33 +397,6 @@ public interface CSTPackage extends EPackage {
 	int LIBRARY_IMPORT_CS__END_OFFSET = IMPORT_CS__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIBRARY_IMPORT_CS__START_TOKEN = IMPORT_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIBRARY_IMPORT_CS__END_TOKEN = IMPORT_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIBRARY_IMPORT_CS__AST = IMPORT_CS__AST;
-
-	/**
 	 * The feature id for the '<em><b>Path Name CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -576,33 +441,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int RENAME_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RENAME_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RENAME_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RENAME_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
 
 	/**
 	 * The feature id for the '<em><b>Type CS</b></em>' containment reference.
@@ -669,33 +507,6 @@ public interface CSTPackage extends EPackage {
 	int MODULE_PROPERTY_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODULE_PROPERTY_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODULE_PROPERTY_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODULE_PROPERTY_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
-
-	/**
 	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -740,33 +551,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONFIG_PROPERTY_CS__END_OFFSET = MODULE_PROPERTY_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONFIG_PROPERTY_CS__START_TOKEN = MODULE_PROPERTY_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONFIG_PROPERTY_CS__END_TOKEN = MODULE_PROPERTY_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONFIG_PROPERTY_CS__AST = MODULE_PROPERTY_CS__AST;
 
 	/**
 	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
@@ -822,33 +606,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int LOCAL_PROPERTY_CS__END_OFFSET = MODULE_PROPERTY_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOCAL_PROPERTY_CS__START_TOKEN = MODULE_PROPERTY_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOCAL_PROPERTY_CS__END_TOKEN = MODULE_PROPERTY_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOCAL_PROPERTY_CS__AST = MODULE_PROPERTY_CS__AST;
 
 	/**
 	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
@@ -913,33 +670,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONTEXTUAL_PROPERTY_CS__END_OFFSET = MODULE_PROPERTY_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTEXTUAL_PROPERTY_CS__START_TOKEN = MODULE_PROPERTY_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTEXTUAL_PROPERTY_CS__END_TOKEN = MODULE_PROPERTY_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTEXTUAL_PROPERTY_CS__AST = MODULE_PROPERTY_CS__AST;
 
 	/**
 	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
@@ -1015,33 +745,6 @@ public interface CSTPackage extends EPackage {
 	int CLASSIFIER_DEF_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_DEF_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_DEF_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_DEF_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
-
-	/**
 	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1104,33 +807,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int CLASSIFIER_PROPERTY_CS__END_OFFSET = LOCAL_PROPERTY_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_PROPERTY_CS__START_TOKEN = LOCAL_PROPERTY_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_PROPERTY_CS__END_TOKEN = LOCAL_PROPERTY_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_PROPERTY_CS__AST = LOCAL_PROPERTY_CS__AST;
 
 	/**
 	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
@@ -1242,33 +918,6 @@ public interface CSTPackage extends EPackage {
 	int OPPOSITE_PROPERTY_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OPPOSITE_PROPERTY_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OPPOSITE_PROPERTY_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OPPOSITE_PROPERTY_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
-
-	/**
 	 * The feature id for the '<em><b>Is Navigable</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1333,33 +982,6 @@ public interface CSTPackage extends EPackage {
 	int MULTIPLICITY_DEF_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MULTIPLICITY_DEF_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MULTIPLICITY_DEF_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MULTIPLICITY_DEF_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
-
-	/**
 	 * The feature id for the '<em><b>Lower Bound</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1413,33 +1035,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int MAPPING_DECLARATION_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_DECLARATION_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_DECLARATION_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_DECLARATION_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
 
 	/**
 	 * The feature id for the '<em><b>Qualifiers</b></em>' attribute list.
@@ -1560,33 +1155,6 @@ public interface CSTPackage extends EPackage {
 	int PARAMETER_DECLARATION_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETER_DECLARATION_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETER_DECLARATION_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETER_DECLARATION_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
-
-	/**
 	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1651,33 +1219,6 @@ public interface CSTPackage extends EPackage {
 	int SIMPLE_SIGNATURE_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SIMPLE_SIGNATURE_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SIMPLE_SIGNATURE_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SIMPLE_SIGNATURE_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
-
-	/**
 	 * The feature id for the '<em><b>Params</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1722,33 +1263,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMPLETE_SIGNATURE_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPLETE_SIGNATURE_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPLETE_SIGNATURE_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPLETE_SIGNATURE_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
 
 	/**
 	 * The feature id for the '<em><b>Simple Signature</b></em>' containment reference.
@@ -1806,33 +1320,6 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_METHOD_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_METHOD_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_METHOD_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_METHOD_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
-
-	/**
 	 * The feature id for the '<em><b>Black Box</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1886,33 +1373,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int MAPPING_RULE_CS__END_OFFSET = MAPPING_METHOD_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_RULE_CS__START_TOKEN = MAPPING_METHOD_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_RULE_CS__END_TOKEN = MAPPING_METHOD_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_RULE_CS__AST = MAPPING_METHOD_CS__AST;
 
 	/**
 	 * The feature id for the '<em><b>Black Box</b></em>' attribute.
@@ -1988,33 +1448,6 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_QUERY_CS__END_OFFSET = MAPPING_METHOD_CS__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_QUERY_CS__START_TOKEN = MAPPING_METHOD_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_QUERY_CS__END_TOKEN = MAPPING_METHOD_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_QUERY_CS__AST = MAPPING_METHOD_CS__AST;
-
-	/**
 	 * The feature id for the '<em><b>Black Box</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2086,33 +1519,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int MAPPING_SECTION_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_SECTION_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_SECTION_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_SECTION_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
 
 	/**
 	 * The feature id for the '<em><b>Body Start Location</b></em>' attribute.
@@ -2188,33 +1594,6 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_INIT_CS__END_OFFSET = MAPPING_SECTION_CS__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_INIT_CS__START_TOKEN = MAPPING_SECTION_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_INIT_CS__END_TOKEN = MAPPING_SECTION_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_INIT_CS__AST = MAPPING_SECTION_CS__AST;
-
-	/**
 	 * The feature id for the '<em><b>Body Start Location</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2286,33 +1665,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int MAPPING_END_CS__END_OFFSET = MAPPING_SECTION_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_END_CS__START_TOKEN = MAPPING_SECTION_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_END_CS__END_TOKEN = MAPPING_SECTION_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_END_CS__AST = MAPPING_SECTION_CS__AST;
 
 	/**
 	 * The feature id for the '<em><b>Body Start Location</b></em>' attribute.
@@ -2388,33 +1740,6 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_SECTIONS_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_SECTIONS_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_SECTIONS_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_SECTIONS_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
-
-	/**
 	 * The feature id for the '<em><b>Mapping Init CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2479,33 +1804,6 @@ public interface CSTPackage extends EPackage {
 	int STATEMENT_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STATEMENT_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STATEMENT_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STATEMENT_CS__AST = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__AST;
-
-	/**
 	 * The number of structural features of the '<em>Statement CS</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2541,33 +1839,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int ASSIGN_STATEMENT_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSIGN_STATEMENT_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSIGN_STATEMENT_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSIGN_STATEMENT_CS__AST = STATEMENT_CS__AST;
 
 	/**
 	 * The feature id for the '<em><b>LValue CS</b></em>' containment reference.
@@ -2634,33 +1905,6 @@ public interface CSTPackage extends EPackage {
 	int EXPRESSION_STATEMENT_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXPRESSION_STATEMENT_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXPRESSION_STATEMENT_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXPRESSION_STATEMENT_CS__AST = STATEMENT_CS__AST;
-
-	/**
 	 * The feature id for the '<em><b>Ocl Expression CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2707,33 +1951,6 @@ public interface CSTPackage extends EPackage {
 	int VARIABLE_INITIALIZATION_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VARIABLE_INITIALIZATION_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VARIABLE_INITIALIZATION_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VARIABLE_INITIALIZATION_CS__AST = STATEMENT_CS__AST;
-
-	/**
 	 * The feature id for the '<em><b>Ocl Expression CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2761,13 +1978,22 @@ public interface CSTPackage extends EPackage {
 	int VARIABLE_INITIALIZATION_CS__TYPE_CS = STATEMENT_CS_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>With Result</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLE_INITIALIZATION_CS__WITH_RESULT = STATEMENT_CS_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>Variable Initialization CS</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE_INITIALIZATION_CS_FEATURE_COUNT = STATEMENT_CS_FEATURE_COUNT + 3;
+	int VARIABLE_INITIALIZATION_CS_FEATURE_COUNT = STATEMENT_CS_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingBodyCSImpl <em>Mapping Body CS</em>}' class.
@@ -2796,33 +2022,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int MAPPING_BODY_CS__END_OFFSET = MAPPING_SECTION_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_BODY_CS__START_TOKEN = MAPPING_SECTION_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_BODY_CS__END_TOKEN = MAPPING_SECTION_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_BODY_CS__AST = MAPPING_SECTION_CS__AST;
 
 	/**
 	 * The feature id for the '<em><b>Body Start Location</b></em>' attribute.
@@ -2905,33 +2104,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int OUT_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OUT_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OUT_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OUT_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__AST;
 
 	/**
 	 * The feature id for the '<em><b>Body Start Location</b></em>' attribute.
@@ -3025,33 +2197,6 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_CALL_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.OPERATION_CALL_EXP_CS__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_CALL_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.OPERATION_CALL_EXP_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_CALL_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.OPERATION_CALL_EXP_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_CALL_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.OPERATION_CALL_EXP_CS__AST;
-
-	/**
 	 * The feature id for the '<em><b>Source</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3143,33 +2288,6 @@ public interface CSTPackage extends EPackage {
 	int WHILE_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WHILE_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WHILE_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WHILE_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__AST;
-
-	/**
 	 * The feature id for the '<em><b>Body</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3234,33 +2352,6 @@ public interface CSTPackage extends EPackage {
 	int SWITCH_EXP_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_EXP_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_EXP_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_EXP_CS__AST = STATEMENT_CS__AST;
-
-	/**
 	 * The feature id for the '<em><b>Alternative Part</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3314,33 +2405,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int SWITCH_ALT_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_ALT_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_ALT_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_ALT_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
 
 	/**
 	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
@@ -3398,33 +2462,6 @@ public interface CSTPackage extends EPackage {
 	int BLOCK_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BLOCK_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BLOCK_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BLOCK_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__AST;
-
-	/**
 	 * The feature id for the '<em><b>Body Expressions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3469,33 +2506,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMPUTE_EXP_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPUTE_EXP_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPUTE_EXP_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPUTE_EXP_CS__AST = STATEMENT_CS__AST;
 
 	/**
 	 * The feature id for the '<em><b>Returned Element</b></em>' containment reference.
@@ -3551,33 +2561,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int DIRECTION_KIND_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIRECTION_KIND_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIRECTION_KIND_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIRECTION_KIND_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
 
 	/**
 	 * The feature id for the '<em><b>Direction Kind</b></em>' attribute.
@@ -3661,33 +2644,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int RESOLVE_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CALL_EXP_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RESOLVE_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CALL_EXP_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RESOLVE_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CALL_EXP_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RESOLVE_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.CALL_EXP_CS__AST;
 
 	/**
 	 * The feature id for the '<em><b>Source</b></em>' containment reference.
@@ -3797,33 +2753,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int RESOLVE_IN_EXP_CS__END_OFFSET = RESOLVE_EXP_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RESOLVE_IN_EXP_CS__START_TOKEN = RESOLVE_EXP_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RESOLVE_IN_EXP_CS__END_TOKEN = RESOLVE_EXP_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RESOLVE_IN_EXP_CS__AST = RESOLVE_EXP_CS__AST;
 
 	/**
 	 * The feature id for the '<em><b>Source</b></em>' containment reference.
@@ -3953,33 +2882,6 @@ public interface CSTPackage extends EPackage {
 	int MODEL_TYPE_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODEL_TYPE_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODEL_TYPE_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODEL_TYPE_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
-
-	/**
 	 * The feature id for the '<em><b>Body Start Location</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4071,33 +2973,6 @@ public interface CSTPackage extends EPackage {
 	int PACKAGE_REF_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PACKAGE_REF_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PACKAGE_REF_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PACKAGE_REF_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
-
-	/**
 	 * The feature id for the '<em><b>Path Name CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4151,33 +3026,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int TRANSFORMATION_HEADER_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSFORMATION_HEADER_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSFORMATION_HEADER_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSFORMATION_HEADER_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
 
 	/**
 	 * The feature id for the '<em><b>Qualifiers</b></em>' containment reference list.
@@ -4262,33 +3110,6 @@ public interface CSTPackage extends EPackage {
 	int MODULE_KIND_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODULE_KIND_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODULE_KIND_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODULE_KIND_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
-
-	/**
 	 * The feature id for the '<em><b>Module Kind</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4333,33 +3154,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int MODULE_REF_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODULE_REF_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODULE_REF_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODULE_REF_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
 
 	/**
 	 * The feature id for the '<em><b>Path Name CS</b></em>' containment reference.
@@ -4415,33 +3209,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int MODULE_USAGE_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODULE_USAGE_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODULE_USAGE_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODULE_USAGE_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
 
 	/**
 	 * The feature id for the '<em><b>Import Kind</b></em>' attribute.
@@ -4508,33 +3275,6 @@ public interface CSTPackage extends EPackage {
 	int TRANSFORMATION_REFINE_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSFORMATION_REFINE_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSFORMATION_REFINE_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSFORMATION_REFINE_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
-
-	/**
 	 * The feature id for the '<em><b>Module Ref CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4590,33 +3330,6 @@ public interface CSTPackage extends EPackage {
 	int TYPE_SPEC_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TYPE_SPEC_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TYPE_SPEC_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TYPE_SPEC_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
-
-	/**
 	 * The feature id for the '<em><b>Type CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4670,33 +3383,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int LOG_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.OPERATION_CALL_EXP_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOG_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.OPERATION_CALL_EXP_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOG_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.OPERATION_CALL_EXP_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOG_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.OPERATION_CALL_EXP_CS__AST;
 
 	/**
 	 * The feature id for the '<em><b>Source</b></em>' containment reference.
@@ -4790,33 +3476,6 @@ public interface CSTPackage extends EPackage {
 	int ASSERT_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSERT_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSERT_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSERT_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__AST;
-
-	/**
 	 * The feature id for the '<em><b>Assertion</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4879,33 +3538,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int IMPERATIVE_LOOP_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_LOOP_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_LOOP_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_LOOP_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__AST;
 
 	/**
 	 * The feature id for the '<em><b>Source</b></em>' containment reference.
@@ -5008,33 +3640,6 @@ public interface CSTPackage extends EPackage {
     int FOR_EXP_CS__END_OFFSET = IMPERATIVE_LOOP_EXP_CS__END_OFFSET;
 
     /**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOR_EXP_CS__START_TOKEN = IMPERATIVE_LOOP_EXP_CS__START_TOKEN;
-
-				/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOR_EXP_CS__END_TOKEN = IMPERATIVE_LOOP_EXP_CS__END_TOKEN;
-
-				/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOR_EXP_CS__AST = IMPERATIVE_LOOP_EXP_CS__AST;
-
-				/**
 	 * The feature id for the '<em><b>Source</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -5133,33 +3738,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int IMPERATIVE_ITERATE_EXP_CS__END_OFFSET = IMPERATIVE_LOOP_EXP_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_ITERATE_EXP_CS__START_TOKEN = IMPERATIVE_LOOP_EXP_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_ITERATE_EXP_CS__END_TOKEN = IMPERATIVE_LOOP_EXP_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_ITERATE_EXP_CS__AST = IMPERATIVE_LOOP_EXP_CS__AST;
 
 	/**
 	 * The feature id for the '<em><b>Source</b></em>' containment reference.
@@ -5271,33 +3849,6 @@ public interface CSTPackage extends EPackage {
 	int RETURN_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RETURN_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RETURN_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RETURN_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__AST;
-
-	/**
 	 * The feature id for the '<em><b>Value</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5342,33 +3893,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int MAPPING_EXTENSION_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_EXTENSION_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_EXTENSION_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_EXTENSION_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
 
 	/**
 	 * The feature id for the '<em><b>Kind</b></em>' attribute.
@@ -5426,33 +3950,6 @@ public interface CSTPackage extends EPackage {
 	int NEW_RULE_CALL_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NEW_RULE_CALL_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NEW_RULE_CALL_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NEW_RULE_CALL_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__AST;
-
-	/**
 	 * The feature id for the '<em><b>Scoped Identifier</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5508,33 +4005,6 @@ public interface CSTPackage extends EPackage {
 	int LIST_TYPE_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.TYPE_CS__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIST_TYPE_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.TYPE_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIST_TYPE_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.TYPE_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIST_TYPE_CS__AST = org.eclipse.ocl.cst.CSTPackage.TYPE_CS__AST;
-
-	/**
 	 * The feature id for the '<em><b>Type CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5579,33 +4049,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int DICTIONARY_TYPE_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.TYPE_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICTIONARY_TYPE_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.TYPE_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICTIONARY_TYPE_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.TYPE_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICTIONARY_TYPE_CS__AST = org.eclipse.ocl.cst.CSTPackage.TYPE_CS__AST;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' containment reference.
@@ -5663,33 +4106,6 @@ public interface CSTPackage extends EPackage {
 	int DICT_LITERAL_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.LITERAL_EXP_CS__END_OFFSET;
 
 	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICT_LITERAL_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.LITERAL_EXP_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICT_LITERAL_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.LITERAL_EXP_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICT_LITERAL_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.LITERAL_EXP_CS__AST;
-
-	/**
 	 * The feature id for the '<em><b>Parts</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5734,33 +4150,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int DICT_LITERAL_PART_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICT_LITERAL_PART_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICT_LITERAL_PART_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICT_LITERAL_PART_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' containment reference.
@@ -6833,6 +5222,17 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getVariableInitializationCS_TypeCS();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS#isWithResult <em>With Result</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>With Result</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS#isWithResult()
+	 * @see #getVariableInitializationCS()
+	 * @generated
+	 */
+	EAttribute getVariableInitializationCS_WithResult();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS <em>Mapping Body CS</em>}'.
@@ -8731,6 +7131,14 @@ public interface CSTPackage extends EPackage {
 		 * @generated
 		 */
 		EReference VARIABLE_INITIALIZATION_CS__TYPE_CS = eINSTANCE.getVariableInitializationCS_TypeCS();
+
+		/**
+		 * The meta object literal for the '<em><b>With Result</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VARIABLE_INITIALIZATION_CS__WITH_RESULT = eINSTANCE.getVariableInitializationCS_WithResult();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingBodyCSImpl <em>Mapping Body CS</em>}' class.

@@ -286,12 +286,12 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 
 	protected final MappingRuleCS createMappingRuleCS(MappingDeclarationCS mappingDecl, OCLExpressionCS guard,
 			MappingSectionsCS mappingBody) {
-				MappingRuleCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingRuleCS();
-				result.setMappingDeclarationCS(mappingDecl);
-				result.setGuard(guard);
-				result.setMappingBody(mappingBody);
-				return result;
-			}
+		MappingRuleCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingRuleCS();
+		result.setMappingDeclarationCS(mappingDecl);
+		result.setGuard(guard);
+		result.setMappingBody(mappingBody);
+		return result;
+	}
 
 	protected final CSTNode createLibraryImportCS(PathNameCS sym) {
 		LibraryImportCS imp = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createLibraryImportCS();
@@ -299,15 +299,16 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return imp;
 	}
 
-	protected final CSTNode createVariableInitializationCS(IToken identifier, TypeCS typeCS, OCLExpressionCS initExpressionCS) {
-				VariableInitializationCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createVariableInitializationCS();
-				SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, identifier.toString());
-				setOffsets(nameCS, identifier);
-				result.setSimpleNameCS(nameCS);
-				result.setTypeCS(typeCS);
-				result.setOclExpressionCS(initExpressionCS);
-				return result;
-			}
+	protected final CSTNode createVariableInitializationCS(IToken identifier, TypeCS typeCS, OCLExpressionCS initExpressionCS, boolean withResult) {
+		VariableInitializationCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createVariableInitializationCS();
+		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, identifier.toString());
+		setOffsets(nameCS, identifier);
+		result.setSimpleNameCS(nameCS);
+		result.setTypeCS(typeCS);
+		result.setOclExpressionCS(initExpressionCS);
+		result.setWithResult(withResult);
+		return result;
+	}
 
 	protected final CSTNode createExpressionStatementCS(OCLExpressionCS sym) {
 		ExpressionStatementCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createExpressionStatementCS();

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempFactoryImpl.java,v 1.5 2009/01/13 20:23:50 radvorak Exp $
+ * $Id: TempFactoryImpl.java,v 1.6 2009/01/14 13:04:41 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.temp.impl;
 
@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.m2m.internal.qvt.oml.cst.temp.*;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ResolveOpArgsExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;

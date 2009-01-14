@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: VariableInitializationCS.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: VariableInitializationCS.java,v 1.2 2009/01/14 13:04:40 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -30,6 +30,7 @@ import org.eclipse.ocl.cst.TypeCS;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS#getOclExpressionCS <em>Ocl Expression CS</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS#getSimpleNameCS <em>Simple Name CS</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS#getTypeCS <em>Type CS</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS#isWithResult <em>With Result</em>}</li>
  * </ul>
  * </p>
  *
@@ -122,5 +123,32 @@ public interface VariableInitializationCS extends StatementCS {
 	 * @generated
 	 */
 	void setTypeCS(TypeCS value);
+
+	/**
+	 * Returns the value of the '<em><b>With Result</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>With Result</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>With Result</em>' attribute.
+	 * @see #setWithResult(boolean)
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getVariableInitializationCS_WithResult()
+	 * @model default="false" required="true"
+	 * @generated
+	 */
+	boolean isWithResult();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS#isWithResult <em>With Result</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>With Result</em>' attribute.
+	 * @see #isWithResult()
+	 * @generated
+	 */
+	void setWithResult(boolean value);
 
 } // VariableInitializationCS

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: VariableInitializationCSImpl.java,v 1.2 2009/01/13 20:23:48 radvorak Exp $
+ * $Id: VariableInitializationCSImpl.java,v 1.3 2009/01/14 13:04:41 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -36,6 +36,7 @@ import org.eclipse.ocl.cst.TypeCS;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.VariableInitializationCSImpl#getOclExpressionCS <em>Ocl Expression CS</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.VariableInitializationCSImpl#getSimpleNameCS <em>Simple Name CS</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.VariableInitializationCSImpl#getTypeCS <em>Type CS</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.VariableInitializationCSImpl#isWithResult <em>With Result</em>}</li>
  * </ul>
  * </p>
  *
@@ -78,6 +79,26 @@ public class VariableInitializationCSImpl extends StatementCSImpl implements Var
 	 * @ordered
 	 */
 	protected TypeCS typeCS;
+
+	/**
+	 * The default value of the '{@link #isWithResult() <em>With Result</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isWithResult()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean WITH_RESULT_EDEFAULT = false;
+
+	/**
+	 * The flag representing the value of the '{@link #isWithResult() <em>With Result</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isWithResult()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int WITH_RESULT_EFLAG = 1 << 8;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -232,6 +253,27 @@ public class VariableInitializationCSImpl extends StatementCSImpl implements Var
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isWithResult() {
+		return (eFlags & WITH_RESULT_EFLAG) != 0;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setWithResult(boolean newWithResult) {
+		boolean oldWithResult = (eFlags & WITH_RESULT_EFLAG) != 0;
+		if (newWithResult) eFlags |= WITH_RESULT_EFLAG; else eFlags &= ~WITH_RESULT_EFLAG;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.VARIABLE_INITIALIZATION_CS__WITH_RESULT, oldWithResult, newWithResult));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -259,6 +301,8 @@ public class VariableInitializationCSImpl extends StatementCSImpl implements Var
 				return getSimpleNameCS();
 			case CSTPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS:
 				return getTypeCS();
+			case CSTPackage.VARIABLE_INITIALIZATION_CS__WITH_RESULT:
+				return isWithResult() ? Boolean.TRUE : Boolean.FALSE;
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -279,6 +323,9 @@ public class VariableInitializationCSImpl extends StatementCSImpl implements Var
 				return;
 			case CSTPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS:
 				setTypeCS((TypeCS)newValue);
+				return;
+			case CSTPackage.VARIABLE_INITIALIZATION_CS__WITH_RESULT:
+				setWithResult(((Boolean)newValue).booleanValue());
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -301,6 +348,9 @@ public class VariableInitializationCSImpl extends StatementCSImpl implements Var
 			case CSTPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS:
 				setTypeCS((TypeCS)null);
 				return;
+			case CSTPackage.VARIABLE_INITIALIZATION_CS__WITH_RESULT:
+				setWithResult(WITH_RESULT_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -319,8 +369,26 @@ public class VariableInitializationCSImpl extends StatementCSImpl implements Var
 				return simpleNameCS != null;
 			case CSTPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS:
 				return typeCS != null;
+			case CSTPackage.VARIABLE_INITIALIZATION_CS__WITH_RESULT:
+				return ((eFlags & WITH_RESULT_EFLAG) != 0) != WITH_RESULT_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (withResult: "); //$NON-NLS-1$
+		result.append((eFlags & WITH_RESULT_EFLAG) != 0);
+		result.append(')');
+		return result.toString();
 	}
 
 } //VariableInitializationCSImpl
