@@ -13,14 +13,13 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui;
 
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.DefaultAnnotationHover;
-import org.eclipse.jface.text.source.IAnnotationHover;
 import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.texteditor.AnnotationPreference;
 
 /**
  * TODO - use new TextSourceViewerConfiguration for QVT
  */
-public class QvtAnnotationHover extends DefaultAnnotationHover implements IAnnotationHover {
+public class QvtAnnotationHover extends DefaultAnnotationHover {
 
 	QvtAnnotationHover() {
 		super();

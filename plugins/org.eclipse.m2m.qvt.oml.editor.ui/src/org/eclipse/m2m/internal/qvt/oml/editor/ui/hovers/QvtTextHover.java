@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextHover;
+import org.eclipse.jface.text.ITextHoverExtension2;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.Region;
@@ -33,7 +34,7 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtDocumentProvider;
 import org.eclipse.ocl.cst.CSTNode;
 
 
-public class QvtTextHover implements ITextHover {
+public class QvtTextHover implements ITextHover, ITextHoverExtension2 {
 	
     private final QvtDocumentProvider myDocumentProvider;
     private final IElementInfoProvider[] myElementInfoProviders;	
@@ -56,6 +57,10 @@ public class QvtTextHover implements ITextHover {
         return new Region(offset, 0);
     }
         
+    public Object getHoverInfo2(final ITextViewer textViewer, final IRegion hoverRegion) {
+    	return getHoverInfo(textViewer, hoverRegion);
+    }
+    
     public String getHoverInfo(final ITextViewer textViewer, final IRegion hoverRegion) {
         if (checkCompiledModule(myDocumentProvider.getCompiledModule()) && 
         	textViewer != null && textViewer.getDocument() != null) {

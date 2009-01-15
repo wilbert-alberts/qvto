@@ -11,11 +11,16 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks;
 
-import java.util.LinkedList;
 import java.util.List;
 
+import lpg.lpgjavaruntime.IToken;
+import lpg.lpgjavaruntime.PrsStream;
+
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EModelElement;
+import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
@@ -24,11 +29,12 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.EnumLiteralExpCS;
 import org.eclipse.ocl.cst.PathNameCS;
+import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.ecore.EnumLiteralExp;
 import org.eclipse.ocl.utilities.ASTNode;
 
@@ -87,33 +93,44 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 	}
 	
 	private static EModelElementRef findReferencedMetamodelElement(CSTNode syntaxElement, IRegion region) {
-		PathNameCS pathNameCS = null;
-		if (syntaxElement instanceof PathNameCS) {
-			pathNameCS = (PathNameCS) syntaxElement;
-			
-			if(pathNameCS.getSequenceOfNames().size() > 0) {
-				int startOffset = pathNameCS.getStartOffset();
-				int firstElementLength = pathNameCS.getSequenceOfNames().get(0).length();
-				
-				if(HyperlinkUtil.isOffsetInRange(region.getOffset(), startOffset, startOffset + firstElementLength)) {				
-					QvtOperationalEnv env = getEnv(pathNameCS);
-					if(env != null) {
-						ModelType modeltype = env.getModelType(pathNameCS.getSequenceOfNames());						
-						if(modeltype != null) {
-							IRegion linkReg = new Region(pathNameCS.getStartOffset(), firstElementLength);
-							return new EModelElementRef(modeltype, linkReg);
+		Object astObj = syntaxElement.getAst();
+		
+		if(astObj instanceof EClassifier) {
+			if (syntaxElement instanceof SimpleNameCS) {			
+				if(astObj instanceof EModelElement) {
+					return new EModelElementRef((EModelElement)astObj, HyperlinkUtil.createRegion(syntaxElement));
+				}
+			} else if (syntaxElement instanceof PathNameCS) {						
+				if(astObj instanceof ENamedElement) {
+					PathNameCS pathNameCS  = (PathNameCS) syntaxElement;				
+					int[] selectedNamePos = new int[1];
+					IRegion resultRegion = refineRegion(pathNameCS, region, selectedNamePos);
+					if(resultRegion != null) {
+						ENamedElement ast = (ENamedElement) pathNameCS.getAst();
+						if(selectedNamePos[0] >= 0) {
+							QvtOperationalEnv env = getEnv(pathNameCS);
+							final EList<String> csNames = pathNameCS.getSequenceOfNames();
+							final List<String> selectedNames = csNames.subList(0, selectedNamePos[0] + 1);
+							
+							ast = env.lookupClassifier(selectedNames);
+							if(ast == null) {
+								ast = env.lookupPackage(selectedNames);
+							}
 						}
+						
+						return new EModelElementRef(ast, resultRegion);
 					}
 				}
 			}
-			
-			return findPathNameReferencedElement(pathNameCS, region);
-		} 
-		else if(syntaxElement instanceof EnumLiteralExpCS) {
+		} else if(syntaxElement instanceof EnumLiteralExpCS) {
+			if(astObj instanceof EnumLiteralExp == false) {
+				return null;
+			}
+
 			EnumLiteralExpCS enumExpCS = (EnumLiteralExpCS) syntaxElement;
-			EnumLiteralExp enumExpAST = ASTBindingHelper.resolveASTNode(enumExpCS, EnumLiteralExp.class);
-			if(enumExpAST != null && enumExpAST.getReferredEnumLiteral() != null) {
-				EEnumLiteral enumLit = enumExpAST.getReferredEnumLiteral();
+			EnumLiteralExp enumExpAST = (EnumLiteralExp) enumExpCS.getAst();
+			EEnumLiteral enumLit = enumExpAST.getReferredEnumLiteral();			
+			if(enumLit != null) {
 				CSTNode linkCS = enumExpCS.getSimpleNameCS();
 				if(linkCS == null) {
 					linkCS = enumExpCS;
@@ -124,66 +141,63 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 		}
 		
 		return null;
-	}
+	}	
 	
-	private static EModelElementRef findPathNameReferencedElement(PathNameCS pathName, IRegion region) {
-		if(pathName.getSequenceOfNames().isEmpty()) {
+	private static IRegion refineRegion(PathNameCS pathNameCS, IRegion selection, int[] selectedNamePos) {
+		if(pathNameCS.getSequenceOfNames().size() == 1) {
+			return HyperlinkUtil.createRegion(pathNameCS);
+		}
+		selectedNamePos[0] = -1;
+		IToken startToken = pathNameCS.getStartToken();
+		IToken endToken = pathNameCS.getEndToken();
+		
+		if(startToken == null || endToken == null) {
 			return null;
 		}
 		
-		QvtOperationalEnv env = getEnv(pathName);
-		if(env != null) {
-			List<String> namesToLookup = new LinkedList<String>();
-			IRegion linkRegion = findElementInPathName(pathName, region, namesToLookup);
-			
-			boolean isPackageReferred = namesToLookup.size() < pathName.getSequenceOfNames().size();			
-			EModelElement element = (isPackageReferred) ? env.lookupPackage(namesToLookup) : env.lookupClassifier(namesToLookup);
-// ? Not needed as the env lookup should resolve names qualified with modeltypes as well 
-//			if(element == null) {
-//				ModelType modelType = env.getModelType(namesToLookup);
-//				if(modelType != null) {
-//					EList<EPackage> metamodels = modelType.getMetamodel();
-//					if(!metamodels.isEmpty()) {
-//						for (EPackage nextPackage : metamodels) {
-//							String uri = nextPackage.getNsURI();
-//							element = env.getEPackageRegistry().getEPackage(uri);							
-//						}
-//					}
-//				}
-//			}
+		int size = pathNameCS.getSequenceOfNames().size();
+		if(size == 1) {
+			return null;
+		} else if(size == 1) {
+			return HyperlinkUtil.createRegion(pathNameCS);
+		}
+		
+		PrsStream prsStream = startToken.getPrsStream();		
+		IToken nextToken = startToken;
 
-			if(element != null) {
-				return new EModelElementRef(element, linkRegion);
+		int namePos = 0;
+		int offset = selection.getOffset();
+		IToken result = null;		
+		while(true) {			
+			if(nextToken.getStartOffset() <= offset && nextToken.getEndOffset() >= offset) {
+				result = nextToken;
+				break;
+			}
+			 
+			if(nextToken == endToken) {
+				break;
+			}
+			
+			if(nextToken.getKind() == QvtOpLPGParsersym.TK_IDENTIFIER) {
+				namePos++;
+			}
+			nextToken = prsStream.getIToken(nextToken.getTokenIndex() + 1);
+		}
+		
+		if(result != null) {
+			int kind = result.getKind();
+			if(kind == QvtOpLPGParsersym.TK_COLONCOLON) {				
+				return HyperlinkUtil.createRegion(pathNameCS);
+			} else if(kind == QvtOpLPGParsersym.TK_IDENTIFIER) {
+				selectedNamePos[0] = namePos;
+				return new Region(result.getStartOffset(), 
+						result.getEndOffset() - result.getStartOffset() + 1);
 			}
 		}
 		
 		return null;
 	}
-	
-	
-	private static IRegion findElementInPathName(PathNameCS pathNameCS, IRegion selectedRegion, List<String> pathToLookup) {
-		int startOffset = pathNameCS.getStartOffset();
-		int endOffset = startOffset;		
-		
-		int index = 0;
-		for (String segment : pathNameCS.getSequenceOfNames()) {
-			pathToLookup.add(segment);
-			
-			if(index > 0) {
-				startOffset = endOffset + "::".length(); //$NON-NLS-1$
-			}
-			endOffset = startOffset + segment.length();
 
-			if(selectedRegion.getOffset() >= startOffset && selectedRegion.getOffset() <= endOffset && 
-				selectedRegion.getLength() <= endOffset - startOffset) {
-				return new Region(startOffset, endOffset - startOffset);
-			}
-			
-			index++;
-		}
-		return HyperlinkUtil.createRegion(pathNameCS);
-	}
-	
 	private static QvtOperationalEnv getEnv(CSTNode node) {
 		return (QvtOperationalEnv)CSTHelper.getEnvironment(node);
 	}	
