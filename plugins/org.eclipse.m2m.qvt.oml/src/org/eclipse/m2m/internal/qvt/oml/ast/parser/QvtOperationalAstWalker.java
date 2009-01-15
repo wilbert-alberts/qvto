@@ -92,16 +92,9 @@ import org.eclipse.ocl.utilities.ExpressionInOCL;
 import org.eclipse.ocl.utilities.Visitable;
 
 public class QvtOperationalAstWalker implements ExtendedVisitor<Object> {
-    public static class StopException extends RuntimeException {
-        private static final long serialVersionUID = -1386908042373844768L;
-
-        public static final StopException INSTANCE = new StopException();
-
-        private StopException() {}
-    }
 
     public interface NodeProcessor {
-        void process(Visitable e, Visitable parent) throws StopException;
+        void process(Visitable e, Visitable parent);
     }
 
     public QvtOperationalAstWalker(final NodeProcessor processor) {
@@ -253,7 +246,10 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object> {
 
 
     public Object visitVariableInitExp(VariableInitExp variableInitExp) {
-        doProcess(variableInitExp.getReferredVariable().getInitExpression(), variableInitExp);
+        org.eclipse.ocl.ecore.Variable referredVariable = variableInitExp.getReferredVariable();
+        if(referredVariable.getInitExpression() != null) {
+        	doProcess(referredVariable.getInitExpression(), variableInitExp);
+        }
         return null;
     }
 
@@ -266,8 +262,13 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object> {
     }
     
     public Object visitComputeExp(ComputeExp computeExp) {
-        doProcess(computeExp.getReturnedElement(), computeExp);
-        doProcess(computeExp.getBody(), computeExp);
+    	if(computeExp.getReturnedElement() != null) {
+    		doProcess(computeExp.getReturnedElement(), computeExp);
+    	}
+    	
+    	if(computeExp.getBody() != null) {
+    		doProcess(computeExp.getBody(), computeExp);
+    	}
         return null;
     }
 
@@ -276,7 +277,9 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object> {
             doProcess(whileExp.getCondition(), whileExp);
         }
     	
-        doProcess(whileExp.getBody(), whileExp);
+        if(whileExp.getBody() != null) {
+        	doProcess(whileExp.getBody(), whileExp);
+        }
 
         return null;
     }

@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import lpg.lpgjavaruntime.IToken;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -2015,6 +2017,7 @@ public class QvtOperationalVisitorCS
                 PathNameCS typePathNameCS = (PathNameCS) paramTypeCS;
                 isSimpleName = typePathNameCS.getSequenceOfNames().size() == 1;
                 type = env.getModelType(typePathNameCS.getSequenceOfNames());
+                paramTypeCS.setAst(type);
             }
             if (type == null || !isSimpleName) {
                 env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_transfParamWrongType,
@@ -2094,6 +2097,8 @@ public class QvtOperationalVisitorCS
 
 		SimpleNameCS identifierCS = modelTypeCS.getIdentifierCS();
 		ModelType modelType = QvtOperationalStdLibrary.INSTANCE.createModel(identifierCS != null ? identifierCS.getValue() : null);
+		identifierCS.setAst(modelType);
+		
 		module.getEClassifiers().add(modelType);
 		if(myCompilerOptions.isGenerateCompletionData()) {
 			ASTBindingHelper.createCST2ASTBinding(modelTypeCS, modelType);
@@ -3194,6 +3199,8 @@ public class QvtOperationalVisitorCS
 		}
 
 		EStructuralFeature feature = createESFeature(type);
+		simpleNameCS.setAst(feature);
+		
 		feature.setName(name);
 		feature.setEType(type);
 
@@ -3212,6 +3219,8 @@ public class QvtOperationalVisitorCS
 
 		EStructuralFeature prop = createESFeature(type);
 		SimpleNameCS simpleNameCS = propCS.getSimpleNameCS();
+		simpleNameCS.setAst(prop);
+		
 		prop.setName(simpleNameCS.getValue());		
 		prop.setEType(type);
 
@@ -3247,7 +3256,9 @@ public class QvtOperationalVisitorCS
 		prop.setStartPosition(propCS.getStartOffset());
 		prop.setEndPosition(propCS.getEndOffset());
 		
-		prop.setName(propCS.getScopedNameCS().getName());
+		ScopedNameCS scopedNameCS = propCS.getScopedNameCS();
+		scopedNameCS.setAst(prop);
+		prop.setName(scopedNameCS.getName());
 
 		EClassifier type = null;
 		if (propCS.getTypeCS() != null) {
@@ -3284,13 +3295,13 @@ public class QvtOperationalVisitorCS
 			}
 		}
 		
-		EClassifier contextType = visitTypeCS(propCS.getScopedNameCS().getTypeCS(), null, env);
+		EClassifier contextType = visitTypeCS(scopedNameCS.getTypeCS(), null, env);
 		if (contextType != null) {
 			if(contextType instanceof EClass) {
 				prop.setContext((EClass)contextType);
 			} else {
 				env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ContextualPropertyTypeIsNotClass, 
-								new Object[] { prop.getName() }), propCS.getScopedNameCS().getTypeCS());
+								new Object[] { prop.getName() }), scopedNameCS.getTypeCS());
 			}
 		}
 		

@@ -82,7 +82,7 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 			myOclValidationVisitor = ValidationVisitor.getInstance(environment);
 		}
 
-		public void process(Visitable e, Visitable parent) throws StopException {
+		public void process(Visitable e, Visitable parent) {
 			try {
 				e.accept(myOclValidationVisitor);
 			}
