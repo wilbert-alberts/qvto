@@ -319,7 +319,7 @@ public class ScopedVariablesExtractor {
     
     // starting from 'let'
     private Result analyseLetExpression(IToken startToken, QvtCompletionData data, Scope scope) {
-        return analyseLetLikeExpression(startToken, null, data, scope, QvtOpLPGParsersym.TK_in, NOT_A_TOKEN,
+        return analyseLetLikeExpression(startToken, null, data, scope, new int[] {QvtOpLPGParsersym.TK_in}, NOT_A_TOKEN,
                 QvtOpLPGParsersym.TK_COMMA, QvtOpLPGParsersym.TK_in);
     }
     
@@ -333,7 +333,7 @@ public class ScopedVariablesExtractor {
             return null;
         }
         Result letLikeExpressionResult = analyseLetLikeExpression(nextToken, startToken, data, scope,
-                QvtOpLPGParsersym.TK_BAR, NOT_A_TOKEN, QvtOpLPGParsersym.TK_COMMA,
+        		new int[] {QvtOpLPGParsersym.TK_BAR, QvtOpLPGParsersym.TK_RPAREN}, NOT_A_TOKEN, QvtOpLPGParsersym.TK_COMMA,
                 QvtOpLPGParsersym.TK_SEMICOLON, QvtOpLPGParsersym.TK_BAR);
         if (letLikeExpressionResult.getScope() != scope) {
             return letLikeExpressionResult;
@@ -371,7 +371,7 @@ public class ScopedVariablesExtractor {
             return null;
         }
         Result letLikeExpressionResult = analyseLetLikeExpression(nextToken, null, data, scope,
-                QvtOpLPGParsersym.TK_BAR, QvtOpLPGParsersym.TK_RPAREN, QvtOpLPGParsersym.TK_BAR);
+        		new int[] {QvtOpLPGParsersym.TK_BAR}, QvtOpLPGParsersym.TK_RPAREN, QvtOpLPGParsersym.TK_BAR);
         if (letLikeExpressionResult.getScope() != scope) {
             return letLikeExpressionResult;
         }
@@ -415,14 +415,14 @@ public class ScopedVariablesExtractor {
 
     // starting from 'let'-like token
     private Result analyseLetLikeExpression(IToken startToken, IToken iteratorExpressionStart, 
-            QvtCompletionData data, Scope scope, int varDeclTerminator, int unexpectedTerminator, int... delimiters) {
+            QvtCompletionData data, Scope scope, int[] varDeclTerminators, int unexpectedTerminator, int... delimiters) {
         Scope letLikeScope = new Scope(scope);
-        Result addVariableListResult = addVariableList(startToken, iteratorExpressionStart, data, letLikeScope, new int[] {varDeclTerminator}, unexpectedTerminator, delimiters);
+        Result addVariableListResult = addVariableList(startToken, iteratorExpressionStart, data, letLikeScope, varDeclTerminators, unexpectedTerminator, delimiters);
         if (addVariableListResult.getScope() != letLikeScope) {
             return addVariableListResult;
         }
         IToken nextToken = addVariableListResult.getEndToken();
-        if ((nextToken != null) && QvtCompletionData.isKindOf(nextToken, varDeclTerminator)) {
+        if ((nextToken != null) && QvtCompletionData.isKindOf(nextToken, varDeclTerminators)) {
             nextToken = getNextToken(nextToken, data);
             if (nextToken != null) {
                 Result oclExpressionResult = extractOclExpression(nextToken, data, letLikeScope);
@@ -438,6 +438,7 @@ public class ScopedVariablesExtractor {
     // starting from 'IDENTIFIER'
     private Result extractVariable(IToken startToken, IToken iteratorExpressionStart, QvtCompletionData data,
             Scope scope, int[] initializers, int  unexpectedTerminator, int... delimiters) {
+    	int parenCount = 0;
         boolean isTypeDefined = false;
         IToken currentToken = startToken;
         IToken nextToken;
@@ -474,6 +475,15 @@ public class ScopedVariablesExtractor {
                 return new Result(startToken, oclExpressionResult.getEndToken(),
                         "var " + identifierAndOrType //$NON-NLS-1$ 
                         + " := " + oclExpressionResult.getString() + ';', scope); //$NON-NLS-1$
+            }
+            if (QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_LPAREN)) {
+            	parenCount++;
+            }
+            if (QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_RPAREN)) {
+            	parenCount--;
+            	if (parenCount < 0) {
+            		return new Result(startToken, startToken, "", scope);  //$NON-NLS-1$
+            	}
             }
             currentToken = nextToken;
         }
