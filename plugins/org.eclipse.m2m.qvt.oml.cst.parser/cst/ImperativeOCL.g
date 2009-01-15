@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.g,v 1.12 2009/01/14 13:04:41 aigdalov Exp $ 
+-- * $Id: ImperativeOCL.g,v 1.13 2009/01/15 18:43:24 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -88,7 +88,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: ImperativeOCL.g,v 1.12 2009/01/14 13:04:41 aigdalov Exp $
+ * $Id: ImperativeOCL.g,v 1.13 2009/01/15 18:43:24 aigdalov Exp $
  */
 	./
 $End
@@ -190,7 +190,7 @@ $Rules
 		  $EndJava
 		./
 
-	variableInitializationCSCorrect ::= var IDENTIFIER ':' typeCS varInitOperator oclExpressionCS
+	variableInitializationCSCorrect ::= var IDENTIFIER ':' typeCS varInitOperator expression
 		/.$BeginJava
 					CSTNode result = createVariableInitializationCS(
 							getIToken($getToken(2)),
@@ -214,7 +214,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	variableInitializationCSCorrect ::= var IDENTIFIER varInitOperator oclExpressionCS
+	variableInitializationCSCorrect ::= var IDENTIFIER varInitOperator expression
 		/.$BeginJava
 					CSTNode result = createVariableInitializationCS(
 							getIToken($getToken(2)),
@@ -263,7 +263,7 @@ $Rules
 		  $EndJava
 		./
 		
-	assignStatementCS ::= oclExpressionCS ':=' oclExpressionCS
+	assignStatementCS ::= dotArrowExpCS ':=' expression
 		/.$BeginJava
 					CSTNode result = createAssignStatementCS(
 							(OCLExpressionCS)$getSym(1),
@@ -274,7 +274,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	assignStatementCS ::= oclExpressionCS ':=' qvtErrorToken
+	assignStatementCS ::= dotArrowExpCS ':=' qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createAssignStatementCS(
 							(OCLExpressionCS)$getSym(1),
@@ -286,7 +286,7 @@ $Rules
 		  $EndJava
 		./
 
-	assignStatementCS ::= oclExpressionCS '+=' oclExpressionCS
+	assignStatementCS ::= dotArrowExpCS '+=' expression
 		/.$BeginJava
 					CSTNode result = createAssignStatementCS(
 							(OCLExpressionCS)$getSym(1),
@@ -297,7 +297,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	assignStatementCS ::= oclExpressionCS '+=' qvtErrorToken
+	assignStatementCS ::= dotArrowExpCS '+=' qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createAssignStatementCS(
 							(OCLExpressionCS)$getSym(1),

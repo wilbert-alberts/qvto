@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.13 2009/01/13 20:23:51 radvorak Exp $ 
+-- * $Id: miscellaneous.g,v 1.14 2009/01/15 18:43:25 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -45,6 +45,8 @@ $DropRules
 	attrOrNavCallExpCS ::= simpleNameCS '[' argumentsCS ']' isMarkedPreCS
 	variableExpCS ::= simpleNameCS '[' argumentsCS ']' isMarkedPreCS
 	variableExpCS ::= keywordAsIdentifier1 '[' argumentsCS ']' isMarkedPreCS
+
+	keywordAsIdentifier1 -> init
 
 $DropSymbols
 	
@@ -280,7 +282,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.13 2009/01/13 20:23:51 radvorak Exp $
+ * $Id: miscellaneous.g,v 1.14 2009/01/15 18:43:25 aigdalov Exp $
  */
 	./
 $End
@@ -602,6 +604,10 @@ $Rules
 	semicolonOpt -> ';'
 	semicolonOpt -> $empty
 
+	expression_listOpt ::= $empty
+		/.$EmptyListAction./
+	expression_listOpt -> expression_list
+
 	expression_list -> expression_semi_list semicolonOpt
 	expression_semi_list ::= expression
 		/.$BeginJava
@@ -617,8 +623,14 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
+	expression_semi_list ::= expression_semi_list qvtErrorToken 
+		/.$BeginJava
+					EList result = (EList)$getSym(1);
+					$setResult(result);
+		  $EndJava
+		./
 
-	expression_block ::= '{' statementListOpt '}'
+	expression_block ::= '{' expression_listOpt '}'
 		/.$BeginJava
 				EList bodyList = (EList) dtParser.getSym(2);
 				CSTNode result = createBlockExpCS(
@@ -627,7 +639,18 @@ $Rules
 				
 				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(3)));
 				$setResult(result);
-          $EndJava
+	          $EndJava
+		./
+
+	expression_block ::= '{' qvtErrorToken
+		/.$BeginJava
+				CSTNode result = createBlockExpCS(
+					$EMPTY_ELIST
+				);
+				
+				setOffsets(result, getIToken(dtParser.getToken(1)));
+				$setResult(result);
+	          $EndJava
 		./
 
 	expression_statement -> expression ';'
@@ -668,41 +691,6 @@ $Rules
 	oclExpressionCSOpt -> oclExpressionCS 
 	oclExpressionCSOpt ::= $empty
 		/.$NullAction./
-		
-
-	statementListOpt ::= $empty
-		/.$EmptyListAction./
-	statementListOpt -> statementList
-	
-	statementList ::= qvtErrorToken
-		/.$BeginJava
-					EList result = new BasicEList();
-					$setResult(result);
-		  $EndJava
-		./
-	statementList -> statementInnerList
-	statementList -> statementInnerList ';'
-
-	statementInnerList ::= expression
-		/.$BeginJava
-					EList result = new BasicEList();
-					result.add($getSym(1));
-					$setResult(result);
-		  $EndJava
-		./
-	statementInnerList ::= statementInnerList ';' expression
-		/.$BeginJava
-					EList result = (EList)$getSym(1);
-					result.add($getSym(3));
-					$setResult(result);
-		  $EndJava
-		./
-	statementInnerList ::= statementInnerList qvtErrorToken
-		/.$BeginJava
-					EList result = (EList)$getSym(1);
-					$setResult(result);
-		  $EndJava
-		./
 		
 	expression ::= oclExpressionCS
 		/.$BeginJava
