@@ -16,6 +16,7 @@ transformation testhyperlinks(
 -- module property
 property /*<region id="moduleProp">*/moduleProp/*</region>*/ : String = '';
 configuration property /*<region id="cfgProp">*/cfgProp/*</region>*/ : String;
+intermediate property EPackage::/*<region id="EPackage.extraPackageProp">*/extraPackageProp/*</region>*/ : String;
 
 main() {	
 	-- test link to external query
@@ -25,6 +26,8 @@ main() {
 	/*<link ref="2">*/foo/*</link>*/(null, null);
 	
 	var p: ECORE::EPackage := null;
+	p./*<link ref="EPackage.extraPackageProp">*/extraPackageProp/*</link>*/;	
+	
 	map /*<link ref="myMapping">*/myMapping/*</link>*/(p, 10); 
 	
 	p.map /*<link ref="myMapping2">*/myMapping2/*</link>*/();
@@ -66,13 +69,14 @@ query /*<region id="2">*/foo/*</region>*/(
     				/*<link ref="foo.par2">*/par2/*</link>*/.name;
     
     /*<link ref="foo2">*/foo2/*</link>*/(par1);
-    null;
+    return null;
 }
   
 query /*<region id="foo2">*/foo2/*</region>*/(model: ecore::EPackage) : Integer {
 	var /*<region id="var.i">*/i/*</region>*/ : Integer := /*<link ref="eModel">*/eModel/*</link>*/.objects()->size();
 	var x:Integer := /*<link ref="umlModel">*/umlModel/*</link>*/.objects()->size();
     /*<link ref="var.i">*/i/*</link>*/
+    return null;
 }
 
 mapping /*<region id="myMapping">*/myMapping/*</region>*/(inout /*<region id="myMapping.pac">*/pac/*</region>*/:ecore::EPackage, in sz : Integer): ecore::EPackage {

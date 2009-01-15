@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextHover;
+import org.eclipse.jface.text.ITextHoverExtension2;
 import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.jface.viewers.ISelection;
@@ -71,7 +72,7 @@ public class TestEditorHyperLinks extends AbstractTestQvtEditorSupport {
 			
 			ITextHover hover = fEditor.getQvtConfiguration().getTextHover(fEditor.getEditorSourceViewer(), null);
 			assertNotNull("Text hover must be available", hover); //$NON-NLS-1$
-			String hoverText = hover.getHoverInfo(fEditor.getEditorSourceViewer(), pointerReg);
+			String hoverText = (String)((ITextHoverExtension2)hover).getHoverInfo2(fEditor.getEditorSourceViewer(), pointerReg);
 			assertTrue(message("No hover for hyperlink", sourceHLink), //$NON-NLS-1$ 
 					hoverText != null && hoverText.trim().length() > 0);
 			

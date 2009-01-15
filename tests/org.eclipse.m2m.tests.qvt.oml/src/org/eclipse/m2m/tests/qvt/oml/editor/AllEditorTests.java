@@ -20,9 +20,8 @@ public class AllEditorTests {
 		TestSuite suite = new TestSuite("Test for org.eclipse.m2m.tests.qvt.oml.editor"); //$NON-NLS-1$
 		//$JUnit-BEGIN$
 		suite.addTestSuite(TestQvtProblemAnnotations.class);
-		suite.addTestSuite(TestSourceAnnotationReader.class);
-// Commented out, currently it fails, due to latest parser changes	
-//suite.addTestSuite(TestEditorHyperLinks.class);
+		suite.addTestSuite(TestSourceAnnotationReader.class);	
+		suite.addTestSuite(TestEditorHyperLinks.class);
 		//$JUnit-END$
 		return suite;
 	}
