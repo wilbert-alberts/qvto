@@ -180,7 +180,7 @@ public class ParserTests {
         new TestData("mm_header6", 1), //$NON-NLS-1$
         new TestData("mm_header7", 1), //$NON-NLS-1$
         new TestData("entryOpDupl", 1), //$NON-NLS-1$
-        new TestData("resolveIn_ambiguity", 0, "Mappings referred in resolveIn must not be overloaded! Several 'ENamedElement::createEClass' mappings found. All of them will participate in the resolution."), //$NON-NLS-1$ //$NON-NLS-2$
+        new TestData("resolveIn_ambiguity", 1), //$NON-NLS-1$ //$NON-NLS-2$
         new TestData("bug205303_2", 3), //$NON-NLS-1$
     };
 }

@@ -259,7 +259,6 @@ public class TransformTests {
                 new FileToFileData("resolve_invresolveoneIn"), //$NON-NLS-1$        
                 new FileToFileData("resolve_lateresolveoneIn"), //$NON-NLS-1$        
                 new FileToFileData("resolve_lateresolveoneInaccess"), //$NON-NLS-1$        
-                new FileToFileData("resolveIn_ambiguity"), //$NON-NLS-1$        
                 new FileToFileData("bug204126_1"), //$NON-NLS-1$        
                 new FileToFileData("bug204126_2"), //$NON-NLS-1$        
                 new FileToFileData("bug204126_3"), //$NON-NLS-1$        

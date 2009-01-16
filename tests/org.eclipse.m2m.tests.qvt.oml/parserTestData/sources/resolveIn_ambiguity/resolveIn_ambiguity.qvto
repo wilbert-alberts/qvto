@@ -8,7 +8,7 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 		model.createEClass(1);
 	}
     	name := 'a';
-    	eClassifiers := resolveIn(ecore::ENamedElement::createEClass, ecore::EClass)->asOrderedSet();
+    	eClassifiers := resolveIn(ecore::ENamedElement::/*<error>*/createEClass/*</error>*/, ecore::EClass)->asOrderedSet();
 }
 
 mapping ecore::ENamedElement::createEClass() : ecore::EClass {
