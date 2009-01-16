@@ -68,8 +68,8 @@ public class ResolveInHyperlinkDetector implements IHyperlinkDetectorHelper {
 		
 	public static MappingOperation findReferencedDefinition(ResolveInExpCS resolveInExpCS) {
 		ResolveInExp resolveInAST = ASTBindingHelper.resolveASTNode(resolveInExpCS, ResolveInExp.class);
-		if(resolveInAST != null && !resolveInAST.getInMappings().isEmpty()) {
-			return resolveInAST.getInMappings().get(0);
+		if(resolveInAST != null) { 
+			return resolveInAST.getInMapping();
 		}
 		
 		return null;
