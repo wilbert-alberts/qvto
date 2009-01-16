@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: EValueItemProvider.java,v 1.3 2009/01/11 23:22:19 radvorak Exp $
+ * $Id: EValueItemProvider.java,v 1.4 2009/01/16 13:53:02 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
@@ -403,7 +403,27 @@ public class EValueItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createListType()));
+				 ImperativeOCLFactory.eINSTANCE.createAltExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createAssertExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createAssignExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createBlockExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createComputeExp()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -418,62 +438,7 @@ public class EValueItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createTemplateParameterType()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
 				 ImperativeOCLFactory.eINSTANCE.createDictionaryType()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createTypedef()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createAssignExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createVariableInitExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createWhileExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createSwitchExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createAltExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createLogExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createAssertExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createInstantiationExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createReturnExp()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -493,12 +458,47 @@ public class EValueItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createBlockExp()));
+				 ImperativeOCLFactory.eINSTANCE.createInstantiationExp()));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createComputeExp()));
+				 ImperativeOCLFactory.eINSTANCE.createListType()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createLogExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createReturnExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createSwitchExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createTemplateParameterType()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createTypedef()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createVariableInitExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createWhileExp()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -933,12 +933,12 @@ public class EValueItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createClass()));
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createContextualProperty()));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createContextualProperty()));
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createImperativeCallExp()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -953,11 +953,6 @@ public class EValueItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModelParameter()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
 				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createOperationBody()));
 
 		newChildDescriptors.add
@@ -968,22 +963,32 @@ public class EValueItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createMappingOperation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createHelper()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
 				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createMappingBody()));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
 				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createMappingCallExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createMappingOperation()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createMappingParameter()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModelParameter()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createHelper()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -1004,11 +1009,6 @@ public class EValueItemProvider
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
 				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModelType()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createMappingParameter()));
 
 		newChildDescriptors.add
 			(createChildParameter
