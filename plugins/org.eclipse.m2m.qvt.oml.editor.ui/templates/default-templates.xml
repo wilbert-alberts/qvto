@@ -81,7 +81,7 @@
           context="org.eclipse.m2m.qvt.oml.templates"
           id="org.eclipse.m2m.qvt.oml.template.helper"
           name="%code_template_helper"
-          description="%code_template_helper_desc">query ${ContextType}::${name}() : ${ReturnType} {
+          description="%code_template_helper_desc">helper ${ContextType}::${name}() : ${ReturnType} {
 	${cursor}
 }</template>
     <template
