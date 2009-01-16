@@ -9,14 +9,13 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ContextualProperty.java,v 1.3 2008/12/18 15:18:10 radvorak Exp $
+ * $Id: ContextualProperty.java,v 1.4 2009/01/16 13:52:56 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.ecore.OCLExpression;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -28,8 +27,8 @@ import org.eclipse.ocl.utilities.Visitor;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty#getContext <em>Context</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty#getOverridden <em>Overridden</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty#getInitExpression <em>Init Expression</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty#getOverridden <em>Overridden</em>}</li>
  * </ul>
  * </p>
  *
@@ -111,7 +110,7 @@ public interface ContextualProperty extends EStructuralFeature, VisitableASTNode
 	 * @model containment="true"
 	 * @generated
 	 */
-	OCLExpression<EClassifier> getInitExpression();
+	OCLExpression getInitExpression();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty#getInitExpression <em>Init Expression</em>}' containment reference.
@@ -121,7 +120,7 @@ public interface ContextualProperty extends EStructuralFeature, VisitableASTNode
 	 * @see #getInitExpression()
 	 * @generated
 	 */
-	void setInitExpression(OCLExpression<EClassifier> value);
+	void setInitExpression(OCLExpression value);
 
 	/**
 	 * <!-- begin-user-doc -->

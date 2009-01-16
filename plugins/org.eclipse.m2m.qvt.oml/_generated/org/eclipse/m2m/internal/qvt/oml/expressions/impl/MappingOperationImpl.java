@@ -16,7 +16,6 @@ import java.util.Collection;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -24,7 +23,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
-import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.ecore.OCLExpression;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -58,7 +57,7 @@ public class MappingOperationImpl extends ImperativeOperationImpl implements Map
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<OCLExpression<EClassifier>> when;
+	protected EList<OCLExpression> when;
 
 	/**
 	 * The cached value of the '{@link #getInherited() <em>Inherited</em>}' reference list.
@@ -112,9 +111,9 @@ public class MappingOperationImpl extends ImperativeOperationImpl implements Map
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<OCLExpression<EClassifier>> getWhen() {
+	public EList<OCLExpression> getWhen() {
 		if (when == null) {
-			when = new EObjectContainmentEList<OCLExpression<EClassifier>>(OCLExpression.class, this, ExpressionsPackage.MAPPING_OPERATION__WHEN);
+			when = new EObjectContainmentEList<OCLExpression>(OCLExpression.class, this, ExpressionsPackage.MAPPING_OPERATION__WHEN);
 		}
 		return when;
 	}
@@ -215,7 +214,7 @@ public class MappingOperationImpl extends ImperativeOperationImpl implements Map
 		switch (featureID) {
 			case ExpressionsPackage.MAPPING_OPERATION__WHEN:
 				getWhen().clear();
-				getWhen().addAll((Collection<? extends OCLExpression<EClassifier>>)newValue);
+				getWhen().addAll((Collection<? extends OCLExpression>)newValue);
 				return;
 			case ExpressionsPackage.MAPPING_OPERATION__INHERITED:
 				getInherited().clear();

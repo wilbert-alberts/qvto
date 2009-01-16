@@ -11,9 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EParameter;
-import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.ecore.Variable;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -81,7 +79,7 @@ public interface ObjectExp extends InstantiationExp {
 	 * @model required="true"
 	 * @generated
 	 */
-	Variable<EClassifier, EParameter> getReferredObject();
+	Variable getReferredObject();
 
 				/**
 	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp#getReferredObject <em>Referred Object</em>}' reference.
@@ -91,7 +89,7 @@ public interface ObjectExp extends InstantiationExp {
 	 * @see #getReferredObject()
 	 * @generated
 	 */
-	void setReferredObject(Variable<EClassifier, EParameter> value);
+	void setReferredObject(Variable value);
 
 				/**
 	 * <!-- begin-user-doc -->

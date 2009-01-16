@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ImperativeLoopExpImpl.java,v 1.3 2009/01/11 23:22:08 radvorak Exp $
+ * $Id: ImperativeLoopExpImpl.java,v 1.4 2009/01/16 13:52:55 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -457,9 +457,9 @@ public class ImperativeLoopExpImpl extends ImperativeExpressionImpl implements I
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ImperativeOCLPackage.IMPERATIVE_LOOP_EXP__PROPERTY_START_POSITION:
-				return new Integer(getPropertyStartPosition());
+				return getPropertyStartPosition();
 			case ImperativeOCLPackage.IMPERATIVE_LOOP_EXP__PROPERTY_END_POSITION:
-				return new Integer(getPropertyEndPosition());
+				return getPropertyEndPosition();
 			case ImperativeOCLPackage.IMPERATIVE_LOOP_EXP__SOURCE:
 				return getSource();
 			case ImperativeOCLPackage.IMPERATIVE_LOOP_EXP__BODY:
@@ -482,10 +482,10 @@ public class ImperativeLoopExpImpl extends ImperativeExpressionImpl implements I
     public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ImperativeOCLPackage.IMPERATIVE_LOOP_EXP__PROPERTY_START_POSITION:
-				setPropertyStartPosition(((Integer)newValue).intValue());
+				setPropertyStartPosition((Integer)newValue);
 				return;
 			case ImperativeOCLPackage.IMPERATIVE_LOOP_EXP__PROPERTY_END_POSITION:
-				setPropertyEndPosition(((Integer)newValue).intValue());
+				setPropertyEndPosition((Integer)newValue);
 				return;
 			case ImperativeOCLPackage.IMPERATIVE_LOOP_EXP__SOURCE:
 				setSource((OCLExpression<EClassifier>)newValue);

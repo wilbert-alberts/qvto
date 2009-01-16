@@ -187,7 +187,7 @@ public class VariableInitExpImpl extends ImperativeExpressionImpl implements Var
 			case ImperativeOCLPackage.VARIABLE_INIT_EXP__REFERRED_VARIABLE:
 				return getReferredVariable();
 			case ImperativeOCLPackage.VARIABLE_INIT_EXP__WITH_RESULT:
-				return isWithResult() ? Boolean.TRUE : Boolean.FALSE;
+				return isWithResult();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -204,7 +204,7 @@ public class VariableInitExpImpl extends ImperativeExpressionImpl implements Var
 				setReferredVariable((Variable)newValue);
 				return;
 			case ImperativeOCLPackage.VARIABLE_INIT_EXP__WITH_RESULT:
-				setWithResult(((Boolean)newValue).booleanValue());
+				setWithResult((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

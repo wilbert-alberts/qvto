@@ -212,9 +212,9 @@ public class RenameImpl extends ETypedElementImpl implements Rename {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ExpressionsPackage.RENAME__START_POSITION:
-				return new Integer(getStartPosition());
+				return getStartPosition();
 			case ExpressionsPackage.RENAME__END_POSITION:
-				return new Integer(getEndPosition());
+				return getEndPosition();
 			case ExpressionsPackage.RENAME__NEW_NAME:
 				return getNewName();
 		}
@@ -230,10 +230,10 @@ public class RenameImpl extends ETypedElementImpl implements Rename {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ExpressionsPackage.RENAME__START_POSITION:
-				setStartPosition(((Integer)newValue).intValue());
+				setStartPosition((Integer)newValue);
 				return;
 			case ExpressionsPackage.RENAME__END_POSITION:
-				setEndPosition(((Integer)newValue).intValue());
+				setEndPosition((Integer)newValue);
 				return;
 			case ExpressionsPackage.RENAME__NEW_NAME:
 				setNewName((String)newValue);

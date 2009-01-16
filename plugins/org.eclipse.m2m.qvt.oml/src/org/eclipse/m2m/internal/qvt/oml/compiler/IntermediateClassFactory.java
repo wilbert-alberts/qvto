@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
@@ -112,8 +113,8 @@ public class IntermediateClassFactory extends EFactoryImpl {
 		return super.basicCreate(class_);
 	}
 	
-	public org.eclipse.m2m.internal.qvt.oml.expressions.Class createIntermediateClassifier() {
-		org.eclipse.m2m.internal.qvt.oml.expressions.Class eClassifier = ExpressionsFactory.eINSTANCE.createClass();
+	public EClass createIntermediateClassifier() {
+		EClass eClassifier = EcoreFactory.eINSTANCE.createEClass();
 		
 		/*
 		 * 8.2.1.3 Module

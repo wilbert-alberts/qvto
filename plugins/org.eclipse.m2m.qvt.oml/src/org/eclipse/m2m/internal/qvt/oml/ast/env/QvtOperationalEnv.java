@@ -648,7 +648,10 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	            if (sameNameAndContextOperations != null) {
 	                for (MappingOperation mappingOperation : sameNameAndContextOperations) {
 	                    ResolveInExp resolveInExp = entry.getKey();
-	                    resolveInExp.getInMappings().add(mappingOperation);
+	                    if(resolveInExp.getInMapping() == null) {
+	                    	// Keep only the first occurence found
+	                    	resolveInExp.setInMapping(mappingOperation);
+	                    }
 	                }
 	            }
 	        }

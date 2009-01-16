@@ -276,7 +276,7 @@ public class AssignExpImpl extends ImperativeExpressionImpl implements AssignExp
 			case ImperativeOCLPackage.ASSIGN_EXP__DEFAULT_VALUE:
 				return getDefaultValue();
 			case ImperativeOCLPackage.ASSIGN_EXP__IS_RESET:
-				return isIsReset() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsReset();
 			case ImperativeOCLPackage.ASSIGN_EXP__LEFT:
 				return getLeft();
 			case ImperativeOCLPackage.ASSIGN_EXP__VALUE:
@@ -298,7 +298,7 @@ public class AssignExpImpl extends ImperativeExpressionImpl implements AssignExp
 				setDefaultValue((OCLExpression)newValue);
 				return;
 			case ImperativeOCLPackage.ASSIGN_EXP__IS_RESET:
-				setIsReset(((Boolean)newValue).booleanValue());
+				setIsReset((Boolean)newValue);
 				return;
 			case ImperativeOCLPackage.ASSIGN_EXP__LEFT:
 				setLeft((OCLExpression)newValue);

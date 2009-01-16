@@ -31,10 +31,10 @@
         </eParameters>
       </eOperations>
       <eStructuralFeatures xsi:type="ecore:EReference" name="condition" lowerBound="1"
-          eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
+          eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="body" lowerBound="1"
-          eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
+          eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="AssertExp" eSuperTypes="#//expressions/ImperativeExpression">
@@ -63,7 +63,7 @@
         </eParameters>
       </eOperations>
       <eStructuralFeatures xsi:type="ecore:EReference" name="assertion" lowerBound="1"
-          eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
+          eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="log" eType="#//expressions/LogExp"
           containment="true"/>
@@ -95,7 +95,7 @@
           <eGenericType eTypeParameter="#//expressions/AssignExp/accept/U"/>
         </eParameters>
       </eOperations>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="defaultValue" eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="defaultValue" eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
           containment="true">
         <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
           <details key="body" value="defaultOwner"/>
@@ -103,10 +103,10 @@
       </eStructuralFeatures>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="isReset" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="left" lowerBound="1"
-          eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
+          eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="value" upperBound="-1"
-          eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
+          eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="BlockExp" eSuperTypes="#//expressions/ImperativeExpression">
@@ -135,7 +135,7 @@
         </eParameters>
       </eOperations>
       <eStructuralFeatures xsi:type="ecore:EReference" name="body" upperBound="-1"
-          eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
+          eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ComputeExp" eSuperTypes="#//expressions/ImperativeExpression">
@@ -164,13 +164,13 @@
         </eParameters>
       </eOperations>
       <eStructuralFeatures xsi:type="ecore:EReference" name="body" lowerBound="1"
-          eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
+          eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="returnedElement" lowerBound="1"
-          eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/Variable"
+          eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/Variable"
           containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="DictLiteralExp" eSuperTypes="platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/LiteralExp">
+    <eClassifiers xsi:type="ecore:EClass" name="DictLiteralExp" eSuperTypes="../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/LiteralExp">
       <eStructuralFeatures xsi:type="ecore:EReference" name="part" ordered="false"
           upperBound="-1" eType="#//expressions/DictLiteralPart" containment="true">
         <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
@@ -179,21 +179,21 @@
       </eStructuralFeatures>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="DictLiteralPart" eSuperTypes="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EModelElement">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="key" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="key" lowerBound="1" eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
           containment="true">
         <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
           <details key="body" value="keyOwner"/>
         </eAnnotations>
       </eStructuralFeatures>
       <eStructuralFeatures xsi:type="ecore:EReference" name="value" lowerBound="1"
-          eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
+          eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
           containment="true">
         <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
           <details key="body" value="valOwner"/>
         </eAnnotations>
       </eStructuralFeatures>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="DictionaryType" eSuperTypes="platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/CollectionType">
+    <eClassifiers xsi:type="ecore:EClass" name="DictionaryType" eSuperTypes="../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/CollectionType">
       <eStructuralFeatures xsi:type="ecore:EReference" name="keyType" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier">
         <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
           <details key="body" value="keyDict"/>
@@ -227,7 +227,7 @@
       </eOperations>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ImperativeExpression" abstract="true"
-        eSuperTypes="platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"/>
+        eSuperTypes="../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"/>
     <eClassifiers xsi:type="ecore:EClass" name="ImperativeIterateExp" eSuperTypes="#//expressions/ImperativeLoopExp">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -253,10 +253,10 @@
           <eGenericType eTypeParameter="#//expressions/ImperativeIterateExp/accept/U"/>
         </eParameters>
       </eOperations>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/Variable"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/Variable"
           containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="ImperativeLoopExp" eSuperTypes="#//expressions/ImperativeExpression platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/LoopExp">
+    <eClassifiers xsi:type="ecore:EClass" name="ImperativeLoopExp" eSuperTypes="#//expressions/ImperativeExpression ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/LoopExp">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitImperativeLoopExp(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
@@ -281,7 +281,7 @@
           <eGenericType eTypeParameter="#//expressions/ImperativeLoopExp/accept/U"/>
         </eParameters>
       </eOperations>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="InstantiationExp" eSuperTypes="#//expressions/ImperativeExpression">
@@ -310,15 +310,15 @@
         </eParameters>
       </eOperations>
       <eStructuralFeatures xsi:type="ecore:EReference" name="argument" upperBound="-1"
-          eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
+          eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="extent" lowerBound="1"
-          eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/Variable"/>
+          eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/Variable"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="instantiatedClass" lowerBound="1"
           eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="ListType" eSuperTypes="platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/CollectionType"/>
-    <eClassifiers xsi:type="ecore:EClass" name="LogExp" eSuperTypes="platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OperationCallExp">
+    <eClassifiers xsi:type="ecore:EClass" name="ListType" eSuperTypes="../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/CollectionType"/>
+    <eClassifiers xsi:type="ecore:EClass" name="LogExp" eSuperTypes="../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OperationCallExp">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="body" value="if(v instanceof ExtendedVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  ExtendedVisitor&lt;T> visitorExt = (ExtendedVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitLogExp(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>
@@ -343,7 +343,7 @@
           <eGenericType eTypeParameter="#//expressions/LogExp/accept/U"/>
         </eParameters>
       </eOperations>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ReturnExp" eSuperTypes="#//expressions/ImperativeExpression">
@@ -371,7 +371,7 @@
           <eGenericType eTypeParameter="#//expressions/ReturnExp/accept/U"/>
         </eParameters>
       </eOperations>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EEnum" name="SeverityKind">
@@ -406,7 +406,7 @@
       </eOperations>
       <eStructuralFeatures xsi:type="ecore:EReference" name="alternativePart" upperBound="-1"
           eType="#//expressions/AltExp" containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="elsePart" eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="elsePart" eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="TemplateParameterType" eSuperTypes="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier">
@@ -415,7 +415,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="Typedef" eSuperTypes="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass">
       <eStructuralFeatures xsi:type="ecore:EReference" name="base" lowerBound="1"
           eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="VariableInitExp" eSuperTypes="#//expressions/ImperativeExpression">
@@ -444,7 +444,7 @@
         </eParameters>
       </eOperations>
       <eStructuralFeatures xsi:type="ecore:EReference" name="referredVariable" lowerBound="1"
-          eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/Variable"
+          eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/Variable"
           containment="true">
         <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
           <details key="body" value="declaration"/>
@@ -479,10 +479,10 @@
         </eParameters>
       </eOperations>
       <eStructuralFeatures xsi:type="ecore:EReference" name="condition" lowerBound="1"
-          eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
+          eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="body" lowerBound="1"
-          eType="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
+          eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ImperativeOCLVisitor" abstract="true"
@@ -556,9 +556,9 @@
         <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EEnumLiteral"/>
         <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EParameter"/>
         <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
-        <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/CallOperationAction"/>
-        <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/SendSignalAction"/>
-        <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/Constraint"/>
+        <eTypeArguments eClassifier="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/CallOperationAction"/>
+        <eTypeArguments eClassifier="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/SendSignalAction"/>
+        <eTypeArguments eClassifier="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/Constraint"/>
       </eGenericSuperTypes>
     </eClassifiers>
   </eSubpackages>

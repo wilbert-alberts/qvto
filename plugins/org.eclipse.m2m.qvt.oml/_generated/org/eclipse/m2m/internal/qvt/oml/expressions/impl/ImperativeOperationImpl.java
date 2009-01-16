@@ -393,9 +393,9 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ExpressionsPackage.IMPERATIVE_OPERATION__START_POSITION:
-				return new Integer(getStartPosition());
+				return getStartPosition();
 			case ExpressionsPackage.IMPERATIVE_OPERATION__END_POSITION:
-				return new Integer(getEndPosition());
+				return getEndPosition();
 			case ExpressionsPackage.IMPERATIVE_OPERATION__CONTEXT:
 				return getContext();
 			case ExpressionsPackage.IMPERATIVE_OPERATION__RESULT:
@@ -403,7 +403,7 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 			case ExpressionsPackage.IMPERATIVE_OPERATION__BODY:
 				return getBody();
 			case ExpressionsPackage.IMPERATIVE_OPERATION__IS_BLACKBOX:
-				return isIsBlackbox() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsBlackbox();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -418,10 +418,10 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ExpressionsPackage.IMPERATIVE_OPERATION__START_POSITION:
-				setStartPosition(((Integer)newValue).intValue());
+				setStartPosition((Integer)newValue);
 				return;
 			case ExpressionsPackage.IMPERATIVE_OPERATION__END_POSITION:
-				setEndPosition(((Integer)newValue).intValue());
+				setEndPosition((Integer)newValue);
 				return;
 			case ExpressionsPackage.IMPERATIVE_OPERATION__CONTEXT:
 				setContext((VarParameter)newValue);
@@ -434,7 +434,7 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 				setBody((OperationBody)newValue);
 				return;
 			case ExpressionsPackage.IMPERATIVE_OPERATION__IS_BLACKBOX:
-				setIsBlackbox(((Boolean)newValue).booleanValue());
+				setIsBlackbox((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

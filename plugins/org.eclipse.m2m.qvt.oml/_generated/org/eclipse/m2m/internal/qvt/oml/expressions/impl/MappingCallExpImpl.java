@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
-import org.eclipse.ocl.ecore.impl.OperationCallExpImpl;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -33,7 +32,7 @@ import org.eclipse.ocl.utilities.Visitor;
  *
  * @generated
  */
-public class MappingCallExpImpl extends OperationCallExpImpl implements MappingCallExp {
+public class MappingCallExpImpl extends ImperativeCallExpImpl implements MappingCallExp {
 	/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -59,7 +58,7 @@ public class MappingCallExpImpl extends OperationCallExpImpl implements MappingC
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int IS_STRICT_EFLAG = 1 << 10;
+	protected static final int IS_STRICT_EFLAG = 1 << 11;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -125,7 +124,7 @@ public class MappingCallExpImpl extends OperationCallExpImpl implements MappingC
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ExpressionsPackage.MAPPING_CALL_EXP__IS_STRICT:
-				return isIsStrict() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsStrict();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -139,7 +138,7 @@ public class MappingCallExpImpl extends OperationCallExpImpl implements MappingC
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ExpressionsPackage.MAPPING_CALL_EXP__IS_STRICT:
-				setIsStrict(((Boolean)newValue).booleanValue());
+				setIsStrict((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

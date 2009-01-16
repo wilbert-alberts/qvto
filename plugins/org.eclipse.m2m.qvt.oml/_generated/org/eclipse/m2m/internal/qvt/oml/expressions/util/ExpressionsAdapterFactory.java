@@ -30,6 +30,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeCallExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeExpression;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
@@ -142,20 +143,16 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createModuleImportAdapter();
 			}
 			@Override
-			public Adapter caseClass(org.eclipse.m2m.internal.qvt.oml.expressions.Class object) {
-				return createClassAdapter();
-			}
-			@Override
 			public Adapter caseContextualProperty(ContextualProperty object) {
 				return createContextualPropertyAdapter();
 			}
 			@Override
-			public Adapter caseImperativeOperation(ImperativeOperation object) {
-				return createImperativeOperationAdapter();
+			public Adapter caseImperativeCallExp(ImperativeCallExp object) {
+				return createImperativeCallExpAdapter();
 			}
 			@Override
-			public Adapter caseModelParameter(ModelParameter object) {
-				return createModelParameterAdapter();
+			public Adapter caseImperativeOperation(ImperativeOperation object) {
+				return createImperativeOperationAdapter();
 			}
 			@Override
 			public Adapter caseVarParameter(VarParameter object) {
@@ -170,14 +167,6 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createConstructorBodyAdapter();
 			}
 			@Override
-			public Adapter caseMappingOperation(MappingOperation object) {
-				return createMappingOperationAdapter();
-			}
-			@Override
-			public Adapter caseHelper(Helper object) {
-				return createHelperAdapter();
-			}
-			@Override
 			public Adapter caseMappingBody(MappingBody object) {
 				return createMappingBodyAdapter();
 			}
@@ -186,12 +175,24 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createMappingCallExpAdapter();
 			}
 			@Override
-			public Adapter caseObjectExp(ObjectExp object) {
-				return createObjectExpAdapter();
+			public Adapter caseMappingOperation(MappingOperation object) {
+				return createMappingOperationAdapter();
 			}
 			@Override
-			public <T> Adapter caseExtendedVisitor(ExtendedVisitor<T> object) {
-				return createExtendedVisitorAdapter();
+			public Adapter caseMappingParameter(MappingParameter object) {
+				return createMappingParameterAdapter();
+			}
+			@Override
+			public Adapter caseModelParameter(ModelParameter object) {
+				return createModelParameterAdapter();
+			}
+			@Override
+			public Adapter caseHelper(Helper object) {
+				return createHelperAdapter();
+			}
+			@Override
+			public Adapter caseObjectExp(ObjectExp object) {
+				return createObjectExpAdapter();
 			}
 			@Override
 			public Adapter caseVisitableASTNode(VisitableASTNode object) {
@@ -210,16 +211,16 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createModelTypeAdapter();
 			}
 			@Override
-			public Adapter caseMappingParameter(MappingParameter object) {
-				return createMappingParameterAdapter();
-			}
-			@Override
 			public Adapter caseOperationalTransformation(OperationalTransformation object) {
 				return createOperationalTransformationAdapter();
 			}
 			@Override
 			public Adapter caseEntryOperation(EntryOperation object) {
 				return createEntryOperationAdapter();
+			}
+			@Override
+			public <T> Adapter caseExtendedVisitor(ExtendedVisitor<T> object) {
+				return createExtendedVisitorAdapter();
 			}
 			@Override
 			public Adapter caseEModelElement(EModelElement object) {
@@ -258,28 +259,8 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createEStructuralFeatureAdapter();
 			}
 			@Override
-			public Adapter caseEOperation(EOperation object) {
-				return createEOperationAdapter();
-			}
-			@Override
 			public <C> Adapter caseTypedElement(TypedElement<C> object) {
 				return createTypedElementAdapter();
-			}
-			@Override
-			public Adapter caseTypedASTNode(TypedASTNode object) {
-				return createTypedASTNodeAdapter();
-			}
-			@Override
-			public <C, PM> Adapter caseVariable(Variable<C, PM> object) {
-				return createVariableAdapter();
-			}
-			@Override
-			public Adapter caseEcore_Variable(org.eclipse.ocl.ecore.Variable object) {
-				return createEcore_VariableAdapter();
-			}
-			@Override
-			public Adapter caseEParameter(EParameter object) {
-				return createEParameterAdapter();
 			}
 			@Override
 			public <C> Adapter caseOCLExpression(OCLExpression<C> object) {
@@ -320,6 +301,26 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseImperativeExpression(ImperativeExpression object) {
 				return createImperativeExpressionAdapter();
+			}
+			@Override
+			public Adapter caseEOperation(EOperation object) {
+				return createEOperationAdapter();
+			}
+			@Override
+			public Adapter caseTypedASTNode(TypedASTNode object) {
+				return createTypedASTNodeAdapter();
+			}
+			@Override
+			public <C, PM> Adapter caseVariable(Variable<C, PM> object) {
+				return createVariableAdapter();
+			}
+			@Override
+			public Adapter caseEcore_Variable(org.eclipse.ocl.ecore.Variable object) {
+				return createEcore_VariableAdapter();
+			}
+			@Override
+			public Adapter caseEParameter(EParameter object) {
+				return createEParameterAdapter();
 			}
 			@Override
 			public Adapter caseInstantiationExp(InstantiationExp object) {
@@ -410,20 +411,6 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Class <em>Class</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.Class
-	 * @generated
-	 */
-	public Adapter createClassAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty <em>Contextual Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -434,6 +421,20 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createContextualPropertyAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeCallExp <em>Imperative Call Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeCallExp
+	 * @generated
+	 */
+	public Adapter createImperativeCallExpAdapter() {
 		return null;
 	}
 

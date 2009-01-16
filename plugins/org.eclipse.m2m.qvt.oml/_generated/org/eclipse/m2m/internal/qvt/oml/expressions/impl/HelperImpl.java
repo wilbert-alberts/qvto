@@ -124,7 +124,7 @@ public class HelperImpl extends ImperativeOperationImpl implements Helper {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ExpressionsPackage.HELPER__IS_QUERY:
-				return isIsQuery() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsQuery();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -138,7 +138,7 @@ public class HelperImpl extends ImperativeOperationImpl implements Helper {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ExpressionsPackage.HELPER__IS_QUERY:
-				setIsQuery(((Boolean)newValue).booleanValue());
+				setIsQuery((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

@@ -37,8 +37,8 @@ import org.eclipse.ocl.utilities.Visitor;
  * <ul>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.VarParameterImpl#getEOperation <em>EOperation</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.VarParameterImpl#getCtxOwner <em>Ctx Owner</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.VarParameterImpl#getResOwner <em>Res Owner</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.VarParameterImpl#getKind <em>Kind</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.VarParameterImpl#getResOwner <em>Res Owner</em>}</li>
  * </ul>
  * </p>
  *
@@ -97,7 +97,7 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	 * @generated
 	 */
 	public EOperation getEOperation() {
-		if (eContainerFeatureID != ExpressionsPackage.VAR_PARAMETER__EOPERATION) return null;
+		if (eContainerFeatureID() != ExpressionsPackage.VAR_PARAMETER__EOPERATION) return null;
 		return (EOperation)eContainer();
 	}
 
@@ -107,7 +107,7 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	 * @generated
 	 */
 	public ImperativeOperation getCtxOwner() {
-		if (eContainerFeatureID != ExpressionsPackage.VAR_PARAMETER__CTX_OWNER) return null;
+		if (eContainerFeatureID() != ExpressionsPackage.VAR_PARAMETER__CTX_OWNER) return null;
 		return (ImperativeOperation)eContainer();
 	}
 
@@ -127,7 +127,7 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	 * @generated
 	 */
 	public void setCtxOwner(ImperativeOperation newCtxOwner) {
-		if (newCtxOwner != eInternalContainer() || (eContainerFeatureID != ExpressionsPackage.VAR_PARAMETER__CTX_OWNER && newCtxOwner != null)) {
+		if (newCtxOwner != eInternalContainer() || (eContainerFeatureID() != ExpressionsPackage.VAR_PARAMETER__CTX_OWNER && newCtxOwner != null)) {
 			if (EcoreUtil.isAncestor(this, newCtxOwner))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
 			NotificationChain msgs = null;
@@ -148,7 +148,7 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	 * @generated
 	 */
 	public ImperativeOperation getResOwner() {
-		if (eContainerFeatureID != ExpressionsPackage.VAR_PARAMETER__RES_OWNER) return null;
+		if (eContainerFeatureID() != ExpressionsPackage.VAR_PARAMETER__RES_OWNER) return null;
 		return (ImperativeOperation)eContainer();
 	}
 
@@ -168,7 +168,7 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	 * @generated
 	 */
 	public void setResOwner(ImperativeOperation newResOwner) {
-		if (newResOwner != eInternalContainer() || (eContainerFeatureID != ExpressionsPackage.VAR_PARAMETER__RES_OWNER && newResOwner != null)) {
+		if (newResOwner != eInternalContainer() || (eContainerFeatureID() != ExpressionsPackage.VAR_PARAMETER__RES_OWNER && newResOwner != null)) {
 			if (EcoreUtil.isAncestor(this, newResOwner))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
 			NotificationChain msgs = null;
@@ -268,7 +268,7 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	 */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID) {
+		switch (eContainerFeatureID()) {
 			case ExpressionsPackage.VAR_PARAMETER__EOPERATION:
 				return eInternalContainer().eInverseRemove(this, EcorePackage.EOPERATION__EPARAMETERS, EOperation.class, msgs);
 			case ExpressionsPackage.VAR_PARAMETER__CTX_OWNER:
@@ -291,10 +291,10 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 				return getEOperation();
 			case ExpressionsPackage.VAR_PARAMETER__CTX_OWNER:
 				return getCtxOwner();
-			case ExpressionsPackage.VAR_PARAMETER__RES_OWNER:
-				return getResOwner();
 			case ExpressionsPackage.VAR_PARAMETER__KIND:
 				return getKind();
+			case ExpressionsPackage.VAR_PARAMETER__RES_OWNER:
+				return getResOwner();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -310,11 +310,11 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 			case ExpressionsPackage.VAR_PARAMETER__CTX_OWNER:
 				setCtxOwner((ImperativeOperation)newValue);
 				return;
-			case ExpressionsPackage.VAR_PARAMETER__RES_OWNER:
-				setResOwner((ImperativeOperation)newValue);
-				return;
 			case ExpressionsPackage.VAR_PARAMETER__KIND:
 				setKind((DirectionKind)newValue);
+				return;
+			case ExpressionsPackage.VAR_PARAMETER__RES_OWNER:
+				setResOwner((ImperativeOperation)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -331,11 +331,11 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 			case ExpressionsPackage.VAR_PARAMETER__CTX_OWNER:
 				setCtxOwner((ImperativeOperation)null);
 				return;
-			case ExpressionsPackage.VAR_PARAMETER__RES_OWNER:
-				setResOwner((ImperativeOperation)null);
-				return;
 			case ExpressionsPackage.VAR_PARAMETER__KIND:
 				setKind(KIND_EDEFAULT);
+				return;
+			case ExpressionsPackage.VAR_PARAMETER__RES_OWNER:
+				setResOwner((ImperativeOperation)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -353,10 +353,10 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 				return getEOperation() != null;
 			case ExpressionsPackage.VAR_PARAMETER__CTX_OWNER:
 				return getCtxOwner() != null;
-			case ExpressionsPackage.VAR_PARAMETER__RES_OWNER:
-				return getResOwner() != null;
 			case ExpressionsPackage.VAR_PARAMETER__KIND:
 				return kind != KIND_EDEFAULT;
+			case ExpressionsPackage.VAR_PARAMETER__RES_OWNER:
+				return getResOwner() != null;
 		}
 		return super.eIsSet(featureID);
 	}

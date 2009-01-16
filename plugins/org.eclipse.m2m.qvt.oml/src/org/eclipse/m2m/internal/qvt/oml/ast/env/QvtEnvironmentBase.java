@@ -85,7 +85,7 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVTOEnviro
      * Implicit variables are generated when there is an iterator without any
      * iteration variable specified.
      */
-    private List<Variable<EClassifier, EParameter>> myImplicitVars = new LinkedList<Variable<EClassifier, EParameter>>();
+    private List<org.eclipse.ocl.ecore.Variable> myImplicitVars = new LinkedList<org.eclipse.ocl.ecore.Variable>();
 
     private QVTUMLReflection fQVUMLReflection;
 	private List<QvtEnvironmentBase> siblings;
@@ -112,22 +112,23 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVTOEnviro
 	
     @Override
     protected void addedVariable(String name, Variable<EClassifier, EParameter> elem, boolean isExplicit) {
+    	org.eclipse.ocl.ecore.Variable elemVar = (org.eclipse.ocl.ecore.Variable) elem;    	
         if(!isExplicit) {
-            myImplicitVars.add(elem);
+            myImplicitVars.add(elemVar);
         }
         
-        if(elem instanceof VarParameter == false) {
+        if(elemVar instanceof VarParameter == false) {
             if(getContextOperation() instanceof ImperativeOperation) {
                 ImperativeOperation imperativeOperation = (ImperativeOperation) getContextOperation();
-                if(elem.eContainer() == null) {
+                if(elemVar.eContainer() == null) {
                     if (imperativeOperation.getBody() != null) {
-                        imperativeOperation.getBody().getVariable().add(elem);
+                        imperativeOperation.getBody().getVariable().add((org.eclipse.ocl.ecore.Variable)elemVar);
                     } else {
-                        super.addedVariable(name, elem, isExplicit);
+                        super.addedVariable(name, elemVar, isExplicit);
                     }
                 }
             } else {
-                super.addedVariable(name, elem, isExplicit);
+                super.addedVariable(name, elemVar, isExplicit);
             }
         } 
     }
@@ -141,7 +142,7 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVTOEnviro
         super.removedVariable(name, variable, isExplicit);
     }
     
-    public Collection<Variable<EClassifier, EParameter>> getImplicitVariables() {
+    public Collection<org.eclipse.ocl.ecore.Variable> getImplicitVariables() {
         return Collections.unmodifiableCollection(myImplicitVars);
     }
 

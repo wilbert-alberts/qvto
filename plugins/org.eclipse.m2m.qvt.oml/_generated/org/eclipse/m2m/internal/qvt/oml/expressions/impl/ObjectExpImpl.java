@@ -14,15 +14,13 @@ package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp;
-import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.ecore.Variable;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -63,7 +61,7 @@ public class ObjectExpImpl extends InstantiationExpImpl implements ObjectExp {
 	 * @generated
 	 * @ordered
 	 */
-	protected Variable<EClassifier, EParameter> referredObject;
+	protected Variable referredObject;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -133,10 +131,10 @@ public class ObjectExpImpl extends InstantiationExpImpl implements ObjectExp {
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
-	public Variable<EClassifier, EParameter> getReferredObject() {
+	public Variable getReferredObject() {
 		if (referredObject != null && referredObject.eIsProxy()) {
 			InternalEObject oldReferredObject = (InternalEObject)referredObject;
-			referredObject = (Variable<EClassifier, EParameter>)eResolveProxy(oldReferredObject);
+			referredObject = (Variable)eResolveProxy(oldReferredObject);
 			if (referredObject != oldReferredObject) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ExpressionsPackage.OBJECT_EXP__REFERRED_OBJECT, oldReferredObject, referredObject));
@@ -150,7 +148,7 @@ public class ObjectExpImpl extends InstantiationExpImpl implements ObjectExp {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Variable<EClassifier, EParameter> basicGetReferredObject() {
+	public Variable basicGetReferredObject() {
 		return referredObject;
 	}
 
@@ -159,8 +157,8 @@ public class ObjectExpImpl extends InstantiationExpImpl implements ObjectExp {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setReferredObject(Variable<EClassifier, EParameter> newReferredObject) {
-		Variable<EClassifier, EParameter> oldReferredObject = referredObject;
+	public void setReferredObject(Variable newReferredObject) {
+		Variable oldReferredObject = referredObject;
 		referredObject = newReferredObject;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.OBJECT_EXP__REFERRED_OBJECT, oldReferredObject, referredObject));
@@ -225,7 +223,7 @@ public class ObjectExpImpl extends InstantiationExpImpl implements ObjectExp {
 				setBody((ConstructorBody)newValue);
 				return;
 			case ExpressionsPackage.OBJECT_EXP__REFERRED_OBJECT:
-				setReferredObject((Variable<EClassifier, EParameter>)newValue);
+				setReferredObject((Variable)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -243,7 +241,7 @@ public class ObjectExpImpl extends InstantiationExpImpl implements ObjectExp {
 				setBody((ConstructorBody)null);
 				return;
 			case ExpressionsPackage.OBJECT_EXP__REFERRED_OBJECT:
-				setReferredObject((Variable<EClassifier, EParameter>)null);
+				setReferredObject((Variable)null);
 				return;
 		}
 		super.eUnset(featureID);

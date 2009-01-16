@@ -16,6 +16,7 @@ import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EFactory;
@@ -58,12 +59,14 @@ import org.eclipse.ocl.utilities.Visitor;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getESuperPackage <em>ESuper Package</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getStartPosition <em>Start Position</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getEndPosition <em>End Position</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getOwnedVariable <em>Owned Variable</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getModuleImport <em>Module Import</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getUsedModelType <em>Used Model Type</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getConfigProperty <em>Config Property</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getOwnedRenaming <em>Owned Renaming</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getEntry <em>Entry</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#isIsBlackbox <em>Is Blackbox</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getModuleImport <em>Module Import</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getOwnedTag <em>Owned Tag</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getOwnedVariable <em>Owned Variable</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getUsedModelType <em>Used Model Type</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getOwnedRenaming <em>Owned Renaming</em>}</li>
  * </ul>
  * </p>
  *
@@ -188,14 +191,53 @@ public class ModuleImpl extends EClassImpl implements Module {
 	protected int endPosition = END_POSITION_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getOwnedVariable() <em>Owned Variable</em>}' containment reference list.
+	 * The cached value of the '{@link #getConfigProperty() <em>Config Property</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getOwnedVariable()
+	 * @see #getConfigProperty()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Variable> ownedVariable;
+	protected EList<EStructuralFeature> configProperty;
+
+	/**
+	 * The cached value of the '{@link #getEntry() <em>Entry</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getEntry()
+	 * @generated
+	 * @ordered
+	 */
+	protected EntryOperation entry;
+
+	/**
+	 * The default value of the '{@link #isIsBlackbox() <em>Is Blackbox</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsBlackbox()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean IS_BLACKBOX_EDEFAULT = false;
+
+	/**
+	 * The flag representing the value of the '{@link #isIsBlackbox() <em>Is Blackbox</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsBlackbox()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int IS_BLACKBOX_EFLAG = 1 << 10;
+
+	/**
+	 * The flag representing whether the Is Blackbox attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int IS_BLACKBOX_ESETFLAG = 1 << 11;
 
 	/**
 	 * The cached value of the '{@link #getModuleImport() <em>Module Import</em>}' containment reference list.
@@ -208,6 +250,26 @@ public class ModuleImpl extends EClassImpl implements Module {
 	protected EList<ModuleImport> moduleImport;
 
 	/**
+	 * The cached value of the '{@link #getOwnedTag() <em>Owned Tag</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOwnedTag()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<EAnnotation> ownedTag;
+
+	/**
+	 * The cached value of the '{@link #getOwnedVariable() <em>Owned Variable</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOwnedVariable()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Variable> ownedVariable;
+
+	/**
 	 * The cached value of the '{@link #getUsedModelType() <em>Used Model Type</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -218,16 +280,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 	protected EList<ModelType> usedModelType;
 
 	/**
-	 * The cached value of the '{@link #getConfigProperty() <em>Config Property</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getConfigProperty()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<EStructuralFeature> configProperty;
-
-	/**
 	 * The cached value of the '{@link #getOwnedRenaming() <em>Owned Renaming</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -236,16 +288,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * @ordered
 	 */
 	protected EList<Rename> ownedRenaming;
-
-	/**
-	 * The cached value of the '{@link #getEntry() <em>Entry</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getEntry()
-	 * @generated
-	 * @ordered
-	 */
-	protected EntryOperation entry;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -381,7 +423,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * @generated
 	 */
 	public EPackage getESuperPackage() {
-		if (eContainerFeatureID != ExpressionsPackage.MODULE__ESUPER_PACKAGE) return null;
+		if (eContainerFeatureID() != ExpressionsPackage.MODULE__ESUPER_PACKAGE) return null;
 		return (EPackage)eContainer();
 	}
 
@@ -391,7 +433,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * @generated
 	 */
 	public EPackage basicGetESuperPackage() {
-		if (eContainerFeatureID != ExpressionsPackage.MODULE__ESUPER_PACKAGE) return null;
+		if (eContainerFeatureID() != ExpressionsPackage.MODULE__ESUPER_PACKAGE) return null;
 		return (EPackage)eInternalContainer();
 	}
 
@@ -504,6 +546,52 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isIsBlackbox() {
+		return (eFlags & IS_BLACKBOX_EFLAG) != 0;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIsBlackbox(boolean newIsBlackbox) {
+		boolean oldIsBlackbox = (eFlags & IS_BLACKBOX_EFLAG) != 0;
+		if (newIsBlackbox) eFlags |= IS_BLACKBOX_EFLAG; else eFlags &= ~IS_BLACKBOX_EFLAG;
+		boolean oldIsBlackboxESet = (eFlags & IS_BLACKBOX_ESETFLAG) != 0;
+		eFlags |= IS_BLACKBOX_ESETFLAG;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.MODULE__IS_BLACKBOX, oldIsBlackbox, newIsBlackbox, !oldIsBlackboxESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetIsBlackbox() {
+		boolean oldIsBlackbox = (eFlags & IS_BLACKBOX_EFLAG) != 0;
+		boolean oldIsBlackboxESet = (eFlags & IS_BLACKBOX_ESETFLAG) != 0;
+		if (IS_BLACKBOX_EDEFAULT) eFlags |= IS_BLACKBOX_EFLAG; else eFlags &= ~IS_BLACKBOX_EFLAG;
+		eFlags &= ~IS_BLACKBOX_ESETFLAG;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ExpressionsPackage.MODULE__IS_BLACKBOX, oldIsBlackbox, IS_BLACKBOX_EDEFAULT, oldIsBlackboxESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetIsBlackbox() {
+		return (eFlags & IS_BLACKBOX_ESETFLAG) != 0;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EList<EStructuralFeature> getConfigProperty() {
 		if (configProperty == null) {
 			configProperty = new EObjectResolvingEList<EStructuralFeature>(EStructuralFeature.class, this, ExpressionsPackage.MODULE__CONFIG_PROPERTY);
@@ -521,6 +609,18 @@ public class ModuleImpl extends EClassImpl implements Module {
 			moduleImport = new EObjectContainmentWithInverseEList<ModuleImport>(ModuleImport.class, this, ExpressionsPackage.MODULE__MODULE_IMPORT, ExpressionsPackage.MODULE_IMPORT__MODULE);
 		}
 		return moduleImport;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<EAnnotation> getOwnedTag() {
+		if (ownedTag == null) {
+			ownedTag = new EObjectContainmentEList<EAnnotation>(EAnnotation.class, this, ExpressionsPackage.MODULE__OWNED_TAG);
+		}
+		return ownedTag;
 	}
 
 	/**
@@ -607,10 +707,12 @@ public class ModuleImpl extends EClassImpl implements Module {
 				return ((InternalEList<?>)getESubpackages()).basicRemove(otherEnd, msgs);
 			case ExpressionsPackage.MODULE__ESUPER_PACKAGE:
 				return eBasicSetContainer(null, ExpressionsPackage.MODULE__ESUPER_PACKAGE, msgs);
-			case ExpressionsPackage.MODULE__OWNED_VARIABLE:
-				return ((InternalEList<?>)getOwnedVariable()).basicRemove(otherEnd, msgs);
 			case ExpressionsPackage.MODULE__MODULE_IMPORT:
 				return ((InternalEList<?>)getModuleImport()).basicRemove(otherEnd, msgs);
+			case ExpressionsPackage.MODULE__OWNED_TAG:
+				return ((InternalEList<?>)getOwnedTag()).basicRemove(otherEnd, msgs);
+			case ExpressionsPackage.MODULE__OWNED_VARIABLE:
+				return ((InternalEList<?>)getOwnedVariable()).basicRemove(otherEnd, msgs);
 			case ExpressionsPackage.MODULE__OWNED_RENAMING:
 				return ((InternalEList<?>)getOwnedRenaming()).basicRemove(otherEnd, msgs);
 		}
@@ -624,7 +726,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID) {
+		switch (eContainerFeatureID()) {
 			case ExpressionsPackage.MODULE__ESUPER_PACKAGE:
 				return eInternalContainer().eInverseRemove(this, EcorePackage.EPACKAGE__ESUBPACKAGES, EPackage.class, msgs);
 		}
@@ -653,22 +755,26 @@ public class ModuleImpl extends EClassImpl implements Module {
 				if (resolve) return getESuperPackage();
 				return basicGetESuperPackage();
 			case ExpressionsPackage.MODULE__START_POSITION:
-				return new Integer(getStartPosition());
+				return getStartPosition();
 			case ExpressionsPackage.MODULE__END_POSITION:
-				return new Integer(getEndPosition());
-			case ExpressionsPackage.MODULE__OWNED_VARIABLE:
-				return getOwnedVariable();
-			case ExpressionsPackage.MODULE__MODULE_IMPORT:
-				return getModuleImport();
-			case ExpressionsPackage.MODULE__USED_MODEL_TYPE:
-				return getUsedModelType();
+				return getEndPosition();
 			case ExpressionsPackage.MODULE__CONFIG_PROPERTY:
 				return getConfigProperty();
-			case ExpressionsPackage.MODULE__OWNED_RENAMING:
-				return getOwnedRenaming();
 			case ExpressionsPackage.MODULE__ENTRY:
 				if (resolve) return getEntry();
 				return basicGetEntry();
+			case ExpressionsPackage.MODULE__IS_BLACKBOX:
+				return isIsBlackbox();
+			case ExpressionsPackage.MODULE__MODULE_IMPORT:
+				return getModuleImport();
+			case ExpressionsPackage.MODULE__OWNED_TAG:
+				return getOwnedTag();
+			case ExpressionsPackage.MODULE__OWNED_VARIABLE:
+				return getOwnedVariable();
+			case ExpressionsPackage.MODULE__USED_MODEL_TYPE:
+				return getUsedModelType();
+			case ExpressionsPackage.MODULE__OWNED_RENAMING:
+				return getOwnedRenaming();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -700,33 +806,40 @@ public class ModuleImpl extends EClassImpl implements Module {
 				getESubpackages().addAll((Collection<? extends EPackage>)newValue);
 				return;
 			case ExpressionsPackage.MODULE__START_POSITION:
-				setStartPosition(((Integer)newValue).intValue());
+				setStartPosition((Integer)newValue);
 				return;
 			case ExpressionsPackage.MODULE__END_POSITION:
-				setEndPosition(((Integer)newValue).intValue());
-				return;
-			case ExpressionsPackage.MODULE__OWNED_VARIABLE:
-				getOwnedVariable().clear();
-				getOwnedVariable().addAll((Collection<? extends Variable>)newValue);
-				return;
-			case ExpressionsPackage.MODULE__MODULE_IMPORT:
-				getModuleImport().clear();
-				getModuleImport().addAll((Collection<? extends ModuleImport>)newValue);
-				return;
-			case ExpressionsPackage.MODULE__USED_MODEL_TYPE:
-				getUsedModelType().clear();
-				getUsedModelType().addAll((Collection<? extends ModelType>)newValue);
+				setEndPosition((Integer)newValue);
 				return;
 			case ExpressionsPackage.MODULE__CONFIG_PROPERTY:
 				getConfigProperty().clear();
 				getConfigProperty().addAll((Collection<? extends EStructuralFeature>)newValue);
 				return;
+			case ExpressionsPackage.MODULE__ENTRY:
+				setEntry((EntryOperation)newValue);
+				return;
+			case ExpressionsPackage.MODULE__IS_BLACKBOX:
+				setIsBlackbox((Boolean)newValue);
+				return;
+			case ExpressionsPackage.MODULE__MODULE_IMPORT:
+				getModuleImport().clear();
+				getModuleImport().addAll((Collection<? extends ModuleImport>)newValue);
+				return;
+			case ExpressionsPackage.MODULE__OWNED_TAG:
+				getOwnedTag().clear();
+				getOwnedTag().addAll((Collection<? extends EAnnotation>)newValue);
+				return;
+			case ExpressionsPackage.MODULE__OWNED_VARIABLE:
+				getOwnedVariable().clear();
+				getOwnedVariable().addAll((Collection<? extends Variable>)newValue);
+				return;
+			case ExpressionsPackage.MODULE__USED_MODEL_TYPE:
+				getUsedModelType().clear();
+				getUsedModelType().addAll((Collection<? extends ModelType>)newValue);
+				return;
 			case ExpressionsPackage.MODULE__OWNED_RENAMING:
 				getOwnedRenaming().clear();
 				getOwnedRenaming().addAll((Collection<? extends Rename>)newValue);
-				return;
-			case ExpressionsPackage.MODULE__ENTRY:
-				setEntry((EntryOperation)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -761,23 +874,29 @@ public class ModuleImpl extends EClassImpl implements Module {
 			case ExpressionsPackage.MODULE__END_POSITION:
 				setEndPosition(END_POSITION_EDEFAULT);
 				return;
-			case ExpressionsPackage.MODULE__OWNED_VARIABLE:
-				getOwnedVariable().clear();
+			case ExpressionsPackage.MODULE__CONFIG_PROPERTY:
+				getConfigProperty().clear();
+				return;
+			case ExpressionsPackage.MODULE__ENTRY:
+				setEntry((EntryOperation)null);
+				return;
+			case ExpressionsPackage.MODULE__IS_BLACKBOX:
+				unsetIsBlackbox();
 				return;
 			case ExpressionsPackage.MODULE__MODULE_IMPORT:
 				getModuleImport().clear();
 				return;
+			case ExpressionsPackage.MODULE__OWNED_TAG:
+				getOwnedTag().clear();
+				return;
+			case ExpressionsPackage.MODULE__OWNED_VARIABLE:
+				getOwnedVariable().clear();
+				return;
 			case ExpressionsPackage.MODULE__USED_MODEL_TYPE:
 				getUsedModelType().clear();
 				return;
-			case ExpressionsPackage.MODULE__CONFIG_PROPERTY:
-				getConfigProperty().clear();
-				return;
 			case ExpressionsPackage.MODULE__OWNED_RENAMING:
 				getOwnedRenaming().clear();
-				return;
-			case ExpressionsPackage.MODULE__ENTRY:
-				setEntry((EntryOperation)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -807,18 +926,22 @@ public class ModuleImpl extends EClassImpl implements Module {
 				return startPosition != START_POSITION_EDEFAULT;
 			case ExpressionsPackage.MODULE__END_POSITION:
 				return endPosition != END_POSITION_EDEFAULT;
-			case ExpressionsPackage.MODULE__OWNED_VARIABLE:
-				return ownedVariable != null && !ownedVariable.isEmpty();
-			case ExpressionsPackage.MODULE__MODULE_IMPORT:
-				return moduleImport != null && !moduleImport.isEmpty();
-			case ExpressionsPackage.MODULE__USED_MODEL_TYPE:
-				return usedModelType != null && !usedModelType.isEmpty();
 			case ExpressionsPackage.MODULE__CONFIG_PROPERTY:
 				return configProperty != null && !configProperty.isEmpty();
-			case ExpressionsPackage.MODULE__OWNED_RENAMING:
-				return ownedRenaming != null && !ownedRenaming.isEmpty();
 			case ExpressionsPackage.MODULE__ENTRY:
 				return entry != null;
+			case ExpressionsPackage.MODULE__IS_BLACKBOX:
+				return isSetIsBlackbox();
+			case ExpressionsPackage.MODULE__MODULE_IMPORT:
+				return moduleImport != null && !moduleImport.isEmpty();
+			case ExpressionsPackage.MODULE__OWNED_TAG:
+				return ownedTag != null && !ownedTag.isEmpty();
+			case ExpressionsPackage.MODULE__OWNED_VARIABLE:
+				return ownedVariable != null && !ownedVariable.isEmpty();
+			case ExpressionsPackage.MODULE__USED_MODEL_TYPE:
+				return usedModelType != null && !usedModelType.isEmpty();
+			case ExpressionsPackage.MODULE__OWNED_RENAMING:
+				return ownedRenaming != null && !ownedRenaming.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -940,6 +1063,8 @@ public class ModuleImpl extends EClassImpl implements Module {
 		result.append(startPosition);
 		result.append(", endPosition: "); //$NON-NLS-1$
 		result.append(endPosition);
+		result.append(", isBlackbox: "); //$NON-NLS-1$
+		if ((eFlags & IS_BLACKBOX_ESETFLAG) != 0) result.append((eFlags & IS_BLACKBOX_EFLAG) != 0); else result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

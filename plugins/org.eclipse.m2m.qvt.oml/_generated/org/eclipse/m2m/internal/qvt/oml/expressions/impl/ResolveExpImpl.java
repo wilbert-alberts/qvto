@@ -9,23 +9,21 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ResolveExpImpl.java,v 1.3 2009/01/11 23:22:09 radvorak Exp $
+ * $Id: ResolveExpImpl.java,v 1.4 2009/01/16 13:52:55 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
+import org.eclipse.ocl.ecore.OCLExpression;
+import org.eclipse.ocl.ecore.Variable;
 import org.eclipse.ocl.ecore.impl.CallExpImpl;
-import org.eclipse.ocl.expressions.OCLExpression;
-import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -35,11 +33,11 @@ import org.eclipse.ocl.utilities.Visitor;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ResolveExpImpl#isOne <em>One</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ResolveExpImpl#isIsInverse <em>Is Inverse</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ResolveExpImpl#isIsDeferred <em>Is Deferred</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ResolveExpImpl#getTarget <em>Target</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ResolveExpImpl#getCondition <em>Condition</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ResolveExpImpl#isIsDeferred <em>Is Deferred</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ResolveExpImpl#isIsInverse <em>Is Inverse</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ResolveExpImpl#isOne <em>One</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ResolveExpImpl#getTarget <em>Target</em>}</li>
  * </ul>
  * </p>
  *
@@ -54,24 +52,34 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
 	/**
-	 * The default value of the '{@link #isOne() <em>One</em>}' attribute.
+	 * The cached value of the '{@link #getCondition() <em>Condition</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isOne()
+	 * @see #getCondition()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean ONE_EDEFAULT = false;
+	protected OCLExpression condition;
 
 	/**
-	 * The flag representing the value of the '{@link #isOne() <em>One</em>}' attribute.
+	 * The default value of the '{@link #isIsDeferred() <em>Is Deferred</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isOne()
+	 * @see #isIsDeferred()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int ONE_EFLAG = 1 << 10;
+	protected static final boolean IS_DEFERRED_EDEFAULT = false;
+
+	/**
+	 * The flag representing the value of the '{@link #isIsDeferred() <em>Is Deferred</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsDeferred()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int IS_DEFERRED_EFLAG = 1 << 10;
 
 	/**
 	 * The default value of the '{@link #isIsInverse() <em>Is Inverse</em>}' attribute.
@@ -94,24 +102,24 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	protected static final int IS_INVERSE_EFLAG = 1 << 11;
 
 	/**
-	 * The default value of the '{@link #isIsDeferred() <em>Is Deferred</em>}' attribute.
+	 * The default value of the '{@link #isOne() <em>One</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isIsDeferred()
+	 * @see #isOne()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean IS_DEFERRED_EDEFAULT = false;
+	protected static final boolean ONE_EDEFAULT = false;
 
 	/**
-	 * The flag representing the value of the '{@link #isIsDeferred() <em>Is Deferred</em>}' attribute.
+	 * The flag representing the value of the '{@link #isOne() <em>One</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isIsDeferred()
+	 * @see #isOne()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int IS_DEFERRED_EFLAG = 1 << 12;
+	protected static final int ONE_EFLAG = 1 << 12;
 
 	/**
 	 * The cached value of the '{@link #getTarget() <em>Target</em>}' containment reference.
@@ -121,17 +129,7 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	 * @generated
 	 * @ordered
 	 */
-	protected Variable<EClassifier, EParameter> target;
-
-	/**
-	 * The cached value of the '{@link #getCondition() <em>Condition</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCondition()
-	 * @generated
-	 * @ordered
-	 */
-	protected OCLExpression<EClassifier> condition;
+	protected Variable target;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -220,7 +218,7 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Variable<EClassifier, EParameter> getTarget() {
+	public Variable getTarget() {
 		return target;
 	}
 
@@ -229,8 +227,8 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetTarget(Variable<EClassifier, EParameter> newTarget, NotificationChain msgs) {
-		Variable<EClassifier, EParameter> oldTarget = target;
+	public NotificationChain basicSetTarget(Variable newTarget, NotificationChain msgs) {
+		Variable oldTarget = target;
 		target = newTarget;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpressionsPackage.RESOLVE_EXP__TARGET, oldTarget, newTarget);
@@ -244,7 +242,7 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setTarget(Variable<EClassifier, EParameter> newTarget) {
+	public void setTarget(Variable newTarget) {
 		if (newTarget != target) {
 			NotificationChain msgs = null;
 			if (target != null)
@@ -263,7 +261,7 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public OCLExpression<EClassifier> getCondition() {
+	public OCLExpression getCondition() {
 		return condition;
 	}
 
@@ -272,8 +270,8 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetCondition(OCLExpression<EClassifier> newCondition, NotificationChain msgs) {
-		OCLExpression<EClassifier> oldCondition = condition;
+	public NotificationChain basicSetCondition(OCLExpression newCondition, NotificationChain msgs) {
+		OCLExpression oldCondition = condition;
 		condition = newCondition;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpressionsPackage.RESOLVE_EXP__CONDITION, oldCondition, newCondition);
@@ -287,7 +285,7 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setCondition(OCLExpression<EClassifier> newCondition) {
+	public void setCondition(OCLExpression newCondition) {
 		if (newCondition != condition) {
 			NotificationChain msgs = null;
 			if (condition != null)
@@ -324,10 +322,10 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ExpressionsPackage.RESOLVE_EXP__TARGET:
-				return basicSetTarget(null, msgs);
 			case ExpressionsPackage.RESOLVE_EXP__CONDITION:
 				return basicSetCondition(null, msgs);
+			case ExpressionsPackage.RESOLVE_EXP__TARGET:
+				return basicSetTarget(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -340,16 +338,16 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ExpressionsPackage.RESOLVE_EXP__ONE:
-				return isOne() ? Boolean.TRUE : Boolean.FALSE;
-			case ExpressionsPackage.RESOLVE_EXP__IS_INVERSE:
-				return isIsInverse() ? Boolean.TRUE : Boolean.FALSE;
-			case ExpressionsPackage.RESOLVE_EXP__IS_DEFERRED:
-				return isIsDeferred() ? Boolean.TRUE : Boolean.FALSE;
-			case ExpressionsPackage.RESOLVE_EXP__TARGET:
-				return getTarget();
 			case ExpressionsPackage.RESOLVE_EXP__CONDITION:
 				return getCondition();
+			case ExpressionsPackage.RESOLVE_EXP__IS_DEFERRED:
+				return isIsDeferred();
+			case ExpressionsPackage.RESOLVE_EXP__IS_INVERSE:
+				return isIsInverse();
+			case ExpressionsPackage.RESOLVE_EXP__ONE:
+				return isOne();
+			case ExpressionsPackage.RESOLVE_EXP__TARGET:
+				return getTarget();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -363,20 +361,20 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ExpressionsPackage.RESOLVE_EXP__ONE:
-				setOne(((Boolean)newValue).booleanValue());
-				return;
-			case ExpressionsPackage.RESOLVE_EXP__IS_INVERSE:
-				setIsInverse(((Boolean)newValue).booleanValue());
+			case ExpressionsPackage.RESOLVE_EXP__CONDITION:
+				setCondition((OCLExpression)newValue);
 				return;
 			case ExpressionsPackage.RESOLVE_EXP__IS_DEFERRED:
-				setIsDeferred(((Boolean)newValue).booleanValue());
+				setIsDeferred((Boolean)newValue);
+				return;
+			case ExpressionsPackage.RESOLVE_EXP__IS_INVERSE:
+				setIsInverse((Boolean)newValue);
+				return;
+			case ExpressionsPackage.RESOLVE_EXP__ONE:
+				setOne((Boolean)newValue);
 				return;
 			case ExpressionsPackage.RESOLVE_EXP__TARGET:
-				setTarget((Variable<EClassifier, EParameter>)newValue);
-				return;
-			case ExpressionsPackage.RESOLVE_EXP__CONDITION:
-				setCondition((OCLExpression<EClassifier>)newValue);
+				setTarget((Variable)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -390,20 +388,20 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.RESOLVE_EXP__ONE:
-				setOne(ONE_EDEFAULT);
-				return;
-			case ExpressionsPackage.RESOLVE_EXP__IS_INVERSE:
-				setIsInverse(IS_INVERSE_EDEFAULT);
+			case ExpressionsPackage.RESOLVE_EXP__CONDITION:
+				setCondition((OCLExpression)null);
 				return;
 			case ExpressionsPackage.RESOLVE_EXP__IS_DEFERRED:
 				setIsDeferred(IS_DEFERRED_EDEFAULT);
 				return;
-			case ExpressionsPackage.RESOLVE_EXP__TARGET:
-				setTarget((Variable<EClassifier, EParameter>)null);
+			case ExpressionsPackage.RESOLVE_EXP__IS_INVERSE:
+				setIsInverse(IS_INVERSE_EDEFAULT);
 				return;
-			case ExpressionsPackage.RESOLVE_EXP__CONDITION:
-				setCondition((OCLExpression<EClassifier>)null);
+			case ExpressionsPackage.RESOLVE_EXP__ONE:
+				setOne(ONE_EDEFAULT);
+				return;
+			case ExpressionsPackage.RESOLVE_EXP__TARGET:
+				setTarget((Variable)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -417,16 +415,16 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.RESOLVE_EXP__ONE:
-				return ((eFlags & ONE_EFLAG) != 0) != ONE_EDEFAULT;
-			case ExpressionsPackage.RESOLVE_EXP__IS_INVERSE:
-				return ((eFlags & IS_INVERSE_EFLAG) != 0) != IS_INVERSE_EDEFAULT;
-			case ExpressionsPackage.RESOLVE_EXP__IS_DEFERRED:
-				return ((eFlags & IS_DEFERRED_EFLAG) != 0) != IS_DEFERRED_EDEFAULT;
-			case ExpressionsPackage.RESOLVE_EXP__TARGET:
-				return target != null;
 			case ExpressionsPackage.RESOLVE_EXP__CONDITION:
 				return condition != null;
+			case ExpressionsPackage.RESOLVE_EXP__IS_DEFERRED:
+				return ((eFlags & IS_DEFERRED_EFLAG) != 0) != IS_DEFERRED_EDEFAULT;
+			case ExpressionsPackage.RESOLVE_EXP__IS_INVERSE:
+				return ((eFlags & IS_INVERSE_EFLAG) != 0) != IS_INVERSE_EDEFAULT;
+			case ExpressionsPackage.RESOLVE_EXP__ONE:
+				return ((eFlags & ONE_EFLAG) != 0) != ONE_EDEFAULT;
+			case ExpressionsPackage.RESOLVE_EXP__TARGET:
+				return target != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -441,12 +439,12 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (one: "); //$NON-NLS-1$
-		result.append((eFlags & ONE_EFLAG) != 0);
+		result.append(" (isDeferred: "); //$NON-NLS-1$
+		result.append((eFlags & IS_DEFERRED_EFLAG) != 0);
 		result.append(", isInverse: "); //$NON-NLS-1$
 		result.append((eFlags & IS_INVERSE_EFLAG) != 0);
-		result.append(", isDeferred: "); //$NON-NLS-1$
-		result.append((eFlags & IS_DEFERRED_EFLAG) != 0);
+		result.append(", one: "); //$NON-NLS-1$
+		result.append((eFlags & ONE_EFLAG) != 0);
 		result.append(')');
 		return result.toString();
 	}

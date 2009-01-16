@@ -9,11 +9,10 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ResolveInExp.java,v 1.2 2008/10/31 00:02:46 radvorak Exp $
+ * $Id: ResolveInExp.java,v 1.3 2009/01/16 13:52:56 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -24,7 +23,7 @@ import org.eclipse.ocl.utilities.Visitor;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp#getInMappings <em>In Mappings</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp#getInMapping <em>In Mapping</em>}</li>
  * </ul>
  * </p>
  *
@@ -41,22 +40,32 @@ public interface ResolveInExp extends ResolveExp {
     String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
     /**
-	 * Returns the value of the '<em><b>In Mappings</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation}.
+	 * Returns the value of the '<em><b>In Mapping</b></em>' reference.
 	 * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>In Mappings</em>' reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-	 * @return the value of the '<em>In Mappings</em>' reference list.
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getResolveInExp_InMappings()
+	 * <p>
+	 * If the meaning of the '<em>In Mapping</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>In Mapping</em>' reference.
+	 * @see #setInMapping(MappingOperation)
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getResolveInExp_InMapping()
 	 * @model
 	 * @generated
 	 */
-    EList<MappingOperation> getInMappings();
+	MappingOperation getInMapping();
 
-    /**
+				/**
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp#getInMapping <em>In Mapping</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>In Mapping</em>' reference.
+	 * @see #getInMapping()
+	 * @generated
+	 */
+	void setInMapping(MappingOperation value);
+
+				/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='if(v instanceof ExtendedVisitor) {\r\n  @SuppressWarnings(\"unchecked\")    \t\t\r\n  ExtendedVisitor<T> visitorExt = (ExtendedVisitor) v;    \t\r\n  return visitorExt.visitResolveInExp(this);\r\n}\r\nreturn org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);'"

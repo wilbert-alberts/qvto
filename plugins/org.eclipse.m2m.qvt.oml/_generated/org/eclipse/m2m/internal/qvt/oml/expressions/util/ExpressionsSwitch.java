@@ -29,6 +29,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeCallExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeExpression;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
@@ -187,21 +188,9 @@ public class ExpressionsSwitch<T1> {
 				ModuleImport moduleImport = (ModuleImport)theEObject;
 				T1 result = caseModuleImport(moduleImport);
 				if (result == null) result = caseVisitableASTNode(moduleImport);
+				if (result == null) result = caseEModelElement(moduleImport);
 				if (result == null) result = caseVisitable(moduleImport);
 				if (result == null) result = caseASTNode(moduleImport);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.CLASS: {
-				org.eclipse.m2m.internal.qvt.oml.expressions.Class class_ = (org.eclipse.m2m.internal.qvt.oml.expressions.Class)theEObject;
-				T1 result = caseClass(class_);
-				if (result == null) result = caseEClass(class_);
-				if (result == null) result = caseVisitableASTNode(class_);
-				if (result == null) result = caseEClassifier(class_);
-				if (result == null) result = caseVisitable(class_);
-				if (result == null) result = caseASTNode(class_);
-				if (result == null) result = caseENamedElement(class_);
-				if (result == null) result = caseEModelElement(class_);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -218,6 +207,28 @@ public class ExpressionsSwitch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ExpressionsPackage.IMPERATIVE_CALL_EXP: {
+				ImperativeCallExp imperativeCallExp = (ImperativeCallExp)theEObject;
+				T1 result = caseImperativeCallExp(imperativeCallExp);
+				if (result == null) result = caseEcore_OperationCallExp(imperativeCallExp);
+				if (result == null) result = caseImperativeExpression(imperativeCallExp);
+				if (result == null) result = caseEcore_FeatureCallExp(imperativeCallExp);
+				if (result == null) result = caseOperationCallExp(imperativeCallExp);
+				if (result == null) result = caseEcore_OCLExpression(imperativeCallExp);
+				if (result == null) result = caseEcore_CallExp(imperativeCallExp);
+				if (result == null) result = caseFeatureCallExp(imperativeCallExp);
+				if (result == null) result = caseETypedElement(imperativeCallExp);
+				if (result == null) result = caseOCLExpression(imperativeCallExp);
+				if (result == null) result = caseCallExp(imperativeCallExp);
+				if (result == null) result = caseENamedElement(imperativeCallExp);
+				if (result == null) result = caseTypedElement(imperativeCallExp);
+				if (result == null) result = caseVisitable(imperativeCallExp);
+				if (result == null) result = caseASTNode(imperativeCallExp);
+				if (result == null) result = caseCallingASTNode(imperativeCallExp);
+				if (result == null) result = caseEModelElement(imperativeCallExp);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ExpressionsPackage.IMPERATIVE_OPERATION: {
 				ImperativeOperation imperativeOperation = (ImperativeOperation)theEObject;
 				T1 result = caseImperativeOperation(imperativeOperation);
@@ -228,23 +239,6 @@ public class ExpressionsSwitch<T1> {
 				if (result == null) result = caseASTNode(imperativeOperation);
 				if (result == null) result = caseENamedElement(imperativeOperation);
 				if (result == null) result = caseEModelElement(imperativeOperation);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.MODEL_PARAMETER: {
-				ModelParameter modelParameter = (ModelParameter)theEObject;
-				T1 result = caseModelParameter(modelParameter);
-				if (result == null) result = caseVarParameter(modelParameter);
-				if (result == null) result = caseEcore_Variable(modelParameter);
-				if (result == null) result = caseEParameter(modelParameter);
-				if (result == null) result = caseETypedElement(modelParameter);
-				if (result == null) result = caseVariable(modelParameter);
-				if (result == null) result = caseENamedElement(modelParameter);
-				if (result == null) result = caseTypedElement(modelParameter);
-				if (result == null) result = caseVisitable(modelParameter);
-				if (result == null) result = caseTypedASTNode(modelParameter);
-				if (result == null) result = caseEModelElement(modelParameter);
-				if (result == null) result = caseASTNode(modelParameter);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -268,6 +262,7 @@ public class ExpressionsSwitch<T1> {
 				OperationBody operationBody = (OperationBody)theEObject;
 				T1 result = caseOperationBody(operationBody);
 				if (result == null) result = caseVisitableASTNode(operationBody);
+				if (result == null) result = caseEModelElement(operationBody);
 				if (result == null) result = caseVisitable(operationBody);
 				if (result == null) result = caseASTNode(operationBody);
 				if (result == null) result = defaultCase(theEObject);
@@ -278,8 +273,43 @@ public class ExpressionsSwitch<T1> {
 				T1 result = caseConstructorBody(constructorBody);
 				if (result == null) result = caseOperationBody(constructorBody);
 				if (result == null) result = caseVisitableASTNode(constructorBody);
+				if (result == null) result = caseEModelElement(constructorBody);
 				if (result == null) result = caseVisitable(constructorBody);
 				if (result == null) result = caseASTNode(constructorBody);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ExpressionsPackage.MAPPING_BODY: {
+				MappingBody mappingBody = (MappingBody)theEObject;
+				T1 result = caseMappingBody(mappingBody);
+				if (result == null) result = caseOperationBody(mappingBody);
+				if (result == null) result = caseVisitableASTNode(mappingBody);
+				if (result == null) result = caseEModelElement(mappingBody);
+				if (result == null) result = caseVisitable(mappingBody);
+				if (result == null) result = caseASTNode(mappingBody);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ExpressionsPackage.MAPPING_CALL_EXP: {
+				MappingCallExp mappingCallExp = (MappingCallExp)theEObject;
+				T1 result = caseMappingCallExp(mappingCallExp);
+				if (result == null) result = caseImperativeCallExp(mappingCallExp);
+				if (result == null) result = caseEcore_OperationCallExp(mappingCallExp);
+				if (result == null) result = caseImperativeExpression(mappingCallExp);
+				if (result == null) result = caseEcore_FeatureCallExp(mappingCallExp);
+				if (result == null) result = caseOperationCallExp(mappingCallExp);
+				if (result == null) result = caseEcore_OCLExpression(mappingCallExp);
+				if (result == null) result = caseEcore_CallExp(mappingCallExp);
+				if (result == null) result = caseFeatureCallExp(mappingCallExp);
+				if (result == null) result = caseETypedElement(mappingCallExp);
+				if (result == null) result = caseOCLExpression(mappingCallExp);
+				if (result == null) result = caseCallExp(mappingCallExp);
+				if (result == null) result = caseENamedElement(mappingCallExp);
+				if (result == null) result = caseTypedElement(mappingCallExp);
+				if (result == null) result = caseVisitable(mappingCallExp);
+				if (result == null) result = caseASTNode(mappingCallExp);
+				if (result == null) result = caseCallingASTNode(mappingCallExp);
+				if (result == null) result = caseEModelElement(mappingCallExp);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -297,6 +327,40 @@ public class ExpressionsSwitch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ExpressionsPackage.MAPPING_PARAMETER: {
+				MappingParameter mappingParameter = (MappingParameter)theEObject;
+				T1 result = caseMappingParameter(mappingParameter);
+				if (result == null) result = caseVarParameter(mappingParameter);
+				if (result == null) result = caseEcore_Variable(mappingParameter);
+				if (result == null) result = caseEParameter(mappingParameter);
+				if (result == null) result = caseETypedElement(mappingParameter);
+				if (result == null) result = caseVariable(mappingParameter);
+				if (result == null) result = caseENamedElement(mappingParameter);
+				if (result == null) result = caseTypedElement(mappingParameter);
+				if (result == null) result = caseVisitable(mappingParameter);
+				if (result == null) result = caseTypedASTNode(mappingParameter);
+				if (result == null) result = caseEModelElement(mappingParameter);
+				if (result == null) result = caseASTNode(mappingParameter);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ExpressionsPackage.MODEL_PARAMETER: {
+				ModelParameter modelParameter = (ModelParameter)theEObject;
+				T1 result = caseModelParameter(modelParameter);
+				if (result == null) result = caseVarParameter(modelParameter);
+				if (result == null) result = caseEcore_Variable(modelParameter);
+				if (result == null) result = caseEParameter(modelParameter);
+				if (result == null) result = caseETypedElement(modelParameter);
+				if (result == null) result = caseVariable(modelParameter);
+				if (result == null) result = caseENamedElement(modelParameter);
+				if (result == null) result = caseTypedElement(modelParameter);
+				if (result == null) result = caseVisitable(modelParameter);
+				if (result == null) result = caseTypedASTNode(modelParameter);
+				if (result == null) result = caseEModelElement(modelParameter);
+				if (result == null) result = caseASTNode(modelParameter);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ExpressionsPackage.HELPER: {
 				Helper helper = (Helper)theEObject;
 				T1 result = caseHelper(helper);
@@ -308,37 +372,6 @@ public class ExpressionsSwitch<T1> {
 				if (result == null) result = caseASTNode(helper);
 				if (result == null) result = caseENamedElement(helper);
 				if (result == null) result = caseEModelElement(helper);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.MAPPING_BODY: {
-				MappingBody mappingBody = (MappingBody)theEObject;
-				T1 result = caseMappingBody(mappingBody);
-				if (result == null) result = caseOperationBody(mappingBody);
-				if (result == null) result = caseVisitableASTNode(mappingBody);
-				if (result == null) result = caseVisitable(mappingBody);
-				if (result == null) result = caseASTNode(mappingBody);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.MAPPING_CALL_EXP: {
-				MappingCallExp mappingCallExp = (MappingCallExp)theEObject;
-				T1 result = caseMappingCallExp(mappingCallExp);
-				if (result == null) result = caseEcore_OperationCallExp(mappingCallExp);
-				if (result == null) result = caseEcore_FeatureCallExp(mappingCallExp);
-				if (result == null) result = caseOperationCallExp(mappingCallExp);
-				if (result == null) result = caseEcore_CallExp(mappingCallExp);
-				if (result == null) result = caseFeatureCallExp(mappingCallExp);
-				if (result == null) result = caseEcore_OCLExpression(mappingCallExp);
-				if (result == null) result = caseCallExp(mappingCallExp);
-				if (result == null) result = caseETypedElement(mappingCallExp);
-				if (result == null) result = caseOCLExpression(mappingCallExp);
-				if (result == null) result = caseCallingASTNode(mappingCallExp);
-				if (result == null) result = caseENamedElement(mappingCallExp);
-				if (result == null) result = caseTypedElement(mappingCallExp);
-				if (result == null) result = caseVisitable(mappingCallExp);
-				if (result == null) result = caseASTNode(mappingCallExp);
-				if (result == null) result = caseEModelElement(mappingCallExp);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -355,14 +388,6 @@ public class ExpressionsSwitch<T1> {
 				if (result == null) result = caseVisitable(objectExp);
 				if (result == null) result = caseASTNode(objectExp);
 				if (result == null) result = caseEModelElement(objectExp);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ExpressionsPackage.EXTENDED_VISITOR: {
-				ExtendedVisitor<?> extendedVisitor = (ExtendedVisitor<?>)theEObject;
-				T1 result = caseExtendedVisitor(extendedVisitor);
-				if (result == null) result = caseImperativeOCLVisitor(extendedVisitor);
-				if (result == null) result = caseVisitor(extendedVisitor);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -422,23 +447,6 @@ public class ExpressionsSwitch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ExpressionsPackage.MAPPING_PARAMETER: {
-				MappingParameter mappingParameter = (MappingParameter)theEObject;
-				T1 result = caseMappingParameter(mappingParameter);
-				if (result == null) result = caseVarParameter(mappingParameter);
-				if (result == null) result = caseEcore_Variable(mappingParameter);
-				if (result == null) result = caseEParameter(mappingParameter);
-				if (result == null) result = caseETypedElement(mappingParameter);
-				if (result == null) result = caseVariable(mappingParameter);
-				if (result == null) result = caseENamedElement(mappingParameter);
-				if (result == null) result = caseTypedElement(mappingParameter);
-				if (result == null) result = caseVisitable(mappingParameter);
-				if (result == null) result = caseTypedASTNode(mappingParameter);
-				if (result == null) result = caseEModelElement(mappingParameter);
-				if (result == null) result = caseASTNode(mappingParameter);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case ExpressionsPackage.OPERATIONAL_TRANSFORMATION: {
 				OperationalTransformation operationalTransformation = (OperationalTransformation)theEObject;
 				T1 result = caseOperationalTransformation(operationalTransformation);
@@ -465,6 +473,14 @@ public class ExpressionsSwitch<T1> {
 				if (result == null) result = caseASTNode(entryOperation);
 				if (result == null) result = caseENamedElement(entryOperation);
 				if (result == null) result = caseEModelElement(entryOperation);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ExpressionsPackage.EXTENDED_VISITOR: {
+				ExtendedVisitor<?> extendedVisitor = (ExtendedVisitor<?>)theEObject;
+				T1 result = caseExtendedVisitor(extendedVisitor);
+				if (result == null) result = caseImperativeOCLVisitor(extendedVisitor);
+				if (result == null) result = caseVisitor(extendedVisitor);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -533,21 +549,6 @@ public class ExpressionsSwitch<T1> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Class</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Class</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseClass(org.eclipse.m2m.internal.qvt.oml.expressions.Class object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Contextual Property</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -559,6 +560,21 @@ public class ExpressionsSwitch<T1> {
 	 * @generated
 	 */
 	public T1 caseContextualProperty(ContextualProperty object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Imperative Call Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Imperative Call Exp</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseImperativeCallExp(ImperativeCallExp object) {
 		return null;
 	}
 

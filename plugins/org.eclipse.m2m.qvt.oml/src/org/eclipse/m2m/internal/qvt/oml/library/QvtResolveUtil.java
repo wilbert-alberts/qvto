@@ -289,12 +289,12 @@ public class QvtResolveUtil {
         Trace trace = internEnv.getTraces();
         if (source == null) {
             List<TraceRecord> traceRecords = new ArrayList<TraceRecord>();
-            for (MappingOperation inMapping : resolveInExp.getInMappings()) {
-                EList<TraceRecord> inMappingTraceRecords = trace.getTraceRecordMap().get(inMapping);
-                if (inMappingTraceRecords != null) {
-                    traceRecords.addAll(inMappingTraceRecords);
-                }
+            MappingOperation inMapping = resolveInExp.getInMapping();
+            EList<TraceRecord> inMappingTraceRecords = trace.getTraceRecordMap().get(inMapping);
+            if (inMappingTraceRecords != null) {
+                traceRecords.addAll(inMappingTraceRecords);
             }
+            
             if (traceRecords.isEmpty()) {
                 return createEmptyCollectionOrNull(resolveInExp);
             }
@@ -308,11 +308,10 @@ public class QvtResolveUtil {
             	return createEmptyCollectionOrNull(resolveInExp);
             }
             for (TraceRecord traceRecord : traceRecords) {
-                for (MappingOperation inMapping : resolveInExp.getInMappings()) {
-                    if (traceRecord.getMappingOperation().getRuntimeMappingOperation().equals(inMapping)) {
-                        selectedTraceRecords.add(traceRecord);
-                    }
-                }
+                MappingOperation inMapping = resolveInExp.getInMapping();
+                if (traceRecord.getMappingOperation().getRuntimeMappingOperation().equals(inMapping)) {
+                    selectedTraceRecords.add(traceRecord);
+                }                
             }
         }
         Object result = searchByTypeAndCondition(resolveInExp, selectedTraceRecords, visitor, env);

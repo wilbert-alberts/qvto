@@ -12,8 +12,7 @@
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.ecore.OCLExpression;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -43,7 +42,7 @@ public interface MappingBody extends OperationBody {
 
     /**
 	 * Returns the value of the '<em><b>Init Section</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.expressions.OCLExpression}&lt;org.eclipse.emf.ecore.EClassifier>.
+	 * The list contents are of type {@link org.eclipse.ocl.ecore.OCLExpression}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Init Section</em>' containment reference list isn't clear,
@@ -55,11 +54,11 @@ public interface MappingBody extends OperationBody {
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<OCLExpression<EClassifier>> getInitSection();
+	EList<OCLExpression> getInitSection();
 
 	/**
 	 * Returns the value of the '<em><b>End Section</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.expressions.OCLExpression}&lt;org.eclipse.emf.ecore.EClassifier>.
+	 * The list contents are of type {@link org.eclipse.ocl.ecore.OCLExpression}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>End Section</em>' containment reference list isn't clear,
@@ -71,7 +70,7 @@ public interface MappingBody extends OperationBody {
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<OCLExpression<EClassifier>> getEndSection();
+	EList<OCLExpression> getEndSection();
 
 	/**
 	 * <!-- begin-user-doc -->

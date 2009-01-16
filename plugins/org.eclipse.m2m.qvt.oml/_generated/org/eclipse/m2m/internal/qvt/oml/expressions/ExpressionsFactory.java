@@ -73,15 +73,6 @@ public interface ExpressionsFactory extends EFactory {
 	ModuleImport createModuleImport();
 
 	/**
-	 * Returns a new object of class '<em>Class</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Class</em>'.
-	 * @generated
-	 */
-	org.eclipse.m2m.internal.qvt.oml.expressions.Class createClass();
-
-	/**
 	 * Returns a new object of class '<em>Contextual Property</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -89,6 +80,15 @@ public interface ExpressionsFactory extends EFactory {
 	 * @generated
 	 */
 	ContextualProperty createContextualProperty();
+
+	/**
+	 * Returns a new object of class '<em>Imperative Call Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Imperative Call Exp</em>'.
+	 * @generated
+	 */
+	ImperativeCallExp createImperativeCallExp();
 
 	/**
 	 * Returns a new object of class '<em>Imperative Operation</em>'.

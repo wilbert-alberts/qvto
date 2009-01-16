@@ -16,14 +16,13 @@ import java.util.Collection;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
-import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.ecore.OCLExpression;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -56,7 +55,7 @@ public class MappingBodyImpl extends OperationBodyImpl implements MappingBody {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<OCLExpression<EClassifier>> initSection;
+	protected EList<OCLExpression> initSection;
 
 	/**
 	 * The cached value of the '{@link #getEndSection() <em>End Section</em>}' containment reference list.
@@ -66,7 +65,7 @@ public class MappingBodyImpl extends OperationBodyImpl implements MappingBody {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<OCLExpression<EClassifier>> endSection;
+	protected EList<OCLExpression> endSection;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -92,9 +91,9 @@ public class MappingBodyImpl extends OperationBodyImpl implements MappingBody {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<OCLExpression<EClassifier>> getInitSection() {
+	public EList<OCLExpression> getInitSection() {
 		if (initSection == null) {
-			initSection = new EObjectContainmentEList<OCLExpression<EClassifier>>(OCLExpression.class, this, ExpressionsPackage.MAPPING_BODY__INIT_SECTION);
+			initSection = new EObjectContainmentEList<OCLExpression>(OCLExpression.class, this, ExpressionsPackage.MAPPING_BODY__INIT_SECTION);
 		}
 		return initSection;
 	}
@@ -104,9 +103,9 @@ public class MappingBodyImpl extends OperationBodyImpl implements MappingBody {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<OCLExpression<EClassifier>> getEndSection() {
+	public EList<OCLExpression> getEndSection() {
 		if (endSection == null) {
-			endSection = new EObjectContainmentEList<OCLExpression<EClassifier>>(OCLExpression.class, this, ExpressionsPackage.MAPPING_BODY__END_SECTION);
+			endSection = new EObjectContainmentEList<OCLExpression>(OCLExpression.class, this, ExpressionsPackage.MAPPING_BODY__END_SECTION);
 		}
 		return endSection;
 	}
@@ -169,11 +168,11 @@ public class MappingBodyImpl extends OperationBodyImpl implements MappingBody {
 		switch (featureID) {
 			case ExpressionsPackage.MAPPING_BODY__INIT_SECTION:
 				getInitSection().clear();
-				getInitSection().addAll((Collection<? extends OCLExpression<EClassifier>>)newValue);
+				getInitSection().addAll((Collection<? extends OCLExpression>)newValue);
 				return;
 			case ExpressionsPackage.MAPPING_BODY__END_SECTION:
 				getEndSection().clear();
-				getEndSection().addAll((Collection<? extends OCLExpression<EClassifier>>)newValue);
+				getEndSection().addAll((Collection<? extends OCLExpression>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

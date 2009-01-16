@@ -23,8 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import lpg.lpgjavaruntime.IToken;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -1183,7 +1181,7 @@ public class QvtOperationalVisitorCS
 		if(outExpCS.getSimpleNameCS() != null) {
 			// a referred object has been explicitly specified
 			String varName = outExpCS.getSimpleNameCS().getValue();
-			Variable<EClassifier, EParameter> referredObject  = varName != null ? env.lookup(varName) : null;
+			org.eclipse.ocl.ecore.Variable referredObject  = varName != null ? (org.eclipse.ocl.ecore.Variable)env.lookup(varName) : null;
 			if(referredObject == null) {
 				// variable not resolved
 				env.reportError(NLS.bind(ValidationMessages.unresolvedNameError, varName), outExpCS.getSimpleNameCS());
@@ -1252,7 +1250,7 @@ public class QvtOperationalVisitorCS
         objectExp.setBody(body);
 
         QvtOperationalEnv tempEnv = env.getFactory().createEnvironment(env);
-        Variable<EClassifier, EParameter> elem = objectExp.getReferredObject();
+        org.eclipse.ocl.ecore.Variable elem = objectExp.getReferredObject();
         if (elem == null) { // new object creation
             elem = EcoreFactory.eINSTANCE.createVariable();
             elem.setType(objectExp.getType());
@@ -1425,9 +1423,10 @@ public class QvtOperationalVisitorCS
 				continue;
 			}
 
-			org.eclipse.m2m.internal.qvt.oml.expressions.Class eClassifier = IntermediateClassFactory.getFactory(module).createIntermediateClassifier();
-			eClassifier.setStartPosition(classifierDefCS.getStartOffset());
-			eClassifier.setEndPosition(classifierDefCS.getEndOffset());
+			EClass eClassifier = IntermediateClassFactory.getFactory(module).createIntermediateClassifier();
+			ASTSyntheticNode astNode = ASTSyntheticNodeAccess.createASTNode(eClassifier);
+			astNode.setStartPosition(classifierDefCS.getStartOffset());
+			astNode.setEndPosition(classifierDefCS.getEndOffset());
 			
 			eClassifier.setName(classifierDefCS.getSimpleNameCS().getValue());
 			
@@ -2370,7 +2369,7 @@ public class QvtOperationalVisitorCS
             ASTBindingHelper.createCST2ASTBinding(methodCS, operation, newEnv);
         }        
 
-		OCLExpression<EClassifier> guard;
+		org.eclipse.ocl.ecore.OCLExpression guard;
 		if (methodCS.getGuard() != null) {
 			guard = visitOclExpressionCS(methodCS.getGuard(), newEnv);
 			if (guard != null) {
@@ -2517,7 +2516,7 @@ public class QvtOperationalVisitorCS
 	}
 	
 	/**
-	 * TODO - make a common resolution operation, reusable in for ResolveExp too. 
+	 * TODO - make a common resolution operation, reusable in for ResolveInExp too. 
 	 */
 	private List<EOperation> resolveMappingOperationReference(ScopedNameCS identifierCS, QvtOperationalEnv env) {
 		List<EOperation> result = Collections.emptyList();
@@ -3268,7 +3267,7 @@ public class QvtOperationalVisitorCS
 			}
 		}		
 
-		OCLExpression<EClassifier> exp = null;
+		org.eclipse.ocl.ecore.OCLExpression exp = null;
 		if (propCS.getOclExpressionCS() != null) {
 			env.reportWarning(NLS.bind(ValidationMessages.IntermediatePropertiesInitNotSupported,
 						new Object[] { }), propCS.getOclExpressionCS());			
@@ -3385,8 +3384,8 @@ public class QvtOperationalVisitorCS
                 env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ResolveInMappingNotFound, new Object[] {
                         mappingFQName}), resolveInExpCS.getInMappingName() != null ? resolveInExpCS.getInMappingName() : resolveInExpCS);
             } else if (mappingOperations.size() > 1) {
-                env.reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ResolveInSeveralMappingsFound, new Object[] {
-                        mappingFQName}), resolveInExpCS);
+                env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ambiguousMappingOperationReference, 
+                		new Object[] { mappingFQName }), resolveInExpCS.getInMappingName());
                 env.registerResolveInExp(resolveInExp, eClassifier, mappingName);
             }
         }
@@ -3423,7 +3422,7 @@ public class QvtOperationalVisitorCS
         resolveExp.setIsDeferred(resolveExpCS.isIsDeferred());
         
         if (resolveExpCS.getTarget() != null) { // at least type is defined
-            Variable<EClassifier, EParameter> variable = EcoreFactory.eINSTANCE.createVariable();
+            org.eclipse.ocl.ecore.Variable variable = EcoreFactory.eINSTANCE.createVariable();
             EClassifier type = visitTypeCS(resolveExpCS.getTarget().getTypeCS(), null, env);
             variable.setType(type);
             
@@ -3456,7 +3455,7 @@ public class QvtOperationalVisitorCS
                 if (!isTargetVarClashing && variable.getName() != null) {                	
                 	env.addElement(variable.getName(), variable, true);
                 }
-                OCLExpression<EClassifier> condExp = visitOclExpressionCS(resolveExpCS.getCondition(), env);
+                org.eclipse.ocl.ecore.OCLExpression condExp = visitOclExpressionCS(resolveExpCS.getCondition(), env);
                 resolveExp.setCondition(condExp);                
                 
                 if (!isTargetVarClashing && variable.getName() != null) {

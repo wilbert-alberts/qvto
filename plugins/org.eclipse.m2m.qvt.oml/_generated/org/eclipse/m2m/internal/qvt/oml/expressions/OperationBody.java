@@ -12,10 +12,9 @@
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.ocl.ecore.OCLExpression;
-import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.ecore.Variable;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -36,7 +35,7 @@ import org.eclipse.ocl.utilities.Visitor;
  * @model
  * @generated
  */
-public interface OperationBody extends VisitableASTNode {
+public interface OperationBody extends VisitableASTNode, EModelElement {
 	/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -90,7 +89,7 @@ public interface OperationBody extends VisitableASTNode {
 
 	/**
 	 * Returns the value of the '<em><b>Variable</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.expressions.Variable}&lt;org.eclipse.emf.ecore.EClassifier, org.eclipse.emf.ecore.EParameter>.
+	 * The list contents are of type {@link org.eclipse.ocl.ecore.Variable}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Variable</em>' containment reference list isn't clear,
@@ -102,7 +101,7 @@ public interface OperationBody extends VisitableASTNode {
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<Variable<EClassifier, EParameter>> getVariable();
+	EList<Variable> getVariable();
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ModelTypeImpl.java,v 1.4 2008/11/25 23:32:19 radvorak Exp $
+ * $Id: ModelTypeImpl.java,v 1.5 2009/01/16 13:52:54 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -19,7 +19,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EClassImpl;
@@ -31,7 +30,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VisitableASTNode;
-import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.ecore.OCLExpression;
 import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.UtilitiesPackage;
 import org.eclipse.ocl.utilities.Visitable;
@@ -110,7 +109,7 @@ public class ModelTypeImpl extends EClassImpl implements ModelType {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<OCLExpression<EClassifier>> additionalCondition;
+	protected EList<OCLExpression> additionalCondition;
 
 	/**
 	 * The default value of the '{@link #getConformanceKind() <em>Conformance Kind</em>}' attribute.
@@ -220,9 +219,9 @@ public class ModelTypeImpl extends EClassImpl implements ModelType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<OCLExpression<EClassifier>> getAdditionalCondition() {
+	public EList<OCLExpression> getAdditionalCondition() {
 		if (additionalCondition == null) {
-			additionalCondition = new EObjectContainmentEList<OCLExpression<EClassifier>>(OCLExpression.class, this, ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION);
+			additionalCondition = new EObjectContainmentEList<OCLExpression>(OCLExpression.class, this, ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION);
 		}
 		return additionalCondition;
 	}
@@ -285,9 +284,9 @@ public class ModelTypeImpl extends EClassImpl implements ModelType {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ExpressionsPackage.MODEL_TYPE__START_POSITION:
-				return new Integer(getStartPosition());
+				return getStartPosition();
 			case ExpressionsPackage.MODEL_TYPE__END_POSITION:
-				return new Integer(getEndPosition());
+				return getEndPosition();
 			case ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION:
 				return getAdditionalCondition();
 			case ExpressionsPackage.MODEL_TYPE__CONFORMANCE_KIND:
@@ -308,14 +307,14 @@ public class ModelTypeImpl extends EClassImpl implements ModelType {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ExpressionsPackage.MODEL_TYPE__START_POSITION:
-				setStartPosition(((Integer)newValue).intValue());
+				setStartPosition((Integer)newValue);
 				return;
 			case ExpressionsPackage.MODEL_TYPE__END_POSITION:
-				setEndPosition(((Integer)newValue).intValue());
+				setEndPosition((Integer)newValue);
 				return;
 			case ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION:
 				getAdditionalCondition().clear();
-				getAdditionalCondition().addAll((Collection<? extends OCLExpression<EClassifier>>)newValue);
+				getAdditionalCondition().addAll((Collection<? extends OCLExpression>)newValue);
 				return;
 			case ExpressionsPackage.MODEL_TYPE__CONFORMANCE_KIND:
 				setConformanceKind((String)newValue);

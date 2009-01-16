@@ -26,7 +26,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Class;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralExp;
@@ -472,9 +471,7 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object> {
     }
 
     public Object visitResolveInExp(ResolveInExp resolveInExp) {
-        for (MappingOperation mappingOperation : resolveInExp.getInMappings()) {
-            doProcess(mappingOperation, resolveInExp);
-        }
+    	// do not process 'inMapping' reference, as it is not containment
         return visitResolveExp(resolveInExp);
     }
 

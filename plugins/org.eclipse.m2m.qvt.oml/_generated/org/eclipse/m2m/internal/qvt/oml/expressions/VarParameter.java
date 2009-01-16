@@ -24,8 +24,8 @@ import org.eclipse.ocl.utilities.Visitor;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter#getCtxOwner <em>Ctx Owner</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter#getResOwner <em>Res Owner</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter#getKind <em>Kind</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter#getResOwner <em>Res Owner</em>}</li>
  * </ul>
  * </p>
  *

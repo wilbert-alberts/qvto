@@ -12,6 +12,7 @@
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -26,12 +27,14 @@ import org.eclipse.ocl.utilities.Visitor;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getOwnedVariable <em>Owned Variable</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getModuleImport <em>Module Import</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getUsedModelType <em>Used Model Type</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getConfigProperty <em>Config Property</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getOwnedRenaming <em>Owned Renaming</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getEntry <em>Entry</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#isIsBlackbox <em>Is Blackbox</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getModuleImport <em>Module Import</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getOwnedTag <em>Owned Tag</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getOwnedVariable <em>Owned Variable</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getUsedModelType <em>Used Model Type</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getOwnedRenaming <em>Owned Renaming</em>}</li>
  * </ul>
  * </p>
  *
@@ -106,6 +109,59 @@ public interface Module extends EClass, EPackage, VisitableASTNode {
 	void setEntry(EntryOperation value);
 
 	/**
+	 * Returns the value of the '<em><b>Is Blackbox</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is Blackbox</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is Blackbox</em>' attribute.
+	 * @see #isSetIsBlackbox()
+	 * @see #unsetIsBlackbox()
+	 * @see #setIsBlackbox(boolean)
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getModule_IsBlackbox()
+	 * @model unsettable="true"
+	 * @generated
+	 */
+	boolean isIsBlackbox();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#isIsBlackbox <em>Is Blackbox</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Blackbox</em>' attribute.
+	 * @see #isSetIsBlackbox()
+	 * @see #unsetIsBlackbox()
+	 * @see #isIsBlackbox()
+	 * @generated
+	 */
+	void setIsBlackbox(boolean value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#isIsBlackbox <em>Is Blackbox</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetIsBlackbox()
+	 * @see #isIsBlackbox()
+	 * @see #setIsBlackbox(boolean)
+	 * @generated
+	 */
+	void unsetIsBlackbox();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#isIsBlackbox <em>Is Blackbox</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Is Blackbox</em>' attribute is set.
+	 * @see #unsetIsBlackbox()
+	 * @see #isIsBlackbox()
+	 * @see #setIsBlackbox(boolean)
+	 * @generated
+	 */
+	boolean isSetIsBlackbox();
+
+	/**
 	 * Returns the value of the '<em><b>Config Property</b></em>' reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecore.EStructuralFeature}.
 	 * <!-- begin-user-doc -->
@@ -138,6 +194,23 @@ public interface Module extends EClass, EPackage, VisitableASTNode {
 	 * @generated
 	 */
 	EList<ModuleImport> getModuleImport();
+
+	/**
+	 * Returns the value of the '<em><b>Owned Tag</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.emf.ecore.EAnnotation}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Owned Tag</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Owned Tag</em>' containment reference list.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getModule_OwnedTag()
+	 * @model containment="true"
+	 *        annotation="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName body='owner'"
+	 * @generated
+	 */
+	EList<EAnnotation> getOwnedTag();
 
 	/**
 	 * Returns the value of the '<em><b>Used Model Type</b></em>' reference list.

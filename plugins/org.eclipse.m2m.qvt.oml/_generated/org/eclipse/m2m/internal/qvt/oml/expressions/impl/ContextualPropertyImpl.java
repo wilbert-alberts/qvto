@@ -9,14 +9,13 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ContextualPropertyImpl.java,v 1.3 2008/12/18 15:18:10 radvorak Exp $
+ * $Id: ContextualPropertyImpl.java,v 1.4 2009/01/16 13:52:55 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -25,7 +24,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VisitableASTNode;
-import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.ecore.OCLExpression;
 import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.UtilitiesPackage;
 import org.eclipse.ocl.utilities.Visitable;
@@ -41,8 +40,8 @@ import org.eclipse.ocl.utilities.Visitor;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ContextualPropertyImpl#getStartPosition <em>Start Position</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ContextualPropertyImpl#getEndPosition <em>End Position</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ContextualPropertyImpl#getContext <em>Context</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ContextualPropertyImpl#getOverridden <em>Overridden</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ContextualPropertyImpl#getInitExpression <em>Init Expression</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ContextualPropertyImpl#getOverridden <em>Overridden</em>}</li>
  * </ul>
  * </p>
  *
@@ -107,6 +106,16 @@ public class ContextualPropertyImpl extends EStructuralFeatureImpl implements Co
 	protected EClass context;
 
 	/**
+	 * The cached value of the '{@link #getInitExpression() <em>Init Expression</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInitExpression()
+	 * @generated
+	 * @ordered
+	 */
+	protected OCLExpression initExpression;
+
+	/**
 	 * The cached value of the '{@link #getOverridden() <em>Overridden</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -115,16 +124,6 @@ public class ContextualPropertyImpl extends EStructuralFeatureImpl implements Co
 	 * @ordered
 	 */
 	protected EStructuralFeature overridden;
-
-	/**
-	 * The cached value of the '{@link #getInitExpression() <em>Init Expression</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getInitExpression()
-	 * @generated
-	 * @ordered
-	 */
-	protected OCLExpression<EClassifier> initExpression;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -268,7 +267,7 @@ public class ContextualPropertyImpl extends EStructuralFeatureImpl implements Co
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public OCLExpression<EClassifier> getInitExpression() {
+	public OCLExpression getInitExpression() {
 		return initExpression;
 	}
 
@@ -277,8 +276,8 @@ public class ContextualPropertyImpl extends EStructuralFeatureImpl implements Co
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetInitExpression(OCLExpression<EClassifier> newInitExpression, NotificationChain msgs) {
-		OCLExpression<EClassifier> oldInitExpression = initExpression;
+	public NotificationChain basicSetInitExpression(OCLExpression newInitExpression, NotificationChain msgs) {
+		OCLExpression oldInitExpression = initExpression;
 		initExpression = newInitExpression;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpressionsPackage.CONTEXTUAL_PROPERTY__INIT_EXPRESSION, oldInitExpression, newInitExpression);
@@ -292,7 +291,7 @@ public class ContextualPropertyImpl extends EStructuralFeatureImpl implements Co
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setInitExpression(OCLExpression<EClassifier> newInitExpression) {
+	public void setInitExpression(OCLExpression newInitExpression) {
 		if (newInitExpression != initExpression) {
 			NotificationChain msgs = null;
 			if (initExpression != null)
@@ -343,17 +342,17 @@ public class ContextualPropertyImpl extends EStructuralFeatureImpl implements Co
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY__START_POSITION:
-				return new Integer(getStartPosition());
+				return getStartPosition();
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY__END_POSITION:
-				return new Integer(getEndPosition());
+				return getEndPosition();
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY__CONTEXT:
 				if (resolve) return getContext();
 				return basicGetContext();
+			case ExpressionsPackage.CONTEXTUAL_PROPERTY__INIT_EXPRESSION:
+				return getInitExpression();
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY__OVERRIDDEN:
 				if (resolve) return getOverridden();
 				return basicGetOverridden();
-			case ExpressionsPackage.CONTEXTUAL_PROPERTY__INIT_EXPRESSION:
-				return getInitExpression();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -368,19 +367,19 @@ public class ContextualPropertyImpl extends EStructuralFeatureImpl implements Co
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY__START_POSITION:
-				setStartPosition(((Integer)newValue).intValue());
+				setStartPosition((Integer)newValue);
 				return;
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY__END_POSITION:
-				setEndPosition(((Integer)newValue).intValue());
+				setEndPosition((Integer)newValue);
 				return;
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY__CONTEXT:
 				setContext((EClass)newValue);
 				return;
+			case ExpressionsPackage.CONTEXTUAL_PROPERTY__INIT_EXPRESSION:
+				setInitExpression((OCLExpression)newValue);
+				return;
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY__OVERRIDDEN:
 				setOverridden((EStructuralFeature)newValue);
-				return;
-			case ExpressionsPackage.CONTEXTUAL_PROPERTY__INIT_EXPRESSION:
-				setInitExpression((OCLExpression<EClassifier>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -403,11 +402,11 @@ public class ContextualPropertyImpl extends EStructuralFeatureImpl implements Co
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY__CONTEXT:
 				setContext((EClass)null);
 				return;
+			case ExpressionsPackage.CONTEXTUAL_PROPERTY__INIT_EXPRESSION:
+				setInitExpression((OCLExpression)null);
+				return;
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY__OVERRIDDEN:
 				setOverridden((EStructuralFeature)null);
-				return;
-			case ExpressionsPackage.CONTEXTUAL_PROPERTY__INIT_EXPRESSION:
-				setInitExpression((OCLExpression<EClassifier>)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -427,10 +426,10 @@ public class ContextualPropertyImpl extends EStructuralFeatureImpl implements Co
 				return endPosition != END_POSITION_EDEFAULT;
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY__CONTEXT:
 				return context != null;
-			case ExpressionsPackage.CONTEXTUAL_PROPERTY__OVERRIDDEN:
-				return overridden != null;
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY__INIT_EXPRESSION:
 				return initExpression != null;
+			case ExpressionsPackage.CONTEXTUAL_PROPERTY__OVERRIDDEN:
+				return overridden != null;
 		}
 		return super.eIsSet(featureID);
 	}

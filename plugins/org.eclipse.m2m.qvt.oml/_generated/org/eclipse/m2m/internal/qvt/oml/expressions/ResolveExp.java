@@ -9,15 +9,13 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ResolveExp.java,v 1.3 2009/01/11 23:22:05 radvorak Exp $
+ * $Id: ResolveExp.java,v 1.4 2009/01/16 13:52:56 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.ocl.ecore.CallExp;
-import org.eclipse.ocl.expressions.OCLExpression;
-import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.ecore.OCLExpression;
+import org.eclipse.ocl.ecore.Variable;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -28,11 +26,11 @@ import org.eclipse.ocl.utilities.Visitor;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp#isOne <em>One</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp#isIsInverse <em>Is Inverse</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp#isIsDeferred <em>Is Deferred</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp#getTarget <em>Target</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp#getCondition <em>Condition</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp#isIsDeferred <em>Is Deferred</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp#isIsInverse <em>Is Inverse</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp#isOne <em>One</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp#getTarget <em>Target</em>}</li>
  * </ul>
  * </p>
  *
@@ -140,7 +138,7 @@ public interface ResolveExp extends CallExp {
 	 * @model containment="true"
 	 * @generated
 	 */
-	Variable<EClassifier, EParameter> getTarget();
+	Variable getTarget();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp#getTarget <em>Target</em>}' containment reference.
@@ -150,7 +148,7 @@ public interface ResolveExp extends CallExp {
 	 * @see #getTarget()
 	 * @generated
 	 */
-	void setTarget(Variable<EClassifier, EParameter> value);
+	void setTarget(Variable value);
 
 	/**
 	 * Returns the value of the '<em><b>Condition</b></em>' containment reference.
@@ -166,7 +164,7 @@ public interface ResolveExp extends CallExp {
 	 * @model containment="true"
 	 * @generated
 	 */
-	OCLExpression<EClassifier> getCondition();
+	OCLExpression getCondition();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp#getCondition <em>Condition</em>}' containment reference.
@@ -176,7 +174,7 @@ public interface ResolveExp extends CallExp {
 	 * @see #getCondition()
 	 * @generated
 	 */
-	void setCondition(OCLExpression<EClassifier> value);
+	void setCondition(OCLExpression value);
 
 	/**
 	 * <!-- begin-user-doc -->

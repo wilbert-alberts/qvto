@@ -24,7 +24,9 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeCallExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
@@ -97,22 +99,22 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 			case ExpressionsPackage.LIBRARY: return createLibrary();
 			case ExpressionsPackage.RENAME: return createRename();
 			case ExpressionsPackage.MODULE_IMPORT: return createModuleImport();
-			case ExpressionsPackage.CLASS: return createClass();
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY: return createContextualProperty();
+			case ExpressionsPackage.IMPERATIVE_CALL_EXP: return createImperativeCallExp();
 			case ExpressionsPackage.IMPERATIVE_OPERATION: return createImperativeOperation();
-			case ExpressionsPackage.MODEL_PARAMETER: return createModelParameter();
 			case ExpressionsPackage.VAR_PARAMETER: return createVarParameter();
 			case ExpressionsPackage.OPERATION_BODY: return createOperationBody();
 			case ExpressionsPackage.CONSTRUCTOR_BODY: return createConstructorBody();
-			case ExpressionsPackage.MAPPING_OPERATION: return createMappingOperation();
-			case ExpressionsPackage.HELPER: return createHelper();
 			case ExpressionsPackage.MAPPING_BODY: return createMappingBody();
 			case ExpressionsPackage.MAPPING_CALL_EXP: return createMappingCallExp();
+			case ExpressionsPackage.MAPPING_OPERATION: return createMappingOperation();
+			case ExpressionsPackage.MAPPING_PARAMETER: return createMappingParameter();
+			case ExpressionsPackage.MODEL_PARAMETER: return createModelParameter();
+			case ExpressionsPackage.HELPER: return createHelper();
 			case ExpressionsPackage.OBJECT_EXP: return createObjectExp();
 			case ExpressionsPackage.RESOLVE_EXP: return createResolveExp();
 			case ExpressionsPackage.RESOLVE_IN_EXP: return createResolveInExp();
 			case ExpressionsPackage.MODEL_TYPE: return createModelType();
-			case ExpressionsPackage.MAPPING_PARAMETER: return createMappingParameter();
 			case ExpressionsPackage.OPERATIONAL_TRANSFORMATION: return createOperationalTransformation();
 			case ExpressionsPackage.ENTRY_OPERATION: return createEntryOperation();
 			default:
@@ -128,6 +130,8 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
+			case ExpressionsPackage.IMPORT_KIND:
+				return createImportKindFromString(eDataType, initialValue);
 			case ExpressionsPackage.DIRECTION_KIND:
 				return createDirectionKindFromString(eDataType, initialValue);
 			default:
@@ -143,6 +147,8 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
+			case ExpressionsPackage.IMPORT_KIND:
+				return convertImportKindToString(eDataType, instanceValue);
 			case ExpressionsPackage.DIRECTION_KIND:
 				return convertDirectionKindToString(eDataType, instanceValue);
 			default:
@@ -195,9 +201,9 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public org.eclipse.m2m.internal.qvt.oml.expressions.Class createClass() {
-		ClassImpl class_ = new ClassImpl();
-		return class_;
+	public ContextualProperty createContextualProperty() {
+		ContextualPropertyImpl contextualProperty = new ContextualPropertyImpl();
+		return contextualProperty;
 	}
 
 	/**
@@ -205,9 +211,9 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ContextualProperty createContextualProperty() {
-		ContextualPropertyImpl contextualProperty = new ContextualPropertyImpl();
-		return contextualProperty;
+	public ImperativeCallExp createImperativeCallExp() {
+		ImperativeCallExpImpl imperativeCallExp = new ImperativeCallExpImpl();
+		return imperativeCallExp;
 	}
 
 	/**
@@ -368,6 +374,26 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	public EntryOperation createEntryOperation() {
 		EntryOperationImpl entryOperation = new EntryOperationImpl();
 		return entryOperation;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ImportKind createImportKindFromString(EDataType eDataType, String initialValue) {
+		ImportKind result = ImportKind.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertImportKindToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
 	}
 
 	/**

@@ -9,15 +9,14 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ResolveInExpImpl.java,v 1.2 2008/10/31 00:02:50 radvorak Exp $
+ * $Id: ResolveInExpImpl.java,v 1.3 2009/01/16 13:52:55 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
-import java.util.Collection;
-
-import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
@@ -31,7 +30,7 @@ import org.eclipse.ocl.utilities.Visitor;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ResolveInExpImpl#getInMappings <em>In Mappings</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ResolveInExpImpl#getInMapping <em>In Mapping</em>}</li>
  * </ul>
  * </p>
  *
@@ -46,16 +45,16 @@ public class ResolveInExpImpl extends ResolveExpImpl implements ResolveInExp {
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
     /**
-	 * The cached value of the '{@link #getInMappings() <em>In Mappings</em>}' reference list.
+	 * The cached value of the '{@link #getInMapping() <em>In Mapping</em>}' reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @see #getInMappings()
+	 * <!-- end-user-doc -->
+	 * @see #getInMapping()
 	 * @generated
 	 * @ordered
 	 */
-    protected EList<MappingOperation> inMappings;
+	protected MappingOperation inMapping;
 
-    /**
+				/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
@@ -76,17 +75,43 @@ public class ResolveInExpImpl extends ResolveExpImpl implements ResolveInExp {
 
     /**
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public EList<MappingOperation> getInMappings() {
-		if (inMappings == null) {
-			inMappings = new EObjectResolvingEList<MappingOperation>(MappingOperation.class, this, ExpressionsPackage.RESOLVE_IN_EXP__IN_MAPPINGS);
+	public MappingOperation getInMapping() {
+		if (inMapping != null && inMapping.eIsProxy()) {
+			InternalEObject oldInMapping = (InternalEObject)inMapping;
+			inMapping = (MappingOperation)eResolveProxy(oldInMapping);
+			if (inMapping != oldInMapping) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ExpressionsPackage.RESOLVE_IN_EXP__IN_MAPPING, oldInMapping, inMapping));
+			}
 		}
-		return inMappings;
+		return inMapping;
 	}
 
-    /**
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public MappingOperation basicGetInMapping() {
+		return inMapping;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setInMapping(MappingOperation newInMapping) {
+		MappingOperation oldInMapping = inMapping;
+		inMapping = newInMapping;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.RESOLVE_IN_EXP__IN_MAPPING, oldInMapping, inMapping));
+	}
+
+				/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
@@ -109,8 +134,9 @@ public class ResolveInExpImpl extends ResolveExpImpl implements ResolveInExp {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ExpressionsPackage.RESOLVE_IN_EXP__IN_MAPPINGS:
-				return getInMappings();
+			case ExpressionsPackage.RESOLVE_IN_EXP__IN_MAPPING:
+				if (resolve) return getInMapping();
+				return basicGetInMapping();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -124,9 +150,8 @@ public class ResolveInExpImpl extends ResolveExpImpl implements ResolveInExp {
     @Override
     public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ExpressionsPackage.RESOLVE_IN_EXP__IN_MAPPINGS:
-				getInMappings().clear();
-				getInMappings().addAll((Collection<? extends MappingOperation>)newValue);
+			case ExpressionsPackage.RESOLVE_IN_EXP__IN_MAPPING:
+				setInMapping((MappingOperation)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -140,8 +165,8 @@ public class ResolveInExpImpl extends ResolveExpImpl implements ResolveInExp {
     @Override
     public void eUnset(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.RESOLVE_IN_EXP__IN_MAPPINGS:
-				getInMappings().clear();
+			case ExpressionsPackage.RESOLVE_IN_EXP__IN_MAPPING:
+				setInMapping((MappingOperation)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -155,8 +180,8 @@ public class ResolveInExpImpl extends ResolveExpImpl implements ResolveInExp {
     @Override
     public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.RESOLVE_IN_EXP__IN_MAPPINGS:
-				return inMappings != null && !inMappings.isEmpty();
+			case ExpressionsPackage.RESOLVE_IN_EXP__IN_MAPPING:
+				return inMapping != null;
 		}
 		return super.eIsSet(featureID);
 	}

@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -21,8 +23,10 @@ import org.eclipse.ocl.utilities.Visitor;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport#getModule <em>Module</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport#getBinding <em>Binding</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport#getImportedModule <em>Imported Module</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport#getKind <em>Kind</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport#getModule <em>Module</em>}</li>
  * </ul>
  * </p>
  *
@@ -30,7 +34,7 @@ import org.eclipse.ocl.utilities.Visitor;
  * @model
  * @generated
  */
-public interface ModuleImport extends VisitableASTNode {
+public interface ModuleImport extends VisitableASTNode, EModelElement {
 	/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -39,6 +43,22 @@ public interface ModuleImport extends VisitableASTNode {
     String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
     /**
+	 * Returns the value of the '<em><b>Binding</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.expressions.ModelType}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Binding</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Binding</em>' reference list.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getModuleImport_Binding()
+	 * @model
+	 * @generated
+	 */
+	EList<ModelType> getBinding();
+
+				/**
 	 * Returns the value of the '<em><b>Module</b></em>' container reference.
 	 * It is bidirectional and its opposite is '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getModuleImport <em>Module Import</em>}'.
 	 * <!-- begin-user-doc -->
@@ -91,6 +111,35 @@ public interface ModuleImport extends VisitableASTNode {
 	 * @generated
 	 */
 	void setImportedModule(Module value);
+
+	/**
+	 * Returns the value of the '<em><b>Kind</b></em>' attribute.
+	 * The literals are from the enumeration {@link org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Kind</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Kind</em>' attribute.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind
+	 * @see #setKind(ImportKind)
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getModuleImport_Kind()
+	 * @model
+	 * @generated
+	 */
+	ImportKind getKind();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport#getKind <em>Kind</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Kind</em>' attribute.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind
+	 * @see #getKind()
+	 * @generated
+	 */
+	void setKind(ImportKind value);
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
-import org.eclipse.ocl.ecore.OperationCallExp;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -30,7 +29,7 @@ import org.eclipse.ocl.utilities.Visitor;
  * @model
  * @generated
  */
-public interface MappingCallExp extends OperationCallExp {
+public interface MappingCallExp extends ImperativeCallExp {
 	/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

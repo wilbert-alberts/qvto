@@ -9,15 +9,14 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ModelType.java,v 1.3 2008/11/11 14:05:50 radvorak Exp $
+ * $Id: ModelType.java,v 1.4 2009/01/16 13:52:56 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.ecore.OCLExpression;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -64,7 +63,7 @@ public interface ModelType extends EClass, VisitableASTNode {
 
 	/**
 	 * Returns the value of the '<em><b>Additional Condition</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.expressions.OCLExpression}&lt;org.eclipse.emf.ecore.EClassifier>.
+	 * The list contents are of type {@link org.eclipse.ocl.ecore.OCLExpression}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Additional Condition</em>' containment reference list isn't clear,
@@ -76,7 +75,7 @@ public interface ModelType extends EClass, VisitableASTNode {
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<OCLExpression<EClassifier>> getAdditionalCondition();
+	EList<OCLExpression> getAdditionalCondition();
 
 	/**
 	 * Returns the value of the '<em><b>Conformance Kind</b></em>' attribute.
