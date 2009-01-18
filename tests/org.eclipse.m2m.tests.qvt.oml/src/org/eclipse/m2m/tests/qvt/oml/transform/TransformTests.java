@@ -109,6 +109,7 @@ public class TransformTests {
         		new FilesToFilesData("stdlibelement", Collections.singletonList("in.ecore"), Arrays.asList("expected_x.ecore", "expected_y.ecore")),           		
         		new FileToFileData("mapDisjuncts"), //$NON-NLS-1$ 
         		new FileToFileData("mapInherits"), //$NON-NLS-1$        		
+        		new FileToFileData("mapMultipleInherits"), //$NON-NLS-1$        		
         		new FileToFileData("mapMerges"), //$NON-NLS-1$        
                 new FileToFileData("bug2437_1"), //$NON-NLS-1$                
                 new FileToFileData("bug2437_2"), //$NON-NLS-1$                

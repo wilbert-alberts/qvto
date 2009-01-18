@@ -14,14 +14,14 @@ main() {
 	-- 2 - merging_fooAB, 2 - merging_ExtentDirectedFooAB,
 	-- (2 - merged_fooA, 2 - merged_fooB) called just once, then fetched from traces
 	-- (2 - superMerged_fooB) - called just once, then fetched from traces
-	var expectedOuts := 10; 
+	var expectedOuts := 16; 
 	assert fatal (c->size() = expectedOuts);
 	
-	assert (src.resolveIn(EPackage::merging_fooAB, EModelElement)->size() = 2);
-	assert (src.resolveIn(EPackage::merged_fooA, EModelElement)->size() = 2);	
-	assert (src.resolveIn(EPackage::merged_fooB, EModelElement)->size() = 2);	
-	assert (src.resolveIn(EPackage::merged_fooB, EPackage)->size() = 1);	
-	assert (src.resolveIn(EModelElement::superMerged_fooB, EModelElement)->size() = 2);		
+	assert (src.resolveIn(EPackage::merging_fooAB, EModelElement)->size() = 4);
+	assert (src.resolveIn(EPackage::merged_fooA, EModelElement)->size() = 4);	
+	assert (src.resolveIn(EPackage::merged_fooB, EModelElement)->size() = 4);	
+	assert (src.resolveIn(EPackage::merged_fooB, EPackage)->size() = 2);	
+	assert (src.resolveIn(EModelElement::superMerged_fooB, EModelElement)->size() = 4);		
 			
 	var r2 := src.map merging_fooAB();
 	
