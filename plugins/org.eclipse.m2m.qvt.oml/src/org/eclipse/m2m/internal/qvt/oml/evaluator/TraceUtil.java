@@ -11,8 +11,10 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -61,18 +63,25 @@ class TraceUtil {
         if (traceRecords == null) {
             return null;
         }
+        
+        // Section [8.2.1.15]
+        // After call resolution, all the parameters of the mapping are passed as a tuple. 
+        // The parameters include, in this order: the context parameter (if any), the owned 
+        // parameters (from Operation::ownedParameter), and the parameters declared as result.
 
         traceCheckCycle:
             for (TraceRecord traceRecord : traceRecords) {
+            	// check context parameter
                 if (QvtOperationalParserUtil.isContextual(mappingOperation)) {
                     if (traceRecord.getContext().getContext() == null) {
                         continue;
                     }
                     Object context = evalEnv.getValueOf(Environment.SELF_VARIABLE_NAME);
-                    if (!isOclEqual(context, traceRecord.getContext().getContext().getValue().getOclObject())) {
+                    if (!isOclEqual(context, traceRecord.getContext().getContext().getValue().getOclObject(), mappingOperation.getContext().getKind())) {
                         continue;
                     }
                 }
+                // check owned parameters
                 int candidateParamSize = mappingOperation.getEParameters().size();
                 if (traceRecord.getParameters().getParameters().size() != candidateParamSize) {
                     continue;
@@ -81,10 +90,40 @@ class TraceUtil {
                     EParameter param = mappingOperation.getEParameters().get(i);
                     Object paramValue = evalEnv.getValueOf(param.getName());
                     VarParameterValue traceParamVal = (VarParameterValue) traceRecord.getParameters().getParameters().get(i);
-                    if (!isOclEqual(paramValue, traceParamVal.getValue().getOclObject())) {
+                    DirectionKind paramKind = DirectionKind.IN;
+                    if (param instanceof VarParameter) {
+                    	paramKind = ((VarParameter) param).getKind();
+                    }
+                    if (!isOclEqual(paramValue, traceParamVal.getValue().getOclObject(), paramKind)) {
                         continue traceCheckCycle;
                     }
                 }
+                // check result parameters
+                Object resultValue = evalEnv.getValueOf(Environment.RESULT_VARIABLE_NAME);
+                if (resultValue != null) {
+                    List<Object> resultValues = new ArrayList<Object>(1); 
+	                if (resultValue instanceof Tuple) {
+	                	@SuppressWarnings("unchecked")
+	                	Tuple<EOperation, EStructuralFeature> tupleResult = (Tuple<EOperation, EStructuralFeature>) resultValue;
+	                	for (EStructuralFeature tupleFeature : tupleResult.getTupleType().oclProperties()) {
+	                		resultValues.add(tupleResult.getValue(tupleFeature));
+	                	}
+	                }
+	                else {
+	                	resultValues.add(resultValue);
+	                }
+	                if (traceRecord.getResult().getResult().size() != resultValues.size()) {
+	                    continue;
+	                }
+	                for (int i = 0, n = resultValues.size(); i < n; i++) {
+	                    Object paramValue = resultValues.get(i);
+	                    VarParameterValue traceParamVal = (VarParameterValue) traceRecord.getResult().getResult().get(i);
+	                    if (!isOclEqual(paramValue, traceParamVal.getValue().getOclObject(), DirectionKind.OUT)) {
+	                        continue traceCheckCycle;
+	                    }
+	                }
+                }
+                
                 return traceRecord;
             }
         return null;
@@ -264,7 +303,13 @@ class TraceUtil {
         return list;
     }
 
-    private static boolean isOclEqual(Object candidateObject, Object traceObject) {
+    private static boolean isOclEqual(Object candidateObject, Object traceObject, DirectionKind directionKind) {
+    	if (directionKind == DirectionKind.OUT) {
+    		if (candidateObject == null) {
+    			// yet not bound 'out' parameter, suit for any
+    			return true;
+    		}
+    	}
         if (candidateObject == traceObject) {
             return true;
         }

@@ -59,7 +59,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
-
 import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralExp;
@@ -710,7 +709,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         if (traceRecord != null) {
         	return new MappingCallResult(TraceUtil.fetchResultFromTrace(evalEnv, traceRecord), evalEnv, MappingCallResult.FETCHED_FROM_TRACE);
         }
-
+		
         return new MappingCallResult(((OperationBodyImpl) mappingOperation.getBody()).accept(getVisitor()),
         				evalEnv, MappingCallResult.BODY_EXECUTED);
     }
