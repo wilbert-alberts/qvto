@@ -43,7 +43,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
@@ -375,10 +374,6 @@ abstract class QvtGenericEvaluationVisitor
 
 	public Object visitOperationBody(OperationBody operationBody) {
 		return getQVTDelegate().visitOperationBody(operationBody);
-	}
-
-	public Object visitRename(Rename rename) {
-		return getQVTDelegate().visitRename(rename);
 	}
 
 	public Object visitResolveExp(ResolveExp resolveExp) {

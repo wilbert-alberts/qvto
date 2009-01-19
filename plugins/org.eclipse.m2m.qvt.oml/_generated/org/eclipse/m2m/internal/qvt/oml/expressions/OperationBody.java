@@ -25,8 +25,8 @@ import org.eclipse.ocl.utilities.Visitor;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody#getOperation <em>Operation</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody#getContent <em>Content</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody#getOperation <em>Operation</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody#getVariable <em>Variable</em>}</li>
  * </ul>
  * </p>

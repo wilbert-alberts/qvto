@@ -13,10 +13,12 @@ package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -33,10 +35,11 @@ import org.eclipse.ocl.utilities.Visitor;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.MappingOperationImpl#getWhen <em>When</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.MappingOperationImpl#getDisjunct <em>Disjunct</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.MappingOperationImpl#getInherited <em>Inherited</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.MappingOperationImpl#getMerged <em>Merged</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.MappingOperationImpl#getDisjunct <em>Disjunct</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.MappingOperationImpl#getWhen <em>When</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.MappingOperationImpl#getWhere <em>Where</em>}</li>
  * </ul>
  * </p>
  *
@@ -50,24 +53,23 @@ public class MappingOperationImpl extends ImperativeOperationImpl implements Map
 	 */
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
     /**
-	 * The cached value of the '{@link #getWhen() <em>When</em>}' containment reference list.
+	 * The cached value of the '{@link #getDisjunct() <em>Disjunct</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getWhen()
+	 * @see #getDisjunct()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<OCLExpression> when;
-
-	/**
-	 * The cached value of the '{@link #getInherited() <em>Inherited</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getInherited()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<MappingOperation> inherited;
+	protected EList<MappingOperation> disjunct;
+				/**
+				 * The cached value of the '{@link #getInherited() <em>Inherited</em>}' reference list.
+				 * <!-- begin-user-doc -->
+				 * <!-- end-user-doc -->
+				 * @see #getInherited()
+				 * @generated
+				 * @ordered
+				 */
+				protected EList<MappingOperation> inherited;
 				/**
 	 * The cached value of the '{@link #getMerged() <em>Merged</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -78,14 +80,23 @@ public class MappingOperationImpl extends ImperativeOperationImpl implements Map
 	 */
 	protected EList<MappingOperation> merged;
 				/**
-	 * The cached value of the '{@link #getDisjunct() <em>Disjunct</em>}' reference list.
+	 * The cached value of the '{@link #getWhen() <em>When</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getDisjunct()
+	 * @see #getWhen()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<MappingOperation> disjunct;
+	protected EList<OCLExpression> when;
+				/**
+	 * The cached value of the '{@link #getWhere() <em>Where</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWhere()
+	 * @generated
+	 * @ordered
+	 */
+	protected OCLExpression where;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -116,6 +127,49 @@ public class MappingOperationImpl extends ImperativeOperationImpl implements Map
 			when = new EObjectContainmentEList<OCLExpression>(OCLExpression.class, this, ExpressionsPackage.MAPPING_OPERATION__WHEN);
 		}
 		return when;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public OCLExpression getWhere() {
+		return where;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetWhere(OCLExpression newWhere, NotificationChain msgs) {
+		OCLExpression oldWhere = where;
+		where = newWhere;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpressionsPackage.MAPPING_OPERATION__WHERE, oldWhere, newWhere);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setWhere(OCLExpression newWhere) {
+		if (newWhere != where) {
+			NotificationChain msgs = null;
+			if (where != null)
+				msgs = ((InternalEObject)where).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.MAPPING_OPERATION__WHERE, null, msgs);
+			if (newWhere != null)
+				msgs = ((InternalEObject)newWhere).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.MAPPING_OPERATION__WHERE, null, msgs);
+			msgs = basicSetWhere(newWhere, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.MAPPING_OPERATION__WHERE, newWhere, newWhere));
 	}
 
 	/**
@@ -179,6 +233,8 @@ public class MappingOperationImpl extends ImperativeOperationImpl implements Map
 		switch (featureID) {
 			case ExpressionsPackage.MAPPING_OPERATION__WHEN:
 				return ((InternalEList<?>)getWhen()).basicRemove(otherEnd, msgs);
+			case ExpressionsPackage.MAPPING_OPERATION__WHERE:
+				return basicSetWhere(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -191,14 +247,16 @@ public class MappingOperationImpl extends ImperativeOperationImpl implements Map
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ExpressionsPackage.MAPPING_OPERATION__WHEN:
-				return getWhen();
+			case ExpressionsPackage.MAPPING_OPERATION__DISJUNCT:
+				return getDisjunct();
 			case ExpressionsPackage.MAPPING_OPERATION__INHERITED:
 				return getInherited();
 			case ExpressionsPackage.MAPPING_OPERATION__MERGED:
 				return getMerged();
-			case ExpressionsPackage.MAPPING_OPERATION__DISJUNCT:
-				return getDisjunct();
+			case ExpressionsPackage.MAPPING_OPERATION__WHEN:
+				return getWhen();
+			case ExpressionsPackage.MAPPING_OPERATION__WHERE:
+				return getWhere();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -212,9 +270,9 @@ public class MappingOperationImpl extends ImperativeOperationImpl implements Map
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ExpressionsPackage.MAPPING_OPERATION__WHEN:
-				getWhen().clear();
-				getWhen().addAll((Collection<? extends OCLExpression>)newValue);
+			case ExpressionsPackage.MAPPING_OPERATION__DISJUNCT:
+				getDisjunct().clear();
+				getDisjunct().addAll((Collection<? extends MappingOperation>)newValue);
 				return;
 			case ExpressionsPackage.MAPPING_OPERATION__INHERITED:
 				getInherited().clear();
@@ -224,9 +282,12 @@ public class MappingOperationImpl extends ImperativeOperationImpl implements Map
 				getMerged().clear();
 				getMerged().addAll((Collection<? extends MappingOperation>)newValue);
 				return;
-			case ExpressionsPackage.MAPPING_OPERATION__DISJUNCT:
-				getDisjunct().clear();
-				getDisjunct().addAll((Collection<? extends MappingOperation>)newValue);
+			case ExpressionsPackage.MAPPING_OPERATION__WHEN:
+				getWhen().clear();
+				getWhen().addAll((Collection<? extends OCLExpression>)newValue);
+				return;
+			case ExpressionsPackage.MAPPING_OPERATION__WHERE:
+				setWhere((OCLExpression)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -240,8 +301,8 @@ public class MappingOperationImpl extends ImperativeOperationImpl implements Map
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.MAPPING_OPERATION__WHEN:
-				getWhen().clear();
+			case ExpressionsPackage.MAPPING_OPERATION__DISJUNCT:
+				getDisjunct().clear();
 				return;
 			case ExpressionsPackage.MAPPING_OPERATION__INHERITED:
 				getInherited().clear();
@@ -249,8 +310,11 @@ public class MappingOperationImpl extends ImperativeOperationImpl implements Map
 			case ExpressionsPackage.MAPPING_OPERATION__MERGED:
 				getMerged().clear();
 				return;
-			case ExpressionsPackage.MAPPING_OPERATION__DISJUNCT:
-				getDisjunct().clear();
+			case ExpressionsPackage.MAPPING_OPERATION__WHEN:
+				getWhen().clear();
+				return;
+			case ExpressionsPackage.MAPPING_OPERATION__WHERE:
+				setWhere((OCLExpression)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -264,14 +328,16 @@ public class MappingOperationImpl extends ImperativeOperationImpl implements Map
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.MAPPING_OPERATION__WHEN:
-				return when != null && !when.isEmpty();
+			case ExpressionsPackage.MAPPING_OPERATION__DISJUNCT:
+				return disjunct != null && !disjunct.isEmpty();
 			case ExpressionsPackage.MAPPING_OPERATION__INHERITED:
 				return inherited != null && !inherited.isEmpty();
 			case ExpressionsPackage.MAPPING_OPERATION__MERGED:
 				return merged != null && !merged.isEmpty();
-			case ExpressionsPackage.MAPPING_OPERATION__DISJUNCT:
-				return disjunct != null && !disjunct.isEmpty();
+			case ExpressionsPackage.MAPPING_OPERATION__WHEN:
+				return when != null && !when.isEmpty();
+			case ExpressionsPackage.MAPPING_OPERATION__WHERE:
+				return where != null;
 		}
 		return super.eIsSet(featureID);
 	}

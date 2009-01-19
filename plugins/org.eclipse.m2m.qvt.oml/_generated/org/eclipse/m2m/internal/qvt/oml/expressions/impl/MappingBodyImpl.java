@@ -32,8 +32,8 @@ import org.eclipse.ocl.utilities.Visitor;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.MappingBodyImpl#getInitSection <em>Init Section</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.MappingBodyImpl#getEndSection <em>End Section</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.MappingBodyImpl#getInitSection <em>Init Section</em>}</li>
  * </ul>
  * </p>
  *
@@ -48,16 +48,6 @@ public class MappingBodyImpl extends OperationBodyImpl implements MappingBody {
     public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
     /**
-	 * The cached value of the '{@link #getInitSection() <em>Init Section</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getInitSection()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<OCLExpression> initSection;
-
-	/**
 	 * The cached value of the '{@link #getEndSection() <em>End Section</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -66,6 +56,16 @@ public class MappingBodyImpl extends OperationBodyImpl implements MappingBody {
 	 * @ordered
 	 */
 	protected EList<OCLExpression> endSection;
+
+	/**
+* The cached value of the '{@link #getInitSection() <em>Init Section</em>}' containment reference list.
+* <!-- begin-user-doc -->
+* <!-- end-user-doc -->
+* @see #getInitSection()
+* @generated
+* @ordered
+*/
+protected EList<OCLExpression> initSection;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -133,10 +133,10 @@ public class MappingBodyImpl extends OperationBodyImpl implements MappingBody {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ExpressionsPackage.MAPPING_BODY__INIT_SECTION:
-				return ((InternalEList<?>)getInitSection()).basicRemove(otherEnd, msgs);
 			case ExpressionsPackage.MAPPING_BODY__END_SECTION:
 				return ((InternalEList<?>)getEndSection()).basicRemove(otherEnd, msgs);
+			case ExpressionsPackage.MAPPING_BODY__INIT_SECTION:
+				return ((InternalEList<?>)getInitSection()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -149,10 +149,10 @@ public class MappingBodyImpl extends OperationBodyImpl implements MappingBody {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ExpressionsPackage.MAPPING_BODY__INIT_SECTION:
-				return getInitSection();
 			case ExpressionsPackage.MAPPING_BODY__END_SECTION:
 				return getEndSection();
+			case ExpressionsPackage.MAPPING_BODY__INIT_SECTION:
+				return getInitSection();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -166,13 +166,13 @@ public class MappingBodyImpl extends OperationBodyImpl implements MappingBody {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ExpressionsPackage.MAPPING_BODY__INIT_SECTION:
-				getInitSection().clear();
-				getInitSection().addAll((Collection<? extends OCLExpression>)newValue);
-				return;
 			case ExpressionsPackage.MAPPING_BODY__END_SECTION:
 				getEndSection().clear();
 				getEndSection().addAll((Collection<? extends OCLExpression>)newValue);
+				return;
+			case ExpressionsPackage.MAPPING_BODY__INIT_SECTION:
+				getInitSection().clear();
+				getInitSection().addAll((Collection<? extends OCLExpression>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -186,11 +186,11 @@ public class MappingBodyImpl extends OperationBodyImpl implements MappingBody {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.MAPPING_BODY__INIT_SECTION:
-				getInitSection().clear();
-				return;
 			case ExpressionsPackage.MAPPING_BODY__END_SECTION:
 				getEndSection().clear();
+				return;
+			case ExpressionsPackage.MAPPING_BODY__INIT_SECTION:
+				getInitSection().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -204,10 +204,10 @@ public class MappingBodyImpl extends OperationBodyImpl implements MappingBody {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ExpressionsPackage.MAPPING_BODY__INIT_SECTION:
-				return initSection != null && !initSection.isEmpty();
 			case ExpressionsPackage.MAPPING_BODY__END_SECTION:
 				return endSection != null && !endSection.isEmpty();
+			case ExpressionsPackage.MAPPING_BODY__INIT_SECTION:
+				return initSection != null && !initSection.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

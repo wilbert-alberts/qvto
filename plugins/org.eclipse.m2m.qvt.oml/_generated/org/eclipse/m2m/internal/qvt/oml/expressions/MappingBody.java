@@ -23,8 +23,8 @@ import org.eclipse.ocl.utilities.Visitor;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody#getInitSection <em>Init Section</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody#getEndSection <em>End Section</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody#getInitSection <em>Init Section</em>}</li>
  * </ul>
  * </p>
  *

@@ -42,10 +42,11 @@ import org.eclipse.ocl.utilities.Visitor;
  * <ul>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeOperationImpl#getStartPosition <em>Start Position</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeOperationImpl#getEndPosition <em>End Position</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeOperationImpl#getContext <em>Context</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeOperationImpl#getResult <em>Result</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeOperationImpl#getBody <em>Body</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeOperationImpl#getContext <em>Context</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeOperationImpl#isIsBlackbox <em>Is Blackbox</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeOperationImpl#getOverridden <em>Overridden</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeOperationImpl#getResult <em>Result</em>}</li>
  * </ul>
  * </p>
  *
@@ -100,26 +101,6 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 	protected int endPosition = END_POSITION_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getContext() <em>Context</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getContext()
-	 * @generated
-	 * @ordered
-	 */
-	protected VarParameter context;
-
-	/**
-	 * The cached value of the '{@link #getResult() <em>Result</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getResult()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<VarParameter> result;
-
-	/**
 	 * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -128,6 +109,16 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 	 * @ordered
 	 */
 	protected OperationBody body;
+
+	/**
+	 * The cached value of the '{@link #getContext() <em>Context</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getContext()
+	 * @generated
+	 * @ordered
+	 */
+	protected VarParameter context;
 
 	/**
 	 * The default value of the '{@link #isIsBlackbox() <em>Is Blackbox</em>}' attribute.
@@ -148,6 +139,26 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 	 * @ordered
 	 */
 	protected static final int IS_BLACKBOX_EFLAG = 1 << 10;
+
+	/**
+	 * The cached value of the '{@link #getOverridden() <em>Overridden</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOverridden()
+	 * @generated
+	 * @ordered
+	 */
+	protected ImperativeOperation overridden;
+
+	/**
+	 * The cached value of the '{@link #getResult() <em>Result</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getResult()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<VarParameter> result;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -334,6 +345,44 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public ImperativeOperation getOverridden() {
+		if (overridden != null && overridden.eIsProxy()) {
+			InternalEObject oldOverridden = (InternalEObject)overridden;
+			overridden = (ImperativeOperation)eResolveProxy(oldOverridden);
+			if (overridden != oldOverridden) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ExpressionsPackage.IMPERATIVE_OPERATION__OVERRIDDEN, oldOverridden, overridden));
+			}
+		}
+		return overridden;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ImperativeOperation basicGetOverridden() {
+		return overridden;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setOverridden(ImperativeOperation newOverridden) {
+		ImperativeOperation oldOverridden = overridden;
+		overridden = newOverridden;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.IMPERATIVE_OPERATION__OVERRIDDEN, oldOverridden, overridden));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
 		if(v instanceof ExtendedVisitor) {
 		  @SuppressWarnings("unchecked")    		
@@ -352,16 +401,16 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case ExpressionsPackage.IMPERATIVE_OPERATION__BODY:
+				if (body != null)
+					msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.IMPERATIVE_OPERATION__BODY, null, msgs);
+				return basicSetBody((OperationBody)otherEnd, msgs);
 			case ExpressionsPackage.IMPERATIVE_OPERATION__CONTEXT:
 				if (context != null)
 					msgs = ((InternalEObject)context).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.IMPERATIVE_OPERATION__CONTEXT, null, msgs);
 				return basicSetContext((VarParameter)otherEnd, msgs);
 			case ExpressionsPackage.IMPERATIVE_OPERATION__RESULT:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getResult()).basicAdd(otherEnd, msgs);
-			case ExpressionsPackage.IMPERATIVE_OPERATION__BODY:
-				if (body != null)
-					msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.IMPERATIVE_OPERATION__BODY, null, msgs);
-				return basicSetBody((OperationBody)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -374,12 +423,12 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case ExpressionsPackage.IMPERATIVE_OPERATION__BODY:
+				return basicSetBody(null, msgs);
 			case ExpressionsPackage.IMPERATIVE_OPERATION__CONTEXT:
 				return basicSetContext(null, msgs);
 			case ExpressionsPackage.IMPERATIVE_OPERATION__RESULT:
 				return ((InternalEList<?>)getResult()).basicRemove(otherEnd, msgs);
-			case ExpressionsPackage.IMPERATIVE_OPERATION__BODY:
-				return basicSetBody(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -396,14 +445,17 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 				return getStartPosition();
 			case ExpressionsPackage.IMPERATIVE_OPERATION__END_POSITION:
 				return getEndPosition();
-			case ExpressionsPackage.IMPERATIVE_OPERATION__CONTEXT:
-				return getContext();
-			case ExpressionsPackage.IMPERATIVE_OPERATION__RESULT:
-				return getResult();
 			case ExpressionsPackage.IMPERATIVE_OPERATION__BODY:
 				return getBody();
+			case ExpressionsPackage.IMPERATIVE_OPERATION__CONTEXT:
+				return getContext();
 			case ExpressionsPackage.IMPERATIVE_OPERATION__IS_BLACKBOX:
 				return isIsBlackbox();
+			case ExpressionsPackage.IMPERATIVE_OPERATION__OVERRIDDEN:
+				if (resolve) return getOverridden();
+				return basicGetOverridden();
+			case ExpressionsPackage.IMPERATIVE_OPERATION__RESULT:
+				return getResult();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -423,18 +475,21 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 			case ExpressionsPackage.IMPERATIVE_OPERATION__END_POSITION:
 				setEndPosition((Integer)newValue);
 				return;
+			case ExpressionsPackage.IMPERATIVE_OPERATION__BODY:
+				setBody((OperationBody)newValue);
+				return;
 			case ExpressionsPackage.IMPERATIVE_OPERATION__CONTEXT:
 				setContext((VarParameter)newValue);
+				return;
+			case ExpressionsPackage.IMPERATIVE_OPERATION__IS_BLACKBOX:
+				setIsBlackbox((Boolean)newValue);
+				return;
+			case ExpressionsPackage.IMPERATIVE_OPERATION__OVERRIDDEN:
+				setOverridden((ImperativeOperation)newValue);
 				return;
 			case ExpressionsPackage.IMPERATIVE_OPERATION__RESULT:
 				getResult().clear();
 				getResult().addAll((Collection<? extends VarParameter>)newValue);
-				return;
-			case ExpressionsPackage.IMPERATIVE_OPERATION__BODY:
-				setBody((OperationBody)newValue);
-				return;
-			case ExpressionsPackage.IMPERATIVE_OPERATION__IS_BLACKBOX:
-				setIsBlackbox((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -454,17 +509,20 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 			case ExpressionsPackage.IMPERATIVE_OPERATION__END_POSITION:
 				setEndPosition(END_POSITION_EDEFAULT);
 				return;
-			case ExpressionsPackage.IMPERATIVE_OPERATION__CONTEXT:
-				setContext((VarParameter)null);
-				return;
-			case ExpressionsPackage.IMPERATIVE_OPERATION__RESULT:
-				getResult().clear();
-				return;
 			case ExpressionsPackage.IMPERATIVE_OPERATION__BODY:
 				setBody((OperationBody)null);
 				return;
+			case ExpressionsPackage.IMPERATIVE_OPERATION__CONTEXT:
+				setContext((VarParameter)null);
+				return;
 			case ExpressionsPackage.IMPERATIVE_OPERATION__IS_BLACKBOX:
 				setIsBlackbox(IS_BLACKBOX_EDEFAULT);
+				return;
+			case ExpressionsPackage.IMPERATIVE_OPERATION__OVERRIDDEN:
+				setOverridden((ImperativeOperation)null);
+				return;
+			case ExpressionsPackage.IMPERATIVE_OPERATION__RESULT:
+				getResult().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -482,14 +540,16 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 				return startPosition != START_POSITION_EDEFAULT;
 			case ExpressionsPackage.IMPERATIVE_OPERATION__END_POSITION:
 				return endPosition != END_POSITION_EDEFAULT;
-			case ExpressionsPackage.IMPERATIVE_OPERATION__CONTEXT:
-				return context != null;
-			case ExpressionsPackage.IMPERATIVE_OPERATION__RESULT:
-				return result != null && !result.isEmpty();
 			case ExpressionsPackage.IMPERATIVE_OPERATION__BODY:
 				return body != null;
+			case ExpressionsPackage.IMPERATIVE_OPERATION__CONTEXT:
+				return context != null;
 			case ExpressionsPackage.IMPERATIVE_OPERATION__IS_BLACKBOX:
 				return ((eFlags & IS_BLACKBOX_EFLAG) != 0) != IS_BLACKBOX_EDEFAULT;
+			case ExpressionsPackage.IMPERATIVE_OPERATION__OVERRIDDEN:
+				return overridden != null;
+			case ExpressionsPackage.IMPERATIVE_OPERATION__RESULT:
+				return result != null && !result.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

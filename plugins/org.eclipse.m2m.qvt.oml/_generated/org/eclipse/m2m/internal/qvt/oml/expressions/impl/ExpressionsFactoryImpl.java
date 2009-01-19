@@ -39,7 +39,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
@@ -95,28 +94,27 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case ExpressionsPackage.MODULE: return createModule();
-			case ExpressionsPackage.LIBRARY: return createLibrary();
-			case ExpressionsPackage.RENAME: return createRename();
-			case ExpressionsPackage.MODULE_IMPORT: return createModuleImport();
+			case ExpressionsPackage.CONSTRUCTOR_BODY: return createConstructorBody();
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY: return createContextualProperty();
+			case ExpressionsPackage.ENTRY_OPERATION: return createEntryOperation();
+			case ExpressionsPackage.HELPER: return createHelper();
 			case ExpressionsPackage.IMPERATIVE_CALL_EXP: return createImperativeCallExp();
 			case ExpressionsPackage.IMPERATIVE_OPERATION: return createImperativeOperation();
-			case ExpressionsPackage.VAR_PARAMETER: return createVarParameter();
-			case ExpressionsPackage.OPERATION_BODY: return createOperationBody();
-			case ExpressionsPackage.CONSTRUCTOR_BODY: return createConstructorBody();
+			case ExpressionsPackage.LIBRARY: return createLibrary();
 			case ExpressionsPackage.MAPPING_BODY: return createMappingBody();
 			case ExpressionsPackage.MAPPING_CALL_EXP: return createMappingCallExp();
 			case ExpressionsPackage.MAPPING_OPERATION: return createMappingOperation();
 			case ExpressionsPackage.MAPPING_PARAMETER: return createMappingParameter();
 			case ExpressionsPackage.MODEL_PARAMETER: return createModelParameter();
-			case ExpressionsPackage.HELPER: return createHelper();
+			case ExpressionsPackage.MODEL_TYPE: return createModelType();
+			case ExpressionsPackage.MODULE: return createModule();
+			case ExpressionsPackage.MODULE_IMPORT: return createModuleImport();
 			case ExpressionsPackage.OBJECT_EXP: return createObjectExp();
+			case ExpressionsPackage.OPERATION_BODY: return createOperationBody();
+			case ExpressionsPackage.OPERATIONAL_TRANSFORMATION: return createOperationalTransformation();
 			case ExpressionsPackage.RESOLVE_EXP: return createResolveExp();
 			case ExpressionsPackage.RESOLVE_IN_EXP: return createResolveInExp();
-			case ExpressionsPackage.MODEL_TYPE: return createModelType();
-			case ExpressionsPackage.OPERATIONAL_TRANSFORMATION: return createOperationalTransformation();
-			case ExpressionsPackage.ENTRY_OPERATION: return createEntryOperation();
+			case ExpressionsPackage.VAR_PARAMETER: return createVarParameter();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -130,10 +128,10 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
-			case ExpressionsPackage.IMPORT_KIND:
-				return createImportKindFromString(eDataType, initialValue);
 			case ExpressionsPackage.DIRECTION_KIND:
 				return createDirectionKindFromString(eDataType, initialValue);
+			case ExpressionsPackage.IMPORT_KIND:
+				return createImportKindFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -147,10 +145,10 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
-			case ExpressionsPackage.IMPORT_KIND:
-				return convertImportKindToString(eDataType, instanceValue);
 			case ExpressionsPackage.DIRECTION_KIND:
 				return convertDirectionKindToString(eDataType, instanceValue);
+			case ExpressionsPackage.IMPORT_KIND:
+				return convertImportKindToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -174,16 +172,6 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	public Library createLibrary() {
 		LibraryImpl library = new LibraryImpl();
 		return library;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Rename createRename() {
-		RenameImpl rename = new RenameImpl();
-		return rename;
 	}
 
 	/**

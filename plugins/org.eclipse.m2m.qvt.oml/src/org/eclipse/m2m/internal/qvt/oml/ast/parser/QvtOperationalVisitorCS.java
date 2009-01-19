@@ -24,10 +24,12 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -143,7 +145,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
@@ -1328,10 +1329,7 @@ public class QvtOperationalVisitorCS
 		importsCS(parsedModuleCS, module, env, compiler);
 
 		for (RenameCS renameCS : moduleCS.getRenamings()) {
-			Rename rename = visitRenameCS(renameCS, env);
-			if (rename != null) {
-				module.getOwnedRenaming().add(rename);
-			}
+			visitRenameCS(renameCS, env);
 		}
 		
 		createModuleProperties(module, moduleCS, env);
@@ -2257,7 +2255,7 @@ public class QvtOperationalVisitorCS
 		return resolvedMetamodel;
 	}
 	
-	protected Rename visitRenameCS(RenameCS renameCS, 
+	protected EAnnotation visitRenameCS(RenameCS renameCS, 
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) throws SemanticException {
 		
@@ -2270,8 +2268,8 @@ public class QvtOperationalVisitorCS
 
 		EStructuralFeature originalProperty = env.lookupProperty(type, originalName);
 		if (originalProperty == null) {
-			QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.noPropertyInTypeError, originalName, QvtOperationalTypesUtil
-					.getTypeFullName(type)), renameCS);
+			QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.noPropertyInTypeError, originalName, 
+					QvtOperationalTypesUtil.getTypeFullName(type)), renameCS);
 			return null;
 		}
 
@@ -2282,24 +2280,16 @@ public class QvtOperationalVisitorCS
 			return null;
 		}
 
-		Variable<EClassifier, EParameter> var = EcoreFactory.eINSTANCE.createVariable();
-		var.setName(newName);
-		var.setType(originalProperty.getEType());
-		Constraint constraint = EcoreFactory.eINSTANCE.createConstraint();
-		constraint.setStereotype(QvtOperationalEnv.RENAMED_PROPERTY_STEREOTYPE);
-		constraint.getConstrainedElements().add(originalProperty);
-		EStructuralFeature feature = env.defineAttribute(type, var, constraint);
-		feature.setLowerBound(originalProperty.getLowerBound());
-		feature.setUpperBound(originalProperty.getUpperBound());
+		EAnnotation aliasTag = createTag(QvtOperationalEnv.TAG_ALIAS, newName, originalProperty);
+		// FIXME - we should required QVT specific requirement env in this operation argument
+		if(env instanceof QvtOperationalEnv) {
+			QvtOperationalModuleEnv moduleEnv = getModuleContextEnv((QvtOperationalEnv) env);
+			if(moduleEnv.getModuleContextType() != null) {
+				moduleEnv.getModuleContextType().getOwnedTag().add(aliasTag);
+			}
+		}
 
-		Rename rename = ExpressionsFactory.eINSTANCE.createRename();
-		rename.setStartPosition(renameCS.getStartOffset());
-		rename.setEndPosition(renameCS.getEndOffset());
-		rename.setName(originalName);
-		rename.setNewName(newName);
-		rename.setEType(type);
-
-		return rename;
+		return aliasTag;
 	}
 
 	private List<org.eclipse.ocl.ecore.OCLExpression> visitMappingSectionCS(MappingSectionCS mappingSectionCS,
@@ -4261,5 +4251,12 @@ public class QvtOperationalVisitorCS
 		}
 		
 		return adapter;
+	}
+	
+	private static EAnnotation createTag(String tagId, String value, EModelElement element) {		
+		EAnnotation annotation = org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.createEAnnotation();
+		annotation.getDetails().put(tagId, value);
+		annotation.getReferences().add(element);
+		return annotation;
 	}
 }

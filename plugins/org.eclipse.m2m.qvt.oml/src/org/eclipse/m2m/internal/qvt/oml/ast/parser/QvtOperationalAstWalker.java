@@ -48,7 +48,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
@@ -175,9 +174,6 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object> {
 
     public Object visitModule(Module module) {
         myNodeProcessor.process(module, null);
-        for (Rename rename : module.getOwnedRenaming()) {
-            doProcess(rename, module);
-        }
 
         // Remark: using QvtOperationalParserUtil.getOwnedOperations() operation instead of direct
         // access to EClass::getEOperations(), as contextual mappings are in owned by the module type 
@@ -234,11 +230,6 @@ public class QvtOperationalAstWalker implements ExtendedVisitor<Object> {
 		return null;
 	}
 	
-    public Object visitRename(Rename rename) {
-        return null;
-    }
-
-
     public Object visitVarParameter(VarParameter varParameter) {
         return null;
     }

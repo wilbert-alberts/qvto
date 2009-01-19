@@ -55,15 +55,6 @@ public interface ExpressionsFactory extends EFactory {
 	Library createLibrary();
 
 	/**
-	 * Returns a new object of class '<em>Rename</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Rename</em>'.
-	 * @generated
-	 */
-	Rename createRename();
-
-	/**
 	 * Returns a new object of class '<em>Module Import</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

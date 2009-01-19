@@ -48,8 +48,8 @@ import org.eclipse.ocl.utilities.Visitor;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.OperationBodyImpl#getStartPosition <em>Start Position</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.OperationBodyImpl#getEndPosition <em>End Position</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.OperationBodyImpl#getEAnnotations <em>EAnnotations</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.OperationBodyImpl#getOperation <em>Operation</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.OperationBodyImpl#getContent <em>Content</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.OperationBodyImpl#getOperation <em>Operation</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.OperationBodyImpl#getVariable <em>Variable</em>}</li>
  * </ul>
  * </p>
@@ -326,10 +326,10 @@ public class OperationBodyImpl extends EObjectImpl implements OperationBody {
 		switch (featureID) {
 			case ExpressionsPackage.OPERATION_BODY__EANNOTATIONS:
 				return ((InternalEList<?>)getEAnnotations()).basicRemove(otherEnd, msgs);
-			case ExpressionsPackage.OPERATION_BODY__OPERATION:
-				return basicSetOperation(null, msgs);
 			case ExpressionsPackage.OPERATION_BODY__CONTENT:
 				return ((InternalEList<?>)getContent()).basicRemove(otherEnd, msgs);
+			case ExpressionsPackage.OPERATION_BODY__OPERATION:
+				return basicSetOperation(null, msgs);
 			case ExpressionsPackage.OPERATION_BODY__VARIABLE:
 				return ((InternalEList<?>)getVariable()).basicRemove(otherEnd, msgs);
 		}
@@ -364,10 +364,10 @@ public class OperationBodyImpl extends EObjectImpl implements OperationBody {
 				return getEndPosition();
 			case ExpressionsPackage.OPERATION_BODY__EANNOTATIONS:
 				return getEAnnotations();
-			case ExpressionsPackage.OPERATION_BODY__OPERATION:
-				return getOperation();
 			case ExpressionsPackage.OPERATION_BODY__CONTENT:
 				return getContent();
+			case ExpressionsPackage.OPERATION_BODY__OPERATION:
+				return getOperation();
 			case ExpressionsPackage.OPERATION_BODY__VARIABLE:
 				return getVariable();
 		}
@@ -393,12 +393,12 @@ public class OperationBodyImpl extends EObjectImpl implements OperationBody {
 				getEAnnotations().clear();
 				getEAnnotations().addAll((Collection<? extends EAnnotation>)newValue);
 				return;
-			case ExpressionsPackage.OPERATION_BODY__OPERATION:
-				setOperation((ImperativeOperation)newValue);
-				return;
 			case ExpressionsPackage.OPERATION_BODY__CONTENT:
 				getContent().clear();
 				getContent().addAll((Collection<? extends OCLExpression>)newValue);
+				return;
+			case ExpressionsPackage.OPERATION_BODY__OPERATION:
+				setOperation((ImperativeOperation)newValue);
 				return;
 			case ExpressionsPackage.OPERATION_BODY__VARIABLE:
 				getVariable().clear();
@@ -425,11 +425,11 @@ public class OperationBodyImpl extends EObjectImpl implements OperationBody {
 			case ExpressionsPackage.OPERATION_BODY__EANNOTATIONS:
 				getEAnnotations().clear();
 				return;
-			case ExpressionsPackage.OPERATION_BODY__OPERATION:
-				setOperation((ImperativeOperation)null);
-				return;
 			case ExpressionsPackage.OPERATION_BODY__CONTENT:
 				getContent().clear();
+				return;
+			case ExpressionsPackage.OPERATION_BODY__OPERATION:
+				setOperation((ImperativeOperation)null);
 				return;
 			case ExpressionsPackage.OPERATION_BODY__VARIABLE:
 				getVariable().clear();
@@ -452,10 +452,10 @@ public class OperationBodyImpl extends EObjectImpl implements OperationBody {
 				return endPosition != END_POSITION_EDEFAULT;
 			case ExpressionsPackage.OPERATION_BODY__EANNOTATIONS:
 				return eAnnotations != null && !eAnnotations.isEmpty();
-			case ExpressionsPackage.OPERATION_BODY__OPERATION:
-				return getOperation() != null;
 			case ExpressionsPackage.OPERATION_BODY__CONTENT:
 				return content != null && !content.isEmpty();
+			case ExpressionsPackage.OPERATION_BODY__OPERATION:
+				return getOperation() != null;
 			case ExpressionsPackage.OPERATION_BODY__VARIABLE:
 				return variable != null && !variable.isEmpty();
 		}

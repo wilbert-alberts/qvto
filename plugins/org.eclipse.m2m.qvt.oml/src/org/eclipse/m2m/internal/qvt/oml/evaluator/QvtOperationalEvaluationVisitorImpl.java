@@ -25,7 +25,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
@@ -85,7 +84,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
@@ -318,7 +316,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
                 Object ownerObj = getAssignExpLValueOwner(lValue);
                 if (ownerObj instanceof EObject) {
                     PropertyCallExp<EClassifier, EStructuralFeature> lvalueExp = (PropertyCallExp<EClassifier, EStructuralFeature>) assignExp.getLeft();
-                    EStructuralFeature referredProperty = getRenamedProperty(lvalueExp.getReferredProperty());
+                    EStructuralFeature referredProperty = lvalueExp.getReferredProperty();
                     internEnv.setLastAssignmentLvalueEval(new EObjectEStructuralFeaturePair((EObject) ownerObj, referredProperty));
                 }        	
             }        	
@@ -388,7 +386,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
                 EObject oldIP = setCurrentEnvInstructionPointer(assignExp);
                 env.callSetter(
                         (EObject) ownerObj,
-                        getRenamedProperty(((PropertyCallExp<EClassifier, EStructuralFeature>) lValue).getReferredProperty()),
+                        ((PropertyCallExp<EClassifier, EStructuralFeature>) lValue).getReferredProperty(),
                         exprValue, isUndefined(exprValue), assignExp.isIsReset());
                 setCurrentEnvInstructionPointer(oldIP);
             }
@@ -667,17 +665,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		}
 		return actualOperation;
 	}
-    
-    @Override
-    public Object visitPropertyCallExp(PropertyCallExp<EClassifier, EStructuralFeature> pc) {
-    	EStructuralFeature renamedProperty = getRenamedProperty(pc.getReferredProperty());
-    	if (renamedProperty != pc.getReferredProperty()) {
-    		// TODO possible 'pc' should be cloned in case it's readonly
-	        pc.setReferredProperty(renamedProperty);
-    	}
-    	return super.visitPropertyCallExp(pc);
-    }
-    
+        
     @Override
     public Object visitEnumLiteralExp(EnumLiteralExp<EClassifier, EEnumLiteral> el) {
         return el.getReferredEnumLiteral().getInstance();
@@ -938,21 +926,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	public Object visitClass(Class class_) {
 		return null;
 	}
-
-	public Object visitRename(Rename rename) {
-    	// nothing to do in runtime, all should be resolved during parsing time.
-    	// https://bugs.eclipse.org/bugs/show_bug.cgi?id=230175    	
-    	return null;
-/*        EClassifier context = rename.getEType();
-
-        // if source is undefined, result is OclInvalid
-        if (isUndefined(context))
-            return getOclInvalid();
-
-        EStructuralFeature origProperty = getEnvironment().lookupProperty(rename.getEType(), rename.getName());
-        return origProperty;
-*/        
-    }
 
     public Object visitVarParameter(VarParameter varParameter) {
         return null;
@@ -1851,23 +1824,23 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		return args;
 	}
 
-    private EStructuralFeature getRenamedProperty(EStructuralFeature property) {
-    	EAnnotation annotation = property.getEAnnotation(Environment.OCL_NAMESPACE_URI);
-    	if (annotation != null) {
-    		for (EObject nextAnn : annotation.getContents()) {
-    			if (false == nextAnn instanceof Constraint) {
-    				continue;
-    			}
-    			Constraint cnt = (Constraint) nextAnn;
-    			if (QvtOperationalEnv.RENAMED_PROPERTY_STEREOTYPE.equals(cnt.getStereotype())
-    					&& !cnt.getConstrainedElements().isEmpty()
-    					&& cnt.getConstrainedElements().get(0) instanceof EStructuralFeature) {
-    				return (EStructuralFeature) cnt.getConstrainedElements().get(0);
-    			}
-    		}
-    	}
-    	return property;
-    }
+//    private EStructuralFeature getRenamedProperty(EStructuralFeature property) {
+//    	EAnnotation annotation = property.getEAnnotation(Environment.OCL_NAMESPACE_URI);
+//    	if (annotation != null) {
+//    		for (EObject nextAnn : annotation.getContents()) {
+//    			if (false == nextAnn instanceof Constraint) {
+//    				continue;
+//    			}
+//    			Constraint cnt = (Constraint) nextAnn;
+//    			if (QvtOperationalEnv.RENAMED_PROPERTY_STEREOTYPE.equals(cnt.getStereotype())
+//    					&& !cnt.getConstrainedElements().isEmpty()
+//    					&& cnt.getConstrainedElements().get(0) instanceof EStructuralFeature) {
+//    				return (EStructuralFeature) cnt.getConstrainedElements().get(0);
+//    			}
+//    		}
+//    	}
+//    	return property;
+//    }
     
     /**
 	* Wraps the environment's creatInstance() and transforms failures to QVT exception

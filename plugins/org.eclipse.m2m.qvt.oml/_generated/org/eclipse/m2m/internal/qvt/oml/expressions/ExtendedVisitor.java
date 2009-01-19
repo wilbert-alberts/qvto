@@ -52,14 +52,6 @@ public interface ExtendedVisitor<T> extends ImperativeOCLVisitor<T> {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model renameRequired="true"
-	 * @generated
-	 */
-	T visitRename(Rename rename);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * @model moduleImportRequired="true"
 	 * @generated
 	 */

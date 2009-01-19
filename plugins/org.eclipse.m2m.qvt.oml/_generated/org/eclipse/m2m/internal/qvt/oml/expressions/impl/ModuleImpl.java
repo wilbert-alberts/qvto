@@ -36,7 +36,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Rename;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VisitableASTNode;
 import org.eclipse.ocl.ecore.Variable;
 import org.eclipse.ocl.utilities.ASTNode;
@@ -66,7 +65,6 @@ import org.eclipse.ocl.utilities.Visitor;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getOwnedTag <em>Owned Tag</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getOwnedVariable <em>Owned Variable</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getUsedModelType <em>Used Model Type</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl#getOwnedRenaming <em>Owned Renaming</em>}</li>
  * </ul>
  * </p>
  *
@@ -280,16 +278,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 	protected EList<ModelType> usedModelType;
 
 	/**
-	 * The cached value of the '{@link #getOwnedRenaming() <em>Owned Renaming</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOwnedRenaming()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Rename> ownedRenaming;
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -489,18 +477,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 			ownedVariable = new EObjectContainmentEList<Variable>(Variable.class, this, ExpressionsPackage.MODULE__OWNED_VARIABLE);
 		}
 		return ownedVariable;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<Rename> getOwnedRenaming() {
-		if (ownedRenaming == null) {
-			ownedRenaming = new EObjectContainmentEList<Rename>(Rename.class, this, ExpressionsPackage.MODULE__OWNED_RENAMING);
-		}
-		return ownedRenaming;
 	}
 
 	/**
@@ -713,8 +689,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 				return ((InternalEList<?>)getOwnedTag()).basicRemove(otherEnd, msgs);
 			case ExpressionsPackage.MODULE__OWNED_VARIABLE:
 				return ((InternalEList<?>)getOwnedVariable()).basicRemove(otherEnd, msgs);
-			case ExpressionsPackage.MODULE__OWNED_RENAMING:
-				return ((InternalEList<?>)getOwnedRenaming()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -773,8 +747,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 				return getOwnedVariable();
 			case ExpressionsPackage.MODULE__USED_MODEL_TYPE:
 				return getUsedModelType();
-			case ExpressionsPackage.MODULE__OWNED_RENAMING:
-				return getOwnedRenaming();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -837,10 +809,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 				getUsedModelType().clear();
 				getUsedModelType().addAll((Collection<? extends ModelType>)newValue);
 				return;
-			case ExpressionsPackage.MODULE__OWNED_RENAMING:
-				getOwnedRenaming().clear();
-				getOwnedRenaming().addAll((Collection<? extends Rename>)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -895,9 +863,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 			case ExpressionsPackage.MODULE__USED_MODEL_TYPE:
 				getUsedModelType().clear();
 				return;
-			case ExpressionsPackage.MODULE__OWNED_RENAMING:
-				getOwnedRenaming().clear();
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -940,8 +905,6 @@ public class ModuleImpl extends EClassImpl implements Module {
 				return ownedVariable != null && !ownedVariable.isEmpty();
 			case ExpressionsPackage.MODULE__USED_MODEL_TYPE:
 				return usedModelType != null && !usedModelType.isEmpty();
-			case ExpressionsPackage.MODULE__OWNED_RENAMING:
-				return ownedRenaming != null && !ownedRenaming.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

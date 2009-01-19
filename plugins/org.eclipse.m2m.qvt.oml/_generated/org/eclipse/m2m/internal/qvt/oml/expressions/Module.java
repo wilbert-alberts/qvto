@@ -34,7 +34,6 @@ import org.eclipse.ocl.utilities.Visitor;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getOwnedTag <em>Owned Tag</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getOwnedVariable <em>Owned Variable</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getUsedModelType <em>Used Model Type</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module#getOwnedRenaming <em>Owned Renaming</em>}</li>
  * </ul>
  * </p>
  *
@@ -67,22 +66,6 @@ public interface Module extends EClass, EPackage, VisitableASTNode {
 	EList<Variable> getOwnedVariable();
 
 				/**
-	 * Returns the value of the '<em><b>Owned Renaming</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.expressions.Rename}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Owned Renaming</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Owned Renaming</em>' containment reference list.
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getModule_OwnedRenaming()
-	 * @model containment="true"
-	 * @generated
-	 */
-	EList<Rename> getOwnedRenaming();
-
-	/**
 	 * Returns the value of the '<em><b>Entry</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>

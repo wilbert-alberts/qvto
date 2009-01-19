@@ -18,6 +18,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
@@ -69,10 +71,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 
 	public static final String THIS = "this"; //$NON-NLS-1$	
 	public static final String MAIN = "main"; //$NON-NLS-1$	
-	
-	public static final String RENAMED_PROPERTY_STEREOTYPE = "renamed_property"; //$NON-NLS-1$
-	public static final String INTERMEDIATE_PROPERTY_STEREOTYPE = "intermediate_property"; //$NON-NLS-1$
-	
+	public static final String TAG_ALIAS = "alias"; //$NON-NLS-1$		
 	public static final String METAMODEL_COMPLIANCE_KIND_STRICT = "strict"; //$NON-NLS-1$
 	
     private EPackage.Registry myPackageRegistry;    
@@ -434,6 +433,28 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		EClassifier result = super.lookupClassifier(names);
 		return (result != null) ? result : QvtOperationalStdLibrary.INSTANCE.lookupClassifier(names);
 	}
+	
+	@Override
+	public EStructuralFeature lookupProperty(EClassifier owner, String name) {
+		EStructuralFeature property = super.lookupProperty(owner, name);
+		if(property == null) {
+			// check for a renamed property
+			Module module = getModuleContextType();
+			if(module != null) {
+				for (EAnnotation nextTag : module.getOwnedTag()) {
+					String newName = nextTag.getDetails().get(TAG_ALIAS);
+					EList<EObject> references = nextTag.getReferences();
+					EObject element = references.isEmpty() ? null : references.get(0);
+					if(name.equals(newName) && element instanceof EStructuralFeature) {
+						String originalName = ((EStructuralFeature)element).getName();
+						return super.lookupProperty(owner, originalName);
+					}
+				}
+			}
+		}
+		
+		return property;
+	}	
 	
 	@Override
 	public EPackage lookupPackage(List<String> path) {
