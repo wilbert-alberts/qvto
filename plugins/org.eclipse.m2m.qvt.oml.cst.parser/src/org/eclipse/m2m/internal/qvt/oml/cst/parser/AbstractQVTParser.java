@@ -97,6 +97,7 @@ import org.eclipse.ocl.cst.SimpleTypeEnum;
 import org.eclipse.ocl.cst.StringLiteralExpCS;
 import org.eclipse.ocl.cst.TypeCS;
 import org.eclipse.ocl.cst.VariableCS;
+import org.eclipse.ocl.cst.VariableExpCS;
 import org.eclipse.ocl.lpg.BasicEnvironment;
 import org.eclipse.ocl.parser.AbstractOCLParser;
 
@@ -900,5 +901,20 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		result.setKey(keyLiteralCS);
 		result.setValue(valueExpCS);
 		return result;
+	}
+	
+	protected VariableCS getVariableFromAssignment(AssignStatementCS assignStatementCS) {
+		if (assignStatementCS.getLValueCS() instanceof VariableExpCS) {
+			VariableExpCS variableExpCS = (VariableExpCS) assignStatementCS.getLValueCS();
+			SimpleNameCS simpleNameCS = variableExpCS.getSimpleNameCS();
+			if (simpleNameCS.getType() == SimpleTypeEnum.IDENTIFIER_LITERAL) {
+				String varName = simpleNameCS.getValue();
+				return createVariableCS(varName, null, assignStatementCS.getOclExpressionCS());
+			}
+		}
+        int startIndex = assignStatementCS.getLValueCS().getStartToken().getTokenIndex();
+        int endIndex = assignStatementCS.getLValueCS().getEndToken().getTokenIndex();
+		reportError(ParseErrorCodes.INVALID_CODE, "", startIndex, endIndex, "Must be an identifier!"); //$NON-NLS-1$ //$NON-NLS-2$
+		return createVariableCS("error_var", null, assignStatementCS.getOclExpressionCS()); //$NON-NLS-1$
 	}
 }	

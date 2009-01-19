@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.g,v 1.13 2009/01/15 18:43:24 aigdalov Exp $ 
+-- * $Id: ImperativeOCL.g,v 1.14 2009/01/19 15:05:37 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -32,7 +32,8 @@ $Globals
 	import lpg.lpgjavaruntime.NullTerminalSymbolsException;
 	import lpg.lpgjavaruntime.UndefinedEofSymbolException;
 	import lpg.lpgjavaruntime.UnimplementedTerminalsException;
-	import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;	
+	import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
+	import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;	
 	import org.eclipse.m2m.internal.qvt.oml.cst.LogExpCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;	
 	import org.eclipse.m2m.internal.qvt.oml.cst.ReturnExpCS;	
@@ -88,7 +89,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: ImperativeOCL.g,v 1.13 2009/01/15 18:43:24 aigdalov Exp $
+ * $Id: ImperativeOCL.g,v 1.14 2009/01/19 15:05:37 aigdalov Exp $
  */
 	./
 $End
@@ -157,7 +158,7 @@ $Rules
 		  $EndJava
 		./
 
-	expression -> returnExpCS 	
+	oclExpressionCS -> returnExpCS 	
 	returnExpCS ::= return oclExpressionCSOpt
 		/.$BeginJava
 				ReturnExpCS returnExpCS = createReturnExpCS((OCLExpressionCS)dtParser.getSym(2));
@@ -172,8 +173,8 @@ $Rules
 		  $EndJava
 		./
 	 
-	expression -> assignStatementCS
-	expression -> variableInitializationCS
+	oclExpressionCS -> assignStatementCS
+	oclExpressionCS -> variableInitializationCS
 
 	variableInitializationCS -> variableInitializationCSCorrect
 
@@ -190,7 +191,7 @@ $Rules
 		  $EndJava
 		./
 
-	variableInitializationCSCorrect ::= var IDENTIFIER ':' typeCS varInitOperator expression
+	variableInitializationCSCorrect ::= var IDENTIFIER ':' typeCS varInitOperator oclExpressionCS
 		/.$BeginJava
 					CSTNode result = createVariableInitializationCS(
 							getIToken($getToken(2)),
@@ -214,7 +215,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	variableInitializationCSCorrect ::= var IDENTIFIER varInitOperator expression
+	variableInitializationCSCorrect ::= var IDENTIFIER varInitOperator oclExpressionCS
 		/.$BeginJava
 					CSTNode result = createVariableInitializationCS(
 							getIToken($getToken(2)),
@@ -263,7 +264,7 @@ $Rules
 		  $EndJava
 		./
 		
-	assignStatementCS ::= dotArrowExpCS ':=' expression
+	assignStatementCS ::= dotArrowExpCS ':=' oclExpressionCS
 		/.$BeginJava
 					CSTNode result = createAssignStatementCS(
 							(OCLExpressionCS)$getSym(1),
@@ -286,7 +287,7 @@ $Rules
 		  $EndJava
 		./
 
-	assignStatementCS ::= dotArrowExpCS '+=' expression
+	assignStatementCS ::= dotArrowExpCS '+=' oclExpressionCS
 		/.$BeginJava
 					CSTNode result = createAssignStatementCS(
 							(OCLExpressionCS)$getSym(1),
@@ -312,10 +313,24 @@ $Rules
 
 	whileBodyCS -> expression_block
 
-	whileExpCS ::= while '(' declarator ';' oclExpressionCS ')' whileBodyCS
+
+	whileExpCS ::= while '(' declarator1 ';' oclExpressionCS ')' whileBodyCS
 		/.$BeginJava
 					CSTNode result = createWhileExpCS(
 							(VariableCS)$getSym(3),
+							(OCLExpressionCS)$getSym(5),
+							(BlockExpCS)$getSym(7)
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(7));
+					$setResult(result);
+		  $EndJava
+		./
+
+	whileExpCS ::= while '(' assignStatementCS ';' oclExpressionCS ')' whileBodyCS
+		/.$BeginJava
+					AssignStatementCS assignment = (AssignStatementCS)$getSym(3);
+					CSTNode result = createWhileExpCS(
+							getVariableFromAssignment(assignment),
 							(OCLExpressionCS)$getSym(5),
 							(BlockExpCS)$getSym(7)
 						);
@@ -531,7 +546,7 @@ $Rules
 		./
 
 
-	switchAltExpCS ::= '(' oclExpressionCS ')' '?' expression ';'
+	switchAltExpCS ::= '(' oclExpressionCS ')' '?' oclExpressionCS ';'
 		/.$BeginJava
 					CSTNode result = createSwitchAltExpCS(
 							(OCLExpressionCS) $getSym(2),
@@ -553,7 +568,7 @@ $Rules
 		  $EndJava
 		./
 	
-	switchAltExpCS ::= '(' oclExpressionCS ')' '?' expression qvtErrorToken
+	switchAltExpCS ::= '(' oclExpressionCS ')' '?' oclExpressionCS qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createSwitchAltExpCS(
 							(OCLExpressionCS) $getSym(2),
@@ -590,7 +605,7 @@ $Rules
 		/.$NullAction./
 	switchElseExpCSOpt -> switchElseExpCS
 
-	switchElseExpCS ::= else '?' expression ';'
+	switchElseExpCS ::= else '?' oclExpressionCS ';'
 		/.$BeginJava
 					$setResult((CSTNode)$getSym(3));
 		  $EndJava
@@ -602,7 +617,7 @@ $Rules
 		  $EndJava
 		./
 
-	switchElseExpCS ::= else '?' expression qvtErrorToken
+	switchElseExpCS ::= else '?' oclExpressionCS qvtErrorToken
 		/.$BeginJava
 					$setResult((CSTNode)$getSym(3));
 		  $EndJava

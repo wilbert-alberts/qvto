@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.14 2009/01/15 18:43:25 aigdalov Exp $ 
+-- * $Id: miscellaneous.g,v 1.15 2009/01/19 15:05:37 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -282,7 +282,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.14 2009/01/15 18:43:25 aigdalov Exp $
+ * $Id: miscellaneous.g,v 1.15 2009/01/19 15:05:37 aigdalov Exp $
  */
 	./
 $End
@@ -454,7 +454,10 @@ $Rules
 		  $EndJava
 		./
 
-	declarator ::= IDENTIFIER ':' typeCS
+	declarator -> declarator1
+	declarator -> declarator2
+
+	declarator1 ::= IDENTIFIER ':' typeCS
 		/.$BeginJava
 					CSTNode result = createVariableCS(
 							getTokenText($getToken(1)),
@@ -466,7 +469,7 @@ $Rules
 		  $EndJava
 		./
 	
-	declarator ::= IDENTIFIER ':' typeCS '=' oclExpressionCS
+	declarator1 ::= IDENTIFIER ':' typeCS '=' oclExpressionCS
 		/.$BeginJava
 					CSTNode result = createVariableCS(
 							getTokenText($getToken(1)),
@@ -478,7 +481,7 @@ $Rules
 		  $EndJava
 		./
 
-	declarator ::= IDENTIFIER ':' typeCS ':=' oclExpressionCS
+	declarator1 ::= IDENTIFIER ':' typeCS ':=' oclExpressionCS
 		/.$BeginJava
 					CSTNode result = createVariableCS(
 							getTokenText($getToken(1)),
@@ -490,7 +493,7 @@ $Rules
 		  $EndJava
 		./
 		
-	declarator ::= IDENTIFIER ':=' oclExpressionCS
+	declarator2 ::= IDENTIFIER ':=' oclExpressionCS
 		/.$BeginJava
 					CSTNode result = createVariableCS(
 							getTokenText($getToken(1)),
@@ -609,14 +612,14 @@ $Rules
 	expression_listOpt -> expression_list
 
 	expression_list -> expression_semi_list semicolonOpt
-	expression_semi_list ::= expression
+	expression_semi_list ::= oclExpressionCS
 		/.$BeginJava
 					EList result = new BasicEList();
 					result.add($getSym(1));
 					$setResult(result);
 		  $EndJava
 		./
-	expression_semi_list ::= expression_semi_list ';' expression 
+	expression_semi_list ::= expression_semi_list ';' oclExpressionCS 
 		/.$BeginJava
 					EList result = (EList)$getSym(1);
 					result.add($getSym(3));
@@ -653,7 +656,7 @@ $Rules
 	          $EndJava
 		./
 
-	expression_statement -> expression ';'
+	expression_statement -> oclExpressionCS ';'
 	expression_statement -> expression_block semicolonOpt
 	
 	qualifiedNameCS ::= qvtIdentifierCS
@@ -691,18 +694,8 @@ $Rules
 	oclExpressionCSOpt -> oclExpressionCS 
 	oclExpressionCSOpt ::= $empty
 		/.$NullAction./
-		
-	expression ::= oclExpressionCS
-		/.$BeginJava
-					CSTNode result = createExpressionStatementCS(
-							(OCLExpressionCS)$getSym(1)
-						);
-					setOffsets(result, (CSTNode)$getSym(1));
-					$setResult(result);
-		  $EndJava
-		./
-		
-	expression ::= primaryOCLExpressionCS 
+				
+	oclExpressionCS ::= primaryOCLExpressionCS 
 		/.$BeginJava
 					CSTNode result = createExpressionStatementCS(
 							(OCLExpressionCS)$getSym(1)
