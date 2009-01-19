@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: EValueItemProvider.java,v 1.4 2009/01/16 13:53:02 radvorak Exp $
+ * $Id: EValueItemProvider.java,v 1.5 2009/01/19 14:32:30 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
@@ -913,22 +913,12 @@ public class EValueItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModule()));
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createOperationBody()));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createLibrary()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createRename()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModuleImport()));
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createConstructorBody()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -938,27 +928,32 @@ public class EValueItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createImperativeCallExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
 				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createImperativeOperation()));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createVarParameter()));
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createEntryOperation()));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createOperationBody()));
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createHelper()));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createConstructorBody()));
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createImperativeCallExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModule()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createLibrary()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -978,6 +973,11 @@ public class EValueItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createVarParameter()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
 				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createMappingParameter()));
 
 		newChildDescriptors.add
@@ -988,12 +988,22 @@ public class EValueItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createHelper()));
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModelType()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModuleImport()));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
 				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createObjectExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createOperationalTransformation()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -1004,21 +1014,6 @@ public class EValueItemProvider
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
 				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createResolveInExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createModelType()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createOperationalTransformation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createEntryOperation()));
 
 		newChildDescriptors.add
 			(createChildParameter
