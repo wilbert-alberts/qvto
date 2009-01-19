@@ -78,6 +78,7 @@ public class TransformTests {
     
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {
+        		new FileToFileData("chainedAssignments_261024"), //$NON-NLS-1$
         		new FileToFileData("_while_261024"), //$NON-NLS-1$
         		new FileToFileData("varInitExpWithResult_260985"), //$NON-NLS-1$
         		new FileToFileData("stdlibList"), //$NON-NLS-1$
