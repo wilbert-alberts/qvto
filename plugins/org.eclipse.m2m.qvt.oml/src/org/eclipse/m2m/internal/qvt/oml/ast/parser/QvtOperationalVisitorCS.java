@@ -2493,23 +2493,25 @@ public class QvtOperationalVisitorCS
 
 		body.getContent().addAll(expressions);
 
-		EClassifier returnType = (helper.getResult().isEmpty() ? helper.getEType() : helper.getResult().get(0).getEType());
-		EClassifier helperType = body.getContent().isEmpty() == false ? body.getContent().get(body.getContent().size() - 1).getType() : null;
-		if (QvtOperationalEnv.MAIN.equals(helper.getName()) 
-				&& (returnType == null || returnType == env.getOCLStandardLibrary().getOclVoid())) {
-			// OK
+		if (helper.getResult().size() <= 1) {
+			EClassifier returnType = (helper.getResult().isEmpty() ? helper.getEType() : helper.getResult().get(0).getEType());
+			EClassifier helperType = body.getContent().isEmpty() == false ? body.getContent().get(body.getContent().size() - 1).getType() : null;
+			if (QvtOperationalEnv.MAIN.equals(helper.getName()) 
+					&& (returnType == null || returnType == env.getOCLStandardLibrary().getOclVoid())) {
+				// OK
+			}
+			else  if (helperType != null && !QvtOperationalParserUtil.isAssignableToFrom(env, returnType, helperType)) {
+				env.reportError(NLS.bind(ValidationMessages.bodyTypeNotCompatibleWithReturnTypeError, new Object[] {
+				        QvtOperationalTypesUtil.getTypeFullName(helperType), 
+				        QvtOperationalTypesUtil.getTypeFullName(returnType) 
+					}), 
+					methodCS.getMappingDeclarationCS());
+			}
+			
+			// adjust implicit variables for serialization
+			consolidateImplicitVariables(newEnv);
+			//
 		}
-		else  if (helperType != null && !QvtOperationalParserUtil.isAssignableToFrom(env, returnType, helperType)) {
-			env.reportError(NLS.bind(ValidationMessages.bodyTypeNotCompatibleWithReturnTypeError, new Object[] {
-			        QvtOperationalTypesUtil.getTypeFullName(helperType), 
-			        QvtOperationalTypesUtil.getTypeFullName(returnType) 
-				}), 
-				methodCS.getMappingDeclarationCS());
-		}
-		
-		// adjust implicit variables for serialization
-		consolidateImplicitVariables(newEnv);
-		//
 	}
 	
 	/**
@@ -2849,6 +2851,9 @@ public class QvtOperationalVisitorCS
 	    result.getValue().add(rightExpr);
 	    result.setIsReset(!expressionCS.isIncremental());
 	    result.setLeft(lValue);
+	    if (lValue != null) {
+	    	result.setType(lValue.getType());
+	    }
 	    return result;
 	}
 	

@@ -29,6 +29,8 @@ import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS;
+import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
@@ -43,12 +45,14 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
+import org.eclipse.m2m.internal.qvt.oml.expressions.VariableInitExp;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.CollectionType;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
+import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.lpg.FormattingHelper;
 import org.eclipse.ocl.parser.ValidationVisitor;
 import org.eclipse.ocl.util.TypeUtil;
@@ -111,7 +115,7 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 			ImperativeOperation mainOperation = QvtOperationalParserUtil.getMainOperation((Module) instantiatedClass);
 			if(mainOperation instanceof EntryOperation == false || 
 				mainOperation.getEParameters().isEmpty() == false) {
-				String message = NLS.bind("''{0}'' requires parameter-less main() entry operation for explicit instantiation", instantiatedClass.getName());
+				String message = NLS.bind(ValidationMessages.QvtOperationalValidationVisitor_ParameterlessMainExpected, instantiatedClass.getName());
 				fEnv.reportError(message, instantiationExp.getStartPosition(), instantiationExp.getEndPosition());
 			}
 		}
@@ -344,6 +348,22 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 		return super.visitOperationBody(operationBody);
 	}
 	
+	@Override
+	public Object visitVariableInitExp(VariableInitExp variableInitExp) {
+		EObject parentExp = variableInitExp.eContainer();
+		if (!(
+				(parentExp instanceof OperationBody)
+				|| (parentExp instanceof BlockExp)
+				|| (parentExp instanceof AssignExp)
+				|| ((parentExp instanceof Variable) 
+						&& (parentExp.eContainer() != null) 
+						&& (parentExp.eContainer() instanceof VariableInitExp))
+				)) {
+			fEnv.reportError(ValidationMessages.QvtOperationalValidationVisitor_CannotDeclareVariables, variableInitExp.getStartPosition(), variableInitExp.getEndPosition());
+		}
+		return super.visitVariableInitExp(variableInitExp);
+	}
+
 	private static boolean isValidContextualType(EClassifier type) {
 		return type != null && !QVTUMLReflection.isModuleInstance(type);
 	}
