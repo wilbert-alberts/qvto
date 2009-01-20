@@ -84,6 +84,7 @@ public class ParserTests {
     }
     
     private static TestData[] ourData = new TestData[] {
+    	TestData.createSourceChecked("varInitExpWithResult_261623", 1, 0), //$NON-NLS-1$
     	TestData.createSourceChecked("_while_261024", 4, 0), //$NON-NLS-1$
     	TestData.createSourceChecked("listtype", 10, 0), //$NON-NLS-1$   	
     	TestData.createSourceChecked("listtype2", 9, 0), //$NON-NLS-1$   	

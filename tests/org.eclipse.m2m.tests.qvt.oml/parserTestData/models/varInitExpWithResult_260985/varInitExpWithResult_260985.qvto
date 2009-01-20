@@ -4,9 +4,7 @@ transformation test(in inModel: ECORE, out outModel : ECORE) {
 
 	main() {
 		object EPackage { 
-			name := switch {
-				case (true) var c ::= 'abc';
-			} 
+			name := var c ::= 'abc';
 		};
 	}
 }
