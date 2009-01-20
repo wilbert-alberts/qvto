@@ -195,6 +195,24 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		
 		super.setFactory(factory);
 	}
+
+	public EStructuralFeature lookupPropertyAlias(EClassifier owner, String aliasName) {
+		Module module = getModuleContextType();
+		if(module != null) {
+			for (EAnnotation nextTag : module.getOwnedTag()) {
+				String newName = nextTag.getDetails().get(TAG_ALIAS);
+				EList<EObject> references = nextTag.getReferences();
+				EObject element = references.isEmpty() ? null : references.get(0);
+				if(aliasName.equals(newName) && element instanceof EStructuralFeature) {
+					if(TypeUtil.compatibleTypeMatch(this, owner, getUMLReflection().getOwningClassifier(element))) {
+						return (EStructuralFeature)element;						
+					}					
+				}
+			}
+		}
+		
+		return null;
+	}	
 		
 	@Override
 	public EOperation lookupOperation(EClassifier owner, String name, List<? extends TypedElement<EClassifier>> args) {
@@ -433,29 +451,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		EClassifier result = super.lookupClassifier(names);
 		return (result != null) ? result : QvtOperationalStdLibrary.INSTANCE.lookupClassifier(names);
 	}
-	
-	@Override
-	public EStructuralFeature lookupProperty(EClassifier owner, String name) {
-		EStructuralFeature property = super.lookupProperty(owner, name);
-		if(property == null) {
-			// check for a renamed property
-			Module module = getModuleContextType();
-			if(module != null) {
-				for (EAnnotation nextTag : module.getOwnedTag()) {
-					String newName = nextTag.getDetails().get(TAG_ALIAS);
-					EList<EObject> references = nextTag.getReferences();
-					EObject element = references.isEmpty() ? null : references.get(0);
-					if(name.equals(newName) && element instanceof EStructuralFeature) {
-						String originalName = ((EStructuralFeature)element).getName();
-						return super.lookupProperty(owner, originalName);
-					}
-				}
-			}
-		}
 		
-		return property;
-	}	
-	
 	@Override
 	public EPackage lookupPackage(List<String> path) {
         if (path.size() > 1) {

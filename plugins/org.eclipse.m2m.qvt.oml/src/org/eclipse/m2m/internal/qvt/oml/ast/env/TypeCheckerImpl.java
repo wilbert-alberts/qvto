@@ -11,8 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
-import static org.eclipse.ocl.utilities.UMLReflection.SUBTYPE;
-
 import java.util.List;
 
 import org.eclipse.emf.common.util.BasicEList;
@@ -28,7 +26,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.TemplateParameterType;
 import org.eclipse.ocl.AbstractTypeChecker;
 import org.eclipse.ocl.ecore.EcorePackage;
-import org.eclipse.ocl.ecore.TypeExp;
 import org.eclipse.ocl.ecore.TypeType;
 import org.eclipse.ocl.expressions.CollectionKind;
 import org.eclipse.ocl.expressions.Variable;
@@ -57,7 +54,27 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 		fGenericResolver = new GenericsResolver(env);
 		fOCLStdlib = getEnvironment().getOCLStandardLibrary();
 	}
+	
+	@Override
+	protected QVTOEnvironment getEnvironment() {
+		return (QVTOEnvironment)super.getEnvironment();
+	}
 		
+	@Override
+	public EStructuralFeature findAttribute(EClassifier owner, String name) {	
+		EStructuralFeature property = super.findAttribute(owner, name);
+		if(property == null) {
+			// check for a renamed property
+			EStructuralFeature aliasedProperty = getEnvironment().lookupPropertyAlias(owner, name);
+			if(aliasedProperty != null) {
+				String originalName = aliasedProperty.getName();
+				return super.findAttribute(owner, originalName);				
+			}
+		}
+		
+		return property;
+	}
+	
 	@Override
 	public boolean isStandardLibraryFeature(EClassifier owner, Object feature) {
 		if(feature instanceof EOperation && isQVTOperation((EOperation) feature)) {
@@ -129,66 +146,6 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 		}
 		
 		return super.getResultType(problemObject, owner, operation, args);
-	}
-
-	//@Override
-	public boolean _matchArgs(EClassifier owner, List<?> paramsOrProperties, List<? extends TypedElement<EClassifier>> args) {
-		int argsize;
-
-		if (args == null) {
-			argsize = 0;
-		} else {
-			argsize = args.size();
-		}
-
-		if (paramsOrProperties.size() != argsize) {
-			return false;
-		}
-		
-		boolean isQVTOperation = false;
-		if(argsize > 0) {
-			Object paramOfProp = paramsOrProperties.get(0);
-			if(paramOfProp instanceof EParameter) {
-				EParameter eParameter = (EParameter) paramOfProp;
-				isQVTOperation = QvtOperationalParserUtil.getOwningModule(eParameter.getEOperation()) != null;
-			}
-		}
-
-		int i = 0;
-		for (Object paramOrProperty : paramsOrProperties) {
-			TypedElement<EClassifier> arg = args.get(i++);
-			EClassifier argType = arg.getType();
-			EClassifier popType = resolve(getUMLReflection().getOCLType(paramOrProperty));
-
-			// handle parameters of type OclType
-			if (popType instanceof TypeType) {
-				if (arg instanceof TypeExp) {
-					continue;
-				}
-				return false;
-			}
-
-			popType = resolveGenericType(owner, popType, argType);
-			
-			if(getEnvironment().getOCLStandardLibrary().getT() == popType) {
-				continue;
-			} else {
-				popType = resolveGenericType(owner, popType, argType);
-			}
-
-			if (popType == getEnvironment().getOCLStandardLibrary().getT()) {
-				// this is a collection operation, and the collection is empty
-				// (element type is OclVoid). Any argument matches in this
-				// case, because any kind of element can be considered to not
-				// be in an empty collection
-			//	continue;
-			}
-
-			if ((getRelationship(argType, popType) & SUBTYPE) == 0) {
-				return false;
-			}
-		}
-		return true;
 	}
 		
 	@Override

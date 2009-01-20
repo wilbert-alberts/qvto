@@ -1329,7 +1329,7 @@ public class QvtOperationalVisitorCS
 		importsCS(parsedModuleCS, module, env, compiler);
 
 		for (RenameCS renameCS : moduleCS.getRenamings()) {
-			visitRenameCS(renameCS, env);
+			legacyRenameCS(renameCS, env);
 		}
 		
 		createModuleProperties(module, moduleCS, env);
@@ -2255,28 +2255,35 @@ public class QvtOperationalVisitorCS
 		return resolvedMetamodel;
 	}
 	
-	protected EAnnotation visitRenameCS(RenameCS renameCS, 
+	protected EAnnotation legacyRenameCS(RenameCS renameCS, 
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) throws SemanticException {
+
+		String originalName = visitLiteralExpCS(renameCS.getOriginalName(), env);
+		String newName = renameCS.getSimpleNameCS().getValue();
+		return renameProperty(renameCS.getTypeCS(), renameCS.getOriginalName(), originalName, renameCS.getSimpleNameCS(), newName, env);
+	}
+
+	private EAnnotation renameProperty(TypeCS typeCS, CSTNode oringinalPropertyCS, String originalName, CSTNode newNameCS, String newName,
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) throws SemanticException {
 		
-		EClassifier type = visitTypeCS(renameCS.getTypeCS(), null, env);
+		EClassifier type = visitTypeCS(typeCS, null, env);
 		if (type == null) {
 			return null;
 		}
-		String originalName = visitLiteralExpCS(renameCS.getOriginalName(), env);
-		String newName = renameCS.getSimpleNameCS().getValue();
-
+ 
 		EStructuralFeature originalProperty = env.lookupProperty(type, originalName);
 		if (originalProperty == null) {
 			QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.noPropertyInTypeError, originalName, 
-					QvtOperationalTypesUtil.getTypeFullName(type)), renameCS);
+					QvtOperationalTypesUtil.getTypeFullName(type)), oringinalPropertyCS);
 			return null;
 		}
-
+		
 		EStructuralFeature newProperty = env.lookupProperty(type, newName);
 		if (newProperty != null) {
 			QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.propertyAlreadyExistsInTypeError, newName,
-			        QvtOperationalTypesUtil.getTypeFullName(type)), renameCS);
+			        QvtOperationalTypesUtil.getTypeFullName(type)), newNameCS);
 			return null;
 		}
 
