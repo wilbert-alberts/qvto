@@ -103,6 +103,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ResolveInExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ReturnExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.TagCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS;
@@ -1324,7 +1325,9 @@ public class QvtOperationalVisitorCS
 		
         env.setContextModule(module);
         
-		visitIntermediateClassesCS(env, moduleCS, module);		
+		visitIntermediateClassesCS(env, moduleCS, module);
+		
+		visitTagCS(env, moduleCS, module);
 
 		importsCS(parsedModuleCS, module, env, compiler);
 
@@ -1408,6 +1411,50 @@ public class QvtOperationalVisitorCS
 		validate(env);
 
 		return module;
+	}
+
+	private void visitTagCS(QvtOperationalFileEnv env, MappingModuleCS moduleCS, Module module) throws SemanticException {
+		for (TagCS ownedTagCS : moduleCS.getTags()) {
+			String tagId = visitLiteralExpCS(ownedTagCS.getName(), env);
+			
+			String value = null;
+			if (ownedTagCS.getOclExpressionCS() != null) {
+				org.eclipse.ocl.ecore.OCLExpression oclExpression = visitOclExpressionCS(ownedTagCS.getOclExpressionCS(), env);
+				if (oclExpression instanceof StringLiteralExp) {
+					value = ((StringLiteralExp) oclExpression).getStringSymbol();
+				}
+			}
+			
+			EModelElement element = null;
+			ScopedNameCS scopedNameCS = ownedTagCS.getScopedNameCS();
+			TypeCS typeCS = scopedNameCS.getTypeCS();
+			EClassifier owningType = null;		
+			if (typeCS != null) {
+				owningType = visitTypeCS(typeCS, null, env);
+				if (owningType != null && scopedNameCS.getName() != null) {
+					element = env.lookupProperty(TypeUtil.resolveType(env, owningType), scopedNameCS.getName());				
+				}
+			}
+			else if (scopedNameCS.getName() != null) {	
+				owningType = env.getModuleContextType();
+				element = env.lookupProperty(owningType, scopedNameCS.getName());
+			}
+			
+			if (element == null) {
+	            QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.unresolvedNameError,
+	            		new Object[] { QvtOperationalParserUtil.getStringRepresentation(scopedNameCS) }),
+	            		scopedNameCS);
+			}
+			else {
+				EAnnotation ownedTag = createTag(tagId, value, element);
+				
+				ASTSyntheticNode astNode = ASTSyntheticNodeAccess.createASTNode(ownedTag);
+				astNode.setStartPosition(ownedTagCS.getStartOffset());
+				astNode.setEndPosition(ownedTagCS.getEndOffset());
+				
+				module.getEAnnotations().add(ownedTag);
+			}
+		}
 	}
 
 	private void visitIntermediateClassesCS(QvtOperationalEnv env, MappingModuleCS moduleCS, Module module) throws SemanticException {
