@@ -25,6 +25,7 @@ public final class ValidationMessages extends NLS {
 	public static String DeprecatedImplicitSourceCall_contextualImplicitCall;
 	public static String DeprecatedImplicitSourceCall_moduleScopeImplicitCall;
 	public static String DeprecatedLibraryImportSupportWarn0;
+	public static String DeprecatedRenameStatement;
 	public static String lateResolveNotUsedInDeferredAssignment;
 	public static String LogExpBooleanTypeConditionError;
 	public static String LogLevelNumberArgumentError;
