@@ -111,12 +111,14 @@ public class ASTBindingHelper {
 	}
 	
 	public static EcoreEnvironment resolveEnvironment(ASTNode astNode) {
-		ASTNode processedNode = astNode;
-		EcoreEnvironment env = localResolveEnvironment(processedNode);
+		EObject processedNode = astNode;
+		EcoreEnvironment env = localResolveEnvironment(astNode);
 		
-		while(env == null && processedNode.eContainer() instanceof ASTNode) {
-			processedNode = (ASTNode)processedNode.eContainer();
-			env = localResolveEnvironment(processedNode);
+		while(env == null && processedNode.eContainer() != null) {
+			processedNode = processedNode.eContainer();
+			if (processedNode instanceof ASTNode) {
+				env = localResolveEnvironment((ASTNode) processedNode);
+			}
 		}
 				
 		return env;
