@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.21 2009/01/14 13:04:41 aigdalov Exp $
+ * $Id: CSTPackageImpl.java,v 1.22 2009/01/21 10:14:30 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -84,6 +84,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.SimpleSignatureCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.StatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.TagCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationRefineCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
@@ -538,6 +539,13 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass tagCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EEnum directionKindEnumEEnum = null;
 
 	/**
@@ -714,6 +722,15 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 */
 	public EReference getMappingModuleCS_ClassifierDefCS() {
 		return (EReference)mappingModuleCSEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getMappingModuleCS_Tags() {
+		return (EReference)mappingModuleCSEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -2359,6 +2376,42 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getTagCS() {
+		return tagCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTagCS_Name() {
+		return (EReference)tagCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTagCS_ScopedNameCS() {
+		return (EReference)tagCSEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTagCS_OclExpressionCS() {
+		return (EReference)tagCSEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getDirectionKindEnum() {
 		return directionKindEnumEEnum;
 	}
@@ -2435,6 +2488,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(mappingModuleCSEClass, MAPPING_MODULE_CS__PROPERTIES);
 		createEReference(mappingModuleCSEClass, MAPPING_MODULE_CS__METHODS);
 		createEReference(mappingModuleCSEClass, MAPPING_MODULE_CS__CLASSIFIER_DEF_CS);
+		createEReference(mappingModuleCSEClass, MAPPING_MODULE_CS__TAGS);
 
 		libraryCSEClass = createEClass(LIBRARY_CS);
 
@@ -2678,6 +2732,11 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(dictLiteralPartCSEClass, DICT_LITERAL_PART_CS__KEY);
 		createEReference(dictLiteralPartCSEClass, DICT_LITERAL_PART_CS__VALUE);
 
+		tagCSEClass = createEClass(TAG_CS);
+		createEReference(tagCSEClass, TAG_CS__NAME);
+		createEReference(tagCSEClass, TAG_CS__SCOPED_NAME_CS);
+		createEReference(tagCSEClass, TAG_CS__OCL_EXPRESSION_CS);
+
 		// Create enums
 		directionKindEnumEEnum = createEEnum(DIRECTION_KIND_ENUM);
 		moduleKindEnumEEnum = createEEnum(MODULE_KIND_ENUM);
@@ -2785,6 +2844,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		dictionaryTypeCSEClass.getESuperTypes().add(theCSTPackage_1.getTypeCS());
 		dictLiteralExpCSEClass.getESuperTypes().add(theCSTPackage_1.getLiteralExpCS());
 		dictLiteralPartCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
+		tagCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(mappingModuleCSEClass, MappingModuleCS.class, "MappingModuleCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -2795,6 +2855,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEReference(getMappingModuleCS_Properties(), this.getModulePropertyCS(), null, "properties", null, 0, -1, MappingModuleCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getMappingModuleCS_Methods(), this.getMappingMethodCS(), null, "methods", null, 0, -1, MappingModuleCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getMappingModuleCS_ClassifierDefCS(), this.getClassifierDefCS(), null, "classifierDefCS", null, 0, -1, MappingModuleCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getMappingModuleCS_Tags(), this.getTagCS(), null, "tags", null, 0, -1, MappingModuleCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(libraryCSEClass, LibraryCS.class, "LibraryCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
@@ -3037,6 +3098,11 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEClass(dictLiteralPartCSEClass, DictLiteralPartCS.class, "DictLiteralPartCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getDictLiteralPartCS_Key(), theCSTPackage_1.getLiteralExpCS(), null, "key", null, 0, 1, DictLiteralPartCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getDictLiteralPartCS_Value(), theCSTPackage_1.getOCLExpressionCS(), null, "value", null, 0, 1, DictLiteralPartCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(tagCSEClass, TagCS.class, "TagCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getTagCS_Name(), theCSTPackage_1.getStringLiteralExpCS(), null, "name", null, 1, 1, TagCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getTagCS_ScopedNameCS(), theTempPackage.getScopedNameCS(), null, "scopedNameCS", null, 0, 1, TagCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getTagCS_OclExpressionCS(), theCSTPackage_1.getOCLExpressionCS(), null, "oclExpressionCS", null, 0, 1, TagCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Initialize enums and add enum literals
 		initEEnum(directionKindEnumEEnum, DirectionKindEnum.class, "DirectionKindEnum"); //$NON-NLS-1$

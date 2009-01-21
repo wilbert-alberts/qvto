@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactory.java,v 1.11 2009/01/09 15:59:22 radvorak Exp $
+ * $Id: CSTFactory.java,v 1.12 2009/01/21 10:14:30 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -535,6 +535,15 @@ public interface CSTFactory extends EFactory {
 	 * @generated
 	 */
 	DictLiteralPartCS createDictLiteralPartCS();
+
+	/**
+	 * Returns a new object of class '<em>Tag CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Tag CS</em>'.
+	 * @generated
+	 */
+	TagCS createTagCS();
 
 	/**
 	 * Returns the package supported by this factory.

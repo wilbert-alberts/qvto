@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingModuleCS.java,v 1.3 2009/01/13 20:23:39 radvorak Exp $
+ * $Id: MappingModuleCS.java,v 1.4 2009/01/21 10:14:30 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -33,6 +33,7 @@ import org.eclipse.ocl.cst.CSTNode;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS#getProperties <em>Properties</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS#getMethods <em>Methods</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS#getClassifierDefCS <em>Classifier Def CS</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS#getTags <em>Tags</em>}</li>
  * </ul>
  * </p>
  *
@@ -169,5 +170,21 @@ public interface MappingModuleCS extends CSTNode {
 	 * @generated
 	 */
 	EList<ClassifierDefCS> getClassifierDefCS();
+
+	/**
+	 * Returns the value of the '<em><b>Tags</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.cst.TagCS}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Tags</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Tags</em>' containment reference list.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getMappingModuleCS_Tags()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<TagCS> getTags();
 
 } // MappingModuleCS

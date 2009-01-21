@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.36 2009/01/19 15:05:37 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.37 2009/01/21 10:14:30 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -122,6 +122,7 @@ $KeyWords
 	inherits
 	merges
 	disjuncts
+	tag
 $End
 
 $Terminals
@@ -148,7 +149,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.36 2009/01/19 15:05:37 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.37 2009/01/21 10:14:30 sboyko Exp $
  */
 	./
 $End
@@ -205,13 +206,14 @@ $Rules
 		/.$EmptyListAction./
 
 	unit_element -> _transformation
-        unit_element -> _library
-        unit_element -> _modeltype
-        unit_element -> classifier
-        unit_element -> _property
-        unit_element -> _helper
-        unit_element -> entry
-        unit_element -> _mapping
+	unit_element -> _library
+	unit_element -> _modeltype
+	unit_element -> classifier
+	unit_element -> _property
+	unit_element -> _helper
+	unit_element -> entry
+	unit_element -> _mapping
+	unit_element -> _tag
 	--=== // definitions in a compilation unit (end) ===--
 
 	--=== // Transformation and library definitions (start) ===--
@@ -488,6 +490,7 @@ $Rules
 	module_element -> _helper
 	module_element -> entry
 	module_element -> _mapping
+	module_element -> _tag
 	--=== // module definitions (end) ===--
 	
 	--=== // model types compliance and metamodel declarations (start) ===--
@@ -1120,6 +1123,40 @@ $Rules
 		  $EndJava
 		./
 	--=== // Syntax for entries (end) ===--
+
+
+	--=== // syntax for tag definition (start) ===--
+	
+	_tag ::= tag qvtStringLiteralExpCS scoped_identifier tag_valueOpt ';'
+		/.$BeginJava
+					CSTNode result = createTagCS(
+							(StringLiteralExpCS) $getSym(2),
+							(ScopedNameCS) $getSym(3),
+							(OCLExpressionCS) $getSym(4)
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	tag_valueOpt ::= $empty
+		/.$NullAction./
+	tag_valueOpt ::= '=' oclExpressionCS
+		/.$BeginJava
+					OCLExpressionCS result = (OCLExpressionCS) $getSym(2);
+					$setResult(result);
+		  $EndJava
+		./
+	tag_valueOpt ::= '=' QUOTE_STRING_LITERAL
+		/.$BeginJava
+					CSTNode result = createStringLiteralExpCS("'" + unquote(getTokenText($getToken(2))) + "'"); //$NON-NLS-1$ //$NON-NLS-2$
+					setOffsets(result, getIToken($getToken(2)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	--=== // syntax for tag definition (end) ===--
+
 
 	--=== // syntax for mapping operations (start) ===--
 	_mapping -> mapping_decl

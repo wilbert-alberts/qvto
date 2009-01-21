@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingModuleCSImpl.java,v 1.3 2009/01/13 20:23:43 radvorak Exp $
+ * $Id: MappingModuleCSImpl.java,v 1.4 2009/01/21 10:14:30 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -33,6 +33,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.RenameCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.TagCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
 import org.eclipse.ocl.cst.impl.CSTNodeImpl;
 
@@ -50,6 +51,7 @@ import org.eclipse.ocl.cst.impl.CSTNodeImpl;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingModuleCSImpl#getProperties <em>Properties</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingModuleCSImpl#getMethods <em>Methods</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingModuleCSImpl#getClassifierDefCS <em>Classifier Def CS</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingModuleCSImpl#getTags <em>Tags</em>}</li>
  * </ul>
  * </p>
  *
@@ -132,6 +134,16 @@ public class MappingModuleCSImpl extends CSTNodeImpl implements MappingModuleCS 
 	 * @ordered
 	 */
 	protected EList<ClassifierDefCS> classifierDefCS;
+
+	/**
+	 * The cached value of the '{@link #getTags() <em>Tags</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTags()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<TagCS> tags;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -272,6 +284,18 @@ public class MappingModuleCSImpl extends CSTNodeImpl implements MappingModuleCS 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<TagCS> getTags() {
+		if (tags == null) {
+			tags = new EObjectContainmentEList<TagCS>(TagCS.class, this, CSTPackage.MAPPING_MODULE_CS__TAGS);
+		}
+		return tags;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -289,6 +313,8 @@ public class MappingModuleCSImpl extends CSTNodeImpl implements MappingModuleCS 
 				return ((InternalEList<?>)getMethods()).basicRemove(otherEnd, msgs);
 			case CSTPackage.MAPPING_MODULE_CS__CLASSIFIER_DEF_CS:
 				return ((InternalEList<?>)getClassifierDefCS()).basicRemove(otherEnd, msgs);
+			case CSTPackage.MAPPING_MODULE_CS__TAGS:
+				return ((InternalEList<?>)getTags()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -315,6 +341,8 @@ public class MappingModuleCSImpl extends CSTNodeImpl implements MappingModuleCS 
 				return getMethods();
 			case CSTPackage.MAPPING_MODULE_CS__CLASSIFIER_DEF_CS:
 				return getClassifierDefCS();
+			case CSTPackage.MAPPING_MODULE_CS__TAGS:
+				return getTags();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -355,6 +383,10 @@ public class MappingModuleCSImpl extends CSTNodeImpl implements MappingModuleCS 
 				getClassifierDefCS().clear();
 				getClassifierDefCS().addAll((Collection<? extends ClassifierDefCS>)newValue);
 				return;
+			case CSTPackage.MAPPING_MODULE_CS__TAGS:
+				getTags().clear();
+				getTags().addAll((Collection<? extends TagCS>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -388,6 +420,9 @@ public class MappingModuleCSImpl extends CSTNodeImpl implements MappingModuleCS 
 			case CSTPackage.MAPPING_MODULE_CS__CLASSIFIER_DEF_CS:
 				getClassifierDefCS().clear();
 				return;
+			case CSTPackage.MAPPING_MODULE_CS__TAGS:
+				getTags().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -414,6 +449,8 @@ public class MappingModuleCSImpl extends CSTNodeImpl implements MappingModuleCS 
 				return methods != null && !methods.isEmpty();
 			case CSTPackage.MAPPING_MODULE_CS__CLASSIFIER_DEF_CS:
 				return classifierDefCS != null && !classifierDefCS.isEmpty();
+			case CSTPackage.MAPPING_MODULE_CS__TAGS:
+				return tags != null && !tags.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

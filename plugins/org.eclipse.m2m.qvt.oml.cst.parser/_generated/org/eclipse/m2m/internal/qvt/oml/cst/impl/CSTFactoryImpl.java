@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactoryImpl.java,v 1.13 2009/01/14 13:04:41 aigdalov Exp $
+ * $Id: CSTFactoryImpl.java,v 1.14 2009/01/21 10:14:30 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -191,6 +191,7 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 			case CSTPackage.DICTIONARY_TYPE_CS: return createDictionaryTypeCS();
 			case CSTPackage.DICT_LITERAL_EXP_CS: return createDictLiteralExpCS();
 			case CSTPackage.DICT_LITERAL_PART_CS: return createDictLiteralPartCS();
+			case CSTPackage.TAG_CS: return createTagCS();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -790,6 +791,16 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	public DictLiteralPartCS createDictLiteralPartCS() {
 		DictLiteralPartCSImpl dictLiteralPartCS = new DictLiteralPartCSImpl();
 		return dictLiteralPartCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TagCS createTagCS() {
+		TagCSImpl tagCS = new TagCSImpl();
+		return tagCS;
 	}
 
 	/**

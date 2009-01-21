@@ -20,6 +20,8 @@
           eType="#//cst/MappingMethodCS" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="classifierDefCS" upperBound="-1"
           eType="#//cst/ClassifierDefCS" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="tags" upperBound="-1"
+          eType="#//cst/TagCS" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="LibraryCS" eSuperTypes="#//cst/MappingModuleCS"/>
     <eClassifiers xsi:type="ecore:EClass" name="ImportCS" abstract="true" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
@@ -418,6 +420,15 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="key" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/LiteralExpCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TagCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="name" lowerBound="1"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/StringLiteralExpCS"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="scopedNameCS" eType="#//cst/temp/ScopedNameCS"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="oclExpressionCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
     </eClassifiers>
     <eSubpackages name="temp" nsURI="http://www.eclipse.org/QVT2/1.0.0/Operational/cst/temp"

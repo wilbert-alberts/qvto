@@ -48,6 +48,7 @@
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingModuleCS/methods"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingModuleCS/classifierDefCS"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingModuleCS/tags"/>
       </genClasses>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/LibraryCS"/>
       <genClasses image="false" ecoreClass="QVTOperationalCST.ecore#//cst/ImportCS">
@@ -194,8 +195,6 @@
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/WhileExpCS/body"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/WhileExpCS/condition"/>
-        <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/WhileExpCS/result"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/WhileExpCS/resultVar"/>
       </genClasses>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/SwitchExpCS">
@@ -310,6 +309,11 @@
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/DictLiteralPartCS">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/DictLiteralPartCS/key"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/DictLiteralPartCS/value"/>
+      </genClasses>
+      <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/TagCS">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/TagCS/name"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/TagCS/scopedNameCS"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/TagCS/oclExpressionCS"/>
       </genClasses>
       <nestedGenPackages prefix="Temp" basePackage="org.eclipse.m2m.internal.qvt.oml.cst"
           disposableProviderFactory="true" ecorePackage="QVTOperationalCST.ecore#//cst/temp">

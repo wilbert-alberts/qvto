@@ -78,6 +78,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.SimpleSignatureCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.StatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.TagCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationRefineCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
@@ -142,6 +143,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	    List<MappingRuleCS> mappings = new ArrayList<MappingRuleCS>();
 	    List<RenameCS> renamings = new ArrayList<RenameCS>();
 	    List<ImportCS> imports = new ArrayList<ImportCS>();
+	    List<TagCS> tags = new ArrayList<TagCS>();
 
 	    for (CSTNode unitElement : unitElements) {
 	        if (unitElement instanceof MappingModuleCS) {
@@ -160,6 +162,8 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	            renamings.add((RenameCS) unitElement);
 	        } else if (unitElement instanceof ImportCS) {
 	            imports.add((ImportCS) unitElement);
+	        } else if (unitElement instanceof TagCS) {
+	            tags.add((TagCS) unitElement);
 	        } else {
 	            throw new RuntimeException("Unknown unit_element: " + unitElement); //$NON-NLS-1$
 	        }
@@ -189,6 +193,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
             moduleCS.getMethods().addAll(mappings);
             moduleCS.getRenamings().addAll(renamings);
             moduleCS.getClassifierDefCS().addAll(classifiers);
+            moduleCS.getTags().addAll(tags);
             setOffsets(moduleCS, unitElements.get(0), unitElements.get(unitElements.size() - 1));
             return moduleCS;
 	    }
@@ -256,6 +261,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
         List<ModulePropertyCS> properties = new ArrayList<ModulePropertyCS>();
         List<MappingQueryCS> helpers = new ArrayList<MappingQueryCS>();
         List<MappingRuleCS> mappings = new ArrayList<MappingRuleCS>();
+        List<TagCS> tags = new ArrayList<TagCS>();
 
         for (CSTNode moduleElement : moduleElements) {
             if (moduleElement instanceof ClassifierDefCS) {
@@ -266,6 +272,8 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
                 helpers.add((MappingQueryCS) moduleElement);
             } else if (moduleElement instanceof MappingRuleCS) {
                 mappings.add((MappingRuleCS) moduleElement);
+            } else if (moduleElement instanceof TagCS) {
+                tags.add((TagCS) moduleElement);
             } else {
                 throw new RuntimeException("Unknown module_element: " + moduleElement); //$NON-NLS-1$
             }
@@ -275,6 +283,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
         moduleCS.getProperties().addAll(properties);
         moduleCS.getMethods().addAll(helpers);
         moduleCS.getMethods().addAll(mappings);
+        moduleCS.getTags().addAll(tags);
         return moduleCS;
 	}
 
@@ -917,4 +926,14 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		reportError(ParseErrorCodes.INVALID_CODE, "", startIndex, endIndex, "Must be an identifier!"); //$NON-NLS-1$ //$NON-NLS-2$
 		return createVariableCS("error_var", null, assignStatementCS.getOclExpressionCS()); //$NON-NLS-1$
 	}
+	
+	protected CSTNode createTagCS(StringLiteralExpCS tagId, ScopedNameCS scopedIdentifier, OCLExpressionCS tagValue) {
+		TagCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createTagCS();
+		result.setName(tagId);
+		result.setScopedNameCS(scopedIdentifier);
+		result.setOclExpressionCS(tagValue);
+		
+		return result;
+	}
+	
 }	
