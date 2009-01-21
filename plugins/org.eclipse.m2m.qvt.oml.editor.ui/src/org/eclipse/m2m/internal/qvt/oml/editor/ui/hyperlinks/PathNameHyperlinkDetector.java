@@ -118,7 +118,9 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 							}
 						}
 						
-						return new EModelElementRef(ast, resultRegion);
+						if(ast != null) {
+							return new EModelElementRef(ast, resultRegion);
+						}
 					}
 				}
 			}
