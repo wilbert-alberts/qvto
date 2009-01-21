@@ -1454,7 +1454,7 @@ public class QvtOperationalVisitorCS
 				astNode.setStartPosition(ownedTagCS.getStartOffset());
 				astNode.setEndPosition(ownedTagCS.getEndOffset());
 				
-				module.getEAnnotations().add(ownedTag);
+				module.getOwnedTag().add(ownedTag);
 			}
 		}
 	}
