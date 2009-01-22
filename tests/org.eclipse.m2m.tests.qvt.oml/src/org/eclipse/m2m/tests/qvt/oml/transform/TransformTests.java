@@ -107,6 +107,7 @@ public class TransformTests {
                 new FileToFileData("intermediateprop_resolve", "in.simpleuml", "expected.simpleuml"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 new FileToFileData("intermediateprop_trace", "in.simpleuml", "expected.simpleuml"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         		new FilesToFilesData("multiresultpars", Collections.singletonList("in.ecore"), Arrays.asList("expected_x.ecore", "expected_y.ecore")),        		
+        		new FilesToFilesData("simpletag", Collections.<String>emptyList(), Collections.<String>emptyList()),           		
         		new FileToFileData("stdlibString"), //$NON-NLS-1$
         		new FilesToFilesData("stdlibelement", Collections.singletonList("in.ecore"), Arrays.asList("expected_x.ecore", "expected_y.ecore")),           		
         		new FileToFileData("mapDisjuncts"), //$NON-NLS-1$ 
