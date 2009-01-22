@@ -1956,6 +1956,9 @@ public class QvtOperationalVisitorCS
 				if (module instanceof OperationalTransformation) {
 					((OperationalTransformation) module).getIntermediateProperty().add(prop);
 				}
+				else {
+		            env.reportError(NLS.bind(ValidationMessages.IntermediatePropertyNotAllowed, new Object[] {}), propCS);
+				}
 				eFeature = prop;
 				// using AST-CST map as this mapping is not optional but always required
 				env.getASTNodeToCSTNodeMap().put(prop, propCS); 

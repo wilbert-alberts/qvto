@@ -142,6 +142,7 @@ public final class ValidationMessages extends NLS {
 	public static String ModulePropertyAlreadyDefined;
 	public static String IntermediatePropertiesInitNotSupported;
 	public static String IntermediatePropertyAlreadyDefined;
+	public static String IntermediatePropertyNotAllowed;
 	public static String DuplicateProperty;
 	public static String DuplicateClassifier;
 	public static String InvalidClassifierForExtend;
