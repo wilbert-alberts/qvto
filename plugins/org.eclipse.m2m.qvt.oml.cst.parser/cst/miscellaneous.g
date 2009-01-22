@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.15 2009/01/19 15:05:37 aigdalov Exp $ 
+-- * $Id: miscellaneous.g,v 1.16 2009/01/22 19:59:09 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -282,7 +282,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.15 2009/01/19 15:05:37 aigdalov Exp $
+ * $Id: miscellaneous.g,v 1.16 2009/01/22 19:59:09 aigdalov Exp $
  */
 	./
 $End
@@ -612,17 +612,29 @@ $Rules
 	expression_listOpt -> expression_list
 
 	expression_list -> expression_semi_list semicolonOpt
-	expression_semi_list ::= oclExpressionCS
+
+	expression_semi_list_element -> oclExpressionCS
+	expression_semi_list ::= expression_semi_list_element
 		/.$BeginJava
 					EList result = new BasicEList();
-					result.add($getSym(1));
+					Object element = $getSym(1);
+					if (element instanceof EList) {
+						result.addAll((EList) element);
+					} else {
+						result.add(element);
+					}
 					$setResult(result);
 		  $EndJava
 		./
-	expression_semi_list ::= expression_semi_list ';' oclExpressionCS 
+	expression_semi_list ::= expression_semi_list ';' expression_semi_list_element 
 		/.$BeginJava
 					EList result = (EList)$getSym(1);
-					result.add($getSym(3));
+					Object element = $getSym(3);
+					if (element instanceof EList) {
+						result.addAll((EList) element);
+					} else {
+						result.add(element);
+					}
 					$setResult(result);
 		  $EndJava
 		./

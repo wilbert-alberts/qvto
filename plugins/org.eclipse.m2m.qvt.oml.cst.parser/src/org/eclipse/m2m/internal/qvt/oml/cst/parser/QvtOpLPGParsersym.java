@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.49 2009/01/22 09:11:53 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.50 2009/01/22 19:59:09 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.49 2009/01/22 09:11:53 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.50 2009/01/22 19:59:09 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.49 2009/01/22 09:11:53 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.50 2009/01/22 19:59:09 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.49 2009/01/22 09:11:53 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.50 2009/01/22 19:59:09 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -80,7 +80,7 @@ public interface QvtOpLPGParsersym {
       TK_DIVIDE = 43,
       TK_GREATER = 23,
       TK_LESS = 24,
-      TK_EQUAL = 4,
+      TK_EQUAL = 5,
       TK_GREATER_EQUAL = 25,
       TK_LESS_EQUAL = 26,
       TK_NOT_EQUAL = 27,
@@ -268,15 +268,15 @@ public interface QvtOpLPGParsersym {
       TK_List = 109,
       TK_EOF_TOKEN = 137,
       TK_IDENTIFIER = 2,
-      TK_ERROR_TOKEN = 5;
+      TK_ERROR_TOKEN = 4;
 
       public final static String orderedTerminalSymbols[] = {
                  "",
                  "LPAREN",
                  "IDENTIFIER",
                  "RPAREN",
-                 "EQUAL",
                  "ERROR_TOKEN",
+                 "EQUAL",
                  "Set",
                  "Bag",
                  "Sequence",

@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.g,v 1.14 2009/01/19 15:05:37 aigdalov Exp $ 
+-- * $Id: ImperativeOCL.g,v 1.15 2009/01/22 19:59:09 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -89,7 +89,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: ImperativeOCL.g,v 1.14 2009/01/19 15:05:37 aigdalov Exp $
+ * $Id: ImperativeOCL.g,v 1.15 2009/01/22 19:59:09 aigdalov Exp $
  */
 	./
 $End
@@ -173,97 +173,157 @@ $Rules
 		  $EndJava
 		./
 	 
-	oclExpressionCS -> assignStatementCS
-	oclExpressionCS -> variableInitializationCS
+	expression_semi_list_element -> var_init_group_exp
 
-	variableInitializationCS -> variableInitializationCSCorrect
+	var_init_group_exp ::= var var_init_declarator_list
+		/.$BeginJava
+					$setResult($getSym(2));
+		  $EndJava
+		./
 
-	varInitOperator ::= '='
+	var_init_group_exp ::= var '(' var_init_declarator_list ')'
+		/.$BeginJava
+					$setResult($getSym(3));
+		  $EndJava
+		./
+
+	var_init_group_exp ::= var '(' var_init_declarator_list qvtErrorToken
+		/.$BeginJava
+					$setResult($getSym(3));
+		  $EndJava
+		./
+
+	oclExpressionCS -> var_init_exp
+
+	var_init_exp ::= var var_init_declarator
+		/.$BeginJava
+					$setResult($getSym(2));
+		  $EndJava
+		./
+
+	var_init_exp ::= var '(' var_init_declarator ')'
+		/.$BeginJava
+					$setResult($getSym(3));
+		  $EndJava
+		./
+
+	var_init_exp ::= var '(' var_init_declarator qvtErrorToken
+		/.$BeginJava
+					$setResult($getSym(3));
+		  $EndJava
+		./
+
+	var_init_exp ::= var qvtErrorToken
+		/.$BeginJava
+					$setResult($EMPTY_ELIST);
+		  $EndJava
+		./
+
+	var_init_declarator_list ::= var_init_declarator ',' var_init_declarator
+		/.$BeginJava
+					EList result = new BasicEList();
+					result.add($getSym(1));
+					result.add($getSym(3));
+					$setResult(result);
+		  $EndJava
+		./
+	var_init_declarator_list ::= var_init_declarator_list ',' var_init_declarator
+		/.$BeginJava
+					EList result = (EList) $getSym(1);
+					result.add($getSym(3));
+					$setResult(result);
+		  $EndJava
+		./
+
+
+	var_init_declarator ::= IDENTIFIER ':' typeCS var_init_op oclExpressionCS
+		/.$BeginJava
+					CSTNode result = createVariableInitializationCS(
+							getIToken($getToken(1)),
+							(TypeCS)$getSym(3),
+							(OCLExpressionCS)$getSym(5),
+							(Boolean)$getSym(4)
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(5));
+					$setResult(result);
+		  $EndJava
+		./
+	var_init_declarator ::= IDENTIFIER ':' typeCS var_init_op qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createVariableInitializationCS(
+							getIToken($getToken(1)),
+							(TypeCS)$getSym(3),
+							null,
+							(Boolean)$getSym(4)
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
+					$setResult(result);
+		  $EndJava
+		./
+	var_init_declarator ::= IDENTIFIER var_init_op oclExpressionCS
+		/.$BeginJava
+					CSTNode result = createVariableInitializationCS(
+							getIToken($getToken(1)),
+							null,
+							(OCLExpressionCS)$getSym(3),
+							(Boolean)$getSym(2)
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(3));
+					$setResult(result);
+		  $EndJava
+		./
+	var_init_declarator ::= IDENTIFIER var_init_op qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createVariableInitializationCS(
+							getIToken($getToken(1)),
+							null,
+							null,
+							(Boolean)$getSym(2)
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(2)));
+					$setResult(result);
+		  $EndJava
+		./
+	var_init_declarator ::= IDENTIFIER ':' typeCS
+		/.$BeginJava
+					CSTNode result = createVariableInitializationCS(
+							getIToken($getToken(1)),
+							(TypeCS)$getSym(3),
+							null,
+							false
+						);
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(3));
+					$setResult(result);
+		  $EndJava
+		./
+	var_init_declarator ::= IDENTIFIER ':' qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createVariableInitializationCS(
+							getIToken($getToken(1)),
+							null,
+							null,
+							false
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(2)));
+					$setResult(result);
+		  $EndJava
+		./
+		
+	var_init_op ::= '='
 		/.$NewCase./
-	varInitOperator ::= ':='
+	var_init_op ::= ':='
 		/.$BeginJava
 					$setResult(false);
 		  $EndJava
 		./
-	varInitOperator ::= '::='
+	var_init_op ::= '::='
 		/.$BeginJava
 					$setResult(true);
 		  $EndJava
 		./
 
-	variableInitializationCSCorrect ::= var IDENTIFIER ':' typeCS varInitOperator oclExpressionCS
-		/.$BeginJava
-					CSTNode result = createVariableInitializationCS(
-							getIToken($getToken(2)),
-							(TypeCS)$getSym(4),
-							(OCLExpressionCS)$getSym(6),
-							(Boolean)$getSym(5)
-						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(6));
-					$setResult(result);
-		  $EndJava
-		./
-	variableInitializationCS ::= var IDENTIFIER ':' typeCS varInitOperator qvtErrorToken
-		/.$BeginJava
-					CSTNode result = createVariableInitializationCS(
-							getIToken($getToken(2)),
-							(TypeCS)$getSym(4),
-							null,
-							(Boolean)$getSym(5)
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
-					$setResult(result);
-		  $EndJava
-		./
-	variableInitializationCSCorrect ::= var IDENTIFIER varInitOperator oclExpressionCS
-		/.$BeginJava
-					CSTNode result = createVariableInitializationCS(
-							getIToken($getToken(2)),
-							null,
-							(OCLExpressionCS)$getSym(4),
-							(Boolean)$getSym(3)
-						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(4));
-					$setResult(result);
-		  $EndJava
-		./
-	variableInitializationCS ::= var IDENTIFIER varInitOperator qvtErrorToken
-		/.$BeginJava
-					CSTNode result = createVariableInitializationCS(
-							getIToken($getToken(2)),
-							null,
-							null,
-							(Boolean)$getSym(3)
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
-					$setResult(result);
-		  $EndJava
-		./
-	variableInitializationCSCorrect ::= var IDENTIFIER ':' typeCS
-		/.$BeginJava
-					CSTNode result = createVariableInitializationCS(
-							getIToken($getToken(2)),
-							(TypeCS)$getSym(4),
-							null,
-							false
-						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(4));
-					$setResult(result);
-		  $EndJava
-		./
-	variableInitializationCS ::= var IDENTIFIER ':' qvtErrorToken
-		/.$BeginJava
-					CSTNode result = createVariableInitializationCS(
-							getIToken($getToken(2)),
-							null,
-							null,
-							false
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
-					$setResult(result);
-		  $EndJava
-		./
-		
+	oclExpressionCS -> assignStatementCS
+
 	assignStatementCS ::= dotArrowExpCS ':=' oclExpressionCS
 		/.$BeginJava
 					CSTNode result = createAssignStatementCS(
