@@ -1462,6 +1462,10 @@ public class QvtOperationalVisitorCS
 		Map<String, EClass> createdIntermClasses = new LinkedHashMap<String, EClass>(moduleCS.getClassifierDefCS().size());
 		final Map<EClass, CSTNode> cstIntermClassesMap = new LinkedHashMap<EClass, CSTNode>();
 		for (ClassifierDefCS classifierDefCS : moduleCS.getClassifierDefCS()) {
+			if (false == module instanceof OperationalTransformation) {
+	            env.reportError(NLS.bind(ValidationMessages.IntermediateClassifierNotAllowed,
+	            		new Object[] {}), classifierDefCS);
+			}
 			if (createdIntermClasses.containsKey(classifierDefCS.getSimpleNameCS().getValue())) {
 	            env.reportError(NLS.bind(ValidationMessages.DuplicateClassifier,
 	            		new Object[] { classifierDefCS.getSimpleNameCS().getValue() }), classifierDefCS.getSimpleNameCS());
