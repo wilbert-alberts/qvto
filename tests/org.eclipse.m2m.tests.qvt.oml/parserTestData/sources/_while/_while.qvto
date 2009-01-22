@@ -23,7 +23,7 @@ query testVarScope(in par1 : Integer) : OclAny {
 	
 	while(i > 0) { 		
 		var inWhileInt : Integer := 0; -- see usage out of scope to check clash
-		/*<error>*/var inWhileInt : Integer := 0/*</error>*/;
+		var /*<error>*/inWhileInt : Integer := 0/*</error>*/;
 		var x : Integer := null;
 	};
 	

@@ -5,11 +5,11 @@ transformation parmnamesclash(in ecore : ECORE, out outModel : ECORE, out /*<err
 mapping EClass::fooMappingWrong(in aa:String, /*<error>*/aa:String/*</error>*/) 
 	: a : EPackage, /*<error>*/a : EPackage/*</error>*/, s : EPackage, /*<error>*/outModel : EClass/*</error>*/ {
 	init {
-		/*<error>*/var s := null/*</error>*/;
+		var /*<error>*/s := null/*</error>*/;
 		var s1 := null;
 	}
 	end {
-		/*<error>*/var a := null/*</error>*/;
+		var /*<error>*/a := null/*</error>*/;
 		var v1 := result;
 		var v2 := self;
 	}
@@ -44,9 +44,9 @@ mapping EClass::fooMappingCorrect(in aa:String, aa__:String) : a_ : EPackage, a_
 query EClass::fooQueryWrong(in aa:String, /*<error>*/aa:String/*</error>*/)
 	: a : EPackage, /*<error>*/a : EPackage/*</error>*/, s : EPackage, /*<error>*/outModel : EClass/*</error>*/ {
 
-	/*<error>*/var s := null/*</error>*/;
+	var /*<error>*/s := null/*</error>*/;
 	var s1 := null;
-	/*<error>*/var a := null/*</error>*/;
+	var /*<error>*/a := null/*</error>*/;
 	var a1 := null;
 	return /*<error>*/result/*</error>*/; --  no result var recognized
 }
@@ -63,9 +63,9 @@ query EClass::fooQueryCorrect(in aa:String, aa__:String) : a_ : EPackage, a__ : 
 helper EClass::fooHelperWrong(in aa:String, /*<error>*/aa:String/*</error>*/)
 	: a : EPackage, /*<error>*/a : EPackage/*</error>*/, s : EPackage, /*<error>*/outModel : EClass/*</error>*/ {
 
-	/*<error>*/var s := null/*</error>*/;
+	var /*<error>*/s := null/*</error>*/;
 	var s1 := null;
-	/*<error>*/var a := null/*</error>*/;
+	var /*<error>*/a := null/*</error>*/;
 	var a1 := self;
 	return /*<error>*/result/*</error>*/; --  no result var recognized
 }

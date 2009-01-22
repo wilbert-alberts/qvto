@@ -10,7 +10,7 @@ main() {
 	var a1 := b := var c3 ::= 'someString';
 	object EPackage { 
 		name := switch {
-			case (true) /*<error>*/var c ::= 'abc'/*</error>*/;
+			case (true) var /*<error>*/c ::= 'abc'/*</error>*/;
 		} 
 	};
 }
