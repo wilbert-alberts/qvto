@@ -1329,7 +1329,9 @@ public class QvtOperationalVisitorCS
         
 		visitIntermediateClassesCS(env, moduleCS, module);
 		
-		visitTagCS(env, moduleCS, module);
+		for (TagCS tagCS : moduleCS.getTags()) {
+			visitTagCS(env, tagCS, module, env.getModuleContextType());
+		}
 
 		importsCS(parsedModuleCS, module, env, compiler);
 
@@ -1415,47 +1417,43 @@ public class QvtOperationalVisitorCS
 		return module;
 	}
 
-	private void visitTagCS(QvtOperationalFileEnv env, MappingModuleCS moduleCS, Module module) throws SemanticException {
-		for (TagCS ownedTagCS : moduleCS.getTags()) {
-			String tagId = visitLiteralExpCS(ownedTagCS.getName(), env);
+	private void visitTagCS(QvtOperationalEnv env, TagCS ownedTagCS, Module module, EClassifier tagContextType) throws SemanticException {
+		String tagId = visitLiteralExpCS(ownedTagCS.getName(), env);
+		
+		String value = null;
+		if (ownedTagCS.getOclExpressionCS() != null) {
+			org.eclipse.ocl.ecore.OCLExpression oclExpression = visitOclExpressionCS(ownedTagCS.getOclExpressionCS(), env);
+			if (oclExpression instanceof StringLiteralExp) {
+				value = ((StringLiteralExp) oclExpression).getStringSymbol();
+			}
+		}
+		
+		EModelElement element = null;
+		ScopedNameCS scopedNameCS = ownedTagCS.getScopedNameCS();
+		TypeCS typeCS = scopedNameCS.getTypeCS();
+		if (typeCS != null) {
+			EClassifier owningType = visitTypeCS(typeCS, null, env);
+			if (owningType != null && scopedNameCS.getName() != null) {
+				element = env.lookupProperty(TypeUtil.resolveType(env, owningType), scopedNameCS.getName());				
+			}
+		}
+		else if (scopedNameCS.getName() != null) {	
+			element = env.lookupProperty(tagContextType, scopedNameCS.getName());
+		}
+		
+		if (element == null) {
+            QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.unresolvedNameError,
+            		new Object[] { QvtOperationalParserUtil.getStringRepresentation(scopedNameCS) }),
+            		scopedNameCS);
+		}
+		else {
+			EAnnotation ownedTag = createTag(tagId, value, element);
 			
-			String value = null;
-			if (ownedTagCS.getOclExpressionCS() != null) {
-				org.eclipse.ocl.ecore.OCLExpression oclExpression = visitOclExpressionCS(ownedTagCS.getOclExpressionCS(), env);
-				if (oclExpression instanceof StringLiteralExp) {
-					value = ((StringLiteralExp) oclExpression).getStringSymbol();
-				}
-			}
+			ASTSyntheticNode astNode = ASTSyntheticNodeAccess.createASTNode(ownedTag);
+			astNode.setStartPosition(ownedTagCS.getStartOffset());
+			astNode.setEndPosition(ownedTagCS.getEndOffset());
 			
-			EModelElement element = null;
-			ScopedNameCS scopedNameCS = ownedTagCS.getScopedNameCS();
-			TypeCS typeCS = scopedNameCS.getTypeCS();
-			EClassifier owningType = null;		
-			if (typeCS != null) {
-				owningType = visitTypeCS(typeCS, null, env);
-				if (owningType != null && scopedNameCS.getName() != null) {
-					element = env.lookupProperty(TypeUtil.resolveType(env, owningType), scopedNameCS.getName());				
-				}
-			}
-			else if (scopedNameCS.getName() != null) {	
-				owningType = env.getModuleContextType();
-				element = env.lookupProperty(owningType, scopedNameCS.getName());
-			}
-			
-			if (element == null) {
-	            QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.unresolvedNameError,
-	            		new Object[] { QvtOperationalParserUtil.getStringRepresentation(scopedNameCS) }),
-	            		scopedNameCS);
-			}
-			else {
-				EAnnotation ownedTag = createTag(tagId, value, element);
-				
-				ASTSyntheticNode astNode = ASTSyntheticNodeAccess.createASTNode(ownedTag);
-				astNode.setStartPosition(ownedTagCS.getStartOffset());
-				astNode.setEndPosition(ownedTagCS.getEndOffset());
-				
-				module.getOwnedTag().add(ownedTag);
-			}
+			module.getOwnedTag().add(ownedTag);
 		}
 	}
 
@@ -1631,6 +1629,10 @@ public class QvtOperationalVisitorCS
 	            env.reportError(NLS.bind(ValidationMessages.DuplicateProperty,
 	            		new Object[] { eClassifier.getName() + '.' + propPair.myEFeature.getName() }), propPair.myPropCS.getSimpleNameCS());
 			}
+		}
+		
+		for (TagCS tagCS : classifierDefCS.getTags()) {
+			visitTagCS(env, tagCS, module, eClassifier);
 		}
 		
 		return eClassifier;
