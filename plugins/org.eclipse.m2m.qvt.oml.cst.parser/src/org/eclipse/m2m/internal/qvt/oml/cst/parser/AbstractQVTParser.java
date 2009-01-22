@@ -838,13 +838,22 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 
-	protected CSTNode createClassifierDefCS(IToken nameToken, EList<TypeCS> extentionList, EList<ClassifierPropertyCS> featureList) {
+	protected CSTNode createClassifierDefCS(IToken nameToken, EList<TypeCS> extentionList, EList<CSTNode> featureList) {
 		ClassifierDefCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createClassifierDefCS();
 		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, nameToken.toString());
 		setOffsets(nameCS, nameToken);
 		result.setSimpleNameCS(nameCS);
 		result.getExtends().addAll(extentionList);
-		result.getProperties().addAll(featureList);
+		
+		for (CSTNode nodeCS : featureList) {
+			if (nodeCS instanceof ClassifierPropertyCS) {
+				result.getProperties().add((ClassifierPropertyCS) nodeCS);
+			}
+			if (nodeCS instanceof TagCS) {
+				result.getTags().add((TagCS) nodeCS);
+			}
+		}
+		
 		return result;
 	}
 

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ClassifierDefCS.java,v 1.4 2009/01/13 20:23:40 radvorak Exp $
+ * $Id: ClassifierDefCS.java,v 1.5 2009/01/22 09:11:54 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -31,6 +31,7 @@ import org.eclipse.ocl.cst.TypeCS;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS#getSimpleNameCS <em>Simple Name CS</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS#getExtends <em>Extends</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS#getProperties <em>Properties</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS#getTags <em>Tags</em>}</li>
  * </ul>
  * </p>
  *
@@ -103,5 +104,21 @@ public interface ClassifierDefCS extends CSTNode {
 	 * @generated
 	 */
 	EList<ClassifierPropertyCS> getProperties();
+
+	/**
+	 * Returns the value of the '<em><b>Tags</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.cst.TagCS}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Tags</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Tags</em>' containment reference list.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getClassifierDefCS_Tags()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<TagCS> getTags();
 
 } // ClassifierDefCS

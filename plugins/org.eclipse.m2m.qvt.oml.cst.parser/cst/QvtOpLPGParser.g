@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.37 2009/01/21 10:14:30 sboyko Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.38 2009/01/22 09:11:54 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -149,7 +149,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.37 2009/01/21 10:14:30 sboyko Exp $
+ * $Id: QvtOpLPGParser.g,v 1.38 2009/01/22 09:11:54 sboyko Exp $
  */
 	./
 $End
@@ -213,7 +213,7 @@ $Rules
 	unit_element -> _helper
 	unit_element -> entry
 	unit_element -> _mapping
-	unit_element -> _tag
+	unit_element -> _tag ';'
 	--=== // definitions in a compilation unit (end) ===--
 
 	--=== // Transformation and library definitions (start) ===--
@@ -490,7 +490,7 @@ $Rules
 	module_element -> _helper
 	module_element -> entry
 	module_element -> _mapping
-	module_element -> _tag
+	module_element -> _tag ';'
 	--=== // module definitions (end) ===--
 	
 	--=== // model types compliance and metamodel declarations (start) ===--
@@ -710,6 +710,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
+	classifierFeatureCS -> _tag
 
 	init_partOpt ::= $empty
 		/.$NullAction./
@@ -1127,14 +1128,15 @@ $Rules
 
 	--=== // syntax for tag definition (start) ===--
 	
-	_tag ::= tag qvtStringLiteralExpCS scoped_identifier tag_valueOpt ';'
+	_tag ::= tag qvtStringLiteralExpCS scoped_identifier tag_valueOpt
 		/.$BeginJava
+					OCLExpressionCS valueExpression = (OCLExpressionCS) $getSym(4);
 					CSTNode result = createTagCS(
 							(StringLiteralExpCS) $getSym(2),
 							(ScopedNameCS) $getSym(3),
-							(OCLExpressionCS) $getSym(4)
+							valueExpression
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
+					setOffsets(result, getIToken($getToken(1)), valueExpression != null ? valueExpression : (CSTNode) $getSym(3));
 					$setResult(result);
 		  $EndJava
 		./

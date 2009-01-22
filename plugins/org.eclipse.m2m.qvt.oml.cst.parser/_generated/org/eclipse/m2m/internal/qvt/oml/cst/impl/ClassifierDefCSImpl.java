@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ClassifierDefCSImpl.java,v 1.4 2009/01/13 20:23:47 radvorak Exp $
+ * $Id: ClassifierDefCSImpl.java,v 1.5 2009/01/22 09:11:54 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.TagCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.TypeCS;
 import org.eclipse.ocl.cst.impl.CSTNodeImpl;
@@ -42,6 +43,7 @@ import org.eclipse.ocl.cst.impl.CSTNodeImpl;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ClassifierDefCSImpl#getSimpleNameCS <em>Simple Name CS</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ClassifierDefCSImpl#getExtends <em>Extends</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ClassifierDefCSImpl#getProperties <em>Properties</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ClassifierDefCSImpl#getTags <em>Tags</em>}</li>
  * </ul>
  * </p>
  *
@@ -84,6 +86,16 @@ public class ClassifierDefCSImpl extends CSTNodeImpl implements ClassifierDefCS 
 	 * @ordered
 	 */
 	protected EList<ClassifierPropertyCS> properties;
+
+	/**
+	 * The cached value of the '{@link #getTags() <em>Tags</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTags()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<TagCS> tags;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -176,6 +188,18 @@ public class ClassifierDefCSImpl extends CSTNodeImpl implements ClassifierDefCS 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<TagCS> getTags() {
+		if (tags == null) {
+			tags = new EObjectContainmentEList<TagCS>(TagCS.class, this, CSTPackage.CLASSIFIER_DEF_CS__TAGS);
+		}
+		return tags;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -185,6 +209,8 @@ public class ClassifierDefCSImpl extends CSTNodeImpl implements ClassifierDefCS 
 				return ((InternalEList<?>)getExtends()).basicRemove(otherEnd, msgs);
 			case CSTPackage.CLASSIFIER_DEF_CS__PROPERTIES:
 				return ((InternalEList<?>)getProperties()).basicRemove(otherEnd, msgs);
+			case CSTPackage.CLASSIFIER_DEF_CS__TAGS:
+				return ((InternalEList<?>)getTags()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -203,6 +229,8 @@ public class ClassifierDefCSImpl extends CSTNodeImpl implements ClassifierDefCS 
 				return getExtends();
 			case CSTPackage.CLASSIFIER_DEF_CS__PROPERTIES:
 				return getProperties();
+			case CSTPackage.CLASSIFIER_DEF_CS__TAGS:
+				return getTags();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -227,6 +255,10 @@ public class ClassifierDefCSImpl extends CSTNodeImpl implements ClassifierDefCS 
 				getProperties().clear();
 				getProperties().addAll((Collection<? extends ClassifierPropertyCS>)newValue);
 				return;
+			case CSTPackage.CLASSIFIER_DEF_CS__TAGS:
+				getTags().clear();
+				getTags().addAll((Collection<? extends TagCS>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -248,6 +280,9 @@ public class ClassifierDefCSImpl extends CSTNodeImpl implements ClassifierDefCS 
 			case CSTPackage.CLASSIFIER_DEF_CS__PROPERTIES:
 				getProperties().clear();
 				return;
+			case CSTPackage.CLASSIFIER_DEF_CS__TAGS:
+				getTags().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -266,6 +301,8 @@ public class ClassifierDefCSImpl extends CSTNodeImpl implements ClassifierDefCS 
 				return extends_ != null && !extends_.isEmpty();
 			case CSTPackage.CLASSIFIER_DEF_CS__PROPERTIES:
 				return properties != null && !properties.isEmpty();
+			case CSTPackage.CLASSIFIER_DEF_CS__TAGS:
+				return tags != null && !tags.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

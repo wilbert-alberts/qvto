@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackage.java,v 1.20 2009/01/21 10:14:30 sboyko Exp $
+ * $Id: CSTPackage.java,v 1.21 2009/01/22 09:11:54 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -1087,13 +1087,22 @@ public interface CSTPackage extends EPackage {
 	int CLASSIFIER_DEF_CS__PROPERTIES = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Tags</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASSIFIER_DEF_CS__TAGS = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>Classifier Def CS</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CLASSIFIER_DEF_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 3;
+	int CLASSIFIER_DEF_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ClassifierPropertyCSImpl <em>Classifier Property CS</em>}' class.
@@ -6311,6 +6320,17 @@ public interface CSTPackage extends EPackage {
 	EReference getClassifierDefCS_Properties();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS#getTags <em>Tags</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Tags</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS#getTags()
+	 * @see #getClassifierDefCS()
+	 * @generated
+	 */
+	EReference getClassifierDefCS_Tags();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS <em>Classifier Property CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8398,6 +8418,14 @@ public interface CSTPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CLASSIFIER_DEF_CS__PROPERTIES = eINSTANCE.getClassifierDefCS_Properties();
+
+		/**
+		 * The meta object literal for the '<em><b>Tags</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CLASSIFIER_DEF_CS__TAGS = eINSTANCE.getClassifierDefCS_Tags();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ClassifierPropertyCSImpl <em>Classifier Property CS</em>}' class.

@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.48 2009/01/21 10:14:29 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.49 2009/01/22 09:11:53 sboyko Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.48 2009/01/21 10:14:29 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.49 2009/01/22 09:11:53 sboyko Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.48 2009/01/21 10:14:29 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.49 2009/01/22 09:11:53 sboyko Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.48 2009/01/21 10:14:29 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.49 2009/01/22 09:11:53 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -89,7 +89,7 @@ public interface QvtOpLPGParsersym {
       TK_LBRACE = 91,
       TK_RBRACE = 93,
       TK_LBRACKET = 97,
-      TK_RBRACKET = 106,
+      TK_RBRACKET = 107,
       TK_ARROW = 119,
       TK_BAR = 96,
       TK_COMMA = 92,
@@ -98,16 +98,16 @@ public interface QvtOpLPGParsersym {
       TK_SEMICOLON = 90,
       TK_DOT = 99,
       TK_DOTDOT = 120,
-      TK_ATPRE = 109,
+      TK_ATPRE = 110,
       TK_CARET = 121,
       TK_CARETCARET = 122,
-      TK_QUESTIONMARK = 110,
-      TK_QUOTE_STRING_LITERAL = 111,
+      TK_QUESTIONMARK = 111,
+      TK_QUOTE_STRING_LITERAL = 112,
       TK_ADD_ASSIGN = 138,
       TK_RESET_ASSIGN = 100,
       TK_AT_SIGN = 149,
-      TK_EXCLAMATION_MARK = 112,
-      TK_NOT_EQUAL_EXEQ = 107,
+      TK_EXCLAMATION_MARK = 113,
+      TK_NOT_EQUAL_EXEQ = 108,
       TK_INTEGER_RANGE_START = 123,
       TK_break = 173,
       TK_class = 150,
@@ -129,7 +129,7 @@ public interface QvtOpLPGParsersym {
       TK_raise = 186,
       TK_readonly = 154,
       TK_references = 155,
-      TK_tag = 113,
+      TK_tag = 103,
       TK_try = 187,
       TK_typedef = 188,
       TK_unlimited = 189,
@@ -157,7 +157,7 @@ public interface QvtOpLPGParsersym {
       TK_not = 56,
       TK_implies = 142,
       TK_let = 77,
-      TK_in = 103,
+      TK_in = 104,
       TK_true = 57,
       TK_false = 58,
       TK_body = 28,
@@ -202,7 +202,7 @@ public interface QvtOpLPGParsersym {
       TK_Invalid = 18,
       TK_OclMessage = 19,
       TK_OclInvalid = 72,
-      TK_end = 104,
+      TK_end = 105,
       TK_while = 73,
       TK_out = 126,
       TK_object = 74,
@@ -218,7 +218,7 @@ public interface QvtOpLPGParsersym {
       TK_var = 79,
       TK_configuration = 116,
       TK_intermediate = 117,
-      TK_property = 105,
+      TK_property = 106,
       TK_opposites = 160,
       TK_population = 145,
       TK_map = 66,
@@ -265,7 +265,7 @@ public interface QvtOpLPGParsersym {
       TK_forOne = 172,
       TK_compute = 76,
       TK_Dict = 51,
-      TK_List = 108,
+      TK_List = 109,
       TK_EOF_TOKEN = 137,
       TK_IDENTIFIER = 2,
       TK_ERROR_TOKEN = 5;
@@ -374,6 +374,7 @@ public interface QvtOpLPGParsersym {
                  "RESET_ASSIGN",
                  "access",
                  "main",
+                 "tag",
                  "in",
                  "end",
                  "property",
@@ -384,7 +385,6 @@ public interface QvtOpLPGParsersym {
                  "QUESTIONMARK",
                  "QUOTE_STRING_LITERAL",
                  "EXCLAMATION_MARK",
-                 "tag",
                  "library",
                  "when",
                  "configuration",
