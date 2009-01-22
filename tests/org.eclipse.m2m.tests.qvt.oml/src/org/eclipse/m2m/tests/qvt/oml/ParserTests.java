@@ -106,6 +106,7 @@ public class ParserTests {
         TestData.createSourceChecked("varscope", 10, 0), //$NON-NLS-1$      
     	TestData.createSourceChecked("_while", 12, 0), //$NON-NLS-1$
     	TestData.createSourceChecked("implicitCallSrc", 20, 4), //$NON-NLS-1$    	
+    	TestData.createSourceChecked("libraryWithModuleElements", 2, 0), //$NON-NLS-1$    	
     	new TestData("assert_log", 0), //$NON-NLS-1$    	
         new TestData("opersignatureparamclash", 1), //$NON-NLS-1$    	
         new TestData("collectreturntype", 0), //$NON-NLS-1$

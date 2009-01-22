@@ -2,15 +2,15 @@ modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
 
 library testlibrary(ECORE) {
 
-	intermediate property EPackage::myProperty : String;
+	--intermediate property EPackage::myProperty : String;
 	
-	intermediate class MyEPackage extends EPackage {
-		myName : String;
-	}
+	--intermediate class MyEPackage extends EPackage {
+	--	myName : String;
+	--}
 		
 	mapping EPackage::foo() : EPackage {
 		name := self.bar() + '_foo';
-		result.myProperty := 'intermProp';
+		--result.myProperty := 'intermProp';
 		nsURI := result.bar2();
 	}
 
@@ -19,6 +19,7 @@ library testlibrary(ECORE) {
 	}
 
 	helper EPackage::bar2() : String {
-		return self.myProperty + '_bar2';
+		--return self.myProperty + '_bar2';
+		return self.name + '_bar2';
 	}
 }
