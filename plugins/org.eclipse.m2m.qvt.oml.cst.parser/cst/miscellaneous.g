@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.16 2009/01/22 19:59:09 aigdalov Exp $ 
+-- * $Id: miscellaneous.g,v 1.17 2009/01/23 12:34:19 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -282,7 +282,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.16 2009/01/22 19:59:09 aigdalov Exp $
+ * $Id: miscellaneous.g,v 1.17 2009/01/23 12:34:19 aigdalov Exp $
  */
 	./
 $End
@@ -1018,41 +1018,6 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-
-	_modeltype -> legacyModeltype
-	legacyModeltype ::= metamodel stringLiteralExpCS ';'
-		/.$BeginJava
-					CSTNode packageRefCS = createPackageRefCS(
-							null,
-							(StringLiteralExpCS)$getSym(2)
-						);
-					setOffsets(packageRefCS, (CSTNode)$getSym(2));
-					
-					EList packageRefList = new BasicEList();
-					packageRefList.add(packageRefCS);
-					ModelTypeCS result = createModelTypeCS(
-							new Token(0, 0, 0),
-							createStringLiteralExpCS("'strict'"),
-							packageRefList,
-							$EMPTY_ELIST
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
-					$setResult(result);
-		  $EndJava
-		./
-	legacyModeltype ::= metamodel qvtErrorToken
-		/.$BeginJava
-					ModelTypeCS result = createModelTypeCS(
-							new Token(0, 0, 0),
-							createStringLiteralExpCS(""),
-							$EMPTY_ELIST,
-							$EMPTY_ELIST
-						);
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
-		  $EndJava
-		./
-
 
         unit_element -> renaming
 	renaming ::= rename typeCS '.' qvtIdentifierCS '=' stringLiteralExpCS ';' 
