@@ -25,8 +25,7 @@ public abstract class AbstractMetamodelCollector extends AbstractCollector {
     @Override
     protected boolean isApplicableInternal(QvtCompletionData data) {
 		IToken leftToken = data.getLeftToken();
-		return ((leftToken.getKind() == QvtOpLPGParsersym.TK_uses) || 
-				(leftToken.getKind() == QvtOpLPGParsersym.TK_metamodel));
+		return QvtCompletionData.isKindOf(leftToken, QvtOpLPGParsersym.TK_uses);
 	}
 
 

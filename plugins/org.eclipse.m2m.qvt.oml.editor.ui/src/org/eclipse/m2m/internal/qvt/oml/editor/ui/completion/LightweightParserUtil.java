@@ -88,7 +88,7 @@ public class LightweightParserUtil {
         uniteIntArrays(IMPERATIVE_OPERATION_TOKENS, new int[] {
                 QvtOpLPGParsersym.TK_init, QvtOpLPGParsersym.TK_end,
                 QvtOpLPGParsersym.TK_transformation, QvtOpLPGParsersym.TK_modeltype,
-                QvtOpLPGParsersym.TK_uses, QvtOpLPGParsersym.TK_metamodel,
+                QvtOpLPGParsersym.TK_uses,
                 QvtOpLPGParsersym.TK_import, QvtOpLPGParsersym.TK_library
         });
 
