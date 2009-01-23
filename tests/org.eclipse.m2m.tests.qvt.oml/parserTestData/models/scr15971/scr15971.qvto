@@ -1,7 +1,7 @@
 transformation scr15971;
 
-metamodel 'http://www.borland.com/together/uml';
-metamodel 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';
+modeltype UML uses 'http://www.borland.com/together/uml';
+modeltype SIMPLEUML uses 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';
 
 mapping main(in model: uml::together::Model) : ecore::EPackage {
 		name := 'foo';

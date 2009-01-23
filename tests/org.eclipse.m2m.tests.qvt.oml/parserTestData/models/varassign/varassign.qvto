@@ -1,5 +1,5 @@
 transformation varassign;
-metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
 
 mapping main(inout model: ecore::EPackage): ecore::EPackage {
 	init {

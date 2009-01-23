@@ -1,6 +1,6 @@
 transformation iteratetest;
 
-metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
 
 mapping main(in root: ecore::EPackage): ecore::EPackage {
 	name := 'iteratetest';

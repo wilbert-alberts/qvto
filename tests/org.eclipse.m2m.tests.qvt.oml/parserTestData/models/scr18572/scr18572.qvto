@@ -1,7 +1,7 @@
 -- just checks compilation of generated java
 
 transformation scr18572;
-metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
 
 mapping main(pack: ecore::EPackage): ecore::EPackage {
         name := 'foo';

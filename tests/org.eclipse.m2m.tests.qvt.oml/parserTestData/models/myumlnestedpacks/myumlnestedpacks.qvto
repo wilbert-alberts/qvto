@@ -1,7 +1,7 @@
 transformation myumlnestedpacks.myumlnestedpacks;
 
-metamodel 'http://www.eclipse.org/emf/2002/Ecore';
-metamodel 'http://www.borland.com/together/uml';
+modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
+modeltype UML uses 'http://www.borland.com/together/uml';
 
 mapping main(in model: ecore::EPackage): uml::together::Model  {
 	    nestedPackages += object uml::kernel::packages::Package {

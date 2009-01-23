@@ -1,5 +1,5 @@
 transformation wrongparamnameinout;
-metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
 
 mapping foo(pack: ecore::EPackage): ecore::EPackage {
    init {

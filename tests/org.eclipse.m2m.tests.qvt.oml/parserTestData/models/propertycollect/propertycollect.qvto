@@ -1,6 +1,6 @@
 transformation propertycollect;
 
-metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
 
 property a = ('sdfsd')->collect(n | n)->any(true);
 

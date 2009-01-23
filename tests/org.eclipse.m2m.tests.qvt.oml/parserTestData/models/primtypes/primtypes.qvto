@@ -1,7 +1,7 @@
 transformation primtypes;
 
-metamodel 'http://www.borland.com/together/uml';
-metamodel 'http://www.borland.com/together/uml20';
+modeltype UML uses 'http://www.borland.com/together/uml';
+modeltype UML20 uses 'http://www.borland.com/together/uml20';
 
 mapping main(in model: ecore::EPackage): uml::together::Model {
 	init {

@@ -1,6 +1,6 @@
 transformation props;
 
-metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
 
 property prop = Sequence {};
 configuration property PROP : String;

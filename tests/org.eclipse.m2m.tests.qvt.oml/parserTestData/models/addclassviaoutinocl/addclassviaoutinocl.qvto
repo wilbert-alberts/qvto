@@ -1,5 +1,5 @@
 transformation addclassviaoutinocl;
-metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
 
 mapping main(in pack: ecore::EPackage): ecore::EPackage {
         name := 'foo';

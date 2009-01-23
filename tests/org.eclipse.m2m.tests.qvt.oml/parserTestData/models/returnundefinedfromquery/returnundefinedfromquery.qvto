@@ -1,7 +1,7 @@
 transformation returnundefinedfromquery;
 
-metamodel 'http://www.eclipse.org/emf/2002/Ecore';
-metamodel 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';
+modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
+modeltype SIMPLEUML uses 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';
 
 mapping main(pack: ecore::EPackage): ecore::EPackage {
         name := 'foo';

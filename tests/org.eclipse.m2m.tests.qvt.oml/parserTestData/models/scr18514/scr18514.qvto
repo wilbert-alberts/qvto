@@ -1,6 +1,6 @@
 transformation scr18514;
 
-metamodel 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';
+modeltype SIMPLEUML uses 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';
 
 mapping main(in inmodel: simpleuml::Model): simpleuml::Model {
 	ownedElements:=inmodel.ownedElements->select(o2|o2.oclIsTypeOf(simpleuml::Package))->        

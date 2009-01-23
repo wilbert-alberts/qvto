@@ -1,9 +1,9 @@
 transformation eobjectmodelopcall;
 import library emf.tools;
 
-metamodel 'http://www.eclipse.org/emf/2002/Ecore';
-metamodel 'http://www.borland.com/together/uml';
-metamodel 'http://www.borland.com/together/uml20';
+modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
+modeltype UML uses 'http://www.borland.com/together/uml';
+modeltype UML20 uses 'http://www.borland.com/together/uml20';
 
 mapping main(in model: uml::together::Model): uml::together::Model {
     	ownedMembers += object uml20::classes::Class {

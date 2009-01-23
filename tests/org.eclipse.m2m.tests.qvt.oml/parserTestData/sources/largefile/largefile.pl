@@ -3,7 +3,7 @@ use strict;
 
 my $text = <<header;
 transformation largefile;
-metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
 header
 	
 print "$text\n";

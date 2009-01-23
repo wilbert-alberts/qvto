@@ -1,6 +1,6 @@
 transformation virt;
 import models.virt.vutil;
-metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
 
 
 query main(pack: ecore::EPackage): ecore::EPackage {

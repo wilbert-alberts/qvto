@@ -1,7 +1,7 @@
 transformation accessbooleans;
 
-metamodel 'http://www.eclipse.org/m2m/qvt/oml/testqvt';
-metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+modeltype TESTQVT uses 'http://www.eclipse.org/m2m/qvt/oml/testqvt';
+modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
 
 mapping main(in model: testqvt::Model): ecore::EPackage {
 	init {

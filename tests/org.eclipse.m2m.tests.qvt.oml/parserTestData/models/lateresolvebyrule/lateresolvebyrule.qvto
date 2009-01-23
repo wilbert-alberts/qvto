@@ -1,6 +1,6 @@
 transformation lateresolvebyrule;
 
-metamodel 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';
+modeltype SIMPLEUML uses 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';
 
 mapping main(in model: simpleuml::Model): simpleuml::Model {
 	name := model.name;

@@ -1,8 +1,8 @@
 transformation Uml_To_Xhtml;
 
-metamodel 'http://www.borland.com/together/uml';
-metamodel 'http://www.borland.com/together/uml20';
-metamodel 'http://www.w3.org/1999/xhtml';
+modeltype UML uses 'http://www.borland.com/together/uml';
+modeltype UML20 uses 'http://www.borland.com/together/uml20';
+modeltype XHTML uses 'http://www.w3.org/1999/xhtml';
 
 rename xhtml::HtmlType._body = 'body';
 rename xhtml::BodyType._div = 'div';

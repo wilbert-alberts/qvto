@@ -1,8 +1,8 @@
 transformation uml14to20;
 
-metamodel 'http://www.borland.com/together/uml';
-metamodel 'http://www.borland.com/together/uml14';
-metamodel 'http://www.borland.com/together/uml20';
+modeltype UML uses 'http://www.borland.com/together/uml';
+modeltype UML14 uses 'http://www.borland.com/together/uml14';
+modeltype UML20 uses 'http://www.borland.com/together/uml20';
 
 mapping main(in model: uml::together::Model): uml::together::Model {
 	init {

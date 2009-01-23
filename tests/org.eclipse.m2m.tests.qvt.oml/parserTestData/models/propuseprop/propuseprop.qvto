@@ -2,7 +2,7 @@ transformation propuseprop;
 
 import models.propuseprop.imp;
 
-metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
 
 property a : Integer = 1;
 property b : Integer = a + 1;

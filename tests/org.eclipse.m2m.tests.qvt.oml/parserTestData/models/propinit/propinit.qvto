@@ -2,7 +2,7 @@ transformation propinit;
 
 import models.propinit.Utils;
 
-metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
 
 property DEFAULT_NAME = 'default';
 

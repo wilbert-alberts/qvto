@@ -1,6 +1,6 @@
 transformation javakeywords;
 
-metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
 
 rename ecore::EPackage.implements = 'name';
 

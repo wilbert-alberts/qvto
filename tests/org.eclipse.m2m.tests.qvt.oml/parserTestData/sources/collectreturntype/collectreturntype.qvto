@@ -1,6 +1,6 @@
 transformation collectreturntype;
 
-metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
 
 mapping foo(): ecore::EPackage {
 	init {
