@@ -1,5 +1,5 @@
 transformation t;
-metamodel /*@*/
+modeltype ECORE uses /*@*/
 
 mapping main(in pack: ecore::EPackage): ecore::EPackage {
     object {

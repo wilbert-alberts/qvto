@@ -1,7 +1,7 @@
 transformation qwerty();
 
-metamodel 'http://www.eclipse.org/m2m/qvt/oml/ui/test/codesense';
-metamodel 'http://www.eclipse.org/emf/2002/Ecore';
+modeltype CODESENSE uses 'http://www.eclipse.org/m2m/qvt/oml/ui/test/codesense';
+modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
 
 mapping main(in model: ecore::EPackage ) : mypackage::MyClass {
 }

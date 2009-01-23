@@ -1,2 +1,1 @@
 .inclusive
-QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = 'http://www.eclipse.org/emf/2002/GenModel', displayString = 'http://www.eclipse.org/emf/2002/GenModel', replacementOffsetDelta = 28, replacementLength = 28, cursorPosition = 42
