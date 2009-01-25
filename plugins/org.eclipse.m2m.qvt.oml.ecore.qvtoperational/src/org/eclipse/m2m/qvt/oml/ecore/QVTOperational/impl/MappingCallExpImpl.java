@@ -11,18 +11,17 @@
  * 
  * </copyright>
  *
- * $Id: MappingCallExpImpl.java,v 1.2 2008/09/30 22:11:49 radvorak Exp $
+ * $Id: MappingCallExpImpl.java,v 1.3 2009/01/25 23:12:23 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.MappingCallExp;
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.util.QVTOperationalVisitor;
+import org.eclipse.ocl.utilities.Visitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -205,5 +204,17 @@ public class MappingCallExpImpl extends ImperativeCallExpImpl implements Mapping
 		result.append(')');
 		return result.toString();
 	}
+	
+	/**
+	 * @generated NOT
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T, U extends Visitor<T,?,?,?,?,?,?,?,?,?>> T accept(U v) {
+		if (v instanceof QVTOperationalVisitor)
+			return (T) ((QVTOperationalVisitor) v).visitMappingCallExp(this);
+		return super.accept(v);
+	}
+	
 
 } //MappingCallExpImpl

@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: ObjectExp.java,v 1.1 2008/09/02 20:02:27 radvorak Exp $
+ * $Id: ObjectExp.java,v 1.2 2009/01/25 23:12:24 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational;
 
@@ -33,7 +33,7 @@ import org.eclipse.ocl.ecore.Variable;
  * </p>
  *
  * @see org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage#getObjectExp()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='wellFormedReferredObject'"
  * @generated
  */
 public interface ObjectExp extends InstantiationExp {

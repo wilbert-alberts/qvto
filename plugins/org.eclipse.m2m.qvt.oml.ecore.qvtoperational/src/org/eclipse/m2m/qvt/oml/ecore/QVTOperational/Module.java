@@ -11,17 +11,15 @@
  * 
  * </copyright>
  *
- * $Id: Module.java,v 1.2 2008/09/30 22:11:49 radvorak Exp $
+ * $Id: Module.java,v 1.3 2009/01/25 23:12:24 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
-
 import org.eclipse.ocl.ecore.Variable;
 
 /**
@@ -43,7 +41,7 @@ import org.eclipse.ocl.ecore.Variable;
  * </p>
  *
  * @see org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage#getModule()
- * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='WellFormedNsURI WellFormedNsPrefix UniqueNsURIs'"
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='WellFormedNsURI WellFormedNsPrefix UniqueNsURIs UniqueOperationSignatures UniqueClassifierNames'"
  * @generated
  */
 public interface Module extends EClass, EPackage {

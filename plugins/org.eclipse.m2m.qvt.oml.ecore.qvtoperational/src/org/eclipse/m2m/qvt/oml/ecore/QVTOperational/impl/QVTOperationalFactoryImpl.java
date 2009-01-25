@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: QVTOperationalFactoryImpl.java,v 1.1 2008/09/02 20:02:26 radvorak Exp $
+ * $Id: QVTOperationalFactoryImpl.java,v 1.2 2009/01/25 23:12:23 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
@@ -19,12 +19,34 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
-import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.*;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.Constructor;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ConstructorBody;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ContextualProperty;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.DirectionKind;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.EntryOperation;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.Helper;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ImperativeCallExp;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ImperativeOperation;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ImportKind;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.Library;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.MappingBody;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.MappingCallExp;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.MappingOperation;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.MappingParameter;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ModelParameter;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ModelType;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.Module;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ModuleImport;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ObjectExp;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.OperationBody;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.OperationalTransformation;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalFactory;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ResolveExp;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ResolveInExp;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.VarParameter;
 
 /**
  * <!-- begin-user-doc -->

@@ -11,16 +11,13 @@
  * 
  * </copyright>
  *
- * $Id: HelperImpl.java,v 1.2 2008/09/30 22:11:49 radvorak Exp $
+ * $Id: HelperImpl.java,v 1.3 2009/01/25 23:12:23 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.Helper;
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage;
 

@@ -11,19 +11,19 @@
  * 
  * </copyright>
  *
- * $Id: ImperativeCallExpImpl.java,v 1.1 2008/09/02 20:02:26 radvorak Exp $
+ * $Id: ImperativeCallExpImpl.java,v 1.2 2009/01/25 23:12:23 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ImperativeCallExp;
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.util.QVTOperationalToStringVisitor;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.util.QVTOperationalVisitor;
 import org.eclipse.ocl.ecore.impl.OperationCallExpImpl;
+import org.eclipse.ocl.utilities.Visitor;
 
 
 /**
@@ -161,17 +161,24 @@ public class ImperativeCallExpImpl extends OperationCallExpImpl implements Imper
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (isVirtual: ");
-		result.append(isVirtual);
-		result.append(')');
-		return result.toString();
+		
+		return accept(QVTOperationalToStringVisitor.getInstance(this));		
+	}
+	
+	/**
+	 * @generated NOT
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T, U extends Visitor<T,?,?,?,?,?,?,?,?,?>> T accept(U v) {
+		if (v instanceof QVTOperationalVisitor)
+			return (T) ((QVTOperationalVisitor) v).visitImperativeCallExp(this);
+		return super.accept(v);
 	}
 
 } //ImperativeCallExpImpl

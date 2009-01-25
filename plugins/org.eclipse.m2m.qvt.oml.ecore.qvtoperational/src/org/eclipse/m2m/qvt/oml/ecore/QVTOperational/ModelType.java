@@ -11,15 +11,13 @@
  * 
  * </copyright>
  *
- * $Id: ModelType.java,v 1.1 2008/09/02 20:02:27 radvorak Exp $
+ * $Id: ModelType.java,v 1.2 2009/01/25 23:12:24 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.ocl.ecore.OCLExpression;
 
 /**

@@ -11,15 +11,13 @@
  * 
  * </copyright>
  *
- * $Id: OperationalTransformation.java,v 1.1 2008/09/02 20:02:27 radvorak Exp $
+ * $Id: OperationalTransformation.java,v 1.2 2009/01/25 23:12:24 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
-
 import org.eclipse.qvt.declarative.ecore.QVTRelation.Relation;
 import org.eclipse.qvt.declarative.ecore.QVTRelation.RelationalTransformation;
 
@@ -40,7 +38,7 @@ import org.eclipse.qvt.declarative.ecore.QVTRelation.RelationalTransformation;
  * </p>
  *
  * @see org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage#getOperationalTransformation()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='hasModelParameters hasEntryOperation hasSuperClass'"
  * @generated
  */
 public interface OperationalTransformation extends Module {

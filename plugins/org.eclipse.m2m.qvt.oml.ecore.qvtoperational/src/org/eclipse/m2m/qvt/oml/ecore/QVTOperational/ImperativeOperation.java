@@ -11,12 +11,11 @@
  * 
  * </copyright>
  *
- * $Id: ImperativeOperation.java,v 1.2 2008/09/30 22:11:49 radvorak Exp $
+ * $Id: ImperativeOperation.java,v 1.3 2009/01/25 23:12:24 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EOperation;
 
 /**

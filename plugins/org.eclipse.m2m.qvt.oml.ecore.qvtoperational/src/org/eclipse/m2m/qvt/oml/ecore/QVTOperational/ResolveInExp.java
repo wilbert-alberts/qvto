@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: ResolveInExp.java,v 1.1 2008/09/02 20:02:27 radvorak Exp $
+ * $Id: ResolveInExp.java,v 1.2 2009/01/25 23:12:24 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational;
 
@@ -29,7 +29,7 @@ package org.eclipse.m2m.qvt.oml.ecore.QVTOperational;
  * </p>
  *
  * @see org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage#getResolveInExp()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='wellFormedSource'"
  * @generated
  */
 public interface ResolveInExp extends ResolveExp {

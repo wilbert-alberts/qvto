@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: QVTOperationalPackageImpl.java,v 1.2 2008/09/30 22:11:49 radvorak Exp $
+ * $Id: QVTOperationalPackageImpl.java,v 1.3 2009/01/25 23:12:23 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
@@ -22,9 +22,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage;
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.Constructor;
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ConstructorBody;
@@ -1346,7 +1344,7 @@ public class QVTOperationalPackageImpl extends EPackageImpl implements QVTOperat
 		   source, 
 		   new String[] {
 			 "body", "overriding"
-		   });		
+		   });				
 		addAnnotation
 		  (getImperativeOperation_Overridden(), 
 		   source, 
@@ -1436,7 +1434,7 @@ public class QVTOperationalPackageImpl extends EPackageImpl implements QVTOperat
 		   source, 
 		   new String[] {
 			 "body", "importingElement"
-		   });		
+		   });			
 		addAnnotation
 		  (getObjectExp_ReferredObject(), 
 		   source, 
@@ -1454,7 +1452,7 @@ public class QVTOperationalPackageImpl extends EPackageImpl implements QVTOperat
 		   source, 
 		   new String[] {
 			 "body", "opBody"
-		   });		
+		   });			
 		addAnnotation
 		  (getOperationalTransformation_IntermediateClass(), 
 		   source, 
@@ -1484,7 +1482,7 @@ public class QVTOperationalPackageImpl extends EPackageImpl implements QVTOperat
 		   source, 
 		   new String[] {
 			 "body", "owner"
-		   });		
+		   });				
 		addAnnotation
 		  (getResolveInExp_InMapping(), 
 		   source, 
@@ -1500,13 +1498,49 @@ public class QVTOperationalPackageImpl extends EPackageImpl implements QVTOperat
 	 * @generated
 	 */
 	protected void createEcoreAnnotations() {
-		String source = "http://www.eclipse.org/emf/2002/Ecore";															
+		String source = "http://www.eclipse.org/emf/2002/Ecore";				
+		addAnnotation
+		  (entryOperationEClass, 
+		   source, 
+		   new String[] {
+			 "constraints", "wellFormedName checkParameters"
+		   });		
+		addAnnotation
+		  (imperativeCallExpEClass, 
+		   source, 
+		   new String[] {
+			 "constraints", "checkSource"
+		   });													
 		addAnnotation
 		  (moduleEClass, 
 		   source, 
 		   new String[] {
-			 "constraints", "WellFormedNsURI WellFormedNsPrefix UniqueNsURIs"
-		   });													
+			 "constraints", "WellFormedNsURI WellFormedNsPrefix UniqueNsURIs UniqueOperationSignatures UniqueClassifierNames"
+		   });						
+		addAnnotation
+		  (objectExpEClass, 
+		   source, 
+		   new String[] {
+			 "constraints", "wellFormedReferredObject"
+		   });					
+		addAnnotation
+		  (operationalTransformationEClass, 
+		   source, 
+		   new String[] {
+			 "constraints", "hasModelParameters hasEntryOperation hasSuperClass"
+		   });							
+		addAnnotation
+		  (resolveExpEClass, 
+		   source, 
+		   new String[] {
+			 "constraints", "wellFormedCondition"
+		   });		
+		addAnnotation
+		  (resolveInExpEClass, 
+		   source, 
+		   new String[] {
+			 "constraints", "wellFormedSource"
+		   });	
 	}
 
 } //QVTOperationalPackageImpl

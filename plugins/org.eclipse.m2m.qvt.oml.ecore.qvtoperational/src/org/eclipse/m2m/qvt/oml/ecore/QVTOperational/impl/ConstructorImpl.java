@@ -11,12 +11,11 @@
  * 
  * </copyright>
  *
- * $Id: ConstructorImpl.java,v 1.1 2008/09/02 20:02:26 radvorak Exp $
+ * $Id: ConstructorImpl.java,v 1.2 2009/01/25 23:12:23 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.Constructor;
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage;
 

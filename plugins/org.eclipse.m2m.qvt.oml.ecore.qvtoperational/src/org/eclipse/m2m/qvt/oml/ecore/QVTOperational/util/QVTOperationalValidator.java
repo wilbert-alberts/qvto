@@ -11,15 +11,23 @@
  * 
  * </copyright>
  *
- * $Id: QVTOperationalValidator.java,v 1.1 2008/09/02 20:02:27 radvorak Exp $
+ * $Id: QVTOperationalValidator.java,v 1.2 2009/01/25 23:12:24 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.util;
 
 import java.util.Map;
 
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreValidator;
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.Constructor;
@@ -47,7 +55,15 @@ import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage;
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ResolveExp;
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ResolveInExp;
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.VarParameter;
+import org.eclipse.ocl.Environment;
+import org.eclipse.ocl.ecore.CallOperationAction;
+import org.eclipse.ocl.ecore.Constraint;
+import org.eclipse.ocl.ecore.OCLExpression;
+import org.eclipse.ocl.ecore.SendSignalAction;
+import org.eclipse.ocl.ecore.Variable;
 import org.eclipse.ocl.expressions.util.ExpressionsValidator;
+import org.eclipse.ocl.util.OCLUtil;
+import org.eclipse.ocl.util.TypeUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -277,7 +293,66 @@ public class QVTOperationalValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= ecoreValidator.validateEOperation_UniqueParameterNames(entryOperation, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEOperation_UniqueTypeParameterNames(entryOperation, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEOperation_NoRepeatingVoid(entryOperation, diagnostics, context);
+		if (result || diagnostics != null) result &= validateEntryOperation_wellFormedName(entryOperation, diagnostics, context);
+		if (result || diagnostics != null) result &= validateEntryOperation_checkParameters(entryOperation, diagnostics, context);
 		return result;
+	}
+
+	/**
+	 * Validates the wellFormedName constraint of '<em>Entry Operation</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateEntryOperation_wellFormedName(EntryOperation entryOperation, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		boolean result = true;
+		if (!entryOperation.getName().equals("main")) { //$NON-NLS-1$
+			result = false;
+		}
+		
+		if (!result) {
+			if (diagnostics != null) {
+				diagnostics.add
+					(createDiagnostic
+						(Diagnostic.ERROR,
+						 DIAGNOSTIC_SOURCE,
+						 0,
+						 "_UIo_InvalidEntryOperationName_diagnostic", //$NON-NLS-1$
+						 new Object[] { getObjectLabel(entryOperation, context) },
+						 new Object[] { entryOperation },
+						 context));
+			}
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Validates the checkParameters constraint of '<em>Entry Operation</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateEntryOperation_checkParameters(EntryOperation entryOperation, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		boolean result = true;
+		if (entryOperation.getEParameters().size() > 0){
+			result = false;
+		}
+		if (!result) {
+			if (diagnostics != null) {
+				diagnostics.add
+					(createDiagnostic
+						(Diagnostic.ERROR,
+						 DIAGNOSTIC_SOURCE,
+						 0,
+						 "_UIo_InvalidEntryOperationParameters_diagnostic", //$NON-NLS-1$
+						 new Object[] { getObjectLabel(entryOperation, context) },
+						 new Object[] { entryOperation },
+						 context));
+			}
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -324,7 +399,69 @@ public class QVTOperationalValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ValidType(imperativeCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= expressionsValidator.validateOperationCallExp_checkArgumentsConform(imperativeCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= expressionsValidator.validateOperationCallExp_checkArgumentCount(imperativeCallExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateImperativeCallExp_checkSource(imperativeCallExp, diagnostics, context);
 		return result;
+	}
+
+	/**
+	 * Validates the checkSource constraint of '<em>Imperative Call Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateImperativeCallExp_checkSource(ImperativeCallExp imperativeCallExp, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		Environment<
+		EPackage, EClassifier, EOperation, EStructuralFeature,
+		EEnumLiteral, EParameter,
+		EObject, CallOperationAction, SendSignalAction, Constraint,
+		EClass, EObject> env = OCLUtil.getValidationEnvironment(imperativeCallExp, context);
+		
+		boolean result = true;
+		String message = null;
+		Object[] substitutions = null;
+		
+		OCLExpression source = (OCLExpression) imperativeCallExp.getSource();
+		EOperation op = imperativeCallExp.getReferredOperation();
+		if (op instanceof ImperativeOperation) {
+			ImperativeOperation io = (ImperativeOperation)op;
+			if (source == null)	{// The referred operation shouldn't have contextual parameter
+				if (io.getContext() != null) {
+					result = false;
+					message = "_UIo_NonSourceImperativeCallExpReferencingContextualOperation_diagnostic"; //$NON-NLS-1$
+					substitutions = new Object[] {getObjectLabel(io, context)};
+				}
+			}
+			else {
+				EClassifier sourceType = source.getType();
+				VarParameter contextualParam = io.getContext();
+				if (contextualParam != null) { // The source type should conform with the contextual parameter
+					EClassifier contextualParamType = contextualParam.getType();
+					if (!TypeUtil.compatibleTypeMatch(env, sourceType, contextualParamType)) {
+						result = false;
+						message = "_UIo_NonConformanceSourceContextualParam_diagnostic"; //$NON-NLS-1$
+						substitutions = new Object[] {getObjectLabel(sourceType, context),
+														getObjectLabel(contextualParamType, context)};
+					}
+				}
+			}
+		}
+
+		
+		if (!result) {
+			if (diagnostics != null) {
+				diagnostics.add
+					(createDiagnostic
+						(Diagnostic.ERROR,
+						 DIAGNOSTIC_SOURCE,
+						 0,
+						 message,
+						 substitutions,
+						 new Object[] { imperativeCallExp },
+						 context));
+			}
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -370,7 +507,7 @@ public class QVTOperationalValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_InterfaceIsAbstract(library, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_AtMostOneID(library, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_UniqueFeatureNames(library, diagnostics, context);
-		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_UniqueOperationSignatures(library, diagnostics, context);
+		if (result || diagnostics != null) result &= validateModule_UniqueOperationSignatures(library, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_NoCircularSuperTypes(library, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_WellFormedMapEntryClass(library, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_ConsistentSuperTypes(library, diagnostics, context);
@@ -378,7 +515,7 @@ public class QVTOperationalValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validateModule_WellFormedNsURI(library, diagnostics, context);
 		if (result || diagnostics != null) result &= validateModule_WellFormedNsPrefix(library, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEPackage_UniqueSubpackageNames(library, diagnostics, context);
-		if (result || diagnostics != null) result &= ecoreValidator.validateEPackage_UniqueClassifierNames(library, diagnostics, context);
+		if (result || diagnostics != null) result &= validateModule_UniqueClassifierNames(library, diagnostics, context);
 		if (result || diagnostics != null) result &= validateModule_UniqueNsURIs(library, diagnostics, context);
 		return result;
 	}
@@ -412,6 +549,7 @@ public class QVTOperationalValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ValidType(mappingCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= expressionsValidator.validateOperationCallExp_checkArgumentsConform(mappingCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= expressionsValidator.validateOperationCallExp_checkArgumentCount(mappingCallExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateImperativeCallExp_checkSource(mappingCallExp, diagnostics, context);
 		return result;
 	}
 
@@ -529,7 +667,7 @@ public class QVTOperationalValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_InterfaceIsAbstract(module, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_AtMostOneID(module, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_UniqueFeatureNames(module, diagnostics, context);
-		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_UniqueOperationSignatures(module, diagnostics, context);
+		if (result || diagnostics != null) result &= validateModule_UniqueOperationSignatures(module, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_NoCircularSuperTypes(module, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_WellFormedMapEntryClass(module, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_ConsistentSuperTypes(module, diagnostics, context);
@@ -537,7 +675,7 @@ public class QVTOperationalValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validateModule_WellFormedNsURI(module, diagnostics, context);
 		if (result || diagnostics != null) result &= validateModule_WellFormedNsPrefix(module, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEPackage_UniqueSubpackageNames(module, diagnostics, context);
-		if (result || diagnostics != null) result &= ecoreValidator.validateEPackage_UniqueClassifierNames(module, diagnostics, context);
+		if (result || diagnostics != null) result &= validateModule_UniqueClassifierNames(module, diagnostics, context);
 		if (result || diagnostics != null) result &= validateModule_UniqueNsURIs(module, diagnostics, context);
 		return result;
 	}
@@ -576,6 +714,32 @@ public class QVTOperationalValidator extends EObjectValidator {
 	}
 
 	/**
+	 * Validates the UniqueOperationSignatures constraint of '<em>Module</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateModule_UniqueOperationSignatures(Module module, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		// This restriction needs to be re-implemented. Two imperative operations with same name and arguments
+		// are allowed if the context parameter is different.
+		// TODO implement this restriction in a proper way instead of not checking
+		return true;
+	}
+
+	/**
+	 * Validates the UniqueClassifierNames constraint of '<em>Module</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateModule_UniqueClassifierNames(Module module, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		// This restriction needs to be re-implemented. Two collections owned by the module, can have the same name and they could be different 
+		// collections. For instance Set(Element) having Element as UML::Element and Stdlib::Element
+		// TODO implement this restriction in a proper way instead of not checking
+		return true;
+	}
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -602,7 +766,48 @@ public class QVTOperationalValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ValidUpperBound(objectExp, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ConsistentBounds(objectExp, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ValidType(objectExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateObjectExp_wellFormedReferredObject(objectExp, diagnostics, context);
 		return result;
+	}
+
+	/**
+	 * Validates the wellFormedReferredObject constraint of '<em>Object Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateObjectExp_wellFormedReferredObject(ObjectExp objectExp, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		Environment<
+		EPackage, EClassifier, EOperation, EStructuralFeature,
+		EEnumLiteral, EParameter,
+		EObject, CallOperationAction, SendSignalAction, Constraint,
+		EClass, EObject> env = OCLUtil.getValidationEnvironment(objectExp, context);
+		
+		boolean result=true;		
+		Variable referredObject = objectExp.getReferredObject();
+		EClass instantiatedClass = objectExp.getInstantiatedClass();
+		if (referredObject != null 
+			&& referredObject.getType() != null
+			&& instantiatedClass != null) {
+			if (!TypeUtil.compatibleTypeMatch(env, instantiatedClass, referredObject.getType())) {
+				result = false;
+			}
+		}
+		if (!result) {
+			if (diagnostics != null) {
+				diagnostics.add
+					(createDiagnostic
+						(Diagnostic.ERROR,
+						 DIAGNOSTIC_SOURCE,
+						 0,
+						 "_UI_NonConformanceInstantiatedClassRefObject_diagnostic", //$NON-NLS-1$
+						 new Object[] { getObjectLabel(instantiatedClass, context), getObjectLabel(referredObject.getType(), context) },
+						 new Object[] { objectExp },
+						 context));
+			}
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -633,7 +838,7 @@ public class QVTOperationalValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_InterfaceIsAbstract(operationalTransformation, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_AtMostOneID(operationalTransformation, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_UniqueFeatureNames(operationalTransformation, diagnostics, context);
-		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_UniqueOperationSignatures(operationalTransformation, diagnostics, context);
+		if (result || diagnostics != null) result &= validateModule_UniqueOperationSignatures(operationalTransformation, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_NoCircularSuperTypes(operationalTransformation, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_WellFormedMapEntryClass(operationalTransformation, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_ConsistentSuperTypes(operationalTransformation, diagnostics, context);
@@ -641,9 +846,106 @@ public class QVTOperationalValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validateModule_WellFormedNsURI(operationalTransformation, diagnostics, context);
 		if (result || diagnostics != null) result &= validateModule_WellFormedNsPrefix(operationalTransformation, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEPackage_UniqueSubpackageNames(operationalTransformation, diagnostics, context);
-		if (result || diagnostics != null) result &= ecoreValidator.validateEPackage_UniqueClassifierNames(operationalTransformation, diagnostics, context);
+		if (result || diagnostics != null) result &= validateModule_UniqueClassifierNames(operationalTransformation, diagnostics, context);
 		if (result || diagnostics != null) result &= validateModule_UniqueNsURIs(operationalTransformation, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOperationalTransformation_hasModelParameters(operationalTransformation, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOperationalTransformation_hasEntryOperation(operationalTransformation, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOperationalTransformation_hasSuperClass(operationalTransformation, diagnostics, context);
 		return result;
+	}
+
+	/**
+	 * Validates the hasModelParameters constraint of '<em>Operational Transformation</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateOperationalTransformation_hasModelParameters(OperationalTransformation operationalTransformation, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		boolean result = true;
+		if (operationalTransformation.getModelParameter() == null
+			|| operationalTransformation.getModelParameter().isEmpty())
+			result = false;
+		if (!result) {
+			if (diagnostics != null) {
+				diagnostics.add
+					(createDiagnostic
+						(Diagnostic.ERROR,
+						 DIAGNOSTIC_SOURCE,
+						 0,
+						 "_UI_UndefinedModelParameters_diagnostic", //$NON-NLS-1$
+						 new Object[] { getObjectLabel(operationalTransformation, context) },
+						 new Object[] { operationalTransformation },
+						 context));
+			}
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Validates the hasEntryOperation constraint of '<em>Operational Transformation</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateOperationalTransformation_hasEntryOperation(OperationalTransformation operationalTransformation, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		boolean result = true;
+		boolean isAbstract = operationalTransformation.isAbstract();
+		
+		String errorMsg = null;
+		int severity=0;		
+		if (operationalTransformation.getEntry() == null) {
+			if (!isAbstract) {
+				result = false;
+				errorMsg = "_UI_UndefinedEntryOperation_diagnostic"; //$NON-NLS-1$
+				severity = Diagnostic.ERROR;
+			}
+		}
+		else {
+			if (isAbstract) {
+				result = false;
+				errorMsg = "_UI_InvalidEntryOperation_diagnostic"; //$NON-NLS-1$
+				severity = Diagnostic.WARNING;
+			}
+		}
+		if (!result) {
+			if (diagnostics != null) {
+				diagnostics.add
+					(createDiagnostic
+						(severity,
+						 DIAGNOSTIC_SOURCE,
+						 0,
+						 errorMsg,
+						 new Object[] { getObjectLabel(operationalTransformation, context) },
+						 new Object[] { operationalTransformation },
+						 context));
+			}
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Validates the hasSuperClass constraint of '<em>Operational Transformation</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateOperationalTransformation_hasSuperClass(OperationalTransformation operationalTransformation, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		boolean result = (operationalTransformation.getEAllSuperTypes() == null) ? true
+				: operationalTransformation.getEAllSuperTypes().isEmpty();
+		if (!result) {
+			if (diagnostics != null) {
+				diagnostics.add(createDiagnostic(Diagnostic.ERROR,
+						DIAGNOSTIC_SOURCE, 0,
+						"_UI_InvalidClassInheritance_diagnosis", //$NON-NLS-1$
+						new Object[] { getObjectLabel(
+								operationalTransformation, context) },
+						new Object[] { operationalTransformation }, context));
+			}
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -664,7 +966,49 @@ public class QVTOperationalValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ValidUpperBound(resolveExp, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ConsistentBounds(resolveExp, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ValidType(resolveExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateResolveExp_wellFormedCondition(resolveExp, diagnostics, context);
 		return result;
+	}
+
+	/**
+	 * Validates the wellFormedCondition constraint of '<em>Resolve Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateResolveExp_wellFormedCondition(ResolveExp resolveExp, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		Environment<
+		EPackage, EClassifier, EOperation, EStructuralFeature,
+		EEnumLiteral, EParameter,
+		EObject, CallOperationAction, SendSignalAction, Constraint,
+		EClass, EObject> env = OCLUtil.getValidationEnvironment(resolveExp, context);
+		
+		boolean result = true;
+		
+		OCLExpression exp = resolveExp.getCondition();
+		if (exp != null) {
+			if (!TypeUtil.exactTypeMatch(env,
+					exp.getType(),
+					env.getOCLStandardLibrary().getBoolean())) {
+				result = false;
+			}
+		}
+		
+		if (!result) {
+			if (diagnostics != null) {
+				diagnostics.add
+					(createDiagnostic
+						(Diagnostic.ERROR,
+						 DIAGNOSTIC_SOURCE,
+						 0,
+						 "_UI_NonBooleanCondition_diagnostic", //$NON-NLS-1$
+						 new Object[] { "wellFormedCondition", getObjectLabel(resolveExp, context) }, //$NON-NLS-1$
+						 new Object[] { resolveExp },
+						 context));
+			}
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -685,7 +1029,66 @@ public class QVTOperationalValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ValidUpperBound(resolveInExp, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ConsistentBounds(resolveInExp, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ValidType(resolveInExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateResolveExp_wellFormedCondition(resolveInExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateResolveInExp_wellFormedSource(resolveInExp, diagnostics, context);
 		return result;
+	}
+
+	/**
+	 * Validates the wellFormedSource constraint of '<em>Resolve In Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateResolveInExp_wellFormedSource(ResolveInExp resolveInExp, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		Environment<
+		EPackage, EClassifier, EOperation, EStructuralFeature,
+		EEnumLiteral, EParameter,
+		EObject, CallOperationAction, SendSignalAction, Constraint,
+		EClass, EObject> env = OCLUtil.getValidationEnvironment(resolveInExp, context);
+
+		boolean result = true;
+		String message = null;
+		Object[] substitutions = null;
+		
+		OCLExpression source = (OCLExpression) resolveInExp.getSource();
+		if (source != null) {
+			EClassifier sourceType = source.getType();
+			MappingOperation mo = resolveInExp.getInMapping();
+			if (mo != null && sourceType != null) {
+				EClassifier moTypeToCompare=null;
+				if (resolveInExp.isIsInverse()) {// the source type should conform the type of the operation
+					moTypeToCompare = mo.getEType();
+					message = "_UIo_NonConformanceInvResolveInExpSourceType_InMappingInType_diagnostic"; //$NON-NLS-1$					
+				}else {	// the source should conform the contextual parameter type					
+					VarParameter contextParam = mo.getContext();
+					if (contextParam != null)
+						moTypeToCompare = contextParam.getType();					
+					message = "_UIo_NonConformanceResolveInExpSourceType_InMappingContextType_diagnostic";
+					
+					
+				}
+				if (!TypeUtil.compatibleTypeMatch(env, sourceType, moTypeToCompare)) {
+					result = false;
+					substitutions = new Object[] {getObjectLabel(sourceType, context),  getObjectLabel(moTypeToCompare, context) };
+				}
+			}			
+		}
+		if (!result) {
+			if (diagnostics != null) {
+				diagnostics.add
+					(createDiagnostic
+						(Diagnostic.ERROR,
+						 DIAGNOSTIC_SOURCE,
+						 0,
+						 message,
+						 substitutions,
+						 new Object[] { resolveInExp },
+						 context));
+			}
+			return false;
+		}
+		return true;		
 	}
 
 	/**
@@ -732,14 +1135,11 @@ public class QVTOperationalValidator extends EObjectValidator {
 	 * Returns the resource locator that will be used to fetch messages for this validator's diagnostics.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		// TODO
-		// Specialize this to return a resource locator for messages specific to this validator.
-		// Ensure that you remove @generated or mark it @generated NOT
-		return super.getResourceLocator();
+		return QVTOperationalPlugin.INSTANCE;
 	}
 
 } //QVTOperationalValidator

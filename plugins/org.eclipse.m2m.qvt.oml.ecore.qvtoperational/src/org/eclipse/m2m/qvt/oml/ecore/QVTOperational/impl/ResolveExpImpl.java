@@ -11,24 +11,23 @@
  * 
  * </copyright>
  *
- * $Id: ResolveExpImpl.java,v 1.2 2008/09/30 22:11:49 radvorak Exp $
+ * $Id: ResolveExpImpl.java,v 1.3 2009/01/25 23:12:23 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage;
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ResolveExp;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.util.QVTOperationalToStringVisitor;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.util.QVTOperationalVisitor;
 import org.eclipse.ocl.ecore.OCLExpression;
 import org.eclipse.ocl.ecore.Variable;
-
 import org.eclipse.ocl.ecore.impl.CallExpImpl;
+import org.eclipse.ocl.utilities.Visitor;
 
 
 /**
@@ -516,21 +515,25 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (isDeferred: ");
-		if (isDeferredESet) result.append(isDeferred); else result.append("<unset>");
-		result.append(", isInverse: ");
-		if (isInverseESet) result.append(isInverse); else result.append("<unset>");
-		result.append(", one: ");
-		if (oneESet) result.append(one); else result.append("<unset>");
-		result.append(')');
-		return result.toString();
+		if (eIsProxy()) {
+			return super.toString();
+		}
+		return accept(QVTOperationalToStringVisitor.getInstance(this));		
+	}
+	
+	/**
+	 * @generated NOT
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T, U extends Visitor<T,?,?,?,?,?,?,?,?,?>> T accept(U v) {		
+		if (v instanceof QVTOperationalVisitor)
+			return (T) ((QVTOperationalVisitor) v).visitResolveExp(this);
+		return super.accept(v);
 	}
 
 } //ResolveExpImpl

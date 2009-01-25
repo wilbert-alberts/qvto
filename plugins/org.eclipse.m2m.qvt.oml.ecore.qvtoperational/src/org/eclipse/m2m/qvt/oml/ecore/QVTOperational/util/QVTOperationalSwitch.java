@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: QVTOperationalSwitch.java,v 1.1 2008/09/02 20:02:27 radvorak Exp $
+ * $Id: QVTOperationalSwitch.java,v 1.2 2009/01/25 23:12:24 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.util;
 
@@ -27,16 +27,36 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
-
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeExpression;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
-import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.*;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.Constructor;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ConstructorBody;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ContextualProperty;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.EntryOperation;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.Helper;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ImperativeCallExp;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ImperativeOperation;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.Library;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.MappingBody;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.MappingCallExp;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.MappingOperation;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.MappingParameter;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ModelParameter;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ModelType;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.Module;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ModuleImport;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ObjectExp;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.OperationBody;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.OperationalTransformation;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ResolveExp;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ResolveInExp;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.VarParameter;
 import org.eclipse.ocl.expressions.CallExp;
 import org.eclipse.ocl.expressions.FeatureCallExp;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.Variable;
-
 import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.CallingASTNode;
 import org.eclipse.ocl.utilities.TypedASTNode;

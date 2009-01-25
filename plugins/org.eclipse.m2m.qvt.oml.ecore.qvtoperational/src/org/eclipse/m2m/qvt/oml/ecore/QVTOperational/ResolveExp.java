@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: ResolveExp.java,v 1.2 2008/09/30 22:11:49 radvorak Exp $
+ * $Id: ResolveExp.java,v 1.3 2009/01/25 23:12:24 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational;
 
@@ -37,7 +37,7 @@ import org.eclipse.ocl.ecore.Variable;
  * </p>
  *
  * @see org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage#getResolveExp()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='wellFormedCondition'"
  * @generated
  */
 public interface ResolveExp extends CallExp, ImperativeExpression {

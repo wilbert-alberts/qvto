@@ -11,23 +11,23 @@
  * 
  * </copyright>
  *
- * $Id: ObjectExpImpl.java,v 1.1 2008/09/02 20:02:26 radvorak Exp $
+ * $Id: ObjectExpImpl.java,v 1.2 2009/01/25 23:12:23 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.impl.InstantiationExpImpl;
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ConstructorBody;
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ObjectExp;
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.util.QVTOperationalToStringVisitor;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.util.QVTOperationalVisitor;
 import org.eclipse.ocl.ecore.Variable;
+import org.eclipse.ocl.utilities.Visitor;
 
 
 
@@ -247,6 +247,30 @@ public class ObjectExpImpl extends InstantiationExpImpl implements ObjectExp {
 				return body != null;
 		}
 		return super.eIsSet(featureID);
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) {
+			return super.toString();
+		}		
+		return accept(QVTOperationalToStringVisitor.getInstance(this));		
+	}
+	
+	/**
+	 * @generated NOT
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T, U extends Visitor<T,?,?,?,?,?,?,?,?,?>> T accept(U v) {
+		if (v instanceof QVTOperationalVisitor)
+			return (T) ((QVTOperationalVisitor) v).visitObjectExp(this);
+		return super.accept(v);
 	}
 
 } //ObjectExpImpl

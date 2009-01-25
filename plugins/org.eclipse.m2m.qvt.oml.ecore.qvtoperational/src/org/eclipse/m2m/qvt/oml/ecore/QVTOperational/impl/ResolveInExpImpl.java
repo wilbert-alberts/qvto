@@ -11,20 +11,20 @@
  * 
  * </copyright>
  *
- * $Id: ResolveInExpImpl.java,v 1.1 2008/09/02 20:02:26 radvorak Exp $
+ * $Id: ResolveInExpImpl.java,v 1.2 2009/01/25 23:12:23 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.MappingOperation;
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage;
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.ResolveInExp;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.util.QVTOperationalToStringVisitor;
+import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.util.QVTOperationalVisitor;
+import org.eclipse.ocl.utilities.Visitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -164,6 +164,30 @@ public class ResolveInExpImpl extends ResolveExpImpl implements ResolveInExp {
 				return inMapping != null;
 		}
 		return super.eIsSet(featureID);
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) {
+			return super.toString();
+		}
+		return accept(QVTOperationalToStringVisitor.getInstance(this));		
+	}
+	
+	/**
+	 * @generated NOT
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T, U extends Visitor<T,?,?,?,?,?,?,?,?,?>> T accept(U v) {
+		if (v instanceof QVTOperationalVisitor)
+			return (T) ((QVTOperationalVisitor) v).visitResolveInExp(this);
+		return super.accept(v);
 	}
 
 } //ResolveInExpImpl

@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: ImperativeCallExp.java,v 1.1 2008/09/02 20:02:27 radvorak Exp $
+ * $Id: ImperativeCallExp.java,v 1.2 2009/01/25 23:12:24 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational;
 
@@ -31,7 +31,7 @@ import org.eclipse.ocl.ecore.OperationCallExp;
  * </p>
  *
  * @see org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage#getImperativeCallExp()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='checkSource'"
  * @generated
  */
 public interface ImperativeCallExp extends OperationCallExp, ImperativeExpression {
