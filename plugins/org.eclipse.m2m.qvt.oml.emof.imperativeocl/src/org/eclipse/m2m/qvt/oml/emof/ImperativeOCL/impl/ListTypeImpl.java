@@ -2,12 +2,11 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ListTypeImpl.java,v 1.1 2008/09/02 20:36:36 radvorak Exp $
+ * $Id: ListTypeImpl.java,v 1.2 2009/01/25 23:11:18 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeOCLPackage;
 import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ListType;
 import org.eclipse.qvt.declarative.emof.EssentialOCL.impl.CollectionTypeImpl;

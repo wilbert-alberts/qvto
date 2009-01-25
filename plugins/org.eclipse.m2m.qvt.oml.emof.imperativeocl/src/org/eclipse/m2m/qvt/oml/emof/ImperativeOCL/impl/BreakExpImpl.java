@@ -2,12 +2,11 @@
  * <copyright>
  * </copyright>
  *
- * $Id: BreakExpImpl.java,v 1.1 2008/09/02 20:36:36 radvorak Exp $
+ * $Id: BreakExpImpl.java,v 1.2 2009/01/25 23:11:18 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.BreakExp;
 import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeOCLPackage;
 

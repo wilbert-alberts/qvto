@@ -2,12 +2,11 @@
  * <copyright>
  * </copyright>
  *
- * $Id: InstantiationExp.java,v 1.1 2008/09/02 20:36:35 radvorak Exp $
+ * $Id: InstantiationExp.java,v 1.2 2009/01/25 23:11:17 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.ImperativeOCL;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.qvt.declarative.emof.EssentialOCL.OclExpression;
 import org.eclipse.qvt.declarative.emof.EssentialOCL.Variable;
 

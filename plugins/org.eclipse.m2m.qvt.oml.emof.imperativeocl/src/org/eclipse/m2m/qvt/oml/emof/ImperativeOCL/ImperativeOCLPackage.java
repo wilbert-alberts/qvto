@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ImperativeOCLPackage.java,v 1.1 2008/09/02 20:36:35 radvorak Exp $
+ * $Id: ImperativeOCLPackage.java,v 1.2 2009/01/25 23:11:18 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.ImperativeOCL;
 
@@ -11,9 +11,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.qvt.declarative.emof.EMOF.EMOFPackage;
-
 import org.eclipse.qvt.declarative.emof.EssentialOCL.EssentialOCLPackage;
 
 /**

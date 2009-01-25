@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ImperativeOCLFactoryImpl.java,v 1.1 2008/09/02 20:36:36 radvorak Exp $
+ * $Id: ImperativeOCLFactoryImpl.java,v 1.2 2009/01/25 23:11:18 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl;
 
@@ -10,12 +10,40 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
-import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.*;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.AltExp;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.AssertExp;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.AssignExp;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.BlockExp;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.BreakExp;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.CatchExp;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ComputeExp;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ContinueExp;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.DictLiteralExp;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.DictLiteralPart;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.DictionaryType;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ForExp;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeIterateExp;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeOCLFactory;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeOCLPackage;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.InstantiationExp;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ListType;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.LogExp;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.OrderedTupleLiteralExp;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.OrderedTupleLiteralPart;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.OrderedTupleType;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.RaiseExp;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ReturnExp;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.SeverityKind;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.SwitchExp;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.TemplateParameterType;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.TryExp;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.Typedef;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.UnlinkExp;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.UnpackExp;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.VariableInitExp;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.WhileExp;
 
 /**
  * <!-- begin-user-doc -->

@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ImperativeOCLPackageImpl.java,v 1.1 2008/09/02 20:36:36 radvorak Exp $
+ * $Id: ImperativeOCLPackageImpl.java,v 1.2 2009/01/25 23:11:18 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl;
 
@@ -11,9 +11,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.AltExp;
 import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.AssertExp;
 import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.AssignExp;
@@ -49,7 +47,6 @@ import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.UnpackExp;
 import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.VariableInitExp;
 import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.WhileExp;
 import org.eclipse.qvt.declarative.emof.EMOF.EMOFPackage;
-
 import org.eclipse.qvt.declarative.emof.EssentialOCL.EssentialOCLPackage;
 
 
