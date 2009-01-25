@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: MappingOperationItemProvider.java,v 1.2 2008/09/30 22:11:18 radvorak Exp $
+ * $Id: MappingOperationItemProvider.java,v 1.3 2009/01/25 23:12:44 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.provider;
 
@@ -21,10 +21,8 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -33,15 +31,12 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLFactory;
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.MappingOperation;
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalFactory;
 import org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage;
 import org.eclipse.ocl.ecore.EcoreFactory;
-
 import org.eclipse.qvt.declarative.ecore.QVTRelation.QVTRelationFactory;
-
 import org.eclipse.qvt.declarative.ecore.QVTTemplate.QVTTemplateFactory;
 
 

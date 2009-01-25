@@ -11,25 +11,18 @@
  * 
  * </copyright>
  *
- * $Id: QVTOperationalEditPlugin.java,v 1.1 2008/09/02 20:01:11 radvorak Exp $
+ * $Id: QVTOperationalEditPlugin.java,v 1.2 2009/01/25 23:12:44 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.provider;
 
 import org.eclipse.emf.common.EMFPlugin;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
-
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider.ImperativeOCLEditPlugin;
 import org.eclipse.ocl.ecore.provider.OCLEcoreEditPlugin;
-
 import org.eclipse.ocl.edit.internal.OCLEditPlugin;
-
 import org.eclipse.qvt.declarative.ecore.QVTBase.provider.QVTBaseEditPlugin;
-
 import org.eclipse.qvt.declarative.ecore.QVTRelation.provider.QVTRelationEditPlugin;
-
 import org.eclipse.qvt.declarative.ecore.QVTTemplate.provider.QVTTemplateEditPlugin;
 
 
