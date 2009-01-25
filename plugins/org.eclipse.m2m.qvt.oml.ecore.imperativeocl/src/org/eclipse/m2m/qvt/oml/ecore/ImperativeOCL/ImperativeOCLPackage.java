@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeOCLPackage.java,v 1.1 2008/09/02 20:01:45 radvorak Exp $
+ * $Id: ImperativeOCLPackage.java,v 1.2 2009/01/25 23:10:43 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL;
 
@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.ocl.ecore.EcorePackage;
 
 /**

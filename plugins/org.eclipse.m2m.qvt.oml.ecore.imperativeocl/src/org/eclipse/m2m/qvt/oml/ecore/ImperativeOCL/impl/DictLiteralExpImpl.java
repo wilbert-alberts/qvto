@@ -10,26 +10,25 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: DictLiteralExpImpl.java,v 1.1 2008/09/02 20:01:45 radvorak Exp $
+ * $Id: DictLiteralExpImpl.java,v 1.2 2009/01/25 23:10:43 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.impl;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralPart;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.util.ImperativeOCLToStringVisitor;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.util.ImperativeOCLVisitor;
 import org.eclipse.ocl.ecore.impl.LiteralExpImpl;
+import org.eclipse.ocl.utilities.Visitor;
 
 
 /**
@@ -159,6 +158,30 @@ public class DictLiteralExpImpl extends LiteralExpImpl implements DictLiteralExp
 				return part != null && !part.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) {
+			return super.toString();
+		}		
+		return accept(ImperativeOCLToStringVisitor.getInstance(this));		
+	}
+	
+	/**
+	 * @generated NOT
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
+		if (v instanceof ImperativeOCLVisitor)
+			return (T) ((ImperativeOCLVisitor) v).visitDictLiteralExp(this);
+		return super.accept(v);
 	}
 
 } //DictLiteralExpImpl

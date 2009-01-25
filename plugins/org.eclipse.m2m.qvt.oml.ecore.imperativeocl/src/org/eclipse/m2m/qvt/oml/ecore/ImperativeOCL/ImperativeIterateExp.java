@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeIterateExp.java,v 1.1 2008/09/02 20:01:44 radvorak Exp $
+ * $Id: ImperativeIterateExp.java,v 1.2 2009/01/25 23:10:43 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL;
 
@@ -29,7 +29,7 @@ import org.eclipse.ocl.ecore.Variable;
  * </p>
  *
  * @see org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage#getImperativeIterateExp()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='WellFormedName WellFormedTargetVar WellFormedBody WellFormedCondition'"
  * @generated
  */
 public interface ImperativeIterateExp extends ImperativeLoopExp {

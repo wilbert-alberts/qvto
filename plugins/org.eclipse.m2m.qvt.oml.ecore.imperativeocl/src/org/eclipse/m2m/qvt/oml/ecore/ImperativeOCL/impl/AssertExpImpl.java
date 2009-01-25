@@ -10,23 +10,22 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: AssertExpImpl.java,v 1.1 2008/09/02 20:01:45 radvorak Exp $
+ * $Id: AssertExpImpl.java,v 1.2 2009/01/25 23:10:43 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssertExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.LogExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.SeverityKind;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.util.ImperativeOCLVisitor;
 import org.eclipse.ocl.ecore.OCLExpression;
+import org.eclipse.ocl.utilities.Visitor;
 
 
 /**
@@ -319,6 +318,17 @@ public class AssertExpImpl extends ImperativeExpressionImpl implements AssertExp
 		result.append(severity);
 		result.append(')');
 		return result.toString();
+	}
+	
+	/**
+	 * @generated NOT
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
+		if (v instanceof ImperativeOCLVisitor)
+			return (T) ((ImperativeOCLVisitor) v).visitAssertExp(this);
+		return super.accept(v);
 	}
 
 } //AssertExpImpl

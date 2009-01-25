@@ -10,22 +10,19 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeLoopExpImpl.java,v 1.1 2008/09/02 20:01:45 radvorak Exp $
+ * $Id: ImperativeLoopExpImpl.java,v 1.2 2009/01/25 23:10:43 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeLoopExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.util.ImperativeOCLToStringVisitor;
 import org.eclipse.ocl.ecore.OCLExpression;
-
 import org.eclipse.ocl.ecore.impl.LoopExpImpl;
 
 
@@ -186,5 +183,16 @@ public abstract class ImperativeLoopExpImpl extends LoopExpImpl implements Imper
 		}
 		return super.eIsSet(featureID);
 	}
-
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+		
+		return accept(ImperativeOCLToStringVisitor.getInstance(this));		
+	}
 } //ImperativeLoopExpImpl

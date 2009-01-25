@@ -10,22 +10,24 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: DictionaryTypeImpl.java,v 1.1 2008/09/02 20:01:45 radvorak Exp $
+ * $Id: DictionaryTypeImpl.java,v 1.2 2009/01/25 23:10:43 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.impl;
 
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
-
+import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictionaryType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.util.ImperativeOCLPlugin;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.util.ImperativeOCLValidator;
 import org.eclipse.ocl.ecore.impl.CollectionTypeImpl;
 
 
@@ -169,5 +171,42 @@ public class DictionaryTypeImpl extends CollectionTypeImpl implements Dictionary
 		}
 		return super.eIsSet(featureID);
 	}
-
+	
+	/**
+	 *
+	 * Overwriting of the method checkCollectionTypeName
+	 * @generated NOT
+	 */
+	@Override
+	public boolean checkCollectionTypeName(DiagnosticChain diagnostics,
+			Map<Object, Object> context) {
+		
+		boolean result=true;
+		
+		String name = getName();
+   	EClassifier elementType = getElementType();
+   	EClassifier keyType = getKeyType();
+   	if (elementType != null
+   		&& keyType != null) {
+   		String elementTypeName = elementType.getName();
+   		String keyTypeName = keyType.getName();
+   		if (!("Dictionary("+ keyTypeName + ","+ elementTypeName+")").equals(name)) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+   			result = false;
+   	}
+   	
+       if (!result) {
+           if (diagnostics != null) {
+               diagnostics.add
+                   (new BasicDiagnostic
+                       (Diagnostic.ERROR,
+                       ImperativeOCLValidator.DIAGNOSTIC_SOURCE,
+                       0,
+                       ImperativeOCLPlugin.INSTANCE.getString(
+                       	"_UI_InvalidDictionaryTypeName_diagnostic", //$NON-NLS-1$ 
+                       	new Object[] {ImperativeOCLValidator.getObjectLabel(this, context)}),
+                       new Object [] { this }));
+           }
+       }
+       return result;
+	}
 } //DictionaryTypeImpl

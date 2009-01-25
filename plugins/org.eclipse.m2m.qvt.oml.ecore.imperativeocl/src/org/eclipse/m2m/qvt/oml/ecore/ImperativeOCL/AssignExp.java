@@ -10,12 +10,11 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: AssignExp.java,v 1.2 2008/09/30 22:11:31 radvorak Exp $
+ * $Id: AssignExp.java,v 1.3 2009/01/25 23:10:43 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.ocl.ecore.OCLExpression;
 
 /**
@@ -34,7 +33,7 @@ import org.eclipse.ocl.ecore.OCLExpression;
  * </p>
  *
  * @see org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage#getAssignExp()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='WellFormedLeftExp checkLeftAndValueExpConformance'"
  * @generated
  */
 public interface AssignExp extends ImperativeExpression {

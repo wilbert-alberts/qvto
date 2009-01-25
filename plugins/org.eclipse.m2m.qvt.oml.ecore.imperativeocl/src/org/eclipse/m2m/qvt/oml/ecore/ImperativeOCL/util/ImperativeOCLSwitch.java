@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeOCLSwitch.java,v 1.1 2008/09/02 20:01:45 radvorak Exp $
+ * $Id: ImperativeOCLSwitch.java,v 1.2 2009/01/25 23:10:43 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.util;
 
@@ -23,17 +23,45 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.ETypedElement;
-
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.*;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AltExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssertExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.BlockExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.BreakExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.CatchExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ComputeExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ContinueExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralPart;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictionaryType;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ForExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeExpression;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeIterateExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeLoopExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListType;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.LogExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.OrderedTupleLiteralExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.OrderedTupleLiteralPart;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.OrderedTupleType;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.RaiseExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ReturnExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.SwitchExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.TemplateParameterType;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.TryExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.Typedef;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.UnlinkExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.UnpackExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.VariableInitExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.WhileExp;
 import org.eclipse.ocl.expressions.CallExp;
 import org.eclipse.ocl.expressions.FeatureCallExp;
 import org.eclipse.ocl.expressions.LiteralExp;
 import org.eclipse.ocl.expressions.LoopExp;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.OperationCallExp;
-
 import org.eclipse.ocl.types.CollectionType;
-
 import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.CallingASTNode;
 import org.eclipse.ocl.utilities.PredefinedType;

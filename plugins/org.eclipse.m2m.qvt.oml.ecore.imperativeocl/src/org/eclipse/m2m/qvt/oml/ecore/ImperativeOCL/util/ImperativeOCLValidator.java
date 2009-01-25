@@ -10,15 +10,23 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeOCLValidator.java,v 1.3 2008/12/29 11:36:42 radvorak Exp $
+ * $Id: ImperativeOCLValidator.java,v 1.4 2009/01/25 23:10:43 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.util;
 
 import java.util.Map;
 
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreValidator;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AltExp;
@@ -54,8 +62,20 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.UnlinkExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.UnpackExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.VariableInitExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.WhileExp;
+import org.eclipse.ocl.Environment;
+import org.eclipse.ocl.ecore.CallOperationAction;
+import org.eclipse.ocl.ecore.CollectionType;
+import org.eclipse.ocl.ecore.Constraint;
+import org.eclipse.ocl.ecore.OCLExpression;
+import org.eclipse.ocl.ecore.PropertyCallExp;
+import org.eclipse.ocl.ecore.SendSignalAction;
+import org.eclipse.ocl.ecore.TypeExp;
+import org.eclipse.ocl.ecore.Variable;
+import org.eclipse.ocl.ecore.VariableExp;
 import org.eclipse.ocl.expressions.util.ExpressionsValidator;
 import org.eclipse.ocl.types.util.TypesValidator;
+import org.eclipse.ocl.util.OCLUtil;
+import org.eclipse.ocl.util.TypeUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -294,8 +314,128 @@ public class ImperativeOCLValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ValidUpperBound(assignExp, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ConsistentBounds(assignExp, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ValidType(assignExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateAssignExp_WellFormedLeftExp(assignExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateAssignExp_checkLeftAndValueExpConformance(assignExp, diagnostics, context);
 		return result;
 	}
+
+	/**
+	 * Validates the WellFormedLeftExp constraint of '<em>Assign Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateAssignExp_WellFormedLeftExp(AssignExp assignExp, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		boolean result = true;
+		String message = null;
+		
+		OCLExpression left = assignExp.getLeft();
+		if (left != null) {
+			if (!(left instanceof VariableExp)
+				&& !(left instanceof PropertyCallExp)) {
+				result = false;
+				message = "_UI_InvalidLeftExpression_diagnostic";  //$NON-NLS-1$
+			}
+			else {	// We check  isReset				
+				EClassifier leftType = left.getType();
+				if (!(leftType instanceof CollectionType)) {	
+					// A monovalued property or variable cann't have additive semantics 
+					if (!assignExp.isIsReset()) { //must be isReset = true
+						result = false;
+						message = "_UI_InvalidIsReset_diagnostic";	  //$NON-NLS-1$			
+					}
+				}
+			}
+		}
+		
+		if (!result) {
+			if (diagnostics != null) {
+				diagnostics.add
+					(createDiagnostic
+						(Diagnostic.ERROR,
+						 DIAGNOSTIC_SOURCE,
+						 0,
+						 message,
+						 new Object[] { getObjectLabel(assignExp.getLeft(), context) },
+						 new Object[] { assignExp },
+						 context));
+			}
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Validates the checkLeftAndValueExpConformance constraint of '<em>Assign Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateAssignExp_checkLeftAndValueExpConformance(AssignExp assignExp, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		Environment<
+		EPackage, EClassifier, EOperation, EStructuralFeature,
+		EEnumLiteral, EParameter,
+		EObject, CallOperationAction, SendSignalAction, Constraint,
+		EClass, EObject> env = OCLUtil.getValidationEnvironment(assignExp, context);
+		
+		boolean result = true;
+			
+		OCLExpression left = assignExp.getLeft();
+		if (left != null) {
+			EClassifier leftType = left.getType();
+			if (leftType != null) {
+				boolean multivaluedLeft = false;			
+				if (leftType instanceof CollectionType) {
+					multivaluedLeft = true;
+					leftType = ((CollectionType)leftType).getElementType();
+				}				
+				for (OCLExpression value : assignExp.getValue()) {
+					EClassifier valueType = value.getType();
+					if (valueType != null) {
+						boolean multivaluedValue = false;
+						if (valueType instanceof CollectionType) {
+							multivaluedValue = true;
+							valueType = ((CollectionType)valueType).getElementType();							
+						}
+						if (multivaluedValue && !multivaluedLeft) {
+							result = false;
+							if (diagnostics != null) {
+								diagnostics.add
+									(createDiagnostic
+										(Diagnostic.ERROR,
+										 DIAGNOSTIC_SOURCE,
+										 0,
+										 "_UI_InvalidCollectionValue_diagnostic",  //$NON-NLS-1$
+										 new Object[] { getObjectLabel(left.getType(), context),
+														getObjectLabel(value.getType(), context)},
+										 new Object[] { assignExp },
+										 context));
+							}
+						}
+						else {
+							if(!TypeUtil.compatibleTypeMatch(env, valueType, leftType)) {						
+								result = false;
+								if (diagnostics != null) {
+									diagnostics.add
+										(createDiagnostic
+											(Diagnostic.ERROR,
+											 DIAGNOSTIC_SOURCE,
+											 0,
+											 "_UI_NonConformanceLeftValueTypes_diagnostic",  //$NON-NLS-1$
+											 new Object[] { getObjectLabel(left.getType(), context),
+															getObjectLabel(value.getType(), context)
+															},
+											 new Object[] { assignExp },
+											 context));
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return result;
+	}	
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -511,7 +651,7 @@ public class ImperativeOCLValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(imperativeIterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(imperativeIterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(imperativeIterateExp, diagnostics, context);
-		if (result || diagnostics != null) result &= ecore_1Validator.validateOCLExpression_WellFormedName(imperativeIterateExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateImperativeIterateExp_WellFormedName(imperativeIterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ValidLowerBound(imperativeIterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ValidUpperBound(imperativeIterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ConsistentBounds(imperativeIterateExp, diagnostics, context);
@@ -519,7 +659,244 @@ public class ImperativeOCLValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= expressionsValidator.validateLoopExp_checkSourceCollection(imperativeIterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= expressionsValidator.validateLoopExp_checkLoopVariableInit(imperativeIterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= expressionsValidator.validateLoopExp_checkLoopVariableType(imperativeIterateExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateImperativeIterateExp_WellFormedTargetVar(imperativeIterateExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateImperativeIterateExp_WellFormedBody(imperativeIterateExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateImperativeIterateExp_WellFormedCondition(imperativeIterateExp, diagnostics, context);
 		return result;
+	}
+
+	/**
+	 * Validates the WellFormedName constraint of '<em>Imperative Iterate Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateImperativeIterateExp_WellFormedName(ImperativeIterateExp imperativeIterateExp, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		boolean result = true;
+		String name = imperativeIterateExp.getName();
+		if (name == null
+			|| (!name.equals("xcollect") //$NON-NLS-1$
+			&& !name.equals("xselect") //$NON-NLS-1$
+			&& !name.equals("selectOne") //$NON-NLS-1$
+			&& !name.equals("collectselect") //$NON-NLS-1$
+			&& !name.equals("collectselectOne"))) //$NON-NLS-1$
+			result = false;
+		
+		if (!result) {
+			if (diagnostics != null) {
+				diagnostics.add
+					(createDiagnostic
+						(Diagnostic.ERROR,
+						 DIAGNOSTIC_SOURCE,
+						 0,
+						 "_UI_UnrecognizedImperativeIterateExp_diagnostic", //$NON-NLS-1$
+						 new Object[] { getObjectLabel(imperativeIterateExp, context) },
+						 new Object[] { imperativeIterateExp },
+						 context));
+			}
+			return false;
+		}
+		return ecore_1Validator.validateOCLExpression_WellFormedName(imperativeIterateExp, diagnostics, context);
+	}
+
+	/**
+	 * Validates the WellFormedTargetVar constraint of '<em>Imperative Iterate Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateImperativeIterateExp_WellFormedTargetVar(ImperativeIterateExp imperativeIterateExp, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		Environment<
+		EPackage, EClassifier, EOperation, EStructuralFeature,
+		EEnumLiteral, EParameter,
+		EObject, CallOperationAction, SendSignalAction, Constraint,
+		EClass, EObject> env = OCLUtil.getValidationEnvironment(imperativeIterateExp, context);
+		
+		boolean result = true;
+		String message = null;
+		int severity=0;
+		Variable target = imperativeIterateExp.getTarget();
+		String name = imperativeIterateExp.getName();
+		if (target != null) {			
+			if (name.equals("xcollect") //$NON-NLS-1$
+				|| name.equals("select") //$NON-NLS-1$
+				|| name.equals("selectOne")) { //$NON-NLS-1$
+				result = false;
+				severity = Diagnostic.WARNING;
+				message = "_UI_UnexpectedTargetVar_diagnostic"; //$NON-NLS-1$
+			}
+			else {
+				OCLExpression body = (OCLExpression) imperativeIterateExp.getBody();
+				if (body != null && target.getType()!= null && body.getType() != null					
+					&&	!TypeUtil.compatibleTypeMatch(env, body.getType(),
+						target.getType())) {
+					result = false;
+					severity = Diagnostic.ERROR;
+					message = "_UI_BodyTypeDoesNotConformTargetVarType_diagnostic"; //$NON-NLS-1$
+					
+				}
+			}
+		} 
+		else {
+			if (name.equals("collectselect") //$NON-NLS-1$
+			|| name.equals("collectselectOne")) { //$NON-NLS-1$
+				result = false;
+				severity = Diagnostic.ERROR;
+				message = "_UI_MissedTargetVar_diagnostic"; //$NON-NLS-1$
+			}
+		}
+		if (!result) {
+			if (diagnostics != null) {
+				diagnostics.add
+					(createDiagnostic
+						(severity,
+						 DIAGNOSTIC_SOURCE,
+						 0,
+						 message,
+						 new Object[] { getObjectLabel(imperativeIterateExp, context) },
+						 new Object[] { imperativeIterateExp },
+						 context));
+			}
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Validates the WellFormedBody constraint of '<em>Imperative Iterate Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateImperativeIterateExp_WellFormedBody(ImperativeIterateExp imperativeIterateExp, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		boolean result = true;
+		OCLExpression body = (OCLExpression) imperativeIterateExp.getBody();
+		String name = imperativeIterateExp.getName();
+		String message = null;
+		int severity=0;
+		if (body != null) {
+			if (name.equals("xselect") 		//$NON-NLS-1$
+			|| name.equals("selectOne")) { 	//$NON-NLS-1$
+				result = false;
+				severity = Diagnostic.WARNING;
+				message = "_UIo_UnexpectedBodyExpression_diagnostic";  //$NON-NLS-1$
+			}
+		}
+		else {
+			if (name.equals("xcollect") 			//$NON-NLS-1$
+			|| name.equals("collectselect") 		//$NON-NLS-1$
+			|| name.equals("collectselectOne")) { 	//$NON-NLS-1$
+				result = false;
+				severity = Diagnostic.ERROR;
+				message = "_UIo_MissedBodyExpression_diagnostic";  //$NON-NLS-1$
+			}
+		}
+		
+		if (!result) {
+			if (diagnostics != null) {
+				diagnostics.add
+					(createDiagnostic
+						(severity,
+						 DIAGNOSTIC_SOURCE,
+						 0,
+						 message,
+						 new Object[] { getObjectLabel(imperativeIterateExp, context) },
+						 new Object[] { imperativeIterateExp },
+						 context));
+			}
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Validates the WellFormedCondition constraint of '<em>Imperative Iterate Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateImperativeIterateExp_WellFormedCondition(ImperativeIterateExp imperativeIterateExp, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		Environment<
+		EPackage, EClassifier, EOperation, EStructuralFeature,
+		EEnumLiteral, EParameter,
+		EObject, CallOperationAction, SendSignalAction, Constraint,
+		EClass, EObject> env = OCLUtil.getValidationEnvironment(imperativeIterateExp, context);
+		
+		boolean result = true;
+		OCLExpression condition = imperativeIterateExp.getCondition();
+		String name = imperativeIterateExp.getName();
+		String message = null;
+		Object[] objects = null;
+		int severity=0;
+		if (condition != null) {			
+			if (name.equals("xcollect")) { //$NON-NLS-1$
+				result = false;
+				severity = Diagnostic.WARNING;
+				message = "_UI_UnexpectedConditionExpression_diagnostic"; //$NON-NLS-1$
+				objects = new Object[] { getObjectLabel(imperativeIterateExp, context) };
+			}
+			else {
+				// Specification says that if condition is an typeExp
+				// should be evaluated as oclIsKind(typeExp) which always
+				// will return a boolean value
+				if (!(condition instanceof TypeExp)
+					&& condition.getType() != null) {
+					EClassifier type = env.getUMLReflection().asOCLType(condition.getType());
+					if (!TypeUtil.exactTypeMatch(env, type, env.getOCLStandardLibrary().getBoolean())) {
+						result = false;
+						severity = Diagnostic.ERROR;
+						message = "_UI_NonBooleanCondition_diagnostic"; //$NON-NLS-1$
+						objects = new Object[] { getObjectLabel(type, context)};
+					}
+				}
+				else {	// we will check that the referred type is compatible with the source element type
+					OCLExpression source = (OCLExpression )imperativeIterateExp.getSource();
+					if (source != null) {
+						EClassifier referredType = ((TypeExp)condition).getReferredType();
+						EClassifier sourceType = source.getType();
+						if (sourceType instanceof CollectionType)  {
+							sourceType = ((CollectionType)sourceType).getElementType();
+						}
+						if (sourceType != null && referredType != null) {
+							if (!TypeUtil.compatibleTypeMatch(env, referredType, sourceType)) {
+								result = false;
+								severity = Diagnostic.ERROR;
+								message = "_UI_ReferredTypeDoesNotConformWithSourceElementType_diagnostic"; //$NON-NLS-1$
+								objects = new Object[] { getObjectLabel(referredType, context),
+														getObjectLabel(sourceType, context)};
+							}
+						}
+					}					
+				}
+			}
+		}
+		else {
+			if (name.equals("xselect") //$NON-NLS-1$
+			|| name.equals("selectOne") //$NON-NLS-1$
+			|| name.equals("collectselect") //$NON-NLS-1$
+			|| name.equals("collectselectOne")) { //$NON-NLS-1$
+				result = false;
+				severity = Diagnostic.ERROR;
+				message = "_UI_MissedConditionExpression_diagnostic"; //$NON-NLS-1$
+				objects = new Object[] { getObjectLabel(imperativeIterateExp, context) };
+			}
+		}
+		
+		if (!result) {
+			if (diagnostics != null) {
+				diagnostics.add
+					(createDiagnostic
+						(severity,
+						 DIAGNOSTIC_SOURCE,
+						 0,
+						 message,
+						 objects,
+						 new Object[] { imperativeIterateExp },
+						 context));
+			}
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -675,7 +1052,7 @@ public class ImperativeOCLValidator extends EObjectValidator {
 	 * @generated NOT
 	 */
 	public boolean validateOrderedTupleType_WellFormedName(OrderedTupleType orderedTupleType, DiagnosticChain diagnostics, Map<Object, Object> context) {
-        // The Ecore constraint is not applicable to ImperativeOCL
+        // The Ecore constraint is not applicable to OrderedTupleType
 		return true;
 	}
 
@@ -906,14 +1283,11 @@ public class ImperativeOCLValidator extends EObjectValidator {
 	 * Returns the resource locator that will be used to fetch messages for this validator's diagnostics.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		// TODO
-		// Specialize this to return a resource locator for messages specific to this validator.
-		// Ensure that you remove @generated or mark it @generated NOT
-		return super.getResourceLocator();
+		return ImperativeOCLPlugin.INSTANCE;
 	}
 
 } //ImperativeOCLValidator

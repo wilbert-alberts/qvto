@@ -10,14 +10,12 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: CatchExp.java,v 1.1 2008/09/02 20:01:44 radvorak Exp $
+ * $Id: CatchExp.java,v 1.2 2009/01/25 23:10:43 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClassifier;
-
 import org.eclipse.ocl.ecore.OCLExpression;
 
 /**

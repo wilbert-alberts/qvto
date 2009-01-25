@@ -10,14 +10,15 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: BreakExpImpl.java,v 1.1 2008/09/02 20:01:45 radvorak Exp $
+ * $Id: BreakExpImpl.java,v 1.2 2009/01/25 23:10:43 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.impl;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.BreakExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.util.ImperativeOCLVisitor;
+import org.eclipse.ocl.utilities.Visitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -46,6 +47,17 @@ public class BreakExpImpl extends ImperativeExpressionImpl implements BreakExp {
 	@Override
 	protected EClass eStaticClass() {
 		return ImperativeOCLPackage.Literals.BREAK_EXP;
+	}
+	
+	/**
+	 * @generated NOT
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
+		if (v instanceof ImperativeOCLVisitor)
+			return (T) ((ImperativeOCLVisitor) v).visitBreakExp(this);
+		return super.accept(v);
 	}
 
 } //BreakExpImpl

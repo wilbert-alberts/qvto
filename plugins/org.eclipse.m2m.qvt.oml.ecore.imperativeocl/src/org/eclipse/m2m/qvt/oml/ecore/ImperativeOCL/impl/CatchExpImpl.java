@@ -10,27 +10,25 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: CatchExpImpl.java,v 1.1 2008/09/02 20:01:45 radvorak Exp $
+ * $Id: CatchExpImpl.java,v 1.2 2009/01/25 23:10:43 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.impl;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.CatchExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.util.ImperativeOCLVisitor;
 import org.eclipse.ocl.ecore.OCLExpression;
+import org.eclipse.ocl.utilities.Visitor;
 
 
 /**
@@ -194,6 +192,17 @@ public class CatchExpImpl extends ImperativeExpressionImpl implements CatchExp {
 				return exception != null && !exception.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+	
+	/**
+	 * @generated NOT
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
+		if (v instanceof ImperativeOCLVisitor)
+			return (T) ((ImperativeOCLVisitor) v).visitCatchtExp(this);
+		return super.accept(v);
 	}
 
 } //CatchExpImpl

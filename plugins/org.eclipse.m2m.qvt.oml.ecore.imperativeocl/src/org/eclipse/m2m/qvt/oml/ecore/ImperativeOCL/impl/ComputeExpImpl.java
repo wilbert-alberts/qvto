@@ -10,22 +10,21 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ComputeExpImpl.java,v 1.1 2008/09/02 20:01:45 radvorak Exp $
+ * $Id: ComputeExpImpl.java,v 1.2 2009/01/25 23:10:43 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ComputeExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.util.ImperativeOCLVisitor;
 import org.eclipse.ocl.ecore.OCLExpression;
 import org.eclipse.ocl.ecore.Variable;
+import org.eclipse.ocl.utilities.Visitor;
 
 
 /**
@@ -250,6 +249,17 @@ public class ComputeExpImpl extends ImperativeExpressionImpl implements ComputeE
 				return returnedElement != null;
 		}
 		return super.eIsSet(featureID);
+	}
+	
+	/**
+	 * @generated NOT
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
+		if (v instanceof ImperativeOCLVisitor)
+			return (T) ((ImperativeOCLVisitor) v).visitComputeExp(this);
+		return super.accept(v);
 	}
 
 } //ComputeExpImpl

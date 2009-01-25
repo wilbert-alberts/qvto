@@ -32,13 +32,16 @@
         defaultValueLiteral="error"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AssignExp" eSuperTypes="#//ImperativeExpression">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="WellFormedLeftExp checkLeftAndValueExpConformance"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="defaultValue" eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
         containment="true">
       <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
         <details key="body" value="defaultOwner"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isReset" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isReset" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
         unsettable="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="left" lowerBound="1" eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"
         containment="true">
@@ -122,6 +125,9 @@
   <eClassifiers xsi:type="ecore:EClass" name="ImperativeExpression" abstract="true"
       eSuperTypes="../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OCLExpression"/>
   <eClassifiers xsi:type="ecore:EClass" name="ImperativeIterateExp" eSuperTypes="#//ImperativeLoopExp">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="WellFormedName WellFormedTargetVar WellFormedBody WellFormedCondition"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="ecore:EClass ../../org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/Variable"
         containment="true">
       <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
@@ -271,7 +277,7 @@
         <details key="body" value="declaration"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="withResult" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="withResult" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
         defaultValueLiteral="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="WhileExp" eSuperTypes="#//ImperativeExpression">

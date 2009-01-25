@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeOCLPackageImpl.java,v 1.2 2008/09/30 22:11:31 radvorak Exp $
+ * $Id: ImperativeOCLPackageImpl.java,v 1.3 2009/01/25 23:10:43 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.impl;
 
@@ -20,9 +20,7 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AltExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssertExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp;
@@ -1420,7 +1418,7 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		   source, 
 		   new String[] {
 			 "body", "assertOwner"
-		   });		
+		   });			
 		addAnnotation
 		  (getAssignExp_DefaultValue(), 
 		   source, 
@@ -1486,7 +1484,7 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		   source, 
 		   new String[] {
 			 "body", "keyDict"
-		   });		
+		   });			
 		addAnnotation
 		  (getImperativeIterateExp_Target(), 
 		   source, 
@@ -1598,7 +1596,19 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 * @generated
 	 */
 	protected void createEcoreAnnotations() {
-		String source = "http://www.eclipse.org/emf/2002/Ecore";																						
+		String source = "http://www.eclipse.org/emf/2002/Ecore";					
+		addAnnotation
+		  (assignExpEClass, 
+		   source, 
+		   new String[] {
+			 "constraints", "WellFormedLeftExp checkLeftAndValueExpConformance"
+		   });													
+		addAnnotation
+		  (imperativeIterateExpEClass, 
+		   source, 
+		   new String[] {
+			 "constraints", "WellFormedName WellFormedTargetVar WellFormedBody WellFormedCondition"
+		   });								
 		addAnnotation
 		  (orderedTupleTypeEClass, 
 		   source, 
