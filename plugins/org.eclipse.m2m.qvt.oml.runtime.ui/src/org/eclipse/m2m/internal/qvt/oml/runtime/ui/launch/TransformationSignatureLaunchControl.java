@@ -99,28 +99,27 @@ public class TransformationSignatureLaunchControl extends ScrolledComposite {
 		getParent().layout();
 	}
 
-	public IStatus validate(String moduleName, Shell shell) {
+	public IStatus validate(String moduleName, Shell shell, String traceFilePath, boolean useTrace) {
 		for (Map.Entry<ModelParameterInfo, IUriGroup> entry : myParamGroups.entrySet()) {
 			entry.getValue().update(moduleName, entry.getKey(), shell);
 		}
 		
-		IStatus result = StatusUtil.makeOkStatus();
+		List<TargetUriData> targetUris = new ArrayList<TargetUriData>(myParamGroups.size());
 		for (Map.Entry<ModelParameterInfo, IUriGroup> entry : myParamGroups.entrySet()) {
-			try {
-				IStatus status = QvtValidator.validateTransformationParameter(
-						entry.getKey().getTransfParam(), entry.getValue().getUriData(), myValidationRS);
-		        if (StatusUtil.isError(status)) {
-		        	return status;
-		        }
-		        if (status.getSeverity() > result.getSeverity()) {
-		    		result = status;
-		    	}
-			}
-			catch (Exception e) {
-		        return StatusUtil.makeErrorStatus(e.getMessage(), e);
-			}
+			targetUris.add(entry.getValue().getUriData());
 		}
-		return result;
+
+		try {
+			IStatus status = QvtValidator.validateTransformation(myTransformation, targetUris,
+					traceFilePath, useTrace);
+	        if (StatusUtil.isError(status)) {
+	        	return status;
+	        }
+		}
+		catch (Exception e) {
+	        return StatusUtil.makeErrorStatus(e.getMessage(), e);
+		}
+		return StatusUtil.makeOkStatus();
 	}
 
 	public void initializeFrom(ILaunchConfiguration configuration) throws CoreException {

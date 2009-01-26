@@ -44,7 +44,6 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.StatusUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
-import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtValidator;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.ITransformationMaker;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
@@ -278,11 +277,7 @@ public class QvtLauncherTab extends MdaLaunchTab {
             if (myTraceFile.getText().length() == 0) {
             	myTraceFile.update(moduleName, MDAConstants.QVTO_TRACEFILE_EXTENSION);
             }
-            IStatus status = myTransfSignatureControl.validate(moduleName, getShell());
-        	IStatus traceStatus = QvtValidator.validateTrace(myTraceFile.getText(), myTraceFile.getUseFileFlag()); 
-            if (traceStatus.getSeverity() > status.getSeverity()) {
-        		status = traceStatus;
-        	}
+            IStatus status = myTransfSignatureControl.validate(moduleName, getShell(), myTraceFile.getText(), myTraceFile.getUseFileFlag());
             return TransformationControls.statusToTab(status, SET_MESSAGE);
         }
     }
