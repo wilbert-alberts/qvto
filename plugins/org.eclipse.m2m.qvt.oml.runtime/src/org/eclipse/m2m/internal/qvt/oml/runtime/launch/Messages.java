@@ -32,6 +32,7 @@ public class Messages extends NLS {
 	public static String QvtValidator_IncompatibleInputMetamodels;
 	public static String QvtValidator_DestinationReadonly;
 	public static String QvtValidator_DestinationExistsNonEObject;
+	public static String QvtValidator_TransformaionMissedEntryOp;
 
     public static String QvtValidator_TraceNotInWorkspace;
 

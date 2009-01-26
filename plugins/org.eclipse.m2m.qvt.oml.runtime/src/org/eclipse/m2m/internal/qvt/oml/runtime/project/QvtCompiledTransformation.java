@@ -92,6 +92,10 @@ public class QvtCompiledTransformation implements QvtTransformation, CompiledTra
     	return getImpl().getParameters();
     }
 
+	public boolean hasEntryOperation() throws MdaException {
+		return getImpl().hasEntryOperation();
+	}
+
     @Override
 	public String toString() {
     	/*

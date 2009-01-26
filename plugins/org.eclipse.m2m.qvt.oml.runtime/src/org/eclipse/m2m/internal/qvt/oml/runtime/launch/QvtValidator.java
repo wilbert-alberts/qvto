@@ -49,6 +49,12 @@ public class QvtValidator {
 	public static IStatus validateTransformation(QvtTransformation transformation, List<TargetUriData> targetUris, String traceFilePath,
 			boolean useTrace) throws MdaException {
         IStatus result = StatusUtil.makeOkStatus();
+        
+        if (!transformation.hasEntryOperation()) {
+            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_TransformaionMissedEntryOp,
+            		transformation.getModuleName()));
+        }
+        
         Iterator<TargetUriData> itrTargetData = targetUris.iterator();
 		for (TransformationParameter transfParam : transformation.getParameters()) {
 			if (!itrTargetData.hasNext()) {
@@ -74,6 +80,12 @@ public class QvtValidator {
 	
 	public static IStatus validateTransformation(QvtTransformation transformation, List<ModelContent> inModels) throws MdaException {
         IStatus result = StatusUtil.makeOkStatus();
+
+        if (!transformation.hasEntryOperation()) {
+            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_TransformaionMissedEntryOp,
+            		transformation.getModuleName()));
+        }
+        
         Iterator<ModelContent> itrInObjs = inModels.iterator();
 		for (TransformationParameter transfParam : transformation.getParameters()) {
 			if (transfParam.getDirectionKind() == DirectionKind.IN
@@ -107,7 +119,7 @@ public class QvtValidator {
         return result;
 	}
 	
-	public static IStatus validateTransformationParameter(TransformationParameter transfParam, TargetUriData targetData, ResourceSet validationRS) {
+	private static IStatus validateTransformationParameter(TransformationParameter transfParam, TargetUriData targetData, ResourceSet validationRS) {
 		if (transfParam.getDirectionKind() == DirectionKind.IN) {
 			return validateTransformationParameterIn(transfParam, targetData, validationRS);
 		}
@@ -117,7 +129,7 @@ public class QvtValidator {
 		return validateTransformationParameterOut(transfParam, targetData, validationRS);
 	}
 	
-	public static IStatus validateTrace(String traceFilePath, boolean useTrace) {
+	private static IStatus validateTrace(String traceFilePath, boolean useTrace) {
 	    try {
 	        IStatus result = StatusUtil.makeOkStatus();
 	        if (useTrace) {

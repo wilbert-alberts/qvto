@@ -36,6 +36,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtEvaluationResult;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
@@ -122,6 +123,10 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 
 	public List<TransformationParameter> getParameters() throws MdaException {
 		return myModule.getParameters();
+	}
+
+	public boolean hasEntryOperation() throws MdaException {
+		return QvtOperationalParserUtil.getMainOperation(myModule.getModule().getModule()) != null;
 	}
 
     public Set<QvtConfigurationProperty> getConfigurationProperties() throws MdaException {

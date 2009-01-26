@@ -71,6 +71,8 @@ public interface QvtTransformation extends Transformation {
     Set<QvtConfigurationProperty> getConfigurationProperties() throws MdaException;
 
     List<TransformationParameter> getParameters() throws MdaException;
+    
+    boolean hasEntryOperation() throws MdaException;
 
     ResourceSet getResourceSet() throws MdaException;
 
