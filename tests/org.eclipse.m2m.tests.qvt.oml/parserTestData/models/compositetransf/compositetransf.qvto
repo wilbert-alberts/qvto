@@ -11,7 +11,7 @@ main() {
 	
 	assert fatal (s.oclIsTypeOf(Status));
 	assert fatal (s.oclIsKindOf(Status));
-	assert fatal (s.success());
+	assert fatal (s.succeeded());
 	assert fatal (not s.failed()); 
 	
 	object EClass {  name := 'after composite' };
