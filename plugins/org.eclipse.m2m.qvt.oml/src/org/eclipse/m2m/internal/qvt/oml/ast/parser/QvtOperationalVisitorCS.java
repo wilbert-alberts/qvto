@@ -768,7 +768,28 @@ public class QvtOperationalVisitorCS
     	OCLExpression<EClassifier> result = super.operationCallExpCS(operationCallExpCS, env);
     	
     	if(result instanceof OperationCallExp) {
-    	    OperationCallExp<EClassifier, EOperation> opCallExp = (OperationCallExp<EClassifier, EOperation>) result;
+    	    OperationCallExp<EClassifier, EOperation> opCallExp = (org.eclipse.ocl.ecore.OperationCallExp) result;
+    	    if(opCallExp.getReferredOperation() != null) {
+    	    	EOperation referredOperation = opCallExp.getReferredOperation();
+    	    	if(QvtOperationalParserUtil.isDeprecated(referredOperation)) {
+	    	    	String message;
+	    	    	String deprecatedByRef = QvtOperationalParserUtil.getDeprecatedBy(referredOperation);	    	    	
+	    	    	
+	    	    	if(deprecatedByRef != null) {
+	    	    		message = NLS.bind(ValidationMessages.DeprecatedElementBy, 
+	    	    				getFormatter().formatName(referredOperation), deprecatedByRef); 
+	    	    	} else {
+	    	    		message = NLS.bind(ValidationMessages.DeprecatedElement, getFormatter().formatName(referredOperation)); 
+	    	    	}
+	    	    	
+	    	    	QvtOperationalUtil.reportWarning(env, message, operationCallExpCS);
+    	    	}
+
+    	    	if(QvtOperationalParserUtil.isUnsupported(referredOperation)) {
+    	    		QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.UnsupportedElement, getFormatter().formatName(referredOperation)), operationCallExpCS);    	    		
+    	    	}
+    	    }
+    	    
     	    OCLExpression<EClassifier> source = opCallExp.getSource();
             if (source != null) {
                 if (isArrowAccessToCollection(operationCallExpCS, source)) {
@@ -1689,7 +1710,7 @@ public class QvtOperationalVisitorCS
 			if (eFeature instanceof EReference) {
 
 				if (oppositeCS.getMultiplicity() != null) {
-					MultiplicityDef multiplcityDef = visitMultiplicityDefCS(oppositeCS.getMultiplicity(), env);
+					visitMultiplicityDefCS(oppositeCS.getMultiplicity(), env);
 				}
 				
 				if (oppositeCS.getSimpleNameCS() != null) {
@@ -1836,7 +1857,7 @@ public class QvtOperationalVisitorCS
 
 		try {
 			multiplicityDef.lower = Integer.valueOf(multiplicityCS.getLowerBound().getSymbol());
-			if ("*".equals(multiplicityCS.getUpperBound().getSymbol())) {
+			if ("*".equals(multiplicityCS.getUpperBound().getSymbol())) { //$NON-NLS-1$
 				multiplicityDef.upper = -1;
 			}
 			else {
@@ -3384,7 +3405,7 @@ public class QvtOperationalVisitorCS
 			result = visitContextualPropertyCS((ContextualPropertyCS) propCS, env);
 		}
 		else {
-			assert false : "Unexpected CS class: " + propCS;
+			assert false : "Unexpected CS class: " + propCS; //$NON-NLS-1$
 		}
 		
         // AST binding

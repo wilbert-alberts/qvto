@@ -28,7 +28,7 @@ public interface QVTOEnvironment extends Environment<EPackage, EClassifier, EOpe
 	
 	QVTOTypeResolver getTypeResolver();
 	
-	QvtOperationalStdLibrary getQVTStandardLibrary();
+	QVTOStandardLibrary getQVTStandardLibrary();
 	
 	EStructuralFeature lookupPropertyAlias(EClassifier owner, String aliasName);
 	

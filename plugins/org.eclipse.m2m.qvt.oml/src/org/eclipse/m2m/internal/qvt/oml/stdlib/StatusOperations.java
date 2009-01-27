@@ -25,7 +25,7 @@ public class StatusOperations extends AbstractContextualOperations {
 	@Override
 	protected OperationProvider[] getOperations() {
 		return new OwnedOperationProvider[] {
-				new OwnedOperationProvider(SUCCESS, "success", getStdlib().getOCLStdLib().getBoolean()),//$NON-NLS-1$ 
+				new OwnedOperationProvider(SUCCESS, "succeeded", getStdlib().getOCLStdLib().getBoolean()),//$NON-NLS-1$ 
 				new OwnedOperationProvider(FAILED, "failed", getStdlib().getOCLStdLib().getBoolean()),//$NON-NLS-1$					
 				new OwnedOperationProvider(RAISED_EXCEPTION, "raisedException", getStdlib().getExceptionClass())//$NON-NLS-1$				
 		};

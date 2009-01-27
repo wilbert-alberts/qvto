@@ -34,7 +34,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Typedef;
 import org.eclipse.ocl.AbstractTypeResolver;
-import org.eclipse.ocl.ecore.internal.TupleFactory;
 import org.eclipse.ocl.expressions.CollectionKind;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.types.TupleType;
@@ -167,26 +166,25 @@ class BasicTypeResolverImpl
         
     @Override
     protected EPackage createTuplePackage() {
-        EPackage result = super.createTuplePackage();  
-        // FIXME - MDT OCL already give access to the base ecore TypeResolver => we should extend that
-        result.setEFactoryInstance(new TupleFactory());        
+        EPackage result = super.createTuplePackage();
+        if(result instanceof Module == false) {
+        	result.setEFactoryInstance(new TupleFactory());
+        }
         return result;
     }
     
     @Override
-    protected EPackage createPackage(String name) {
-        EPackage result = EcoreFactory.eINSTANCE.createEPackage();
-        
-        result.setName(name);
-        
+    protected EPackage createPackage(String name) {    	
+    	
         QvtEnvironmentBase env = (QvtEnvironmentBase)getEnvironment();
         Module module = env.getModuleContextType();
     	if(module != null) {
-    		module.getESubpackages().add(result);
-    	} else {
-    		getResource().getContents().add(result);
+    		return module;
     	}
-        
+    	
+    	EPackage result = EcoreFactory.eINSTANCE.createEPackage();
+    	result.setName(name);    		
+		getResource().getContents().add(result);
         return result;
     }
     
@@ -291,5 +289,5 @@ class BasicTypeResolverImpl
         }
         
 		return null;
-	}    
+	}	
 }

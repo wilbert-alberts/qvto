@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ImperativeOCLPackageImpl.java,v 1.2 2009/01/13 16:51:21 radvorak Exp $
+ * $Id: ImperativeOCLPackageImpl.java,v 1.3 2009/01/27 15:18:11 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -40,6 +40,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.OrderedTupleType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.SeverityKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.SwitchExp;
@@ -147,6 +148,13 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 * @generated
 	 */
 	private EClass logExpEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass orderedTupleTypeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -591,6 +599,24 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getOrderedTupleType() {
+		return orderedTupleTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getOrderedTupleType_ElementType() {
+		return (EReference)orderedTupleTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getAssertExp() {
 		return assertExpEClass;
 	}
@@ -864,6 +890,9 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		logExpEClass = createEClass(LOG_EXP);
 		createEReference(logExpEClass, LOG_EXP__CONDITION);
 
+		orderedTupleTypeEClass = createEClass(ORDERED_TUPLE_TYPE);
+		createEReference(orderedTupleTypeEClass, ORDERED_TUPLE_TYPE__ELEMENT_TYPE);
+
 		returnExpEClass = createEClass(RETURN_EXP);
 		createEReference(returnExpEClass, RETURN_EXP__VALUE);
 
@@ -942,6 +971,7 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		instantiationExpEClass.getESuperTypes().add(this.getImperativeExpression());
 		listTypeEClass.getESuperTypes().add(theEcorePackage.getCollectionType());
 		logExpEClass.getESuperTypes().add(theEcorePackage.getOperationCallExp());
+		orderedTupleTypeEClass.getESuperTypes().add(theEcorePackage_1.getEClass());
 		returnExpEClass.getESuperTypes().add(this.getImperativeExpression());
 		switchExpEClass.getESuperTypes().add(this.getImperativeExpression());
 		templateParameterTypeEClass.getESuperTypes().add(theEcorePackage_1.getEClassifier());
@@ -1324,6 +1354,9 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
 
+		initEClass(orderedTupleTypeEClass, OrderedTupleType.class, "OrderedTupleType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getOrderedTupleType_ElementType(), theEcorePackage_1.getEClassifier(), null, "elementType", null, 0, -1, OrderedTupleType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
 		initEClass(returnExpEClass, ReturnExp.class, "ReturnExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getReturnExp_Value(), theEcorePackage.getOCLExpression(), null, "value", null, 0, 1, ReturnExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
@@ -1594,7 +1627,13 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		   source, 
 		   new String[] {
 			 "body", "keyDict" //$NON-NLS-1$ //$NON-NLS-2$
-		   });										
+		   });							
+		addAnnotation
+		  (getOrderedTupleType_ElementType(), 
+		   source, 
+		   new String[] {
+			 "body", "eltTuple" //$NON-NLS-1$ //$NON-NLS-2$
+		   });					
 		addAnnotation
 		  (getVariableInitExp_ReferredVariable(), 
 		   source, 

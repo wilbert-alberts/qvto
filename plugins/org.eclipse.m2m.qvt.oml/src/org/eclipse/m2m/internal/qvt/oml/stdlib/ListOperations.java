@@ -87,13 +87,13 @@ public class ListOperations extends AbstractContextualOperations {
 	protected OperationProvider[] getOperations() {
 		OCLStandardLibrary<EClassifier> oclStdlib = getStdlib().getEnvironment().getOCLStandardLibrary();
 		return new OperationProvider[] {
-			new OperationProvider(ADD, ADD_NAME, oclStdlib.getOclVoid(), oclStdlib.getT()),
-			new OperationProvider(ADD, APPEND_SYNONYM, oclStdlib.getOclVoid(), oclStdlib.getT()),			
-			new OperationProvider(PREPEND, PREPEND_NAME, oclStdlib.getOclVoid(), oclStdlib.getT()),
-			new OperationProvider(INSERT_AT, INSERT_AT_NAME, oclStdlib.getOclVoid(), 
+			new OperationProvider(ADD, ADD_NAME, new String[] { "object"}, oclStdlib.getOclVoid(), oclStdlib.getT()), //$NON-NLS-1$
+			new OperationProvider(ADD, APPEND_SYNONYM, new String[] { "object"}, oclStdlib.getOclVoid(), oclStdlib.getT()), //$NON-NLS-1$			
+			new OperationProvider(PREPEND, PREPEND_NAME, new String[] { "object"}, oclStdlib.getOclVoid(), oclStdlib.getT()), //$NON-NLS-1$
+			new OperationProvider(INSERT_AT, INSERT_AT_NAME, new String[] { "object", "pos"}, oclStdlib.getOclVoid(), //$NON-NLS-1$ //$NON-NLS-2$ 
 					oclStdlib.getT(), oclStdlib.getInteger()),
-			new OperationProvider(JOINFIELDS, JOINFIELDS_NAME, oclStdlib.getString(), 
-					oclStdlib.getString(), oclStdlib.getString(), oclStdlib.getString())			
+			new OperationProvider(JOINFIELDS, JOINFIELDS_NAME, new String[] { "sep", "begin", "end" }, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$  
+					oclStdlib.getString(), oclStdlib.getString(), oclStdlib.getString(), oclStdlib.getString())			
 			
 		};
 	}	

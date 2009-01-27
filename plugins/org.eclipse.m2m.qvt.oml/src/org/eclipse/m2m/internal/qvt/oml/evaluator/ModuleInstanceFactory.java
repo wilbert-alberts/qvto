@@ -25,10 +25,12 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.TupleFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
+import org.eclipse.ocl.ecore.TupleType;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.util.CollectionUtil;
 
@@ -81,6 +83,8 @@ public class ModuleInstanceFactory extends EFactoryImpl {
 			return result;
 		} else if(eClass instanceof ModelType) {
 			return new ModelInstanceImpl((ModelType) eClass, new ModelParameterExtent());
+		} else if(eClass instanceof TupleType) {
+			return TupleFactory.createTuple(eClass);
 		}
 
 		return super.basicCreate(eClass);

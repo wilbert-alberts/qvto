@@ -22,6 +22,8 @@ public final class ValidationMessages extends NLS {
 	}
 
     public static String BooleanTypeAssertConditionError;
+	public static String DeprecatedElement;
+	public static String DeprecatedElementBy;
 	public static String DeprecatedImplicitSourceCall_contextualImplicitCall;
 	public static String DeprecatedImplicitSourceCall_moduleScopeImplicitCall;
 	public static String DeprecatedLibraryImportSupportWarn0;
@@ -49,12 +51,10 @@ public final class ValidationMessages extends NLS {
 	public static String QvtOperationalVisitorCS_canNotInstantiateAbstractType;
 	public static String QvtOperationalVisitorCS_canNotModifyINParameter;
 	public static String QvtOperationalVisitorCS_ContextualPropertyTypeIsNotClass;
-	public static String QvtOperationalVisitorCS_deprecatedWhileExp;
 	public static String QvtOperationalVisitorCS_duplicateMappingRereferenceInExtensionKind;
 	public static String QvtOperationalVisitorCS_duplicateQualifierOnOperation;
 	public static String QvtOperationalVisitorCS_instatiatedTypeDoesNotConformToReferredType;
-    public static String QvtOperationalVisitorCS_ResolveInMappingNotFound;
-    public static String QvtOperationalVisitorCS_ResolveInSeveralMappingsFound;
+    public static String QvtOperationalVisitorCS_ResolveInMappingNotFound;    
 	public static String QvtOperationalVisitorCS_unresolvedMappingOperationReference;
     public static String QvtOperationalVisitorCS_unsupportedMetamodelComplianceKind;
     public static String QvtOperationalVisitorCS_metamodelPackageRefInconsistent;
@@ -92,6 +92,7 @@ public final class ValidationMessages extends NLS {
 	public static String readOnlyPropertyModificationError;
 	public static String StringTypeMessageLogArgumentError;
 	public static String UknownSeverityKindError;
+	public static String UnsupportedElement;
 	public static String UnsupportedLogExpArgumentError;
 	
 	public static String incorrectCastWarning;
@@ -99,7 +100,6 @@ public final class ValidationMessages extends NLS {
 	
 	public static String nonModelTypeError;
 	
-	public static String propertyAssignmentExpectedError;
 	public static String noPropertyInTypeError;
 	public static String ContextParamMustBeInOrInout;
 	public static String ContextParamMustBeIn;

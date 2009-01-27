@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ImperativeOCLFactoryImpl.java,v 1.3 2009/01/13 20:21:46 radvorak Exp $
+ * $Id: ImperativeOCLFactoryImpl.java,v 1.4 2009/01/27 15:18:11 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.m2m.internal.qvt.oml.expressions.*;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
@@ -101,6 +102,7 @@ public class ImperativeOCLFactoryImpl extends EFactoryImpl implements Imperative
 			case ImperativeOCLPackage.INSTANTIATION_EXP: return createInstantiationExp();
 			case ImperativeOCLPackage.LIST_TYPE: return createListType();
 			case ImperativeOCLPackage.LOG_EXP: return createLogExp();
+			case ImperativeOCLPackage.ORDERED_TUPLE_TYPE: return createOrderedTupleType();
 			case ImperativeOCLPackage.RETURN_EXP: return createReturnExp();
 			case ImperativeOCLPackage.SWITCH_EXP: return createSwitchExp();
 			case ImperativeOCLPackage.TEMPLATE_PARAMETER_TYPE: return createTemplateParameterType();
@@ -260,6 +262,16 @@ public class ImperativeOCLFactoryImpl extends EFactoryImpl implements Imperative
 	public LogExp createLogExp() {
 		LogExpImpl logExp = new LogExpImpl();
 		return logExp;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public OrderedTupleType createOrderedTupleType() {
+		OrderedTupleTypeImpl orderedTupleType = new OrderedTupleTypeImpl();
+		return orderedTupleType;
 	}
 
 	/**

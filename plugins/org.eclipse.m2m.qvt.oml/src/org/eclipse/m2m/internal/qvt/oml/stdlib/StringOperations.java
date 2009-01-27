@@ -33,41 +33,41 @@ public class StringOperations extends AbstractContextualOperations {
 	protected OperationProvider[] getOperations() {
 		OCLStandardLibrary<EClassifier> oclStdLib = getStdlib().getEnvironment().getOCLStandardLibrary();		
 		return new OperationProvider[] {
-			new OperationProvider(STRING_CONCAT, PredefinedType.PLUS_NAME, oclStdLib.getString(), oclStdLib.getString()),			
-			new OperationProvider(LENGTH, LENGTH_NAME, oclStdLib.getInteger()),
-			new OperationProvider(SUBSTRING_BEFORE, SUBSTRING_BEFORE_NAME, oclStdLib.getString(), oclStdLib.getString()),			
-			new OperationProvider(SUBSTRING_AFTER, SUBSTRING_AFTER_NAME, oclStdLib.getString(), oclStdLib.getString()),			
-			new OperationProvider(FIRST_TO_UPPER, FIRST_TO_UPPER_NAME, oclStdLib.getString()),			
-			new OperationProvider(LAST_TO_UPPER, LAST_TO_UPPER_NAME, oclStdLib.getString()),			
-			new OperationProvider(INDEX_OF, INDEX_OF_NAME, oclStdLib.getInteger(), oclStdLib.getString()),			
-			new OperationProvider(STARTS_WITH, STARTS_WITH_NAME, oclStdLib.getBoolean(), oclStdLib.getString()),			
-			new OperationProvider(ENDS_WITH, ENDS_WITH_NAME, oclStdLib.getBoolean(), oclStdLib.getString()),			
-			new OperationProvider(TRIM, TRIME_NAME, oclStdLib.getString()),
-			new OperationProvider(NORMALIZE, NORMALIZE_SPACE_NAME, oclStdLib.getString()),
-			new OperationProvider(REPLACE, REPLACE_NAME, oclStdLib.getString(), oclStdLib.getString(), oclStdLib.getString()),
-			new OperationProvider(MATCH, MATCH_NAME, oclStdLib.getBoolean(), oclStdLib.getString()),			
-			new OperationProvider(EQUALS_IGNORE_CASE, EQUALS_IGNORE_CASE_NAME, oclStdLib.getBoolean(), oclStdLib.getString()),
-			new OperationProvider(FIND, FIND_NAME, oclStdLib.getInteger(), oclStdLib.getString()),			
-			new OperationProvider(RFIND, RFIND_NAME, oclStdLib.getInteger(), oclStdLib.getString()),
-			new OperationProvider(IS_QUOTED, IS_QUOTED_NAME, oclStdLib.getBoolean(), oclStdLib.getString()),			
-			new OperationProvider(QUOTIFY, QUOTIFY_NAME, oclStdLib.getString(), oclStdLib.getString()),			
-			new OperationProvider(UNQUOTIFY, UNQUOTIFY_NAME, oclStdLib.getString(), oclStdLib.getString()),			
-			
-			new OperationProvider(MATCH_BOOLEAN, MATCH_BOOLEAN_NAME, oclStdLib.getBoolean(), oclStdLib.getBoolean()),			
-			new OperationProvider(MATCH_INTEGER, MATCH_INTEGER_NAME, oclStdLib.getBoolean(), oclStdLib.getInteger()),			
-			new OperationProvider(MATCH_FLOAT, MATCH_FLOAT_NAME, oclStdLib.getBoolean(), oclStdLib.getReal()),
-			new OperationProvider(MATCH_IDENTIFIER, MATCH_IDENTIFIER_NAME, oclStdLib.getBoolean(), oclStdLib.getString()),
-			
-			new OperationProvider(AS_BOOLEAN, AS_BOOLEAN_NAME, oclStdLib.getBoolean()),
-			new OperationProvider(AS_INTEGER, AS_INTEGER_NAME, oclStdLib.getInteger()),
+			new OperationProvider(STRING_CONCAT, PredefinedType.PLUS_NAME, oclStdLib.getString(), oclStdLib.getString()),
+			new OperationProvider(ADD_SUFFIX_NUMBER, ADD_SUFFIX_NUMBER_NAME, oclStdLib.getString()),
+			new OperationProvider(AS_BOOLEAN, AS_BOOLEAN_NAME, oclStdLib.getBoolean()),			
 			new OperationProvider(AS_FLOAT, AS_FLOAT_NAME, oclStdLib.getReal()),
+			new OperationProvider(AS_INTEGER, AS_INTEGER_NAME, oclStdLib.getInteger()),
+			new OperationProvider(ENDS_WITH, ENDS_WITH_NAME, new String[] { "match" }, oclStdLib.getBoolean(), oclStdLib.getString()), //$NON-NLS-1$			
+			new OperationProvider(EQUALS_IGNORE_CASE, EQUALS_IGNORE_CASE_NAME, new String[] { "match" }, oclStdLib.getBoolean(), oclStdLib.getString()), //$NON-NLS-1$
+			new OperationProvider(FIND, FIND_NAME, new String[] { "match" }, oclStdLib.getInteger(), oclStdLib.getString()), //$NON-NLS-1$
+			new OperationProvider(FIRST_TO_UPPER, FIRST_TO_UPPER_NAME, oclStdLib.getString()),
 			
-			createStaticOperationProvider(START_STR_COUNTER, START_STR_COUNTER_NAME, oclStdLib.getOclVoid(), oclStdLib.getString()),
-			createStaticOperationProvider(GET_STR_COUNTER, GET_STR_COUNTER_NAME, oclStdLib.getInteger(), oclStdLib.getString()),			
-			createStaticOperationProvider(INCR_STR_COUNTER, INCR_STR_COUNTER_NAME, oclStdLib.getInteger(), oclStdLib.getString()),						
-			createStaticOperationProvider(RESTART_ALL_STR_COUNTER, RESTART_ALL_STR_COUNTER_NAME, oclStdLib.getOclVoid()),
-			new OperationProvider(ADD_SUFFIX_NUMBER, ADD_SUFFIX_NUMBER_NAME, oclStdLib.getString()),					
+			new OperationProvider(UNSUPPORTED_OPER, "format", new String[] { "value" }, oclStdLib.getString(), getStdlib().getObject()), //$NON-NLS-1$
 			
+			createAdditionalStaticOperationProvider(GET_STR_COUNTER, GET_STR_COUNTER_NAME, new String[] { "s" }, oclStdLib.getInteger(), oclStdLib.getString()), //$NON-NLS-1$
+			createAdditionalStaticOperationProvider(INCR_STR_COUNTER, INCR_STR_COUNTER_NAME, new String[] { "s" }, oclStdLib.getInteger(), oclStdLib.getString()), //$NON-NLS-1$			
+			new OperationProvider(INDEX_OF, INDEX_OF_NAME, new String[] { "match" }, oclStdLib.getInteger(), oclStdLib.getString()), //$NON-NLS-1$
+			new OperationProvider(IS_QUOTED, IS_QUOTED_NAME, new String[] { "s" }, oclStdLib.getBoolean(), oclStdLib.getString()), //$NON-NLS-1$
+			new OperationProvider(LAST_TO_UPPER, LAST_TO_UPPER_NAME, oclStdLib.getString()),			
+			new OperationProvider(LENGTH, LENGTH_NAME, oclStdLib.getInteger()),
+			new OperationProvider(MATCH, MATCH_NAME, new String[] { "matchPattern" }, oclStdLib.getBoolean(), oclStdLib.getString()), //$NON-NLS-1$			
+			new OperationProvider(MATCH_BOOLEAN, MATCH_BOOLEAN_NAME, new String[] { "b" }, oclStdLib.getBoolean(), oclStdLib.getBoolean()), //$NON-NLS-1$
+			new OperationProvider(MATCH_FLOAT, MATCH_FLOAT_NAME, new String[] { "r" }, oclStdLib.getBoolean(), oclStdLib.getReal()), //$NON-NLS-1$
+			new OperationProvider(MATCH_IDENTIFIER, MATCH_IDENTIFIER_NAME, new String[] { "s" }, oclStdLib.getBoolean(), oclStdLib.getString()), //$NON-NLS-1$			
+			new OperationProvider(MATCH_INTEGER, MATCH_INTEGER_NAME, new String[] { "s" }, oclStdLib.getBoolean(), oclStdLib.getInteger()), //$NON-NLS-1$			
+			new OperationProvider(NORMALIZE, NORMALIZE_SPACE_NAME, oclStdLib.getString()),
+			new OperationProvider(REPLACE, REPLACE_NAME, new String[] { "m1", "m2" }, //$NON-NLS-1$ //$NON-NLS-2$ 
+					oclStdLib.getString(), oclStdLib.getString(), oclStdLib.getString()),
+			createAdditionalStaticOperationProvider(RESTART_ALL_STR_COUNTER, RESTART_ALL_STR_COUNTER_NAME, null, oclStdLib.getOclVoid()),
+			new OperationProvider(RFIND, RFIND_NAME, new String[] { "match" }, oclStdLib.getInteger(), oclStdLib.getString()), //$NON-NLS-1$			
+			new OperationProvider(STARTS_WITH, STARTS_WITH_NAME, new String[] { "match" }, oclStdLib.getBoolean(), oclStdLib.getString()),			
+			createAdditionalStaticOperationProvider(START_STR_COUNTER, START_STR_COUNTER_NAME, new String[] { "s" }, oclStdLib.getOclVoid(), oclStdLib.getString()), //$NON-NLS-1$
+			new OperationProvider(SUBSTRING_AFTER, SUBSTRING_AFTER_NAME, new String[] { "match" }, oclStdLib.getString(), oclStdLib.getString()), //$NON-NLS-1$			
+			new OperationProvider(SUBSTRING_BEFORE, SUBSTRING_BEFORE_NAME, new String[] { "match" }, oclStdLib.getString(), oclStdLib.getString()), //$NON-NLS-1$			
+			new OperationProvider(QUOTIFY, QUOTIFY_NAME, new String[] { "s" }, oclStdLib.getString(), oclStdLib.getString()), //$NON-NLS-1$
+			new OperationProvider(TRIM, TRIME_NAME, oclStdLib.getString()),
+			new OperationProvider(UNQUOTIFY, UNQUOTIFY_NAME, new String[] { "s" }, oclStdLib.getString(), oclStdLib.getString()), //$NON-NLS-1$
 		};
 	}
 	

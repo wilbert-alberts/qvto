@@ -36,9 +36,11 @@ public class StdlibModuleOperations extends AbstractContextualOperations {
 
 		return new OperationProvider[] {
 				new OperationProvider(DUMP, DUMP_NAME, 
-								oclStdLib.getOclVoid(), oclStdLib.getOclAny()),
+					oclStdLib.getOclVoid(), oclStdLib.getOclAny())
+					.deprecate(),
 				new OperationProvider(DUMP, DUMP_NAME, 
-						oclStdLib.getOclVoid(), genericCollectionType)
+					oclStdLib.getOclVoid(), genericCollectionType)
+					.deprecate()
 		};
 	}
 	

@@ -34,6 +34,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.OrderedTupleType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.AbstractContextualOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.AbstractQVTStdlib;
@@ -43,6 +44,7 @@ import org.eclipse.m2m.internal.qvt.oml.stdlib.ElementOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.IntegerOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.ListOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.ModelOperations;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.ObjectOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.OclAnyOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.RealOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.StatusOperations;
@@ -51,14 +53,13 @@ import org.eclipse.m2m.internal.qvt.oml.stdlib.StringOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.TransformationOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.model.StdlibFactory;
 import org.eclipse.ocl.util.TypeUtil;
-import org.eclipse.ocl.utilities.TypedElement;
 
 
-public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
+public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements QVTOStandardLibrary {
 	
 	public static final String QVT_STDLIB_MODULE_NAME = "Stdlib"; //$NON-NLS-1$
 	
-	public static final QvtOperationalStdLibrary INSTANCE = createLibrary();
+	public static final QvtOperationalStdLibrary INSTANCE = createLibrary();	
 	static {
 		try {
 			INSTANCE.defineStandardOperations();
@@ -67,18 +68,19 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 		}
 	}
 	
-	private EClassifier ELEMENT;	
-	private EClass MODEL;
-	private EClass TRANSFORMATION;
-	private EOperation TRANSFORM;
+	private final EClassifier OBJECT;
+	private final EClassifier ELEMENT;	
+	private final EClass MODEL;
+	private final EClass TRANSFORMATION;
 	private EClass STATUS;
 	private EClass EXCEPTION;
 	private EClassifier LIST;
 	private EClassifier KEY_T;
-	private DictionaryType DICTIONARY;	
+	private DictionaryType DICTIONARY;
+	private OrderedTupleType ORDERED_TUPLE; 	
 	
 	private final Library fStdlibModule;
-	private StdlibFactory fFactory;
+	private final StdlibFactory fFactory;
 	
 	private final QvtOperationalModuleEnv fEnv;
 	private final Map<String, EClassifier> fTypeAliasMap;
@@ -91,31 +93,25 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 		
 		fEnv = new QvtOperationalModuleEnv(new EPackageRegistryImpl());
 		fEnv.setContextModule(fStdlibModule);
+		fFactory = new StdlibFactory(this);
 		
 		assert fStdlibModule.eResource() != null;
 		fStdlibModule.eResource().setURI(URI.createURI("qvto:/Stdlib.ecore")); //$NON-NLS-1$		
 
 		ELEMENT = createClass("Element", true); //$NON-NLS-1$
-		MODEL = createClass("Model", true); //$NON-NLS-1$
-		TRANSFORMATION = createClass("Transformation", true); //$NON-NLS-1$ 
-		STATUS = createClass("Status", false); //$NON-NLS-1$
 		EXCEPTION = createClass("Exception", false); //$NON-NLS-1$		
-		
-		ListType listType = ImperativeOCLFactory.eINSTANCE.createListType();
-		listType.setElementType(fEnv.getOCLStandardLibrary().getT());
-		fStdlibModule.getEClassifiers().add(listType);
-		LIST = listType;
-		
-		KEY_T = ImperativeOCLFactory.eINSTANCE.createTemplateParameterType();
-		KEY_T.setName("KeyT"); //$NON-NLS-1$
-		fStdlibModule.getEClassifiers().add(KEY_T);
+		MODEL = createClass("Model", true); //$NON-NLS-1$
+		ORDERED_TUPLE = createOrderedTuple();		
+		OBJECT = createClass("Object", true); //$NON-NLS-1$		
+		STATUS = createClass("Status", false); //$NON-NLS-1$		
+		TRANSFORMATION = createClass("Transformation", true); //$NON-NLS-1$ 
 
-		fFactory = new StdlibFactory(this);		
-		DICTIONARY = fFactory.createDictionary(KEY_T, fEnv.getOCLStandardLibrary().getT());
-		fStdlibModule.getEClassifiers().add(DICTIONARY);
-				
+		LIST = createListType();
+		DICTIONARY = createDictionaryType();
+
 		fTypeAliasMap = createTypeAliasMap(fEnv);		
 		
+		// add non-standard legacy operations
 		modelOperations = new ModelOperations(this);
 		anyOperations = new OclAnyOperations(this);		
 	}	
@@ -124,15 +120,12 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 		define(new StringOperations(this));
 		define(modelOperations);
 		define(anyOperations);
+		define(new ObjectOperations(this));		
 		define(new ElementOperations(this));
 		define(new StdlibModuleOperations(this));
 		define(new IntegerOperations(this));		
 		define(new RealOperations(this));
-		define(new TransformationOperations(this));		
-		TRANSFORM = fEnv.lookupOperation(TRANSFORMATION, "transform", //$NON-NLS-1$ 
-				Collections.<TypedElement<EClassifier>>emptyList());
-		assert TRANSFORM != null : "transform() operation mus be defined";
-		
+		define(new TransformationOperations(this));				
 		define(new StatusOperations(this));
 		define(new ListOperations(this));
 		define(new DictionaryOperations(this));
@@ -142,6 +135,9 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 		((ModuleImpl)fStdlibModule).freeze();		
 	}
 		
+	/* (non-Javadoc)
+	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOStandardLibrary#getEnvironment()
+	 */
 	@Override
 	public QVTOEnvironment getEnvironment() {
 		return fEnv;
@@ -152,6 +148,9 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 		return fFactory;
 	}
 		
+	/* (non-Javadoc)
+	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOStandardLibrary#getOperations(org.eclipse.emf.ecore.EClassifier)
+	 */
 	public List<EOperation> getOperations(EClassifier classifier) {
 		List<EOperation> result = TypeUtil.getOperations(fEnv, classifier);
 		return (result != null) ? result : Collections.<EOperation>emptyList();
@@ -165,51 +164,94 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
     	return classifier == getElementType() || classifier == fStdlibModule.getEClassifier(classifier.getName());
     }
     
+	/* (non-Javadoc)
+	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOStandardLibrary#getStdLibModule()
+	 */
 	@Override
     public Library getStdLibModule() {
 		return fStdlibModule;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOStandardLibrary#getList()
+	 */
 	public EClassifier getList() {
 		return LIST;
 	}
 		
+	/* (non-Javadoc)
+	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOStandardLibrary#getDictionary()
+	 */
 	public EClassifier getDictionary() {
 		return DICTIONARY;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOStandardLibrary#getOrderedTupleType()
+	 */
+	public EClassifier getOrderedTupleType() {	
+		return ORDERED_TUPLE;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOStandardLibrary#getKeyT()
+	 */
 	public EClassifier getKeyT() {		
 		return KEY_T;
 	};
 		
+	/* (non-Javadoc)
+	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOStandardLibrary#getModelClass()
+	 */
 	public EClass getModelClass() {	
 		return MODEL;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOStandardLibrary#getStatusClass()
+	 */
 	public EClass getStatusClass() {
 		return STATUS;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOStandardLibrary#getExceptionClass()
+	 */
 	public EClass getExceptionClass() {
 		return EXCEPTION;
 	}	
 	
+	/* (non-Javadoc)
+	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOStandardLibrary#getTransformationClass()
+	 */
 	public EClass getTransformationClass() {	
 		return TRANSFORMATION;
 	}	
-	
-	public EOperation getTransformOperation() {	
-		return TRANSFORM;
-	}	
-	
+		
+	/* (non-Javadoc)
+	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOStandardLibrary#getModuleType()
+	 */
 	public EClass getModuleType() {
 		return ExpressionsPackage.eINSTANCE.getModule();
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOStandardLibrary#getElementType()
+	 */
 	public EClassifier getElementType() {
 		return ELEMENT;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOStandardLibrary#getObject()
+	 */
+	public EClassifier getObject() {
+		return OBJECT;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOStandardLibrary#createModel(java.lang.String)
+	 */
 	public ModelType createModel(String name) {
 		ModelType modelType = ExpressionsFactory.eINSTANCE.createModelType();
 		modelType.setName(name);
@@ -226,6 +268,9 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 		return lib;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOStandardLibrary#createTransformation(java.lang.String)
+	 */
 	public OperationalTransformation createTransformation(String name) {	
 		OperationalTransformation transf = ExpressionsFactory.eINSTANCE.createOperationalTransformation();
 		transf.setInstanceClass(TransformationInstance.class);
@@ -279,6 +324,32 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib {
 
 		return result;
 	}
+	
+	private OrderedTupleType createOrderedTuple() {
+		OrderedTupleType result = ImperativeOCLFactory.eINSTANCE.createOrderedTupleType();
+		result.setName("OrderedTupleType(T)"); //$NON-NLS-1$
+		result.getElementType().add(getOCLStdLib().getT());
+		
+		fStdlibModule.getEClassifiers().add(result);
+		return result;
+	}
+	
+	private ListType createListType() {
+		ListType result = getStdlibFactory().createList(getOCLStdLib().getT());
+		fStdlibModule.getEClassifiers().add(result);
+		return result;
+	}
+	
+	private DictionaryType createDictionaryType() {
+		KEY_T = ImperativeOCLFactory.eINSTANCE.createTemplateParameterType();
+		KEY_T.setName("KeyT"); //$NON-NLS-1$
+		fStdlibModule.getEClassifiers().add(KEY_T);
+		
+		DictionaryType result = fFactory.createDictionary(KEY_T, getOCLStdLib().getT());
+		fStdlibModule.getEClassifiers().add(result);
+
+		return result;
+	}	
 		
 	private static QvtOperationalStdLibrary createLibrary() {
 		try {

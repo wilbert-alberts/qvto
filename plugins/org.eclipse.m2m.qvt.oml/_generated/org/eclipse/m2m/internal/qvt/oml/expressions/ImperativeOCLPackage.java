@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ImperativeOCLPackage.java,v 1.2 2009/01/13 16:51:21 radvorak Exp $
+ * $Id: ImperativeOCLPackage.java,v 1.3 2009/01/27 15:18:11 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
@@ -77,7 +77,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeOCLPackageImpl#getImperativeOCLVisitor()
 	 * @generated
 	 */
-	int IMPERATIVE_OCL_VISITOR = 21;
+	int IMPERATIVE_OCL_VISITOR = 22;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ListTypeImpl <em>List Type</em>}' class.
@@ -117,7 +117,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeOCLPackageImpl#getTemplateParameterType()
 	 * @generated
 	 */
-	int TEMPLATE_PARAMETER_TYPE = 17;
+	int TEMPLATE_PARAMETER_TYPE = 18;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.DictionaryTypeImpl <em>Dictionary Type</em>}' class.
@@ -137,7 +137,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeOCLPackageImpl#getTypedef()
 	 * @generated
 	 */
-	int TYPEDEF = 18;
+	int TYPEDEF = 19;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeExpressionImpl <em>Imperative Expression</em>}' class.
@@ -284,7 +284,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeOCLPackageImpl#getVariableInitExp()
 	 * @generated
 	 */
-	int VARIABLE_INIT_EXP = 19;
+	int VARIABLE_INIT_EXP = 20;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.WhileExpImpl <em>While Exp</em>}' class.
@@ -294,7 +294,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeOCLPackageImpl#getWhileExp()
 	 * @generated
 	 */
-	int WHILE_EXP = 20;
+	int WHILE_EXP = 21;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.SwitchExpImpl <em>Switch Exp</em>}' class.
@@ -304,7 +304,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeOCLPackageImpl#getSwitchExp()
 	 * @generated
 	 */
-	int SWITCH_EXP = 16;
+	int SWITCH_EXP = 17;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.AltExpImpl <em>Alt Exp</em>}' class.
@@ -786,7 +786,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeOCLPackageImpl#getReturnExp()
 	 * @generated
 	 */
-	int RETURN_EXP = 15;
+	int RETURN_EXP = 16;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeLoopExpImpl <em>Imperative Loop Exp</em>}' class.
@@ -2414,6 +2414,250 @@ public interface ImperativeOCLPackage extends EPackage {
 	int LOG_EXP_FEATURE_COUNT = EcorePackage.OPERATION_CALL_EXP_FEATURE_COUNT + 1;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.OrderedTupleTypeImpl <em>Ordered Tuple Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.OrderedTupleTypeImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeOCLPackageImpl#getOrderedTupleType()
+	 * @generated
+	 */
+	int ORDERED_TUPLE_TYPE = 15;
+
+	/**
+	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__EANNOTATIONS = org.eclipse.emf.ecore.EcorePackage.ECLASS__EANNOTATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__NAME = org.eclipse.emf.ecore.EcorePackage.ECLASS__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Instance Class Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__INSTANCE_CLASS_NAME = org.eclipse.emf.ecore.EcorePackage.ECLASS__INSTANCE_CLASS_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Instance Class</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__INSTANCE_CLASS = org.eclipse.emf.ecore.EcorePackage.ECLASS__INSTANCE_CLASS;
+
+	/**
+	 * The feature id for the '<em><b>Default Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__DEFAULT_VALUE = org.eclipse.emf.ecore.EcorePackage.ECLASS__DEFAULT_VALUE;
+
+	/**
+	 * The feature id for the '<em><b>Instance Type Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__INSTANCE_TYPE_NAME = org.eclipse.emf.ecore.EcorePackage.ECLASS__INSTANCE_TYPE_NAME;
+
+	/**
+	 * The feature id for the '<em><b>EPackage</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__EPACKAGE = org.eclipse.emf.ecore.EcorePackage.ECLASS__EPACKAGE;
+
+	/**
+	 * The feature id for the '<em><b>EType Parameters</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__ETYPE_PARAMETERS = org.eclipse.emf.ecore.EcorePackage.ECLASS__ETYPE_PARAMETERS;
+
+	/**
+	 * The feature id for the '<em><b>Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__ABSTRACT = org.eclipse.emf.ecore.EcorePackage.ECLASS__ABSTRACT;
+
+	/**
+	 * The feature id for the '<em><b>Interface</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__INTERFACE = org.eclipse.emf.ecore.EcorePackage.ECLASS__INTERFACE;
+
+	/**
+	 * The feature id for the '<em><b>ESuper Types</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__ESUPER_TYPES = org.eclipse.emf.ecore.EcorePackage.ECLASS__ESUPER_TYPES;
+
+	/**
+	 * The feature id for the '<em><b>EOperations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__EOPERATIONS = org.eclipse.emf.ecore.EcorePackage.ECLASS__EOPERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>EAll Attributes</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__EALL_ATTRIBUTES = org.eclipse.emf.ecore.EcorePackage.ECLASS__EALL_ATTRIBUTES;
+
+	/**
+	 * The feature id for the '<em><b>EAll References</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__EALL_REFERENCES = org.eclipse.emf.ecore.EcorePackage.ECLASS__EALL_REFERENCES;
+
+	/**
+	 * The feature id for the '<em><b>EReferences</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__EREFERENCES = org.eclipse.emf.ecore.EcorePackage.ECLASS__EREFERENCES;
+
+	/**
+	 * The feature id for the '<em><b>EAttributes</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__EATTRIBUTES = org.eclipse.emf.ecore.EcorePackage.ECLASS__EATTRIBUTES;
+
+	/**
+	 * The feature id for the '<em><b>EAll Containments</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__EALL_CONTAINMENTS = org.eclipse.emf.ecore.EcorePackage.ECLASS__EALL_CONTAINMENTS;
+
+	/**
+	 * The feature id for the '<em><b>EAll Operations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__EALL_OPERATIONS = org.eclipse.emf.ecore.EcorePackage.ECLASS__EALL_OPERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>EAll Structural Features</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__EALL_STRUCTURAL_FEATURES = org.eclipse.emf.ecore.EcorePackage.ECLASS__EALL_STRUCTURAL_FEATURES;
+
+	/**
+	 * The feature id for the '<em><b>EAll Super Types</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__EALL_SUPER_TYPES = org.eclipse.emf.ecore.EcorePackage.ECLASS__EALL_SUPER_TYPES;
+
+	/**
+	 * The feature id for the '<em><b>EID Attribute</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__EID_ATTRIBUTE = org.eclipse.emf.ecore.EcorePackage.ECLASS__EID_ATTRIBUTE;
+
+	/**
+	 * The feature id for the '<em><b>EStructural Features</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__ESTRUCTURAL_FEATURES = org.eclipse.emf.ecore.EcorePackage.ECLASS__ESTRUCTURAL_FEATURES;
+
+	/**
+	 * The feature id for the '<em><b>EGeneric Super Types</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__EGENERIC_SUPER_TYPES = org.eclipse.emf.ecore.EcorePackage.ECLASS__EGENERIC_SUPER_TYPES;
+
+	/**
+	 * The feature id for the '<em><b>EAll Generic Super Types</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__EALL_GENERIC_SUPER_TYPES = org.eclipse.emf.ecore.EcorePackage.ECLASS__EALL_GENERIC_SUPER_TYPES;
+
+	/**
+	 * The feature id for the '<em><b>Element Type</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__ELEMENT_TYPE = org.eclipse.emf.ecore.EcorePackage.ECLASS_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Ordered Tuple Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE_FEATURE_COUNT = org.eclipse.emf.ecore.EcorePackage.ECLASS_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>EAnnotations</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3294,7 +3538,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeOCLPackageImpl#getSeverityKind()
 	 * @generated
 	 */
-	int SEVERITY_KIND = 22;
+	int SEVERITY_KIND = 23;
 
 
 	/**
@@ -3646,6 +3890,27 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getLogExp_Condition();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.OrderedTupleType <em>Ordered Tuple Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Ordered Tuple Type</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.OrderedTupleType
+	 * @generated
+	 */
+	EClass getOrderedTupleType();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.m2m.internal.qvt.oml.expressions.OrderedTupleType#getElementType <em>Element Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Element Type</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.OrderedTupleType#getElementType()
+	 * @see #getOrderedTupleType()
+	 * @generated
+	 */
+	EReference getOrderedTupleType_ElementType();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp <em>Assert Exp</em>}'.
@@ -4190,6 +4455,24 @@ public interface ImperativeOCLPackage extends EPackage {
 		 * @generated
 		 */
 		EReference LOG_EXP__CONDITION = eINSTANCE.getLogExp_Condition();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.OrderedTupleTypeImpl <em>Ordered Tuple Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.OrderedTupleTypeImpl
+		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeOCLPackageImpl#getOrderedTupleType()
+		 * @generated
+		 */
+		EClass ORDERED_TUPLE_TYPE = eINSTANCE.getOrderedTupleType();
+
+		/**
+		 * The meta object literal for the '<em><b>Element Type</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ORDERED_TUPLE_TYPE__ELEMENT_TYPE = eINSTANCE.getOrderedTupleType_ElementType();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.AssertExpImpl <em>Assert Exp</em>}' class.

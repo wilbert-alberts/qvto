@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ImperativeOCLFactory.java,v 1.1 2009/01/11 23:22:03 radvorak Exp $
+ * $Id: ImperativeOCLFactory.java,v 1.2 2009/01/27 15:18:11 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
@@ -139,6 +139,15 @@ public interface ImperativeOCLFactory extends EFactory {
 	 * @generated
 	 */
 	LogExp createLogExp();
+
+	/**
+	 * Returns a new object of class '<em>Ordered Tuple Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Ordered Tuple Type</em>'.
+	 * @generated
+	 */
+	OrderedTupleType createOrderedTupleType();
 
 	/**
 	 * Returns a new object of class '<em>Assert Exp</em>'.

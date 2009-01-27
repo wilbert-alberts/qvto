@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ImperativeOCLSwitch.java,v 1.3 2009/01/13 20:21:46 radvorak Exp $
+ * $Id: ImperativeOCLSwitch.java,v 1.4 2009/01/27 15:18:11 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.util;
 
@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.ETypedElement;
+import org.eclipse.m2m.internal.qvt.oml.expressions.*;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
@@ -374,6 +375,16 @@ public class ImperativeOCLSwitch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ImperativeOCLPackage.ORDERED_TUPLE_TYPE: {
+				OrderedTupleType orderedTupleType = (OrderedTupleType)theEObject;
+				T1 result = caseOrderedTupleType(orderedTupleType);
+				if (result == null) result = caseEClass(orderedTupleType);
+				if (result == null) result = caseEClassifier(orderedTupleType);
+				if (result == null) result = caseENamedElement(orderedTupleType);
+				if (result == null) result = caseEModelElement(orderedTupleType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ImperativeOCLPackage.RETURN_EXP: {
 				ReturnExp returnExp = (ReturnExp)theEObject;
 				T1 result = caseReturnExp(returnExp);
@@ -656,6 +667,21 @@ public class ImperativeOCLSwitch<T1> {
 	 * @generated
 	 */
 	public T1 caseLogExp(LogExp object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Ordered Tuple Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Ordered Tuple Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseOrderedTupleType(OrderedTupleType object) {
 		return null;
 	}
 

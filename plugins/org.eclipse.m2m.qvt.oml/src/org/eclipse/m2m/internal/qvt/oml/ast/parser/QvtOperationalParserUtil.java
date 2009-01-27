@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -81,10 +82,13 @@ public class QvtOperationalParserUtil {
 	private static final String NAMESPACE_SEPARATOR = "."; //$NON-NLS-1$
 	
 	private static final String QVT_NAMESPACE_URI = "http://www.eclipse.org/m2m/1.0.0/QVT"; //$NON-NLS-1$
-	private static final String QVT_IS_ABSTACT = "isAbstract"; //$NON-NLS-1$
-	private static final String QVT_IS_STATIC = "isStatic"; //$NON-NLS-1$	
+	private static final String QVT_IS_ABSTACT = "abstract"; //$NON-NLS-1$
+	private static final String QVT_IS_STATIC = "static"; //$NON-NLS-1$	
 	
-	private static final String QVT_INIT_EXPRESSION_URI = QVT_NAMESPACE_URI + "/initExp"; //$NON-NLS-1$	
+	private static final String QVT_INIT_EXPRESSION_URI = QVT_NAMESPACE_URI + "/initExp"; //$NON-NLS-1$
+	
+	private static final String QVT_DEPRECATED = "deprecated"; //$NON-NLS-1$
+	private static final String QVT_UNSUPPORTED = "unsupported"; //$NON-NLS-1$	
 
 	private QvtOperationalParserUtil() {
 	}
@@ -197,29 +201,39 @@ public class QvtOperationalParserUtil {
 		return null; 
 	}
 
-	public static Module getOwningModule(EOperation operation) {
-		EClass containingClass = operation.getEContainingClass();
-		if(containingClass != null) {
-			EPackage owningPackage = containingClass.getEPackage();
-			if(containingClass instanceof Typedef) {							
-				if(owningPackage != null) {
-					// FIXME -
-					// our QVT AST meta-model contains the additional operation via
-					// typedef in 'additions' package, owned by the QVT module
-					// -> should be directly owned by the module
-					if(owningPackage.getESuperPackage() instanceof Module) {				
-						return (Module) owningPackage.getESuperPackage();
-					}
-				} 
-			} else if(owningPackage instanceof Module) {
-				// handles cases like plain EOperation on Model class in Stdlib
-				return (Module)owningPackage;
-			}
+	public static Module getOwningModule(EOperation operation) {		
+		EClassifier owner = operation.getEContainingClass();
+		if(owner == null) {
+			return null;
 		}
 		
-		// check for plain EOperation directly owned by a QVT module
-		if(containingClass instanceof Module) {
-			return (Module) containingClass;
+		// check for operations directly owned by a QVT module
+		if(owner instanceof Module) {
+			return (Module) owner;
+		}
+		
+		EPackage owningPackage = owner.getEPackage();
+		if(owningPackage == null) {
+			return null;
+		}
+		
+		if(owner instanceof Typedef) {
+			if(owningPackage instanceof Module) {
+				return (Module) owningPackage;						
+			} 
+
+			// our QVT AST meta-model contains the additional operations via
+			// typedef stored directly in the owning module 
+			// Additionally, support the nested 'additions' package as implemented by MDT OCL					
+			EPackage superOwner = owningPackage.getESuperPackage();
+			if(superOwner instanceof Module) {
+				return (Module) superOwner;
+			} 
+		} 
+		
+		if(owningPackage instanceof Module) {
+			// handles cases like plain EOperation on Model class in Stdlib
+			return (Module)owningPackage;
 		}
 		
 		return null; 
@@ -486,6 +500,7 @@ public class QvtOperationalParserUtil {
 		return context instanceof EClass;
 	}
 	
+	// FIXME - review this spaghetti
 	public static boolean isTypeEquals(QvtOperationalEnv env, EClassifier type, EClassifier otherType) {
 		return isAssignableToFrom(env, type, otherType) && isAssignableToFrom(env, otherType, type);
 	}
@@ -563,6 +578,49 @@ public class QvtOperationalParserUtil {
 			parent = parent.eContainer();
 		}
 		return result;
+	}
+
+	public static void markAsUnsupported(EModelElement element) {
+		EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
+		annotation.setSource(QVT_NAMESPACE_URI);
+		annotation.getDetails().put(QVT_UNSUPPORTED, null);
+		element.getEAnnotations().add(annotation);
+	}
+
+	public static boolean isUnsupported(EModelElement element) {
+		EAnnotation annotation = element.getEAnnotation(QVT_NAMESPACE_URI);
+		if(annotation != null) {
+			return annotation.getDetails().containsKey(QVT_UNSUPPORTED);
+		}
+		
+		return false;		
+	}
+	
+	public static void markAsDeprecated(EModelElement element) {
+		markAsDeprecated(element, null);
+	}
+	
+	public static void markAsDeprecated(EModelElement element, String replacingReferenceOpt) {
+		EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
+		annotation.setSource(QVT_NAMESPACE_URI);
+		if(replacingReferenceOpt != null) {
+			annotation.getDetails().put(QVT_DEPRECATED, replacingReferenceOpt);
+		}
+		element.getEAnnotations().add(annotation);
+	}
+	
+	
+	public static boolean isDeprecated(EModelElement element) {
+		EAnnotation annotation = element.getEAnnotation(QVT_NAMESPACE_URI);
+		return annotation != null && annotation.getDetails().containsKey(QVT_DEPRECATED);
+	}
+	
+	public static String getDeprecatedBy(EModelElement element) {
+		EAnnotation annotation = element.getEAnnotation(QVT_NAMESPACE_URI);
+		if(annotation != null) {
+			return annotation.getDetails().get(QVT_DEPRECATED);
+		}		
+		return null;
 	}
 	
 	public static void markAsAbstractMappingOperation(MappingOperation mappingOperation) {

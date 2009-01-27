@@ -247,7 +247,7 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVTOEnviro
 		return (QVTOTypeResolver)super.getTypeResolver();
 	}
 	
-	public QvtOperationalStdLibrary getQVTStandardLibrary() {
+	public QVTOStandardLibrary getQVTStandardLibrary() {
 		return QvtOperationalStdLibrary.INSTANCE;
 	}
 		

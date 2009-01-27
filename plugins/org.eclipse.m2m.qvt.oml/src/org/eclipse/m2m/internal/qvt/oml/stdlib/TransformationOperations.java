@@ -12,7 +12,9 @@
 
 package org.eclipse.m2m.internal.qvt.oml.stdlib;
 
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOEnvironment;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
@@ -22,17 +24,31 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance.Interna
 import org.eclipse.m2m.internal.qvt.oml.stdlib.model.ExceptionInstance;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.model.StatusInstance;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.model.StdlibFactory;
+import org.eclipse.ocl.types.OCLStandardLibrary;
 
 public class TransformationOperations extends AbstractContextualOperations {
 
+	static final String TRANSFORM_NAME = "transform"; //$NON-NLS-1$	
+	static final String PARALLEL_TRANSFORM_NAME = "parallelTransform"; //$NON-NLS-1$	
+	static final String WAIT_NAME = "wait"; //$NON-NLS-1$	
+	
+	
     public TransformationOperations(AbstractQVTStdlib library) {
 		super(library, library.getTransformationClass());
 	}
 	
 	@Override
 	protected OperationProvider[] getOperations() {
-		return new OwnedOperationProvider[] {
-				new OwnedOperationProvider(createTransformHandler(getStdlib()), "transform", getStdlib().getStatusClass())//$NON-NLS-1$ 
+		QVTOEnvironment environment = getStdlib().getEnvironment();
+		OCLStandardLibrary<EClassifier> oclStdLibrary = environment.getOCLStandardLibrary();
+		EClassifier statusList = environment.getTypeResolver().resolveListType(oclStdLibrary.getT());
+		
+		return new OwnedOperationProvider[] {				
+			new OwnedOperationProvider(createTransformHandler(getStdlib()), TRANSFORM_NAME, getStdlib().getStatusClass()),
+			
+			new OwnedOperationProvider(UNSUPPORTED_OPER, PARALLEL_TRANSFORM_NAME, getStdlib().getStatusClass()),
+			new OwnedOperationProvider(UNSUPPORTED_OPER, WAIT_NAME, new String[] { "statusList" }, //$NON-NLS-1$
+					oclStdLibrary.getOclVoid(), statusList)
 		};
 	}
 	

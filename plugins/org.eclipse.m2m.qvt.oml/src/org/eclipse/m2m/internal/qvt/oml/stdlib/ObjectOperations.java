@@ -21,16 +21,15 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOEnvironment;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.ocl.types.OCLStandardLibrary;
-import org.eclipse.ocl.util.TypeUtil;
-import org.eclipse.ocl.utilities.PredefinedType;
 
 
-public class OclAnyOperations extends AbstractContextualOperations {
+public class ObjectOperations extends AbstractContextualOperations {
 
-	public static final String REPR_NAME = "repr"; //$NON-NLS-1$
+	static final String REPR_NAME = "repr"; //$NON-NLS-1$
+	static final String AS_ORDERED_TUPLE_NAME = "asOrderedTuple"; //$NON-NLS-1$	
 	
-	public OclAnyOperations(AbstractQVTStdlib library) {
-		super(library, library.getEnvironment().getOCLStandardLibrary().getOclAny());
+	public ObjectOperations(AbstractQVTStdlib library) {
+		super(library, library.getObject());
 	}
 		
 	@Override
@@ -38,19 +37,11 @@ public class OclAnyOperations extends AbstractContextualOperations {
 		QVTOEnvironment env = getStdlib().getEnvironment();
 		OCLStandardLibrary<EClassifier> oclStdlib = env.getOCLStandardLibrary();
 		
-		EClassifier createTypeType = getStdlib().getOCLStdLib().getOclType();
-		return new OperationProvider[] {
-			// FIXME - repr() should be available on Object type 
-			new OperationProvider(REPR, REPR_NAME, oclStdlib.getString()),
-				
-			new OperationProvider(StdlibModuleOperations.DUMP, 
-					StdlibModuleOperations.DUMP_NAME, oclStdlib.getOclVoid())
-					.deprecate(),
-					
-			new OperationProvider(ALL_INSTANCES, PredefinedType.ALL_INSTANCES_NAME,
-					TypeUtil.resolveSetType(env, getStdlib().getOCLStdLib().getT()), 
-					TypeUtil.resolveType(env, createTypeType))
-					.deprecateBy("Element::objectsOfKind(OclType)") //$NON-NLS-1$
+		return new OperationProvider[] { 
+			new OwnedOperationProvider(REPR, REPR_NAME, oclStdlib.getString()),
+								
+			new OwnedOperationProvider(AS_ORDERED_TUPLE, AS_ORDERED_TUPLE_NAME,
+				getStdlib().getOrderedTupleType())
 		};
 	}
 	
@@ -60,9 +51,7 @@ public class OclAnyOperations extends AbstractContextualOperations {
 		}
 	};
 
-
-	// non-std - legacy
-	private static final CallHandler ALL_INSTANCES = new CallHandler() {
+	private static final CallHandler AS_ORDERED_TUPLE = new CallHandler() {
 		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 	        Set<Object> instances = new LinkedHashSet<Object>();	        
 	        for (Iterator<EObject> it = ((EObject) source).eAllContents(); it.hasNext(); ) {

@@ -40,7 +40,7 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 	private Module myContextModule;	
 	private List<Module> myLibs;
 	
-	public QvtOperationalModuleEnv(EPackage.Registry registry) {
+	QvtOperationalModuleEnv(EPackage.Registry registry) {
 		super(registry,  new XMIResourceImpl(URI.createURI("qvto:/module.env"))); //$NON-NLS-1$
 
         // Eliminate parsing warning on "" occurrences, used in model types URIs, etc.

@@ -26,7 +26,7 @@ import org.eclipse.ocl.util.TypeUtil;
 
 
 public class ElementOperations extends AbstractContextualOperations {
-
+	
 	static final String DEEP_CLONE_NAME = "deepclone"; //$NON-NLS-1$	
 	static final String CLONE_NAME = "clone"; //$NON-NLS-1$
 	
@@ -43,16 +43,36 @@ public class ElementOperations extends AbstractContextualOperations {
 		EClassifier elementSet = TypeUtil.resolveSetType(getStdlib().getEnvironment(), getStdlib().getElementType());
 		EClassifier oclType = getStdlib().getOCLStdLib().getOclType();
 		return new OwnedOperationProvider[] {
-			new OwnedOperationProvider(DEEP_CLONE, DEEP_CLONE_NAME, getStdlib().getElementType()),
-			new OwnedOperationProvider(CLONE, CLONE_NAME, getStdlib().getElementType()),
-			new OwnedOperationProvider(CONTAINER, CONTAINER_NAME, getStdlib().getElementType()),
-			new OwnedOperationProvider(METACLASS, METACLASS_NAME, getOclStdlib().getString()),
-			new OwnedOperationProvider(SUBOBJECTS, SUBOBJECTS_NAME, elementSet),
-			new OwnedOperationProvider(SUBOBJECTS_OF_TYPE, SUBOBJECTS_OF_TYPE_NAME, elementSet, oclType),
-			new OwnedOperationProvider(SUBOBJECTS_OF_KIND, SUBOBJECTS_OF_KIND_NAME, elementSet, oclType),
+			new OwnedOperationProvider(UNSUPPORTED_OPER, "_localId", getOclStdlib().getString()), //$NON-NLS-1$
+			new OwnedOperationProvider(UNSUPPORTED_OPER, "_globalId", getOclStdlib().getString()), //$NON-NLS-1$
+			
 			new OwnedOperationProvider(ALL_SUBOBJECTS, ALL_SUBOBJECTS_NAME, elementSet),
-			new OwnedOperationProvider(ALL_SUBOBJECTS_OF_TYPE, ALL_SUBOBJECTS_OF_TYPE_NAME, elementSet, oclType),
-			new OwnedOperationProvider(ALL_SUBOBJECTS_OF_KIND, ALL_SUBOBJECTS_OF_KIND_NAME, elementSet, oclType),					
+			new OwnedOperationProvider(ALL_SUBOBJECTS_OF_TYPE, ALL_SUBOBJECTS_OF_TYPE_NAME, 
+					new String[] { "type" }, elementSet, oclType), //$NON-NLS-1$
+					
+			new OwnedOperationProvider(ALL_SUBOBJECTS_OF_KIND, ALL_SUBOBJECTS_OF_KIND_NAME, 
+					new String[] { "type" }, elementSet, oclType), //$NON-NLS-1$
+			new OwnedOperationProvider(CLONE, CLONE_NAME, getStdlib().getElementType()),
+			new OwnedOperationProvider(CONTAINER, CONTAINER_NAME, getStdlib().getElementType()),				
+			new OwnedOperationProvider(DEEP_CLONE, DEEP_CLONE_NAME, getStdlib().getElementType()),
+			
+			new OwnedOperationProvider(UNSUPPORTED_OPER, "markedAs", //$NON-NLS-1$
+					new String[] { "value" }, getOclStdlib().getBoolean(), getOclStdlib().getString()), //$NON-NLS-1$			
+			new OwnedOperationProvider(UNSUPPORTED_OPER, "markValue", getStdlib().getObject()), //$NON-NLS-1$			
+					
+			new OwnedOperationProvider(METACLASS, METACLASS_NAME, getOclStdlib().getString()),
+			
+			new OwnedOperationProvider(UNSUPPORTED_OPER, "stereotypedBy", //$NON-NLS-1$
+					new String[] { "value" }, getOclStdlib().getBoolean(), getOclStdlib().getString()), //$NON-NLS-1$
+			
+			new OwnedOperationProvider(UNSUPPORTED_OPER, "stereotypedStrictBy", //$NON-NLS-1$
+							new String[] { "value" }, getOclStdlib().getBoolean(), getOclStdlib().getString()), //$NON-NLS-1$			
+			
+			new OwnedOperationProvider(SUBOBJECTS, SUBOBJECTS_NAME, elementSet),
+			new OwnedOperationProvider(SUBOBJECTS_OF_TYPE, SUBOBJECTS_OF_TYPE_NAME, 
+					new String[] { "type" }, elementSet, oclType), //$NON-NLS-1$
+			new OwnedOperationProvider(SUBOBJECTS_OF_KIND, SUBOBJECTS_OF_KIND_NAME, 
+					new String[] { "type" }, elementSet, oclType), //$NON-NLS-1$
 		};
 	}
 

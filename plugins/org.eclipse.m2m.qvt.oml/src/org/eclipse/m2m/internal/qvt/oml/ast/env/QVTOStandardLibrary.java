@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008 Borland Software Corporation
+ * Copyright (c) 2009 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,15 +9,24 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.internal.qvt.oml.stdlib.model;
+package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 
-public interface StdlibPackage {
-
-	EClassifier getObject();
+public interface QVTOStandardLibrary {
 	
+	Library getStdLibModule();
+
+	EClassifier getList();
+
+	EClassifier getDictionary();
+
+	EClassifier getOrderedTupleType();
+
+	EClassifier getKeyT();
+
 	EClass getModelClass();
 
 	EClass getStatusClass();
@@ -29,12 +38,6 @@ public interface StdlibPackage {
 	EClass getModuleType();
 
 	EClassifier getElementType();
-	
-	EClassifier getList();
 
-	EClassifier getDictionary();
-	
-	EClassifier getKeyT();
-	
-	EClassifier getOrderedTupleType();	
+	EClassifier getObject();
 }

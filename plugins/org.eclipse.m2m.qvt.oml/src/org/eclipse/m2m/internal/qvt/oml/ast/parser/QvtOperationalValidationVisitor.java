@@ -105,7 +105,7 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 		Boolean result = Boolean.TRUE;
 		EClass instantiatedClass = instantiationExp.getInstantiatedClass();
 		if(instantiatedClass == null || QvtOperationalStdLibrary.INSTANCE.getTransformationClass().isSuperTypeOf(instantiatedClass) == false) {
-			fEnv.reportError(ValidationMessages.bind(
+			fEnv.reportError(NLS.bind(
 					ValidationMessages.QvtOperationalValidationVisitor_invalidInstantiatedType, 
 					fEnv.getFormatter().formatType(instantiatedClass)), 
 					instantiationExp.getStartPosition(), 
@@ -135,7 +135,7 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 					boolean compatible = paramType instanceof ModelType && expectedType instanceof ModelType &&
 										checkCompatibleModelType((ModelType)paramType, (ModelType)expectedType);
 					if(!compatible) {
-						fEnv.reportError(ValidationMessages.bind(
+						fEnv.reportError(NLS.bind(
 								ValidationMessages.QvtOperationalValidationVisitor_incompatibleArgumentModelType,
 								fEnv.getFormatter().formatType(nextActualArg.getType()),								
 								fEnv.getFormatter().formatType(modelParameter.getEType())),								
@@ -147,7 +147,7 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 					
 				}
 			} else {
-				fEnv.reportError(ValidationMessages.bind(
+				fEnv.reportError(NLS.bind(
 						ValidationMessages.QvtOperationalValidationVisitor_unresolvedTransformationSignature,
 						new Object [] {
 							fEnv.getFormatter().formatName(transf),

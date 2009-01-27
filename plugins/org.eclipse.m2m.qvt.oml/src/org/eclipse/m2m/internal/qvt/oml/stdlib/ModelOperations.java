@@ -30,6 +30,7 @@ import org.eclipse.ocl.util.TypeUtil;
 
 public class ModelOperations extends AbstractContextualOperations {
 
+	public static final String CREATE_EMPTY_MODEL_NAME = "createEmptyModel"; //$NON-NLS-1$	
 	public static final String OBJECTS_NAME = "objects"; //$NON-NLS-1$
 	public static final String ROOT_OBJECTS_NAME = "rootObjects"; //$NON-NLS-1$
 	public static final String OBJECTS_OF_TYPE_NAME = "objectsOfType"; //$NON-NLS-1$
@@ -50,15 +51,18 @@ public class ModelOperations extends AbstractContextualOperations {
 		EClassifier setOfElements = TypeUtil.resolveSetType(getStdlib().getEnvironment(), getStdlib().getElementType());
 		EClassifier setOfT = TypeUtil.resolveSetType(getStdlib().getEnvironment(), oclStdLibrary.getT());
 		return new OperationProvider[] {
+			new OwnedOperationProvider(UNSUPPORTED_OPER, "asTransformation", new String[] { "model" }, //$NON-NLS-1$ //$NON-NLS-2$
+					getStdlib().getTransformationClass(), getStdlib().getModelClass()),
+			new OwnedOperationProvider(UNSUPPORTED_OPER, "copy", getStdlib().getModelClass()), //$NON-NLS-1$
+			
+			createOwnedStaticOperationProvider(CREATE_EMPTY_MODEL, CREATE_EMPTY_MODEL_NAME, null, getStdlib().getModelClass()),
+			
 			new OwnedOperationProvider(OBJECTS, OBJECTS_NAME, setOfElements),
-			new OwnedOperationProvider(ROOT_OBJECTS, ROOT_OBJECTS_NAME, setOfElements),
-			new OwnedOperationProvider(OBJECTS_OF_TYPE, OBJECTS_OF_TYPE_NAME, 
+			new OwnedOperationProvider(OBJECTS_OF_TYPE, OBJECTS_OF_TYPE_NAME, new String[] { "type" }, //$NON-NLS-1$
 					setOfT, oclStdLibrary.getOclType()),
-			new OwnedOperationProvider(REMOVE_ELEMENT, REMOVE_ELEMENT_NAME, 
+			new OwnedOperationProvider(REMOVE_ELEMENT, REMOVE_ELEMENT_NAME, new String[] { "element" }, //$NON-NLS-1$
 					oclStdLibrary.getOclVoid(), getStdlib().getElementType()),
-			createStaticOperationProvider(CREATE_EMPTY_MODEL, CREATE_EMPTY_MODEL_NAME, 
-							getStdlib().getModelClass())
-					
+			new OwnedOperationProvider(ROOT_OBJECTS, ROOT_OBJECTS_NAME, setOfElements),					
 		};
 	}
 	
@@ -125,8 +129,6 @@ public class ModelOperations extends AbstractContextualOperations {
 		}
 	};
 		
-	private static final String CREATE_EMPTY_MODEL_NAME = "createEmptyModel"; //$NON-NLS-1$
-	
 	private static final CallHandler CREATE_EMPTY_MODEL = new CallHandler() {
 		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			if(source instanceof ModelType == false) {

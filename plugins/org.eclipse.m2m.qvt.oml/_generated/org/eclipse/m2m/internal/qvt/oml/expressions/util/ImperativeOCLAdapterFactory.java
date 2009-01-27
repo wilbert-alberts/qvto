@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ImperativeOCLAdapterFactory.java,v 1.3 2009/01/13 20:21:46 radvorak Exp $
+ * $Id: ImperativeOCLAdapterFactory.java,v 1.4 2009/01/27 15:18:11 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.util;
 
@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.ETypedElement;
+import org.eclipse.m2m.internal.qvt.oml.expressions.*;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
@@ -176,6 +177,10 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseLogExp(LogExp object) {
 				return createLogExpAdapter();
+			}
+			@Override
+			public Adapter caseOrderedTupleType(OrderedTupleType object) {
+				return createOrderedTupleTypeAdapter();
 			}
 			@Override
 			public Adapter caseReturnExp(ReturnExp object) {
@@ -512,6 +517,20 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createLogExpAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.OrderedTupleType <em>Ordered Tuple Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.OrderedTupleType
+	 * @generated
+	 */
+	public Adapter createOrderedTupleTypeAdapter() {
 		return null;
 	}
 
