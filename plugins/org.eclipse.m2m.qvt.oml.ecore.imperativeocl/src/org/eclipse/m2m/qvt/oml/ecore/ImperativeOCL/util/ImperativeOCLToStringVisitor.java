@@ -8,7 +8,7 @@
  * Contributors:
  *     Adolfo Sanchez-Barbudo Herrera - initial API and implementation
  * 
- * $Id: ImperativeOCLToStringVisitor.java,v 1.1 2009/01/25 23:10:43 radvorak Exp $
+ * $Id: ImperativeOCLToStringVisitor.java,v 1.2 2009/01/27 16:03:20 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.util;
 
@@ -49,7 +49,6 @@ import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.util.ToStringVisitor;
 import org.eclipse.ocl.utilities.TypedElement;
-import org.eclipse.qvt.declarative.ecore.utils.ClassUtils;
 
 /**
  * Implementation of {@link ImperativeOCLVisitor} to have the String representation of a {@link ImperativeExpression ImperativeOCL expression} 
@@ -62,7 +61,7 @@ public class ImperativeOCLToStringVisitor extends  ToStringVisitor<EClassifier, 
 
 	
 	public static ImperativeOCLToStringVisitor getInstance(TypedElement<EClassifier> element) {
-		Environment<?, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, ?, ?> env = ClassUtils.asClassUnchecked(Environment.Registry.INSTANCE.getEnvironmentFor(element));
+		Environment<?, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, ?, ?> env = Environment.Registry.INSTANCE.getEnvironmentFor(element);
 		return new ImperativeOCLToStringVisitor(env);
 	}
 	protected ImperativeOCLToStringVisitor(
