@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.38 2009/01/22 09:11:54 sboyko Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.39 2009/01/28 22:14:35 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -55,6 +55,7 @@ $Globals
 	import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;	
 	import org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS;
+	import org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.ModuleUsageCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
@@ -88,6 +89,7 @@ $KeyWords
 	mapping
 	query
 	helper
+	constructor
 	inout
 	configuration
 	intermediate
@@ -149,7 +151,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.38 2009/01/22 09:11:54 sboyko Exp $
+ * $Id: QvtOpLPGParser.g,v 1.39 2009/01/28 22:14:35 sboyko Exp $
  */
 	./
 $End
@@ -211,6 +213,7 @@ $Rules
 	unit_element -> classifier
 	unit_element -> _property
 	unit_element -> _helper
+	unit_element -> _constructor
 	unit_element -> entry
 	unit_element -> _mapping
 	unit_element -> _tag ';'
@@ -488,6 +491,7 @@ $Rules
 	module_element -> classifier
 	module_element -> _property
 	module_element -> _helper
+	module_element -> _constructor
 	module_element -> entry
 	module_element -> _mapping
 	module_element -> _tag ';'
@@ -1061,6 +1065,71 @@ $Rules
 		  $EndJava
 		./
 	--=== // Syntax for helper operations (end) ===--
+
+	--=== // Syntax for constructor operations (start) ===--
+	_constructor -> constructor_decl
+	_constructor -> constructor_def
+	
+	constructor_header ::= qualifierList constructor scoped_identifier simple_signature 
+		/.$BeginJava
+					SimpleSignatureCS signature = (SimpleSignatureCS) $getSym(4);					
+					MappingDeclarationCS mappingDeclarationCS = createMappingDeclarationCS(
+						null,
+						(ScopedNameCS) $getSym(3),
+						signature.getParams(),
+						null
+					);
+					setOffsets(mappingDeclarationCS, getIToken($getToken(2)), signature);
+
+					EList<SimpleNameCS> qualifiers = (EList<SimpleNameCS>) $getSym(1);
+					if (!qualifiers.isEmpty()) {
+						mappingDeclarationCS.getQualifiers().addAll(createQualifiersListCS(qualifiers));
+					}
+
+					$setResult(mappingDeclarationCS);
+		  $EndJava
+		./
+
+	constructor_decl ::= constructor_header ';' 
+		/.$BeginJava
+					MappingDeclarationCS mappingDecl = (MappingDeclarationCS) $getSym(1);
+					ConstructorCS result = createConstructorCS(
+							mappingDecl,
+							$EMPTY_ELIST
+						);
+					result.setBlackBox(true);
+					setOffsets(result, mappingDecl, getIToken($getToken(2)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	constructor_decl ::= constructor_header qvtErrorToken 
+		/.$BeginJava
+					MappingDeclarationCS mappingDecl = (MappingDeclarationCS) $getSym(1);
+					ConstructorCS result = createConstructorCS(
+							mappingDecl,
+							$EMPTY_ELIST
+						);
+					result.setBlackBox(true);
+					setOffsets(result, mappingDecl);
+					$setResult(result);
+		  $EndJava
+		./
+
+	constructor_def ::= constructor_header expression_block semicolonOpt
+		/.$BeginJava
+					MappingDeclarationCS mappingDecl = (MappingDeclarationCS) $getSym(1);
+					BlockExpCS blockExpCS = (BlockExpCS) $getSym(2);
+					ConstructorCS result = createConstructorCS(
+							mappingDecl,
+							blockExpCS.getBodyExpressions()
+						);
+					setOffsets(result, mappingDecl, blockExpCS);
+					$setResult(result);
+		  $EndJava
+		./
+
+	--=== // Syntax for constructor operations (end) ===--
 
 	--=== // Syntax for entries (start) ===--
 	entry -> entry_decl

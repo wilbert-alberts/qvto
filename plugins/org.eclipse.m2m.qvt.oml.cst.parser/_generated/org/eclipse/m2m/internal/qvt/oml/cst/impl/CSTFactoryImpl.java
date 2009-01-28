@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactoryImpl.java,v 1.14 2009/01/21 10:14:30 sboyko Exp $
+ * $Id: CSTFactoryImpl.java,v 1.15 2009/01/28 22:14:35 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -154,6 +154,7 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 			case CSTPackage.COMPLETE_SIGNATURE_CS: return createCompleteSignatureCS();
 			case CSTPackage.MAPPING_RULE_CS: return createMappingRuleCS();
 			case CSTPackage.MAPPING_QUERY_CS: return createMappingQueryCS();
+			case CSTPackage.CONSTRUCTOR_CS: return createConstructorCS();
 			case CSTPackage.MAPPING_INIT_CS: return createMappingInitCS();
 			case CSTPackage.MAPPING_END_CS: return createMappingEndCS();
 			case CSTPackage.MAPPING_SECTIONS_CS: return createMappingSectionsCS();
@@ -421,6 +422,16 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	public MappingQueryCS createMappingQueryCS() {
 		MappingQueryCSImpl mappingQueryCS = new MappingQueryCSImpl();
 		return mappingQueryCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ConstructorCS createConstructorCS() {
+		ConstructorCSImpl constructorCS = new ConstructorCSImpl();
+		return constructorCS;
 	}
 
 	/**

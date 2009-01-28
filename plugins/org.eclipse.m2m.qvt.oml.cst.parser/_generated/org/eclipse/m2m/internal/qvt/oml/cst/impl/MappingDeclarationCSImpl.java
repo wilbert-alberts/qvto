@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingDeclarationCSImpl.java,v 1.4 2008/10/27 14:26:31 aigdalov Exp $
+ * $Id: MappingDeclarationCSImpl.java,v 1.5 2009/01/28 22:14:35 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -46,7 +46,6 @@ import org.eclipse.ocl.cst.impl.CSTNodeImpl;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingDeclarationCSImpl#getQualifiers <em>Qualifiers</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingDeclarationCSImpl#getSimpleNameCS <em>Simple Name CS</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingDeclarationCSImpl#getContextType <em>Context Type</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingDeclarationCSImpl#getContextTypeAndName <em>Context Type And Name</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingDeclarationCSImpl#getParameters <em>Parameters</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingDeclarationCSImpl#getResult <em>Result</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingDeclarationCSImpl#getDirectionKindCS <em>Direction Kind CS</em>}</li>
@@ -94,16 +93,6 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 	 * @ordered
 	 */
 	protected TypeCS contextType;
-
-	/**
-	 * The cached value of the '{@link #getContextTypeAndName() <em>Context Type And Name</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getContextTypeAndName()
-	 * @generated
-	 * @ordered
-	 */
-	protected TypeCS contextTypeAndName;
 
 	/**
 	 * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
@@ -287,49 +276,6 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TypeCS getContextTypeAndName() {
-		return contextTypeAndName;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetContextTypeAndName(TypeCS newContextTypeAndName, NotificationChain msgs) {
-		TypeCS oldContextTypeAndName = contextTypeAndName;
-		contextTypeAndName = newContextTypeAndName;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE_AND_NAME, oldContextTypeAndName, newContextTypeAndName);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setContextTypeAndName(TypeCS newContextTypeAndName) {
-		if (newContextTypeAndName != contextTypeAndName) {
-			NotificationChain msgs = null;
-			if (contextTypeAndName != null)
-				msgs = ((InternalEObject)contextTypeAndName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE_AND_NAME, null, msgs);
-			if (newContextTypeAndName != null)
-				msgs = ((InternalEObject)newContextTypeAndName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE_AND_NAME, null, msgs);
-			msgs = basicSetContextTypeAndName(newContextTypeAndName, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE_AND_NAME, newContextTypeAndName, newContextTypeAndName));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EList<ParameterDeclarationCS> getParameters() {
 		if (parameters == null) {
 			parameters = new EObjectContainmentEList<ParameterDeclarationCS>(ParameterDeclarationCS.class, this, CSTPackage.MAPPING_DECLARATION_CS__PARAMETERS);
@@ -437,8 +383,6 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 				return basicSetSimpleNameCS(null, msgs);
 			case CSTPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE:
 				return basicSetContextType(null, msgs);
-			case CSTPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE_AND_NAME:
-				return basicSetContextTypeAndName(null, msgs);
 			case CSTPackage.MAPPING_DECLARATION_CS__PARAMETERS:
 				return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
 			case CSTPackage.MAPPING_DECLARATION_CS__RESULT:
@@ -465,8 +409,6 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 				return getSimpleNameCS();
 			case CSTPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE:
 				return getContextType();
-			case CSTPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE_AND_NAME:
-				return getContextTypeAndName();
 			case CSTPackage.MAPPING_DECLARATION_CS__PARAMETERS:
 				return getParameters();
 			case CSTPackage.MAPPING_DECLARATION_CS__RESULT:
@@ -499,9 +441,6 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 				return;
 			case CSTPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE:
 				setContextType((TypeCS)newValue);
-				return;
-			case CSTPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE_AND_NAME:
-				setContextTypeAndName((TypeCS)newValue);
 				return;
 			case CSTPackage.MAPPING_DECLARATION_CS__PARAMETERS:
 				getParameters().clear();
@@ -542,9 +481,6 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 			case CSTPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE:
 				setContextType((TypeCS)null);
 				return;
-			case CSTPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE_AND_NAME:
-				setContextTypeAndName((TypeCS)null);
-				return;
 			case CSTPackage.MAPPING_DECLARATION_CS__PARAMETERS:
 				getParameters().clear();
 				return;
@@ -578,8 +514,6 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 				return simpleNameCS != null;
 			case CSTPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE:
 				return contextType != null;
-			case CSTPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE_AND_NAME:
-				return contextTypeAndName != null;
 			case CSTPackage.MAPPING_DECLARATION_CS__PARAMETERS:
 				return parameters != null && !parameters.isEmpty();
 			case CSTPackage.MAPPING_DECLARATION_CS__RESULT:

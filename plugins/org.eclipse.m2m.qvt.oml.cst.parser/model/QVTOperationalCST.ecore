@@ -108,8 +108,6 @@
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="contextType" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
           containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="contextTypeAndName" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
-          containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
           eType="#//cst/ParameterDeclarationCS" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="result" upperBound="-1"
@@ -160,6 +158,11 @@
           eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="isSimpleDefinition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ConstructorCS" eSuperTypes="#//cst/MappingMethodCS">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="expressions" upperBound="-1"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+          containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="MappingSectionCS" abstract="true"
         eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode #//cst/ElementWithBody">

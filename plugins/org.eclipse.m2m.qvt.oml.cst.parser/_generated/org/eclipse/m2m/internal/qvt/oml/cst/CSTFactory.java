@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactory.java,v 1.12 2009/01/21 10:14:30 sboyko Exp $
+ * $Id: CSTFactory.java,v 1.13 2009/01/28 22:14:35 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -202,6 +202,15 @@ public interface CSTFactory extends EFactory {
 	 * @generated
 	 */
 	MappingQueryCS createMappingQueryCS();
+
+	/**
+	 * Returns a new object of class '<em>Constructor CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Constructor CS</em>'.
+	 * @generated
+	 */
+	ConstructorCS createConstructorCS();
 
 	/**
 	 * Returns a new object of class '<em>Mapping Init CS</em>'.

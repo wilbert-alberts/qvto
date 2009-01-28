@@ -27,6 +27,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralPartCS;
@@ -141,6 +142,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	    List<ModulePropertyCS> properties = new ArrayList<ModulePropertyCS>();
 	    List<MappingQueryCS> helpers = new ArrayList<MappingQueryCS>();
 	    List<MappingRuleCS> mappings = new ArrayList<MappingRuleCS>();
+	    List<ConstructorCS> constructors = new ArrayList<ConstructorCS>();
 	    List<RenameCS> renamings = new ArrayList<RenameCS>();
 	    List<ImportCS> imports = new ArrayList<ImportCS>();
 	    List<TagCS> tags = new ArrayList<TagCS>();
@@ -158,6 +160,8 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	            helpers.add((MappingQueryCS) unitElement);
 	        } else if (unitElement instanceof MappingRuleCS) {
 	            mappings.add((MappingRuleCS) unitElement);
+	        } else if (unitElement instanceof ConstructorCS) {
+	            constructors.add((ConstructorCS) unitElement);
 	        } else if (unitElement instanceof RenameCS) {
 	            renamings.add((RenameCS) unitElement);
 	        } else if (unitElement instanceof ImportCS) {
@@ -191,6 +195,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
             moduleCS.getProperties().addAll(properties);
             moduleCS.getMethods().addAll(helpers);
             moduleCS.getMethods().addAll(mappings);
+            moduleCS.getMethods().addAll(constructors);
             moduleCS.getRenamings().addAll(renamings);
             moduleCS.getClassifierDefCS().addAll(classifiers);
             moduleCS.getTags().addAll(tags);
@@ -261,6 +266,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
         List<ModulePropertyCS> properties = new ArrayList<ModulePropertyCS>();
         List<MappingQueryCS> helpers = new ArrayList<MappingQueryCS>();
         List<MappingRuleCS> mappings = new ArrayList<MappingRuleCS>();
+	    List<ConstructorCS> constructors = new ArrayList<ConstructorCS>();
         List<TagCS> tags = new ArrayList<TagCS>();
 
         for (CSTNode moduleElement : moduleElements) {
@@ -272,6 +278,8 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
                 helpers.add((MappingQueryCS) moduleElement);
             } else if (moduleElement instanceof MappingRuleCS) {
                 mappings.add((MappingRuleCS) moduleElement);
+	        } else if (moduleElement instanceof ConstructorCS) {
+	            constructors.add((ConstructorCS) moduleElement);
             } else if (moduleElement instanceof TagCS) {
                 tags.add((TagCS) moduleElement);
             } else {
@@ -283,6 +291,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
         moduleCS.getProperties().addAll(properties);
         moduleCS.getMethods().addAll(helpers);
         moduleCS.getMethods().addAll(mappings);
+        moduleCS.getMethods().addAll(constructors);
         moduleCS.getTags().addAll(tags);
         return moduleCS;
 	}
@@ -945,4 +954,11 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 	
+	protected final ConstructorCS createConstructorCS(MappingDeclarationCS methodDecl, EList<OCLExpressionCS> expressions) {
+		ConstructorCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createConstructorCS();
+		result.setMappingDeclarationCS(methodDecl);
+		result.getExpressions().addAll(expressions);
+		return result;
+	}
+
 }	

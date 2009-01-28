@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTAdapterFactory.java,v 1.14 2009/01/21 10:14:29 sboyko Exp $
+ * $Id: CSTAdapterFactory.java,v 1.15 2009/01/28 22:14:34 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -237,6 +237,10 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseMappingQueryCS(MappingQueryCS object) {
 				return createMappingQueryCSAdapter();
+			}
+			@Override
+			public Adapter caseConstructorCS(ConstructorCS object) {
+				return createConstructorCSAdapter();
 			}
 			@Override
 			public Adapter caseMappingSectionCS(MappingSectionCS object) {
@@ -745,6 +749,20 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createMappingQueryCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS <em>Constructor CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS
+	 * @generated
+	 */
+	public Adapter createConstructorCSAdapter() {
 		return null;
 	}
 

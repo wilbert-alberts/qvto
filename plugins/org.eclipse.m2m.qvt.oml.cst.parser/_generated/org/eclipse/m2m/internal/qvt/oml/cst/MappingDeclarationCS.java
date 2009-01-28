@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingDeclarationCS.java,v 1.5 2009/01/13 20:23:40 radvorak Exp $
+ * $Id: MappingDeclarationCS.java,v 1.6 2009/01/28 22:14:35 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -31,7 +31,6 @@ import org.eclipse.ocl.cst.TypeCS;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getQualifiers <em>Qualifiers</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getSimpleNameCS <em>Simple Name CS</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getContextType <em>Context Type</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getContextTypeAndName <em>Context Type And Name</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getParameters <em>Parameters</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getResult <em>Result</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getDirectionKindCS <em>Direction Kind CS</em>}</li>
@@ -121,32 +120,6 @@ public interface MappingDeclarationCS extends CSTNode {
 	 * @generated
 	 */
 	void setContextType(TypeCS value);
-
-	/**
-	 * Returns the value of the '<em><b>Context Type And Name</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Context Type And Name</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Context Type And Name</em>' containment reference.
-	 * @see #setContextTypeAndName(TypeCS)
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getMappingDeclarationCS_ContextTypeAndName()
-	 * @model containment="true"
-	 * @generated
-	 */
-	TypeCS getContextTypeAndName();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS#getContextTypeAndName <em>Context Type And Name</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Context Type And Name</em>' containment reference.
-	 * @see #getContextTypeAndName()
-	 * @generated
-	 */
-	void setContextTypeAndName(TypeCS value);
 
 	/**
 	 * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.

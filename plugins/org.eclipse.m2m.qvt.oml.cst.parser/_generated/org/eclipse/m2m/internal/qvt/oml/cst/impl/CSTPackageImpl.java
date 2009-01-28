@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.23 2009/01/22 09:11:54 sboyko Exp $
+ * $Id: CSTPackageImpl.java,v 1.24 2009/01/28 22:14:35 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -31,6 +31,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralPartCS;
@@ -253,6 +254,13 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * @generated
 	 */
 	private EClass mappingQueryCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass constructorCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1116,7 +1124,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getMappingDeclarationCS_ContextTypeAndName() {
+	public EReference getMappingDeclarationCS_Parameters() {
 		return (EReference)mappingDeclarationCSEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -1125,7 +1133,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getMappingDeclarationCS_Parameters() {
+	public EReference getMappingDeclarationCS_Result() {
 		return (EReference)mappingDeclarationCSEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -1134,7 +1142,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getMappingDeclarationCS_Result() {
+	public EReference getMappingDeclarationCS_DirectionKindCS() {
 		return (EReference)mappingDeclarationCSEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -1143,7 +1151,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getMappingDeclarationCS_DirectionKindCS() {
+	public EReference getMappingDeclarationCS_MappingExtension() {
 		return (EReference)mappingDeclarationCSEClass.getEStructuralFeatures().get(6);
 	}
 
@@ -1152,17 +1160,8 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getMappingDeclarationCS_MappingExtension() {
-		return (EReference)mappingDeclarationCSEClass.getEStructuralFeatures().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getMappingDeclarationCS_IsQuery() {
-		return (EAttribute)mappingDeclarationCSEClass.getEStructuralFeatures().get(8);
+		return (EAttribute)mappingDeclarationCSEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -1325,6 +1324,24 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 */
 	public EAttribute getMappingQueryCS_IsSimpleDefinition() {
 		return (EAttribute)mappingQueryCSEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getConstructorCS() {
+		return constructorCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getConstructorCS_Expressions() {
+		return (EReference)constructorCSEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -2554,7 +2571,6 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEAttribute(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__QUALIFIERS);
 		createEReference(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__SIMPLE_NAME_CS);
 		createEReference(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__CONTEXT_TYPE);
-		createEReference(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__CONTEXT_TYPE_AND_NAME);
 		createEReference(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__PARAMETERS);
 		createEReference(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__RESULT);
 		createEReference(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__DIRECTION_KIND_CS);
@@ -2584,6 +2600,9 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		mappingQueryCSEClass = createEClass(MAPPING_QUERY_CS);
 		createEReference(mappingQueryCSEClass, MAPPING_QUERY_CS__EXPRESSIONS);
 		createEAttribute(mappingQueryCSEClass, MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION);
+
+		constructorCSEClass = createEClass(CONSTRUCTOR_CS);
+		createEReference(constructorCSEClass, CONSTRUCTOR_CS__EXPRESSIONS);
 
 		mappingSectionCSEClass = createEClass(MAPPING_SECTION_CS);
 		createEReference(mappingSectionCSEClass, MAPPING_SECTION_CS__STATEMENTS);
@@ -2811,6 +2830,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		mappingMethodCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		mappingRuleCSEClass.getESuperTypes().add(this.getMappingMethodCS());
 		mappingQueryCSEClass.getESuperTypes().add(this.getMappingMethodCS());
+		constructorCSEClass.getESuperTypes().add(this.getMappingMethodCS());
 		mappingSectionCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		mappingSectionCSEClass.getESuperTypes().add(this.getElementWithBody());
 		mappingInitCSEClass.getESuperTypes().add(this.getMappingSectionCS());
@@ -2922,7 +2942,6 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEAttribute(getMappingDeclarationCS_Qualifiers(), this.getQualifierKindCS(), "qualifiers", null, 0, -1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getMappingDeclarationCS_SimpleNameCS(), theCSTPackage_1.getSimpleNameCS(), null, "simpleNameCS", null, 0, 1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getMappingDeclarationCS_ContextType(), theCSTPackage_1.getTypeCS(), null, "contextType", null, 0, 1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(getMappingDeclarationCS_ContextTypeAndName(), theCSTPackage_1.getTypeCS(), null, "contextTypeAndName", null, 0, 1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getMappingDeclarationCS_Parameters(), this.getParameterDeclarationCS(), null, "parameters", null, 0, -1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getMappingDeclarationCS_Result(), this.getParameterDeclarationCS(), null, "result", null, 0, -1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getMappingDeclarationCS_DirectionKindCS(), this.getDirectionKindCS(), null, "directionKindCS", null, 0, 1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -2952,6 +2971,9 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEClass(mappingQueryCSEClass, MappingQueryCS.class, "MappingQueryCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getMappingQueryCS_Expressions(), theCSTPackage_1.getOCLExpressionCS(), null, "expressions", null, 0, -1, MappingQueryCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getMappingQueryCS_IsSimpleDefinition(), ecorePackage.getEBoolean(), "isSimpleDefinition", null, 0, 1, MappingQueryCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(constructorCSEClass, ConstructorCS.class, "ConstructorCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getConstructorCS_Expressions(), theCSTPackage_1.getOCLExpressionCS(), null, "expressions", null, 0, -1, ConstructorCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(mappingSectionCSEClass, MappingSectionCS.class, "MappingSectionCS", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getMappingSectionCS_Statements(), theCSTPackage_1.getOCLExpressionCS(), null, "statements", null, 0, -1, MappingSectionCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

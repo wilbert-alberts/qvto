@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTSwitch.java,v 1.15 2009/01/21 10:14:29 sboyko Exp $
+ * $Id: CSTSwitch.java,v 1.16 2009/01/28 22:14:34 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -326,6 +326,14 @@ public class CSTSwitch<T> {
 				T result = caseMappingQueryCS(mappingQueryCS);
 				if (result == null) result = caseMappingMethodCS(mappingQueryCS);
 				if (result == null) result = caseCSTNode(mappingQueryCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.CONSTRUCTOR_CS: {
+				ConstructorCS constructorCS = (ConstructorCS)theEObject;
+				T result = caseConstructorCS(constructorCS);
+				if (result == null) result = caseMappingMethodCS(constructorCS);
+				if (result == null) result = caseCSTNode(constructorCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -990,6 +998,21 @@ public class CSTSwitch<T> {
 	 * @generated
 	 */
 	public T caseMappingQueryCS(MappingQueryCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Constructor CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Constructor CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseConstructorCS(ConstructorCS object) {
 		return null;
 	}
 
