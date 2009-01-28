@@ -11,12 +11,13 @@
  * 
  * 
  *
- * $Id: ModelTypeCS.java,v 1.2 2009/01/13 20:23:41 radvorak Exp $
+ * $Id: ModelTypeCS.java,v 1.3 2009/01/28 22:31:09 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.StringLiteralExpCS;
 
@@ -117,7 +118,7 @@ public interface ModelTypeCS extends CSTNode, ElementWithBody {
 
 	/**
 	 * Returns the value of the '<em><b>Where Statements</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.cst.StatementCS}.
+	 * The list contents are of type {@link org.eclipse.ocl.cst.OCLExpressionCS}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Where Statements</em>' containment reference list isn't clear,
@@ -129,6 +130,6 @@ public interface ModelTypeCS extends CSTNode, ElementWithBody {
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<StatementCS> getWhereStatements();
+	EList<OCLExpressionCS> getWhereStatements();
 
 } // ModelTypeCS

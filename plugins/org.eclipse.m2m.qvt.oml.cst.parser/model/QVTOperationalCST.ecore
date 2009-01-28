@@ -295,7 +295,8 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="packageRefs" lowerBound="1"
           upperBound="-1" eType="#//cst/PackageRefCS" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="whereStatements" upperBound="-1"
-          eType="#//cst/StatementCS" containment="true"/>
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+          containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="PackageRefCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
       <eStructuralFeatures xsi:type="ecore:EReference" name="pathNameCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/PathNameCS"

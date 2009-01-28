@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ModelTypeCSImpl.java,v 1.2 2009/01/13 20:23:44 radvorak Exp $
+ * $Id: ModelTypeCSImpl.java,v 1.3 2009/01/28 22:31:09 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -29,6 +29,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.ElementWithBody;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
+import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.StatementCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.StringLiteralExpCS;
@@ -138,7 +139,7 @@ public class ModelTypeCSImpl extends CSTNodeImpl implements ModelTypeCS {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<StatementCS> whereStatements;
+	protected EList<OCLExpressionCS> whereStatements;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -304,9 +305,9 @@ public class ModelTypeCSImpl extends CSTNodeImpl implements ModelTypeCS {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<StatementCS> getWhereStatements() {
+	public EList<OCLExpressionCS> getWhereStatements() {
 		if (whereStatements == null) {
-			whereStatements = new EObjectContainmentEList<StatementCS>(StatementCS.class, this, CSTPackage.MODEL_TYPE_CS__WHERE_STATEMENTS);
+			whereStatements = new EObjectContainmentEList<OCLExpressionCS>(OCLExpressionCS.class, this, CSTPackage.MODEL_TYPE_CS__WHERE_STATEMENTS);
 		}
 		return whereStatements;
 	}
@@ -382,7 +383,7 @@ public class ModelTypeCSImpl extends CSTNodeImpl implements ModelTypeCS {
 				return;
 			case CSTPackage.MODEL_TYPE_CS__WHERE_STATEMENTS:
 				getWhereStatements().clear();
-				getWhereStatements().addAll((Collection<? extends StatementCS>)newValue);
+				getWhereStatements().addAll((Collection<? extends OCLExpressionCS>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
