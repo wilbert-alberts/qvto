@@ -97,7 +97,7 @@
           context="org.eclipse.m2m.qvt.oml.templates"
           id="org.eclipse.m2m.qvt.oml.template.rename"
           name="%code_template_rename"
-          description="%code_template_rename_desc">rename ${Type}.${newName} = '${oldName}';</template>
+          description="%code_template_rename_desc">tag "alias" ${Class}::${PropertyName} = '${newName}';</template>
           
     <template
           autoinsert="true"
