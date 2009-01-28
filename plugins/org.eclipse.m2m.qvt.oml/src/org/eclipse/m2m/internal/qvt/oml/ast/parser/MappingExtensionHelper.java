@@ -62,11 +62,11 @@ class MappingExtensionHelper {
 					!body.getInitSection().isEmpty() ||
 					!body.getEndSection().isEmpty());
 			
-			if(false /*nonEmptyBody*/) {
+			if(nonEmptyBody) {
 				// TODO - required changes in building AST, as body + ObjectExp AST gets always created
-				env.reportWarning(NLS.bind(ValidationMessages.MappingExtension_disjunctingMappingBodyNotExecuted, 
-					QvtOperationalParserUtil.safeGetMappingQualifiedName(env, fOperation)),
-					body.getStartPosition(), body.getEndPosition());
+//				env.reportWarning(NLS.bind(ValidationMessages.MappingExtension_disjunctingMappingBodyNotExecuted, 
+//					QvtOperationalParserUtil.safeGetMappingQualifiedName(env, fOperation)),
+//					body.getStartPosition(), body.getEndPosition());
 			}
 
 			result &= reportInvalidExtensionsInDisjunctingMapping(env, fOperation.getInherited(), MappingExtensionKindCS.INHERITS);
