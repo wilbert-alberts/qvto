@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: EValueItemProvider.java,v 1.5 2009/01/19 14:32:30 radvorak Exp $
+ * $Id: EValueItemProvider.java,v 1.6 2009/01/28 11:46:25 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
@@ -33,10 +33,10 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLFactory;
 import org.eclipse.m2m.internal.qvt.oml.trace.EValue;
 import org.eclipse.m2m.internal.qvt.oml.trace.TraceFactory;
 import org.eclipse.m2m.internal.qvt.oml.trace.TracePackage;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLFactory;
 import org.eclipse.ocl.expressions.ExpressionsFactory;
 import org.eclipse.ocl.types.TypesFactory;
 
@@ -399,106 +399,6 @@ public class EValueItemProvider
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
 				 EcoreFactory.eINSTANCE.createETypeParameter()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createAltExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createAssertExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createAssignExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createBlockExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createComputeExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createDictLiteralExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createDictLiteralPart()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createDictionaryType()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createImperativeLoopExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createForExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createImperativeIterateExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createInstantiationExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createListType()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createLogExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createReturnExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createSwitchExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createTemplateParameterType()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createTypedef()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createVariableInitExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createWhileExp()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -1014,6 +914,151 @@ public class EValueItemProvider
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
 				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createResolveInExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createAltExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createAssertExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createAssignExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createBlockExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createBreakExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createCatchExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createComputeExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createContinueExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createDictLiteralExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createDictLiteralPart()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createDictionaryType()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createForExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createImperativeIterateExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createInstantiationExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createListType()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createLogExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createOrderedTupleLiteralExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createOrderedTupleLiteralPart()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createOrderedTupleType()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createRaiseExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createReturnExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createSwitchExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createTemplateParameterType()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createTryExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createTypedef()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createUnlinkExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createUnpackExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createVariableInitExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createWhileExp()));
 
 		newChildDescriptors.add
 			(createChildParameter
