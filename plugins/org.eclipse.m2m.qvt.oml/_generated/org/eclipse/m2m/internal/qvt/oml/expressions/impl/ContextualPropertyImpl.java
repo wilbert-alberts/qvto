@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ContextualPropertyImpl.java,v 1.5 2009/01/28 11:47:27 radvorak Exp $
+ * $Id: ContextualPropertyImpl.java,v 1.6 2009/01/28 22:22:44 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -341,9 +341,9 @@ public class ContextualPropertyImpl extends EStructuralFeatureImpl implements Co
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY__START_POSITION:
-				return getStartPosition();
+				return new Integer(getStartPosition());
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY__END_POSITION:
-				return getEndPosition();
+				return new Integer(getEndPosition());
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY__CONTEXT:
 				if (resolve) return getContext();
 				return basicGetContext();
@@ -366,10 +366,10 @@ public class ContextualPropertyImpl extends EStructuralFeatureImpl implements Co
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY__START_POSITION:
-				setStartPosition((Integer)newValue);
+				setStartPosition(((Integer)newValue).intValue());
 				return;
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY__END_POSITION:
-				setEndPosition((Integer)newValue);
+				setEndPosition(((Integer)newValue).intValue());
 				return;
 			case ExpressionsPackage.CONTEXTUAL_PROPERTY__CONTEXT:
 				setContext((EClass)newValue);

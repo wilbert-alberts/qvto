@@ -22,7 +22,20 @@
         <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//expressions/ImportKind/extension"/>
         <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//expressions/ImportKind/access"/>
       </genEnums>
-      <genClasses ecoreClass="QVTOperational.ecore#//expressions/ConstructorBody"/>
+      <genClasses ecoreClass="QVTOperational.ecore#//expressions/Constructor">
+        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/Constructor/accept">
+          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/Constructor/accept/v"/>
+          <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/Constructor/accept/T"/>
+          <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/Constructor/accept/U"/>
+        </genOperations>
+      </genClasses>
+      <genClasses ecoreClass="QVTOperational.ecore#//expressions/ConstructorBody">
+        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ConstructorBody/accept">
+          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ConstructorBody/accept/v"/>
+          <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/ConstructorBody/accept/T"/>
+          <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/ConstructorBody/accept/U"/>
+        </genOperations>
+      </genClasses>
       <genClasses ecoreClass="QVTOperational.ecore#//expressions/ContextualProperty">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference QVTOperational.ecore#//expressions/ContextualProperty/context"/>
@@ -209,105 +222,6 @@
         </genOperations>
       </genClasses>
       <genClasses image="false" ecoreClass="QVTOperational.ecore#//expressions/VisitableASTNode"/>
-      <genClasses image="false" ecoreClass="QVTOperational.ecore#//expressions/ExtendedVisitor">
-        <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/T"/>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitModule">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitModule/module"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitLibrary">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitLibrary/library"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitModuleImport">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitModuleImport/moduleImport"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitContextualProperty">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitContextualProperty/contextualProperty"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitImperativeOperation">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitImperativeOperation/imperativeOperation"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitVarParameter">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitVarParameter/varParameter"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitOperationBody">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitOperationBody/operationBody"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitMappingOperation">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitMappingOperation/mappingOperation"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitHelper">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitHelper/helper"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitMappingBody">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitMappingBody/mappingBody"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitMappingCallExp">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitMappingCallExp/mappingCallExp"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitResolveExp">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitResolveExp/resolveExp"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitResolveInExp">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitResolveInExp/resolveInExp"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitObjectExp">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitObjectExp/objectExp"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitModelType">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitModelType/modelType"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ExtendedVisitor/visitEntryOperation">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ExtendedVisitor/visitEntryOperation/entryOperation"/>
-        </genOperations>
-      </genClasses>
-      <genClasses image="false" ecoreClass="QVTOperational.ecore#//expressions/ImperativeOCLVisitor">
-        <genTypeParameters ecoreTypeParameter="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/T"/>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitAssignExp">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitAssignExp/assignExp"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitVariableInitExp">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitVariableInitExp/variableInitExp"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitBlockExp">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitBlockExp/blockExp"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitComputeExp">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitComputeExp/computeExp"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitInstantiationExp">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitInstantiationExp/instantiationExp"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitWhileExp">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitWhileExp/whileExp"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitSwitchExp">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitSwitchExp/switchExp"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitSwitchAltExp">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitSwitchAltExp/switchAltExp"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitLogExp">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitLogExp/logExp"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitAssertExp">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitAssertExp/assertExp"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitImperativeLoopExp">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitImperativeLoopExp/imperativeLoopExp"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitForExp">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitForExp/forExp"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitImperativeIterateExp">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitImperativeIterateExp/imperativeIterateExp"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitReturnExp">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitReturnExp/returnExp"/>
-        </genOperations>
-        <genOperations ecoreOperation="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitDictLiteralExp">
-          <genParameters ecoreParameter="QVTOperational.ecore#//expressions/ImperativeOCLVisitor/visitDictLiteralExp/dictLiteralExp"/>
-        </genOperations>
-      </genClasses>
     </nestedGenPackages>
   </genPackages>
 </genmodel:GenModel>

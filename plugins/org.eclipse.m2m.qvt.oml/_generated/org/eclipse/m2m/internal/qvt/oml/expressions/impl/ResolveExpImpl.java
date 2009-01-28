@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ResolveExpImpl.java,v 1.5 2009/01/28 11:47:28 radvorak Exp $
+ * $Id: ResolveExpImpl.java,v 1.6 2009/01/28 22:22:44 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -340,11 +340,11 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 			case ExpressionsPackage.RESOLVE_EXP__CONDITION:
 				return getCondition();
 			case ExpressionsPackage.RESOLVE_EXP__IS_DEFERRED:
-				return isIsDeferred();
+				return isIsDeferred() ? Boolean.TRUE : Boolean.FALSE;
 			case ExpressionsPackage.RESOLVE_EXP__IS_INVERSE:
-				return isIsInverse();
+				return isIsInverse() ? Boolean.TRUE : Boolean.FALSE;
 			case ExpressionsPackage.RESOLVE_EXP__ONE:
-				return isOne();
+				return isOne() ? Boolean.TRUE : Boolean.FALSE;
 			case ExpressionsPackage.RESOLVE_EXP__TARGET:
 				return getTarget();
 		}
@@ -364,13 +364,13 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 				setCondition((OCLExpression)newValue);
 				return;
 			case ExpressionsPackage.RESOLVE_EXP__IS_DEFERRED:
-				setIsDeferred((Boolean)newValue);
+				setIsDeferred(((Boolean)newValue).booleanValue());
 				return;
 			case ExpressionsPackage.RESOLVE_EXP__IS_INVERSE:
-				setIsInverse((Boolean)newValue);
+				setIsInverse(((Boolean)newValue).booleanValue());
 				return;
 			case ExpressionsPackage.RESOLVE_EXP__ONE:
-				setOne((Boolean)newValue);
+				setOne(((Boolean)newValue).booleanValue());
 				return;
 			case ExpressionsPackage.RESOLVE_EXP__TARGET:
 				setTarget((Variable)newValue);

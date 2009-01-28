@@ -22,6 +22,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Constructor;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
@@ -556,6 +558,14 @@ public class QvtOperationalAstWalker implements QVTOperationalVisitor<Object> {
         return visitImperativeLoopExp(forExp);
     }
 
+	public Object visitConstructor(Constructor constructor) {
+		return visitImperativeOperation(constructor);
+	}
+
+	public Object visitConstructorBody(ConstructorBody constructorBody) {
+		return visitOperationBody(constructorBody);
+	}    
+
 	public Object visitBreakExp(BreakExp astNode) {
 		// TODO Auto-generated method stub
 		return null;
@@ -604,5 +614,6 @@ public class QvtOperationalAstWalker implements QVTOperationalVisitor<Object> {
 	public Object visitUnpackExp(UnpackExp astNode) {
 		// TODO Auto-generated method stub
 		return null;
-	}    
+	}
+
 }

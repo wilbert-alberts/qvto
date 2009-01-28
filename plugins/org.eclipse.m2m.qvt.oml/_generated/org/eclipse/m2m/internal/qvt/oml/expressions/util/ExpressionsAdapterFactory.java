@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
+import org.eclipse.m2m.internal.qvt.oml.expressions.*;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
@@ -123,6 +124,10 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	protected ExpressionsSwitch<Adapter> modelSwitch =
 		new ExpressionsSwitch<Adapter>() {
 			@Override
+			public Adapter caseConstructor(Constructor object) {
+				return createConstructorAdapter();
+			}
+			@Override
 			public Adapter caseConstructorBody(ConstructorBody object) {
 				return createConstructorBodyAdapter();
 			}
@@ -211,14 +216,6 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createVisitableASTNodeAdapter();
 			}
 			@Override
-			public Adapter caseVisitable(Visitable object) {
-				return createVisitableAdapter();
-			}
-			@Override
-			public Adapter caseASTNode(ASTNode object) {
-				return createASTNodeAdapter();
-			}
-			@Override
 			public Adapter caseEModelElement(EModelElement object) {
 				return createEModelElementAdapter();
 			}
@@ -231,12 +228,20 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createETypedElementAdapter();
 			}
 			@Override
-			public Adapter caseEStructuralFeature(EStructuralFeature object) {
-				return createEStructuralFeatureAdapter();
-			}
-			@Override
 			public Adapter caseEOperation(EOperation object) {
 				return createEOperationAdapter();
+			}
+			@Override
+			public Adapter caseVisitable(Visitable object) {
+				return createVisitableAdapter();
+			}
+			@Override
+			public Adapter caseASTNode(ASTNode object) {
+				return createASTNodeAdapter();
+			}
+			@Override
+			public Adapter caseEStructuralFeature(EStructuralFeature object) {
+				return createEStructuralFeatureAdapter();
 			}
 			@Override
 			public <C> Adapter caseTypedElement(TypedElement<C> object) {
@@ -247,8 +252,8 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createOCLExpressionAdapter();
 			}
 			@Override
-			public Adapter caseEcore_OCLExpression(org.eclipse.ocl.ecore.OCLExpression object) {
-				return createEcore_OCLExpressionAdapter();
+			public Adapter caseOCLExpression_1(org.eclipse.ocl.ecore.OCLExpression object) {
+				return createOCLExpression_1Adapter();
 			}
 			@Override
 			public Adapter caseCallingASTNode(CallingASTNode object) {
@@ -259,24 +264,24 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createCallExpAdapter();
 			}
 			@Override
-			public Adapter caseEcore_CallExp(org.eclipse.ocl.ecore.CallExp object) {
-				return createEcore_CallExpAdapter();
+			public Adapter caseCallExp_1(org.eclipse.ocl.ecore.CallExp object) {
+				return createCallExp_1Adapter();
 			}
 			@Override
 			public <C> Adapter caseFeatureCallExp(FeatureCallExp<C> object) {
 				return createFeatureCallExpAdapter();
 			}
 			@Override
-			public Adapter caseEcore_FeatureCallExp(org.eclipse.ocl.ecore.FeatureCallExp object) {
-				return createEcore_FeatureCallExpAdapter();
+			public Adapter caseFeatureCallExp_1(org.eclipse.ocl.ecore.FeatureCallExp object) {
+				return createFeatureCallExp_1Adapter();
 			}
 			@Override
 			public <C, O> Adapter caseOperationCallExp(OperationCallExp<C, O> object) {
 				return createOperationCallExpAdapter();
 			}
 			@Override
-			public Adapter caseEcore_OperationCallExp(org.eclipse.ocl.ecore.OperationCallExp object) {
-				return createEcore_OperationCallExpAdapter();
+			public Adapter caseOperationCallExp_1(org.eclipse.ocl.ecore.OperationCallExp object) {
+				return createOperationCallExp_1Adapter();
 			}
 			@Override
 			public Adapter caseImperativeExpression(ImperativeExpression object) {
@@ -303,8 +308,8 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createVariableAdapter();
 			}
 			@Override
-			public Adapter caseEcore_Variable(org.eclipse.ocl.ecore.Variable object) {
-				return createEcore_VariableAdapter();
+			public Adapter caseVariable_1(org.eclipse.ocl.ecore.Variable object) {
+				return createVariable_1Adapter();
 			}
 			@Override
 			public Adapter caseEParameter(EParameter object) {
@@ -333,6 +338,20 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 		return modelSwitch.doSwitch((EObject)target);
 	}
 
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Constructor <em>Constructor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.Constructor
+	 * @generated
+	 */
+	public Adapter createConstructorAdapter() {
+		return null;
+	}
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.Module <em>Module</em>}'.
@@ -862,7 +881,7 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.ocl.ecore.Variable
 	 * @generated
 	 */
-	public Adapter createEcore_VariableAdapter() {
+	public Adapter createVariable_1Adapter() {
 		return null;
 	}
 
@@ -904,7 +923,7 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.ocl.ecore.OCLExpression
 	 * @generated
 	 */
-	public Adapter createEcore_OCLExpressionAdapter() {
+	public Adapter createOCLExpression_1Adapter() {
 		return null;
 	}
 
@@ -946,7 +965,7 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.ocl.ecore.CallExp
 	 * @generated
 	 */
-	public Adapter createEcore_CallExpAdapter() {
+	public Adapter createCallExp_1Adapter() {
 		return null;
 	}
 
@@ -974,7 +993,7 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.ocl.ecore.FeatureCallExp
 	 * @generated
 	 */
-	public Adapter createEcore_FeatureCallExpAdapter() {
+	public Adapter createFeatureCallExp_1Adapter() {
 		return null;
 	}
 
@@ -1002,7 +1021,7 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.ocl.ecore.OperationCallExp
 	 * @generated
 	 */
-	public Adapter createEcore_OperationCallExpAdapter() {
+	public Adapter createOperationCallExp_1Adapter() {
 		return null;
 	}
 

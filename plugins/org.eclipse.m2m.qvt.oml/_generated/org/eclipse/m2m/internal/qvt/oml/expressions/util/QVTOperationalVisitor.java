@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.expressions.util;
 
+import org.eclipse.m2m.internal.qvt.oml.expressions.Constructor;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
@@ -64,4 +66,8 @@ public interface QVTOperationalVisitor<T> extends ImperativeOCLVisitor<T> {
 
 	T visitEntryOperation(EntryOperation entryOperation);
 
+	T visitConstructor(Constructor constructor);
+
+	T visitConstructorBody(ConstructorBody constructorBody);
+	
 } // ExtendedVisitor

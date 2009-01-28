@@ -410,7 +410,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * @generated
 	 */
 	public EPackage getESuperPackage() {
-		if (eContainerFeatureID() != ExpressionsPackage.MODULE__ESUPER_PACKAGE) return null;
+		if (eContainerFeatureID != ExpressionsPackage.MODULE__ESUPER_PACKAGE) return null;
 		return (EPackage)eContainer();
 	}
 
@@ -420,7 +420,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * @generated
 	 */
 	public EPackage basicGetESuperPackage() {
-		if (eContainerFeatureID() != ExpressionsPackage.MODULE__ESUPER_PACKAGE) return null;
+		if (eContainerFeatureID != ExpressionsPackage.MODULE__ESUPER_PACKAGE) return null;
 		return (EPackage)eInternalContainer();
 	}
 
@@ -699,7 +699,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID()) {
+		switch (eContainerFeatureID) {
 			case ExpressionsPackage.MODULE__ESUPER_PACKAGE:
 				return eInternalContainer().eInverseRemove(this, EcorePackage.EPACKAGE__ESUBPACKAGES, EPackage.class, msgs);
 		}
@@ -728,16 +728,16 @@ public class ModuleImpl extends EClassImpl implements Module {
 				if (resolve) return getESuperPackage();
 				return basicGetESuperPackage();
 			case ExpressionsPackage.MODULE__START_POSITION:
-				return getStartPosition();
+				return new Integer(getStartPosition());
 			case ExpressionsPackage.MODULE__END_POSITION:
-				return getEndPosition();
+				return new Integer(getEndPosition());
 			case ExpressionsPackage.MODULE__CONFIG_PROPERTY:
 				return getConfigProperty();
 			case ExpressionsPackage.MODULE__ENTRY:
 				if (resolve) return getEntry();
 				return basicGetEntry();
 			case ExpressionsPackage.MODULE__IS_BLACKBOX:
-				return isIsBlackbox();
+				return isIsBlackbox() ? Boolean.TRUE : Boolean.FALSE;
 			case ExpressionsPackage.MODULE__MODULE_IMPORT:
 				return getModuleImport();
 			case ExpressionsPackage.MODULE__OWNED_TAG:
@@ -777,10 +777,10 @@ public class ModuleImpl extends EClassImpl implements Module {
 				getESubpackages().addAll((Collection<? extends EPackage>)newValue);
 				return;
 			case ExpressionsPackage.MODULE__START_POSITION:
-				setStartPosition((Integer)newValue);
+				setStartPosition(((Integer)newValue).intValue());
 				return;
 			case ExpressionsPackage.MODULE__END_POSITION:
-				setEndPosition((Integer)newValue);
+				setEndPosition(((Integer)newValue).intValue());
 				return;
 			case ExpressionsPackage.MODULE__CONFIG_PROPERTY:
 				getConfigProperty().clear();
@@ -790,7 +790,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 				setEntry((EntryOperation)newValue);
 				return;
 			case ExpressionsPackage.MODULE__IS_BLACKBOX:
-				setIsBlackbox((Boolean)newValue);
+				setIsBlackbox(((Boolean)newValue).booleanValue());
 				return;
 			case ExpressionsPackage.MODULE__MODULE_IMPORT:
 				getModuleImport().clear();

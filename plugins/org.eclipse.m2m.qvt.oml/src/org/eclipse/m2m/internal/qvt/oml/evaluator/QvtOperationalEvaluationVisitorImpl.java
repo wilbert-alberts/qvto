@@ -54,6 +54,8 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.iterators.QvtIterationTemplate
 import org.eclipse.m2m.internal.qvt.oml.evaluator.iterators.QvtIterationTemplateForExp;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.iterators.QvtIterationTemplateXCollect;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.iterators.QvtIterationTemplateXSelect;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Constructor;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
@@ -1289,6 +1291,14 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         throw new UnsupportedOperationException(message);
     }
     
+	public Object visitConstructor(Constructor constructor) {
+		return visitImperativeOperation(constructor);
+	}
+
+	public Object visitConstructorBody(ConstructorBody constructorBody) {
+		return visitOperationBody(constructorBody);
+	}
+
 	public Object visitBreakExp(BreakExp astNode) {
 		// TODO Auto-generated method stub
 		return null;
@@ -2059,4 +2069,5 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			return fResult;
 		}
 	}
+
 }

@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
+import org.eclipse.m2m.internal.qvt.oml.expressions.*;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
@@ -139,6 +140,20 @@ public class ExpressionsSwitch<T> {
 	 */
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
+			case ExpressionsPackage.CONSTRUCTOR: {
+				Constructor constructor = (Constructor)theEObject;
+				T result = caseConstructor(constructor);
+				if (result == null) result = caseImperativeOperation(constructor);
+				if (result == null) result = caseEOperation(constructor);
+				if (result == null) result = caseVisitableASTNode(constructor);
+				if (result == null) result = caseETypedElement(constructor);
+				if (result == null) result = caseVisitable(constructor);
+				if (result == null) result = caseASTNode(constructor);
+				if (result == null) result = caseENamedElement(constructor);
+				if (result == null) result = caseEModelElement(constructor);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ExpressionsPackage.CONSTRUCTOR_BODY: {
 				ConstructorBody constructorBody = (ConstructorBody)theEObject;
 				T result = caseConstructorBody(constructorBody);
@@ -194,12 +209,12 @@ public class ExpressionsSwitch<T> {
 			case ExpressionsPackage.IMPERATIVE_CALL_EXP: {
 				ImperativeCallExp imperativeCallExp = (ImperativeCallExp)theEObject;
 				T result = caseImperativeCallExp(imperativeCallExp);
-				if (result == null) result = caseEcore_OperationCallExp(imperativeCallExp);
+				if (result == null) result = caseOperationCallExp_1(imperativeCallExp);
 				if (result == null) result = caseImperativeExpression(imperativeCallExp);
-				if (result == null) result = caseEcore_FeatureCallExp(imperativeCallExp);
+				if (result == null) result = caseFeatureCallExp_1(imperativeCallExp);
 				if (result == null) result = caseOperationCallExp(imperativeCallExp);
-				if (result == null) result = caseEcore_OCLExpression(imperativeCallExp);
-				if (result == null) result = caseEcore_CallExp(imperativeCallExp);
+				if (result == null) result = caseOCLExpression_1(imperativeCallExp);
+				if (result == null) result = caseCallExp_1(imperativeCallExp);
 				if (result == null) result = caseFeatureCallExp(imperativeCallExp);
 				if (result == null) result = caseETypedElement(imperativeCallExp);
 				if (result == null) result = caseOCLExpression(imperativeCallExp);
@@ -256,12 +271,12 @@ public class ExpressionsSwitch<T> {
 				MappingCallExp mappingCallExp = (MappingCallExp)theEObject;
 				T result = caseMappingCallExp(mappingCallExp);
 				if (result == null) result = caseImperativeCallExp(mappingCallExp);
-				if (result == null) result = caseEcore_OperationCallExp(mappingCallExp);
+				if (result == null) result = caseOperationCallExp_1(mappingCallExp);
 				if (result == null) result = caseImperativeExpression(mappingCallExp);
-				if (result == null) result = caseEcore_FeatureCallExp(mappingCallExp);
+				if (result == null) result = caseFeatureCallExp_1(mappingCallExp);
 				if (result == null) result = caseOperationCallExp(mappingCallExp);
-				if (result == null) result = caseEcore_OCLExpression(mappingCallExp);
-				if (result == null) result = caseEcore_CallExp(mappingCallExp);
+				if (result == null) result = caseOCLExpression_1(mappingCallExp);
+				if (result == null) result = caseCallExp_1(mappingCallExp);
 				if (result == null) result = caseFeatureCallExp(mappingCallExp);
 				if (result == null) result = caseETypedElement(mappingCallExp);
 				if (result == null) result = caseOCLExpression(mappingCallExp);
@@ -293,7 +308,7 @@ public class ExpressionsSwitch<T> {
 				MappingParameter mappingParameter = (MappingParameter)theEObject;
 				T result = caseMappingParameter(mappingParameter);
 				if (result == null) result = caseVarParameter(mappingParameter);
-				if (result == null) result = caseEcore_Variable(mappingParameter);
+				if (result == null) result = caseVariable_1(mappingParameter);
 				if (result == null) result = caseEParameter(mappingParameter);
 				if (result == null) result = caseETypedElement(mappingParameter);
 				if (result == null) result = caseVariable(mappingParameter);
@@ -310,7 +325,7 @@ public class ExpressionsSwitch<T> {
 				ModelParameter modelParameter = (ModelParameter)theEObject;
 				T result = caseModelParameter(modelParameter);
 				if (result == null) result = caseVarParameter(modelParameter);
-				if (result == null) result = caseEcore_Variable(modelParameter);
+				if (result == null) result = caseVariable_1(modelParameter);
 				if (result == null) result = caseEParameter(modelParameter);
 				if (result == null) result = caseETypedElement(modelParameter);
 				if (result == null) result = caseVariable(modelParameter);
@@ -365,7 +380,7 @@ public class ExpressionsSwitch<T> {
 				T result = caseObjectExp(objectExp);
 				if (result == null) result = caseInstantiationExp(objectExp);
 				if (result == null) result = caseImperativeExpression(objectExp);
-				if (result == null) result = caseEcore_OCLExpression(objectExp);
+				if (result == null) result = caseOCLExpression_1(objectExp);
 				if (result == null) result = caseETypedElement(objectExp);
 				if (result == null) result = caseOCLExpression(objectExp);
 				if (result == null) result = caseENamedElement(objectExp);
@@ -404,8 +419,8 @@ public class ExpressionsSwitch<T> {
 			case ExpressionsPackage.RESOLVE_EXP: {
 				ResolveExp resolveExp = (ResolveExp)theEObject;
 				T result = caseResolveExp(resolveExp);
-				if (result == null) result = caseEcore_CallExp(resolveExp);
-				if (result == null) result = caseEcore_OCLExpression(resolveExp);
+				if (result == null) result = caseCallExp_1(resolveExp);
+				if (result == null) result = caseOCLExpression_1(resolveExp);
 				if (result == null) result = caseCallExp(resolveExp);
 				if (result == null) result = caseETypedElement(resolveExp);
 				if (result == null) result = caseOCLExpression(resolveExp);
@@ -422,8 +437,8 @@ public class ExpressionsSwitch<T> {
 				ResolveInExp resolveInExp = (ResolveInExp)theEObject;
 				T result = caseResolveInExp(resolveInExp);
 				if (result == null) result = caseResolveExp(resolveInExp);
-				if (result == null) result = caseEcore_CallExp(resolveInExp);
-				if (result == null) result = caseEcore_OCLExpression(resolveInExp);
+				if (result == null) result = caseCallExp_1(resolveInExp);
+				if (result == null) result = caseOCLExpression_1(resolveInExp);
 				if (result == null) result = caseCallExp(resolveInExp);
 				if (result == null) result = caseETypedElement(resolveInExp);
 				if (result == null) result = caseOCLExpression(resolveInExp);
@@ -439,7 +454,7 @@ public class ExpressionsSwitch<T> {
 			case ExpressionsPackage.VAR_PARAMETER: {
 				VarParameter varParameter = (VarParameter)theEObject;
 				T result = caseVarParameter(varParameter);
-				if (result == null) result = caseEcore_Variable(varParameter);
+				if (result == null) result = caseVariable_1(varParameter);
 				if (result == null) result = caseEParameter(varParameter);
 				if (result == null) result = caseETypedElement(varParameter);
 				if (result == null) result = caseVariable(varParameter);
@@ -462,6 +477,21 @@ public class ExpressionsSwitch<T> {
 			}
 			default: return defaultCase(theEObject);
 		}
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Constructor</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Constructor</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseConstructor(Constructor object) {
+		return null;
 	}
 
 	/**
@@ -1030,7 +1060,7 @@ public class ExpressionsSwitch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseEcore_Variable(org.eclipse.ocl.ecore.Variable object) {
+	public T caseVariable_1(org.eclipse.ocl.ecore.Variable object) {
 		return null;
 	}
 
@@ -1075,7 +1105,7 @@ public class ExpressionsSwitch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseEcore_OCLExpression(org.eclipse.ocl.ecore.OCLExpression object) {
+	public T caseOCLExpression_1(org.eclipse.ocl.ecore.OCLExpression object) {
 		return null;
 	}
 
@@ -1120,7 +1150,7 @@ public class ExpressionsSwitch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseEcore_CallExp(org.eclipse.ocl.ecore.CallExp object) {
+	public T caseCallExp_1(org.eclipse.ocl.ecore.CallExp object) {
 		return null;
 	}
 
@@ -1150,7 +1180,7 @@ public class ExpressionsSwitch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseEcore_FeatureCallExp(org.eclipse.ocl.ecore.FeatureCallExp object) {
+	public T caseFeatureCallExp_1(org.eclipse.ocl.ecore.FeatureCallExp object) {
 		return null;
 	}
 
@@ -1180,7 +1210,7 @@ public class ExpressionsSwitch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseEcore_OperationCallExp(org.eclipse.ocl.ecore.OperationCallExp object) {
+	public T caseOperationCallExp_1(org.eclipse.ocl.ecore.OperationCallExp object) {
 		return null;
 	}
 

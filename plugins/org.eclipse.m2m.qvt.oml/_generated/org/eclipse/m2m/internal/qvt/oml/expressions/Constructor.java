@@ -9,24 +9,23 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ConstructorBody.java,v 1.2 2009/01/28 22:22:44 sboyko Exp $
+ * $Id: Constructor.java,v 1.1 2009/01/28 22:22:44 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
 import org.eclipse.ocl.utilities.Visitor;
 
-
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Constructor Body</b></em>'.
+ * A representation of the model object '<em><b>Constructor</b></em>'.
  * <!-- end-user-doc -->
  *
  *
- * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getConstructorBody()
+ * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage#getConstructor()
  * @model
  * @generated
  */
-public interface ConstructorBody extends OperationBody {
+public interface Constructor extends ImperativeOperation {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -37,9 +36,9 @@ public interface ConstructorBody extends OperationBody {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='if(v instanceof org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor) {\r\n  @SuppressWarnings(\"unchecked\")    \t\t\r\n  org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor<T> visitorExt = (org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor) v;    \t\r\n  return visitorExt.visitConstructorBody(this);\r\n}\r\nreturn org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);'"
+	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='if(v instanceof org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor) {\r\n  @SuppressWarnings(\"unchecked\")    \t\t\r\n  org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor<T> visitorExt = (org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor) v;    \t\r\n  return visitorExt.visitConstructor(this);\r\n}\r\nreturn org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);'"
 	 * @generated
 	 */
 	<T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v);
 
-} // ConstructorBody
+} // Constructor

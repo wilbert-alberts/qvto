@@ -441,15 +441,15 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ExpressionsPackage.IMPERATIVE_OPERATION__START_POSITION:
-				return getStartPosition();
+				return new Integer(getStartPosition());
 			case ExpressionsPackage.IMPERATIVE_OPERATION__END_POSITION:
-				return getEndPosition();
+				return new Integer(getEndPosition());
 			case ExpressionsPackage.IMPERATIVE_OPERATION__BODY:
 				return getBody();
 			case ExpressionsPackage.IMPERATIVE_OPERATION__CONTEXT:
 				return getContext();
 			case ExpressionsPackage.IMPERATIVE_OPERATION__IS_BLACKBOX:
-				return isIsBlackbox();
+				return isIsBlackbox() ? Boolean.TRUE : Boolean.FALSE;
 			case ExpressionsPackage.IMPERATIVE_OPERATION__OVERRIDDEN:
 				if (resolve) return getOverridden();
 				return basicGetOverridden();
@@ -469,10 +469,10 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ExpressionsPackage.IMPERATIVE_OPERATION__START_POSITION:
-				setStartPosition((Integer)newValue);
+				setStartPosition(((Integer)newValue).intValue());
 				return;
 			case ExpressionsPackage.IMPERATIVE_OPERATION__END_POSITION:
-				setEndPosition((Integer)newValue);
+				setEndPosition(((Integer)newValue).intValue());
 				return;
 			case ExpressionsPackage.IMPERATIVE_OPERATION__BODY:
 				setBody((OperationBody)newValue);
@@ -481,7 +481,7 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 				setContext((VarParameter)newValue);
 				return;
 			case ExpressionsPackage.IMPERATIVE_OPERATION__IS_BLACKBOX:
-				setIsBlackbox((Boolean)newValue);
+				setIsBlackbox(((Boolean)newValue).booleanValue());
 				return;
 			case ExpressionsPackage.IMPERATIVE_OPERATION__OVERRIDDEN:
 				setOverridden((ImperativeOperation)newValue);

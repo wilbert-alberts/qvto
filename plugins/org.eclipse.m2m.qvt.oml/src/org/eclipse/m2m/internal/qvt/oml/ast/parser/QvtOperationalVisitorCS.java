@@ -64,6 +64,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralPartCS;
@@ -115,28 +116,14 @@ import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.EmfMmUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AltExp;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssertExp;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.BlockExp;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ComputeExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralExp;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralPart;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictionaryType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ForExp;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeIterateExp;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListType;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.LogExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
@@ -150,16 +137,30 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ReturnExp;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.SeverityKind;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.SwitchExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.VariableInitExp;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.WhileExp;
 import org.eclipse.m2m.internal.qvt.oml.library.QvtResolveUtil;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
 import org.eclipse.m2m.qvt.oml.blackbox.LoadContext;
 import org.eclipse.m2m.qvt.oml.blackbox.ResolutionContextImpl;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AltExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssertExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.BlockExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ComputeExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralPart;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictionaryType;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ForExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeIterateExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLFactory;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListType;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.LogExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ReturnExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.SeverityKind;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.SwitchExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.VariableInitExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.WhileExp;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.SemanticException;
 import org.eclipse.ocl.Environment.Internal;
@@ -1373,10 +1374,20 @@ public class QvtOperationalVisitorCS
 					name = methodNameCS.getValue(); //$NON-NLS-1$
 				}
 			}
-					
-			boolean isMapping = methodCS instanceof MappingRuleCS;
-			ImperativeOperation operation = isMapping ? ExpressionsFactory.eINSTANCE.createMappingOperation() : 
-					(QvtOperationalEnv.MAIN.equals(name) ? ExpressionsFactory.eINSTANCE.createEntryOperation() : ExpressionsFactory.eINSTANCE.createHelper());
+			
+			ImperativeOperation operation = null;
+			if (methodCS instanceof ConstructorCS) {
+				operation = ExpressionsFactory.eINSTANCE.createConstructor();
+			}
+			else if (methodCS instanceof MappingRuleCS) {
+				operation = ExpressionsFactory.eINSTANCE.createMappingOperation();
+			}
+			else if (QvtOperationalEnv.MAIN.equals(name)) {
+				operation = ExpressionsFactory.eINSTANCE.createEntryOperation();
+			}
+			else {
+				operation = ExpressionsFactory.eINSTANCE.createHelper();
+			}
 			
 			if (visitMappingDeclarationCS(methodCS, env, operation)) {
 				EOperation imperativeOp = env.defineImperativeOperation(operation, methodCS instanceof MappingRuleCS, true);
@@ -2401,7 +2412,10 @@ public class QvtOperationalVisitorCS
 
 	protected void visitMappingMethodCS(MappingMethodCS methodCS, QvtOperationalEnv env, ImperativeOperation declaredOperation)
 			throws SemanticException {
-		if (methodCS instanceof MappingRuleCS) {
+		if (methodCS instanceof ConstructorCS) {
+			visitConstructorCS((ConstructorCS) methodCS, env, declaredOperation);
+		}
+		else if (methodCS instanceof MappingRuleCS) {
 			visitMappingRuleCS((MappingRuleCS) methodCS, env, (MappingOperation)declaredOperation);
 		}
 		else {
@@ -2433,6 +2447,57 @@ public class QvtOperationalVisitorCS
 					duplicate.getName(), QvtOperationalParserUtil.getMappingStringRepresentation(methodCS));			
 			env.reportError(errMessage, QvtOperationalParserUtil.getImperativeOperationProblemNode(methodCS));
 		}
+	}
+
+	private void visitConstructorCS(ConstructorCS methodCS, QvtOperationalEnv env, ImperativeOperation constructor) throws SemanticException {
+		constructor.setEndPosition(methodCS.getEndOffset());
+
+		if (constructor.getContext() == null) {
+			env.reportError(ValidationMessages.ContextlessConstructor, methodCS.getMappingDeclarationCS());
+		}
+		else {
+			if (!constructor.getContext().getEType().getName().equals(constructor.getName())) {
+				env.reportError(ValidationMessages.ConstructorNameMismatch, methodCS.getMappingDeclarationCS());
+			}
+		}
+		
+		QvtOperationalEnv newEnv = env.getFactory().createOperationContext(env, constructor);
+		newEnv.deleteElement(Environment.SELF_VARIABLE_NAME);
+		
+		VarParameter varResult = ExpressionsFactory.eINSTANCE.createVarParameter();
+		varResult.setName(Environment.RESULT_VARIABLE_NAME);
+		if (constructor.getContext() != null) {
+			varResult.setEType(constructor.getContext().getEType());
+		}
+		varResult.setKind(DirectionKind.OUT);		
+		varResult.setRepresentedParameter(varResult);
+		newEnv.addElement(varResult.getName(), varResult, false);
+		
+        if(myCompilerOptions.isGenerateCompletionData()) {          
+            ASTBindingHelper.createCST2ASTBinding(methodCS, constructor, newEnv);
+        }
+
+		OperationBody body = ExpressionsFactory.eINSTANCE.createConstructorBody();
+		constructor.setBody(body);
+		body.setStartPosition(methodCS.getMappingDeclarationCS().getEndOffset());
+		body.setEndPosition(methodCS.getEndOffset());
+        
+        List<org.eclipse.ocl.ecore.OCLExpression> expressions = new ArrayList<org.eclipse.ocl.ecore.OCLExpression>(methodCS.getExpressions().size());
+		for (OCLExpressionCS exprCS : methodCS.getExpressions()) {
+			if (exprCS == null) {
+				continue;
+			}
+			org.eclipse.ocl.ecore.OCLExpression expr = visitOclExpressionCS(exprCS, newEnv);
+			if (expr != null) {
+				expressions.add(expr);
+			}
+		}
+
+		body.getContent().addAll(expressions);
+
+		// adjust implicit variables for serialization
+		consolidateImplicitVariables(newEnv);
+		//
 	}
 
 	private ImperativeOperation visitMappingRuleCS(MappingRuleCS methodCS, QvtOperationalEnv env, final MappingOperation operation)

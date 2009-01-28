@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ModelTypeImpl.java,v 1.6 2009/01/28 11:47:27 radvorak Exp $
+ * $Id: ModelTypeImpl.java,v 1.7 2009/01/28 22:22:44 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -283,9 +283,9 @@ public class ModelTypeImpl extends EClassImpl implements ModelType {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ExpressionsPackage.MODEL_TYPE__START_POSITION:
-				return getStartPosition();
+				return new Integer(getStartPosition());
 			case ExpressionsPackage.MODEL_TYPE__END_POSITION:
-				return getEndPosition();
+				return new Integer(getEndPosition());
 			case ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION:
 				return getAdditionalCondition();
 			case ExpressionsPackage.MODEL_TYPE__CONFORMANCE_KIND:
@@ -306,10 +306,10 @@ public class ModelTypeImpl extends EClassImpl implements ModelType {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ExpressionsPackage.MODEL_TYPE__START_POSITION:
-				setStartPosition((Integer)newValue);
+				setStartPosition(((Integer)newValue).intValue());
 				return;
 			case ExpressionsPackage.MODEL_TYPE__END_POSITION:
-				setEndPosition((Integer)newValue);
+				setEndPosition(((Integer)newValue).intValue());
 				return;
 			case ExpressionsPackage.MODEL_TYPE__ADDITIONAL_CONDITION:
 				getAdditionalCondition().clear();
