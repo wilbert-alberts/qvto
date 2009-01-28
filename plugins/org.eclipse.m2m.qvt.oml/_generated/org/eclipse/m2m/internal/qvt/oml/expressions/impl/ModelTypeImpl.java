@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ModelTypeImpl.java,v 1.5 2009/01/16 13:52:54 radvorak Exp $
+ * $Id: ModelTypeImpl.java,v 1.6 2009/01/28 11:47:27 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VisitableASTNode;
 import org.eclipse.ocl.ecore.OCLExpression;
@@ -253,9 +252,9 @@ public class ModelTypeImpl extends EClassImpl implements ModelType {
 	 * @generated
 	 */
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
-		if(v instanceof ExtendedVisitor) {
+		if(v instanceof org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor) {
 		  @SuppressWarnings("unchecked")    		
-		  ExtendedVisitor<T> visitorExt = (ExtendedVisitor) v;    	
+		  org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor<T> visitorExt = (org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor) v;    	
 		  return visitorExt.visitModelType(this);
 		}
 		return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);

@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ExpressionsPackage.java,v 1.20 2009/01/19 14:32:27 radvorak Exp $
+ * $Id: ExpressionsPackage.java,v 1.21 2009/01/28 11:47:27 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage;
 import org.eclipse.ocl.utilities.UtilitiesPackage;
 
 /**
@@ -811,16 +812,6 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 */
 	int OBJECT_EXP = 15;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor <em>Extended Visitor</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getExtendedVisitor()
-	 * @generated
-	 */
-	int EXTENDED_VISITOR = 22;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.impl.ResolveExpImpl <em>Resolve Exp</em>}' class.
@@ -4600,15 +4591,6 @@ public interface ExpressionsPackage extends EPackage {
 	int RESOLVE_IN_EXP_FEATURE_COUNT = RESOLVE_EXP_FEATURE_COUNT + 1;
 
 	/**
-	 * The number of structural features of the '<em>Extended Visitor</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXTENDED_VISITOR_FEATURE_COUNT = ImperativeOCLPackage.IMPERATIVE_OCL_VISITOR_FEATURE_COUNT + 0;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind <em>Import Kind</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4616,7 +4598,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getImportKind()
 	 * @generated
 	 */
-	int IMPORT_KIND = 24;
+	int IMPORT_KIND = 23;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind <em>Direction Kind</em>}' enum.
@@ -4626,7 +4608,7 @@ public interface ExpressionsPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getDirectionKind()
 	 * @generated
 	 */
-	int DIRECTION_KIND = 23;
+	int DIRECTION_KIND = 22;
 
 
 	/**
@@ -5185,16 +5167,6 @@ public interface ExpressionsPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getObjectExp_ReferredObject();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor <em>Extended Visitor</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Extended Visitor</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor
-	 * @generated
-	 */
-	EClass getExtendedVisitor();
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind <em>Import Kind</em>}'.
@@ -5896,16 +5868,6 @@ public interface ExpressionsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference OBJECT_EXP__REFERRED_OBJECT = eINSTANCE.getObjectExp_ReferredObject();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor <em>Extended Visitor</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor
-		 * @see org.eclipse.m2m.internal.qvt.oml.expressions.impl.ExpressionsPackageImpl#getExtendedVisitor()
-		 * @generated
-		 */
-		EClass EXTENDED_VISITOR = eINSTANCE.getExtendedVisitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind <em>Import Kind</em>}' enum.

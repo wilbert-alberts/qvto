@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ExpressionsPackageImpl.java,v 1.22 2009/01/19 14:32:26 radvorak Exp $
+ * $Id: ExpressionsPackageImpl.java,v 1.23 2009/01/28 11:47:27 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -30,10 +30,8 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeCallExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
@@ -52,6 +50,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VisitableASTNode;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage;
 import org.eclipse.ocl.utilities.UtilitiesPackage;
 
 /**
@@ -172,13 +171,6 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 	 * @generated
 	 */
 	private EClass objectExpEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass extendedVisitorEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -813,15 +805,6 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getExtendedVisitor() {
-		return extendedVisitorEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EEnum getImportKind() {
 		return importKindEEnum;
 	}
@@ -1137,8 +1120,6 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 
 		visitableASTNodeEClass = createEClass(VISITABLE_AST_NODE);
 
-		extendedVisitorEClass = createEClass(EXTENDED_VISITOR);
-
 		// Create enums
 		directionKindEEnum = createEEnum(DIRECTION_KIND);
 		importKindEEnum = createEEnum(IMPORT_KIND);
@@ -1174,7 +1155,6 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		ImperativeOCLPackage theImperativeOCLPackage = (ImperativeOCLPackage)EPackage.Registry.INSTANCE.getEPackage(ImperativeOCLPackage.eNS_URI);
 
 		// Create type parameters
-		ETypeParameter extendedVisitorEClass_T = addETypeParameter(extendedVisitorEClass, "T"); //$NON-NLS-1$
 
 		// Set bounds for type parameters
 
@@ -1211,10 +1191,6 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		varParameterEClass.getESuperTypes().add(theEcorePackage.getEParameter());
 		visitableASTNodeEClass.getESuperTypes().add(theUtilitiesPackage.getVisitable());
 		visitableASTNodeEClass.getESuperTypes().add(theUtilitiesPackage.getASTNode());
-		EGenericType g1 = createEGenericType(theImperativeOCLPackage.getImperativeOCLVisitor());
-		EGenericType g2 = createEGenericType(extendedVisitorEClass_T);
-		g1.getETypeArguments().add(g2);
-		extendedVisitorEClass.getEGenericSuperTypes().add(g1);
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(constructorBodyEClass, ConstructorBody.class, "ConstructorBody", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -1227,8 +1203,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		EOperation op = addEOperation(contextualPropertyEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		ETypeParameter t1 = addETypeParameter(op, "T"); //$NON-NLS-1$
 		ETypeParameter t2 = addETypeParameter(op, "U"); //$NON-NLS-1$
-		g1 = createEGenericType(theUtilitiesPackage.getVisitor());
-		g2 = createEGenericType(t1);
+		EGenericType g1 = createEGenericType(theUtilitiesPackage.getVisitor());
+		EGenericType g2 = createEGenericType(t1);
 		g1.getETypeArguments().add(g2);
 		g2 = createEGenericType();
 		g1.getETypeArguments().add(g2);
@@ -1790,88 +1766,6 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 		initEOperation(op, g1);
 
 		initEClass(visitableASTNodeEClass, VisitableASTNode.class, "VisitableASTNode", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(extendedVisitorEClass, ExtendedVisitor.class, "ExtendedVisitor", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		op = addEOperation(extendedVisitorEClass, null, "visitModule", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getModule(), "module", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		g1 = createEGenericType(extendedVisitorEClass_T);
-		initEOperation(op, g1);
-
-		op = addEOperation(extendedVisitorEClass, null, "visitLibrary", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getLibrary(), "library", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		g1 = createEGenericType(extendedVisitorEClass_T);
-		initEOperation(op, g1);
-
-		op = addEOperation(extendedVisitorEClass, null, "visitModuleImport", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getModuleImport(), "moduleImport", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		g1 = createEGenericType(extendedVisitorEClass_T);
-		initEOperation(op, g1);
-
-		op = addEOperation(extendedVisitorEClass, null, "visitContextualProperty", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getContextualProperty(), "contextualProperty", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		g1 = createEGenericType(extendedVisitorEClass_T);
-		initEOperation(op, g1);
-
-		op = addEOperation(extendedVisitorEClass, null, "visitImperativeOperation", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getImperativeOperation(), "imperativeOperation", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		g1 = createEGenericType(extendedVisitorEClass_T);
-		initEOperation(op, g1);
-
-		op = addEOperation(extendedVisitorEClass, null, "visitVarParameter", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getVarParameter(), "varParameter", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		g1 = createEGenericType(extendedVisitorEClass_T);
-		initEOperation(op, g1);
-
-		op = addEOperation(extendedVisitorEClass, null, "visitOperationBody", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getOperationBody(), "operationBody", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		g1 = createEGenericType(extendedVisitorEClass_T);
-		initEOperation(op, g1);
-
-		op = addEOperation(extendedVisitorEClass, null, "visitMappingOperation", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getMappingOperation(), "mappingOperation", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		g1 = createEGenericType(extendedVisitorEClass_T);
-		initEOperation(op, g1);
-
-		op = addEOperation(extendedVisitorEClass, null, "visitHelper", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getHelper(), "helper", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		g1 = createEGenericType(extendedVisitorEClass_T);
-		initEOperation(op, g1);
-
-		op = addEOperation(extendedVisitorEClass, null, "visitMappingBody", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getMappingBody(), "mappingBody", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		g1 = createEGenericType(extendedVisitorEClass_T);
-		initEOperation(op, g1);
-
-		op = addEOperation(extendedVisitorEClass, null, "visitMappingCallExp", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getMappingCallExp(), "mappingCallExp", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		g1 = createEGenericType(extendedVisitorEClass_T);
-		initEOperation(op, g1);
-
-		op = addEOperation(extendedVisitorEClass, null, "visitResolveExp", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getResolveExp(), "resolveExp", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		g1 = createEGenericType(extendedVisitorEClass_T);
-		initEOperation(op, g1);
-
-		op = addEOperation(extendedVisitorEClass, null, "visitResolveInExp", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getResolveInExp(), "resolveInExp", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		g1 = createEGenericType(extendedVisitorEClass_T);
-		initEOperation(op, g1);
-
-		op = addEOperation(extendedVisitorEClass, null, "visitObjectExp", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getObjectExp(), "objectExp", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		g1 = createEGenericType(extendedVisitorEClass_T);
-		initEOperation(op, g1);
-
-		op = addEOperation(extendedVisitorEClass, null, "visitModelType", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getModelType(), "modelType", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		g1 = createEGenericType(extendedVisitorEClass_T);
-		initEOperation(op, g1);
-
-		op = addEOperation(extendedVisitorEClass, null, "visitEntryOperation", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getEntryOperation(), "entryOperation", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		g1 = createEGenericType(extendedVisitorEClass_T);
-		initEOperation(op, g1);
 
 		// Initialize enums and add enum literals
 		initEEnum(directionKindEEnum, DirectionKind.class, "DirectionKind"); //$NON-NLS-1$

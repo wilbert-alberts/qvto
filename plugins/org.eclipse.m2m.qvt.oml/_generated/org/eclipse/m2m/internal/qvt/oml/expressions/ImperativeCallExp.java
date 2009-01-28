@@ -9,10 +9,11 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ImperativeCallExp.java,v 1.1 2009/01/16 13:52:55 radvorak Exp $
+ * $Id: ImperativeCallExp.java,v 1.2 2009/01/28 11:47:26 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions;
 
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeExpression;
 import org.eclipse.ocl.ecore.OperationCallExp;
 
 /**

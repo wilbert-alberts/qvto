@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitor;
-import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;

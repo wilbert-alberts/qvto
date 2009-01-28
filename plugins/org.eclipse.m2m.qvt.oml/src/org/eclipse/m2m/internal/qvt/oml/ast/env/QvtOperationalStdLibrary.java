@@ -26,15 +26,11 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstanceFactory;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance;
-import org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.OrderedTupleType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.AbstractContextualOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.AbstractQVTStdlib;
@@ -52,6 +48,10 @@ import org.eclipse.m2m.internal.qvt.oml.stdlib.StdlibModuleOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.StringOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.TransformationOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.model.StdlibFactory;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictionaryType;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLFactory;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListType;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.OrderedTupleType;
 import org.eclipse.ocl.util.TypeUtil;
 
 

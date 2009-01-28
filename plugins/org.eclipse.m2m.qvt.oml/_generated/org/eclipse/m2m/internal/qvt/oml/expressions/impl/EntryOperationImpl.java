@@ -9,14 +9,13 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: EntryOperationImpl.java,v 1.3 2008/12/18 15:18:10 radvorak Exp $
+ * $Id: EntryOperationImpl.java,v 1.4 2009/01/28 11:47:27 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -62,9 +61,9 @@ public class EntryOperationImpl extends ImperativeOperationImpl implements Entry
 	 */
 	@Override
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
-		if(v instanceof ExtendedVisitor) {
+		if(v instanceof org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor) {
 		  @SuppressWarnings("unchecked")    		
-		  ExtendedVisitor<T> visitorExt = (ExtendedVisitor) v;    	
+		  org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor<T> visitorExt = (org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor) v;    	
 		  return visitorExt.visitEntryOperation(this);
 		}
 		return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);

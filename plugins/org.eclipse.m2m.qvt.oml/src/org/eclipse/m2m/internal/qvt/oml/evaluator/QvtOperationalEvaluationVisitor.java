@@ -20,14 +20,14 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
+import org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.ocl.EvaluationVisitor;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
 
-public interface QvtOperationalEvaluationVisitor extends ExtendedVisitor<Object>,
+public interface QvtOperationalEvaluationVisitor extends QVTOperationalVisitor<Object>,
 	EvaluationVisitor<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, 
 		EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> {
 	

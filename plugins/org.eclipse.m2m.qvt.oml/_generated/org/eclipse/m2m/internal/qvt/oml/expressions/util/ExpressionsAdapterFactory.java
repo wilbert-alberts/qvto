@@ -28,13 +28,9 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeCallExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeExpression;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
@@ -51,6 +47,8 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VisitableASTNode;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeExpression;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
 import org.eclipse.ocl.expressions.CallExp;
 import org.eclipse.ocl.expressions.FeatureCallExp;
 import org.eclipse.ocl.expressions.OCLExpression;
@@ -61,7 +59,6 @@ import org.eclipse.ocl.utilities.CallingASTNode;
 import org.eclipse.ocl.utilities.TypedASTNode;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.Visitable;
-import org.eclipse.ocl.utilities.Visitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -214,10 +211,6 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createVisitableASTNodeAdapter();
 			}
 			@Override
-			public <T> Adapter caseExtendedVisitor(ExtendedVisitor<T> object) {
-				return createExtendedVisitorAdapter();
-			}
-			@Override
 			public Adapter caseVisitable(Visitable object) {
 				return createVisitableAdapter();
 			}
@@ -320,14 +313,6 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseInstantiationExp(InstantiationExp object) {
 				return createInstantiationExpAdapter();
-			}
-			@Override
-			public <T, C, O, P, EL, PM, S, COA, SSA, CT> Adapter caseVisitor(Visitor<T, C, O, P, EL, PM, S, COA, SSA, CT> object) {
-				return createVisitorAdapter();
-			}
-			@Override
-			public <T> Adapter caseImperativeOCLVisitor(ImperativeOCLVisitor<T> object) {
-				return createImperativeOCLVisitorAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -560,20 +545,6 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor <em>Extended Visitor</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor
-	 * @generated
-	 */
-	public Adapter createExtendedVisitorAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.VisitableASTNode <em>Visitable AST Node</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -672,27 +643,13 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLVisitor <em>Visitor</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeExpression <em>Imperative Expression</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLVisitor
-	 * @generated
-	 */
-	public Adapter createImperativeOCLVisitorAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeExpression <em>Imperative Expression</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeExpression
+	 * @see org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeExpression
 	 * @generated
 	 */
 	public Adapter createImperativeExpressionAdapter() {
@@ -700,13 +657,13 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp <em>Instantiation Exp</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp <em>Instantiation Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp
+	 * @see org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp
 	 * @generated
 	 */
 	public Adapter createInstantiationExpAdapter() {
@@ -1046,20 +1003,6 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createEcore_OperationCallExpAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.utilities.Visitor <em>Visitor</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.utilities.Visitor
-	 * @generated
-	 */
-	public Adapter createVisitorAdapter() {
 		return null;
 	}
 

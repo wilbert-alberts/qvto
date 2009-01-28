@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ResolveInExpImpl.java,v 1.3 2009/01/16 13:52:55 radvorak Exp $
+ * $Id: ResolveInExpImpl.java,v 1.4 2009/01/28 11:47:27 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.ocl.utilities.Visitor;
@@ -118,9 +117,9 @@ public class ResolveInExpImpl extends ResolveExpImpl implements ResolveInExp {
 	 */
     @Override
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
-		if(v instanceof ExtendedVisitor) {
+		if(v instanceof org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor) {
 		  @SuppressWarnings("unchecked")    		
-		  ExtendedVisitor<T> visitorExt = (ExtendedVisitor) v;    	
+		  org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor<T> visitorExt = (org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor) v;    	
 		  return visitorExt.visitResolveInExp(this);
 		}
 		return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);

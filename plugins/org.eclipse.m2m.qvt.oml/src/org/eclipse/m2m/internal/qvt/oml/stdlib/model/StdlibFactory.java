@@ -19,9 +19,9 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QVTStackTraceElement;
-import org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOCLFactory;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictionaryType;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLFactory;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListType;
 import org.eclipse.m2m.qvt.oml.util.Dictionary;
 import org.eclipse.m2m.qvt.oml.util.MutableList;
 

@@ -14,8 +14,8 @@ package org.eclipse.m2m.internal.qvt.oml.ast.env;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.m2m.internal.qvt.oml.expressions.DictionaryType;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ListType;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictionaryType;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListType;
 import org.eclipse.ocl.TypeResolver;
 
 public interface QVTOTypeResolver extends TypeResolver<EClassifier, EOperation, EStructuralFeature> {

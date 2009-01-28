@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.ocl.ecore.OCLExpression;
 import org.eclipse.ocl.utilities.Visitor;
@@ -62,13 +61,13 @@ public class MappingOperationImpl extends ImperativeOperationImpl implements Map
 	 */
 	protected EList<MappingOperation> disjunct;
 				/**
-				 * The cached value of the '{@link #getInherited() <em>Inherited</em>}' reference list.
-				 * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getInherited() <em>Inherited</em>}' reference list.
+	 * <!-- begin-user-doc -->
 				 * <!-- end-user-doc -->
-				 * @see #getInherited()
-				 * @generated
-				 * @ordered
-				 */
+	 * @see #getInherited()
+	 * @generated
+	 * @ordered
+	 */
 				protected EList<MappingOperation> inherited;
 				/**
 	 * The cached value of the '{@link #getMerged() <em>Merged</em>}' reference list.
@@ -215,9 +214,9 @@ public class MappingOperationImpl extends ImperativeOperationImpl implements Map
 	 */
 	@Override
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
-		if(v instanceof ExtendedVisitor) {
+		if(v instanceof org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor) {
 		  @SuppressWarnings("unchecked")    		
-		  ExtendedVisitor<T> visitorExt = (ExtendedVisitor) v;    	
+		  org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor<T> visitorExt = (org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor) v;    	
 		  return visitorExt.visitMappingOperation(this);
 		}
 		return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);

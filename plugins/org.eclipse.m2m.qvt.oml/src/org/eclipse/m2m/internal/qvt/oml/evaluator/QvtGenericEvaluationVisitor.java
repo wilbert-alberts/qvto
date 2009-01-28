@@ -19,22 +19,32 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.m2m.internal.qvt.oml.expressions.AltExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.AssertExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.BlockExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ComputeExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AltExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssertExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.BlockExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.BreakExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.CatchExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ComputeExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ContinueExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralPart;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.OrderedTupleLiteralExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.OrderedTupleLiteralPart;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.RaiseExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.TryExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.UnlinkExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.UnpackExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
-import org.eclipse.m2m.internal.qvt.oml.expressions.DictLiteralExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ForExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ForExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeIterateExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeLoopExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeIterateExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeLoopExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.InstantiationExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
-import org.eclipse.m2m.internal.qvt.oml.expressions.LogExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.LogExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
@@ -45,11 +55,11 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ReturnExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.SwitchExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ReturnExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.SwitchExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
-import org.eclipse.m2m.internal.qvt.oml.expressions.VariableInitExp;
-import org.eclipse.m2m.internal.qvt.oml.expressions.WhileExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.VariableInitExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.WhileExp;
 import org.eclipse.ocl.EvaluationVisitorDecorator;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
@@ -384,8 +394,8 @@ abstract class QvtGenericEvaluationVisitor
 		return getQVTDelegate().visitResolveInExp(resolveInExp);
 	}
 
-	public Object visitSwitchAltExp(AltExp switchAltExp) {
-		return getQVTDelegate().visitSwitchAltExp(switchAltExp);
+	public Object visitAltExp(AltExp switchAltExp) {
+		return getQVTDelegate().visitAltExp(switchAltExp);
 	}
 
 	public Object visitSwitchExp(SwitchExp switchExp) {
@@ -412,9 +422,9 @@ abstract class QvtGenericEvaluationVisitor
 		return getQVTDelegate().visitLogExp(logExp);
 	}
 	
-    public Object visitImperativeLoopExp(ImperativeLoopExp imperativeLoopExp) {
-        return getQVTDelegate().visitImperativeLoopExp(imperativeLoopExp);
-    }
+//    public Object visitImperativeLoopExp(ImperativeLoopExp imperativeLoopExp) {
+//        return getQVTDelegate().visitImperativeLoopExp(imperativeLoopExp);
+//    }
 
     public Object visitForExp(ForExp forExp) {
         return getQVTDelegate().visitForExp(forExp);
@@ -435,4 +445,44 @@ abstract class QvtGenericEvaluationVisitor
     public Object visitDictLiteralExp(DictLiteralExp dictLiteralExp) {
     	return getQVTDelegate().visitDictLiteralExp(dictLiteralExp);
     }
+    
+	public Object visitBreakExp(BreakExp astNode) {
+		return getQVTDelegate().visitBreakExp(astNode);
+	}
+
+	public Object visitCatchtExp(CatchExp astNode) {
+		return getQVTDelegate().visitCatchtExp(astNode);
+	}
+
+	public Object visitContinueExp(ContinueExp astNode) {
+		return getQVTDelegate().visitContinueExp(astNode);
+	}
+
+	public Object visitDictLiteralPart(DictLiteralPart astNode) {
+		return getQVTDelegate().visitDictLiteralPart(astNode);
+	}
+
+	public Object visitOrderedTupleLiteralExp(OrderedTupleLiteralExp astNode) {
+		return getQVTDelegate().visitOrderedTupleLiteralExp(astNode);
+	}
+
+	public Object visitOrderedTupleLiteralPart(OrderedTupleLiteralPart astNode) {
+		return getQVTDelegate().visitOrderedTupleLiteralPart(astNode);
+	}
+
+	public Object visitRaiseExp(RaiseExp astNode) {
+		return getQVTDelegate().visitRaiseExp(astNode);
+	}
+
+	public Object visitTryExp(TryExp astNode) {
+		return getQVTDelegate().visitTryExp(astNode);
+	}
+
+	public Object visitUnlinkExp(UnlinkExp astNode) {
+		return getQVTDelegate().visitUnlinkExp(astNode);
+	}
+
+	public Object visitUnpackExp(UnpackExp astNode) {
+		return getQVTDelegate().visitUnpackExp(astNode);
+	}    
 }

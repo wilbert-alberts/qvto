@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ExtendedVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.ocl.ecore.OCLExpression;
 import org.eclipse.ocl.utilities.Visitor;
@@ -58,13 +57,13 @@ public class MappingBodyImpl extends OperationBodyImpl implements MappingBody {
 	protected EList<OCLExpression> endSection;
 
 	/**
-* The cached value of the '{@link #getInitSection() <em>Init Section</em>}' containment reference list.
-* <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getInitSection() <em>Init Section</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
 * <!-- end-user-doc -->
-* @see #getInitSection()
-* @generated
-* @ordered
-*/
+	 * @see #getInitSection()
+	 * @generated
+	 * @ordered
+	 */
 protected EList<OCLExpression> initSection;
 
 	/**
@@ -117,9 +116,9 @@ protected EList<OCLExpression> initSection;
 	 */
 	@Override
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
-		if(v instanceof ExtendedVisitor) {
+		if(v instanceof org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor) {
 		  @SuppressWarnings("unchecked")    		
-		  ExtendedVisitor<T> visitorExt = (ExtendedVisitor) v;    	
+		  org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor<T> visitorExt = (org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor) v;    	
 		  return visitorExt.visitMappingBody(this);
 		}
 		return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);

@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
-import org.eclipse.m2m.internal.qvt.oml.expressions.AssignExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp;
 
 /**
  * This interface is intended to be used to recieve notifications on deferred assignments
