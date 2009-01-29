@@ -96,7 +96,7 @@ public class ParserTests {
     	TestData.createSourceChecked("blackboxlib_annotation_java", 1, 1),
     	TestData.createSourceChecked("dupImportFileUnit", 0, 1),    	
     	TestData.createSourceChecked("dupImportLibrary", 0, 1),    	
-    	TestData.createSourceChecked("testmodelparamtype", 3, 0),    	
+    	TestData.createSourceChecked("testmodelparamtype", 3, 1),    	
     	TestData.createSourceChecked("resolvecond", 1, 0),
     	TestData.createSourceChecked("intermPropClash", 9, 0),    	    	
     	TestData.createSourceChecked("noClassInImplicitPopulate", 3, 0),    	
