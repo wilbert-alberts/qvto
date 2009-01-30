@@ -123,7 +123,7 @@ public class MappingCallExpImpl extends ImperativeCallExpImpl implements Mapping
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ExpressionsPackage.MAPPING_CALL_EXP__IS_STRICT:
-				return isIsStrict() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsStrict();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -137,7 +137,7 @@ public class MappingCallExpImpl extends ImperativeCallExpImpl implements Mapping
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ExpressionsPackage.MAPPING_CALL_EXP__IS_STRICT:
-				setIsStrict(((Boolean)newValue).booleanValue());
+				setIsStrict((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

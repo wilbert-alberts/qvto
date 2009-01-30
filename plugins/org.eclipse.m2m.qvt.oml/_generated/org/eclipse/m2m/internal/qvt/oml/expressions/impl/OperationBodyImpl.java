@@ -212,7 +212,7 @@ public class OperationBodyImpl extends EObjectImpl implements OperationBody {
 	 * @generated
 	 */
 	public ImperativeOperation getOperation() {
-		if (eContainerFeatureID != ExpressionsPackage.OPERATION_BODY__OPERATION) return null;
+		if (eContainerFeatureID() != ExpressionsPackage.OPERATION_BODY__OPERATION) return null;
 		return (ImperativeOperation)eContainer();
 	}
 
@@ -232,7 +232,7 @@ public class OperationBodyImpl extends EObjectImpl implements OperationBody {
 	 * @generated
 	 */
 	public void setOperation(ImperativeOperation newOperation) {
-		if (newOperation != eInternalContainer() || (eContainerFeatureID != ExpressionsPackage.OPERATION_BODY__OPERATION && newOperation != null)) {
+		if (newOperation != eInternalContainer() || (eContainerFeatureID() != ExpressionsPackage.OPERATION_BODY__OPERATION && newOperation != null)) {
 			if (EcoreUtil.isAncestor(this, newOperation))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
 			NotificationChain msgs = null;
@@ -342,7 +342,7 @@ public class OperationBodyImpl extends EObjectImpl implements OperationBody {
 	 */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID) {
+		switch (eContainerFeatureID()) {
 			case ExpressionsPackage.OPERATION_BODY__OPERATION:
 				return eInternalContainer().eInverseRemove(this, ExpressionsPackage.IMPERATIVE_OPERATION__BODY, ImperativeOperation.class, msgs);
 		}
@@ -358,9 +358,9 @@ public class OperationBodyImpl extends EObjectImpl implements OperationBody {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ExpressionsPackage.OPERATION_BODY__START_POSITION:
-				return new Integer(getStartPosition());
+				return getStartPosition();
 			case ExpressionsPackage.OPERATION_BODY__END_POSITION:
-				return new Integer(getEndPosition());
+				return getEndPosition();
 			case ExpressionsPackage.OPERATION_BODY__EANNOTATIONS:
 				return getEAnnotations();
 			case ExpressionsPackage.OPERATION_BODY__CONTENT:
@@ -383,10 +383,10 @@ public class OperationBodyImpl extends EObjectImpl implements OperationBody {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ExpressionsPackage.OPERATION_BODY__START_POSITION:
-				setStartPosition(((Integer)newValue).intValue());
+				setStartPosition((Integer)newValue);
 				return;
 			case ExpressionsPackage.OPERATION_BODY__END_POSITION:
-				setEndPosition(((Integer)newValue).intValue());
+				setEndPosition((Integer)newValue);
 				return;
 			case ExpressionsPackage.OPERATION_BODY__EANNOTATIONS:
 				getEAnnotations().clear();

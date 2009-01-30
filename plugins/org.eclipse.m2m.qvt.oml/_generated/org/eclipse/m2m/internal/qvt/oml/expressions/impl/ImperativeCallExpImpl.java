@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ImperativeCallExpImpl.java,v 1.2 2009/01/28 22:22:44 sboyko Exp $
+ * $Id: ImperativeCallExpImpl.java,v 1.3 2009/01/30 19:19:28 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -111,7 +111,7 @@ public class ImperativeCallExpImpl extends OperationCallExpImpl implements Imper
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ExpressionsPackage.IMPERATIVE_CALL_EXP__IS_VIRTUAL:
-				return isIsVirtual() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsVirtual();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -125,7 +125,7 @@ public class ImperativeCallExpImpl extends OperationCallExpImpl implements Imper
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ExpressionsPackage.IMPERATIVE_CALL_EXP__IS_VIRTUAL:
-				setIsVirtual(((Boolean)newValue).booleanValue());
+				setIsVirtual((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

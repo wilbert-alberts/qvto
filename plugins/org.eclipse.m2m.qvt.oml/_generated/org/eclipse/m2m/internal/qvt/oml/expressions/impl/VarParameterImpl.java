@@ -96,7 +96,7 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	 * @generated
 	 */
 	public EOperation getEOperation() {
-		if (eContainerFeatureID != ExpressionsPackage.VAR_PARAMETER__EOPERATION) return null;
+		if (eContainerFeatureID() != ExpressionsPackage.VAR_PARAMETER__EOPERATION) return null;
 		return (EOperation)eContainer();
 	}
 
@@ -106,7 +106,7 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	 * @generated
 	 */
 	public ImperativeOperation getCtxOwner() {
-		if (eContainerFeatureID != ExpressionsPackage.VAR_PARAMETER__CTX_OWNER) return null;
+		if (eContainerFeatureID() != ExpressionsPackage.VAR_PARAMETER__CTX_OWNER) return null;
 		return (ImperativeOperation)eContainer();
 	}
 
@@ -126,7 +126,7 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	 * @generated
 	 */
 	public void setCtxOwner(ImperativeOperation newCtxOwner) {
-		if (newCtxOwner != eInternalContainer() || (eContainerFeatureID != ExpressionsPackage.VAR_PARAMETER__CTX_OWNER && newCtxOwner != null)) {
+		if (newCtxOwner != eInternalContainer() || (eContainerFeatureID() != ExpressionsPackage.VAR_PARAMETER__CTX_OWNER && newCtxOwner != null)) {
 			if (EcoreUtil.isAncestor(this, newCtxOwner))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
 			NotificationChain msgs = null;
@@ -147,7 +147,7 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	 * @generated
 	 */
 	public ImperativeOperation getResOwner() {
-		if (eContainerFeatureID != ExpressionsPackage.VAR_PARAMETER__RES_OWNER) return null;
+		if (eContainerFeatureID() != ExpressionsPackage.VAR_PARAMETER__RES_OWNER) return null;
 		return (ImperativeOperation)eContainer();
 	}
 
@@ -167,7 +167,7 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	 * @generated
 	 */
 	public void setResOwner(ImperativeOperation newResOwner) {
-		if (newResOwner != eInternalContainer() || (eContainerFeatureID != ExpressionsPackage.VAR_PARAMETER__RES_OWNER && newResOwner != null)) {
+		if (newResOwner != eInternalContainer() || (eContainerFeatureID() != ExpressionsPackage.VAR_PARAMETER__RES_OWNER && newResOwner != null)) {
 			if (EcoreUtil.isAncestor(this, newResOwner))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
 			NotificationChain msgs = null;
@@ -267,7 +267,7 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	 */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID) {
+		switch (eContainerFeatureID()) {
 			case ExpressionsPackage.VAR_PARAMETER__EOPERATION:
 				return eInternalContainer().eInverseRemove(this, EcorePackage.EOPERATION__EPARAMETERS, EOperation.class, msgs);
 			case ExpressionsPackage.VAR_PARAMETER__CTX_OWNER:

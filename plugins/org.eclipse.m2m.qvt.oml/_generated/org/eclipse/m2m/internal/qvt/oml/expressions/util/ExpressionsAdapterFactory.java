@@ -252,8 +252,8 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createOCLExpressionAdapter();
 			}
 			@Override
-			public Adapter caseOCLExpression_1(org.eclipse.ocl.ecore.OCLExpression object) {
-				return createOCLExpression_1Adapter();
+			public Adapter caseEcore_OCLExpression(org.eclipse.ocl.ecore.OCLExpression object) {
+				return createEcore_OCLExpressionAdapter();
 			}
 			@Override
 			public Adapter caseCallingASTNode(CallingASTNode object) {
@@ -264,24 +264,24 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createCallExpAdapter();
 			}
 			@Override
-			public Adapter caseCallExp_1(org.eclipse.ocl.ecore.CallExp object) {
-				return createCallExp_1Adapter();
+			public Adapter caseEcore_CallExp(org.eclipse.ocl.ecore.CallExp object) {
+				return createEcore_CallExpAdapter();
 			}
 			@Override
 			public <C> Adapter caseFeatureCallExp(FeatureCallExp<C> object) {
 				return createFeatureCallExpAdapter();
 			}
 			@Override
-			public Adapter caseFeatureCallExp_1(org.eclipse.ocl.ecore.FeatureCallExp object) {
-				return createFeatureCallExp_1Adapter();
+			public Adapter caseEcore_FeatureCallExp(org.eclipse.ocl.ecore.FeatureCallExp object) {
+				return createEcore_FeatureCallExpAdapter();
 			}
 			@Override
 			public <C, O> Adapter caseOperationCallExp(OperationCallExp<C, O> object) {
 				return createOperationCallExpAdapter();
 			}
 			@Override
-			public Adapter caseOperationCallExp_1(org.eclipse.ocl.ecore.OperationCallExp object) {
-				return createOperationCallExp_1Adapter();
+			public Adapter caseEcore_OperationCallExp(org.eclipse.ocl.ecore.OperationCallExp object) {
+				return createEcore_OperationCallExpAdapter();
 			}
 			@Override
 			public Adapter caseImperativeExpression(ImperativeExpression object) {
@@ -308,8 +308,8 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createVariableAdapter();
 			}
 			@Override
-			public Adapter caseVariable_1(org.eclipse.ocl.ecore.Variable object) {
-				return createVariable_1Adapter();
+			public Adapter caseEcore_Variable(org.eclipse.ocl.ecore.Variable object) {
+				return createEcore_VariableAdapter();
 			}
 			@Override
 			public Adapter caseEParameter(EParameter object) {
@@ -881,7 +881,7 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.ocl.ecore.Variable
 	 * @generated
 	 */
-	public Adapter createVariable_1Adapter() {
+	public Adapter createEcore_VariableAdapter() {
 		return null;
 	}
 
@@ -923,7 +923,7 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.ocl.ecore.OCLExpression
 	 * @generated
 	 */
-	public Adapter createOCLExpression_1Adapter() {
+	public Adapter createEcore_OCLExpressionAdapter() {
 		return null;
 	}
 
@@ -965,7 +965,7 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.ocl.ecore.CallExp
 	 * @generated
 	 */
-	public Adapter createCallExp_1Adapter() {
+	public Adapter createEcore_CallExpAdapter() {
 		return null;
 	}
 
@@ -993,7 +993,7 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.ocl.ecore.FeatureCallExp
 	 * @generated
 	 */
-	public Adapter createFeatureCallExp_1Adapter() {
+	public Adapter createEcore_FeatureCallExpAdapter() {
 		return null;
 	}
 
@@ -1021,7 +1021,7 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.ocl.ecore.OperationCallExp
 	 * @generated
 	 */
-	public Adapter createOperationCallExp_1Adapter() {
+	public Adapter createEcore_OperationCallExpAdapter() {
 		return null;
 	}
 

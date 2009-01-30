@@ -245,7 +245,7 @@ public class ModuleImportImpl extends EObjectImpl implements ModuleImport {
 	 * @generated
 	 */
 	public Module getModule() {
-		if (eContainerFeatureID != ExpressionsPackage.MODULE_IMPORT__MODULE) return null;
+		if (eContainerFeatureID() != ExpressionsPackage.MODULE_IMPORT__MODULE) return null;
 		return (Module)eContainer();
 	}
 
@@ -265,7 +265,7 @@ public class ModuleImportImpl extends EObjectImpl implements ModuleImport {
 	 * @generated
 	 */
 	public void setModule(Module newModule) {
-		if (newModule != eInternalContainer() || (eContainerFeatureID != ExpressionsPackage.MODULE_IMPORT__MODULE && newModule != null)) {
+		if (newModule != eInternalContainer() || (eContainerFeatureID() != ExpressionsPackage.MODULE_IMPORT__MODULE && newModule != null)) {
 			if (EcoreUtil.isAncestor(this, newModule))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
 			NotificationChain msgs = null;
@@ -406,7 +406,7 @@ public class ModuleImportImpl extends EObjectImpl implements ModuleImport {
 	 */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID) {
+		switch (eContainerFeatureID()) {
 			case ExpressionsPackage.MODULE_IMPORT__MODULE:
 				return eInternalContainer().eInverseRemove(this, ExpressionsPackage.MODULE__MODULE_IMPORT, Module.class, msgs);
 		}
@@ -422,9 +422,9 @@ public class ModuleImportImpl extends EObjectImpl implements ModuleImport {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ExpressionsPackage.MODULE_IMPORT__START_POSITION:
-				return new Integer(getStartPosition());
+				return getStartPosition();
 			case ExpressionsPackage.MODULE_IMPORT__END_POSITION:
-				return new Integer(getEndPosition());
+				return getEndPosition();
 			case ExpressionsPackage.MODULE_IMPORT__EANNOTATIONS:
 				return getEAnnotations();
 			case ExpressionsPackage.MODULE_IMPORT__BINDING:
@@ -450,10 +450,10 @@ public class ModuleImportImpl extends EObjectImpl implements ModuleImport {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ExpressionsPackage.MODULE_IMPORT__START_POSITION:
-				setStartPosition(((Integer)newValue).intValue());
+				setStartPosition((Integer)newValue);
 				return;
 			case ExpressionsPackage.MODULE_IMPORT__END_POSITION:
-				setEndPosition(((Integer)newValue).intValue());
+				setEndPosition((Integer)newValue);
 				return;
 			case ExpressionsPackage.MODULE_IMPORT__EANNOTATIONS:
 				getEAnnotations().clear();
