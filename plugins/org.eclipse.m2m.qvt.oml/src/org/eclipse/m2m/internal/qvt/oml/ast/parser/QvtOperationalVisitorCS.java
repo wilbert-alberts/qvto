@@ -192,7 +192,6 @@ import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.ecore.SendSignalAction;
-import org.eclipse.ocl.ecore.StringLiteralExp;
 import org.eclipse.ocl.expressions.BooleanLiteralExp;
 import org.eclipse.ocl.expressions.CollectionKind;
 import org.eclipse.ocl.expressions.CollectionLiteralExp;
@@ -206,6 +205,7 @@ import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.PropertyCallExp;
 import org.eclipse.ocl.expressions.RealLiteralExp;
+import org.eclipse.ocl.expressions.StringLiteralExp;
 import org.eclipse.ocl.expressions.TypeExp;
 import org.eclipse.ocl.expressions.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.expressions.Variable;
@@ -4103,7 +4103,7 @@ public class QvtOperationalVisitorCS
                 org.eclipse.ocl.expressions.StringLiteralExp<EClassifier> stringLiteralExp = oclFactory.createStringLiteralExp();
                 stringLiteralExp.setStringSymbol(""); //$NON-NLS-1$
                 stringLiteralExp.setType(oclStdLib.getString());
-                return (StringLiteralExp)stringLiteralExp;
+                return (org.eclipse.ocl.ecore.StringLiteralExp) stringLiteralExp;
             }
         }
 	    return null;
@@ -4432,5 +4432,58 @@ public class QvtOperationalVisitorCS
 		annotation.getDetails().put(tagId, value);
 		annotation.getReferences().add(element);
 		return annotation;
+	}
+
+	@Override
+	protected org.eclipse.ocl.expressions.StringLiteralExp<EClassifier> stringLiteralExpCS(
+			StringLiteralExpCS stringLiteralExpCS,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+
+		StringLiteralExp<EClassifier> astNode = oclFactory.createStringLiteralExp();
+		initASTMapping(env, astNode, stringLiteralExpCS);
+		String stringLiteral = stringLiteralExpCS.getStringSymbol();
+		List<String> singlelineStringLiterals = splitMultilineStringLiteral(stringLiteral);
+		String[] processedSinglelineStringLiterals = new String[singlelineStringLiterals.size()];
+		for (int i = 0; i < processedSinglelineStringLiterals.length; i++) {
+			processedSinglelineStringLiterals[i] = processSinglelineStringLiteral(singlelineStringLiterals.get(i));
+		}
+		StringBuilder stringBuilder = new StringBuilder();
+		for (String processedSinglelineStringLiteral : processedSinglelineStringLiterals) {
+			stringBuilder.append(processedSinglelineStringLiteral);
+		}
+		astNode.setStringSymbol(stringBuilder.toString());
+		astNode.setType(env.getOCLStandardLibrary().getString());
+		
+		TRACE("stringLiteralExpCS", "String: " + stringLiteralExpCS.getSymbol());//$NON-NLS-2$//$NON-NLS-1$
+			
+		return astNode;
+	}
+
+	private List<String> splitMultilineStringLiteral(String stringLiteral) {
+		List<String> singlelineStringLiterals = new ArrayList<String>();
+		char quote = stringLiteral.charAt(0);
+		boolean isInQuotes = true;
+		int leftIndex = 1;
+		for (int i = 1, n = stringLiteral.length(); i < n; i++) {
+			char ch = stringLiteral.charAt(i);
+			if (isInQuotes) {
+				if ((ch == quote)
+						&& (stringLiteral.charAt(i - 1) != '\\')) {
+						singlelineStringLiterals.add(stringLiteral.substring(leftIndex, i));
+						isInQuotes = false;
+					}
+			} else {
+				if (!Character.isWhitespace(ch)) {
+					quote = ch;
+					leftIndex = i + 1;
+					isInQuotes = true;
+				}
+			}
+		}
+		return singlelineStringLiterals;
+	}
+	
+	private String processSinglelineStringLiteral(String rawString) {
+		return rawString;
 	}
 }
