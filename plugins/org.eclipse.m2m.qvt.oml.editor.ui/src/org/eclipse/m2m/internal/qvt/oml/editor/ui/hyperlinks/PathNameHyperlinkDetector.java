@@ -29,6 +29,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.ocl.cst.CSTNode;
@@ -100,7 +101,7 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 				if(astObj instanceof EModelElement) {
 					return new EModelElementRef((EModelElement)astObj, HyperlinkUtil.createRegion(syntaxElement));
 				}
-			} else if (syntaxElement instanceof PathNameCS) {						
+			} else if (syntaxElement instanceof PathNameCS && false == syntaxElement.eContainer() instanceof NewRuleCallExpCS) {						
 				if(astObj instanceof ENamedElement) {
 					PathNameCS pathNameCS  = (PathNameCS) syntaxElement;				
 					int[] selectedNamePos = new int[1];
