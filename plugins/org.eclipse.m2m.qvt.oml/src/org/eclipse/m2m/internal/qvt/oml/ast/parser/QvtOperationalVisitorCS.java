@@ -52,6 +52,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFolder;
 import org.eclipse.m2m.internal.qvt.oml.compiler.BlackboxModuleHelper;
+import org.eclipse.m2m.internal.qvt.oml.compiler.ConstructorOperationAdapter;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IntermediateClassFactory;
 import org.eclipse.m2m.internal.qvt.oml.compiler.ParsedModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
@@ -116,6 +117,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.EmfMmUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Constructor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
@@ -266,14 +268,17 @@ public class QvtOperationalVisitorCS
     		EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		InstantiationExp instantiationExp = ImperativeOCLFactory.eINSTANCE.createInstantiationExp();
 		initStartEndPositions(instantiationExp, newCallExp);
+		newCallExp.setAst(instantiationExp);
 
 		PathNameCS scopedIdentifierCS = newCallExp.getScopedIdentifier();
 		EClassifier instantiatedClass = typeCS(scopedIdentifierCS, env);
 		instantiationExp.setType(instantiatedClass);
 
+		boolean isTransformationInstantiation = false;
 		if(instantiatedClass instanceof EClass) {			
 			instantiationExp.setInstantiatedClass((EClass)instantiatedClass);
 			instantiationExp.setName(instantiatedClass.getName());
+			isTransformationInstantiation = QvtOperationalStdLibrary.INSTANCE.getTransformationClass().isSuperTypeOf((EClass) instantiatedClass);
 		}
 
 		for (OCLExpressionCS nextArgCS : newCallExp.getArguments()) {
@@ -282,6 +287,14 @@ public class QvtOperationalVisitorCS
 				instantiationExp.getArgument().add((org.eclipse.ocl.ecore.OCLExpression)nextArgAST);
 			}
 		}
+		
+		if (!isTransformationInstantiation && env instanceof QvtOperationalEnv) {
+			EOperation lookupOperation = ((QvtOperationalEnv) env).lookupConstructorOperation(instantiationExp.getType(), instantiationExp.getName(), instantiationExp.getArgument());
+			if (lookupOperation instanceof Constructor) {
+				instantiationExp.eAdapters().add(new ConstructorOperationAdapter((Constructor) lookupOperation));
+			}
+		}
+		
 		return instantiationExp;
     }
 	

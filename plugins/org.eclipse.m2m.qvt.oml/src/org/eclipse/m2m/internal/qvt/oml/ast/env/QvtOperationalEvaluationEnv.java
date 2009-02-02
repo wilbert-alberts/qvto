@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Stack;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -778,15 +777,12 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	private class Internal implements InternalEvaluationEnv {
 	    private ThisInstanceResolver myThisResolver;		
 	    private EObject myCurrentIP;
-		private final Stack<Object> myObjectExpOwnerStack;
 	    
 		Internal() {
-			myObjectExpOwnerStack = new Stack<Object>();			
 		}		
 		
 		Internal(Internal another) {
 			this();
-			myObjectExpOwnerStack.addAll(another.myObjectExpOwnerStack);
 			myThisResolver = another.myThisResolver;
 			myCurrentIP = another.myCurrentIP;
 		}
@@ -856,18 +852,6 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	    	return getRoot().internalEnv().getTraces();
 	    }
 	    
-		public void popObjectExpOwner() {
-			myObjectExpOwnerStack.pop();
-		}
-
-		public Object peekObjectExpOwner() {
-			return myObjectExpOwnerStack.peek();
-		}
-
-		public void pushObjectExpOwner(Object owner) {
-			myObjectExpOwnerStack.push(owner);
-		}
-		
 	    public EObject setCurrentIP(EObject currentIPObject) {
 	    	EObject prevValue = myCurrentIP;
 	    	myCurrentIP = currentIPObject;

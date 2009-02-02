@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Constructor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
@@ -78,6 +79,10 @@ public class QvtOperationalUtil {
 
     public static boolean isMappingOperation(EOperation operation) {
         return operation instanceof MappingOperation;
+    }
+
+    public static boolean isConstructorOperation(EOperation operation) {
+        return operation instanceof Constructor;
     }
 
     public static boolean isImperativeOperation(EOperation operation) {

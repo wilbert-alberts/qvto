@@ -177,6 +177,8 @@ public final class ValidationMessages extends NLS {
     public static String IntermClassifier_invalideOppositeName;
     public static String IntermClassifier_incompatibleFeatureKeys;
     
+    public static String OperationIsUndefined;
+    
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, ValidationMessages.class);
 	}

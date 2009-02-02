@@ -500,11 +500,6 @@ public class QvtOperationalParserUtil {
 		return context instanceof EClass;
 	}
 	
-	// FIXME - review this spaghetti
-	public static boolean isTypeEquals(QvtOperationalEnv env, EClassifier type, EClassifier otherType) {
-		return isAssignableToFrom(env, type, otherType) && isAssignableToFrom(env, otherType, type);
-	}
-
 	public static String safeGetMappingQualifiedName(QvtOperationalEnv env, MappingOperation mappingOperation) {
 		if(mappingOperation != null) {
 			StringBuilder buf = new StringBuilder();			

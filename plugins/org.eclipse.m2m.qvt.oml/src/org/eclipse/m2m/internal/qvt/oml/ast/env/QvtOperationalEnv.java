@@ -216,37 +216,44 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		
 	@Override
 	public EOperation lookupOperation(EClassifier owner, String name, List<? extends TypedElement<EClassifier>> args) {
+
 		// first try to lookup imperative operation with param's exact matching  
-        UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> uml = getUMLReflection();
-		List<EOperation> lookupMappingOperations = lookupMappingOperations(owner, name);
-		nextOpLabel:for (EOperation op : lookupMappingOperations) {
+		for (EOperation op : lookupMappingOperations(owner, name)) {
 	        List<EParameter> params = op.getEParameters();
 	        if (params.size() != args.size()) {
 	            continue;
 	        }
 	        
+	        boolean isMatched = true;
 	        for (int i = 0, n = params.size(); i < n; ++i) {
 	        	TypedElement<EClassifier> argVal = args.get(i);
 	        	if(argVal == null) {
 	        		// may have not been parsed successfully
 	        		continue;
 	        	}
-				EClassifier argType = argVal.getType();
-				EClassifier popType = uml.getOCLType(params.get(i));
 	            
-	            if (!QvtOperationalParserUtil.isTypeEquals(this, argType, popType)) {
-	                continue nextOpLabel;
-	            }
+				if (TypeUtil.getRelationship(
+								this,
+								getUMLReflection().getOCLType(argVal),
+								getUMLReflection().getOCLType(params.get(i)))
+							!= UMLReflection.SAME_TYPE) {
+					
+					isMatched = false;
+					break;
+				}
 	        }
-	        return op;
+	        if (isMatched) {
+	        	return op;
+	        }
 		}
+		
 		// pass to super in case exact imperative operation wasn't found
 		return super.lookupOperation(owner, name, args);
 	}
 	
     public List<EOperation> lookupMappingOperations(EClassifier owner, String name) {
         if (owner == null) {
-            owner = getModuleContextType();//getOCLStandardLibrary().getOclVoid();
+            owner = getModuleContextType();
         }
 
         UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> uml = getUMLReflection();
@@ -254,6 +261,59 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
         List<EOperation> result = new ArrayList<EOperation>();
 		for (EOperation operation : operations) {
 		    if (uml.getName(operation).equals(name) && QvtOperationalUtil.isMappingOperation(operation)) {
+		        result.add(operation);
+		    }
+		}
+
+        return result;
+    }
+
+    public EOperation lookupConstructorOperation(EClassifier owner, String name, List<? extends TypedElement<EClassifier>> args) {
+    	List<EOperation> operations = lookupConstructorOperations(owner, name, args.size());
+    	
+    	// first pass with strict matching (like in doFindCollidingOperation() and QvtOperationalEnv::lookupOperation() for mappings)
+    	for (EOperation op : operations) {
+	        List<EParameter> params = op.getEParameters();
+
+	        boolean isMatched = true;
+	        for (int i = 0, n = params.size(); i < n; ++i) {
+				if (TypeUtil.getRelationship(
+								this,
+								getUMLReflection().getOCLType(args.get(i)),
+								getUMLReflection().getOCLType(params.get(i)))
+							!= UMLReflection.SAME_TYPE) {
+					
+					isMatched = false;
+					break;
+				}
+	        }
+	        if (isMatched) {
+	        	return op;
+	        }
+    	}
+
+    	// second pass with conformance matching (like in AbstractEnvironment::lookupOperation() for operations)
+    	for (EOperation op : operations) {
+			if (getTypeChecker().matchArgs(owner, op.getEParameters(), args)) {
+	        	return op;
+	        }
+    	}
+
+    	return null;
+    }
+    
+    private List<EOperation> lookupConstructorOperations(EClassifier owner, String name, int paramSize) {
+        if (owner == null) {
+            owner = getModuleContextType();
+        }
+
+        UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> uml = getUMLReflection();
+        List<EOperation> operations = TypeUtil.getOperations(this, owner);
+        List<EOperation> result = new ArrayList<EOperation>(2);
+		for (EOperation operation : operations) {
+		    if (uml.getName(operation).equals(name) 
+		    		&& QvtOperationalUtil.isConstructorOperation(operation)
+		    		&& operation.getEParameters().size() == paramSize) {
 		        result.add(operation);
 		    }
 		}

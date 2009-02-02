@@ -24,6 +24,7 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -35,6 +36,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.IModuleSourceInfo;
@@ -47,6 +49,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.m2m.internal.qvt.oml.compiler.ConstructorOperationAdapter;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IntermediateClassFactory;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance.InternalTransformation;
@@ -762,43 +765,69 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	public Object visitInstantiationExp(InstantiationExp objectExp) { 
 		// should instantiate the module transformation
 		EClass _class = objectExp.getInstantiatedClass();
-		assert _class instanceof OperationalTransformation; // do not support normal class constructor calls yet
-			
-		EList<org.eclipse.ocl.ecore.OCLExpression> formalArguments = objectExp.getArgument();		
-		List<ModelInstance> actualArguments = new ArrayList<ModelInstance>(formalArguments.size());
-
-		for (OCLExpression<EClassifier> nextArg : formalArguments) {
-			Object argVal = nextArg.accept(getVisitor());
-			if(argVal instanceof ModelInstance == false) {
-				throwQVTException(new QvtRuntimeException("Undefined model passed to transformation"));
+		if (_class instanceof OperationalTransformation) {
+				
+			EList<org.eclipse.ocl.ecore.OCLExpression> formalArguments = objectExp.getArgument();		
+			List<ModelInstance> actualArguments = new ArrayList<ModelInstance>(formalArguments.size());
+	
+			for (OCLExpression<EClassifier> nextArg : formalArguments) {
+				Object argVal = nextArg.accept(getVisitor());
+				if(argVal instanceof ModelInstance == false) {
+					throwQVTException(new QvtRuntimeException("Undefined model passed to transformation"));
+				}
+				ModelInstance modelInstance = (ModelInstance) argVal;
+				actualArguments.add(modelInstance); 
 			}
-			ModelInstance modelInstance = (ModelInstance) argVal;
-			actualArguments.add(modelInstance); 
-		}
-
-		OperationalTransformation targetTransf = (OperationalTransformation)_class;
-		QvtOperationalEvaluationEnv currentEnv = getOperationalEvaluationEnv();		
-		// create a nested environment for constructor invocation representing 
-		// the root environment of explicitly called transformation		
-		// Empty default context, no configuration property is available
-		// Remark: Can we set configuration property in the concrete syntax on the explicit transf object.
-		Context nestedContext = EvaluationUtil.createAggregatedContext(currentEnv);
-		
-		QvtOperationalEnvFactory envFactory = getOperationalEnv().getFactory();
-		QvtOperationalEvaluationEnv nestedEvalEnv = envFactory.createEvaluationEnvironment(nestedContext, null);
-		// send arguments into the entry operation
-		nestedEvalEnv.getOperationArgs().addAll(actualArguments);
-		// Use per transformation instance visitor 
-		InternalEvaluator nestedVisitor = createNestedEvaluationVisitor(this, nestedEvalEnv).createInterruptibleVisitor();
-		try {
-			setOperationalEvaluationEnv(nestedEvalEnv);
+	
+			OperationalTransformation targetTransf = (OperationalTransformation)_class;
+			QvtOperationalEvaluationEnv currentEnv = getOperationalEvaluationEnv();		
+			// create a nested environment for constructor invocation representing 
+			// the root environment of explicitly called transformation		
+			// Empty default context, no configuration property is available
+			// Remark: Can we set configuration property in the concrete syntax on the explicit transf object.
+			Context nestedContext = EvaluationUtil.createAggregatedContext(currentEnv);
 			
-			ModuleInstance moduleInstance = nestedVisitor.callTransformationImplicitConstructor(targetTransf, actualArguments);
-			//nestedEvalEnv.add(QvtOperationalEnv.THIS, moduleInstance);
-			moduleInstance.getAdapter(InternalTransformation.class).setEntryOperationHandler(createEntryOperationHandler(nestedVisitor));
-			return moduleInstance;
-		} finally {
-			setOperationalEvaluationEnv(currentEnv);
+			QvtOperationalEnvFactory envFactory = getOperationalEnv().getFactory();
+			QvtOperationalEvaluationEnv nestedEvalEnv = envFactory.createEvaluationEnvironment(nestedContext, null);
+			// send arguments into the entry operation
+			nestedEvalEnv.getOperationArgs().addAll(actualArguments);
+			// Use per transformation instance visitor 
+			InternalEvaluator nestedVisitor = createNestedEvaluationVisitor(this, nestedEvalEnv).createInterruptibleVisitor();
+			try {
+				setOperationalEvaluationEnv(nestedEvalEnv);
+				
+				ModuleInstance moduleInstance = nestedVisitor.callTransformationImplicitConstructor(targetTransf, actualArguments);
+				//nestedEvalEnv.add(QvtOperationalEnv.THIS, moduleInstance);
+				moduleInstance.getAdapter(InternalTransformation.class).setEntryOperationHandler(createEntryOperationHandler(nestedVisitor));
+				return moduleInstance;
+			} finally {
+				setOperationalEvaluationEnv(currentEnv);
+			}
+		}
+		else {
+	        setCurrentEnvInstructionPointer(objectExp);
+	    	
+	        Object owner = createInstance(objectExp.getType(), (ModelParameter) objectExp.getExtent());
+
+			Adapter adapter = EcoreUtil.getAdapter(objectExp.eAdapters(), ConstructorOperationAdapter.class);
+			if (adapter != null) {
+				Constructor constructorOp = ((ConstructorOperationAdapter) adapter).getReferredConstructor();
+
+				EList<org.eclipse.ocl.ecore.OCLExpression> formalArguments = objectExp.getArgument();		
+				List<Object> actualArguments = new ArrayList<Object>(formalArguments.size());
+		
+				for (OCLExpression<EClassifier> nextArg : formalArguments) {
+					Object argVal = nextArg.accept(getVisitor());
+					actualArguments.add(argVal); 
+				}
+
+				executeImperativeOperation(constructorOp, owner, actualArguments, false);
+			}
+			else {
+				throwQVTException(new QvtRuntimeException("Undefined constructor is called"));
+			}
+			
+	        return owner;
 		}
 	}
 	
@@ -882,8 +911,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     	
         Object owner = getOutOwner(objectExp);
 
-        internEnv.pushObjectExpOwner(owner);
-
     	if(objectExp.getBody() != null) {
     		EList<org.eclipse.ocl.ecore.OCLExpression> contents = objectExp.getBody().getContent();        
 	        for (OCLExpression<EClassifier> exp : contents) {
@@ -891,8 +918,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	        }
     	}
     	
-        internEnv.popObjectExpOwner();
-        
         if (getOperationalEnv().isTemporaryElement(objectExp.getName())) {
             getOperationalEvaluationEnv().remove(objectExp.getName());
         }
@@ -1292,7 +1317,10 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     }
     
 	public Object visitConstructor(Constructor constructor) {
-		return visitImperativeOperation(constructor);
+        visitImperativeOperation(constructor);
+        QvtOperationalEvaluationEnv env = getOperationalEvaluationEnv();
+        env.add(Environment.RESULT_VARIABLE_NAME, env.remove(Environment.SELF_VARIABLE_NAME));
+        return new OperationCallResult(visitOperationBody(constructor.getBody()), getOperationalEvaluationEnv());
 	}
 
 	public Object visitConstructorBody(ConstructorBody constructorBody) {

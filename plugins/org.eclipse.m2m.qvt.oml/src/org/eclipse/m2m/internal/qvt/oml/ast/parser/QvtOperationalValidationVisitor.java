@@ -12,9 +12,11 @@
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -25,16 +27,16 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
+import org.eclipse.m2m.internal.qvt.oml.compiler.ConstructorOperationAdapter;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.BlockExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Constructor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
@@ -43,15 +45,19 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ReturnExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.VariableInitExp;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.BlockExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ReturnExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.VariableInitExp;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.CollectionType;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
+import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.lpg.FormattingHelper;
 import org.eclipse.ocl.parser.ValidationVisitor;
@@ -99,11 +105,65 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 			EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> myOclValidationVisitor;
 		
 	}
+	
+	@Override
+	public Object visitOperationCallExp(OperationCallExp<EClassifier, EOperation> callExp) {
+		if (callExp.getReferredOperation() instanceof Constructor) {
+			fEnv.reportError(NLS.bind(
+					ValidationMessages.OperationIsUndefined, 
+					operationString(fEnv, callExp.getReferredOperation().getName(), callExp.getArgument()),
+					callExp.getSource() == null ? null : fEnv.getUMLReflection().getName(callExp.getSource().getType())), 
+					callExp.getStartPosition(), 
+					callExp.getEndPosition());
+		}
+		return super.visitOperationCallExp(callExp);
+	}
+	
+	protected String operationString(QvtOperationalEnv env, String operName, List<? extends TypedElement<EClassifier>> args) {
+		StringBuffer result = new StringBuffer();
+
+		result.append(operName);
+		result.append('(');
+
+		for (Iterator<? extends TypedElement<EClassifier>> iter = args.iterator(); iter.hasNext();) {
+
+			TypedElement<EClassifier> arg = iter.next();
+			EClassifier type = arg.getType();
+
+			result.append((type == null) ? (String) null : env.getUMLReflection().getName(type));
+
+			if (iter.hasNext()) {
+				result.append(", "); //$NON-NLS-1$
+			}
+		}
+
+		result.append(')');
+
+		return result.toString();
+	}	
 		
 	@Override
 	public Object visitInstantiationExp(InstantiationExp instantiationExp) {
 		Boolean result = Boolean.TRUE;
 		EClass instantiatedClass = instantiationExp.getInstantiatedClass();
+
+		Adapter adapter = EcoreUtil.getAdapter(instantiationExp.eAdapters(), ConstructorOperationAdapter.class);
+		if (adapter != null) {
+			assert ((ConstructorOperationAdapter) adapter).getReferredConstructor() != null;
+			
+			if (instantiatedClass != null 
+					&& (instantiatedClass.isAbstract() || instantiatedClass.isInterface())) {
+				
+				fEnv.reportError(NLS.bind(
+						ValidationMessages.QvtOperationalVisitorCS_canNotInstantiateAbstractType, 
+						fEnv.getFormatter().formatType(instantiatedClass)), 
+						instantiationExp.getStartPosition(), 
+						instantiationExp.getEndPosition());
+				result = Boolean.FALSE;
+			}
+			return result;
+		}
+		
 		if(instantiatedClass == null || QvtOperationalStdLibrary.INSTANCE.getTransformationClass().isSuperTypeOf(instantiatedClass) == false) {
 			fEnv.reportError(NLS.bind(
 					ValidationMessages.QvtOperationalValidationVisitor_invalidInstantiatedType, 

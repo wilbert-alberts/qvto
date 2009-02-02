@@ -85,14 +85,6 @@ public interface InternalEvaluationEnv {
 	
 	Object getInvalid();
 	    	        
-	void pushObjectExpOwner(Object owner);
-    
-	void popObjectExpOwner();
-
-    // FIXME - never called, only push/popObjectExpOwner(...) is used, 
-	// -> review this
-	Object peekObjectExpOwner();
-	
 	ThisInstanceResolver getThisResolver();
 
 	void setThisResolver(ThisInstanceResolver myThisResolver);
