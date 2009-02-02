@@ -12,12 +12,13 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLexer.g,v 1.4 2009/01/14 13:04:41 aigdalov Exp $
+-- * $Id: QvtOpLexer.g,v 1.5 2009/02/02 11:44:33 aigdalov Exp $
 -- */
 --
 -- The QVT Lexer
 --
 
+%options scopes
 %options escape=$
 %options la=2
 %options fp=QvtOpLexer,prefix=Char_
@@ -55,6 +56,7 @@ $Import
 $DropRules
 
 	Identifier -> QuotedName
+	QuotedName -> '"' SLNotDQ '"'
 
 $End
 
@@ -84,14 +86,13 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLexer.g,v 1.4 2009/01/14 13:04:41 aigdalov Exp $
+ * $Id: QvtOpLexer.g,v 1.5 2009/02/02 11:44:33 aigdalov Exp $
  */
 	./
 $End
 
 $Export
 
-	QUOTE_STRING_LITERAL
 	ADD_ASSIGN
 	RESET_ASSIGN
 	AT_SIGN
@@ -106,12 +107,6 @@ $Export
 $End
 
 $Rules
-
-	Token ::= QuotedName
-		/.$BeginAction
-					makeToken($_QUOTE_STRING_LITERAL);
-		  $EndAction
-		./
 
 	Token ::= ':' '='
 		/.$BeginAction
@@ -178,4 +173,17 @@ $Rules
 	NotSQ -> LF
 	NotSQ -> CR
 	
+	NotDQ -> HT
+	NotDQ -> LF
+	NotDQ -> CR
+
+	Token ::= DoubleQuote SLNotDQOpt DoubleQuote
+		/.$BeginAction
+					makeToken($_STRING_LITERAL);
+		  $EndAction
+		./
+
+	SLNotDQOpt -> $empty
+			| SLNotDQ
+
 $End

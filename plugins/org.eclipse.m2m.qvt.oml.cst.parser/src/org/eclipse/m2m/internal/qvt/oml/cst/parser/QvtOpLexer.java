@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexer.java,v 1.53 2009/01/28 22:31:09 sboyko Exp $
+* $Id: QvtOpLexer.java,v 1.54 2009/02/02 11:44:33 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexer.java,v 1.53 2009/01/28 22:31:09 sboyko Exp $
+* $Id: QvtOpLexer.java,v 1.54 2009/02/02 11:44:33 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -829,90 +829,90 @@ public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtO
             }
 	 
             //
-            // Rule 326:  Token ::= QuotedName
+            // Rule 325:  Token ::= : =
             //
-            case 326: { 
-				makeToken(TK_QUOTE_STRING_LITERAL);
-	            break;
-            }
-	 
-            //
-            // Rule 327:  Token ::= : =
-            //
-            case 327: { 
+            case 325: { 
 				makeToken(TK_RESET_ASSIGN);
 	            break;
             }
 	 
             //
-            // Rule 328:  Token ::= + =
+            // Rule 326:  Token ::= + =
             //
-            case 328: { 
+            case 326: { 
 				makeToken(TK_ADD_ASSIGN);
 	            break;
             }
 	 
             //
-            // Rule 329:  Token ::= @
+            // Rule 327:  Token ::= @
             //
-            case 329: { 
+            case 327: { 
 				makeToken(TK_AT_SIGN);
 	            break;
             }
 	 
             //
-            // Rule 330:  Token ::= !
+            // Rule 328:  Token ::= !
             //
-            case 330: { 
+            case 328: { 
 				makeToken(TK_EXCLAMATION_MARK);
 	            break;
             }
 	 
             //
-            // Rule 331:  Token ::= ! =
+            // Rule 329:  Token ::= ! =
             //
-            case 331: { 
+            case 329: { 
 				makeToken(TK_NOT_EQUAL_EXEQ);
 	            break;
             }
 	 
             //
-            // Rule 332:  Token ::= < <
+            // Rule 330:  Token ::= < <
             //
-            case 332: { 
+            case 330: { 
 				makeToken(TK_STEREOTYPE_QUALIFIER_OPEN);
 	            break;
             }
 	 
             //
-            // Rule 333:  Token ::= > >
+            // Rule 331:  Token ::= > >
             //
-            case 333: { 
+            case 331: { 
 				makeToken(TK_STEREOTYPE_QUALIFIER_CLOSE);
 	            break;
             }
 	 
             //
-            // Rule 334:  Token ::= . . .
+            // Rule 332:  Token ::= . . .
             //
-            case 334: { 
+            case 332: { 
 				makeToken(TK_MULTIPLICITY_RANGE);
 	            break;
             }
 	 
             //
-            // Rule 335:  Token ::= ~
+            // Rule 333:  Token ::= ~
             //
-            case 335: { 
+            case 333: { 
 				makeToken(TK_TILDE_SIGN);
 	            break;
             }
 	 
             //
-            // Rule 336:  Token ::= : : =
+            // Rule 334:  Token ::= : : =
             //
-            case 336: { 
+            case 334: { 
 				makeToken(TK_COLONCOLONEQUAL);
+	            break;
+            }
+	 
+            //
+            // Rule 341:  Token ::= DoubleQuote SLNotDQOpt DoubleQuote
+            //
+            case 341: { 
+				makeToken(TK_STRING_LITERAL);
 	            break;
             }
 	

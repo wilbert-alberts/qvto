@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.17 2009/01/23 12:34:19 aigdalov Exp $ 
+-- * $Id: miscellaneous.g,v 1.18 2009/02/02 11:44:33 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -232,7 +232,6 @@ $End
 
 $Terminals
 
-	QUOTE_STRING_LITERAL
 	ADD_ASSIGN    ::= '+='
 	RESET_ASSIGN  ::= ':='
 	AT_SIGN       ::= '@'
@@ -282,7 +281,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.17 2009/01/23 12:34:19 aigdalov Exp $
+ * $Id: miscellaneous.g,v 1.18 2009/02/02 11:44:33 aigdalov Exp $
  */
 	./
 $End
@@ -986,6 +985,23 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
+
+	stringLiteralExpCS ::= stringLiteralExpCS STRING_LITERAL
+		/.$BeginJava
+					StringLiteralExpCS result = (StringLiteralExpCS) $getSym(1);
+					result.setStringSymbol(result.getStringSymbol() +  getTokenText($getToken(2)));
+					IToken token = getIToken($getToken(2));
+					int tokenLine = token.getLine();
+					setOffsets(result, result, token);
+					IToken prevToken = getParseStream().getTokenAt(token.getTokenIndex() - 1);
+					int prevTokenLine = prevToken.getLine();
+					if (prevTokenLine == tokenLine) {
+						reportError(lpg.lpgjavaruntime.ParseErrorCodes.INVALID_CODE, "", prevToken.getTokenIndex(), token.getTokenIndex(), "Multiline string literals must be located in different lines!"); //$NON-NLS-1$ //$NON-NLS-2$
+					}
+					$setResult(result);
+		  $EndJava
+		./
+        
         ----- '!=' - a synonym of '<>' (end) -----
 	--=== Miscellaneous QVTO grammar rules (end) ===--
 
@@ -1028,15 +1044,6 @@ $Rules
 							(StringLiteralExpCS)$getSym(6)
 						);
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
-					$setResult(result);
-		  $EndJava
-		./
-
-	qvtStringLiteralExpCS -> stringLiteralExpCS
-	qvtStringLiteralExpCS ::= QUOTE_STRING_LITERAL
-		/.$BeginJava
-					CSTNode result = createStringLiteralExpCS("'" + unquote(getTokenText($getToken(1))) + "'"); //$NON-NLS-1$ //$NON-NLS-2$
-					setOffsets(result, getIToken($getToken(1)));
 					$setResult(result);
 		  $EndJava
 		./

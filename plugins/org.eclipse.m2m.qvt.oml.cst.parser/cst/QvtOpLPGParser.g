@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.39 2009/01/28 22:14:35 sboyko Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.40 2009/02/02 11:44:33 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -151,7 +151,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.39 2009/01/28 22:14:35 sboyko Exp $
+ * $Id: QvtOpLPGParser.g,v 1.40 2009/02/02 11:44:33 aigdalov Exp $
  */
 	./
 $End
@@ -523,7 +523,7 @@ $Rules
 		/.$BeginJava
 					ModelTypeCS result = createModelTypeCS(
 							new Token(0, 0, 0),
-							createStringLiteralExpCS(""),
+							createStringLiteralExpCS("''"),
 							$EMPTY_ELIST,
 							$EMPTY_ELIST
 						);
@@ -596,11 +596,11 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	compliance_kindOpt -> qvtStringLiteralExpCS
+	compliance_kindOpt -> stringLiteralExpCS
 	--=== // model types compliance and metamodel declarations (end) ===--
 
 	--=== // like: "strict" and "effective" (start) ===--
-	uri -> qvtStringLiteralExpCS
+	uri -> stringLiteralExpCS
 	--=== // like: "strict" and "effective" (end) ===--
 
 	--=== // Syntax for defining explicitly metamodel contents (start) ===--
@@ -1197,7 +1197,7 @@ $Rules
 
 	--=== // syntax for tag definition (start) ===--
 	
-	_tag ::= tag qvtStringLiteralExpCS scoped_identifier tag_valueOpt
+	_tag ::= tag stringLiteralExpCS scoped_identifier tag_valueOpt
 		/.$BeginJava
 					OCLExpressionCS valueExpression = (OCLExpressionCS) $getSym(4);
 					CSTNode result = createTagCS(
@@ -1214,15 +1214,7 @@ $Rules
 		/.$NullAction./
 	tag_valueOpt ::= '=' oclExpressionCS
 		/.$BeginJava
-					OCLExpressionCS result = (OCLExpressionCS) $getSym(2);
-					$setResult(result);
-		  $EndJava
-		./
-	tag_valueOpt ::= '=' QUOTE_STRING_LITERAL
-		/.$BeginJava
-					CSTNode result = createStringLiteralExpCS("'" + unquote(getTokenText($getToken(2))) + "'"); //$NON-NLS-1$ //$NON-NLS-2$
-					setOffsets(result, getIToken($getToken(2)));
-					$setResult(result);
+					$setResult($getSym(2));
 		  $EndJava
 		./
 
