@@ -11,13 +11,15 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
+import org.eclipse.m2m.internal.qvt.oml.compiler.ConstructorOperationAdapter;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
@@ -27,10 +29,8 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.OperationCallExpCS;
-import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.TypeCS;
-import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.ecore.OperationCallExp;
 import org.eclipse.ocl.utilities.ASTNode;
 
@@ -45,16 +45,13 @@ public class OperationHyperlinkDetector implements IHyperlinkDetectorHelper {
 				return null;
 			}
 			InstantiationExp instExp = (InstantiationExp) syntaxElement.getAst();
-			EcoreEnvironment astEnv = ASTBindingHelper.resolveEnvironment(instExp);
-			if (false == astEnv instanceof QvtOperationalEnv) {
+			Adapter adapter = EcoreUtil.getAdapter(instExp.eAdapters(), ConstructorOperationAdapter.class);
+			if (adapter == null) {
 				return null;
 			}
-			EOperation operation = ((QvtOperationalEnv) astEnv).lookupConstructorOperation(instExp.getType(), instExp.getName(), instExp.getArgument());
-			if (false == operation instanceof Constructor) {
-				return null;
-			}
-			CSTNode resultCS = ASTBindingHelper.resolveCSTNode((Constructor) operation);
-			PathNameCS nameCS = ((NewRuleCallExpCS) syntaxElement).getScopedIdentifier();
+			Constructor constructor = ((ConstructorOperationAdapter) adapter).getReferredConstructor();
+			CSTNode resultCS = ASTBindingHelper.resolveCSTNode(constructor);
+			CSTNode nameCS = (NewRuleCallExpCS) syntaxElement;//((NewRuleCallExpCS) syntaxElement).getTypeSpecCS();
 			if (resultCS instanceof MappingMethodCS) {
 				MappingMethodCS methodCS = (MappingMethodCS) resultCS;
 				IRegion destRegion = getGoToOperationRegion(methodCS);
@@ -63,7 +60,7 @@ public class OperationHyperlinkDetector implements IHyperlinkDetectorHelper {
 								destRegion, destRegion);
 			}
 			// proceed as with ordinary ecore metamodel operation
-			return new MetamodelElementHyperlink(HyperlinkUtil.createRegion(nameCS), operation);						
+			return new MetamodelElementHyperlink(HyperlinkUtil.createRegion(nameCS), constructor);						
 		}
 		
 		if (syntaxElement instanceof SimpleNameCS) {

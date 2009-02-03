@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.44 2009/02/02 11:44:40 aigdalov Exp $
+* $Id: LightweightTypeParser.java,v 1.45 2009/02/03 21:36:18 sboyko Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.44 2009/02/02 11:44:40 aigdalov Exp $
+* $Id: LightweightTypeParser.java,v 1.45 2009/02/03 21:36:18 sboyko Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.44 2009/02/02 11:44:40 aigdalov Exp $
+* $Id: LightweightTypeParser.java,v 1.45 2009/02/03 21:36:18 sboyko Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.44 2009/02/02 11:44:40 aigdalov Exp $
+* $Id: LightweightTypeParser.java,v 1.45 2009/02/03 21:36:18 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -3947,7 +3947,8 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 			//
 			case 445: {
 				
-			OCLExpressionCS result = createNewRuleCallExpCS((PathNameCS)dtParser.getSym(2),(EList)dtParser.getSym(4));
+			TypeSpecCS typeSpecCS = createTypeSpecCS((PathNameCS)dtParser.getSym(2), null);
+			OCLExpressionCS result = createNewRuleCallExpCS(typeSpecCS,(EList)dtParser.getSym(4));
 			setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(5)));
 			dtParser.setSym1(result);
 	  		  break;

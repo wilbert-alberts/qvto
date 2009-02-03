@@ -16,28 +16,34 @@ import java.util.List;
 import lpg.lpgjavaruntime.IToken;
 import lpg.lpgjavaruntime.PrsStream;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
+import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNode;
+import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNodeAccess;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
+import org.eclipse.m2m.internal.qvt.oml.compiler.ConstructorOperationAdapter;
+import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.EnumLiteralExpCS;
 import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.ecore.EnumLiteralExp;
-import org.eclipse.ocl.utilities.ASTNode;
 
 
 /**
@@ -61,26 +67,31 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 		
 		if(elementRef != null) {
 			EModelElement element = elementRef.element;
-			if(element instanceof ASTNode) {
-				ASTNode elementAST = (ASTNode) element;
-				CSTNode cstNode = ASTBindingHelper.resolveCSTNode(elementAST, CSTNode.class);
-				if(cstNode != null) {
-					CFile file = CSTHelper.getSourceFile(cstNode);
-					if(file != null) {
-						if(cstNode instanceof ModelTypeCS) {
-							// TODO - use QVT model Switch to get destination region specific to various CST							
-							cstNode = ((ModelTypeCS) cstNode).getIdentifierCS();  
-						} else if(cstNode instanceof MappingModuleCS) {
-							MappingModuleCS moduleCS = (MappingModuleCS) cstNode;
-							if(moduleCS.getHeaderCS() != null) {
-								cstNode = moduleCS.getHeaderCS(); 
-							}
-						}
-						IRegion destReg = HyperlinkUtil.createRegion(cstNode);
-						return new QvtFileHyperlink(elementRef.sourceLinkRegion, file, destReg, destReg);
-					}
+			CSTNode cstNode = ASTBindingHelper.resolveCSTNode(element, CSTNode.class);
+			if(cstNode == null) {
+				ASTSyntheticNode referencedDefinitionAST = ASTSyntheticNodeAccess.getASTNode(element);
+				if(referencedDefinitionAST != null) {
+					cstNode = ASTSyntheticNodeAccess.getCST(referencedDefinitionAST, CSTNode.class);
 				}
-			} 
+			}
+			if(cstNode != null) {
+				CFile file = CSTHelper.getSourceFile(cstNode);
+				if(file != null) {
+					if(cstNode instanceof ModelTypeCS) {
+						// TODO - use QVT model Switch to get destination region specific to various CST							
+						cstNode = ((ModelTypeCS) cstNode).getIdentifierCS();  
+					} else if(cstNode instanceof MappingModuleCS) {
+						MappingModuleCS moduleCS = (MappingModuleCS) cstNode;
+						if(moduleCS.getHeaderCS() != null) {
+							cstNode = moduleCS.getHeaderCS(); 
+						}
+					} else if(cstNode instanceof ClassifierDefCS) {
+						cstNode = ((ClassifierDefCS) cstNode).getSimpleNameCS();
+					}
+					IRegion destReg = HyperlinkUtil.createRegion(cstNode);
+					return new QvtFileHyperlink(elementRef.sourceLinkRegion, file, destReg, destReg);
+				}
+			}
 			
 			return new MetamodelElementHyperlink(elementRef.sourceLinkRegion, elementRef.element);			
 		}
@@ -101,7 +112,7 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 				if(astObj instanceof EModelElement) {
 					return new EModelElementRef((EModelElement)astObj, HyperlinkUtil.createRegion(syntaxElement));
 				}
-			} else if (syntaxElement instanceof PathNameCS && false == syntaxElement.eContainer() instanceof NewRuleCallExpCS) {						
+			} else if (syntaxElement instanceof PathNameCS && !isConstructorCS(syntaxElement)) {						
 				if(astObj instanceof ENamedElement) {
 					PathNameCS pathNameCS  = (PathNameCS) syntaxElement;				
 					int[] selectedNamePos = new int[1];
@@ -146,6 +157,19 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 		return null;
 	}	
 	
+	private static boolean isConstructorCS(CSTNode syntaxElement) {
+		if (false == syntaxElement.eContainer() instanceof NewRuleCallExpCS) {
+			return false;
+		}
+		NewRuleCallExpCS constructorCS = (NewRuleCallExpCS) syntaxElement.eContainer();
+		if (false == constructorCS.getAst() instanceof InstantiationExp) {
+			return false;
+		}
+		InstantiationExp instExp = (InstantiationExp) constructorCS.getAst();
+		Adapter adapter = EcoreUtil.getAdapter(instExp.eAdapters(), ConstructorOperationAdapter.class);
+		return adapter != null && ((ConstructorOperationAdapter) adapter).getReferredConstructor() != null;
+	}
+
 	private static IRegion refineRegion(PathNameCS pathNameCS, IRegion selection, int[] selectedNamePos) {
 		if(pathNameCS.getSequenceOfNames().size() == 1) {
 			return HyperlinkUtil.createRegion(pathNameCS);
