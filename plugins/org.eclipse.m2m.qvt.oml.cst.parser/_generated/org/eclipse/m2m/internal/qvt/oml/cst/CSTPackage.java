@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackage.java,v 1.22 2009/01/28 22:14:35 sboyko Exp $
+ * $Id: CSTPackage.java,v 1.23 2009/02/03 21:32:03 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -1096,13 +1096,22 @@ public interface CSTPackage extends EPackage {
 	int CLASSIFIER_DEF_CS__TAGS = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Constructors</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASSIFIER_DEF_CS__CONSTRUCTORS = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 4;
+
+	/**
 	 * The number of structural features of the '<em>Classifier Def CS</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CLASSIFIER_DEF_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 4;
+	int CLASSIFIER_DEF_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ClassifierPropertyCSImpl <em>Classifier Property CS</em>}' class.
@@ -5571,13 +5580,13 @@ public interface CSTPackage extends EPackage {
 	int NEW_RULE_CALL_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__AST;
 
 	/**
-	 * The feature id for the '<em><b>Scoped Identifier</b></em>' containment reference.
+	 * The feature id for the '<em><b>Type Spec CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NEW_RULE_CALL_EXP_CS__SCOPED_IDENTIFIER = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 0;
+	int NEW_RULE_CALL_EXP_CS__TYPE_SPEC_CS = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Arguments</b></em>' containment reference list.
@@ -6411,6 +6420,17 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getClassifierDefCS_Tags();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS#getConstructors <em>Constructors</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Constructors</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS#getConstructors()
+	 * @see #getClassifierDefCS()
+	 * @generated
+	 */
+	EReference getClassifierDefCS_Constructors();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS <em>Classifier Property CS</em>}'.
@@ -7983,15 +8003,15 @@ public interface CSTPackage extends EPackage {
 	EClass getNewRuleCallExpCS();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS#getScopedIdentifier <em>Scoped Identifier</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS#getTypeSpecCS <em>Type Spec CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Scoped Identifier</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS#getScopedIdentifier()
+	 * @return the meta object for the containment reference '<em>Type Spec CS</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS#getTypeSpecCS()
 	 * @see #getNewRuleCallExpCS()
 	 * @generated
 	 */
-	EReference getNewRuleCallExpCS_ScopedIdentifier();
+	EReference getNewRuleCallExpCS_TypeSpecCS();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS#getArguments <em>Arguments</em>}'.
@@ -8518,6 +8538,14 @@ public interface CSTPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CLASSIFIER_DEF_CS__TAGS = eINSTANCE.getClassifierDefCS_Tags();
+
+		/**
+		 * The meta object literal for the '<em><b>Constructors</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CLASSIFIER_DEF_CS__CONSTRUCTORS = eINSTANCE.getClassifierDefCS_Constructors();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ClassifierPropertyCSImpl <em>Classifier Property CS</em>}' class.
@@ -9790,12 +9818,12 @@ public interface CSTPackage extends EPackage {
 		EClass NEW_RULE_CALL_EXP_CS = eINSTANCE.getNewRuleCallExpCS();
 
 		/**
-		 * The meta object literal for the '<em><b>Scoped Identifier</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Type Spec CS</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference NEW_RULE_CALL_EXP_CS__SCOPED_IDENTIFIER = eINSTANCE.getNewRuleCallExpCS_ScopedIdentifier();
+		EReference NEW_RULE_CALL_EXP_CS__TYPE_SPEC_CS = eINSTANCE.getNewRuleCallExpCS_TypeSpecCS();
 
 		/**
 		 * The meta object literal for the '<em><b>Arguments</b></em>' containment reference list feature.

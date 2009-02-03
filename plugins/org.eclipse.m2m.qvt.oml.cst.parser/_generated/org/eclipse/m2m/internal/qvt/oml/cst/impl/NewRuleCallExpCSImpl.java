@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: NewRuleCallExpCSImpl.java,v 1.2 2009/01/13 20:23:44 radvorak Exp $
+ * $Id: NewRuleCallExpCSImpl.java,v 1.3 2009/02/03 21:32:03 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.impl.OCLExpressionCSImpl;
@@ -38,7 +39,7 @@ import org.eclipse.ocl.cst.impl.OCLExpressionCSImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.NewRuleCallExpCSImpl#getScopedIdentifier <em>Scoped Identifier</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.NewRuleCallExpCSImpl#getTypeSpecCS <em>Type Spec CS</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.NewRuleCallExpCSImpl#getArguments <em>Arguments</em>}</li>
  * </ul>
  * </p>
@@ -54,14 +55,14 @@ public class NewRuleCallExpCSImpl extends OCLExpressionCSImpl implements NewRule
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 	/**
-	 * The cached value of the '{@link #getScopedIdentifier() <em>Scoped Identifier</em>}' containment reference.
+	 * The cached value of the '{@link #getTypeSpecCS() <em>Type Spec CS</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getScopedIdentifier()
+	 * @see #getTypeSpecCS()
 	 * @generated
 	 * @ordered
 	 */
-	protected PathNameCS scopedIdentifier;
+	protected TypeSpecCS typeSpecCS;
 
 	/**
 	 * The cached value of the '{@link #getArguments() <em>Arguments</em>}' containment reference list.
@@ -97,8 +98,8 @@ public class NewRuleCallExpCSImpl extends OCLExpressionCSImpl implements NewRule
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public PathNameCS getScopedIdentifier() {
-		return scopedIdentifier;
+	public TypeSpecCS getTypeSpecCS() {
+		return typeSpecCS;
 	}
 
 	/**
@@ -106,11 +107,11 @@ public class NewRuleCallExpCSImpl extends OCLExpressionCSImpl implements NewRule
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetScopedIdentifier(PathNameCS newScopedIdentifier, NotificationChain msgs) {
-		PathNameCS oldScopedIdentifier = scopedIdentifier;
-		scopedIdentifier = newScopedIdentifier;
+	public NotificationChain basicSetTypeSpecCS(TypeSpecCS newTypeSpecCS, NotificationChain msgs) {
+		TypeSpecCS oldTypeSpecCS = typeSpecCS;
+		typeSpecCS = newTypeSpecCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.NEW_RULE_CALL_EXP_CS__SCOPED_IDENTIFIER, oldScopedIdentifier, newScopedIdentifier);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.NEW_RULE_CALL_EXP_CS__TYPE_SPEC_CS, oldTypeSpecCS, newTypeSpecCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -121,18 +122,18 @@ public class NewRuleCallExpCSImpl extends OCLExpressionCSImpl implements NewRule
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setScopedIdentifier(PathNameCS newScopedIdentifier) {
-		if (newScopedIdentifier != scopedIdentifier) {
+	public void setTypeSpecCS(TypeSpecCS newTypeSpecCS) {
+		if (newTypeSpecCS != typeSpecCS) {
 			NotificationChain msgs = null;
-			if (scopedIdentifier != null)
-				msgs = ((InternalEObject)scopedIdentifier).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.NEW_RULE_CALL_EXP_CS__SCOPED_IDENTIFIER, null, msgs);
-			if (newScopedIdentifier != null)
-				msgs = ((InternalEObject)newScopedIdentifier).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.NEW_RULE_CALL_EXP_CS__SCOPED_IDENTIFIER, null, msgs);
-			msgs = basicSetScopedIdentifier(newScopedIdentifier, msgs);
+			if (typeSpecCS != null)
+				msgs = ((InternalEObject)typeSpecCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.NEW_RULE_CALL_EXP_CS__TYPE_SPEC_CS, null, msgs);
+			if (newTypeSpecCS != null)
+				msgs = ((InternalEObject)newTypeSpecCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.NEW_RULE_CALL_EXP_CS__TYPE_SPEC_CS, null, msgs);
+			msgs = basicSetTypeSpecCS(newTypeSpecCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.NEW_RULE_CALL_EXP_CS__SCOPED_IDENTIFIER, newScopedIdentifier, newScopedIdentifier));
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.NEW_RULE_CALL_EXP_CS__TYPE_SPEC_CS, newTypeSpecCS, newTypeSpecCS));
 	}
 
 	/**
@@ -155,8 +156,8 @@ public class NewRuleCallExpCSImpl extends OCLExpressionCSImpl implements NewRule
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CSTPackage.NEW_RULE_CALL_EXP_CS__SCOPED_IDENTIFIER:
-				return basicSetScopedIdentifier(null, msgs);
+			case CSTPackage.NEW_RULE_CALL_EXP_CS__TYPE_SPEC_CS:
+				return basicSetTypeSpecCS(null, msgs);
 			case CSTPackage.NEW_RULE_CALL_EXP_CS__ARGUMENTS:
 				return ((InternalEList<?>)getArguments()).basicRemove(otherEnd, msgs);
 		}
@@ -171,8 +172,8 @@ public class NewRuleCallExpCSImpl extends OCLExpressionCSImpl implements NewRule
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CSTPackage.NEW_RULE_CALL_EXP_CS__SCOPED_IDENTIFIER:
-				return getScopedIdentifier();
+			case CSTPackage.NEW_RULE_CALL_EXP_CS__TYPE_SPEC_CS:
+				return getTypeSpecCS();
 			case CSTPackage.NEW_RULE_CALL_EXP_CS__ARGUMENTS:
 				return getArguments();
 		}
@@ -188,8 +189,8 @@ public class NewRuleCallExpCSImpl extends OCLExpressionCSImpl implements NewRule
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CSTPackage.NEW_RULE_CALL_EXP_CS__SCOPED_IDENTIFIER:
-				setScopedIdentifier((PathNameCS)newValue);
+			case CSTPackage.NEW_RULE_CALL_EXP_CS__TYPE_SPEC_CS:
+				setTypeSpecCS((TypeSpecCS)newValue);
 				return;
 			case CSTPackage.NEW_RULE_CALL_EXP_CS__ARGUMENTS:
 				getArguments().clear();
@@ -207,8 +208,8 @@ public class NewRuleCallExpCSImpl extends OCLExpressionCSImpl implements NewRule
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CSTPackage.NEW_RULE_CALL_EXP_CS__SCOPED_IDENTIFIER:
-				setScopedIdentifier((PathNameCS)null);
+			case CSTPackage.NEW_RULE_CALL_EXP_CS__TYPE_SPEC_CS:
+				setTypeSpecCS((TypeSpecCS)null);
 				return;
 			case CSTPackage.NEW_RULE_CALL_EXP_CS__ARGUMENTS:
 				getArguments().clear();
@@ -225,8 +226,8 @@ public class NewRuleCallExpCSImpl extends OCLExpressionCSImpl implements NewRule
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CSTPackage.NEW_RULE_CALL_EXP_CS__SCOPED_IDENTIFIER:
-				return scopedIdentifier != null;
+			case CSTPackage.NEW_RULE_CALL_EXP_CS__TYPE_SPEC_CS:
+				return typeSpecCS != null;
 			case CSTPackage.NEW_RULE_CALL_EXP_CS__ARGUMENTS:
 				return arguments != null && !arguments.isEmpty();
 		}

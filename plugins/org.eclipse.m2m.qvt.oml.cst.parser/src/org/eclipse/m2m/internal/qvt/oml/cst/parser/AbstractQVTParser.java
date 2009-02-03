@@ -782,9 +782,9 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
         return result;
     }
     
-    protected NewRuleCallExpCS createNewRuleCallExpCS(PathNameCS pathNameCS, List<OCLExpressionCS> arguments) {
+    protected NewRuleCallExpCS createNewRuleCallExpCS(TypeSpecCS typeSpecCS, List<OCLExpressionCS> arguments) {
     	NewRuleCallExpCS call = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createNewRuleCallExpCS();
-		call.setScopedIdentifier(pathNameCS);
+		call.setTypeSpecCS(typeSpecCS);
 		call.getArguments().addAll(arguments);
     	return call;
     }
@@ -860,6 +860,9 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 			}
 			if (nodeCS instanceof TagCS) {
 				result.getTags().add((TagCS) nodeCS);
+			}
+			if (nodeCS instanceof ConstructorCS) {
+				result.getConstructors().add((ConstructorCS) nodeCS);
 			}
 		}
 		

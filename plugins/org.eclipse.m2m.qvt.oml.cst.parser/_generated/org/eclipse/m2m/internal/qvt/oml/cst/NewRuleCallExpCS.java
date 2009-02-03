@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: NewRuleCallExpCS.java,v 1.2 2009/01/13 20:23:41 radvorak Exp $
+ * $Id: NewRuleCallExpCS.java,v 1.3 2009/02/03 21:32:03 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -27,7 +27,7 @@ import org.eclipse.ocl.cst.PathNameCS;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS#getScopedIdentifier <em>Scoped Identifier</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS#getTypeSpecCS <em>Type Spec CS</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS#getArguments <em>Arguments</em>}</li>
  * </ul>
  * </p>
@@ -45,30 +45,30 @@ public interface NewRuleCallExpCS extends OCLExpressionCS {
 	String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 	/**
-	 * Returns the value of the '<em><b>Scoped Identifier</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Type Spec CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Scoped Identifier</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Type Spec CS</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Scoped Identifier</em>' containment reference.
-	 * @see #setScopedIdentifier(PathNameCS)
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getNewRuleCallExpCS_ScopedIdentifier()
+	 * @return the value of the '<em>Type Spec CS</em>' containment reference.
+	 * @see #setTypeSpecCS(TypeSpecCS)
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getNewRuleCallExpCS_TypeSpecCS()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	PathNameCS getScopedIdentifier();
+	TypeSpecCS getTypeSpecCS();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS#getScopedIdentifier <em>Scoped Identifier</em>}' containment reference.
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS#getTypeSpecCS <em>Type Spec CS</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Scoped Identifier</em>' containment reference.
-	 * @see #getScopedIdentifier()
+	 * @param value the new value of the '<em>Type Spec CS</em>' containment reference.
+	 * @see #getTypeSpecCS()
 	 * @generated
 	 */
-	void setScopedIdentifier(PathNameCS value);
+	void setTypeSpecCS(TypeSpecCS value);
 
 	/**
 	 * Returns the value of the '<em><b>Arguments</b></em>' containment reference list.

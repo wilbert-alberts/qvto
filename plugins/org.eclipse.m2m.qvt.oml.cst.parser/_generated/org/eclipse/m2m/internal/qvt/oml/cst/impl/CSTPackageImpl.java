@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.25 2009/01/28 22:31:09 sboyko Exp $
+ * $Id: CSTPackageImpl.java,v 1.26 2009/02/03 21:32:03 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -964,6 +964,15 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 */
 	public EReference getClassifierDefCS_Tags() {
 		return (EReference)classifierDefCSEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getClassifierDefCS_Constructors() {
+		return (EReference)classifierDefCSEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -2294,7 +2303,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getNewRuleCallExpCS_ScopedIdentifier() {
+	public EReference getNewRuleCallExpCS_TypeSpecCS() {
 		return (EReference)newRuleCallExpCSEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -2550,6 +2559,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(classifierDefCSEClass, CLASSIFIER_DEF_CS__EXTENDS);
 		createEReference(classifierDefCSEClass, CLASSIFIER_DEF_CS__PROPERTIES);
 		createEReference(classifierDefCSEClass, CLASSIFIER_DEF_CS__TAGS);
+		createEReference(classifierDefCSEClass, CLASSIFIER_DEF_CS__CONSTRUCTORS);
 
 		classifierPropertyCSEClass = createEClass(CLASSIFIER_PROPERTY_CS);
 		createEReference(classifierPropertyCSEClass, CLASSIFIER_PROPERTY_CS__STEREOTYPE_QUALIFIERS);
@@ -2744,7 +2754,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(mappingExtensionCSEClass, MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS);
 
 		newRuleCallExpCSEClass = createEClass(NEW_RULE_CALL_EXP_CS);
-		createEReference(newRuleCallExpCSEClass, NEW_RULE_CALL_EXP_CS__SCOPED_IDENTIFIER);
+		createEReference(newRuleCallExpCSEClass, NEW_RULE_CALL_EXP_CS__TYPE_SPEC_CS);
 		createEReference(newRuleCallExpCSEClass, NEW_RULE_CALL_EXP_CS__ARGUMENTS);
 
 		listTypeCSEClass = createEClass(LIST_TYPE_CS);
@@ -2921,6 +2931,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEReference(getClassifierDefCS_Extends(), theCSTPackage_1.getTypeCS(), null, "extends", null, 0, -1, ClassifierDefCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getClassifierDefCS_Properties(), this.getClassifierPropertyCS(), null, "properties", null, 0, -1, ClassifierDefCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getClassifierDefCS_Tags(), this.getTagCS(), null, "tags", null, 0, -1, ClassifierDefCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getClassifierDefCS_Constructors(), this.getConstructorCS(), null, "constructors", null, 0, -1, ClassifierDefCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(classifierPropertyCSEClass, ClassifierPropertyCS.class, "ClassifierPropertyCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getClassifierPropertyCS_StereotypeQualifiers(), theCSTPackage_1.getSimpleNameCS(), null, "stereotypeQualifiers", null, 0, -1, ClassifierPropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -3115,7 +3126,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEReference(getMappingExtensionCS_MappingIdentifiers(), theTempPackage.getScopedNameCS(), null, "mappingIdentifiers", null, 1, -1, MappingExtensionCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(newRuleCallExpCSEClass, NewRuleCallExpCS.class, "NewRuleCallExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getNewRuleCallExpCS_ScopedIdentifier(), theCSTPackage_1.getPathNameCS(), null, "scopedIdentifier", null, 1, 1, NewRuleCallExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getNewRuleCallExpCS_TypeSpecCS(), this.getTypeSpecCS(), null, "typeSpecCS", null, 1, 1, NewRuleCallExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getNewRuleCallExpCS_Arguments(), theCSTPackage_1.getOCLExpressionCS(), null, "arguments", null, 0, -1, NewRuleCallExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(listTypeCSEClass, ListTypeCS.class, "ListTypeCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$

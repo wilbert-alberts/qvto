@@ -72,6 +72,8 @@
           eType="#//cst/ClassifierPropertyCS" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="tags" upperBound="-1"
           eType="#//cst/TagCS" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="constructors" upperBound="-1"
+          eType="#//cst/ConstructorCS" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ClassifierPropertyCS" eSuperTypes="#//cst/LocalPropertyCS">
       <eStructuralFeatures xsi:type="ecore:EReference" name="stereotypeQualifiers"
@@ -401,9 +403,8 @@
       <eLiterals name="static" value="3"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="NewRuleCallExpCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="scopedIdentifier" lowerBound="1"
-          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/PathNameCS"
-          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="typeSpecCS" lowerBound="1"
+          eType="#//cst/TypeSpecCS" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="arguments" upperBound="-1"
           eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>

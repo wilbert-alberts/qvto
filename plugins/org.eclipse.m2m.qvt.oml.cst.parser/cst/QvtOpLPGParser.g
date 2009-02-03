@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.40 2009/02/02 11:44:33 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.41 2009/02/03 21:32:03 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -151,7 +151,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.40 2009/02/02 11:44:33 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.41 2009/02/03 21:32:03 sboyko Exp $
  */
 	./
 $End
@@ -715,6 +715,7 @@ $Rules
 		  $EndJava
 		./
 	classifierFeatureCS -> _tag
+	classifierFeatureCS -> constructor_def_pure
 
 	init_partOpt ::= $empty
 		/.$NullAction./
@@ -1070,16 +1071,23 @@ $Rules
 	_constructor -> constructor_decl
 	_constructor -> constructor_def
 	
-	constructor_header ::= qualifierList constructor scoped_identifier simple_signature 
+	constructor_header_pure ::= constructor scoped_identifier simple_signature 
 		/.$BeginJava
-					SimpleSignatureCS signature = (SimpleSignatureCS) $getSym(4);					
+					SimpleSignatureCS signature = (SimpleSignatureCS) $getSym(3);					
 					MappingDeclarationCS mappingDeclarationCS = createMappingDeclarationCS(
 						null,
-						(ScopedNameCS) $getSym(3),
+						(ScopedNameCS) $getSym(2),
 						signature.getParams(),
 						null
 					);
-					setOffsets(mappingDeclarationCS, getIToken($getToken(2)), signature);
+					setOffsets(mappingDeclarationCS, getIToken($getToken(1)), signature);
+
+					$setResult(mappingDeclarationCS);
+		  $EndJava
+		./
+	constructor_header ::= qualifierList constructor_header_pure 
+		/.$BeginJava
+					MappingDeclarationCS mappingDeclarationCS = (MappingDeclarationCS) $getSym(2);
 
 					EList<SimpleNameCS> qualifiers = (EList<SimpleNameCS>) $getSym(1);
 					if (!qualifiers.isEmpty()) {
@@ -1116,6 +1124,8 @@ $Rules
 		  $EndJava
 		./
 
+	constructor_def_pure ::= constructor_header_pure expression_block
+		/.$NewCase./
 	constructor_def ::= constructor_header expression_block semicolonOpt
 		/.$BeginJava
 					MappingDeclarationCS mappingDecl = (MappingDeclarationCS) $getSym(1);
