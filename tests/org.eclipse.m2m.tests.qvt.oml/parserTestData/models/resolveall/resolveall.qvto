@@ -14,7 +14,7 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
     	};
     	eAnnotations += object ecore::EAnnotation {
     		_references += selectionSort(resolveIn(ecore::EPackage::toAttribute, ecore::EAttribute)->asOrderedSet());
-    		source := 'resolveAllByRule(''toAttribute'', ecore::EAttribute)';
+    		source := 'resolveAllByRule(toAttribute, ecore::EAttribute)';
     	};
     	eClassifiers += cl;
 }
