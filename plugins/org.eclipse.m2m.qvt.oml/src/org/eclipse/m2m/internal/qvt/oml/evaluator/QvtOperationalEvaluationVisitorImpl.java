@@ -824,7 +824,12 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 				executeImperativeOperation(constructorOp, owner, actualArguments, false);
 			}
 			else {
-				throwQVTException(new QvtRuntimeException("Undefined constructor is called"));
+				if (objectExp.getArgument().isEmpty()) {
+					// it's OK since default constructor is called
+				}
+				else {
+					throwQVTException(new QvtRuntimeException("Undefined constructor is called"));
+				}
 			}
 			
 	        return owner;

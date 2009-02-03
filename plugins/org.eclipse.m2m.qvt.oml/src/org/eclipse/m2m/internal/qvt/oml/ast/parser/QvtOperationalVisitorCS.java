@@ -270,15 +270,22 @@ public class QvtOperationalVisitorCS
 		initStartEndPositions(instantiationExp, newCallExp);
 		newCallExp.setAst(instantiationExp);
 
-		PathNameCS scopedIdentifierCS = newCallExp.getScopedIdentifier();
-		EClassifier instantiatedClass = typeCS(scopedIdentifierCS, env);
-		instantiationExp.setType(instantiatedClass);
+		if (env instanceof QvtOperationalEnv) {
+			TypeSpecPair typeSpecCS = visitTypeSpecCS(newCallExp.getTypeSpecCS(), DirectionKind.OUT, (QvtOperationalEnv) env);
+			instantiationExp.setType(typeSpecCS.myType);
+			instantiationExp.setExtent(typeSpecCS.myExtent);
+		}
+		else {
+			EClassifier instantiatedClass = typeCS(newCallExp.getTypeSpecCS().getTypeCS(), env);
+			instantiationExp.setType(instantiatedClass);
+		}
 
 		boolean isTransformationInstantiation = false;
-		if(instantiatedClass instanceof EClass) {			
-			instantiationExp.setInstantiatedClass((EClass)instantiatedClass);
-			instantiationExp.setName(instantiatedClass.getName());
-			isTransformationInstantiation = QvtOperationalStdLibrary.INSTANCE.getTransformationClass().isSuperTypeOf((EClass) instantiatedClass);
+		if (instantiationExp.getType() instanceof EClass) {			
+			instantiationExp.setInstantiatedClass((EClass) instantiationExp.getType());
+			instantiationExp.setName(instantiationExp.getType().getName());
+			isTransformationInstantiation = QvtOperationalStdLibrary.INSTANCE.getTransformationClass()
+					.isSuperTypeOf(instantiationExp.getInstantiatedClass());
 		}
 
 		for (OCLExpressionCS nextArgCS : newCallExp.getArguments()) {
@@ -1402,10 +1409,11 @@ public class QvtOperationalVisitorCS
 				operation = ExpressionsFactory.eINSTANCE.createHelper();
 			}
 			
-			if (visitMappingDeclarationCS(methodCS, env, operation)) {
-				EOperation imperativeOp = env.defineImperativeOperation(operation, methodCS instanceof MappingRuleCS, true);
-				if(imperativeOp != null) {
-					methodMap.put(methodCS, (ImperativeOperation)imperativeOp);
+			TypeCS contextTypeCS = methodCS.getMappingDeclarationCS() != null ? methodCS.getMappingDeclarationCS().getContextType() : null;
+			if (visitMappingDeclarationCS(methodCS, contextTypeCS, env, operation)) {
+				ImperativeOperation imperativeOp = env.defineImperativeOperation(operation, methodCS instanceof MappingRuleCS, true);
+				if (imperativeOp != null) {
+					methodMap.put(methodCS, imperativeOp);
 				}
 			}
 		}
@@ -1502,7 +1510,7 @@ public class QvtOperationalVisitorCS
 		}
 	}
 
-	private void visitIntermediateClassesCS(QvtOperationalEnv env, MappingModuleCS moduleCS, Module module) throws SemanticException {
+	private void visitIntermediateClassesCS(QvtOperationalFileEnv env, MappingModuleCS moduleCS, Module module) throws SemanticException {
 		
 		Map<String, EClass> createdIntermClasses = new LinkedHashMap<String, EClass>(moduleCS.getClassifierDefCS().size());
 		final Map<EClass, CSTNode> cstIntermClassesMap = new LinkedHashMap<EClass, CSTNode>();
@@ -1521,6 +1529,9 @@ public class QvtOperationalVisitorCS
 			ASTSyntheticNode astNode = ASTSyntheticNodeAccess.createASTNode(eClassifier);
 			astNode.setStartPosition(classifierDefCS.getStartOffset());
 			astNode.setEndPosition(classifierDefCS.getEndOffset());
+			if (myCompilerOptions.isGenerateCompletionData()) {
+				ASTSyntheticNodeAccess.setCST(astNode, classifierDefCS);
+			}
 			
 			eClassifier.setName(classifierDefCS.getSimpleNameCS().getValue());
 			
@@ -1540,6 +1551,7 @@ public class QvtOperationalVisitorCS
 				if (typeCS instanceof PathNameCS && ((PathNameCS) typeCS).getSequenceOfNames().size() == 1) {
 					EClass extClass = createdIntermClasses.get(((PathNameCS) typeCS).getSequenceOfNames().get(0));
 					if (extClass != null) {
+						typeCS.setAst(extClass);
 						rootClass.getESuperTypes().add(extClass);
 						continue;
 					}
@@ -1635,7 +1647,7 @@ public class QvtOperationalVisitorCS
 	}
 	
 	private EClass visitClassifierDefCS(ClassifierDefCS classifierDefCS, EClass eClassifier, Module module,
-			Map<ClassifierPropertyCS, EStructuralFeature> createdProperties, QvtOperationalEnv env) throws SemanticException {
+			Map<ClassifierPropertyCS, EStructuralFeature> createdProperties, QvtOperationalFileEnv env) throws SemanticException {
 
 		class PropertyPair {
 			final EStructuralFeature myEFeature;
@@ -1682,6 +1694,20 @@ public class QvtOperationalVisitorCS
 		
 		for (TagCS tagCS : classifierDefCS.getTags()) {
 			visitTagCS(env, tagCS, module, eClassifier);
+		}
+		for (ConstructorCS constructorCS : classifierDefCS.getConstructors()) {
+
+			ImperativeOperation operation = ExpressionsFactory.eINSTANCE.createConstructor();
+			
+			PathNameCS contextTypeCS = CSTFactory.eINSTANCE.createPathNameCS();
+			contextTypeCS.getSequenceOfNames().add(classifierDefCS.getSimpleNameCS().getValue());
+
+			if (visitMappingDeclarationCS(constructorCS, contextTypeCS, env, operation)) {
+				ImperativeOperation imperativeOp = env.defineImperativeOperation(operation, false, true);
+				if (imperativeOp != null) {
+					visitConstructorCS(constructorCS, env, imperativeOp);
+				}
+			}
 		}
 		
 		return eClassifier;
@@ -2761,7 +2787,7 @@ public class QvtOperationalVisitorCS
 		}
 	}
 	
-	protected boolean visitMappingDeclarationCS(MappingMethodCS mappingMethodCS, QvtOperationalModuleEnv env, ImperativeOperation operation) throws SemanticException {
+	protected boolean visitMappingDeclarationCS(MappingMethodCS mappingMethodCS, TypeCS contextTypeCS, QvtOperationalModuleEnv env, ImperativeOperation operation) throws SemanticException {
 	    MappingDeclarationCS mappingDeclarationCS = mappingMethodCS.getMappingDeclarationCS();
 		if (mappingDeclarationCS == null) {
 			return false;
@@ -2780,8 +2806,8 @@ public class QvtOperationalVisitorCS
 		}
 
 		EClassifier contextType;
-		if (mappingDeclarationCS.getContextType() != null) {
-			contextType = visitTypeCS(mappingDeclarationCS.getContextType(), contextDirection, env);
+		if (contextTypeCS != null) {
+			contextType = visitTypeCS(contextTypeCS, contextDirection, env);
 			if (contextType == null) {
 				contextType = env.getModuleContextType();
 			}
@@ -2804,14 +2830,14 @@ public class QvtOperationalVisitorCS
 			params.add(param);
 		}
 				
-		if (mappingDeclarationCS.getContextType() != null) {
+		if (contextTypeCS != null) {
 			MappingParameter mappingParam = createMappingParams ? ExpressionsFactory.eINSTANCE.createMappingParameter() : null;
 			VarParameter varContext = createMappingParams ? mappingParam : ExpressionsFactory.eINSTANCE.createVarParameter();
 			
 			varContext.setRepresentedParameter(varContext);
 			varContext.setName(Environment.SELF_VARIABLE_NAME);
-			varContext.setStartPosition(mappingDeclarationCS.getContextType().getStartOffset());
-			varContext.setEndPosition(mappingDeclarationCS.getContextType().getEndOffset());
+			varContext.setStartPosition(contextTypeCS.getStartOffset());
+			varContext.setEndPosition(contextTypeCS.getEndOffset());
 			
 			varContext.setEType(contextType);
 			varContext.setKind(contextDirection);

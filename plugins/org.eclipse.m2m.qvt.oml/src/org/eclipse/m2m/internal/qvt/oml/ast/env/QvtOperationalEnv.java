@@ -595,7 +595,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		return result;
 	}
         
-	public EOperation defineImperativeOperation(ImperativeOperation operation, boolean isMappingOperation,
+	public ImperativeOperation defineImperativeOperation(ImperativeOperation operation, boolean isMappingOperation,
 			boolean isCheckDuplicates) {
 		EClassifier ownerType = QvtOperationalParserUtil.getContextualType(operation);
 		boolean isContextual = true;
@@ -604,7 +604,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			ownerType = getModuleContextType();
 		}
 		
-		EOperation newOperation = operation;
+		ImperativeOperation newOperation = operation;
 		
 		CollisionStatus collidingOperStatus = findCollidingOperation(ownerType, newOperation);
 		if(collidingOperStatus != null) {

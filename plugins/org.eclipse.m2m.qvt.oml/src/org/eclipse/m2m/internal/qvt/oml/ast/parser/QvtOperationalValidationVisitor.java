@@ -147,6 +147,7 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 		Boolean result = Boolean.TRUE;
 		EClass instantiatedClass = instantiationExp.getInstantiatedClass();
 
+		// declared constructors
 		Adapter adapter = EcoreUtil.getAdapter(instantiationExp.eAdapters(), ConstructorOperationAdapter.class);
 		if (adapter != null) {
 			assert ((ConstructorOperationAdapter) adapter).getReferredConstructor() != null;
@@ -163,7 +164,25 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 			}
 			return result;
 		}
-		
+
+		// default constructor
+		if (instantiatedClass != null
+				&& !QvtOperationalStdLibrary.INSTANCE.getTransformationClass().isSuperTypeOf(instantiatedClass)
+				&& instantiationExp.getArgument().isEmpty()) {
+
+			if (instantiatedClass.isAbstract() || instantiatedClass.isInterface()) {
+				
+				fEnv.reportError(NLS.bind(
+						ValidationMessages.QvtOperationalVisitorCS_canNotInstantiateAbstractType, 
+						fEnv.getFormatter().formatType(instantiatedClass)), 
+						instantiationExp.getStartPosition(), 
+						instantiationExp.getEndPosition());
+				result = Boolean.FALSE;
+			}
+			return result;
+		}
+
+		// transformation instantiation
 		if(instantiatedClass == null || QvtOperationalStdLibrary.INSTANCE.getTransformationClass().isSuperTypeOf(instantiatedClass) == false) {
 			fEnv.reportError(NLS.bind(
 					ValidationMessages.QvtOperationalValidationVisitor_invalidInstantiatedType, 
