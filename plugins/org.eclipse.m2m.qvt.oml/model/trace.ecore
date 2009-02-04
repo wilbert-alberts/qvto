@@ -4,6 +4,15 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="trace"
     nsURI="http:///www.eclipse.org/m2m/qvt/operational/trace.ecore" nsPrefix="trace">
   <eClassifiers xsi:type="ecore:EClass" name="Trace">
+    <eOperations name="getRecordBySource" eType="#//TraceRecord">
+      <eParameters name="mapping" eType="ecore:EClass QVTOperational.ecore#//expressions/MappingOperation"/>
+      <eParameters name="sourceObject" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
+    </eOperations>
+    <eOperations name="addRecordBySource">
+      <eParameters name="sourceObject" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
+      <eParameters name="mapping" eType="ecore:EClass QVTOperational.ecore#//expressions/MappingOperation"/>
+      <eParameters name="trace" eType="#//TraceRecord"/>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="traceRecords" upperBound="-1"
         eType="#//TraceRecord" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="traceRecordMap" ordered="false"
