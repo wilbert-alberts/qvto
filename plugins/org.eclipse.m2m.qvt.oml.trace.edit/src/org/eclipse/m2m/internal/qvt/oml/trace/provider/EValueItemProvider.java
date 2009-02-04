@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: EValueItemProvider.java,v 1.6 2009/01/28 11:46:25 radvorak Exp $
+ * $Id: EValueItemProvider.java,v 1.7 2009/02/04 12:36:53 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
@@ -813,6 +813,16 @@ public class EValueItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createImperativeOperation()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createConstructor()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
 				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createOperationBody()));
 
 		newChildDescriptors.add
@@ -824,11 +834,6 @@ public class EValueItemProvider
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
 				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createContextualProperty()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createImperativeOperation()));
 
 		newChildDescriptors.add
 			(createChildParameter
