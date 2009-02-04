@@ -1409,8 +1409,7 @@ public class QvtOperationalVisitorCS
 				operation = ExpressionsFactory.eINSTANCE.createHelper();
 			}
 			
-			TypeCS contextTypeCS = methodCS.getMappingDeclarationCS() != null ? methodCS.getMappingDeclarationCS().getContextType() : null;
-			if (visitMappingDeclarationCS(methodCS, contextTypeCS, env, operation)) {
+			if (visitMappingDeclarationCS(methodCS, env, operation)) {
 				ImperativeOperation imperativeOp = env.defineImperativeOperation(operation, methodCS instanceof MappingRuleCS, true);
 				if (imperativeOp != null) {
 					methodMap.put(methodCS, imperativeOp);
@@ -1694,20 +1693,6 @@ public class QvtOperationalVisitorCS
 		
 		for (TagCS tagCS : classifierDefCS.getTags()) {
 			visitTagCS(env, tagCS, module, eClassifier);
-		}
-		for (ConstructorCS constructorCS : classifierDefCS.getConstructors()) {
-
-			ImperativeOperation operation = ExpressionsFactory.eINSTANCE.createConstructor();
-			
-			PathNameCS contextTypeCS = CSTFactory.eINSTANCE.createPathNameCS();
-			contextTypeCS.getSequenceOfNames().add(classifierDefCS.getSimpleNameCS().getValue());
-
-			if (visitMappingDeclarationCS(constructorCS, contextTypeCS, env, operation)) {
-				ImperativeOperation imperativeOp = env.defineImperativeOperation(operation, false, true);
-				if (imperativeOp != null) {
-					visitConstructorCS(constructorCS, env, imperativeOp);
-				}
-			}
 		}
 		
 		return eClassifier;
@@ -2797,7 +2782,7 @@ public class QvtOperationalVisitorCS
 		}
 	}
 	
-	protected boolean visitMappingDeclarationCS(MappingMethodCS mappingMethodCS, TypeCS contextTypeCS, QvtOperationalModuleEnv env, ImperativeOperation operation) throws SemanticException {
+	protected boolean visitMappingDeclarationCS(MappingMethodCS mappingMethodCS, QvtOperationalModuleEnv env, ImperativeOperation operation) throws SemanticException {
 	    MappingDeclarationCS mappingDeclarationCS = mappingMethodCS.getMappingDeclarationCS();
 		if (mappingDeclarationCS == null) {
 			return false;
@@ -2815,6 +2800,7 @@ public class QvtOperationalVisitorCS
 							.getDirectionKind().getLiteral());
 		}
 
+		TypeCS contextTypeCS = mappingDeclarationCS.getContextType();
 		EClassifier contextType;
 		if (contextTypeCS != null) {
 			contextType = visitTypeCS(contextTypeCS, contextDirection, env);
