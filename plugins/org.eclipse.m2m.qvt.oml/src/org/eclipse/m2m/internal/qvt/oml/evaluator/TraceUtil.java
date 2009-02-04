@@ -60,7 +60,7 @@ class TraceUtil {
         Object selfObj = evalEnv.getValueOf(Environment.SELF_VARIABLE_NAME);
     	
     	// the direct fetch by the contextual source object
-    	if(selfObj != null && mappingOperation.getEParameters().isEmpty() && mappingOperation.getContext() != null) {
+    	if(selfObj != null && isParameterLessContextual(mappingOperation)) {
 	    	TraceRecord record = trace.getRecordBySource(mappingOperation, selfObj);
 	    	if(record != null && Boolean.TRUE.equals(checkResultMatch(record, evalEnv))) {
 	    		return record;
@@ -192,7 +192,7 @@ class TraceUtil {
 		// Note: add it here so we ensure the record is fully initialized
         trace.getTraceRecords().add(traceRecord);
         
-        if(QvtOperationalParserUtil.isContextual(mappingOperation) && mappingOperation.getEParameters().isEmpty()) {
+        if(isParameterLessContextual(mappingOperation)) {
         	// parameter-less contextual operation can be cached efficiently
         	addTraceRecordBySourceObject(trace, traceRecord);
         }
@@ -365,5 +365,10 @@ class TraceUtil {
 				traces.addRecordBySource(source, mapping, newObject);
 			}
 		}
-	}    
+	}
+	
+	private static boolean isParameterLessContextual(
+			MappingOperation mappingOperation) {
+		return QvtOperationalParserUtil.isContextual(mappingOperation) && mappingOperation.getEParameters().isEmpty();
+	}	
 }
