@@ -13,16 +13,16 @@ intermediate class Cls {
 	name : String;
 	references base : Cls;
 	composes subclasses : Cls[*] ordered opposites base;
+}
 
-	constructor Cls () 
-	{
-		name := "foo";
-	};
-	
-	constructor Cls (r : Real) 
-	{
-		name := "foo" + r.toString();
-	}
+constructor Cls::Cls () 
+{
+	name := "foo";
+}
+
+constructor Cls::Cls (r : Real) 
+{
+	name := "foo" + r.toString();
 }
 
 -- default constructor
