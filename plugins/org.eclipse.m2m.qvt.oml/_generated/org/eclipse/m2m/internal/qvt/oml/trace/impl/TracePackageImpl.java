@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: TracePackageImpl.java,v 1.3 2009/01/11 23:22:10 radvorak Exp $
+ * $Id: TracePackageImpl.java,v 1.4 2009/02/04 12:34:40 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace.impl;
 
@@ -18,8 +18,10 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.trace.EDirectionKind;
@@ -701,6 +703,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 
 		// Obtain other dependent packages
 		ExpressionsPackage theExpressionsPackage = (ExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(ExpressionsPackage.eNS_URI);
+		EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
 
 		// Create type parameters
 
@@ -715,6 +718,15 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 		initEReference(getTrace_TraceRecordMap(), this.getMappingOperationToTraceRecordMapEntry(), null, "traceRecordMap", null, 0, -1, Trace.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getTrace_SourceToTraceRecordMap(), this.getObjectToTraceRecordMapEntry(), null, "sourceToTraceRecordMap", null, 0, -1, Trace.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getTrace_TargetToTraceRecordMap(), this.getObjectToTraceRecordMapEntry(), null, "targetToTraceRecordMap", null, 0, -1, Trace.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		EOperation op = addEOperation(traceEClass, this.getTraceRecord(), "getRecordBySource", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theExpressionsPackage.getMappingOperation(), "mapping", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEcorePackage.getEJavaObject(), "sourceObject", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(traceEClass, null, "addRecordBySource", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEcorePackage.getEJavaObject(), "sourceObject", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theExpressionsPackage.getMappingOperation(), "mapping", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getTraceRecord(), "trace", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(traceRecordEClass, TraceRecord.class, "TraceRecord", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTraceRecord_MappingOperation(), this.getEMappingOperation(), null, "mappingOperation", null, 1, 1, TraceRecord.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

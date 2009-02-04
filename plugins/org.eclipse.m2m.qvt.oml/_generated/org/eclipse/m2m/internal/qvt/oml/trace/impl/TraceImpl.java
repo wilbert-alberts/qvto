@@ -9,11 +9,13 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: TraceImpl.java,v 1.2 2008/12/18 15:18:11 radvorak Exp $
+ * $Id: TraceImpl.java,v 1.3 2009/02/04 12:34:40 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace.impl;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -94,6 +96,13 @@ public class TraceImpl extends EObjectImpl implements Trace {
 	 */
     protected EMap<Object, EList<TraceRecord>> targetToTraceRecordMap;
 
+
+    /**
+	 * @generated NOT
+	 */
+    private Map<MappingOperation, Map<Object, TraceRecord>> mapping2Records = new HashMap<MappingOperation, Map<Object, TraceRecord>>();    
+    
+    
     /**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -273,5 +282,32 @@ public class TraceImpl extends EObjectImpl implements Trace {
 		}
 		return super.eIsSet(featureID);
 	}
+    
+    /**
+	 * @generated NOT
+	 */    
+    public TraceRecord getRecordBySource(MappingOperation mapping, Object contextSource) {
+		Map<Object, TraceRecord> records = mapping2Records.get(mapping);
+		if(records != null) {
+			return records.get(contextSource);
+		}
+		
+		return null;
+    }
 
+    /**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public void addRecordBySource(Object sourceObject, MappingOperation mapping, TraceRecord traceRecord) {
+		Map<Object, TraceRecord> records = mapping2Records.get(mapping);
+		if(records == null) {								
+			records = new HashMap<Object, TraceRecord>();
+			mapping2Records.put(mapping, records);
+		}
+		
+		records.put(sourceObject, traceRecord);
+	}    
+    
 } //TraceImpl

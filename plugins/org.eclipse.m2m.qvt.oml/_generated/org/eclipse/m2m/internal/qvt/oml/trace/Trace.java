@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: Trace.java,v 1.2 2008/12/18 15:18:10 radvorak Exp $
+ * $Id: Trace.java,v 1.3 2009/02/04 12:34:40 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace;
 
@@ -112,4 +112,19 @@ public interface Trace extends EObject {
 	 */
     EMap<Object, EList<TraceRecord>> getTargetToTraceRecordMap();
 
+    /**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	TraceRecord getRecordBySource(MappingOperation mapping, Object sourceObject);
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	void addRecordBySource(Object sourceObject, MappingOperation mapping, TraceRecord trace);
 } // Trace

@@ -57,7 +57,16 @@ class TraceUtil {
     static TraceRecord getTraceRecord(QvtOperationalEvaluationEnv evalEnv, MappingOperation mappingOperation) {
     	InternalEvaluationEnv internEnv = evalEnv.getAdapter(InternalEvaluationEnv.class);    	
     	Trace trace = internEnv.getTraces();
+        Object selfObj = evalEnv.getValueOf(Environment.SELF_VARIABLE_NAME);
     	
+    	// the direct fetch by the contextual source object
+    	if(selfObj != null && mappingOperation.getEParameters().isEmpty() && mappingOperation.getContext() != null) {
+	    	TraceRecord record = trace.getRecordBySource(mappingOperation, selfObj);
+	    	if(record != null && Boolean.TRUE.equals(checkResultMatch(record, evalEnv))) {
+	    		return record;
+	    	}
+    	}
+
         EMap<MappingOperation, EList<TraceRecord>> allTraceRecordMap = trace.getTraceRecordMap();
         EList<TraceRecord> traceRecords = allTraceRecordMap.get(mappingOperation);
         if (traceRecords == null) {
@@ -70,26 +79,26 @@ class TraceUtil {
         // parameters (from Operation::ownedParameter), and the parameters declared as result.
 
         traceCheckCycle:
-            for (TraceRecord traceRecord : traceRecords) {
+            for (TraceRecord nextRecord : traceRecords) {
             	// check context parameter
                 if (QvtOperationalParserUtil.isContextual(mappingOperation)) {
-                    if (traceRecord.getContext().getContext() == null) {
+                    VarParameterValue nextContext = nextRecord.getContext().getContext();
+					if (nextContext == null) {
                         continue;
                     }
-                    Object context = evalEnv.getValueOf(Environment.SELF_VARIABLE_NAME);
-                    if (!isOclEqual(context, traceRecord.getContext().getContext().getValue().getOclObject(), mappingOperation.getContext().getKind())) {
+                    if (!isOclEqual(selfObj, nextContext.getValue().getOclObject(), mappingOperation.getContext().getKind())) {
                         continue;
                     }
                 }
                 // check owned parameters
                 int candidateParamSize = mappingOperation.getEParameters().size();
-                if (traceRecord.getParameters().getParameters().size() != candidateParamSize) {
+                if (nextRecord.getParameters().getParameters().size() != candidateParamSize) {
                     continue;
                 }
                 for (int i = 0; i < candidateParamSize; i++) {
                     EParameter param = mappingOperation.getEParameters().get(i);
                     Object paramValue = evalEnv.getValueOf(param.getName());
-                    VarParameterValue traceParamVal = (VarParameterValue) traceRecord.getParameters().getParameters().get(i);
+                    VarParameterValue traceParamVal = (VarParameterValue) nextRecord.getParameters().getParameters().get(i);
                     DirectionKind paramKind = DirectionKind.IN;
                     if (param instanceof VarParameter) {
                     	paramKind = ((VarParameter) param).getKind();
@@ -98,33 +107,16 @@ class TraceUtil {
                         continue traceCheckCycle;
                     }
                 }
-                // check result parameters
-                Object resultValue = evalEnv.getValueOf(Environment.RESULT_VARIABLE_NAME);
-                if (resultValue != null) {
-                    List<Object> resultValues = new ArrayList<Object>(1); 
-	                if (resultValue instanceof Tuple) {
-	                	@SuppressWarnings("unchecked")
-	                	Tuple<EOperation, EStructuralFeature> tupleResult = (Tuple<EOperation, EStructuralFeature>) resultValue;
-	                	for (EStructuralFeature tupleFeature : tupleResult.getTupleType().oclProperties()) {
-	                		resultValues.add(tupleResult.getValue(tupleFeature));
-	                	}
-	                }
-	                else {
-	                	resultValues.add(resultValue);
-	                }
-	                if (traceRecord.getResult().getResult().size() != resultValues.size()) {
-	                    continue;
-	                }
-	                for (int i = 0, n = resultValues.size(); i < n; i++) {
-	                    Object paramValue = resultValues.get(i);
-	                    VarParameterValue traceParamVal = (VarParameterValue) traceRecord.getResult().getResult().get(i);
-	                    if (!isOclEqual(paramValue, traceParamVal.getValue().getOclObject(), DirectionKind.OUT)) {
-	                        continue traceCheckCycle;
-	                    }
-	                }
+                
+                // check result parameters                
+                Boolean checkResult = checkResultMatch(nextRecord, evalEnv);
+                if(checkResult == null) {
+                	continue;
+                } else if(Boolean.FALSE.equals(checkResult)) {
+                	continue traceCheckCycle;
                 }
                 
-                return traceRecord;
+                return nextRecord;
             }
         return null;
     }
@@ -136,7 +128,7 @@ class TraceUtil {
         Trace trace = internEnv.getTraces();
         EList<TraceRecord> list = createOrGetListElementFromMap(trace.getTraceRecordMap(), mappingOperation);
         list.add(traceRecord);
-        trace.getTraceRecords().add(traceRecord);
+
         EMappingOperation eMappingOperation = TraceFactory.eINSTANCE.createEMappingOperation();
         traceRecord.setMappingOperation(eMappingOperation);
         eMappingOperation.setName(mappingOperation.getName());
@@ -197,6 +189,14 @@ class TraceUtil {
             }
         }
 
+		// Note: add it here so we ensure the record is fully initialized
+        trace.getTraceRecords().add(traceRecord);
+        
+        if(QvtOperationalParserUtil.isContextual(mappingOperation) && mappingOperation.getEParameters().isEmpty()) {
+        	// parameter-less contextual operation can be cached efficiently
+        	addTraceRecordBySourceObject(trace, traceRecord);
+        }
+        
         return traceRecord;
     }
 
@@ -320,5 +320,50 @@ class TraceUtil {
             return false;
         }
         return candidateObject.equals(traceObject); // Overridden equals() is implied
-    }    
+    }
+    
+    private static Boolean checkResultMatch(TraceRecord nextRecord, QvtOperationalEvaluationEnv evalEnv) {
+        // check result parameters
+        Object resultValue = evalEnv.getValueOf(Environment.RESULT_VARIABLE_NAME);
+        if (resultValue != null) {
+            List<Object> resultValues = new ArrayList<Object>(1); 
+            if (resultValue instanceof Tuple) {
+            	@SuppressWarnings("unchecked")
+            	Tuple<EOperation, EStructuralFeature> tupleResult = (Tuple<EOperation, EStructuralFeature>) resultValue;
+            	for (EStructuralFeature tupleFeature : tupleResult.getTupleType().oclProperties()) {
+            		resultValues.add(tupleResult.getValue(tupleFeature));
+            	}
+            }
+            else {
+            	resultValues.add(resultValue);
+            }
+            if (nextRecord.getResult().getResult().size() != resultValues.size()) {
+                return null;
+            }
+            for (int i = 0, n = resultValues.size(); i < n; i++) {
+                Object paramValue = resultValues.get(i);
+                VarParameterValue traceParamVal = (VarParameterValue) nextRecord.getResult().getResult().get(i);
+                if (!isOclEqual(paramValue, traceParamVal.getValue().getOclObject(), DirectionKind.OUT)) {
+                    return Boolean.FALSE;
+                }
+            }
+        }    	
+        
+        return Boolean.TRUE;
+    }
+    
+	private static void addTraceRecordBySourceObject(Trace traces, TraceRecord newObject) {
+		EMappingOperation eMapping = newObject.getMappingOperation();				
+		MappingOperation mapping = eMapping.getRuntimeMappingOperation();
+		assert mapping != null;
+
+		EMappingContext context = newObject.getContext();
+		if(context != null && context.getContext() != null) {
+			EValue value = context.getContext().getValue();
+			Object source = value.getOclObject();
+			if(source != null) {
+				traces.addRecordBySource(source, mapping, newObject);
+			}
+		}
+	}    
 }
