@@ -12,5 +12,5 @@ main() {
 
 query fooQuery(model: ecore::EPackage) : /*<error>*/ecore::XXX/*</error>*/
 {    
-	null
+	return null
 }
