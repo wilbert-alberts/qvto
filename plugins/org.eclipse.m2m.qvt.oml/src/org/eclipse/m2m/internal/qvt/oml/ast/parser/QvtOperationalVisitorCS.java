@@ -2700,6 +2700,16 @@ public class QvtOperationalVisitorCS
 			consolidateImplicitVariables(newEnv);
 			//
 		}
+		
+		// add warning if single expression in non-simple body definition does not use return expression
+		// as only during CST analysis we know that non-simple body variant is used
+		// => query foo() : String = 'foo'; 
+ 		if(!methodCS.isIsSimpleDefinition() && helper.getResult().size() == 1 && body != null) {
+ 			EList<org.eclipse.ocl.ecore.OCLExpression> contents = body.getContent(); 			
+ 			if(contents.size() == 1 && contents.get(0) instanceof ReturnExp == false) {
+ 				env.reportWarning(ValidationMessages.useReturnExpForOperationResult, methodCS.getMappingDeclarationCS()); 				
+ 			}
+		}		
 	}
 	
 	/**

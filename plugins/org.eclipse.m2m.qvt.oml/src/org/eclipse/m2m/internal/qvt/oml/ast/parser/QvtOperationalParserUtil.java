@@ -48,9 +48,9 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
+import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ReturnExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.Typedef;
-import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CollectionTypeCS;
@@ -598,9 +598,7 @@ public class QvtOperationalParserUtil {
 	public static void markAsDeprecated(EModelElement element, String replacingReferenceOpt) {
 		EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
 		annotation.setSource(QVT_NAMESPACE_URI);
-		if(replacingReferenceOpt != null) {
-			annotation.getDetails().put(QVT_DEPRECATED, replacingReferenceOpt);
-		}
+		annotation.getDetails().put(QVT_DEPRECATED, replacingReferenceOpt);
 		element.getEAnnotations().add(annotation);
 	}
 	

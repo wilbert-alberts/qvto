@@ -254,6 +254,9 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
     public List<EOperation> lookupMappingOperations(EClassifier owner, String name) {
         if (owner == null) {
             owner = getModuleContextType();
+            if(owner == null) {
+            	return Collections.emptyList();
+            }            
         }
 
         UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> uml = getUMLReflection();
@@ -305,6 +308,9 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
     private List<EOperation> lookupConstructorOperations(EClassifier owner, String name, int paramSize) {
         if (owner == null) {
             owner = getModuleContextType();
+            if(owner == null) {
+            	return Collections.emptyList();
+            }
         }
 
         UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> uml = getUMLReflection();
@@ -472,7 +478,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			
 			for (QvtEnvironmentBase nextImported : getRootEnv().getSiblings()) {
 				Module importedModule = nextImported.getModuleContextType();
-				if(firstName.equals(importedModule.getName())) {
+				if(importedModule != null && firstName.equals(importedModule.getName())) {
 					return importedModule;
 				}				
 			}
@@ -697,6 +703,9 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			EClassifier ownerType = QvtOperationalParserUtil.getContextualType(operation);
 			if (ownerType == null) {
 				ownerType = getModuleContextType();
+	            if(ownerType == null) {
+	            	return;
+	            }
 			}
 	    	
             MappingsMapKey key = new MappingsMapKey(ownerType, operation.getName());

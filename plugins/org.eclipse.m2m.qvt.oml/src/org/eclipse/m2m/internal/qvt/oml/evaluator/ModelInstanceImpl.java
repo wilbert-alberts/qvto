@@ -11,7 +11,12 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 
@@ -28,13 +33,20 @@ class ModelInstanceImpl extends DynamicEObjectImpl  implements ModelInstance {
 		eSetClass(modelType);
 		fExtent = extent;
 	}
-	
+		
 	public ModelType getModelType() {
 		return (ModelType) eClass();
 	}
 	
 	public ModelParameterExtent getExtent() {
 		return fExtent;
+	}
+	
+	public ModelInstance copy() {
+		List<EObject> rootObjects = getExtent().getRootObjects();
+		List<EObject> copyAll = new ArrayList<EObject>(EcoreUtil.copyAll(rootObjects));
+		ModelParameterExtent extentCopy = new ModelParameterExtent(copyAll);
+		return new ModelInstanceImpl(getModelType(), extentCopy);
 	}
 
 	@Override

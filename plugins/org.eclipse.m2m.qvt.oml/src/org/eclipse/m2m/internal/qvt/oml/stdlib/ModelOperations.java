@@ -31,6 +31,7 @@ import org.eclipse.ocl.util.TypeUtil;
 public class ModelOperations extends AbstractContextualOperations {
 
 	public static final String CREATE_EMPTY_MODEL_NAME = "createEmptyModel"; //$NON-NLS-1$	
+	public static final String COPY_NAME = "copy"; //$NON-NLS-1$	
 	public static final String OBJECTS_NAME = "objects"; //$NON-NLS-1$
 	public static final String ROOT_OBJECTS_NAME = "rootObjects"; //$NON-NLS-1$
 	public static final String OBJECTS_OF_TYPE_NAME = "objectsOfType"; //$NON-NLS-1$
@@ -53,7 +54,7 @@ public class ModelOperations extends AbstractContextualOperations {
 		return new OperationProvider[] {
 			new OwnedOperationProvider(UNSUPPORTED_OPER, "asTransformation", new String[] { "model" }, //$NON-NLS-1$ //$NON-NLS-2$
 					getStdlib().getTransformationClass(), getStdlib().getModelClass()),
-			new OwnedOperationProvider(UNSUPPORTED_OPER, "copy", getStdlib().getModelClass()), //$NON-NLS-1$
+			new OwnedOperationProvider(COPY, COPY_NAME, getStdlib().getModelClass()), //$NON-NLS-1$
 			
 			createOwnedStaticOperationProvider(CREATE_EMPTY_MODEL, CREATE_EMPTY_MODEL_NAME, null, getStdlib().getModelClass()),
 			
@@ -126,6 +127,16 @@ public class ModelOperations extends AbstractContextualOperations {
 				modelParam.removeElement((EObject) elementObject);
 			}
 	        return null;
+		}
+	};
+
+	private static final CallHandler COPY = new CallHandler() {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
+			if(source instanceof ModelInstance == false) {
+				throw new IllegalArgumentException();
+			}
+			ModelInstance model = (ModelInstance) source;
+	        return model.copy();
 		}
 	};
 		

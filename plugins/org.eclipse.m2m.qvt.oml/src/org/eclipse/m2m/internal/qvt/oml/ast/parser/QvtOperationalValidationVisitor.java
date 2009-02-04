@@ -28,11 +28,9 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.compiler.ConstructorOperationAdapter;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Constructor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
@@ -52,7 +50,6 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.BlockExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ReturnExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.VariableInitExp;
-import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.CollectionType;
 import org.eclipse.ocl.ecore.Constraint;
@@ -62,7 +59,6 @@ import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.lpg.FormattingHelper;
 import org.eclipse.ocl.parser.ValidationVisitor;
 import org.eclipse.ocl.util.TypeUtil;
-import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
 import org.eclipse.ocl.utilities.Visitable;
@@ -413,14 +409,17 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 				//return Boolean.TRUE; // continue to super type visit
 			} else {
 				EList<org.eclipse.ocl.ecore.OCLExpression> content = operationBody.getContent();
-				if(operation.getResult().size() == 1 && 
-					(content.isEmpty() || content.get(content.size() - 1) instanceof ReturnExp == false)) {
-                    CSTNode operationCS = ASTBindingHelper.resolveCSTNode(operation);
-                    if (!((operationCS instanceof MappingQueryCS) && ((MappingQueryCS) operationCS).isIsSimpleDefinition())) {
-                        ASTNode problemTarget = operation;
-                        String message = ValidationMessages.useReturnExpForOperationResult;
-                        fEnv.reportWarning(message, problemTarget.getStartPosition(), operationBody.getStartPosition());
-                    }
+				if(operation.getResult().size() == 1) {
+					// in case of multiple result, a tuple composed from the result variables is is always returned
+					// so we do not care about the return statement
+					int bodySize = content.size();
+					if((bodySize == 0 && !operation.isIsBlackbox()) || 
+						(bodySize > 1 && content.get(bodySize - 1) instanceof ReturnExp == false)) {
+						// Note: every single expression is OK from the AST point of view as
+						// it corresponds to a single expression query
+						String message = ValidationMessages.useReturnExpForOperationResult;
+						fEnv.reportWarning(message, operation.getStartPosition(), operationBody.getStartPosition());
+					}
 				}
 			}
 		}

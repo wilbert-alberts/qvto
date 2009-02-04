@@ -20,4 +20,6 @@ public interface ModelInstance extends EObject {
 	ModelType getModelType();
 	
 	ModelParameterExtent getExtent();
+	
+	ModelInstance copy();
 }
