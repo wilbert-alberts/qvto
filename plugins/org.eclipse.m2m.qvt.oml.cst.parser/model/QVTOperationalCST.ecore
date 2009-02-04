@@ -72,8 +72,6 @@
           eType="#//cst/ClassifierPropertyCS" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="tags" upperBound="-1"
           eType="#//cst/TagCS" containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="constructors" upperBound="-1"
-          eType="#//cst/ConstructorCS" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ClassifierPropertyCS" eSuperTypes="#//cst/LocalPropertyCS">
       <eStructuralFeatures xsi:type="ecore:EReference" name="stereotypeQualifiers"

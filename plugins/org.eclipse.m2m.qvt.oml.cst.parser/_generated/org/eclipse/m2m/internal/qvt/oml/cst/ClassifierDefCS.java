@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ClassifierDefCS.java,v 1.6 2009/02/03 21:32:03 sboyko Exp $
+ * $Id: ClassifierDefCS.java,v 1.7 2009/02/04 15:33:23 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -32,7 +32,6 @@ import org.eclipse.ocl.cst.TypeCS;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS#getExtends <em>Extends</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS#getProperties <em>Properties</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS#getTags <em>Tags</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS#getConstructors <em>Constructors</em>}</li>
  * </ul>
  * </p>
  *
@@ -121,21 +120,5 @@ public interface ClassifierDefCS extends CSTNode {
 	 * @generated
 	 */
 	EList<TagCS> getTags();
-
-	/**
-	 * Returns the value of the '<em><b>Constructors</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Constructors</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Constructors</em>' containment reference list.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getClassifierDefCS_Constructors()
-	 * @model containment="true"
-	 * @generated
-	 */
-	EList<ConstructorCS> getConstructors();
 
 } // ClassifierDefCS

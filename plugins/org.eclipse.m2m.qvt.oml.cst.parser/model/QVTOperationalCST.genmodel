@@ -87,7 +87,6 @@
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ClassifierDefCS/extends"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ClassifierDefCS/properties"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ClassifierDefCS/tags"/>
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ClassifierDefCS/constructors"/>
       </genClasses>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/ClassifierPropertyCS">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ClassifierPropertyCS/stereotypeQualifiers"/>

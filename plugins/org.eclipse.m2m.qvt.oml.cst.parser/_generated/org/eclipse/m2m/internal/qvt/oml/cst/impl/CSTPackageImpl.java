@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.26 2009/02/03 21:32:03 sboyko Exp $
+ * $Id: CSTPackageImpl.java,v 1.27 2009/02/04 15:33:23 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -964,15 +964,6 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 */
 	public EReference getClassifierDefCS_Tags() {
 		return (EReference)classifierDefCSEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getClassifierDefCS_Constructors() {
-		return (EReference)classifierDefCSEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -2559,7 +2550,6 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(classifierDefCSEClass, CLASSIFIER_DEF_CS__EXTENDS);
 		createEReference(classifierDefCSEClass, CLASSIFIER_DEF_CS__PROPERTIES);
 		createEReference(classifierDefCSEClass, CLASSIFIER_DEF_CS__TAGS);
-		createEReference(classifierDefCSEClass, CLASSIFIER_DEF_CS__CONSTRUCTORS);
 
 		classifierPropertyCSEClass = createEClass(CLASSIFIER_PROPERTY_CS);
 		createEReference(classifierPropertyCSEClass, CLASSIFIER_PROPERTY_CS__STEREOTYPE_QUALIFIERS);
@@ -2931,7 +2921,6 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEReference(getClassifierDefCS_Extends(), theCSTPackage_1.getTypeCS(), null, "extends", null, 0, -1, ClassifierDefCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getClassifierDefCS_Properties(), this.getClassifierPropertyCS(), null, "properties", null, 0, -1, ClassifierDefCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getClassifierDefCS_Tags(), this.getTagCS(), null, "tags", null, 0, -1, ClassifierDefCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(getClassifierDefCS_Constructors(), this.getConstructorCS(), null, "constructors", null, 0, -1, ClassifierDefCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(classifierPropertyCSEClass, ClassifierPropertyCS.class, "ClassifierPropertyCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getClassifierPropertyCS_StereotypeQualifiers(), theCSTPackage_1.getSimpleNameCS(), null, "stereotypeQualifiers", null, 0, -1, ClassifierPropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

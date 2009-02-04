@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ClassifierDefCSImpl.java,v 1.6 2009/02/03 21:32:03 sboyko Exp $
+ * $Id: ClassifierDefCSImpl.java,v 1.7 2009/02/04 15:33:23 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -45,7 +45,6 @@ import org.eclipse.ocl.cst.impl.CSTNodeImpl;
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ClassifierDefCSImpl#getExtends <em>Extends</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ClassifierDefCSImpl#getProperties <em>Properties</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ClassifierDefCSImpl#getTags <em>Tags</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ClassifierDefCSImpl#getConstructors <em>Constructors</em>}</li>
  * </ul>
  * </p>
  *
@@ -98,16 +97,6 @@ public class ClassifierDefCSImpl extends CSTNodeImpl implements ClassifierDefCS 
 	 * @ordered
 	 */
 	protected EList<TagCS> tags;
-
-	/**
-	 * The cached value of the '{@link #getConstructors() <em>Constructors</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getConstructors()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<ConstructorCS> constructors;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -212,18 +201,6 @@ public class ClassifierDefCSImpl extends CSTNodeImpl implements ClassifierDefCS 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ConstructorCS> getConstructors() {
-		if (constructors == null) {
-			constructors = new EObjectContainmentEList<ConstructorCS>(ConstructorCS.class, this, CSTPackage.CLASSIFIER_DEF_CS__CONSTRUCTORS);
-		}
-		return constructors;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -235,8 +212,6 @@ public class ClassifierDefCSImpl extends CSTNodeImpl implements ClassifierDefCS 
 				return ((InternalEList<?>)getProperties()).basicRemove(otherEnd, msgs);
 			case CSTPackage.CLASSIFIER_DEF_CS__TAGS:
 				return ((InternalEList<?>)getTags()).basicRemove(otherEnd, msgs);
-			case CSTPackage.CLASSIFIER_DEF_CS__CONSTRUCTORS:
-				return ((InternalEList<?>)getConstructors()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -257,8 +232,6 @@ public class ClassifierDefCSImpl extends CSTNodeImpl implements ClassifierDefCS 
 				return getProperties();
 			case CSTPackage.CLASSIFIER_DEF_CS__TAGS:
 				return getTags();
-			case CSTPackage.CLASSIFIER_DEF_CS__CONSTRUCTORS:
-				return getConstructors();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -287,10 +260,6 @@ public class ClassifierDefCSImpl extends CSTNodeImpl implements ClassifierDefCS 
 				getTags().clear();
 				getTags().addAll((Collection<? extends TagCS>)newValue);
 				return;
-			case CSTPackage.CLASSIFIER_DEF_CS__CONSTRUCTORS:
-				getConstructors().clear();
-				getConstructors().addAll((Collection<? extends ConstructorCS>)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -315,9 +284,6 @@ public class ClassifierDefCSImpl extends CSTNodeImpl implements ClassifierDefCS 
 			case CSTPackage.CLASSIFIER_DEF_CS__TAGS:
 				getTags().clear();
 				return;
-			case CSTPackage.CLASSIFIER_DEF_CS__CONSTRUCTORS:
-				getConstructors().clear();
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -338,8 +304,6 @@ public class ClassifierDefCSImpl extends CSTNodeImpl implements ClassifierDefCS 
 				return properties != null && !properties.isEmpty();
 			case CSTPackage.CLASSIFIER_DEF_CS__TAGS:
 				return tags != null && !tags.isEmpty();
-			case CSTPackage.CLASSIFIER_DEF_CS__CONSTRUCTORS:
-				return constructors != null && !constructors.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

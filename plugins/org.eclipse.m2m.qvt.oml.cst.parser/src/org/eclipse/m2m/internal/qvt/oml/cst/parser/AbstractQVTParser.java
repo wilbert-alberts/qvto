@@ -861,9 +861,6 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 			if (nodeCS instanceof TagCS) {
 				result.getTags().add((TagCS) nodeCS);
 			}
-			if (nodeCS instanceof ConstructorCS) {
-				result.getConstructors().add((ConstructorCS) nodeCS);
-			}
 		}
 		
 		return result;
