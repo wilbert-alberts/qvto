@@ -101,7 +101,9 @@ import org.eclipse.ocl.cst.TypeCS;
 import org.eclipse.ocl.cst.VariableCS;
 import org.eclipse.ocl.cst.VariableExpCS;
 import org.eclipse.ocl.lpg.BasicEnvironment;
+import org.eclipse.ocl.lpg.ProblemHandler.Severity;
 import org.eclipse.ocl.parser.AbstractOCLParser;
+import org.eclipse.osgi.util.NLS;
 
 public abstract class AbstractQVTParser extends AbstractOCLParser {
 
@@ -126,7 +128,13 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	public QvtOpLexer getLexer() {
 		return (QvtOpLexer) super.getLexStream();
 	} 
-	
+
+	protected void reportWarning(String message, int startOffset, int endOffset) {
+        BasicEnvironment env = getEnvironment();
+        if (env != null && env.getProblemHandler() != null) {
+        	env.getProblemHandler().parserProblem(Severity.WARNING, message, "", startOffset, endOffset); //$NON-NLS-1$
+        }
+	}
 	
 	public abstract String getTokenKindName(int kind);
 	
@@ -682,6 +690,18 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		SwitchAltExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createSwitchAltExpCS();
 		result.setCondition(cond);
 		result.setBody(body);
+		return result;
+	}
+
+	protected final CSTNode createSwitchAltExpCSDeprecated(OCLExpressionCS cond, OCLExpressionCS body) {
+		SwitchAltExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createSwitchAltExpCS();
+		result.setCondition(cond);
+		result.setBody(body);
+        
+    	int startOffset = (cond != null ? cond.getStartOffset() : (body != null ? body.getStartOffset() : -1));
+    	int endOffset = (body != null ? body.getEndOffset() : (cond != null ? cond.getEndOffset() : -1));
+		reportWarning(NLS.bind(Messages.AbstractQVTParser_DeprecatedSwitchAltExp, null), startOffset, endOffset);
+
 		return result;
 	}
 

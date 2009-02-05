@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.18 2009/02/02 11:44:33 aigdalov Exp $ 
+-- * $Id: miscellaneous.g,v 1.19 2009/02/05 22:35:47 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -281,7 +281,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.18 2009/02/02 11:44:33 aigdalov Exp $
+ * $Id: miscellaneous.g,v 1.19 2009/02/05 22:35:47 sboyko Exp $
  */
 	./
 $End
@@ -1035,7 +1035,7 @@ $Rules
 		  $EndJava
 		./
 
-        unit_element -> renaming
+	unit_element -> renaming
 	renaming ::= rename typeCS '.' qvtIdentifierCS '=' stringLiteralExpCS ';' 
 		/.$BeginJava
 					CSTNode result = createRenameCS(
@@ -1047,5 +1047,57 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
+	
+	switchAltExpCS ::= '(' oclExpressionCS ')' '?' oclExpressionCS ';'
+		/.$BeginJava
+					CSTNode result = createSwitchAltExpCSDeprecated(
+							(OCLExpressionCS) $getSym(2),
+							(OCLExpressionCS) $getSym(5)
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(6)));
+					$setResult(result);
+		  $EndJava
+		./
+	switchAltExpCS ::= '(' oclExpressionCS ')' qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createSwitchAltExpCSDeprecated(
+							(OCLExpressionCS) $getSym(2),
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
+					$setResult(result);
+		  $EndJava
+		./
+	switchAltExpCS ::= '(' qvtErrorToken
+		/.$BeginJava
+					CSTNode result = createSwitchAltExpCSDeprecated(
+							null,
+							null
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	switchElseExpCS ::= else '?' oclExpressionCS ';'
+		/.$BeginJava
+			    	int startOffset = getIToken($getToken(1)).getStartOffset();
+			    	int endOffset = getIToken($getToken(4)).getEndOffset();
+					reportWarning(org.eclipse.osgi.util.NLS.bind(Messages.AbstractQVTParser_DeprecatedSwitchElseExp, null), startOffset, endOffset);
+					
+					$setResult((CSTNode)$getSym(3));
+		  $EndJava
+		./
+	switchElseExpCS ::= else '?' oclExpressionCS qvtErrorToken
+		/.$BeginJava
+			    	int startOffset = getIToken($getToken(1)).getStartOffset();
+			    	int endOffset = getIToken($getToken(3)).getEndOffset();
+					reportWarning(org.eclipse.osgi.util.NLS.bind(Messages.AbstractQVTParser_DeprecatedSwitchElseExp, null), startOffset, endOffset);
+					
+					$setResult((CSTNode)$getSym(3));
+		  $EndJava
+		./
+
 	--=== Non-standard extensions and legacy support (end) ===--
+	
 $End

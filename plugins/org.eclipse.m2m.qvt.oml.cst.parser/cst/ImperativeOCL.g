@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.g,v 1.16 2009/02/03 21:32:03 sboyko Exp $ 
+-- * $Id: ImperativeOCL.g,v 1.17 2009/02/05 22:35:47 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -89,7 +89,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: ImperativeOCL.g,v 1.16 2009/02/03 21:32:03 sboyko Exp $
+ * $Id: ImperativeOCL.g,v 1.17 2009/02/05 22:35:47 sboyko Exp $
  */
 	./
 $End
@@ -605,18 +605,6 @@ $Rules
 		  $EndJava
 		./
 
-
-	switchAltExpCS ::= '(' oclExpressionCS ')' '?' oclExpressionCS ';'
-		/.$BeginJava
-					CSTNode result = createSwitchAltExpCS(
-							(OCLExpressionCS) $getSym(2),
-							(OCLExpressionCS) $getSym(5)
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(6)));
-					$setResult(result);
-		  $EndJava
-		./
-	
 	switchAltExpCS ::= case '(' oclExpressionCS ')' expression_statement
 		/.$BeginJava
 					CSTNode result = createSwitchAltExpCS(
@@ -627,62 +615,26 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	
-	switchAltExpCS ::= '(' oclExpressionCS ')' '?' oclExpressionCS qvtErrorToken
+	switchAltExpCS ::= case '(' oclExpressionCS ')' qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createSwitchAltExpCS(
-							(OCLExpressionCS) $getSym(2),
-							(OCLExpressionCS) $getSym(5)
-						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode) $getSym(5));
-					$setResult(result);
-		  $EndJava
-		./
-	
-	switchAltExpCS ::= '(' oclExpressionCS ')' qvtErrorToken
-		/.$BeginJava
-					CSTNode result = createSwitchAltExpCS(
-							(OCLExpressionCS) $getSym(2),
+							(OCLExpressionCS) $getSym(3),
 							null
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
 					$setResult(result);
 		  $EndJava
 		./
 	
-	
-	switchAltExpCS ::= '(' qvtErrorToken
-		/.$BeginJava
-					CSTNode result = createSwitchAltExpCS(
-							null,
-							null
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
-					$setResult(result);
-		  $EndJava
-		./
 	switchElseExpCSOpt ::= $empty
 		/.$NullAction./
 	switchElseExpCSOpt -> switchElseExpCS
-
-	switchElseExpCS ::= else '?' oclExpressionCS ';'
-		/.$BeginJava
-					$setResult((CSTNode)$getSym(3));
-		  $EndJava
-		./
 
 	switchElseExpCS ::= else expression_statement
 		/.$BeginJava
 					$setResult((CSTNode)$getSym(2));
 		  $EndJava
 		./
-
-	switchElseExpCS ::= else '?' oclExpressionCS qvtErrorToken
-		/.$BeginJava
-					$setResult((CSTNode)$getSym(3));
-		  $EndJava
-		./
-
 	switchElseExpCS ::= else qvtErrorToken
 		/.$BeginJava
 					$setResult(null);

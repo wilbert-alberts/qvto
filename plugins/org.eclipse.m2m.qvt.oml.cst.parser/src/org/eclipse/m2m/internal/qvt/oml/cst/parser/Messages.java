@@ -29,4 +29,7 @@ public class Messages extends NLS {
 
     public static String AbstractQVTParser_NoModulesDeclared;
     public static String AbstractQVTParser_MultipleModulesExtraUnitElements;
+    public static String AbstractQVTParser_DeprecatedSwitchAltExp;
+    public static String AbstractQVTParser_DeprecatedSwitchElseExp;
+    
 }
