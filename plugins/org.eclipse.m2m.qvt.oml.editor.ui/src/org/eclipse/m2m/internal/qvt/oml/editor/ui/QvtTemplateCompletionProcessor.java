@@ -25,9 +25,9 @@ import org.eclipse.jface.text.templates.Template;
 import org.eclipse.jface.text.templates.TemplateCompletionProcessor;
 import org.eclipse.jface.text.templates.TemplateContext;
 import org.eclipse.jface.text.templates.TemplateContextType;
+import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CategoryImageConstants;
+import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
 import org.eclipse.swt.graphics.Image;
-
-import org.eclipse.m2m.internal.qvt.oml.ui.QvtPluginImages;
 
 /**
  * @author vrepeshko
@@ -77,7 +77,7 @@ public class QvtTemplateCompletionProcessor extends TemplateCompletionProcessor 
 
 	@Override
 	protected Image getImage(Template template) {
-		return QvtPluginImages.getInstance().getImage(QvtPluginImages.TEMPLATE);
+		return CompletionProposalUtil.getImage(CategoryImageConstants.TEMPLATE);
 	}
 
 	@Override

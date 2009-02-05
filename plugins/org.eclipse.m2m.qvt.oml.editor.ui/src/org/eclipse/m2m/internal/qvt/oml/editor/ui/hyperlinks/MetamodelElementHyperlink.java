@@ -14,7 +14,7 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.views.MetamodelBrowserView;
-import org.eclipse.m2m.internal.qvt.oml.ui.QVTUIPlugin;
+import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
@@ -46,7 +46,7 @@ public class MetamodelElementHyperlink extends AbstractHyperlink {
 			MetamodelBrowserView metamodelBrowserView = (MetamodelBrowserView) activePage.showView(MetamodelBrowserView.ID);
 			metamodelBrowserView.navigate(myMetamodelElement);
 		} catch (PartInitException e) {
-			QVTUIPlugin.log(e);
+			Activator.log(e);
 		}
 	}
 

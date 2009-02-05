@@ -33,7 +33,8 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.RenameCS;
-import org.eclipse.m2m.internal.qvt.oml.ui.QvtPluginImages;
+import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CategoryImageConstants;
+import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
 import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.StringLiteralExpCS;
 import org.eclipse.ocl.cst.TypeCS;
@@ -72,9 +73,9 @@ public class QvtOutlineLabelProvider implements ILabelProvider {
 				return JavaUI.getSharedImages().getImage(ISharedImages.IMG_FIELD_PUBLIC);
 			case QvtOutlineNodeType.MAPPING_RULE: {
 				if (node.getSyntaxElement() instanceof MappingQueryCS) {
-					return QvtPluginImages.getInstance().getImage(QvtPluginImages.QUERY);
+					return CompletionProposalUtil.getImage(CategoryImageConstants.QVT_QUERY);
 				}
-				return QvtPluginImages.getInstance().getImage(QvtPluginImages.MAPPING);
+				return CompletionProposalUtil.getImage(CategoryImageConstants.QVT_MAPPING);
 			}
 			case QvtOutlineNodeType.IMPORTED_LIBRARY:
 				return JavaUI.getSharedImages().getImage(ISharedImages.IMG_OBJS_IMPCONT);
