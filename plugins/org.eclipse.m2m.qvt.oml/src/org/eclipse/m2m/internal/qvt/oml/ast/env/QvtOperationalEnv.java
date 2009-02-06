@@ -795,6 +795,12 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		super.initASTMapping(astNode, cstNode);
 	}
 	
+	public void close() {
+    	setParser(null);
+    	setProblemHandler(null);
+    	setASTNodeToCSTNodeMap(Collections.<Object, CSTNode>emptyMap());    	
+	}
+	
 	private static int getLineNum(QvtOperationalEnv env, int startOffset) {
 		if(startOffset < 0) {
 			return -1;
@@ -847,7 +853,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		
 		return false;
     }
-        
+ 
+    
     private interface LookupPackageableElementDelegate<T> {
         public T lookupPackageableElement(List<String> names);
     };

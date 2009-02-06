@@ -25,8 +25,9 @@ import org.eclipse.ocl.cst.PathNameCS;
 
 public class ParsedModuleCS {
 
-	private final AbstractQVTParser myParser;	
+	private AbstractQVTParser myParser;	
     private final CFile mySource;
+    private final QvtOperationalEnv myEnv;
     private final MappingModuleCS myModuleCS; 
     private final Map<PathNameCS, ParsedModuleCS> myResolvedImports;
 
@@ -42,7 +43,7 @@ public class ParsedModuleCS {
 		mySource = source;
 		myModuleCS = moduleCS;
         myParser = parser;
-        
+		myEnv = (QvtOperationalEnv) parser.getEnvironment();
 		myResolvedImports = new LinkedHashMap<PathNameCS, ParsedModuleCS>();
 	}
 
@@ -55,11 +56,15 @@ public class ParsedModuleCS {
 	}
 	
 	public QvtOperationalEnv getEnvironment() {
-		return (QvtOperationalEnv) myParser.getEnvironment();
+		return myEnv;
 	}
 	
 	public AbstractQVTParser getParser() {
 		return myParser;
+	}
+	
+	void setParser(AbstractQVTParser parser) {
+		myParser = parser;
 	}
 			
     public Collection<ParsedModuleCS> getParsedImports() {

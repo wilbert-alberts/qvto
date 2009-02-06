@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTParsingOptions;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
@@ -166,7 +167,7 @@ public class QvtCompiler {
 	 */
     public QvtCompilationResult compile(CFile source, QvtCompilerOptions options, IProgressMonitor monitor) throws MdaException {
         return compile(new CFile[] {source}, options, monitor)[0];
-    }
+    }        
 
     /**
      * The main compilation method - the common entry point to the compilation 
@@ -175,31 +176,32 @@ public class QvtCompiler {
         if (monitor == null) {
             monitor = new NullProgressMonitor();
         }
-             
+
+        List<QvtCompilationResult> resultList = new ArrayList<QvtCompilationResult>();         
         List<ParsedModuleCS> mmaList = new ArrayList<ParsedModuleCS>(sources.length);
         for (CFile source : sources) {
         	try {
-				mmaList.add(parse(source));
+				mmaList.add(parse(source, options));
 			} 
 			catch (IOException e) {
 				Throwable cause = e.getCause() != null ? e.getCause() : e;
 				throw new MdaException(cause.getMessage(), cause);
 			}
-        }
-        
-        Map<ParsedModuleCS, List<ParsedModuleCS>> removedImportCycles =
-        	new IdentityHashMap<ParsedModuleCS, List<ParsedModuleCS>>();
-        for (ParsedModuleCS parsed : mmaList) {
-            checkRemoveCycles(parsed, removedImportCycles);
-        }
 
-        this.importCompiler = new ImportCompiler(removedImportCycles, options);
-        List<QvtCompilationResult> resultList = new ArrayList<QvtCompilationResult>(); 
-        for (ParsedModuleCS parsed : mmaList) {        	
-        	QvtCompilationResult qvtCompilationResult = analyse(parsed, options);
-            resultList.add(qvtCompilationResult);
+	        Map<ParsedModuleCS, List<ParsedModuleCS>> removedImportCycles =
+	        	new IdentityHashMap<ParsedModuleCS, List<ParsedModuleCS>>();
+	        for (ParsedModuleCS parsed : mmaList) {
+	            checkRemoveCycles(parsed, removedImportCycles);
+	        }
+
+	        this.importCompiler = new ImportCompiler(removedImportCycles, options);
+	        for (ParsedModuleCS parsed : mmaList) {        	
+	        	QvtCompilationResult qvtCompilationResult = analyse(parsed, options);
+	            resultList.add(qvtCompilationResult);
+	        }
+			
         }
-        
+                
         afterCompileCleanup();
         
         return resultList.toArray(new QvtCompilationResult[resultList.size()]);
@@ -267,25 +269,29 @@ public class QvtCompiler {
         }
     }
 
-    private ParsedModuleCS parse(final CFile source) throws IOException {
+    private ParsedModuleCS parse(final CFile source, QvtCompilerOptions options) throws IOException {
     	ParsedModuleCS result = mySyntaxModules.get(source);        
     	if (result != null) {
         	return result;
         }
  
-        result = parseInternal(source);
+        result = parseInternal(source, options);
         assert result != null;
         
         mySyntaxModules.put(source, result);
-    	parseImportedModules(source, result);
+    	parseImportedModules(source, result, options);
 
         return result;
     }
 
-    protected ParsedModuleCS parseInternal(CFile source) throws IOException {
+    protected ParsedModuleCS parseInternal(CFile source, QvtCompilerOptions options) throws IOException {
         Reader is = CFileUtil.getReader(source);
-        try {        	
+        try {
         	QvtOperationalFileEnv env = new QvtOperationalEnvFactory().createEnvironment(source, myKernel);
+        	if(options.isEnableCSTModelToken()) {
+        		env.setOption(QVTParsingOptions.ENABLE_CSTMODEL_TOKENS, true);
+        	}
+        	
         	QvtOperationalParser qvtParser = new QvtOperationalParser();
         	MappingModuleCS moduleCS = qvtParser.parse(is, source.getName(), env);
             
@@ -303,7 +309,7 @@ public class QvtCompiler {
         }
     }
     
-    private void parseImportedModules(CFile importedFrom, ParsedModuleCS module) {
+    private void parseImportedModules(CFile importedFrom, ParsedModuleCS module, QvtCompilerOptions options) {
     	myModuleProvider.setContext(
     			new ResolutionContextImpl(importedFrom),
     			new LoadContext(module.getEnvironment().getEPackageRegistry()));
@@ -325,7 +331,7 @@ public class QvtCompiler {
         		module.getEnvironment().reportWarning(NLS.bind(CompilerMessages.moduleAlreadyImported, 
         				importString), importQName);
         	} else {
-            	ParsedModuleCS impResult = getImportedModule(module.getSource(), importString);
+            	ParsedModuleCS impResult = getImportedModule(module.getSource(), importString, options);
                 if (impResult != null) {
                     module.addParsedImport(impResult, importQName);
                 } else {
@@ -364,6 +370,8 @@ public class QvtCompiler {
     	}
     	
     	Module module = analyse(mma, options, moduleEnv);
+    	moduleEnv.close();
+    	mma.setParser(null);
 
     	for (ImportCS importCS : mma.getModuleCS().getImports()) { 
 			ParsedModuleCS parsedImportCS = mma.getParsedImport(importCS.getPathNameCS());
@@ -423,7 +431,7 @@ public class QvtCompiler {
         return module;
     }    
     
-    private ParsedModuleCS getImportedModule(final CFile source, final String qualifiedName) {
+    private ParsedModuleCS getImportedModule(final CFile source, final String qualifiedName, QvtCompilerOptions options) {
     	CFile importSource = myKernel.getImportResolver().resolveImport(qualifiedName);
     	if (importSource == null) {
     		importSource = myKernel.getImportResolver().resolveImport(source, qualifiedName);
@@ -432,7 +440,7 @@ public class QvtCompiler {
     		return null;
     	}
         try {
-            ParsedModuleCS parsed = parse(importSource);
+            ParsedModuleCS parsed = parse(importSource, options);
             return parsed;
         } catch(IOException e) {
         	Logger.getLogger().log(Logger.SEVERE, "Failed to get module for " + source, e); //$NON-NLS-1$

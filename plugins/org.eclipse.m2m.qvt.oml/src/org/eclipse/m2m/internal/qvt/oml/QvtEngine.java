@@ -18,6 +18,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
@@ -38,7 +39,7 @@ public class QvtEngine {
 		QvtEngine engine = (QvtEngine) ourEnginesMap.get(project);
 		if(engine == null) {
 			engine = new QvtEngine(project);
-			ourEnginesMap.put(project, engine);
+			//ourEnginesMap.put(project, engine);
 		}
 		return engine;
 	}
@@ -89,7 +90,9 @@ public class QvtEngine {
 	}
     
 	private void reset(QvtCompilerOptions options) { // TODO: QvtException
-	    myCompiler = new QvtCompiler(myImportResolver);
+		ResourceSetImpl resourceSet = new ResourceSetImpl();
+		resourceSet.setURIResourceMap(new EPackageRegistryBasedURIResourceMap(resourceSet.getURIConverter()));
+	    myCompiler = new QvtCompiler(myImportResolver, resourceSet);
 	    if (options != null) {
 	        myCompiler.getKernel().setMetamodelResourceSet(options.getMetamodelResourceSet());
 	    }

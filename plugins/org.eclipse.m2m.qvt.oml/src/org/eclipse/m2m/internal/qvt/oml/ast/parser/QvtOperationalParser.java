@@ -16,6 +16,7 @@ import java.io.Reader;
 import lpg.lpgjavaruntime.BadParseException;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTParsingOptions;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerMessages;
@@ -52,6 +53,7 @@ public class QvtOperationalParser {
 		try {
 			QvtOpLexer lexer = createLexer(is, name, env);
 			myParser = new RunnableQVTParser(lexer);		
+			myParser.enableCSTTokens(Boolean.TRUE.equals(env.getValue(QVTParsingOptions.ENABLE_CSTMODEL_TOKENS)));
 			
 			lexer.lexToTokens(myParser);
 			result = (MappingModuleCS) myParser.runParser(100);	

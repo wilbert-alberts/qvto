@@ -22,6 +22,7 @@ public class QvtCompilerOptions {
     private boolean isReportErrors = true;
     private boolean isShowAnnotations = true;
     private boolean isGenerateCompletionData = true;
+    private boolean isEnableCSTModelToken = false;    
     private boolean isSourceLineNumbersEnabled = true;    
     private QvtOperationalVisitorCS myQvtOperationalVisitorCS = null;
     private ResourceSet myMetamodelResourceSet = null;
@@ -79,4 +80,12 @@ public class QvtCompilerOptions {
     public void setMetamodelResourceSet(ResourceSet metamodelResourceSet) {
         myMetamodelResourceSet = metamodelResourceSet;
     }
+    
+    public boolean isEnableCSTModelToken() {
+		return isEnableCSTModelToken;
+	}
+    
+    public void enableCSTModelToken(boolean enable) {
+		this.isEnableCSTModelToken = enable;
+	}
 }

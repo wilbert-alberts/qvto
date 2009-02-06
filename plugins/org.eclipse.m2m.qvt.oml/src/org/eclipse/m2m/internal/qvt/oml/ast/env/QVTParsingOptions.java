@@ -27,6 +27,10 @@ public class QVTParsingOptions {
     public static final Option<Boolean> ENFORCE_EXPLICIT_SELF_VARIABLE =
         new BasicOption<Boolean>("enforce.explicit.self", true); //$NON-NLS-1$
     
+    public static final Option<Boolean> ENABLE_CSTMODEL_TOKENS =
+        new BasicOption<Boolean>("enable.cstmodel.tokens", false); //$NON-NLS-1$
+    
+    
     /**
      * Obtains the value of the specified option's setting in the the given
      * environment's options map, adapting the environment as necessary to the

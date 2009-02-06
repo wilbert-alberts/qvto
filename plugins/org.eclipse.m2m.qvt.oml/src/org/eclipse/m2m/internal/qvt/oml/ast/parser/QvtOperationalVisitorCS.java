@@ -23,8 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import lpg.lpgjavaruntime.IToken;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
@@ -2373,9 +2371,8 @@ public class QvtOperationalVisitorCS
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) throws SemanticException {
 		
-		IToken startToken = renameCS.getStartToken();
 		String message = ValidationMessages.DeprecatedRenameStatement;
-		QvtOperationalUtil.reportWarning(env, message, startToken.getStartOffset(), startToken.getEndOffset());
+		QvtOperationalUtil.reportWarning(env, message, renameCS.getStartOffset(), renameCS.getEndOffset());
 		
 		
 		String originalName = visitLiteralExpCS(renameCS.getOriginalName(), env);
