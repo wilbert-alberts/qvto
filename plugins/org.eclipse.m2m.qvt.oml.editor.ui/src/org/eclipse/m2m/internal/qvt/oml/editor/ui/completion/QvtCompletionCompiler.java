@@ -118,7 +118,7 @@ public class QvtCompletionCompiler extends QvtCompiler {
     }
 
     @Override
-    protected ParsedModuleCS parseInternal(CFile source) throws IOException {
+    protected ParsedModuleCS parseInternal(CFile source, QvtCompilerOptions options) throws IOException {
     	CFileData cFileData = compile(source);
     	// FIXME - 
     	// wrapping the used QVT lexer with its environment within the QvtOpLPGParser 

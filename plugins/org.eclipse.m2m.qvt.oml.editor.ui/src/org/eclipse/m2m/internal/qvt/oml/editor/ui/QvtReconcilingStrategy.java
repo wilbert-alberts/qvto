@@ -71,6 +71,7 @@ public class QvtReconcilingStrategy implements IReconcilingStrategy, IReconcilin
         QvtCompilerOptions options = new QvtCompilerOptions();
         options.setShowAnnotations(QvtCompilerFacade.isEditingInQvtSourceContainer(myEditor));
         options.setSourceLineNumbersEnabled(false);
+        options.enableCSTModelToken(true);
         
         IQVTReconcilingListener reconcilingListener = myEditor.getReconcilingListener();        
         QvtCompilationResult compilationResult = null;
