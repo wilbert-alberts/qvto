@@ -20,6 +20,8 @@ import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtKeywords;
 import org.eclipse.osgi.util.NLS;
 
+import com.ibm.icu.lang.UCharacter;
+
 /**
  * Provides validation functionality for QVT elements identifiers.
  */
@@ -180,7 +182,7 @@ public class QvtNamesChecker {
 		for (int i = 0; i < name.length(); ++i) {
 			char c = name.charAt(i);
 			// For now, check just as a Java identifier as the QVT specification is not clear about this
-			if (!Character.isJavaIdentifierPart(name.charAt(i))) {
+			if (!UCharacter.isJavaIdentifierPart(name.charAt(i))) {
 				String[] args = new String[] { identifierKindName, name, String.valueOf(c) }; 
 				String message = NLS.bind(Messages.QvtNamesChecker_illegalCharInIdentifierError, args);
 				return CommonPlugin.createStatus(IStatus.ERROR, message, null); 

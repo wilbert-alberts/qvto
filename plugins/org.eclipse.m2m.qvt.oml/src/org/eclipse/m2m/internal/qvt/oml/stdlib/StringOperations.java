@@ -22,6 +22,8 @@ import org.eclipse.m2m.internal.qvt.oml.library.ISessionData;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.utilities.PredefinedType;
 
+import com.ibm.icu.lang.UCharacter;
+
 
 public class StringOperations extends AbstractContextualOperations {
 	
@@ -207,7 +209,7 @@ public class StringOperations extends AbstractContextualOperations {
 			boolean isWhiteArea = false;
 			for (int i = 0; i < self.length(); i++) {
 				char c = self.charAt(i);
-				if(Character.isWhitespace(c)) {
+				if(UCharacter.isWhitespace(c)) {
 					if(isWhiteArea) {
 						continue;
 					} 
@@ -392,8 +394,8 @@ public class StringOperations extends AbstractContextualOperations {
 			String self = (String) source;
 			for (int i = 0; i < self.length(); i++) {
 				char c = self.charAt(i);
-				if( (i == 0 && !Character.isLetter(c)) ||
-					!Character.isLetterOrDigit(c) ) {
+				if( (i == 0 && !UCharacter.isLetter(c)) ||
+					!UCharacter.isLetterOrDigit(c) ) {
 					return Boolean.FALSE;
 				}				
 			}
