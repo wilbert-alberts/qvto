@@ -41,23 +41,23 @@ public class QvtoTransfHelperTests {
 				new ApiTestData("imports", Collections.<String>emptyList(), Arrays.asList("imports.qvto", "q1.qvto", "q2.qvto", "nested2/q4.qvto", "nested/q3.qvto")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
 
 		suite.addTest(new ExecTransformationTestCase(
-				new ApiTestData("exec1", Arrays.asList("in1.ecore", "in2.ecore"), Arrays.asList("expected.uml", "expected.rdb")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				new ApiTestData("exec1", Arrays.asList("in1.ecore", "in2.ecore"), Arrays.asList("expected.simpleuml", "expected.rdb")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 		suite.addTest(new ExecTransformationTestCase(
-				new ApiTestData("exec2", Arrays.asList("in1.ecore", "in2.ecore"), Arrays.asList("expected.uml", "expected.rdb")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				new ApiTestData("exec2", Arrays.asList("in1.ecore", "in2.ecore"), Arrays.asList("expected.simpleuml", "expected.rdb")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 		suite.addTest(new ExecTransformationTestCase(
 				new ApiTestData("exec3", Collections.<String>emptyList(), Collections.<String>emptyList()))); //$NON-NLS-1$
 
 		suite.addTest(new ExecDeployedTransformationTestCase(false,
-				new ApiTestData("exec1", Arrays.asList("in1.ecore", "in2.ecore"), Arrays.asList("expected.uml", "expected.rdb")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				new ApiTestData("exec1", Arrays.asList("in1.ecore", "in2.ecore"), Arrays.asList("expected.simpleuml", "expected.rdb")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 		suite.addTest(new ExecDeployedTransformationTestCase(false,
 				new ApiTestData("exec3", Collections.<String>emptyList(), Collections.<String>emptyList()))); //$NON-NLS-1$
 		suite.addTest(new ExecDeployedTransformationTestCase(false,
 				new ApiTestData("exec3_withImport", Collections.<String>emptyList(), Collections.<String>emptyList()))); //$NON-NLS-1$
 		
 		suite.addTest(new ExecDeployedTransformationTestCase(true,
-				new ApiTestData("exec1", Arrays.asList("in1.ecore", "in2.ecore"), Arrays.asList("expected.uml", "expected.rdb")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				new ApiTestData("exec1", Arrays.asList("in1.ecore", "in2.ecore"), Arrays.asList("expected.simpleuml", "expected.rdb")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 		suite.addTest(new ExecDeployedTransformationTestCase(true,
-				new ApiTestData("exec2", Arrays.asList("in1.ecore", "in2.ecore"), Arrays.asList("expected.uml", "expected.rdb")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				new ApiTestData("exec2", Arrays.asList("in1.ecore", "in2.ecore"), Arrays.asList("expected.simpleuml", "expected.rdb")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 		suite.addTest(new ExecDeployedTransformationTestCase(true,
 				new ApiTestData("exec3", Collections.<String>emptyList(), Collections.<String>emptyList()))); //$NON-NLS-1$
 		suite.addTest(new ExecDeployedTransformationTestCase(true,
