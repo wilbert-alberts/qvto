@@ -225,6 +225,8 @@ import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.UMLReflection;
 import org.eclipse.osgi.util.NLS;
 
+import com.ibm.icu.lang.UCharacter;
+
 
 public class QvtOperationalVisitorCS
 		extends AbstractOCLAnalyzer<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, 
@@ -4492,7 +4494,7 @@ public class QvtOperationalVisitorCS
 						isInQuotes = false;
 					}
 			} else {
-				if (!Character.isWhitespace(ch)) {
+				if (!UCharacter.isWhitespace(ch)) {
 					quote = ch;
 					leftIndex = i + 1;
 					isInQuotes = true;

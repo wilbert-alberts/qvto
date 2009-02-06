@@ -35,6 +35,8 @@ import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.SemanticException;
 import org.eclipse.osgi.util.NLS;
 
+import com.ibm.icu.lang.UCharacter;
+
 
 public class QvtOperationalParser {
 	
@@ -161,7 +163,7 @@ public class QvtOperationalParser {
 						result.append(' ');
 					} else if (chars[i] == '\n' || chars[i] == '\r' || chars[i] == '\f') {
 						if (i > 0) {
-							if (!Character.isWhitespace(chars[i-1])) {
+							if (!UCharacter.isWhitespace(chars[i-1])) {
 								result.append(' ');
 							}
 						}
