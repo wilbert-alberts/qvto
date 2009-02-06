@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: InstantiationExpImpl.java,v 1.2 2009/01/25 23:10:43 radvorak Exp $
+ * $Id: InstantiationExpImpl.java,v 1.3 2009/02/06 15:47:30 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.impl;
 
@@ -289,7 +289,7 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
 		if (v instanceof ImperativeOCLVisitor)
 			return (T) ((ImperativeOCLVisitor) v).visitInstantiationExp(this);
-		return super.accept(v);
+		return super.<T, U>accept(v);
 	}
 
 } //InstantiationExpImpl
