@@ -116,12 +116,18 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		}
 	}
 		
+	private boolean isCSTTokenEnabled = false;
+	
 	protected AbstractQVTParser(BasicEnvironment environment) {
 		super(environment);
 	}
 
 	protected AbstractQVTParser(QvtOpLexer lexStream) {
 		super(lexStream);
+	}
+	
+	public void enableCSTTokens(boolean enable) {
+		this.isCSTTokenEnabled = enable;
 	}
 	
 	@Override
@@ -133,6 +139,13 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
         BasicEnvironment env = getEnvironment();
         if (env != null && env.getProblemHandler() != null) {
         	env.getProblemHandler().parserProblem(Severity.WARNING, message, "", startOffset, endOffset); //$NON-NLS-1$
+        }
+	}
+	
+	protected void reportError(String message, int startOffset, int endOffset) {
+        BasicEnvironment env = getEnvironment();
+        if (env != null && env.getProblemHandler() != null) {
+        	env.getProblemHandler().parserProblem(Severity.ERROR, message, "", startOffset, endOffset); //$NON-NLS-1$
         }
 	}
 	
@@ -182,12 +195,12 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	    }
 	    if (modules.isEmpty()) {
             reportError(ParseErrorCodes.INVALID_CODE, "",  //$NON-NLS-1$
-                    Messages.AbstractQVTParser_NoModulesDeclared);
+                    Messages.NoModulesDeclared);
             return null;
 	    }
 	    if ((modules.size() > 1) && (unitElements.size() != modules.size() + imports.size() + modeltypes.size())) {
 	        reportError(ParseErrorCodes.INVALID_CODE, "",  //$NON-NLS-1$
-	                Messages.AbstractQVTParser_MultipleModulesExtraUnitElements);
+	                Messages.MultipleModulesExtraUnitElements);
 	    }
         // TODO: support multiple modules
 	    if (modules.size() > 1) {
@@ -951,17 +964,25 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	}
 	
 	protected VariableCS getVariableFromAssignment(AssignStatementCS assignStatementCS) {
-		if (assignStatementCS.getLValueCS() instanceof VariableExpCS) {
-			VariableExpCS variableExpCS = (VariableExpCS) assignStatementCS.getLValueCS();
+		if(assignStatementCS.isIncremental()) {
+			reportError(Messages.InvalidAdditiveAssignmentUsage, assignStatementCS.getStartOffset(), assignStatementCS.getEndOffset());			
+		}
+		
+		OCLExpressionCS lValueCS = assignStatementCS.getLValueCS();
+		if (lValueCS instanceof VariableExpCS) {
+			VariableExpCS variableExpCS = (VariableExpCS) lValueCS;
 			SimpleNameCS simpleNameCS = variableExpCS.getSimpleNameCS();
-			if (simpleNameCS.getType() == SimpleTypeEnum.IDENTIFIER_LITERAL) {
+			if (simpleNameCS.getType() == SimpleTypeEnum.IDENTIFIER_LITERAL) { 
 				String varName = simpleNameCS.getValue();
-				return createVariableCS(varName, null, assignStatementCS.getOclExpressionCS());
+				VariableCS variableCS = createVariableCS(varName, null, assignStatementCS.getOclExpressionCS());
+				variableCS.setStartOffset(lValueCS.getStartOffset());
+				variableCS.setEndOffset(lValueCS.getEndOffset());				
+				return variableCS;
 			}
 		}
-        int startIndex = assignStatementCS.getLValueCS().getStartToken().getTokenIndex();
-        int endIndex = assignStatementCS.getLValueCS().getEndToken().getTokenIndex();
-		reportError(ParseErrorCodes.INVALID_CODE, "", startIndex, endIndex, "Must be an identifier!"); //$NON-NLS-1$ //$NON-NLS-2$
+
+		reportError(Messages.IdentifierExpectedOnLeftSide, lValueCS.getStartOffset(), lValueCS.getEndOffset());
+
 		return createVariableCS("error_var", null, assignStatementCS.getOclExpressionCS()); //$NON-NLS-1$
 	}
 	
@@ -979,6 +1000,67 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		result.setMappingDeclarationCS(methodDecl);
 		result.getExpressions().addAll(expressions);
 		return result;
+	}
+
+	
+	@Override
+	protected void setOffsets(CSTNode cstNode, IToken startEnd) {
+		super.setOffsets(cstNode, startEnd);
+		
+		if(!isCSTTokenEnabled) {
+			cstNode.setStartToken(null);
+			cstNode.setEndToken(null);
+		}
+	}
+
+	@Override
+	protected void setOffsets(CSTNode cstNode, CSTNode startEnd) {
+		super.setOffsets(cstNode, startEnd);
+		
+		if(!isCSTTokenEnabled) {
+			cstNode.setStartToken(null);
+			cstNode.setEndToken(null);
+		}
+	}
+
+	@Override
+	protected void setOffsets(CSTNode cstNode, CSTNode start, CSTNode end) {
+		super.setOffsets(cstNode, start, end);
+		
+		if(!isCSTTokenEnabled) {
+			cstNode.setStartToken(null);
+			cstNode.setEndToken(null);
+		}
+	}
+
+	@Override
+	protected void setOffsets(CSTNode cstNode, CSTNode start, IToken end) {
+		super.setOffsets(cstNode, start, end);
+		
+		if(!isCSTTokenEnabled) {
+			cstNode.setStartToken(null);
+			cstNode.setEndToken(null);
+		}
+	}
+
+	@Override
+	protected void setOffsets(CSTNode cstNode, IToken start, CSTNode end) {
+		super.setOffsets(cstNode, start, end);
+		
+		if(!isCSTTokenEnabled) {
+			cstNode.setStartToken(null);
+			cstNode.setEndToken(null);
+		}
+	}
+
+	@Override
+	protected void setOffsets(CSTNode cstNode, IToken start, IToken end) {
+		super.setOffsets(cstNode, start, end);
+		
+		if(!isCSTTokenEnabled) {
+			cstNode.setStartToken(null);
+			cstNode.setEndToken(null);
+		}
 	}
 
 }	

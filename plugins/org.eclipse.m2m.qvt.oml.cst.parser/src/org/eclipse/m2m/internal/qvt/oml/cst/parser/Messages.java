@@ -27,8 +27,10 @@ public class Messages extends NLS {
 	private Messages() {
 	}
 
-    public static String AbstractQVTParser_NoModulesDeclared;
-    public static String AbstractQVTParser_MultipleModulesExtraUnitElements;
+    public static String NoModulesDeclared;
+    public static String MultipleModulesExtraUnitElements;
+	public static String IdentifierExpectedOnLeftSide;
+	public static String InvalidAdditiveAssignmentUsage;
     public static String AbstractQVTParser_DeprecatedSwitchAltExp;
     public static String AbstractQVTParser_DeprecatedSwitchElseExp;
     
