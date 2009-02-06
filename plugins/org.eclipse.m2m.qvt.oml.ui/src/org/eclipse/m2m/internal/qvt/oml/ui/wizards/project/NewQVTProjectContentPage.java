@@ -33,6 +33,8 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.osgi.framework.Version;
 
+import com.ibm.icu.lang.UCharacter;
+
 
 public class NewQVTProjectContentPage extends WizardPage {
 
@@ -179,7 +181,7 @@ public class NewQVTProjectContentPage extends WizardPage {
 		while (tok.hasMoreTokens()) {
 			String token = tok.nextToken();
 			if (!tok.hasMoreTokens()) {
-				myNameText.setText(Character.toUpperCase(token.charAt(0))
+				myNameText.setText(UCharacter.toUpperCase(token.charAt(0))
 								+ ((token.length() > 1) ? token.substring(1) : "") //$NON-NLS-1$
 								+ " " + getNameFieldQualifier()); //$NON-NLS-1$
 			}
@@ -192,11 +194,11 @@ public class NewQVTProjectContentPage extends WizardPage {
 		for (int i = 0; i < id.length(); i++) {
 			char ch = id.charAt(i);
 			if (buffer.length() == 0) {
-				if (Character.isJavaIdentifierStart(ch)) {
-					buffer.append(Character.toLowerCase(ch));
+				if (UCharacter.isJavaIdentifierStart(ch)) {
+					buffer.append(UCharacter.toLowerCase(ch));
 				}
 			} else {
-				if (Character.isJavaIdentifierPart(ch)) {
+				if (UCharacter.isJavaIdentifierPart(ch)) {
                     buffer.append(ch);
 				}
                 else if (ch == '.'){
