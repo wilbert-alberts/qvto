@@ -1,4 +1,5 @@
 transformation missinglibmmimport;
 
-import library together.uml;
---modeltype UML uses 'http://www.borland.com/together/uml';
+import library foo.uml;
+
+modeltype SIMPLEUML uses 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';

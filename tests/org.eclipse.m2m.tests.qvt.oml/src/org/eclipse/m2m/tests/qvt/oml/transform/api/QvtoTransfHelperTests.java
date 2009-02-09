@@ -36,7 +36,7 @@ public class QvtoTransfHelperTests {
 		TestSuite suite = new TestSuite("QVT transformation api tests"); //$NON-NLS-1$
 		
 		suite.addTest(new InputExtensionsTestCase(
-				new ApiTestData("twoInputs", Arrays.asList("in.uml", "in.rdb"), Arrays.asList("out.ecore")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				new ApiTestData("twoInputs", Arrays.asList("in.simpleuml", "in.rdb"), Arrays.asList("out.ecore")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 		suite.addTest(new ImportedTransfTestCase(
 				new ApiTestData("imports", Collections.<String>emptyList(), Arrays.asList("imports.qvto", "q1.qvto", "q2.qvto", "nested2/q4.qvto", "nested/q3.qvto")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
 

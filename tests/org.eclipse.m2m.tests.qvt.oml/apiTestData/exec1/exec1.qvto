@@ -6,11 +6,11 @@ transformation exec1(in model1 : ECORE, in model2 : ECORE, out uml : SIMPLEUML, 
 
 main(in p1 : EPackage@model1) {
 
-	var umlPackage1 := object SIMPLEUML::Package {name := 'uml1'};
+	var umlPackage1 := object SIMPLEUML::Package {name := 'pack1'};
 	umlPackage1.ownedElements := p1.eClassifiers->select(c|c.oclIsKindOf(EClass))
 		->collect(c|c.oclAsType(EClass).map toClass1())->asOrderedSet();
 
-	var umlPackage2 := object SIMPLEUML::Package {name := 'uml2'};
+	var umlPackage2 := object SIMPLEUML::Package {name := 'pack2'};
 	umlPackage2.ownedElements += p1.eClassifiers->select(c|c.oclIsKindOf(EClass))
 		->collect(c|c.oclAsType(EClass).map toClass2())->asSet();
 		

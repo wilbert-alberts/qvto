@@ -1,6 +1,6 @@
-transformation mm_header7(in ecore : ECORE, out uml : UML);
+transformation mm_header7(in ecore : ECORE, out uml : SIMPLEUML);
 
-modeltype UML uses "http://www.eclipse.org/uml2/2.1.0/UML";
+modeltype SIMPLEUML uses 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';
 modeltype ECORE uses "http://www.eclipse.org/emf/2002/Ecore";
 
 mapping main(in p1 : ECORE::ecore::EPackage@ecore, out c1 : Class) {

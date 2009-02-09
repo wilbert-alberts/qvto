@@ -1,7 +1,7 @@
-transformation uml2rdb(in uml : UML, out RDB);
-
-modeltype UML uses "http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml";
+modeltype SIMPLEUML uses "http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml";
 modeltype RDB uses 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/rdb';
+
+transformation uml2rdb(in uml : SIMPLEUML, out RDB);
 
 mapping main(out schema : RDB::Schema) {
 	init {

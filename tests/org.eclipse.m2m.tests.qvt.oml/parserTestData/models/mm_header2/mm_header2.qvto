@@ -1,6 +1,5 @@
-transformation mm_header2(in ecore : ECORE, out uml : UML, out ecore2 : ECORE);
+transformation mm_header2(in ecore : ECORE, out uml : ECORE, out ecore2 : ECORE);
 
-modeltype UML uses "http://www.eclipse.org/uml2/2.1.0/UML";
 modeltype ECORE uses "http://www.eclipse.org/emf/2002/Ecore";
 modeltype SimpleUML uses 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml';
 modeltype RDB uses 'http://www.eclipse.org/qvt/1.0.0/Operational/examples/rdb';

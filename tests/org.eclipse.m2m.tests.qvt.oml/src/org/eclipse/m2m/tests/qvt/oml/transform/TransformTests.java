@@ -162,7 +162,6 @@ public class TransformTests {
                 new FileToFileData("egetcodegen"), //$NON-NLS-1$
                 new FileToFileData("imports"), //$NON-NLS-1$
                 new FileToFileData("imports_transformations"), //$NON-NLS-1$        
-                //        new MyUmlToFileData("libop", "manylinks", "expected.ecore"),  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 new FileToFileData("assigntoprimfeature"), //$NON-NLS-1$    	
                 new FileToFileData("assigntonullowner"), //$NON-NLS-1$
                 new FileToFileData("firstlast"), //$NON-NLS-1$
@@ -179,11 +178,9 @@ public class TransformTests {
                 new FileToFileData("virtscr20707"), //$NON-NLS-1$
                 new FileToFileData("calloclIsUndefinedforundefined"), //$NON-NLS-1$
                 new FileToFileData("callvirtforundefined"),  //$NON-NLS-1$
-                //        new MyUmlToMyUmlData("mmlibimport", "myumlsource", "myumlsourceexp"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 new FileToFileData("omittedobject"), //$NON-NLS-1$
                 new FileToFileData("omittedobjectwithinit"), //$NON-NLS-1$
                 new FileToFileData("primtypesecore"), //$NON-NLS-1$
-                //        new FileToMyUmlData("primtypes", "in.ecore", "primtypes"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 new FileToFileData("scr21329"), //$NON-NLS-1$
                 new FileToFileData("scr21121"), //$NON-NLS-1$
                 new FileToFileData("scr20811"), //$NON-NLS-1$
@@ -195,9 +192,7 @@ public class TransformTests {
                 new FileToFileData("scr19364"), //$NON-NLS-1$
                 new FileToFileData("scr18739"), //$NON-NLS-1$
                 new FileToFileData("scr18514", "pim.simpleuml", "expected.simpleuml"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                //        new MyUmlToFileData("implicitcollect", "uml20_1", "expected.ecore"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 new FileToFileData("oclastype"),  //$NON-NLS-1$
-                //        new MyUmlToFileData("Uml_To_Xhtml", "uml20_1", "1.xhtml"),  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 new FileToFileData("usebooleanprop", "in.simpleuml", "expected.ecore"),  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 new FileToFileData("getpropfromundefined"), //$NON-NLS-1$ 
                 new FileToFileData("javakeywords"),  //$NON-NLS-1$
@@ -205,11 +200,9 @@ public class TransformTests {
                 new FileToFileData("scr18783"), //$NON-NLS-1$
                 new FileToFileData("boxing"), //$NON-NLS-1$
                 new FileToFileData("scr18572"), //$NON-NLS-1$
-                //        new FileToMyUmlData("myumlnestedpacks", "in.ecore", "myumldest14", "myumlnestedpacksexp"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                 new FileToFileData("propinit"),  //$NON-NLS-1$
                 new FileToFileData("allinstances"),  //$NON-NLS-1$
                 new FileToFileData("customop", "in.simpleuml", "expected.ecore"),  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                //        new MyUmlToFileData("scr15971", "singlepack", "expected.ecore"),  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 new FileToFileData("returnundefinedfromquery"), //$NON-NLS-1$ 
                 new FileToFileData("addclass"), //$NON-NLS-1$ 
                 new FileToFileData("addclassviamodificationininit"), //$NON-NLS-1$ 
@@ -247,9 +240,6 @@ public class TransformTests {
                 new FileToFileData("initsectresultpatch"), //$NON-NLS-1$
                 new FileToFileData("endsectresultpatch"), //$NON-NLS-1$
 
-                //        new MyUmlToMyUmlData("uml14to20", "uml14", "uml14exp"),  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                //        new MyUmlToMyUmlData("myuml", "myumlsource", "myumlsourceexp"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-
                 new FileToFileData("inoutcontextparam", "in.ecore", "expected.ecore"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 new FileToFileData("inoutcontextparamnoresult", "in.ecore", "expected.ecore"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
@@ -277,8 +267,6 @@ public class TransformTests {
                 new FileToFileData("bug204126_7"), //$NON-NLS-1$        
                 new FileToFileData("bug205303_1"), //$NON-NLS-1$        
                 new FileToFileData("bug219075_1"), //$NON-NLS-1$        
-                //        new MyUmlToMyUmlData("eobjectmodelopcall", "eobjectmodelopcallsource", "eobjectmodelopcalldest"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                // */        
         };
     }
 
