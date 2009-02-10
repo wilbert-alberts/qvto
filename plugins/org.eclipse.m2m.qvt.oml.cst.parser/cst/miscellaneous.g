@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.19 2009/02/05 22:35:47 sboyko Exp $ 
+-- * $Id: miscellaneous.g,v 1.20 2009/02/10 15:24:53 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -281,7 +281,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.19 2009/02/05 22:35:47 sboyko Exp $
+ * $Id: miscellaneous.g,v 1.20 2009/02/10 15:24:53 sboyko Exp $
  */
 	./
 $End
@@ -1083,7 +1083,7 @@ $Rules
 		/.$BeginJava
 			    	int startOffset = getIToken($getToken(1)).getStartOffset();
 			    	int endOffset = getIToken($getToken(4)).getEndOffset();
-					reportWarning(org.eclipse.osgi.util.NLS.bind(Messages.AbstractQVTParser_DeprecatedSwitchElseExp, null), startOffset, endOffset);
+					reportWarning(org.eclipse.osgi.util.NLS.bind(org.eclipse.m2m.internal.qvt.oml.cst.parser.Messages.AbstractQVTParser_DeprecatedSwitchElseExp, null), startOffset, endOffset);
 					
 					$setResult((CSTNode)$getSym(3));
 		  $EndJava
@@ -1092,7 +1092,7 @@ $Rules
 		/.$BeginJava
 			    	int startOffset = getIToken($getToken(1)).getStartOffset();
 			    	int endOffset = getIToken($getToken(3)).getEndOffset();
-					reportWarning(org.eclipse.osgi.util.NLS.bind(Messages.AbstractQVTParser_DeprecatedSwitchElseExp, null), startOffset, endOffset);
+					reportWarning(org.eclipse.osgi.util.NLS.bind(org.eclipse.m2m.internal.qvt.oml.cst.parser.Messages.AbstractQVTParser_DeprecatedSwitchElseExp, null), startOffset, endOffset);
 					
 					$setResult((CSTNode)$getSym(3));
 		  $EndJava
