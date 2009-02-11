@@ -20,9 +20,9 @@ import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.ConstructorOperationAdapter;
+import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Constructor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
@@ -40,7 +40,7 @@ public class OperationHyperlinkDetector implements IHyperlinkDetectorHelper {
 	public IHyperlink detectHyperlink(IDetectionContext context) {
 		CSTNode syntaxElement = context.getSyntaxElement();
 
-		if (syntaxElement instanceof NewRuleCallExpCS) {
+		if (syntaxElement instanceof InstantiationExpCS) {
 			if (false == syntaxElement.getAst() instanceof InstantiationExp) {
 				return null;
 			}
@@ -51,7 +51,7 @@ public class OperationHyperlinkDetector implements IHyperlinkDetectorHelper {
 			}
 			Constructor constructor = ((ConstructorOperationAdapter) adapter).getReferredConstructor();
 			CSTNode resultCS = ASTBindingHelper.resolveCSTNode(constructor);
-			CSTNode nameCS = (NewRuleCallExpCS) syntaxElement;//((NewRuleCallExpCS) syntaxElement).getTypeSpecCS();
+			CSTNode nameCS = (InstantiationExpCS) syntaxElement;//((InstantiationExpCS) syntaxElement).getTypeSpecCS();
 			if (resultCS instanceof MappingMethodCS) {
 				MappingMethodCS methodCS = (MappingMethodCS) resultCS;
 				IRegion destRegion = getGoToOperationRegion(methodCS);

@@ -33,9 +33,9 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.ConstructorOperationAdapter;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
@@ -158,10 +158,10 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 	}	
 	
 	private static boolean isConstructorCS(CSTNode syntaxElement) {
-		if (false == syntaxElement.eContainer() instanceof NewRuleCallExpCS) {
+		if (false == syntaxElement.eContainer() instanceof InstantiationExpCS) {
 			return false;
 		}
-		NewRuleCallExpCS constructorCS = (NewRuleCallExpCS) syntaxElement.eContainer();
+		InstantiationExpCS constructorCS = (InstantiationExpCS) syntaxElement.eContainer();
 		if (false == constructorCS.getAst() instanceof InstantiationExp) {
 			return false;
 		}
