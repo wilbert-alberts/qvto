@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.43 2009/02/10 15:27:09 sboyko Exp $
+* $Id: LightweightTypeParsersym.java,v 1.44 2009/02/11 16:19:41 sboyko Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.43 2009/02/10 15:27:09 sboyko Exp $
+* $Id: LightweightTypeParsersym.java,v 1.44 2009/02/11 16:19:41 sboyko Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.43 2009/02/10 15:27:09 sboyko Exp $
+* $Id: LightweightTypeParsersym.java,v 1.44 2009/02/11 16:19:41 sboyko Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.43 2009/02/10 15:27:09 sboyko Exp $
+* $Id: LightweightTypeParsersym.java,v 1.44 2009/02/11 16:19:41 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -86,33 +86,31 @@ public interface LightweightTypeParsersym {
       TK_NOT_EQUAL = 25,
       TK_LPAREN = 1,
       TK_RPAREN = 2,
-      TK_LBRACE = 91,
-      TK_RBRACE = 95,
-      TK_LBRACKET = 97,
-      TK_RBRACKET = 100,
-      TK_ARROW = 105,
-      TK_BAR = 92,
-      TK_COMMA = 90,
-      TK_COLON = 93,
-      TK_COLONCOLON = 94,
-      TK_SEMICOLON = 96,
-      TK_DOT = 106,
-      TK_DOTDOT = 113,
-      TK_ATPRE = 101,
-      TK_CARET = 107,
-      TK_CARETCARET = 108,
-      TK_QUESTIONMARK = 102,
-      TK_ADD_ASSIGN = 114,
-      TK_RESET_ASSIGN = 98,
-      TK_AT_SIGN = 119,
-      TK_EXCLAMATION_MARK = 103,
-      TK_NOT_EQUAL_EXEQ = 99,
-      TK_INTEGER_RANGE_START = 109,
-      TK_break = 132,
-      TK_class = 133,
-      TK_composes = 134,
-      TK_constructor = 135,
-      TK_continue = 136,
+      TK_LBRACE = 93,
+      TK_RBRACE = 97,
+      TK_LBRACKET = 99,
+      TK_RBRACKET = 102,
+      TK_ARROW = 107,
+      TK_BAR = 94,
+      TK_COMMA = 92,
+      TK_COLON = 95,
+      TK_COLONCOLON = 96,
+      TK_SEMICOLON = 98,
+      TK_DOT = 108,
+      TK_DOTDOT = 115,
+      TK_ATPRE = 103,
+      TK_CARET = 109,
+      TK_CARETCARET = 110,
+      TK_QUESTIONMARK = 104,
+      TK_ADD_ASSIGN = 116,
+      TK_RESET_ASSIGN = 100,
+      TK_AT_SIGN = 121,
+      TK_EXCLAMATION_MARK = 105,
+      TK_NOT_EQUAL_EXEQ = 101,
+      TK_INTEGER_RANGE_START = 111,
+      TK_class = 134,
+      TK_composes = 135,
+      TK_constructor = 136,
       TK_datatype = 137,
       TK_default = 138,
       TK_derived = 139,
@@ -133,7 +131,7 @@ public interface LightweightTypeParsersym {
       TK_typedef = 154,
       TK_unlimited = 155,
       TK_invalid = 156,
-      TK_COLONCOLONEQUAL = 115,
+      TK_COLONCOLONEQUAL = 117,
       TK_STEREOTYPE_QUALIFIER_OPEN = 157,
       TK_STEREOTYPE_QUALIFIER_CLOSE = 158,
       TK_MULTIPLICITY_RANGE = 159,
@@ -145,16 +143,16 @@ public interface LightweightTypeParsersym {
       TK_endpackage = 164,
       TK_def = 165,
       TK_if = 71,
-      TK_then = 116,
-      TK_else = 110,
-      TK_endif = 111,
+      TK_then = 118,
+      TK_else = 112,
+      TK_endif = 113,
       TK_and = 29,
       TK_or = 30,
       TK_xor = 31,
       TK_not = 56,
-      TK_implies = 117,
-      TK_let = 77,
-      TK_in = 112,
+      TK_implies = 119,
+      TK_let = 79,
+      TK_in = 114,
       TK_true = 57,
       TK_false = 58,
       TK_body = 39,
@@ -199,28 +197,30 @@ public interface LightweightTypeParsersym {
       TK_OclInvalid = 72,
       TK_end = 167,
       TK_while = 73,
-      TK_when = 120,
-      TK_var = 79,
-      TK_log = 78,
-      TK_assert = 80,
-      TK_with = 121,
+      TK_when = 122,
+      TK_var = 81,
+      TK_log = 80,
+      TK_assert = 82,
+      TK_with = 123,
       TK_switch = 68,
-      TK_case = 118,
-      TK_xselect = 122,
-      TK_xcollect = 123,
-      TK_selectOne = 124,
-      TK_collectOne = 125,
-      TK_collectselect = 126,
-      TK_collectselectOne = 127,
-      TK_return = 81,
-      TK_forEach = 128,
-      TK_forOne = 129,
+      TK_case = 120,
+      TK_xselect = 124,
+      TK_xcollect = 125,
+      TK_selectOne = 126,
+      TK_collectOne = 127,
+      TK_collectselect = 128,
+      TK_collectselectOne = 129,
+      TK_return = 83,
+      TK_forEach = 130,
+      TK_forOne = 131,
       TK_compute = 74,
       TK_new = 75,
-      TK_List = 104,
+      TK_List = 106,
       TK_Dict = 37,
+      TK_break = 76,
+      TK_continue = 77,
       TK_out = 168,
-      TK_object = 76,
+      TK_object = 78,
       TK_transformation = 169,
       TK_import = 170,
       TK_library = 171,
@@ -237,14 +237,14 @@ public interface LightweightTypeParsersym {
       TK_map = 66,
       TK_xmap = 67,
       TK_late = 69,
-      TK_resolve = 82,
-      TK_resolveone = 83,
-      TK_resolveIn = 84,
-      TK_resolveoneIn = 85,
-      TK_invresolve = 86,
-      TK_invresolveone = 87,
-      TK_invresolveIn = 88,
-      TK_invresolveoneIn = 89,
+      TK_resolve = 84,
+      TK_resolveone = 85,
+      TK_resolveIn = 86,
+      TK_resolveoneIn = 87,
+      TK_invresolve = 88,
+      TK_invresolveone = 89,
+      TK_invresolveIn = 90,
+      TK_invresolveoneIn = 91,
       TK_modeltype = 182,
       TK_uses = 183,
       TK_where = 184,
@@ -255,7 +255,7 @@ public interface LightweightTypeParsersym {
       TK_abstract = 189,
       TK_static = 190,
       TK_result = 28,
-      TK_main = 130,
+      TK_main = 132,
       TK_this = 34,
       TK_rename = 191,
       TK_inherits = 192,
@@ -263,7 +263,7 @@ public interface LightweightTypeParsersym {
       TK_disjuncts = 194,
       TK_IDENTIFIER = 3,
       TK_ERROR_TOKEN = 20,
-      TK_EOF_TOKEN = 131;
+      TK_EOF_TOKEN = 133;
 
       public final static String orderedTerminalSymbols[] = {
                  "",
@@ -342,6 +342,8 @@ public interface LightweightTypeParsersym {
                  "while",
                  "compute",
                  "new",
+                 "break",
+                 "continue",
                  "object",
                  "let",
                  "log",
@@ -398,11 +400,9 @@ public interface LightweightTypeParsersym {
                  "forOne",
                  "main",
                  "EOF_TOKEN",
-                 "break",
                  "class",
                  "composes",
                  "constructor",
-                 "continue",
                  "datatype",
                  "default",
                  "derived",
