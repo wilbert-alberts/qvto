@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ReturnExpCS.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: ReturnExpCS.java,v 1.2 2009/02/11 16:17:59 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -33,7 +33,7 @@ import org.eclipse.ocl.cst.OCLExpressionCS;
  * @model
  * @generated
  */
-public interface ReturnExpCS extends OCLExpressionCS {
+public interface ReturnExpCS extends StatementCS {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactoryImpl.java,v 1.15 2009/01/28 22:14:35 sboyko Exp $
+ * $Id: CSTFactoryImpl.java,v 1.16 2009/02/11 16:17:59 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -25,6 +25,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.*;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.BreakExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
@@ -32,7 +33,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ContinueExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralPartCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DictionaryTypeCS;
@@ -43,6 +46,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeLoopExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum;
+import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ListTypeCS;
@@ -66,9 +70,8 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleUsageCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MultiplicityDefCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS;
@@ -79,6 +82,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ReturnExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SimpleSignatureCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.TagCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationRefineCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
@@ -158,17 +162,22 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 			case CSTPackage.MAPPING_INIT_CS: return createMappingInitCS();
 			case CSTPackage.MAPPING_END_CS: return createMappingEndCS();
 			case CSTPackage.MAPPING_SECTIONS_CS: return createMappingSectionsCS();
-			case CSTPackage.ASSIGN_STATEMENT_CS: return createAssignStatementCS();
-			case CSTPackage.EXPRESSION_STATEMENT_CS: return createExpressionStatementCS();
-			case CSTPackage.VARIABLE_INITIALIZATION_CS: return createVariableInitializationCS();
-			case CSTPackage.MAPPING_BODY_CS: return createMappingBodyCS();
-			case CSTPackage.OUT_EXP_CS: return createOutExpCS();
-			case CSTPackage.MAPPING_CALL_EXP_CS: return createMappingCallExpCS();
-			case CSTPackage.WHILE_EXP_CS: return createWhileExpCS();
-			case CSTPackage.SWITCH_EXP_CS: return createSwitchExpCS();
-			case CSTPackage.SWITCH_ALT_EXP_CS: return createSwitchAltExpCS();
 			case CSTPackage.BLOCK_EXP_CS: return createBlockExpCS();
 			case CSTPackage.COMPUTE_EXP_CS: return createComputeExpCS();
+			case CSTPackage.WHILE_EXP_CS: return createWhileExpCS();
+			case CSTPackage.IMPERATIVE_LOOP_EXP_CS: return createImperativeLoopExpCS();
+			case CSTPackage.FOR_EXP_CS: return createForExpCS();
+			case CSTPackage.IMPERATIVE_ITERATE_EXP_CS: return createImperativeIterateExpCS();
+			case CSTPackage.SWITCH_EXP_CS: return createSwitchExpCS();
+			case CSTPackage.SWITCH_ALT_EXP_CS: return createSwitchAltExpCS();
+			case CSTPackage.VARIABLE_INITIALIZATION_CS: return createVariableInitializationCS();
+			case CSTPackage.ASSIGN_STATEMENT_CS: return createAssignStatementCS();
+			case CSTPackage.BREAK_EXP_CS: return createBreakExpCS();
+			case CSTPackage.CONTINUE_EXP_CS: return createContinueExpCS();
+			case CSTPackage.EXPRESSION_STATEMENT_CS: return createExpressionStatementCS();
+			case CSTPackage.MAPPING_BODY_CS: return createMappingBodyCS();
+			case CSTPackage.OBJECT_EXP_CS: return createObjectExpCS();
+			case CSTPackage.MAPPING_CALL_EXP_CS: return createMappingCallExpCS();
 			case CSTPackage.DIRECTION_KIND_CS: return createDirectionKindCS();
 			case CSTPackage.RESOLVE_EXP_CS: return createResolveExpCS();
 			case CSTPackage.RESOLVE_IN_EXP_CS: return createResolveInExpCS();
@@ -182,12 +191,9 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 			case CSTPackage.TYPE_SPEC_CS: return createTypeSpecCS();
 			case CSTPackage.LOG_EXP_CS: return createLogExpCS();
 			case CSTPackage.ASSERT_EXP_CS: return createAssertExpCS();
-			case CSTPackage.IMPERATIVE_LOOP_EXP_CS: return createImperativeLoopExpCS();
-			case CSTPackage.FOR_EXP_CS: return createForExpCS();
-			case CSTPackage.IMPERATIVE_ITERATE_EXP_CS: return createImperativeIterateExpCS();
 			case CSTPackage.RETURN_EXP_CS: return createReturnExpCS();
 			case CSTPackage.MAPPING_EXTENSION_CS: return createMappingExtensionCS();
-			case CSTPackage.NEW_RULE_CALL_EXP_CS: return createNewRuleCallExpCS();
+			case CSTPackage.INSTANTIATION_EXP_CS: return createInstantiationExpCS();
 			case CSTPackage.LIST_TYPE_CS: return createListTypeCS();
 			case CSTPackage.DICTIONARY_TYPE_CS: return createDictionaryTypeCS();
 			case CSTPackage.DICT_LITERAL_EXP_CS: return createDictLiteralExpCS();
@@ -479,6 +485,26 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public BreakExpCS createBreakExpCS() {
+		BreakExpCSImpl breakExpCS = new BreakExpCSImpl();
+		return breakExpCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ContinueExpCS createContinueExpCS() {
+		ContinueExpCSImpl continueExpCS = new ContinueExpCSImpl();
+		return continueExpCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public ExpressionStatementCS createExpressionStatementCS() {
 		ExpressionStatementCSImpl expressionStatementCS = new ExpressionStatementCSImpl();
 		return expressionStatementCS;
@@ -509,9 +535,9 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public OutExpCS createOutExpCS() {
-		OutExpCSImpl outExpCS = new OutExpCSImpl();
-		return outExpCS;
+	public ObjectExpCS createObjectExpCS() {
+		ObjectExpCSImpl objectExpCS = new ObjectExpCSImpl();
+		return objectExpCS;
 	}
 
 	/**
@@ -759,9 +785,9 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NewRuleCallExpCS createNewRuleCallExpCS() {
-		NewRuleCallExpCSImpl newRuleCallExpCS = new NewRuleCallExpCSImpl();
-		return newRuleCallExpCS;
+	public InstantiationExpCS createInstantiationExpCS() {
+		InstantiationExpCSImpl instantiationExpCS = new InstantiationExpCSImpl();
+		return instantiationExpCS;
 	}
 
 	/**

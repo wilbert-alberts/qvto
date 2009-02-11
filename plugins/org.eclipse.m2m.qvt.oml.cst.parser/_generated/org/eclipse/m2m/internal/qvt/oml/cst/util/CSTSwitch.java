@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTSwitch.java,v 1.16 2009/01/28 22:14:34 sboyko Exp $
+ * $Id: CSTSwitch.java,v 1.17 2009/02/11 16:18:00 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -23,13 +23,16 @@ import org.eclipse.m2m.internal.qvt.oml.cst.*;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.BreakExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ContinueExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralPartCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DictionaryTypeCS;
@@ -40,6 +43,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeLoopExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ListTypeCS;
@@ -64,9 +68,8 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleUsageCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MultiplicityDefCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.RenameCS;
@@ -77,6 +80,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.SimpleSignatureCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.StatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.TagCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationRefineCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
@@ -378,67 +382,65 @@ public class CSTSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CSTPackage.ASSIGN_STATEMENT_CS: {
-				AssignStatementCS assignStatementCS = (AssignStatementCS)theEObject;
-				T result = caseAssignStatementCS(assignStatementCS);
-				if (result == null) result = caseStatementCS(assignStatementCS);
-				if (result == null) result = caseOCLExpressionCS(assignStatementCS);
-				if (result == null) result = caseCSTNode(assignStatementCS);
+			case CSTPackage.BLOCK_EXP_CS: {
+				BlockExpCS blockExpCS = (BlockExpCS)theEObject;
+				T result = caseBlockExpCS(blockExpCS);
+				if (result == null) result = caseStatementCS(blockExpCS);
+				if (result == null) result = caseOCLExpressionCS(blockExpCS);
+				if (result == null) result = caseCSTNode(blockExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CSTPackage.EXPRESSION_STATEMENT_CS: {
-				ExpressionStatementCS expressionStatementCS = (ExpressionStatementCS)theEObject;
-				T result = caseExpressionStatementCS(expressionStatementCS);
-				if (result == null) result = caseStatementCS(expressionStatementCS);
-				if (result == null) result = caseOCLExpressionCS(expressionStatementCS);
-				if (result == null) result = caseCSTNode(expressionStatementCS);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CSTPackage.VARIABLE_INITIALIZATION_CS: {
-				VariableInitializationCS variableInitializationCS = (VariableInitializationCS)theEObject;
-				T result = caseVariableInitializationCS(variableInitializationCS);
-				if (result == null) result = caseStatementCS(variableInitializationCS);
-				if (result == null) result = caseOCLExpressionCS(variableInitializationCS);
-				if (result == null) result = caseCSTNode(variableInitializationCS);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CSTPackage.MAPPING_BODY_CS: {
-				MappingBodyCS mappingBodyCS = (MappingBodyCS)theEObject;
-				T result = caseMappingBodyCS(mappingBodyCS);
-				if (result == null) result = caseMappingSectionCS(mappingBodyCS);
-				if (result == null) result = caseCSTNode(mappingBodyCS);
-				if (result == null) result = caseElementWithBody(mappingBodyCS);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CSTPackage.OUT_EXP_CS: {
-				OutExpCS outExpCS = (OutExpCS)theEObject;
-				T result = caseOutExpCS(outExpCS);
-				if (result == null) result = caseOCLExpressionCS(outExpCS);
-				if (result == null) result = caseElementWithBody(outExpCS);
-				if (result == null) result = caseCSTNode(outExpCS);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CSTPackage.MAPPING_CALL_EXP_CS: {
-				MappingCallExpCS mappingCallExpCS = (MappingCallExpCS)theEObject;
-				T result = caseMappingCallExpCS(mappingCallExpCS);
-				if (result == null) result = caseOperationCallExpCS(mappingCallExpCS);
-				if (result == null) result = caseFeatureCallExpCS(mappingCallExpCS);
-				if (result == null) result = caseCallExpCS(mappingCallExpCS);
-				if (result == null) result = caseOCLExpressionCS(mappingCallExpCS);
-				if (result == null) result = caseCSTNode(mappingCallExpCS);
+			case CSTPackage.COMPUTE_EXP_CS: {
+				ComputeExpCS computeExpCS = (ComputeExpCS)theEObject;
+				T result = caseComputeExpCS(computeExpCS);
+				if (result == null) result = caseStatementCS(computeExpCS);
+				if (result == null) result = caseOCLExpressionCS(computeExpCS);
+				if (result == null) result = caseCSTNode(computeExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case CSTPackage.WHILE_EXP_CS: {
 				WhileExpCS whileExpCS = (WhileExpCS)theEObject;
 				T result = caseWhileExpCS(whileExpCS);
+				if (result == null) result = caseStatementCS(whileExpCS);
 				if (result == null) result = caseOCLExpressionCS(whileExpCS);
 				if (result == null) result = caseCSTNode(whileExpCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.IMPERATIVE_LOOP_EXP_CS: {
+				ImperativeLoopExpCS imperativeLoopExpCS = (ImperativeLoopExpCS)theEObject;
+				T result = caseImperativeLoopExpCS(imperativeLoopExpCS);
+				if (result == null) result = caseLoopExpCS(imperativeLoopExpCS);
+				if (result == null) result = caseStatementCS(imperativeLoopExpCS);
+				if (result == null) result = caseCallExpCS(imperativeLoopExpCS);
+				if (result == null) result = caseOCLExpressionCS(imperativeLoopExpCS);
+				if (result == null) result = caseCSTNode(imperativeLoopExpCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.FOR_EXP_CS: {
+				ForExpCS forExpCS = (ForExpCS)theEObject;
+				T result = caseForExpCS(forExpCS);
+				if (result == null) result = caseImperativeLoopExpCS(forExpCS);
+				if (result == null) result = caseLoopExpCS(forExpCS);
+				if (result == null) result = caseStatementCS(forExpCS);
+				if (result == null) result = caseCallExpCS(forExpCS);
+				if (result == null) result = caseOCLExpressionCS(forExpCS);
+				if (result == null) result = caseCSTNode(forExpCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.IMPERATIVE_ITERATE_EXP_CS: {
+				ImperativeIterateExpCS imperativeIterateExpCS = (ImperativeIterateExpCS)theEObject;
+				T result = caseImperativeIterateExpCS(imperativeIterateExpCS);
+				if (result == null) result = caseImperativeLoopExpCS(imperativeIterateExpCS);
+				if (result == null) result = caseLoopExpCS(imperativeIterateExpCS);
+				if (result == null) result = caseStatementCS(imperativeIterateExpCS);
+				if (result == null) result = caseCallExpCS(imperativeIterateExpCS);
+				if (result == null) result = caseOCLExpressionCS(imperativeIterateExpCS);
+				if (result == null) result = caseCSTNode(imperativeIterateExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -454,24 +456,85 @@ public class CSTSwitch<T> {
 			case CSTPackage.SWITCH_ALT_EXP_CS: {
 				SwitchAltExpCS switchAltExpCS = (SwitchAltExpCS)theEObject;
 				T result = caseSwitchAltExpCS(switchAltExpCS);
+				if (result == null) result = caseStatementCS(switchAltExpCS);
+				if (result == null) result = caseOCLExpressionCS(switchAltExpCS);
 				if (result == null) result = caseCSTNode(switchAltExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CSTPackage.BLOCK_EXP_CS: {
-				BlockExpCS blockExpCS = (BlockExpCS)theEObject;
-				T result = caseBlockExpCS(blockExpCS);
-				if (result == null) result = caseOCLExpressionCS(blockExpCS);
-				if (result == null) result = caseCSTNode(blockExpCS);
+			case CSTPackage.VARIABLE_INITIALIZATION_CS: {
+				VariableInitializationCS variableInitializationCS = (VariableInitializationCS)theEObject;
+				T result = caseVariableInitializationCS(variableInitializationCS);
+				if (result == null) result = caseStatementCS(variableInitializationCS);
+				if (result == null) result = caseOCLExpressionCS(variableInitializationCS);
+				if (result == null) result = caseCSTNode(variableInitializationCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CSTPackage.COMPUTE_EXP_CS: {
-				ComputeExpCS computeExpCS = (ComputeExpCS)theEObject;
-				T result = caseComputeExpCS(computeExpCS);
-				if (result == null) result = caseStatementCS(computeExpCS);
-				if (result == null) result = caseOCLExpressionCS(computeExpCS);
-				if (result == null) result = caseCSTNode(computeExpCS);
+			case CSTPackage.ASSIGN_STATEMENT_CS: {
+				AssignStatementCS assignStatementCS = (AssignStatementCS)theEObject;
+				T result = caseAssignStatementCS(assignStatementCS);
+				if (result == null) result = caseStatementCS(assignStatementCS);
+				if (result == null) result = caseOCLExpressionCS(assignStatementCS);
+				if (result == null) result = caseCSTNode(assignStatementCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.BREAK_EXP_CS: {
+				BreakExpCS breakExpCS = (BreakExpCS)theEObject;
+				T result = caseBreakExpCS(breakExpCS);
+				if (result == null) result = caseStatementCS(breakExpCS);
+				if (result == null) result = caseOCLExpressionCS(breakExpCS);
+				if (result == null) result = caseCSTNode(breakExpCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.CONTINUE_EXP_CS: {
+				ContinueExpCS continueExpCS = (ContinueExpCS)theEObject;
+				T result = caseContinueExpCS(continueExpCS);
+				if (result == null) result = caseStatementCS(continueExpCS);
+				if (result == null) result = caseOCLExpressionCS(continueExpCS);
+				if (result == null) result = caseCSTNode(continueExpCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.EXPRESSION_STATEMENT_CS: {
+				ExpressionStatementCS expressionStatementCS = (ExpressionStatementCS)theEObject;
+				T result = caseExpressionStatementCS(expressionStatementCS);
+				if (result == null) result = caseStatementCS(expressionStatementCS);
+				if (result == null) result = caseOCLExpressionCS(expressionStatementCS);
+				if (result == null) result = caseCSTNode(expressionStatementCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.MAPPING_BODY_CS: {
+				MappingBodyCS mappingBodyCS = (MappingBodyCS)theEObject;
+				T result = caseMappingBodyCS(mappingBodyCS);
+				if (result == null) result = caseMappingSectionCS(mappingBodyCS);
+				if (result == null) result = caseCSTNode(mappingBodyCS);
+				if (result == null) result = caseElementWithBody(mappingBodyCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.OBJECT_EXP_CS: {
+				ObjectExpCS objectExpCS = (ObjectExpCS)theEObject;
+				T result = caseObjectExpCS(objectExpCS);
+				if (result == null) result = caseInstantiationExpCS(objectExpCS);
+				if (result == null) result = caseElementWithBody(objectExpCS);
+				if (result == null) result = caseStatementCS(objectExpCS);
+				if (result == null) result = caseOCLExpressionCS(objectExpCS);
+				if (result == null) result = caseCSTNode(objectExpCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.MAPPING_CALL_EXP_CS: {
+				MappingCallExpCS mappingCallExpCS = (MappingCallExpCS)theEObject;
+				T result = caseMappingCallExpCS(mappingCallExpCS);
+				if (result == null) result = caseOperationCallExpCS(mappingCallExpCS);
+				if (result == null) result = caseFeatureCallExpCS(mappingCallExpCS);
+				if (result == null) result = caseCallExpCS(mappingCallExpCS);
+				if (result == null) result = caseOCLExpressionCS(mappingCallExpCS);
+				if (result == null) result = caseCSTNode(mappingCallExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -578,49 +641,16 @@ public class CSTSwitch<T> {
 			case CSTPackage.ASSERT_EXP_CS: {
 				AssertExpCS assertExpCS = (AssertExpCS)theEObject;
 				T result = caseAssertExpCS(assertExpCS);
+				if (result == null) result = caseStatementCS(assertExpCS);
 				if (result == null) result = caseOCLExpressionCS(assertExpCS);
 				if (result == null) result = caseCSTNode(assertExpCS);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CSTPackage.IMPERATIVE_LOOP_EXP_CS: {
-				ImperativeLoopExpCS imperativeLoopExpCS = (ImperativeLoopExpCS)theEObject;
-				T result = caseImperativeLoopExpCS(imperativeLoopExpCS);
-				if (result == null) result = caseLoopExpCS(imperativeLoopExpCS);
-				if (result == null) result = caseStatementCS(imperativeLoopExpCS);
-				if (result == null) result = caseCallExpCS(imperativeLoopExpCS);
-				if (result == null) result = caseOCLExpressionCS(imperativeLoopExpCS);
-				if (result == null) result = caseCSTNode(imperativeLoopExpCS);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CSTPackage.FOR_EXP_CS: {
-				ForExpCS forExpCS = (ForExpCS)theEObject;
-				T result = caseForExpCS(forExpCS);
-				if (result == null) result = caseImperativeLoopExpCS(forExpCS);
-				if (result == null) result = caseLoopExpCS(forExpCS);
-				if (result == null) result = caseStatementCS(forExpCS);
-				if (result == null) result = caseCallExpCS(forExpCS);
-				if (result == null) result = caseOCLExpressionCS(forExpCS);
-				if (result == null) result = caseCSTNode(forExpCS);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CSTPackage.IMPERATIVE_ITERATE_EXP_CS: {
-				ImperativeIterateExpCS imperativeIterateExpCS = (ImperativeIterateExpCS)theEObject;
-				T result = caseImperativeIterateExpCS(imperativeIterateExpCS);
-				if (result == null) result = caseImperativeLoopExpCS(imperativeIterateExpCS);
-				if (result == null) result = caseLoopExpCS(imperativeIterateExpCS);
-				if (result == null) result = caseStatementCS(imperativeIterateExpCS);
-				if (result == null) result = caseCallExpCS(imperativeIterateExpCS);
-				if (result == null) result = caseOCLExpressionCS(imperativeIterateExpCS);
-				if (result == null) result = caseCSTNode(imperativeIterateExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case CSTPackage.RETURN_EXP_CS: {
 				ReturnExpCS returnExpCS = (ReturnExpCS)theEObject;
 				T result = caseReturnExpCS(returnExpCS);
+				if (result == null) result = caseStatementCS(returnExpCS);
 				if (result == null) result = caseOCLExpressionCS(returnExpCS);
 				if (result == null) result = caseCSTNode(returnExpCS);
 				if (result == null) result = defaultCase(theEObject);
@@ -633,11 +663,12 @@ public class CSTSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CSTPackage.NEW_RULE_CALL_EXP_CS: {
-				NewRuleCallExpCS newRuleCallExpCS = (NewRuleCallExpCS)theEObject;
-				T result = caseNewRuleCallExpCS(newRuleCallExpCS);
-				if (result == null) result = caseOCLExpressionCS(newRuleCallExpCS);
-				if (result == null) result = caseCSTNode(newRuleCallExpCS);
+			case CSTPackage.INSTANTIATION_EXP_CS: {
+				InstantiationExpCS instantiationExpCS = (InstantiationExpCS)theEObject;
+				T result = caseInstantiationExpCS(instantiationExpCS);
+				if (result == null) result = caseStatementCS(instantiationExpCS);
+				if (result == null) result = caseOCLExpressionCS(instantiationExpCS);
+				if (result == null) result = caseCSTNode(instantiationExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -1107,6 +1138,36 @@ public class CSTSwitch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Break Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Break Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseBreakExpCS(BreakExpCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Continue Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Continue Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseContinueExpCS(ContinueExpCS object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Expression Statement CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1152,17 +1213,17 @@ public class CSTSwitch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Out Exp CS</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Object Exp CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Out Exp CS</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Object Exp CS</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseOutExpCS(OutExpCS object) {
+	public T caseObjectExpCS(ObjectExpCS object) {
 		return null;
 	}
 
@@ -1542,17 +1603,17 @@ public class CSTSwitch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>New Rule Call Exp CS</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Instantiation Exp CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>New Rule Call Exp CS</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Instantiation Exp CS</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseNewRuleCallExpCS(NewRuleCallExpCS object) {
+	public T caseInstantiationExpCS(InstantiationExpCS object) {
 		return null;
 	}
 

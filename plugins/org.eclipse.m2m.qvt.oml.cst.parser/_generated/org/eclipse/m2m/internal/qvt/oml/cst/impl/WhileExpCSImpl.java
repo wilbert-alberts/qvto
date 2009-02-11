@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: WhileExpCSImpl.java,v 1.2 2009/01/13 20:23:49 radvorak Exp $
+ * $Id: WhileExpCSImpl.java,v 1.3 2009/02/11 16:17:59 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -41,7 +41,7 @@ import org.eclipse.ocl.cst.impl.OCLExpressionCSImpl;
  *
  * @generated
  */
-public class WhileExpCSImpl extends OCLExpressionCSImpl implements WhileExpCS {
+public class WhileExpCSImpl extends StatementCSImpl implements WhileExpCS {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

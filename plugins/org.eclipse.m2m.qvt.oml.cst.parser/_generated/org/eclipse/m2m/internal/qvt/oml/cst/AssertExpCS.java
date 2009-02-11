@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: AssertExpCS.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: AssertExpCS.java,v 1.2 2009/02/11 16:17:59 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -36,7 +36,7 @@ import org.eclipse.ocl.cst.SimpleNameCS;
  * @model
  * @generated
  */
-public interface AssertExpCS extends OCLExpressionCS {
+public interface AssertExpCS extends StatementCS {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

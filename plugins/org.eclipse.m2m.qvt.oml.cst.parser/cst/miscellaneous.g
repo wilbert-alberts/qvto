@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.20 2009/02/10 15:24:53 sboyko Exp $ 
+-- * $Id: miscellaneous.g,v 1.21 2009/02/11 16:18:00 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -239,11 +239,9 @@ $Terminals
 	NOT_EQUAL_EXEQ   ::= '!='
 	INTEGER_RANGE_START
 
-        break
         class
         composes
         constructor
-        continue
         datatype
         default
         derived
@@ -281,7 +279,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.20 2009/02/10 15:24:53 sboyko Exp $
+ * $Id: miscellaneous.g,v 1.21 2009/02/11 16:18:00 sboyko Exp $
  */
 	./
 $End

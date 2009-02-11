@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactory.java,v 1.13 2009/01/28 22:14:35 sboyko Exp $
+ * $Id: CSTFactory.java,v 1.14 2009/02/11 16:17:59 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -249,6 +249,24 @@ public interface CSTFactory extends EFactory {
 	AssignStatementCS createAssignStatementCS();
 
 	/**
+	 * Returns a new object of class '<em>Break Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Break Exp CS</em>'.
+	 * @generated
+	 */
+	BreakExpCS createBreakExpCS();
+
+	/**
+	 * Returns a new object of class '<em>Continue Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Continue Exp CS</em>'.
+	 * @generated
+	 */
+	ContinueExpCS createContinueExpCS();
+
+	/**
 	 * Returns a new object of class '<em>Expression Statement CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -276,13 +294,13 @@ public interface CSTFactory extends EFactory {
 	MappingBodyCS createMappingBodyCS();
 
 	/**
-	 * Returns a new object of class '<em>Out Exp CS</em>'.
+	 * Returns a new object of class '<em>Object Exp CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Out Exp CS</em>'.
+	 * @return a new object of class '<em>Object Exp CS</em>'.
 	 * @generated
 	 */
-	OutExpCS createOutExpCS();
+	ObjectExpCS createObjectExpCS();
 
 	/**
 	 * Returns a new object of class '<em>Mapping Call Exp CS</em>'.
@@ -501,13 +519,13 @@ public interface CSTFactory extends EFactory {
 	MappingExtensionCS createMappingExtensionCS();
 
 	/**
-	 * Returns a new object of class '<em>New Rule Call Exp CS</em>'.
+	 * Returns a new object of class '<em>Instantiation Exp CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>New Rule Call Exp CS</em>'.
+	 * @return a new object of class '<em>Instantiation Exp CS</em>'.
 	 * @generated
 	 */
-	NewRuleCallExpCS createNewRuleCallExpCS();
+	InstantiationExpCS createInstantiationExpCS();
 
 	/**
 	 * Returns a new object of class '<em>List Type CS</em>'.

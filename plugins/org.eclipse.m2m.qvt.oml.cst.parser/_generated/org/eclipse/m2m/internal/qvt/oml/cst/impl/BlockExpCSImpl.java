@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: BlockExpCSImpl.java,v 1.3 2009/01/13 20:23:45 radvorak Exp $
+ * $Id: BlockExpCSImpl.java,v 1.4 2009/02/11 16:17:59 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -41,7 +41,7 @@ import org.eclipse.ocl.cst.impl.OCLExpressionCSImpl;
  *
  * @generated
  */
-public class BlockExpCSImpl extends OCLExpressionCSImpl implements BlockExpCS {
+public class BlockExpCSImpl extends StatementCSImpl implements BlockExpCS {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

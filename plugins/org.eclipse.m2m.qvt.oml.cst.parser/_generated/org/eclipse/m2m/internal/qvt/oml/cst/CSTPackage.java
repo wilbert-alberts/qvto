@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackage.java,v 1.24 2009/02/04 15:33:23 sboyko Exp $
+ * $Id: CSTPackage.java,v 1.25 2009/02/11 16:17:59 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -2631,88 +2631,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getAssignStatementCS()
 	 * @generated
 	 */
-	int ASSIGN_STATEMENT_CS = 27;
-
-	/**
-	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSIGN_STATEMENT_CS__START_OFFSET = STATEMENT_CS__START_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSIGN_STATEMENT_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSIGN_STATEMENT_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSIGN_STATEMENT_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSIGN_STATEMENT_CS__AST = STATEMENT_CS__AST;
-
-	/**
-	 * The feature id for the '<em><b>LValue CS</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSIGN_STATEMENT_CS__LVALUE_CS = STATEMENT_CS_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Ocl Expression CS</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS = STATEMENT_CS_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Incremental</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSIGN_STATEMENT_CS__INCREMENTAL = STATEMENT_CS_FEATURE_COUNT + 2;
-
-	/**
-	 * The number of structural features of the '<em>Assign Statement CS</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSIGN_STATEMENT_CS_FEATURE_COUNT = STATEMENT_CS_FEATURE_COUNT + 3;
+	int ASSIGN_STATEMENT_CS = 36;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ExpressionStatementCSImpl <em>Expression Statement CS</em>}' class.
@@ -2722,70 +2641,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getExpressionStatementCS()
 	 * @generated
 	 */
-	int EXPRESSION_STATEMENT_CS = 28;
-
-	/**
-	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXPRESSION_STATEMENT_CS__START_OFFSET = STATEMENT_CS__START_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXPRESSION_STATEMENT_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXPRESSION_STATEMENT_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXPRESSION_STATEMENT_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXPRESSION_STATEMENT_CS__AST = STATEMENT_CS__AST;
-
-	/**
-	 * The feature id for the '<em><b>Ocl Expression CS</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXPRESSION_STATEMENT_CS__OCL_EXPRESSION_CS = STATEMENT_CS_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Expression Statement CS</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXPRESSION_STATEMENT_CS_FEATURE_COUNT = STATEMENT_CS_FEATURE_COUNT + 1;
+	int EXPRESSION_STATEMENT_CS = 39;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.VariableInitializationCSImpl <em>Variable Initialization CS</em>}' class.
@@ -2795,7 +2651,967 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getVariableInitializationCS()
 	 * @generated
 	 */
-	int VARIABLE_INITIALIZATION_CS = 29;
+	int VARIABLE_INITIALIZATION_CS = 35;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingBodyCSImpl <em>Mapping Body CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingBodyCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingBodyCS()
+	 * @generated
+	 */
+	int MAPPING_BODY_CS = 40;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingCallExpCSImpl <em>Mapping Call Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingCallExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingCallExpCS()
+	 * @generated
+	 */
+	int MAPPING_CALL_EXP_CS = 42;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.WhileExpCSImpl <em>While Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.WhileExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getWhileExpCS()
+	 * @generated
+	 */
+	int WHILE_EXP_CS = 29;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.SwitchExpCSImpl <em>Switch Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.SwitchExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getSwitchExpCS()
+	 * @generated
+	 */
+	int SWITCH_EXP_CS = 33;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.SwitchAltExpCSImpl <em>Switch Alt Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.SwitchAltExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getSwitchAltExpCS()
+	 * @generated
+	 */
+	int SWITCH_ALT_EXP_CS = 34;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.BlockExpCSImpl <em>Block Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.BlockExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getBlockExpCS()
+	 * @generated
+	 */
+	int BLOCK_EXP_CS = 27;
+
+	/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BLOCK_EXP_CS__START_OFFSET = STATEMENT_CS__START_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BLOCK_EXP_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BLOCK_EXP_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>End Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BLOCK_EXP_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BLOCK_EXP_CS__AST = STATEMENT_CS__AST;
+
+	/**
+	 * The feature id for the '<em><b>Body Expressions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BLOCK_EXP_CS__BODY_EXPRESSIONS = STATEMENT_CS_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Block Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BLOCK_EXP_CS_FEATURE_COUNT = STATEMENT_CS_FEATURE_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ComputeExpCSImpl <em>Compute Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ComputeExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getComputeExpCS()
+	 * @generated
+	 */
+	int COMPUTE_EXP_CS = 28;
+
+	/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPUTE_EXP_CS__START_OFFSET = STATEMENT_CS__START_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPUTE_EXP_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPUTE_EXP_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>End Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPUTE_EXP_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPUTE_EXP_CS__AST = STATEMENT_CS__AST;
+
+	/**
+	 * The feature id for the '<em><b>Returned Element</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPUTE_EXP_CS__RETURNED_ELEMENT = STATEMENT_CS_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Body</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPUTE_EXP_CS__BODY = STATEMENT_CS_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Compute Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPUTE_EXP_CS_FEATURE_COUNT = STATEMENT_CS_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WHILE_EXP_CS__START_OFFSET = STATEMENT_CS__START_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WHILE_EXP_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WHILE_EXP_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>End Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WHILE_EXP_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WHILE_EXP_CS__AST = STATEMENT_CS__AST;
+
+	/**
+	 * The feature id for the '<em><b>Body</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WHILE_EXP_CS__BODY = STATEMENT_CS_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WHILE_EXP_CS__CONDITION = STATEMENT_CS_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Result Var</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WHILE_EXP_CS__RESULT_VAR = STATEMENT_CS_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>While Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WHILE_EXP_CS_FEATURE_COUNT = STATEMENT_CS_FEATURE_COUNT + 3;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.DirectionKindCSImpl <em>Direction Kind CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.DirectionKindCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getDirectionKindCS()
+	 * @generated
+	 */
+	int DIRECTION_KIND_CS = 43;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ElementWithBodyImpl <em>Element With Body</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ElementWithBodyImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getElementWithBody()
+	 * @generated
+	 */
+	int ELEMENT_WITH_BODY = 44;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ResolveExpCSImpl <em>Resolve Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ResolveExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getResolveExpCS()
+	 * @generated
+	 */
+	int RESOLVE_EXP_CS = 45;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ResolveInExpCSImpl <em>Resolve In Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ResolveInExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getResolveInExpCS()
+	 * @generated
+	 */
+	int RESOLVE_IN_EXP_CS = 46;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ModelTypeCSImpl <em>Model Type CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ModelTypeCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getModelTypeCS()
+	 * @generated
+	 */
+	int MODEL_TYPE_CS = 47;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.PackageRefCSImpl <em>Package Ref CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.PackageRefCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getPackageRefCS()
+	 * @generated
+	 */
+	int PACKAGE_REF_CS = 48;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.TransformationHeaderCSImpl <em>Transformation Header CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.TransformationHeaderCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getTransformationHeaderCS()
+	 * @generated
+	 */
+	int TRANSFORMATION_HEADER_CS = 49;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ModuleKindCSImpl <em>Module Kind CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ModuleKindCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getModuleKindCS()
+	 * @generated
+	 */
+	int MODULE_KIND_CS = 50;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ModuleRefCSImpl <em>Module Ref CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ModuleRefCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getModuleRefCS()
+	 * @generated
+	 */
+	int MODULE_REF_CS = 51;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ModuleUsageCSImpl <em>Module Usage CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ModuleUsageCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getModuleUsageCS()
+	 * @generated
+	 */
+	int MODULE_USAGE_CS = 52;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.TransformationRefineCSImpl <em>Transformation Refine CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.TransformationRefineCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getTransformationRefineCS()
+	 * @generated
+	 */
+	int TRANSFORMATION_REFINE_CS = 53;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.TypeSpecCSImpl <em>Type Spec CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.TypeSpecCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getTypeSpecCS()
+	 * @generated
+	 */
+	int TYPE_SPEC_CS = 54;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.LogExpCSImpl <em>Log Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.LogExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getLogExpCS()
+	 * @generated
+	 */
+	int LOG_EXP_CS = 55;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.AssertExpCSImpl <em>Assert Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.AssertExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getAssertExpCS()
+	 * @generated
+	 */
+	int ASSERT_EXP_CS = 56;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ImperativeLoopExpCSImpl <em>Imperative Loop Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ImperativeLoopExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getImperativeLoopExpCS()
+	 * @generated
+	 */
+	int IMPERATIVE_LOOP_EXP_CS = 30;
+
+	/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_LOOP_EXP_CS__START_OFFSET = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__START_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_LOOP_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__END_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_LOOP_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__START_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>End Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_LOOP_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__END_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_LOOP_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__AST;
+
+	/**
+	 * The feature id for the '<em><b>Source</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_LOOP_EXP_CS__SOURCE = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__SOURCE;
+
+	/**
+	 * The feature id for the '<em><b>Accessor</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_LOOP_EXP_CS__ACCESSOR = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__ACCESSOR;
+
+	/**
+	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_LOOP_EXP_CS__SIMPLE_NAME_CS = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__SIMPLE_NAME_CS;
+
+	/**
+	 * The feature id for the '<em><b>Variable1</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_LOOP_EXP_CS__VARIABLE1 = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__VARIABLE1;
+
+	/**
+	 * The feature id for the '<em><b>Variable2</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_LOOP_EXP_CS__VARIABLE2 = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__VARIABLE2;
+
+	/**
+	 * The feature id for the '<em><b>Body</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_LOOP_EXP_CS__BODY = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__BODY;
+
+	/**
+	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_LOOP_EXP_CS__CONDITION = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Imperative Loop Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_LOOP_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS_FEATURE_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ForExpCSImpl <em>For Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ForExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getForExpCS()
+	 * @generated
+	 */
+    int FOR_EXP_CS = 31;
+
+    /**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int FOR_EXP_CS__START_OFFSET = IMPERATIVE_LOOP_EXP_CS__START_OFFSET;
+
+    /**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int FOR_EXP_CS__END_OFFSET = IMPERATIVE_LOOP_EXP_CS__END_OFFSET;
+
+    /**
+	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FOR_EXP_CS__START_TOKEN = IMPERATIVE_LOOP_EXP_CS__START_TOKEN;
+
+				/**
+	 * The feature id for the '<em><b>End Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FOR_EXP_CS__END_TOKEN = IMPERATIVE_LOOP_EXP_CS__END_TOKEN;
+
+				/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FOR_EXP_CS__AST = IMPERATIVE_LOOP_EXP_CS__AST;
+
+				/**
+	 * The feature id for the '<em><b>Source</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int FOR_EXP_CS__SOURCE = IMPERATIVE_LOOP_EXP_CS__SOURCE;
+
+    /**
+	 * The feature id for the '<em><b>Accessor</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int FOR_EXP_CS__ACCESSOR = IMPERATIVE_LOOP_EXP_CS__ACCESSOR;
+
+    /**
+	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int FOR_EXP_CS__SIMPLE_NAME_CS = IMPERATIVE_LOOP_EXP_CS__SIMPLE_NAME_CS;
+
+    /**
+	 * The feature id for the '<em><b>Variable1</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int FOR_EXP_CS__VARIABLE1 = IMPERATIVE_LOOP_EXP_CS__VARIABLE1;
+
+    /**
+	 * The feature id for the '<em><b>Variable2</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int FOR_EXP_CS__VARIABLE2 = IMPERATIVE_LOOP_EXP_CS__VARIABLE2;
+
+    /**
+	 * The feature id for the '<em><b>Body</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int FOR_EXP_CS__BODY = IMPERATIVE_LOOP_EXP_CS__BODY;
+
+    /**
+	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int FOR_EXP_CS__CONDITION = IMPERATIVE_LOOP_EXP_CS__CONDITION;
+
+    /**
+	 * The number of structural features of the '<em>For Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int FOR_EXP_CS_FEATURE_COUNT = IMPERATIVE_LOOP_EXP_CS_FEATURE_COUNT + 0;
+
+    /**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ImperativeIterateExpCSImpl <em>Imperative Iterate Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ImperativeIterateExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getImperativeIterateExpCS()
+	 * @generated
+	 */
+	int IMPERATIVE_ITERATE_EXP_CS = 32;
+
+	/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_ITERATE_EXP_CS__START_OFFSET = IMPERATIVE_LOOP_EXP_CS__START_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_ITERATE_EXP_CS__END_OFFSET = IMPERATIVE_LOOP_EXP_CS__END_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_ITERATE_EXP_CS__START_TOKEN = IMPERATIVE_LOOP_EXP_CS__START_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>End Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_ITERATE_EXP_CS__END_TOKEN = IMPERATIVE_LOOP_EXP_CS__END_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_ITERATE_EXP_CS__AST = IMPERATIVE_LOOP_EXP_CS__AST;
+
+	/**
+	 * The feature id for the '<em><b>Source</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_ITERATE_EXP_CS__SOURCE = IMPERATIVE_LOOP_EXP_CS__SOURCE;
+
+	/**
+	 * The feature id for the '<em><b>Accessor</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_ITERATE_EXP_CS__ACCESSOR = IMPERATIVE_LOOP_EXP_CS__ACCESSOR;
+
+	/**
+	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_ITERATE_EXP_CS__SIMPLE_NAME_CS = IMPERATIVE_LOOP_EXP_CS__SIMPLE_NAME_CS;
+
+	/**
+	 * The feature id for the '<em><b>Variable1</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_ITERATE_EXP_CS__VARIABLE1 = IMPERATIVE_LOOP_EXP_CS__VARIABLE1;
+
+	/**
+	 * The feature id for the '<em><b>Variable2</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_ITERATE_EXP_CS__VARIABLE2 = IMPERATIVE_LOOP_EXP_CS__VARIABLE2;
+
+	/**
+	 * The feature id for the '<em><b>Body</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_ITERATE_EXP_CS__BODY = IMPERATIVE_LOOP_EXP_CS__BODY;
+
+	/**
+	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_ITERATE_EXP_CS__CONDITION = IMPERATIVE_LOOP_EXP_CS__CONDITION;
+
+	/**
+	 * The feature id for the '<em><b>Target</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_ITERATE_EXP_CS__TARGET = IMPERATIVE_LOOP_EXP_CS_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Imperative Iterate Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_ITERATE_EXP_CS_FEATURE_COUNT = IMPERATIVE_LOOP_EXP_CS_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_EXP_CS__START_OFFSET = STATEMENT_CS__START_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_EXP_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_EXP_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>End Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_EXP_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_EXP_CS__AST = STATEMENT_CS__AST;
+
+	/**
+	 * The feature id for the '<em><b>Alternative Part</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_EXP_CS__ALTERNATIVE_PART = STATEMENT_CS_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Else Part</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_EXP_CS__ELSE_PART = STATEMENT_CS_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Switch Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_EXP_CS_FEATURE_COUNT = STATEMENT_CS_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_ALT_EXP_CS__START_OFFSET = STATEMENT_CS__START_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_ALT_EXP_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_ALT_EXP_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>End Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_ALT_EXP_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_ALT_EXP_CS__AST = STATEMENT_CS__AST;
+
+	/**
+	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_ALT_EXP_CS__CONDITION = STATEMENT_CS_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Body</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_ALT_EXP_CS__BODY = STATEMENT_CS_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Switch Alt Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_ALT_EXP_CS_FEATURE_COUNT = STATEMENT_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2888,14 +3704,276 @@ public interface CSTPackage extends EPackage {
 	int VARIABLE_INITIALIZATION_CS_FEATURE_COUNT = STATEMENT_CS_FEATURE_COUNT + 4;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingBodyCSImpl <em>Mapping Body CS</em>}' class.
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingBodyCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingBodyCS()
+	 * @generated
+	 * @ordered
+	 */
+	int ASSIGN_STATEMENT_CS__START_OFFSET = STATEMENT_CS__START_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSIGN_STATEMENT_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSIGN_STATEMENT_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>End Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSIGN_STATEMENT_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSIGN_STATEMENT_CS__AST = STATEMENT_CS__AST;
+
+	/**
+	 * The feature id for the '<em><b>LValue CS</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSIGN_STATEMENT_CS__LVALUE_CS = STATEMENT_CS_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Ocl Expression CS</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS = STATEMENT_CS_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Incremental</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSIGN_STATEMENT_CS__INCREMENTAL = STATEMENT_CS_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Assign Statement CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSIGN_STATEMENT_CS_FEATURE_COUNT = STATEMENT_CS_FEATURE_COUNT + 3;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.BreakExpCSImpl <em>Break Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.BreakExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getBreakExpCS()
 	 * @generated
 	 */
-	int MAPPING_BODY_CS = 30;
+	int BREAK_EXP_CS = 37;
+
+	/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAK_EXP_CS__START_OFFSET = STATEMENT_CS__START_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAK_EXP_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAK_EXP_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>End Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAK_EXP_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAK_EXP_CS__AST = STATEMENT_CS__AST;
+
+	/**
+	 * The number of structural features of the '<em>Break Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAK_EXP_CS_FEATURE_COUNT = STATEMENT_CS_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ContinueExpCSImpl <em>Continue Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ContinueExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getContinueExpCS()
+	 * @generated
+	 */
+	int CONTINUE_EXP_CS = 38;
+
+	/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTINUE_EXP_CS__START_OFFSET = STATEMENT_CS__START_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTINUE_EXP_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTINUE_EXP_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>End Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTINUE_EXP_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTINUE_EXP_CS__AST = STATEMENT_CS__AST;
+
+	/**
+	 * The number of structural features of the '<em>Continue Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTINUE_EXP_CS_FEATURE_COUNT = STATEMENT_CS_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXPRESSION_STATEMENT_CS__START_OFFSET = STATEMENT_CS__START_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXPRESSION_STATEMENT_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXPRESSION_STATEMENT_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>End Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXPRESSION_STATEMENT_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXPRESSION_STATEMENT_CS__AST = STATEMENT_CS__AST;
+
+	/**
+	 * The feature id for the '<em><b>Ocl Expression CS</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXPRESSION_STATEMENT_CS__OCL_EXPRESSION_CS = STATEMENT_CS_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Expression Statement CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXPRESSION_STATEMENT_CS_FEATURE_COUNT = STATEMENT_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2997,14 +4075,44 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_BODY_CS_FEATURE_COUNT = MAPPING_SECTION_CS_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.OutExpCSImpl <em>Out Exp CS</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ObjectExpCSImpl <em>Object Exp CS</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.OutExpCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getOutExpCS()
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ObjectExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getObjectExpCS()
 	 * @generated
 	 */
-	int OUT_EXP_CS = 31;
+	int OBJECT_EXP_CS = 41;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ReturnExpCSImpl <em>Return Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ReturnExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getReturnExpCS()
+	 * @generated
+	 */
+	int RETURN_EXP_CS = 57;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingExtensionCSImpl <em>Mapping Extension CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingExtensionCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingExtensionCS()
+	 * @generated
+	 */
+	int MAPPING_EXTENSION_CS = 58;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.InstantiationExpCSImpl <em>Instantiation Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.InstantiationExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getInstantiationExpCS()
+	 * @generated
+	 */
+	int INSTANTIATION_EXP_CS = 59;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3013,7 +4121,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int OUT_EXP_CS__START_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_OFFSET;
+	int INSTANTIATION_EXP_CS__START_OFFSET = STATEMENT_CS__START_OFFSET;
 
 	/**
 	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
@@ -3022,7 +4130,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int OUT_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_OFFSET;
+	int INSTANTIATION_EXP_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
 
 	/**
 	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
@@ -3031,7 +4139,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int OUT_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_TOKEN;
+	int INSTANTIATION_EXP_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
 
 	/**
 	 * The feature id for the '<em><b>End Token</b></em>' attribute.
@@ -3040,7 +4148,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int OUT_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_TOKEN;
+	int INSTANTIATION_EXP_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
 
 	/**
 	 * The feature id for the '<em><b>Ast</b></em>' attribute.
@@ -3049,34 +4157,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int OUT_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__AST;
-
-	/**
-	 * The feature id for the '<em><b>Body Start Location</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OUT_EXP_CS__BODY_START_LOCATION = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Body End Location</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OUT_EXP_CS__BODY_END_LOCATION = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OUT_EXP_CS__SIMPLE_NAME_CS = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 2;
+	int INSTANTIATION_EXP_CS__AST = STATEMENT_CS__AST;
 
 	/**
 	 * The feature id for the '<em><b>Type Spec CS</b></em>' containment reference.
@@ -3085,7 +4166,115 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int OUT_EXP_CS__TYPE_SPEC_CS = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 3;
+	int INSTANTIATION_EXP_CS__TYPE_SPEC_CS = STATEMENT_CS_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Arguments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSTANTIATION_EXP_CS__ARGUMENTS = STATEMENT_CS_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Instantiation Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSTANTIATION_EXP_CS_FEATURE_COUNT = STATEMENT_CS_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_EXP_CS__START_OFFSET = INSTANTIATION_EXP_CS__START_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_EXP_CS__END_OFFSET = INSTANTIATION_EXP_CS__END_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_EXP_CS__START_TOKEN = INSTANTIATION_EXP_CS__START_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>End Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_EXP_CS__END_TOKEN = INSTANTIATION_EXP_CS__END_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_EXP_CS__AST = INSTANTIATION_EXP_CS__AST;
+
+	/**
+	 * The feature id for the '<em><b>Type Spec CS</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_EXP_CS__TYPE_SPEC_CS = INSTANTIATION_EXP_CS__TYPE_SPEC_CS;
+
+	/**
+	 * The feature id for the '<em><b>Arguments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_EXP_CS__ARGUMENTS = INSTANTIATION_EXP_CS__ARGUMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Body Start Location</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_EXP_CS__BODY_START_LOCATION = INSTANTIATION_EXP_CS_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Body End Location</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_EXP_CS__BODY_END_LOCATION = INSTANTIATION_EXP_CS_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_EXP_CS__SIMPLE_NAME_CS = INSTANTIATION_EXP_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Expressions</b></em>' containment reference list.
@@ -3094,7 +4283,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int OUT_EXP_CS__EXPRESSIONS = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 4;
+	int OBJECT_EXP_CS__EXPRESSIONS = INSTANTIATION_EXP_CS_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Is Implicit</b></em>' attribute.
@@ -3103,26 +4292,16 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int OUT_EXP_CS__IS_IMPLICIT = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 5;
+	int OBJECT_EXP_CS__IS_IMPLICIT = INSTANTIATION_EXP_CS_FEATURE_COUNT + 4;
 
 	/**
-	 * The number of structural features of the '<em>Out Exp CS</em>' class.
+	 * The number of structural features of the '<em>Object Exp CS</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int OUT_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 6;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingCallExpCSImpl <em>Mapping Call Exp CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingCallExpCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingCallExpCS()
-	 * @generated
-	 */
-	int MAPPING_CALL_EXP_CS = 32;
+	int OBJECT_EXP_CS_FEATURE_COUNT = INSTANTIATION_EXP_CS_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3233,426 +4412,6 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_CALL_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.OPERATION_CALL_EXP_CS_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.WhileExpCSImpl <em>While Exp CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.WhileExpCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getWhileExpCS()
-	 * @generated
-	 */
-	int WHILE_EXP_CS = 33;
-
-	/**
-	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WHILE_EXP_CS__START_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WHILE_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WHILE_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WHILE_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WHILE_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__AST;
-
-	/**
-	 * The feature id for the '<em><b>Body</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WHILE_EXP_CS__BODY = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WHILE_EXP_CS__CONDITION = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Result Var</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WHILE_EXP_CS__RESULT_VAR = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 2;
-
-	/**
-	 * The number of structural features of the '<em>While Exp CS</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WHILE_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 3;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.SwitchExpCSImpl <em>Switch Exp CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.SwitchExpCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getSwitchExpCS()
-	 * @generated
-	 */
-	int SWITCH_EXP_CS = 34;
-
-	/**
-	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_EXP_CS__START_OFFSET = STATEMENT_CS__START_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_EXP_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_EXP_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_EXP_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_EXP_CS__AST = STATEMENT_CS__AST;
-
-	/**
-	 * The feature id for the '<em><b>Alternative Part</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_EXP_CS__ALTERNATIVE_PART = STATEMENT_CS_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Else Part</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_EXP_CS__ELSE_PART = STATEMENT_CS_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Switch Exp CS</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_EXP_CS_FEATURE_COUNT = STATEMENT_CS_FEATURE_COUNT + 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.SwitchAltExpCSImpl <em>Switch Alt Exp CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.SwitchAltExpCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getSwitchAltExpCS()
-	 * @generated
-	 */
-	int SWITCH_ALT_EXP_CS = 35;
-
-	/**
-	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_ALT_EXP_CS__START_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_ALT_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_ALT_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_ALT_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_ALT_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
-
-	/**
-	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_ALT_EXP_CS__CONDITION = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Body</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_ALT_EXP_CS__BODY = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Switch Alt Exp CS</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_ALT_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.BlockExpCSImpl <em>Block Exp CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.BlockExpCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getBlockExpCS()
-	 * @generated
-	 */
-	int BLOCK_EXP_CS = 36;
-
-	/**
-	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BLOCK_EXP_CS__START_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BLOCK_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BLOCK_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BLOCK_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BLOCK_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__AST;
-
-	/**
-	 * The feature id for the '<em><b>Body Expressions</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BLOCK_EXP_CS__BODY_EXPRESSIONS = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Block Exp CS</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BLOCK_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 1;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ComputeExpCSImpl <em>Compute Exp CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ComputeExpCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getComputeExpCS()
-	 * @generated
-	 */
-	int COMPUTE_EXP_CS = 37;
-
-	/**
-	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPUTE_EXP_CS__START_OFFSET = STATEMENT_CS__START_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPUTE_EXP_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPUTE_EXP_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPUTE_EXP_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPUTE_EXP_CS__AST = STATEMENT_CS__AST;
-
-	/**
-	 * The feature id for the '<em><b>Returned Element</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPUTE_EXP_CS__RETURNED_ELEMENT = STATEMENT_CS_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Body</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPUTE_EXP_CS__BODY = STATEMENT_CS_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Compute Exp CS</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPUTE_EXP_CS_FEATURE_COUNT = STATEMENT_CS_FEATURE_COUNT + 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.DirectionKindCSImpl <em>Direction Kind CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.DirectionKindCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getDirectionKindCS()
-	 * @generated
-	 */
-	int DIRECTION_KIND_CS = 38;
-
-	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3716,16 +4475,6 @@ public interface CSTPackage extends EPackage {
 	int DIRECTION_KIND_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ElementWithBodyImpl <em>Element With Body</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ElementWithBodyImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getElementWithBody()
-	 * @generated
-	 */
-	int ELEMENT_WITH_BODY = 39;
-
-	/**
 	 * The feature id for the '<em><b>Body Start Location</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3751,16 +4500,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int ELEMENT_WITH_BODY_FEATURE_COUNT = 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ResolveExpCSImpl <em>Resolve Exp CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ResolveExpCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getResolveExpCS()
-	 * @generated
-	 */
-	int RESOLVE_EXP_CS = 40;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3887,16 +4626,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int RESOLVE_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CALL_EXP_CS_FEATURE_COUNT + 5;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ResolveInExpCSImpl <em>Resolve In Exp CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ResolveInExpCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getResolveInExpCS()
-	 * @generated
-	 */
-	int RESOLVE_IN_EXP_CS = 41;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -4043,16 +4772,6 @@ public interface CSTPackage extends EPackage {
 	int RESOLVE_IN_EXP_CS_FEATURE_COUNT = RESOLVE_EXP_CS_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ModelTypeCSImpl <em>Model Type CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ModelTypeCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getModelTypeCS()
-	 * @generated
-	 */
-	int MODEL_TYPE_CS = 42;
-
-	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4161,16 +4880,6 @@ public interface CSTPackage extends EPackage {
 	int MODEL_TYPE_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 6;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.PackageRefCSImpl <em>Package Ref CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.PackageRefCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getPackageRefCS()
-	 * @generated
-	 */
-	int PACKAGE_REF_CS = 43;
-
-	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4241,16 +4950,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int PACKAGE_REF_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.TransformationHeaderCSImpl <em>Transformation Header CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.TransformationHeaderCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getTransformationHeaderCS()
-	 * @generated
-	 */
-	int TRANSFORMATION_HEADER_CS = 44;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -4352,16 +5051,6 @@ public interface CSTPackage extends EPackage {
 	int TRANSFORMATION_HEADER_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 5;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ModuleKindCSImpl <em>Module Kind CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ModuleKindCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getModuleKindCS()
-	 * @generated
-	 */
-	int MODULE_KIND_CS = 45;
-
-	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4423,16 +5112,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int MODULE_KIND_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 1;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ModuleRefCSImpl <em>Module Ref CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ModuleRefCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getModuleRefCS()
-	 * @generated
-	 */
-	int MODULE_REF_CS = 46;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -4505,16 +5184,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int MODULE_REF_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ModuleUsageCSImpl <em>Module Usage CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ModuleUsageCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getModuleUsageCS()
-	 * @generated
-	 */
-	int MODULE_USAGE_CS = 47;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -4598,16 +5267,6 @@ public interface CSTPackage extends EPackage {
 	int MODULE_USAGE_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 3;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.TransformationRefineCSImpl <em>Transformation Refine CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.TransformationRefineCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getTransformationRefineCS()
-	 * @generated
-	 */
-	int TRANSFORMATION_REFINE_CS = 48;
-
-	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4680,16 +5339,6 @@ public interface CSTPackage extends EPackage {
 	int TRANSFORMATION_REFINE_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.TypeSpecCSImpl <em>Type Spec CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.TypeSpecCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getTypeSpecCS()
-	 * @generated
-	 */
-	int TYPE_SPEC_CS = 49;
-
-	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4760,16 +5409,6 @@ public interface CSTPackage extends EPackage {
 	 * @ordered
 	 */
 	int TYPE_SPEC_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.LogExpCSImpl <em>Log Exp CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.LogExpCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getLogExpCS()
-	 * @generated
-	 */
-	int LOG_EXP_CS = 50;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -4880,23 +5519,13 @@ public interface CSTPackage extends EPackage {
 	int LOG_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.OPERATION_CALL_EXP_CS_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.AssertExpCSImpl <em>Assert Exp CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.AssertExpCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getAssertExpCS()
-	 * @generated
-	 */
-	int ASSERT_EXP_CS = 51;
-
-	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ASSERT_EXP_CS__START_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_OFFSET;
+	int ASSERT_EXP_CS__START_OFFSET = STATEMENT_CS__START_OFFSET;
 
 	/**
 	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
@@ -4905,7 +5534,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSERT_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_OFFSET;
+	int ASSERT_EXP_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
 
 	/**
 	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
@@ -4914,7 +5543,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSERT_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_TOKEN;
+	int ASSERT_EXP_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
 
 	/**
 	 * The feature id for the '<em><b>End Token</b></em>' attribute.
@@ -4923,7 +5552,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSERT_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_TOKEN;
+	int ASSERT_EXP_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
 
 	/**
 	 * The feature id for the '<em><b>Ast</b></em>' attribute.
@@ -4932,7 +5561,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSERT_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__AST;
+	int ASSERT_EXP_CS__AST = STATEMENT_CS__AST;
 
 	/**
 	 * The feature id for the '<em><b>Assertion</b></em>' containment reference.
@@ -4941,7 +5570,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSERT_EXP_CS__ASSERTION = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 0;
+	int ASSERT_EXP_CS__ASSERTION = STATEMENT_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Log</b></em>' containment reference.
@@ -4950,7 +5579,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSERT_EXP_CS__LOG = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 1;
+	int ASSERT_EXP_CS__LOG = STATEMENT_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Severity</b></em>' containment reference.
@@ -4959,7 +5588,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSERT_EXP_CS__SEVERITY = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 2;
+	int ASSERT_EXP_CS__SEVERITY = STATEMENT_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Assert Exp CS</em>' class.
@@ -4968,17 +5597,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSERT_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 3;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ImperativeLoopExpCSImpl <em>Imperative Loop Exp CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ImperativeLoopExpCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getImperativeLoopExpCS()
-	 * @generated
-	 */
-	int IMPERATIVE_LOOP_EXP_CS = 52;
+	int ASSERT_EXP_CS_FEATURE_COUNT = STATEMENT_CS_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -4987,7 +5606,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPERATIVE_LOOP_EXP_CS__START_OFFSET = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__START_OFFSET;
+	int RETURN_EXP_CS__START_OFFSET = STATEMENT_CS__START_OFFSET;
 
 	/**
 	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
@@ -4996,7 +5615,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPERATIVE_LOOP_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__END_OFFSET;
+	int RETURN_EXP_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
 
 	/**
 	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
@@ -5005,7 +5624,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPERATIVE_LOOP_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__START_TOKEN;
+	int RETURN_EXP_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
 
 	/**
 	 * The feature id for the '<em><b>End Token</b></em>' attribute.
@@ -5014,7 +5633,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPERATIVE_LOOP_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__END_TOKEN;
+	int RETURN_EXP_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
 
 	/**
 	 * The feature id for the '<em><b>Ast</b></em>' attribute.
@@ -5023,397 +5642,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPERATIVE_LOOP_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__AST;
-
-	/**
-	 * The feature id for the '<em><b>Source</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_LOOP_EXP_CS__SOURCE = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__SOURCE;
-
-	/**
-	 * The feature id for the '<em><b>Accessor</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_LOOP_EXP_CS__ACCESSOR = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__ACCESSOR;
-
-	/**
-	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_LOOP_EXP_CS__SIMPLE_NAME_CS = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__SIMPLE_NAME_CS;
-
-	/**
-	 * The feature id for the '<em><b>Variable1</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_LOOP_EXP_CS__VARIABLE1 = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__VARIABLE1;
-
-	/**
-	 * The feature id for the '<em><b>Variable2</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_LOOP_EXP_CS__VARIABLE2 = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__VARIABLE2;
-
-	/**
-	 * The feature id for the '<em><b>Body</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_LOOP_EXP_CS__BODY = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS__BODY;
-
-	/**
-	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_LOOP_EXP_CS__CONDITION = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Imperative Loop Exp CS</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_LOOP_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.LOOP_EXP_CS_FEATURE_COUNT + 1;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ForExpCSImpl <em>For Exp CS</em>}' class.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ForExpCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getForExpCS()
-	 * @generated
-	 */
-    int FOR_EXP_CS = 53;
-
-    /**
-	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int FOR_EXP_CS__START_OFFSET = IMPERATIVE_LOOP_EXP_CS__START_OFFSET;
-
-    /**
-	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int FOR_EXP_CS__END_OFFSET = IMPERATIVE_LOOP_EXP_CS__END_OFFSET;
-
-    /**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOR_EXP_CS__START_TOKEN = IMPERATIVE_LOOP_EXP_CS__START_TOKEN;
-
-				/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOR_EXP_CS__END_TOKEN = IMPERATIVE_LOOP_EXP_CS__END_TOKEN;
-
-				/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOR_EXP_CS__AST = IMPERATIVE_LOOP_EXP_CS__AST;
-
-				/**
-	 * The feature id for the '<em><b>Source</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int FOR_EXP_CS__SOURCE = IMPERATIVE_LOOP_EXP_CS__SOURCE;
-
-    /**
-	 * The feature id for the '<em><b>Accessor</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int FOR_EXP_CS__ACCESSOR = IMPERATIVE_LOOP_EXP_CS__ACCESSOR;
-
-    /**
-	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int FOR_EXP_CS__SIMPLE_NAME_CS = IMPERATIVE_LOOP_EXP_CS__SIMPLE_NAME_CS;
-
-    /**
-	 * The feature id for the '<em><b>Variable1</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int FOR_EXP_CS__VARIABLE1 = IMPERATIVE_LOOP_EXP_CS__VARIABLE1;
-
-    /**
-	 * The feature id for the '<em><b>Variable2</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int FOR_EXP_CS__VARIABLE2 = IMPERATIVE_LOOP_EXP_CS__VARIABLE2;
-
-    /**
-	 * The feature id for the '<em><b>Body</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int FOR_EXP_CS__BODY = IMPERATIVE_LOOP_EXP_CS__BODY;
-
-    /**
-	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int FOR_EXP_CS__CONDITION = IMPERATIVE_LOOP_EXP_CS__CONDITION;
-
-    /**
-	 * The number of structural features of the '<em>For Exp CS</em>' class.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int FOR_EXP_CS_FEATURE_COUNT = IMPERATIVE_LOOP_EXP_CS_FEATURE_COUNT + 0;
-
-    /**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ImperativeIterateExpCSImpl <em>Imperative Iterate Exp CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ImperativeIterateExpCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getImperativeIterateExpCS()
-	 * @generated
-	 */
-	int IMPERATIVE_ITERATE_EXP_CS = 54;
-
-	/**
-	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_ITERATE_EXP_CS__START_OFFSET = IMPERATIVE_LOOP_EXP_CS__START_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_ITERATE_EXP_CS__END_OFFSET = IMPERATIVE_LOOP_EXP_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_ITERATE_EXP_CS__START_TOKEN = IMPERATIVE_LOOP_EXP_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_ITERATE_EXP_CS__END_TOKEN = IMPERATIVE_LOOP_EXP_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_ITERATE_EXP_CS__AST = IMPERATIVE_LOOP_EXP_CS__AST;
-
-	/**
-	 * The feature id for the '<em><b>Source</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_ITERATE_EXP_CS__SOURCE = IMPERATIVE_LOOP_EXP_CS__SOURCE;
-
-	/**
-	 * The feature id for the '<em><b>Accessor</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_ITERATE_EXP_CS__ACCESSOR = IMPERATIVE_LOOP_EXP_CS__ACCESSOR;
-
-	/**
-	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_ITERATE_EXP_CS__SIMPLE_NAME_CS = IMPERATIVE_LOOP_EXP_CS__SIMPLE_NAME_CS;
-
-	/**
-	 * The feature id for the '<em><b>Variable1</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_ITERATE_EXP_CS__VARIABLE1 = IMPERATIVE_LOOP_EXP_CS__VARIABLE1;
-
-	/**
-	 * The feature id for the '<em><b>Variable2</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_ITERATE_EXP_CS__VARIABLE2 = IMPERATIVE_LOOP_EXP_CS__VARIABLE2;
-
-	/**
-	 * The feature id for the '<em><b>Body</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_ITERATE_EXP_CS__BODY = IMPERATIVE_LOOP_EXP_CS__BODY;
-
-	/**
-	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_ITERATE_EXP_CS__CONDITION = IMPERATIVE_LOOP_EXP_CS__CONDITION;
-
-	/**
-	 * The feature id for the '<em><b>Target</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_ITERATE_EXP_CS__TARGET = IMPERATIVE_LOOP_EXP_CS_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Imperative Iterate Exp CS</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_ITERATE_EXP_CS_FEATURE_COUNT = IMPERATIVE_LOOP_EXP_CS_FEATURE_COUNT + 1;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ReturnExpCSImpl <em>Return Exp CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ReturnExpCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getReturnExpCS()
-	 * @generated
-	 */
-	int RETURN_EXP_CS = 55;
-
-	/**
-	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RETURN_EXP_CS__START_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RETURN_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RETURN_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RETURN_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RETURN_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__AST;
+	int RETURN_EXP_CS__AST = STATEMENT_CS__AST;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' containment reference.
@@ -5422,7 +5651,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RETURN_EXP_CS__VALUE = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 0;
+	int RETURN_EXP_CS__VALUE = STATEMENT_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Return Exp CS</em>' class.
@@ -5431,17 +5660,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RETURN_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 1;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingExtensionCSImpl <em>Mapping Extension CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingExtensionCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingExtensionCS()
-	 * @generated
-	 */
-	int MAPPING_EXTENSION_CS = 56;
+	int RETURN_EXP_CS_FEATURE_COUNT = STATEMENT_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -5516,88 +5735,6 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_EXTENSION_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.NewRuleCallExpCSImpl <em>New Rule Call Exp CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.NewRuleCallExpCSImpl
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getNewRuleCallExpCS()
-	 * @generated
-	 */
-	int NEW_RULE_CALL_EXP_CS = 57;
-
-	/**
-	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NEW_RULE_CALL_EXP_CS__START_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NEW_RULE_CALL_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_OFFSET;
-
-	/**
-	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NEW_RULE_CALL_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__START_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>End Token</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NEW_RULE_CALL_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__END_TOKEN;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NEW_RULE_CALL_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS__AST;
-
-	/**
-	 * The feature id for the '<em><b>Type Spec CS</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NEW_RULE_CALL_EXP_CS__TYPE_SPEC_CS = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Arguments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NEW_RULE_CALL_EXP_CS__ARGUMENTS = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>New Rule Call Exp CS</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NEW_RULE_CALL_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.OCL_EXPRESSION_CS_FEATURE_COUNT + 2;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ListTypeCSImpl <em>List Type CS</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5605,7 +5742,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getListTypeCS()
 	 * @generated
 	 */
-	int LIST_TYPE_CS = 58;
+	int LIST_TYPE_CS = 60;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -5678,7 +5815,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getDictionaryTypeCS()
 	 * @generated
 	 */
-	int DICTIONARY_TYPE_CS = 59;
+	int DICTIONARY_TYPE_CS = 61;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -5760,7 +5897,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getDictLiteralExpCS()
 	 * @generated
 	 */
-	int DICT_LITERAL_EXP_CS = 60;
+	int DICT_LITERAL_EXP_CS = 62;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -5833,7 +5970,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getDictLiteralPartCS()
 	 * @generated
 	 */
-	int DICT_LITERAL_PART_CS = 61;
+	int DICT_LITERAL_PART_CS = 63;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -5915,7 +6052,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getTagCS()
 	 * @generated
 	 */
-	int TAG_CS = 62;
+	int TAG_CS = 64;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -6006,7 +6143,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getDirectionKindEnum()
 	 * @generated
 	 */
-	int DIRECTION_KIND_ENUM = 63;
+	int DIRECTION_KIND_ENUM = 65;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindEnum <em>Module Kind Enum</em>}' enum.
@@ -6016,7 +6153,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getModuleKindEnum()
 	 * @generated
 	 */
-	int MODULE_KIND_ENUM = 64;
+	int MODULE_KIND_ENUM = 66;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum <em>Import Kind Enum</em>}' enum.
@@ -6026,7 +6163,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getImportKindEnum()
 	 * @generated
 	 */
-	int IMPORT_KIND_ENUM = 65;
+	int IMPORT_KIND_ENUM = 67;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionKindCS <em>Mapping Extension Kind CS</em>}' enum.
@@ -6036,7 +6173,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingExtensionKindCS()
 	 * @generated
 	 */
-	int MAPPING_EXTENSION_KIND_CS = 66;
+	int MAPPING_EXTENSION_KIND_CS = 68;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS <em>Qualifier Kind CS</em>}' enum.
@@ -6046,7 +6183,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getQualifierKindCS()
 	 * @generated
 	 */
-	int QUALIFIER_KIND_CS = 67;
+	int QUALIFIER_KIND_CS = 69;
 
 
 	/**
@@ -7012,6 +7149,26 @@ public interface CSTPackage extends EPackage {
 	EAttribute getAssignStatementCS_Incremental();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.BreakExpCS <em>Break Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Break Exp CS</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.BreakExpCS
+	 * @generated
+	 */
+	EClass getBreakExpCS();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ContinueExpCS <em>Continue Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Continue Exp CS</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ContinueExpCS
+	 * @generated
+	 */
+	EClass getContinueExpCS();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ExpressionStatementCS <em>Expression Statement CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7108,58 +7265,47 @@ public interface CSTPackage extends EPackage {
 	EAttribute getMappingBodyCS_HasPopulationKeyword();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS <em>Out Exp CS</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS <em>Object Exp CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Out Exp CS</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS
+	 * @return the meta object for class '<em>Object Exp CS</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS
 	 * @generated
 	 */
-	EClass getOutExpCS();
+	EClass getObjectExpCS();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS#getSimpleNameCS <em>Simple Name CS</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS#getSimpleNameCS <em>Simple Name CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Simple Name CS</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS#getSimpleNameCS()
-	 * @see #getOutExpCS()
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS#getSimpleNameCS()
+	 * @see #getObjectExpCS()
 	 * @generated
 	 */
-	EReference getOutExpCS_SimpleNameCS();
+	EReference getObjectExpCS_SimpleNameCS();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS#getTypeSpecCS <em>Type Spec CS</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Type Spec CS</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS#getTypeSpecCS()
-	 * @see #getOutExpCS()
-	 * @generated
-	 */
-	EReference getOutExpCS_TypeSpecCS();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS#getExpressions <em>Expressions</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS#getExpressions <em>Expressions</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Expressions</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS#getExpressions()
-	 * @see #getOutExpCS()
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS#getExpressions()
+	 * @see #getObjectExpCS()
 	 * @generated
 	 */
-	EReference getOutExpCS_Expressions();
+	EReference getObjectExpCS_Expressions();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS#isIsImplicit <em>Is Implicit</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS#isIsImplicit <em>Is Implicit</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Is Implicit</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS#isIsImplicit()
-	 * @see #getOutExpCS()
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS#isIsImplicit()
+	 * @see #getObjectExpCS()
 	 * @generated
 	 */
-	EAttribute getOutExpCS_IsImplicit();
+	EAttribute getObjectExpCS_IsImplicit();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingCallExpCS <em>Mapping Call Exp CS</em>}'.
@@ -7973,36 +8119,36 @@ public interface CSTPackage extends EPackage {
 	EReference getMappingExtensionCS_MappingIdentifiers();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS <em>New Rule Call Exp CS</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS <em>Instantiation Exp CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>New Rule Call Exp CS</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS
+	 * @return the meta object for class '<em>Instantiation Exp CS</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS
 	 * @generated
 	 */
-	EClass getNewRuleCallExpCS();
+	EClass getInstantiationExpCS();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS#getTypeSpecCS <em>Type Spec CS</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS#getTypeSpecCS <em>Type Spec CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Type Spec CS</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS#getTypeSpecCS()
-	 * @see #getNewRuleCallExpCS()
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS#getTypeSpecCS()
+	 * @see #getInstantiationExpCS()
 	 * @generated
 	 */
-	EReference getNewRuleCallExpCS_TypeSpecCS();
+	EReference getInstantiationExpCS_TypeSpecCS();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS#getArguments <em>Arguments</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS#getArguments <em>Arguments</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Arguments</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS#getArguments()
-	 * @see #getNewRuleCallExpCS()
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS#getArguments()
+	 * @see #getInstantiationExpCS()
 	 * @generated
 	 */
-	EReference getNewRuleCallExpCS_Arguments();
+	EReference getInstantiationExpCS_Arguments();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ListTypeCS <em>List Type CS</em>}'.
@@ -9002,6 +9148,26 @@ public interface CSTPackage extends EPackage {
 		EAttribute ASSIGN_STATEMENT_CS__INCREMENTAL = eINSTANCE.getAssignStatementCS_Incremental();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.BreakExpCSImpl <em>Break Exp CS</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.BreakExpCSImpl
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getBreakExpCS()
+		 * @generated
+		 */
+		EClass BREAK_EXP_CS = eINSTANCE.getBreakExpCS();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ContinueExpCSImpl <em>Continue Exp CS</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ContinueExpCSImpl
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getContinueExpCS()
+		 * @generated
+		 */
+		EClass CONTINUE_EXP_CS = eINSTANCE.getContinueExpCS();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ExpressionStatementCSImpl <em>Expression Statement CS</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -9080,14 +9246,14 @@ public interface CSTPackage extends EPackage {
 		EAttribute MAPPING_BODY_CS__HAS_POPULATION_KEYWORD = eINSTANCE.getMappingBodyCS_HasPopulationKeyword();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.OutExpCSImpl <em>Out Exp CS</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ObjectExpCSImpl <em>Object Exp CS</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.OutExpCSImpl
-		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getOutExpCS()
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ObjectExpCSImpl
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getObjectExpCS()
 		 * @generated
 		 */
-		EClass OUT_EXP_CS = eINSTANCE.getOutExpCS();
+		EClass OBJECT_EXP_CS = eINSTANCE.getObjectExpCS();
 
 		/**
 		 * The meta object literal for the '<em><b>Simple Name CS</b></em>' containment reference feature.
@@ -9095,15 +9261,7 @@ public interface CSTPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference OUT_EXP_CS__SIMPLE_NAME_CS = eINSTANCE.getOutExpCS_SimpleNameCS();
-
-		/**
-		 * The meta object literal for the '<em><b>Type Spec CS</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference OUT_EXP_CS__TYPE_SPEC_CS = eINSTANCE.getOutExpCS_TypeSpecCS();
+		EReference OBJECT_EXP_CS__SIMPLE_NAME_CS = eINSTANCE.getObjectExpCS_SimpleNameCS();
 
 		/**
 		 * The meta object literal for the '<em><b>Expressions</b></em>' containment reference list feature.
@@ -9111,7 +9269,7 @@ public interface CSTPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference OUT_EXP_CS__EXPRESSIONS = eINSTANCE.getOutExpCS_Expressions();
+		EReference OBJECT_EXP_CS__EXPRESSIONS = eINSTANCE.getObjectExpCS_Expressions();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Implicit</b></em>' attribute feature.
@@ -9119,7 +9277,7 @@ public interface CSTPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute OUT_EXP_CS__IS_IMPLICIT = eINSTANCE.getOutExpCS_IsImplicit();
+		EAttribute OBJECT_EXP_CS__IS_IMPLICIT = eINSTANCE.getObjectExpCS_IsImplicit();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingCallExpCSImpl <em>Mapping Call Exp CS</em>}' class.
@@ -9780,14 +9938,14 @@ public interface CSTPackage extends EPackage {
 		EReference MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS = eINSTANCE.getMappingExtensionCS_MappingIdentifiers();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.NewRuleCallExpCSImpl <em>New Rule Call Exp CS</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.InstantiationExpCSImpl <em>Instantiation Exp CS</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.NewRuleCallExpCSImpl
-		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getNewRuleCallExpCS()
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.InstantiationExpCSImpl
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getInstantiationExpCS()
 		 * @generated
 		 */
-		EClass NEW_RULE_CALL_EXP_CS = eINSTANCE.getNewRuleCallExpCS();
+		EClass INSTANTIATION_EXP_CS = eINSTANCE.getInstantiationExpCS();
 
 		/**
 		 * The meta object literal for the '<em><b>Type Spec CS</b></em>' containment reference feature.
@@ -9795,7 +9953,7 @@ public interface CSTPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference NEW_RULE_CALL_EXP_CS__TYPE_SPEC_CS = eINSTANCE.getNewRuleCallExpCS_TypeSpecCS();
+		EReference INSTANTIATION_EXP_CS__TYPE_SPEC_CS = eINSTANCE.getInstantiationExpCS_TypeSpecCS();
 
 		/**
 		 * The meta object literal for the '<em><b>Arguments</b></em>' containment reference list feature.
@@ -9803,7 +9961,7 @@ public interface CSTPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference NEW_RULE_CALL_EXP_CS__ARGUMENTS = eINSTANCE.getNewRuleCallExpCS_Arguments();
+		EReference INSTANTIATION_EXP_CS__ARGUMENTS = eINSTANCE.getInstantiationExpCS_Arguments();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ListTypeCSImpl <em>List Type CS</em>}' class.

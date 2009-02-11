@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: OutExpCSImpl.java,v 1.3 2009/01/13 20:23:48 radvorak Exp $
+ * $Id: ObjectExpCSImpl.java,v 1.1 2009/02/11 16:17:59 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -19,39 +19,45 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.ElementWithBody;
-import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
+
 import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
+
 import org.eclipse.ocl.cst.impl.OCLExpressionCSImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Out Exp CS</b></em>'.
+ * An implementation of the model object '<em><b>Object Exp CS</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.OutExpCSImpl#getBodyStartLocation <em>Body Start Location</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.OutExpCSImpl#getBodyEndLocation <em>Body End Location</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.OutExpCSImpl#getSimpleNameCS <em>Simple Name CS</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.OutExpCSImpl#getTypeSpecCS <em>Type Spec CS</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.OutExpCSImpl#getExpressions <em>Expressions</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.OutExpCSImpl#isIsImplicit <em>Is Implicit</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ObjectExpCSImpl#getBodyStartLocation <em>Body Start Location</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ObjectExpCSImpl#getBodyEndLocation <em>Body End Location</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ObjectExpCSImpl#getSimpleNameCS <em>Simple Name CS</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ObjectExpCSImpl#getExpressions <em>Expressions</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ObjectExpCSImpl#isIsImplicit <em>Is Implicit</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
+public class ObjectExpCSImpl extends InstantiationExpCSImpl implements ObjectExpCS {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -110,16 +116,6 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 	protected SimpleNameCS simpleNameCS;
 
 	/**
-	 * The cached value of the '{@link #getTypeSpecCS() <em>Type Spec CS</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTypeSpecCS()
-	 * @generated
-	 * @ordered
-	 */
-	protected TypeSpecCS typeSpecCS;
-
-	/**
 	 * The cached value of the '{@link #getExpressions() <em>Expressions</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -154,7 +150,7 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected OutExpCSImpl() {
+	protected ObjectExpCSImpl() {
 		super();
 	}
 
@@ -165,7 +161,7 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return CSTPackage.Literals.OUT_EXP_CS;
+		return CSTPackage.Literals.OBJECT_EXP_CS;
 	}
 
 	/**
@@ -186,7 +182,7 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 		int oldBodyStartLocation = bodyStartLocation;
 		bodyStartLocation = newBodyStartLocation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.OUT_EXP_CS__BODY_START_LOCATION, oldBodyStartLocation, bodyStartLocation));
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.OBJECT_EXP_CS__BODY_START_LOCATION, oldBodyStartLocation, bodyStartLocation));
 	}
 
 	/**
@@ -207,7 +203,7 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 		int oldBodyEndLocation = bodyEndLocation;
 		bodyEndLocation = newBodyEndLocation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.OUT_EXP_CS__BODY_END_LOCATION, oldBodyEndLocation, bodyEndLocation));
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.OBJECT_EXP_CS__BODY_END_LOCATION, oldBodyEndLocation, bodyEndLocation));
 	}
 
 	/**
@@ -228,7 +224,7 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 		SimpleNameCS oldSimpleNameCS = simpleNameCS;
 		simpleNameCS = newSimpleNameCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.OUT_EXP_CS__SIMPLE_NAME_CS, oldSimpleNameCS, newSimpleNameCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.OBJECT_EXP_CS__SIMPLE_NAME_CS, oldSimpleNameCS, newSimpleNameCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -243,57 +239,14 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 		if (newSimpleNameCS != simpleNameCS) {
 			NotificationChain msgs = null;
 			if (simpleNameCS != null)
-				msgs = ((InternalEObject)simpleNameCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.OUT_EXP_CS__SIMPLE_NAME_CS, null, msgs);
+				msgs = ((InternalEObject)simpleNameCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.OBJECT_EXP_CS__SIMPLE_NAME_CS, null, msgs);
 			if (newSimpleNameCS != null)
-				msgs = ((InternalEObject)newSimpleNameCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.OUT_EXP_CS__SIMPLE_NAME_CS, null, msgs);
+				msgs = ((InternalEObject)newSimpleNameCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.OBJECT_EXP_CS__SIMPLE_NAME_CS, null, msgs);
 			msgs = basicSetSimpleNameCS(newSimpleNameCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.OUT_EXP_CS__SIMPLE_NAME_CS, newSimpleNameCS, newSimpleNameCS));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public TypeSpecCS getTypeSpecCS() {
-		return typeSpecCS;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetTypeSpecCS(TypeSpecCS newTypeSpecCS, NotificationChain msgs) {
-		TypeSpecCS oldTypeSpecCS = typeSpecCS;
-		typeSpecCS = newTypeSpecCS;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.OUT_EXP_CS__TYPE_SPEC_CS, oldTypeSpecCS, newTypeSpecCS);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setTypeSpecCS(TypeSpecCS newTypeSpecCS) {
-		if (newTypeSpecCS != typeSpecCS) {
-			NotificationChain msgs = null;
-			if (typeSpecCS != null)
-				msgs = ((InternalEObject)typeSpecCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.OUT_EXP_CS__TYPE_SPEC_CS, null, msgs);
-			if (newTypeSpecCS != null)
-				msgs = ((InternalEObject)newTypeSpecCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.OUT_EXP_CS__TYPE_SPEC_CS, null, msgs);
-			msgs = basicSetTypeSpecCS(newTypeSpecCS, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.OUT_EXP_CS__TYPE_SPEC_CS, newTypeSpecCS, newTypeSpecCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.OBJECT_EXP_CS__SIMPLE_NAME_CS, newSimpleNameCS, newSimpleNameCS));
 	}
 
 	/**
@@ -303,7 +256,7 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 	 */
 	public EList<OCLExpressionCS> getExpressions() {
 		if (expressions == null) {
-			expressions = new EObjectContainmentEList<OCLExpressionCS>(OCLExpressionCS.class, this, CSTPackage.OUT_EXP_CS__EXPRESSIONS);
+			expressions = new EObjectContainmentEList<OCLExpressionCS>(OCLExpressionCS.class, this, CSTPackage.OBJECT_EXP_CS__EXPRESSIONS);
 		}
 		return expressions;
 	}
@@ -326,7 +279,7 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 		boolean oldIsImplicit = (eFlags & IS_IMPLICIT_EFLAG) != 0;
 		if (newIsImplicit) eFlags |= IS_IMPLICIT_EFLAG; else eFlags &= ~IS_IMPLICIT_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.OUT_EXP_CS__IS_IMPLICIT, oldIsImplicit, newIsImplicit));
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.OBJECT_EXP_CS__IS_IMPLICIT, oldIsImplicit, newIsImplicit));
 	}
 
 	/**
@@ -337,11 +290,9 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CSTPackage.OUT_EXP_CS__SIMPLE_NAME_CS:
+			case CSTPackage.OBJECT_EXP_CS__SIMPLE_NAME_CS:
 				return basicSetSimpleNameCS(null, msgs);
-			case CSTPackage.OUT_EXP_CS__TYPE_SPEC_CS:
-				return basicSetTypeSpecCS(null, msgs);
-			case CSTPackage.OUT_EXP_CS__EXPRESSIONS:
+			case CSTPackage.OBJECT_EXP_CS__EXPRESSIONS:
 				return ((InternalEList<?>)getExpressions()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -355,17 +306,15 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CSTPackage.OUT_EXP_CS__BODY_START_LOCATION:
+			case CSTPackage.OBJECT_EXP_CS__BODY_START_LOCATION:
 				return new Integer(getBodyStartLocation());
-			case CSTPackage.OUT_EXP_CS__BODY_END_LOCATION:
+			case CSTPackage.OBJECT_EXP_CS__BODY_END_LOCATION:
 				return new Integer(getBodyEndLocation());
-			case CSTPackage.OUT_EXP_CS__SIMPLE_NAME_CS:
+			case CSTPackage.OBJECT_EXP_CS__SIMPLE_NAME_CS:
 				return getSimpleNameCS();
-			case CSTPackage.OUT_EXP_CS__TYPE_SPEC_CS:
-				return getTypeSpecCS();
-			case CSTPackage.OUT_EXP_CS__EXPRESSIONS:
+			case CSTPackage.OBJECT_EXP_CS__EXPRESSIONS:
 				return getExpressions();
-			case CSTPackage.OUT_EXP_CS__IS_IMPLICIT:
+			case CSTPackage.OBJECT_EXP_CS__IS_IMPLICIT:
 				return isIsImplicit() ? Boolean.TRUE : Boolean.FALSE;
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -380,23 +329,20 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CSTPackage.OUT_EXP_CS__BODY_START_LOCATION:
+			case CSTPackage.OBJECT_EXP_CS__BODY_START_LOCATION:
 				setBodyStartLocation(((Integer)newValue).intValue());
 				return;
-			case CSTPackage.OUT_EXP_CS__BODY_END_LOCATION:
+			case CSTPackage.OBJECT_EXP_CS__BODY_END_LOCATION:
 				setBodyEndLocation(((Integer)newValue).intValue());
 				return;
-			case CSTPackage.OUT_EXP_CS__SIMPLE_NAME_CS:
+			case CSTPackage.OBJECT_EXP_CS__SIMPLE_NAME_CS:
 				setSimpleNameCS((SimpleNameCS)newValue);
 				return;
-			case CSTPackage.OUT_EXP_CS__TYPE_SPEC_CS:
-				setTypeSpecCS((TypeSpecCS)newValue);
-				return;
-			case CSTPackage.OUT_EXP_CS__EXPRESSIONS:
+			case CSTPackage.OBJECT_EXP_CS__EXPRESSIONS:
 				getExpressions().clear();
 				getExpressions().addAll((Collection<? extends OCLExpressionCS>)newValue);
 				return;
-			case CSTPackage.OUT_EXP_CS__IS_IMPLICIT:
+			case CSTPackage.OBJECT_EXP_CS__IS_IMPLICIT:
 				setIsImplicit(((Boolean)newValue).booleanValue());
 				return;
 		}
@@ -411,22 +357,19 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CSTPackage.OUT_EXP_CS__BODY_START_LOCATION:
+			case CSTPackage.OBJECT_EXP_CS__BODY_START_LOCATION:
 				setBodyStartLocation(BODY_START_LOCATION_EDEFAULT);
 				return;
-			case CSTPackage.OUT_EXP_CS__BODY_END_LOCATION:
+			case CSTPackage.OBJECT_EXP_CS__BODY_END_LOCATION:
 				setBodyEndLocation(BODY_END_LOCATION_EDEFAULT);
 				return;
-			case CSTPackage.OUT_EXP_CS__SIMPLE_NAME_CS:
+			case CSTPackage.OBJECT_EXP_CS__SIMPLE_NAME_CS:
 				setSimpleNameCS((SimpleNameCS)null);
 				return;
-			case CSTPackage.OUT_EXP_CS__TYPE_SPEC_CS:
-				setTypeSpecCS((TypeSpecCS)null);
-				return;
-			case CSTPackage.OUT_EXP_CS__EXPRESSIONS:
+			case CSTPackage.OBJECT_EXP_CS__EXPRESSIONS:
 				getExpressions().clear();
 				return;
-			case CSTPackage.OUT_EXP_CS__IS_IMPLICIT:
+			case CSTPackage.OBJECT_EXP_CS__IS_IMPLICIT:
 				setIsImplicit(IS_IMPLICIT_EDEFAULT);
 				return;
 		}
@@ -441,17 +384,15 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CSTPackage.OUT_EXP_CS__BODY_START_LOCATION:
+			case CSTPackage.OBJECT_EXP_CS__BODY_START_LOCATION:
 				return bodyStartLocation != BODY_START_LOCATION_EDEFAULT;
-			case CSTPackage.OUT_EXP_CS__BODY_END_LOCATION:
+			case CSTPackage.OBJECT_EXP_CS__BODY_END_LOCATION:
 				return bodyEndLocation != BODY_END_LOCATION_EDEFAULT;
-			case CSTPackage.OUT_EXP_CS__SIMPLE_NAME_CS:
+			case CSTPackage.OBJECT_EXP_CS__SIMPLE_NAME_CS:
 				return simpleNameCS != null;
-			case CSTPackage.OUT_EXP_CS__TYPE_SPEC_CS:
-				return typeSpecCS != null;
-			case CSTPackage.OUT_EXP_CS__EXPRESSIONS:
+			case CSTPackage.OBJECT_EXP_CS__EXPRESSIONS:
 				return expressions != null && !expressions.isEmpty();
-			case CSTPackage.OUT_EXP_CS__IS_IMPLICIT:
+			case CSTPackage.OBJECT_EXP_CS__IS_IMPLICIT:
 				return ((eFlags & IS_IMPLICIT_EFLAG) != 0) != IS_IMPLICIT_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
@@ -466,8 +407,8 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
 		if (baseClass == ElementWithBody.class) {
 			switch (derivedFeatureID) {
-				case CSTPackage.OUT_EXP_CS__BODY_START_LOCATION: return CSTPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION;
-				case CSTPackage.OUT_EXP_CS__BODY_END_LOCATION: return CSTPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION;
+				case CSTPackage.OBJECT_EXP_CS__BODY_START_LOCATION: return CSTPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION;
+				case CSTPackage.OBJECT_EXP_CS__BODY_END_LOCATION: return CSTPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION;
 				default: return -1;
 			}
 		}
@@ -483,8 +424,8 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
 		if (baseClass == ElementWithBody.class) {
 			switch (baseFeatureID) {
-				case CSTPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION: return CSTPackage.OUT_EXP_CS__BODY_START_LOCATION;
-				case CSTPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION: return CSTPackage.OUT_EXP_CS__BODY_END_LOCATION;
+				case CSTPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION: return CSTPackage.OBJECT_EXP_CS__BODY_START_LOCATION;
+				case CSTPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION: return CSTPackage.OBJECT_EXP_CS__BODY_END_LOCATION;
 				default: return -1;
 			}
 		}
@@ -511,4 +452,4 @@ public class OutExpCSImpl extends OCLExpressionCSImpl implements OutExpCS {
 		return result.toString();
 	}
 
-} //OutExpCSImpl
+} //ObjectExpCSImpl

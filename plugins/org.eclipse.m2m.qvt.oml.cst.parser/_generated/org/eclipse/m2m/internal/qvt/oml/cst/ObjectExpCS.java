@@ -11,34 +11,34 @@
  * 
  * 
  *
- * $Id: OutExpCS.java,v 1.3 2009/01/13 20:23:40 radvorak Exp $
+ * $Id: ObjectExpCS.java,v 1.1 2009/02/11 16:17:59 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Out Exp CS</b></em>'.
+ * A representation of the model object '<em><b>Object Exp CS</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS#getSimpleNameCS <em>Simple Name CS</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS#getTypeSpecCS <em>Type Spec CS</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS#getExpressions <em>Expressions</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS#isIsImplicit <em>Is Implicit</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS#getSimpleNameCS <em>Simple Name CS</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS#getExpressions <em>Expressions</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS#isIsImplicit <em>Is Implicit</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getOutExpCS()
+ * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getObjectExpCS()
  * @model
  * @generated
  */
-public interface OutExpCS extends OCLExpressionCS, ElementWithBody {
+public interface ObjectExpCS extends InstantiationExpCS, ElementWithBody {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -56,14 +56,14 @@ public interface OutExpCS extends OCLExpressionCS, ElementWithBody {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Simple Name CS</em>' containment reference.
 	 * @see #setSimpleNameCS(SimpleNameCS)
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getOutExpCS_SimpleNameCS()
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getObjectExpCS_SimpleNameCS()
 	 * @model containment="true"
 	 * @generated
 	 */
 	SimpleNameCS getSimpleNameCS();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS#getSimpleNameCS <em>Simple Name CS</em>}' containment reference.
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS#getSimpleNameCS <em>Simple Name CS</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Simple Name CS</em>' containment reference.
@@ -71,32 +71,6 @@ public interface OutExpCS extends OCLExpressionCS, ElementWithBody {
 	 * @generated
 	 */
 	void setSimpleNameCS(SimpleNameCS value);
-
-	/**
-	 * Returns the value of the '<em><b>Type Spec CS</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Type Spec CS</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Type Spec CS</em>' containment reference.
-	 * @see #setTypeSpecCS(TypeSpecCS)
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getOutExpCS_TypeSpecCS()
-	 * @model containment="true"
-	 * @generated
-	 */
-	TypeSpecCS getTypeSpecCS();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS#getTypeSpecCS <em>Type Spec CS</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Type Spec CS</em>' containment reference.
-	 * @see #getTypeSpecCS()
-	 * @generated
-	 */
-	void setTypeSpecCS(TypeSpecCS value);
 
 	/**
 	 * Returns the value of the '<em><b>Expressions</b></em>' containment reference list.
@@ -108,7 +82,7 @@ public interface OutExpCS extends OCLExpressionCS, ElementWithBody {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Expressions</em>' containment reference list.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getOutExpCS_Expressions()
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getObjectExpCS_Expressions()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -124,14 +98,14 @@ public interface OutExpCS extends OCLExpressionCS, ElementWithBody {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Is Implicit</em>' attribute.
 	 * @see #setIsImplicit(boolean)
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getOutExpCS_IsImplicit()
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getObjectExpCS_IsImplicit()
 	 * @model
 	 * @generated
 	 */
 	boolean isIsImplicit();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS#isIsImplicit <em>Is Implicit</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS#isIsImplicit <em>Is Implicit</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Is Implicit</em>' attribute.
@@ -140,4 +114,4 @@ public interface OutExpCS extends OCLExpressionCS, ElementWithBody {
 	 */
 	void setIsImplicit(boolean value);
 
-} // OutExpCS
+} // ObjectExpCS

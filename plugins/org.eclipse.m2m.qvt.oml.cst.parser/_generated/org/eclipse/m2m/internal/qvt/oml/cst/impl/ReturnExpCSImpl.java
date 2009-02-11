@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ReturnExpCSImpl.java,v 1.2 2009/01/13 20:23:46 radvorak Exp $
+ * $Id: ReturnExpCSImpl.java,v 1.3 2009/02/11 16:17:59 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -38,7 +38,7 @@ import org.eclipse.ocl.cst.impl.OCLExpressionCSImpl;
  *
  * @generated
  */
-public class ReturnExpCSImpl extends OCLExpressionCSImpl implements ReturnExpCS {
+public class ReturnExpCSImpl extends StatementCSImpl implements ReturnExpCS {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

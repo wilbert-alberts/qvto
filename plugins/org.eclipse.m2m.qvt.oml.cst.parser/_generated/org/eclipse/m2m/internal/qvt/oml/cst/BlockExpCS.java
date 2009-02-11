@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: BlockExpCS.java,v 1.2 2009/01/13 20:23:39 radvorak Exp $
+ * $Id: BlockExpCS.java,v 1.3 2009/02/11 16:17:59 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -34,7 +34,7 @@ import org.eclipse.ocl.cst.OCLExpressionCS;
  * @model
  * @generated
  */
-public interface BlockExpCS extends OCLExpressionCS {
+public interface BlockExpCS extends StatementCS {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

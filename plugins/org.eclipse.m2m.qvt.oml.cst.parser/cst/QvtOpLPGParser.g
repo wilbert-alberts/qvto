@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.42 2009/02/04 15:33:23 sboyko Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.43 2009/02/11 16:18:00 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -58,7 +58,7 @@ $Globals
 	import org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.ModuleUsageCS;
-	import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
+	import org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.SimpleSignatureCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.temp.ResolveOpArgsExpCS;
@@ -151,7 +151,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.42 2009/02/04 15:33:23 sboyko Exp $
+ * $Id: QvtOpLPGParser.g,v 1.43 2009/02/11 16:18:00 sboyko Exp $
  */
 	./
 $End
@@ -1560,7 +1560,7 @@ $Rules
 		/.$BeginJava
 					BlockExpCS blockExpCS = (BlockExpCS) $getSym(3);
 					CSTNode result = setupOutExpCS(
-							(OutExpCS)$getSym(2),					
+							(ObjectExpCS) $getSym(2),					
 							blockExpCS.getBodyExpressions(),
 							// passing body positions
 							blockExpCS.getStartOffset(),
@@ -1572,7 +1572,7 @@ $Rules
 		./
 	outExpCS ::= object objectDeclCS qvtErrorToken
 		/.$BeginJava
-					OutExpCS objectDeclCS = ((OutExpCS)$getSym(2));  
+					ObjectExpCS objectDeclCS = ((ObjectExpCS) $getSym(2));  
 					CSTNode result = createOutExpCS(
 							objectDeclCS.getSimpleNameCS(),						
 							objectDeclCS.getTypeSpecCS()

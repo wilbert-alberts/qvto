@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.27 2009/02/04 15:33:23 sboyko Exp $
+ * $Id: CSTPackageImpl.java,v 1.28 2009/02/11 16:17:59 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.BreakExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
@@ -33,6 +34,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ContinueExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralPartCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DictionaryTypeCS;
@@ -45,6 +47,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeLoopExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum;
+import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ListTypeCS;
@@ -71,9 +74,8 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleUsageCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MultiplicityDefCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS;
@@ -309,6 +311,20 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass breakExpCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass continueExpCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass expressionStatementCSEClass = null;
 
 	/**
@@ -330,7 +346,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass outExpCSEClass = null;
+	private EClass objectExpCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -512,7 +528,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass newRuleCallExpCSEClass = null;
+	private EClass instantiationExpCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1475,6 +1491,24 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getBreakExpCS() {
+		return breakExpCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getContinueExpCS() {
+		return continueExpCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getExpressionStatementCS() {
 		return expressionStatementCSEClass;
 	}
@@ -1556,8 +1590,8 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getOutExpCS() {
-		return outExpCSEClass;
+	public EClass getObjectExpCS() {
+		return objectExpCSEClass;
 	}
 
 	/**
@@ -1565,8 +1599,8 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getOutExpCS_SimpleNameCS() {
-		return (EReference)outExpCSEClass.getEStructuralFeatures().get(0);
+	public EReference getObjectExpCS_SimpleNameCS() {
+		return (EReference)objectExpCSEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1574,8 +1608,8 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getOutExpCS_TypeSpecCS() {
-		return (EReference)outExpCSEClass.getEStructuralFeatures().get(1);
+	public EReference getObjectExpCS_Expressions() {
+		return (EReference)objectExpCSEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1583,17 +1617,8 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getOutExpCS_Expressions() {
-		return (EReference)outExpCSEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getOutExpCS_IsImplicit() {
-		return (EAttribute)outExpCSEClass.getEStructuralFeatures().get(3);
+	public EAttribute getObjectExpCS_IsImplicit() {
+		return (EAttribute)objectExpCSEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -2285,8 +2310,8 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getNewRuleCallExpCS() {
-		return newRuleCallExpCSEClass;
+	public EClass getInstantiationExpCS() {
+		return instantiationExpCSEClass;
 	}
 
 	/**
@@ -2294,8 +2319,8 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getNewRuleCallExpCS_TypeSpecCS() {
-		return (EReference)newRuleCallExpCSEClass.getEStructuralFeatures().get(0);
+	public EReference getInstantiationExpCS_TypeSpecCS() {
+		return (EReference)instantiationExpCSEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -2303,8 +2328,8 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getNewRuleCallExpCS_Arguments() {
-		return (EReference)newRuleCallExpCSEClass.getEStructuralFeatures().get(1);
+	public EReference getInstantiationExpCS_Arguments() {
+		return (EReference)instantiationExpCSEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -2619,36 +2644,25 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
 		statementCSEClass = createEClass(STATEMENT_CS);
 
-		assignStatementCSEClass = createEClass(ASSIGN_STATEMENT_CS);
-		createEReference(assignStatementCSEClass, ASSIGN_STATEMENT_CS__LVALUE_CS);
-		createEReference(assignStatementCSEClass, ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS);
-		createEAttribute(assignStatementCSEClass, ASSIGN_STATEMENT_CS__INCREMENTAL);
+		blockExpCSEClass = createEClass(BLOCK_EXP_CS);
+		createEReference(blockExpCSEClass, BLOCK_EXP_CS__BODY_EXPRESSIONS);
 
-		expressionStatementCSEClass = createEClass(EXPRESSION_STATEMENT_CS);
-		createEReference(expressionStatementCSEClass, EXPRESSION_STATEMENT_CS__OCL_EXPRESSION_CS);
-
-		variableInitializationCSEClass = createEClass(VARIABLE_INITIALIZATION_CS);
-		createEReference(variableInitializationCSEClass, VARIABLE_INITIALIZATION_CS__OCL_EXPRESSION_CS);
-		createEReference(variableInitializationCSEClass, VARIABLE_INITIALIZATION_CS__SIMPLE_NAME_CS);
-		createEReference(variableInitializationCSEClass, VARIABLE_INITIALIZATION_CS__TYPE_CS);
-		createEAttribute(variableInitializationCSEClass, VARIABLE_INITIALIZATION_CS__WITH_RESULT);
-
-		mappingBodyCSEClass = createEClass(MAPPING_BODY_CS);
-		createEAttribute(mappingBodyCSEClass, MAPPING_BODY_CS__HAS_POPULATION_KEYWORD);
-
-		outExpCSEClass = createEClass(OUT_EXP_CS);
-		createEReference(outExpCSEClass, OUT_EXP_CS__SIMPLE_NAME_CS);
-		createEReference(outExpCSEClass, OUT_EXP_CS__TYPE_SPEC_CS);
-		createEReference(outExpCSEClass, OUT_EXP_CS__EXPRESSIONS);
-		createEAttribute(outExpCSEClass, OUT_EXP_CS__IS_IMPLICIT);
-
-		mappingCallExpCSEClass = createEClass(MAPPING_CALL_EXP_CS);
-		createEAttribute(mappingCallExpCSEClass, MAPPING_CALL_EXP_CS__STRICT);
+		computeExpCSEClass = createEClass(COMPUTE_EXP_CS);
+		createEReference(computeExpCSEClass, COMPUTE_EXP_CS__RETURNED_ELEMENT);
+		createEReference(computeExpCSEClass, COMPUTE_EXP_CS__BODY);
 
 		whileExpCSEClass = createEClass(WHILE_EXP_CS);
 		createEReference(whileExpCSEClass, WHILE_EXP_CS__BODY);
 		createEReference(whileExpCSEClass, WHILE_EXP_CS__CONDITION);
 		createEReference(whileExpCSEClass, WHILE_EXP_CS__RESULT_VAR);
+
+		imperativeLoopExpCSEClass = createEClass(IMPERATIVE_LOOP_EXP_CS);
+		createEReference(imperativeLoopExpCSEClass, IMPERATIVE_LOOP_EXP_CS__CONDITION);
+
+		forExpCSEClass = createEClass(FOR_EXP_CS);
+
+		imperativeIterateExpCSEClass = createEClass(IMPERATIVE_ITERATE_EXP_CS);
+		createEReference(imperativeIterateExpCSEClass, IMPERATIVE_ITERATE_EXP_CS__TARGET);
 
 		switchExpCSEClass = createEClass(SWITCH_EXP_CS);
 		createEReference(switchExpCSEClass, SWITCH_EXP_CS__ALTERNATIVE_PART);
@@ -2658,12 +2672,34 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(switchAltExpCSEClass, SWITCH_ALT_EXP_CS__CONDITION);
 		createEReference(switchAltExpCSEClass, SWITCH_ALT_EXP_CS__BODY);
 
-		blockExpCSEClass = createEClass(BLOCK_EXP_CS);
-		createEReference(blockExpCSEClass, BLOCK_EXP_CS__BODY_EXPRESSIONS);
+		variableInitializationCSEClass = createEClass(VARIABLE_INITIALIZATION_CS);
+		createEReference(variableInitializationCSEClass, VARIABLE_INITIALIZATION_CS__OCL_EXPRESSION_CS);
+		createEReference(variableInitializationCSEClass, VARIABLE_INITIALIZATION_CS__SIMPLE_NAME_CS);
+		createEReference(variableInitializationCSEClass, VARIABLE_INITIALIZATION_CS__TYPE_CS);
+		createEAttribute(variableInitializationCSEClass, VARIABLE_INITIALIZATION_CS__WITH_RESULT);
 
-		computeExpCSEClass = createEClass(COMPUTE_EXP_CS);
-		createEReference(computeExpCSEClass, COMPUTE_EXP_CS__RETURNED_ELEMENT);
-		createEReference(computeExpCSEClass, COMPUTE_EXP_CS__BODY);
+		assignStatementCSEClass = createEClass(ASSIGN_STATEMENT_CS);
+		createEReference(assignStatementCSEClass, ASSIGN_STATEMENT_CS__LVALUE_CS);
+		createEReference(assignStatementCSEClass, ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS);
+		createEAttribute(assignStatementCSEClass, ASSIGN_STATEMENT_CS__INCREMENTAL);
+
+		breakExpCSEClass = createEClass(BREAK_EXP_CS);
+
+		continueExpCSEClass = createEClass(CONTINUE_EXP_CS);
+
+		expressionStatementCSEClass = createEClass(EXPRESSION_STATEMENT_CS);
+		createEReference(expressionStatementCSEClass, EXPRESSION_STATEMENT_CS__OCL_EXPRESSION_CS);
+
+		mappingBodyCSEClass = createEClass(MAPPING_BODY_CS);
+		createEAttribute(mappingBodyCSEClass, MAPPING_BODY_CS__HAS_POPULATION_KEYWORD);
+
+		objectExpCSEClass = createEClass(OBJECT_EXP_CS);
+		createEReference(objectExpCSEClass, OBJECT_EXP_CS__SIMPLE_NAME_CS);
+		createEReference(objectExpCSEClass, OBJECT_EXP_CS__EXPRESSIONS);
+		createEAttribute(objectExpCSEClass, OBJECT_EXP_CS__IS_IMPLICIT);
+
+		mappingCallExpCSEClass = createEClass(MAPPING_CALL_EXP_CS);
+		createEAttribute(mappingCallExpCSEClass, MAPPING_CALL_EXP_CS__STRICT);
 
 		directionKindCSEClass = createEClass(DIRECTION_KIND_CS);
 		createEAttribute(directionKindCSEClass, DIRECTION_KIND_CS__DIRECTION_KIND);
@@ -2728,14 +2764,6 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(assertExpCSEClass, ASSERT_EXP_CS__LOG);
 		createEReference(assertExpCSEClass, ASSERT_EXP_CS__SEVERITY);
 
-		imperativeLoopExpCSEClass = createEClass(IMPERATIVE_LOOP_EXP_CS);
-		createEReference(imperativeLoopExpCSEClass, IMPERATIVE_LOOP_EXP_CS__CONDITION);
-
-		forExpCSEClass = createEClass(FOR_EXP_CS);
-
-		imperativeIterateExpCSEClass = createEClass(IMPERATIVE_ITERATE_EXP_CS);
-		createEReference(imperativeIterateExpCSEClass, IMPERATIVE_ITERATE_EXP_CS__TARGET);
-
 		returnExpCSEClass = createEClass(RETURN_EXP_CS);
 		createEReference(returnExpCSEClass, RETURN_EXP_CS__VALUE);
 
@@ -2743,9 +2771,9 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEAttribute(mappingExtensionCSEClass, MAPPING_EXTENSION_CS__KIND);
 		createEReference(mappingExtensionCSEClass, MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS);
 
-		newRuleCallExpCSEClass = createEClass(NEW_RULE_CALL_EXP_CS);
-		createEReference(newRuleCallExpCSEClass, NEW_RULE_CALL_EXP_CS__TYPE_SPEC_CS);
-		createEReference(newRuleCallExpCSEClass, NEW_RULE_CALL_EXP_CS__ARGUMENTS);
+		instantiationExpCSEClass = createEClass(INSTANTIATION_EXP_CS);
+		createEReference(instantiationExpCSEClass, INSTANTIATION_EXP_CS__TYPE_SPEC_CS);
+		createEReference(instantiationExpCSEClass, INSTANTIATION_EXP_CS__ARGUMENTS);
 
 		listTypeCSEClass = createEClass(LIST_TYPE_CS);
 		createEReference(listTypeCSEClass, LIST_TYPE_CS__TYPE_CS);
@@ -2837,18 +2865,24 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		mappingEndCSEClass.getESuperTypes().add(this.getMappingSectionCS());
 		mappingSectionsCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		statementCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
-		assignStatementCSEClass.getESuperTypes().add(this.getStatementCS());
-		expressionStatementCSEClass.getESuperTypes().add(this.getStatementCS());
-		variableInitializationCSEClass.getESuperTypes().add(this.getStatementCS());
-		mappingBodyCSEClass.getESuperTypes().add(this.getMappingSectionCS());
-		outExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
-		outExpCSEClass.getESuperTypes().add(this.getElementWithBody());
-		mappingCallExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOperationCallExpCS());
-		whileExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
-		switchExpCSEClass.getESuperTypes().add(this.getStatementCS());
-		switchAltExpCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
-		blockExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
+		blockExpCSEClass.getESuperTypes().add(this.getStatementCS());
 		computeExpCSEClass.getESuperTypes().add(this.getStatementCS());
+		whileExpCSEClass.getESuperTypes().add(this.getStatementCS());
+		imperativeLoopExpCSEClass.getESuperTypes().add(theCSTPackage_1.getLoopExpCS());
+		imperativeLoopExpCSEClass.getESuperTypes().add(this.getStatementCS());
+		forExpCSEClass.getESuperTypes().add(this.getImperativeLoopExpCS());
+		imperativeIterateExpCSEClass.getESuperTypes().add(this.getImperativeLoopExpCS());
+		switchExpCSEClass.getESuperTypes().add(this.getStatementCS());
+		switchAltExpCSEClass.getESuperTypes().add(this.getStatementCS());
+		variableInitializationCSEClass.getESuperTypes().add(this.getStatementCS());
+		assignStatementCSEClass.getESuperTypes().add(this.getStatementCS());
+		breakExpCSEClass.getESuperTypes().add(this.getStatementCS());
+		continueExpCSEClass.getESuperTypes().add(this.getStatementCS());
+		expressionStatementCSEClass.getESuperTypes().add(this.getStatementCS());
+		mappingBodyCSEClass.getESuperTypes().add(this.getMappingSectionCS());
+		objectExpCSEClass.getESuperTypes().add(this.getInstantiationExpCS());
+		objectExpCSEClass.getESuperTypes().add(this.getElementWithBody());
+		mappingCallExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOperationCallExpCS());
 		directionKindCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		resolveExpCSEClass.getESuperTypes().add(theCSTPackage_1.getCallExpCS());
 		resolveInExpCSEClass.getESuperTypes().add(this.getResolveExpCS());
@@ -2862,14 +2896,10 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		transformationRefineCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		typeSpecCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		logExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOperationCallExpCS());
-		assertExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
-		imperativeLoopExpCSEClass.getESuperTypes().add(theCSTPackage_1.getLoopExpCS());
-		imperativeLoopExpCSEClass.getESuperTypes().add(this.getStatementCS());
-		forExpCSEClass.getESuperTypes().add(this.getImperativeLoopExpCS());
-		imperativeIterateExpCSEClass.getESuperTypes().add(this.getImperativeLoopExpCS());
-		returnExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
+		assertExpCSEClass.getESuperTypes().add(this.getStatementCS());
+		returnExpCSEClass.getESuperTypes().add(this.getStatementCS());
 		mappingExtensionCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
-		newRuleCallExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOCLExpressionCS());
+		instantiationExpCSEClass.getESuperTypes().add(this.getStatementCS());
 		listTypeCSEClass.getESuperTypes().add(theCSTPackage_1.getTypeCS());
 		dictionaryTypeCSEClass.getESuperTypes().add(theCSTPackage_1.getTypeCS());
 		dictLiteralExpCSEClass.getESuperTypes().add(theCSTPackage_1.getLiteralExpCS());
@@ -2990,36 +3020,25 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
 		initEClass(statementCSEClass, StatementCS.class, "StatementCS", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(assignStatementCSEClass, AssignStatementCS.class, "AssignStatementCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getAssignStatementCS_LValueCS(), theCSTPackage_1.getOCLExpressionCS(), null, "lValueCS", null, 0, 1, AssignStatementCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(getAssignStatementCS_OclExpressionCS(), theCSTPackage_1.getOCLExpressionCS(), null, "oclExpressionCS", null, 0, 1, AssignStatementCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getAssignStatementCS_Incremental(), ecorePackage.getEBoolean(), "incremental", null, 0, 1, AssignStatementCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(blockExpCSEClass, BlockExpCS.class, "BlockExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getBlockExpCS_BodyExpressions(), theCSTPackage_1.getOCLExpressionCS(), null, "bodyExpressions", null, 0, -1, BlockExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(expressionStatementCSEClass, ExpressionStatementCS.class, "ExpressionStatementCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getExpressionStatementCS_OclExpressionCS(), theCSTPackage_1.getOCLExpressionCS(), null, "oclExpressionCS", null, 0, 1, ExpressionStatementCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(variableInitializationCSEClass, VariableInitializationCS.class, "VariableInitializationCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getVariableInitializationCS_OclExpressionCS(), theCSTPackage_1.getOCLExpressionCS(), null, "oclExpressionCS", null, 0, 1, VariableInitializationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(getVariableInitializationCS_SimpleNameCS(), theCSTPackage_1.getSimpleNameCS(), null, "simpleNameCS", null, 0, 1, VariableInitializationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(getVariableInitializationCS_TypeCS(), theCSTPackage_1.getTypeCS(), null, "typeCS", null, 0, 1, VariableInitializationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getVariableInitializationCS_WithResult(), ecorePackage.getEBoolean(), "withResult", "false", 1, 1, VariableInitializationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-
-		initEClass(mappingBodyCSEClass, MappingBodyCS.class, "MappingBodyCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(getMappingBodyCS_HasPopulationKeyword(), ecorePackage.getEBoolean(), "hasPopulationKeyword", null, 0, 1, MappingBodyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(outExpCSEClass, OutExpCS.class, "OutExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getOutExpCS_SimpleNameCS(), theCSTPackage_1.getSimpleNameCS(), null, "simpleNameCS", null, 0, 1, OutExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(getOutExpCS_TypeSpecCS(), this.getTypeSpecCS(), null, "typeSpecCS", null, 0, 1, OutExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(getOutExpCS_Expressions(), theCSTPackage_1.getOCLExpressionCS(), null, "expressions", null, 0, -1, OutExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getOutExpCS_IsImplicit(), ecorePackage.getEBoolean(), "isImplicit", null, 0, 1, OutExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(mappingCallExpCSEClass, MappingCallExpCS.class, "MappingCallExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(getMappingCallExpCS_Strict(), ecorePackage.getEBoolean(), "strict", null, 0, 1, MappingCallExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(computeExpCSEClass, ComputeExpCS.class, "ComputeExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getComputeExpCS_ReturnedElement(), theCSTPackage_1.getVariableCS(), null, "returnedElement", null, 1, 1, ComputeExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getComputeExpCS_Body(), theCSTPackage_1.getOCLExpressionCS(), null, "body", null, 1, 1, ComputeExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(whileExpCSEClass, WhileExpCS.class, "WhileExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getWhileExpCS_Body(), theCSTPackage_1.getOCLExpressionCS(), null, "body", null, 1, 1, WhileExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getWhileExpCS_Condition(), theCSTPackage_1.getOCLExpressionCS(), null, "condition", null, 0, 1, WhileExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getWhileExpCS_ResultVar(), theCSTPackage_1.getVariableCS(), null, "resultVar", null, 0, 1, WhileExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(imperativeLoopExpCSEClass, ImperativeLoopExpCS.class, "ImperativeLoopExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getImperativeLoopExpCS_Condition(), theCSTPackage_1.getOCLExpressionCS(), null, "condition", null, 1, 1, ImperativeLoopExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(forExpCSEClass, ForExpCS.class, "ForExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(imperativeIterateExpCSEClass, ImperativeIterateExpCS.class, "ImperativeIterateExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getImperativeIterateExpCS_Target(), theCSTPackage_1.getVariableCS(), null, "target", null, 0, 1, ImperativeIterateExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(switchExpCSEClass, SwitchExpCS.class, "SwitchExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getSwitchExpCS_AlternativePart(), this.getSwitchAltExpCS(), null, "alternativePart", null, 1, -1, SwitchExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -3029,12 +3048,34 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEReference(getSwitchAltExpCS_Condition(), theCSTPackage_1.getOCLExpressionCS(), null, "condition", null, 1, 1, SwitchAltExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getSwitchAltExpCS_Body(), theCSTPackage_1.getOCLExpressionCS(), null, "body", null, 1, 1, SwitchAltExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(blockExpCSEClass, BlockExpCS.class, "BlockExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getBlockExpCS_BodyExpressions(), theCSTPackage_1.getOCLExpressionCS(), null, "bodyExpressions", null, 0, -1, BlockExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(variableInitializationCSEClass, VariableInitializationCS.class, "VariableInitializationCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getVariableInitializationCS_OclExpressionCS(), theCSTPackage_1.getOCLExpressionCS(), null, "oclExpressionCS", null, 0, 1, VariableInitializationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getVariableInitializationCS_SimpleNameCS(), theCSTPackage_1.getSimpleNameCS(), null, "simpleNameCS", null, 0, 1, VariableInitializationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getVariableInitializationCS_TypeCS(), theCSTPackage_1.getTypeCS(), null, "typeCS", null, 0, 1, VariableInitializationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getVariableInitializationCS_WithResult(), ecorePackage.getEBoolean(), "withResult", "false", 1, 1, VariableInitializationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
-		initEClass(computeExpCSEClass, ComputeExpCS.class, "ComputeExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getComputeExpCS_ReturnedElement(), theCSTPackage_1.getVariableCS(), null, "returnedElement", null, 1, 1, ComputeExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(getComputeExpCS_Body(), theCSTPackage_1.getOCLExpressionCS(), null, "body", null, 1, 1, ComputeExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(assignStatementCSEClass, AssignStatementCS.class, "AssignStatementCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getAssignStatementCS_LValueCS(), theCSTPackage_1.getOCLExpressionCS(), null, "lValueCS", null, 0, 1, AssignStatementCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getAssignStatementCS_OclExpressionCS(), theCSTPackage_1.getOCLExpressionCS(), null, "oclExpressionCS", null, 0, 1, AssignStatementCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getAssignStatementCS_Incremental(), ecorePackage.getEBoolean(), "incremental", null, 0, 1, AssignStatementCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(breakExpCSEClass, BreakExpCS.class, "BreakExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(continueExpCSEClass, ContinueExpCS.class, "ContinueExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(expressionStatementCSEClass, ExpressionStatementCS.class, "ExpressionStatementCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getExpressionStatementCS_OclExpressionCS(), theCSTPackage_1.getOCLExpressionCS(), null, "oclExpressionCS", null, 0, 1, ExpressionStatementCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(mappingBodyCSEClass, MappingBodyCS.class, "MappingBodyCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getMappingBodyCS_HasPopulationKeyword(), ecorePackage.getEBoolean(), "hasPopulationKeyword", null, 0, 1, MappingBodyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(objectExpCSEClass, ObjectExpCS.class, "ObjectExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getObjectExpCS_SimpleNameCS(), theCSTPackage_1.getSimpleNameCS(), null, "simpleNameCS", null, 0, 1, ObjectExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getObjectExpCS_Expressions(), theCSTPackage_1.getOCLExpressionCS(), null, "expressions", null, 0, -1, ObjectExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getObjectExpCS_IsImplicit(), ecorePackage.getEBoolean(), "isImplicit", null, 0, 1, ObjectExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(mappingCallExpCSEClass, MappingCallExpCS.class, "MappingCallExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getMappingCallExpCS_Strict(), ecorePackage.getEBoolean(), "strict", null, 0, 1, MappingCallExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(directionKindCSEClass, DirectionKindCS.class, "DirectionKindCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getDirectionKindCS_DirectionKind(), this.getDirectionKindEnum(), "directionKind", null, 0, 1, DirectionKindCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -3099,14 +3140,6 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEReference(getAssertExpCS_Log(), this.getLogExpCS(), null, "log", null, 0, 1, AssertExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getAssertExpCS_Severity(), theCSTPackage_1.getSimpleNameCS(), null, "severity", null, 0, 1, AssertExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(imperativeLoopExpCSEClass, ImperativeLoopExpCS.class, "ImperativeLoopExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getImperativeLoopExpCS_Condition(), theCSTPackage_1.getOCLExpressionCS(), null, "condition", null, 1, 1, ImperativeLoopExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(forExpCSEClass, ForExpCS.class, "ForExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(imperativeIterateExpCSEClass, ImperativeIterateExpCS.class, "ImperativeIterateExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getImperativeIterateExpCS_Target(), theCSTPackage_1.getVariableCS(), null, "target", null, 0, 1, ImperativeIterateExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
 		initEClass(returnExpCSEClass, ReturnExpCS.class, "ReturnExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getReturnExpCS_Value(), theCSTPackage_1.getOCLExpressionCS(), null, "value", null, 0, 1, ReturnExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
@@ -3114,9 +3147,9 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEAttribute(getMappingExtensionCS_Kind(), this.getMappingExtensionKindCS(), "kind", "disjuncts", 0, 1, MappingExtensionCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(getMappingExtensionCS_MappingIdentifiers(), theTempPackage.getScopedNameCS(), null, "mappingIdentifiers", null, 1, -1, MappingExtensionCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(newRuleCallExpCSEClass, NewRuleCallExpCS.class, "NewRuleCallExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getNewRuleCallExpCS_TypeSpecCS(), this.getTypeSpecCS(), null, "typeSpecCS", null, 1, 1, NewRuleCallExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(getNewRuleCallExpCS_Arguments(), theCSTPackage_1.getOCLExpressionCS(), null, "arguments", null, 0, -1, NewRuleCallExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(instantiationExpCSEClass, InstantiationExpCS.class, "InstantiationExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getInstantiationExpCS_TypeSpecCS(), this.getTypeSpecCS(), null, "typeSpecCS", null, 1, 1, InstantiationExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getInstantiationExpCS_Arguments(), theCSTPackage_1.getOCLExpressionCS(), null, "arguments", null, 0, -1, InstantiationExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(listTypeCSEClass, ListTypeCS.class, "ListTypeCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getListTypeCS_TypeCS(), theCSTPackage_1.getTypeCS(), null, "typeCS", null, 0, 1, ListTypeCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

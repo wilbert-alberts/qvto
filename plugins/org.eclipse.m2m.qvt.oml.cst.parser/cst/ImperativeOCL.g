@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.g,v 1.17 2009/02/05 22:35:47 sboyko Exp $ 
+-- * $Id: ImperativeOCL.g,v 1.18 2009/02/11 16:18:00 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -72,6 +72,8 @@ $KeyWords
 	new
 	List
 	Dict
+	break
+	continue
 $End
 
 $Notice
@@ -89,7 +91,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: ImperativeOCL.g,v 1.17 2009/02/05 22:35:47 sboyko Exp $
+ * $Id: ImperativeOCL.g,v 1.18 2009/02/11 16:18:00 sboyko Exp $
  */
 	./
 $End
@@ -934,6 +936,26 @@ $Rules
 				$setResult(result);
 		  $EndJava
 		./	
+
+		
+	-- imperative BreakExp and ContinueExp registration
+		
+	oclExpCS ::= break
+		/.$BeginJava
+				OCLExpressionCS result = createBreakCS();
+				setOffsets(result, getIToken($getToken(1)));
+				$setResult(result);
+		  $EndJava
+		./	
+	
+	oclExpCS ::= continue
+		/.$BeginJava
+				OCLExpressionCS result = createContinueCS();
+				setOffsets(result, getIToken($getToken(1)));
+				$setResult(result);
+		  $EndJava
+		./	
+	
 $End
 
 	

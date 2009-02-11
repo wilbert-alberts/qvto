@@ -11,32 +11,32 @@
  * 
  * 
  *
- * $Id: NewRuleCallExpCS.java,v 1.3 2009/02/03 21:32:03 sboyko Exp $
+ * $Id: InstantiationExpCS.java,v 1.1 2009/02/11 16:17:59 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.ocl.cst.OCLExpressionCS;
-import org.eclipse.ocl.cst.PathNameCS;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>New Rule Call Exp CS</b></em>'.
+ * A representation of the model object '<em><b>Instantiation Exp CS</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS#getTypeSpecCS <em>Type Spec CS</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS#getArguments <em>Arguments</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS#getTypeSpecCS <em>Type Spec CS</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS#getArguments <em>Arguments</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getNewRuleCallExpCS()
+ * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getInstantiationExpCS()
  * @model
  * @generated
  */
-public interface NewRuleCallExpCS extends OCLExpressionCS {
+public interface InstantiationExpCS extends StatementCS {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -54,14 +54,14 @@ public interface NewRuleCallExpCS extends OCLExpressionCS {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type Spec CS</em>' containment reference.
 	 * @see #setTypeSpecCS(TypeSpecCS)
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getNewRuleCallExpCS_TypeSpecCS()
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getInstantiationExpCS_TypeSpecCS()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
 	TypeSpecCS getTypeSpecCS();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS#getTypeSpecCS <em>Type Spec CS</em>}' containment reference.
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS#getTypeSpecCS <em>Type Spec CS</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Type Spec CS</em>' containment reference.
@@ -80,10 +80,10 @@ public interface NewRuleCallExpCS extends OCLExpressionCS {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Arguments</em>' containment reference list.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getNewRuleCallExpCS_Arguments()
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getInstantiationExpCS_Arguments()
 	 * @model containment="true"
 	 * @generated
 	 */
 	EList<OCLExpressionCS> getArguments();
 
-} // NewRuleCallExpCS
+} // InstantiationExpCS

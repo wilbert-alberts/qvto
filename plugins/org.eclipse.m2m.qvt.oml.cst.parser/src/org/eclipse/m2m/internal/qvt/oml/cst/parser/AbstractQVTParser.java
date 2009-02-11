@@ -40,6 +40,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum;
+import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ListTypeCS;
@@ -65,9 +66,8 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleUsageCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MultiplicityDefCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS;
@@ -507,7 +507,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 				return result;
 			}
 	
-	protected final OutExpCS setupOutExpCS(OutExpCS result, EList<OCLExpressionCS> expressions, int startOffset, int endOffset) {
+	protected final ObjectExpCS setupOutExpCS(ObjectExpCS result, EList<OCLExpressionCS> expressions, int startOffset, int endOffset) {
 				result.getExpressions().addAll(expressions);
 				result.setBodyStartLocation(startOffset);
 				result.setBodyEndLocation(endOffset);
@@ -520,8 +520,8 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 				return result;
 	}
 
-	protected final OutExpCS createOutExpCS(SimpleNameCS optVarNameCS, TypeSpecCS optTypeSpecCS) {
-		OutExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createOutExpCS();		
+	protected final ObjectExpCS createOutExpCS(SimpleNameCS optVarNameCS, TypeSpecCS optTypeSpecCS) {
+		ObjectExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createObjectExpCS();		
 		result.setSimpleNameCS(optVarNameCS);
 		result.setTypeSpecCS(optTypeSpecCS);
 
@@ -815,8 +815,8 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
         return result;
     }
     
-    protected NewRuleCallExpCS createNewRuleCallExpCS(TypeSpecCS typeSpecCS, List<OCLExpressionCS> arguments) {
-    	NewRuleCallExpCS call = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createNewRuleCallExpCS();
+    protected InstantiationExpCS createNewRuleCallExpCS(TypeSpecCS typeSpecCS, List<OCLExpressionCS> arguments) {
+    	InstantiationExpCS call = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createInstantiationExpCS();
 		call.setTypeSpecCS(typeSpecCS);
 		call.getArguments().addAll(arguments);
     	return call;
@@ -999,6 +999,16 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		ConstructorCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createConstructorCS();
 		result.setMappingDeclarationCS(methodDecl);
 		result.getExpressions().addAll(expressions);
+		return result;
+	}
+
+	protected final StatementCS createBreakCS() {
+		StatementCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createBreakExpCS();
+		return result;
+	}
+
+	protected final StatementCS createContinueCS() {
+		StatementCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createContinueExpCS();
 		return result;
 	}
 

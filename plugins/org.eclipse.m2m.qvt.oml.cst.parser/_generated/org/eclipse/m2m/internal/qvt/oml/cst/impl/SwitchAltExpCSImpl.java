@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: SwitchAltExpCSImpl.java,v 1.2 2009/01/13 20:23:45 radvorak Exp $
+ * $Id: SwitchAltExpCSImpl.java,v 1.3 2009/02/11 16:17:59 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -39,7 +39,7 @@ import org.eclipse.ocl.cst.impl.CSTNodeImpl;
  *
  * @generated
  */
-public class SwitchAltExpCSImpl extends CSTNodeImpl implements SwitchAltExpCS {
+public class SwitchAltExpCSImpl extends StatementCSImpl implements SwitchAltExpCS {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
