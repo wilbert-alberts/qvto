@@ -59,12 +59,14 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.BreakExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ContinueExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralPartCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DictionaryTypeCS;
@@ -72,7 +74,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.ExpressionStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeLoopExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ListTypeCS;
@@ -93,9 +97,8 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MultiplicityDefCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.NewRuleCallExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS;
@@ -103,6 +106,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.RenameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveInExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ReturnExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.StatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TagCS;
@@ -146,11 +150,14 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AltExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssertExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.BlockExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.BreakExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ComputeExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ContinueExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralPart;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictionaryType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ForExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeExpression;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeIterateExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLFactory;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
@@ -263,7 +270,7 @@ public class QvtOperationalVisitorCS
     	astNode.setEndPosition(cstNode.getEndOffset());
     }
     
-    protected InstantiationExp instantiationExpCS(NewRuleCallExpCS newCallExp, 
+    protected InstantiationExp instantiationExpCS(InstantiationExpCS newCallExp, 
     		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
     		EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		InstantiationExp instantiationExp = ImperativeOCLFactory.eINSTANCE.createInstantiationExp();
@@ -509,8 +516,8 @@ public class QvtOperationalVisitorCS
 	        if (oclExpressionCS instanceof SwitchExpCS) {
 	            return visitSwitchExpCS((SwitchExpCS) oclExpressionCS, env);
 	        }
-	        if (oclExpressionCS instanceof OutExpCS) {
-                return visitOutExpCS((OutExpCS) oclExpressionCS, toQVTOperationalEnv(env), true);
+	        if (oclExpressionCS instanceof ObjectExpCS) {
+                return visitObjectExpCS((ObjectExpCS) oclExpressionCS, toQVTOperationalEnv(env), true);
 	        }
 	        if (oclExpressionCS instanceof AssignStatementCS) {
 	            return visitAssignStatementCS((AssignStatementCS) oclExpressionCS, env);
@@ -546,8 +553,16 @@ public class QvtOperationalVisitorCS
 	            return visitReturnExpCS((ReturnExpCS) oclExpressionCS, env);
 	        }
 	        
-	        if(oclExpressionCS instanceof NewRuleCallExpCS) {
-	        	return instantiationExpCS((NewRuleCallExpCS)oclExpressionCS, env);
+	        if (oclExpressionCS instanceof BreakExpCS) {
+	            return visitBreakExpCS((BreakExpCS) oclExpressionCS, env);
+	        }
+	        
+	        if (oclExpressionCS instanceof ContinueExpCS) {
+	            return visitContinueExpCS((ContinueExpCS) oclExpressionCS, env);
+	        }
+	        
+	        if(oclExpressionCS instanceof InstantiationExpCS) {
+	        	return instantiationExpCS((InstantiationExpCS)oclExpressionCS, env);
 	        }
 	        	
 	        if (oclExpressionCS instanceof TypeCS) {
@@ -593,7 +608,57 @@ public class QvtOperationalVisitorCS
 	    return null;
 	}
 	
-    @Override
+    private org.eclipse.ocl.ecore.OCLExpression visitContinueExpCS(
+			ContinueExpCS continueExpCS,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+
+		ContinueExp result = ImperativeOCLFactory.eINSTANCE.createContinueExp();
+		initStartEndPositions(result, continueExpCS);
+		
+		validateBreakContinue(continueExpCS, env, result);
+    	
+		return result;
+	}
+
+	private org.eclipse.ocl.ecore.OCLExpression visitBreakExpCS(
+			BreakExpCS breakExpCS,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+
+		BreakExp result = ImperativeOCLFactory.eINSTANCE.createBreakExp();
+		initStartEndPositions(result, breakExpCS);
+		
+		validateBreakContinue(breakExpCS, env, result);
+
+		return result;
+	}
+
+	private void validateBreakContinue(
+			StatementCS breakExpCS,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
+			ImperativeExpression result) {
+		if (false == breakExpCS.eContainer() instanceof StatementCS) {
+	    	QvtOperationalUtil.reportError(env, 
+	    			NLS.bind(ValidationMessages.BreakContinue_InvalidExpressionOwner, result.eClass().getName()),
+	    			breakExpCS);
+		}
+		
+		boolean isLoopFound = false;
+		EObject container = breakExpCS.eContainer();
+		while (container != null) {
+			if (container instanceof ImperativeLoopExpCS || container instanceof WhileExpCS) {
+				isLoopFound = true;
+				break;
+			}
+			container = container.eContainer();
+		}
+		if (!isLoopFound) {
+	    	QvtOperationalUtil.reportError(env, 
+	    			NLS.bind(ValidationMessages.BreakContinue_InvalidExpressionUsage, result.eClass().getName()),
+	    			breakExpCS);
+		}
+	}
+
+	@Override
     protected OCLExpression<EClassifier> literalExpCS(LiteralExpCS literalExpCS,
             Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
     	
@@ -1167,7 +1232,7 @@ public class QvtOperationalVisitorCS
 		return result;
 	}
     
-    private static MappingDeclarationCS findOwningMappingDeclarationCS(OutExpCS outExpCS) {
+    private static MappingDeclarationCS findOwningMappingDeclarationCS(ObjectExpCS outExpCS) {
     	EObject eContainer = outExpCS.eContainer();
     	if (eContainer instanceof MappingBodyCS) {
     	    eContainer = eContainer.eContainer();
@@ -1182,7 +1247,7 @@ public class QvtOperationalVisitorCS
     	return null;
     }
 
-    private ObjectExp visitOutExpCS(OutExpCS outExpCS, QvtOperationalEnv env, boolean isValidationChecked) {
+    private ObjectExp visitObjectExpCS(ObjectExpCS outExpCS, QvtOperationalEnv env, boolean isValidationChecked) {
 		MappingDeclarationCS topLevelInMapping = findOwningMappingDeclarationCS(outExpCS);		
 		if(topLevelInMapping != null && topLevelInMapping.getResult().isEmpty() && topLevelInMapping.getContextType() == null) {
 			//return null; FIXME - review this, ommitted to get better error reporting for AST
@@ -3243,7 +3308,7 @@ public class QvtOperationalVisitorCS
                 && (mappingDeclarationCS.getDirectionKindCS() != null)
                 && (mappingDeclarationCS.getDirectionKindCS().getDirectionKind() == DirectionKindEnum.INOUT);
                 if (isUniqueResult || isImplicitContext) {
-                    OutExpCS implicitObjectExpCS = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createOutExpCS();
+                	ObjectExpCS implicitObjectExpCS = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createObjectExpCS();
                     implicitObjectExpCS.setIsImplicit(true);
 
                     SimpleNameCS resultVar = CSTFactory.eINSTANCE.createSimpleNameCS();
@@ -3257,7 +3322,7 @@ public class QvtOperationalVisitorCS
                     implicitObjectExpCS.getExpressions().addAll(mappingBodyCS.getStatements());
                     mappingBodyCS.getStatements().add(implicitObjectExpCS);
 
-                    ObjectExp objectExp = visitOutExpCS(implicitObjectExpCS, env, false);
+                    ObjectExp objectExp = visitObjectExpCS(implicitObjectExpCS, env, false);
                     body.getContent().add(objectExp);
                     return body;
 				}
@@ -3283,7 +3348,7 @@ public class QvtOperationalVisitorCS
 		return astNode.getEndPosition();
 	}	
 	
-	private void validateObjectExp(ObjectExp objectExp, OutExpCS objectExpCS, QvtOperationalEnv env) {
+	private void validateObjectExp(ObjectExp objectExp, ObjectExpCS objectExpCS, QvtOperationalEnv env) {
 		EClass derivedInstantiatedClass = objectExp.getInstantiatedClass();		
 		Variable<EClassifier, EParameter> referredObject  = objectExp.getReferredObject();
 		if(derivedInstantiatedClass == null && (referredObject != null && QVTUMLReflection.isUserModelElement(referredObject.getType()))) {

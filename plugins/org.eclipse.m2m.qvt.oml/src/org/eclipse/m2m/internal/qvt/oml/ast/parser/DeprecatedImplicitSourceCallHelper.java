@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTParsingOptions;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
-import org.eclipse.m2m.internal.qvt.oml.cst.OutExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.cst.CSTNode;
@@ -96,8 +96,8 @@ class DeprecatedImplicitSourceCallHelper {
 						    boolean isImplicitSelfOk = false;
 						    EObject tempCS = callExpCS;
 						    while (tempCS != null) {
-						        if (tempCS instanceof OutExpCS) {
-						            OutExpCS objectExpCS = (OutExpCS) tempCS;
+						        if (tempCS instanceof ObjectExpCS) {
+						        	ObjectExpCS objectExpCS = (ObjectExpCS) tempCS;
 						            SimpleNameCS referredObject = objectExpCS.getSimpleNameCS();
                                     if (referredObject != null) {
                                         if (QvtOperationalEnv.SELF_VARIABLE_NAME.equals(referredObject.getValue())) {

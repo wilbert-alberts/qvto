@@ -179,6 +179,9 @@ public final class ValidationMessages extends NLS {
     
     public static String OperationIsUndefined;
     
+    public static String BreakContinue_InvalidExpressionOwner;
+    public static String BreakContinue_InvalidExpressionUsage;
+    
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, ValidationMessages.class);
 	}
