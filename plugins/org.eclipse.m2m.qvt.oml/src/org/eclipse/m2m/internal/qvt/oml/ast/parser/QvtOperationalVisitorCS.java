@@ -232,9 +232,6 @@ import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.UMLReflection;
 import org.eclipse.osgi.util.NLS;
 
-import com.ibm.icu.lang.UCharacter;
-
-
 public class QvtOperationalVisitorCS
 		extends AbstractOCLAnalyzer<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, 
 							CallOperationAction, SendSignalAction, Constraint, EClass, EObject> { 	// FIXME - changed in M3.4 migration
@@ -4518,58 +4515,5 @@ public class QvtOperationalVisitorCS
 		annotation.getDetails().put(tagId, value);
 		annotation.getReferences().add(element);
 		return annotation;
-	}
-
-	@Override
-	protected org.eclipse.ocl.expressions.StringLiteralExp<EClassifier> stringLiteralExpCS(
-			StringLiteralExpCS stringLiteralExpCS,
-			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
-
-		StringLiteralExp<EClassifier> astNode = oclFactory.createStringLiteralExp();
-		initASTMapping(env, astNode, stringLiteralExpCS);
-		String stringLiteral = stringLiteralExpCS.getStringSymbol();
-		List<String> singlelineStringLiterals = splitMultilineStringLiteral(stringLiteral);
-		String[] processedSinglelineStringLiterals = new String[singlelineStringLiterals.size()];
-		for (int i = 0; i < processedSinglelineStringLiterals.length; i++) {
-			processedSinglelineStringLiterals[i] = processSinglelineStringLiteral(singlelineStringLiterals.get(i));
-		}
-		StringBuilder stringBuilder = new StringBuilder();
-		for (String processedSinglelineStringLiteral : processedSinglelineStringLiterals) {
-			stringBuilder.append(processedSinglelineStringLiteral);
-		}
-		astNode.setStringSymbol(stringBuilder.toString());
-		astNode.setType(env.getOCLStandardLibrary().getString());
-		
-		TRACE("stringLiteralExpCS", "String: " + stringLiteralExpCS.getSymbol());//$NON-NLS-2$//$NON-NLS-1$
-			
-		return astNode;
-	}
-
-	private List<String> splitMultilineStringLiteral(String stringLiteral) {
-		List<String> singlelineStringLiterals = new ArrayList<String>();
-		char quote = stringLiteral.charAt(0);
-		boolean isInQuotes = true;
-		int leftIndex = 1;
-		for (int i = 1, n = stringLiteral.length(); i < n; i++) {
-			char ch = stringLiteral.charAt(i);
-			if (isInQuotes) {
-				if ((ch == quote)
-						&& (stringLiteral.charAt(i - 1) != '\\')) {
-						singlelineStringLiterals.add(stringLiteral.substring(leftIndex, i));
-						isInQuotes = false;
-					}
-			} else {
-				if (!UCharacter.isWhitespace(ch)) {
-					quote = ch;
-					leftIndex = i + 1;
-					isInQuotes = true;
-				}
-			}
-		}
-		return singlelineStringLiterals;
-	}
-	
-	private String processSinglelineStringLiteral(String rawString) {
-		return rawString;
 	}
 }

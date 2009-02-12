@@ -31,11 +31,11 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage;
 import org.eclipse.ocl.LookupException;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.CollectionType;
@@ -44,6 +44,7 @@ import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.ecore.EcorePackage;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.options.ParsingOptions;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.util.OCLStandardLibraryUtil;
 import org.eclipse.ocl.util.TypeUtil;
@@ -93,14 +94,17 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVTOEnviro
 
 	protected QvtEnvironmentBase(QvtEnvironmentBase parent) {
 		super(parent);
+		setOption(ParsingOptions.USE_BACKSLASH_ESCAPE_PROCESSING, true);
 	}
 
 	protected QvtEnvironmentBase(EPackage.Registry reg, Resource resource) {
 		super(reg, resource);
+		setOption(ParsingOptions.USE_BACKSLASH_ESCAPE_PROCESSING, true);
 	}
 
 	protected QvtEnvironmentBase(EPackage.Registry reg) {
 		super(reg);
+		setOption(ParsingOptions.USE_BACKSLASH_ESCAPE_PROCESSING, true);
 	}
 	
 	public abstract Module getModuleContextType();	
