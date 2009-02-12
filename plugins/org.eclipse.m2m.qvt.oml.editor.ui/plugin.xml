@@ -170,7 +170,7 @@
 		   <action id="org.eclipse.m2m.qvt.oml.editor.ui.actions.OpenDeclaration"
 			   class="org.eclipse.m2m.internal.qvt.oml.editor.ui.actions.OpenDeclarationActionDelegate"
 			   definitionId="org.eclipse.m2m.qvt.oml.editor.ui.openDecl"
-			   menubarPath="additions"
+			   menubarPath="group.open"
 			   label="%action.label.openDeclaration">			   
 		   </action>
 	      </viewerContribution>

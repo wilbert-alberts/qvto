@@ -313,7 +313,7 @@ public class QvtEditor extends TextEditor {
         setAction("ContentAssistProposal", action); //$NON-NLS-1$
 		markAsStateDependentAction("ContentAssistProposal", true); //$NON-NLS-1$
 		
-		action = new OpenDeclarationAction(ActionMessages.getResourceBundle(), "OpenDeclaration", this); //$NON-NLS-1$
+		action = new OpenDeclarationAction(ActionMessages.getResourceBundle(), "OpenDeclaration.", this); //$NON-NLS-1$
  
 		setAction(action.getActionDefinitionId(), action);
 
