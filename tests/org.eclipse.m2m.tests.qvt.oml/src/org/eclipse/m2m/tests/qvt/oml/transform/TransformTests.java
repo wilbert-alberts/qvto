@@ -78,6 +78,7 @@ public class TransformTests {
     
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {
+        		new FileToFileData("escape_sequences_250630"), //$NON-NLS-1$
         		new FileToFileData("multilineStrings_262733"), //$NON-NLS-1$
         		new FileToFileData("doubleQuoteStrings_262734"), //$NON-NLS-1$
         		new FileToFileData("varInitGroup_261841"), //$NON-NLS-1$

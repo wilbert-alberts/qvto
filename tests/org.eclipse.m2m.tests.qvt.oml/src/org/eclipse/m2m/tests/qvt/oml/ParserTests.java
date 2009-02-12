@@ -84,6 +84,7 @@ public class ParserTests {
     }
     
     private static TestData[] ourData = new TestData[] {
+    	TestData.createSourceChecked("escape_sequences_250630", 4, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("multiline_strings_262733", 1, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("deprecated_rename", 0, 1), //$NON-NLS-1$    	
     	TestData.createSourceChecked("varInitExpWithResult_261623", 1, 0), //$NON-NLS-1$

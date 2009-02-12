@@ -12,5 +12,5 @@ main() {
 
 		var r2 : Set(OclAny) := 'selfString'.oclAnyMyOperation();	
 		assert fatal (r2->asSequence()->at(1) = 'selfString') 
-			with log('The java library operation ''oclAnyMyOperation'' did give expected result');			
+			with log('The java library operation \'oclAnyMyOperation\' did give expected result');			
 }
