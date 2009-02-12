@@ -15,7 +15,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: EssentialOCL.g,v 1.1 2008/10/08 19:41:58 aigdalov Exp $
+-- * $Id: EssentialOCL.g,v 1.2 2009/02/12 16:49:33 aigdalov Exp $
 -- */
 --
 -- The EssentialOCL Parser
@@ -194,7 +194,7 @@ $Notice
 $copyright_contributions
  * </copyright>
  *
- * $Id: EssentialOCL.g,v 1.1 2008/10/08 19:41:58 aigdalov Exp $
+ * $Id: EssentialOCL.g,v 1.2 2009/02/12 16:49:33 aigdalov Exp $
  */
 	./
 $End
@@ -1237,7 +1237,7 @@ $Rules
 		./
 	stringLiteralExpCS ::= STRING_LITERAL
 		/.$BeginJava
-					CSTNode result = createStringLiteralExpCS(getTokenText($getToken(1)));
+					CSTNode result = createStringLiteralExpCS(unescape(getIToken(($getToken(1)))));
 					setOffsets(result, getIToken($getToken(1)));
 					$setResult(result);
 		  $EndJava

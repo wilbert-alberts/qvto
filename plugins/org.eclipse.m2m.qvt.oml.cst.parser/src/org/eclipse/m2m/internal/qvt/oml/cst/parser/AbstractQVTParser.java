@@ -1073,4 +1073,8 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		}
 	}
 
-}	
+	@Override
+	protected boolean isNonStdSQSupported() {
+		return false;
+	}
+}

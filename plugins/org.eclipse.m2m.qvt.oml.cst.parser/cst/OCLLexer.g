@@ -13,7 +13,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: OCLLexer.g,v 1.3 2008/10/08 19:41:58 aigdalov Exp $
+-- * $Id: OCLLexer.g,v 1.4 2009/02/12 16:49:33 aigdalov Exp $
 -- */
 --
 -- The OCL Lexer
@@ -65,7 +65,7 @@ $Notice
  $copyright_contributions
  * </copyright>
  *
- * $Id: OCLLexer.g,v 1.3 2008/10/08 19:41:58 aigdalov Exp $
+ * $Id: OCLLexer.g,v 1.4 2009/02/12 16:49:33 aigdalov Exp $
  */
 	./
 $End
@@ -529,13 +529,16 @@ $Rules
                        '%' | '&' | '^' | ':' | ';' | "'" | '\' | '|' | '{' | '}' |
                        '[' | ']' | '?' | ',' | '.' | '<' | '>' | '=' | '#' | DollarSign
 
-    SpecialNotDQ -> '+' | '-' | '/' | '(' | ')' | '*' | '!' | '@' | '`' | '~' |
-                    '%' | '&' | '^' | ':' | ';' | "'" | '|' | '{' | '}' |
-                    '[' | ']' | '?' | ',' | '.' | '<' | '>' | '=' | '#' | DollarSign
+    SpecialNotSQNotDQ -> '+' | '-' | '/' | '(' | ')' | '*' | '!' | '@' | '`' | '~' |
+                         '%' | '&' | '^' | ':' | ';' | '|' | '{' | '}' |
+                         '[' | ']' | '?' | ',' | '.' | '<' | '>' | '=' | '#' | DollarSign
 
-    SpecialNotSQ -> '+' | '-' | '/' | '(' | ')' | '*' | '!' | '@' | '`' | '~' |
-                    '%' | '&' | '^' | ':' | ';' | '"' | '|' | '{' | '}' | '\' |
-                    '[' | ']' | '?' | ',' | '.' | '<' | '>' | '=' | '#' | DollarSign
+    
+    SpecialNotDQ -> SpecialNotSQNotDQ | "'"
+    SpecialNotSQ -> SpecialNotSQNotDQ | '"'
+
+    EscapedSymbols -> NotSQNotDQ | '"' | "'" | '\'
+    BackslashEscapedSymbol -> '\' EscapedSymbols
 
     NotSlashOrStar -> Letter
                     | Digit
@@ -551,6 +554,11 @@ $Rules
             | FF
             | CtlCharNotWS
 
+    NotSQNotDQ -> Letter
+           | Digit
+           | SpecialNotSQNotDQ
+           | Space
+
     NotDQ -> Letter
            | Digit
            | SpecialNotDQ
@@ -564,6 +572,7 @@ $Rules
            | SpecialNotSQ
            | Space
            | EscapedSQ
+           | BackslashEscapedSymbol
            --| '\' u HexDigit HexDigit HexDigit HexDigit
            --| '\' OctalDigit
 

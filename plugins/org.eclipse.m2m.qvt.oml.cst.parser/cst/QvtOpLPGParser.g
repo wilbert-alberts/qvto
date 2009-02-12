@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.43 2009/02/11 16:18:00 sboyko Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.44 2009/02/12 16:49:33 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -151,7 +151,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.43 2009/02/11 16:18:00 sboyko Exp $
+ * $Id: QvtOpLPGParser.g,v 1.44 2009/02/12 16:49:33 aigdalov Exp $
  */
 	./
 $End
@@ -523,7 +523,7 @@ $Rules
 		/.$BeginJava
 					ModelTypeCS result = createModelTypeCS(
 							new Token(0, 0, 0),
-							createStringLiteralExpCS("''"),
+							null,
 							$EMPTY_ELIST,
 							$EMPTY_ELIST
 						);
@@ -590,12 +590,7 @@ $Rules
 		./
 
 	compliance_kindOpt ::= $empty
-		/.$BeginJava
-					CSTNode result = createStringLiteralExpCS("''");
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
-		  $EndJava
-		./
+		/.$NullAction./
 	compliance_kindOpt -> stringLiteralExpCS
 	--=== // model types compliance and metamodel declarations (end) ===--
 

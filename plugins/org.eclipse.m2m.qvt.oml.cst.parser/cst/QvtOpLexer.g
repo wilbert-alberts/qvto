@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLexer.g,v 1.5 2009/02/02 11:44:33 aigdalov Exp $
+-- * $Id: QvtOpLexer.g,v 1.6 2009/02/12 16:49:33 aigdalov Exp $
 -- */
 --
 -- The QVT Lexer
@@ -57,6 +57,9 @@ $DropRules
 
 	Identifier -> QuotedName
 	QuotedName -> '"' SLNotDQ '"'
+	EscapedDQ -> '\' DoubleQuote
+	NotDQ -> EscapedDQ -- QVT unites backslash-escape sequences. See rules below.
+	NotSQ -> EscapedSQ -- QVT prohibits '' escaping within SQ string literals
 
 $End
 
@@ -86,7 +89,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLexer.g,v 1.5 2009/02/02 11:44:33 aigdalov Exp $
+ * $Id: QvtOpLexer.g,v 1.6 2009/02/12 16:49:33 aigdalov Exp $
  */
 	./
 $End
@@ -168,7 +171,6 @@ $Rules
 		  $EndAction
 		./
 
-
 	NotSQ -> HT
 	NotSQ -> LF
 	NotSQ -> CR
@@ -176,6 +178,8 @@ $Rules
 	NotDQ -> HT
 	NotDQ -> LF
 	NotDQ -> CR
+
+	NotDQ -> BackslashEscapedSymbol
 
 	Token ::= DoubleQuote SLNotDQOpt DoubleQuote
 		/.$BeginAction
@@ -185,5 +189,4 @@ $Rules
 
 	SLNotDQOpt -> $empty
 			| SLNotDQ
-
 $End

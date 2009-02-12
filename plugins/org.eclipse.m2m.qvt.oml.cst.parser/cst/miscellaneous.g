@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.21 2009/02/11 16:18:00 sboyko Exp $ 
+-- * $Id: miscellaneous.g,v 1.22 2009/02/12 16:49:33 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -279,7 +279,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.21 2009/02/11 16:18:00 sboyko Exp $
+ * $Id: miscellaneous.g,v 1.22 2009/02/12 16:49:33 aigdalov Exp $
  */
 	./
 $End
@@ -987,7 +987,7 @@ $Rules
 	stringLiteralExpCS ::= stringLiteralExpCS STRING_LITERAL
 		/.$BeginJava
 					StringLiteralExpCS result = (StringLiteralExpCS) $getSym(1);
-					result.setStringSymbol(result.getStringSymbol() +  getTokenText($getToken(2)));
+					result.setStringSymbol(result.getStringSymbol() +  unescape(getIToken(($getToken(2)))));
 					IToken token = getIToken($getToken(2));
 					int tokenLine = token.getLine();
 					setOffsets(result, result, token);
