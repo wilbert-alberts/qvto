@@ -48,6 +48,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFileUtil;
+import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.BundleFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.WorkspaceMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
@@ -214,7 +215,12 @@ public class QvtCompiler {
 			URI sourceURI = null;
 			try {
 				try {
-					sourceURI = URI.createURI(source.getFileStore().toURI().toString());	
+					if (source instanceof BundleFile) {
+						sourceURI = URI.createURI(source.getFullPath());
+					}
+					else {
+						sourceURI = URI.createURI(source.getFileStore().toURI().toString());
+					}
 				} catch (IOException e) {
 					QvtPlugin.logError("Can't get QVT source URI", e); //$NON-NLS-1$
 				} catch (UnsupportedOperationException ex) {

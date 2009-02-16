@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtTransitionReachedException;
 import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.EvaluationVisitor;
 import org.eclipse.ocl.expressions.OCLExpression;
@@ -77,10 +78,24 @@ public abstract class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT,
             initializeIterators(iterators, javaIters, coll);
 
             while (true) {
-                Object resultVal = evaluateResultTemplate(iterators, target, resultName, condition, body, isOne);
+            	Object resultVal = null;
+            	boolean isUpdateResultVal = true;
+            	try {
+            		resultVal = evaluateResultTemplate(iterators, target, resultName, condition, body, isOne);
+            	}
+            	catch (QvtTransitionReachedException ex) {
+            		if (ex.getReason() == QvtTransitionReachedException.REASON_BREAK) {
+            			setDone(true);
+            		}
+            		if (ex.getReason() == QvtTransitionReachedException.REASON_CONTINUE) {
+            		}
+            		isUpdateResultVal = false;
+            	}
 
                 // set the result variable in the environment with the result value
-                myEvalEnv.replace(resultName, resultVal);
+                if (isUpdateResultVal) {
+                	myEvalEnv.replace(resultName, resultVal);
+                }
 
                 // find the next unfinished iterator
                 int curr = getNextUnfinishedIterator(javaIters);

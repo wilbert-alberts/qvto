@@ -305,7 +305,10 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		if (condVal != null && condVal.booleanValue()) {
             return ie.getThenExpression().accept(getVisitor());
         }
-		return ie.getElseExpression().accept(getVisitor());
+		if (ie.getElseExpression() != null) {
+			return ie.getElseExpression().accept(getVisitor());
+		}
+		return null;
 	}
 
 	@Override
@@ -1042,7 +1045,17 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         while (true) {
             Object condition = whileExp.getCondition().accept(getVisitor());
             if (Boolean.TRUE.equals(condition)) {
-            	whileExp.getBody().accept(getVisitor());
+            	try {
+            		whileExp.getBody().accept(getVisitor());
+            	}
+            	catch (QvtTransitionReachedException ex) {
+            		if (ex.getReason() == QvtTransitionReachedException.REASON_BREAK) {
+            			break;
+            		}
+            		if (ex.getReason() == QvtTransitionReachedException.REASON_CONTINUE) {
+            			continue;
+            		}
+            	}
             } else {
                 break;
             }
@@ -1333,8 +1346,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	}
 
 	public Object visitBreakExp(BreakExp astNode) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new QvtTransitionReachedException(QvtTransitionReachedException.REASON_BREAK);
 	}
 
 	public Object visitCatchtExp(CatchExp astNode) {
@@ -1343,8 +1355,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	}
 
 	public Object visitContinueExp(ContinueExp astNode) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new QvtTransitionReachedException(QvtTransitionReachedException.REASON_CONTINUE);
 	}
 
 	public Object visitDictLiteralPart(DictLiteralPart astNode) {
