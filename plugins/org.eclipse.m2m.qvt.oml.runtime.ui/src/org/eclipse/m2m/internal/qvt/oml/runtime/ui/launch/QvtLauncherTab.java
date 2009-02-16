@@ -38,11 +38,12 @@ import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.IUriGroup;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.MdaLaunchTab;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.OptionalFileGroup;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.TransformationControls;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.StatusUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.ITransformationMaker;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
@@ -189,12 +190,15 @@ public class QvtLauncherTab extends MdaLaunchTab {
         }
         
         try {
-            CompiledModule module = QvtEngine.getInstance(file).compile(file, null);
-            ImperativeOperation mainOperation = QvtOperationalParserUtil.getMainOperation(module.getModule());
-			if(module != null && mainOperation != null) {
-                initializeName(configuration, module.getModule().getName());
-                URI transfUri = URI.createPlatformResourceURI(file.getFullPath().toString(), false);
-                configuration.setAttribute(IQvtLaunchConstants.MODULE, transfUri.toString());
+            CompiledUnit unit = QvtEngine.getInstance(file).compileUnit(file, null);
+            if(unit != null && unit.getModules().size() == 1) {
+	            Module module = unit.getModules().get(0);
+	            ImperativeOperation mainOperation = QvtOperationalParserUtil.getMainOperation(module);
+				if(mainOperation != null) {
+	                initializeName(configuration, unit.getName());
+	                URI transfUri = URI.createPlatformResourceURI(file.getFullPath().toString(), false);
+	                configuration.setAttribute(IQvtLaunchConstants.MODULE, transfUri.toString());
+	            }
             }
         }
         catch (MdaException e) {
