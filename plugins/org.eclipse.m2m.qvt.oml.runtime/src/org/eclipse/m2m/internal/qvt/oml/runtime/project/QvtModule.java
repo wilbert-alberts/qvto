@@ -34,8 +34,8 @@ import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingParameter;
@@ -58,13 +58,15 @@ public abstract class QvtModule {
     protected QvtModule() {		
     }
 
-    public abstract CompiledModule getModule() throws MdaException;
-    public abstract CompiledModule getModule(boolean isCheckErrors) throws MdaException;
+    public abstract CompiledUnit getUnit() throws MdaException;
+    
+    public abstract Module getModule() throws MdaException;
+    public abstract Module getModule(boolean isCheckErrors) throws MdaException;
 
-    public abstract QvtCompiler getCompiler() throws MdaException;
+    public abstract QVTOCompiler getCompiler() throws MdaException;
 
     public List<TransformationParameter> getParameters() throws MdaException {
-        Module module = getModule().getModule();
+        Module module = getModule();
         if(module instanceof OperationalTransformation == false) {
         	return Collections.emptyList();
         }
@@ -209,13 +211,15 @@ public abstract class QvtModule {
      * @throws MdaException as {@link #getModule()} does
      */
     public Set<QvtConfigurationProperty> getConfigurationProperties() throws MdaException {
-        CompiledModule module = getModule();
-        if (module == null) {
+        CompiledUnit unit = getUnit();
+        if (unit == null) {
             return Collections.<QvtConfigurationProperty>emptySet();
         }
         Set<Module> moduleSet = new HashSet<Module>();
 
-        collectImports(module, moduleSet);
+        for (Module nextModule : unit.getModules()) {
+            collectImports(nextModule, moduleSet);			
+		}
 
         Set<QvtConfigurationProperty> propSet = new LinkedHashSet<QvtConfigurationProperty>();
         for (Module m : moduleSet) {
@@ -230,15 +234,18 @@ public abstract class QvtModule {
     @Override
     public abstract String toString();
 
-    protected void checkModuleErrors(CompiledModule mappingModule) throws MdaException {
-        List<QvtMessage> errors = new ArrayList<QvtMessage>();
-        TransformationUtil.getErrors(mappingModule, errors);
-        if(errors.isEmpty()) {
+    protected void checkModuleErrors(CompiledUnit unit) throws MdaException {    	
+        // List<QvtMessage> errors = new ArrayList<QvtMessage>();
+        // FIXME  
+        // no need to check imports recursively as the compiled modules reports error on bad imports
+        // => for now, get only the directly owned errors, including "import has compilation error!"
+        // TransformationUtil.getErrors(unit, errors);
+        List<QvtMessage> errors = unit.getErrors();
+		if(errors.isEmpty()) {
         	return;
         }
         
-        MultiStatus multistatus = new MultiStatus(QvtRuntimePlugin.ID, 1, 
-        		NLS.bind(Messages.TransformationUtil_ParseTransformationError, toString(), errors.size()), null);
+        MultiStatus multistatus = new MultiStatus(QvtRuntimePlugin.ID, 1, NLS.bind(Messages.TransformationUtil_ParseTransformationError, toString(), errors.size()), null);
         for (QvtMessage msg : errors) {
             IStatus status = new Status(msg.getSeverity() == QvtMessage.SEVERITY_ERROR ? IStatus.ERROR : IStatus.WARNING,
             		QvtRuntimePlugin.ID, 1, msg.toString(), null);
@@ -253,10 +260,12 @@ public abstract class QvtModule {
      * @param module - root module
      * @param moduleSet - resulting set
      */
-    private void collectImports(CompiledModule module, Set<Module> moduleSet) {
+    private void collectImports(Module module, Set<Module> moduleSet) {
+    	assert module != null;
+    	
         // WFS on imports graph
         Queue<Module> queue = new LinkedList<Module>();
-        queue.offer(module.getModule());
+        queue.offer(module);
         while (!queue.isEmpty()) {
             Module m = queue.poll();
             moduleSet.add(m);

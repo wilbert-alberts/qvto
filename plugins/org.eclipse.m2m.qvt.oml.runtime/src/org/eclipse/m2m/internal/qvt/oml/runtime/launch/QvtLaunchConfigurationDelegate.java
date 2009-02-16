@@ -26,7 +26,7 @@ import org.eclipse.debug.core.IStatusHandler;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.ShallowProcess;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.StreamsProxy;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
@@ -149,7 +149,7 @@ public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelega
     
     @Override
 	protected boolean existsProblems(IProject proj) throws CoreException {
-        IMarker[] markers = proj.findMarkers(QvtCompiler.PROBLEM_MARKER, true, IResource.DEPTH_INFINITE);
+        IMarker[] markers = proj.findMarkers(QVTOCompiler.PROBLEM_MARKER, true, IResource.DEPTH_INFINITE);
         for (int i = 0; i < markers.length; i++) {
             if (isLaunchProblem(markers[i])) {
                 return true;

@@ -34,7 +34,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.ShallowProcess;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerFacade;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
@@ -214,12 +214,12 @@ public class QvtoTransformationHelper {
 			
 			QvtCompilerOptions compilerOptions = new QvtCompilerOptions();
 			compilerOptions.setGenerateCompletionData(true);
-			CompiledModule compiledModule = QvtCompilerFacade.getCompiledModule(myTransfUri, compilerOptions, null).getCompiledModule();		
-
+			CompiledUnit compiledUnit = QvtCompilerFacade.getCompiledModule(myTransfUri, compilerOptions, null).getCompiledModule();		
+			
 			{
-			CFile scriptFile = ASTBindingHelper.resolveModuleFile(compiledModule.getModule());
+			CFile scriptFile = compiledUnit.getSource();
 			if (scriptFile == null) {
-				throw new MdaException(NLS.bind(Messages.ImportedTransformation_NoWsFileForModule, compiledModule.getModule().getName()));
+				throw new MdaException(NLS.bind(Messages.ImportedTransformation_NoWsFileForModule, compiledUnit.getSource().getName()));
 			}
 			IFile ifile = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(new Path(scriptFile.getFullPath()));
 			if (ifile == null) {
@@ -229,7 +229,10 @@ public class QvtoTransformationHelper {
 			}
 			
 			Set<Module> imports = new LinkedHashSet<Module>();
-			QvtOperationalParserUtil.collectAllImports(compiledModule.getModule(), imports);
+			for (Module importingModule : compiledUnit.getModules()) {
+				QvtOperationalParserUtil.collectAllImports(importingModule, imports);				
+			}
+
 			for (Module module : imports) {
 				CFile scriptFile = ASTBindingHelper.resolveModuleFile(module);
 				if (scriptFile == null) {

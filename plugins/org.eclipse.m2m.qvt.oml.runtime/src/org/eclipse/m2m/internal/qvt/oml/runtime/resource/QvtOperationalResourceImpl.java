@@ -14,7 +14,6 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.resource;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -24,7 +23,7 @@ import org.eclipse.emf.ecore.xmi.DOMHandler;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.Messages;
 import org.eclipse.osgi.util.NLS;
@@ -57,16 +56,16 @@ public class QvtOperationalResourceImpl extends XMIResourceImpl {
     		
             try {
             	URI normalizedUri = getURIConverter().normalize(getURI());
-            	CompiledModule compiledModule = TransformationUtil.getQvtModule(normalizedUri).getModule(false);
-				fillCompilationDiagnostic(compiledModule, normalizedUri);
+            	CompiledUnit unit = TransformationUtil.getQvtModule(normalizedUri).getUnit();
+				fillCompilationDiagnostic(unit, normalizedUri);
 
-				if (compiledModule.getModule() == null) {
+				if (unit.getModules().isEmpty()) {
     				throw new IOException(NLS.bind(Messages.QvtResource_moduleCompilationErrors, 
-    						normalizedUri, Arrays.asList(compiledModule.getErrors())));
+    						normalizedUri, unit.getProblems()));
     			}
 
         		notification = setLoaded(true);
-    			getContents().add(compiledModule.getModule());
+    			getContents().addAll(unit.getModules());
             }
             catch (MdaException e) {
 				throw new IOWrappedException(e);
@@ -83,13 +82,9 @@ public class QvtOperationalResourceImpl extends XMIResourceImpl {
     	}
     }
     
-    private void fillCompilationDiagnostic(CompiledModule compiledModule, URI uri) {
-    	warnings = getWarnings();
-		for (QvtMessage msg : compiledModule.getWarnings()) {
-			warnings.add(new Diagnostic(msg.getMessage(), uri.toString(), msg.getLineNum()));
-		}
-		for (QvtMessage msg : compiledModule.getErrors()) {
-			warnings.add(new QvtCompilationErrorException(msg, uri.toString(), msg.getLineNum()));
+    private void fillCompilationDiagnostic(CompiledUnit unit, URI uri) {
+		for (QvtMessage msg : unit.getProblems()) {
+			getWarnings().add(new Diagnostic(msg.getMessage(), uri.toString(), msg.getLineNum()));
 		}
 	}
 

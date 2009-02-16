@@ -38,14 +38,15 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelParameterHelper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner.In;
@@ -84,7 +85,7 @@ public class QvtInterpretedTransformation implements QvtTransformation {
     }
     
 	public Out run(In in) throws MdaException {
-        CompiledModule module = myModule.getModule();
+        Module module = myModule.getModule();
 
         Iterator<TransformationParameter> itrParam = getParameters().iterator();
         List<ModelContent> inputs = new ArrayList<ModelContent>(in.getSources().length);
@@ -118,7 +119,7 @@ public class QvtInterpretedTransformation implements QvtTransformation {
     }
 	
 	public String getModuleName() throws MdaException {
-		return myModule.getModule().getModule().getName();
+		return myModule.getModule().getName();
 	}
 
 	public List<TransformationParameter> getParameters() throws MdaException {
@@ -126,7 +127,7 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 	}
 
 	public boolean hasEntryOperation() throws MdaException {
-		return QvtOperationalParserUtil.getMainOperation(myModule.getModule().getModule()) != null;
+		return QvtOperationalParserUtil.getMainOperation(myModule.getModule()) != null;
 	}
 
     public Set<QvtConfigurationProperty> getConfigurationProperties() throws MdaException {
@@ -145,19 +146,28 @@ public class QvtInterpretedTransformation implements QvtTransformation {
     	return new QvtOperationalEnvFactory();
     }
     
-	private Out evaluate(QvtCompiler compiler, CompiledModule module, List<ModelContent> args, IContext context) {
+	private Out evaluate(QVTOCompiler compiler, Module module, List<ModelContent> args, IContext context) {
 		QvtOperationalEnvFactory factory = getEnvironmentFactory();
 
 		QvtOperationalEvaluationEnv evaluationEnv = factory.createEvaluationEnvironment(context, null);
-		setArguments(evaluationEnv, (OperationalTransformation) module.getModule(), args);
+		// FIXME
+		setArguments(evaluationEnv, (OperationalTransformation) module, args);
 		
-		QvtOperationalFileEnv rootEnv = factory.createEnvironment(module.getSource(), compiler.getKernel());
+		CompiledUnit unit;
+		try {
+			unit = myModule.getUnit();
+		} catch (MdaException e) {
+			// bad but we can not do better until 
+			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=264335 is done 
+			throw new IllegalStateException("unit must be available"); //$NON-NLS-1$
+		}
+		QvtOperationalFileEnv rootEnv = factory.createEnvironment(unit.getSource(), compiler.getKernel());
 
 		EvaluationVisitor<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject>		
 			evaluator = factory.createEvaluationVisitor(rootEnv, evaluationEnv, null);
 		
 		Trace traces = evaluationEnv.getAdapter(InternalEvaluationEnv.class).getTraces(); 
-		Object outObj = module.getModule().accept(evaluator);
+		Object outObj = module.accept(evaluator);
 		
         if (false == outObj instanceof QvtEvaluationResult) {
             return new Out(Collections.<ModelExtentContents>emptyList(),

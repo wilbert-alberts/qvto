@@ -19,7 +19,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerFacade;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.Messages;
@@ -39,9 +39,9 @@ public class QvtoTransformationValidator {
 		try {
 			QvtCompilerOptions compilerOptions = new QvtCompilerOptions();
 			compilerOptions.setGenerateCompletionData(false);
-	    	CompiledModule compiledModule = QvtCompilerFacade.getCompiledModule(uriTransf, compilerOptions, monitor).getCompiledModule();
+	    	CompiledUnit compiledUnit = QvtCompilerFacade.getCompiledModule(uriTransf, compilerOptions, monitor).getCompiledModule();
 
-	    	return fillCompilationDiagnostic(compiledModule, uriTransf);
+	    	return fillCompilationDiagnostic(compiledUnit, uriTransf);
 		}
 		catch (MdaException e) {
 			return new BasicDiagnostic(Diagnostic.ERROR, uriTransf.toString(), QVTO_ROOT_DIAGNOSTIC,
@@ -49,10 +49,10 @@ public class QvtoTransformationValidator {
 		}
 	}
 
-    private static Diagnostic fillCompilationDiagnostic(CompiledModule compiledModule, URI uri) {
+    private static Diagnostic fillCompilationDiagnostic(CompiledUnit compiledUnit, URI uri) {
     	BasicDiagnostic result = new BasicDiagnostic(Diagnostic.INFO, uri.toString(), QVTO_ROOT_DIAGNOSTIC,
     			NLS.bind(Messages.moduleDiagnosticChain, uri.toString()), new Object[0]);
-		for (QvtMessage msg : compiledModule.getMessages()) {
+		for (QvtMessage msg : compiledUnit.getProblems()) {
 			result.add(createDiagnostic(msg, uri));
 		}
 		return result;

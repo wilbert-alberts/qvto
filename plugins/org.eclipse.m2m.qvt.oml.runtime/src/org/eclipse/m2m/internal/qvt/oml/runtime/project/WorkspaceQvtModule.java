@@ -15,8 +15,10 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.m2m.internal.qvt.oml.QvtEngine;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 
 public class WorkspaceQvtModule extends QvtModule {
     
@@ -32,29 +34,36 @@ public class WorkspaceQvtModule extends QvtModule {
     }
     
     @Override
-	public CompiledModule getModule(boolean isCheckErrors) throws MdaException {
+	public Module getModule(boolean isCheckErrors) throws MdaException {
         if(myModule == null) {
-            QvtEngine engine = QvtEngine.getInstance(myTransformationFile); 
-            CompiledModule module = engine.compile(myTransformationFile, null, getQvtCompilerOptions());
+            QvtEngine engine = QvtEngine.getInstance(myTransformationFile);
+            myUnit = engine.compileUnit(new EclipseFile(myTransformationFile), getQvtCompilerOptions(), null);
             
             if (isCheckErrors) {
-            	checkModuleErrors(module);
+            	checkModuleErrors(myUnit);
             }
             
-            myModule = module;
-            myCompiler = engine.getCompiler();
+            // FIXME - 
+            myModule = myUnit.getModules().get(0);
+            myCompiler = engine.getQVTOCompiler();
         }
         
         return myModule;
     }
 
     @Override
-	public CompiledModule getModule() throws MdaException {
+    public CompiledUnit getUnit() throws MdaException {
+    	getModule();
+    	return myUnit;
+    }
+    
+    @Override
+	public Module getModule() throws MdaException {
     	return getModule(true);
     }
     
 	@Override
-	public QvtCompiler getCompiler() throws MdaException {
+	public QVTOCompiler getCompiler() throws MdaException {
 		getModule();
 		return myCompiler;
 	}
@@ -64,6 +73,7 @@ public class WorkspaceQvtModule extends QvtModule {
     }
     
     private final IFile myTransformationFile;
-    private CompiledModule myModule;
-    private QvtCompiler myCompiler;
+    private Module myModule;
+    private CompiledUnit myUnit;    
+    private QVTOCompiler myCompiler;
 }

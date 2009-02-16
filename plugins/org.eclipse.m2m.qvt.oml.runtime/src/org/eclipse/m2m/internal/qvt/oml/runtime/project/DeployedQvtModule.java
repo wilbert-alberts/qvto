@@ -15,18 +15,20 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.MetamodelRegistryProvider;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerMessages;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.osgi.util.NLS;
 
 public class DeployedQvtModule extends QvtModule {
     
-	private CompiledModule myModule;
-    private QvtCompiler myCompiler;
+	private Module myModule;
+	private CompiledUnit myUnit;
+    private QVTOCompiler myCompiler;
 	private String moduleID;
 	
 	public DeployedQvtModule(String qvtModuleID) {
@@ -41,7 +43,7 @@ public class DeployedQvtModule extends QvtModule {
 	}
 	
     @Override
-	public CompiledModule getModule(boolean isCheckErrors) throws MdaException {
+	public Module getModule(boolean isCheckErrors) throws MdaException {
         if (myModule == null) {           
             IImportResolver importResolver = DeployedImportResolver.INSTANCE;
         	CFile srcFile = importResolver.resolveImport(moduleID);
@@ -49,20 +51,22 @@ public class DeployedQvtModule extends QvtModule {
         		throw new MdaException(NLS.bind(CompilerMessages.importedModuleNotFound, moduleID));
         	}
         	
-            QvtCompiler qvtCompiler = new QvtCompiler(importResolver, creatMetamodelRegistryProvider());
+            QVTOCompiler qvtCompiler = new QVTOCompiler(importResolver, creatMetamodelRegistryProvider());
 
             QvtCompilerOptions options = getQvtCompilerOptions();
             if (options == null) {
                 options = new QvtCompilerOptions();
                 options.setGenerateCompletionData(false);
             }
-            CompiledModule module = qvtCompiler.compile(srcFile, options, null).getModule();
+           
+            myUnit = qvtCompiler.compile(srcFile, options, null);
             
             if (isCheckErrors) {
-            	checkModuleErrors(module);
+            	checkModuleErrors(myUnit);
             }
             
-            myModule = module;
+            // FIXME - we should add support of uri fragment, being the name of the refered module
+            myModule = myUnit.getModules().get(0);
             myCompiler = qvtCompiler;
         }
         
@@ -70,15 +74,21 @@ public class DeployedQvtModule extends QvtModule {
     }
     
     @Override
-	public CompiledModule getModule() throws MdaException {
+	public Module getModule() throws MdaException {
     	return getModule(true);
     }
     
 	@Override
-	public QvtCompiler getCompiler() throws MdaException {
+	public QVTOCompiler getCompiler() throws MdaException {
 		getModule();
 		return myCompiler;
-	}    
+	}
+	
+    @Override
+	public CompiledUnit getUnit() throws MdaException {
+    	getModule();    	
+    	return myUnit;
+    }
 	
     @Override
 	public String toString() {

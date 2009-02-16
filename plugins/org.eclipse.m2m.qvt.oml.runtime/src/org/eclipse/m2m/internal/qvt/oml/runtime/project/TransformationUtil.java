@@ -11,14 +11,13 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.osgi.util.NLS;
 
@@ -28,16 +27,16 @@ public class TransformationUtil {
 
     private TransformationUtil() {}
     
-    public static void getErrors(CompiledModule module, List<QvtMessage> errors) {
-        errors.addAll(Arrays.asList(module.getErrors()));
-        for (CompiledModule imp : module.getCompiledImports()) {
+    public static void getErrors(CompiledUnit unit, List<QvtMessage> errors) {
+        errors.addAll(unit.getErrors());
+        for (CompiledUnit imp : unit.getCompiledImports()) {
             getErrors(imp, errors);
         }
     }
     
-    public static void getWarnings(CompiledModule module, List<QvtMessage> warnings) {
-        warnings.addAll(Arrays.asList(module.getWarnings()));
-        for (CompiledModule imp : module.getCompiledImports()) {
+    public static void getWarnings(CompiledUnit unit, List<QvtMessage> warnings) {
+        warnings.addAll(unit.getWarnings());
+        for (CompiledUnit imp : unit.getCompiledImports()) {
             getWarnings(imp, warnings);
         }
     }
