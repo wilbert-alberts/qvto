@@ -11,31 +11,43 @@
  * 
  * 
  *
- * $Id: MappingCallExpCSImpl.java,v 1.3 2009/02/16 12:44:05 aigdalov Exp $
+ * $Id: ListLiteralExpCSImpl.java,v 1.1 2009/02/16 12:44:05 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
-import org.eclipse.emf.common.notify.Notification;
+import java.util.Collection;
+
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingCallExpCS;
-import org.eclipse.ocl.cst.impl.OperationCallExpCSImpl;
+import org.eclipse.m2m.internal.qvt.oml.cst.ListLiteralExpCS;
+
+import org.eclipse.ocl.cst.CollectionLiteralPartCS;
+
+import org.eclipse.ocl.cst.impl.LiteralExpCSImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Mapping Call Exp CS</b></em>'.
+ * An implementation of the model object '<em><b>List Literal Exp CS</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingCallExpCSImpl#isStrict <em>Strict</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ListLiteralExpCSImpl#getCollectionLiteralParts <em>Collection Literal Parts</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class MappingCallExpCSImpl extends OperationCallExpCSImpl implements MappingCallExpCS {
+public class ListLiteralExpCSImpl extends LiteralExpCSImpl implements ListLiteralExpCS {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -44,31 +56,21 @@ public class MappingCallExpCSImpl extends OperationCallExpCSImpl implements Mapp
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 	/**
-	 * The default value of the '{@link #isStrict() <em>Strict</em>}' attribute.
+	 * The cached value of the '{@link #getCollectionLiteralParts() <em>Collection Literal Parts</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isStrict()
+	 * @see #getCollectionLiteralParts()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean STRICT_EDEFAULT = false;
-
-	/**
-	 * The flag representing the value of the '{@link #isStrict() <em>Strict</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isStrict()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int STRICT_EFLAG = 1 << 8;
+	protected EList<CollectionLiteralPartCS> collectionLiteralParts;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected MappingCallExpCSImpl() {
+	protected ListLiteralExpCSImpl() {
 		super();
 	}
 
@@ -79,7 +81,7 @@ public class MappingCallExpCSImpl extends OperationCallExpCSImpl implements Mapp
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return CSTPackage.Literals.MAPPING_CALL_EXP_CS;
+		return CSTPackage.Literals.LIST_LITERAL_EXP_CS;
 	}
 
 	/**
@@ -87,8 +89,11 @@ public class MappingCallExpCSImpl extends OperationCallExpCSImpl implements Mapp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isStrict() {
-		return (eFlags & STRICT_EFLAG) != 0;
+	public EList<CollectionLiteralPartCS> getCollectionLiteralParts() {
+		if (collectionLiteralParts == null) {
+			collectionLiteralParts = new EObjectContainmentEList<CollectionLiteralPartCS>(CollectionLiteralPartCS.class, this, CSTPackage.LIST_LITERAL_EXP_CS__COLLECTION_LITERAL_PARTS);
+		}
+		return collectionLiteralParts;
 	}
 
 	/**
@@ -96,11 +101,13 @@ public class MappingCallExpCSImpl extends OperationCallExpCSImpl implements Mapp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setStrict(boolean newStrict) {
-		boolean oldStrict = (eFlags & STRICT_EFLAG) != 0;
-		if (newStrict) eFlags |= STRICT_EFLAG; else eFlags &= ~STRICT_EFLAG;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.MAPPING_CALL_EXP_CS__STRICT, oldStrict, newStrict));
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case CSTPackage.LIST_LITERAL_EXP_CS__COLLECTION_LITERAL_PARTS:
+				return ((InternalEList<?>)getCollectionLiteralParts()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -111,8 +118,8 @@ public class MappingCallExpCSImpl extends OperationCallExpCSImpl implements Mapp
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CSTPackage.MAPPING_CALL_EXP_CS__STRICT:
-				return isStrict();
+			case CSTPackage.LIST_LITERAL_EXP_CS__COLLECTION_LITERAL_PARTS:
+				return getCollectionLiteralParts();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -122,11 +129,13 @@ public class MappingCallExpCSImpl extends OperationCallExpCSImpl implements Mapp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CSTPackage.MAPPING_CALL_EXP_CS__STRICT:
-				setStrict((Boolean)newValue);
+			case CSTPackage.LIST_LITERAL_EXP_CS__COLLECTION_LITERAL_PARTS:
+				getCollectionLiteralParts().clear();
+				getCollectionLiteralParts().addAll((Collection<? extends CollectionLiteralPartCS>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -140,8 +149,8 @@ public class MappingCallExpCSImpl extends OperationCallExpCSImpl implements Mapp
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CSTPackage.MAPPING_CALL_EXP_CS__STRICT:
-				setStrict(STRICT_EDEFAULT);
+			case CSTPackage.LIST_LITERAL_EXP_CS__COLLECTION_LITERAL_PARTS:
+				getCollectionLiteralParts().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -155,26 +164,10 @@ public class MappingCallExpCSImpl extends OperationCallExpCSImpl implements Mapp
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CSTPackage.MAPPING_CALL_EXP_CS__STRICT:
-				return ((eFlags & STRICT_EFLAG) != 0) != STRICT_EDEFAULT;
+			case CSTPackage.LIST_LITERAL_EXP_CS__COLLECTION_LITERAL_PARTS:
+				return collectionLiteralParts != null && !collectionLiteralParts.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (strict: "); //$NON-NLS-1$
-		result.append((eFlags & STRICT_EFLAG) != 0);
-		result.append(')');
-		return result.toString();
-	}
-
-} //MappingCallExpCSImpl
+} //ListLiteralExpCSImpl

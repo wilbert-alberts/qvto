@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ElementWithBodyImpl.java,v 1.2 2009/01/13 20:23:44 radvorak Exp $
+ * $Id: ElementWithBodyImpl.java,v 1.3 2009/02/16 12:44:05 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -154,9 +154,9 @@ public abstract class ElementWithBodyImpl extends EObjectImpl implements Element
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case CSTPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION:
-				return new Integer(getBodyStartLocation());
+				return getBodyStartLocation();
 			case CSTPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION:
-				return new Integer(getBodyEndLocation());
+				return getBodyEndLocation();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -170,10 +170,10 @@ public abstract class ElementWithBodyImpl extends EObjectImpl implements Element
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case CSTPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION:
-				setBodyStartLocation(((Integer)newValue).intValue());
+				setBodyStartLocation((Integer)newValue);
 				return;
 			case CSTPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION:
-				setBodyEndLocation(((Integer)newValue).intValue());
+				setBodyEndLocation((Integer)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

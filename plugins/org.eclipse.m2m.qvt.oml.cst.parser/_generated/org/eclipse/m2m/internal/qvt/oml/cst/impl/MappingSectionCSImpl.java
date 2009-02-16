@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingSectionCSImpl.java,v 1.3 2009/01/13 20:23:45 radvorak Exp $
+ * $Id: MappingSectionCSImpl.java,v 1.4 2009/02/16 12:44:05 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -257,9 +257,9 @@ public abstract class MappingSectionCSImpl extends CSTNodeImpl implements Mappin
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case CSTPackage.MAPPING_SECTION_CS__BODY_START_LOCATION:
-				return new Integer(getBodyStartLocation());
+				return getBodyStartLocation();
 			case CSTPackage.MAPPING_SECTION_CS__BODY_END_LOCATION:
-				return new Integer(getBodyEndLocation());
+				return getBodyEndLocation();
 			case CSTPackage.MAPPING_SECTION_CS__STATEMENTS:
 				return getStatements();
 			case CSTPackage.MAPPING_SECTION_CS__MAPPING_RULE_CS:
@@ -278,10 +278,10 @@ public abstract class MappingSectionCSImpl extends CSTNodeImpl implements Mappin
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case CSTPackage.MAPPING_SECTION_CS__BODY_START_LOCATION:
-				setBodyStartLocation(((Integer)newValue).intValue());
+				setBodyStartLocation((Integer)newValue);
 				return;
 			case CSTPackage.MAPPING_SECTION_CS__BODY_END_LOCATION:
-				setBodyEndLocation(((Integer)newValue).intValue());
+				setBodyEndLocation((Integer)newValue);
 				return;
 			case CSTPackage.MAPPING_SECTION_CS__STATEMENTS:
 				getStatements().clear();

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingQueryCSImpl.java,v 1.3 2009/01/13 20:23:49 radvorak Exp $
+ * $Id: MappingQueryCSImpl.java,v 1.4 2009/02/16 12:44:05 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -158,7 +158,7 @@ public class MappingQueryCSImpl extends MappingMethodCSImpl implements MappingQu
 			case CSTPackage.MAPPING_QUERY_CS__EXPRESSIONS:
 				return getExpressions();
 			case CSTPackage.MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION:
-				return isIsSimpleDefinition() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsSimpleDefinition();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -177,7 +177,7 @@ public class MappingQueryCSImpl extends MappingMethodCSImpl implements MappingQu
 				getExpressions().addAll((Collection<? extends OCLExpressionCS>)newValue);
 				return;
 			case CSTPackage.MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION:
-				setIsSimpleDefinition(((Boolean)newValue).booleanValue());
+				setIsSimpleDefinition((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

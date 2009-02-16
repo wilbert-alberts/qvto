@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingBodyCSImpl.java,v 1.3 2009/01/13 20:23:45 radvorak Exp $
+ * $Id: MappingBodyCSImpl.java,v 1.4 2009/02/16 12:44:05 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -111,7 +111,7 @@ public class MappingBodyCSImpl extends MappingSectionCSImpl implements MappingBo
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case CSTPackage.MAPPING_BODY_CS__HAS_POPULATION_KEYWORD:
-				return isHasPopulationKeyword() ? Boolean.TRUE : Boolean.FALSE;
+				return isHasPopulationKeyword();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -125,7 +125,7 @@ public class MappingBodyCSImpl extends MappingSectionCSImpl implements MappingBo
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case CSTPackage.MAPPING_BODY_CS__HAS_POPULATION_KEYWORD:
-				setHasPopulationKeyword(((Boolean)newValue).booleanValue());
+				setHasPopulationKeyword((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

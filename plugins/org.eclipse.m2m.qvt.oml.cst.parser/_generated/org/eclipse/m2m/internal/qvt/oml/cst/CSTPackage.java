@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackage.java,v 1.25 2009/02/11 16:17:59 sboyko Exp $
+ * $Id: CSTPackage.java,v 1.26 2009/02/16 12:44:06 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -5808,6 +5808,79 @@ public interface CSTPackage extends EPackage {
 	int LIST_TYPE_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.TYPE_CS_FEATURE_COUNT + 1;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ListLiteralExpCSImpl <em>List Literal Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ListLiteralExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getListLiteralExpCS()
+	 * @generated
+	 */
+	int LIST_LITERAL_EXP_CS = 61;
+
+	/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIST_LITERAL_EXP_CS__START_OFFSET = org.eclipse.ocl.cst.CSTPackage.LITERAL_EXP_CS__START_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIST_LITERAL_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.LITERAL_EXP_CS__END_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIST_LITERAL_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.LITERAL_EXP_CS__START_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>End Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIST_LITERAL_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.LITERAL_EXP_CS__END_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIST_LITERAL_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.LITERAL_EXP_CS__AST;
+
+	/**
+	 * The feature id for the '<em><b>Collection Literal Parts</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIST_LITERAL_EXP_CS__COLLECTION_LITERAL_PARTS = org.eclipse.ocl.cst.CSTPackage.LITERAL_EXP_CS_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>List Literal Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIST_LITERAL_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.LITERAL_EXP_CS_FEATURE_COUNT + 1;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.DictionaryTypeCSImpl <em>Dictionary Type CS</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5815,7 +5888,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getDictionaryTypeCS()
 	 * @generated
 	 */
-	int DICTIONARY_TYPE_CS = 61;
+	int DICTIONARY_TYPE_CS = 62;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -5897,7 +5970,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getDictLiteralExpCS()
 	 * @generated
 	 */
-	int DICT_LITERAL_EXP_CS = 62;
+	int DICT_LITERAL_EXP_CS = 63;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -5970,7 +6043,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getDictLiteralPartCS()
 	 * @generated
 	 */
-	int DICT_LITERAL_PART_CS = 63;
+	int DICT_LITERAL_PART_CS = 64;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -6052,7 +6125,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getTagCS()
 	 * @generated
 	 */
-	int TAG_CS = 64;
+	int TAG_CS = 65;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -6143,7 +6216,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getDirectionKindEnum()
 	 * @generated
 	 */
-	int DIRECTION_KIND_ENUM = 65;
+	int DIRECTION_KIND_ENUM = 66;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindEnum <em>Module Kind Enum</em>}' enum.
@@ -6153,7 +6226,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getModuleKindEnum()
 	 * @generated
 	 */
-	int MODULE_KIND_ENUM = 66;
+	int MODULE_KIND_ENUM = 67;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum <em>Import Kind Enum</em>}' enum.
@@ -6163,7 +6236,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getImportKindEnum()
 	 * @generated
 	 */
-	int IMPORT_KIND_ENUM = 67;
+	int IMPORT_KIND_ENUM = 68;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionKindCS <em>Mapping Extension Kind CS</em>}' enum.
@@ -6173,7 +6246,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingExtensionKindCS()
 	 * @generated
 	 */
-	int MAPPING_EXTENSION_KIND_CS = 68;
+	int MAPPING_EXTENSION_KIND_CS = 69;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS <em>Qualifier Kind CS</em>}' enum.
@@ -6183,7 +6256,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getQualifierKindCS()
 	 * @generated
 	 */
-	int QUALIFIER_KIND_CS = 69;
+	int QUALIFIER_KIND_CS = 70;
 
 
 	/**
@@ -8172,6 +8245,27 @@ public interface CSTPackage extends EPackage {
 	EReference getListTypeCS_TypeCS();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ListLiteralExpCS <em>List Literal Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>List Literal Exp CS</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ListLiteralExpCS
+	 * @generated
+	 */
+	EClass getListLiteralExpCS();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.cst.ListLiteralExpCS#getCollectionLiteralParts <em>Collection Literal Parts</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Collection Literal Parts</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ListLiteralExpCS#getCollectionLiteralParts()
+	 * @see #getListLiteralExpCS()
+	 * @generated
+	 */
+	EReference getListLiteralExpCS_CollectionLiteralParts();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.DictionaryTypeCS <em>Dictionary Type CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9980,6 +10074,24 @@ public interface CSTPackage extends EPackage {
 		 * @generated
 		 */
 		EReference LIST_TYPE_CS__TYPE_CS = eINSTANCE.getListTypeCS_TypeCS();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ListLiteralExpCSImpl <em>List Literal Exp CS</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ListLiteralExpCSImpl
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getListLiteralExpCS()
+		 * @generated
+		 */
+		EClass LIST_LITERAL_EXP_CS = eINSTANCE.getListLiteralExpCS();
+
+		/**
+		 * The meta object literal for the '<em><b>Collection Literal Parts</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference LIST_LITERAL_EXP_CS__COLLECTION_LITERAL_PARTS = eINSTANCE.getListLiteralExpCS_CollectionLiteralParts();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.DictionaryTypeCSImpl <em>Dictionary Type CS</em>}' class.

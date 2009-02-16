@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.g,v 1.19 2009/02/12 16:49:33 aigdalov Exp $ 
+-- * $Id: ImperativeOCL.g,v 1.20 2009/02/16 12:44:05 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -91,7 +91,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: ImperativeOCL.g,v 1.19 2009/02/12 16:49:33 aigdalov Exp $
+ * $Id: ImperativeOCL.g,v 1.20 2009/02/16 12:44:05 aigdalov Exp $
  */
 	./
 $End
@@ -112,9 +112,9 @@ $Rules
 		  $EndJava
 		./
 
-	listLiteralCS ::= List '{' dictLiteralPartListCSopt '}'
+	listLiteralCS ::= List '{' collectionLiteralPartsCSopt '}'
 		/.$BeginJava
-					CSTNode result = createDictLiteralExpCS((EList<DictLiteralPartCS>)$getSym(3));
+					CSTNode result = createListLiteralExpCS((EList)$getSym(3));
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
 					$setResult(result);
 		  $EndJava
@@ -139,6 +139,7 @@ $Rules
 	
 	literalSimpleCS -> primitiveLiteralExpCS
 	literalSimpleCS -> nullLiteralExpCS	
+	literalExpCS -> listLiteralCS
 	literalExpCS -> dictLiteralCS
 	
 	dictLiteralPartCS ::= literalSimpleCS '=' oclExpressionCS

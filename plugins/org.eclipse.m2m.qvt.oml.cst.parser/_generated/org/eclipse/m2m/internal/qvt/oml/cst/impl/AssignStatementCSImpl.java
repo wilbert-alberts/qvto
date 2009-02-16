@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: AssignStatementCSImpl.java,v 1.2 2009/01/13 20:23:49 radvorak Exp $
+ * $Id: AssignStatementCSImpl.java,v 1.3 2009/02/16 12:44:05 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -242,7 +242,7 @@ public class AssignStatementCSImpl extends StatementCSImpl implements AssignStat
 			case CSTPackage.ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS:
 				return getOclExpressionCS();
 			case CSTPackage.ASSIGN_STATEMENT_CS__INCREMENTAL:
-				return isIncremental() ? Boolean.TRUE : Boolean.FALSE;
+				return isIncremental();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -262,7 +262,7 @@ public class AssignStatementCSImpl extends StatementCSImpl implements AssignStat
 				setOclExpressionCS((OCLExpressionCS)newValue);
 				return;
 			case CSTPackage.ASSIGN_STATEMENT_CS__INCREMENTAL:
-				setIncremental(((Boolean)newValue).booleanValue());
+				setIncremental((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

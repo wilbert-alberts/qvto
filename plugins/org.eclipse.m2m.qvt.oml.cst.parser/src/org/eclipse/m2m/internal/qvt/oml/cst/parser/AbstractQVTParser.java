@@ -43,6 +43,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ListLiteralExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ListTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LocalPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LogExpCS;
@@ -90,6 +91,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.TempFactory;
 import org.eclipse.ocl.cst.CSTFactory;
 import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.cst.CollectionLiteralPartCS;
 import org.eclipse.ocl.cst.LiteralExpCS;
 import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.cst.PathNameCS;
@@ -940,6 +942,12 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	protected ListTypeCS createListTypeCS(TypeCS typeCS) {
 		ListTypeCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createListTypeCS();
 		result.setTypeCS(typeCS);
+		return result;
+	}
+
+	protected ListLiteralExpCS createListLiteralExpCS(EList<CollectionLiteralPartCS> collectionLiteralParts) {
+		ListLiteralExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createListLiteralExpCS();
+		result.getCollectionLiteralParts().addAll(collectionLiteralParts);
 		return result;
 	}
 

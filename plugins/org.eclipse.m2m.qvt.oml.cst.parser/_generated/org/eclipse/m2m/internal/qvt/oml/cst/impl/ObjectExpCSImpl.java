@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ObjectExpCSImpl.java,v 1.1 2009/02/11 16:17:59 sboyko Exp $
+ * $Id: ObjectExpCSImpl.java,v 1.2 2009/02/16 12:44:05 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -307,15 +307,15 @@ public class ObjectExpCSImpl extends InstantiationExpCSImpl implements ObjectExp
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case CSTPackage.OBJECT_EXP_CS__BODY_START_LOCATION:
-				return new Integer(getBodyStartLocation());
+				return getBodyStartLocation();
 			case CSTPackage.OBJECT_EXP_CS__BODY_END_LOCATION:
-				return new Integer(getBodyEndLocation());
+				return getBodyEndLocation();
 			case CSTPackage.OBJECT_EXP_CS__SIMPLE_NAME_CS:
 				return getSimpleNameCS();
 			case CSTPackage.OBJECT_EXP_CS__EXPRESSIONS:
 				return getExpressions();
 			case CSTPackage.OBJECT_EXP_CS__IS_IMPLICIT:
-				return isIsImplicit() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsImplicit();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -330,10 +330,10 @@ public class ObjectExpCSImpl extends InstantiationExpCSImpl implements ObjectExp
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case CSTPackage.OBJECT_EXP_CS__BODY_START_LOCATION:
-				setBodyStartLocation(((Integer)newValue).intValue());
+				setBodyStartLocation((Integer)newValue);
 				return;
 			case CSTPackage.OBJECT_EXP_CS__BODY_END_LOCATION:
-				setBodyEndLocation(((Integer)newValue).intValue());
+				setBodyEndLocation((Integer)newValue);
 				return;
 			case CSTPackage.OBJECT_EXP_CS__SIMPLE_NAME_CS:
 				setSimpleNameCS((SimpleNameCS)newValue);
@@ -343,7 +343,7 @@ public class ObjectExpCSImpl extends InstantiationExpCSImpl implements ObjectExp
 				getExpressions().addAll((Collection<? extends OCLExpressionCS>)newValue);
 				return;
 			case CSTPackage.OBJECT_EXP_CS__IS_IMPLICIT:
-				setIsImplicit(((Boolean)newValue).booleanValue());
+				setIsImplicit((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

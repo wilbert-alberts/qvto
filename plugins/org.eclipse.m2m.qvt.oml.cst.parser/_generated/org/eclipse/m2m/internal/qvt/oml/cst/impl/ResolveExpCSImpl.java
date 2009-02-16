@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ResolveExpCSImpl.java,v 1.2 2009/01/13 20:23:47 radvorak Exp $
+ * $Id: ResolveExpCSImpl.java,v 1.3 2009/02/16 12:44:05 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -324,11 +324,11 @@ public class ResolveExpCSImpl extends CallExpCSImpl implements ResolveExpCS {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case CSTPackage.RESOLVE_EXP_CS__ONE:
-				return isOne() ? Boolean.TRUE : Boolean.FALSE;
+				return isOne();
 			case CSTPackage.RESOLVE_EXP_CS__IS_INVERSE:
-				return isIsInverse() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsInverse();
 			case CSTPackage.RESOLVE_EXP_CS__IS_DEFERRED:
-				return isIsDeferred() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsDeferred();
 			case CSTPackage.RESOLVE_EXP_CS__TARGET:
 				return getTarget();
 			case CSTPackage.RESOLVE_EXP_CS__CONDITION:
@@ -346,13 +346,13 @@ public class ResolveExpCSImpl extends CallExpCSImpl implements ResolveExpCS {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case CSTPackage.RESOLVE_EXP_CS__ONE:
-				setOne(((Boolean)newValue).booleanValue());
+				setOne((Boolean)newValue);
 				return;
 			case CSTPackage.RESOLVE_EXP_CS__IS_INVERSE:
-				setIsInverse(((Boolean)newValue).booleanValue());
+				setIsInverse((Boolean)newValue);
 				return;
 			case CSTPackage.RESOLVE_EXP_CS__IS_DEFERRED:
-				setIsDeferred(((Boolean)newValue).booleanValue());
+				setIsDeferred((Boolean)newValue);
 				return;
 			case CSTPackage.RESOLVE_EXP_CS__TARGET:
 				setTarget((VariableCS)newValue);

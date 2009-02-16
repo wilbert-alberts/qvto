@@ -301,6 +301,9 @@
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/ListTypeCS">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ListTypeCS/typeCS"/>
       </genClasses>
+      <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/ListLiteralExpCS">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/ListLiteralExpCS/collectionLiteralParts"/>
+      </genClasses>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/DictionaryTypeCS">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/DictionaryTypeCS/key"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/DictionaryTypeCS/value"/>

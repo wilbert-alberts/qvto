@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: VariableInitializationCSImpl.java,v 1.3 2009/01/14 13:04:41 aigdalov Exp $
+ * $Id: VariableInitializationCSImpl.java,v 1.4 2009/02/16 12:44:05 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -302,7 +302,7 @@ public class VariableInitializationCSImpl extends StatementCSImpl implements Var
 			case CSTPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS:
 				return getTypeCS();
 			case CSTPackage.VARIABLE_INITIALIZATION_CS__WITH_RESULT:
-				return isWithResult() ? Boolean.TRUE : Boolean.FALSE;
+				return isWithResult();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -325,7 +325,7 @@ public class VariableInitializationCSImpl extends StatementCSImpl implements Var
 				setTypeCS((TypeCS)newValue);
 				return;
 			case CSTPackage.VARIABLE_INITIALIZATION_CS__WITH_RESULT:
-				setWithResult(((Boolean)newValue).booleanValue());
+				setWithResult((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingDeclarationCSImpl.java,v 1.5 2009/01/28 22:14:35 sboyko Exp $
+ * $Id: MappingDeclarationCSImpl.java,v 1.6 2009/02/16 12:44:05 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -418,7 +418,7 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 			case CSTPackage.MAPPING_DECLARATION_CS__MAPPING_EXTENSION:
 				return getMappingExtension();
 			case CSTPackage.MAPPING_DECLARATION_CS__IS_QUERY:
-				return isIsQuery() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsQuery();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -458,7 +458,7 @@ public class MappingDeclarationCSImpl extends CSTNodeImpl implements MappingDecl
 				getMappingExtension().addAll((Collection<? extends MappingExtensionCS>)newValue);
 				return;
 			case CSTPackage.MAPPING_DECLARATION_CS__IS_QUERY:
-				setIsQuery(((Boolean)newValue).booleanValue());
+				setIsQuery((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

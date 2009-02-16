@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactory.java,v 1.14 2009/02/11 16:17:59 sboyko Exp $
+ * $Id: CSTFactory.java,v 1.15 2009/02/16 12:44:06 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -535,6 +535,15 @@ public interface CSTFactory extends EFactory {
 	 * @generated
 	 */
 	ListTypeCS createListTypeCS();
+
+	/**
+	 * Returns a new object of class '<em>List Literal Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>List Literal Exp CS</em>'.
+	 * @generated
+	 */
+	ListLiteralExpCS createListLiteralExpCS();
 
 	/**
 	 * Returns a new object of class '<em>Dictionary Type CS</em>'.

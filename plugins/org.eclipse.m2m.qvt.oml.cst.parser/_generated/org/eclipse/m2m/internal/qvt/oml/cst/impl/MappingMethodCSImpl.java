@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingMethodCSImpl.java,v 1.3 2009/01/13 20:23:48 radvorak Exp $
+ * $Id: MappingMethodCSImpl.java,v 1.4 2009/02/16 12:44:05 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -183,7 +183,7 @@ public abstract class MappingMethodCSImpl extends CSTNodeImpl implements Mapping
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case CSTPackage.MAPPING_METHOD_CS__BLACK_BOX:
-				return isBlackBox() ? Boolean.TRUE : Boolean.FALSE;
+				return isBlackBox();
 			case CSTPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS:
 				return getMappingDeclarationCS();
 		}
@@ -199,7 +199,7 @@ public abstract class MappingMethodCSImpl extends CSTNodeImpl implements Mapping
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case CSTPackage.MAPPING_METHOD_CS__BLACK_BOX:
-				setBlackBox(((Boolean)newValue).booleanValue());
+				setBlackBox((Boolean)newValue);
 				return;
 			case CSTPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS:
 				setMappingDeclarationCS((MappingDeclarationCS)newValue);

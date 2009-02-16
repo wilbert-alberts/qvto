@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTSwitch.java,v 1.17 2009/02/11 16:18:00 sboyko Exp $
+ * $Id: CSTSwitch.java,v 1.18 2009/02/16 12:44:06 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -678,6 +678,15 @@ public class CSTSwitch<T> {
 				if (result == null) result = caseTypeCS(listTypeCS);
 				if (result == null) result = caseOCLExpressionCS(listTypeCS);
 				if (result == null) result = caseCSTNode(listTypeCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.LIST_LITERAL_EXP_CS: {
+				ListLiteralExpCS listLiteralExpCS = (ListLiteralExpCS)theEObject;
+				T result = caseListLiteralExpCS(listLiteralExpCS);
+				if (result == null) result = caseLiteralExpCS(listLiteralExpCS);
+				if (result == null) result = caseOCLExpressionCS(listLiteralExpCS);
+				if (result == null) result = caseCSTNode(listLiteralExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -1629,6 +1638,21 @@ public class CSTSwitch<T> {
 	 * @generated
 	 */
 	public T caseListTypeCS(ListTypeCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>List Literal Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>List Literal Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseListLiteralExpCS(ListLiteralExpCS object) {
 		return null;
 	}
 

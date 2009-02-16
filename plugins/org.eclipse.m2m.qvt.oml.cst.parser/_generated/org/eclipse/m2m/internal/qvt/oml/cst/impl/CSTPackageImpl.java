@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.28 2009/02/11 16:17:59 sboyko Exp $
+ * $Id: CSTPackageImpl.java,v 1.29 2009/02/16 12:44:05 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -50,6 +50,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ListLiteralExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ListTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LocalPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LogExpCS;
@@ -536,6 +537,13 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * @generated
 	 */
 	private EClass listTypeCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass listLiteralExpCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -2355,6 +2363,24 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getListLiteralExpCS() {
+		return listLiteralExpCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getListLiteralExpCS_CollectionLiteralParts() {
+		return (EReference)listLiteralExpCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getDictionaryTypeCS() {
 		return dictionaryTypeCSEClass;
 	}
@@ -2778,6 +2804,9 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		listTypeCSEClass = createEClass(LIST_TYPE_CS);
 		createEReference(listTypeCSEClass, LIST_TYPE_CS__TYPE_CS);
 
+		listLiteralExpCSEClass = createEClass(LIST_LITERAL_EXP_CS);
+		createEReference(listLiteralExpCSEClass, LIST_LITERAL_EXP_CS__COLLECTION_LITERAL_PARTS);
+
 		dictionaryTypeCSEClass = createEClass(DICTIONARY_TYPE_CS);
 		createEReference(dictionaryTypeCSEClass, DICTIONARY_TYPE_CS__KEY);
 		createEReference(dictionaryTypeCSEClass, DICTIONARY_TYPE_CS__VALUE);
@@ -2901,6 +2930,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		mappingExtensionCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		instantiationExpCSEClass.getESuperTypes().add(this.getStatementCS());
 		listTypeCSEClass.getESuperTypes().add(theCSTPackage_1.getTypeCS());
+		listLiteralExpCSEClass.getESuperTypes().add(theCSTPackage_1.getLiteralExpCS());
 		dictionaryTypeCSEClass.getESuperTypes().add(theCSTPackage_1.getTypeCS());
 		dictLiteralExpCSEClass.getESuperTypes().add(theCSTPackage_1.getLiteralExpCS());
 		dictLiteralPartCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
@@ -3153,6 +3183,9 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
 		initEClass(listTypeCSEClass, ListTypeCS.class, "ListTypeCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getListTypeCS_TypeCS(), theCSTPackage_1.getTypeCS(), null, "typeCS", null, 0, 1, ListTypeCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(listLiteralExpCSEClass, ListLiteralExpCS.class, "ListLiteralExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getListLiteralExpCS_CollectionLiteralParts(), theCSTPackage_1.getCollectionLiteralPartCS(), null, "collectionLiteralParts", null, 0, -1, ListLiteralExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(dictionaryTypeCSEClass, DictionaryTypeCS.class, "DictionaryTypeCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getDictionaryTypeCS_Key(), theCSTPackage_1.getTypeCS(), null, "key", null, 0, 1, DictionaryTypeCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

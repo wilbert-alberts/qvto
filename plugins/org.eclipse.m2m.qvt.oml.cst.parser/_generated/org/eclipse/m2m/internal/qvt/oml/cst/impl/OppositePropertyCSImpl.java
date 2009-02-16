@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: OppositePropertyCSImpl.java,v 1.2 2009/01/13 20:23:44 radvorak Exp $
+ * $Id: OppositePropertyCSImpl.java,v 1.3 2009/02/16 12:44:05 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -241,7 +241,7 @@ public class OppositePropertyCSImpl extends CSTNodeImpl implements OppositePrope
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case CSTPackage.OPPOSITE_PROPERTY_CS__IS_NAVIGABLE:
-				return isIsNavigable() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsNavigable();
 			case CSTPackage.OPPOSITE_PROPERTY_CS__SIMPLE_NAME_CS:
 				return getSimpleNameCS();
 			case CSTPackage.OPPOSITE_PROPERTY_CS__MULTIPLICITY:
@@ -259,7 +259,7 @@ public class OppositePropertyCSImpl extends CSTNodeImpl implements OppositePrope
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case CSTPackage.OPPOSITE_PROPERTY_CS__IS_NAVIGABLE:
-				setIsNavigable(((Boolean)newValue).booleanValue());
+				setIsNavigable((Boolean)newValue);
 				return;
 			case CSTPackage.OPPOSITE_PROPERTY_CS__SIMPLE_NAME_CS:
 				setSimpleNameCS((SimpleNameCS)newValue);

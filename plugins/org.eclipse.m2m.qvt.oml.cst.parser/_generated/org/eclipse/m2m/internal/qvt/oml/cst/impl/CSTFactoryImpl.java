@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactoryImpl.java,v 1.16 2009/02/11 16:17:59 sboyko Exp $
+ * $Id: CSTFactoryImpl.java,v 1.17 2009/02/16 12:44:05 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -195,6 +195,7 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 			case CSTPackage.MAPPING_EXTENSION_CS: return createMappingExtensionCS();
 			case CSTPackage.INSTANTIATION_EXP_CS: return createInstantiationExpCS();
 			case CSTPackage.LIST_TYPE_CS: return createListTypeCS();
+			case CSTPackage.LIST_LITERAL_EXP_CS: return createListLiteralExpCS();
 			case CSTPackage.DICTIONARY_TYPE_CS: return createDictionaryTypeCS();
 			case CSTPackage.DICT_LITERAL_EXP_CS: return createDictLiteralExpCS();
 			case CSTPackage.DICT_LITERAL_PART_CS: return createDictLiteralPartCS();
@@ -798,6 +799,16 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	public ListTypeCS createListTypeCS() {
 		ListTypeCSImpl listTypeCS = new ListTypeCSImpl();
 		return listTypeCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ListLiteralExpCS createListLiteralExpCS() {
+		ListLiteralExpCSImpl listLiteralExpCS = new ListLiteralExpCSImpl();
+		return listLiteralExpCS;
 	}
 
 	/**

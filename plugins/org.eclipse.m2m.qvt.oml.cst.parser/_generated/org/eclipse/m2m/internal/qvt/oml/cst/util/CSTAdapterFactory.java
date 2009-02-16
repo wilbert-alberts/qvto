@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTAdapterFactory.java,v 1.16 2009/02/11 16:18:00 sboyko Exp $
+ * $Id: CSTAdapterFactory.java,v 1.17 2009/02/16 12:44:06 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -401,6 +401,10 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseListTypeCS(ListTypeCS object) {
 				return createListTypeCSAdapter();
+			}
+			@Override
+			public Adapter caseListLiteralExpCS(ListLiteralExpCS object) {
+				return createListLiteralExpCSAdapter();
 			}
 			@Override
 			public Adapter caseDictionaryTypeCS(DictionaryTypeCS object) {
@@ -1321,6 +1325,20 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createListTypeCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ListLiteralExpCS <em>List Literal Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ListLiteralExpCS
+	 * @generated
+	 */
+	public Adapter createListLiteralExpCSAdapter() {
 		return null;
 	}
 

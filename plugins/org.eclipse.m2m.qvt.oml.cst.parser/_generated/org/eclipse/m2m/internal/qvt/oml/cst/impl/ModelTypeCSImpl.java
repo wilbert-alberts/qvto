@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ModelTypeCSImpl.java,v 1.3 2009/01/28 22:31:09 sboyko Exp $
+ * $Id: ModelTypeCSImpl.java,v 1.4 2009/02/16 12:44:05 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -341,9 +341,9 @@ public class ModelTypeCSImpl extends CSTNodeImpl implements ModelTypeCS {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case CSTPackage.MODEL_TYPE_CS__BODY_START_LOCATION:
-				return new Integer(getBodyStartLocation());
+				return getBodyStartLocation();
 			case CSTPackage.MODEL_TYPE_CS__BODY_END_LOCATION:
-				return new Integer(getBodyEndLocation());
+				return getBodyEndLocation();
 			case CSTPackage.MODEL_TYPE_CS__IDENTIFIER_CS:
 				return getIdentifierCS();
 			case CSTPackage.MODEL_TYPE_CS__COMPLIANCE_KIND_CS:
@@ -366,10 +366,10 @@ public class ModelTypeCSImpl extends CSTNodeImpl implements ModelTypeCS {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case CSTPackage.MODEL_TYPE_CS__BODY_START_LOCATION:
-				setBodyStartLocation(((Integer)newValue).intValue());
+				setBodyStartLocation((Integer)newValue);
 				return;
 			case CSTPackage.MODEL_TYPE_CS__BODY_END_LOCATION:
-				setBodyEndLocation(((Integer)newValue).intValue());
+				setBodyEndLocation((Integer)newValue);
 				return;
 			case CSTPackage.MODEL_TYPE_CS__IDENTIFIER_CS:
 				setIdentifierCS((SimpleNameCS)newValue);

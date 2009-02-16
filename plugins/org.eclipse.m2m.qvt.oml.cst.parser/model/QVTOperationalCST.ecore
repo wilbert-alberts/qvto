@@ -411,6 +411,11 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="typeCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
           containment="true"/>
     </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ListLiteralExpCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/LiteralExpCS">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="collectionLiteralParts"
+          upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CollectionLiteralPartCS"
+          containment="true"/>
+    </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="DictionaryTypeCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS">
       <eStructuralFeatures xsi:type="ecore:EReference" name="key" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
           containment="true"/>

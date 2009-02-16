@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ClassifierPropertyCSImpl.java,v 1.3 2009/01/13 20:23:49 radvorak Exp $
+ * $Id: ClassifierPropertyCSImpl.java,v 1.4 2009/02/16 12:44:05 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -304,7 +304,7 @@ public class ClassifierPropertyCSImpl extends LocalPropertyCSImpl implements Cla
 			case CSTPackage.CLASSIFIER_PROPERTY_CS__OPPOSITE:
 				return getOpposite();
 			case CSTPackage.CLASSIFIER_PROPERTY_CS__IS_ORDERED:
-				return isIsOrdered() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsOrdered();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -333,7 +333,7 @@ public class ClassifierPropertyCSImpl extends LocalPropertyCSImpl implements Cla
 				setOpposite((OppositePropertyCS)newValue);
 				return;
 			case CSTPackage.CLASSIFIER_PROPERTY_CS__IS_ORDERED:
-				setIsOrdered(((Boolean)newValue).booleanValue());
+				setIsOrdered((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
