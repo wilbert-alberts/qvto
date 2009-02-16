@@ -69,6 +69,7 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeExpression;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeIterateExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeLoopExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.LogExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.OrderedTupleLiteralExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.OrderedTupleLiteralPart;
@@ -87,6 +88,7 @@ import org.eclipse.ocl.ecore.IfExp;
 import org.eclipse.ocl.ecore.IterateExp;
 import org.eclipse.ocl.ecore.IteratorExp;
 import org.eclipse.ocl.ecore.SendSignalAction;
+import org.eclipse.ocl.expressions.CollectionLiteralExp;
 import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.lpg.FormattingHelper;
@@ -631,6 +633,8 @@ final class CustomOclValidationVisitor extends
 				Constraint, EClass, EObject>
 								implements QVTOperationalVisitor<Boolean>{
 
+	private QvtOperationalValidationVisitor myDelegateVisitor = null;
+
 	protected CustomOclValidationVisitor(QvtOperationalEnv environment) {
 		super(environment);
 	}
@@ -816,7 +820,11 @@ final class CustomOclValidationVisitor extends
 		return Boolean.TRUE;
 	}
 
-	private QvtOperationalValidationVisitor myDelegateVisitor = null;
-
+	@Override
+	public Boolean visitCollectionLiteralExp(CollectionLiteralExp<EClassifier> cl) {
+		if (cl.getType() instanceof ListType) {
+			return Boolean.TRUE;
+		}
+		return super.visitCollectionLiteralExp(cl);
+	}
 }
-

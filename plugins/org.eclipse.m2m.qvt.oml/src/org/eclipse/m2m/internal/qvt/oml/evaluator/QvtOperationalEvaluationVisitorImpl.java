@@ -90,6 +90,7 @@ import org.eclipse.m2m.internal.qvt.oml.library.LateResolveTask;
 import org.eclipse.m2m.internal.qvt.oml.library.QvtResolveUtil;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.DictionaryImpl;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.MutableListImpl;
 import org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AltExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssertExp;
@@ -105,6 +106,7 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ForExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeIterateExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeLoopExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.LogExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.OrderedTupleLiteralExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.OrderedTupleLiteralPart;
@@ -129,7 +131,11 @@ import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.ecore.SendSignalAction;
+import org.eclipse.ocl.expressions.CollectionItem;
 import org.eclipse.ocl.expressions.CollectionKind;
+import org.eclipse.ocl.expressions.CollectionLiteralExp;
+import org.eclipse.ocl.expressions.CollectionLiteralPart;
+import org.eclipse.ocl.expressions.CollectionRange;
 import org.eclipse.ocl.expressions.EnumLiteralExp;
 import org.eclipse.ocl.expressions.IfExp;
 import org.eclipse.ocl.expressions.OCLExpression;
@@ -1713,7 +1719,46 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     	return super.call(operation, body, target, args);
     }
     
-    @SuppressWarnings("unchecked") //$NON-NLS-1$
+    @Override
+	public Object visitCollectionLiteralExp(CollectionLiteralExp<EClassifier> cl) {
+		if (cl.getType() instanceof ListType) {
+			Collection<Object> result = new MutableListImpl<Object>();
+			for (CollectionLiteralPart<EClassifier> part : cl.getPart()) {
+				if (part instanceof CollectionItem) {
+					// CollectionItem part
+					CollectionItem<EClassifier> item = (CollectionItem<EClassifier>) part;
+					OCLExpression<EClassifier> itemExp = item.getItem();
+					Object itemVal = itemExp.accept(getVisitor());
+					if (itemVal != null) {
+						// add it to the result set
+						result.add(itemVal);
+					}
+				} else {
+					// Collection range
+					CollectionRange<EClassifier> range = (CollectionRange<EClassifier>) part;
+					OCLExpression<EClassifier> first = range.getFirst();
+					OCLExpression<EClassifier> last = range.getLast();
+
+					// evaluate first value
+					Integer firstVal = (Integer) first.accept(getVisitor());
+					Integer lastVal = (Integer) last.accept(getVisitor());
+					if (!((firstVal == null) || (lastVal == null))) {
+						// TODO: enhance IntegerRangeList to support multiple ranges
+						// add values between first and last inclusive
+						int firstInt = firstVal.intValue();
+						int lastInt = lastVal.intValue();
+						for (int i = firstInt; i <= lastInt; i++) {
+                            result.add(new Integer(i));
+                        }
+					}
+				} // end of collection range
+			} // end of parts iterator
+			return result;
+		}
+		return super.visitCollectionLiteralExp(cl);
+	}
+
+	@SuppressWarnings("unchecked") //$NON-NLS-1$
 	@Override
 	protected Object navigate(EStructuralFeature property, OCLExpression<EClassifier> derivation, Object target) {
 		Environment myEnv = getEnvironment(); 

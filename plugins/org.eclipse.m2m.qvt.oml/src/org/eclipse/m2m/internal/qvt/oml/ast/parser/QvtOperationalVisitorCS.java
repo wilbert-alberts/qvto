@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -78,6 +79,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ListLiteralExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ListTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LocalPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LogExpCS;
@@ -171,6 +173,7 @@ import org.eclipse.ocl.Environment.Internal;
 import org.eclipse.ocl.cst.CSTFactory;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CallExpCS;
+import org.eclipse.ocl.cst.CollectionLiteralPartCS;
 import org.eclipse.ocl.cst.CollectionTypeCS;
 import org.eclipse.ocl.cst.DotOrArrowEnum;
 import org.eclipse.ocl.cst.FeatureCallExpCS;
@@ -196,6 +199,7 @@ import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.BooleanLiteralExp;
 import org.eclipse.ocl.expressions.CollectionKind;
 import org.eclipse.ocl.expressions.CollectionLiteralExp;
+import org.eclipse.ocl.expressions.CollectionLiteralPart;
 import org.eclipse.ocl.expressions.FeatureCallExp;
 import org.eclipse.ocl.expressions.IfExp;
 import org.eclipse.ocl.expressions.IntegerLiteralExp;
@@ -607,8 +611,10 @@ public class QvtOperationalVisitorCS
     protected OCLExpression<EClassifier> literalExpCS(LiteralExpCS literalExpCS,
             Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
     	
-    	OCLExpression<EClassifier> literalExp = null;    	
-    	if(literalExpCS instanceof DictLiteralExpCS) {
+    	OCLExpression<EClassifier> literalExp;    	
+    	if (literalExpCS instanceof ListLiteralExpCS) {
+    		literalExp = listLiteralExpCS((ListLiteralExpCS) literalExpCS, env);
+    	} else if (literalExpCS instanceof DictLiteralExpCS) {
     		literalExp = dictionaryLiteralExp((DictLiteralExpCS)literalExpCS, env);
     	} else {
     		literalExp = super.literalExpCS(literalExpCS, env);
@@ -4283,7 +4289,68 @@ public class QvtOperationalVisitorCS
 		listTypeCS.setAst(result);		
 		return result;
 	}
+	
+	protected CollectionLiteralExp<EClassifier> listLiteralExpCS(ListLiteralExpCS listLiteralExpCS,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+
+		CollectionLiteralExp<EClassifier> astNode = oclFactory.createCollectionLiteralExp();
+
+		EClassifier elementType = null;
+
+		initASTMapping(env, astNode, listLiteralExpCS);
+		astNode.setKind(CollectionKind.SEQUENCE_LITERAL);
 		
+		EList<CollectionLiteralPart<EClassifier>> collectionParts = astNode.getPart();
+
+		EList<CollectionLiteralPartCS> collectionLiteralPartsCS = listLiteralExpCS
+			.getCollectionLiteralParts();
+
+		if (!collectionLiteralPartsCS.isEmpty()) {
+			Iterator<CollectionLiteralPartCS> i = collectionLiteralPartsCS
+				.iterator();
+
+			CollectionLiteralPartCS colPart = i.next();
+			CollectionLiteralPart<EClassifier> collectionLiteralPartExp = collectionLiteralPartCS(colPart, env);
+			collectionParts.add(collectionLiteralPartExp);
+			elementType = collectionLiteralPartExp.getType();
+
+			if (isErrorNode(collectionLiteralPartExp)) {
+				// propagate error stigma to the collection literal
+				markAsErrorNode(astNode);
+			}
+
+			while (i.hasNext()) {
+				collectionLiteralPartExp = collectionLiteralPartCS(i.next(),
+					env);
+
+				EClassifier type1 = collectionLiteralPartExp.getType();
+				elementType = getCommonSuperType(colPart,
+					"collectionLiteralExpCS", env, elementType, type1); //$NON-NLS-1$
+				collectionParts.add(collectionLiteralPartExp);
+
+				if (isErrorNode(collectionLiteralPartExp)) {
+					// propagate error stigma to the collection literal
+					markAsErrorNode(astNode);
+				}
+			}
+		}
+		
+		if (elementType == null) {
+			elementType = env.getOCLStandardLibrary().getOclVoid();
+		}
+		
+		EClassifier resultType = getListType(elementType, env);
+		if(resultType == null) {
+			resultType = env.getOCLStandardLibrary().getOclVoid();
+		}
+		
+		astNode.setType(resultType);
+		
+		listLiteralExpCS.setAst(astNode);
+
+		return astNode;
+	}
+	
 	protected EClassifier dictionaryTypeCS(DictionaryTypeCS dictTypeCS,
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 
