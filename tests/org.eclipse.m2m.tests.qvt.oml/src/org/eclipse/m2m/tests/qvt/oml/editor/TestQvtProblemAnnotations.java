@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.editor;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class TestQvtProblemAnnotations extends AbstractTestQvtEditorSupport {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();		
-		fProblems = Arrays.asList(getQVTDocumentProvider(fEditor).getCompiledModule().getMessages());
+		fProblems = getQVTDocumentProvider(fEditor).getCompiledModule().getProblems();
 	}
 		
 	public void testProblemAnnotations() throws Exception {		

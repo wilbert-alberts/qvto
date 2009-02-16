@@ -16,10 +16,17 @@ import org.eclipse.m2m.tests.qvt.oml.transform.ModelTestData;
 /**
  * @author sboyko
  */
+
 public class WrappedExecTransformationTestCase extends ExecDeployedTransformationTestCase {
 	
-    public WrappedExecTransformationTestCase(boolean useFilename, ModelTestData data) {
-        super(useFilename, data);
+    public WrappedExecTransformationTestCase(String testName) {
+		super(testName);
+		myUseFilename = true;		
+	}
+
+	public WrappedExecTransformationTestCase(ModelTestData data) {
+        super(data);
+        myUseFilename = true;
     }
     
     @Override

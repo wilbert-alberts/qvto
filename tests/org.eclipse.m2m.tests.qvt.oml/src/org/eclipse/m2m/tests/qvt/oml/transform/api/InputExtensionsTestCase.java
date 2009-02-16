@@ -25,9 +25,15 @@ import org.eclipse.m2m.tests.qvt.oml.transform.ModelTestData;
  */
 public class InputExtensionsTestCase extends ApiTestCase {
 	
-    public InputExtensionsTestCase(ModelTestData data) {
+    public InputExtensionsTestCase(String testName) {
+		super(testName);
+	}
+
+	public InputExtensionsTestCase(ModelTestData data) {
         super(data);
     }
+
+    
     
     @Override
     public void runTest() throws Exception {

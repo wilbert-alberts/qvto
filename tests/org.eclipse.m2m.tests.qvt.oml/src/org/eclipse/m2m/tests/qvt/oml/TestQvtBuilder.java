@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.nature.TransformationNature;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 
 
@@ -71,7 +71,7 @@ public class TestQvtBuilder extends TestCase {
 		}
         
         assertTrue("Expecting QVT compiler error markers", //$NON-NLS-1$
-        		qvtFile.findMarkers(QvtCompiler.PROBLEM_MARKER, true, IResource.DEPTH_INFINITE).length > 0);        
+        		qvtFile.findMarkers(QVTOCompiler.PROBLEM_MARKER, true, IResource.DEPTH_INFINITE).length > 0);        
     }
     
     public void testClean() throws Exception {
@@ -81,7 +81,7 @@ public class TestQvtBuilder extends TestCase {
     }
     
     private boolean hasErrorMarkers(IFile qvtFile) throws CoreException {
-    	IMarker[] markers = qvtFile.findMarkers(QvtCompiler.PROBLEM_MARKER, true, IResource.DEPTH_INFINITE);
+    	IMarker[] markers = qvtFile.findMarkers(QVTOCompiler.PROBLEM_MARKER, true, IResource.DEPTH_INFINITE);
     	for (IMarker marker : markers) {
 			if(marker.getAttribute(IMarker.SEVERITY, -1) == IMarker.SEVERITY_ERROR) {
 				return true;

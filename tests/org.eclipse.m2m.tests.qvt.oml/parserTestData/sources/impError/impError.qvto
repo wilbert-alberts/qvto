@@ -1,6 +1,6 @@
 library impError;
 
-/*<error>*/import b1;/*</error>*/ -- report compilation error in imported module
+import /*<error>*/b1/*</error>*/; -- report compilation error in imported module
    
 query foo_b2(): String {
 	return 'b2->' + foo_b1();

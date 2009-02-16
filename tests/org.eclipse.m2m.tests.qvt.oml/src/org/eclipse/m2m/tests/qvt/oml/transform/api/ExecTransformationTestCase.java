@@ -34,26 +34,34 @@ import org.eclipse.m2m.tests.qvt.oml.transform.ModelTestData;
  * @author sboyko
  */
 public class ExecTransformationTestCase extends ApiTestCase {
-	
-    public ExecTransformationTestCase(ModelTestData data) {
-        super(data);
-        setName("workspace: " + data.getName()); //$NON-NLS-1$
-    }
-    
-    @Override
-    public void runTest() throws Exception {
-    	URI scriptUri = createScriptUri(getData().getName());
-    	
+
+	public ExecTransformationTestCase(String testName) {
+		super(testName);
+	}
+
+	public ExecTransformationTestCase(ModelTestData data) {
+		super(data);
+		setName("workspace: " + data.getName()); //$NON-NLS-1$
+	}
+
+	@Override
+	public void runTest() throws Exception {
+		URI scriptUri = createScriptUri(getData().getName());
+
 		List<EObject> inObjects = new ArrayList<EObject>();
 		List<URI> inputs = getData().getIn(getProject());
 		for (URI uri : inputs) {
 			ModelContent loadModel = EmfUtil.loadModel(uri);
 			inObjects.add(loadModel.getContent().get(0));
 		}
-		ResourceSet metamodelResourceSet = inObjects.isEmpty() ? new ResourceSetImpl() : inObjects.get(0).eResource().getResourceSet();
-		TransfExecutionResult execResult = new QvtoTransformationHelper(scriptUri).executeTransformation(inObjects, Collections.<String, Object>emptyMap(), metamodelResourceSet);
-		
-		Iterator<ModelExtent> itrExt = execResult.getOutModelExtents().iterator();
+		ResourceSet metamodelResourceSet = inObjects.isEmpty() ? new ResourceSetImpl()
+				: inObjects.get(0).eResource().getResourceSet();
+		TransfExecutionResult execResult = new QvtoTransformationHelper(
+				scriptUri).executeTransformation(inObjects, Collections
+				.<String, Object> emptyMap(), metamodelResourceSet);
+
+		Iterator<ModelExtent> itrExt = execResult.getOutModelExtents()
+				.iterator();
 		for (URI uri : getData().getExpected(getProject())) {
 			if (!itrExt.hasNext()) {
 				throw new Exception("Missed execution result model extent"); //$NON-NLS-1$
@@ -61,27 +69,33 @@ public class ExecTransformationTestCase extends ApiTestCase {
 			Resource loadResource = EmfUtil.loadResource(uri);
 			ModelExtent nextExtent = itrExt.next();
 			for (int i = 0; i < loadResource.getContents().size(); ++i) {
-				ModelTestData.assertEquals("Diff execution result", loadResource.getContents().get(i), nextExtent.getAllRootElements().get(i)); //$NON-NLS-1$
+				ModelTestData
+						.assertEquals(
+								"Diff execution result", loadResource.getContents().get(i), nextExtent.getAllRootElements().get(i)); //$NON-NLS-1$
 			}
 		}
 
 		if (execResult.getOutParameters().isEmpty()) {
 			return;
 		}
-		
+
 		Iterator<EObject> itrObj = execResult.getOutParameters().iterator();
 		for (URI uri : getData().getExpected(getProject())) {
 			if (!itrObj.hasNext()) {
 				throw new Exception("Missed execution result out parameter"); //$NON-NLS-1$
 			}
 			Resource loadResource = EmfUtil.loadResource(uri);
-			ModelTestData.assertEquals("Diff execution result", loadResource.getContents().get(0), itrObj.next()); //$NON-NLS-1$
+			ModelTestData
+					.assertEquals(
+							"Diff execution result", loadResource.getContents().get(0), itrObj.next()); //$NON-NLS-1$
 		}
-    }
-    
+	}
+
 	protected URI createScriptUri(String scriptName) {
-		IFile qvtoFile = getIFile(getData().getName() + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT);
-		return URI.createPlatformResourceURI(qvtoFile.getFullPath().toString(), false);
+		IFile qvtoFile = getIFile(getData().getName()
+				+ MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT);
+		return URI.createPlatformResourceURI(qvtoFile.getFullPath().toString(),
+				false);
 	}
 
 }

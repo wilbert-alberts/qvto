@@ -31,6 +31,10 @@ public class ImportedTransfTestCase extends ApiTestCase {
         super(data);
     }
     
+    public ImportedTransfTestCase(String testName) {
+    	super(testName);
+    }
+    
     @Override
     public void runTest() throws Exception {
 		IFile qvtoFile = getIFile(getData().getName() + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT);

@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.blackbox.AbstractCompilationUnitDescriptor;
 import org.eclipse.m2m.qvt.oml.blackbox.BlackboxRegistry;
@@ -75,7 +75,7 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 	
 	@Override
 	protected void setUp() {
-		final Set<CompiledModule> compileModules = TestUtil.compileModules(SRC_CONTAINER,
+		final Set<CompiledUnit> compileModules = TestUtil.compileModules(SRC_CONTAINER,
 			new String[] {
 				"org.q1",
 				"org.q2"
@@ -83,8 +83,8 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 		);
 		
 		fImportedModules = new LinkedHashSet<Module>();
-		for (CompiledModule compiledModule : compileModules) {
-			fImportedModules.add(compiledModule.getModule());
+		for (CompiledUnit compiledUnits : compileModules) {
+			fImportedModules.addAll(compiledUnits.getModules());
 		}
 		
 		try {

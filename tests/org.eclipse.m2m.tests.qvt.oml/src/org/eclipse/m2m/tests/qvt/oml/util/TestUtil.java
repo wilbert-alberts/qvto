@@ -53,9 +53,8 @@ import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilationResult;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
@@ -72,9 +71,9 @@ public class TestUtil extends Assert {
 
 	private TestUtil() {}
 
-	static Set<CompiledModule> collectAllCompiledModules(CompiledModule compiledModule, Set<CompiledModule> result) {
-		result.add(compiledModule);
-		for (CompiledModule imported : compiledModule.getCompiledImports()) {
+	static Set<CompiledUnit> collectAllCompiledModules(CompiledUnit unit, Set<CompiledUnit> result) {
+		result.add(unit);
+		for (CompiledUnit imported : unit.getCompiledImports()) {
 			collectAllCompiledModules(imported, result);
 		}
 		return result;
@@ -98,32 +97,41 @@ public class TestUtil extends Assert {
 		}
 	}
 	
-	public static void assertAllPersistableAST(CompiledModule compiledModule) {
-		Collection<CompiledModule> all = collectAllCompiledModules(compiledModule, new HashSet<CompiledModule>());
+	public static void assertAllPersistableAST(CompiledUnit compiledModule) {
+		Collection<CompiledUnit> all = collectAllCompiledModules(compiledModule, new HashSet<CompiledUnit>());
 		
-		HashMap<CompiledModule, Resource> resourceMap = new HashMap<CompiledModule, Resource>();
-		for (CompiledModule nextModule : all) {
+		HashMap<CompiledUnit, Resource> resourceMap = new HashMap<CompiledUnit, Resource>();
+		for (CompiledUnit nextModule : all) {
 			resourceMap.put(nextModule, confineInResource(nextModule));
 		}
 		
-		for (CompiledModule nextModule : all) {
-			Resource res = resourceMap.get(nextModule);
-			assertPersistableAST(nextModule, res);
+		for (CompiledUnit nextUnit : all) {
+			Resource res = resourceMap.get(nextUnit);
+			assertPersistableAST(nextUnit, res);
 		}
 	}
 	
-	private static Resource confineInResource(CompiledModule module) {
+	private static Resource confineInResource(CompiledUnit unit) {
 		// FIXME -
-		EclipseFile source = (EclipseFile)module.getSource();
+		EclipseFile source = (EclipseFile)unit.getSource();
 		URI uri = URI.createURI(source.getFile().getLocationURI().toString()).appendFileExtension("xmi"); //$NON-NLS-1$
-		Resource res = module.getModule().eResource();
-		assertNotNull("A resource must be bound to AST Module: " + uri, res); //$NON-NLS-1$
-		res.getContents().add(module.getModule());		
-		res.setURI(uri);
+				
+		Resource res = null;
+		for (Module nextModule : unit.getModules()) {
+			if(res == null) {
+				res = nextModule.eResource();
+				res.setURI(uri);				
+			}
+			
+			res.getContents().add(nextModule);
+		}
+		
+		assertNotNull("A resource must be bound to AST Module: " + uri, res); //$NON-NLS-1$		
+
 		return res;
 	}
 	
-	private static Resource assertPersistableAST(CompiledModule module, Resource res) {
+	private static Resource assertPersistableAST(CompiledUnit module, Resource res) {
 		try {
 			res.save(null);
 		} catch (Exception e) {
@@ -137,10 +145,10 @@ public class TestUtil extends Assert {
 		return res;
 	}
 	
-	public static Set<CompiledModule> compileModules(String srcContainer, String[] modulePaths)  {
+	public static Set<CompiledUnit> compileModules(String srcContainer, String[] modulePaths)  {
 		TestModuleResolver testResolver = TestModuleResolver.createdTestPluginResolver(srcContainer);
 		
-		QvtCompiler compiler = new QvtCompiler(TestModuleResolver.createdTestPluginResolver(srcContainer));				
+		QVTOCompiler compiler = new QVTOCompiler(TestModuleResolver.createdTestPluginResolver(srcContainer));				
 		QvtCompilerOptions options = new QvtCompilerOptions();
 		options.setGenerateCompletionData(true);
 		
@@ -152,16 +160,16 @@ public class TestUtil extends Assert {
 			pos++;
 		}
 		
-		QvtCompilationResult[] result;
-		Set<CompiledModule> modules;		
+		CompiledUnit[] result;
+		Set<CompiledUnit> modules;		
 		try {
 			result = compiler.compile(sourceFiles, options, null);
-			modules = new LinkedHashSet<CompiledModule>();
-			for (QvtCompilationResult nextResult : result) {
-				assertEquals(nextResult.getModule().getSource().getFullPath()  
+			modules = new LinkedHashSet<CompiledUnit>();
+			for (CompiledUnit nextResult : result) {
+				assertEquals(nextResult.getSource().getFullPath()  
 						+ " must not have compilation error", //$NON-NLS-1$ 
-						0, nextResult.getErrors().length); //$NON-NLS-1$
-				modules.add(nextResult.getModule());
+						0, nextResult.getErrors().size()); //$NON-NLS-1$
+				modules.add(nextResult);
 			}
 			
 		} catch (MdaException e) {
@@ -172,8 +180,8 @@ public class TestUtil extends Assert {
 		return modules;
 	}
 		
-	public static QvtCompiler createTestPluginQvtCompiler(String sourceContainerPath) {
-		return new QvtCompiler(TestModuleResolver.createdTestPluginResolver(sourceContainerPath));
+	public static QVTOCompiler createTestPluginQvtCompiler(String sourceContainerPath) {
+		return new QVTOCompiler(TestModuleResolver.createdTestPluginResolver(sourceContainerPath));
 	}
 	
 	public static void turnOffAutoBuilding() throws CoreException {

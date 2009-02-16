@@ -21,10 +21,43 @@ import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
  */
 public class ExecDeployedTransformationTestCase extends ExecTransformationTestCase {
 	
-    public ExecDeployedTransformationTestCase(boolean useFilename, ModelTestData data) {
+	private static final String TEST_PREFIX = "deployed_";	
+	
+	private static final String TEST_USEFILE_PREFIX = "file_deployed_";
+	
+
+	public static class UseFileName extends ExecDeployedTransformationTestCase {
+
+		public UseFileName(ModelTestData data) {
+			super(true, data);
+			setName(TEST_USEFILE_PREFIX + getData().getName());			
+		}
+
+		public UseFileName(String testName) {
+			super(extractTestDataName(testName, TEST_USEFILE_PREFIX));
+			myUseFilename = true;
+			setName(TEST_USEFILE_PREFIX + getData().getName());
+		}
+	}
+	
+    public ExecDeployedTransformationTestCase(String testName) {
+		super(extractTestDataName(testName, TEST_PREFIX));
+		myUseFilename = false;
+		setName(TEST_PREFIX + getData().getName()); //$NON-NLS-1$		
+	}
+    
+	public ExecDeployedTransformationTestCase(ModelTestData data) {
+		this(false, data);
+	}
+	
+	protected String getPrefix() {
+		return TEST_PREFIX;
+	}
+
+	private ExecDeployedTransformationTestCase(boolean useFilename, ModelTestData data) {
         super(data);
         myUseFilename = useFilename;
-        setName("deployed: " + data.getName()); //$NON-NLS-1$
+        setName(TEST_PREFIX + data.getName()); //$NON-NLS-1$
     }
     
     @Override
@@ -32,11 +65,11 @@ public class ExecDeployedTransformationTestCase extends ExecTransformationTestCa
     	if (myUseFilename) {
 			return URI.createPlatformPluginURI("/" + TestUtil.BUNDLE + "/" + ROOT_DIR_NAME //$NON-NLS-1$ //$NON-NLS-2$
 					+ "/" + scriptName + "/" + scriptName + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT, false); //$NON-NLS-1$ //$NON-NLS-2$
-    	} else {
-			return URI.createPlatformPluginURI("/" + ROOT_DIR_NAME //$NON-NLS-1$
-					+ "." + scriptName + "." + scriptName, false); //$NON-NLS-1$ //$NON-NLS-2$
-    	}
+    	} 
+    	
+		return URI.createPlatformPluginURI("/" + ROOT_DIR_NAME //$NON-NLS-1$
+				+ "." + scriptName + "." + scriptName, false); //$NON-NLS-1$ //$NON-NLS-2$
 	}
     
-    private final boolean myUseFilename;
+    protected boolean myUseFilename;
 }

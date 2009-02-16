@@ -24,8 +24,8 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilationResult;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtAssertionFailed;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
@@ -56,13 +56,13 @@ public class TestExternHelperCall extends TestCase {
 
 	protected void setupLibrary(String libraryName) throws MdaException {
 		TestModuleResolver importResolver = TestModuleResolver.createdTestPluginResolver(srcContainer);
-		QvtCompiler compiler = new QvtCompiler(importResolver);		
+		QVTOCompiler compiler = new QVTOCompiler(importResolver);		
 		CFile file = importResolver.resolveImport(libraryName);
 		
-		QvtCompilationResult result = compiler.compile(file, new QvtCompilerOptions(), null);
-		assertTrue("Library must no have compilation errors", result.getErrors().length == 0);
+		CompiledUnit result = compiler.compile(file, new QvtCompilerOptions(), null);
+		assertTrue("Library must no have compilation errors", result.getErrors().size() == 0);
 		
-		Module module = result.getModule().getModule();
+		Module module = result.getModules().get(0);
 		Helper operation = findOperationByName(module, getName());
 		assertNotNull("Library operation for the "+ getName() +"testcase not found", operation);
 

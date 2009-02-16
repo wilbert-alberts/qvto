@@ -24,7 +24,6 @@ import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
-import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
@@ -81,7 +80,7 @@ public class TestQvtInterpreter extends TestTransformation {
 		public LinkedHashMap<ModelExtentContents, URI> transform(IFile transformation, List<URI> inUris, IContext qvtContext) throws Exception {
         	QvtInterpretedTransformation trans = getTransformation(transformation);
         	
-        	TestUtil.assertAllPersistableAST(trans.getModule().getModule());
+        	TestUtil.assertAllPersistableAST(trans.getModule().getUnit());
             
         	List<ModelContent> inputs = new ArrayList<ModelContent>(inUris.size());
         	for (URI uri : inUris) {
@@ -97,7 +96,7 @@ public class TestQvtInterpreter extends TestTransformation {
 				throw e;
 			}
 
-            OperationalTransformation transformationModule = (OperationalTransformation) trans.getModule().getModule().getModule();            
+            //OperationalTransformation transformationModule = (OperationalTransformation) trans.getModule().getUnit();            
             LinkedHashMap<ModelExtentContents, URI> result = new LinkedHashMap<ModelExtentContents, URI>();            
             if(output.getOutParamValues().isEmpty() || !returnMainOperationOutput()) {            
             	List<ModelExtentContents> extents = output.getExtents(); 

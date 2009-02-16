@@ -25,7 +25,7 @@ import org.eclipse.jface.text.Position;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.tests.qvt.oml.util.SourceAnnotationReader.AnnotationData;
 
 
@@ -64,7 +64,7 @@ public class ProblemSourceAnnotationHelper {
 		return WARN_TAG.equals(sourceAnnotation.getName());
 	}
 	
-	public void assertMarchingProblems(QvtMessage[] problems) throws AssertionFailedError {
+	public void assertMarchingProblems(List<QvtMessage> problems) throws AssertionFailedError {
 		for (QvtMessage problemMessage : problems) {
 			AnnotationData expectedAnnotation = findAnnotationByPosition(problemMessage);
 			TestCase.assertNotNull("Unexpected compilation problem message. " + problemMessage, expectedAnnotation); //$NON-NLS-1$
@@ -83,13 +83,13 @@ public class ProblemSourceAnnotationHelper {
 		}
 	}
 	
-	public static ProblemSourceAnnotationHelper assertCompilationProblemMatchExpectedAnnotations(CompiledModule compiledModule) throws AssertionFailedError {
+	public static ProblemSourceAnnotationHelper assertCompilationProblemMatchExpectedAnnotations(CompiledUnit compiledModule) throws AssertionFailedError {
 		ProblemSourceAnnotationHelper problemSourceAnnotationHelper = ProblemSourceAnnotationHelper.create(compiledModule);
-		problemSourceAnnotationHelper.assertMarchingProblems(compiledModule.getMessages());
+		problemSourceAnnotationHelper.assertMarchingProblems(compiledModule.getProblems());
 		return problemSourceAnnotationHelper;
 	}
 	
-	public static ProblemSourceAnnotationHelper create(CompiledModule compiledModule) throws AssertionFailedError {
+	public static ProblemSourceAnnotationHelper create(CompiledUnit compiledModule) throws AssertionFailedError {
 		CFile source = compiledModule.getSource();
 		try {
 			String contents = FileUtil.getStreamContents(source.getContents(), source.getCharset());

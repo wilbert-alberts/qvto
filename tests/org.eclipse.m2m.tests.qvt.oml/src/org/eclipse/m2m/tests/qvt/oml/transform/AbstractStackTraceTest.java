@@ -139,7 +139,7 @@ public abstract class AbstractStackTraceTest extends TestTransformation {
 	            }
 	            
 	            saveTraceData(output.getTrace(), new EclipseFile(transformation));	            
-	        	TestUtil.assertAllPersistableAST(transf.getModule().getModule());	        	
+	        	TestUtil.assertAllPersistableAST(transf.getModule().getUnit());	        	
 	            
 	            return result;
 	        }

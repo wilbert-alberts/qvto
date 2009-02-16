@@ -49,7 +49,7 @@ public class QvtLibraryASTTest extends TestQvtParser {
 		super.runTest();
 				
 		checkLibrary((Library)QvtOperationalStdLibrary.INSTANCE.getStdLibModule());
-		EList<ModuleImport> moduleImports = getCompiledResults()[0].getModule().getModule().getModuleImport();		
+		EList<ModuleImport> moduleImports = getCompiledResults()[0].getModules().get(0).getModuleImport();		
 		assertEquals(moduleImports.size(), 2);
 		
 		for (ModuleImport nextImport : moduleImports) {

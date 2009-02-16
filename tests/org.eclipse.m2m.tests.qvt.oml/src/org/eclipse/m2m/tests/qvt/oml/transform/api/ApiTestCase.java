@@ -39,6 +39,14 @@ public class ApiTestCase extends TestCase {
         myData = data;
     }
     
+    public ApiTestCase(String testName) {
+    	this(QvtoTransfHelperTests.getTestData(testName));
+    }
+    
+	protected static String extractTestDataName(String testName, String prefix) {
+		return testName.startsWith(prefix) ? testName.substring(prefix.length()) : testName; 
+	}
+	    
     @Override
 	public void setUp() throws Exception {
         TestUtil.turnOffAutoBuilding();     

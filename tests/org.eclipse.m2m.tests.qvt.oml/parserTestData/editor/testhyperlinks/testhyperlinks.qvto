@@ -75,8 +75,7 @@ query /*<region id="2">*/foo/*</region>*/(
 query /*<region id="foo2">*/foo2/*</region>*/(model: ecore::EPackage) : Integer {
 	var /*<region id="var.i">*/i/*</region>*/ : Integer := /*<link ref="eModel">*/eModel/*</link>*/.objects()->size();
 	var x:Integer := /*<link ref="umlModel">*/umlModel/*</link>*/.objects()->size();
-    /*<link ref="var.i">*/i/*</link>*/
-    return null;
+    return /*<link ref="var.i">*/i/*</link>*/;
 }
 
 mapping /*<region id="myMapping">*/myMapping/*</region>*/(inout /*<region id="myMapping.pac">*/pac/*</region>*/:ecore::EPackage, in sz : Integer): ecore::EPackage {

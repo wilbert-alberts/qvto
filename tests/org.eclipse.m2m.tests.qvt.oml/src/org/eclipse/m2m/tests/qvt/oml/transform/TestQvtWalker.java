@@ -18,7 +18,8 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.m2m.internal.qvt.oml.QvtEngine;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalAstWalker;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.utilities.Visitable;
 
 public class TestQvtWalker extends TestTransformation {
@@ -41,9 +42,9 @@ public class TestQvtWalker extends TestTransformation {
                 IFile transformation = getIFile(data.getTransformation(project));
                 
                 QvtEngine engine = QvtEngine.getInstance(transformation);
-                CompiledModule module = engine.compile(transformation, null);
-                if(module.getErrors().length > 0) {
-                    throw new MdaException("Failed to parse " + transformation + ": " + Arrays.asList(module.getErrors())); //$NON-NLS-1$ //$NON-NLS-2$
+                CompiledUnit unit = engine.compileUnit(transformation, null);
+                if(unit.getErrors().size() > 0) {
+                    throw new MdaException("Failed to parse " + transformation + ": " + Arrays.asList(unit.getErrors())); //$NON-NLS-1$ //$NON-NLS-2$
                 }
                 
                 final int[] nodeCount = new int[1];
@@ -54,7 +55,9 @@ public class TestQvtWalker extends TestTransformation {
                 };
                 
                 QvtOperationalAstWalker v = new QvtOperationalAstWalker(nodeProcessor);
-                ((Visitable) module.getModule()).accept(v);
+                for (Module module : unit.getModules()) {
+                    ((Visitable) module).accept(v);					
+				}
                 
                 assertTrue("No nodes", nodeCount[0] > 0); //$NON-NLS-1$
             }

@@ -30,7 +30,7 @@ import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.nature.TransformationNature;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtDocumentProvider;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtEditor;
 import org.eclipse.m2m.tests.qvt.oml.TestProject;
@@ -88,7 +88,7 @@ public abstract class AbstractTestQvtEditorSupport extends TestCase {
 			
 			final int WAIT_FOR_RECONCILE = 15000;
 			editor.forceReconciling();
-			CompiledModule compiledModule = editor.getValidCompiledModule(WAIT_FOR_RECONCILE);
+			CompiledUnit compiledModule = editor.getValidCompiledModule(WAIT_FOR_RECONCILE);
 			
 			assertNotNull("Failed to aquire AST model in QVT Editor", compiledModule); //$NON-NLS-1$
 			

@@ -36,9 +36,8 @@ import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilationResult;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.EclipseImportResolver;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
@@ -60,7 +59,7 @@ public class TestQvtParser extends TestCase {
         myData = data;        
     }
 	
-	protected QvtCompilationResult[] getCompiledResults() {
+	protected CompiledUnit[] getCompiledResults() {
 		return myCompiled;
 	}
 	    
@@ -140,17 +139,17 @@ public class TestQvtParser extends TestCase {
 		}
 
 		// check the AST is consistent
-		for (QvtCompilationResult compilationResult : myCompiled) {
-			if(compilationResult.getErrors().length == 0) {
-				TestUtil.assertAllPersistableAST(compilationResult.getModule());
+		for (CompiledUnit compilationResult : myCompiled) {
+			if(compilationResult.getErrors().size() == 0) {
+				TestUtil.assertAllPersistableAST(compilationResult);
 			}
 		}		
 		//		
 		
 		if(myData.usesSourceAnnotations()) {
 			Set<ProblemSourceAnnotationHelper> helpers = new HashSet<ProblemSourceAnnotationHelper>();	
-			for (QvtCompilationResult compilationResult : myCompiled) {
-				doCompiledUnitCheck(compilationResult.getModule(), helpers);
+			for (CompiledUnit compilationResult : myCompiled) {
+				doCompiledUnitCheck(compilationResult, helpers);
 			}
 	
 			int expectedProblemCount = myData.getAllProblemsCount();
@@ -169,11 +168,11 @@ public class TestQvtParser extends TestCase {
 		return new File(myProject.getProject().getLocation().toString() + "/sources/" + myData.getDir());
 	}
 	
-	private void doCompiledUnitCheck(CompiledModule module,Set<ProblemSourceAnnotationHelper> annotationCollector) {
+	private void doCompiledUnitCheck(CompiledUnit module, Set<ProblemSourceAnnotationHelper> annotationCollector) {
 		ProblemSourceAnnotationHelper helper = ProblemSourceAnnotationHelper
 				.assertCompilationProblemMatchExpectedAnnotations(module);
 		annotationCollector.add(helper);
-		for (CompiledModule importedModule : module.getCompiledImports()) {
+		for (CompiledUnit importedModule : module.getCompiledImports()) {
 			if (!annotationCollector.contains(importedModule)) {
 				doCompiledUnitCheck(importedModule, annotationCollector);
 			}
@@ -204,28 +203,28 @@ public class TestQvtParser extends TestCase {
         private final List<Throwable> myExceptions;
     }
     
-    private List<QvtMessage> getAllErrors(QvtCompilationResult[] compiled) {
+    private List<QvtMessage> getAllErrors(CompiledUnit[] compiled) {
         List<QvtMessage> errors = new ArrayList<QvtMessage>();
-        for (QvtCompilationResult compilationResult : compiled) {
-            TransformationUtil.getErrors(compilationResult.getModule(), errors);
+        for (CompiledUnit compilationResult : compiled) {
+            TransformationUtil.getErrors(compilationResult, errors);
         }
 
         return errors;
     }
     
-    private List<QvtMessage> getAllWarnings(QvtCompilationResult[] compiled) {
+    private List<QvtMessage> getAllWarnings(CompiledUnit[] compiled) {
         List<QvtMessage> warnings = new ArrayList<QvtMessage>();
-        for (QvtCompilationResult compilationResult : compiled) {
-            TransformationUtil.getWarnings(compilationResult.getModule(), warnings);
+        for (CompiledUnit compilationResult : compiled) {
+            TransformationUtil.getWarnings(compilationResult, warnings);
         }
 
         return warnings;
     }
     
-	private QvtCompilationResult[] compile(File folder) throws Exception {
+	private CompiledUnit[] compile(File folder) throws Exception {
 		final String topName = folder.getName() + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT;
 		File topFile = getFile(folder, topName);
-		QvtCompiler compiler = new QvtCompiler(
+		QVTOCompiler compiler = new QVTOCompiler(
 				new EclipseImportResolver(new IContainer[] {getIFolder(folder)}));
 		IFile topIFile = getIFile(topFile);
         QvtCompilerOptions options = new QvtCompilerOptions();
@@ -271,5 +270,5 @@ public class TestQvtParser extends TestCase {
 	
     private final TestData myData;
 	private TestProject myProject;
-	private QvtCompilationResult[] myCompiled;
+	private CompiledUnit[] myCompiled;
 }
