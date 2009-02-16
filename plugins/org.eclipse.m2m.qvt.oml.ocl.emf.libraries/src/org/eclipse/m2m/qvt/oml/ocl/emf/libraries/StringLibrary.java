@@ -235,14 +235,14 @@ public class StringLibrary {
     	return self.toUpperCase();
     }
 
-    public List split(String self, String regex) {
+    public List<String> split(String self, String regex) {
     	if (self == null || regex == null) {
     		return null;
     	}
     	return Arrays.asList(self.split(regex));
     }
     
-    public List split(String self, String regex, Integer limit) {
+    public List<String> split(String self, String regex, Integer limit) {
     	if (self == null || regex == null || limit == null) {
     		return null;
     	}

@@ -45,8 +45,12 @@ public class EmfToolsLibrary {
         	"ecore::EObject" //$NON-NLS-1$
         };
 
-        public static String[] getDataTypeInstance(String nsURI,
-                String dataTypeName) {
+        private static final String[] CURRENTTIME_MILLIS = new String[] {
+        	LibrariesPlugin.OCL_LIBRARY_PACKAGE + "::" + AnyType.SINGLETON_NAME, //$NON-NLS-1$
+        	PrimitiveType.INTEGER_NAME 
+        }; 
+        
+        public static String[] getDataTypeInstance(String nsURI, String dataTypeName) {
             return GET_DATATYPE_INSTANCE;
         }
         
@@ -58,9 +62,13 @@ public class EmfToolsLibrary {
         	return AS_EOBJECT; 
         }
         
+        public static String[] currentTimeMillis() {
+        	return CURRENTTIME_MILLIS; 
+        }
+        
     }
 
-    private static final Class[] EMPTY_CLASSES = new Class[0];
+    private static final Class<?>[] EMPTY_CLASSES = new Class[0];
 
     private static final Object[] EMPTY_OBJECTS = new Object[0];
 
@@ -124,6 +132,10 @@ public class EmfToolsLibrary {
     		return (EObject) self;
     	}
     	return null;
+    }
+
+    public Integer currentTimeMillis() {
+    	return new Integer(new Long(System.currentTimeMillis()).intValue());
     }
 
 }
