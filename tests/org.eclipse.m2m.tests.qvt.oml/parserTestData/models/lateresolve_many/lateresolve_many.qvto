@@ -53,7 +53,7 @@ main() {
 	
 	eClasses.late resolve(c:Class | c.late invresolveone(ec:EClass | 
 		if true then { this.allClasscounter:=allClasscounter+1; } else false endif) = null);		
-	eClasses.late resolve(c:Class | if (allClasscounter <> eClasses->size()) then failure('all class counter has invalid value') endif);	
+	eClasses.late resolve(c:Class | if (allClasscounter <> eClasses->size()) then failure('all class counter has invalid value') endif = null);	
 }
 
 
