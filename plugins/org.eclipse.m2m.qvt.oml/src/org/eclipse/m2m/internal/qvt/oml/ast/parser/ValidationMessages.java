@@ -77,6 +77,8 @@ public final class ValidationMessages extends NLS {
     public static String QvtOperationalVisitorCS_entryPointShouldBeDeclOnce;
     public static String QvtOperationalVisitorCS_FeatureNotFoundForType;
     public static String QvtOperationalVisitorCS_ifExpWithoutElseAssignment;
+    public static String QvtOperationalVisitorCS_ifExpIncomplete;
+    public static String QvtOperationalVisitorCS_ifExpNonBooleanCond;
     public static String QvtOperationalVisitorCS_incompatibleTransfSignature;
     public static String QvtOperationalVisitorCS_LibrarySignatureErrorDirectionKindSpecified;
     public static String QvtOperationalVisitorCS_LibrarySignatureErrorDuplicateModelType;

@@ -32,27 +32,60 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.compiler.ConstructorOperationAdapter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Constructor;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
+import org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AltExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssertExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.BlockExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.BreakExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.CatchExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ComputeExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ContinueExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralPart;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ForExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeExpression;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeIterateExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeLoopExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.LogExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.OrderedTupleLiteralExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.OrderedTupleLiteralPart;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.RaiseExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ReturnExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.SwitchExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.TryExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.UnlinkExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.UnpackExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.VariableInitExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.WhileExp;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.CollectionType;
 import org.eclipse.ocl.ecore.Constraint;
+import org.eclipse.ocl.ecore.IfExp;
+import org.eclipse.ocl.ecore.IterateExp;
+import org.eclipse.ocl.ecore.IteratorExp;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.Variable;
@@ -62,7 +95,6 @@ import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
 import org.eclipse.ocl.utilities.Visitable;
-import org.eclipse.ocl.utilities.Visitor;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -79,35 +111,104 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 	
 	public QvtOperationalValidationVisitor(QvtOperationalEnv environment) {
 		super (new ValidationNodeProcessor(environment));
+		((ValidationNodeProcessor) getNodeProcessor()).myOclValidationVisitor.setVisitor(this);
 		fEnv = environment;
 	}
 	
 	private static class ValidationNodeProcessor implements NodeProcessor {
 			
 		ValidationNodeProcessor(QvtOperationalEnv environment) {
-			myOclValidationVisitor = ValidationVisitor.getInstance(environment);
+			myOclValidationVisitor = new CustomOclValidationVisitor(environment);
 		}
-
+		
 		public void process(Visitable e, Visitable parent) {
-			try {
+			if (e.eClass().eContainer() == org.eclipse.ocl.ecore.EcorePackage.eINSTANCE) {
 				e.accept(myOclValidationVisitor);
 			}
-			catch (Throwable throwable) {
-				// FIXME - eliminate this !!!!
-			}
 		}
 		
-		final Visitor<Boolean, EClassifier, EOperation, EStructuralFeature, EEnumLiteral,
-			EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> myOclValidationVisitor;
-		
+		final CustomOclValidationVisitor myOclValidationVisitor;
 	}
 	
 	@Override
+	public Object visitIfExp(org.eclipse.ocl.expressions.IfExp<EClassifier> ifExp) {
+		// QVT language also defines an imperative “if-then-else” construct that is less constrained 
+		// as the corresponding OCL construct
+		
+		if (ifExp.getCondition() == null || ifExp.getThenExpression() == null) {
+			QvtOperationalUtil.reportError(fEnv,
+					NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ifExpIncomplete, new Object[] { }),
+					ifExp.getStartPosition(), ifExp.getEndPosition());
+		}
+		else if (ifExp.getCondition().getType() != fEnv.getOCLStandardLibrary().getBoolean()) {
+			QvtOperationalUtil.reportError(fEnv,
+					NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ifExpNonBooleanCond, new Object[] { }),
+					ifExp.getStartPosition(), ifExp.getEndPosition());
+		}
+		
+		EObject container = ifExp.eContainer();
+		while (container != null) {
+			if (container instanceof VariableInitExp) {
+				if (ifExp.getElseExpression() == null) {
+					QvtOperationalUtil.reportWarning(fEnv,
+							NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ifExpWithoutElseAssignment, new Object[] { }),
+							ifExp.getStartPosition(), ifExp.getEndPosition());
+					break;
+				}
+			}
+			container = container.eContainer();
+		}
+		
+		return super.visitIfExp(ifExp);
+	}
+	
+	@Override
+	public Object visitContinueExp(ContinueExp astNode) {
+		validateBreakContinue(astNode);
+		return super.visitContinueExp(astNode);
+	}
+	
+	@Override
+	public Object visitBreakExp(BreakExp astNode) {
+		validateBreakContinue(astNode);
+		return super.visitBreakExp(astNode);
+	}
+
+	private void validateBreakContinue(ImperativeExpression breakContinueExp) {
+		boolean isLoopFound = false;
+		EObject container = breakContinueExp.eContainer();
+		while (container != null) {
+			if (container instanceof ImperativeLoopExp || container instanceof WhileExp) {
+				isLoopFound = true;
+				break;
+			}
+			if (container instanceof IterateExp || container instanceof IteratorExp) {
+				break;
+			}
+			container = container.eContainer();
+		}
+		
+		if (!isLoopFound) {
+	    	QvtOperationalUtil.reportError(fEnv, 
+	    			NLS.bind(ValidationMessages.BreakContinue_InvalidExpressionUsage, breakContinueExp.eClass().getName()),
+	    			breakContinueExp.getStartPosition(), breakContinueExp.getEndPosition());
+		}
+		else if (false == breakContinueExp.eContainer() instanceof ImperativeExpression
+				&& false == breakContinueExp.eContainer() instanceof IfExp) {
+			// QVT language also defines an imperative “if-then-else” construct that is less constrained 
+			// as the corresponding OCL construct
+	    	QvtOperationalUtil.reportError(fEnv, 
+	    			NLS.bind(ValidationMessages.BreakContinue_InvalidExpressionOwner, breakContinueExp.eClass().getName()),
+	    			breakContinueExp.getStartPosition(), breakContinueExp.getEndPosition());
+		}
+		
+	}
+
+	@Override
 	public Object visitOperationCallExp(OperationCallExp<EClassifier, EOperation> callExp) {
 		if (callExp.getReferredOperation() instanceof Constructor) {
-			fEnv.reportError(NLS.bind(
-					ValidationMessages.OperationIsUndefined, 
-					operationString(fEnv, callExp.getReferredOperation().getName(), callExp.getArgument()),
+			QvtOperationalUtil.reportError(fEnv,
+					NLS.bind(ValidationMessages.OperationIsUndefined, operationString(fEnv, callExp.getReferredOperation().getName(), callExp.getArgument()),
 					callExp.getSource() == null ? null : fEnv.getUMLReflection().getName(callExp.getSource().getType())), 
 					callExp.getStartPosition(), 
 					callExp.getEndPosition());
@@ -151,8 +252,8 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 			if (instantiatedClass != null 
 					&& (instantiatedClass.isAbstract() || instantiatedClass.isInterface())) {
 				
-				fEnv.reportError(NLS.bind(
-						ValidationMessages.QvtOperationalVisitorCS_canNotInstantiateAbstractType, 
+				QvtOperationalUtil.reportError(fEnv,
+						NLS.bind(ValidationMessages.QvtOperationalVisitorCS_canNotInstantiateAbstractType, 
 						fEnv.getFormatter().formatType(instantiatedClass)), 
 						instantiationExp.getStartPosition(), 
 						instantiationExp.getEndPosition());
@@ -168,8 +269,8 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 
 			if (instantiatedClass.isAbstract() || instantiatedClass.isInterface()) {
 				
-				fEnv.reportError(NLS.bind(
-						ValidationMessages.QvtOperationalVisitorCS_canNotInstantiateAbstractType, 
+				QvtOperationalUtil.reportError(fEnv,
+						NLS.bind(ValidationMessages.QvtOperationalVisitorCS_canNotInstantiateAbstractType, 
 						fEnv.getFormatter().formatType(instantiatedClass)), 
 						instantiationExp.getStartPosition(), 
 						instantiationExp.getEndPosition());
@@ -523,3 +624,199 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 		return null;
 	}
 }
+
+final class CustomOclValidationVisitor extends 
+		ValidationVisitor<EPackage, EClassifier, EOperation, 
+				EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, 
+				Constraint, EClass, EObject>
+								implements QVTOperationalVisitor<Boolean>{
+
+	protected CustomOclValidationVisitor(QvtOperationalEnv environment) {
+		super(environment);
+	}
+	
+	void setVisitor(QvtOperationalValidationVisitor visitor) {
+		myDelegateVisitor = visitor;		
+	}
+
+	@Override
+	public Boolean visitIfExp(org.eclipse.ocl.expressions.IfExp<EClassifier> i) {
+		if (myDelegateVisitor != null) {
+			myDelegateVisitor.visitIfExp(i);
+			return Boolean.TRUE;
+		}
+		return super.visitIfExp(i);
+	}
+
+	public Boolean visitConstructor(Constructor constructor) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitConstructorBody(ConstructorBody constructorBody) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitContextualProperty(ContextualProperty contextualProperty) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitEntryOperation(EntryOperation entryOperation) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitHelper(Helper helper) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitImperativeOperation(ImperativeOperation imperativeOperation) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitLibrary(Library library) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitMappingBody(MappingBody mappingBody) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitMappingCallExp(MappingCallExp mappingCallExp) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitMappingOperation(MappingOperation mappingOperation) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitModelType(ModelType modelType) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitModule(Module module) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitModuleImport(ModuleImport moduleImport) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitObjectExp(ObjectExp objectExp) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitOperationBody(OperationBody operationBody) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitResolveExp(ResolveExp resolveExp) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitResolveInExp(ResolveInExp resolveInExp) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitVarParameter(VarParameter varParameter) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitAltExp(AltExp astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitAssertExp(AssertExp astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitAssignExp(AssignExp astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitBlockExp(BlockExp astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitBreakExp(BreakExp astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitCatchtExp(CatchExp astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitComputeExp(ComputeExp astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitContinueExp(ContinueExp astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitDictLiteralExp(DictLiteralExp astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitDictLiteralPart(DictLiteralPart astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitForExp(ForExp astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitImperativeIterateExp(ImperativeIterateExp astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitInstantiationExp(InstantiationExp astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitLogExp(LogExp astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitOrderedTupleLiteralExp(OrderedTupleLiteralExp astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitOrderedTupleLiteralPart(OrderedTupleLiteralPart astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitRaiseExp(RaiseExp astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitReturnExp(ReturnExp astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitSwitchExp(SwitchExp astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitTryExp(TryExp astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitUnlinkExp(UnlinkExp astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitUnpackExp(UnpackExp astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitVariableInitExp(VariableInitExp astNode) {
+		return Boolean.TRUE;
+	}
+
+	public Boolean visitWhileExp(WhileExp astNode) {
+		return Boolean.TRUE;
+	}
+
+	private QvtOperationalValidationVisitor myDelegateVisitor = null;
+
+}
+

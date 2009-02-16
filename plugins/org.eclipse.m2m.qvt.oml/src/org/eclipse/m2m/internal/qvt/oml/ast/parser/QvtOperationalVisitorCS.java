@@ -74,7 +74,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.ExpressionStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeLoopExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
@@ -106,7 +105,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.RenameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveInExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ReturnExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.StatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TagCS;
@@ -157,7 +155,6 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralPart;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictionaryType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ForExp;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeExpression;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeIterateExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLFactory;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
@@ -180,7 +177,6 @@ import org.eclipse.ocl.cst.FeatureCallExpCS;
 import org.eclipse.ocl.cst.IfExpCS;
 import org.eclipse.ocl.cst.IteratorExpCS;
 import org.eclipse.ocl.cst.LiteralExpCS;
-import org.eclipse.ocl.cst.NullLiteralExpCS;
 import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.cst.OperationCallExpCS;
 import org.eclipse.ocl.cst.PathNameCS;
@@ -462,25 +458,7 @@ public class QvtOperationalVisitorCS
 	protected IfExp<EClassifier> ifExpCS(
 			IfExpCS ifExpCS,
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
-		boolean isElseMissed = false;
-		if (ifExpCS.getElseExpression() == null) {
-			isElseMissed = true;
-			// FIXME - !!!!! What a strange hack found during migration to OCL 1.2
-			NullLiteralExpCS nullCS = CSTFactory.eINSTANCE.createNullLiteralExpCS();
-			nullCS.setSymbol("null"); //$NON-NLS-1$
-			//
-			ifExpCS.setElseExpression(nullCS); //$NON-NLS-1$
-		}
 		IfExp<EClassifier> ifExp = super.ifExpCS(ifExpCS, env);
-		
-		EObject container = ifExpCS.eContainer();
-		if (container instanceof VariableInitializationCS) {
-			if (isElseMissed) {
-				QvtOperationalUtil.reportWarning(env, NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ifExpWithoutElseAssignment,
-						new Object[] { }), ifExpCS);
-			}
-		}
-		
 		return ifExp;
 	}
 	
@@ -612,8 +590,6 @@ public class QvtOperationalVisitorCS
 		ContinueExp result = ImperativeOCLFactory.eINSTANCE.createContinueExp();
 		initStartEndPositions(result, continueExpCS);
 		
-		validateBreakContinue(continueExpCS, env, result);
-    	
 		return result;
 	}
 
@@ -624,35 +600,7 @@ public class QvtOperationalVisitorCS
 		BreakExp result = ImperativeOCLFactory.eINSTANCE.createBreakExp();
 		initStartEndPositions(result, breakExpCS);
 		
-		validateBreakContinue(breakExpCS, env, result);
-
 		return result;
-	}
-
-	private void validateBreakContinue(
-			StatementCS breakExpCS,
-			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
-			ImperativeExpression result) {
-		if (false == breakExpCS.eContainer() instanceof StatementCS) {
-	    	QvtOperationalUtil.reportError(env, 
-	    			NLS.bind(ValidationMessages.BreakContinue_InvalidExpressionOwner, result.eClass().getName()),
-	    			breakExpCS);
-		}
-		
-		boolean isLoopFound = false;
-		EObject container = breakExpCS.eContainer();
-		while (container != null) {
-			if (container instanceof ImperativeLoopExpCS || container instanceof WhileExpCS) {
-				isLoopFound = true;
-				break;
-			}
-			container = container.eContainer();
-		}
-		if (!isLoopFound) {
-	    	QvtOperationalUtil.reportError(env, 
-	    			NLS.bind(ValidationMessages.BreakContinue_InvalidExpressionUsage, result.eClass().getName()),
-	    			breakExpCS);
-		}
 	}
 
 	@Override

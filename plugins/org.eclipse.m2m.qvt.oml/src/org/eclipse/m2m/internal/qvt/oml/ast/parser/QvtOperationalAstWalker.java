@@ -110,7 +110,7 @@ public class QvtOperationalAstWalker implements QVTOperationalVisitor<Object> {
         myNodeProcessor = processor;
         myProcessed = new HashSet<Visitable>();
     }
-
+    
     public Object visitDictLiteralExp(DictLiteralExp dictLiteralExp) {
         for (DictLiteralPart part : dictLiteralExp.getPart()) {
         	doProcess(part.getKey(), dictLiteralExp);
@@ -506,6 +506,10 @@ public class QvtOperationalAstWalker implements QVTOperationalVisitor<Object> {
         }
 
         return null;
+    }
+
+    protected NodeProcessor getNodeProcessor() {
+    	return myNodeProcessor;
     }
 
     private void doProcess(Visitable e, Visitable parent) {
