@@ -32,15 +32,20 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.m2m.internal.qvt.oml.QvtEngine;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.m2m.internal.qvt.oml.EPackageRegistryBasedURIResourceMap;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilationResult;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
+import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolverFactory;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MetamodelURIMappingHelper;
 
@@ -63,7 +68,13 @@ public class QvtBuilder extends IncrementalProjectBuilder {
     
     @SuppressWarnings("unchecked")
 	@Override
-	protected IProject[] build(int kind, Map args, IProgressMonitor monitor) throws CoreException {        
+	protected IProject[] build(int kind, Map args, IProgressMonitor monitor) throws CoreException {
+    	if(monitor == null) {
+    		monitor = new NullProgressMonitor();
+    	}
+    	
+    	monitor.beginTask("building " + getProject().getFullPath(), 1);
+    	
         if (kind == IncrementalProjectBuilder.FULL_BUILD) {
             fullBuild(monitor);
         } else {
@@ -72,7 +83,13 @@ public class QvtBuilder extends IncrementalProjectBuilder {
         
         fireBuildEvent();
         
-        return getConfig().getProjectDependencies(true);
+        monitor.worked(1);
+        
+        IProject[] projectDependencies = getConfig().getProjectDependencies(true);
+        
+        
+        monitor.done();        
+		return projectDependencies;
     }
     
     private void fullBuild(IProgressMonitor monitor) throws CoreException {
@@ -192,30 +209,43 @@ public class QvtBuilder extends IncrementalProjectBuilder {
     }
     
     private void rebuildAll(IProgressMonitor monitor) throws CoreException {
+    	
         IFile[] files = collectFiles();
-        QvtCompilationResult[] modules;
+        monitor.worked(1);
+        
+        CompiledUnit[] units;
 		try {
-			modules = QvtEngine.getInstance(getProject()).compile(files, null);
-            QvtEngine.getInstance(getProject()).getCompiler(); // TODO
-		} 
+			QvtCompilerOptions options = new QvtCompilerOptions();
+			options.setGenerateCompletionData(false);
+			
+			EclipseFile[] sources = new EclipseFile[files.length];
+			for (int i = 0; i < sources.length; i++) {
+				sources[i] = new EclipseFile(files[i]);
+			}
+			
+			units = createCompiler(getProject()).compile(sources, options, new SubProgressMonitor(monitor, 1));
+		}
+		catch(OperationCanceledException e) {
+			throw e;
+		}
 		catch (Exception e) {
 			throw new CoreException(QvtPlugin.createErrorStatus(e));
 		}
 		
-        List<CompiledModule> cleanModules = new ArrayList<CompiledModule>();
-        for (int i = 0; i < modules.length; i++) {
-            CompiledModule module = modules[i].getModule();
-            QvtMessage[] messages = module.getMessages();
-            EclipseFile source = (EclipseFile) module.getSource();
-            IFile curFile = source.getFile();
+        for (int i = 0; i < units.length; i++) {        
+        	CompiledUnit nextUnit = units[i];
+            EclipseFile source = (EclipseFile) nextUnit.getSource();
             
-            curFile.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
-            if (module.getErrors().length == 0) {
-                cleanModules.add(module);
+            if(monitor.isCanceled()) {
+            	throw new OperationCanceledException();
             }
-            for (int j = 0; j < messages.length; j++) {
-                QvtMessage e = messages[j];
-                createQvtMarker(curFile, e);
+            
+            IFile curFile = source.getFile();
+            curFile.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
+
+            List<QvtMessage> messages = nextUnit.getProblems();            
+            for (QvtMessage nextMessage : messages) {
+                createQvtMarker(curFile, nextMessage);
             }
         }
     }
@@ -230,7 +260,7 @@ public class QvtBuilder extends IncrementalProjectBuilder {
         	attributes.put(IMarker.LINE_NUMBER, Integer.valueOf(e.getLineNum()));
         }
         try {
-            IMarker marker = curFile.createMarker(QvtCompiler.PROBLEM_MARKER);
+            IMarker marker = curFile.createMarker(QVTOCompiler.PROBLEM_MARKER);
             marker.setAttributes(attributes);
         }
         catch (CoreException e1) {
@@ -301,7 +331,16 @@ public class QvtBuilder extends IncrementalProjectBuilder {
             l.buildPerformed();
         }
     }
-    
+
+	private QVTOCompiler createCompiler(IProject project) {
+		IImportResolverFactory resolverFactory = IImportResolverFactory.Registry.INSTANCE.getFactory(project);		
+        IImportResolver resolver = resolverFactory.createResolver(project);
+        
+		ResourceSetImpl resourceSet = new ResourceSetImpl();
+		resourceSet.setURIResourceMap(new EPackageRegistryBasedURIResourceMap(resourceSet.getURIConverter()));
+        
+        return new QVTOCompiler(resolver, resourceSet);
+	}    
     
     private static final List<BuildListener> ourListeners = new Vector<BuildListener>();
     private QvtBuilderConfig myConfig;

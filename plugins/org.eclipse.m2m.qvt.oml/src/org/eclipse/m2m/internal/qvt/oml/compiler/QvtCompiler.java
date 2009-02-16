@@ -67,10 +67,9 @@ import org.eclipse.osgi.util.NLS;
 
 /**
  * @author pkobiakov
+ * @deprecated replaced by {@link QVTOCompiler}
  */
 public class QvtCompiler {
-
-    public static final String PROBLEM_MARKER = "org.eclipse.m2m.qvt.oml.qvtProblem"; //$NON-NLS-1$
 
     private final Map<CFile, ParsedModuleCS> mySyntaxModules;
     private final Map<ParsedModuleCS, QvtCompilationResult> myCompilationResults;
@@ -119,7 +118,7 @@ public class QvtCompiler {
 	    myCompilationResults = new IdentityHashMap<ParsedModuleCS, QvtCompilationResult>();
 	    myModuleProvider = new BlackboxModuleHelper();
 	    
-        myKernel = new QvtCompilerKernel(importResolver, metamodelRegistryProvider);
+        myKernel = null;//new QvtCompilerKernel(importResolver, metamodelRegistryProvider);
         this.resourceSet = (metamodelRegistryProvider instanceof WorkspaceMetamodelRegistryProvider) ?
         		((WorkspaceMetamodelRegistryProvider) metamodelRegistryProvider).getResolutionResourceSet() : 
         			new ResourceSetImpl();
@@ -407,7 +406,7 @@ public class QvtCompiler {
 			public void write(int b) {} }));
             try {
                 QvtOperationalParser parser = new QvtOperationalParser();
-                module = parser.analyze(mma, this, env, options);                                
+                //module = parser.analyze(mma.getParser(), mma.getModuleCS(), this, env, options);                                
             } finally {
                 System.setOut(out);
             }
@@ -421,7 +420,7 @@ public class QvtCompiler {
         	}
         	
         	env.setContextModule(module);
-            myKernel.setModule(module, mma.getModuleCS());            
+            
             // AST binding
             if(options.isGenerateCompletionData()) {
                 ASTBindingHelper.createModuleBinding(mma.getModuleCS(), module, env, mma.getSource());
@@ -438,9 +437,9 @@ public class QvtCompiler {
     }    
     
     private ParsedModuleCS getImportedModule(final CFile source, final String qualifiedName, QvtCompilerOptions options) {
-    	CFile importSource = myKernel.getImportResolver().resolveImport(qualifiedName);
+    	CFile importSource = null;//myKernel.getImportResolver().resolveImport(qualifiedName);
     	if (importSource == null) {
-    		importSource = myKernel.getImportResolver().resolveImport(source, qualifiedName);
+    		importSource = null;//myKernel.getImportResolver().resolveImport(source, qualifiedName);
     	}
     	if (importSource == null) {
     		return null;

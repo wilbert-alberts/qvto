@@ -22,11 +22,10 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolverFactory;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilationResult;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 
 
@@ -52,54 +51,31 @@ public class QvtEngine {
 	}
 	
 
-    public QvtCompilationResult compile(final CFile source, final QvtCompilerOptions options, 
-            final IProgressMonitor monitor) throws MdaException {
-		// TODO: remove this reset as soon as timestamps are finished
+    public CompiledUnit compileUnit(CFile source, QvtCompilerOptions options, IProgressMonitor monitor) throws MdaException {
 		reset(options);
 		return myCompiler.compile(source, options, monitor);
 	}
-    
-	public CompiledModule compile(IFile file, IProgressMonitor monitor) throws MdaException {
-		return compile(file, monitor, null);
-	}
-	
-	public CompiledModule compile(IFile file, IProgressMonitor monitor, QvtCompilerOptions options) throws MdaException {
-		return compile(new IFile[] { file }, monitor, options)[0].getModule();
-	}
-	
-    public QvtCompilationResult[] compile(IFile[] files, IProgressMonitor monitor) throws MdaException {
-		return compile(files, monitor, null);
-	}
-	
-    public QvtCompilationResult[] compile(IFile[] files, IProgressMonitor monitor, QvtCompilerOptions options) throws MdaException {
-		EclipseFile[] sources = new EclipseFile[files.length];
-		for (int i = 0; i < sources.length; i++) {
-			sources[i] = new EclipseFile(files[i]);
-		}
-		// TODO: remove this reset as soon as timestamps are finished
-		reset(options);
-		if (options == null) {
-	        options = new QvtCompilerOptions();
-	        options.setGenerateCompletionData(false);
-		}
-		return myCompiler.compile(sources, options, monitor);
-	}
-	
-	public QvtCompiler getCompiler() {
+
+    public CompiledUnit compileUnit(IFile source, IProgressMonitor monitor) throws MdaException {
+    	return myCompiler.compile(new EclipseFile(source), /*default*/null, monitor);
+    }
+    		    			
+	public QVTOCompiler getQVTOCompiler() {
 		return myCompiler;
-	}
+	}	
     
 	private void reset(QvtCompilerOptions options) { // TODO: QvtException
 		ResourceSetImpl resourceSet = new ResourceSetImpl();
 		resourceSet.setURIResourceMap(new EPackageRegistryBasedURIResourceMap(resourceSet.getURIConverter()));
-	    myCompiler = new QvtCompiler(myImportResolver, resourceSet);
+	    
+	    myCompiler = new QVTOCompiler(myImportResolver, resourceSet);
 	    if (options != null) {
 	        myCompiler.getKernel().setMetamodelResourceSet(options.getMetamodelResourceSet());
-	    }
+	    }	    
 	}
 	
 	private static Map<IProject, QvtEngine> ourEnginesMap = new HashMap<IProject, QvtEngine>();
-	private QvtCompiler myCompiler;
+	private QVTOCompiler myCompiler;	
 	private IProject myProject;
     private final IImportResolver myImportResolver;
 }

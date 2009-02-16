@@ -207,7 +207,7 @@ public class QvtOperationalParserUtil {
 			return null;
 		}
 		
-		// check for operations directly owned by a QVT module
+		// check for operations directly owned by a QVT moduleAST
 		if(owner instanceof Module) {
 			return (Module) owner;
 		}
@@ -223,7 +223,7 @@ public class QvtOperationalParserUtil {
 			} 
 
 			// our QVT AST meta-model contains the additional operations via
-			// typedef stored directly in the owning module 
+			// typedef stored directly in the owning moduleAST 
 			// Additionally, support the nested 'additions' package as implemented by MDT OCL					
 			EPackage superOwner = owningPackage.getESuperPackage();
 			if(superOwner instanceof Module) {
@@ -249,7 +249,6 @@ public class QvtOperationalParserUtil {
 		return result;
 	}
 	
-		
 
 	public static void collectAllImports(Module module, Set<Module> result) {
 		for (ModuleImport imp : module.getModuleImport()) {
@@ -302,10 +301,10 @@ public class QvtOperationalParserUtil {
 	}
 
 	/**
-	 * Get the module simple name as the last element of possible qualified
+	 * Get the moduleAST simple name as the last element of possible qualified
 	 * name.
 	 * 
-	 * @return the name string or empty string, of the module name sequence is
+	 * @return the name string or empty string, of the moduleAST name sequence is
 	 *         empty
 	 */
 	public static String getMappingModuleSimpleName(TransformationHeaderCS headerCS) {
@@ -704,6 +703,8 @@ public class QvtOperationalParserUtil {
         	module = QvtOperationalStdLibrary.INSTANCE.createTransformation(name);
         }
  
+        moduleCS.setAst(module);
+        
         if(headerCS != null) {
         	ASTSyntheticNode astNode = ASTSyntheticNodeAccess.createASTNode(module);
         	astNode.setStartPosition(headerCS.getStartOffset());
@@ -713,4 +714,7 @@ public class QvtOperationalParserUtil {
         return module;
 	}
 
+	public static String wrappInSeeErrorLogMessage(String message) {
+		return NLS.bind(ValidationMessages.QvtOperationalVisitorCS_SeeErrorLogForDetails, message);
+	}
 }

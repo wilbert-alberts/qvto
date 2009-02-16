@@ -178,7 +178,7 @@ public class GraphWalker {
 		path2Weight.put(s2s, new Integer(0));
 	}
 	
-	public static class ObjectPair {
+	private static class ObjectPair {
 		public ObjectPair(Object first, Object second) {
 			myFirst = first;
 			mySecond = second;

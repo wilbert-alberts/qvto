@@ -13,9 +13,9 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 public class QvtCompilerFacade {
 	public static interface CompilationResult {
 		
-		QvtCompiler getCompiler();
+		QVTOCompiler getCompiler();
 		
-		CompiledModule getCompiledModule();
+		CompiledUnit getCompiledModule();
 	}
 	
 	private QvtCompilerFacade() {
@@ -48,15 +48,15 @@ public class QvtCompilerFacade {
 			monitor.worked(1);
 
 			QvtEngine qvtEngine = QvtEngine.getInstance(ifile);
-			final CompiledModule module = qvtEngine.compile(new EclipseFile(ifile), compilerOptions,
-					new SubProgressMonitor(monitor, 2)).getModule();
-			final QvtCompiler compiler = qvtEngine.getCompiler();
+			final CompiledUnit module = qvtEngine.compileUnit(new EclipseFile(ifile), compilerOptions,
+					new SubProgressMonitor(monitor, 2));
+			final QVTOCompiler compiler = qvtEngine.getQVTOCompiler();
 			
 			return new CompilationResult() {
-				public CompiledModule getCompiledModule() {
+				public CompiledUnit getCompiledModule() {
 					return module;
 				}
-				public QvtCompiler getCompiler() {
+				public QVTOCompiler getCompiler() {
 					return compiler;
 				}				
 			};

@@ -16,14 +16,13 @@ import java.io.Reader;
 import lpg.lpgjavaruntime.BadParseException;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTParsingOptions;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerMessages;
-import org.eclipse.m2m.internal.qvt.oml.compiler.ParsedModuleCS;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitImportResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
-import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParser;
@@ -65,7 +64,7 @@ public class QvtOperationalParser {
 		}
 
 		if (result == null) {
-			result = CSTFactory.eINSTANCE.createMappingModuleCS();
+			//result = CSTFactory.eINSTANCE.createMappingModuleCS();
 			
 			if (!env.hasErrors()) {
 				env.reportError(NLS.bind(
@@ -76,16 +75,13 @@ public class QvtOperationalParser {
 		return result;
 	}
 
-	public Module analyze(final ParsedModuleCS moduleCS, final QvtCompiler compiler, QvtOperationalFileEnv env, QvtCompilerOptions options) {
+	public Module analyze(AbstractQVTParser parser, final MappingModuleCS moduleCS, UnitImportResolver importResolver, ResourceSet resSet, QvtOperationalFileEnv env, QvtCompilerOptions options) {
 		Module module = null;
 	
 		env.setQvtCompilerOptions(options);
 		try {
-			QvtOperationalVisitorCS visitor = options.getQvtOperationalVisitorCS();
-			if (visitor == null) {
-	            visitor = new QvtOperationalVisitorCS(moduleCS.getParser(), options);
-			}
-			module = visitor.visitMappingModule(moduleCS, env, compiler);
+			QvtOperationalVisitorCS visitor = new QvtOperationalVisitorCS(parser, options);
+			module = visitor.visitMappingModule(moduleCS, importResolver.getImporter(), env, importResolver, resSet);
 		} catch (SemanticException e) {
 			env.reportError(e.getLocalizedMessage(), 0, 0);
 		}

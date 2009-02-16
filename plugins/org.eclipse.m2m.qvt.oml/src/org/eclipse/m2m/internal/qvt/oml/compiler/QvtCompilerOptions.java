@@ -11,7 +11,6 @@
 package org.eclipse.m2m.internal.qvt.oml.compiler;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalVisitorCS;
 
 /**
  * @author aigdalov
@@ -24,8 +23,12 @@ public class QvtCompilerOptions {
     private boolean isGenerateCompletionData = true;
     private boolean isEnableCSTModelToken = false;    
     private boolean isSourceLineNumbersEnabled = true;    
-    private QvtOperationalVisitorCS myQvtOperationalVisitorCS = null;
+
     private ResourceSet myMetamodelResourceSet = null;
+    
+    public QvtCompilerOptions() {
+    	super();
+	}
     
     public boolean isReportErrors() {
         return isReportErrors;
@@ -49,14 +52,6 @@ public class QvtCompilerOptions {
 
     public void setShowAnnotations(boolean showAnnotations) {
         isShowAnnotations = showAnnotations;
-    }
-
-    public QvtOperationalVisitorCS getQvtOperationalVisitorCS() {
-        return myQvtOperationalVisitorCS;
-    }
-
-    public void setQvtOperationalVisitorCS(QvtOperationalVisitorCS qvtOperationalVisitorCS) {
-        myQvtOperationalVisitorCS = qvtOperationalVisitorCS;
     }
 
     /**
