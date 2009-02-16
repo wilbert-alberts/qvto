@@ -39,9 +39,8 @@ import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilationResult;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.ui.part.FileEditorInput;
 
 /**
@@ -51,7 +50,7 @@ public class QvtCompilerFacade {
 	
 	private QvtCompilerFacade() {}
 	
-	public QvtCompilationResult compile(final QvtEditor editor, final IDocument document, 
+	public CompiledUnit compile(final QvtEditor editor, final IDocument document, 
 			QvtCompilerOptions options, IProgressMonitor monitor) {
 		if (!checkEditor(editor)) {
 			return null;
@@ -61,7 +60,7 @@ public class QvtCompilerFacade {
             monitor = new NullProgressMonitor();
         }
         monitor.beginTask(Messages.QvtCompilerFacade_compilingDoc , 4);
-        QvtCompilationResult result = null;
+        CompiledUnit result = null;
 		
 		try {
 			monitor.subTask(Messages.QvtCompilerFacade_acquiringDoc);
@@ -94,18 +93,33 @@ public class QvtCompilerFacade {
 //						return ((IDocumentExtension4) document).getModificationStamp();
 						return timeStamp;
 					}
+					
+					@Override
+					public boolean equals(Object other) {
+						if(other instanceof EclipseFile) {
+							EclipseFile another = (EclipseFile) other;
+							return getFile().equals(another.getFile());
+						}
+						
+						return true;
+					}
+					
+					@Override
+					public int hashCode() {					
+						return getFile().hashCode();
+					}
 				};
 				
 				QvtEngine engine = QvtEngine.getInstance(file);
 				
-                result = engine.compile(source, options, new SubProgressMonitor(monitor, 2));
+                result = engine.compileUnit(source, options, new SubProgressMonitor(monitor, 2));
                 
                 if (result != null) {
-                    documentProvider.setMappingModule(result.getModule());
+                    documentProvider.setMappingModule(result);
                 }
             } catch (MdaException e) {
-                documentProvider.setMappingModule(result != null ? result.getModule() : null);
-                Logger.getLogger().log(Logger.SEVERE, "Error during compiling document", e); //$NON-NLS-1$
+                documentProvider.setMappingModule(result);
+                Activator.log(e);
             }
             
             if (options.isReportErrors() && options.isShowAnnotations()) {
@@ -117,8 +131,8 @@ public class QvtCompilerFacade {
         return result;
 	}
 	
-	private void reportProblems(QvtCompilationResult compilationResult, IAnnotationModel model) {
-		if (compilationResult == null || model == null || model.getAnnotationIterator() == null) {
+	private void reportProblems(CompiledUnit unit, IAnnotationModel model) {
+		if (unit == null || model == null || model.getAnnotationIterator() == null) {
 			return;
 		}
 		
@@ -132,7 +146,7 @@ public class QvtCompilerFacade {
 		}
 		
 		Map<Annotation, Position> annotationsToAdd = new HashMap<Annotation, Position>();
-		for (QvtMessage problem : compilationResult.getMessages()) {
+		for (QvtMessage problem : unit.getProblems()) {
 			if (checkProblem(problem)) {
 				annotationsToAdd.put(createProblemAnnotation(problem), createProblemPosition(problem));
 			}

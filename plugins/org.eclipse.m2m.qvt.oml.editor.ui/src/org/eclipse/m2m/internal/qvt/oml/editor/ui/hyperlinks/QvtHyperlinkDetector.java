@@ -17,7 +17,7 @@ import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.jface.text.hyperlink.IHyperlinkDetector;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtDocumentProvider;
@@ -50,12 +50,12 @@ public class QvtHyperlinkDetector implements IHyperlinkDetector {
 		if (documentProvider == null) {
 			return null;
 		}
-		CompiledModule compiledModule = documentProvider.getCompiledModule();
-		if (compiledModule == null) {
+		CompiledUnit compiledUnit = documentProvider.getCompiledModule();
+		if (compiledUnit == null) {
 			return null;
 		}
 
-		List<CSTNode> elements = CSTHelper.selectTargetedElements(compiledModule.getSyntaxElement().getModuleCS(), region);
+		List<CSTNode> elements = CSTHelper.selectTargetedElements(compiledUnit.getCST(), region);
 		
 		Context context = new Context(documentProvider.getCompiledModule(), region, textViewer);		
 		
@@ -90,19 +90,19 @@ public class QvtHyperlinkDetector implements IHyperlinkDetector {
 	 */
 	private static class Context implements IDetectionContext {
 
-		final CompiledModule compiledModule;
+		final CompiledUnit compiledUnit;
 		final IRegion region;
 		final ITextViewer textViewer;
 		CSTNode syntaxElement;
 		
-		public Context(CompiledModule module, IRegion region, ITextViewer textViewer) {
-			this.compiledModule = module;
+		public Context(CompiledUnit unit, IRegion region, ITextViewer textViewer) {
+			this.compiledUnit = unit;
 			this.region = region;
 			this.textViewer = textViewer;
 		}		
 
-		public CompiledModule getModule() {
-			return compiledModule;
+		public CompiledUnit getModule() {
+			return compiledUnit;
 		}
 		
 		public IRegion getRegion() {			

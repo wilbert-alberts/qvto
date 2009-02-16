@@ -14,7 +14,7 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.ocl.cst.CSTNode;
 
 
@@ -27,7 +27,7 @@ public interface IHyperlinkDetectorHelper {
 	
 	interface IDetectionContext {
 		
-		CompiledModule getModule();
+		CompiledUnit getModule();
 		
 		CSTNode getSyntaxElement();
 		

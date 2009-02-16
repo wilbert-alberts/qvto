@@ -10,19 +10,21 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalVisitorCS;
-import org.eclipse.m2m.internal.qvt.oml.compiler.ParsedModuleCS;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitImportResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.SemanticException;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
-import org.eclipse.ocl.parser.OCLLexer;
 import org.eclipse.ocl.utilities.ASTNode;
 
 /**
@@ -34,23 +36,26 @@ public class QvtCompletionVisitorCS extends QvtOperationalVisitorCS {
     private QvtOperationalEnv myEnv; 
 
     public QvtCompletionVisitorCS(
-            OCLLexer lexStream,
-            QvtOperationalFileEnv environment,
+            AbstractQVTParser parser,
             QvtCompilerOptions options,
             QvtCompletionData data) {
-        super(lexStream, environment, options);
+        super(parser, options);
         myData = data;
-        myEnv = environment;
+        myEnv = (QvtOperationalEnv) parser.getEnvironment();
     }
 
+    protected void setEnv(QvtOperationalEnv env) {
+    	myEnv = env;
+    }
+    
     public QvtOperationalEnv getEnv() {
         return myEnv;
     }
     
     @Override
-    public Module visitMappingModule(ParsedModuleCS parsedModuleCS, QvtOperationalFileEnv env, QvtCompiler compiler) throws SemanticException {
-        myEnv = env;
-        return super.visitMappingModule(parsedModuleCS, env, compiler);
+    public Module visitMappingModule(MappingModuleCS moduleCS, CFile source, QvtOperationalFileEnv env, UnitImportResolver importResolver, ResourceSet resSet) throws SemanticException {
+        setEnv(env);
+        return super.visitMappingModule(moduleCS, source, env, importResolver, resSet);
     }
 
     @Override
@@ -61,7 +66,7 @@ public class QvtCompletionVisitorCS extends QvtOperationalVisitorCS {
             if (astNode != null) {
                 EcoreEnvironment resolvedEnvironment = ASTBindingHelper.resolveEnvironment(astNode);
                 if (resolvedEnvironment instanceof QvtOperationalEnv) {
-                    myEnv = (QvtOperationalEnv) resolvedEnvironment;
+                    setEnv((QvtOperationalEnv) resolvedEnvironment);
                 }
             }
         }

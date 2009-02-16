@@ -13,11 +13,11 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
-import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.PathNameCS;
+import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.StringLiteralExpCS;
 
 
@@ -38,44 +38,26 @@ public class ModelTypeHyperlinkDetector implements IHyperlinkDetectorHelper {
 	}
 
 	public static EPackage findReferencedPackageDefinition(CSTNode syntaxElement) {
-		PackageRefCS packageRefCS = null;		
-		if(syntaxElement instanceof PathNameCS && syntaxElement.eContainer() instanceof PackageRefCS) {
-			packageRefCS = (PackageRefCS) syntaxElement.eContainer();
-		}
-		else if (syntaxElement instanceof StringLiteralExpCS && syntaxElement.eContainer() instanceof PackageRefCS) {
-			packageRefCS = (PackageRefCS) syntaxElement.eContainer();
-			if(packageRefCS.getUriCS() != syntaxElement) {
-				return null;
+		PackageRefCS packageRefCS = null;
+		if(syntaxElement.eContainer() instanceof PackageRefCS) {
+			packageRefCS = (PackageRefCS) syntaxElement.eContainer();						
+			if((syntaxElement instanceof PathNameCS) || 
+				((syntaxElement instanceof StringLiteralExpCS) && packageRefCS.getUriCS() == syntaxElement)) {
+				Object ast = syntaxElement.getAst();
+				if(ast instanceof EPackage) {
+					return (EPackage) ast;
+				}
+			}
+		}		
+	
+		if(syntaxElement instanceof SimpleNameCS && syntaxElement.getAst() instanceof ModelType) {
+			ModelType modelType = (ModelType) syntaxElement.getAst();
+			if(!modelType.getMetamodel().isEmpty()) {
+				// TODO - multiple links for multiple metamodels
+				return modelType.getMetamodel().get(0);
 			}
 		}
 		
-		if(packageRefCS != null) {
-			StringLiteralExpCS uriCS = packageRefCS.getUriCS();
-			if(uriCS != null) {
-				return findReferencedEPackage(uriCS);
-			}			
-		}
-		
 		return null;
-	}	
-	
-	private static EPackage findReferencedEPackage(StringLiteralExpCS uriLiteral) {
-		QvtOperationalEnv env = getEnv(uriLiteral);
-		if(env == null) {
-			return null;
-		}
-		
-		String id = uriLiteral.getStringSymbol();
-		if(id == null || id.length() < 2) {
-			return null;
-		}
-		
-		// strip quotations
-		id = id.substring(1, id.length() - 1);
-		return env.getEPackageRegistry().getEPackage(id);
-	}
-	
-	private static QvtOperationalEnv getEnv(CSTNode node) {
-		return (QvtOperationalEnv)CSTHelper.getEnvironment(node);
 	}	
 }

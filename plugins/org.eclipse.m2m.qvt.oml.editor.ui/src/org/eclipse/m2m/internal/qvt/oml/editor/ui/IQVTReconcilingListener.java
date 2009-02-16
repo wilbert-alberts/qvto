@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui;
 
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 
 public interface IQVTReconcilingListener {
 	/**
@@ -22,7 +22,7 @@ public interface IQVTReconcilingListener {
 	/**
 	 * Called after reconciling has been finished.
 	 * 
-	 * @param ast the compilation unit AST or <code>null</code> if the AST failed to be produced            
+	 * @param unit the compilation unit or <code>null</code> if the unit failed to be compiled
 	 */
-	void reconciled(CompiledModule ast);
+	void reconciled(CompiledUnit unit);
 }

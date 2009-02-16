@@ -23,15 +23,15 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalVisitorCS;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFileUtil;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
-import org.eclipse.m2m.internal.qvt.oml.compiler.ParsedModuleCS;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompiler;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
-import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
@@ -40,13 +40,12 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.keywordhandler.Keyw
 import org.eclipse.ocl.OCLInput;
 import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.cst.CSTNode;
-import org.eclipse.ocl.parser.OCLLexer;
 
 /**
  * @author aigdalov
  * Created on Oct 30, 2007
  */
-public class QvtCompletionCompiler extends QvtCompiler {
+public class QvtCompletionCompiler extends QVTOCompiler {
     private final QvtCompletionData myData;
     private final Map<CFile, CFileData> myCFileDataMap = new LinkedHashMap<CFile, CFileData>();
     private QvtOperationalEnv myEnvironment;
@@ -95,40 +94,42 @@ public class QvtCompletionCompiler extends QvtCompiler {
             options.setShowAnnotations(false);
             options.setSourceLineNumbersEnabled(false);
 
-            OCLLexer oclLexer = new OCLLexer(myEnvironment);
             try {
-                oclLexer.initialize(new OCLInput("").getContent(), myData.getCFile().getName()); //$NON-NLS-1$
-
-                QvtCompletionVisitorCS visitorCS = new QvtCompletionVisitorCS(oclLexer, 
-                        (QvtOperationalFileEnv) myEnvironment, options, myData);
-
-                options.setQvtOperationalVisitorCS(visitorCS);
-
-                try {
-                    compile(myData.getCFile(), options, null);
-                    myEnvironment = visitorCS.getEnv();
-                } catch (MdaException ex) {
-                  Activator.log(ex);
-                }
-            } catch (ParserException ex) {
+                compile(myData.getCFile(), options, null);
+            } catch (MdaException ex) {
               Activator.log(ex);
             }
         }
         return myEnvironment;
     }
+    
+    @Override
+    protected QvtOperationalVisitorCS createAnalyzer(AbstractQVTParser parser, QvtCompilerOptions options) {
+		return new QvtCompletionVisitorCS(parser, options, null) {
+			@Override
+			protected void setEnv(QvtOperationalEnv env) {			
+				super.setEnv(env);
+				myEnvironment = env;
+			}
+		};
+    }
 
     @Override
-    protected ParsedModuleCS parseInternal(CFile source, QvtCompilerOptions options) throws IOException {
-    	CFileData cFileData = compile(source);
-    	// FIXME - 
-    	// wrapping the used QVT lexer with its environment within the QvtOpLPGParser 
-    	// in order to stick with the contract of the super class
-    	QvtOpLPGParser qvtParser = new QvtOpLPGParser(cFileData.getLexer());
+    protected CSTParseResult parse(CFile source, QvtCompilerOptions options) throws ParserException {
+     	CFileData cFileData = compile(source);
+		AbstractQVTParser qvtParser = (AbstractQVTParser) cFileData.getLexer().getParser();
+		// FIXME - should be no dummy module but rather empty UnitCS object
     	MappingModuleCS mappingModuleCS = cFileData.getMappingModuleCS();
     	if (mappingModuleCS == null) {
-    	    mappingModuleCS = CSTFactory.eINSTANCE.createMappingModuleCS();
+    	    //mappingModuleCS = CSTFactory.eINSTANCE.createMappingModuleCS();
     	}
-        return new ParsedModuleCS(mappingModuleCS, source, qvtParser);
+    	
+    	QvtOperationalFileEnv env = (QvtOperationalFileEnv)cFileData.getLexer().getEnvironment();
+    	CSTParseResult result = new CSTParseResult();
+    	result.moduleCS = mappingModuleCS;
+    	result.env = env;
+    	result.parser = qvtParser;
+    	return result;
     }
     
     

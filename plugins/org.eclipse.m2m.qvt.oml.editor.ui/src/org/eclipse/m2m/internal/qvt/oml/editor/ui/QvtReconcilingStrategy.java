@@ -25,8 +25,7 @@ import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.reconciler.DirtyRegion;
 import org.eclipse.jface.text.reconciler.IReconcilingStrategy;
 import org.eclipse.jface.text.reconciler.IReconcilingStrategyExtension;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilationResult;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
@@ -74,7 +73,7 @@ public class QvtReconcilingStrategy implements IReconcilingStrategy, IReconcilin
         options.enableCSTModelToken(true);
         
         IQVTReconcilingListener reconcilingListener = myEditor.getReconcilingListener();        
-        QvtCompilationResult compilationResult = null;
+        CompiledUnit compilationResult = null;
         try {
 			reconcilingListener.aboutToBeReconciled();
 			
@@ -88,21 +87,20 @@ public class QvtReconcilingStrategy implements IReconcilingStrategy, IReconcilin
                 }
             }
         } finally {
-        CompiledModule compiledModule = (compilationResult != null) ? compilationResult.getModule() : null;
+        reconcilingListener.reconciled(compilationResult);
         
-        reconcilingListener.reconciled(compiledModule);
-        
-        if (compiledModule != null) {
-            MappingModuleCS mappingModuleCS = compiledModule.getSyntaxElement().getModuleCS();
+        if (compilationResult != null) {
+            MappingModuleCS mappingModuleCS = compilationResult.getCST();
+            if(mappingModuleCS != null) {
+	            addListPosition(mappingModuleCS.getImports(), positions);
+	            addListPosition(mappingModuleCS.getImports(), positions);
+	            addListPosition(mappingModuleCS.getMetamodels(), positions);
+	            addListPosition(mappingModuleCS.getProperties(), positions);
+	            addListPosition(mappingModuleCS.getRenamings(), positions);
             
-            addListPosition(mappingModuleCS.getImports(), positions);
-            addListPosition(mappingModuleCS.getImports(), positions);
-            addListPosition(mappingModuleCS.getMetamodels(), positions);
-            addListPosition(mappingModuleCS.getProperties(), positions);
-            addListPosition(mappingModuleCS.getRenamings(), positions);
-            
-            for (MappingMethodCS method : mappingModuleCS.getMethods()) {
-                positions.add(createPosition(method.getStartOffset(), method.getEndOffset()));
+	            for (MappingMethodCS method : mappingModuleCS.getMethods()) {
+	                positions.add(createPosition(method.getStartOffset(), method.getEndOffset()));
+	            }
             }
         }
         }

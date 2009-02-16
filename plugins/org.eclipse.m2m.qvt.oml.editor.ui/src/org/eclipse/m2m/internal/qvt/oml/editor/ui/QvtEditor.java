@@ -36,7 +36,7 @@ import org.eclipse.jface.text.source.projection.ProjectionSupport;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilder;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.actions.OpenDeclarationAction;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.outline.QvtOutlineContentProvider;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.outline.QvtOutlineInput;
@@ -337,10 +337,10 @@ public class QvtEditor extends TextEditor {
         s.getShell().getDisplay().syncExec(new Runnable() {
             public void run() {
             	if (myTreeViewer != null && !myTreeViewer.getControl().isDisposed()) {
-                    CompiledModule mm = ((QvtDocumentProvider)getDocumentProvider()).getCompiledModule();
-                    if (mm != null) {
+                    CompiledUnit unit = ((QvtDocumentProvider)getDocumentProvider()).getCompiledModule();
+                    if (unit != null) {
                     	QvtOutlineInput input = (QvtOutlineInput) myTreeViewer.getInput();
-                    	input.mappingModuleUpdated(mm.getSyntaxElement());
+                    	input.mappingModuleUpdated(unit);
                         myTreeViewer.refresh();
                         selectionChanged((TextSelection)getSelectionProvider().getSelection());
                     }
@@ -410,9 +410,9 @@ public class QvtEditor extends TextEditor {
      * @param timeoutInMilisec number of milliseconds to wait if the a valid () AST is not available right-away
      * 			Note: The argument semantics conforms to Object::wait(long)
      *   
-     * @return AST module or <code>null</code> if it was not available within the specified timeout  
+     * @return compilation unit or <code>null</code> if it was not available within the specified timeout  
      */
-    public CompiledModule getValidCompiledModule(long timeoutInMilisec) {
+    public CompiledUnit getValidCompiledModule(long timeoutInMilisec) {
     	return fASTProvider.getValidCompiledModule(timeoutInMilisec);
     }
     
@@ -462,7 +462,7 @@ public class QvtEditor extends TextEditor {
 			doc.addDocumentListener(fDocListener);
 		}
     	
-        public CompiledModule getValidCompiledModule(long timeoutInMilisec) {
+        public CompiledUnit getValidCompiledModule(long timeoutInMilisec) {
         	QvtDocumentProvider documentProvider = (QvtDocumentProvider) getDocumentProvider();
         	synchronized (fLock) {
         		while(fNeedsReconciling) {
@@ -486,7 +486,7 @@ public class QvtEditor extends TextEditor {
 	    	}
 	    }
 	    
-	    public void reconciled(CompiledModule ast) {
+	    public void reconciled(CompiledUnit unit) {
 	    	synchronized(fLock) {
 	        	if(fModifyTimeStamp == fStartReconcileTimeStamp) {
 	        		fNeedsReconciling = false;

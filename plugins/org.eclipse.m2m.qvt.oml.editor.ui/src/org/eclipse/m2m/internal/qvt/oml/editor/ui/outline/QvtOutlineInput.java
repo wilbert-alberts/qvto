@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.m2m.internal.qvt.oml.compiler.ParsedModuleCS;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
@@ -39,12 +39,12 @@ public class QvtOutlineInput {
 		this(null);
 	}
 
-	public QvtOutlineInput(ParsedModuleCS parsedModuleCS) {
-		myModule = parsedModuleCS;
+	public QvtOutlineInput(CompiledUnit parsedModuleCS) {
+		myUnit = parsedModuleCS;
 	}
 	
-	public void mappingModuleUpdated(ParsedModuleCS parsedModuleCS) {
-		myModule = parsedModuleCS;
+	public void mappingModuleUpdated(CompiledUnit unit) {
+		myUnit = unit;
 		myModuleNode.setIdentity(getModuleNodeIdentity());
 	}
 
@@ -60,7 +60,7 @@ public class QvtOutlineInput {
 	}
 
 	private String getModuleNodeIdentity() {
-		return myModule != null ? QvtOutlineLabelProvider.getMappingModuleLabel(myModule.getModuleCS()) : ""; //$NON-NLS-1$
+		return myUnit != null ? QvtOutlineLabelProvider.getMappingModuleLabel(myUnit.getCST()) : ""; //$NON-NLS-1$
 	}
 	
 	private abstract class ModuleDependentNode extends OutlineNode {
@@ -75,7 +75,7 @@ public class QvtOutlineInput {
 		
 		@Override
 		public final List<OutlineNode> getChildren() {
-			if (myModule == null) {
+			if (myUnit == null) {
 				return Collections.emptyList();
 			}
 			return doGetChildren();
@@ -95,7 +95,7 @@ public class QvtOutlineInput {
 		protected List<OutlineNode> doGetChildren() {
 			List<OutlineNode> result = new ArrayList<OutlineNode>();
 
-			for (MappingMethodCS method : myModule.getModuleCS().getMethods()) {
+			for (MappingMethodCS method : myUnit.getCST().getMethods()) {
 				OutlineNode childNode = new OutlineNode(QvtOutlineLabelProvider.getMappingRuleLabel(method), this,
 						QvtOutlineNodeType.MAPPING_RULE, method);
 				result.add(childNode);
@@ -115,25 +115,31 @@ public class QvtOutlineInput {
 		@Override
 		protected List<OutlineNode> doGetChildren() {
 			List<OutlineNode> result = new ArrayList<OutlineNode>();
-			for (ImportCS imp : myModule.getModuleCS().getImports()) {
+			for (ImportCS imp : myUnit.getCST().getImports()) {
 				PathNameCS importPath = imp.getPathNameCS();
 				if (imp instanceof LibraryImportCS) {
 					LibraryNode childNode = new LibraryNode(QvtOutlineLabelProvider.getImportLabel(importPath), this,
 							QvtOutlineNodeType.MAPPING_MODULE, importPath);
 					result.add(childNode);
 				}
-				else if (myModule.getParsedImport(importPath) != null) {
-					MappingModuleCS moduleCS = myModule.getParsedImport(importPath).getModuleCS();
-					OutlineNode childNode = new ImportedModuleNode(QvtOutlineLabelProvider.getImportLabel(importPath),
-							moduleCS, this, QvtOutlineNodeType.MAPPING_MODULE, importPath);
-					result.add(childNode);
-				}
+			}
+			
+			for (ImportCS nextImportCS : myUnit.getCST().getImports()) {
+		    	PathNameCS importQName = nextImportCS.getPathNameCS();
+				if (importQName == null) {
+		    		continue;
+		    	}
+		    	
+				OutlineNode childNode = new OutlineNode(QvtOutlineLabelProvider.getImportLabel(importQName),
+						this, QvtOutlineNodeType.MAPPING_MODULE, importQName);
+				result.add(childNode);
 			}
 
 			return result;
 		}
 
 	}
+	
 
 	private final class MetamodelsNode extends ModuleDependentNode {
 
@@ -145,7 +151,7 @@ public class QvtOutlineInput {
 		protected List<OutlineNode> doGetChildren() {
 			List<OutlineNode> result = new ArrayList<OutlineNode>();
 
-			for (ModelTypeCS modelTypeCS : myModule.getModuleCS().getMetamodels()) {
+			for (ModelTypeCS modelTypeCS : myUnit.getCST().getMetamodels()) {
 		    	if (modelTypeCS == null || modelTypeCS.getPackageRefs().isEmpty()) {
 		    		continue;
 		    	}
@@ -169,7 +175,7 @@ public class QvtOutlineInput {
 		protected List<OutlineNode> doGetChildren() {
 			List<OutlineNode> result = new ArrayList<OutlineNode>();
 
-			for (RenameCS rename : myModule.getModuleCS().getRenamings()) {
+			for (RenameCS rename : myUnit.getCST().getRenamings()) {
 				OutlineNode childNode = new OutlineNode(QvtOutlineLabelProvider.getRenameLabel(rename), this,
 						QvtOutlineNodeType.RENAME, rename);
 				result.add(childNode);
@@ -190,7 +196,7 @@ public class QvtOutlineInput {
 		protected List<OutlineNode> doGetChildren() {
 			List<OutlineNode> result = new ArrayList<OutlineNode>();
 
-			for (ModulePropertyCS prop : myModule.getModuleCS().getProperties()) {
+			for (ModulePropertyCS prop : myUnit.getCST().getProperties()) {
 				OutlineNode childNode = new OutlineNode(QvtOutlineLabelProvider.getPropertyLabel(prop), this,
 						QvtOutlineNodeType.PROPERTY, prop);
 				result.add(childNode);
@@ -259,7 +265,7 @@ public class QvtOutlineInput {
 
 	}
 
-	private ParsedModuleCS myModule;
+	private CompiledUnit myUnit;
 	
 	private Object[] myChildren;
 	

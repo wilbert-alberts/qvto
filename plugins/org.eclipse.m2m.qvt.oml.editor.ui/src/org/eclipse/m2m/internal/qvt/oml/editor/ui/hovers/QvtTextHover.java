@@ -27,7 +27,7 @@ import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.ISourceViewer;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtDocumentProvider;
@@ -62,7 +62,7 @@ public class QvtTextHover implements ITextHover, ITextHoverExtension2 {
     }
     
     public String getHoverInfo(final ITextViewer textViewer, final IRegion hoverRegion) {
-        if (checkCompiledModule(myDocumentProvider.getCompiledModule()) && 
+        if (checkCompiledUnit(myDocumentProvider.getCompiledModule()) && 
         	textViewer != null && textViewer.getDocument() != null) {
 	        
 	        Annotation annotation = getAnnotation(textViewer, hoverRegion.getOffset());
@@ -70,7 +70,7 @@ public class QvtTextHover implements ITextHover, ITextHoverExtension2 {
         		return annotation.getText();
         	}
         	
-        	CSTNode rootCS = myDocumentProvider.getCompiledModule().getSyntaxElement().getModuleCS();
+        	CSTNode rootCS = myDocumentProvider.getCompiledModule().getCST();
         	List<CSTNode> elements = CSTHelper.selectTargetedElements(rootCS, hoverRegion);
         	if(!elements.isEmpty()) {
         		try {
@@ -132,7 +132,7 @@ public class QvtTextHover implements ITextHover, ITextHoverExtension2 {
     	return ""; //$NON-NLS-1$
     }
     
-    private boolean checkCompiledModule(final CompiledModule compiledModule) {
-        return compiledModule != null && compiledModule.getSyntaxElement() != null;
+    private boolean checkCompiledUnit(final CompiledUnit unit) {
+        return unit != null && unit.getCST() != null;
     }    
 }

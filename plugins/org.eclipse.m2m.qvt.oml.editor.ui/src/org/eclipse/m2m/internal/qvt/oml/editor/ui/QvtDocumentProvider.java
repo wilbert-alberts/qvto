@@ -13,18 +13,18 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.text.source.IAnnotationModel;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledModule;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.ui.editors.text.TextFileDocumentProvider;
 import org.eclipse.ui.texteditor.ResourceMarkerAnnotationModel;
 
 
 public class QvtDocumentProvider extends TextFileDocumentProvider {
 	
-    public void setMappingModule(final CompiledModule compiledModule) {
-        myCompiledModule = compiledModule;
+    public void setMappingModule(final CompiledUnit compiledUnit) {
+        myCompiledModule = compiledUnit;
     }
     
-    public CompiledModule getCompiledModule() {
+    public CompiledUnit getCompiledModule() {
         return myCompiledModule;
     }
 
@@ -33,5 +33,5 @@ public class QvtDocumentProvider extends TextFileDocumentProvider {
     	return new ResourceMarkerAnnotationModel(file);
     }
     
-    private CompiledModule myCompiledModule;
+    private CompiledUnit myCompiledModule;
 }
