@@ -125,7 +125,12 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 		
 		public void process(Visitable e, Visitable parent) {
 			if (e.eClass().eContainer() == org.eclipse.ocl.ecore.EcorePackage.eINSTANCE) {
-				e.accept(myOclValidationVisitor);
+				try {
+					e.accept(myOclValidationVisitor);
+				}
+				catch (UnsupportedOperationException ex) {
+					
+				}
 			}
 		}
 		
