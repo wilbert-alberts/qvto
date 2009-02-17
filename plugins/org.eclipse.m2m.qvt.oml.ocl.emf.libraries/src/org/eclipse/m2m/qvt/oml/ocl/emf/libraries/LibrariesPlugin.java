@@ -20,12 +20,15 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.ocl.ecore.internal.OCLStandardLibraryImpl;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.osgi.framework.BundleContext;
 
 public class LibrariesPlugin extends Plugin {
 	
-	public static final String OCL_LIBRARY_PACKAGE = OCLStandardLibraryImpl.stdlibPackage.getName();
+	public static final String OCL_LIBRARY_PACKAGE =
+		EPackage.Registry.INSTANCE.get(EcoreEnvironment.OCL_STANDARD_LIBRARY_NS_URI) instanceof EPackage ?
+				((EPackage) EPackage.Registry.INSTANCE.get(EcoreEnvironment.OCL_STANDARD_LIBRARY_NS_URI)).getName() : "oclstdlib"; //$NON-NLS-1$
 
     private static final String LOGLEVEL_OPTION = "/loglevel"; //$NON-NLS-1$
 
