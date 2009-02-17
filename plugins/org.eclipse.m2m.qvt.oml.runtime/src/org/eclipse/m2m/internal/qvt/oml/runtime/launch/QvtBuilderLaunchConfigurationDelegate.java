@@ -45,7 +45,6 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
 import org.eclipse.m2m.qvt.oml.util.WriterLog;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.externaltools.internal.model.ExternalToolBuilder;
-import org.eclipse.ui.externaltools.internal.model.IExternalToolConstants;
 
 public class QvtBuilderLaunchConfigurationDelegate extends LaunchConfigurationDelegate {
 
@@ -62,7 +61,7 @@ public class QvtBuilderLaunchConfigurationDelegate extends LaunchConfigurationDe
             
             ShallowProcess.IRunnable r = new ShallowProcess.IRunnable() {
                 public void run() throws Exception {
-                    if(IExternalToolConstants.BUILD_TYPE_CLEAN.equals(buildType)) {
+                    if(BUILD_TYPE_CLEAN.equals(buildType)) {
                         clean(project, configuration);
                     }
                     else {
@@ -164,4 +163,48 @@ public class QvtBuilderLaunchConfigurationDelegate extends LaunchConfigurationDe
 	        Logger.getLogger().log(Logger.SEVERE, "Failed to create marker on " + project, e); //$NON-NLS-1$
 	    }
 	}
+
+    /**
+     * Copied from org.eclipse.ui.externaltools.internal.model.IExternalToolConstants
+     * 
+     * Looks like it's never evolved to API (see: http://dev.eclipse.org/newslists/news.eclipse.platform/msg38656.html)
+     * 
+     */
+
+	// ------- Build Types -------
+	/**
+	 * Build type indicating an incremental project build request for
+	 * the external tool running as a builder (value <code>incremental</code>).
+	 */
+	public static final String BUILD_TYPE_INCREMENTAL = "incremental"; //$NON-NLS-1$
+
+	/**
+	 * Build type indicating a full project build request for
+	 * the external tool running as a builder (value <code>full</code>).
+	 */
+	public static final String BUILD_TYPE_FULL = "full"; //$NON-NLS-1$
+
+	/**
+	 * Build type indicating an automatic project build request for
+	 * the external tool running as a builder (value <code>auto</code>).
+	 */
+	public static final String BUILD_TYPE_AUTO = "auto"; //$NON-NLS-1$
+	
+	/**
+	 * Build type indicating a clean project build request for
+	 * the external tool running as a builder (value <code>clean</code>).
+	 */
+	public static final String BUILD_TYPE_CLEAN = "clean"; //$NON-NLS-1$
+
+	/**
+	 * Plugin identifier for external tools (value <code>org.eclipse.ui.externaltools</code>).
+	 */
+	private static final String PLUGIN_ID = "org.eclipse.ui.externaltools"; //$NON-NLS-1$;
+
+	/**
+	 * String attribute containing an array of build kinds for which an
+	 * external tool builder should be run.
+	 */
+	public static final String ATTR_RUN_BUILD_KINDS = PLUGIN_ID + ".ATTR_RUN_BUILD_KINDS"; //$NON-NLS-1$
+
 }
