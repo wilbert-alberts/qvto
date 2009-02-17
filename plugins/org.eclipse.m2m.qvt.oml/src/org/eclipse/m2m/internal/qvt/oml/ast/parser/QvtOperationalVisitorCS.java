@@ -209,7 +209,6 @@ import org.eclipse.ocl.expressions.TypeExp;
 import org.eclipse.ocl.expressions.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.expressions.VariableExp;
-import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.parser.AbstractOCLAnalyzer;
 import org.eclipse.ocl.parser.OCLLexer;
 import org.eclipse.ocl.parser.OCLParser;
@@ -448,9 +447,11 @@ public class QvtOperationalVisitorCS
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env)
 			throws SemanticException {
 	    // stringLiteralExpCS() is not called directly for AST-CST binding creation done in literalExpCS()
-		OCLExpression<EClassifier> literalExpCS = literalExpCS(stringLiteralExpCS, env);
-		StringLiteralExp stringLiteralExp = (StringLiteralExp) literalExpCS;
-        return stringLiteralExp.getStringSymbol();
+		OCLExpression<EClassifier> literalExp = literalExpCS(stringLiteralExpCS, env);
+		if (literalExp instanceof StringLiteralExp) {
+			return ((StringLiteralExp<EClassifier>) literalExp).getStringSymbol();
+		}
+        return null;
 	}
 	
 	@Override
@@ -542,8 +543,8 @@ public class QvtOperationalVisitorCS
 	        if (oclExpressionCS instanceof TypeCS) {
 	            EClassifier type = typeCS((TypeCS) oclExpressionCS, env);
 	            if (type == null) {
-	                QvtOperationalUtil.reportError(env, OCLMessages.bind(
-	                        OCLMessages.UnrecognizedType_ERROR_,
+	                QvtOperationalUtil.reportError(env, NLS.bind(
+	                		ValidationMessages.UnknownClassifierType,
 	                        QvtOperationalUtil.getStringRepresentation((TypeCS) oclExpressionCS)), oclExpressionCS);
 	            }
 	            else {

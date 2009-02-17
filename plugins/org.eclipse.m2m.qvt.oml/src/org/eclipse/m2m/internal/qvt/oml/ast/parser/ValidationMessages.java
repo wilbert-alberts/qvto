@@ -183,6 +183,11 @@ public final class ValidationMessages extends NLS {
     public static String BreakContinue_InvalidExpressionOwner;
     public static String BreakContinue_InvalidExpressionUsage;
     
+    public static String TupleTypeMismatch;
+    public static String TupleFieldNumMismatch;
+    public static String TupleFieldNotFound;
+    public static String TypeMismatchNoCommonType;
+    
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, ValidationMessages.class);
 	}

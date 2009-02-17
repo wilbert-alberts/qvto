@@ -56,7 +56,6 @@ class MappingExtensionHelper {
 			boolean result = true; 
 			MappingBody body = (MappingBody)fOperation.getBody();
 			
-			@SuppressWarnings("unused") //$NON-NLS-1$
 			boolean nonEmptyBody = body != null &&
 					(!body.getContent().isEmpty() || 
 					!body.getInitSection().isEmpty() ||

@@ -26,7 +26,9 @@ public class EvaluationMessages extends NLS {
     public static String FatalAssertionFailed;
 	public static String QvtOperationalEvaluationVisitorImpl_invalidConfigPropertyValue;
 	public static String TerminatingExecution;
-	public static String UknownSourceLabel;  
+	public static String UknownSourceLabel;
+	
+	public static String IteratorNotImpl;
     
     static {
         // initialize resource bundle

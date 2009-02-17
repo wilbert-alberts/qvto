@@ -144,7 +144,6 @@ import org.eclipse.ocl.expressions.PropertyCallExp;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.expressions.VariableExp;
 import org.eclipse.ocl.internal.evaluation.EvaluationVisitorImpl;
-import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.types.BagType;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.types.OCLStandardLibrary;
@@ -1336,7 +1335,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
             return result;
         }
         
-        String message = OCLMessages.bind(OCLMessages.IteratorNotImpl_ERROR_, imperativeIterateExp.getName());
+        String message = NLS.bind(EvaluationMessages.IteratorNotImpl, imperativeIterateExp.getName());
         throw new UnsupportedOperationException(message);
     }
     

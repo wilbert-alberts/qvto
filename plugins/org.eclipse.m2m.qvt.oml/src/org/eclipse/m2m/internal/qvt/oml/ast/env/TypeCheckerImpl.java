@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.ValidationMessages;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictionaryType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListType;
@@ -29,7 +30,6 @@ import org.eclipse.ocl.ecore.EcorePackage;
 import org.eclipse.ocl.ecore.TypeType;
 import org.eclipse.ocl.expressions.CollectionKind;
 import org.eclipse.ocl.expressions.Variable;
-import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.lpg.BasicEnvironment;
 import org.eclipse.ocl.options.ParsingOptions;
 import org.eclipse.ocl.types.CollectionType;
@@ -327,7 +327,7 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 		if (type1 instanceof TupleType || type2 instanceof TupleType) {
 			if (!((type1 instanceof TupleType) && (type2 instanceof TupleType))) {
 				String message = NLS.bind(
-						OCLMessages.TupleTypeMismatch_ERROR_, getName(type1),
+						ValidationMessages.TupleTypeMismatch, getName(type1),
 					getName(type2));
 				error(message, "commonSuperType", problemObject); //$NON-NLS-1$
 				return null;
@@ -338,7 +338,7 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 
 			if (props1.size() != props2.size()) {
 				String message = NLS.bind(
-						OCLMessages.TupleFieldNumMismatch_ERROR_, getName(type1),
+						ValidationMessages.TupleFieldNumMismatch, getName(type1),
 					getName(type2));
 				error(message, "commonSuperType", problemObject); //$NON-NLS-1$
 				return null;
@@ -367,7 +367,7 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 				}
 				if (!found) {
 					String message = NLS.bind(
-							OCLMessages.TupleFieldNotFound_ERROR_, new Object[]{
+							ValidationMessages.TupleFieldNotFound, new Object[]{
 							getName(type1), getName(prop1), getName(type2)});
 					error(message, "commonSuperType", problemObject); //$NON-NLS-1$
 					return null;
@@ -383,7 +383,7 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 				return getEnvironment().getOCLStandardLibrary().getOclAny();
 			}
 			
-			String message = NLS.bind(OCLMessages.TypeMismatch_ERROR_,
+			String message = NLS.bind(ValidationMessages.TypeMismatchNoCommonType,
 				getName(type1), getName(type2));
 			error(message, "commonSuperType", problemObject); //$NON-NLS-1$
 			return null;
@@ -403,7 +403,7 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 		}
 
 		if (result == null) {
-			String message = NLS.bind(OCLMessages.TypeMismatch_ERROR_,
+			String message = NLS.bind(ValidationMessages.TypeMismatchNoCommonType,
 				getName(type1), getName(type2));
 			error(message, "commonSuperType", problemObject); //$NON-NLS-1$
 			return null;
