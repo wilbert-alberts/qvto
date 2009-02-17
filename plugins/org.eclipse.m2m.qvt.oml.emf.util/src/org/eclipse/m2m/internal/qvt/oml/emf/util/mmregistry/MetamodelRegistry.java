@@ -148,7 +148,7 @@ public class MetamodelRegistry {
 		
         for (IMetamodelDesc d: myMetamodelDescs.values()) {
         	EPackage pack = d.getModel();
-        	if (pack.getESuperPackage() != null) {
+        	if (pack == null || pack.getESuperPackage() != null) {
         		continue;
         	}
         	EPackage lookupPackage = EmfMmUtil.lookupPackage(pack, packageName);
@@ -228,7 +228,9 @@ public class MetamodelRegistry {
         	}
         	
 	        for(int i = 0; i < models.length; i++) {
-	            metamodelDescs.put(models[i].getId(), models[i]);
+	        	if (models[i].getId() != null) {
+	        		metamodelDescs.put(models[i].getId(), models[i]);
+	        	}
 	        }
         }
 		
