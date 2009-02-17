@@ -18,6 +18,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.ocl.ecore.internal.EcoreForeignMethods;
+import org.eclipse.ocl.parser.AbstractOCLAnalyzer;
 
 public class EmfMmUtil {
     private EmfMmUtil() {}
@@ -41,7 +42,7 @@ public class EmfMmUtil {
 		if (path.isEmpty()) {
 			return null;
 		}
-		if (!EcoreForeignMethods.isNamed(path.get(0), rootPackage)) {
+		if (!AbstractOCLAnalyzer.equalName(path.get(0), rootPackage.getName())) {
 			return null;
 		}
         
