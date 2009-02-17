@@ -14,8 +14,8 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch;
 
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtBuilderLaunchConfigurationDelegate;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.ITransformationMaker;
-import org.eclipse.ui.externaltools.internal.model.IExternalToolConstants;
 
 /**
  * @author sboyko
@@ -32,10 +32,10 @@ public class QvtBuilderLauncherTab extends QvtLauncherTab {
 		super.performApply(configuration);
 
         setBuildTypes(configuration, new String[] {
-                IExternalToolConstants.BUILD_TYPE_FULL,
-                IExternalToolConstants.BUILD_TYPE_INCREMENTAL,
-                IExternalToolConstants.BUILD_TYPE_AUTO,
-                IExternalToolConstants.BUILD_TYPE_CLEAN,
+        		QvtBuilderLaunchConfigurationDelegate.BUILD_TYPE_FULL,
+        		QvtBuilderLaunchConfigurationDelegate.BUILD_TYPE_INCREMENTAL,
+        		QvtBuilderLaunchConfigurationDelegate.BUILD_TYPE_AUTO,
+        		QvtBuilderLaunchConfigurationDelegate.BUILD_TYPE_CLEAN,
         });
 
 	}
@@ -51,7 +51,7 @@ public class QvtBuilderLauncherTab extends QvtLauncherTab {
             s.append(buildType);
         }
         
-        configuration.setAttribute(IExternalToolConstants.ATTR_RUN_BUILD_KINDS, s.toString());
+        configuration.setAttribute(QvtBuilderLaunchConfigurationDelegate.ATTR_RUN_BUILD_KINDS, s.toString());
     }
-
+    
 }
