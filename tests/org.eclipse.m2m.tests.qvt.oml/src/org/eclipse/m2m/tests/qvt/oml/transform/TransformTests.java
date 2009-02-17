@@ -94,7 +94,7 @@ public class TransformTests {
         		new FilesToFilesData("intermProperties", Collections.<String>emptyList(), Arrays.asList("intermProperties.ecore")),        		
         		new FilesToFilesData("intermWithCrossRefs", Collections.<String>emptyList(), Arrays.asList("intermWithCrossRefs.ecore")),        		
         		new FilesToFilesData("intermWithExtends", Collections.<String>emptyList(), Arrays.asList("intermWithExtends.ecore")),        		
-        		new FilesToFilesData("intermWithoutExtent", Collections.singletonList("in.ecore"), Collections.<String>emptyList()),        		
+        		new FileToFileData("intermWithoutExtent"),        		
         		new FilesToFilesData("constructors", Collections.<String>emptyList(), Arrays.asList("constructors_x.ecore", "constructors_y.ecore")),        		
                 new FileToFileData("libraryWithModuleElements_257184"), //$NON-NLS-1$                
                 new FileToFileData("transformationWithModuleElements_257055"), //$NON-NLS-1$                

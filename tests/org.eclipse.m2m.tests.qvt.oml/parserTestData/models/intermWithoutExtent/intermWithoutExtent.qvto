@@ -1,6 +1,6 @@
 modeltype Ecore uses 'http://www.eclipse.org/emf/2002/Ecore';
 
-transformation intermWithoutExtent(in srcModel : Ecore);
+transformation intermWithoutExtent(in srcModel : Ecore, out Ecore);
 
 intermediate class LeafAttribute {
 	_name:String;
@@ -8,7 +8,7 @@ intermediate class LeafAttribute {
 };
 
 main() {
-	var v := srcModel.objects()[EClass]->collect(c|c.eAllAttributes->map attr2LeafAttrs('p_'));
+	var v := srcModel.objects()[EClass]->collect(c|c.eStructuralFeatures[EAttribute]->map attr2LeafAttrs('p_'));
 	assert fatal (v->size() = 2);
 }
 
