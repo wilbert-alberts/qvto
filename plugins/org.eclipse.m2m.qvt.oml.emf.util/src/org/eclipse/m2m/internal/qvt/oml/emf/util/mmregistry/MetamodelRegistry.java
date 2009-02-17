@@ -99,7 +99,7 @@ public class MetamodelRegistry {
             }
         }
         
-        if (desc == null) {
+        if (desc == null && id != null) {
             // Unregistered platform metamodels, e.g. available via "platform:/resource" or "platform:/plugin"
             URI uri = URI.createURI(id);
             if (uri.isPlatform()) {
