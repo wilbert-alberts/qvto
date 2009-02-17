@@ -59,7 +59,7 @@ class MetamodelResolutionHelper {
 		try {
 		    IMetamodelDesc[] desc = null;
 		    Internal<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env = qvtEnv;
-		    while (env != null) {
+		    while (env != null && metamodelUri != null) {
 		        if (env instanceof QvtOperationalFileEnv) {
 		            QvtOperationalFileEnv fileEnv = (QvtOperationalFileEnv) env;
 		            ResourceSet resourceSet = fileEnv.getKernel().getMetamodelResourceSet();
