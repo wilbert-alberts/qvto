@@ -46,11 +46,11 @@ mapping Class::class2table () : Table
   when {self.kind = 'persistent';}
 {
   init { -- performs any needed intialization
-    self.leafAttributes := self.attribute->map attr2LeafAttrs('','')->flatten();
+    self.leafAttributes := self.attribute->map attr2LeafAttrs("","")->flatten();
   }
   -- population section for the table
   name := 't_' + self.name;
-  column +=/*:=*/ self.leafAttributes->map leafAttr2OrdinaryColumn('');
+  column := self.leafAttributes->map leafAttr2OrdinaryColumn("");
   _key := object Key {  -- nested population section for a 'Key'
            name := 'k_'+ self.name; column := result.column[kind='primary']; 
          };
@@ -60,7 +60,7 @@ mapping Class::class2table () : Table
 
 mapping Attribute::attr2LeafAttrs(in prefix:String, in pkind:String) : Sequence(LeafAttribute) {
   init {
-    var k := if pkind='' then self.kind else pkind endif;
+    var k := if pkind="" then self.kind else pkind endif;
     
     result := 
     	/*if self.type.isKindOf(PrimitiveDataType)*/
@@ -70,7 +70,7 @@ mapping Attribute::attr2LeafAttrs(in prefix:String, in pkind:String) : Sequence(
            object LeafAttribute {attr:=self;name:=prefix+self.name;kind:=k;}
          }
        /*else self.type.asType(Class).attribute->map attr2LeafAttrs(self.name+"_",k)->flatten()*/
-       else self.type.oclAsType(Class).attribute->map attr2LeafAttrs(self.name+'_',k)->flatten()
+       else self.type.oclAsType(Class).attribute->map attr2LeafAttrs(self.name+"_",k)->flatten()
        endif;
   }
 }
@@ -89,7 +89,8 @@ mapping Association::asso2table() : Table
   when {self.isPersistent();}
 {
   init {result := self.destination.resolveone(Table);}
-  foreignKey /*:=*/ += self.map asso2ForeignKey();
+  foreignKey := self.map asso2ForeignKey();
+  -- looks like bug in OMG sample
   column /*:=*/ += result.foreignKey->column->flatten();
 }
 
@@ -98,7 +99,7 @@ mapping Association::asso2table() : Table
 mapping Association::asso2ForeignKey() : ForeignKey {
    name := 'f_' + self.name;
    refersTo := self.source.resolveone(Table)._key;
-   column /*:=*/ += self.source.leafAttributes[kind = 'primary']
+   column := self.source.leafAttributes[kind = 'primary']
               				->map leafAttr2ForeignColumn(self.source.name+'_');
 }
 
@@ -108,5 +109,5 @@ mapping Association::asso2ForeignKey() : ForeignKey {
 
 mapping LeafAttribute::leafAttr2ForeignColumn (in prefix:String) : Column 
   inherits LeafAttribute::leafAttr2OrdinaryColumn {
-     kind := 'foreign';
+     kind := "foreign";
 }
