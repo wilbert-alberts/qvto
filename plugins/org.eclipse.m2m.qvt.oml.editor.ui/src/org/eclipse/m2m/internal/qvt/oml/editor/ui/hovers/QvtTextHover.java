@@ -70,7 +70,7 @@ public class QvtTextHover implements ITextHover, ITextHoverExtension2 {
         		return annotation.getText();
         	}
         	
-        	CSTNode rootCS = myDocumentProvider.getCompiledModule().getCST();
+        	CSTNode rootCS = myDocumentProvider.getCompiledModule().getUnitCST();
         	List<CSTNode> elements = CSTHelper.selectTargetedElements(rootCS, hoverRegion);
         	if(!elements.isEmpty()) {
         		try {
@@ -133,6 +133,6 @@ public class QvtTextHover implements ITextHover, ITextHoverExtension2 {
     }
     
     private boolean checkCompiledUnit(final CompiledUnit unit) {
-        return unit != null && unit.getCST() != null;
+        return unit != null && unit.getUnitCST() != null;
     }    
 }

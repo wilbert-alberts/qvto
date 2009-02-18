@@ -104,7 +104,7 @@ public class QvtOutlineLabelProvider implements ILabelProvider {
     
     
     public static String getMappingModuleLabel(final MappingModuleCS m) {
-    	return (m.getHeaderCS() == null || m.getHeaderCS().getPathNameCS() == null) ? "" : //$NON-NLS-1$
+    	return (m == null || m.getHeaderCS() == null || m.getHeaderCS().getPathNameCS() == null) ? "" : //$NON-NLS-1$
     		getImportLabel(m.getHeaderCS().getPathNameCS()); 
     }
 

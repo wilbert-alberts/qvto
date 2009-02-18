@@ -90,7 +90,7 @@ public class QvtReconcilingStrategy implements IReconcilingStrategy, IReconcilin
         reconcilingListener.reconciled(compilationResult);
         
         if (compilationResult != null) {
-            MappingModuleCS mappingModuleCS = compilationResult.getCST();
+            MappingModuleCS mappingModuleCS = compilationResult.getPrimaryModuleCS();
             if(mappingModuleCS != null) {
 	            addListPosition(mappingModuleCS.getImports(), positions);
 	            addListPosition(mappingModuleCS.getImports(), positions);

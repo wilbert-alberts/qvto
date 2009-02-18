@@ -33,6 +33,7 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolverFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
@@ -194,9 +195,9 @@ public class QvtCompletionData {
         myQvtCompiler.compileAll();
         List<MappingModuleCS> modules = new ArrayList<MappingModuleCS>();
         for (CFileData cFileData : myQvtCompiler.getCFileDataMap().values()) {
-            MappingModuleCS mappingModuleCS = cFileData.getMappingModuleCS();
-            if (mappingModuleCS != null) {
-                modules.add(mappingModuleCS);
+            UnitCS unitCS = cFileData.getUnitCS();
+            if(unitCS != null) {
+            	modules.addAll(unitCS.getModules());
             }
         }
         return modules.toArray(new MappingModuleCS[modules.size()]);
@@ -208,6 +209,7 @@ public class QvtCompletionData {
         if (cFileData != null) {
             return cFileData.getMappingModuleCS();
         }
+        
         return null;
     }
     

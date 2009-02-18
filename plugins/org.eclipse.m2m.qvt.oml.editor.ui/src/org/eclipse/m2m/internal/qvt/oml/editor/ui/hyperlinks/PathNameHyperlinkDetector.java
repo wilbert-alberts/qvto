@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks;
 
+import java.util.Arrays;
 import java.util.List;
 
 import lpg.lpgjavaruntime.IToken;
@@ -114,9 +115,11 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 				}
 			} else if (syntaxElement instanceof PathNameCS && !isConstructorCS(syntaxElement)) {						
 				if(astObj instanceof ENamedElement) {
-					PathNameCS pathNameCS  = (PathNameCS) syntaxElement;				
+					PathNameCS pathNameCS  = (PathNameCS) syntaxElement;	
+
 					int[] selectedNamePos = new int[1];
-					IRegion resultRegion = refineRegion(pathNameCS, region, selectedNamePos);
+					//IRegion resultRegion = refineRegion(pathNameCS, region, selectedNamePos);
+					IRegion resultRegion = getPathRegion(pathNameCS, region);					
 					if(resultRegion != null) {
 						ENamedElement ast = (ENamedElement) pathNameCS.getAst();
 						if(selectedNamePos[0] >= 0) {
@@ -170,61 +173,63 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 		return adapter != null && ((ConstructorOperationAdapter) adapter).getReferredConstructor() != null;
 	}
 
-	private static IRegion refineRegion(PathNameCS pathNameCS, IRegion selection, int[] selectedNamePos) {
-		if(pathNameCS.getSequenceOfNames().size() == 1) {
-			return HyperlinkUtil.createRegion(pathNameCS);
+	
+	private static IRegion getPathRegion(PathNameCS pathNameCS, IRegion selection) {
+		int[] positions = getPathPos(pathNameCS);		
+		if(positions == null) {
+			return HyperlinkUtil.createRegion(pathNameCS); 
 		}
-		selectedNamePos[0] = -1;
-		IToken startToken = pathNameCS.getStartToken();
-		IToken endToken = pathNameCS.getEndToken();
-		
-		if(startToken == null || endToken == null) {
-			return null;
-		}
-		
-		int size = pathNameCS.getSequenceOfNames().size();
-		if(size == 1) {
-			return null;
-		} else if(size == 1) {
-			return HyperlinkUtil.createRegion(pathNameCS);
-		}
-		
-		PrsStream prsStream = startToken.getPrsStream();		
-		IToken nextToken = startToken;
-
-		int namePos = 0;
-		int offset = selection.getOffset();
-		IToken result = null;		
-		while(true) {			
-			if(nextToken.getStartOffset() <= offset && nextToken.getEndOffset() >= offset) {
-				result = nextToken;
-				break;
+			
+		int nameOffset = pathNameCS.getStartOffset();
+		int i = 0;
+		for (String name : pathNameCS.getSequenceOfNames()) {
+			int offset = selection.getOffset();
+			if(nameOffset <= offset && offset <= nameOffset + name.length()) {
+				return new Region(nameOffset, name.length());
 			}
-			 
-			if(nextToken == endToken) {
+
+			if(i == positions.length) {
 				break;
 			}
 			
-			if(nextToken.getKind() == QvtOpLPGParsersym.TK_IDENTIFIER) {
-				namePos++;
-			}
-			nextToken = prsStream.getIToken(nextToken.getTokenIndex() + 1);
+			nameOffset = positions[i++];			
 		}
 		
-		if(result != null) {
-			int kind = result.getKind();
-			if(kind == QvtOpLPGParsersym.TK_COLONCOLON) {				
-				return HyperlinkUtil.createRegion(pathNameCS);
-			} else if(kind == QvtOpLPGParsersym.TK_IDENTIFIER) {
-				selectedNamePos[0] = namePos;
-				return new Region(result.getStartOffset(), 
-						result.getEndOffset() - result.getStartOffset() + 1);
-			}
-		}
-		
-		return null;
+		return HyperlinkUtil.createRegion(pathNameCS);
 	}
+	
+	private static int[] getPathPos(PathNameCS pathNameCS) {		
+		EList<String> sequenceOfNames = pathNameCS.getSequenceOfNames();
+		if(sequenceOfNames.size() == 1) {
+			return null;
+		}
+		
+		int size = sequenceOfNames.size() - 1;
+		int[] positions = new int[size];
+		Arrays.fill(positions, -1);
+		
+		IToken startToken = pathNameCS.getStartToken();
+		IToken endToken = pathNameCS.getEndToken();
+		
+		PrsStream prsStream = startToken.getPrsStream();
+		IToken nextToken = startToken;
+		
+		int tokenIndex = 1;
+		int i = 0;		
+		while(nextToken != endToken) {
+			nextToken = prsStream.getIToken(startToken.getTokenIndex() + tokenIndex++);
+			if(nextToken.getKind() == QvtOpLPGParsersym.TK_IDENTIFIER) {
+				positions[i++] = nextToken.getStartOffset();
+				if(i == positions.length) {
+					// safety exit in case we have inconsistent start end token
+					break;
+				}
+			}
+		}
 
+		return positions;
+	}
+	
 	private static QvtOperationalEnv getEnv(CSTNode node) {
 		return (QvtOperationalEnv)CSTHelper.getEnvironment(node);
 	}	

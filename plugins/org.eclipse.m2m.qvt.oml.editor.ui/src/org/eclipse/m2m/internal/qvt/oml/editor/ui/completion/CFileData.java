@@ -11,7 +11,9 @@
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion;
 
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
 
 /**
@@ -23,7 +25,8 @@ public class CFileData {
     private final QvtCompletionData myData;
 
     private QvtOpLexer myLexer;
-    private MappingModuleCS myMappingModuleCS;
+    private UnitCS myUnitCS;
+    private CompiledUnit myCompiledUnit;    
     private String myLightweightScript;
  
     public CFileData(CFile cFile, QvtCompletionData data) {
@@ -45,12 +48,25 @@ public class CFileData {
     }
     
     public MappingModuleCS getMappingModuleCS() {
-        return myMappingModuleCS;
+    	if(myUnitCS == null || myUnitCS.getModules().isEmpty()) {
+    		return null;
+    	}
+    	// FIXME - we just follow the contract need to be adjusted to 
+    	// the fact that UnitCS is the root CST
+    	return myUnitCS.getModules().get(0);
+    }
+    
+    public UnitCS getUnitCS() {
+        return myUnitCS;
     }
 
-    public void setMappingModuleCS(MappingModuleCS mappingModuleCS) {
-        myMappingModuleCS = mappingModuleCS;
+    public void setUnitCS(UnitCS unitCS) {
+        myUnitCS = unitCS;
     }
+    
+    public void setCompiledUnit(CompiledUnit compiledUnit) {
+        myCompiledUnit = compiledUnit;
+    }    
 
     public String getLightweightScript() {
         return myLightweightScript;

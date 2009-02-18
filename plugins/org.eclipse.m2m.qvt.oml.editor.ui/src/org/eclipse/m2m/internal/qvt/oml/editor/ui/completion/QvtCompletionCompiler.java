@@ -27,10 +27,13 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalVisitorCS;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFileUtil;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
+import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
@@ -104,6 +107,12 @@ public class QvtCompletionCompiler extends QVTOCompiler {
     }
     
     @Override
+    protected void onCompilationUnitFinished(CompiledUnit unit) {    	
+    	CFileData cFileData = getCFileData(unit.getSource());
+    	cFileData.setCompiledUnit(unit);
+    }
+    
+    @Override
     protected QvtOperationalVisitorCS createAnalyzer(AbstractQVTParser parser, QvtCompilerOptions options) {
 		return new QvtCompletionVisitorCS(parser, options, null) {
 			@Override
@@ -118,15 +127,12 @@ public class QvtCompletionCompiler extends QVTOCompiler {
     protected CSTParseResult parse(CFile source, QvtCompilerOptions options) throws ParserException {
      	CFileData cFileData = compile(source);
 		AbstractQVTParser qvtParser = (AbstractQVTParser) cFileData.getLexer().getParser();
-		// FIXME - should be no dummy module but rather empty UnitCS object
-    	MappingModuleCS mappingModuleCS = cFileData.getMappingModuleCS();
-    	if (mappingModuleCS == null) {
-    	    //mappingModuleCS = CSTFactory.eINSTANCE.createMappingModuleCS();
-    	}
+
+    	UnitCS unitCS = cFileData.getUnitCS();
     	
     	QvtOperationalFileEnv env = (QvtOperationalFileEnv)cFileData.getLexer().getEnvironment();
     	CSTParseResult result = new CSTParseResult();
-    	result.moduleCS = mappingModuleCS;
+    	result.unitCS = unitCS;
     	result.env = env;
     	result.parser = qvtParser;
     	return result;
@@ -157,9 +163,16 @@ public class QvtCompletionCompiler extends QVTOCompiler {
             String lightweightScript = lightweightScriptBuilder.toString();
             cFileData.setLightweightScript(lightweightScript);
             CSTNode cstNode = LightweightParserUtil.parse(lightweightScript, cFile, LightweightParserUtil.ParserTypeEnum.LIGHTWEIGHT_PARSER);
-            if (cstNode instanceof MappingModuleCS) {
-                cFileData.setMappingModuleCS((MappingModuleCS) cstNode);
+
+            UnitCS unitCS = CSTFactory.eINSTANCE.createUnitCS();
+        	unitCS.setStartOffset(0);
+        	unitCS.setStartOffset(lexer.getStreamLength());
+            
+            if (cstNode instanceof MappingModuleCS) {            	
+            	unitCS.getModules().add((MappingModuleCS) cstNode);
             }
+            
+            cFileData.setUnitCS(unitCS);            
         } catch (Exception ex) {
             Activator.log(ex);
         }
@@ -177,7 +190,8 @@ public class QvtCompletionCompiler extends QVTOCompiler {
     
     public CFileData getCFileData(MappingModuleCS mappingModuleCS) {
         for (CFileData cFileData : myCFileDataMap.values()) {
-            if (cFileData.getMappingModuleCS() == mappingModuleCS) {
+        	UnitCS unitCS = cFileData.getUnitCS();
+        	if(unitCS != null && unitCS.getModules().contains(mappingModuleCS)) {
                 return cFileData;
             }
         }

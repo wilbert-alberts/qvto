@@ -55,7 +55,7 @@ public class QvtHyperlinkDetector implements IHyperlinkDetector {
 			return null;
 		}
 
-		List<CSTNode> elements = CSTHelper.selectTargetedElements(compiledUnit.getCST(), region);
+		List<CSTNode> elements = CSTHelper.selectTargetedElements(compiledUnit.getUnitCST(), region);
 		
 		Context context = new Context(documentProvider.getCompiledModule(), region, textViewer);		
 		
