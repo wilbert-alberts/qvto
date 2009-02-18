@@ -38,7 +38,6 @@ import org.eclipse.ocl.options.ProblemOption;
 public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 
 	private Module myContextModule;	
-	private List<Module> myLibs;
 	
 	QvtOperationalModuleEnv(EPackage.Registry registry) {
 		super(registry,  new XMIResourceImpl(URI.createURI("qvto:/module.env"))); //$NON-NLS-1$
@@ -178,11 +177,6 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 	public final Module getModuleContextType() {
 		return myContextModule;
 	}
-	    
-    @Override
-	public List<Module> getNativeLibs() {
-    	return myLibs == null ? Collections.<Module>emptyList() : Collections.unmodifiableList(myLibs);
-	} 
     
     @Override
     public String toString() {

@@ -21,9 +21,11 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTParsingOptions;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerMessages;
-import org.eclipse.m2m.internal.qvt.oml.compiler.UnitImportResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitImportResolver;
+import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
@@ -48,11 +50,18 @@ public class QvtOperationalParser {
 		return lexer;
 	}
 	
-	public MappingModuleCS parse(final Reader is, final String name, QvtOperationalEnv env) {
+	public UnitCS parse(final Reader is, final String name, QvtOperationalEnv env) {
 		MappingModuleCS result = null;
-
-		try {
+		// Note:
+		// Adding compilation unit here to support multiple top-level elements
+		// Before they get supported already by the raw parser, 
+		// the compiler and the rest of the tooling can adopt it
+		UnitCS unitCS = CSTFactory.eINSTANCE.createUnitCS();		
+		try {			
 			QvtOpLexer lexer = createLexer(is, name, env);
+			unitCS.setStartOffset(0);
+			unitCS.setEndOffset(lexer.getStreamLength());			
+
 			myParser = new RunnableQVTParser(lexer);		
 			myParser.enableCSTTokens(Boolean.TRUE.equals(env.getValue(QVTParsingOptions.ENABLE_CSTMODEL_TOKENS)));
 			
@@ -64,15 +73,17 @@ public class QvtOperationalParser {
 		}
 
 		if (result == null) {
-			//result = CSTFactory.eINSTANCE.createMappingModuleCS();
-			
 			if (!env.hasErrors()) {
 				env.reportError(NLS.bind(
 						CompilerMessages.moduleTransformationExpected, new Object[] { name }),0, 0);
 			}
 		}
 		
-		return result;
+		if(result != null) {
+			unitCS.getModules().add(result);
+		}
+		
+		return unitCS;
 	}
 
 	public Module analyze(AbstractQVTParser parser, final MappingModuleCS moduleCS, UnitImportResolver importResolver, ResourceSet resSet, QvtOperationalFileEnv env, QvtCompilerOptions options) {

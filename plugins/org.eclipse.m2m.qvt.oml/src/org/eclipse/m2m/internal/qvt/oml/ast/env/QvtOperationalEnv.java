@@ -136,14 +136,6 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		return new TypeCheckerImpl(this);
 	}
 	
-    public List<Module> getNativeLibs() {
-    	if(getInternalParent() instanceof QvtOperationalEnv) {
-    		return ((QvtOperationalEnv)getInternalParent()).getNativeLibs();
-    	}
-
-    	return Collections.<Module>emptyList();
-	}
-	
 	/**
 	* Gets the package registry used in this environment EClassifier lookup.
 	*/

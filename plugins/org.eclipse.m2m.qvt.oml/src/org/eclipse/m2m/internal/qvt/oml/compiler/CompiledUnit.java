@@ -19,6 +19,7 @@ import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 
 public class CompiledUnit {
@@ -30,7 +31,7 @@ public class CompiledUnit {
 	private List<QvtOperationalModuleEnv> moduleEnvs;
 
 	// FIXME - add compilationUnit CST element
-	MappingModuleCS fModuleCST;	
+	UnitCS fUnitCST;	
 	
 	
 	CompiledUnit(List<String> qualifiedName, CFile source, QvtOperationalModuleEnv modules) {
@@ -113,8 +114,19 @@ public class CompiledUnit {
 		return fSource;
 	}
 	
-	public MappingModuleCS getCST() {
-		return fModuleCST;
+	public UnitCS getUnitCST() {
+		return fUnitCST;
+	}
+	
+	/*
+	 * A convenience operation to help in migration of obsolete code which relies on single module per file
+	 */
+	public MappingModuleCS getPrimaryModuleCS() {
+		if(fUnitCST == null || fUnitCST.getModules().isEmpty()) {
+			return null;
+		}
+		
+		return fUnitCST.getModules().get(0);
 	}
 	
 	public List<QvtMessage> getProblems() {

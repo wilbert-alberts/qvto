@@ -52,9 +52,11 @@ import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.BundleFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.WorkspaceMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.blackbox.LoadContext;
 import org.eclipse.m2m.qvt.oml.blackbox.ResolutionContextImpl;
@@ -202,7 +204,7 @@ public class QVTOCompiler {
 	
     protected CSTParseResult parse(CFile source, QvtCompilerOptions options) throws ParserException {
     	Reader is = null;
-    	MappingModuleCS moduleCS = null;
+    	UnitCS unitCS = null;
     	try {
     		is = CFileUtil.getReader(source);    		
 	    	QvtOperationalFileEnv env = new QvtOperationalEnvFactory().createEnvironment(source, myKernel);
@@ -211,10 +213,10 @@ public class QVTOCompiler {
         	}
 	    	
 	    	QvtOperationalParser qvtParser = new QvtOperationalParser();
-	    	moduleCS = qvtParser.parse(is, source.getName(), env);
+	    	unitCS = qvtParser.parse(is, source.getName(), env);
 	    	
 	    	CSTParseResult result = new CSTParseResult();
-	    	result.moduleCS = moduleCS;
+	    	result.unitCS = unitCS;
 	    	result.env = env;
 	    	result.parser = qvtParser.getParser();
 	    	return result;
@@ -234,26 +236,36 @@ public class QVTOCompiler {
     	
     }
     
-	protected Module analyze(CSTParseResult parseResult, UnitImportResolver unitImportResolver, QvtCompilerOptions options) {
+	protected CSTAnalysisResult analyze(CSTParseResult parseResult, UnitImportResolver unitImportResolver, QvtCompilerOptions options) {
 		QvtOperationalFileEnv env = parseResult.env;
 		env.setQvtCompilerOptions(options);
 
-		Module module = null;
-		try { 
-			QvtOperationalVisitorCS visitor = createAnalyzer(parseResult.parser, options);			
-			module = visitor.visitMappingModule(parseResult.moduleCS, unitImportResolver.getImporter(), env, unitImportResolver, getResourceSet());
+		CSTAnalysisResult result = new CSTAnalysisResult();
+		try {
+			QvtOperationalVisitorCS visitor = createAnalyzer(parseResult.parser, options);
+			UnitCS unitCS = parseResult.unitCS;
+			if(!unitCS.getModules().isEmpty()) {
+				// FIXME - need to handle mutliple modules			
+				Module module = visitor.visitMappingModule(unitCS.getModules().get(0), 
+							unitImportResolver.getImporter(), env, unitImportResolver, getResourceSet());
+				result.modules = Collections.singletonList(module);
+			}
 		} catch (SemanticException e) {
 			env.reportError(e.getLocalizedMessage(), 0, 0);
 		}
-		
-		if (module != null && options.isReportErrors()) {
-			env.setCheckForDuplicateErrors(true);
-			QvtOperationalValidationVisitor validation = new QvtOperationalValidationVisitor(env);
-			validation.visitModule(module);
-			env.setCheckForDuplicateErrors(false);
+
+		if(result.modules != null) {
+			for(Module nextModule : result.modules) {
+				if (options.isReportErrors()) {
+					env.setCheckForDuplicateErrors(true);
+					QvtOperationalValidationVisitor validation = new QvtOperationalValidationVisitor(env);
+					validation.visitModule(nextModule);
+					env.setCheckForDuplicateErrors(false);
+				}
+			}
 		}
 		
-		return module;
+		return result;
 	}
     
     protected QvtOperationalVisitorCS createAnalyzer(AbstractQVTParser parser, QvtCompilerOptions options) {
@@ -269,6 +281,19 @@ public class QVTOCompiler {
     	this.fDependencyWalkPath.clear();    	
     }
 	
+	/**
+	 * Notification operation which is called when a compilation unit and its
+	 * imported units has been compiled.
+	 * <p>
+	 * Subclasses may override this operation
+	 * 
+	 * @param unit
+	 *            the unit the compilation of which was finished
+	 */
+    protected void onCompilationUnitFinished(CompiledUnit unit) {
+    	// do nothing, clients will override
+    }
+    
     /**
      * The main compilation method - the common entry point to the compilation 
      */
@@ -305,94 +330,91 @@ public class QVTOCompiler {
 			QvtOperationalFileEnv env = parseResult.env;
     		dependencyElement.importerEnv = env;
 			
-	    	MappingModuleCS moduleCS = parseResult.moduleCS;
-			if(moduleCS != null) {
-				UnitResolverImpl unitResolver = new UnitResolverImpl(source);
-		    	
-		    	for (ImportCS nextImportCS : moduleCS.getImports()) {
-		            String importQNameStr = getQualifiedName(nextImportCS);
-		            if(importQNameStr == null || importQNameStr.length() == 0) {
-		            	// nothing reasonable to look for, syntax error
-		            	continue;
-		            }
+	    	UnitCS unitCS = parseResult.unitCS;
+			UnitResolverImpl unitResolver = new UnitResolverImpl(source);	    	
+	    	List<ImportCS> allUnitImportsCS = parseResult.getImports();
+	    	
+			for (ImportCS nextImportCS : allUnitImportsCS) {
+	            String importQNameStr = getQualifiedName(nextImportCS);
+	            if(importQNameStr == null || importQNameStr.length() == 0) {
+	            	// nothing reasonable to look for, syntax error
+	            	continue;
+	            }
 
-	            	List<String> importedUnitQName = nextImportCS.getPathNameCS().getSequenceOfNames();		            	            	
-	            	CFile importedFile = getImportedFile(source, importQNameStr);	            	
-	            	CompiledUnit compiledImport = null;	            	
+            	List<String> importedUnitQName = nextImportCS.getPathNameCS().getSequenceOfNames();		            	            	
+            	CFile importedFile = getImportedFile(source, importQNameStr);	            	
+            	CompiledUnit compiledImport = null;	            	
 
-	            	if(importedFile != null) {
-	            		// check for cyclic import error condition
-	            		dependencyElement.currentProcessedImport = nextImportCS;
-	            		
-	            		DependencyPathElement importerDependencyElement = findDependencyElement(importedFile);
-	            		if(importerDependencyElement != null) {
-			            	ImportCS importedCS = importerDependencyElement.currentProcessedImport;
-	            			// not cached compiled unit yet, but we got here into a cycle 
-			            	if(env != importerDependencyElement.importerEnv ) {
-			            		reportCyclicImportError(nextImportCS, importedCS, env);
-			            	}
-			            	
-			            	// report the cyclic problem in the opposite direction
-			            	reportCyclicImportError(importedCS, nextImportCS, env);
-			            	
-			            	continue;			            		
-	            		}
-	            		
-	            		compiledImport = doCompile(importedFile, options, monitor); 
-	            	} else {
-	            		List<QvtOperationalModuleEnv> bboxModules = loadBlackbox(env, nextImportCS);
-	            		if(bboxModules == null) {
-	            			String notFoundMessage = NLS.bind(CompilerMessages.importedCompilationUnitNotFound, 
-	            					QvtOperationalParserUtil.getStringRepresentation(nextImportCS.getPathNameCS(), NAMESPACE_SEP));
-	    	        		env.reportError(notFoundMessage, nextImportCS.getPathNameCS());
-	            		} 
-	            		else if(!bboxModules.isEmpty()) {
-	            			// found but failed to load,  errors reported in loadBlackbox()
-	            			compiledImport = new CompiledUnit(importedUnitQName, bboxModules);
-	            		}
-	            	}
-	            
-	        		if(compiledImport != null) {	        			
-	        			if(compiledImport.getSource() != null && !compiledImport.getErrors().isEmpty()) {
-	        				// TODO - source =null indicates blackbox lib now 
-	        				String errorInImportMessage = NLS.bind(CompilerMessages.importHasCompilationError, 
-	        						QvtOperationalParserUtil.getStringRepresentation(nextImportCS.getPathNameCS()));	        				
-	        				env.reportError(errorInImportMessage, nextImportCS.getPathNameCS());
-	        			}
-	        				        				        			
-	        			if(compiledImports == null) {
-	        				compiledImports = new ArrayList<CompiledUnit>();		        				
-	        			}
+            	if(importedFile != null) {
+            		// check for cyclic import error condition
+            		dependencyElement.currentProcessedImport = nextImportCS;
+            		
+            		DependencyPathElement importerDependencyElement = findDependencyElement(importedFile);
+            		if(importerDependencyElement != null) {
+		            	ImportCS importedCS = importerDependencyElement.currentProcessedImport;
+            			// not cached compiled unit yet, but we got here into a cycle 
+		            	if(env != importerDependencyElement.importerEnv ) {
+		            		reportCyclicImportError(nextImportCS, importedCS, env);
+		            	}
+		            	
+		            	// report the cyclic problem in the opposite direction
+		            	reportCyclicImportError(importedCS, nextImportCS, env);
+		            	
+		            	continue;			            		
+            		}
+            		
+            		compiledImport = doCompile(importedFile, options, monitor); 
+            	} else {
+            		List<QvtOperationalModuleEnv> bboxModules = loadBlackbox(env, nextImportCS);
+            		if(bboxModules == null) {
+            			String notFoundMessage = NLS.bind(CompilerMessages.importedCompilationUnitNotFound, 
+            					QvtOperationalParserUtil.getStringRepresentation(nextImportCS.getPathNameCS(), NAMESPACE_SEP));
+    	        		env.reportError(notFoundMessage, nextImportCS.getPathNameCS());
+            		} 
+            		else if(!bboxModules.isEmpty()) {
+            			// found but failed to load,  errors reported in loadBlackbox()
+            			compiledImport = new CompiledUnit(importedUnitQName, bboxModules);
+            		}
+            	}
+            
+        		if(compiledImport != null) {	        			
+        			if(compiledImport.getSource() != null && !compiledImport.getErrors().isEmpty()) {
+        				// TODO - source =null indicates blackbox lib now 
+        				String errorInImportMessage = NLS.bind(CompilerMessages.importHasCompilationError, 
+        						QvtOperationalParserUtil.getStringRepresentation(nextImportCS.getPathNameCS()));	        				
+        				env.reportError(errorInImportMessage, nextImportCS.getPathNameCS());
+        			}
+        				        				        			
+        			if(compiledImports == null) {
+        				compiledImports = new ArrayList<CompiledUnit>();		        				
+        			}
 
-	        			if(compiledImport.getSource() != null) {
-	        				compiledImports.add(compiledImport);
-	        			}
+        			if(compiledImport.getSource() != null) {
+        				compiledImports.add(compiledImport);
+        			}
 
-	        			unitResolver.addUnit(importedUnitQName, compiledImport);
-	        		}
-		    	}
-				    	
-		    	// announce CST and imports done
-		    	monitor.worked(1); 
-		
-		    	// perform CST analysis
-		    	Module analysisResult = analyze(parseResult, unitResolver, options);
-		    	if(analysisResult != null) {
-		            if(options.isSourceLineNumbersEnabled()) {
-		            	addSourceLineNumberInfo(parseResult.parser, analysisResult, source);        	
-		            }		    		
-		    	}
-		    	
-		    	// report possible duplicate imports
-		    	checkForDupImports(moduleCS.getImports(), env);
+        			unitResolver.addUnit(importedUnitQName, compiledImport);
+        		}
 	    	}
+			    	
+	    	// announce CST and imports done
+	    	monitor.worked(1); 
+	
+	    	// perform CST analysis
+	    	CSTAnalysisResult analysisResult = analyze(parseResult, unitResolver, options);
+			if(options.isSourceLineNumbersEnabled()) {
+	        	addSourceLineNumberInfo(parseResult.parser, analysisResult, source);
+	    	}
+	    	
+	    	// report possible duplicate imports
+	    	checkForDupImports(allUnitImportsCS, env);
 	    	
 			// get rid of parser allocated data 
 	    	env.close(); // TODO - check whether we can use dispose()	    	
 	    	// FIXME - construct proper qualified name
 	    	CompiledUnit result = new CompiledUnit(Collections.singletonList(source.getUnitName()), source, env);
 	    	// TODO - make this optional as we not always want to carry the whole CST
-	    	result.fModuleCST = moduleCS;
+	    	result.fUnitCST = unitCS;
 	    
 	    	if(compiledImports != null) {
 	    		result.setImports(compiledImports);
@@ -401,6 +423,10 @@ public class QVTOCompiler {
 	    	// put to central compilation result cache
 	    	// TODO - better to use this one as unit resolver 
 	    	fSource2Compiled.put(source, result);
+
+	    	if(result.getSource() != null) {
+	    		onCompilationUnitFinished(result);
+	    	}
 	    	
 	    	monitor.worked(1);	    	
 	    	return result;
@@ -431,7 +457,7 @@ public class QVTOCompiler {
 		}
 	}
 	
-	private void addSourceLineNumberInfo(AbstractQVTParser parser, Module moduleAST, CFile source) {
+	private void addSourceLineNumberInfo(AbstractQVTParser parser, CSTAnalysisResult analysisResult, CFile source) {
 		QvtOpLexer lexer = parser.getLexer();
 		if (lexer != null) {
 			URI sourceURI = null;
@@ -453,10 +479,10 @@ public class QVTOCompiler {
 				// catch if not a valid URI, should not affect normal RUN model QVT execution
 			}
 
-			if(sourceURI != null) {
-				//final String s = new String(lexer.getInputChars());
-				//ASTBindingHelper.createModuleSourceBinding(moduleAST, sourceURI, new StringLineNumberProvider(s));
-				ASTBindingHelper.createModuleSourceBinding(moduleAST, sourceURI, new BasicLineNumberProvider(lexer));				
+			if(sourceURI != null && analysisResult.modules != null) {
+				for (Module module : analysisResult.modules) {
+					ASTBindingHelper.createModuleSourceBinding(module, sourceURI, new BasicLineNumberProvider(lexer));					
+				}
 			}
 		}
 	}
@@ -594,13 +620,29 @@ public class QVTOCompiler {
 	}
 
 	protected static class CSTParseResult {    	
-    	public MappingModuleCS moduleCS;
+    	public UnitCS unitCS;
     	public QvtOperationalFileEnv env;
     	public AbstractQVTParser parser;
     	
-    	public CSTParseResult() {}    	
+    	public CSTParseResult() {}
+    	
+    	List<ImportCS> getImports() {
+    		// TODO - will be removed as soon as unit can hold unit import statements
+			List<ImportCS> allImports = new ArrayList<ImportCS>();
+			if(unitCS != null) {
+				for (MappingModuleCS nextModule : unitCS.getModules()) {
+					allImports.addAll(nextModule.getImports());	
+				}
+			}
+			return allImports;
+    	}    	
     }
-	
+    
+	protected static class CSTAnalysisResult {
+		List<Module> modules;
+		List<ModelType> modelTypes;
+	}
+
 	private DependencyPathElement findDependencyElement(CFile source) {
 		for (DependencyPathElement element : fDependencyWalkPath) {
 			if(source.equals(element.importer)) {

@@ -298,7 +298,7 @@ public class QvtCompiler {
         	}
         	
         	QvtOperationalParser qvtParser = new QvtOperationalParser();
-        	MappingModuleCS moduleCS = qvtParser.parse(is, source.getName(), env);
+        	MappingModuleCS moduleCS = null;//qvtParser.parse(is, source.getName(), env);
             
         	if (moduleCS == null) {
             	moduleCS = CSTFactory.eINSTANCE.createMappingModuleCS();

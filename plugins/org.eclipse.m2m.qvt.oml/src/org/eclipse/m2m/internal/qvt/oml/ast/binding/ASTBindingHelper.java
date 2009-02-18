@@ -31,6 +31,15 @@ import org.eclipse.ocl.utilities.ASTNode;
 
 public class ASTBindingHelper {
 	
+	public static <T> T getAST(CSTNode node, Class<T> type) {
+		if(type == null) {
+			throw new IllegalArgumentException();
+		}
+		
+		Object astObj = node.getAst();
+		return (type.isInstance(astObj)) ? type.cast(astObj) : null;
+	}	
+	
 	public static void createModuleSourceBinding(EObject target, URI sourceURI, LineNumberProvider lineNumberProvider) {
 		target.eAdapters().add(new ModuleSourceAdapter(sourceURI, lineNumberProvider));
 	}
@@ -227,7 +236,6 @@ public class ASTBindingHelper {
 
 	private static class ModuleSourceAdapter extends AdapterImpl implements IModuleSourceInfo {
 		private URI fSourceURI;
-		private String fContents;
 		private LineNumberProvider fLineNumProvider;
 		
 		protected ModuleSourceAdapter(URI sourceURI, LineNumberProvider lineNumberProvider) {
@@ -241,11 +249,7 @@ public class ASTBindingHelper {
 		public URI getSourceURI() {
 			return fSourceURI;
 		}
-		
-		public String getContents() {
-			return fContents;
-		}
-		
+				
 		public LineNumberProvider getLineNumberProvider() {
 			return fLineNumProvider; 
 		}

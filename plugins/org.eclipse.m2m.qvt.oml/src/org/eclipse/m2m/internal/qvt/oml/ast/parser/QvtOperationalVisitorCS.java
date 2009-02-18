@@ -431,6 +431,9 @@ public class QvtOperationalVisitorCS
 		
 		if (typeSpecCS.getSimpleNameCS() != null) {
 			result.myExtent = lookupModelParameter(typeSpecCS.getSimpleNameCS(), directionKind, env);
+			
+			typeSpecCS.getSimpleNameCS().setAst(result.myExtent);
+			
 			if (result.myExtent != null && result.myExtent.getEType() instanceof ModelType) {
 				result.myType = visitTypeCSInModelType(typeSpecCS, (ModelType) result.myExtent.getEType(), env);
 				return result;
@@ -439,6 +442,7 @@ public class QvtOperationalVisitorCS
 
 		result.myType = visitTypeCS(typeSpecCS.getTypeCS(), directionKind, env);
 
+		typeSpecCS.setAst(result.myType);
 		return result;
 	}
 
@@ -1236,14 +1240,17 @@ public class QvtOperationalVisitorCS
 			}
 		}
 
-		if(outExpCS.getSimpleNameCS() != null) {
+		SimpleNameCS referredObjNameCS = outExpCS.getSimpleNameCS();
+		if(referredObjNameCS != null) {
 			// a referred object has been explicitly specified
-			String varName = outExpCS.getSimpleNameCS().getValue();
+			String varName = referredObjNameCS.getValue();
 			org.eclipse.ocl.ecore.Variable referredObject  = varName != null ? (org.eclipse.ocl.ecore.Variable)env.lookup(varName) : null;
 			if(referredObject == null) {
 				// variable not resolved
-				env.reportError(NLS.bind(ValidationMessages.unresolvedNameError, varName), outExpCS.getSimpleNameCS());
+				env.reportError(NLS.bind(ValidationMessages.unresolvedNameError, varName), referredObjNameCS);
 			} else {
+				referredObjNameCS.setAst(referredObject);
+				
 				// TODO - implicit variables should follow multiplicity [1] referredObject and should always be created
 				// for now, only explicit variables are recorded
 				objectExp.setName(varName);
@@ -1927,17 +1934,19 @@ public class QvtOperationalVisitorCS
 				continue;
 			}
 			
-			
-			
 			CompiledUnit importedUnit = importResolver.resolve(nextImportedCS.getPathNameCS().getSequenceOfNames());
 			if(importedUnit != null) {
 				for (QvtOperationalModuleEnv nextImportedEnv : importedUnit.getModuleEnvironments()) {
+					Module importedModule = nextImportedEnv.getModuleContextType();
+					if(importedModule == null) {
+						// nothing to import in, no module was sucessfully parsed
+						continue;
+					}
+					
 					if(!env.getSiblings().contains(nextImportedEnv)) {
 						// we might have duplicates in imports, so avoid exceptions in environments
 						env.addSibling(nextImportedEnv);
 					}
-					
-					Module importedModule = nextImportedEnv.getModuleContextType();
 					
 					ModuleImport moduleImport = ExpressionsFactory.eINSTANCE.createModuleImport();					
 					moduleImport.setImportedModule(importedModule);
@@ -2095,11 +2104,16 @@ public class QvtOperationalVisitorCS
             }
 
             ModelParameter varParam = ExpressionsFactory.eINSTANCE.createModelParameter();
+            paramCS.setAst(varParam);
+            
             varParam.setRepresentedParameter(varParam);
             varParam.setStartPosition(paramCS.getStartOffset());
             varParam.setEndPosition(paramCS.getEndOffset());
-            if(paramCS.getSimpleNameCS() != null) {
-                varParam.setName(paramCS.getSimpleNameCS().getValue());
+            
+            SimpleNameCS paramNameCS = paramCS.getSimpleNameCS();
+			if(paramNameCS != null) {
+                varParam.setName(paramNameCS.getValue());
+                paramNameCS.setAst(varParam);
             } else {
                 varParam.setName(""); //$NON-NLS-1$
             }
@@ -2113,7 +2127,7 @@ public class QvtOperationalVisitorCS
 
             if (paramNames.contains(varParam.getName())) {
                 env.reportError(NLS.bind(ValidationMessages.SameParamName, new Object[] { varParam.getName() }),
-                        (paramCS.getSimpleNameCS() == null || paramCS.getSimpleNameCS().getValue().length() == 0) ? paramCS : paramCS.getSimpleNameCS());
+                        (paramNameCS == null || paramNameCS.getValue().length() == 0) ? paramCS : paramNameCS);
             }
             paramNames.add(varParam.getName());
             
@@ -2871,8 +2885,10 @@ public class QvtOperationalVisitorCS
 		varResult.setStartPosition(paramCS.getStartOffset());
 		varResult.setEndPosition(paramCS.getEndOffset());
 		
-		if(paramCS.getSimpleNameCS() != null) {
-			varResult.setName(paramCS.getSimpleNameCS().getValue());
+		SimpleNameCS simpleNameCS = paramCS.getSimpleNameCS();
+		if(simpleNameCS != null) {
+			simpleNameCS.setAst(varResult);
+			varResult.setName(simpleNameCS.getValue());
 		} 
 		
 		if(varResult.getName() == null){
@@ -2895,6 +2911,9 @@ public class QvtOperationalVisitorCS
 		}
 		
 		varResult.setRepresentedParameter(varResult);
+		
+		paramCS.setAst(varResult);		
+		
 		return varResult;
 	}
 
@@ -3051,8 +3070,11 @@ public class QvtOperationalVisitorCS
 		varParam.setRepresentedParameter(varParam);
 		varParam.setStartPosition(paramCS.getStartOffset());
 		varParam.setEndPosition(paramCS.getEndOffset());
-		if(paramCS.getSimpleNameCS() != null) {
-			varParam.setName(paramCS.getSimpleNameCS().getValue());
+		
+		SimpleNameCS paramNameCS = paramCS.getSimpleNameCS();
+		if(paramNameCS != null) {
+			paramNameCS.setAst(varParam);
+			varParam.setName(paramNameCS.getValue());
 		} else {
 			varParam.setName(""); //$NON-NLS-1$
 		}
@@ -3079,6 +3101,8 @@ public class QvtOperationalVisitorCS
         }
 		//
 		
+        paramCS.setAst(varParam);
+        
 		return varParam;
 	}
 
@@ -3159,6 +3183,8 @@ public class QvtOperationalVisitorCS
 			}
         }
 		//		
+        
+        varInitCS.setAst(result);
 		
 		return result;
 	}
@@ -3569,19 +3595,22 @@ public class QvtOperationalVisitorCS
         resolveExp.setIsInverse(resolveExpCS.isIsInverse());
         resolveExp.setIsDeferred(resolveExpCS.isIsDeferred());
         
-        if (resolveExpCS.getTarget() != null) { // at least type is defined
+        VariableCS targetVarCS = resolveExpCS.getTarget();
+		if (targetVarCS != null) { // at least type is defined
             org.eclipse.ocl.ecore.Variable variable = EcoreFactory.eINSTANCE.createVariable();
-            EClassifier type = visitTypeCS(resolveExpCS.getTarget().getTypeCS(), null, env);
+            targetVarCS.setAst(variable);
+            
+            EClassifier type = visitTypeCS(targetVarCS.getTypeCS(), null, env);
             variable.setType(type);
             
             boolean isTargetVarClashing = false;
-            String targetVarName = resolveExpCS.getTarget().getName();
+            String targetVarName = targetVarCS.getName();
             if (targetVarName != null) {
         		if (env.lookupLocal(targetVarName) != null) {
         			isTargetVarClashing = true;
         			
         			env.reportError(NLS.bind(ValidationMessages.NameAlreadyDefinedError, new Object[] { targetVarName }),
-        					resolveExpCS.getTarget().getStartOffset(), resolveExpCS.getTarget().getEndOffset());
+        					targetVarCS.getStartOffset(), targetVarCS.getEndOffset());
         		}
     			variable.setName(targetVarName);
             }
@@ -3589,7 +3618,7 @@ public class QvtOperationalVisitorCS
             
             // AST binding
             if(myCompilerOptions.isGenerateCompletionData()) {      
-                ASTBindingHelper.createCST2ASTBinding(resolveExpCS.getTarget(), variable, env);
+                ASTBindingHelper.createCST2ASTBinding(targetVarCS, variable, env);
             }
             //
             
