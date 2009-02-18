@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTAdapterFactory.java,v 1.17 2009/02/16 12:44:06 aigdalov Exp $
+ * $Id: CSTAdapterFactory.java,v 1.18 2009/02/18 10:20:11 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -421,6 +421,10 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseTagCS(TagCS object) {
 				return createTagCSAdapter();
+			}
+			@Override
+			public Adapter caseUnitCS(UnitCS object) {
+				return createUnitCSAdapter();
 			}
 			@Override
 			public Adapter caseCSTNode(CSTNode object) {
@@ -1395,6 +1399,20 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTagCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.UnitCS <em>Unit CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.UnitCS
+	 * @generated
+	 */
+	public Adapter createUnitCSAdapter() {
 		return null;
 	}
 

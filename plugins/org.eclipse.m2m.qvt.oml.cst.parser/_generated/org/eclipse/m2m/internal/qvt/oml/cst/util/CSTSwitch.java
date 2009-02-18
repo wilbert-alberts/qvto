@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTSwitch.java,v 1.18 2009/02/16 12:44:06 aigdalov Exp $
+ * $Id: CSTSwitch.java,v 1.19 2009/02/18 10:20:11 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -719,6 +719,13 @@ public class CSTSwitch<T> {
 				TagCS tagCS = (TagCS)theEObject;
 				T result = caseTagCS(tagCS);
 				if (result == null) result = caseCSTNode(tagCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.UNIT_CS: {
+				UnitCS unitCS = (UnitCS)theEObject;
+				T result = caseUnitCS(unitCS);
+				if (result == null) result = caseCSTNode(unitCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -1713,6 +1720,21 @@ public class CSTSwitch<T> {
 	 * @generated
 	 */
 	public T caseTagCS(TagCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Unit CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Unit CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseUnitCS(UnitCS object) {
 		return null;
 	}
 
