@@ -381,8 +381,8 @@ public class QvtOperationalParserUtil {
 		return false;
 	}
 
-	public static boolean validateAssignment(String leftName, EClassifier leftType,
-			OCLExpression<EClassifier> right, boolean isIncremental, CSTNode cstNode, 
+	public static boolean validateAssignment(boolean isProperty, String leftName, EClassifier leftType,
+			EClassifier rightType, boolean isIncremental, CSTNode cstNode, 
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		
@@ -393,7 +393,7 @@ public class QvtOperationalParserUtil {
 			}
 
 			EClassifier baseType = ((CollectionType) leftType).getElementType();
-			EClassifier actualType = right.getType();
+			EClassifier actualType = rightType;
 			if (actualType instanceof CollectionType) {
 				actualType = ((CollectionType) actualType).getElementType();
 			}
@@ -404,12 +404,26 @@ public class QvtOperationalParserUtil {
 							QvtOperationalTypesUtil.getTypeFullName(actualType) }), cstNode);
 				return false;
 			}
-		} else {
-			EClassifier actualType = right.getType();
-			if (!QvtOperationalParserUtil.isAssignableToFrom(env, leftType, actualType)) {
+		}
+		else if (isProperty && leftType instanceof CollectionType) {
+			EClassifier baseType = ((CollectionType) leftType).getElementType();
+			EClassifier actualType = rightType;
+			if (actualType instanceof CollectionType) {
+				actualType = ((CollectionType) actualType).getElementType();
+			}
+
+			if (!QvtOperationalParserUtil.isAssignableToFrom(env, baseType, actualType)) {
+				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.SemanticUtil_5, 
+						new Object[] { leftName, QvtOperationalTypesUtil.getTypeFullName(baseType),
+							QvtOperationalTypesUtil.getTypeFullName(actualType) }), cstNode);
+				return false;
+			}
+		}
+		else {
+			if (!QvtOperationalParserUtil.isAssignableToFrom(env, leftType, rightType)) {
 				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.SemanticUtil_8, new Object[] { leftName,
 				        QvtOperationalTypesUtil.getTypeFullName(leftType),
-				        QvtOperationalTypesUtil.getTypeFullName(actualType) }), cstNode);
+				        QvtOperationalTypesUtil.getTypeFullName(rightType) }), cstNode);
 				return false;
 			}
 		}

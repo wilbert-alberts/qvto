@@ -2959,8 +2959,8 @@ public class QvtOperationalVisitorCS
 	            return null;
 	        }
 	        QvtOperationalParserUtil.validateVariableModification(variable, pathNameCS, null, env, true);         
-	        QvtOperationalParserUtil.validateAssignment(variable.getName(), variable.getType(), rightExpr, expressionCS.isIncremental(),
-	                pathNameCS, env);
+	        QvtOperationalParserUtil.validateAssignment(false, variable.getName(), variable.getType(), rightExpr.getType(),
+	        		expressionCS.isIncremental(), pathNameCS, env);
 	    } else if (lValue instanceof PropertyCallExp) {
 	        @SuppressWarnings("unchecked")
 	        PropertyCallExp<EClassifier, EStructuralFeature> propertyCallExp = (PropertyCallExp<EClassifier, EStructuralFeature>) lValue;
@@ -2981,9 +2981,8 @@ public class QvtOperationalVisitorCS
 	                    Variable<EClassifier, EParameter> sourceVariable = sourceExp.getReferredVariable();
 	                    QvtOperationalParserUtil.validateVariableModification(sourceVariable, pathNameCS, property, env, false);
 	                }
-	                QvtOperationalParserUtil.validateAssignment(property.getName(),
-	                        env.getUMLReflection().getOCLType(property), rightExpr, expressionCS.isIncremental(),
-	                        lValueCS, env);
+	                QvtOperationalParserUtil.validateAssignment(true, property.getName(), env.getUMLReflection().getOCLType(property),
+	                		rightExpr.getType(), expressionCS.isIncremental(), lValueCS, env);
 	            }
 	        }
 	    } else {
