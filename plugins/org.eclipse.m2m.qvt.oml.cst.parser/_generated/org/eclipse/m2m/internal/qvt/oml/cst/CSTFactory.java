@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactory.java,v 1.16 2009/02/18 10:20:11 radvorak Exp $
+ * $Id: CSTFactory.java,v 1.17 2009/02/19 11:25:54 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -60,13 +60,13 @@ public interface CSTFactory extends EFactory {
 	LibraryCS createLibraryCS();
 
 	/**
-	 * Returns a new object of class '<em>Module Import CS</em>'.
+	 * Returns a new object of class '<em>Import CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Module Import CS</em>'.
+	 * @return a new object of class '<em>Import CS</em>'.
 	 * @generated
 	 */
-	ModuleImportCS createModuleImportCS();
+	ImportCS createImportCS();
 
 	/**
 	 * Returns a new object of class '<em>Library Import CS</em>'.

@@ -11,12 +11,11 @@
  * 
  * 
  *
- * $Id: ListLiteralExpCS.java,v 1.1 2009/02/16 12:44:06 aigdalov Exp $
+ * $Id: ListLiteralExpCS.java,v 1.2 2009/02/19 11:25:54 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.ocl.cst.CollectionLiteralPartCS;
 import org.eclipse.ocl.cst.LiteralExpCS;
 

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ImportCSImpl.java,v 1.2 2009/01/13 20:23:46 radvorak Exp $
+ * $Id: ImportCSImpl.java,v 1.3 2009/02/19 11:25:51 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -38,7 +38,7 @@ import org.eclipse.ocl.cst.impl.CSTNodeImpl;
  *
  * @generated
  */
-public abstract class ImportCSImpl extends CSTNodeImpl implements ImportCS {
+public class ImportCSImpl extends CSTNodeImpl implements ImportCS {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

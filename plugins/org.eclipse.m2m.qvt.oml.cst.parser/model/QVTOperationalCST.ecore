@@ -24,11 +24,10 @@
           eType="#//cst/TagCS" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="LibraryCS" eSuperTypes="#//cst/MappingModuleCS"/>
-    <eClassifiers xsi:type="ecore:EClass" name="ImportCS" abstract="true" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+    <eClassifiers xsi:type="ecore:EClass" name="ImportCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
       <eStructuralFeatures xsi:type="ecore:EReference" name="pathNameCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/PathNameCS"
           containment="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="ModuleImportCS" eSuperTypes="#//cst/ImportCS"/>
     <eClassifiers xsi:type="ecore:EClass" name="LibraryImportCS" eSuperTypes="#//cst/ImportCS"/>
     <eClassifiers xsi:type="ecore:EClass" name="RenameCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
       <eStructuralFeatures xsi:type="ecore:EReference" name="typeCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
@@ -442,8 +441,18 @@
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="UnitCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="topLevelElements" upperBound="-1"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode"
+          containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="modules" upperBound="-1"
-          eType="#//cst/MappingModuleCS" containment="true"/>
+          eType="#//cst/MappingModuleCS" changeable="false" volatile="true" transient="true"
+          derived="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="modelTypes" upperBound="-1"
+          eType="#//cst/ModelTypeCS" changeable="false" volatile="true" transient="true"
+          derived="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="imports" upperBound="-1"
+          eType="#//cst/ImportCS" changeable="false" volatile="true" transient="true"
+          derived="true"/>
     </eClassifiers>
     <eSubpackages name="temp" nsURI="http://www.eclipse.org/QVT2/1.0.0/Operational/cst/temp"
         nsPrefix="qvtoperational.cst.temp">

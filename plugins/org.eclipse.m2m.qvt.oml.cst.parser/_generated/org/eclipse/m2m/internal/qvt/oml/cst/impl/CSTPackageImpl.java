@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.30 2009/02/18 10:20:11 radvorak Exp $
+ * $Id: CSTPackageImpl.java,v 1.31 2009/02/19 11:25:51 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -68,7 +68,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ModuleImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
@@ -132,13 +131,6 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * @generated
 	 */
 	private EClass importCSEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass moduleImportCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -798,15 +790,6 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 */
 	public EReference getImportCS_PathNameCS() {
 		return (EReference)importCSEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getModuleImportCS() {
-		return moduleImportCSEClass;
 	}
 
 	/**
@@ -2506,8 +2489,35 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getUnitCS_Modules() {
+	public EReference getUnitCS_TopLevelElements() {
 		return (EReference)unitCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getUnitCS_Modules() {
+		return (EReference)unitCSEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getUnitCS_ModelTypes() {
+		return (EReference)unitCSEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getUnitCS_Imports() {
+		return (EReference)unitCSEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -2597,8 +2607,6 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
 		importCSEClass = createEClass(IMPORT_CS);
 		createEReference(importCSEClass, IMPORT_CS__PATH_NAME_CS);
-
-		moduleImportCSEClass = createEClass(MODULE_IMPORT_CS);
 
 		libraryImportCSEClass = createEClass(LIBRARY_IMPORT_CS);
 
@@ -2850,7 +2858,10 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(tagCSEClass, TAG_CS__OCL_EXPRESSION_CS);
 
 		unitCSEClass = createEClass(UNIT_CS);
+		createEReference(unitCSEClass, UNIT_CS__TOP_LEVEL_ELEMENTS);
 		createEReference(unitCSEClass, UNIT_CS__MODULES);
+		createEReference(unitCSEClass, UNIT_CS__MODEL_TYPES);
+		createEReference(unitCSEClass, UNIT_CS__IMPORTS);
 
 		// Create enums
 		directionKindEnumEEnum = createEEnum(DIRECTION_KIND_ENUM);
@@ -2898,7 +2909,6 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		mappingModuleCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		libraryCSEClass.getESuperTypes().add(this.getMappingModuleCS());
 		importCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
-		moduleImportCSEClass.getESuperTypes().add(this.getImportCS());
 		libraryImportCSEClass.getESuperTypes().add(this.getImportCS());
 		renameCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		modulePropertyCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
@@ -2979,10 +2989,8 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
 		initEClass(libraryCSEClass, LibraryCS.class, "LibraryCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(importCSEClass, ImportCS.class, "ImportCS", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEClass(importCSEClass, ImportCS.class, "ImportCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getImportCS_PathNameCS(), theCSTPackage_1.getPathNameCS(), null, "pathNameCS", null, 0, 1, ImportCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(moduleImportCSEClass, ModuleImportCS.class, "ModuleImportCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(libraryImportCSEClass, LibraryImportCS.class, "LibraryImportCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
@@ -3234,7 +3242,10 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEReference(getTagCS_OclExpressionCS(), theCSTPackage_1.getOCLExpressionCS(), null, "oclExpressionCS", null, 0, 1, TagCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(unitCSEClass, UnitCS.class, "UnitCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getUnitCS_Modules(), this.getMappingModuleCS(), null, "modules", null, 0, -1, UnitCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getUnitCS_TopLevelElements(), theCSTPackage_1.getCSTNode(), null, "topLevelElements", null, 0, -1, UnitCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getUnitCS_Modules(), this.getMappingModuleCS(), null, "modules", null, 0, -1, UnitCS.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getUnitCS_ModelTypes(), this.getModelTypeCS(), null, "modelTypes", null, 0, -1, UnitCS.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getUnitCS_Imports(), this.getImportCS(), null, "imports", null, 0, -1, UnitCS.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Initialize enums and add enum literals
 		initEEnum(directionKindEnumEEnum, DirectionKindEnum.class, "DirectionKindEnum"); //$NON-NLS-1$

@@ -11,12 +11,11 @@
  * 
  * 
  *
- * $Id: ConstructorCS.java,v 1.1 2009/01/28 22:14:35 sboyko Exp $
+ * $Id: ConstructorCS.java,v 1.2 2009/02/19 11:25:54 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.ocl.cst.OCLExpressionCS;
 
 /**

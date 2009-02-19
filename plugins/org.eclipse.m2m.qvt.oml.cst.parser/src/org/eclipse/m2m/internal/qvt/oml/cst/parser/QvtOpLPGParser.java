@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.61 2009/02/16 12:44:04 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.62 2009/02/19 11:25:52 radvorak Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.61 2009/02/16 12:44:04 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.62 2009/02/19 11:25:52 radvorak Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.61 2009/02/16 12:44:04 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.62 2009/02/19 11:25:52 radvorak Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.61 2009/02/16 12:44:04 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.62 2009/02/19 11:25:52 radvorak Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -4004,7 +4004,7 @@ import org.eclipse.ocl.cst.LiteralExpCS;
 			//
 			case 452: {
 				
-				CSTNode result = createModuleImportCS(
+				CSTNode result = createImportCS(
 						(PathNameCS)dtParser.getSym(2)
 					);
 				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(3)));

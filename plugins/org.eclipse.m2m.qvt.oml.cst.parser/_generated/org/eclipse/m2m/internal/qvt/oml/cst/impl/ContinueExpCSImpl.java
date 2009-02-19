@@ -11,12 +11,11 @@
  * 
  * 
  *
- * $Id: ContinueExpCSImpl.java,v 1.1 2009/02/11 16:17:59 sboyko Exp $
+ * $Id: ContinueExpCSImpl.java,v 1.2 2009/02/19 11:25:51 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.ContinueExpCS;
 

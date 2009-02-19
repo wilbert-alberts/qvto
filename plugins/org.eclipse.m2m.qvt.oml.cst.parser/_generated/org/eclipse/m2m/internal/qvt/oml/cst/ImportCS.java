@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ImportCS.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: ImportCS.java,v 1.2 2009/02/19 11:25:54 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -31,7 +31,7 @@ import org.eclipse.ocl.cst.PathNameCS;
  * </p>
  *
  * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getImportCS()
- * @model abstract="true"
+ * @model
  * @generated
  */
 public interface ImportCS extends CSTNode {

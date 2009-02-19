@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: BlockExpCSImpl.java,v 1.4 2009/02/11 16:17:59 sboyko Exp $
+ * $Id: BlockExpCSImpl.java,v 1.5 2009/02/19 11:25:51 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.ocl.cst.OCLExpressionCS;
-import org.eclipse.ocl.cst.impl.OCLExpressionCSImpl;
 
 /**
  * <!-- begin-user-doc -->

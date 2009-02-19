@@ -11,26 +11,25 @@
  * 
  * 
  *
- * $Id: UnitCSImpl.java,v 1.1 2009/02/18 10:20:11 radvorak Exp $
+ * $Id: UnitCSImpl.java,v 1.2 2009/02/19 11:25:51 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
-
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
+import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
-
+import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.impl.CSTNodeImpl;
 
 /**
@@ -40,7 +39,10 @@ import org.eclipse.ocl.cst.impl.CSTNodeImpl;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.UnitCSImpl#getTopLevelElements <em>Top Level Elements</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.UnitCSImpl#getModules <em>Modules</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.UnitCSImpl#getModelTypes <em>Model Types</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.UnitCSImpl#getImports <em>Imports</em>}</li>
  * </ul>
  * </p>
  *
@@ -55,14 +57,14 @@ public class UnitCSImpl extends CSTNodeImpl implements UnitCS {
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 	/**
-	 * The cached value of the '{@link #getModules() <em>Modules</em>}' containment reference list.
+	 * The cached value of the '{@link #getTopLevelElements() <em>Top Level Elements</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getModules()
+	 * @see #getTopLevelElements()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<MappingModuleCS> modules;
+	protected EList<CSTNode> topLevelElements;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -88,11 +90,56 @@ public class UnitCSImpl extends CSTNodeImpl implements UnitCS {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<MappingModuleCS> getModules() {
-		if (modules == null) {
-			modules = new EObjectContainmentEList<MappingModuleCS>(MappingModuleCS.class, this, CSTPackage.UNIT_CS__MODULES);
+	public EList<CSTNode> getTopLevelElements() {
+		if (topLevelElements == null) {
+			topLevelElements = new EObjectContainmentEList<CSTNode>(CSTNode.class, this, CSTPackage.UNIT_CS__TOP_LEVEL_ELEMENTS);
 		}
-		return modules;
+		return topLevelElements;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public EList<MappingModuleCS> getModules() {
+		EList<MappingModuleCS> result = new BasicEList<MappingModuleCS>();
+		for (CSTNode nextTopLevelCS : getTopLevelElements()) {
+			if(nextTopLevelCS instanceof MappingModuleCS) {
+				result.add((MappingModuleCS) nextTopLevelCS);
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public EList<ModelTypeCS> getModelTypes() {
+		EList<ModelTypeCS> result = new BasicEList<ModelTypeCS>();
+		for (CSTNode nextTopLevelCS : getTopLevelElements()) {
+			if(nextTopLevelCS instanceof ModelTypeCS) {
+				result.add((ModelTypeCS) nextTopLevelCS);
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public EList<ImportCS> getImports() {
+		EList<ImportCS> result = new BasicEList<ImportCS>();
+		for (CSTNode nextTopLevelCS : getTopLevelElements()) {
+			if(nextTopLevelCS instanceof ImportCS) {
+				result.add((ImportCS) nextTopLevelCS);
+			}
+		}
+		return result;
 	}
 
 	/**
@@ -103,8 +150,8 @@ public class UnitCSImpl extends CSTNodeImpl implements UnitCS {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CSTPackage.UNIT_CS__MODULES:
-				return ((InternalEList<?>)getModules()).basicRemove(otherEnd, msgs);
+			case CSTPackage.UNIT_CS__TOP_LEVEL_ELEMENTS:
+				return ((InternalEList<?>)getTopLevelElements()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -117,8 +164,14 @@ public class UnitCSImpl extends CSTNodeImpl implements UnitCS {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case CSTPackage.UNIT_CS__TOP_LEVEL_ELEMENTS:
+				return getTopLevelElements();
 			case CSTPackage.UNIT_CS__MODULES:
 				return getModules();
+			case CSTPackage.UNIT_CS__MODEL_TYPES:
+				return getModelTypes();
+			case CSTPackage.UNIT_CS__IMPORTS:
+				return getImports();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -132,9 +185,9 @@ public class UnitCSImpl extends CSTNodeImpl implements UnitCS {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CSTPackage.UNIT_CS__MODULES:
-				getModules().clear();
-				getModules().addAll((Collection<? extends MappingModuleCS>)newValue);
+			case CSTPackage.UNIT_CS__TOP_LEVEL_ELEMENTS:
+				getTopLevelElements().clear();
+				getTopLevelElements().addAll((Collection<? extends CSTNode>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -148,8 +201,8 @@ public class UnitCSImpl extends CSTNodeImpl implements UnitCS {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CSTPackage.UNIT_CS__MODULES:
-				getModules().clear();
+			case CSTPackage.UNIT_CS__TOP_LEVEL_ELEMENTS:
+				getTopLevelElements().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -163,8 +216,14 @@ public class UnitCSImpl extends CSTNodeImpl implements UnitCS {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case CSTPackage.UNIT_CS__TOP_LEVEL_ELEMENTS:
+				return topLevelElements != null && !topLevelElements.isEmpty();
 			case CSTPackage.UNIT_CS__MODULES:
-				return modules != null && !modules.isEmpty();
+				return !getModules().isEmpty();
+			case CSTPackage.UNIT_CS__MODEL_TYPES:
+				return !getModelTypes().isEmpty();
+			case CSTPackage.UNIT_CS__IMPORTS:
+				return !getImports().isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

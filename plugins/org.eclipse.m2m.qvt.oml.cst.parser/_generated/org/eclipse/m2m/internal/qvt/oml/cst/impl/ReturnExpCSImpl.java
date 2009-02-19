@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ReturnExpCSImpl.java,v 1.3 2009/02/11 16:17:59 sboyko Exp $
+ * $Id: ReturnExpCSImpl.java,v 1.4 2009/02/19 11:25:51 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.ReturnExpCS;
 import org.eclipse.ocl.cst.OCLExpressionCS;
-import org.eclipse.ocl.cst.impl.OCLExpressionCSImpl;
 
 /**
  * <!-- begin-user-doc -->

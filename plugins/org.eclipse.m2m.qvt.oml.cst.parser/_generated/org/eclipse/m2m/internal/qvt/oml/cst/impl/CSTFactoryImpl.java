@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactoryImpl.java,v 1.18 2009/02/18 10:20:11 radvorak Exp $
+ * $Id: CSTFactoryImpl.java,v 1.19 2009/02/19 11:25:51 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.m2m.internal.qvt.oml.cst.*;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
@@ -45,10 +44,12 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ExpressionStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeLoopExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ListLiteralExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ListTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LocalPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LogExpCS;
@@ -64,7 +65,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ModuleImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleRefCS;
@@ -86,6 +86,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TagCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationRefineCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS;
 
@@ -142,7 +143,7 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 		switch (eClass.getClassifierID()) {
 			case CSTPackage.MAPPING_MODULE_CS: return createMappingModuleCS();
 			case CSTPackage.LIBRARY_CS: return createLibraryCS();
-			case CSTPackage.MODULE_IMPORT_CS: return createModuleImportCS();
+			case CSTPackage.IMPORT_CS: return createImportCS();
 			case CSTPackage.LIBRARY_IMPORT_CS: return createLibraryImportCS();
 			case CSTPackage.RENAME_CS: return createRenameCS();
 			case CSTPackage.CONFIG_PROPERTY_CS: return createConfigPropertyCS();
@@ -277,9 +278,9 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ModuleImportCS createModuleImportCS() {
-		ModuleImportCSImpl moduleImportCS = new ModuleImportCSImpl();
-		return moduleImportCS;
+	public ImportCS createImportCS() {
+		ImportCSImpl importCS = new ImportCSImpl();
+		return importCS;
 	}
 
 	/**

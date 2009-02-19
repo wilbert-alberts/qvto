@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.44 2009/02/12 16:49:33 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.45 2009/02/19 11:25:55 radvorak Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -151,7 +151,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.44 2009/02/12 16:49:33 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.45 2009/02/19 11:25:55 radvorak Exp $
  */
 	./
 $End
@@ -174,7 +174,7 @@ $Rules
 
 	_import ::= import unit ';'
 		/.$BeginJava
-					CSTNode result = createModuleImportCS(
+					CSTNode result = createImportCS(
 							(PathNameCS)$getSym(2)
 						);
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));

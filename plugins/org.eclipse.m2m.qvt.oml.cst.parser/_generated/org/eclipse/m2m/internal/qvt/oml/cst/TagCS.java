@@ -11,12 +11,11 @@
  * 
  * 
  *
- * $Id: TagCS.java,v 1.1 2009/01/21 10:14:30 sboyko Exp $
+ * $Id: TagCS.java,v 1.2 2009/02/19 11:25:54 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
-
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.cst.StringLiteralExpCS;

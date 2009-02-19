@@ -54,13 +54,13 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingEndCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionKindCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingInitCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ModuleImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
@@ -157,8 +157,10 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		element.setBodyStartLocation(start.getEndOffset());
 		element.setBodyEndLocation(end.getStartOffset());
 	}
-	
+		
 	protected final Object setupTopLevel(EList<CSTNode> unitElements) {
+		validateTopLevelElementOrder(unitElements);
+		
 	    List<MappingModuleCS> modules = new ArrayList<MappingModuleCS>();
 	    List<ModelTypeCS> modeltypes = new ArrayList<ModelTypeCS>();
 	    List<ClassifierDefCS> classifiers = new ArrayList<ClassifierDefCS>();
@@ -266,12 +268,12 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 
-	protected final CSTNode createModuleImportCS(PathNameCS sym) {
-		ModuleImportCS imp = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createModuleImportCS();
+	protected final CSTNode createImportCS(PathNameCS sym) {
+		ImportCS imp = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createImportCS();
 		imp.setPathNameCS(sym);
 		return imp;
 	}
-
+	
 	protected final MappingModuleCS createLibraryCS(TransformationHeaderCS header, EList<CSTNode> moduleElements) {
 	    LibraryCS libraryCS = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createLibraryCS();
 	    return initializeModule(libraryCS, header, moduleElements);
@@ -1085,4 +1087,46 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	protected boolean isNonStdSQSupported() {
 		return false;
 	}
+	
+	private void validateTopLevelElementOrder(EList<CSTNode> topElements) {		
+		boolean otherThenImportOccured = false;
+		boolean moduleAlreadyDeclared = false;		
+
+		for (CSTNode nextElement : topElements) {
+			if(nextElement instanceof MappingModuleCS) {
+				moduleAlreadyDeclared = true;
+				continue;
+			}
+			
+			if(nextElement instanceof ImportCS) {
+				if(otherThenImportOccured) {				
+					reportWarning(Messages.ImportMustBeFirstInCompilationUnit, 
+							nextElement.getStartOffset(), nextElement.getEndOffset());
+				}
+			} else {
+				otherThenImportOccured = true;
+			}
+			
+			if(!moduleAlreadyDeclared) {
+				if(nextElement instanceof ModulePropertyCS) {
+					ModulePropertyCS propertyCS = (ModulePropertyCS) nextElement; 
+					CSTNode problemCS = propertyCS.getSimpleNameCS() != null ? propertyCS.getSimpleNameCS() : propertyCS; 
+					reportWarning(Messages.ModuleDeclarationMustPrecedeThisElement, 
+							problemCS.getStartOffset(), problemCS.getEndOffset());				
+				}
+				else if(nextElement instanceof MappingMethodCS) {
+					MappingMethodCS methodCS = (MappingMethodCS) nextElement;
+					CSTNode problemCS = methodCS.getMappingDeclarationCS() != null ? methodCS.getMappingDeclarationCS() : methodCS;				
+					reportWarning(Messages.ModuleDeclarationMustPrecedeThisElement,
+							problemCS.getStartOffset(), problemCS.getEndOffset());				
+				}
+				else if(nextElement instanceof ClassifierDefCS) {
+					ClassifierDefCS classifierCS = (ClassifierDefCS) nextElement; 
+					CSTNode problemCS = classifierCS.getSimpleNameCS() != null ? classifierCS.getSimpleNameCS() : classifierCS; 
+					reportWarning(Messages.ModuleDeclarationMustPrecedeThisElement,
+							problemCS.getStartOffset(), problemCS.getEndOffset());				
+				}
+			}
+		} 
+	}	
 }
