@@ -49,8 +49,6 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
-import org.eclipse.m2m.internal.qvt.oml.compiler.ConstructorOperationAdapter;
-import org.eclipse.m2m.internal.qvt.oml.compiler.IntermediateClassFactory;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitImportResolver;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;

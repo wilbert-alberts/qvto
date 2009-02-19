@@ -18,7 +18,7 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
-import org.eclipse.m2m.internal.qvt.oml.compiler.IntermediateClassFactory;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.IntermediateClassFactory;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance.InternalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;

@@ -10,7 +10,7 @@
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.m2m.internal.qvt.oml.compiler;
+package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
 import org.eclipse.m2m.internal.qvt.oml.cst.adapters.AbstractGenericAdapter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Constructor;

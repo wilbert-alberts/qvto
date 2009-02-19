@@ -30,7 +30,6 @@ import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
-import org.eclipse.m2m.internal.qvt.oml.compiler.ConstructorOperationAdapter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Constructor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
