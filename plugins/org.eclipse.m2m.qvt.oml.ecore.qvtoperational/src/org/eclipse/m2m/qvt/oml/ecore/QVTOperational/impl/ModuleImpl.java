@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: ModuleImpl.java,v 1.3 2009/01/25 23:12:23 radvorak Exp $
+ * $Id: ModuleImpl.java,v 1.4 2009/02/19 20:52:04 sboyko Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
@@ -372,7 +372,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * @generated
 	 */
 	public EPackage getESuperPackage() {
-		if (eContainerFeatureID != QVTOperationalPackage.MODULE__ESUPER_PACKAGE) return null;
+		if (eContainerFeatureID() != QVTOperationalPackage.MODULE__ESUPER_PACKAGE) return null;
 		return (EPackage)eContainer();
 	}
 
@@ -382,7 +382,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 * @generated
 	 */
 	public EPackage basicGetESuperPackage() {
-		if (eContainerFeatureID != QVTOperationalPackage.MODULE__ESUPER_PACKAGE) return null;
+		if (eContainerFeatureID() != QVTOperationalPackage.MODULE__ESUPER_PACKAGE) return null;
 		return (EPackage)eInternalContainer();
 	}
 
@@ -617,7 +617,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 	 */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID) {
+		switch (eContainerFeatureID()) {
 			case QVTOperationalPackage.MODULE__ESUPER_PACKAGE:
 				return eInternalContainer().eInverseRemove(this, EcorePackage.EPACKAGE__ESUBPACKAGES, EPackage.class, msgs);
 		}

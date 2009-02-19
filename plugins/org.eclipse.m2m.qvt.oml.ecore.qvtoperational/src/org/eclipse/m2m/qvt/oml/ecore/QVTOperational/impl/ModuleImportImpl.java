@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: ModuleImportImpl.java,v 1.2 2009/01/25 23:12:23 radvorak Exp $
+ * $Id: ModuleImportImpl.java,v 1.3 2009/02/19 20:52:04 sboyko Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
@@ -185,7 +185,7 @@ public class ModuleImportImpl extends EModelElementImpl implements ModuleImport 
 	 * @generated
 	 */
 	public Module getModule() {
-		if (eContainerFeatureID != QVTOperationalPackage.MODULE_IMPORT__MODULE) return null;
+		if (eContainerFeatureID() != QVTOperationalPackage.MODULE_IMPORT__MODULE) return null;
 		return (Module)eContainer();
 	}
 
@@ -205,7 +205,7 @@ public class ModuleImportImpl extends EModelElementImpl implements ModuleImport 
 	 * @generated
 	 */
 	public void setModule(Module newModule) {
-		if (newModule != eInternalContainer() || (eContainerFeatureID != QVTOperationalPackage.MODULE_IMPORT__MODULE && newModule != null)) {
+		if (newModule != eInternalContainer() || (eContainerFeatureID() != QVTOperationalPackage.MODULE_IMPORT__MODULE && newModule != null)) {
 			if (EcoreUtil.isAncestor(this, newModule))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
@@ -257,7 +257,7 @@ public class ModuleImportImpl extends EModelElementImpl implements ModuleImport 
 	 */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID) {
+		switch (eContainerFeatureID()) {
 			case QVTOperationalPackage.MODULE_IMPORT__MODULE:
 				return eInternalContainer().eInverseRemove(this, QVTOperationalPackage.MODULE__MODULE_IMPORT, Module.class, msgs);
 		}
