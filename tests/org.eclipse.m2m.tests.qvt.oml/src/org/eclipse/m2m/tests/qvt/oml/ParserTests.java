@@ -83,7 +83,8 @@ public class ParserTests {
     	throw new IllegalArgumentException("No such testdata: " + name); //$NON-NLS-1$
     }
     
-    private static TestData[] ourData = new TestData[] {    	
+    private static TestData[] ourData = new TestData[] {
+    	TestData.createSourceChecked("collectionOperationNotFound_224093", 3, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("deprecated_importLocation", 0, 1), //$NON-NLS-1$
     	TestData.createSourceChecked("misplacedTopElements", 0, 4), //$NON-NLS-1$
     	TestData.createSourceChecked("escape_sequences_250630", 4, 0), //$NON-NLS-1$    	
@@ -95,17 +96,17 @@ public class ParserTests {
     	TestData.createSourceChecked("listtype2", 9, 0), //$NON-NLS-1$   	
         //new TestData("orderedsetdoesnotconformtoset", 1), //$NON-NLS-1$
         TestData.createSourceChecked("computeExp_252269", 3, 0), //$NON-NLS-1$       
-    	new TestData("implicitsource_ocl_234354", 6, 0),
-    	TestData.createSourceChecked("duplicateModelTypeDef", 1, 0),    	
-    	TestData.createSourceChecked("blackboxlib_annotation_java", 1, 1),
-    	TestData.createSourceChecked("dupImportFileUnit", 0, 1),    	
-    	TestData.createSourceChecked("dupImportLibrary", 0, 1),    	
-    	TestData.createSourceChecked("testmodelparamtype", 3, 1),    	
-    	TestData.createSourceChecked("resolvecond", 1, 0),
-    	TestData.createSourceChecked("intermPropClash", 9, 0),    	    	
-    	TestData.createSourceChecked("noClassInImplicitPopulate", 3, 0),    	
-    	TestData.createSourceChecked("parmnamesclash", 22, 0),
-    	TestData.createSourceChecked("stdlibElementAsOut", 7, 0),    	
+    	new TestData("implicitsource_ocl_234354", 6, 0), //$NON-NLS-1$
+    	TestData.createSourceChecked("duplicateModelTypeDef", 1, 0),    	 //$NON-NLS-1$
+    	TestData.createSourceChecked("blackboxlib_annotation_java", 1, 1), //$NON-NLS-1$
+    	TestData.createSourceChecked("dupImportFileUnit", 0, 1),    	 //$NON-NLS-1$
+    	TestData.createSourceChecked("dupImportLibrary", 0, 1),    	 //$NON-NLS-1$
+    	TestData.createSourceChecked("testmodelparamtype", 3, 1),    	 //$NON-NLS-1$
+    	TestData.createSourceChecked("resolvecond", 1, 0), //$NON-NLS-1$
+    	TestData.createSourceChecked("intermPropClash", 9, 0),    	    	 //$NON-NLS-1$
+    	TestData.createSourceChecked("noClassInImplicitPopulate", 3, 0),    	 //$NON-NLS-1$
+    	TestData.createSourceChecked("parmnamesclash", 22, 0), //$NON-NLS-1$
+    	TestData.createSourceChecked("stdlibElementAsOut", 7, 0),    	 //$NON-NLS-1$
         TestData.createSourceChecked("bug2732_wrongcondition", 1, 1), //$NON-NLS-1$      
         TestData.createSourceChecked("varscope", 10, 0), //$NON-NLS-1$      
     	TestData.createSourceChecked("_while", 12, 0), //$NON-NLS-1$
@@ -153,7 +154,7 @@ public class ParserTests {
         new TestData("modifyresult", 0), //$NON-NLS-1$
         new TestData("wrongorderininit", 1), //$NON-NLS-1$
         new TestData("duplicateinitvariable", 1), //$NON-NLS-1$
-        TestData.createSourceChecked("missingObjectType", 1, 0), // replaced former 'nestedouterror'
+        TestData.createSourceChecked("missingObjectType", 1, 0), // replaced former 'nestedouterror' //$NON-NLS-1$
         new TestData("emptyinit", 0), //$NON-NLS-1$
         new TestData("assignresultininit", 0), //$NON-NLS-1$
         new TestData("assign_inoutParam", 2), //$NON-NLS-1$
@@ -188,7 +189,7 @@ public class ParserTests {
         new TestData("mm_header6", 1), //$NON-NLS-1$
         new TestData("mm_header7", 1), //$NON-NLS-1$
         new TestData("entryOpDupl", 1), //$NON-NLS-1$
-        new TestData("resolveIn_ambiguity", 1), //$NON-NLS-1$ //$NON-NLS-2$
+        new TestData("resolveIn_ambiguity", 1), //$NON-NLS-1$
         new TestData("bug205303_2", 3), //$NON-NLS-1$
     };
 }
