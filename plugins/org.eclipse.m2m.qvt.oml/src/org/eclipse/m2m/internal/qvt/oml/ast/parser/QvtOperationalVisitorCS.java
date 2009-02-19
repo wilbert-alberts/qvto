@@ -93,7 +93,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ModuleUsageCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MultiplicityDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS;
@@ -220,6 +219,7 @@ import org.eclipse.ocl.types.OrderedSetType;
 import org.eclipse.ocl.types.SequenceType;
 import org.eclipse.ocl.types.SetType;
 import org.eclipse.ocl.types.TypeType;
+import org.eclipse.ocl.util.OCLStandardLibraryUtil;
 import org.eclipse.ocl.util.OCLUtil;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.ASTNode;
@@ -855,16 +855,96 @@ public class QvtOperationalVisitorCS
             OperationCallExpCS operationCallExpCS, String rule,
             String operName, OCLExpression<EClassifier> source,
             EClassifier ownerType, List<OCLExpression<EClassifier>> args) {
-        EClassifier operationSourceType = ownerType;
+
+    	EClassifier operationSourceType = ownerType;
         if (isArrowAccessToCollection(operationCallExpCS, source)
                 && (lookupOperation(operationCallExpCS, env, ownerType, operName, args) == null)) {
             @SuppressWarnings("unchecked") //$NON-NLS-1$
             CollectionType<EClassifier, EOperation> sourceType = (CollectionType<EClassifier, EOperation>) ownerType;
             operationSourceType = sourceType.getElementType();
         }
-        return super.genOperationCallExp(env, operationCallExpCS, rule, operName,
-                source, operationSourceType, args);
-    }
+
+		OperationCallExp<EClassifier, EOperation> result;
+
+		result = oclFactory.createOperationCallExp();
+		initASTMapping(env, result, operationCallExpCS);
+		result.setSource(source);
+
+		// Performs method signature checking
+		EOperation oper = lookupOperation(operationCallExpCS.getSimpleNameCS(), env,
+				operationSourceType, operName, args);
+
+		// sometimes we use the resolved name in case the environment's look-up
+		// supports aliasing
+		String resolvedName = operName;
+
+		if (oper == null) {
+			String message;
+			String operationString = operationString(env, operName, args);
+			String operationSourceTypeString = (operationSourceType == null) ?
+					null : uml.getName(operationSourceType);
+			if (source.getType() == operationSourceType) {
+				message = NLS.bind(
+				ValidationMessages.QvtOperationalVisitorCS_OperationNotFound_ERROR_,
+				operationString,
+				operationSourceTypeString);
+			} else {
+				message = NLS.bind(
+						ValidationMessages.QvtOperationalVisitorCS_OperationNotFoundForCollectionAndItsElement,
+						new Object[] {operationString, uml.getName(source.getType()), operationSourceTypeString});
+			}
+			ERROR(operationCallExpCS, rule, message);
+			result.setType(env.getOCLStandardLibrary().getOclVoid());
+		} else {
+			resolvedName = uml.getName(oper);
+			TRACE(rule, resolvedName);
+			result.setReferredOperation(oper);
+		}
+
+		// Set up arguments
+		List<OCLExpression<EClassifier>> callargs = result.getArgument();
+		if (args != null) {
+			for (OCLExpression<EClassifier> arg : args) {
+				if (arg == null) {
+					ERROR(operationCallExpCS, rule, ValidationMessages.QvtOperationalVisitorCS_BadArg_ERROR_);
+				} else {
+					callargs.add(arg);
+				}
+			}
+		}
+
+		// Compute the result type, and perform conformance checking.
+		if (oper != null) {
+			EClassifier resultType = null;
+
+			int opcode = 0;
+			if (TypeUtil.isStandardLibraryFeature(env, operationSourceType, oper)) {
+				// the operations defined intrinsically by the standard library
+				// are the only ones that may have opcodes
+				opcode = OCLStandardLibraryUtil.getOperationCode(resolvedName);
+			} else if (TypeUtil.isOclAnyOperation(env, oper)) {
+				// source is a user class, enumeration, or data type and the
+				// operation is defined by OclAny, not the source type
+				opcode = OCLStandardLibraryUtil
+					.getOclAnyOperationCode(resolvedName);
+			}
+
+			result.setOperationCode(opcode);
+			resultType = TypeUtil.getResultType(operationCallExpCS, env,
+				ownerType, oper, args);
+			if (resultType == null) {
+				resultType = getOCLType(env, oper);
+			}
+
+			// resolve collection or tuple type against the cache in the
+			// environment
+			resultType = TypeUtil.resolveType(env, resultType);
+
+			result.setType(resultType);
+		}
+
+		return result;
+	}
 
     /**
      * Creates an implicit <code>xcollect</code> iterator expression for a

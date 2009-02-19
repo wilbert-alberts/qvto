@@ -47,6 +47,7 @@ public final class ValidationMessages extends NLS {
 	public static String QvtOperationalValidationVisitor_unresolvedTransformationSignature;
 	public static String QvtOperationalVisitorCS_AbstractTypesNotInitialized;
 	public static String QvtOperationalVisitorCS_ambiguousMappingOperationReference;
+	public static String QvtOperationalVisitorCS_BadArg_ERROR_;
 	public static String QvtOperationalVisitorCS_booleanTypeExpressionExpected;
 	public static String QvtOperationalVisitorCS_canNotInstantiateAbstractType;
 	public static String QvtOperationalVisitorCS_canNotModifyINParameter;
@@ -85,6 +86,8 @@ public final class ValidationMessages extends NLS {
     public static String QvtOperationalVisitorCS_LibrarySignatureErrorModelExtentSpecified;
     public static String QvtOperationalVisitorCS_LibrarySignatureErrorParameterNameSpecified;
     public static String QvtOperationalVisitorCS_mapKeywordNotUsed;
+	public static String QvtOperationalVisitorCS_OperationNotFound_ERROR_;
+	public static String QvtOperationalVisitorCS_OperationNotFoundForCollectionAndItsElement;
 	public static String QvtOperationalVisitorCS_resultParamNameDirectionNotAllowed;
 	public static String QvtOperationalVisitorCS_resultParamNameNotAllowed;
 	public static String QvtOperationalVisitorCS_SeeErrorLogForDetails;
