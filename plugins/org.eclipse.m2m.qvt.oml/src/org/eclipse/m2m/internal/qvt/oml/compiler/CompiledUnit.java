@@ -18,7 +18,6 @@ import java.util.List;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 
@@ -117,18 +116,7 @@ public class CompiledUnit {
 	public UnitCS getUnitCST() {
 		return fUnitCST;
 	}
-	
-	/*
-	 * A convenience operation to help in migration of obsolete code which relies on single module per file
-	 */
-	public MappingModuleCS getPrimaryModuleCS() {
-		if(fUnitCST == null || fUnitCST.getModules().isEmpty()) {
-			return null;
-		}
 		
-		return fUnitCST.getModules().get(0);
-	}
-	
 	public List<QvtMessage> getProblems() {
 		return fAllProblems;
 	}		

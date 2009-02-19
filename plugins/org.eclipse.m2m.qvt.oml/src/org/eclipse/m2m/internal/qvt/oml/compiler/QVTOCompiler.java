@@ -51,7 +51,6 @@ import org.eclipse.m2m.internal.qvt.oml.common.io.CFileUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.BundleFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.WorkspaceMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
@@ -627,15 +626,11 @@ public class QVTOCompiler {
     	public CSTParseResult() {}
     	
     	List<ImportCS> getImports() {
-    		// TODO - will be removed as soon as unit can hold unit import statements
-			List<ImportCS> allImports = new ArrayList<ImportCS>();
-			if(unitCS != null) {
-				for (MappingModuleCS nextModule : unitCS.getModules()) {
-					allImports.addAll(nextModule.getImports());	
-				}
-			}
-			return allImports;
-    	}    	
+    		if(unitCS != null) {    		
+    			return QvtOperationalParserUtil.getImports(unitCS);
+    		}
+    		return Collections.emptyList();
+    	}
     }
     
 	protected static class CSTAnalysisResult {

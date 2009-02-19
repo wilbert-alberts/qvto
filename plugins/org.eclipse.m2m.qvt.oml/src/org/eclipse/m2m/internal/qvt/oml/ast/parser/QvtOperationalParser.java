@@ -80,7 +80,7 @@ public class QvtOperationalParser {
 		}
 		
 		if(result != null) {
-			unitCS.getModules().add(result);
+			unitCS.getTopLevelElements().add(result);
 		}
 		
 		return unitCS;

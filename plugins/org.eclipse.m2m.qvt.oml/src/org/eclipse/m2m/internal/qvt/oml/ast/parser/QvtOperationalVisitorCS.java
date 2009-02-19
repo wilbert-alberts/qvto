@@ -93,6 +93,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ModuleUsageCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MultiplicityDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS;
@@ -1927,7 +1928,7 @@ public class QvtOperationalVisitorCS
 		return multiplicityDef;
 	}
 	
-	private void importsCS(MappingModuleCS parsedModuleCS, Module module, QvtOperationalFileEnv env, UnitImportResolver importResolver) {		
+	private void importsCS(MappingModuleCS parsedModuleCS, Module module, QvtOperationalFileEnv env, UnitImportResolver importResolver) {
 		for (ImportCS nextImportedCS : parsedModuleCS.getImports()) {			
 			if(nextImportedCS.getPathNameCS() == null) {
 				// nothing meaningful to represent in AST
@@ -1939,7 +1940,7 @@ public class QvtOperationalVisitorCS
 				for (QvtOperationalModuleEnv nextImportedEnv : importedUnit.getModuleEnvironments()) {
 					Module importedModule = nextImportedEnv.getModuleContextType();
 					if(importedModule == null) {
-						// nothing to import in, no module was sucessfully parsed
+						// nothing to import in, no module was sucessfuly parsed
 						continue;
 					}
 					
@@ -1969,7 +1970,7 @@ public class QvtOperationalVisitorCS
 				if(nextImportedCS instanceof LibraryImportCS) {
 					String libId = QvtOperationalParserUtil.getStringRepresentation(nextImportedCS.getPathNameCS(), "."); //$NON-NLS-1$
 					// warn about specific library import deprecation
-					env.reportWarning(NLS.bind(ValidationMessages.DeprecatedLibraryImportSupportWarn0, new Object[] { libId }), nextImportedCS.getPathNameCS());
+					env.reportWarning(NLS.bind(ValidationMessages.DeprecatedLibraryImportStatement, new Object[] { libId }), nextImportedCS.getPathNameCS());
 				}
 			}
 		}

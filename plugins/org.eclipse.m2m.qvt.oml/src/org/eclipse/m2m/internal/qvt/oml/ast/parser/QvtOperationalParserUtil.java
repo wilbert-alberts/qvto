@@ -35,12 +35,15 @@ import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNode;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNodeAccess;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
+import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
@@ -728,6 +731,28 @@ public class QvtOperationalParserUtil {
         return module;
 	}
 
+	public static List<ImportCS> getImports(UnitCS unitCS) {
+		List<ImportCS> allImports = new ArrayList<ImportCS>();
+		allImports.addAll(unitCS.getImports());
+		
+		for (MappingModuleCS nextModule : unitCS.getModules()) {
+			allImports.addAll(nextModule.getImports());	
+		}
+		return allImports;		
+	}
+
+	public static List<ModelTypeCS> getModelTypes(UnitCS unitCS) {
+		List<ModelTypeCS> modelTypes = new ArrayList<ModelTypeCS>();
+		
+		modelTypes.addAll(unitCS.getModelTypes());
+		
+		for (MappingModuleCS nextModule : unitCS.getModules()) {
+			modelTypes.addAll(nextModule.getMetamodels());	
+		}
+		
+		return modelTypes;		
+	}	
+	
 	public static String wrappInSeeErrorLogMessage(String message) {
 		return NLS.bind(ValidationMessages.QvtOperationalVisitorCS_SeeErrorLogForDetails, message);
 	}
