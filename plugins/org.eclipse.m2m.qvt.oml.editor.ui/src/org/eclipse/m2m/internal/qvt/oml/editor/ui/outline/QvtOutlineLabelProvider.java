@@ -24,7 +24,10 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
+import org.eclipse.m2m.internal.qvt.oml.cst.LocalPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
@@ -117,7 +120,29 @@ public class QvtOutlineLabelProvider implements ILabelProvider {
     }
     
     public static String getPropertyLabel(final ModulePropertyCS prop) {
-    	return prop.getSimpleNameCS().getValue();
+    	StringBuilder buf = new StringBuilder();
+    	if(prop instanceof ContextualPropertyCS) {
+    		ContextualPropertyCS ctxPropCS = (ContextualPropertyCS) prop;
+    		if(ctxPropCS.getTypeCS() != null) {
+    			buf.append(getTypeAsString(ctxPropCS.getTypeCS())).append("::"); //$NON-NLS-1$
+    		}
+    	}
+    	
+    	buf.append(prop.getSimpleNameCS().getValue());
+    	TypeCS typeCS = null;
+    	if(prop instanceof LocalPropertyCS) {
+    		typeCS = ((LocalPropertyCS) prop).getTypeCS();
+    	} else if(prop instanceof ConfigPropertyCS) {
+    		typeCS = ((ConfigPropertyCS) prop).getTypeCS();
+    	} else if(prop instanceof ContextualPropertyCS) {
+    		typeCS = ((ContextualPropertyCS) prop).getTypeCS();
+    	}
+    	
+    	if(typeCS != null) {
+    		buf.append(" : ").append(getTypeAsString(typeCS)); //$NON-NLS-1$
+    	}
+    	
+    	return buf.toString();
     }
 
     public static String getImportLabel(final PathNameCS path) {

@@ -27,8 +27,10 @@ import org.eclipse.jface.text.reconciler.IReconcilingStrategy;
 import org.eclipse.jface.text.reconciler.IReconcilingStrategyExtension;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
+import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.swt.widgets.Display;
 
@@ -87,22 +89,11 @@ public class QvtReconcilingStrategy implements IReconcilingStrategy, IReconcilin
                 }
             }
         } finally {
-        reconcilingListener.reconciled(compilationResult);
+        	reconcilingListener.reconciled(compilationResult);
         
-        if (compilationResult != null) {
-            MappingModuleCS mappingModuleCS = compilationResult.getPrimaryModuleCS();
-            if(mappingModuleCS != null) {
-	            addListPosition(mappingModuleCS.getImports(), positions);
-	            addListPosition(mappingModuleCS.getImports(), positions);
-	            addListPosition(mappingModuleCS.getMetamodels(), positions);
-	            addListPosition(mappingModuleCS.getProperties(), positions);
-	            addListPosition(mappingModuleCS.getRenamings(), positions);
-            
-	            for (MappingMethodCS method : mappingModuleCS.getMethods()) {
-	                positions.add(createPosition(method.getStartOffset(), method.getEndOffset()));
-	            }
-            }
-        }
+	        if (compilationResult != null) {
+	            getNewFoldingPositions(positions, compilationResult);
+	        }
         }
         
         myEditor.refresh();
@@ -113,6 +104,28 @@ public class QvtReconcilingStrategy implements IReconcilingStrategy, IReconcilin
             }
         });
     }
+
+	private void getNewFoldingPositions(final ArrayList<Position> positions, CompiledUnit compilationResult) {
+		UnitCS unitCST = compilationResult.getUnitCST();
+		addListPosition(unitCST.getImports(), positions);		
+		addListPosition(unitCST.getModelTypes(), positions);
+		
+		for(MappingModuleCS mappingModuleCS : unitCST.getModules()) {
+//	commented out elements with mixed ordering			
+//		    addListPosition(mappingModuleCS.getImports(), positions);
+//		    addListPosition(mappingModuleCS.getMetamodels(), positions);
+//		    addListPosition(mappingModuleCS.getProperties(), positions);
+//		    addListPosition(mappingModuleCS.getRenamings(), positions);
+		    
+		    for(ClassifierDefCS classifierDefCS : mappingModuleCS.getClassifierDefCS()) {
+		    	positions.add(createPosition(classifierDefCS.getStartOffset(), classifierDefCS.getEndOffset()));
+		    }
+		
+		    for (MappingMethodCS method : mappingModuleCS.getMethods()) {
+		        positions.add(createPosition(method.getStartOffset(), method.getEndOffset()));
+		    }
+		}
+	}
     
     private void addListPosition(final List<? extends CSTNode> list, final List<Position> positionList) {
         if (!list.isEmpty()) {

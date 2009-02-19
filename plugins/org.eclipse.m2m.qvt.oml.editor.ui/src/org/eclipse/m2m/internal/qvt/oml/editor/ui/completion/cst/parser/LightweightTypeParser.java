@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.49 2009/02/16 12:44:25 aigdalov Exp $
+* $Id: LightweightTypeParser.java,v 1.50 2009/02/19 11:26:04 radvorak Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.49 2009/02/16 12:44:25 aigdalov Exp $
+* $Id: LightweightTypeParser.java,v 1.50 2009/02/19 11:26:04 radvorak Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.49 2009/02/16 12:44:25 aigdalov Exp $
+* $Id: LightweightTypeParser.java,v 1.50 2009/02/19 11:26:04 radvorak Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.49 2009/02/16 12:44:25 aigdalov Exp $
+* $Id: LightweightTypeParser.java,v 1.50 2009/02/19 11:26:04 radvorak Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -4009,7 +4009,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 			//
 			case 452: {
 				
-				CSTNode result = createModuleImportCS(
+				CSTNode result = createImportCS(
 						(PathNameCS)dtParser.getSym(2)
 					);
 				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(3)));

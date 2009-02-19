@@ -340,7 +340,7 @@ public class QvtEditor extends TextEditor {
                     CompiledUnit unit = ((QvtDocumentProvider)getDocumentProvider()).getCompiledModule();
                     if (unit != null) {
                     	QvtOutlineInput input = (QvtOutlineInput) myTreeViewer.getInput();
-                    	input.mappingModuleUpdated(unit);
+                    	input.compilationUnitUpdated(unit);
                         myTreeViewer.refresh();
                         selectionChanged((TextSelection)getSelectionProvider().getSelection());
                     }

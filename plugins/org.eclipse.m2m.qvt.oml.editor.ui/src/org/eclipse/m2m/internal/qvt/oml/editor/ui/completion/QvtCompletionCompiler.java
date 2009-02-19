@@ -168,8 +168,8 @@ public class QvtCompletionCompiler extends QVTOCompiler {
         	unitCS.setStartOffset(0);
         	unitCS.setStartOffset(lexer.getStreamLength());
             
-            if (cstNode instanceof MappingModuleCS) {            	
-            	unitCS.getModules().add((MappingModuleCS) cstNode);
+            if (cstNode instanceof MappingModuleCS) {  	
+            	unitCS.getTopLevelElements().add((MappingModuleCS) cstNode);
             }
             
             cFileData.setUnitCS(unitCS);            

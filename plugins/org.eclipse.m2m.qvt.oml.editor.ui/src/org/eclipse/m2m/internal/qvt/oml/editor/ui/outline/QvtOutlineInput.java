@@ -12,24 +12,19 @@
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.outline;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.RenameCS;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
-import org.eclipse.m2m.internal.qvt.oml.ocl.OclQvtoPlugin;
-import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.Library;
-import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LibraryCreationException;
-import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LibraryOperation;
+import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.PathNameCS;
 
@@ -39,34 +34,48 @@ public class QvtOutlineInput {
 		this(null);
 	}
 
-	public QvtOutlineInput(CompiledUnit parsedModuleCS) {
-		myUnit = parsedModuleCS;
+	public QvtOutlineInput(CompiledUnit unit) {
+		myUnit = unit;
 	}
 	
-	public void mappingModuleUpdated(CompiledUnit unit) {
-		myUnit = unit;
-		myModuleNode.setIdentity(getModuleNodeIdentity());
+	public void compilationUnitUpdated(CompiledUnit unit) {
+		myUnit = unit;	
+		myChildren = null;
 	}
 
 	public Object[] getChildren() {
 		if (myChildren == null) {
-			myModuleNode = new ModuleNode(getModuleNodeIdentity());
-			myChildren = new Object[] {
-					new ImportsNode(), new MetamodelsNode(), new RenamesNode(), 
-	                new PropertiesNode(), myModuleNode
-			};
+			List<Object> children = new ArrayList<Object>();
+			
+			if(getUnitCST() != null) {
+				children.addAll(Arrays.asList(
+						new ImportsNode(), 
+						new MetamodelsNode(), 
+						new RenamesNode()));
+				
+				for (MappingModuleCS nextModule : getUnitCST().getModules()) {
+					children.add(new ModuleNode(nextModule, getModuleNodeIdentity(nextModule)));
+				}
+			}			
+			
+			myChildren = children.toArray();
 		}
+		
 		return myChildren;
 	}
 
-	private String getModuleNodeIdentity() {
-		return myUnit != null && myUnit.getPrimaryModuleCS() != null ? QvtOutlineLabelProvider.getMappingModuleLabel(myUnit.getPrimaryModuleCS()) : ""; //$NON-NLS-1$
+	private static String getModuleNodeIdentity(MappingModuleCS moduleCS) {
+		return moduleCS != null ? QvtOutlineLabelProvider.getMappingModuleLabel(moduleCS) : ""; //$NON-NLS-1$
 	}
 	
+	private UnitCS getUnitCST() {
+		return myUnit != null ? myUnit.getUnitCST() : null;
+	}	
+	
 	private abstract class ModuleDependentNode extends OutlineNode {
-
+		
 		protected ModuleDependentNode(String identity, Object parent, int type) {
-			super(identity, parent, type);
+			super(identity, parent, type);			
 		}
 		
 		protected ModuleDependentNode(String identity, Object parent, int type, CSTNode syntaxElement) {
@@ -75,7 +84,7 @@ public class QvtOutlineInput {
 		
 		@Override
 		public final List<OutlineNode> getChildren() {
-			if (myUnit == null) {
+			if (getUnitCST() == null) {
 				return Collections.emptyList();
 			}
 			return doGetChildren();
@@ -86,19 +95,30 @@ public class QvtOutlineInput {
 	}
 
 	private final class ModuleNode extends ModuleDependentNode {
-
-		public ModuleNode(String identity) {
+		
+		private MappingModuleCS moduleCS;
+		
+		public ModuleNode(MappingModuleCS moduleCS, String identity) {
 			super(identity, QvtOutlineInput.this, QvtOutlineNodeType.MAPPING_MODULE);
+			
+			this.moduleCS = moduleCS;
 		}
 
 		@Override
 		protected List<OutlineNode> doGetChildren() {
 			List<OutlineNode> result = new ArrayList<OutlineNode>();
-			if(myUnit.getPrimaryModuleCS() == null) {
+			if(myUnit == null) {
 				return result;
 			}
 
-			for (MappingMethodCS method : myUnit.getPrimaryModuleCS().getMethods()) {
+			for (ModulePropertyCS prop : moduleCS.getProperties()) {
+				OutlineNode childNode = new OutlineNode(QvtOutlineLabelProvider.getPropertyLabel(prop), this,
+						QvtOutlineNodeType.PROPERTY, prop);
+				result.add(childNode);
+			}
+			
+			
+			for (MappingMethodCS method : moduleCS.getMethods()) {
 				OutlineNode childNode = new OutlineNode(QvtOutlineLabelProvider.getMappingRuleLabel(method), this,
 						QvtOutlineNodeType.MAPPING_RULE, method);
 				result.add(childNode);
@@ -118,20 +138,11 @@ public class QvtOutlineInput {
 		@Override
 		protected List<OutlineNode> doGetChildren() {
 			List<OutlineNode> result = new ArrayList<OutlineNode>();			
-			if(myUnit.getPrimaryModuleCS() == null) {
+			if(getUnitCST() == null) {
 				return result;
 			}
-			
-			for (ImportCS imp : myUnit.getPrimaryModuleCS().getImports()) {
-				PathNameCS importPath = imp.getPathNameCS();
-				if (imp instanceof LibraryImportCS) {
-					LibraryNode childNode = new LibraryNode(QvtOutlineLabelProvider.getImportLabel(importPath), this,
-							QvtOutlineNodeType.MAPPING_MODULE, importPath);
-					result.add(childNode);
-				}
-			}
-			
-			for (ImportCS nextImportCS : myUnit.getPrimaryModuleCS().getImports()) {
+						
+			for (ImportCS nextImportCS : QvtOperationalParserUtil.getImports(getUnitCST())) {
 		    	PathNameCS importQName = nextImportCS.getPathNameCS();
 				if (importQName == null) {
 		    		continue;
@@ -139,6 +150,7 @@ public class QvtOutlineInput {
 		    	
 				OutlineNode childNode = new OutlineNode(QvtOutlineLabelProvider.getImportLabel(importQName),
 						this, QvtOutlineNodeType.MAPPING_MODULE, importQName);
+
 				result.add(childNode);
 			}
 
@@ -157,11 +169,11 @@ public class QvtOutlineInput {
 		@Override
 		protected List<OutlineNode> doGetChildren() {
 			List<OutlineNode> result = new ArrayList<OutlineNode>();
-			if(myUnit.getPrimaryModuleCS() == null) {
+			if(myUnit.getUnitCST() == null) {
 				return result;
 			}
 			
-			for (ModelTypeCS modelTypeCS : myUnit.getPrimaryModuleCS().getMetamodels()) {
+			for (ModelTypeCS modelTypeCS : QvtOperationalParserUtil.getModelTypes(getUnitCST())) {
 		    	if (modelTypeCS == null || modelTypeCS.getPackageRefs().isEmpty()) {
 		    		continue;
 		    	}
@@ -184,107 +196,25 @@ public class QvtOutlineInput {
 		@Override
 		protected List<OutlineNode> doGetChildren() {
 			List<OutlineNode> result = new ArrayList<OutlineNode>();
-			if(myUnit.getPrimaryModuleCS() == null) {
+			if(getUnitCST() == null) {
 				return result;
 			}
 
-			for (RenameCS rename : myUnit.getPrimaryModuleCS().getRenamings()) {
-				OutlineNode childNode = new OutlineNode(QvtOutlineLabelProvider.getRenameLabel(rename), this,
-						QvtOutlineNodeType.RENAME, rename);
-				result.add(childNode);
-			}
-
-			return result;
-		}
-
-	}
-
-	private final class PropertiesNode extends ModuleDependentNode {
-
-		public PropertiesNode() {
-			super(QvtOutlineLabelProvider.PROPERTIES_NODE, QvtOutlineInput.this, QvtOutlineNodeType.PROPERTIES);
-		}
-
-		@Override
-		protected List<OutlineNode> doGetChildren() {
-			List<OutlineNode> result = new ArrayList<OutlineNode>();
-			if(myUnit.getPrimaryModuleCS() == null) {
-				return result;
-			}
-
-			for (ModulePropertyCS prop : myUnit.getPrimaryModuleCS().getProperties()) {
-				OutlineNode childNode = new OutlineNode(QvtOutlineLabelProvider.getPropertyLabel(prop), this,
-						QvtOutlineNodeType.PROPERTY, prop);
-				result.add(childNode);
-			}
-
-			return result;
-		}
-
-	}
-
-	private static final class LibraryNode extends OutlineNode {
-		public LibraryNode(final String identity, final OutlineNode parent, int type, CSTNode syntaxElement) {
-			super(identity, parent, type, syntaxElement);
-		}
-
-		@Override
-		public List<OutlineNode> getChildren() {
-			List<OutlineNode> result = new ArrayList<OutlineNode>();
-			String libId = getIdentity();
-			Library lib = OclQvtoPlugin.getDefault().getLibrariesRegistry().getLibrary(libId);
-
-			if (lib != null) {
-				try {
-					for (Iterator<?> it = lib.getLibraryOperations().iterator(); it.hasNext();) {
-						LibraryOperation libOp = (LibraryOperation) it.next();
-						String label = QvtOutlineLabelProvider.getMappingDeclarationAsString(libOp.getName(),
-								"", Collections.<String>emptyList()); //$NON-NLS-1$
-						OutlineNode childNode = new OutlineNode(label, this, QvtOutlineNodeType.MAPPING_RULE);
-						result.add(childNode);
-					}
-				} catch (LibraryCreationException e) {
-					Logger.getLogger().log(Logger.SEVERE, "Exception while loading library", e); //$NON-NLS-1$
-				}
-			}
-
-			return result;
-		}
-	}
-
-	private static final class ImportedModuleNode extends OutlineNode {
-
-		public ImportedModuleNode(final String identity, MappingModuleCS importedModule, final OutlineNode parent, int type,
-				CSTNode syntaxElement) {
-			super(identity, parent, type, syntaxElement);
-			myImportedModule = importedModule;
-		}
-
-		@Override
-		public List<OutlineNode> getChildren() {
-			List<OutlineNode> result = new ArrayList<OutlineNode>();
-			if (myImportedModule != null) {
-				for (MappingMethodCS operationCS : myImportedModule.getMethods()) {
-					MappingDeclarationCS declaration = operationCS.getMappingDeclarationCS();
-					if (declaration == null) {
-						continue;
-					}
-					String label = QvtOutlineLabelProvider.getMappingRuleLabel(operationCS);
-					OutlineNode childNode = new OutlineNode(label, this, QvtOutlineNodeType.MAPPING_RULE);
+			for(MappingModuleCS moduleCS : getUnitCST().getModules()) {
+				for (RenameCS rename : moduleCS.getRenamings()) {
+					OutlineNode childNode = new OutlineNode(QvtOutlineLabelProvider.getRenameLabel(rename), this,
+							QvtOutlineNodeType.RENAME, rename);
 					result.add(childNode);
 				}
 			}
+
 			return result;
 		}
-
-		private final MappingModuleCS myImportedModule;
 
 	}
 
 	private CompiledUnit myUnit;
 	
 	private Object[] myChildren;
-	
-	private ModuleNode myModuleNode;
 	
 }
