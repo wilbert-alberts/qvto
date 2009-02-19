@@ -1,0 +1,3 @@
+library deprecated_importLocation;
+
+import /*<warn>*/org.bar.Foo/*</warn>*/;
