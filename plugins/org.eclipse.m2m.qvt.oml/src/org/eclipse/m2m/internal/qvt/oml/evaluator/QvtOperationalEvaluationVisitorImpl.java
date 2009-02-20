@@ -325,7 +325,8 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		return expression.accept(getVisitor());
 	}
     
-    public Object visitAssignExp(final AssignExp assignExp) {
+    @SuppressWarnings("unchecked")
+	public Object visitAssignExp(final AssignExp assignExp) {
         QvtOperationalEvaluationEnv env = getOperationalEvaluationEnv();
 		InternalEvaluationEnv internEnv = env.getAdapter(InternalEvaluationEnv.class);
         
@@ -355,8 +356,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         	return null;
         }        
         
-        if (lValue instanceof VariableExp) {
-            @SuppressWarnings("unchecked")
+        if (lValue instanceof VariableExp<?, ?>) {
             VariableExp<EClassifier, EParameter> varExp = (VariableExp<EClassifier, EParameter>) lValue;
             Variable<EClassifier, EParameter> referredVariable = varExp.getReferredVariable();
             if (referredVariable != null) {
@@ -364,7 +364,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
                 Object oldValue = getRuntimeValue(varName);
                 EClassifier variableType = lValue.getType();
                 if ((variableType instanceof CollectionType) && (oldValue instanceof Collection)) {
-                    @SuppressWarnings("unchecked")
                     Collection<Object> oldOclCollection = (Collection<Object>) oldValue;
                     Collection<Object> leftOclCollection;
                     if (assignExp.isIsReset()) {
@@ -402,7 +401,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
                     replaceInEnv(varName, exprValue, variableType);
                 }
             }
-        } else if (lValue instanceof PropertyCallExp) {
+        } else if (lValue instanceof PropertyCallExp<?, ?>) {
             Object ownerObj = getAssignExpLValueOwner(lValue);
             if (ownerObj instanceof EObject) {
                 EObject oldIP = setCurrentEnvInstructionPointer(assignExp);

@@ -441,7 +441,7 @@ public class QvtOperationalParserUtil {
 	 * @param variable
 	 *            the variable to be assigned a value or indirectly modified through
 	 *            an owned property
-	 * @param varPathNameNodeCS
+	 * @param varNodeCS
 	 *            the pathname representing the left side of an assignment. It can be a simple name
 	 *            representing a variable direct access or a path navigating to owned property.
 	 * @param varPathNamePropertyASTopt AST property element for a property if any available as the target for modification  
@@ -450,7 +450,7 @@ public class QvtOperationalParserUtil {
 	 *         otherwise.
 	 */
 	public static boolean validateVariableModification(Variable<EClassifier, EParameter> variable,
-			PathNameCS varPathNameNodeCS, EStructuralFeature varPathNamePropertyASTopt, 
+			CSTNode varNodeCS, EStructuralFeature varPathNamePropertyASTopt, 
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
 			boolean isDirectModification) {
@@ -463,22 +463,15 @@ public class QvtOperationalParserUtil {
 			
 			if(isDirectInoutModification) {
 				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.QvtOperationalParserUtil_inoutParamAssignmentError, parameter.getName()),
-						varPathNameNodeCS);
+						varNodeCS);
 				return false;
 			}
 			
 			if (parameter.getKind() != DirectionKind.OUT && parameter.getKind() != DirectionKind.INOUT && isContextualPropertyAccessed == false) {
 				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.inputParameterModificationError, variable.getName()),
-						varPathNameNodeCS);
+						varNodeCS);
 				return false;
 			}
-		}
-		
-		//FIXME - remove the code bellow, it has no effect
-		if (representedParameter instanceof EStructuralFeature) {
-			QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.readOnlyPropertyModificationError, variable.getName()),
-					varPathNameNodeCS);
-			return false;
 		}
 		return true;
 	}

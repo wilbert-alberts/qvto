@@ -2996,32 +2996,15 @@ public class QvtOperationalVisitorCS
 		return varResult;
 	}
 
+	@SuppressWarnings("unchecked")
 	private org.eclipse.ocl.ecore.OCLExpression visitAssignStatementCS(AssignStatementCS expressionCS, 
 	        Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 	        EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 
 	    OCLExpressionCS lValueCS = expressionCS.getLValueCS();
-	    org.eclipse.ocl.ecore.OCLExpression lValue = oclExpressionCS(lValueCS, env);
-	    PathNameCS pathNameCS = extractQualifiedName(lValueCS);
-	    if (pathNameCS == null) {
+	    if ((lValueCS instanceof OperationCallExpCS)
+	    		|| !(lValueCS instanceof VariableExpCS) && !(lValueCS instanceof FeatureCallExpCS)) {
 	        QvtOperationalUtil.reportError(env, ValidationMessages.notAnLValueError, lValueCS);
-	        return null;
-	    }
-	    EList<String> qualifiedName = pathNameCS.getSequenceOfNames();
-	    if (qualifiedName.size() > 2) {
-	        QvtOperationalUtil.reportError(env, ValidationMessages.cannotModifyNestedPropertiesError, lValueCS);
-	        return null;
-	    }
-
-	    String lvalueName = qualifiedName.get(0);
-	    if (qualifiedName.size() == 1 && Environment.SELF_VARIABLE_NAME.equals(lvalueName)) {
-	        QvtOperationalUtil.reportError(env, ValidationMessages.CantAssignToSelf, lValueCS);
-	        return null;
-	    }
-
-
-	    if (qualifiedName.size() == 1 && QvtOperationalEnv.THIS.equals(lvalueName)) {
-	        QvtOperationalUtil.reportError(env, ValidationMessages.CantAssignToThis, lValueCS);
 	        return null;
 	    }
 
@@ -3030,24 +3013,34 @@ public class QvtOperationalVisitorCS
 	        return null;
 	    }
 
-	    if (lValue instanceof VariableExp) {
-	        Variable<EClassifier, EParameter> variable = env.lookup(lvalueName);
+	    org.eclipse.ocl.ecore.OCLExpression lValue = oclExpressionCS(lValueCS, env);
+	    if (lValue instanceof VariableExp<?, ?>) {
+	    	VariableExp<EClassifier, EParameter> variableExp = (VariableExp<EClassifier, EParameter>) lValue;
+		    String referredVariableName = variableExp.getName();
+		    if (Environment.SELF_VARIABLE_NAME.equals(referredVariableName)) {
+		        QvtOperationalUtil.reportError(env, ValidationMessages.CantAssignToSelf, lValueCS);
+		        return null;
+		    }
+
+
+		    if (QvtOperationalEnv.THIS.equals(referredVariableName)) {
+		        QvtOperationalUtil.reportError(env, ValidationMessages.CantAssignToThis, lValueCS);
+		        return null;
+		    }
+		    Variable<EClassifier, EParameter> variable = variableExp.getReferredVariable();
 	        if (variable == null) { // We mustn't be here. Must have been detected by OCL
-	            QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.unresolvedNameError, new Object[] { lvalueName }),
+	            QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.unresolvedNameError, new Object[] { referredVariableName }),
 	                    lValueCS);
 	            return null;
 	        }
-	        QvtOperationalParserUtil.validateVariableModification(variable, pathNameCS, null, env, true);         
+	        QvtOperationalParserUtil.validateVariableModification(variable, lValueCS, null, env, true);         
 	        QvtOperationalParserUtil.validateAssignment(false, variable.getName(), variable.getType(), rightExpr.getType(),
-	        		expressionCS.isIncremental(), pathNameCS, env);
-	    } else if (lValue instanceof PropertyCallExp) {
-	        @SuppressWarnings("unchecked")
+	        		expressionCS.isIncremental(), lValueCS, env);
+	    } else if (lValue instanceof PropertyCallExp<?, ?>) {
 	        PropertyCallExp<EClassifier, EStructuralFeature> propertyCallExp = (PropertyCallExp<EClassifier, EStructuralFeature>) lValue;
 	        EStructuralFeature property = propertyCallExp.getReferredProperty();
 	        if (property == null) { // We mustn't be here. This case is to be handled below
-	            String fullName = QvtOperationalParserUtil.getStringRepresentation(pathNameCS, "."); //$NON-NLS-1$ 
-	            QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.invalidPropertyReferenceError,
-	                    new Object[] { fullName }), lValueCS);
+	            QvtOperationalUtil.reportError(env, ValidationMessages.invalidPropertyReferenceError, lValueCS);
 	            return null;
 	        } else {
 	            if (!property.isChangeable()) {
@@ -3055,32 +3048,15 @@ public class QvtOperationalVisitorCS
 	            } else {
 	                OCLExpression<EClassifier> source = propertyCallExp.getSource();
 	                if (source instanceof VariableExp) {
-	                    @SuppressWarnings("unchecked")
 	                    VariableExp<EClassifier, EParameter> sourceExp = (VariableExp<EClassifier, EParameter>) source;
 	                    Variable<EClassifier, EParameter> sourceVariable = sourceExp.getReferredVariable();
-	                    QvtOperationalParserUtil.validateVariableModification(sourceVariable, pathNameCS, property, env, false);
+	                    QvtOperationalParserUtil.validateVariableModification(sourceVariable, lValueCS, property, env, false);
 	                }
 	                QvtOperationalParserUtil.validateAssignment(true, property.getName(), env.getUMLReflection().getOCLType(property),
 	                		rightExpr.getType(), expressionCS.isIncremental(), lValueCS, env);
 	            }
 	        }
 	    } else {
-	        EStructuralFeature leftProp = null;
-	        if (qualifiedName.size() > 1) {
-	            Variable<EClassifier, EParameter> variable = env.lookup(lvalueName);
-	            if (variable == null) {
-	                QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.unresolvedNameError, new Object[] { lvalueName }),
-	                        lValueCS);
-	                return null;
-	            }
-	            leftProp = env.lookupProperty(variable.getType(), qualifiedName.get(qualifiedName.size() - 1));
-	            if (leftProp == null) {
-	                String fullName = QvtOperationalParserUtil.getStringRepresentation(pathNameCS, "."); //$NON-NLS-1$ 
-	                QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.invalidPropertyReferenceError,
-	                        new Object[] { fullName }), lValueCS);
-	                return null;
-	            }
-	        }
 	        // TODO: This code is to be transferred to the AST validator
 	        if ((lValue != null) && !(lValue instanceof InvalidLiteralExp)) { // to avoid induced errors on unresolved variables
 	            QvtOperationalUtil.reportError(env, ValidationMessages.notAnLValueError, lValueCS);
@@ -3100,37 +3076,7 @@ public class QvtOperationalVisitorCS
 	    return result;
 	}
 	
-    private PathNameCS extractQualifiedName(OCLExpressionCS qualified) {
-        if (qualified instanceof PathNameCS) {
-            return (PathNameCS) qualified;
-        }
-        else if (qualified instanceof VariableExpCS) {
-            PathNameCS result = CSTFactory.eINSTANCE.createPathNameCS();
-            result.getSequenceOfNames().add(((VariableExpCS) qualified).getSimpleNameCS().getValue());
-            result.setStartOffset(qualified.getStartOffset());
-            result.setEndOffset(qualified.getEndOffset());
-            return result;
-        }
-        else if (qualified instanceof FeatureCallExpCS) {
-            FeatureCallExpCS callExp = (FeatureCallExpCS) qualified;
-            if (callExp.getSource() == null) {
-                return null;
-            }
-            PathNameCS prefix = extractQualifiedName(callExp.getSource());
-            if (prefix == null) {
-                return null;
-            }
-            PathNameCS result = CSTFactory.eINSTANCE.createPathNameCS();
-            result.getSequenceOfNames().addAll(prefix.getSequenceOfNames());
-            result.getSequenceOfNames().add(callExp.getSimpleNameCS().getValue());
-            result.setStartOffset(qualified.getStartOffset());
-            result.setEndOffset(qualified.getEndOffset());
-            return result;
-        }
-        return null;
-    }
-	
-	private VarParameter visitParameterDeclarationCS(ParameterDeclarationCS paramCS, boolean createMappingParam, 
+    private VarParameter visitParameterDeclarationCS(ParameterDeclarationCS paramCS, boolean createMappingParam, 
 			QvtOperationalModuleEnv env, boolean isOutAllowed) throws SemanticException {
 		DirectionKindEnum directionKindEnum = paramCS.getDirectionKind();
 		if (directionKindEnum == DirectionKindEnum.DEFAULT) {
