@@ -78,6 +78,7 @@ public class TransformTests {
     
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {
+        		new FileToFileData("nestedPropertiesAssignment_262757"), //$NON-NLS-1$
         		new FileToFileData("listLiteral_259754"), //$NON-NLS-1$
         		new FileToFileData("escape_sequences_250630"), //$NON-NLS-1$
         		new FileToFileData("multilineStrings_262733"), //$NON-NLS-1$
@@ -91,11 +92,11 @@ public class TransformTests {
         		new FileToFileData("stdlibDict"), //$NON-NLS-1$        		        		
                 new FileToFileData("libraryHeaderWithSignature_257575"), //$NON-NLS-1$                
                 new FileToFileData("intermSimple"), //$NON-NLS-1$                
-        		new FilesToFilesData("intermProperties", Collections.<String>emptyList(), Arrays.asList("intermProperties.ecore")),        		
-        		new FilesToFilesData("intermWithCrossRefs", Collections.<String>emptyList(), Arrays.asList("intermWithCrossRefs.ecore")),        		
-        		new FilesToFilesData("intermWithExtends", Collections.<String>emptyList(), Arrays.asList("intermWithExtends.ecore")),        		
-        		new FileToFileData("intermWithoutExtent"),        		
-        		new FilesToFilesData("constructors", Collections.<String>emptyList(), Arrays.asList("constructors_x.ecore", "constructors_y.ecore")),        		
+        		new FilesToFilesData("intermProperties", Collections.<String>emptyList(), Arrays.asList("intermProperties.ecore")),        		 //$NON-NLS-1$ //$NON-NLS-2$
+        		new FilesToFilesData("intermWithCrossRefs", Collections.<String>emptyList(), Arrays.asList("intermWithCrossRefs.ecore")),        		 //$NON-NLS-1$ //$NON-NLS-2$
+        		new FilesToFilesData("intermWithExtends", Collections.<String>emptyList(), Arrays.asList("intermWithExtends.ecore")),        		 //$NON-NLS-1$ //$NON-NLS-2$
+        		new FileToFileData("intermWithoutExtent"),        		 //$NON-NLS-1$
+        		new FilesToFilesData("constructors", Collections.<String>emptyList(), Arrays.asList("constructors_x.ecore", "constructors_y.ecore")),        		 //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 new FileToFileData("libraryWithModuleElements_257184"), //$NON-NLS-1$                
                 new FileToFileData("transformationWithModuleElements_257055"), //$NON-NLS-1$                
                 new FileToFileData("objectExpBodyExpressions_253051"), //$NON-NLS-1$                
@@ -113,10 +114,10 @@ public class TransformTests {
         		new FileToFileData("intermediateprop_import"), //$NON-NLS-1$ 
                 new FileToFileData("intermediateprop_resolve", "in.simpleuml", "expected.simpleuml"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 new FileToFileData("intermediateprop_trace", "in.simpleuml", "expected.simpleuml"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        		new FilesToFilesData("multiresultpars", Collections.singletonList("in.ecore"), Arrays.asList("expected_x.ecore", "expected_y.ecore")),        		
-        		new FilesToFilesData("simpletag", Collections.<String>emptyList(), Collections.<String>emptyList()),           		
+        		new FilesToFilesData("multiresultpars", Collections.singletonList("in.ecore"), Arrays.asList("expected_x.ecore", "expected_y.ecore")),        		 //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        		new FilesToFilesData("simpletag", Collections.<String>emptyList(), Collections.<String>emptyList()),           		 //$NON-NLS-1$
         		new FileToFileData("stdlibString"), //$NON-NLS-1$
-        		new FilesToFilesData("stdlibelement", Collections.singletonList("in.ecore"), Arrays.asList("expected_x.ecore", "expected_y.ecore")),           		
+        		new FilesToFilesData("stdlibelement", Collections.singletonList("in.ecore"), Arrays.asList("expected_x.ecore", "expected_y.ecore")),           		 //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         		new FileToFileData("mapDisjuncts"), //$NON-NLS-1$ 
         		new FileToFileData("mapInherits"), //$NON-NLS-1$        		
         		new FileToFileData("mapMultipleInherits"), //$NON-NLS-1$        		
@@ -140,7 +141,7 @@ public class TransformTests {
                 new FileToFileData("oclAllInstances"), //$NON-NLS-1$                
                 new FileToFileData("_while"), //$NON-NLS-1$
                 new FileToFileData("bug214718"), //$NON-NLS-1$        
-                new FileToFileData("oclannotation", "in.ecore", "expected.xmi").includeMetamodelFile("metamodel.ecore"), //$NON-NLS-1$    			
+                new FileToFileData("oclannotation", "in.ecore", "expected.xmi").includeMetamodelFile("metamodel.ecore"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$    			
                 new FileToFileData("importedvirtuals"), //$NON-NLS-1$    	
                 new FileToFileData("ocl_test"), //$NON-NLS-1$    			
                 new FileToFileData("tuples"), //$NON-NLS-1$    			
@@ -170,7 +171,7 @@ public class TransformTests {
                 new FileToFileData("accessbooleans", "testqvt.testqvt", "expected.ecore"),   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
                 new FileToFileData("localstrings"), //$NON-NLS-1$
                 new FileToFileData("castinttodouble"), //$NON-NLS-1$
-//                new FileToFileData("stringescaping"), //$NON-NLS-1$ // TODO: uncomment this line after QVTO string escaping is supported
+                new FileToFileData("stringescaping"), //$NON-NLS-1$
                 new FileToFileData("exists"), //$NON-NLS-1$
                 new FileToFileData("nestednativeops"), //$NON-NLS-1$
                 new FileToFileData("scr23070"), //$NON-NLS-1$
@@ -275,7 +276,7 @@ public class TransformTests {
     }
 
     private static final Set<String> JAVALESS_EXCLUDES = new HashSet<String>(Arrays.asList(new String[] {
-    		"compositetransf", // FIXME - make this included as java-less    		
+    		"compositetransf", // FIXME - make this included as java-less    		 //$NON-NLS-1$
     		"blackboxlib_237781", //$NON-NLS-1$ // imports java lib oper requiring generated ecore metamodel
             "primtypesecore", // uses getDataTypeInstance() defined on ecore //$NON-NLS-1$
             "importedvirtuals", "imports_transformations", "imports", "virt", "full", "fqntraces", // TODO import other files //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
@@ -283,8 +284,8 @@ public class TransformTests {
             "assigntonullowner", "resolveall", // reference not in required format: eSuperTypes = "#//NEW_Class1" insteand of "//@eClassifiers.0" //$NON-NLS-1$ //$NON-NLS-2$
             "egetcodegen", // java method can't be called//$NON-NLS-1$
             "bug214718", // platform protocol URI metamodel reference //$NON-NLS-1$
-            "intermediateprop_import", "_while", "oclAllInstances", "bug216317", "simplestXCollectShorthand", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            "intermediateprop_import", "_while", "oclAllInstances", "bug216317", "simplestXCollectShorthand", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
             "bug2787", "bug2839", "bug2437_4", "bug2437_5", // uses getEClassifier() defined on ecore //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-            "blackboxlib_annotation_java", // generated ECORE models -> not applicable to dynamic models 
+            "blackboxlib_annotation_java", // generated ECORE models -> not applicable to dynamic models  //$NON-NLS-1$
     }));
 }

@@ -84,6 +84,7 @@ public class ParserTests {
     }
     
     private static TestData[] ourData = new TestData[] {
+    	TestData.createSourceChecked("nestedPropertiesAssignment_262757", 9, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("collectionOperationNotFound_224093", 3, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("deprecated_importLocation", 0, 1), //$NON-NLS-1$
     	TestData.createSourceChecked("misplacedTopElements", 0, 4), //$NON-NLS-1$
@@ -147,8 +148,8 @@ public class ParserTests {
         new TestData("modifyfeatureerror", 2), //$NON-NLS-1$
         new TestData("bodywithsemicolon", 0), //$NON-NLS-1$
         new TestData("modifyparam", 0), //$NON-NLS-1$
-        new TestData("wrongparamnameinout", 4), //$NON-NLS-1$
-        new TestData("modifyfeatureininiterror", 3), //$NON-NLS-1$
+        new TestData("wrongparamnameinout", 3), //$NON-NLS-1$
+        new TestData("modifyfeatureininiterror", 2), //$NON-NLS-1$
         TestData.createSourceChecked("voidout", 2, 0), //$NON-NLS-1$
         new TestData("modifyinparam", 1), //$NON-NLS-1$
         new TestData("modifyresult", 0), //$NON-NLS-1$
