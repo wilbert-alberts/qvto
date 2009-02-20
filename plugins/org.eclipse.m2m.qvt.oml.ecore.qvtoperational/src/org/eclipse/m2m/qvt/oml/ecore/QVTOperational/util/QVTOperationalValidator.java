@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: QVTOperationalValidator.java,v 1.2 2009/01/25 23:12:24 radvorak Exp $
+ * $Id: QVTOperationalValidator.java,v 1.3 2009/02/20 12:52:33 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.util;
 
@@ -317,7 +317,7 @@ public class QVTOperationalValidator extends EObjectValidator {
 						(Diagnostic.ERROR,
 						 DIAGNOSTIC_SOURCE,
 						 0,
-						 "_UIo_InvalidEntryOperationName_diagnostic", //$NON-NLS-1$
+						 "_UI_InvalidEntryOperationName_diagnostic", //$NON-NLS-1$
 						 new Object[] { getObjectLabel(entryOperation, context) },
 						 new Object[] { entryOperation },
 						 context));
@@ -345,7 +345,7 @@ public class QVTOperationalValidator extends EObjectValidator {
 						(Diagnostic.ERROR,
 						 DIAGNOSTIC_SOURCE,
 						 0,
-						 "_UIo_InvalidEntryOperationParameters_diagnostic", //$NON-NLS-1$
+						 "_UI_InvalidEntryOperationParameters_diagnostic", //$NON-NLS-1$
 						 new Object[] { getObjectLabel(entryOperation, context) },
 						 new Object[] { entryOperation },
 						 context));
@@ -427,7 +427,7 @@ public class QVTOperationalValidator extends EObjectValidator {
 			if (source == null)	{// The referred operation shouldn't have contextual parameter
 				if (io.getContext() != null) {
 					result = false;
-					message = "_UIo_NonSourceImperativeCallExpReferencingContextualOperation_diagnostic"; //$NON-NLS-1$
+					message = "_UI_NonSourceImperativeCallExpReferencingContextualOperation_diagnostic"; //$NON-NLS-1$
 					substitutions = new Object[] {getObjectLabel(io, context)};
 				}
 			}
@@ -438,7 +438,7 @@ public class QVTOperationalValidator extends EObjectValidator {
 					EClassifier contextualParamType = contextualParam.getType();
 					if (!TypeUtil.compatibleTypeMatch(env, sourceType, contextualParamType)) {
 						result = false;
-						message = "_UIo_NonConformanceSourceContextualParam_diagnostic"; //$NON-NLS-1$
+						message = "_UI_NonConformanceSourceContextualParam_diagnostic"; //$NON-NLS-1$
 						substitutions = new Object[] {getObjectLabel(sourceType, context),
 														getObjectLabel(contextualParamType, context)};
 					}
@@ -1059,12 +1059,12 @@ public class QVTOperationalValidator extends EObjectValidator {
 				EClassifier moTypeToCompare=null;
 				if (resolveInExp.isIsInverse()) {// the source type should conform the type of the operation
 					moTypeToCompare = mo.getEType();
-					message = "_UIo_NonConformanceInvResolveInExpSourceType_InMappingInType_diagnostic"; //$NON-NLS-1$					
+					message = "_UI_NonConformanceInvResolveInExpSourceType_InMappingInType_diagnostic"; //$NON-NLS-1$					
 				}else {	// the source should conform the contextual parameter type					
 					VarParameter contextParam = mo.getContext();
 					if (contextParam != null)
 						moTypeToCompare = contextParam.getType();					
-					message = "_UIo_NonConformanceResolveInExpSourceType_InMappingContextType_diagnostic";
+					message = "_UI_NonConformanceResolveInExpSourceType_InMappingContextType_diagnostic";
 					
 					
 				}
