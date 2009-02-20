@@ -29,7 +29,7 @@ import org.eclipse.pde.core.plugin.IPlugin;
 import org.eclipse.pde.core.plugin.IPluginBase;
 import org.eclipse.pde.core.plugin.IPluginModel;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
-import org.eclipse.pde.internal.core.PDECore;
+import org.eclipse.pde.core.plugin.PluginRegistry;
 import org.eclipse.pde.internal.core.TargetPlatformHelper;
 
 
@@ -87,11 +87,11 @@ public class PluginUtil {
 	}
     	
     public static IPluginModelBase findPluginModelByProject(IProject project) {
-		return PDECore.getDefault().getModelManager().findModel(project);
+		return PluginRegistry.findModel(project);
 	}
 
 	public static IPluginModelBase findPluginModelByID(String importID) {
-		return PDECore.getDefault().getModelManager().findModel(importID);
+		return PluginRegistry.findModel(importID);
 	}
       
     
