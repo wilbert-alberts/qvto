@@ -2,16 +2,13 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ImperativeCallExpImpl.java,v 1.1 2008/09/02 20:36:01 radvorak Exp $
+ * $Id: ImperativeCallExpImpl.java,v 1.2 2009/02/20 12:55:55 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.QVTOperational.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.qvt.oml.emof.QVTOperational.ImperativeCallExp;
 import org.eclipse.m2m.qvt.oml.emof.QVTOperational.QVTOperationalPackage;
 import org.eclipse.qvt.declarative.emof.EssentialOCL.impl.OperationCallExpImpl;

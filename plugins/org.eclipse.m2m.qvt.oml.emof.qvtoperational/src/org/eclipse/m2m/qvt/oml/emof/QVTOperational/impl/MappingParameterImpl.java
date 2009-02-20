@@ -2,17 +2,14 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MappingParameterImpl.java,v 1.1 2008/09/02 20:36:01 radvorak Exp $
+ * $Id: MappingParameterImpl.java,v 1.2 2009/02/20 12:55:55 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.QVTOperational.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.m2m.qvt.oml.emof.QVTOperational.MappingParameter;
 import org.eclipse.m2m.qvt.oml.emof.QVTOperational.ModelParameter;
 import org.eclipse.m2m.qvt.oml.emof.QVTOperational.QVTOperationalPackage;

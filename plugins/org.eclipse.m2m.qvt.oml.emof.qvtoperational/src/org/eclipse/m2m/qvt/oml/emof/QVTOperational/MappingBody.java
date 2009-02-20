@@ -2,12 +2,11 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MappingBody.java,v 1.1 2008/09/02 20:36:00 radvorak Exp $
+ * $Id: MappingBody.java,v 1.2 2009/02/20 12:55:55 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.QVTOperational;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.qvt.declarative.emof.EssentialOCL.OclExpression;
 
 /**

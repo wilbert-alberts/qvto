@@ -2,12 +2,11 @@
  * <copyright>
  * </copyright>
  *
- * $Id: EntryOperationImpl.java,v 1.1 2008/09/02 20:36:01 radvorak Exp $
+ * $Id: EntryOperationImpl.java,v 1.2 2009/02/20 12:55:55 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.QVTOperational.impl;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.m2m.qvt.oml.emof.QVTOperational.EntryOperation;
 import org.eclipse.m2m.qvt.oml.emof.QVTOperational.QVTOperationalPackage;
 

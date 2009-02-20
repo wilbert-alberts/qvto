@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ModuleImpl.java,v 1.2 2008/09/30 22:11:05 radvorak Exp $
+ * $Id: ModuleImpl.java,v 1.3 2009/02/20 12:55:55 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.QVTOperational.impl;
 
@@ -10,20 +10,15 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.m2m.qvt.oml.emof.QVTOperational.EntryOperation;
 import org.eclipse.m2m.qvt.oml.emof.QVTOperational.ModelType;
 import org.eclipse.m2m.qvt.oml.emof.QVTOperational.Module;
@@ -33,9 +28,7 @@ import org.eclipse.qvt.declarative.emof.EMOF.EMOFPackage;
 import org.eclipse.qvt.declarative.emof.EMOF.Property;
 import org.eclipse.qvt.declarative.emof.EMOF.Tag;
 import org.eclipse.qvt.declarative.emof.EMOF.Type;
-
 import org.eclipse.qvt.declarative.emof.EMOF.impl.ClassImpl;
-
 import org.eclipse.qvt.declarative.emof.EssentialOCL.Variable;
 
 

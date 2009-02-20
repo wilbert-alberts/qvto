@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: QVTOperationalPackageImpl.java,v 1.1 2008/09/02 20:36:01 radvorak Exp $
+ * $Id: QVTOperationalPackageImpl.java,v 1.2 2009/02/20 12:55:55 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.QVTOperational.impl;
 
@@ -11,9 +11,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeOCLPackage;
 import org.eclipse.m2m.qvt.oml.emof.QVTOperational.Constructor;
 import org.eclipse.m2m.qvt.oml.emof.QVTOperational.ConstructorBody;
@@ -42,9 +40,7 @@ import org.eclipse.m2m.qvt.oml.emof.QVTOperational.ResolveExp;
 import org.eclipse.m2m.qvt.oml.emof.QVTOperational.ResolveInExp;
 import org.eclipse.m2m.qvt.oml.emof.QVTOperational.VarParameter;
 import org.eclipse.qvt.declarative.emof.EMOF.EMOFPackage;
-
 import org.eclipse.qvt.declarative.emof.EssentialOCL.EssentialOCLPackage;
-
 import org.eclipse.qvt.declarative.emof.QVTRelation.QVTRelationPackage;
 
 

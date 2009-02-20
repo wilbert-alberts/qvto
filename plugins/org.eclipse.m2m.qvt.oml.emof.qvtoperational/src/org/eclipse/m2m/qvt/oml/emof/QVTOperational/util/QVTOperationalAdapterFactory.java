@@ -2,20 +2,39 @@
  * <copyright>
  * </copyright>
  *
- * $Id: QVTOperationalAdapterFactory.java,v 1.1 2008/09/02 20:36:02 radvorak Exp $
+ * $Id: QVTOperationalAdapterFactory.java,v 1.2 2009/02/20 12:55:55 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.QVTOperational.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeExpression;
 import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.InstantiationExp;
-import org.eclipse.m2m.qvt.oml.emof.QVTOperational.*;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.Constructor;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.ConstructorBody;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.ContextualProperty;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.EntryOperation;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.Helper;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.ImperativeCallExp;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.ImperativeOperation;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.Library;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.MappingBody;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.MappingCallExp;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.MappingOperation;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.MappingParameter;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.ModelParameter;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.ModelType;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.Module;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.ModuleImport;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.ObjectExp;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.OperationBody;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.OperationalTransformation;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.QVTOperationalPackage;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.ResolveExp;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.ResolveInExp;
+import org.eclipse.m2m.qvt.oml.emof.QVTOperational.VarParameter;
 import org.eclipse.qvt.declarative.emof.EMOF.Element;
 import org.eclipse.qvt.declarative.emof.EMOF.MultiplicityElement;
 import org.eclipse.qvt.declarative.emof.EMOF.NamedElement;
@@ -24,7 +43,6 @@ import org.eclipse.qvt.declarative.emof.EMOF.Parameter;
 import org.eclipse.qvt.declarative.emof.EMOF.Property;
 import org.eclipse.qvt.declarative.emof.EMOF.Type;
 import org.eclipse.qvt.declarative.emof.EMOF.TypedElement;
-
 import org.eclipse.qvt.declarative.emof.EssentialOCL.CallExp;
 import org.eclipse.qvt.declarative.emof.EssentialOCL.FeatureCallExp;
 import org.eclipse.qvt.declarative.emof.EssentialOCL.OclExpression;

@@ -2,20 +2,16 @@
  * <copyright>
  * </copyright>
  *
- * $Id: VarParameterImpl.java,v 1.1 2008/09/02 20:36:01 radvorak Exp $
+ * $Id: VarParameterImpl.java,v 1.2 2009/02/20 12:55:55 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.QVTOperational.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EcoreUtil;
-
 import org.eclipse.m2m.qvt.oml.emof.QVTOperational.DirectionKind;
 import org.eclipse.m2m.qvt.oml.emof.QVTOperational.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.emof.QVTOperational.QVTOperationalPackage;
@@ -24,7 +20,6 @@ import org.eclipse.qvt.declarative.emof.EMOF.EMOFPackage;
 import org.eclipse.qvt.declarative.emof.EMOF.MultiplicityElement;
 import org.eclipse.qvt.declarative.emof.EMOF.Operation;
 import org.eclipse.qvt.declarative.emof.EMOF.Parameter;
-
 import org.eclipse.qvt.declarative.emof.EssentialOCL.impl.VariableImpl;
 
 

@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: OperationBodyImpl.java,v 1.1 2008/09/02 20:36:02 radvorak Exp $
+ * $Id: OperationBodyImpl.java,v 1.2 2009/02/20 12:55:55 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.QVTOperational.impl;
 
@@ -10,23 +10,17 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.m2m.qvt.oml.emof.QVTOperational.ImperativeOperation;
 import org.eclipse.m2m.qvt.oml.emof.QVTOperational.OperationBody;
 import org.eclipse.m2m.qvt.oml.emof.QVTOperational.QVTOperationalPackage;
 import org.eclipse.qvt.declarative.emof.EMOF.impl.ElementImpl;
-
 import org.eclipse.qvt.declarative.emof.EssentialOCL.OclExpression;
 import org.eclipse.qvt.declarative.emof.EssentialOCL.Variable;
 

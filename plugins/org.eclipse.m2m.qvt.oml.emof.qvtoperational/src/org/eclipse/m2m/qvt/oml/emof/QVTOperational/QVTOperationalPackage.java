@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: QVTOperationalPackage.java,v 1.2 2008/09/30 22:11:05 radvorak Exp $
+ * $Id: QVTOperationalPackage.java,v 1.3 2009/02/20 12:55:55 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.QVTOperational;
 
@@ -11,10 +11,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeOCLPackage;
 import org.eclipse.qvt.declarative.emof.EMOF.EMOFPackage;
-
 import org.eclipse.qvt.declarative.emof.EssentialOCL.EssentialOCLPackage;
 
 
