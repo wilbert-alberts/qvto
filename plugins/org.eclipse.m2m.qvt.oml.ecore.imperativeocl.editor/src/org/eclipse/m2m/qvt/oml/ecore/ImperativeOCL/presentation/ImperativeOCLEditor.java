@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeOCLEditor.java,v 1.3 2009/01/25 23:11:30 radvorak Exp $
+ * $Id: ImperativeOCLEditor.java,v 1.4 2009/02/20 12:55:44 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.presentation;
 
@@ -469,31 +469,31 @@ public class ImperativeOCLEditor
 						}
 					}
 
-					ResourceDeltaVisitor visitor = new ResourceDeltaVisitor();
+					final ResourceDeltaVisitor visitor = new ResourceDeltaVisitor();
 					delta.accept(visitor);
 
 					if (!visitor.getRemovedResources().isEmpty()) {
-						removedResources.addAll(visitor.getRemovedResources());
-						if (!isDirty()) {
-							getSite().getShell().getDisplay().asyncExec
-								(new Runnable() {
-									 public void run() {
+						getSite().getShell().getDisplay().asyncExec
+							(new Runnable() {
+								 public void run() {
+									 removedResources.addAll(visitor.getRemovedResources());
+									 if (!isDirty()) {
 										 getSite().getPage().closeEditor(ImperativeOCLEditor.this, false);
 									 }
-								 });
-						}
+								 }
+							 });
 					}
 
 					if (!visitor.getChangedResources().isEmpty()) {
-						changedResources.addAll(visitor.getChangedResources());
-						if (getSite().getPage().getActiveEditor() == ImperativeOCLEditor.this) {
-							getSite().getShell().getDisplay().asyncExec
-								(new Runnable() {
-									 public void run() {
+						getSite().getShell().getDisplay().asyncExec
+							(new Runnable() {
+								 public void run() {
+									 changedResources.addAll(visitor.getChangedResources());
+									 if (getSite().getPage().getActiveEditor() == ImperativeOCLEditor.this) {
 										 handleActivate();
 									 }
-								 });
-						}
+								 }
+							 });
 					}
 				}
 				catch (CoreException exception) {
@@ -731,11 +731,6 @@ public class ImperativeOCLEditor
 		// Make sure it's okay.
 		//
 		if (theSelection != null && !theSelection.isEmpty()) {
-			// I don't know if this should be run this deferred
-			// because we might have to give the editor a chance to process the viewer update events
-			// and hence to update the views first.
-			//
-			//
 			Runnable runnable =
 				new Runnable() {
 					public void run() {
@@ -746,7 +741,7 @@ public class ImperativeOCLEditor
 						}
 					}
 				};
-			runnable.run();
+			getSite().getShell().getDisplay().asyncExec(runnable);
 		}
 	}
 
