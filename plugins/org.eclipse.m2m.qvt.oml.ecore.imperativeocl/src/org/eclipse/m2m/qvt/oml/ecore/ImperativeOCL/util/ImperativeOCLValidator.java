@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeOCLValidator.java,v 1.5 2009/02/20 11:03:59 radvorak Exp $
+ * $Id: ImperativeOCLValidator.java,v 1.6 2009/02/20 12:52:31 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.util;
 
@@ -779,7 +779,7 @@ public class ImperativeOCLValidator extends EObjectValidator {
 			|| name.equals("selectOne")) { 	//$NON-NLS-1$
 				result = false;
 				severity = Diagnostic.WARNING;
-				message = "_UIo_UnexpectedBodyExpression_diagnostic";  //$NON-NLS-1$
+				message = "_UI_UnexpectedBodyExpression_diagnostic";  //$NON-NLS-1$
 			}
 		}
 		else {
@@ -788,7 +788,7 @@ public class ImperativeOCLValidator extends EObjectValidator {
 			|| name.equals("collectselectOne")) { 	//$NON-NLS-1$
 				result = false;
 				severity = Diagnostic.ERROR;
-				message = "_UIo_MissedBodyExpression_diagnostic";  //$NON-NLS-1$
+				message = "_UI_MissedBodyExpression_diagnostic";  //$NON-NLS-1$
 			}
 		}
 		
