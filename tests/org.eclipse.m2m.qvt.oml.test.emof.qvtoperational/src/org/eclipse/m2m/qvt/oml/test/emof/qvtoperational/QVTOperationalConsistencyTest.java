@@ -56,7 +56,13 @@ public class QVTOperationalConsistencyTest extends AbstractEssentialOCLConsisten
 		//
 		//	Ecore added value
 		//
+		missingConstraint(differences, helper, org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage.Literals.ENTRY_OPERATION);
+		missingConstraint(differences, helper, org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage.Literals.IMPERATIVE_CALL_EXP);
 		missingConstraint(differences, helper, org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage.Literals.MODULE);
+		missingConstraint(differences, helper, org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage.Literals.OBJECT_EXP);
+		missingConstraint(differences, helper, org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage.Literals.OPERATIONAL_TRANSFORMATION);
+		missingConstraint(differences, helper, org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage.Literals.RESOLVE_EXP);
+		missingConstraint(differences, helper, org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage.Literals.RESOLVE_IN_EXP);
 	}
 
 	@Override
@@ -231,10 +237,10 @@ public class QVTOperationalConsistencyTest extends AbstractEssentialOCLConsisten
 		helper.setLogStream(null);
 //		missingOppositeAnnotation(differences, helper, QVTOperationalPackage.Literals.PROPERTY_ASSIGNMENT__SLOT_EXPRESSION);
 		missingPrefix(differences, helper, QVTOperationalPackage.eINSTANCE);
-		QVTRelationConsistencyTest.expectedEmo2OmgEmofDifferences(differences, helper);
-		ImperativeOCLConsistencyTest.expectedEmo2OmgEmofDifferences(differences, helper);
-		EssentialOCLConsistencyTest.expectedEmo2OmgEmofDifferences(differences, helper);
-		EMOFConsistencyTest.expectedEmo2OmgEmofDifferences(differences, helper);
+		QVTRelationConsistencyTest.expectedEmof2OmgEmofDifferences(differences, helper);
+		ImperativeOCLConsistencyTest.expectedEmof2OmgEmofDifferences(differences, helper);
+		EssentialOCLConsistencyTest.expectedEmof2OmgEmofDifferences(differences, helper);
+		EMOFConsistencyTest.expectedEmof2OmgEmofDifferences(differences, helper);
 		return differences;
 	}
 
