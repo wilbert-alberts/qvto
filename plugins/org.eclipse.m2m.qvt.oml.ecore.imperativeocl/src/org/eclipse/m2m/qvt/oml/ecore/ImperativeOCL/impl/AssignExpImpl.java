@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: AssignExpImpl.java,v 1.4 2009/02/06 15:47:30 radvorak Exp $
+ * $Id: AssignExpImpl.java,v 1.5 2009/02/20 11:03:59 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.impl;
 
@@ -299,7 +299,7 @@ public class AssignExpImpl extends ImperativeExpressionImpl implements AssignExp
 			case ImperativeOCLPackage.ASSIGN_EXP__DEFAULT_VALUE:
 				return getDefaultValue();
 			case ImperativeOCLPackage.ASSIGN_EXP__IS_RESET:
-				return isIsReset() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsReset();
 			case ImperativeOCLPackage.ASSIGN_EXP__LEFT:
 				return getLeft();
 			case ImperativeOCLPackage.ASSIGN_EXP__VALUE:
@@ -321,7 +321,7 @@ public class AssignExpImpl extends ImperativeExpressionImpl implements AssignExp
 				setDefaultValue((OCLExpression)newValue);
 				return;
 			case ImperativeOCLPackage.ASSIGN_EXP__IS_RESET:
-				setIsReset(((Boolean)newValue).booleanValue());
+				setIsReset((Boolean)newValue);
 				return;
 			case ImperativeOCLPackage.ASSIGN_EXP__LEFT:
 				setLeft((OCLExpression)newValue);

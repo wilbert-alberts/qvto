@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeOCLValidator.java,v 1.4 2009/01/25 23:10:43 radvorak Exp $
+ * $Id: ImperativeOCLValidator.java,v 1.5 2009/02/20 11:03:59 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.util;
 
@@ -586,7 +586,7 @@ public class ImperativeOCLValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(dictionaryType, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(dictionaryType, diagnostics, context);
 		if (result || diagnostics != null) result &= ecore_1Validator.validateCollectionType_WellFormedName(dictionaryType, diagnostics, context);
-		if (result || diagnostics != null) result &= ecoreValidator.validateEClassifier_WellFormedInstanceTypeName(dictionaryType, diagnostics, context);
+		if (result || diagnostics != null) result &= ecore_1Validator.validateCollectionType_WellFormedInstanceTypeName(dictionaryType, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClassifier_UniqueTypeParameterNames(dictionaryType, diagnostics, context);
 		if (result || diagnostics != null) result &= typesValidator.validateCollectionType_checkCollectionTypeName(dictionaryType, diagnostics, context);
 		if (result || diagnostics != null) result &= typesValidator.validateCollectionType_checkNoInvalidValues(dictionaryType, diagnostics, context);
@@ -958,7 +958,7 @@ public class ImperativeOCLValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(listType, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(listType, diagnostics, context);
 		if (result || diagnostics != null) result &= ecore_1Validator.validateCollectionType_WellFormedName(listType, diagnostics, context);
-		if (result || diagnostics != null) result &= ecoreValidator.validateEClassifier_WellFormedInstanceTypeName(listType, diagnostics, context);
+		if (result || diagnostics != null) result &= ecore_1Validator.validateCollectionType_WellFormedInstanceTypeName(listType, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClassifier_UniqueTypeParameterNames(listType, diagnostics, context);
 		if (result || diagnostics != null) result &= typesValidator.validateCollectionType_checkCollectionTypeName(listType, diagnostics, context);
 		if (result || diagnostics != null) result &= typesValidator.validateCollectionType_checkNoInvalidValues(listType, diagnostics, context);

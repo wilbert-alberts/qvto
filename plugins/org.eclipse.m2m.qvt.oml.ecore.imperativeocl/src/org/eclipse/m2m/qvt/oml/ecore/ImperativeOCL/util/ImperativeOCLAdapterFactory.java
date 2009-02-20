@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeOCLAdapterFactory.java,v 1.2 2009/01/25 23:10:43 radvorak Exp $
+ * $Id: ImperativeOCLAdapterFactory.java,v 1.3 2009/02/20 11:03:59 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.util;
 
@@ -280,16 +280,16 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 				return createOCLExpressionAdapter();
 			}
 			@Override
-			public Adapter caseOCLExpression_1(org.eclipse.ocl.ecore.OCLExpression object) {
-				return createOCLExpression_1Adapter();
+			public Adapter caseEcore_OCLExpression(org.eclipse.ocl.ecore.OCLExpression object) {
+				return createEcore_OCLExpressionAdapter();
 			}
 			@Override
 			public <C> Adapter caseLiteralExp(LiteralExp<C> object) {
 				return createLiteralExpAdapter();
 			}
 			@Override
-			public Adapter caseLiteralExp_1(org.eclipse.ocl.ecore.LiteralExp object) {
-				return createLiteralExp_1Adapter();
+			public Adapter caseEcore_LiteralExp(org.eclipse.ocl.ecore.LiteralExp object) {
+				return createEcore_LiteralExpAdapter();
 			}
 			@Override
 			public Adapter caseEClassifier(EClassifier object) {
@@ -312,8 +312,8 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 				return createCollectionTypeAdapter();
 			}
 			@Override
-			public Adapter caseCollectionType_1(org.eclipse.ocl.ecore.CollectionType object) {
-				return createCollectionType_1Adapter();
+			public Adapter caseEcore_CollectionType(org.eclipse.ocl.ecore.CollectionType object) {
+				return createEcore_CollectionTypeAdapter();
 			}
 			@Override
 			public Adapter caseCallingASTNode(CallingASTNode object) {
@@ -324,32 +324,32 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 				return createCallExpAdapter();
 			}
 			@Override
-			public Adapter caseCallExp_1(org.eclipse.ocl.ecore.CallExp object) {
-				return createCallExp_1Adapter();
+			public Adapter caseEcore_CallExp(org.eclipse.ocl.ecore.CallExp object) {
+				return createEcore_CallExpAdapter();
 			}
 			@Override
 			public <C, PM> Adapter caseLoopExp(LoopExp<C, PM> object) {
 				return createLoopExpAdapter();
 			}
 			@Override
-			public Adapter caseLoopExp_1(org.eclipse.ocl.ecore.LoopExp object) {
-				return createLoopExp_1Adapter();
+			public Adapter caseEcore_LoopExp(org.eclipse.ocl.ecore.LoopExp object) {
+				return createEcore_LoopExpAdapter();
 			}
 			@Override
 			public <C> Adapter caseFeatureCallExp(FeatureCallExp<C> object) {
 				return createFeatureCallExpAdapter();
 			}
 			@Override
-			public Adapter caseFeatureCallExp_1(org.eclipse.ocl.ecore.FeatureCallExp object) {
-				return createFeatureCallExp_1Adapter();
+			public Adapter caseEcore_FeatureCallExp(org.eclipse.ocl.ecore.FeatureCallExp object) {
+				return createEcore_FeatureCallExpAdapter();
 			}
 			@Override
 			public <C, O> Adapter caseOperationCallExp(OperationCallExp<C, O> object) {
 				return createOperationCallExpAdapter();
 			}
 			@Override
-			public Adapter caseOperationCallExp_1(org.eclipse.ocl.ecore.OperationCallExp object) {
-				return createOperationCallExp_1Adapter();
+			public Adapter caseEcore_OperationCallExp(org.eclipse.ocl.ecore.OperationCallExp object) {
+				return createEcore_OperationCallExpAdapter();
 			}
 			@Override
 			public Adapter caseEClass(EClass object) {
@@ -917,7 +917,7 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.ocl.ecore.OCLExpression
 	 * @generated
 	 */
-	public Adapter createOCLExpression_1Adapter() {
+	public Adapter createEcore_OCLExpressionAdapter() {
 		return null;
 	}
 
@@ -945,7 +945,7 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.ocl.ecore.LiteralExp
 	 * @generated
 	 */
-	public Adapter createLiteralExp_1Adapter() {
+	public Adapter createEcore_LiteralExpAdapter() {
 		return null;
 	}
 
@@ -1029,7 +1029,7 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.ocl.ecore.CollectionType
 	 * @generated
 	 */
-	public Adapter createCollectionType_1Adapter() {
+	public Adapter createEcore_CollectionTypeAdapter() {
 		return null;
 	}
 
@@ -1071,7 +1071,7 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.ocl.ecore.CallExp
 	 * @generated
 	 */
-	public Adapter createCallExp_1Adapter() {
+	public Adapter createEcore_CallExpAdapter() {
 		return null;
 	}
 
@@ -1099,7 +1099,7 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.ocl.ecore.LoopExp
 	 * @generated
 	 */
-	public Adapter createLoopExp_1Adapter() {
+	public Adapter createEcore_LoopExpAdapter() {
 		return null;
 	}
 
@@ -1127,7 +1127,7 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.ocl.ecore.FeatureCallExp
 	 * @generated
 	 */
-	public Adapter createFeatureCallExp_1Adapter() {
+	public Adapter createEcore_FeatureCallExpAdapter() {
 		return null;
 	}
 
@@ -1155,7 +1155,7 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.ocl.ecore.OperationCallExp
 	 * @generated
 	 */
-	public Adapter createOperationCallExp_1Adapter() {
+	public Adapter createEcore_OperationCallExpAdapter() {
 		return null;
 	}
 

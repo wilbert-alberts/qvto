@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeOCLSwitch.java,v 1.2 2009/01/25 23:10:43 radvorak Exp $
+ * $Id: ImperativeOCLSwitch.java,v 1.3 2009/02/20 11:03:59 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.util;
 
@@ -148,7 +148,7 @@ public class ImperativeOCLSwitch<T> {
 				AltExp altExp = (AltExp)theEObject;
 				T result = caseAltExp(altExp);
 				if (result == null) result = caseImperativeExpression(altExp);
-				if (result == null) result = caseOCLExpression_1(altExp);
+				if (result == null) result = caseEcore_OCLExpression(altExp);
 				if (result == null) result = caseETypedElement(altExp);
 				if (result == null) result = caseOCLExpression(altExp);
 				if (result == null) result = caseENamedElement(altExp);
@@ -163,7 +163,7 @@ public class ImperativeOCLSwitch<T> {
 				AssertExp assertExp = (AssertExp)theEObject;
 				T result = caseAssertExp(assertExp);
 				if (result == null) result = caseImperativeExpression(assertExp);
-				if (result == null) result = caseOCLExpression_1(assertExp);
+				if (result == null) result = caseEcore_OCLExpression(assertExp);
 				if (result == null) result = caseETypedElement(assertExp);
 				if (result == null) result = caseOCLExpression(assertExp);
 				if (result == null) result = caseENamedElement(assertExp);
@@ -178,7 +178,7 @@ public class ImperativeOCLSwitch<T> {
 				AssignExp assignExp = (AssignExp)theEObject;
 				T result = caseAssignExp(assignExp);
 				if (result == null) result = caseImperativeExpression(assignExp);
-				if (result == null) result = caseOCLExpression_1(assignExp);
+				if (result == null) result = caseEcore_OCLExpression(assignExp);
 				if (result == null) result = caseETypedElement(assignExp);
 				if (result == null) result = caseOCLExpression(assignExp);
 				if (result == null) result = caseENamedElement(assignExp);
@@ -193,7 +193,7 @@ public class ImperativeOCLSwitch<T> {
 				BlockExp blockExp = (BlockExp)theEObject;
 				T result = caseBlockExp(blockExp);
 				if (result == null) result = caseImperativeExpression(blockExp);
-				if (result == null) result = caseOCLExpression_1(blockExp);
+				if (result == null) result = caseEcore_OCLExpression(blockExp);
 				if (result == null) result = caseETypedElement(blockExp);
 				if (result == null) result = caseOCLExpression(blockExp);
 				if (result == null) result = caseENamedElement(blockExp);
@@ -208,7 +208,7 @@ public class ImperativeOCLSwitch<T> {
 				BreakExp breakExp = (BreakExp)theEObject;
 				T result = caseBreakExp(breakExp);
 				if (result == null) result = caseImperativeExpression(breakExp);
-				if (result == null) result = caseOCLExpression_1(breakExp);
+				if (result == null) result = caseEcore_OCLExpression(breakExp);
 				if (result == null) result = caseETypedElement(breakExp);
 				if (result == null) result = caseOCLExpression(breakExp);
 				if (result == null) result = caseENamedElement(breakExp);
@@ -223,7 +223,7 @@ public class ImperativeOCLSwitch<T> {
 				CatchExp catchExp = (CatchExp)theEObject;
 				T result = caseCatchExp(catchExp);
 				if (result == null) result = caseImperativeExpression(catchExp);
-				if (result == null) result = caseOCLExpression_1(catchExp);
+				if (result == null) result = caseEcore_OCLExpression(catchExp);
 				if (result == null) result = caseETypedElement(catchExp);
 				if (result == null) result = caseOCLExpression(catchExp);
 				if (result == null) result = caseENamedElement(catchExp);
@@ -238,7 +238,7 @@ public class ImperativeOCLSwitch<T> {
 				ComputeExp computeExp = (ComputeExp)theEObject;
 				T result = caseComputeExp(computeExp);
 				if (result == null) result = caseImperativeExpression(computeExp);
-				if (result == null) result = caseOCLExpression_1(computeExp);
+				if (result == null) result = caseEcore_OCLExpression(computeExp);
 				if (result == null) result = caseETypedElement(computeExp);
 				if (result == null) result = caseOCLExpression(computeExp);
 				if (result == null) result = caseENamedElement(computeExp);
@@ -253,7 +253,7 @@ public class ImperativeOCLSwitch<T> {
 				ContinueExp continueExp = (ContinueExp)theEObject;
 				T result = caseContinueExp(continueExp);
 				if (result == null) result = caseImperativeExpression(continueExp);
-				if (result == null) result = caseOCLExpression_1(continueExp);
+				if (result == null) result = caseEcore_OCLExpression(continueExp);
 				if (result == null) result = caseETypedElement(continueExp);
 				if (result == null) result = caseOCLExpression(continueExp);
 				if (result == null) result = caseENamedElement(continueExp);
@@ -267,8 +267,8 @@ public class ImperativeOCLSwitch<T> {
 			case ImperativeOCLPackage.DICT_LITERAL_EXP: {
 				DictLiteralExp dictLiteralExp = (DictLiteralExp)theEObject;
 				T result = caseDictLiteralExp(dictLiteralExp);
-				if (result == null) result = caseLiteralExp_1(dictLiteralExp);
-				if (result == null) result = caseOCLExpression_1(dictLiteralExp);
+				if (result == null) result = caseEcore_LiteralExp(dictLiteralExp);
+				if (result == null) result = caseEcore_OCLExpression(dictLiteralExp);
 				if (result == null) result = caseLiteralExp(dictLiteralExp);
 				if (result == null) result = caseETypedElement(dictLiteralExp);
 				if (result == null) result = caseOCLExpression(dictLiteralExp);
@@ -290,7 +290,7 @@ public class ImperativeOCLSwitch<T> {
 			case ImperativeOCLPackage.DICTIONARY_TYPE: {
 				DictionaryType dictionaryType = (DictionaryType)theEObject;
 				T result = caseDictionaryType(dictionaryType);
-				if (result == null) result = caseCollectionType_1(dictionaryType);
+				if (result == null) result = caseEcore_CollectionType(dictionaryType);
 				if (result == null) result = caseEDataType(dictionaryType);
 				if (result == null) result = caseCollectionType(dictionaryType);
 				if (result == null) result = caseEClassifier(dictionaryType);
@@ -306,11 +306,11 @@ public class ImperativeOCLSwitch<T> {
 				ForExp forExp = (ForExp)theEObject;
 				T result = caseForExp(forExp);
 				if (result == null) result = caseImperativeLoopExp(forExp);
-				if (result == null) result = caseLoopExp_1(forExp);
+				if (result == null) result = caseEcore_LoopExp(forExp);
 				if (result == null) result = caseImperativeExpression(forExp);
-				if (result == null) result = caseCallExp_1(forExp);
+				if (result == null) result = caseEcore_CallExp(forExp);
 				if (result == null) result = caseLoopExp(forExp);
-				if (result == null) result = caseOCLExpression_1(forExp);
+				if (result == null) result = caseEcore_OCLExpression(forExp);
 				if (result == null) result = caseCallExp(forExp);
 				if (result == null) result = caseETypedElement(forExp);
 				if (result == null) result = caseOCLExpression(forExp);
@@ -326,7 +326,7 @@ public class ImperativeOCLSwitch<T> {
 			case ImperativeOCLPackage.IMPERATIVE_EXPRESSION: {
 				ImperativeExpression imperativeExpression = (ImperativeExpression)theEObject;
 				T result = caseImperativeExpression(imperativeExpression);
-				if (result == null) result = caseOCLExpression_1(imperativeExpression);
+				if (result == null) result = caseEcore_OCLExpression(imperativeExpression);
 				if (result == null) result = caseETypedElement(imperativeExpression);
 				if (result == null) result = caseOCLExpression(imperativeExpression);
 				if (result == null) result = caseENamedElement(imperativeExpression);
@@ -341,11 +341,11 @@ public class ImperativeOCLSwitch<T> {
 				ImperativeIterateExp imperativeIterateExp = (ImperativeIterateExp)theEObject;
 				T result = caseImperativeIterateExp(imperativeIterateExp);
 				if (result == null) result = caseImperativeLoopExp(imperativeIterateExp);
-				if (result == null) result = caseLoopExp_1(imperativeIterateExp);
+				if (result == null) result = caseEcore_LoopExp(imperativeIterateExp);
 				if (result == null) result = caseImperativeExpression(imperativeIterateExp);
-				if (result == null) result = caseCallExp_1(imperativeIterateExp);
+				if (result == null) result = caseEcore_CallExp(imperativeIterateExp);
 				if (result == null) result = caseLoopExp(imperativeIterateExp);
-				if (result == null) result = caseOCLExpression_1(imperativeIterateExp);
+				if (result == null) result = caseEcore_OCLExpression(imperativeIterateExp);
 				if (result == null) result = caseCallExp(imperativeIterateExp);
 				if (result == null) result = caseETypedElement(imperativeIterateExp);
 				if (result == null) result = caseOCLExpression(imperativeIterateExp);
@@ -361,11 +361,11 @@ public class ImperativeOCLSwitch<T> {
 			case ImperativeOCLPackage.IMPERATIVE_LOOP_EXP: {
 				ImperativeLoopExp imperativeLoopExp = (ImperativeLoopExp)theEObject;
 				T result = caseImperativeLoopExp(imperativeLoopExp);
-				if (result == null) result = caseLoopExp_1(imperativeLoopExp);
+				if (result == null) result = caseEcore_LoopExp(imperativeLoopExp);
 				if (result == null) result = caseImperativeExpression(imperativeLoopExp);
-				if (result == null) result = caseCallExp_1(imperativeLoopExp);
+				if (result == null) result = caseEcore_CallExp(imperativeLoopExp);
 				if (result == null) result = caseLoopExp(imperativeLoopExp);
-				if (result == null) result = caseOCLExpression_1(imperativeLoopExp);
+				if (result == null) result = caseEcore_OCLExpression(imperativeLoopExp);
 				if (result == null) result = caseCallExp(imperativeLoopExp);
 				if (result == null) result = caseETypedElement(imperativeLoopExp);
 				if (result == null) result = caseOCLExpression(imperativeLoopExp);
@@ -382,7 +382,7 @@ public class ImperativeOCLSwitch<T> {
 				InstantiationExp instantiationExp = (InstantiationExp)theEObject;
 				T result = caseInstantiationExp(instantiationExp);
 				if (result == null) result = caseImperativeExpression(instantiationExp);
-				if (result == null) result = caseOCLExpression_1(instantiationExp);
+				if (result == null) result = caseEcore_OCLExpression(instantiationExp);
 				if (result == null) result = caseETypedElement(instantiationExp);
 				if (result == null) result = caseOCLExpression(instantiationExp);
 				if (result == null) result = caseENamedElement(instantiationExp);
@@ -396,7 +396,7 @@ public class ImperativeOCLSwitch<T> {
 			case ImperativeOCLPackage.LIST_TYPE: {
 				ListType listType = (ListType)theEObject;
 				T result = caseListType(listType);
-				if (result == null) result = caseCollectionType_1(listType);
+				if (result == null) result = caseEcore_CollectionType(listType);
 				if (result == null) result = caseEDataType(listType);
 				if (result == null) result = caseCollectionType(listType);
 				if (result == null) result = caseEClassifier(listType);
@@ -411,12 +411,12 @@ public class ImperativeOCLSwitch<T> {
 			case ImperativeOCLPackage.LOG_EXP: {
 				LogExp logExp = (LogExp)theEObject;
 				T result = caseLogExp(logExp);
-				if (result == null) result = caseOperationCallExp_1(logExp);
+				if (result == null) result = caseEcore_OperationCallExp(logExp);
 				if (result == null) result = caseImperativeExpression(logExp);
-				if (result == null) result = caseFeatureCallExp_1(logExp);
+				if (result == null) result = caseEcore_FeatureCallExp(logExp);
 				if (result == null) result = caseOperationCallExp(logExp);
-				if (result == null) result = caseOCLExpression_1(logExp);
-				if (result == null) result = caseCallExp_1(logExp);
+				if (result == null) result = caseEcore_OCLExpression(logExp);
+				if (result == null) result = caseEcore_CallExp(logExp);
 				if (result == null) result = caseFeatureCallExp(logExp);
 				if (result == null) result = caseETypedElement(logExp);
 				if (result == null) result = caseOCLExpression(logExp);
@@ -433,8 +433,8 @@ public class ImperativeOCLSwitch<T> {
 			case ImperativeOCLPackage.ORDERED_TUPLE_LITERAL_EXP: {
 				OrderedTupleLiteralExp orderedTupleLiteralExp = (OrderedTupleLiteralExp)theEObject;
 				T result = caseOrderedTupleLiteralExp(orderedTupleLiteralExp);
-				if (result == null) result = caseLiteralExp_1(orderedTupleLiteralExp);
-				if (result == null) result = caseOCLExpression_1(orderedTupleLiteralExp);
+				if (result == null) result = caseEcore_LiteralExp(orderedTupleLiteralExp);
+				if (result == null) result = caseEcore_OCLExpression(orderedTupleLiteralExp);
 				if (result == null) result = caseLiteralExp(orderedTupleLiteralExp);
 				if (result == null) result = caseETypedElement(orderedTupleLiteralExp);
 				if (result == null) result = caseOCLExpression(orderedTupleLiteralExp);
@@ -467,7 +467,7 @@ public class ImperativeOCLSwitch<T> {
 				RaiseExp raiseExp = (RaiseExp)theEObject;
 				T result = caseRaiseExp(raiseExp);
 				if (result == null) result = caseImperativeExpression(raiseExp);
-				if (result == null) result = caseOCLExpression_1(raiseExp);
+				if (result == null) result = caseEcore_OCLExpression(raiseExp);
 				if (result == null) result = caseETypedElement(raiseExp);
 				if (result == null) result = caseOCLExpression(raiseExp);
 				if (result == null) result = caseENamedElement(raiseExp);
@@ -482,7 +482,7 @@ public class ImperativeOCLSwitch<T> {
 				ReturnExp returnExp = (ReturnExp)theEObject;
 				T result = caseReturnExp(returnExp);
 				if (result == null) result = caseImperativeExpression(returnExp);
-				if (result == null) result = caseOCLExpression_1(returnExp);
+				if (result == null) result = caseEcore_OCLExpression(returnExp);
 				if (result == null) result = caseETypedElement(returnExp);
 				if (result == null) result = caseOCLExpression(returnExp);
 				if (result == null) result = caseENamedElement(returnExp);
@@ -497,7 +497,7 @@ public class ImperativeOCLSwitch<T> {
 				SwitchExp switchExp = (SwitchExp)theEObject;
 				T result = caseSwitchExp(switchExp);
 				if (result == null) result = caseImperativeExpression(switchExp);
-				if (result == null) result = caseOCLExpression_1(switchExp);
+				if (result == null) result = caseEcore_OCLExpression(switchExp);
 				if (result == null) result = caseETypedElement(switchExp);
 				if (result == null) result = caseOCLExpression(switchExp);
 				if (result == null) result = caseENamedElement(switchExp);
@@ -521,7 +521,7 @@ public class ImperativeOCLSwitch<T> {
 				TryExp tryExp = (TryExp)theEObject;
 				T result = caseTryExp(tryExp);
 				if (result == null) result = caseImperativeExpression(tryExp);
-				if (result == null) result = caseOCLExpression_1(tryExp);
+				if (result == null) result = caseEcore_OCLExpression(tryExp);
 				if (result == null) result = caseETypedElement(tryExp);
 				if (result == null) result = caseOCLExpression(tryExp);
 				if (result == null) result = caseENamedElement(tryExp);
@@ -546,7 +546,7 @@ public class ImperativeOCLSwitch<T> {
 				UnlinkExp unlinkExp = (UnlinkExp)theEObject;
 				T result = caseUnlinkExp(unlinkExp);
 				if (result == null) result = caseImperativeExpression(unlinkExp);
-				if (result == null) result = caseOCLExpression_1(unlinkExp);
+				if (result == null) result = caseEcore_OCLExpression(unlinkExp);
 				if (result == null) result = caseETypedElement(unlinkExp);
 				if (result == null) result = caseOCLExpression(unlinkExp);
 				if (result == null) result = caseENamedElement(unlinkExp);
@@ -561,7 +561,7 @@ public class ImperativeOCLSwitch<T> {
 				UnpackExp unpackExp = (UnpackExp)theEObject;
 				T result = caseUnpackExp(unpackExp);
 				if (result == null) result = caseImperativeExpression(unpackExp);
-				if (result == null) result = caseOCLExpression_1(unpackExp);
+				if (result == null) result = caseEcore_OCLExpression(unpackExp);
 				if (result == null) result = caseETypedElement(unpackExp);
 				if (result == null) result = caseOCLExpression(unpackExp);
 				if (result == null) result = caseENamedElement(unpackExp);
@@ -576,7 +576,7 @@ public class ImperativeOCLSwitch<T> {
 				VariableInitExp variableInitExp = (VariableInitExp)theEObject;
 				T result = caseVariableInitExp(variableInitExp);
 				if (result == null) result = caseImperativeExpression(variableInitExp);
-				if (result == null) result = caseOCLExpression_1(variableInitExp);
+				if (result == null) result = caseEcore_OCLExpression(variableInitExp);
 				if (result == null) result = caseETypedElement(variableInitExp);
 				if (result == null) result = caseOCLExpression(variableInitExp);
 				if (result == null) result = caseENamedElement(variableInitExp);
@@ -591,7 +591,7 @@ public class ImperativeOCLSwitch<T> {
 				WhileExp whileExp = (WhileExp)theEObject;
 				T result = caseWhileExp(whileExp);
 				if (result == null) result = caseImperativeExpression(whileExp);
-				if (result == null) result = caseOCLExpression_1(whileExp);
+				if (result == null) result = caseEcore_OCLExpression(whileExp);
 				if (result == null) result = caseETypedElement(whileExp);
 				if (result == null) result = caseOCLExpression(whileExp);
 				if (result == null) result = caseENamedElement(whileExp);
@@ -1187,7 +1187,7 @@ public class ImperativeOCLSwitch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseOCLExpression_1(org.eclipse.ocl.ecore.OCLExpression object) {
+	public T caseEcore_OCLExpression(org.eclipse.ocl.ecore.OCLExpression object) {
 		return null;
 	}
 
@@ -1217,7 +1217,7 @@ public class ImperativeOCLSwitch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseLiteralExp_1(org.eclipse.ocl.ecore.LiteralExp object) {
+	public T caseEcore_LiteralExp(org.eclipse.ocl.ecore.LiteralExp object) {
 		return null;
 	}
 
@@ -1307,7 +1307,7 @@ public class ImperativeOCLSwitch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCollectionType_1(org.eclipse.ocl.ecore.CollectionType object) {
+	public T caseEcore_CollectionType(org.eclipse.ocl.ecore.CollectionType object) {
 		return null;
 	}
 
@@ -1352,7 +1352,7 @@ public class ImperativeOCLSwitch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCallExp_1(org.eclipse.ocl.ecore.CallExp object) {
+	public T caseEcore_CallExp(org.eclipse.ocl.ecore.CallExp object) {
 		return null;
 	}
 
@@ -1382,7 +1382,7 @@ public class ImperativeOCLSwitch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseLoopExp_1(org.eclipse.ocl.ecore.LoopExp object) {
+	public T caseEcore_LoopExp(org.eclipse.ocl.ecore.LoopExp object) {
 		return null;
 	}
 
@@ -1412,7 +1412,7 @@ public class ImperativeOCLSwitch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseFeatureCallExp_1(org.eclipse.ocl.ecore.FeatureCallExp object) {
+	public T caseEcore_FeatureCallExp(org.eclipse.ocl.ecore.FeatureCallExp object) {
 		return null;
 	}
 
@@ -1442,7 +1442,7 @@ public class ImperativeOCLSwitch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseOperationCallExp_1(org.eclipse.ocl.ecore.OperationCallExp object) {
+	public T caseEcore_OperationCallExp(org.eclipse.ocl.ecore.OperationCallExp object) {
 		return null;
 	}
 

@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: VariableInitExpImpl.java,v 1.3 2009/02/06 15:47:30 radvorak Exp $
+ * $Id: VariableInitExpImpl.java,v 1.4 2009/02/20 11:03:59 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.impl;
 
@@ -179,7 +179,7 @@ public class VariableInitExpImpl extends ImperativeExpressionImpl implements Var
 			case ImperativeOCLPackage.VARIABLE_INIT_EXP__REFERRED_VARIABLE:
 				return getReferredVariable();
 			case ImperativeOCLPackage.VARIABLE_INIT_EXP__WITH_RESULT:
-				return isWithResult() ? Boolean.TRUE : Boolean.FALSE;
+				return isWithResult();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -196,7 +196,7 @@ public class VariableInitExpImpl extends ImperativeExpressionImpl implements Var
 				setReferredVariable((Variable)newValue);
 				return;
 			case ImperativeOCLPackage.VARIABLE_INIT_EXP__WITH_RESULT:
-				setWithResult(((Boolean)newValue).booleanValue());
+				setWithResult((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
