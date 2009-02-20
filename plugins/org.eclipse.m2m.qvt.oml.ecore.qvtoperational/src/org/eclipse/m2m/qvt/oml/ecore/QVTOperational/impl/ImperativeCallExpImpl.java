@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: ImperativeCallExpImpl.java,v 1.2 2009/01/25 23:12:23 radvorak Exp $
+ * $Id: ImperativeCallExpImpl.java,v 1.3 2009/02/20 11:04:08 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
@@ -109,7 +109,7 @@ public class ImperativeCallExpImpl extends OperationCallExpImpl implements Imper
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case QVTOperationalPackage.IMPERATIVE_CALL_EXP__IS_VIRTUAL:
-				return isIsVirtual() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsVirtual();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -123,7 +123,7 @@ public class ImperativeCallExpImpl extends OperationCallExpImpl implements Imper
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case QVTOperationalPackage.IMPERATIVE_CALL_EXP__IS_VIRTUAL:
-				setIsVirtual(((Boolean)newValue).booleanValue());
+				setIsVirtual((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

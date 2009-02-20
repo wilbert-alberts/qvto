@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: QVTOperationalSwitch.java,v 1.2 2009/01/25 23:12:24 radvorak Exp $
+ * $Id: QVTOperationalSwitch.java,v 1.3 2009/02/20 11:04:08 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.util;
 
@@ -193,12 +193,12 @@ public class QVTOperationalSwitch<T> {
 			case QVTOperationalPackage.IMPERATIVE_CALL_EXP: {
 				ImperativeCallExp imperativeCallExp = (ImperativeCallExp)theEObject;
 				T result = caseImperativeCallExp(imperativeCallExp);
-				if (result == null) result = caseOperationCallExp_1(imperativeCallExp);
+				if (result == null) result = caseEcore_OperationCallExp(imperativeCallExp);
 				if (result == null) result = caseImperativeExpression(imperativeCallExp);
-				if (result == null) result = caseFeatureCallExp_1(imperativeCallExp);
+				if (result == null) result = caseEcore_FeatureCallExp(imperativeCallExp);
 				if (result == null) result = caseOperationCallExp(imperativeCallExp);
-				if (result == null) result = caseOCLExpression_1(imperativeCallExp);
-				if (result == null) result = caseCallExp_1(imperativeCallExp);
+				if (result == null) result = caseEcore_OCLExpression(imperativeCallExp);
+				if (result == null) result = caseEcore_CallExp(imperativeCallExp);
 				if (result == null) result = caseFeatureCallExp(imperativeCallExp);
 				if (result == null) result = caseETypedElement(imperativeCallExp);
 				if (result == null) result = caseOCLExpression(imperativeCallExp);
@@ -246,12 +246,12 @@ public class QVTOperationalSwitch<T> {
 				MappingCallExp mappingCallExp = (MappingCallExp)theEObject;
 				T result = caseMappingCallExp(mappingCallExp);
 				if (result == null) result = caseImperativeCallExp(mappingCallExp);
-				if (result == null) result = caseOperationCallExp_1(mappingCallExp);
+				if (result == null) result = caseEcore_OperationCallExp(mappingCallExp);
 				if (result == null) result = caseImperativeExpression(mappingCallExp);
-				if (result == null) result = caseFeatureCallExp_1(mappingCallExp);
+				if (result == null) result = caseEcore_FeatureCallExp(mappingCallExp);
 				if (result == null) result = caseOperationCallExp(mappingCallExp);
-				if (result == null) result = caseOCLExpression_1(mappingCallExp);
-				if (result == null) result = caseCallExp_1(mappingCallExp);
+				if (result == null) result = caseEcore_OCLExpression(mappingCallExp);
+				if (result == null) result = caseEcore_CallExp(mappingCallExp);
 				if (result == null) result = caseFeatureCallExp(mappingCallExp);
 				if (result == null) result = caseETypedElement(mappingCallExp);
 				if (result == null) result = caseOCLExpression(mappingCallExp);
@@ -280,7 +280,7 @@ public class QVTOperationalSwitch<T> {
 				MappingParameter mappingParameter = (MappingParameter)theEObject;
 				T result = caseMappingParameter(mappingParameter);
 				if (result == null) result = caseVarParameter(mappingParameter);
-				if (result == null) result = caseVariable_1(mappingParameter);
+				if (result == null) result = caseEcore_Variable(mappingParameter);
 				if (result == null) result = caseEParameter(mappingParameter);
 				if (result == null) result = caseETypedElement(mappingParameter);
 				if (result == null) result = caseVariable(mappingParameter);
@@ -297,7 +297,7 @@ public class QVTOperationalSwitch<T> {
 				ModelParameter modelParameter = (ModelParameter)theEObject;
 				T result = caseModelParameter(modelParameter);
 				if (result == null) result = caseVarParameter(modelParameter);
-				if (result == null) result = caseVariable_1(modelParameter);
+				if (result == null) result = caseEcore_Variable(modelParameter);
 				if (result == null) result = caseEParameter(modelParameter);
 				if (result == null) result = caseETypedElement(modelParameter);
 				if (result == null) result = caseVariable(modelParameter);
@@ -343,7 +343,7 @@ public class QVTOperationalSwitch<T> {
 				T result = caseObjectExp(objectExp);
 				if (result == null) result = caseInstantiationExp(objectExp);
 				if (result == null) result = caseImperativeExpression(objectExp);
-				if (result == null) result = caseOCLExpression_1(objectExp);
+				if (result == null) result = caseEcore_OCLExpression(objectExp);
 				if (result == null) result = caseETypedElement(objectExp);
 				if (result == null) result = caseOCLExpression(objectExp);
 				if (result == null) result = caseENamedElement(objectExp);
@@ -376,9 +376,9 @@ public class QVTOperationalSwitch<T> {
 			case QVTOperationalPackage.RESOLVE_EXP: {
 				ResolveExp resolveExp = (ResolveExp)theEObject;
 				T result = caseResolveExp(resolveExp);
-				if (result == null) result = caseCallExp_1(resolveExp);
+				if (result == null) result = caseEcore_CallExp(resolveExp);
 				if (result == null) result = caseImperativeExpression(resolveExp);
-				if (result == null) result = caseOCLExpression_1(resolveExp);
+				if (result == null) result = caseEcore_OCLExpression(resolveExp);
 				if (result == null) result = caseCallExp(resolveExp);
 				if (result == null) result = caseETypedElement(resolveExp);
 				if (result == null) result = caseOCLExpression(resolveExp);
@@ -395,9 +395,9 @@ public class QVTOperationalSwitch<T> {
 				ResolveInExp resolveInExp = (ResolveInExp)theEObject;
 				T result = caseResolveInExp(resolveInExp);
 				if (result == null) result = caseResolveExp(resolveInExp);
-				if (result == null) result = caseCallExp_1(resolveInExp);
+				if (result == null) result = caseEcore_CallExp(resolveInExp);
 				if (result == null) result = caseImperativeExpression(resolveInExp);
-				if (result == null) result = caseOCLExpression_1(resolveInExp);
+				if (result == null) result = caseEcore_OCLExpression(resolveInExp);
 				if (result == null) result = caseCallExp(resolveInExp);
 				if (result == null) result = caseETypedElement(resolveInExp);
 				if (result == null) result = caseOCLExpression(resolveInExp);
@@ -413,7 +413,7 @@ public class QVTOperationalSwitch<T> {
 			case QVTOperationalPackage.VAR_PARAMETER: {
 				VarParameter varParameter = (VarParameter)theEObject;
 				T result = caseVarParameter(varParameter);
-				if (result == null) result = caseVariable_1(varParameter);
+				if (result == null) result = caseEcore_Variable(varParameter);
 				if (result == null) result = caseEParameter(varParameter);
 				if (result == null) result = caseETypedElement(varParameter);
 				if (result == null) result = caseVariable(varParameter);
@@ -906,7 +906,7 @@ public class QVTOperationalSwitch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseOCLExpression_1(org.eclipse.ocl.ecore.OCLExpression object) {
+	public T caseEcore_OCLExpression(org.eclipse.ocl.ecore.OCLExpression object) {
 		return null;
 	}
 
@@ -951,7 +951,7 @@ public class QVTOperationalSwitch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCallExp_1(org.eclipse.ocl.ecore.CallExp object) {
+	public T caseEcore_CallExp(org.eclipse.ocl.ecore.CallExp object) {
 		return null;
 	}
 
@@ -981,7 +981,7 @@ public class QVTOperationalSwitch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseFeatureCallExp_1(org.eclipse.ocl.ecore.FeatureCallExp object) {
+	public T caseEcore_FeatureCallExp(org.eclipse.ocl.ecore.FeatureCallExp object) {
 		return null;
 	}
 
@@ -1011,7 +1011,7 @@ public class QVTOperationalSwitch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseOperationCallExp_1(org.eclipse.ocl.ecore.OperationCallExp object) {
+	public T caseEcore_OperationCallExp(org.eclipse.ocl.ecore.OperationCallExp object) {
 		return null;
 	}
 
@@ -1101,7 +1101,7 @@ public class QVTOperationalSwitch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseVariable_1(org.eclipse.ocl.ecore.Variable object) {
+	public T caseEcore_Variable(org.eclipse.ocl.ecore.Variable object) {
 		return null;
 	}
 

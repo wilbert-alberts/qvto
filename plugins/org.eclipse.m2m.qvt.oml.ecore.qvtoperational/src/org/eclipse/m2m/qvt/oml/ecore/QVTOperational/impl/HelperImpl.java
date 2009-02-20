@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: HelperImpl.java,v 1.3 2009/01/25 23:12:23 radvorak Exp $
+ * $Id: HelperImpl.java,v 1.4 2009/02/20 11:04:08 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
@@ -138,7 +138,7 @@ public class HelperImpl extends ImperativeOperationImpl implements Helper {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case QVTOperationalPackage.HELPER__IS_QUERY:
-				return isIsQuery() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsQuery();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -152,7 +152,7 @@ public class HelperImpl extends ImperativeOperationImpl implements Helper {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case QVTOperationalPackage.HELPER__IS_QUERY:
-				setIsQuery(((Boolean)newValue).booleanValue());
+				setIsQuery((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

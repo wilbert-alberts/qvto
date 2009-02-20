@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: ModuleImpl.java,v 1.4 2009/02/19 20:52:04 sboyko Exp $
+ * $Id: ModuleImpl.java,v 1.5 2009/02/20 11:04:08 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
@@ -651,7 +651,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 				if (resolve) return getEntry();
 				return basicGetEntry();
 			case QVTOperationalPackage.MODULE__IS_BLACKBOX:
-				return isIsBlackbox() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsBlackbox();
 			case QVTOperationalPackage.MODULE__MODULE_IMPORT:
 				return getModuleImport();
 			case QVTOperationalPackage.MODULE__OWNED_TAG:
@@ -698,7 +698,7 @@ public class ModuleImpl extends EClassImpl implements Module {
 				setEntry((EntryOperation)newValue);
 				return;
 			case QVTOperationalPackage.MODULE__IS_BLACKBOX:
-				setIsBlackbox(((Boolean)newValue).booleanValue());
+				setIsBlackbox((Boolean)newValue);
 				return;
 			case QVTOperationalPackage.MODULE__MODULE_IMPORT:
 				getModuleImport().clear();

@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: MappingCallExpImpl.java,v 1.3 2009/01/25 23:12:23 radvorak Exp $
+ * $Id: MappingCallExpImpl.java,v 1.4 2009/02/20 11:04:08 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
@@ -140,7 +140,7 @@ public class MappingCallExpImpl extends ImperativeCallExpImpl implements Mapping
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case QVTOperationalPackage.MAPPING_CALL_EXP__IS_STRICT:
-				return isIsStrict() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsStrict();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -154,7 +154,7 @@ public class MappingCallExpImpl extends ImperativeCallExpImpl implements Mapping
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case QVTOperationalPackage.MAPPING_CALL_EXP__IS_STRICT:
-				setIsStrict(((Boolean)newValue).booleanValue());
+				setIsStrict((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: ImperativeOperationImpl.java,v 1.2 2008/09/30 22:11:49 radvorak Exp $
+ * $Id: ImperativeOperationImpl.java,v 1.3 2009/02/20 11:04:08 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
@@ -373,7 +373,7 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 			case QVTOperationalPackage.IMPERATIVE_OPERATION__CONTEXT:
 				return getContext();
 			case QVTOperationalPackage.IMPERATIVE_OPERATION__IS_BLACKBOX:
-				return isIsBlackbox() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsBlackbox();
 			case QVTOperationalPackage.IMPERATIVE_OPERATION__OVERRIDDEN:
 				if (resolve) return getOverridden();
 				return basicGetOverridden();
@@ -399,7 +399,7 @@ public class ImperativeOperationImpl extends EOperationImpl implements Imperativ
 				setContext((VarParameter)newValue);
 				return;
 			case QVTOperationalPackage.IMPERATIVE_OPERATION__IS_BLACKBOX:
-				setIsBlackbox(((Boolean)newValue).booleanValue());
+				setIsBlackbox((Boolean)newValue);
 				return;
 			case QVTOperationalPackage.IMPERATIVE_OPERATION__OVERRIDDEN:
 				setOverridden((ImperativeOperation)newValue);

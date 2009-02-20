@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: ResolveExpImpl.java,v 1.3 2009/01/25 23:12:23 radvorak Exp $
+ * $Id: ResolveExpImpl.java,v 1.4 2009/02/20 11:04:08 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
@@ -425,11 +425,11 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 			case QVTOperationalPackage.RESOLVE_EXP__CONDITION:
 				return getCondition();
 			case QVTOperationalPackage.RESOLVE_EXP__IS_DEFERRED:
-				return isIsDeferred() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsDeferred();
 			case QVTOperationalPackage.RESOLVE_EXP__IS_INVERSE:
-				return isIsInverse() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsInverse();
 			case QVTOperationalPackage.RESOLVE_EXP__ONE:
-				return isOne() ? Boolean.TRUE : Boolean.FALSE;
+				return isOne();
 			case QVTOperationalPackage.RESOLVE_EXP__TARGET:
 				return getTarget();
 		}
@@ -448,13 +448,13 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 				setCondition((OCLExpression)newValue);
 				return;
 			case QVTOperationalPackage.RESOLVE_EXP__IS_DEFERRED:
-				setIsDeferred(((Boolean)newValue).booleanValue());
+				setIsDeferred((Boolean)newValue);
 				return;
 			case QVTOperationalPackage.RESOLVE_EXP__IS_INVERSE:
-				setIsInverse(((Boolean)newValue).booleanValue());
+				setIsInverse((Boolean)newValue);
 				return;
 			case QVTOperationalPackage.RESOLVE_EXP__ONE:
-				setOne(((Boolean)newValue).booleanValue());
+				setOne((Boolean)newValue);
 				return;
 			case QVTOperationalPackage.RESOLVE_EXP__TARGET:
 				setTarget((Variable)newValue);
@@ -533,7 +533,7 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	public <T, U extends Visitor<T,?,?,?,?,?,?,?,?,?>> T accept(U v) {		
 		if (v instanceof QVTOperationalVisitor)
 			return (T) ((QVTOperationalVisitor) v).visitResolveExp(this);
-		return super.accept(v);
+		return (T) super.accept(v);
 	}
 
 } //ResolveExpImpl
