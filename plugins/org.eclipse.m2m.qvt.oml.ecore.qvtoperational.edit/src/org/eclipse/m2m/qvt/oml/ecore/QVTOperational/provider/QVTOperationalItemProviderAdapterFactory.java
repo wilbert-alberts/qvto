@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: QVTOperationalItemProviderAdapterFactory.java,v 1.2 2009/01/25 23:12:44 radvorak Exp $
+ * $Id: QVTOperationalItemProviderAdapterFactory.java,v 1.3 2009/02/20 11:04:16 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.provider;
 
@@ -638,7 +638,7 @@ public class QVTOperationalItemProviderAdapterFactory extends QVTOperationalAdap
 	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type)) {
 			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class) || (((Class<?>)type).isInstance(adapter))) {
+			if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
 				return adapter;
 			}
 		}
