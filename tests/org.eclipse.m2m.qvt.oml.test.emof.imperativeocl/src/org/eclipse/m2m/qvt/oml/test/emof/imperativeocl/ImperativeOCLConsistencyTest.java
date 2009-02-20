@@ -42,6 +42,8 @@ public class ImperativeOCLConsistencyTest extends AbstractEssentialOCLConsistenc
 		//
 		//	Ecore added value
 		//
+		missingConstraint(differences, helper, org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage.Literals.ASSIGN_EXP);
+		missingConstraint(differences, helper, org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage.Literals.IMPERATIVE_ITERATE_EXP);
 		missingConstraint(differences, helper, org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage.Literals.ORDERED_TUPLE_TYPE);
 	}
 
@@ -51,7 +53,7 @@ public class ImperativeOCLConsistencyTest extends AbstractEssentialOCLConsistenc
 		changeOfName(differences, helper, ImperativeOCLPackage.eINSTANCE);
 	}
 
-	public static void expectedEmo2OmgEmofDifferences(Set<EcoreDifference> differences, EquivalenceHelper helper) {
+	public static void expectedEmof2OmgEmofDifferences(Set<EcoreDifference> differences, EquivalenceHelper helper) {
 		missingURI(differences, helper, ImperativeOCLPackage.eINSTANCE);
 		missingPrefix(differences, helper, ImperativeOCLPackage.eINSTANCE);
 		changeOfName(differences, helper, ImperativeOCLPackage.eINSTANCE);
