@@ -121,7 +121,6 @@ public final class ValidationMessages extends NLS {
 	public static String propertyAlreadyExistsInTypeError;
 	public static String bodyTypeNotCompatibleWithReturnTypeError;
     public static String notAnLValueError;
-    public static String cannotModifyNestedPropertiesError;
 	public static String CantAssignToSelf;
 	public static String CantAssignToThis;	
 	public static String unresolvedNameError;
