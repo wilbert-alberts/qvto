@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeOCLItemProviderAdapterFactory.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: ImperativeOCLItemProviderAdapterFactory.java,v 1.3 2009/02/20 11:04:03 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -798,7 +798,7 @@ public class ImperativeOCLItemProviderAdapterFactory extends ImperativeOCLAdapte
 	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type)) {
 			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class) || (((Class<?>)type).isInstance(adapter))) {
+			if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
 				return adapter;
 			}
 		}
