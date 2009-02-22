@@ -3501,6 +3501,10 @@ public class QvtOperationalVisitorCS
 								new Object[] { prop.getName() }), scopedNameCS.getTypeCS());
 			}
 		}
+		else {
+			env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ContextualPropertyTypeIsMissed, 
+					new Object[] { }), scopedNameCS);
+		}
 		
 		return prop;
 	}

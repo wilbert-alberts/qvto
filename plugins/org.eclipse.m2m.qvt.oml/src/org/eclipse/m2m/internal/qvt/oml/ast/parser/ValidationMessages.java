@@ -52,6 +52,7 @@ public final class ValidationMessages extends NLS {
 	public static String QvtOperationalVisitorCS_canNotInstantiateAbstractType;
 	public static String QvtOperationalVisitorCS_canNotModifyINParameter;
 	public static String QvtOperationalVisitorCS_ContextualPropertyTypeIsNotClass;
+	public static String QvtOperationalVisitorCS_ContextualPropertyTypeIsMissed;
 	public static String QvtOperationalVisitorCS_duplicateMappingRereferenceInExtensionKind;
 	public static String QvtOperationalVisitorCS_duplicateQualifierOnOperation;
 	public static String QvtOperationalVisitorCS_instatiatedTypeDoesNotConformToReferredType;
