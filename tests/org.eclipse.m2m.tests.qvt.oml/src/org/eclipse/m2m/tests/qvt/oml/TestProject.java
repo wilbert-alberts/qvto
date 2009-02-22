@@ -30,18 +30,10 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.project.NatureUtils;
-import org.eclipse.m2m.internal.qvt.oml.common.project.PluginUtil;
-import org.eclipse.m2m.internal.qvt.oml.common.project.PluginUtil.ModelHelper;
-import org.eclipse.m2m.tests.qvt.oml.util.ConvertProjectUtil;
-import org.eclipse.pde.core.plugin.IPlugin;
-import org.eclipse.pde.core.plugin.IPluginImport;
-import org.eclipse.pde.core.plugin.IPluginModel;
-import org.eclipse.pde.core.plugin.IPluginModelFactory;
 import org.osgi.framework.Bundle;
 
 /**
@@ -70,7 +62,7 @@ public class TestProject {
     
     public TestProject(String name, String[] natures, int unused) throws CoreException {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		root.refreshLocal(IResource.DEPTH_INFINITE, null);
+		//root.refreshLocal(IResource.DEPTH_INFINITE, null);
 		project = root.getProject(name);
 		if (project.exists()) {
 			project.delete(true, true, null);
@@ -111,35 +103,10 @@ public class TestProject {
         project.refreshLocal(IResource.DEPTH_INFINITE, null);
     }
     
-    public void convertToPlugin() throws CoreException {
-        ConvertProjectUtil.convertToPluginProject(project, new NullProgressMonitor());
-    }
-    
-    public void addPluginImports(String[] imports) throws Exception {
-    	ModelHelper<IPluginModel> model = PluginUtil.getModel(project);
-        IPluginModelFactory factory = model.model().getPluginFactory();
-        
-        IPlugin plugin = model.model().getPlugin();
-        for (int i = 0; i < imports.length; i++) {
-            String impId = imports[i];
-
-            IPluginImport imp = factory.createImport();
-            imp.setId(impId);
-            imp.setOptional(false);
-            plugin.add(imp);
-        }
-        
-        model.save();
-    }
-
 	public IProject getProject() {
 		return project;
 	}
 	
-	public void addWorkspaceProject(final IProject project) throws CoreException {
-		project.open(null);
-	}
-
 	public void delete() throws CoreException {
 		project.delete(true, true, null);
 	}

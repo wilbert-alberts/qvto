@@ -74,18 +74,6 @@ public class TestQvtParser extends TestCase {
         }
         else {
             myProject = new TestProject(name, new String[] {}, 0); 
-            myProject.convertToPlugin();
-
-            myProject.addPluginImports(new String[] {
-                    "org.eclipse.emf.ecore", //$NON-NLS-1$
-                    "org.eclipse.emf.common", //$NON-NLS-1$
-                    "org.eclipse.core.runtime", //$NON-NLS-1$
-                    "org.eclipse.core.resources", //$NON-NLS-1$
-                    
-                    "org.eclipse.m2m.qvt.oml", //$NON-NLS-1$
-                    "org.eclipse.m2m.qvt.oml.samples", //$NON-NLS-1$
-                    "org.eclipse.m2m.qvt.oml.ocl.emf.libraries", //$NON-NLS-1$
-            });
         }
 	}
 	

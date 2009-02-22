@@ -37,17 +37,9 @@ public class TestQvtBuilder extends TestCase {
         TestUtil.turnOffAutoBuilding();
         
 		myProject = new TestProject("BuilderTest", new String[] {TransformationNature.ID}); //$NON-NLS-1$
-        myProject.convertToPlugin();
         // set source folder explicitly to project, as the default is set to transformations folder
         QvtBuilderConfig.getConfig(myProject.getProject()).setSourceContainer(myProject.getProject());
         
-		myProject.addPluginImports(new String[] {
-                "org.eclipse.emf.ecore", //$NON-NLS-1$
-                "org.eclipse.emf.common", //$NON-NLS-1$
-                "org.eclipse.m2m.qvt.oml", //$NON-NLS-1$ 
-                "org.eclipse.m2m.qvt.oml.samples", //$NON-NLS-1$
-        });
-
 		copyData();
 	}
     

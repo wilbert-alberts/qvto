@@ -21,7 +21,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,19 +31,15 @@ import junit.framework.TestCase;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
-import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceDescription;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -59,7 +54,6 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.tests.qvt.oml.RuntimeWorkspaceSetup;
-import org.eclipse.m2m.tests.qvt.oml.TestProject;
 import org.osgi.framework.Bundle;
 
 /**
@@ -238,8 +232,7 @@ public class TestUtil extends Assert {
 	                }
 	            });
                 
-                for (Iterator iter = filesToDelete.iterator(); iter.hasNext();) {
-                    IFile file = (IFile) iter.next();
+                for (IFile file : filesToDelete) {
                     try {
                         file.delete(true, null);
                     }
@@ -257,7 +250,7 @@ public class TestUtil extends Assert {
     
     public static void buildProject(final IProject project, final int kind) throws CoreException {
 		project.build(kind, null);
-        List errors = getBuildErrors(project);
+        List<String> errors = getBuildErrors(project);
         assertTrue("Build failed for " + project + ": " + errors, errors.isEmpty()); //$NON-NLS-1$ //$NON-NLS-2$
     }
 	
@@ -286,47 +279,6 @@ public class TestUtil extends Assert {
 		
 		return errors;
 	}
-	
-	public static IProject openExistingProject(final String path) throws CoreException {
-		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-//		IPath projectPath = new Path(path);
-		IPath descriptionPath = new Path(path + File.separator + ".project"); //$NON-NLS-1$
-		IProjectDescription projectDesc = workspace.loadProjectDescription(descriptionPath);
-		String projectName = projectDesc == null ? null : projectDesc.getName();
-		IProject project = workspace.getRoot().getProject(projectName);
-		
-		if (project.exists() && project.isOpen()) {
-			return project;
-		}
-		
-		if (projectDesc == null) {
-			projectDesc = workspace.newProjectDescription(projectName);
-			if (Platform.getLocation().isPrefixOf(descriptionPath)) {
-				projectDesc.setLocation(null);
-			} else {
-				projectDesc.setLocation(descriptionPath);
-			}
-		}  else {
-			projectDesc.setName(projectName);
-		}
-		
-		try {
-			project.create(projectDesc, null);
-			project.open(null);
-		} catch(CoreException e) {
-			e.printStackTrace();
-			throw e;
-		}
-		
-		return project;
-	}
-    
-    public static void addProject(TestProject testProject, String path) throws Exception {
-        String location = TestUtil.getPluginRelativeFolder(path).getAbsolutePath();
-        IProject project = TestUtil.openExistingProject(location);
-        TestUtil.buildProject(project);
-        testProject.addWorkspaceProject(project);
-    }    
 	
 	public static void logQVTStackTrace(QvtRuntimeException e) {
 		PrintWriter pw = new PrintWriter(System.err);

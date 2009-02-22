@@ -47,11 +47,6 @@ import org.eclipse.emf.codegen.ecore.Generator;
 public class RuntimeWorkspaceSetup {
 	private static RuntimeWorkspaceSetup INSTANCE;
 	
-	/**
-	 * Copy of <code>PDECore.CLASSPATH_CONTAINER_ID</code>
-	 */
-	private static final String PLUGIN_CONTAINER_ID = "org.eclipse.pde.core.requiredPlugins"; //$NON-NLS-1$
-
 	private boolean isDevLaunchMode;
 
 	private RuntimeWorkspaceSetup() {
@@ -123,7 +118,7 @@ public class RuntimeWorkspaceSetup {
 	private void importDevPluginsIntoRunTimeWorkspace(String[] pluginIDs) throws CoreException {
 		IProject p = getSOSProject();
 		final Path srcPath = new Path('/' + p.getName() + "/src"); //$NON-NLS-1$
-		Generator.createEMFProject(srcPath, null, Collections.EMPTY_LIST, new NullProgressMonitor(), Generator.EMF_PLUGIN_PROJECT_STYLE, null);
+		Generator.createEMFProject(srcPath, null, Collections.<IProject>emptyList(), new NullProgressMonitor(), Generator.EMF_PLUGIN_PROJECT_STYLE, null);
 		
 		StringBuffer pluginXmlContent = new StringBuffer();
 		pluginXmlContent.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<?eclipse version=\"3.0\"?>\n<plugin "); //$NON-NLS-1$
