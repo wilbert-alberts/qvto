@@ -69,10 +69,7 @@ public class TestQvtParser extends TestCase {
 		
 		String name = "ParserTest"; //$NON-NLS-1$
         myProject = TestProject.getExistingProject(name);
-        if(myProject != null) {
-            myProject.deleteContents();
-        }
-        else {
+        if(myProject == null) {
             myProject = new TestProject(name, new String[] {}, 0); 
         }
 	}

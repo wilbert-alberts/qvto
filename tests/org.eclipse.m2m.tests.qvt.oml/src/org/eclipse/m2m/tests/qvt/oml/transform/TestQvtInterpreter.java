@@ -51,16 +51,6 @@ public class TestQvtInterpreter extends TestTransformation {
     }
     
     @Override
-    public void setUp() throws Exception {
-    	super.setUp();
-    }
-    
-    @Override
-	public void tearDown() throws Exception {
-		super.tearDown();
-	}    
-    
-    @Override
 	public void runTest() throws Exception {
         checkTransformation(new TransformationChecker(getTransformer()));
     }
