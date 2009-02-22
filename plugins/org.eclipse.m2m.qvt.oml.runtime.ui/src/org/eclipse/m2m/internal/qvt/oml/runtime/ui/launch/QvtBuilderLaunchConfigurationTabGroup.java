@@ -16,7 +16,6 @@ import org.eclipse.debug.ui.CommonTab;
 import org.eclipse.debug.ui.ILaunchConfigurationDialog;
 import org.eclipse.debug.ui.ILaunchConfigurationTab;
 import org.eclipse.debug.ui.RefreshTab;
-import org.eclipse.ui.externaltools.internal.launchConfigurations.ExternalToolsBuilderTab;
 
 /**
  * @author sboyko
@@ -29,7 +28,7 @@ public class QvtBuilderLaunchConfigurationTabGroup extends QvtLaunchConfiguratio
         ILaunchConfigurationTab[] tabs = new ILaunchConfigurationTab[] {
         		new QvtBuilderLauncherTab(TRANSFORMATION_MAKER),
         		new QvtTransformationConfigurationTab(TRANSFORMATION_MAKER),
-                new ExternalToolsBuilderTab(false),                
+                //new ExternalToolsBuilderTab(false),                
                 new CommonTab(),
                 new RefreshTab(),
             };
