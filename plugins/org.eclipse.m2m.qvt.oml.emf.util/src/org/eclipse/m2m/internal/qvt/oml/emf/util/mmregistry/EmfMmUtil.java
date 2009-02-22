@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.ocl.ecore.internal.EcoreForeignMethods;
-import org.eclipse.ocl.parser.AbstractOCLAnalyzer;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
+import org.eclipse.ocl.ecore.EcoreEnvironment;
 
 public class EmfMmUtil {
     private EmfMmUtil() {}
@@ -39,21 +39,10 @@ public class EmfMmUtil {
     }
 
 	public static EPackage lookupPackage(EPackage rootPackage, List<String> path) {
-		if (path.isEmpty()) {
-			return null;
-		}
-		if (!AbstractOCLAnalyzer.equalName(path.get(0), rootPackage.getName())) {
-			return null;
-		}
-        
-		EPackage pkg = rootPackage;
-		for (int i = 1, n = path.size(); i < n; ++i) {
-			pkg = EcoreForeignMethods.getESubpackage(pkg, path.get(i));
-			if (pkg == null) {
-				break;
-			}
-		}
-		return pkg;
+		EPackage.Registry registry = new EPackageRegistryImpl();
+		registry.put(rootPackage.getNsURI(), rootPackage);
+		
+		return EcoreEnvironment.findPackage(path, registry);
 	}	
 	
 }
