@@ -29,16 +29,15 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.IntermediateClassFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.Typedef;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.Typedef;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
-import org.eclipse.ocl.ecore.internal.OCLStandardLibraryImpl;
 import org.eclipse.ocl.utilities.ExpressionInOCL;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
@@ -82,12 +81,6 @@ public class QVTUMLReflection
 				return true;
 			}
 			
-			// FIXME - eliminate the dependency on MDT OCL shadow classes, as we
-			// do not need it anymore, Typedef is used instead 
-			EClassifier realClassifier = OCLStandardLibraryImpl.getRealClassifier(eClass);
-			if(eClass != realClassifier && realClassifier != null) {
-				return false;
-			}
 			EClass metaClass = eClass.eClass();
 			EPackage stdlibPackage = QvtOperationalStdLibrary.INSTANCE.getStdLibModule();
 			
