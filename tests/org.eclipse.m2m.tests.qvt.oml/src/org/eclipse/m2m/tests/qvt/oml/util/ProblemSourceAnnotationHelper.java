@@ -20,13 +20,13 @@ import java.util.Map;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
-import org.eclipse.jface.text.IRegion;
-import org.eclipse.jface.text.Position;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.tests.qvt.oml.util.SourceAnnotationReader.AnnotationData;
+import org.eclipse.m2m.tests.qvt.oml.util.SourceAnnotationReader.Position;
+import org.eclipse.m2m.tests.qvt.oml.util.SourceAnnotationReader.RegionInfo;
 
 
 public class ProblemSourceAnnotationHelper {
@@ -38,7 +38,7 @@ public class ProblemSourceAnnotationHelper {
 	
 	public ProblemSourceAnnotationHelper(List<AnnotationData> annotations) {
 		for (AnnotationData nextAnnotation : annotations) {
-			IRegion region = nextAnnotation.getAnnotatedRegion();
+			RegionInfo region = nextAnnotation.getAnnotatedRegion();
 			fPositionedMap.put(new Position(region.getOffset(), region.getLength()), nextAnnotation);
 		}
 	}

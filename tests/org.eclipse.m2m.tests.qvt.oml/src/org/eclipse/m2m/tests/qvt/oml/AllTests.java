@@ -21,7 +21,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.eclipse.m2m.tests.qvt.oml.ant.QvtAntScriptTests;
-import org.eclipse.m2m.tests.qvt.oml.editor.AllEditorTests;
 import org.eclipse.m2m.tests.qvt.oml.emf.AllEmfTests;
 import org.eclipse.m2m.tests.qvt.oml.env.QVTOperationalEnvTest;
 import org.eclipse.m2m.tests.qvt.oml.traces.TestTraceFile;
@@ -47,13 +46,11 @@ public class AllTests {
 		suite.addTestSuite(OCLEnvironmentWithQVTAccessTest.class);
 		suite.addTestSuite(ExtOCLEnvironmentWithQVTAccessTest.class);
 		suite.addTestSuite(TestExternHelperCall.class);
-		suite.addTest(AllEditorTests.suite());
 		suite.addTest(AllEmfTests.suite());
 		suite.addTestSuite(TestMetamodelRegistry.class);
         suite.addTestSuite(TestLaunchConfiguration.class);
         suite.addTest(ParserTests.suite());
 
-//        suite.addTest(TransformTests.projectSuite());
         suite.addTest(TransformTests.interpreterSuite());
         suite.addTest(TransformTests.javalessSuite());
         suite.addTest(TransformTests.walkerSuite());
@@ -64,11 +61,8 @@ public class AllTests {
         suite.addTestSuite(TestSamples.class);
         suite.addTestSuite(TestGraphWalker.class);
         suite.addTestSuite(TestLaunchConfigs.class);
-//        suite.addTestSuite(TestModelElementSaver.class);
         suite.addTestSuite(TestTraceFile.class);
         suite.addTestSuite(TestQvtResourceFactory.class);
-//        suite.addTestSuite(TestTraceFileForMyUml.class);
-//        suite.addTestSuite(TestTreeContentProvider.class);
         
         suite.addTestSuite(TestOCLSemantics.class);
         suite.addTestSuite(TestOCLAnnotationSupport.class);     
