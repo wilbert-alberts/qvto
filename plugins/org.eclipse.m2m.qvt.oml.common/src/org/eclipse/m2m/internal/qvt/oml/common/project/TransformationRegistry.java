@@ -38,7 +38,6 @@ public abstract class TransformationRegistry {
     public static class InputFilter implements Filter {
         private List<EClass> myInput = new ArrayList<EClass>();
 
-        @SuppressWarnings("unchecked")
 		public InputFilter(EClass input) {
             myInput.add(input);
             myInput.addAll(input.getEAllSuperTypes());

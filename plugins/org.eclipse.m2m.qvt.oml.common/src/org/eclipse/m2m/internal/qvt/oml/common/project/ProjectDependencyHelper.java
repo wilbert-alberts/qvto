@@ -23,6 +23,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.nature.TransformationNature;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.pde.core.plugin.IPluginImport;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
+import org.eclipse.pde.core.plugin.PluginRegistry;
 
 
 public class ProjectDependencyHelper {
@@ -63,11 +64,11 @@ public class ProjectDependencyHelper {
 	}
 
 	public static  Set<IProject> collectQvtPluginWorkspaceDependencies(IProject dependantProject, Set<IProject> pluginDependencies, boolean recursive) {
-		IPluginModelBase plugin = PluginUtil.findPluginModelByProject(dependantProject);
+		IPluginModelBase plugin = findPluginModelByProject(dependantProject);
 		if(plugin != null) {
 			for (IPluginImport nextImport : plugin.getPluginBase().getImports()) {
 				String importID = nextImport.getId();
-				IPluginModelBase depPlugin = PluginUtil.findPluginModelByID(importID);
+				IPluginModelBase depPlugin = findPluginModelByID(importID);
 				if(depPlugin != null && depPlugin.getUnderlyingResource() != null) {
 					IProject projectDep = depPlugin.getUnderlyingResource().getProject();
 
@@ -111,4 +112,13 @@ public class ProjectDependencyHelper {
 	    
 	    return Collections.emptySet();
 	}
+
+    private static IPluginModelBase findPluginModelByProject(IProject project) {
+		return PluginRegistry.findModel(project);
+	}
+
+	private static IPluginModelBase findPluginModelByID(String importID) {
+		return PluginRegistry.findModel(importID);
+	}
+
 }
