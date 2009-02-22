@@ -19,9 +19,14 @@ import java.util.Map;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.variables.IDynamicVariable;
+import org.eclipse.core.variables.VariablesPlugin;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.LaunchConfigurationDelegate;
@@ -44,7 +49,6 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.Transf
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
 import org.eclipse.m2m.qvt.oml.util.WriterLog;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.ui.externaltools.internal.model.ExternalToolBuilder;
 
 public class QvtBuilderLaunchConfigurationDelegate extends LaunchConfigurationDelegate {
 
@@ -53,8 +57,9 @@ public class QvtBuilderLaunchConfigurationDelegate extends LaunchConfigurationDe
     public void launch(final ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {
         
         try {
-            final String buildType = ExternalToolBuilder.getBuildType();
-            final IProject project = ExternalToolBuilder.getBuildProject();
+        	final String buildType = getVariableValue("build_type"); //$NON-NLS-1$
+        	IPath path = new Path(getVariableValue("build_project")); //$NON-NLS-1$
+            final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(path.lastSegment());
 
             StreamsProxy streamsProxy = new StreamsProxy();
             final PrintWriter printWriter = new PrintWriter(streamsProxy.getOutputWriter());
@@ -162,6 +167,11 @@ public class QvtBuilderLaunchConfigurationDelegate extends LaunchConfigurationDe
 	    catch (CoreException e) {
 	        Logger.getLogger().log(Logger.SEVERE, "Failed to create marker on " + project, e); //$NON-NLS-1$
 	    }
+	}
+	
+	private String getVariableValue(String variableName) throws CoreException {
+    	IDynamicVariable dynamicVar = VariablesPlugin.getDefault().getStringVariableManager().getDynamicVariable(variableName);
+    	return dynamicVar.getValue(null);
 	}
 
     /**
