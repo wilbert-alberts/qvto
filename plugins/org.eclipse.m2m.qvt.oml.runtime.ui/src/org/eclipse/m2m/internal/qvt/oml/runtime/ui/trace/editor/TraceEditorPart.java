@@ -20,8 +20,8 @@ import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.m2m.internal.qvt.oml.common.emf.ExtendedEmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
+import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.common.TraceWorkbenchPart;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.trace.presentation.EObjectNode;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
@@ -90,7 +90,7 @@ public class TraceEditorPart extends EditorPart implements IGotoMarker {
 
 	public void gotoMarker(IMarker marker) {
 		try {
-			if (marker.getType().equals(QVTOCompiler.PROBLEM_MARKER)) {
+			if (marker.getType().equals(QVTOProjectPlugin.PROBLEM_MARKER)) {
 				String uriAttribute = marker.getAttribute(EValidator.URI_ATTRIBUTE, null);
 				if (uriAttribute != null) {
 					EObject eObject = myTrace.eResource().getEObject(uriAttribute);
