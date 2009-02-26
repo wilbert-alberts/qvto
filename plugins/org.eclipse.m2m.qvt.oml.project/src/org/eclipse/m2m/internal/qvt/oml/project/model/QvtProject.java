@@ -23,8 +23,8 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.m2m.internal.qvt.oml.QvtNamesChecker;
-import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
-import org.eclipse.m2m.internal.qvt.oml.project.QVTProjectPlugin;
+import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
+import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilderConfig;
 
 public class QvtProject extends QvtBaseElement implements IQvtProject {
 	
@@ -35,13 +35,8 @@ public class QvtProject extends QvtBaseElement implements IQvtProject {
 	
 	public QvtProject(IProject project) {
 		super(project.getFullPath(), project.getName());
-
-		if(project == null) {
-			throw new IllegalArgumentException();
-		}
 		
 		fProject = project;
-		
 	}
 	
 	public IProject getProject() {
@@ -95,7 +90,7 @@ public class QvtProject extends QvtBaseElement implements IQvtProject {
 	public IContainer getSourceContainer() throws QvtModelException {
 		if(srcContainer == null) {
 			try {
-				srcContainer = QvtBuilderConfig.getConfig(fProject).getSourceContainer();
+				srcContainer = QVTOBuilderConfig.getConfig(fProject).getSourceContainer();
 			} catch (CoreException e) {
 				propagateAsQvtModelException("Failed to read QVT builder config", e); //$NON-NLS-1$
 			}
@@ -188,7 +183,7 @@ public class QvtProject extends QvtBaseElement implements IQvtProject {
 				return resourcePath.removeFirstSegments(containerPath.segmentCount());
 			}
 		} catch (QvtModelException e) {
-			QVTProjectPlugin.log(e);
+			QVTOProjectPlugin.log(e);
 		}
 		
 		return null;

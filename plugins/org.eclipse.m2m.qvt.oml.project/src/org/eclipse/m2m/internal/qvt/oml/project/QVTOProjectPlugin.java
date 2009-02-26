@@ -12,21 +12,34 @@
 package org.eclipse.m2m.internal.qvt.oml.project;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
- * The main plugin class to be used in the desktop.
+ * The main plug-in class to be used in the desktop.
  */
-public class QVTProjectPlugin extends AbstractUIPlugin {
+public class QVTOProjectPlugin extends Plugin {
+	/**
+	 * Plug-in NATURE_ID.
+	 */
+    public static final String ID = "org.eclipse.m2m.qvt.oml.project"; //$NON-NLS-1$
+	
+        
+	public static final String NATURE_ID = "org.eclipse.m2m.qvt.oml.project.QVTONature";//$NON-NLS-1$
+	
+	public static final String BUILDER_ID = "org.eclipse.m2m.qvt.oml.project.QVTOBuilder";//$NON-NLS-1$
+	
+	public static final String PROBLEM_MARKER = "org.eclipse.m2m.qvt.oml.project.QVTOProblem"; //$NON-NLS-1$	
+	
+	
 	//The shared instance.
-	private static QVTProjectPlugin plugin;
+	private static QVTOProjectPlugin plugin;
 
 	/**
 	 * The constructor.
 	 */
-	public QVTProjectPlugin() {
+	public QVTOProjectPlugin() {
 		super();
 		plugin = this;
 	}
@@ -50,7 +63,7 @@ public class QVTProjectPlugin extends AbstractUIPlugin {
 	/**
 	 * Returns the shared instance.
 	 */
-	public static QVTProjectPlugin getDefault() {
+	public static QVTOProjectPlugin getDefault() {
 		return plugin;
 	}
 	
@@ -62,5 +75,4 @@ public class QVTProjectPlugin extends AbstractUIPlugin {
 	    log(new Status(IStatus.ERROR, ID, 100001, "Unexpected error", t));//$NON-NLS-1$ 
 	}
 
-    public static final String ID = "org.eclipse.m2m.qvt.oml.project"; //$NON-NLS-1$
 }

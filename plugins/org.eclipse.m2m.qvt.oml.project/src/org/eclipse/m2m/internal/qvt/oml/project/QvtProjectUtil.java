@@ -16,8 +16,7 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
-import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
-import org.eclipse.m2m.internal.qvt.oml.common.nature.TransformationNature;
+import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.project.model.IQvtProject;
 import org.eclipse.m2m.internal.qvt.oml.project.model.QvtProject;
 
@@ -37,7 +36,7 @@ public class QvtProjectUtil {
 	
     public static boolean isQvtProject(IProject project) {
     	try {
-			return project.isAccessible() && project.hasNature(TransformationNature.ID);
+			return project.isAccessible() && project.hasNature(QVTOProjectPlugin.NATURE_ID);
 		} catch (CoreException e) {
 			QvtPlugin.log(e);
 		}
@@ -48,10 +47,10 @@ public class QvtProjectUtil {
     public static boolean isNamespaceFolder(IFolder folder) {
     	if(folder.exists() && isQvtProject(folder.getProject())) {
 			try {
-				QvtBuilderConfig builderConfig = QvtBuilderConfig.getConfig(folder.getProject());
+				QVTOBuilderConfig builderConfig = QVTOBuilderConfig.getConfig(folder.getProject());
 	    		return builderConfig.isInSourceContainer(folder);				
 			} catch (CoreException e) {
-				QVTProjectPlugin.log(e.getStatus());
+				QVTOProjectPlugin.log(e.getStatus());
 			}
     	}
     	
@@ -75,10 +74,10 @@ public class QvtProjectUtil {
 		}
 
 		try {
-    		IContainer container = QvtBuilderConfig.getConfig(project).getSourceContainer();
+    		IContainer container = QVTOBuilderConfig.getConfig(project).getSourceContainer();
     		return container.exists() ? container : null;
 		} catch (CoreException e) {
-			QVTProjectPlugin.log(e.getStatus());
+			QVTOProjectPlugin.log(e.getStatus());
 		}
 		
 		return null;

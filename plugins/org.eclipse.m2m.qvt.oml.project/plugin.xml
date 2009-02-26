@@ -2,28 +2,40 @@
 <?eclipse version="3.0"?>
 <plugin>
    
-   <extension-point id="transformNatureConfigParticipants" name="%transformNatureConfigParticipants" schema="schema/transformNatureConfigParticipants.exsd"/>
-   
-   <extension point="org.eclipse.m2m.qvt.oml.project.transformNatureConfigParticipants">
-      <configParticipant class="org.eclipse.m2m.internal.qvt.oml.project.nature.QvtNatureConfigParticipant"/>
-   </extension> 
- 
    <extension
          id="TransformationNature"
          name="%transformationNature"
          point="org.eclipse.core.resources.natures">
       <runtime>
-         <run class="org.eclipse.m2m.internal.qvt.oml.project.nature.TransformationNatureImpl"/>
+         <run class="org.eclipse.m2m.internal.qvt.oml.project.nature.LegacyNature"/>
       </runtime>
       <builder id="org.eclipse.m2m.qvt.oml.QvtBuilder"/>
    </extension>
+   
+   <extension
+         id="QVTONature"
+         name="%QVTONature.name"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run class="org.eclipse.m2m.internal.qvt.oml.project.nature.QVTONature"/>
+      </runtime>
+      <builder id="org.eclipse.m2m.qvt.oml.project.QVTOBuilder"/>
+   </extension>
+   
+ <extension id="QVTOBuilder" name="%QVTOBuilder.name" point="org.eclipse.core.resources.builders">
+      <builder hasNature="true">
+         <run class="org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilder"/>
+      </builder>
+   </extension>
+                                                          
+ <extension point="org.eclipse.core.resources.markers" id="QVTOProblem" name="%problemMarker.name">
+	<super type="org.eclipse.core.resources.problemmarker"/>
+    <super type="org.eclipse.core.resources.textmarker"/>
+	<persistent value="true"/>
+ </extension>
 
-   <extension point="org.eclipse.ui.ide.projectNatureImages">
- 		<image
- 			id="org.eclipse.m2m.qvt.oml.project.TransformationNatureImage"
- 			natureId="org.eclipse.m2m.qvt.oml.project.TransformationNature"
- 		    icon="icons/pr-MDA.gif">
- 		</image>
-    </extension>   
-             
+ <extension point="org.eclipse.m2m.qvt.oml.importResolverFactory">
+	<factory class="org.eclipse.m2m.internal.qvt.oml.project.builder.EclipseImportResolverFactory"/>
+ </extension>
+
 </plugin>
