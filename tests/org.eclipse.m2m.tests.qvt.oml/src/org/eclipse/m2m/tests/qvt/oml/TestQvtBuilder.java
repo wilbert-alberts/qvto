@@ -20,10 +20,9 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
-import org.eclipse.m2m.internal.qvt.oml.common.nature.TransformationNature;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
+import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
+import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilderConfig;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 
 
@@ -36,9 +35,9 @@ public class TestQvtBuilder extends TestCase {
 	public void setUp() throws Exception {
         TestUtil.turnOffAutoBuilding();
         
-		myProject = new TestProject("BuilderTest", new String[] {TransformationNature.ID}); //$NON-NLS-1$
+		myProject = new TestProject("BuilderTest", new String[] {QVTOProjectPlugin.NATURE_ID}); //$NON-NLS-1$
         // set source folder explicitly to project, as the default is set to transformations folder
-        QvtBuilderConfig.getConfig(myProject.getProject()).setSourceContainer(myProject.getProject());
+        QVTOBuilderConfig.getConfig(myProject.getProject()).setSourceContainer(myProject.getProject());
         
 		copyData();
 	}
@@ -63,7 +62,7 @@ public class TestQvtBuilder extends TestCase {
 		}
         
         assertTrue("Expecting QVT compiler error markers", //$NON-NLS-1$
-        		qvtFile.findMarkers(QVTOCompiler.PROBLEM_MARKER, true, IResource.DEPTH_INFINITE).length > 0);        
+        		qvtFile.findMarkers(QVTOProjectPlugin.PROBLEM_MARKER, true, IResource.DEPTH_INFINITE).length > 0);        
     }
     
     public void testClean() throws Exception {
@@ -73,7 +72,7 @@ public class TestQvtBuilder extends TestCase {
     }
     
     private boolean hasErrorMarkers(IFile qvtFile) throws CoreException {
-    	IMarker[] markers = qvtFile.findMarkers(QVTOCompiler.PROBLEM_MARKER, true, IResource.DEPTH_INFINITE);
+    	IMarker[] markers = qvtFile.findMarkers(QVTOProjectPlugin.PROBLEM_MARKER, true, IResource.DEPTH_INFINITE);
     	for (IMarker marker : markers) {
 			if(marker.getAttribute(IMarker.SEVERITY, -1) == IMarker.SEVERITY_ERROR) {
 				return true;

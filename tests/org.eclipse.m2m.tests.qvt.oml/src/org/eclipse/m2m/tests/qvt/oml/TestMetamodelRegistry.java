@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CResourceRepositoryContext;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.WorkspaceMetamodelRegistryProvider;
-import org.eclipse.m2m.internal.qvt.oml.common.nature.TransformationNature;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
@@ -33,6 +32,7 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MModelURIMapFactory;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MappingContainer;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MetamodelURIMappingHelper;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.URIMapping;
+import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
 
 
 public class TestMetamodelRegistry extends TestCase {
@@ -45,7 +45,7 @@ public class TestMetamodelRegistry extends TestCase {
 	
 	@Override
 	public void setUp() throws Exception {
-		myProject = new TestProject("MModelREgistryTest", new String[] {TransformationNature.ID}); //$NON-NLS-1$
+		myProject = new TestProject("MModelREgistryTest", new String[] {QVTOProjectPlugin.NATURE_ID}); //$NON-NLS-1$
         
 		Resource mappingResource = MetamodelURIMappingHelper.createMappingResource(myProject.getProject());
         MappingContainer allMappings = MetamodelURIMappingHelper.createNewMappings(mappingResource);

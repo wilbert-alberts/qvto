@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.m2m.internal.qvt.oml.common.project.NatureUtils;
+import org.eclipse.m2m.internal.qvt.oml.project.nature.NatureUtils;
 import org.osgi.framework.Bundle;
 
 /**
@@ -83,7 +83,7 @@ public class TestProject {
             
             for (int i = 0; i < natures.length; i++) {
                 String nature = natures[i];
-                //if(TransformationNature.ID.equals(nature)) {
+                //if(TransformationNature.NATURE_ID.equals(nature)) {
                   NatureUtils.addNature(project, nature);
                 //}
             }

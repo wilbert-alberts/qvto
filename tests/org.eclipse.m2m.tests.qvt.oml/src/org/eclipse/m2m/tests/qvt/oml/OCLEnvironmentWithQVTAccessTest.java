@@ -203,7 +203,7 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 			fail("Additional operation should come from super type"); //$NON-NLS-1$
 		}
 	}
-	
+		
 	public void testImportedOperations() throws ParserException {		
 		OCLHelper<EClassifier, EOperation, EStructuralFeature, Constraint> helper = fOCL.createOCLHelper();		
 		helper.setContext(EcorePackage.eINSTANCE.getENamedElement());

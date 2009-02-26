@@ -39,7 +39,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
-import org.eclipse.m2m.internal.qvt.oml.runtime.project.EclipseImportResolver;
+import org.eclipse.m2m.internal.qvt.oml.project.builder.EclipseImportResolver;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.tests.qvt.oml.ParserTests.TestData;
 import org.eclipse.m2m.tests.qvt.oml.util.ProblemSourceAnnotationHelper;
