@@ -171,6 +171,9 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	    List<RenameCS> renamings = new ArrayList<RenameCS>();
 	    List<ImportCS> imports = new ArrayList<ImportCS>();
 	    List<TagCS> tags = new ArrayList<TagCS>();
+	    
+	    CSTNode startingUnitElement = null;
+	    CSTNode trailingUnitElement = null;
 
 	    for (CSTNode unitElement : unitElements) {
 	        if (unitElement instanceof MappingModuleCS) {
@@ -193,9 +196,16 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	            imports.add((ImportCS) unitElement);
 	        } else if (unitElement instanceof TagCS) {
 	            tags.add((TagCS) unitElement);
+	        } else if (unitElement == null) {
+	        	continue;
 	        } else {
 	            throw new RuntimeException("Unknown unit_element: " + unitElement); //$NON-NLS-1$
 	        }
+        	assert (unitElement != null); // must have been checked before
+	        if (startingUnitElement == null) {
+	        	startingUnitElement = unitElement;
+	        }
+	        trailingUnitElement = unitElement;
 	    }
 	    if (modules.isEmpty()) {
             reportError(ParseErrorCodes.INVALID_CODE, "",  //$NON-NLS-1$
@@ -224,7 +234,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
             moduleCS.getRenamings().addAll(renamings);
             moduleCS.getClassifierDefCS().addAll(classifiers);
             moduleCS.getTags().addAll(tags);
-            setOffsets(moduleCS, unitElements.get(0), unitElements.get(unitElements.size() - 1));
+            setOffsets(moduleCS, startingUnitElement, trailingUnitElement);
             return moduleCS;
 	    }
 	    return null; // TODO: support multiple modules

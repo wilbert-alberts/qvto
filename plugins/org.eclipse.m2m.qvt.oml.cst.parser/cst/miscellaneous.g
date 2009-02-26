@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.22 2009/02/12 16:49:33 aigdalov Exp $ 
+-- * $Id: miscellaneous.g,v 1.23 2009/02/26 21:21:53 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -279,7 +279,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.22 2009/02/12 16:49:33 aigdalov Exp $
+ * $Id: miscellaneous.g,v 1.23 2009/02/26 21:21:53 aigdalov Exp $
  */
 	./
 $End
@@ -372,12 +372,6 @@ $Rules
 		/.$EmptyListAction./
 	param_listOpt -> param_list
 
-	param_list ::= param_list qvtErrorToken
-		/.$BeginJava
-					EList result = (EList)$getSym(1);
-					$setResult(result);
-		  $EndJava
-		./
 	param_list ::= param_list ',' param
 		/.$BeginJava
 					EList result = (EList)$getSym(1);
@@ -385,10 +379,22 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
+	param_list ::= param_list ',' qvtErrorToken
+		/.$BeginJava
+					EList result = (EList)$getSym(1);
+					$setResult(result);
+		  $EndJava
+		./
 	param_list ::= param
 		/.$BeginJava
 					EList result = new BasicEList();
 					result.add($getSym(1));
+					$setResult(result);
+		  $EndJava
+		./
+	param_list ::= qvtErrorToken
+		/.$BeginJava
+					EList result = new BasicEList();
 					$setResult(result);
 		  $EndJava
 		./

@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.45 2009/02/19 11:25:55 radvorak Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.46 2009/02/26 21:21:53 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -151,7 +151,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.45 2009/02/19 11:25:55 radvorak Exp $
+ * $Id: QvtOpLPGParser.g,v 1.46 2009/02/26 21:21:53 aigdalov Exp $
  */
 	./
 $End
@@ -217,6 +217,8 @@ $Rules
 	unit_element -> entry
 	unit_element -> _mapping
 	unit_element -> _tag ';'
+	unit_element ::= qvtErrorToken
+		/.$NullAction./
 	--=== // definitions in a compilation unit (end) ===--
 
 	--=== // Transformation and library definitions (start) ===--
@@ -983,15 +985,15 @@ $Rules
 						$EMPTY_ELIST
 					);
 					setOffsets(mappingDeclarationCS, (IToken) helperInfo[1]);
-
+	
 					EList<SimpleNameCS> qualifiers = (EList<SimpleNameCS>) helperInfo[0];
 					if(!qualifiers.isEmpty()) {
 						mappingDeclarationCS.getQualifiers().addAll(createQualifiersListCS(qualifiers));
 					}
-
+	
 					IToken helperKind = (IToken) helperInfo[1];
 					mappingDeclarationCS.setIsQuery(helperKind.getKind() == $sym_type.TK_query);
-
+	
 					$setResult(mappingDeclarationCS);
 		  $EndJava
 		./
