@@ -9,7 +9,7 @@
  * Contributors:
  *    Alexander Shatalin (Borland) - initial API and implementation
  */
-package org.eclipse.m2m.internal.qvt.oml;
+package org.eclipse.m2m.internal.qvt.oml.compiler;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -22,12 +22,13 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class EPackageRegistryBasedURIResourceMap extends HashMap<URI, Resource> {
+class EPackageRegistryBasedURIResourceMap extends HashMap<URI, Resource> {
 
 	private static final long serialVersionUID = -3716798352459745813L;
 

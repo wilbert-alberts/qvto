@@ -69,8 +69,6 @@ import org.eclipse.osgi.util.NLS;
 public class QVTOCompiler {
 
 	private static final String NAMESPACE_SEP = ".";
-
-	public static final String PROBLEM_MARKER = "org.eclipse.m2m.qvt.oml.qvtProblem"; //$NON-NLS-1$    	
 	
     private final Map<CFile, CompiledUnit> fSource2Compiled = new HashMap<CFile, CompiledUnit>();
     private final Stack<DependencyPathElement> fDependencyWalkPath = new Stack<DependencyPathElement>();    
@@ -112,6 +110,12 @@ public class QVTOCompiler {
     			afterCompileCleanup();
     		}
     	};
+    }
+    
+    public static QVTOCompiler createCompiler(IImportResolver importResolver) {
+		ResourceSetImpl resourceSet = new ResourceSetImpl();
+		resourceSet.setURIResourceMap(new EPackageRegistryBasedURIResourceMap(resourceSet.getURIConverter()));
+		return new QVTOCompiler(importResolver, resourceSet);
     }
     
     public QVTOCompiler(IImportResolver importResolver, IMetamodelRegistryProvider metamodelRegistryProvider) {

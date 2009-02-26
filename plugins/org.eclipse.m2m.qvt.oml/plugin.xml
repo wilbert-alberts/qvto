@@ -6,23 +6,12 @@
    <extension-point id="blackboxProvider" name="Black box provider" schema="schema/blackboxProviders.exsd"/>
    <extension-point id="javaBlackboxUnits" name="Java blackbox compilation units" schema="schema/javaBlackboxUnits.exsd"/>
     
-   <extension
-         id="QvtBuilder"
-         name="%qvtBuilder"
-         point="org.eclipse.core.resources.builders">
-      <builder hasNature="true">
-         <run class="org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilder">
-         </run>
-      </builder>
-   </extension>
-                                                          
-   <extension point="org.eclipse.core.resources.markers"
-           id="qvtProblem" name="%qvtProblemName">
-                <super type="org.eclipse.core.resources.problemmarker"/>
-                <super type="org.eclipse.core.resources.textmarker"/>
-                <persistent value="true"/>
-  </extension>
-   
+ <extension name="Java blackbox implementation provider" point="org.eclipse.m2m.qvt.oml.blackboxProvider">
+    <provider
+          class="org.eclipse.m2m.internal.qvt.oml.blackbox.java.JavaBlackboxProvider">
+    </provider>
+ </extension>
+ 
  <extension point="org.eclipse.emf.ecore.generated_package">
    <package 
       uri = "http:///www.eclipse.org/m2m/qvt/operational/trace.ecore" 
@@ -36,13 +25,21 @@
       class = "org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage"
       genModel = "model/QVTOperational.genmodel" /> 
  </extension>
- 
- <extension
-       name="Java blackbox implementation provider"
-       point="org.eclipse.m2m.qvt.oml.blackboxProvider">
-    <provider
-          class="org.eclipse.m2m.internal.qvt.oml.blackbox.java.JavaBlackboxProvider">
-    </provider>
+
+
+
+ <extension id="QvtBuilder" name="%legacyQvtBuilder" point="org.eclipse.core.resources.builders">
+      <builder
+            callOnEmptyDelta="true"
+            hasNature="true">
+         <run class="org.eclipse.m2m.internal.qvt.oml.legacy.QvtMigrationBuilder"/>
+      </builder>
+   </extension>
+                                                          
+ <extension point="org.eclipse.core.resources.markers" id="qvtProblem" name="%legacyQvtProblemName">
+	<super type="org.eclipse.core.resources.problemmarker"/>
+    <super type="org.eclipse.core.resources.textmarker"/>
+	<persistent value="true"/>
  </extension>
 
 </plugin>
