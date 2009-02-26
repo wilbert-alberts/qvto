@@ -63,7 +63,8 @@ public class QvtPlugin extends Plugin {
     }
     
     public static void log(Throwable e) {
-        log(new Status(IStatus.ERROR, ID, 100001, "Unexpected_exception", e)); //$NON-NLS-1$
+    	String message = QVT_PREFIX + (e.getLocalizedMessage() != null ? e.getLocalizedMessage() : "Exception"); //$NON-NLS-1$
+        log(new Status(IStatus.ERROR, ID, 100001, message, e));
     }
     
     public static void logError(String message, Throwable e) {
@@ -75,7 +76,10 @@ public class QvtPlugin extends Plugin {
 	}
 	
 	public static IStatus createErrorStatus(Exception e) {
-		return new Status(IStatus.ERROR, QvtPlugin.ID, IStatus.ERROR, "internal error", e); //$NON-NLS-1$
-	}    
+    	String message = QVT_PREFIX + (e.getLocalizedMessage() != null ? e.getLocalizedMessage() : "Error"); //$NON-NLS-1$
+		return new Status(IStatus.ERROR, QvtPlugin.ID, IStatus.ERROR, message, e);
+	}
+	
+	private static final String QVT_PREFIX = "Operational QVT: "; //$NON-NLS-1$
 	
 }
