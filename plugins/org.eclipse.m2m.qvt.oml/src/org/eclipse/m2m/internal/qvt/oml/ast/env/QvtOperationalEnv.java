@@ -15,8 +15,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAnnotation;
@@ -75,8 +77,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	public static final String METAMODEL_COMPLIANCE_KIND_STRICT = "strict"; //$NON-NLS-1$
 	
     private EPackage.Registry myPackageRegistry;    
-	private final List<QvtMessage> myWarningsList = new ArrayList<QvtMessage>(2);
-	private final List<QvtMessage> myErrorsList = new ArrayList<QvtMessage>(2);
+	private final Set<QvtMessage> myWarningSet = new LinkedHashSet<QvtMessage>(2);
+	private final Set<QvtMessage> myErrorSet = new LinkedHashSet<QvtMessage>(2);
 	private boolean myCheckForDuplicateErrors;
 	private QvtCompilerOptions myCompilerOptions;
 	
@@ -332,7 +334,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		boolean foundSameLocation = false;
 		int msgLength = endOffset-startOffset+1;
 		if (myCheckForDuplicateErrors) {
-			for (QvtMessage msg : parent.myErrorsList) {
+			for (QvtMessage msg : parent.myErrorSet) {
 				if (msg.getOffset() == startOffset && msg.getLength() == msgLength) {
 					foundSameLocation = true;
 					break;
@@ -341,7 +343,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		}
 		
 		if (!foundSameLocation) {
-			parent.myErrorsList.add(new QvtMessage(message, QvtMessage.SEVERITY_ERROR, startOffset, msgLength, getLineNum(parent, startOffset)));
+			parent.myErrorSet.add(new QvtMessage(message, QvtMessage.SEVERITY_ERROR, startOffset, msgLength, getLineNum(parent, startOffset)));
 		}
 	}
 
@@ -353,7 +355,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		while (parent.getInternalParent() != null) {
 			parent = (QvtOperationalEnv) parent.getInternalParent();
 		}
-		parent.myWarningsList.add(new QvtMessage(message, QvtMessage.SEVERITY_WARNING, startOffset, endOffset-startOffset+1, getLineNum(parent, startOffset)));
+		parent.myWarningSet.add(new QvtMessage(message, QvtMessage.SEVERITY_WARNING, startOffset, endOffset-startOffset+1, getLineNum(parent, startOffset)));
 
 		// TODO #199408  Use traces in QVTParser instead of System.xxx output facilities
 		//System.err.println("Warning: " + message + ", Pos: " + startOffset + "-" + endOffset);
@@ -372,19 +374,19 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	}
 
 	public boolean hasErrors() {
-		return myErrorsList != null && myErrorsList.isEmpty() == false;
+		return myErrorSet != null && myErrorSet.isEmpty() == false;
 	}
 	
 	public boolean hasWarnings() {
-		return myWarningsList != null && myWarningsList.isEmpty() == false;
+		return myWarningSet != null && myWarningSet.isEmpty() == false;
 	}	
 		
 	public List<QvtMessage> getErrorsList() {
-		return myErrorsList;
+		return new ArrayList<QvtMessage>(myErrorSet);
 	}
 
 	public List<QvtMessage> getWarningsList() {
-		return myWarningsList;
+		return new ArrayList<QvtMessage>(myWarningSet);
 	}
 	
 	public List<QvtMessage> getAllProblemMessages() {
