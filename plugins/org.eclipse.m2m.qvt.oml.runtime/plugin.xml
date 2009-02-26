@@ -4,12 +4,7 @@
 
     <extension-point id="qvtTransformation" name="%qvtTransformation" schema="schema/qvt-transformation.exsd"/>
     <extension-point id="qvtTransformationImplFactory" name="%qvtTransformationImplFactory" schema="schema/qvtTransformationImplFactory.exsd"/>
-                 
-
-    <extension point="org.eclipse.m2m.qvt.oml.importResolverFactory">
-        <factory class="org.eclipse.m2m.internal.qvt.oml.runtime.project.EclipseImportResolverFactory"/>
-    </extension>
-   
+                    
 	<extension point="org.eclipse.core.resources.markers"
 		id="qvtBuilderMarker" name="%qvtBuilderTransformation">
 		<super type="org.eclipse.core.resources.problemmarker"/>

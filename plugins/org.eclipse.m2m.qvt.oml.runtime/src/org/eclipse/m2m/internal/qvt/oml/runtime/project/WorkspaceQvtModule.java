@@ -13,12 +13,11 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.m2m.internal.qvt.oml.QvtEngine;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
-import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtCompilerFacade.CompilationResult;
 
 public class WorkspaceQvtModule extends QvtModule {
     
@@ -36,16 +35,18 @@ public class WorkspaceQvtModule extends QvtModule {
     @Override
 	public Module getModule(boolean isCheckErrors) throws MdaException {
         if(myModule == null) {
-            QvtEngine engine = QvtEngine.getInstance(myTransformationFile);
-            myUnit = engine.compileUnit(new EclipseFile(myTransformationFile), getQvtCompilerOptions(), null);
+        	CompilationResult result = QvtCompilerFacade.getCompiledModule(myTransformationFile, getQvtCompilerOptions(), null);
+        	myUnit = result.getCompiledModule();
+//            QvtEngine engine = QvtEngine.getInstance(myTransformationFile);
+//            myUnit = engine.compileUnit(new EclipseFile(myTransformationFile), getQvtCompilerOptions(), null);
             
             if (isCheckErrors) {
             	checkModuleErrors(myUnit);
             }
-            
+
             // FIXME - 
-            myModule = myUnit.getModules().get(0);
-            myCompiler = engine.getQVTOCompiler();
+            myModule = myUnit.getModules().isEmpty() ? null : myUnit.getModules().get(0);
+            myCompiler = result.getCompiler();
         }
         
         return myModule;

@@ -31,7 +31,6 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.emf.ExtendedEmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.trace.EValue;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
@@ -72,7 +71,7 @@ public class TraceSerializer {
 	    	attributes.put(EValidator.URI_ATTRIBUTE, uri.fragment());
 	    }
 	    try {
-	        IMarker marker = iresource.createMarker(QVTOCompiler.PROBLEM_MARKER);
+	        IMarker marker = iresource.createMarker(IMarker.PROBLEM);
 	        marker.setAttributes(attributes);
 	    }
 	    catch (CoreException e) {

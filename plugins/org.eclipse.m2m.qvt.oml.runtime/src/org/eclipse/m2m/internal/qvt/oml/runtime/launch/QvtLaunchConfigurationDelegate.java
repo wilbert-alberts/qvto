@@ -11,9 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.launch;
 
-import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -26,7 +23,6 @@ import org.eclipse.debug.core.IStatusHandler;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.ShallowProcess;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.StreamsProxy;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
@@ -146,17 +142,20 @@ public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelega
 		};
 	}
     
-    
-    @Override
-	protected boolean existsProblems(IProject proj) throws CoreException {
-        IMarker[] markers = proj.findMarkers(QVTOCompiler.PROBLEM_MARKER, true, IResource.DEPTH_INFINITE);
-        for (int i = 0; i < markers.length; i++) {
-            if (isLaunchProblem(markers[i])) {
-                return true;
-            }
-        }
-
-        return false;
-    }
+  
+// FIXME - do we need such an annoying generic check ?
+// Useless anyway without overriding 
+//	org.eclipse.debug.core.model.LaunchConfigurationDelegate.getProjectsForProblemSearch(ILaunchConfiguration, String)	
+//    @Override
+//	protected boolean existsProblems(IProject proj) throws CoreException {
+//        IMarker[] markers = proj.findMarkers(QVTOProjectPlugin.PROBLEM_MARKER, true, IResource.DEPTH_INFINITE);
+//        for (int i = 0; i < markers.length; i++) {
+//            if (isLaunchProblem(markers[i])) {
+//                return true;
+//            }
+//        }
+//
+//        return false;
+//    }
 
 }
