@@ -36,13 +36,13 @@ import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.source.ISourceViewer;
-import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilder;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
-import org.eclipse.m2m.internal.qvt.oml.common.nature.TransformationNature;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtConfiguration;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtEditor;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionProcessor;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionProposal;
+import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
+import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilder;
 import org.eclipse.m2m.tests.qvt.oml.TestProject;
 import org.eclipse.m2m.tests.qvt.oml.util.ReaderInputStream;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
@@ -119,7 +119,7 @@ public class CompletionTest extends AbstractCompletionTest {
 	}
 	
 	protected void initializeProject() throws Exception {
-		myTestProject = new TestProject("CompletionTest", new String[] {TransformationNature.ID}); //$NON-NLS-1$
+		myTestProject = new TestProject("CompletionTest", new String[] {QVTOProjectPlugin.NATURE_ID}); //$NON-NLS-1$
         File srcFolder = TestUtil.getPluginRelativeFile(BUNDLE, ICompletionTestConstants.COMPLETION_TEST_FOLDER
                 + "/" + myFolder); //$NON-NLS-1$
         FileUtil.copyFolder(srcFolder, myTestProject.getProject().getLocation().toFile());
@@ -243,7 +243,7 @@ public class CompletionTest extends AbstractCompletionTest {
 	}
 	
 	protected String getTransformationContents() throws CoreException {
-		return QvtBuilder.getFileContents(getTransformationFile());
+		return QVTOBuilder.getFileContents(getTransformationFile());
 	}
 	
 	protected File getAnnotatedTransformationFile() throws IOException {

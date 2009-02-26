@@ -26,13 +26,13 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
-import org.eclipse.m2m.internal.qvt.oml.common.nature.TransformationNature;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtDocumentProvider;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtEditor;
+import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
+import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilderConfig;
 import org.eclipse.m2m.tests.qvt.oml.TestProject;
 import org.eclipse.m2m.tests.qvt.oml.util.SourceAnnotationReader;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
@@ -116,10 +116,10 @@ public abstract class AbstractTestQvtEditorSupport extends TestCase {
 	}	
 	
 	protected void initializeProject() throws Exception {
-		fTestProject = new TestProject("Editor", new String[] {TransformationNature.ID}); //$NON-NLS-1$
+		fTestProject = new TestProject("Editor", new String[] {QVTOProjectPlugin.NATURE_ID}); //$NON-NLS-1$
 	
 		File srcFolder = TestUtil.getPluginRelativeFile(TestUtil.BUNDLE, "parserTestData/editor/" + fTestFolder); //$NON-NLS-1$
-	    fSrcContainer = QvtBuilderConfig.getConfig(fTestProject.getProject()).getSourceContainer();
+	    fSrcContainer = QVTOBuilderConfig.getConfig(fTestProject.getProject()).getSourceContainer();
 	    File destFolder = fSrcContainer.getLocation().toFile();
 	    FileUtil.copyFolder(srcFolder, destFolder);
 	    
