@@ -32,15 +32,12 @@
       <import plugin="org.eclipse.m2m.qvt.oml.ocl"/>
       <import plugin="org.eclipse.m2m.qvt.oml.samples"/>
       <import plugin="org.eclipse.ant.core"/>
+      <import plugin="org.eclipse.debug.core"/>
       <import plugin="org.eclipse.jface.text"/>
       <import plugin="org.eclipse.m2m.qvt.oml.editor.ui"/>
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.ui.editors"/>
-      <import plugin="org.eclipse.core.runtime.compatibility"/>
-      <import plugin="org.apache.ant" version="1.6.5" match="compatible"/>
-      <import plugin="org.eclipse.ui.ide.application"/>
-      <import plugin="org.eclipse.equinox.app"/>
-      <import plugin="org.eclipse.debug.core"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.project"/>
    </requires>
 
    <plugin
