@@ -55,6 +55,17 @@
 	          name="qvto.interpretedTransformation"/>
 	 </extension>
 	 
+	 <extension point="org.eclipse.ant.core.antTasks">
+	    <antTask
+	          class="org.eclipse.m2m.internal.qvt.oml.runtime.ant.QvtoAntTransformationTask"
+	          eclipseRuntime="true"
+	          headless="true"
+	          library="lib/antTasks.jar"
+	          name="transformation"
+	          uri="http://www.eclipse.org/qvt/1.0.0/Operational"
+	          />
+	 </extension>
+	 
 	 <extension point="org.eclipse.ant.core.extraClasspathEntries">
 	    <extraClasspathEntry
 	          eclipseRuntime="true"

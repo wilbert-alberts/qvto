@@ -24,14 +24,13 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.LaunchConfigurationDelegate;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
@@ -153,27 +152,27 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
     	
         Context context = QvtLaunchUtil.createContext(configProps);
 
-    		final StringWriter consoleLogger = new StringWriter();
-    		context.setLog(new WriterLog(consoleLogger));
-	    	
-	        TransformationRunner.In in = new TransformationRunner.In(inObjs.toArray(new ModelContent[inObjs.size()]), context);
-	        TransformationRunner.Out out = transformation.run(in);
-	
-	        outExtents.addAll(out.getExtents());
-	
-	        for (Object outValue : out.getOutParamValues()) {
-	        	if (outValue instanceof EObject) {
-	        		outMainParams.add((EObject) outValue);
-	        	}
-	        	else {
-	        		outMainParams.add(null);
-	        	}
-	        }
-	        
-	        if (out.getTrace() != null) {
-	        	outTraces.add(out.getTrace());
-	        }
-	        outConsole.add(consoleLogger.getBuffer().toString());
+		final StringWriter consoleLogger = new StringWriter();
+		context.setLog(new WriterLog(consoleLogger));
+    	
+        TransformationRunner.In in = new TransformationRunner.In(inObjs.toArray(new ModelContent[inObjs.size()]), context);
+        TransformationRunner.Out out = transformation.run(in);
+
+        outExtents.addAll(out.getExtents());
+
+        for (Object outValue : out.getOutParamValues()) {
+        	if (outValue instanceof EObject) {
+        		outMainParams.add((EObject) outValue);
+        	}
+        	else {
+        		outMainParams.add(null);
+        	}
+        }
+        
+        if (out.getTrace() != null) {
+        	outTraces.add(out.getTrace());
+        }
+        outConsole.add(consoleLogger.getBuffer().toString());
     }
         
     private static List<URI> doLaunch(final QvtTransformation transformation, final List<ModelContent> inObjs,
@@ -257,21 +256,20 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
 	            }
 	            
 		        EStructuralFeature feature = container.eClass().getEStructuralFeature(targetData.getFeature());
-		        if(feature instanceof EReference == false) {
+		        if (feature == null) {
 	                throw new MdaException("Reference " + targetData.getFeature() + " not found in " + container); //$NON-NLS-1$ //$NON-NLS-2$
 		        }
 
+		        if (targetData.isClearContents() && FeatureMapUtil.isMany(container, feature)) {
+		        	List<EObject> value = (List<EObject>) container.eGet(feature);
+		        	if (value != null) {
+		        		value.clear();
+		        	}
+		        }
+		        
         		for (EObject out : extent.getAllRootElements()) {
-			        EReference ref = (EReference)feature;
-			        if(!ref.isMany()) {
-			        	container.eSet(ref, out);
-			        }
-			        else {
-			        	EList<EObject> value = (EList<EObject>) container.eGet(feature);
-			        	if(targetData.isClearContents()) {
-			        		value.clear();
-			        	}
-
+			        if (FeatureMapUtil.isMany(container, feature)) {
+			        	List<EObject> value = (List<EObject>) container.eGet(feature);
 			        	try {
 			        		value.add(out);
 			        	}
@@ -279,6 +277,9 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
 			        		throw new MdaException(NLS.bind(Messages.QvtLaunchConfigurationDelegateBase_FeatureSetFailure,
 			        				EmfUtil.getFullName(out.eClass()), targetData.getFeature()));
 			        	}
+			        }
+			        else {
+			        	container.eSet(feature, out);
 			        }
         		}
         		
