@@ -84,6 +84,9 @@ public class ParserTests {
     }
     
     private static TestData[] ourData = new TestData[] {
+    	TestData.createSourceChecked("unitElementErrorRecovery_264517_1", 1, 0), //$NON-NLS-1$    	
+    	TestData.createSourceChecked("unitElementErrorRecovery_264517_2", 3, 0), //$NON-NLS-1$    	
+    	TestData.createSourceChecked("unitElementErrorRecovery_264675", 1, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("nestedPropertiesAssignment_262757", 9, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("collectionOperationNotFound_224093", 3, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("deprecated_importLocation", 0, 1), //$NON-NLS-1$
@@ -155,7 +158,7 @@ public class ParserTests {
         new TestData("modifyresult", 0), //$NON-NLS-1$
         new TestData("wrongorderininit", 1), //$NON-NLS-1$
         new TestData("duplicateinitvariable", 1), //$NON-NLS-1$
-        TestData.createSourceChecked("missingObjectType", 1, 0), // replaced former 'nestedouterror' //$NON-NLS-1$
+        TestData.createSourceChecked("missingObjectType", 3, 0), // replaced former 'nestedouterror' //$NON-NLS-1$
         new TestData("emptyinit", 0), //$NON-NLS-1$
         new TestData("assignresultininit", 0), //$NON-NLS-1$
         new TestData("assign_inoutParam", 2), //$NON-NLS-1$
