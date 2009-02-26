@@ -57,6 +57,23 @@
         <newWizardShortcut id="org.eclipse.m2m.qvt.oml.ui.wizards.NewQvtLibraryWizard"/>
      </perspectiveExtension>
   </extension>
+   <extension
+         point="org.eclipse.ui.ide.projectNatureImages">
+      <image
+            icon="icons/pr-legacy.gif"
+            id="org.eclipse.m2m.qvt.oml.project.QVTONatureImage"
+            natureId="org.eclipse.m2m.qvt.oml.project.TransformationNature">
+      </image>
+   </extension>
+  
+  <extension point="org.eclipse.ui.ide.projectNatureImages">
+	<image
+		id="org.eclipse.m2m.qvt.oml.project.QVTONatureImage"
+		natureId="org.eclipse.m2m.qvt.oml.project.QVTONature"
+    	icon="icons/pr-MDA.gif">
+	</image>
+  </extension>   
+  
   
   <extension point="org.eclipse.ui.propertyPages">
     <page
@@ -64,7 +81,7 @@
         category="org.eclipse.m2m.qvt.oml.ui.QvtSettingsPropertyPage"
         name= "%metamodelMappingsPageName"
         class="org.eclipse.m2m.internal.qvt.oml.ui.wizards.project.QvtMetamodelMappingPage">
-	    <filter name="nature" value="org.eclipse.m2m.qvt.oml.project.TransformationNature"/>        
+	    <filter name="nature" value="org.eclipse.m2m.qvt.oml.project.QVTONature"/>        
      <enabledWhen>
         <adapt type="org.eclipse.core.resources.IProject"/>
      </enabledWhen>        
@@ -76,7 +93,7 @@
         id="org.eclipse.m2m.qvt.oml.ui.QvtSettingsPropertyPage"
         name= "%qvtSettings"
         class="org.eclipse.m2m.internal.qvt.oml.ui.wizards.project.QvtSettingsPropertyPage">
-	    <filter name="nature" value="org.eclipse.m2m.qvt.oml.project.TransformationNature"/>
+	    <filter name="nature" value="org.eclipse.m2m.qvt.oml.project.QVTONature"/>
      <enabledWhen>
         <adapt type="org.eclipse.core.resources.IProject"/>
      </enabledWhen>      

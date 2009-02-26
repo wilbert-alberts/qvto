@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.window.Window;
-import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
+import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.ui.IStatusChangeListener;
 import org.eclipse.m2m.internal.qvt.oml.ui.QVTUIPlugin;
 import org.eclipse.osgi.util.NLS;
@@ -44,7 +44,7 @@ import org.eclipse.ui.ide.undo.CreateFolderOperation;
 
 class SourceContainerConfigBlock {
 	
-    private QvtBuilderConfig fBuilderConfig;
+    private QVTOBuilderConfig fBuilderConfig;
 
 	private IProject fProject;	
     private IContainer fSourceContainer;    
@@ -253,7 +253,7 @@ class SourceContainerConfigBlock {
     private boolean loadBuilderConfig() {
     	// used with a newly created project, acquire the configuration now
     	try {
-			fBuilderConfig = QvtBuilderConfig.getConfig(fProject);
+			fBuilderConfig = QVTOBuilderConfig.getConfig(fProject);
 		} catch (CoreException e) {
 			setError(Messages.SourceContainerConfigBlock_loadBuilderConfigError, e, true);
 			return false;

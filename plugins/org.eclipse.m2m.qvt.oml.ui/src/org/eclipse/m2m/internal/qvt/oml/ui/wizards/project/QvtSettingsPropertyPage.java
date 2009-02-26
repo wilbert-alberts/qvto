@@ -15,9 +15,9 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilder;
-import org.eclipse.m2m.internal.qvt.oml.common.project.NatureUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
+import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
+import org.eclipse.m2m.internal.qvt.oml.project.nature.NatureUtils;
 import org.eclipse.m2m.internal.qvt.oml.ui.IStatusChangeListener;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -104,7 +104,7 @@ public class QvtSettingsPropertyPage extends PropertyPage {
 
     private static boolean isQvtProject(IProject project) {
         try {
-            return project.isOpen() && NatureUtils.isBuilderEnabled(project, QvtBuilder.ID);
+            return project.isOpen() && NatureUtils.isBuilderEnabled(project, QVTOProjectPlugin.BUILDER_ID);
         } 
         catch (CoreException e) {
             Logger.getLogger().log(Logger.SEVERE, "Builder check failed", e); //$NON-NLS-1$

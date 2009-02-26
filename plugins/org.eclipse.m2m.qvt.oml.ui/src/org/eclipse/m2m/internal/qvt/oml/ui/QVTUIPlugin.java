@@ -21,7 +21,7 @@ import org.osgi.framework.BundleContext;
  */
 public class QVTUIPlugin extends Plugin {
 
-	// The plug-in ID
+	// The plug-in NATURE_ID
 	public static final String PLUGIN_ID = "org.eclipse.m2m.qvt.oml.ui";
 
 	// The shared instance

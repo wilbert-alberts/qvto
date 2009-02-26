@@ -18,8 +18,8 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
+import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.ui.QvtPluginImages;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
@@ -36,7 +36,7 @@ public class QvtProjectLabelProvider extends LabelProvider {
 	public String getText(Object element) {
 		/*if(element instanceof IContainer) {
 			IContainer resource = (IContainer) element;
-			QvtBuilderConfig config = getBuilderConfig(resource);		
+			QVTOBuilderConfig config = getBuilderConfig(resource);		
 			if(config != null && resource.equals(config.getSourceContainer())) {				
 				return resource.getProjectRelativePath().toString(); 
 			}
@@ -47,7 +47,7 @@ public class QvtProjectLabelProvider extends LabelProvider {
 	
 	@Override
 	public Image getImage(Object element) {
-		QvtBuilderConfig config = getBuilderConfig(element);
+		QVTOBuilderConfig config = getBuilderConfig(element);
 		if(config == null) {
 			return delegate.getImage(element); 
 		}
@@ -75,10 +75,10 @@ public class QvtProjectLabelProvider extends LabelProvider {
 		return null;
 	}
 		
-	private static QvtBuilderConfig getBuilderConfig(Object element) {
+	private static QVTOBuilderConfig getBuilderConfig(Object element) {
 		try {
 			if (element instanceof IResource) {
-				return QvtBuilderConfig.getConfig(((IResource) element).getProject());				
+				return QVTOBuilderConfig.getConfig(((IResource) element).getProject());				
 			}
 		} catch (CoreException e) {
 			return null;

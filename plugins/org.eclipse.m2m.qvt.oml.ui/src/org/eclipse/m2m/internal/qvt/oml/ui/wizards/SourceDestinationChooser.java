@@ -31,8 +31,8 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.window.Window;
-import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.project.QvtProjectUtil;
+import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.project.model.IQvtElement;
 import org.eclipse.m2m.internal.qvt.oml.project.model.IQvtNamespace;
 import org.eclipse.m2m.internal.qvt.oml.project.model.IQvtProject;
@@ -320,7 +320,7 @@ public class SourceDestinationChooser extends ElementTreeSelectionDialog {
 			IProject project = adaptObject(element, IProject.class);
 			if(project != null) {
 				// add top level source container if the project itself is not a container 
-				QvtBuilderConfig config = getBuilderConfig(project);
+				QVTOBuilderConfig config = getBuilderConfig(project);
 				if (config != null) {
 					IContainer sourceContainer = config.getSourceContainer();
 					if(sourceContainer.getType() != IResource.PROJECT) {
@@ -372,7 +372,7 @@ public class SourceDestinationChooser extends ElementTreeSelectionDialog {
 			if(element instanceof IContainer) {
 				IContainer resource = (IContainer) element;
 				if(resource.getType() != IResource.PROJECT) {
-					QvtBuilderConfig config = getBuilderConfig(resource);
+					QVTOBuilderConfig config = getBuilderConfig(resource);
 					if(config != null) {
 						IContainer sourceContainer = config.getSourceContainer();
 						if(sourceContainer.getType() != IResource.PROJECT && resource.equals(sourceContainer)) {
@@ -404,13 +404,13 @@ public class SourceDestinationChooser extends ElementTreeSelectionDialog {
 	
 	
 	
-	private static QvtBuilderConfig getBuilderConfig(Object element) {
+	private static QVTOBuilderConfig getBuilderConfig(Object element) {
 		try {
 			IResource resource = adaptObject(element, IResource.class);
 			if (resource != null) {
 				IProject project = resource.getProject();
 				if(QvtProjectUtil.isQvtProject(project)) {
-					return QvtBuilderConfig.getConfig(project);
+					return QVTOBuilderConfig.getConfig(project);
 				}
 			}
 		} catch (CoreException e) {

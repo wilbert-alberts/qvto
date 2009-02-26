@@ -35,9 +35,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardSelectionPage;
-import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
-import org.eclipse.m2m.internal.qvt.oml.common.nature.TransformationNature;
-import org.eclipse.m2m.internal.qvt.oml.common.project.NatureUtils;
+import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.ui.QVTUIPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ui.QvtPluginImages;
 import org.eclipse.ui.INewWizard;
@@ -242,7 +240,7 @@ public class NewQVTProjectWizard extends Wizard implements INewWizard, IExecutab
         	SourceContainerUpdater.ensureDestinationExists((IFolder)srcContainer, monitor);    		
     	}
     	
-    	QvtBuilderConfig qvtConfig = QvtBuilderConfig.getConfig(createdProject);
+    	QVTOBuilderConfig qvtConfig = QVTOBuilderConfig.getConfig(createdProject);
     	qvtConfig.setSourceContainer(srcContainer);
     	qvtConfig.addTransformationNature();
 
