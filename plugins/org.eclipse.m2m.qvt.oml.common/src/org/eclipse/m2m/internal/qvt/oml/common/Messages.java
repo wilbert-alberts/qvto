@@ -27,4 +27,10 @@ public class Messages extends NLS {
     public static String FileUtil_CannotDelete;
     public static String ShallowProcess_Label;
     public static String ShallowProcess_InvalidState;
+    
+    public static String TransformationRegistry_MissingMetamodelAttr;
+    public static String TransformationRegistry_MissingMetaclassAttr;
+    public static String TransformationRegistry_UnknownMetamodel;
+    public static String TransformationRegistry_NoElements;
+    
 }

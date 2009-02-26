@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.common.project;
 
-public class Pair<A, B> {
+class Pair<A, B> {
     
     public Pair(A a, B b) {
         myFirst = a;

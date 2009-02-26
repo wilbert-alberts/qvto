@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
+import org.eclipse.m2m.internal.qvt.oml.common.Messages;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfException;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
@@ -36,7 +37,8 @@ public abstract class TransformationRegistry {
     };
 
     public static class InputFilter implements Filter {
-        private List<EClass> myInput = new ArrayList<EClass>();
+        
+    	private List<EClass> myInput = new ArrayList<EClass>();
 
 		public InputFilter(EClass input) {
             myInput.add(input);
@@ -147,9 +149,9 @@ public abstract class TransformationRegistry {
                 if (pack == 0) {
                     if (metamodel.equals(ePack.getNsURI())) {
                         return true;
-                    } else {
-                        return false;
-                    }
+                    } 
+                    
+                    return false;                    
                 }
                 ePack = ePack.getESuperPackage();
             };
