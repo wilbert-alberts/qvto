@@ -33,14 +33,14 @@ import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.IAnnotationModelExtension;
-import org.eclipse.m2m.internal.qvt.oml.QvtEngine;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
-import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
+import org.eclipse.m2m.internal.qvt.oml.project.QvtEngine;
+import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilderConfig;
 import org.eclipse.ui.part.FileEditorInput;
 
 /**
@@ -207,7 +207,7 @@ public class QvtCompilerFacade {
 		IFile file = ((FileEditorInput) editor.getEditorInput()).getFile();
 		if(file != null && file.exists()) {
 			try {
-				IContainer srcContainer = QvtBuilderConfig.getConfig(file.getProject()).getSourceContainer();
+				IContainer srcContainer = QVTOBuilderConfig.getConfig(file.getProject()).getSourceContainer();
 				if(srcContainer.exists()) {
 					IPath editedPath = file.getFullPath();
 					IPath srcPath = srcContainer.getFullPath();

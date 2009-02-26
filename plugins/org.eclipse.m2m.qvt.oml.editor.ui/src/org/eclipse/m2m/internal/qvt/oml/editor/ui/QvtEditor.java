@@ -35,7 +35,6 @@ import org.eclipse.jface.text.source.projection.ProjectionAnnotationModel;
 import org.eclipse.jface.text.source.projection.ProjectionSupport;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.m2m.internal.qvt.oml.builder.QvtBuilder;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.actions.OpenDeclarationAction;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.outline.QvtOutlineContentProvider;
@@ -44,6 +43,7 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.outline.QvtOutlineLabelProvide
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.outline.QvtOutlineNodeSelector;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.outline.QvtOutlineSelectionListener;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
+import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilder;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.RGB;
@@ -78,7 +78,7 @@ public class QvtEditor extends TextEditor {
         setRulerContextMenuId("#QvtoEditorRulerContext"); //$NON-NLS-1$
         setEditorContextMenuId("#QvtoEditorContext");   //$NON-NLS-1$
         
-        QvtBuilder.addBuildListener(myBuildListener);        
+        QVTOBuilder.addBuildListener(myBuildListener);        
     }
     
     void setReconciler(QvtReconciler reconciler) {
@@ -108,7 +108,7 @@ public class QvtEditor extends TextEditor {
         }
         
         if(myBuildListener != null) {
-            QvtBuilder.removeBuildListener(myBuildListener);
+            QVTOBuilder.removeBuildListener(myBuildListener);
             myBuildListener = null;
         }
         
@@ -389,7 +389,7 @@ public class QvtEditor extends TextEditor {
     private Object fASTProviderLock = new Object();
 
      
-    private QvtBuilder.BuildListener myBuildListener = new QvtBuilder.BuildListener() {
+    private QVTOBuilder.BuildListener myBuildListener = new QVTOBuilder.BuildListener() {
         public void buildPerformed() {
             //refresh();
         }
