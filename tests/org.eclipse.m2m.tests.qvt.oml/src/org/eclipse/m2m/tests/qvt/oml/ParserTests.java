@@ -84,9 +84,10 @@ public class ParserTests {
     }
     
     private static TestData[] ourData = new TestData[] {
+    	TestData.createSourceChecked("moduleElementErrorRecovery_265452", 7, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("unitElementErrorRecovery_264517_1", 1, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("unitElementErrorRecovery_264517_2", 3, 0), //$NON-NLS-1$    	
-    	TestData.createSourceChecked("unitElementErrorRecovery_264675", 1, 0), //$NON-NLS-1$    	
+    	TestData.createSourceChecked("unitElementErrorRecovery_264675", 3, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("nestedPropertiesAssignment_262757", 9, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("collectionOperationNotFound_224093", 3, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("deprecated_importLocation", 0, 1), //$NON-NLS-1$
