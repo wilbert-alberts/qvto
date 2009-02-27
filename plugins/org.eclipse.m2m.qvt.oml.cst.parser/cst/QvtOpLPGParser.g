@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.46 2009/02/26 21:21:53 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.47 2009/02/27 12:16:45 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -151,7 +151,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.46 2009/02/26 21:21:53 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.47 2009/02/27 12:16:45 aigdalov Exp $
  */
 	./
 $End
@@ -497,6 +497,8 @@ $Rules
 	module_element -> entry
 	module_element -> _mapping
 	module_element -> _tag ';'
+	module_element ::= qvtErrorToken
+		/.$NullAction./
 	--=== // module definitions (end) ===--
 	
 	--=== // model types compliance and metamodel declarations (start) ===--
@@ -556,6 +558,12 @@ $Rules
 		/.$BeginJava
 					EList result = (EList)$getSym(1);
 					result.add($getSym(3));
+					$setResult(result);
+		  $EndJava
+		./
+	packageref_list ::= packageref_list qvtErrorToken
+		/.$BeginJava
+					EList result = (EList)$getSym(1);
 					$setResult(result);
 		  $EndJava
 		./

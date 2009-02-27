@@ -196,7 +196,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	            imports.add((ImportCS) unitElement);
 	        } else if (unitElement instanceof TagCS) {
 	            tags.add((TagCS) unitElement);
-	        } else if (unitElement == null) {
+	        } else if (unitElement == null) { // error recovery
 	        	continue;
 	        } else {
 	            throw new RuntimeException("Unknown unit_element: " + unitElement); //$NON-NLS-1$
@@ -317,6 +317,8 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	            constructors.add((ConstructorCS) moduleElement);
             } else if (moduleElement instanceof TagCS) {
                 tags.add((TagCS) moduleElement);
+            } else if (moduleElement == null) { // error recovery
+                continue;
             } else {
                 throw new RuntimeException("Unknown module_element: " + moduleElement); //$NON-NLS-1$
             }

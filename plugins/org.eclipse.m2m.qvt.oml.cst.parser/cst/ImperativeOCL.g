@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.g,v 1.20 2009/02/16 12:44:05 aigdalov Exp $ 
+-- * $Id: ImperativeOCL.g,v 1.21 2009/02/27 12:16:45 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -91,7 +91,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: ImperativeOCL.g,v 1.20 2009/02/16 12:44:05 aigdalov Exp $
+ * $Id: ImperativeOCL.g,v 1.21 2009/02/27 12:16:45 aigdalov Exp $
  */
 	./
 $End
@@ -165,6 +165,12 @@ $Rules
 		/.$BeginJava
 					EList result = (EList)$getSym(1);
 					result.add($getSym(3));
+					$setResult(result);
+		  $EndJava
+		./
+	dictLiteralPartListCS ::= dictLiteralPartListCS qvtErrorToken
+		/.$BeginJava
+					EList result = (EList)$getSym(1);
 					$setResult(result);
 		  $EndJava
 		./
