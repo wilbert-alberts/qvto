@@ -54,7 +54,10 @@ public class WorkspaceUtils {
 		
 		if (ifile == null || !ifile.exists()) {
 			if (uri.isFile()) {
-				ifile = getIFile(uriPath);
+				IFile wsfile = getIFile(uriPath);
+				if (wsfile != null && wsfile.exists()) {
+					return wsfile;
+				}
 			}
 		}
 		return ifile;
