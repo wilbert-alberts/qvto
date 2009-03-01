@@ -18,12 +18,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.ProjectComponent;
 import org.apache.tools.ant.Task;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.ShallowProcess;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData.TargetType;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.StatusUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchConfigurationDelegateBase;
@@ -36,7 +38,24 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.Transf
 import org.eclipse.osgi.util.NLS;
 
 /**
- *  NOTE: all the URIs are workspace-relative
+ *  <p>
+ *  All URIs used in transformation task (that are: transformation URI,
+ *  transformation's parameter URI, trace URI) are resolved due to the following rules:
+ *  
+ *  <ul>
+ *  <li>
+ *  in case it's platform URI (URI.isPlatfrom() == true) -
+ *      it is used as-is
+ *  <li>
+ *  in case it's non-relative file URI (URI.isRelative() == false) - 
+ *      it's resolved against workspace root
+ *  <li>
+ *  in case it's relative file URI (URI.isRelative() == false) but starts with ["\", "/"] - 
+ *      it's resolved against workspace root
+ *  <li>
+ *  in case it's relative file URI (URI.isRelative() == false) and does not start with ["\", "/"] - 
+ *      it's resolved against script location
+ *  </ul>
  */
 public class QvtoAntTransformationTask extends Task {
 	
@@ -51,8 +70,8 @@ public class QvtoAntTransformationTask extends Task {
 	    public In() {
 	    }
 	    
-	    public URI getURI() {
-	        return toUri(myUri);
+	    URI getURI(ProjectComponent project) {
+	        return toUri(myUri, project);
 	    }
 	    
 	    public void setUri(String uri) {
@@ -70,25 +89,25 @@ public class QvtoAntTransformationTask extends Task {
 	    public Inout() {
 	    }
 	    
-	    public URI getURI() {
-	        return toUri(myUri);
+	    URI getURI(ProjectComponent project) {
+	        return toUri(myUri, project);
 	    }
 	    
 	    public void setUri(String uri) {
 	        myUri = uri;
 	    }
 	    
-	    public URI getOutURI() {
-	        return toUri(myOutUri);
+	    URI getOutURI(ProjectComponent project) {
+	        String outUriString = myOutUri != null && myOutUri.trim().length() > 0 ? myOutUri : myUri;
+	        return toUri(outUriString, project);
 	    }
 	    
 	    public void setOuturi(String uri) {
 	    	myOutUri = uri;
 	    }
 	    
-	    TargetUriData getTargetUriData() {
-	        String outUriString = myOutUri != null && myOutUri.trim().length() > 0 ? myOutUri : myUri;
-	        return new TargetUriData(outUriString);
+	    TargetUriData getTargetUriData(ProjectComponent project) {
+	        return new TargetUriData(getOutURI(project).toString());
 	    }
 	    
 	    private String myUri;
@@ -103,19 +122,52 @@ public class QvtoAntTransformationTask extends Task {
 	    public Out() {
 	    }
 	    
-	    public URI getURI() {
-	        return toUri(myUri);
+	    URI getURI(ProjectComponent project) {
+	        return toUri(myUri, project);
 	    }
 	    
 	    public void setUri(String uri) {
 	        myUri = uri;
 	    }
 	    
-	    TargetUriData getTargetUriData() {
-	        return new TargetUriData(myUri);
+	    public void addConfiguredFeature(Feature feature) {
+	    	myFeature = feature;
+	    }
+	    
+	    TargetUriData getTargetUriData(ProjectComponent project) {
+	    	String feature = myFeature != null ? myFeature.getName() : null;
+	        return new TargetUriData(
+	        		feature != null && feature.trim().length() > 0 ? TargetType.EXISTING_CONTAINER : TargetType.NEW_MODEL,
+	        		getURI(project).toString(),
+	        		feature.trim(),
+	        		Boolean.valueOf(myFeature.getClearContents())
+	        		);
 	    }
 	    
 	    private String myUri;
+	    private Feature myFeature;
+	}
+	
+	public static class Feature {
+		
+        public String getName() {
+            return myName;
+        }
+        
+        public void setName(String name) {
+            myName = name;
+        }
+        
+        public String getClearContents() {
+            return myClearcontents;
+        }
+        
+        public void setClearcontents(String clearcontents) {
+        	myClearcontents = clearcontents;
+        }
+        
+        private String myName;
+        private String myClearcontents;
 	}
 	
 	/**
@@ -127,12 +179,8 @@ public class QvtoAntTransformationTask extends Task {
 	    public Trace() {
 	    }
 	    
-	    public URI getURI() {
-	        return toUri(myUri);
-	    }
-	    
-	    public String getOriginalUri() {
-	        return myUri;
+	    public URI getURI(ProjectComponent project) {
+	        return toUri(myUri, project);
 	    }
 	    
 	    public void setUri(String uri) {
@@ -152,29 +200,25 @@ public class QvtoAntTransformationTask extends Task {
 	    }
 	    
 	    public String getName() {
-	        return name;
+	        return myName;
 	    }
 	    
 	    public void setName(String name) {
-	        this.name = name;
+	        myName = name;
 	    }
 	    
 	    public String getValue() {
-	        return value;
+	        return myValue;
 	    }
 	    
 	    public void setValue(String value) {
-	        this.value = value;
+	        myValue = value;
 	    }
 	    
-	    private String name;
-	    private String value;
+	    private String myName;
+	    private String myValue;
 	}
 
-	public URI getModuleURI() {
-	    return toUri(myModuleUri);
-	}
-	
 	public void setUri(String moduleUri) {
 	    myModuleUri = moduleUri;
 	}
@@ -201,7 +245,7 @@ public class QvtoAntTransformationTask extends Task {
 	
 	
 	/**
-	 * Checks up parameters validity and calls doExecute()
+	 * Checks up parameters validity and launch transformation
 	 */
 	@Override
 	public void execute() throws BuildException {
@@ -222,7 +266,7 @@ public class QvtoAntTransformationTask extends Task {
 	                }      	
 	        		
 	        		QvtLaunchConfigurationDelegateBase.doLaunch(transformation,
-	        				inObjects, targetData, getConfiguration(), getTraceUri());
+	        				inObjects, targetData, getConfiguration(), getTraceUri(QvtoAntTransformationTask.this));
 	        		
 	        		transformation.cleanup();
 	            }
@@ -237,7 +281,7 @@ public class QvtoAntTransformationTask extends Task {
 	        throw new BuildException(StatusUtil.getExceptionMessages(e), e);
 	    }
 	
-	    System.out.println(NLS.bind(Messages.TransformationExecuted, getModuleURI()));   
+	    System.out.println(NLS.bind(Messages.TransformationExecuted, getModuleURI(this)));   
 	}    
 	
 	/**
@@ -245,12 +289,12 @@ public class QvtoAntTransformationTask extends Task {
 	 */
 	private QvtTransformation getTransformationObject() {
         try {
-			return new QvtInterpretedTransformation(TransformationUtil.getQvtModule(getModuleURI()));
+			return new QvtInterpretedTransformation(TransformationUtil.getQvtModule(getModuleURI(this)));
 		} catch (Exception e) {
             throw new BuildException(
                     NLS.bind(
                             Messages.AbstractApplyTransformationTask_File_not_found, 
-                            getModuleURI()
+                            getModuleURI(this)
                         ),
                     e
                     );
@@ -267,6 +311,7 @@ public class QvtoAntTransformationTask extends Task {
 	            		transfParam.getName()));
 			}
 			ModelParameter modelParam = itrModelParam.next();
+			
 			if (transfParam.getDirectionKind() == DirectionKind.IN) {
 				if (false == modelParam instanceof In) {
     	            throw new BuildException(NLS.bind(Messages.ModelParameterTypeMismatch,
@@ -274,7 +319,7 @@ public class QvtoAntTransformationTask extends Task {
 				}
 				In inParam = (In) modelParam;
 				
-		        ModelContent inModel = transformation.loadInput(inParam.getURI());
+		        ModelContent inModel = transformation.loadInput(inParam.getURI(this));
 		        inObjects.add(inModel);
 			}
 			if (transfParam.getDirectionKind() == DirectionKind.INOUT) {
@@ -284,10 +329,10 @@ public class QvtoAntTransformationTask extends Task {
 				}
 				Inout inoutParam = (Inout) modelParam;
 				
-		        ModelContent inModel = transformation.loadInput(inoutParam.getURI());
+		        ModelContent inModel = transformation.loadInput(inoutParam.getURI(this));
 		        inObjects.add(inModel);
 
-		        targetData.add(inoutParam.getTargetUriData());
+		        targetData.add(inoutParam.getTargetUriData(this));
 			}
 			if (transfParam.getDirectionKind() == DirectionKind.OUT) {
 				if (false == modelParam instanceof Out) {
@@ -296,35 +341,40 @@ public class QvtoAntTransformationTask extends Task {
 				}
 				Out outParam = (Out) modelParam;
 
-				targetData.add(outParam.getTargetUriData());
+				targetData.add(outParam.getTargetUriData(this));
 			}
 		}
 	}
 
-	private String getTraceUri() {
+	private URI getModuleURI(ProjectComponent project) {
+	    return toUri(myModuleUri, project);
+	}
+	
+	private String getTraceUri(ProjectComponent project) {
 		if (myTrace == null) {
 			return null;
 		}
-		return myTrace.getOriginalUri();
+		return myTrace.getURI(project).toString();
 	}
 	
 	private Map<String, Object> getConfiguration() {
 	    return myConfigProperties;
 	}
 	
-	private static URI toUri(String uriString) throws BuildException {
+	private static URI toUri(String uriString, ProjectComponent project) throws BuildException {
 	    try {
 	    	URI uri = URI.createURI(uriString);
 	    	if(uri == null) {
-	    		throw new BuildException(NLS.bind(Messages.AbstractApplyTransformationTask_File_not_found, uriString));
+	    		throw new BuildException(NLS.bind(Messages.InvalidUriSpecified, uriString));
 	    	}
-//			if (uri.isRelative()) {
-//				URI baseUri = URI.createFileURI(getProject().getBaseDir().getAbsolutePath());
-//				uri = baseUri.appendSegments(uri.segments());
-//			}
+	    	
+			if (uri.isRelative() && !uriString.trim().startsWith(MSDOS_FS) && !uriString.trim().startsWith(UNIX_FS)) {
+				URI baseUri = URI.createFileURI(project.getProject().getBaseDir().getAbsolutePath());
+				uri = baseUri.appendSegments(uri.segments());
+			}
 	    	return uri;
 	    }
-	    catch(Exception e) {
+	    catch (Exception e) {
 	    	throw new BuildException(e);
 	    }
 	}
@@ -335,4 +385,9 @@ public class QvtoAntTransformationTask extends Task {
 	
 	private final List<ModelParameter> myModelParameters = new ArrayList<ModelParameter>(3);
 	private final Map<String, Object> myConfigProperties = new LinkedHashMap<String, Object>(3);
+	
+	//private static final String SYSTEM_FS = System.getProperty("file.separator"); //$NON-NLS-1$
+	private static final String MSDOS_FS = "\\"; //$NON-NLS-1$
+	private static final String UNIX_FS = "/"; //$NON-NLS-1$
+	
 }

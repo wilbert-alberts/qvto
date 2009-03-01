@@ -28,6 +28,7 @@ public class Messages extends NLS {
 	public static String AbstractApplyTransformationTask_Transformation_has_been_applied;
 	public static String AbstractApplyTransformationTask_File_not_found;
 	
+	public static String InvalidUriSpecified;
 	public static String ModelParameterTypeMismatch;
 	public static String TransformationExecuted;
 
