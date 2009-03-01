@@ -13,9 +13,6 @@ package org.eclipse.m2m.internal.qvt.oml.emf.util;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
@@ -27,9 +24,8 @@ public class WorkspaceUtils {
 	private WorkspaceUtils() {}
 	
     public static IFile getIFile(String fileUnderWorkspace) {
-		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IPath location = new Path(fileUnderWorkspace);
-		IFile ifile = workspace.getRoot().getFileForLocation(location);
+		IFile ifile = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(location);
 		return ifile;
 	}
     
@@ -44,10 +40,24 @@ public class WorkspaceUtils {
     }
     
     public static IFile getWorkspaceFile(URI uri) {
-		String uriPath = uri.isFile() ? uri.toFileString() :
-			(uri.isPlatform() ? uri.toPlatformString(true) :
-					uri.toString());
-		return getWorkspaceFile(uriPath);
+		String uriPath;
+		if (uri.isFile()) {
+			uriPath = uri.toFileString();
+		}
+		else if (uri.isPlatform()) {
+			uriPath = uri.toPlatformString(true);
+		}
+		else {
+			uriPath = uri.toString();
+		}
+		IFile ifile = getWorkspaceFile(uriPath);
+		
+		if (ifile == null || !ifile.exists()) {
+			if (uri.isFile()) {
+				ifile = getIFile(uriPath);
+			}
+		}
+		return ifile;
     }
     
     public static IContainer getIContainer(String folderUnderWorkspace) {
@@ -57,42 +67,4 @@ public class WorkspaceUtils {
         return cont;
     }
     
-    public static IFolder getWorkspaceFolder(String name) {
-        try {
-            IFolder folder = ResourcesPlugin.getWorkspace().getRoot().getFolder(new Path(name));
-            return folder;
-        }
-        catch(Exception e) {
-            return null;
-        }
-    }
-    
-    public static IProject getWorkspaceProject(String name) {
-        try {
-            IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(name);
-            return project;
-        }
-        catch(Exception e) {
-            return null;
-        }
-    }
-    
-    public static IContainer getWorkspaceContainer(String name) {
-        IPath path = new Path(name);
-        if(path.segmentCount() > 1) {
-            return getWorkspaceFolder(name);
-        }
-        else {
-            return getWorkspaceProject(name);
-        }
-    }
-    
-    public static String getPathString(IResource resource) {
-        String path = resource.getFullPath().toString();
-        if(path.startsWith("/")) { //$NON-NLS-1$
-            path = path.substring(1);
-        }
-        
-        return path;
-    }
 }
