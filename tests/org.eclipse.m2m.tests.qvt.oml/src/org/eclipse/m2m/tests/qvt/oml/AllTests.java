@@ -23,7 +23,7 @@ import junit.framework.TestSuite;
 import org.eclipse.m2m.tests.qvt.oml.ant.QvtAntScriptTests;
 import org.eclipse.m2m.tests.qvt.oml.emf.AllEmfTests;
 import org.eclipse.m2m.tests.qvt.oml.env.QVTOperationalEnvTest;
-import org.eclipse.m2m.tests.qvt.oml.traces.TestTraceFile;
+import org.eclipse.m2m.tests.qvt.oml.transform.TraceTests;
 import org.eclipse.m2m.tests.qvt.oml.transform.TransformManyModelTests;
 import org.eclipse.m2m.tests.qvt.oml.transform.TransformTests;
 import org.eclipse.m2m.tests.qvt.oml.transform.api.QvtoTransfHelperTests;
@@ -61,7 +61,7 @@ public class AllTests {
         suite.addTestSuite(TestSamples.class);
         suite.addTestSuite(TestGraphWalker.class);
         suite.addTestSuite(TestLaunchConfigs.class);
-        suite.addTestSuite(TestTraceFile.class);
+        suite.addTest(TraceTests.suite());
         suite.addTestSuite(TestQvtResourceFactory.class);
         
         suite.addTestSuite(TestOCLSemantics.class);

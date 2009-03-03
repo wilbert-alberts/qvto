@@ -19,16 +19,20 @@ import org.eclipse.m2m.tests.qvt.oml.transform.TestTransformation;
 
 
 public class TestTraceFile extends TestTransformation {
-	public TestTraceFile() {
-		super(new FileToFileData("multipletracerecords")); //$NON-NLS-1$
+	private final int myExpectedTraceSize;
+
+	public TestTraceFile(String name, int expectedTraceSize) {
+		super(new FileToFileData(name));
+		myExpectedTraceSize = expectedTraceSize;
 	}
 	
-	public void testInterpretedDuplication() throws Exception {
-		checkDuplication(TestQvtInterpreter.TRANSFORMER);
-	}
+    @Override
+	public void runTest() throws Exception {
+		check(TestQvtInterpreter.TRANSFORMER);
+    }
 
-	private void checkDuplication(ITransformer transformer) throws Exception {
+    private void check(ITransformer transformer) throws Exception {
         Trace trace = TraceUtil.transform(getData(), getProject(), transformer);
-        assertTrue(trace.getTraceRecords().size() == 5);
+        assertTrue(trace.getTraceRecords().size() == myExpectedTraceSize);
 	}
 }
