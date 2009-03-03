@@ -543,7 +543,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     }
     
     public Object visitMappingBody(MappingBody mappingBody) {
-		boolean hasResultVar = ! mappingBody.getOperation().getResult().isEmpty();
 		QvtOperationalEvaluationEnv evalEnv = getOperationalEvaluationEnv();
 		
 		setupInitialResultVariables(mappingBody);
@@ -552,11 +551,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
             initExp.accept(getVisitor());
         }
 
-        Object result = null;
-
-		if(hasResultVar) {
-			result = createOrGetResult((MappingOperation) mappingBody.getOperation());
-		}
+        Object result = createOrGetResult((MappingOperation) mappingBody.getOperation());
 
 		MappingOperation currentMappingCalled = (MappingOperation) evalEnv.getOperation();
 		
@@ -568,9 +563,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		}
 
         Object bodyResult = visitOperationBody(mappingBody);
-        if (hasResultVar && bodyResult != null) {
-            //result = bodyResult;
-        }
 
         // TODO investigate possibility to modify result
         for (OCLExpression<EClassifier> endExp : mappingBody.getEndSection()) {
@@ -1487,22 +1479,26 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	}
     
     private Object createOrGetResult(MappingOperation mappingOperation) {
-        Object result = getRuntimeValue(Environment.RESULT_VARIABLE_NAME);
+        Object result = null;
         
-        if (isUndefined(result)) { // if nothing was assigned to the result in the init section
-            EList<VarParameter> resultParams = mappingOperation.getResult();
-            if(resultParams.size() > 1) {
-            	result = createTupleResult(mappingOperation);
-            } 
-            else {
-    			VarParameter type = (resultParams.isEmpty() ? null : resultParams.get(0));
-                if (type != null && false == type.getEType() instanceof VoidType) {
-                    result = createInstance(type.getEType(), ((MappingParameter) type).getExtent());
-                }    			
+        if (!mappingOperation.getResult().isEmpty()) {
+        	result = getRuntimeValue(Environment.RESULT_VARIABLE_NAME);
+            if (isUndefined(result)) { // if nothing was assigned to the result in the init section
+                EList<VarParameter> resultParams = mappingOperation.getResult();
+                if(resultParams.size() > 1) {
+                	result = createTupleResult(mappingOperation);
+                } 
+                else {
+        			VarParameter type = (resultParams.isEmpty() ? null : resultParams.get(0));
+                    if (type != null && false == type.getEType() instanceof VoidType) {
+                        result = createInstance(type.getEType(), ((MappingParameter) type).getExtent());
+                    }    			
+                }
+                
+                replaceInEnv(Environment.RESULT_VARIABLE_NAME, result, mappingOperation.getEType());
             }
-            
-            replaceInEnv(Environment.RESULT_VARIABLE_NAME, result, mappingOperation.getEType());
         }
+        
         TraceUtil.addTraceRecord(getOperationalEvaluationEnv(), mappingOperation);
         return result;
     }
