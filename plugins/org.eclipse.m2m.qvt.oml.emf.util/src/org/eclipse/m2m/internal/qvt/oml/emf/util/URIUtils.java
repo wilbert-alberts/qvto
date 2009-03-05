@@ -11,8 +11,11 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.emf.util;
 
+import java.net.URISyntaxException;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
@@ -22,29 +25,36 @@ public class URIUtils {
 	private URIUtils() {
 	}
 
-	public static IFile getFile(URI uri){
-	    String scheme = uri.scheme();
-	    
-	    if("platform".equals(scheme) && uri.segmentCount() > 1 &&  //$NON-NLS-1$
-	        "resource".equals(uri.segment(0))) { //$NON-NLS-1$
-	        StringBuffer platformResourcePath = new StringBuffer();
-	        for (int j = 1, size = uri.segmentCount(); j < size; ++j) {
-	            platformResourcePath.append('/');
-	            platformResourcePath.append(uri.segment(j));
-	        }
-	        try {
-	        return ResourcesPlugin.getWorkspace().getRoot().getFile(
-	                new Path(platformResourcePath.toString()));
-	        } catch (IllegalArgumentException e) {
-	            return null;
-	        }
-	    }
-	    else if("file".equals(scheme)) { //$NON-NLS-1$
-	        return WorkspaceUtils.getIFile(uri.toFileString().toString());
-	    }
-	    else {
-	        return null;
-	    }
+	public static URI getResourceURI(IResource resource) {
+		return URI.createPlatformResourceURI(resource.getFullPath().toString(), true);
+	}
+	
+	public static IResource getResource(URI resourceURI) {
+		IWorkspaceRoot wsRoot = ResourcesPlugin.getWorkspace().getRoot();
+		
+		if(resourceURI.isPlatformResource()) {
+			String wsRelativePath = resourceURI.toPlatformString(true);
+			return wsRoot.findMember(new Path(wsRelativePath));			
+		} else if(resourceURI.isFile() && !resourceURI.isRelative()) {
+            IFile[] files;
+			try {
+				files = wsRoot.findFilesForLocationURI(new java.net.URI(resourceURI.toString()));
+	            if (files.length > 0) {
+	            	return files[0];
+	            }
+				
+			} catch (URISyntaxException e) {
+				// do nothing just indicate we could not resolve to a resource
+				return null;
+			}
+		}
+
+		return null;
+	}
+	
+	public static IFile getFile(URI uri) {
+		IResource resource = getResource(uri);
+		return resource instanceof IFile ? (IFile) resource : null;
 	}
 
 	public static void refresh(URI uri) {
