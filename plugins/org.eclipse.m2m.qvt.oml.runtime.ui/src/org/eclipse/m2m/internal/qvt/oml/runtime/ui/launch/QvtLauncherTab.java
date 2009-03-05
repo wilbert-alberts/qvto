@@ -38,9 +38,12 @@ import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.MdaLaunchTab;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.OptionalFileGroup;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.TransformationControls;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolverFactory;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.StatusUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.project.QvtEngine;
@@ -189,13 +192,19 @@ public class QvtLauncherTab extends MdaLaunchTab {
             return;
         }
         
+        // FIXME - strange error condition processing
         try {
-            CompiledUnit unit = QvtEngine.getInstance(file).compileUnit(file, null);
-            if(unit != null && unit.getModules().size() == 1) {
-	            Module module = unit.getModules().get(0);
+        	URI uri = URIUtils.getResourceURI(file);
+        	UnitProxy unit = IImportResolverFactory.Registry.INSTANCE.getFactory(file).findUnit(uri);
+        	if(unit == null) {
+        		return;
+        	}
+            CompiledUnit compiledUnit = QvtEngine.getInstance(file).compileUnit(unit, null);
+            if(compiledUnit != null && compiledUnit.getModules().size() == 1) {
+	            Module module = compiledUnit.getModules().get(0);
 	            ImperativeOperation mainOperation = QvtOperationalParserUtil.getMainOperation(module);
 				if(mainOperation != null) {
-	                initializeName(configuration, unit.getName());
+	                initializeName(configuration, compiledUnit.getName());
 	                URI transfUri = URI.createPlatformResourceURI(file.getFullPath().toString(), false);
 	                configuration.setAttribute(IQvtLaunchConstants.MODULE, transfUri.toString());
 	            }
