@@ -19,18 +19,21 @@ import java.util.List;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFolder;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.BundleFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.BundleModuleRegistry;
-import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
+import org.eclipse.m2m.internal.qvt.oml.compiler.BlackboxUnitResolver;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProvider;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.DeployedImportResolver;
 import org.osgi.framework.Bundle;
 
-public class TestModuleResolver implements IImportResolver {
+public class TestModuleResolver implements UnitResolver {
 	
-	private DeployedImportResolver fResolver;
+	private UnitResolver fDeployedResolver;	
 	private IPath fBasePath;
 			
 	/**
@@ -44,7 +47,7 @@ public class TestModuleResolver implements IImportResolver {
 		return new TestModuleResolver(TestUtil.BUNDLE, sourceContainerPath);
 	}
 	
-	public TestModuleResolver(String bundleSymbolicName, String sourceContainerPath) {
+	public TestModuleResolver(final String bundleSymbolicName, final String sourceContainerPath) {
 		if(bundleSymbolicName == null || sourceContainerPath == null) {
 			throw new IllegalArgumentException();
 		}
@@ -63,31 +66,43 @@ public class TestModuleResolver implements IImportResolver {
 		}
 		
 		BundleModuleRegistry registry = new BundleModuleRegistry(bundleSymbolicName, pathList);
-		fResolver = new DeployedImportResolver(Arrays.asList(registry)) {
+		
+		fDeployedResolver = new DeployedImportResolver(Arrays.asList(registry)) {			
+			UnitResolver fBlackboxResolver = new BlackboxUnitResolver(URI.createPlatformPluginURI(bundleSymbolicName, false));
+
+			@Override
+			public UnitProxy resolveUnit(String qualifiedName) {			
+				UnitProxy unit = super.resolveUnit(qualifiedName);
+				if(unit == null) {
+					unit = fBlackboxResolver.resolveUnit(qualifiedName);
+				}
+				return unit;
+			}
+			
 			@Override
 			public CFile resolveImport(String importedUnitName) {
+				CFile result = null; 
 				IPath fullPath = fBasePath.append(importedUnitName.replace('.', '/') + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT);
 				for (BundleModuleRegistry nextRegistry : getBundleModules()) {
 					if (nextRegistry.fileExists(fullPath)) {
-						return new BundleFile(fullPath, nextRegistry);
+						result = new BundleFile(fullPath, nextRegistry);
 					}
 				}
 				
-				return null;
+				return result;
 			}
 		};
+		
 		fBasePath = new Path(sourceContainerPath).makeAbsolute();
 	}
-	
-	public String getPackageName(CFolder folder) {
-		return fResolver.getPackageName(folder);
-	}
 
-	public CFile resolveImport(String importedUnitName) {
-		return fResolver.resolveImport(importedUnitName);
-	}
-	
-	public CFile resolveImport(CFile parentFile, String importedUnitName) {		
-		return fResolver.resolveImport(parentFile, importedUnitName);
+	public UnitProxy resolveUnit(String qualifiedName) {
+		return fDeployedResolver.resolveUnit(qualifiedName);		
+//		CFile resolvedImport = fDeployedResolver.resolveUnit(qualifiedName);
+//		if(resolvedImport == null) {
+//			return fBlackboxResolver.resolveUnit(qualifiedName);			
+//		}
+//		
+//		return DeployedImportResolver.UNIT_RESOLVER_INSTANCE.createUnit(qualifiedName, (BundleFile) resolvedImport);		
 	}
 }

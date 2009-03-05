@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -23,6 +24,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.project.nature.NatureUtils;
 import org.osgi.framework.Bundle;
 
@@ -66,6 +68,10 @@ public class TestProject {
     private TestProject(String name) {
         IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
         project = root.getProject(name);
+    }
+    
+    public IContainer getQVTSourceContainer() throws CoreException {
+    	return QVTOBuilderConfig.getConfig(getProject()).getSourceContainer();
     }
     
 	public IProject getProject() {

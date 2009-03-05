@@ -23,8 +23,8 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CResourceRepositoryContext;
-import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.WorkspaceMetamodelRegistryProvider;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
@@ -65,8 +65,15 @@ public class TestMetamodelRegistry extends TestCase {
         
         assertTrue(MetamodelURIMappingHelper.hasMappingResource(myProject.getProject()));  
         
-        IMetamodelRegistryProvider.IRepositoryContext ctx = new CResourceRepositoryContext(new EclipseFile(myProject.getProject().getFile(".project"))); //$NON-NLS-1$
+        IMetamodelRegistryProvider.IRepositoryContext ctx = createContext();
         metamodelRegistry = new WorkspaceMetamodelRegistryProvider().getRegistry(ctx);
+	}
+
+	private IMetamodelRegistryProvider.IRepositoryContext createContext() {
+		IFile projectDescFile = myProject.getProject().getFile(".project");
+        URI projectDescURI = URIUtils.getResourceURI(projectDescFile);
+		IMetamodelRegistryProvider.IRepositoryContext ctx = new CResourceRepositoryContext(projectDescURI);
+		return ctx;
 	}
 	
 	@Override
@@ -75,8 +82,7 @@ public class TestMetamodelRegistry extends TestCase {
 	}
 		
 	public void testProjectContextRegistration() throws Exception {
-        IMetamodelRegistryProvider.IRepositoryContext ctx = new CResourceRepositoryContext(
-        		new EclipseFile(myProject.getProject().getFile(".project"))); //$NON-NLS-1$
+        IMetamodelRegistryProvider.IRepositoryContext ctx = createContext();
 
         IMetamodelDesc metamodelDesc = new WorkspaceMetamodelRegistryProvider()
         	.getRegistry(ctx).getMetamodelDesc(METAMODEL_ID);

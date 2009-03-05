@@ -45,12 +45,11 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
-import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.tests.qvt.oml.RuntimeWorkspaceSetup;
@@ -101,15 +100,14 @@ public class TestUtil extends Assert {
 		
 		for (CompiledUnit nextUnit : all) {
 			Resource res = resourceMap.get(nextUnit);
-			assertPersistableAST(nextUnit, res);
+			if(!"qvto".equals(res.getURI().scheme())) {
+				assertPersistableAST(nextUnit, res);
+			}
 		}
 	}
 	
 	private static Resource confineInResource(CompiledUnit unit) {
-		// FIXME -
-		EclipseFile source = (EclipseFile)unit.getSource();
-		URI uri = URI.createURI(source.getFile().getLocationURI().toString()).appendFileExtension("xmi"); //$NON-NLS-1$
-				
+		URI uri = unit.getURI().appendFileExtension("xmi"); //$NON-NLS-1$
 		Resource res = null;
 		for (Module nextModule : unit.getModules()) {
 			if(res == null) {
@@ -129,7 +127,7 @@ public class TestUtil extends Assert {
 		try {
 			res.save(null);
 		} catch (Exception e) {
-			System.err.print(module.getSource().getFullPath());
+			System.err.print(module.getURI());
 			e.printStackTrace();							
 			fail("Invalid module AST for serialization" + e.getLocalizedMessage()); //$NON-NLS-1$
 		}
@@ -147,10 +145,10 @@ public class TestUtil extends Assert {
 		options.setGenerateCompletionData(true);
 		
 		
-		CFile[] sourceFiles = new CFile[modulePaths.length];
+		UnitProxy[] sourceFiles = new UnitProxy[modulePaths.length];
 		int pos = 0;
 		for (String nextModulePath : modulePaths) {
-			sourceFiles[pos] = testResolver.resolveImport(nextModulePath);
+			sourceFiles[pos] = testResolver.resolveUnit(nextModulePath);
 			pos++;
 		}
 		
@@ -160,8 +158,7 @@ public class TestUtil extends Assert {
 			result = compiler.compile(sourceFiles, options, null);
 			modules = new LinkedHashSet<CompiledUnit>();
 			for (CompiledUnit nextResult : result) {
-				assertEquals(nextResult.getSource().getFullPath()  
-						+ " must not have compilation error", //$NON-NLS-1$ 
+				assertEquals(nextResult.getURI() + " must not have compilation error", //$NON-NLS-1$ 
 						0, nextResult.getErrors().size()); //$NON-NLS-1$
 				modules.add(nextResult);
 			}

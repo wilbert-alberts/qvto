@@ -12,6 +12,7 @@
 package org.eclipse.m2m.tests.qvt.oml.util;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -20,8 +21,10 @@ import java.util.Map;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.tests.qvt.oml.util.SourceAnnotationReader.AnnotationData;
@@ -90,9 +93,10 @@ public class ProblemSourceAnnotationHelper {
 	}
 	
 	public static ProblemSourceAnnotationHelper create(CompiledUnit compiledModule) throws AssertionFailedError {
-		CFile source = compiledModule.getSource();
+		URI source = compiledModule.getURI();		
 		try {
-			String contents = FileUtil.getStreamContents(source.getContents(), source.getCharset());
+			InputStream is = new ExtensibleURIConverterImpl().createInputStream(source);
+			String contents = FileUtil.getStreamContents(is, ResourcesPlugin.getEncoding());
 			SourceAnnotationReader annotationReader = new SourceAnnotationReader(contents, false);
 			return new ProblemSourceAnnotationHelper(annotationReader.getAnnotations());
 		} catch (IOException e) {

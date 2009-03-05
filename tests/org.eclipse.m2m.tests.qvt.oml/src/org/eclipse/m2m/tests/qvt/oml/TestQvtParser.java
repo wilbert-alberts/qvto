@@ -16,6 +16,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,13 +34,12 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
-import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
-import org.eclipse.m2m.internal.qvt.oml.project.builder.EclipseImportResolver;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
+import org.eclipse.m2m.internal.qvt.oml.project.builder.WorkspaceUnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.tests.qvt.oml.ParserTests.TestData;
 import org.eclipse.m2m.tests.qvt.oml.util.ProblemSourceAnnotationHelper;
@@ -109,10 +109,13 @@ public class TestQvtParser extends TestCase {
 		myCompiled = compile(folder);
 		
 		assertTrue("No results", myCompiled.length > 0); //$NON-NLS-1$
-		List<QvtMessage> allErrors = getAllErrors(myCompiled);
+		
+		boolean collectOnlyCSTProblems = myData.usesSourceAnnotations();
+		
+		List<QvtMessage> allErrors = getAllErrors(myCompiled, collectOnlyCSTProblems);
 		assertEquals("Wrong error count for '" + folder.getName() + "', error(s)=" + allErrors, myData.getErrCount(), allErrors.size()); //$NON-NLS-1$ //$NON-NLS-2$
 		if (myData.getWarnings() != null) {
-	        List<QvtMessage> allWarnings = getAllWarnings(myCompiled);
+	        List<QvtMessage> allWarnings = getAllWarnings(myCompiled, collectOnlyCSTProblems);
 	        expectedWarningsCycle : for (String expectedWarning : myData.getWarnings()) {
 	            for (QvtMessage qvtMessage : allWarnings) {
 	                if (expectedWarning.equals(qvtMessage.getMessage())) {
@@ -154,6 +157,11 @@ public class TestQvtParser extends TestCase {
 	}
 	
 	private void doCompiledUnitCheck(CompiledUnit module, Set<ProblemSourceAnnotationHelper> annotationCollector) {
+		if(!MDAConstants.QVTO_FILE_EXTENSION.equals(module.getURI().fileExtension())) {
+			// check only .qvto file as these have CST stream
+			return;
+		}
+		
 		ProblemSourceAnnotationHelper helper = ProblemSourceAnnotationHelper
 				.assertCompilationProblemMatchExpectedAnnotations(module);
 		annotationCollector.add(helper);
@@ -188,19 +196,19 @@ public class TestQvtParser extends TestCase {
         private final List<Throwable> myExceptions;
     }
     
-    private List<QvtMessage> getAllErrors(CompiledUnit[] compiled) {
+    private List<QvtMessage> getAllErrors(CompiledUnit[] compiled, boolean concreteSyntaxOnly) {
         List<QvtMessage> errors = new ArrayList<QvtMessage>();
-        for (CompiledUnit compilationResult : compiled) {
-            TransformationUtil.getErrors(compilationResult, errors);
+        for (CompiledUnit compilationResult : compiled) {        	
+            TransformationUtil.getErrors(compilationResult, errors, concreteSyntaxOnly);
         }
 
         return errors;
     }
     
-    private List<QvtMessage> getAllWarnings(CompiledUnit[] compiled) {
+    private List<QvtMessage> getAllWarnings(CompiledUnit[] compiled, boolean concreteSyntaxOnly) {
         List<QvtMessage> warnings = new ArrayList<QvtMessage>();
         for (CompiledUnit compilationResult : compiled) {
-            TransformationUtil.getWarnings(compilationResult, warnings);
+            TransformationUtil.getWarnings(compilationResult, warnings, concreteSyntaxOnly);
         }
 
         return warnings;
@@ -209,12 +217,14 @@ public class TestQvtParser extends TestCase {
 	private CompiledUnit[] compile(File folder) throws Exception {
 		final String topName = folder.getName() + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT;
 		File topFile = getFile(folder, topName);
-		QVTOCompiler compiler = new QVTOCompiler(
-				new EclipseImportResolver(new IContainer[] {getIFolder(folder)}));
-		IFile topIFile = getIFile(topFile);
+		WorkspaceUnitResolver resolver = new WorkspaceUnitResolver(Collections.singletonList(getIFolder(folder)));
+		QVTOCompiler compiler = new QVTOCompiler(resolver);
+		
         QvtCompilerOptions options = new QvtCompilerOptions();
         options.setGenerateCompletionData(false);
-		return compiler.compile(new CFile[] {new EclipseFile(topIFile)}, options, new NullProgressMonitor());
+        
+        UnitProxy unit = resolver.resolveUnit(folder.getName());
+		return new CompiledUnit[] { compiler.compile(unit, options, new NullProgressMonitor()) };
 	}
 	
 	private static File getFile(File folder, final String expectedName) {
@@ -234,7 +244,7 @@ public class TestQvtParser extends TestCase {
 		return ifile;
 	}
 	
-	private IFolder getIFolder(File folderUnderWorkspace) {
+	private IContainer getIFolder(File folderUnderWorkspace) {
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IPath location = new Path(folderUnderWorkspace.getAbsolutePath());
 		IContainer[] containers = workspace.getRoot().findContainersForLocation(location);

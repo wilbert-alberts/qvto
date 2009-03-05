@@ -11,15 +11,15 @@
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.transform;
 
-import java.util.Arrays;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalAstWalker;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.project.QvtEngine;
+import org.eclipse.m2m.internal.qvt.oml.project.builder.WorkspaceUnitResolver;
 import org.eclipse.ocl.utilities.Visitable;
 
 public class TestQvtWalker extends TestTransformation {
@@ -40,11 +40,13 @@ public class TestQvtWalker extends TestTransformation {
 		checkTransformation(new IChecker() {
             public void check(ModelTestData data, IProject project) throws Exception {
                 IFile transformation = getIFile(data.getTransformation(project));
+                UnitProxy srcUnit = WorkspaceUnitResolver.getUnit(transformation);
+                assertNotNull("source unit must be resolved:" + transformation, srcUnit); //$NON-NLS-1$
                 
                 QvtEngine engine = QvtEngine.getInstance(transformation);
-                CompiledUnit unit = engine.compileUnit(transformation, null);
+                CompiledUnit unit = engine.compileUnit(srcUnit, null);
                 if(unit.getErrors().size() > 0) {
-                    throw new MdaException("Failed to parse " + transformation + ": " + Arrays.asList(unit.getErrors())); //$NON-NLS-1$ //$NON-NLS-2$
+                    throw new MdaException("Failed to parse " + transformation + ": " + unit.getErrors()); //$NON-NLS-1$ //$NON-NLS-2$
                 }
                 
                 final int[] nodeCount = new int[1];

@@ -1,5 +1,7 @@
-import org.bar.Foo; 
 import org.eclipse.m2m.tests.qvt.oml.bbox.SimpleJavaLibrary;
+-- report duplicate
+import /*<warn>*/org.eclipse.m2m.tests.qvt.oml.bbox.SimpleJavaLibrary/*</warn>*/;
+
 -- test library load failed
 import /*<error>*/org.eclipse.m2m.tests.qvt.oml.bbox.InvalidLibrary/*</error>*/;
 
