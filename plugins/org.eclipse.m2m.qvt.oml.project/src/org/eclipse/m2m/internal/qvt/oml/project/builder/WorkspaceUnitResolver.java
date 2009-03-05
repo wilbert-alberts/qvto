@@ -31,7 +31,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.compiler.BlackboxUnitResolver;
+import org.eclipse.m2m.internal.qvt.oml.compiler.ResolverUtils;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitContents;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProvider;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
@@ -163,7 +165,7 @@ public class WorkspaceUnitResolver implements UnitResolver, UnitProvider {
 	private IResource resolveResource(IContainer container, String qualifiedName, boolean isUnit) {		
 		IPath unitPath = qName2Path(qualifiedName);
 		if(isUnit) {
-			unitPath = unitPath.addFileExtension(ResolverUtils.EXTENSION);
+			unitPath = unitPath.addFileExtension(MDAConstants.QVTO_FILE_EXTENSION);
 		}
 		
 		return container.findMember(unitPath);		
@@ -208,7 +210,7 @@ public class WorkspaceUnitResolver implements UnitResolver, UnitProvider {
 			String name = proxy.getName();
 			int type = proxy.getType();
 			
-			if(type == IResource.FILE && name.endsWith(ResolverUtils.EXTENSION_WITH_DOT)) {
+			if(type == IResource.FILE && name.endsWith(MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT)) {
 				IPath path = proxy.requestFullPath();
 				
 				String unitName = path.removeFileExtension().lastSegment();
@@ -236,6 +238,20 @@ public class WorkspaceUnitResolver implements UnitResolver, UnitProvider {
 			
 			return false;
 		}		
+	}
+	
+	public static List<UnitProxy> findAllUnits(IProject project) {
+		WorkspaceUnitResolver resolver;
+		try {
+			resolver = getResolver(project);
+			if(resolver != null) {
+				return ResolverUtils.findAllUnits(resolver);
+			}			
+		} catch (CoreException e) {
+			QVTOProjectPlugin.log(e.getStatus());
+		}
+
+		return Collections.emptyList();
 	}
 	
 	
@@ -280,4 +296,34 @@ public class WorkspaceUnitResolver implements UnitResolver, UnitProvider {
 			};
 		}
 	}
+	
+//	public static List<String> getRequiredPlugins(Bundle bundle) {
+//		Dictionary<?, ?> headers = bundle.getHeaders();
+//		String requireBundleHeader = headers.get(Constants.REQUIRE_BUNDLE).toString();
+//		if(requireBundleHeader == null) {
+//			return Collections.emptyList();
+//		}
+//		
+//		ManifestElement[] parsedElements = null;		
+//		try {
+//	    	parsedElements = ManifestElement.parseHeader(Constants.REQUIRE_BUNDLE, requireBundleHeader);
+//		} catch (BundleException e) {
+//			// do nothing
+//		}
+//	
+//		if(parsedElements == null) {
+//			return Collections.emptyList();			
+//		}
+//	
+//		List<String> bundles = new ArrayList<String>(parsedElements.length);
+//		for (ManifestElement element : parsedElements) {
+//			String value = element.getValue();
+//			if(value != null) {
+//				bundles.add(element.getValue());
+//			}
+//		}				
+//	
+//		return bundles;
+//	}
+	
 }

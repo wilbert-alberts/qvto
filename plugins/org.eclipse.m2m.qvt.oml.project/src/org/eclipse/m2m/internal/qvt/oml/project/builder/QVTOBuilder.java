@@ -43,6 +43,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
+import org.eclipse.m2m.internal.qvt.oml.compiler.ResolverUtils;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
