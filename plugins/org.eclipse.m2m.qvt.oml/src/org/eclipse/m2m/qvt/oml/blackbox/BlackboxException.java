@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.blackbox;
 
+import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 
 public class BlackboxException extends Exception {
@@ -20,20 +21,13 @@ public class BlackboxException extends Exception {
 	private Diagnostic fDiagnostic;
 	
 	public BlackboxException(Diagnostic diagnostic) {
-		super();
-		fDiagnostic = diagnostic;
-	}
-
-	public BlackboxException(String message) {
-		super(message);
-	}
-
-	public BlackboxException(Throwable throwable) {
-		super(throwable);
+		super(diagnostic.getMessage());
+		fDiagnostic = diagnostic;		
 	}
 
 	public BlackboxException(String message, Throwable throwable) {
 		super(message, throwable);
+		fDiagnostic = createDiagnostic(message, throwable);
 	}
 	
 	@Override
@@ -43,9 +37,15 @@ public class BlackboxException extends Exception {
 	}
 	
 	/** 
-	 * @return the diagnostic object or <code>null</code>
+	 * @return the diagnostic object
 	 */
 	public Diagnostic getDiagnostic() {
 		return fDiagnostic;
-	}	
+	}
+	
+	static Diagnostic createDiagnostic(String message, Throwable throwable) {
+		return new BasicDiagnostic(Diagnostic.ERROR,
+				"org.eclipse.m2m.qvt.oml.blackbox", 0, message, //$NON-NLS-1$
+				new Object[] { throwable });
+	}
 }

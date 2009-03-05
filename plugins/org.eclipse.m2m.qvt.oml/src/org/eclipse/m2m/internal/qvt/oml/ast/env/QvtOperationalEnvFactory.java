@@ -14,6 +14,7 @@ package org.eclipse.m2m.internal.qvt.oml.ast.env;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
@@ -24,7 +25,6 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerKernel;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitorImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
@@ -73,8 +73,8 @@ public class QvtOperationalEnvFactory extends EcoreEnvironmentFactory {
 		return env;
 	}
 	
-	public QvtOperationalFileEnv createEnvironment(final CFile file, final QvtCompilerKernel kernel) {
-		QvtOperationalFileEnv env = new QvtOperationalFileEnv(file, kernel);
+	public QvtOperationalFileEnv createEnvironment(final URI uri, final QvtCompilerKernel kernel) {
+		QvtOperationalFileEnv env = new QvtOperationalFileEnv(uri, kernel);
 		env.setFactory(this);
 		return env;
 	}

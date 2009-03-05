@@ -112,7 +112,7 @@ public final class ValidationMessages extends NLS {
 	public static String SameParamName;
 	public static String ReadOnlyProperty;
 	public static String NoLibrary;
-	public static String FailedToLoadLibrary;
+	public static String FailedToLoadUnit;
 	
 	public static String ReturnTypeMismatch;
 	public static String DuplicateMetamodelImport;

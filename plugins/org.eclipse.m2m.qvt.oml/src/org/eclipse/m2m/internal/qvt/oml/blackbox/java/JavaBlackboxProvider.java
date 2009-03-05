@@ -41,7 +41,9 @@ import org.eclipse.osgi.util.NLS;
 
 
 public class JavaBlackboxProvider extends AbstractBlackboxProvider {
-		
+	
+	private static final String PROVIDER_ID = "Java"; //$NON-NLS-1$
+	
 	private static final String EXTENSION_POINT = "javaBlackboxUnits"; //$NON-NLS-1$
 	
 	private static final String CLASS_NAME_SEPARATOR = "."; //$NON-NLS-1$
@@ -67,6 +69,11 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 		// TODO - Should we necessarily be available in all contexts ? 
 		return fDescriptorMap.get(qualifiedName);
 	}
+	
+	@Override
+	protected String getProviderID() {
+		return PROVIDER_ID;
+	}	
 
 	@Override
 	public List<AbstractCompilationUnitDescriptor> getModuleDescriptors(ResolutionContext resolutionContext) {
@@ -185,7 +192,7 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 			String qualifiedName = namespace + CLASS_NAME_SEPARATOR + name;
 			return new Descriptor(configurationElement, qualifiedName, description);
 		} else if(LIBRARY_ELEM.equals(configurationElement.getName())) {
-			return new Descriptor(configurationElement);
+			return new Descriptor(configurationElement, deriveQualifiedNameFromSimpleDefinition(configurationElement), null);
 		}
 		
 		throw new CoreException(QvtPlugin.createErrorStatus(
@@ -232,24 +239,31 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 		private List<ModuleHandle> fModules = Collections.emptyList();
 		private String fContributingBundleId; 
 
-		Descriptor(IConfigurationElement moduleElement) {			
-			super(JavaBlackboxProvider.this, deriveQualifiedNameFromSimpleDefinition(moduleElement));
-			fContributingBundleId = moduleElement.getContributor().getName();
-			addModuleHandle(moduleElement);			
+//		Descriptor(IConfigurationElement moduleElement) {			
+//			super(JavaBlackboxProvider.this, deriveQualifiedNameFromSimpleDefinition(moduleElement));
+//			fContributingBundleId = moduleElement.getContributor().getName();
+//			addModuleHandle(moduleElement);			
+//		}
+				
+		Descriptor(IConfigurationElement configurationElement, String unitQualifiedName, String description) {
+			super(JavaBlackboxProvider.this, unitQualifiedName, 
+					new String[] { configurationElement.getContributor().getName(), unitQualifiedName });
+			fContributingBundleId = configurationElement.getContributor().getName();
+			
+			if(configurationElement.getName().equals(LIBRARY_ELEM)) {
+				addModuleHandle(configurationElement);				
+			} else {
+				IConfigurationElement[] libraries = configurationElement.getChildren(LIBRARY_ELEM);			
+				for (IConfigurationElement moduleElement : libraries) {
+					addModuleHandle(moduleElement);
+				}
+			}
 		}
-		
+
 		String getContributorId() {
 			return fContributingBundleId;
 		}
 		
-		Descriptor(IConfigurationElement configurationElement, String unitQualifiedName, String description) {
-			super(JavaBlackboxProvider.this, unitQualifiedName);
-			
-			IConfigurationElement[] libraries = configurationElement.getChildren(LIBRARY_ELEM);
-			for (IConfigurationElement moduleElement : libraries) {
-				addModuleHandle(moduleElement);
-			}
-		}
 		private void addModuleHandle(IConfigurationElement moduleElement) {
 			if(fModules.isEmpty()) {
 				fModules = new LinkedList<ModuleHandle>();

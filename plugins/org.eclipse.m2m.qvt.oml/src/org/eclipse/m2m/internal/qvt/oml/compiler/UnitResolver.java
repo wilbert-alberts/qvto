@@ -5,17 +5,15 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.compiler;
 
-import java.util.List;
 
-public interface UnitImportResolver {
-	
-	UnitProxy getImporter();
-	
-	CompiledUnit resolve(List<String> importQualifiedName);
+
+public interface UnitResolver {
+
+	UnitProxy resolveUnit(String qualifiedName);
 }

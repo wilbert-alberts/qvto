@@ -1,7 +1,7 @@
 package org.eclipse.m2m.internal.qvt.oml.compiler;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CResourceRepositoryContext;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
@@ -18,8 +18,8 @@ public class QvtCompilerKernel {
         myMetamodelRegistryProvider = metamodelRegistryProvider;
     }
     
-    public MetamodelRegistry getMetamodelRegistry(CFile sourceFile) {
-    	return myMetamodelRegistryProvider.getRegistry(new CResourceRepositoryContext(sourceFile));    	
+    public MetamodelRegistry getMetamodelRegistry(URI context) {
+    	return myMetamodelRegistryProvider.getRegistry(new CResourceRepositoryContext(context));    	
     }
         
     public ResourceSet getMetamodelResourceSet() {

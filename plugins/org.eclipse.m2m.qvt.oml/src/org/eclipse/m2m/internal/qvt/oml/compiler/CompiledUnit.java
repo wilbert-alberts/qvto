@@ -15,16 +15,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 
 public class CompiledUnit {
 	
 	private List<String> fQname;
-	private CFile fSource;	
+	private URI fUri;	
 	private List<QvtMessage> fAllProblems;
 	private List<CompiledUnit> fImports;
 	private List<QvtOperationalModuleEnv> moduleEnvs;
@@ -33,29 +33,35 @@ public class CompiledUnit {
 	UnitCS fUnitCST;	
 	
 	
-	CompiledUnit(List<String> qualifiedName, CFile source, QvtOperationalModuleEnv modules) {
-		if(qualifiedName == null || source == null || modules == null) {
+	CompiledUnit(List<String> qualifiedName, URI uri, List<? extends QvtOperationalModuleEnv> modules) {
+		if(qualifiedName == null || modules == null || uri == null) {
 			throw new IllegalArgumentException();
 		}
 		
-		this.fQname = qualifiedName;
-		this.fSource = source;
-		this.moduleEnvs = Collections.singletonList(modules);
-		this.fAllProblems = modules.getAllProblemMessages();
-	}
-
-	CompiledUnit(List<String> qualifiedName, List<QvtOperationalModuleEnv> modules) {
-		if(qualifiedName == null || modules == null) {
-			throw new IllegalArgumentException();
-		}
-		
+		this.fUri = uri;
 		this.fQname = qualifiedName;		
-		this.moduleEnvs = modules;			
-		this.fAllProblems = new ArrayList<QvtMessage>();
+		this.moduleEnvs = new ArrayList<QvtOperationalModuleEnv>(modules);
+		
+		ArrayList<QvtMessage> problems = new ArrayList<QvtMessage>();
+		this.fAllProblems = problems;
+		
 		for (QvtOperationalModuleEnv next : modules) {
 			fAllProblems.addAll(next.getAllProblemMessages());
 		}
+
+		if(!problems.isEmpty()) {
+			problems.trimToSize();			
+		}
 	}
+	
+	void addProblem(QvtMessage problem) {
+		if(problem == null) {
+			throw new IllegalArgumentException();
+		}
+		
+		fAllProblems.add(problem);
+	}
+
 				
 	void setImports(List<CompiledUnit> imports) {
 		this.fImports = imports; 
@@ -66,7 +72,7 @@ public class CompiledUnit {
 	}	
 	
 	public String getName() {
-		return fSource.getUnitName();
+		return fQname.get(0);
 	}
 	
 	public List<QvtOperationalModuleEnv> getModuleEnvironments() {
@@ -109,10 +115,10 @@ public class CompiledUnit {
 		return modules;
 	}
 	
-	public CFile getSource() {
-		return fSource;
+	public URI getURI() {
+		return fUri;
 	}
-	
+		
 	public UnitCS getUnitCST() {
 		return fUnitCST;
 	}
@@ -120,9 +126,24 @@ public class CompiledUnit {
 	public List<QvtMessage> getProblems() {
 		return fAllProblems;
 	}		
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof CompiledUnit) {
+			CompiledUnit another = (CompiledUnit) obj;
+			return fUri.equals(another.fUri);
+		}
+		
+		return super.equals(obj);
+	}
+	
+	@Override
+	public int hashCode() {	
+		return fUri.hashCode();
+	}
 	
 	@Override
 	public String toString() {		
-		return fSource.getFullPath();
+		return fUri.toString();
 	}
 }

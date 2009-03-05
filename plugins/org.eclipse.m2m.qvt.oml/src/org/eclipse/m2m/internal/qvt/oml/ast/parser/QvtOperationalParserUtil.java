@@ -35,6 +35,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNode;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNodeAccess;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
@@ -252,6 +253,15 @@ public class QvtOperationalParserUtil {
 		return result;
 	}
 	
+	public static void collectAllImports(CompiledUnit unit, Set<CompiledUnit> result) {		
+		for (CompiledUnit importedUnit : unit.getCompiledImports()) {			
+			if (!result.contains(importedUnit)) {				
+				collectAllImports(importedUnit, result);				
+			}
+			
+			result.add(importedUnit);			
+		}
+	}	
 
 	public static void collectAllImports(Module module, Set<Module> result) {
 		for (ModuleImport imp : module.getModuleImport()) {

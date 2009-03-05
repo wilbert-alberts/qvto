@@ -92,7 +92,7 @@ public class QvtOperationalParser {
 		env.setQvtCompilerOptions(options);
 		try {
 			QvtOperationalVisitorCS visitor = new QvtOperationalVisitorCS(parser, options);
-			module = visitor.visitMappingModule(moduleCS, importResolver.getImporter(), env, importResolver, resSet);
+			module = visitor.visitMappingModule(moduleCS, importResolver.getImporter().getURI(), env, importResolver, resSet);
 		} catch (SemanticException e) {
 			env.reportError(e.getLocalizedMessage(), 0, 0);
 		}

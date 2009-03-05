@@ -11,11 +11,14 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.compiler;
 
-import java.util.List;
-
-public interface UnitImportResolver {
+/**
+ * The purpose of this interface is solely to realize the 
+ * legacy support for imports from deployed transformations
+ * https://bugs.eclipse.org/bugs/show_bug.cgi?id=240192
+ */
+public interface LegacyResolverSupport extends UnitResolver {
 	
-	UnitProxy getImporter();
+	@Deprecated
+	UnitProxy resolveUnit(UnitProxy fromUnit, String qualifiedName);
 	
-	CompiledUnit resolve(List<String> importQualifiedName);
 }

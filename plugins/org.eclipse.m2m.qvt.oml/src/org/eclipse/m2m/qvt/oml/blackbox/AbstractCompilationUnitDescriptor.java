@@ -11,25 +11,43 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.blackbox;
 
+import org.eclipse.emf.common.util.URI;
+
 
 
 
 public abstract class AbstractCompilationUnitDescriptor {
-
+	
+	static final String URI_SCHEME = "qvto"; //$NON-NLS-1$
+	static final String URI_AUTHORITY = "blackbox"; //$NON-NLS-1$	
+	
+	private URI fURI;
 	private String fQualifiedName;
 	private String fDescription;
 	private AbstractBlackboxProvider fProvider;
 	
-	
-	protected AbstractCompilationUnitDescriptor(AbstractBlackboxProvider provider, String qualifiedName) {
+	/**
+	 * @throws IllegalArgumentException
+	 */
+	protected AbstractCompilationUnitDescriptor(AbstractBlackboxProvider provider, String qualifiedName, String[] uriSegments) {
 		if(provider == null || qualifiedName == null) {
 			throw new IllegalArgumentException("null 'qualified name' or 'provider'"); //$NON-NLS-1$
 		}
 		
+		if(uriSegments == null || uriSegments.length == 0) {
+			throw new IllegalArgumentException("Invalid unit uri segments"); //$NON-NLS-1$
+		}
+		
 		fProvider = provider;
 		fQualifiedName = qualifiedName;
+		// TODO - better error handling of invalid segments
+		fURI = URI.createHierarchicalURI(URI_SCHEME, URI_AUTHORITY, null, uriSegments, null, null);		
 	}
 	
+	protected AbstractCompilationUnitDescriptor(AbstractBlackboxProvider provider, String qualifiedName) {
+		this(provider, qualifiedName, new String [] { provider.getProviderID(), qualifiedName });
+	}
+		
 	protected AbstractBlackboxProvider getProvider() {
 		return fProvider;
 	}
@@ -38,6 +56,10 @@ public abstract class AbstractCompilationUnitDescriptor {
 		fDescription = description;
 	}
 
+	public final URI getURI() {
+		return fURI;
+	}	
+	
 	public String getDescription() {
 		return fDescription; 
 	}	

@@ -11,16 +11,16 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerKernel;
 
 public class QvtOperationalFileEnv extends QvtOperationalModuleEnv {
 
     private final QvtCompilerKernel myKernel;
-	private final CFile myFile;    
+	private final URI myFile;    
 	
-	protected QvtOperationalFileEnv(final CFile file, final QvtCompilerKernel kernel) {
+	protected QvtOperationalFileEnv(final URI file, final QvtCompilerKernel kernel) {
 		super(new EPackageRegistryImpl());
 
 		myFile = file;
@@ -33,17 +33,13 @@ public class QvtOperationalFileEnv extends QvtOperationalModuleEnv {
         return myKernel;
     }
 	
-	public CFile getFile() {
+	public URI getFile() {
         return myFile;
     }
-
-    public String getUnitName() {
-        return myFile.getUnitName();
-	}
 	    	    
     @Override
     public String toString() {    
-    	return  "Env:" + myFile.getFullPath(); //$NON-NLS-1$
+    	return  "QVTOEnv:" + myFile.toString(); //$NON-NLS-1$
     }
     
 }

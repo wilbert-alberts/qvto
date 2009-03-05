@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -47,7 +48,6 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitImportResolver;
@@ -1418,13 +1418,13 @@ public class QvtOperationalVisitorCS
         return objectExp;
         }
 		
-	public Module visitMappingModule(MappingModuleCS moduleCS, CFile source, QvtOperationalFileEnv env, UnitImportResolver importResolver, ResourceSet resSet) throws SemanticException {        
+	public Module visitMappingModule(MappingModuleCS moduleCS, URI unitURI, QvtOperationalFileEnv env, UnitImportResolver importResolver, ResourceSet resSet) throws SemanticException {        
         Module module = QvtOperationalParserUtil.createModule(moduleCS);        
 		module.setStartPosition(moduleCS.getStartOffset());
 		module.setEndPosition(moduleCS.getEndOffset());
         // AST binding
         if(myCompilerOptions.isGenerateCompletionData()) {
-            ASTBindingHelper.createModuleBinding(moduleCS, module, env, source);
+            ASTBindingHelper.createModuleBinding(moduleCS, module, env, unitURI);
         }
         //
 		
@@ -1452,7 +1452,7 @@ public class QvtOperationalVisitorCS
 			}
 		}
 		
-		visitTransformationHeaderCS(moduleCS.getHeaderCS(), env, module, source);
+		visitTransformationHeaderCS(moduleCS.getHeaderCS(), env, module);
 		
         env.setContextModule(module);
         
@@ -2018,7 +2018,7 @@ public class QvtOperationalVisitorCS
 				for (QvtOperationalModuleEnv nextImportedEnv : importedUnit.getModuleEnvironments()) {
 					Module importedModule = nextImportedEnv.getModuleContextType();
 					if(importedModule == null) {
-						// nothing to import in, no module was sucessfuly parsed
+						// nothing to import in, no module was successfully parsed
 						continue;
 					}
 					
@@ -2126,7 +2126,7 @@ public class QvtOperationalVisitorCS
 	}
  
 	protected void visitTransformationHeaderCS(TransformationHeaderCS headerCS,
-			QvtOperationalFileEnv env, Module module, CFile sourceFile) {
+			QvtOperationalFileEnv env, Module module) {
 		if (!headerCS.getQualifiers().isEmpty()) {
 			env.reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_transfQualifiersNotSupported,
 					new Object[] { }), 
@@ -2418,6 +2418,7 @@ public class QvtOperationalVisitorCS
 						new Object[] { metamodelName, uriList }), cstNode);
 			}
 		} catch (RuntimeException e) {
+			QvtPlugin.log(e);
 			env.reportError(NLS.bind(ValidationMessages.failedToResolveMetamodelError,
 					new Object[] { metamodelName }), cstNode);
 		}

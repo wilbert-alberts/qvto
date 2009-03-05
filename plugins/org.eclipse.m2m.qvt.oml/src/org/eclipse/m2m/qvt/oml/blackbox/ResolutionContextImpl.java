@@ -12,47 +12,53 @@
 package org.eclipse.m2m.qvt.oml.blackbox;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.BundleFile;
-import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
+import org.eclipse.emf.common.util.URI;
 import org.osgi.framework.Bundle;
 
+/**
+ * FIXME - temp solution due to #264335, mixing CFile, URI based context 
+ */
 public class ResolutionContextImpl implements ResolutionContext {
 	
-	private CFile fFile;	
+	private URI fURI;	
 	
-	public ResolutionContextImpl(CFile cFile) {
-		if(cFile == null) {
+	public ResolutionContextImpl(URI contextURI) {
+		if(contextURI == null) {
 			throw new IllegalArgumentException();
 		}
 		
-		fFile = cFile;
+		fURI = contextURI;
 	}
-		
-	public <T> T getAdapter(Class<T> adapterType) {
-		if(fFile == null) {
-			return null;
-		}
+	
 
-		if(adapterType == Bundle.class) {
-			if(fFile instanceof BundleFile) {
-				BundleFile bundleFile = (BundleFile) fFile;
-				String bundleId = bundleFile.getBundleSymbolicName();
-				Bundle bundle = Platform.getBundle(bundleId);
-				return adapterType.cast(bundle);
+	public <T> T getAdapter(Class<T> adapterType) {
+		
+		if (adapterType == IProject.class) {
+			if (fURI.isPlatformResource()) {
+				String wsFullPath = fURI.toPlatformString(true);
+				IResource resource = ResourcesPlugin.getWorkspace().getRoot().findMember(wsFullPath);
+				if (resource != null) {
+					return adapterType.cast(resource.getProject());
+				}
+			}
+		} else if (adapterType == Bundle.class) {
+			if (fURI.isPlatformPlugin()) {
+				if (fURI.segmentCount() > 1) {
+					String bundleID = fURI.segment(1);
+					Bundle bundle = Platform.getBundle(bundleID);
+					return (bundle != null) ? adapterType.cast(bundle) : null;
+				}
 			}
 		}
-		else if(adapterType == IProject.class) {
-			if(fFile instanceof EclipseFile) {
-				return adapterType.cast(((EclipseFile)fFile).getFile().getProject());
-			}
-		} 
+			
 		return null;
 	}
 	
 	@Override
 	public String toString() {	
-		return "Resolution context (" + fFile.toString() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+		return "Resolution context (" + fURI.toString() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }

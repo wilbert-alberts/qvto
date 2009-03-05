@@ -14,6 +14,8 @@ package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -27,11 +29,13 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
+import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.common.resourcesetprovider.ResourceSetProviderRegistry;
 import org.eclipse.m2m.internal.qvt.oml.common.resourcesetprovider.ResourceSetProviderRegistry.ResourceSetResourceSetProviderPair;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfException;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.ocl.Environment.Internal;
@@ -65,15 +69,20 @@ class MetamodelResolutionHelper {
 		            ResourceSet resourceSet = fileEnv.getKernel().getMetamodelResourceSet();
 		            ResourceSetResourceSetProviderPair pair = null;
 		            if (resourceSet == null) {
-	                    CFile cFile = fileEnv.getFile();
-	                    pair = ResourceSetProviderRegistry.getResourceSetResourceSetProviderPair(cFile);
-	                    if (pair != null) {
-	                        ResourceSet providedResourceSet = pair.getResourceSet();
-	                        URI mmURI = URI.createURI(metamodelUri);
-                            if (EmfUtil.isUriMapped(providedResourceSet, mmURI)) {
-                                resourceSet = providedResourceSet;
-	                        }
-	                    }
+	                    URI uri = fileEnv.getFile();
+	                    // FIXME - refactore CFile out of here
+						IFile iFileURI = URIUtils.getFile(uri);
+						if(iFileURI != null) {
+							CFile cFile = new EclipseFile(iFileURI);
+		                    pair = ResourceSetProviderRegistry.getResourceSetResourceSetProviderPair(cFile);
+		                    if (pair != null) {
+		                        ResourceSet providedResourceSet = pair.getResourceSet();
+		                        URI mmURI = URI.createURI(metamodelUri);
+	                            if (EmfUtil.isUriMapped(providedResourceSet, mmURI)) {
+	                                resourceSet = providedResourceSet;
+		                        }
+		                    }
+						}
 		            }
 		            if (resourceSet != null) {
 		                IMetamodelDesc metamodelDesc = MetamodelRegistry.createUndeclaredMetamodel(metamodelUri, resourceSet);
@@ -101,7 +110,7 @@ class MetamodelResolutionHelper {
 	            }
 		    }
 
-			for(IMetamodelDesc nextDesc : desc) {
+			for(IMetamodelDesc nextDesc : desc) {				
 	        	EPackage model = nextDesc.getModel();
 	            // register metamodel for EClassifier lookup
 	        	if (model.getNsURI() == null) {
@@ -113,9 +122,10 @@ class MetamodelResolutionHelper {
 					}
 	        	}
 	        	
-	        	metamodels.add(model);
-	        	
-	            qvtEnv.getEPackageRegistry().put(model.getNsURI(), model);
+	        	if(nextDesc.getLoadStatus().getSeverity() < IStatus.ERROR) {
+	        		metamodels.add(model);	        	
+	        		qvtEnv.getEPackageRegistry().put(model.getNsURI(), model);
+	        	}
 	            break;
 /*
 	            EPackage[] all = EmfMmUtil.getRegisterableModels(model, true);            

@@ -399,7 +399,16 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		
 		return Collections.emptyList();
 	}	
+	
+	public void clearProblems() {
+		if(myErrorSet != null) {
+			myErrorSet.clear();
+		}
 		
+		if(myWarningSet != null) {
+			myWarningSet.clear();
+		}
+	}		
 			
 	/**
 	 * Register given modeltype in the Environment. Modeltype's registry is used in

@@ -20,7 +20,6 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.util.LineNumberProvider;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
@@ -48,13 +47,13 @@ public class ASTBindingHelper {
 		return (IModuleSourceInfo)EcoreUtil.getExistingAdapter(astModule, ModuleSourceAdapter.class);
 	}
 		
-	public static void createModuleBinding(MappingModuleCS cstModule, Module astModule, EcoreEnvironment env, CFile moduleFile) {
-		ASTAdapter<ASTNode> astAdapter = new ModuleASTAdapter(cstModule, astModule, env, moduleFile);
+	public static void createModuleBinding(MappingModuleCS cstModule, Module astModule, EcoreEnvironment env, URI unitURI) {
+		ASTAdapter<ASTNode> astAdapter = new ModuleASTAdapter(cstModule, astModule, env, unitURI);
 		astModule.eAdapters().add(astAdapter);	
 		cstModule.eAdapters().add(astAdapter);		
 	}
 	
-    public static CFile resolveModuleFile(EObject cstModule) {
+    public static URI resolveModuleFile(EObject cstModule) {
         ModuleASTAdapter moduleASTAdapter = getModuleASTAdapter(cstModule);
         if (moduleASTAdapter != null) {
             return moduleASTAdapter.getModuleFile();           
@@ -220,19 +219,20 @@ public class ASTBindingHelper {
 	}
 	
 	private static class ModuleASTAdapter extends ASTAdapter<ASTNode> {
-		private CFile file;
+		
+		private URI uri;
 		
 		protected ModuleASTAdapter(CSTNode cstNode, ASTNode astNode,
-				EcoreEnvironment env, CFile moduleFile) {
+				EcoreEnvironment env, URI unitURI) {
 			super(cstNode, astNode, env);
 			
-			this.file = moduleFile;
+			this.uri = unitURI;
 		}
 
-		public CFile getModuleFile() {
-			return file;
+		public URI getModuleFile() {
+			return uri;
 		}
-	}	
+	}
 
 	private static class ModuleSourceAdapter extends AdapterImpl implements IModuleSourceInfo {
 		private URI fSourceURI;
@@ -258,5 +258,52 @@ public class ASTBindingHelper {
 		public boolean isAdapterForType(Object type) {
 			return type == ModuleSourceAdapter.class;
 		}
-	}	
+	}
+	
+	public static void setEnvironment(EObject topLevelElement, EcoreEnvironment elementEnv) {
+		Adapter adapter = EcoreUtil.getAdapter(topLevelElement.eAdapters(), elementEnv.getClass());
+		if(adapter != null) {
+			topLevelElement.eAdapters().remove(adapter);
+		}
+		
+		topLevelElement.eAdapters().add(new EnvAdapter(elementEnv));
+	}
+	
+	public static <T extends EcoreEnvironment> T getEnvironment(EObject topLevelElement, Class<T> type) {
+		Adapter adapter = EcoreUtil.getAdapter(topLevelElement.eAdapters(), type);
+		if(adapter instanceof EnvAdapter) {
+			EnvAdapter envAdapter = (EnvAdapter) adapter;
+			return envAdapter.getEnvironment(type);
+		}	
+
+		return null;
+	}
+		
+	private static class EnvAdapter extends AdapterImpl {
+		
+		private EcoreEnvironment fEnv;
+
+		EnvAdapter(EcoreEnvironment env) {
+			assert env != null;
+			fEnv = env;
+		}
+
+		@Override
+		public boolean isAdapterForType(Object type) {
+			if(type instanceof Class) {
+				Class<?> clazz = (Class<?>) type;
+				return clazz.isInstance(fEnv);
+			}
+			
+			return false;
+		}
+		
+		<T extends EcoreEnvironment> T getEnvironment(Class<T> type) {
+			if(isAdapterForType(type)) {
+				return type.cast(fEnv);
+			}
+			
+			return null;
+		}
+	}		
 }

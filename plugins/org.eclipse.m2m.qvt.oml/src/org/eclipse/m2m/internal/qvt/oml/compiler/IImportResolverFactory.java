@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 
 
@@ -27,6 +28,10 @@ public interface IImportResolverFactory {
 	boolean isAccepted(Object source);
 	
 	IImportResolver createResolver(Object source);
+	
+	UnitResolver getResolver(URI uri);
+
+	UnitProxy findUnit(URI unitURI);
 	
 	interface Registry {
 		String POINT_ID = QvtPlugin.ID + ".importResolverFactory"; //$NON-NLS-1$
