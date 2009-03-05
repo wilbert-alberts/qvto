@@ -14,18 +14,17 @@ package org.eclipse.m2m.internal.qvt.oml.project;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
-import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolverFactory;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 
 
 /**
@@ -45,26 +44,30 @@ public class QvtEngine {
 	private QvtEngine(IProject project) {
 		myProject = project;
 		IImportResolverFactory resolverFactory = IImportResolverFactory.Registry.INSTANCE.getFactory(myProject);		
-        myImportResolver = resolverFactory.createResolver(myProject);
+        myImportResolver = resolverFactory.getResolver(URIUtils.getResourceURI(myProject));
 		reset(null);
 	}
 	
 
-    public CompiledUnit compileUnit(CFile source, QvtCompilerOptions options, IProgressMonitor monitor) throws MdaException {
-		reset(options);
+    public CompiledUnit compileUnit(UnitProxy source,  QvtCompilerOptions options, IProgressMonitor monitor) throws MdaException {
 		return myCompiler.compile(source, options, monitor);
 	}
+	
+	
+    public CompiledUnit compileUnit(UnitProxy source, IProgressMonitor monitor) throws MdaException {
+		return myCompiler.compile(source, /*default*/null, monitor);
+	}
 
-    public CompiledUnit compileUnit(IFile source, IProgressMonitor monitor) throws MdaException {
-    	return myCompiler.compile(new EclipseFile(source), /*default*/null, monitor);
-    }
+//    public CompiledUnit compileUnit(IFile source, IProgressMonitor monitor) throws MdaException {
+//    	return myCompiler.compile(new EclipseFile(source), /*default*/null, monitor);
+//    }
     		    			
 	public QVTOCompiler getQVTOCompiler() {
 		return myCompiler;
 	}	
     
 	private void reset(QvtCompilerOptions options) { // TODO: QvtException
-	    myCompiler = QVTOCompiler.createCompiler(myImportResolver);
+	    myCompiler = new QVTOCompiler(myImportResolver);
 	    if (options != null) {
 	        myCompiler.getKernel().setMetamodelResourceSet(options.getMetamodelResourceSet());
 	    }
@@ -73,5 +76,5 @@ public class QvtEngine {
 	private static Map<IProject, QvtEngine> ourEnginesMap = new HashMap<IProject, QvtEngine>();
 	private QVTOCompiler myCompiler;	
 	private IProject myProject;
-    private final IImportResolver myImportResolver;
+    private final UnitResolver myImportResolver;
 }

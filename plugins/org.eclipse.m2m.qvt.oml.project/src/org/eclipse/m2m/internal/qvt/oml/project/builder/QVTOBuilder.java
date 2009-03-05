@@ -34,6 +34,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
@@ -42,21 +43,26 @@ import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MetamodelURIMappingHelper;
 import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
 
 
 
 public class QVTOBuilder extends IncrementalProjectBuilder {
-	// FIXME - not used?
-    private static final List<BuildListener> ourListeners = new Vector<BuildListener>();
-    private QVTOBuilderConfig myConfig;
-	    
+	
     public interface BuildListener {
         void buildPerformed();
     }
+	
+	
+	// FIXME - not used?
+    private static final List<BuildListener> ourListeners = new Vector<BuildListener>();
     
+    private QVTOBuilderConfig myConfig;
+	        
     public QVTOBuilder() {
     	super();
     }
@@ -198,7 +204,13 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
 				sources[i] = new EclipseFile(files[i]);
 			}
 			
-			units = createCompiler(getProject()).compile(sources, options, new SubProgressMonitor(monitor, 1));
+	        WorkspaceUnitResolver resolver = WorkspaceUnitResolver.getResolver(getProject());	        
+	        QVTOCompiler compiler = new QVTOCompiler(resolver);
+	        
+	        List<UnitProxy> allUnits = ResolverUtils.findAllUnits(resolver);
+
+	        units = compiler.compile(allUnits.toArray(new UnitProxy[allUnits.size()]),
+						options, new SubProgressMonitor(monitor, 1));
 		}
 		catch(OperationCanceledException e) {
 			throw e;
@@ -207,20 +219,20 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
 			throw new CoreException(QvtPlugin.createErrorStatus(e));
 		}
 		
-        for (int i = 0; i < units.length; i++) {        
-        	CompiledUnit nextUnit = units[i];
-            EclipseFile source = (EclipseFile) nextUnit.getSource();
-            
+        for (int i = 0; i < units.length; i++) {                    
             if(monitor.isCanceled()) {
             	throw new OperationCanceledException();
             }
             
-            IFile curFile = source.getFile();
-            curFile.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
+        	CompiledUnit nextUnit = units[i];
+        	URI sourceURI = nextUnit.getURI();
+        	IFile sourceFile = URIUtils.getFile(sourceURI);
+        	
+        	sourceFile.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
 
             List<QvtMessage> messages = nextUnit.getProblems();            
             for (QvtMessage nextMessage : messages) {
-                createQvtMarker(curFile, nextMessage);
+                createQvtMarker(sourceFile, nextMessage);
             }
         }
     }
@@ -307,7 +319,4 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
         }
     }
 
-	private QVTOCompiler createCompiler(IProject project) {                
-        return new QVTOCompiler(new EclipseImportResolver(project));
-	}
 }

@@ -11,9 +11,16 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.project.builder;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolverFactory;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
+import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
 
 
 public class EclipseImportResolverFactory implements IImportResolverFactory {
@@ -24,7 +31,31 @@ public class EclipseImportResolverFactory implements IImportResolverFactory {
 	public boolean isAccepted(Object source) {
 		return source instanceof IResource;
 	}
+
+	public UnitProxy findUnit(URI unitURI) {
+		if(unitURI.isPlatformResource()) {
+			IFile file = URIUtils.getFile(unitURI);
+			if(file != null) {
+				return WorkspaceUnitResolver.getUnit(file);
+			}
+		}
 		
+		return null;
+	}
+	
+	public UnitResolver getResolver(URI uri) {
+		IResource resource = URIUtils.getResource(uri);
+		if(resource.exists()) {
+			try {
+				return WorkspaceUnitResolver.getResolver(resource.getProject());
+			} catch (CoreException e) {
+				QVTOProjectPlugin.log(e);
+			}
+		}
+		
+		return null; 
+	}
+	
 	public IImportResolver createResolver(Object source) {
 		if(isAccepted(source)) {
 			IResource resource = (IResource) source;
