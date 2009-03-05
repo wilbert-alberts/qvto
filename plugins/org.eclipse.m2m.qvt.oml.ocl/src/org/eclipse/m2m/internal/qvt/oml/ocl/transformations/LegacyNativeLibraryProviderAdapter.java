@@ -30,6 +30,11 @@ public class LegacyNativeLibraryProviderAdapter extends AbstractBlackboxProvider
 	}
 
 	@Override
+	protected String getProviderID() {
+		return "legacy";
+	}	
+	
+	@Override
 	public List<AbstractCompilationUnitDescriptor> getModuleDescriptors(ResolutionContext loadContext) {
 		LibrariesRegistry registry = OclQvtoPlugin.getDefault().getLibrariesRegistry();
 		
@@ -74,18 +79,14 @@ public class LegacyNativeLibraryProviderAdapter extends AbstractBlackboxProvider
 		private Library fLibrary;
 		
 		protected LibraryDescriptor(Library library) {
-			super(LegacyNativeLibraryProviderAdapter.this, library.getId()); 
+			super(LegacyNativeLibraryProviderAdapter.this, library.getId());
 			fLibrary = library;
 		}
-
-		@Override
-		public String getQualifiedName() {				
-			return fLibrary.getId();
-		}
-		
+				
 		@Override
 		public String getDescription() {
 			return fLibrary.getLibraryClassName();
-		}		
+		}
+		
 	}	
 }
