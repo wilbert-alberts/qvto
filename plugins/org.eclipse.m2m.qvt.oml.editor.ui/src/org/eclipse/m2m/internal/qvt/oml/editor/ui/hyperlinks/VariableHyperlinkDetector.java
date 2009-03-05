@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EParameter;
@@ -74,7 +75,8 @@ public class VariableHyperlinkDetector implements IHyperlinkDetectorHelper {
 		if(targetCS != null) {
 			IRegion linkRegion = HyperlinkUtil.createRegion(syntaxElement);
 			IRegion targetRegion = HyperlinkUtil.createRegion(targetCS);
-			return new QvtFileHyperlink(linkRegion, context.getModule().getSource(), targetRegion, targetRegion); 
+			URI sourceURI = context.getModule().getURI();
+			return new QvtFileHyperlink(linkRegion, sourceURI, targetRegion, targetRegion); 
 		}
 		
 		return null;

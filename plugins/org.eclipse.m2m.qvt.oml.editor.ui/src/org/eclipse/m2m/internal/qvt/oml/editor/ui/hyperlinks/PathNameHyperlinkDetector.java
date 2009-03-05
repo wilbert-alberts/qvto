@@ -19,6 +19,7 @@ import lpg.lpgjavaruntime.PrsStream;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EModelElement;
@@ -32,7 +33,6 @@ import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNode;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNodeAccess;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.ConstructorOperationAdapter;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
@@ -76,8 +76,8 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 				}
 			}
 			if(cstNode != null) {
-				CFile file = CSTHelper.getSourceFile(cstNode);
-				if(file != null) {
+				URI sourceURI = CSTHelper.getSourceFile(cstNode);
+				if(sourceURI != null) {
 					if(cstNode instanceof ModelTypeCS) {
 						// TODO - use QVT model Switch to get destination region specific to various CST							
 						cstNode = ((ModelTypeCS) cstNode).getIdentifierCS();  
@@ -90,7 +90,7 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 						cstNode = ((ClassifierDefCS) cstNode).getSimpleNameCS();
 					}
 					IRegion destReg = HyperlinkUtil.createRegion(cstNode);
-					return new QvtFileHyperlink(elementRef.sourceLinkRegion, file, destReg, destReg);
+					return new QvtFileHyperlink(elementRef.sourceLinkRegion, sourceURI, destReg, destReg);
 				}
 			}
 			

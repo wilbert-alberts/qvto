@@ -25,6 +25,7 @@ import org.eclipse.core.resources.IResourceProxyVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -33,8 +34,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseResource;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CategoryImageConstants;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
@@ -123,19 +122,21 @@ public class WorkspaceMetamodelCollector extends AbstractMetamodelCollector {
 	}
 	
 	private static void addToSettings(QvtCompletionData data, URI resURI, EPackage pack) {
-		CFile cFile = data.getCFile();
-		if (cFile instanceof EclipseResource) {
-			EclipseResource eclipseResource = (EclipseResource) cFile;
-			IResource resource = eclipseResource.getResource();
-			if (resource != null) {
-				IProject project = resource.getProject();
-				if (project != null) {
-					MappingContainer uriMap = loadMappings(project);
-					URIMapping mapping = createMapping(resURI, pack);
-					removeOldMapping(uriMap, mapping);
-					uriMap.getMapping().add(mapping);
-					saveMappings(uriMap, project);
-				}
+		URI cFile = data.getCFile().getURI();		
+		if(!cFile.isPlatformResource()) {
+			return;
+		}
+
+		String wsRelativePath = cFile.toPlatformString(true);
+		IResource resource = ResourcesPlugin.getWorkspace().getRoot().findMember(new Path(wsRelativePath));
+		if (resource != null) {
+			IProject project = resource.getProject();
+			if (project != null) {
+				MappingContainer uriMap = loadMappings(project);
+				URIMapping mapping = createMapping(resURI, pack);
+				removeOldMapping(uriMap, mapping);
+				uriMap.getMapping().add(mapping);
+				saveMappings(uriMap, project);
 			}
 		}
 	}

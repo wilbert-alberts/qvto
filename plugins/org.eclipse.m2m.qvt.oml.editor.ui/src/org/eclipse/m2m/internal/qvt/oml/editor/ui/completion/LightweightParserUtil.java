@@ -23,8 +23,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalVisitorCS;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
@@ -292,16 +292,16 @@ public class LightweightParserUtil {
         return LightweightParserUtil.getText(tokens[0], tokens[tokens.length - 1]);
     }
     
-    public static final CSTNode parse(IToken[] tokens, CFile cFile, ParserTypeEnum parserType) {
+    public static final CSTNode parse(IToken[] tokens, UnitProxy unit, ParserTypeEnum parserType) {
         String script = LightweightParserUtil.getText(tokens);
-        return parse(script, cFile, parserType);
+        return parse(script, unit, parserType);
     }
     
-    public static final CSTNode parse(String script, CFile cFile, ParserTypeEnum parserType) {
+    public static final CSTNode parse(String script, UnitProxy unit, ParserTypeEnum parserType) {
         try {
         	QvtOperationalEnv env = new QvtOperationalEnvFactory().createEnvironment();
             QvtOpLexer lexer = new QvtOpLexer(env);
-            lexer.initialize(new OCLInput(script).getContent(), cFile.getName());
+            lexer.initialize(new OCLInput(script).getContent(), unit.getName());
             AbstractQVTParser parser = null;
             switch (parserType) {
                 case LIGHTWEIGHT_PARSER: parser = new RunnableLightweightParser(lexer); break;

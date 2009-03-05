@@ -68,9 +68,14 @@ public class QvtReconcilingStrategy implements IReconcilingStrategy, IReconcilin
     }
     
     private void reconcileInternal() {
+        boolean editingInQvtSourceContainer = QvtCompilerFacade.isEditingInQvtSourceContainer(myEditor);
+        if(!editingInQvtSourceContainer) {
+        	return;
+        }
+        
         final ArrayList<Position> positions = new ArrayList<Position>();
         QvtCompilerOptions options = new QvtCompilerOptions();
-        options.setShowAnnotations(QvtCompilerFacade.isEditingInQvtSourceContainer(myEditor));
+		options.setShowAnnotations(editingInQvtSourceContainer);
         options.setSourceLineNumbersEnabled(false);
         options.enableCSTModelToken(true);
         

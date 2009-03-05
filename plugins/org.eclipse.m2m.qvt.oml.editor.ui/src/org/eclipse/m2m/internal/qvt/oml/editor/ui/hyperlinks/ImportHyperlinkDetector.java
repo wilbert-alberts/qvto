@@ -12,11 +12,11 @@
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks;
 
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.ocl.cst.CSTNode;
@@ -30,8 +30,8 @@ public class ImportHyperlinkDetector implements IHyperlinkDetectorHelper {
 	public IHyperlink detectHyperlink(IDetectionContext context) {
 		CSTNode syntaxElement = context.getSyntaxElement();
 		
-		CFile sourceFile = findDefinition(syntaxElement);
-		if(sourceFile != null) {			
+		URI sourceFileURI = findDefinition(syntaxElement);
+		if(sourceFileURI != null) {			
 			IRegion destRegion = new Region(0, 0); // point to the beginning
 
 			ImportCS importCS = getImport(syntaxElement);
@@ -40,15 +40,14 @@ public class ImportHyperlinkDetector implements IHyperlinkDetectorHelper {
 				linkNodeCS = syntaxElement;
 			}
 			
-			IRegion hlinkReg = HyperlinkUtil.createRegion(linkNodeCS);			
-			
-			return new QvtFileHyperlink(hlinkReg, sourceFile, destRegion, destRegion);
+			IRegion hlinkReg = HyperlinkUtil.createRegion(linkNodeCS);						
+			return new QvtFileHyperlink(hlinkReg, sourceFileURI, destRegion, destRegion);
 		}
 		
 		return null;
 	}
 	
-	public static CFile findDefinition(CSTNode syntaxElement) {		
+	public static URI findDefinition(CSTNode syntaxElement) {		
 		ImportCS ImportCS = getImport(syntaxElement);
 		
 		if ((syntaxElement instanceof ImportCS)) {

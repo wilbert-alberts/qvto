@@ -28,9 +28,9 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
-import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
-import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolverFactory;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
@@ -38,6 +38,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtEditor;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.ui.part.FileEditorInput;
 
@@ -64,7 +65,9 @@ public class QvtCompletionData {
     private PrsStream myPrsStream;
     private Exception myException;
     private IFile myIFile;
-    private EclipseFile myCFile;
+    private UnitProxy myCFile;
+    private String myCharSet;
+    
     private QvtCompletionCompiler myQvtCompiler;
 
     private IToken myParentImperativeOperation;
@@ -76,9 +79,11 @@ public class QvtCompletionData {
         myOffset = offset;
         try {
             myIFile = ((FileEditorInput) myEditor.getEditorInput()).getFile();
-            myCFile = new EclipseFile(myIFile);
+            myCharSet = myIFile.getCharset();
+            myCFile = editor.getUnit();
             myQvtCompiler = createQvtCompiler();
-            myLexer = myQvtCompiler.createLexer(myCFile);
+            myLexer = myQvtCompiler.createLexer(editor.getUnit());
+
             myPrsStream = myLexer.getPrsStream();
             getLeftTokenAndCurrentToken();
         } catch (Exception ex) {
@@ -87,8 +92,12 @@ public class QvtCompletionData {
         }
     }
     
+    public String getCharacterSet() {
+    	return myCharSet;
+    }
+    
     public MetamodelRegistry getMetamodelRegistry() {
-    	return myQvtCompiler.getKernel().getMetamodelRegistry(myCFile);
+    	return myQvtCompiler.getKernel().getMetamodelRegistry(myCFile.getURI());
     }
 
     public QvtEditor getEditor() {
@@ -131,7 +140,7 @@ public class QvtCompletionData {
         return myIFile;
     }
 
-    public EclipseFile getCFile() {
+    public UnitProxy getCFile() {
         return myCFile;
     }
 
@@ -286,7 +295,7 @@ public class QvtCompletionData {
     private QvtCompletionCompiler createQvtCompiler() {
         IProject project = myIFile.getProject();
         IImportResolverFactory resolverFactory = IImportResolverFactory.Registry.INSTANCE.getFactory(project);        
-        IImportResolver importResolver = resolverFactory.createResolver(project);
+        UnitResolver importResolver = resolverFactory.getResolver(URIUtils.getResourceURI(project));
         QvtCompletionCompiler qvtCompiler = new QvtCompletionCompiler(importResolver, this);
         return qvtCompiler;
     }

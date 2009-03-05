@@ -10,25 +10,28 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import lpg.lpgjavaruntime.IToken;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFolder;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CResource;
 import org.eclipse.m2m.internal.qvt.oml.common.project.CompiledTransformation;
 import org.eclipse.m2m.internal.qvt.oml.common.project.TransformationRegistry;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProvider;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
-import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CategoryImageConstants;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionProposal;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformationRegistry;
 import org.eclipse.m2m.qvt.oml.blackbox.AbstractCompilationUnitDescriptor;
 import org.eclipse.m2m.qvt.oml.blackbox.BlackboxRegistry;
@@ -51,7 +54,7 @@ public class ImportModuleCollector extends AbstractCollector {
             QvtCompletionData data) {
         addLocalModulesProposals(proposals, data);
         addDeployedModulesProposals(proposals, data);
-        final ResolutionContextImpl loadContext = new ResolutionContextImpl(data.getCFile());
+        final ResolutionContextImpl loadContext = new ResolutionContextImpl(data.getCFile().getURI());
         for (AbstractCompilationUnitDescriptor abstractCompilationUnitDescriptor : BlackboxRegistry.INSTANCE.getCompilationUnitDescriptors(loadContext)) {
             String proposalString = abstractCompilationUnitDescriptor.getQualifiedName();
             QvtCompletionProposal info = CompletionProposalUtil.createCompletionProposal(proposalString, CategoryImageConstants.MAPPING, data);
@@ -62,44 +65,49 @@ public class ImportModuleCollector extends AbstractCollector {
 
     private void addLocalModulesProposals(
             Collection<ICompletionProposal> proposals, QvtCompletionData data) {
-        CFile compiledFile = data.getCFile();
-        CFolder rootFolder = compiledFile.getParent();
-        addFolderProposals(rootFolder, compiledFile, proposals, data, new String[] {});
-    }
+        UnitProxy unit = data.getCFile();
+		URI compiledFileURI = unit.getURI();
+        IResource compiledFile = URIUtils.getResource(compiledFileURI);
+        if(compiledFile.getType() != IResource.FILE) {
+        	return;
+        }
 
-    private void addFolderProposals(CFolder folder, CFile excludedFile,
+        addFolderProposals(unit, proposals, data, new String[] {});
+    }
+    
+    private void addFolderProposals(UnitProxy excludedFile,
             Collection<ICompletionProposal> proposals, QvtCompletionData data, String[] path) {
-        try {
-            CResource[] members = folder.members();
-            for (CResource member : members) {
-                if (member instanceof CFile) {
-                    CFile file = (CFile) member;
-                    if ((path.length == 0) && file.getName().equals(excludedFile.getName())) {
-                        continue;
-                    }
-                    if (!MDAConstants.QVTO_FILE_EXTENSION.equals(file.getExtension())) {
-                        continue;
-                    }
-                    StringBuilder stringBuilder = new StringBuilder();
-                    for (String pathElement : path) {
-                        stringBuilder.append(pathElement).append('.');
-                    }
-                    stringBuilder.append(file.getUnitName());
-                    QvtCompletionProposal info = CompletionProposalUtil.createCompletionProposal(stringBuilder.toString(), CategoryImageConstants.CLASS, data);
-                    CompletionProposalUtil.addProposalIfNecessary(proposals, info, data);
-                }
+
+		final List<UnitProxy> members = new ArrayList<UnitProxy>();
+		
+		UnitResolver resolver = excludedFile.getResolver();
+		// FIXME - avoid the assumption that a unit resolver is also a provider
+		// for now, import proposals are available only if this recondition is true
+		if(resolver instanceof UnitProvider) {
+			UnitProvider unitProvider = (UnitProvider) resolver;			
+			UnitProvider.UnitVisitor visitor = new UnitProvider.UnitVisitor() {
+				public boolean visitUnit(UnitProxy unit) {
+					members.add(unit);
+					return true;
+				}
+			};
+			
+			unitProvider.accept(visitor, null /* default namespace */,
+					UnitProvider.UnitVisitor.DEPTH_INFINITE, false);
+			
+			Collections.sort(members, new Comparator<UnitProxy>() {
+				public int compare(UnitProxy unit1, UnitProxy unit2) {
+					return unit1.getQualifiedName().compareTo(unit2.getQualifiedName());
+				}
+			});
+		}	
+
+        for (UnitProxy memberUnit : members) {
+        	if(!memberUnit.equals(excludedFile)) {
+        		String qualifiedName = memberUnit.getQualifiedName(); 
+                QvtCompletionProposal info = CompletionProposalUtil.createCompletionProposal(qualifiedName, CategoryImageConstants.CLASS, data);
+                CompletionProposalUtil.addProposalIfNecessary(proposals, info, data);
             }
-            for (CResource member : members) {
-                if (member instanceof CFolder) {
-                    CFolder subfolder = (CFolder) member;
-                    String[] newPath = new String[path.length + 1];
-                    System.arraycopy(path, 0, newPath, 0, path.length);
-                    newPath[newPath.length - 1] = subfolder.getName();
-                    addFolderProposals(subfolder, excludedFile, proposals, data, newPath);
-                }
-            }
-        } catch (IOException e) {
-            Activator.log(e);
         }
     }
 

@@ -11,9 +11,9 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -36,11 +36,12 @@ import org.eclipse.jface.text.source.IAnnotationModelExtension;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
-import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
-import org.eclipse.m2m.internal.qvt.oml.project.QvtEngine;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilderConfig;
+import org.eclipse.m2m.internal.qvt.oml.project.builder.WorkspaceUnitResolver;
 import org.eclipse.ui.part.FileEditorInput;
 
 /**
@@ -67,52 +68,23 @@ public class QvtCompilerFacade {
 			IFile file = ((FileEditorInput) editor.getEditorInput()).getFile();
 			QvtDocumentProvider documentProvider = (QvtDocumentProvider) editor.getDocumentProvider();
 			
-			final String contents = document.get();
-			final long timeStamp = System.currentTimeMillis();
 			monitor.worked(1);
-			
-			try {
-				EclipseFile source = new EclipseFile(file) {
+
+			final String contents = document.get();			
+			try {				
+				final UnitProxy unit = WorkspaceUnitResolver.getUnit(file);			
+				QVTOCompiler compiler = new QVTOCompiler(unit.getResolver()) {
 					@Override
-					public InputStream getContents() {
-						try {
-							return new ByteArrayInputStream(contents.getBytes(getCharset()));
-						} 
-						catch(IOException e) {
-							throw new RuntimeException(e);
-						}  
-					}
-					
-					@Override
-					public String getCharset() throws IOException {
-						return "UTF-8"; //$NON-NLS-1$
-					}
-					
-					@Override
-					public long getTimeStamp() {
-//						return ((IDocumentExtension4) document).getModificationStamp();
-						return timeStamp;
-					}
-					
-					@Override
-					public boolean equals(Object other) {
-						if(other instanceof EclipseFile) {
-							EclipseFile another = (EclipseFile) other;
-							return getFile().equals(another.getFile());
+					protected Reader createReader(UnitProxy source) throws IOException {
+						if(source.equals(unit)) {
+							return new StringReader(contents);
 						}
 						
-						return true;
+						return super.createReader(source);
 					}
-					
-					@Override
-					public int hashCode() {					
-						return getFile().hashCode();
-					}
-				};
+				};								
 				
-				QvtEngine engine = QvtEngine.getInstance(file);
-				
-                result = engine.compileUnit(source, options, new SubProgressMonitor(monitor, 2));
+                result = compiler.compile(unit, options, new SubProgressMonitor(monitor, 2));
                 
                 if (result != null) {
                     documentProvider.setMappingModule(result);

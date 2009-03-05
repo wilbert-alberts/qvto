@@ -12,6 +12,7 @@
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks;
 
 import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.text.IRegion;
@@ -19,7 +20,6 @@ import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.ConstructorOperationAdapter;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
@@ -55,8 +55,8 @@ public class OperationHyperlinkDetector implements IHyperlinkDetectorHelper {
 			if (resultCS instanceof MappingMethodCS) {
 				MappingMethodCS methodCS = (MappingMethodCS) resultCS;
 				IRegion destRegion = getGoToOperationRegion(methodCS);
-				CFile source = ASTBindingHelper.resolveModuleFile(CSTHelper.getModule(methodCS));
-				return new QvtFileHyperlink(HyperlinkUtil.createRegion(nameCS), source, 
+				URI sourceURI = ASTBindingHelper.resolveModuleFile(CSTHelper.getModule(methodCS));
+				return new QvtFileHyperlink(HyperlinkUtil.createRegion(nameCS), sourceURI, 
 								destRegion, destRegion);
 			}
 			// proceed as with ordinary ecore metamodel operation
@@ -71,8 +71,8 @@ public class OperationHyperlinkDetector implements IHyperlinkDetectorHelper {
 				MappingMethodCS methodCS = resolveImperativeOperationDecl(nameCS);
 				if(methodCS != null) {
 					IRegion destRegion = getGoToOperationRegion(methodCS);
-					CFile source = ASTBindingHelper.resolveModuleFile(CSTHelper.getModule(methodCS));
-					return new QvtFileHyperlink(HyperlinkUtil.createRegion(nameCS), source, 
+					URI sourceURI = ASTBindingHelper.resolveModuleFile(CSTHelper.getModule(methodCS));
+					return new QvtFileHyperlink(HyperlinkUtil.createRegion(nameCS), sourceURI, 
 									destRegion, destRegion);
 				}
 				// proceed as with ordinary ecore metamodel operation

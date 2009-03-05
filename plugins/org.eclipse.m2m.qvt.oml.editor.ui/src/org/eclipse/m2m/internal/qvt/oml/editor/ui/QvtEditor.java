@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.action.IAction;
@@ -36,6 +37,7 @@ import org.eclipse.jface.text.source.projection.ProjectionSupport;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.actions.OpenDeclarationAction;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.outline.QvtOutlineContentProvider;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.outline.QvtOutlineInput;
@@ -44,12 +46,14 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.outline.QvtOutlineNodeSelector
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.outline.QvtOutlineSelectionListener;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilder;
+import org.eclipse.m2m.internal.qvt.oml.project.builder.WorkspaceUnitResolver;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PartInitException;
@@ -117,6 +121,21 @@ public class QvtEditor extends TextEditor {
         }
         
         super.dispose();
+    }
+    
+    @Override
+    protected void doSetInput(IEditorInput input) throws CoreException {
+    	super.doSetInput(input);
+    	
+    	// FIXME - should handle bundle units too 
+    	if(input instanceof IFileEditorInput) {
+    		IFileEditorInput fileInput = (IFileEditorInput) input; 
+    		fUnitProxy = WorkspaceUnitResolver.getUnit(fileInput.getFile());
+    	}
+    }
+    
+    public UnitProxy getUnit() {
+    	return fUnitProxy;
     }
     
     @Override
@@ -291,9 +310,7 @@ public class QvtEditor extends TextEditor {
 			throw e;
 		}		
 	}
-	
-	
-    
+	    
     public int getTabWidth() {
         return getSourceViewerConfiguration().getTabWidth(getSourceViewer());
     }
@@ -386,6 +403,7 @@ public class QvtEditor extends TextEditor {
     private QvtOutlineNodeSelector myOutlineSelector;
     private BracketInserter myBracketInserter;
     private ASTProvider fASTProvider; 
+    private UnitProxy fUnitProxy;
     private Object fASTProviderLock = new Object();
 
      

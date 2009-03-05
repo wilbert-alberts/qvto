@@ -12,14 +12,11 @@
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.source.ISourceViewer;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtEditor;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
@@ -32,23 +29,23 @@ import org.eclipse.ui.part.FileEditorInput;
  */
 public class QvtFileHyperlink extends AbstractHyperlink {
 	
-	private final CFile myDestinationFile;
+	private final URI myDestinationURI;
 	
 	private final IRegion myDestinationRevealRegion;
 	
 	private final IRegion myDestinationSelectRegion;
 	
 	
-	public QvtFileHyperlink(IRegion hyperlinkRegion, CFile destinationFile, 
+	public QvtFileHyperlink(IRegion hyperlinkRegion, URI destinationURI, 
 			IRegion destinationRevealRegion, IRegion destinationSelectRegion) {
 		super(hyperlinkRegion);
-		if (destinationFile == null) {
+		if (destinationURI == null) {
 			throw new IllegalArgumentException();
 		}
 		
 		
 		
-		myDestinationFile = destinationFile;
+		myDestinationURI = destinationURI;
 		myDestinationRevealRegion = destinationRevealRegion;
 		myDestinationSelectRegion = destinationSelectRegion;
 	}
@@ -67,7 +64,7 @@ public class QvtFileHyperlink extends AbstractHyperlink {
             // If you want to be able to return to the initial location, uncomment the line below
             activePage.getNavigationHistory().markLocation(activePage.getActiveEditor());
 
-			IFile file = getEclipseFile();
+			IFile file = URIUtils.getFile(myDestinationURI);
 			if(file == null) {
 				return;
 			}
@@ -90,11 +87,5 @@ public class QvtFileHyperlink extends AbstractHyperlink {
 			// ignored
 		}
 	}
-	
-	private IFile getEclipseFile() {
-		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		IPath location = new Path(myDestinationFile.getFullPath());
-		IFile ifile = workspace.getRoot().getFileForLocation(location);
-		return ifile;
-	}
+
 }

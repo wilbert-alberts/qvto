@@ -16,13 +16,13 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
-import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.utilities.ASTNode;
 
 public class CSTHelper {
@@ -73,7 +73,7 @@ public class CSTHelper {
 		return (MappingModuleCS) parent;
 	}
 	
-	public static CFile getSourceFile(CSTNode nodeCS) {
+	public static URI getSourceFile(CSTNode nodeCS) {
 		MappingModuleCS moduleCST = getModule(nodeCS);
 		if(moduleCST == null) {
 			return null;

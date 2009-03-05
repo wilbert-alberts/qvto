@@ -19,18 +19,18 @@ import java.util.Map;
 import lpg.lpgjavaruntime.IToken;
 import lpg.lpgjavaruntime.PrsStream;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalVisitorCS;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFileUtil;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
-import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
@@ -50,29 +50,29 @@ import org.eclipse.ocl.cst.CSTNode;
  */
 public class QvtCompletionCompiler extends QVTOCompiler {
     private final QvtCompletionData myData;
-    private final Map<CFile, CFileData> myCFileDataMap = new LinkedHashMap<CFile, CFileData>();
+    private final Map<URI, CFileData> myCFileDataMap = new LinkedHashMap<URI, CFileData>();
     private QvtOperationalEnv myEnvironment;
 
-    public QvtCompletionCompiler(IImportResolver importResolver, QvtCompletionData data) {
+    public QvtCompletionCompiler(UnitResolver importResolver, QvtCompletionData data) {
         super(importResolver);
         myData = data;
     }
     
-    public Map<CFile, CFileData> getCFileDataMap() {
+    public Map<URI, CFileData> getCFileDataMap() {
         return myCFileDataMap;
     }
 
-    public QvtOpLexer createLexer(CFile cFile) throws IOException, ParserException, BadLocationException {
-        CFileData cFileData = getCFileData(cFile);
+    public QvtOpLexer createLexer(UnitProxy unit) throws IOException, ParserException, BadLocationException {
+        CFileData cFileData = getCFileData(unit.getURI());
         if (cFileData.getLexer() != null) {
             return cFileData.getLexer();
         }
-        Reader reader = getCFileReader(cFile);
+        Reader reader = createReader(unit);
         
-        QvtOpLexer lexer = new QvtOpLexer(new QvtOperationalEnvFactory().createEnvironment(cFile, getKernel()));
+        QvtOpLexer lexer = new QvtOpLexer(new QvtOperationalEnvFactory().createEnvironment(unit.getURI(), getKernel()));
         cFileData.setLexer(lexer);
         try {
-            lexer.initialize(new OCLInput(reader).getContent(), cFile.getName());
+            lexer.initialize(new OCLInput(reader).getContent(), unit.getURI().lastSegment());
             lexer.lexToTokens(new QvtOpLPGParser(lexer));
         } finally {
             reader.close();
@@ -80,17 +80,27 @@ public class QvtCompletionCompiler extends QVTOCompiler {
         return lexer;    
     }
 
-    private Reader getCFileReader(CFile cFile) throws IOException, BadLocationException {
-        if (cFile == myData.getCFile()) {
-            String documentText = myData.getDocument().get(0, myData.getDocument().getLength());
-            return new StringReader(documentText);
-        }
-        return CFileUtil.getReader(cFile);
+    @Override
+    protected Reader createReader(UnitProxy source) throws IOException {
+      if (source.getURI().equals(myData.getCFile().getURI())) {
+    	  String documentText = myData.getDocument().get();
+    	  return new StringReader(documentText);
+      }
+    	
+      return super.createReader(source);
     }
+    
+//    private Reader getCFileReader(URI unitURI) throws IOException, BadLocationException {
+//        if (unitURI == myData.getCFile()) {
+//            String documentText = myData.getDocument().get();
+//            return new StringReader(documentText);
+//        }
+//        return CFileUtil.getReader(unitURI);
+//    }
     
     public QvtOperationalEnv compileAll() {
         if (myEnvironment == null) {
-            myEnvironment = new QvtOperationalEnvFactory().createEnvironment(myData.getCFile(), getKernel());
+            myEnvironment = new QvtOperationalEnvFactory().createEnvironment(myData.getCFile().getURI(), getKernel());
 
             QvtCompilerOptions options = new QvtCompilerOptions();
             options.setReportErrors(false);
@@ -108,7 +118,7 @@ public class QvtCompletionCompiler extends QVTOCompiler {
     
     @Override
     protected void onCompilationUnitFinished(CompiledUnit unit) {    	
-    	CFileData cFileData = getCFileData(unit.getSource());
+    	CFileData cFileData = getCFileData(unit.getURI());
     	cFileData.setCompiledUnit(unit);
     }
     
@@ -124,7 +134,7 @@ public class QvtCompletionCompiler extends QVTOCompiler {
     }
 
     @Override
-    protected CSTParseResult parse(CFile source, QvtCompilerOptions options) throws ParserException {
+    protected CSTParseResult parse(UnitProxy source, QvtCompilerOptions options) throws ParserException {
      	CFileData cFileData = compile(source);
 		AbstractQVTParser qvtParser = (AbstractQVTParser) cFileData.getLexer().getParser();
 
@@ -139,8 +149,8 @@ public class QvtCompletionCompiler extends QVTOCompiler {
     }
     
     
-    private CFileData compile(CFile cFile) {
-        CFileData cFileData = getCFileData(cFile);
+    private CFileData compile(UnitProxy cFile) {
+        CFileData cFileData = getCFileData(cFile.getURI());
         try {
             QvtOpLexer lexer = createLexer(cFile);
             PrsStream prsStream = lexer.getPrsStream();
@@ -179,11 +189,11 @@ public class QvtCompletionCompiler extends QVTOCompiler {
         return cFileData;
     }
     
-    public CFileData getCFileData(CFile cFile) {
-        CFileData cFileData = myCFileDataMap.get(cFile);
+    public CFileData getCFileData(URI unitURI) {
+        CFileData cFileData = myCFileDataMap.get(unitURI);
         if (cFileData == null) {
-            cFileData = new CFileData(cFile, myData);
-            myCFileDataMap.put(cFile, cFileData);        
+            cFileData = new CFileData(unitURI, myData);
+            myCFileDataMap.put(unitURI, cFileData);        
         }
         return cFileData;
     }

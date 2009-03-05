@@ -11,11 +11,11 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveInExpCS;
@@ -51,13 +51,13 @@ public class ResolveInHyperlinkDetector implements IHyperlinkDetectorHelper {
 					
 					MappingDeclarationCS mappingDeclCS = findReferencedDefinitionCS(resolveInExpCS);
 					if(mappingDeclCS != null) {
-						CFile sourceFile = CSTHelper.getSourceFile(mappingDeclCS);
-						if(sourceFile == null) {
+						URI sourceURI = CSTHelper.getSourceFile(mappingDeclCS);
+						if(sourceURI == null) {
 							return null;
 						}
 						
 						IRegion destReg = HyperlinkUtil.createRegion(getLinkDestinationNode(mappingDeclCS));
-						return new QvtFileHyperlink(new Region(mappingNameStartOffset, length), sourceFile, destReg, destReg);
+						return new QvtFileHyperlink(new Region(mappingNameStartOffset, length), sourceURI, destReg, destReg);
 					}
 				}
 			}

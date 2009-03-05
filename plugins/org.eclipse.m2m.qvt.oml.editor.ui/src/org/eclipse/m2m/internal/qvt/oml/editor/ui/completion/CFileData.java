@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion;
 
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
@@ -21,7 +21,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
  * Created on Oct 23, 2007
  */
 public class CFileData {
-    private final CFile myCFile;
+    private final URI myCFile;
     private final QvtCompletionData myData;
 
     private QvtOpLexer myLexer;
@@ -29,12 +29,12 @@ public class CFileData {
     private CompiledUnit myCompiledUnit;    
     private String myLightweightScript;
  
-    public CFileData(CFile cFile, QvtCompletionData data) {
-        myCFile = cFile;
+    public CFileData(URI unitURI, QvtCompletionData data) {
+        myCFile = unitURI;
         myData = data;
     }
     
-    public CFile getCFile() {
+    public URI getCFile() {
         return myCFile;
     }
     

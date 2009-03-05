@@ -11,13 +11,13 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNode;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNodeAccess;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
@@ -34,10 +34,10 @@ public class ObjectPropertyHyperlinkDetector implements IHyperlinkDetectorHelper
 		if(referredFeature != null) {
 			ModulePropertyCS propertyCS = findDefinitionCS(referredFeature);
 			if(propertyCS != null) {
-				CFile sourceFile = CSTHelper.getSourceFile(propertyCS);
+				URI sourceFileURI = CSTHelper.getSourceFile(propertyCS);
 				CSTNode destNodeCS = (propertyCS.getSimpleNameCS() != null) ? propertyCS.getSimpleNameCS() : propertyCS;
 				IRegion destRegion = HyperlinkUtil.createRegion(destNodeCS);						
-				return new QvtFileHyperlink(HyperlinkUtil.createRegion(syntaxElement), sourceFile, destRegion, destRegion);	
+				return new QvtFileHyperlink(HyperlinkUtil.createRegion(syntaxElement), sourceFileURI, destRegion, destRegion);	
 			}
 			
 			return new MetamodelElementHyperlink(HyperlinkUtil.createRegion(syntaxElement), referredFeature);
