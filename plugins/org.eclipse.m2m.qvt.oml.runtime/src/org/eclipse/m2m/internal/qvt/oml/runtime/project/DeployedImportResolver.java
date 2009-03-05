@@ -11,18 +11,23 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFolder;
@@ -31,25 +36,29 @@ import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.BundleModuleRegistry;
 import org.eclipse.m2m.internal.qvt.oml.common.project.IRegistryConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.project.TransformationRegistry;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
+import org.eclipse.m2m.internal.qvt.oml.compiler.LegacyResolverSupport;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitContents;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProvider;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
 
-public class DeployedImportResolver implements IImportResolver {
+public class DeployedImportResolver implements LegacyResolverSupport, IImportResolver {
 		
 	/**
 	 * A single instance registry including all bundles with registered QVT
 	 * modules in the platform.
 	 */
-	public static IImportResolver INSTANCE = new DeployedImportResolver(createModulesRegistry());
-	
-	
+	public static DeployedImportResolver INSTANCE = new DeployedImportResolver(createModulesRegistry());
+		
 	private List<BundleModuleRegistry> bundleModules;
-
+	
 	/**
 	 * Constructs resolver based on the given list of bundle registries.
 	 * 
 	 * @param bundleRegistryList
 	 *            a list registries of QVT module files per installed bundle
 	 */
-	public DeployedImportResolver(List<BundleModuleRegistry> bundleRegistryList) {
+	protected DeployedImportResolver(List<BundleModuleRegistry> bundleRegistryList) {
 		if(bundleRegistryList == null) {
 			throw new IllegalArgumentException();
 		}
@@ -59,7 +68,7 @@ public class DeployedImportResolver implements IImportResolver {
 	protected List<BundleModuleRegistry> getBundleModules() {
 		return bundleModules;
 	}
-
+	
 	public String getPackageName(CFolder folder) {
 		if(folder == null) {
 			return ""; //$NON-NLS-1$
@@ -174,4 +183,84 @@ public class DeployedImportResolver implements IImportResolver {
 		}
 	    return registryEntries;
 	}
+	
+	// Unit resolver interface
+	public void acceptVisitor(UnitProvider.UnitVisitor visitor, String scopeQualifiedName, int depth, boolean includeExternal) {
+		throw new UnsupportedOperationException();		
+	}
+
+	public UnitProxy resolveUnit(String qualifiedName) {
+		CFile resolved = resolveImport(qualifiedName);
+		if(resolved == null) {
+			return null;
+		}
+		
+		BundleFile bundleFile = (BundleFile) resolved;
+		return createUnit(qualifiedName, createBundFileURI(bundleFile));
+	}
+
+	/**
+	 * Legacy support for imports from deployed transformations
+	 * https://bugs.eclipse.org/bugs/show_bug.cgi?id=240192
+	 * <p>
+	 * The logic has been taken from {@link #resolveImport(CFile, String)}
+	 */
+	public UnitProxy resolveUnit(UnitProxy fromUnit, String qualifiedName) {
+		ExtensibleURIConverterImpl uriConverter = new ExtensibleURIConverterImpl();		
+		URI parentURI = fromUnit.getURI().trimSegments(1);
+		
+		IPath path = new Path(parentURI.toPlatformString(true)).append(qualifiedName.replace('.', '/'));
+		URI uri = URI.createPlatformPluginURI(path.toString(), false).appendFileExtension(MDAConstants.QVTO_FILE_EXTENSION);
+		
+		while (uri.segmentCount() > 1) {
+			if(!uriConverter.exists(uri, Collections.emptyMap())) {
+				if (uri.segmentCount() > 1) {
+					uri = uri.trimSegments(1);
+				} else {
+					break;
+				}
+			} else {
+				return createUnit(qualifiedName, uri);
+			}
+		}
+		
+		return null;
+	}
+
+	private static URI createBundFileURI(BundleFile bundleFile) {
+		return URI.createPlatformPluginURI(bundleFile.getBundleSymbolicName() + "/" + //$NON-NLS-1$ 
+				bundleFile.getFullPath(), false);
+	}
+	
+	public UnitProxy createUnit(final String qualifiedName, final URI uri) { 
+		String name = uri.trimFileExtension().lastSegment();
+		String namespace = null;
+
+		if(qualifiedName.length() > name.length()) {
+			namespace = qualifiedName.substring(0, qualifiedName.length() - name.length() - 1);
+		}
+		
+		return new UnitProxy(namespace, name, uri) {
+			@Override
+			public int getContentType() {				
+				return UnitProxy.TYPE_CST_STREAM;
+			}
+			
+			@Override
+			public UnitResolver getResolver() {
+				return DeployedImportResolver.this;
+			}
+			
+			@Override
+			public UnitContents getContents() throws IOException {				
+				return new UnitContents.CSTContents() {					
+					public Reader getContents() throws IOException {
+						return new InputStreamReader(new ExtensibleURIConverterImpl()
+							.createInputStream(uri), ResourcesPlugin.getEncoding());
+					}
+				};
+			}
+		};
+	}
+
 }

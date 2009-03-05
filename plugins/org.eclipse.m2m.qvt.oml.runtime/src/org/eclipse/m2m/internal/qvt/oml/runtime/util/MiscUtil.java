@@ -41,8 +41,11 @@ public class MiscUtil {
 	}	
 	
 	public static String readStream(CFile file) throws IOException {
+	    return readAndClose(CFileUtil.getReader(file));
+	}
+
+	public static String readAndClose(Reader reader) throws IOException {
 	    StringBuffer contents = new StringBuffer();
-	    Reader reader = CFileUtil.getReader(file);
 	    try {
 	        char[] buf = new char[4096];
 	        int read;
@@ -55,7 +58,7 @@ public class MiscUtil {
 	    }
 	 
 	    return contents.toString();
-	}
+	}	
 	
 	public static int getLineNumber(CharSequence data, int pos) {
 		int length = data.length();

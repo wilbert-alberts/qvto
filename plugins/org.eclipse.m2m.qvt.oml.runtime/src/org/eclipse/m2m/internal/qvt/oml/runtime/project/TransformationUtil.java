@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
+import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
@@ -27,17 +28,25 @@ public class TransformationUtil {
 
     private TransformationUtil() {}
     
-    public static void getErrors(CompiledUnit unit, List<QvtMessage> errors) {
+    public static void getErrors(CompiledUnit unit, List<QvtMessage> errors, boolean concreteSyntaxOnly) {
+    	if(concreteSyntaxOnly && !MDAConstants.QVTO_FILE_EXTENSION.equals(unit.getURI().fileExtension())) {
+    		return;
+    	}
+
         errors.addAll(unit.getErrors());
         for (CompiledUnit imp : unit.getCompiledImports()) {
-            getErrors(imp, errors);
+            getErrors(imp, errors, concreteSyntaxOnly);
         }
     }
     
-    public static void getWarnings(CompiledUnit unit, List<QvtMessage> warnings) {
+    public static void getWarnings(CompiledUnit unit, List<QvtMessage> warnings, boolean concreteSyntaxOnly) {
+    	if(concreteSyntaxOnly && !MDAConstants.QVTO_FILE_EXTENSION.equals(unit.getURI().fileExtension())) {
+    		return;
+    	}
+    	
         warnings.addAll(unit.getWarnings());
         for (CompiledUnit imp : unit.getCompiledImports()) {
-            getWarnings(imp, warnings);
+            getWarnings(imp, warnings, concreteSyntaxOnly);
         }
     }
     

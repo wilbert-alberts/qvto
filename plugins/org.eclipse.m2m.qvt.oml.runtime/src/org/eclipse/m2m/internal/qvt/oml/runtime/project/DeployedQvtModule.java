@@ -13,13 +13,13 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
 
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.MetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerMessages;
-import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.osgi.util.NLS;
@@ -45,13 +45,13 @@ public class DeployedQvtModule extends QvtModule {
     @Override
 	public Module getModule(boolean isCheckErrors) throws MdaException {
         if (myModule == null) {           
-            IImportResolver importResolver = DeployedImportResolver.INSTANCE;
-        	CFile srcFile = importResolver.resolveImport(moduleID);
-        	if (srcFile == null) {
+            UnitResolver unitResolver = DeployedImportResolver.INSTANCE;
+        	UnitProxy srcUnit = unitResolver.resolveUnit(moduleID);
+        	if (srcUnit == null) {
         		throw new MdaException(NLS.bind(CompilerMessages.importedModuleNotFound, moduleID));
         	}
         	
-            QVTOCompiler qvtCompiler = new QVTOCompiler(importResolver, creatMetamodelRegistryProvider());
+            QVTOCompiler qvtCompiler = new QVTOCompiler(unitResolver, creatMetamodelRegistryProvider());
 
             QvtCompilerOptions options = getQvtCompilerOptions();
             if (options == null) {
@@ -59,7 +59,7 @@ public class DeployedQvtModule extends QvtModule {
                 options.setGenerateCompletionData(false);
             }
            
-            myUnit = qvtCompiler.compile(srcFile, options, null);
+            myUnit = qvtCompiler.compile(srcUnit, options, null);
             
             if (isCheckErrors) {
             	checkModuleErrors(myUnit);

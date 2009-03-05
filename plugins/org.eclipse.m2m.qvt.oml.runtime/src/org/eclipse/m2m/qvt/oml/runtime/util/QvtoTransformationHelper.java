@@ -19,25 +19,21 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.ShallowProcess;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.library.IConfiguration;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchConfigurationDelegateBase;
@@ -217,32 +213,24 @@ public class QvtoTransformationHelper {
 			CompiledUnit compiledUnit = QvtCompilerFacade.getCompiledModule(myTransfUri, compilerOptions, null).getCompiledModule();		
 			
 			{
-			CFile scriptFile = compiledUnit.getSource();
-			if (scriptFile == null) {
-				throw new MdaException(NLS.bind(Messages.ImportedTransformation_NoWsFileForModule, compiledUnit.getSource().getName()));
-			}
-			IFile ifile = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(new Path(scriptFile.getFullPath()));
-			if (ifile == null) {
-				throw new MdaException(NLS.bind(Messages.ImportedTransformation_NoWsFileForLocation, scriptFile.getFullPath()));
-			}
-			importUris.add(URI.createPlatformResourceURI(ifile.getFullPath().toString(), false));
+				
+				IFile file = URIUtils.getFile(compiledUnit.getURI());
+				if (file == null) {
+					throw new MdaException(NLS.bind(Messages.ImportedTransformation_NoWsFileForLocation, compiledUnit.getURI().toPlatformString(true)));
+				}
+				importUris.add(compiledUnit.getURI());
 			}
 			
-			Set<Module> imports = new LinkedHashSet<Module>();
-			for (Module importingModule : compiledUnit.getModules()) {
-				QvtOperationalParserUtil.collectAllImports(importingModule, imports);				
-			}
-
-			for (Module module : imports) {
-				CFile scriptFile = ASTBindingHelper.resolveModuleFile(module);
-				if (scriptFile == null) {
-					continue;
-				}
-				IFile ifile = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(new Path(scriptFile.getFullPath()));
+			Set<CompiledUnit> imports = new LinkedHashSet<CompiledUnit>();
+			QvtOperationalParserUtil.collectAllImports(compiledUnit, imports);
+			
+			for (CompiledUnit importedUnit : imports) {
+				URI unitURI = importedUnit.getURI();
+				IFile ifile = URIUtils.getFile(unitURI);
 				if (ifile == null) {
-					//throw new MdaException(NLS.bind(Messages.ImportedTransformation_NoWsFileForLocation, scriptFile.getFullPath()));
 					continue;
 				}
+				
 				importUris.add(URI.createPlatformResourceURI(ifile.getFullPath().toString(), false));
 			}
 			

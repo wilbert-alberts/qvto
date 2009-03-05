@@ -17,12 +17,12 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
-import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
-import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolverFactory;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 
 public class QvtCompilerFacade {
@@ -63,19 +63,21 @@ public class QvtCompilerFacade {
 
         try {
 			IImportResolverFactory factory = IImportResolverFactory.Registry.INSTANCE.getFactory(ifile);
-			IImportResolver importResolver = null;
+			UnitProxy sourceUnit = null;
+			
 			if(factory != null) {
-				importResolver = factory.createResolver(ifile);				
-			} else {
-				throw new MdaException("No import resolver available for: " + ifile); //$NON-NLS-1$
+				URI resourceURI = URIUtils.getResourceURI(ifile);
+				if(resourceURI != null) {
+					sourceUnit = factory.findUnit(resourceURI);
+				}
 			}
 			
+			if(sourceUnit == null) {
+				throw new MdaException("Failed to resolve compilation unit: " + ifile); //$NON-NLS-1$
+			}			
 
-			//QvtEngine qvtEngine = QvtEngine.getInstance(ifile);
-			final QVTOCompiler compiler = QVTOCompiler.createCompiler(importResolver);
-			final CompiledUnit module = compiler.compile(new EclipseFile(ifile), compilerOptions, new SubProgressMonitor(monitor, 0));
-			//final CompiledUnit module = qvtEngine.compileUnit(new EclipseFile(ifile), compilerOptions, new SubProgressMonitor(monitor, 2));
-			//final QVTOCompiler compiler = qvtEngine.getQVTOCompiler();
+			final QVTOCompiler compiler = new QVTOCompiler(sourceUnit.getResolver());
+			final CompiledUnit module = compiler.compile(sourceUnit, compilerOptions, new SubProgressMonitor(monitor, 0));
 			
 			return new CompilationResult() {
 				public CompiledUnit getCompiledModule() {

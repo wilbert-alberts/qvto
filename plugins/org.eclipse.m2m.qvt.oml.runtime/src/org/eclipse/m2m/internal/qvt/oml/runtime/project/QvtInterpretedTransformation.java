@@ -161,7 +161,7 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=264335 is done 
 			throw new IllegalStateException("unit must be available"); //$NON-NLS-1$
 		}
-		QvtOperationalFileEnv rootEnv = factory.createEnvironment(unit.getSource(), compiler.getKernel());
+		QvtOperationalFileEnv rootEnv = factory.createEnvironment(unit.getURI(), compiler.getKernel());
 
 		EvaluationVisitor<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject>		
 			evaluator = factory.createEvaluationVisitor(rootEnv, evaluationEnv, null);
