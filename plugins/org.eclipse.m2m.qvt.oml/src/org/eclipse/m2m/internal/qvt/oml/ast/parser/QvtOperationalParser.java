@@ -22,7 +22,6 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerMessages;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
-import org.eclipse.m2m.internal.qvt.oml.compiler.UnitImportResolver;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
@@ -86,13 +85,13 @@ public class QvtOperationalParser {
 		return unitCS;
 	}
 
-	public Module analyze(AbstractQVTParser parser, final MappingModuleCS moduleCS, UnitImportResolver importResolver, ResourceSet resSet, QvtOperationalFileEnv env, QvtCompilerOptions options) {
+	public Module analyze(AbstractQVTParser parser, final MappingModuleCS moduleCS, ExternalUnitElementsProvider importResolver, ResourceSet resSet, QvtOperationalFileEnv env, QvtCompilerOptions options) {
 		Module module = null;
 	
 		env.setQvtCompilerOptions(options);
 		try {
 			QvtOperationalVisitorCS visitor = new QvtOperationalVisitorCS(parser, options);
-			module = visitor.visitMappingModule(moduleCS, importResolver.getImporter().getURI(), env, importResolver, resSet);
+			module = visitor.visitMappingModule(moduleCS, importResolver.getImporter(), env, importResolver, resSet);
 		} catch (SemanticException e) {
 			env.reportError(e.getLocalizedMessage(), 0, 0);
 		}

@@ -47,6 +47,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParser;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalValidationVisitor;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalVisitorCS;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.ExternalUnitElementsProvider;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.WorkspaceMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitContents.ModelContents;
@@ -269,7 +270,7 @@ public class QVTOCompiler {
 		return getContentReader(unit);
 	}
     
-	protected CSTAnalysisResult analyze(CSTParseResult parseResult, UnitImportResolver unitImportResolver, QvtCompilerOptions options) {
+	protected CSTAnalysisResult analyze(CSTParseResult parseResult, ExternalUnitElementsProvider externalUnitElementsProvider, QvtCompilerOptions options) {
 		QvtOperationalFileEnv env = parseResult.env;
 		env.setQvtCompilerOptions(options);
 
@@ -281,8 +282,8 @@ public class QVTOCompiler {
 				// FIXME - need to handle multiple modules			
 				MappingModuleCS topModuleCS = unitCS.getModules().get(0);
 				Module module = visitor.visitMappingModule(topModuleCS, 
-							unitImportResolver.getImporter().getURI(), 
-							env, unitImportResolver, getResourceSet());
+							externalUnitElementsProvider.getImporter(), 
+							env, externalUnitElementsProvider, getResourceSet());
 				
 				result.modules = Collections.singletonList(module);
 			}
@@ -659,7 +660,7 @@ public class QVTOCompiler {
     	}
     }    
     
-    private static class UnitResolverImpl implements UnitImportResolver {
+    private static class UnitResolverImpl implements ExternalUnitElementsProvider {
 		private final Map<List<String>, CompiledUnit> qName2CU;
 		private final UnitProxy source;
 
@@ -672,16 +673,21 @@ public class QVTOCompiler {
 			qName2CU.put(qualifiedName, unit);
 		}
 		
-		public UnitProxy getImporter() {        		
-			return source;
+		public URI getImporter() {
+			return source.getURI();
 		}
 
-		public CompiledUnit resolve(List<String> unitQName) {
-			if(unitQName == null) {
-				throw new IllegalArgumentException();
+		public List<QvtOperationalModuleEnv> getModules(List<String> importedUnitQualifiedName) {
+			if(importedUnitQualifiedName == null) {
+				return null;
 			}
 			
-			return qName2CU.get(unitQName);
+			CompiledUnit compiledUnit = qName2CU.get(importedUnitQualifiedName);
+			if(compiledUnit != null) {
+				return compiledUnit.getModuleEnvironments();				
+			}
+			
+			return null;
 		}
 	}
 

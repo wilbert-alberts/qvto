@@ -48,9 +48,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
-import org.eclipse.m2m.internal.qvt.oml.compiler.UnitImportResolver;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
@@ -1418,7 +1416,7 @@ public class QvtOperationalVisitorCS
         return objectExp;
         }
 		
-	public Module visitMappingModule(MappingModuleCS moduleCS, URI unitURI, QvtOperationalFileEnv env, UnitImportResolver importResolver, ResourceSet resSet) throws SemanticException {        
+	public Module visitMappingModule(MappingModuleCS moduleCS, URI unitURI, QvtOperationalFileEnv env, ExternalUnitElementsProvider importResolver, ResourceSet resSet) throws SemanticException {        
         Module module = QvtOperationalParserUtil.createModule(moduleCS);        
 		module.setStartPosition(moduleCS.getStartOffset());
 		module.setEndPosition(moduleCS.getEndOffset());
@@ -2006,16 +2004,18 @@ public class QvtOperationalVisitorCS
 		return multiplicityDef;
 	}
 	
-	private void importsCS(MappingModuleCS parsedModuleCS, Module module, QvtOperationalFileEnv env, UnitImportResolver importResolver) {
+	private void importsCS(MappingModuleCS parsedModuleCS, Module module, QvtOperationalFileEnv env, ExternalUnitElementsProvider importResolver) {
 		for (ImportCS nextImportedCS : parsedModuleCS.getImports()) {			
 			if(nextImportedCS.getPathNameCS() == null) {
 				// nothing meaningful to represent in AST
 				continue;
 			}
 			
-			CompiledUnit importedUnit = importResolver.resolve(nextImportedCS.getPathNameCS().getSequenceOfNames());
-			if(importedUnit != null) {
-				for (QvtOperationalModuleEnv nextImportedEnv : importedUnit.getModuleEnvironments()) {
+			EList<String> importedUnitQName = nextImportedCS.getPathNameCS().getSequenceOfNames();
+			List<QvtOperationalModuleEnv> moduleEnvironments = importResolver.getModules(importedUnitQName);
+			
+			if(moduleEnvironments != null && !moduleEnvironments.isEmpty()) {
+				for (QvtOperationalModuleEnv nextImportedEnv : moduleEnvironments) {
 					Module importedModule = nextImportedEnv.getModuleContextType();
 					if(importedModule == null) {
 						// nothing to import in, no module was successfully parsed

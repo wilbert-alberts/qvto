@@ -9,13 +9,16 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.internal.qvt.oml.compiler;
+package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
 import java.util.List;
 
-public interface UnitImportResolver {
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
+
+public interface ExternalUnitElementsProvider {
 	
-	UnitProxy getImporter();
+	URI getImporter();
 	
-	CompiledUnit resolve(List<String> importQualifiedName);
+	List<QvtOperationalModuleEnv> getModules(List<String> importQualifiedName);
 }
