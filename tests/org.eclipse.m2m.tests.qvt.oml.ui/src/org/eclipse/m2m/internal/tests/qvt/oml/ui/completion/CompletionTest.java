@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
@@ -122,7 +123,7 @@ public class CompletionTest extends AbstractCompletionTest {
 		myTestProject = new TestProject("CompletionTest", new String[] {QVTOProjectPlugin.NATURE_ID}); //$NON-NLS-1$
         File srcFolder = TestUtil.getPluginRelativeFile(BUNDLE, ICompletionTestConstants.COMPLETION_TEST_FOLDER
                 + "/" + myFolder); //$NON-NLS-1$
-        FileUtil.copyFolder(srcFolder, myTestProject.getProject().getLocation().toFile());
+        FileUtil.copyFolder(srcFolder, myTestProject.getQVTSourceContainer().getLocation().toFile());
 		myTestProject.getProject().refreshLocal(IResource.DEPTH_INFINITE, null);
 	}
 	
@@ -136,10 +137,12 @@ public class CompletionTest extends AbstractCompletionTest {
 		QvtCompletionProcessor processor = (QvtCompletionProcessor) contentAssistant.getContentAssistProcessor(IDocument.DEFAULT_CONTENT_TYPE);
 		do {
 			ICompletionProposal[] proposals = processor.computeCompletionProposals((ITextViewer) sourceViewer, myOffset);
-			for (ICompletionProposal completionProposal : proposals) {
-				if (completionProposal instanceof QvtCompletionProposal) {
-					String completionProposalStringPresentation = toString((QvtCompletionProposal) completionProposal, processor.getCurrentCategory().getId());
-					myActualProposalStrings.add(completionProposalStringPresentation);
+			if(proposals != null) {
+				for (ICompletionProposal completionProposal : proposals) {
+					if (completionProposal instanceof QvtCompletionProposal) {
+						String completionProposalStringPresentation = toString((QvtCompletionProposal) completionProposal, processor.getCurrentCategory().getId());
+						myActualProposalStrings.add(completionProposalStringPresentation);
+					}
 				}
 			}
 		} while(processor.getCurrentCategory() != processor.getLastCategory());
@@ -227,7 +230,7 @@ public class CompletionTest extends AbstractCompletionTest {
             contents.replace(myOffset, myOffset + ICompletionTestConstants.COMPLETION_ANNOTATION.length(), ""); //$NON-NLS-1$
             
             // create transformation file with updated contents 
-            IFile transformation = myTestProject.getProject().getFile(ICompletionTestConstants.TRANSFORMATION_FILE);
+            IFile transformation = myTestProject.getQVTSourceContainer().getFile(new Path(ICompletionTestConstants.TRANSFORMATION_FILE));
             transformation.create(new ReaderInputStream(contents.toString()), true, null);
 		} finally {
 			try {
@@ -238,8 +241,8 @@ public class CompletionTest extends AbstractCompletionTest {
 		}
 	}
 	
-	protected IFile getTransformationFile() {
-		return myTestProject.getProject().getFile(ICompletionTestConstants.TRANSFORMATION_FILE);
+	protected IFile getTransformationFile() throws CoreException {
+		return myTestProject.getQVTSourceContainer().getFile(new Path(ICompletionTestConstants.TRANSFORMATION_FILE));
 	}
 	
 	protected String getTransformationContents() throws CoreException {
