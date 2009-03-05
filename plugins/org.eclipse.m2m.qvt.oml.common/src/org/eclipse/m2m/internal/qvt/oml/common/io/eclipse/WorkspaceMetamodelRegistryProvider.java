@@ -62,9 +62,13 @@ public class WorkspaceMetamodelRegistryProvider implements IMetamodelRegistryPro
 			throw new IllegalArgumentException("Null context"); //$NON-NLS-1$
 		}
 		
-		IPath wsLocation = Path.fromOSString(context.getURI().toFileString());
+		URI uri = context.getURI();
+		if(!uri.isPlatformResource()) {
+			return MetamodelRegistry.getInstance();
+		}
 		
-		IResource wsResource = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(wsLocation);
+		IPath wsLocation = new Path(uri.toPlatformString(true));		
+		IResource wsResource = ResourcesPlugin.getWorkspace().getRoot().findMember(wsLocation);		
 		if(wsResource == null) {
 			// not a file, could be a folder
 			wsResource = ResourcesPlugin.getWorkspace().getRoot().getContainerForLocation(wsLocation);		

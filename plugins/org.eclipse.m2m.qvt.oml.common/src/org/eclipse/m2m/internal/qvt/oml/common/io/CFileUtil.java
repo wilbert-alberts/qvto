@@ -56,6 +56,7 @@ public class CFileUtil {
 			}
 		}
     }
+
     
     public static Reader getReader(CFile file) throws IOException {
     	String charset = file.getCharset();

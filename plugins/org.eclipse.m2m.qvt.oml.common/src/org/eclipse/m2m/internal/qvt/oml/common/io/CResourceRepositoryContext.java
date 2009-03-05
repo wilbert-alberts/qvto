@@ -12,23 +12,20 @@
 package org.eclipse.m2m.internal.qvt.oml.common.io;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider.IRepositoryContext;
 
 public class CResourceRepositoryContext implements IRepositoryContext {
-	private CResource resource;
+	private URI fUri;
 	
-	public CResourceRepositoryContext(CResource resource) {
-		this.resource = resource;
+	public CResourceRepositoryContext(URI uri) {
+		if(uri == null) {
+			throw new IllegalArgumentException();
+		}
+		
+		this.fUri = uri;
 	}
 
 	public URI getURI() {
-		String fullPath = resource.getFullPath();
-		try {
-			return URI.createFileURI(fullPath);
-		} catch (IllegalArgumentException e) {
-			// fall-back to global context
-		}
-		return IMetamodelRegistryProvider.GLOBAL_CONTEXT;
+		return fUri;
 	}
 }
