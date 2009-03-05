@@ -61,7 +61,7 @@
          point="org.eclipse.ui.ide.projectNatureImages">
       <image
             icon="icons/pr-legacy.gif"
-            id="org.eclipse.m2m.qvt.oml.project.QVTONatureImage"
+            id="org.eclipse.m2m.qvt.oml.project.LegacyNatureImage"
             natureId="org.eclipse.m2m.qvt.oml.project.TransformationNature">
       </image>
    </extension>
@@ -126,17 +126,15 @@
 			<triggerPoints>
 				<or>
 					<adapt type="org.eclipse.core.resources.IProject" >
-						<test property="org.eclipse.core.resources.projectNature" value="org.eclipse.m2m.qvt.oml.project.TransformationNature"/>
+						<test property="org.eclipse.core.resources.projectNature" value="org.eclipse.m2m.qvt.oml.project.QVTONature"/>
 					</adapt>
  				</or>
 			</triggerPoints>
 			<possibleChildren>
 			<or>
-				<instanceof	value="org.eclipse.core.resources.IFolder" />
-    <instanceof
-          value="org.eclipse.core.resources.IFile">
-    </instanceof>
-				</or>				
+				<instanceof	value="org.eclipse.core.resources.IFolder"/>
+    			<instanceof value="org.eclipse.core.resources.IFile"/>
+			</or>				
 			</possibleChildren>
    
 		</navigatorContent>
