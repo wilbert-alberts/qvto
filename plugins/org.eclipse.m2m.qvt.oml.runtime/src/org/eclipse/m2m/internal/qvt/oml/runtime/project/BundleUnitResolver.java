@@ -18,10 +18,10 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
@@ -53,7 +53,14 @@ public class BundleUnitResolver implements UnitResolver {
 		public UnitContents getContents() throws IOException {
 			return new UnitContents.CSTContents() {				
 				public Reader getContents() throws IOException {
-					return new InputStreamReader(url.openStream(), ResourcesPlugin.getEncoding());
+					URLConnection connection = url.openConnection();
+					
+					String charset = connection.getContentEncoding();
+					if(charset == null) {
+						charset = "UTF-8"; //$NON-NLS-1$
+					}
+
+					return new InputStreamReader(connection.getInputStream(), charset);
 				}
 			};
 		}
