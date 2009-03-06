@@ -486,10 +486,6 @@ public class QVTOCompiler {
 	    	monitor.done();    		
     	}
     }
-
-    private static String[] getNameSegments(String qualifiedName) {
-		return qualifiedName.split("\\."); //$NON-NLS-1$    	
-    }
     
 	private static CompiledUnit createCompiledUnit(UnitProxy unit, QvtOperationalFileEnv env) {
 		List<String> qualifiedName = getQualifiedNameSegments(unit);		
@@ -500,7 +496,7 @@ public class QVTOCompiler {
 		List<String> qualifiedName = null;		
 		String namespace = unit.getNamespace();		
 		if(namespace != null) {
-			String[] segments = getNameSegments(namespace);
+			String[] segments = ResolverUtils.getNameSegments(namespace);
 			qualifiedName = new ArrayList<String>(segments.length + 1);
 			qualifiedName.addAll(Arrays.asList(segments));
 			
@@ -591,11 +587,20 @@ public class QVTOCompiler {
 
 	@SuppressWarnings("deprecation")
 	private UnitProxy resolveImportedUnit(UnitProxy importingUnit, String unitQualifiedName) {
-		UnitProxy unit = importingUnit.getResolver().resolveUnit(unitQualifiedName);
+		UnitResolver resolver = importingUnit.getResolver();
+		UnitProxy unit = resolver.resolveUnit(unitQualifiedName);
+		
+		if(unit == null) {
+			String namespace = importingUnit.getNamespace();
+			if(namespace != null && unitQualifiedName.contains(NAMESPACE_SEP) == false) {
+				unit = resolver.resolveUnit(namespace + NAMESPACE_SEP + unitQualifiedName);
+			}
+		}
+		
 		// Handle legacy imports from deployed transformations
     	// https://bugs.eclipse.org/bugs/show_bug.cgi?id=240192
-    	if(unit == null && importingUnit.getResolver() instanceof LegacyResolverSupport) {
-    		LegacyResolverSupport legacyResolver = (LegacyResolverSupport)importingUnit.getResolver();
+    	if(unit == null && resolver instanceof LegacyResolverSupport) {
+    		LegacyResolverSupport legacyResolver = (LegacyResolverSupport)resolver;
 			unit = legacyResolver.resolveUnit(importingUnit, unitQualifiedName);
     	}
     	

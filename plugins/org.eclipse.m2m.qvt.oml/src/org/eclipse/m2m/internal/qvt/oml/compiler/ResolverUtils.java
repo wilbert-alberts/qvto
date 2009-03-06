@@ -12,10 +12,15 @@
 package org.eclipse.m2m.internal.qvt.oml.compiler;
 
 
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitContents.CSTContents;
 
 
 public class ResolverUtils {
@@ -69,5 +74,69 @@ public class ResolverUtils {
 
 		unitProvider.accept(visitor, null, UnitProvider.UnitVisitor.DEPTH_INFINITE, true);		
 		return result;
+	}
+	
+	public static String toQualifiedName(String[] nameSegments, int startPos, int endPos) {
+		int len = nameSegments.length;
+		
+		if(	startPos > endPos ||
+			(startPos < 0 || startPos >= len) ||
+			(endPos < 0 || endPos >= len) ) {
+			throw new ArrayIndexOutOfBoundsException("name segment position"); //$NON-NLS-1$
+		}
+		
+		StringBuilder buf = new StringBuilder();
+		for (int i = startPos; i <= endPos; i++) {
+			if(i > startPos) {
+				buf.append(UnitProxy.NAMESPACE_SEP);
+			}
+			
+			buf.append(nameSegments[0]);
+		}
+		
+		return buf.toString();
+	}
+	
+    static String[] getNameSegments(String qualifiedName) {
+		return qualifiedName.split("\\."); //$NON-NLS-1$    	
+    }	
+	
+	public static UnitProxy createUnitProxy(String qualifiedName, URI uri, final String contents, final UnitResolver resolver) {
+		String[] segments = getNameSegments(qualifiedName);
+		String namespace = null;
+		if(segments.length > 1) {
+			namespace = toQualifiedName(segments, 0, segments.length - 1);
+		}
+		
+		String name = segments[segments.length - 1];
+		
+		return new UnitProxy(namespace, name, uri) {
+			@Override
+			public UnitContents getContents() throws IOException {
+				return createCSTContents(contents);
+			}
+			
+			@Override
+			public int getContentType() {			
+				return TYPE_CST_STREAM;
+			}
+			
+			@Override
+			public UnitResolver getResolver() {			
+				return resolver;
+			}
+		};
+	}
+	
+	public static CSTContents createCSTContents(final String input) {
+		if(input == null) {
+			throw new IllegalArgumentException();
+		}
+		
+		return new UnitContents.CSTContents() {
+			public Reader getContents() throws IOException {				
+				return new StringReader(input);
+			}
+		};
 	}
 }
