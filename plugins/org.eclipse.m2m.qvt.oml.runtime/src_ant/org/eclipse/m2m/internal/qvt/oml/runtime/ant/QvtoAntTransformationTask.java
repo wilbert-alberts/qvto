@@ -44,7 +44,7 @@ import org.eclipse.osgi.util.NLS;
  *  
  *  <ul>
  *  <li>
- *  in case it's platform URI (URI.isPlatfrom() == true) -
+ *  in case it's platform URI (URI.isPlatform() == true) -
  *      it is used as-is
  *  <li>
  *  in case it's non-relative file URI (URI.isRelative() == false) - 
@@ -56,8 +56,31 @@ import org.eclipse.osgi.util.NLS;
  *  in case it's relative file URI (URI.isRelative() == false) and does not start with ["\", "/"] - 
  *      it's resolved against script location
  *  </ul>
+ *  
+ *  <hr>
+ *  <p>
+ *  Ant task example:
+ *  <br>
+ *  
+ *  &lt;project name="project" default="default" xmlns:qvto="http://www.eclipse.org/qvt/1.0.0/Operational"><br>
+ *  &lt;target name="default"><br>
+ *      &lt;qvto:transformation uri="platform:/resource/qvto/transforms/NewTransformation.qvto"><br>
+ *  <br>
+ *           &lt;inout<br>
+ *               uri="platform:/resource/qvto/transforms/in.ecore"<br>
+ *               outuri="platform:/resource/qvto/transforms/in_out.ecore"<br>
+ *           /><br>
+ *           &lt;out uri="platform:/resource/qvto/transforms/out.ecore#//cls"/><br>
+ *  <br>
+ *           &lt;trace uri="platform:/resource/qvto/transforms/NewTransformation.qvtotrace"/><br>
+ *       &lt;/qvto:transformation><br>
+ *  &lt;/target><br>
+ *  &lt;/project><br>
+ *
  */
 public class QvtoAntTransformationTask extends Task {
+	
+	public static final String QVTO_ANTTASK_NAME = "qvto:transformation"; //$NON-NLS-1$
 	
 	public static interface ModelParameter {
 	}
