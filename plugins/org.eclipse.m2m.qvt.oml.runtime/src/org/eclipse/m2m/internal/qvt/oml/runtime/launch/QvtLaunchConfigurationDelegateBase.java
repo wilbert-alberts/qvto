@@ -69,7 +69,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         return new IProject[] { moduleFile.getProject() };
     }
  
-    protected static QvtModule getQvtModule(ILaunchConfiguration configuration) throws CoreException {
+    public static QvtModule getQvtModule(ILaunchConfiguration configuration) throws CoreException {
         String moduleName = configuration.getAttribute(IQvtLaunchConstants.MODULE, ""); //$NON-NLS-1$
 		try {
 			return TransformationUtil.getQvtModule(EmfUtil.makeUri(moduleName));

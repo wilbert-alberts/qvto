@@ -33,8 +33,10 @@ import org.eclipse.m2m.qvt.oml.util.WriterLog;
 
 public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelegateBase {
 
-	public static final int LAUNCH_ERROR_CODE = 210;
-    public static final IStatus fgLaunchErrorStatus = new Status(IStatus.ERROR, QvtRuntimePlugin.ID, LAUNCH_ERROR_CODE, "Launch configuration error", null); //$NON-NLS-1$	
+    public static final String LAUNCH_CONFIGURATION_TYPE_ID = "org.eclipse.m2m.qvt.oml.QvtTransformation"; //$NON-NLS-1$
+
+    private static final int LAUNCH_ERROR_CODE = 210;
+    private static final IStatus fgLaunchErrorStatus = new Status(IStatus.ERROR, QvtRuntimePlugin.ID, LAUNCH_ERROR_CODE, "Launch configuration error", null); //$NON-NLS-1$	
 	
 	public QvtLaunchConfigurationDelegate() {
 	}
