@@ -119,13 +119,16 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 
 					int[] selectedNamePos = new int[1];
 					//IRegion resultRegion = refineRegion(pathNameCS, region, selectedNamePos);
-					IRegion resultRegion = getPathRegion(pathNameCS, region);					
+					IRegion resultRegion = getPathRegion(pathNameCS, region, selectedNamePos);					
 					if(resultRegion != null) {
 						ENamedElement ast = (ENamedElement) pathNameCS.getAst();
-						if(selectedNamePos[0] >= 0) {
+						int pos = selectedNamePos[0];
+						final EList<String> csNames = pathNameCS.getSequenceOfNames();
+						
+						if(pos >= 0 && pos < csNames.size() - 1) {
 							QvtOperationalEnv env = getEnv(pathNameCS);
-							final EList<String> csNames = pathNameCS.getSequenceOfNames();
-							final List<String> selectedNames = csNames.subList(0, selectedNamePos[0] + 1);
+
+							final List<String> selectedNames = csNames.subList(0, pos + 1);
 							
 							ast = env.lookupClassifier(selectedNames);
 							if(ast == null) {
@@ -174,7 +177,7 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 	}
 
 	
-	private static IRegion getPathRegion(PathNameCS pathNameCS, IRegion selection) {
+	private static IRegion getPathRegion(PathNameCS pathNameCS, IRegion selection, int[] selectedPos) {
 		int[] positions = getPathPos(pathNameCS);		
 		if(positions == null) {
 			return HyperlinkUtil.createRegion(pathNameCS); 
@@ -185,6 +188,7 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 		for (String name : pathNameCS.getSequenceOfNames()) {
 			int offset = selection.getOffset();
 			if(nameOffset <= offset && offset <= nameOffset + name.length()) {
+				selectedPos[0] = i;				
 				return new Region(nameOffset, name.length());
 			}
 
