@@ -20,6 +20,7 @@ import java.util.Map;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 import org.apache.tools.ant.Task;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
@@ -28,6 +29,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData.TargetType;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.StatusUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchConfigurationDelegateBase;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtValidator;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
@@ -162,8 +164,8 @@ public class QvtoAntTransformationTask extends Task {
 	        return new TargetUriData(
 	        		feature != null && feature.trim().length() > 0 ? TargetType.EXISTING_CONTAINER : TargetType.NEW_MODEL,
 	        		getURI(project).toString(),
-	        		feature.trim(),
-	        		Boolean.valueOf(myFeature.getClearContents())
+	        		feature,
+	        		myFeature != null ? Boolean.valueOf(myFeature.getClearContents()) : false
 	        		);
 	    }
 	    
@@ -394,6 +396,9 @@ public class QvtoAntTransformationTask extends Task {
 			if (uri.isRelative() && !uriString.trim().startsWith(MSDOS_FS) && !uriString.trim().startsWith(UNIX_FS)) {
 				URI baseUri = URI.createFileURI(project.getProject().getBaseDir().getAbsolutePath());
 				uri = baseUri.appendSegments(uri.segments());
+				
+				IFile wsfile = WorkspaceUtils.getIFile(uri.toFileString());
+				uri = URI.createURI(wsfile.getFullPath().toPortableString());
 			}
 	    	return uri;
 	    }
