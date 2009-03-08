@@ -214,7 +214,7 @@ public class QvtCompletionData {
     
     public MappingModuleCS getCurrentMappingModuleCS() {
         myQvtCompiler.compileAll();
-        CFileData cFileData = myQvtCompiler.getCFileDataMap().get(myCFile);
+        CFileData cFileData = myQvtCompiler.getCFileDataMap().get(myCFile.getURI());
         if (cFileData != null) {
             return cFileData.getMappingModuleCS();
         }
