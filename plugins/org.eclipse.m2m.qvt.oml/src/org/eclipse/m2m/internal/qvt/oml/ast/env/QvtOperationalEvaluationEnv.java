@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.ETypedElement;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.IntermediateClassFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
@@ -494,6 +494,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         		for (Object nextElement : newVal) {
         			if(nextElement != getInvalidResult() && nextElement != null) {
         				currentValues.add(nextElement);
+        				break;
         			}
 				}
         	} else if(exprValue != getInvalidResult() && exprValue != null) {
@@ -505,7 +506,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         
         Class<?> expectedType = eStructuralFeature.getEType().getInstanceClass();
 
-        if (isMany(owner, eStructuralFeature))  {
+        if (FeatureMapUtil.isMany(owner, eStructuralFeature))  {
 			List<Object> featureValues = (List<Object>) owner.eGet(eStructuralFeature);
 			if (isReset) {
 				featureValues.clear();
@@ -520,22 +521,31 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 				featureValues.add(ensureTypeCompatibility(exprValue, expectedType));
 			}
         } else if (!valueIsUndefined || acceptsNullValue(expectedType)) {
-			owner.eSet(eStructuralFeature, ensureTypeCompatibility(exprValue, expectedType));
+			if (exprValue instanceof Collection) {
+                for (Object element : (Collection<Object>) exprValue) {
+                    if (element != null) {
+                    	owner.eSet(eStructuralFeature, ensureTypeCompatibility(element, expectedType));
+                    }
+                }
+			}
+			else {
+				owner.eSet(eStructuralFeature, ensureTypeCompatibility(exprValue, expectedType));
+			}
         } else {
         	owner.eUnset(eStructuralFeature);
         }
 	}
 
 
-	private boolean isMany(EObject ownerObj, EStructuralFeature eStructuralFeature) {
-		if (eStructuralFeature.isMany()) {
-			return true;
-		}
-		if (eStructuralFeature.getLowerBound() == 0 && eStructuralFeature.getUpperBound() == ETypedElement.UNSPECIFIED_MULTIPLICITY) {
-			return ownerObj.eGet(eStructuralFeature) instanceof List;
-		}
-		return false;
-	}
+//	private boolean isMany(EObject ownerObj, EStructuralFeature eStructuralFeature) {
+//		if (eStructuralFeature.isMany()) {
+//			return true;
+//		}
+//		if (eStructuralFeature.getLowerBound() == 0 && eStructuralFeature.getUpperBound() == ETypedElement.UNSPECIFIED_MULTIPLICITY) {
+//			return ownerObj.eGet(eStructuralFeature) instanceof List;
+//		}
+//		return false;
+//	}
 	
 	/**
 	 * Ensures that the value has a type compatible with then expected type
