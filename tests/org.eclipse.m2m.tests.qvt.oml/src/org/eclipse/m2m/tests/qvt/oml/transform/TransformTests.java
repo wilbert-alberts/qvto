@@ -272,6 +272,7 @@ public class TransformTests {
                 new FileToFileData("bug219075_1"), //$NON-NLS-1$        
         		new FilesToFilesData("continue_break", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
         		new FileToFileData("continue_perf"), //$NON-NLS-1$
+        		new FilesToFilesData("unspecified_multiplicity", Collections.<String>emptyList(), Collections.singletonList("expected.xmi")), //$NON-NLS-1$
         };
     }
 
