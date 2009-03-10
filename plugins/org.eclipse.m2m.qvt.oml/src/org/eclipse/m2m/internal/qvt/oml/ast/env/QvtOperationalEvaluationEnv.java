@@ -494,7 +494,6 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         		for (Object nextElement : newVal) {
         			if(nextElement != getInvalidResult() && nextElement != null) {
         				currentValues.add(nextElement);
-        				break;
         			}
 				}
         	} else if(exprValue != getInvalidResult() && exprValue != null) {
@@ -525,6 +524,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
                 for (Object element : (Collection<Object>) exprValue) {
                     if (element != null) {
                     	owner.eSet(eStructuralFeature, ensureTypeCompatibility(element, expectedType));
+        				break;
                     }
                 }
 			}
