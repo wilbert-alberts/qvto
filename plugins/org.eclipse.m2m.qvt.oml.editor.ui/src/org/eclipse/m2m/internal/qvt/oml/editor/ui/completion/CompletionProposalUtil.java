@@ -13,6 +13,7 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,7 @@ import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.viewers.DecorationOverlayIcon;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtEnvironmentBase;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
@@ -264,7 +266,12 @@ public class CompletionProposalUtil {
     
     private static List<Module> getNativeLibraries(QvtCompletionData data) {
     	List<Module> result = new LinkedList<Module>();
-    	for (Object sibling : data.getEnvironment().getSiblings()) {
+    	
+    	Collection<QvtEnvironmentBase> imports = new LinkedHashSet<QvtEnvironmentBase>();
+    	imports.addAll(data.getEnvironment().getImportsByExtends());
+    	imports.addAll(data.getEnvironment().getImportsByAccess());    	
+    	
+		for (Object sibling : imports) {
     		if(sibling instanceof QvtOperationalModuleEnv) {
     			if(sibling instanceof QvtOperationalFileEnv) {
     				// parsed concrete syntax from a file
