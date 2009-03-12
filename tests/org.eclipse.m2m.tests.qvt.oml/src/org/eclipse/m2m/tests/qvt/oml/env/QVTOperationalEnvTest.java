@@ -17,6 +17,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
 
 public class QVTOperationalEnvTest extends TestCase {
 
@@ -37,18 +38,19 @@ public class QVTOperationalEnvTest extends TestCase {
 		QvtOperationalModuleEnv parentEnv = factory.createModuleEnvironment(QvtOperationalStdLibrary.createLibrary("Foo"));
 		QvtOperationalModuleEnv importedEnv = factory.createModuleEnvironment(QvtOperationalStdLibrary.createLibrary("Imported"));		
 		
-		parentEnv.addSibling(importedEnv);
-		assertTrue(parentEnv.getSiblings().contains(importedEnv));		
+		parentEnv.addImport(ImportKind.EXTENSION, importedEnv);
+		assertTrue(parentEnv.getImportsByExtends().contains(importedEnv));		
 				
 		QvtOperationalEnv childEnv = factory.createEnvironment(parentEnv);
 		
 		QvtOperationalModuleEnv importedEnv2 = factory.createModuleEnvironment(QvtOperationalStdLibrary.createLibrary("Imported2"));		
-		childEnv.addSibling(importedEnv2);
+		childEnv.addImport(ImportKind.ACCESS, importedEnv2);
 
-		assertEquals(parentEnv.getSiblings(), childEnv.getSiblings());
-		assertTrue(childEnv.getSiblings().contains(importedEnv));		
-		assertTrue(childEnv.getSiblings().contains(importedEnv2));
+		assertEquals(parentEnv.getImportsByAccess(), childEnv.getImportsByAccess());
+		assertEquals(parentEnv.getImportsByExtends(), childEnv.getImportsByExtends());		
+		assertTrue(childEnv.getImportsByExtends().contains(importedEnv));		
+		assertTrue(childEnv.getImportsByAccess().contains(importedEnv2));
 		
-		assertTrue(parentEnv.getSiblings().contains(importedEnv2));
+		assertTrue(parentEnv.getImportsByAccess().contains(importedEnv2));
 	}
 }
