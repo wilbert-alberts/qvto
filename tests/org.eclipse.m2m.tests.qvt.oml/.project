@@ -25,6 +25,5 @@
 		<nature>org.eclipse.pde.PluginNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.emf.codegen.jet.IJETNature</nature>
-		<nature>org.eclipse.m2m.qvt.oml.project.MDANature</nature>
 	</natures>
 </projectDescription>
