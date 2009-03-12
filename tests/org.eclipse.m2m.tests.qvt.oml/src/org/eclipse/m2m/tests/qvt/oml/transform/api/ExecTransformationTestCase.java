@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -26,6 +27,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.qvt.oml.runtime.util.QvtoTransformationHelper;
+import org.eclipse.m2m.qvt.oml.runtime.util.QvtoTransformationValidator;
 import org.eclipse.m2m.qvt.oml.runtime.util.QvtoTransformationHelper.ModelExtent;
 import org.eclipse.m2m.qvt.oml.runtime.util.QvtoTransformationHelper.TransfExecutionResult;
 import org.eclipse.m2m.tests.qvt.oml.transform.ModelTestData;
@@ -47,6 +49,7 @@ public class ExecTransformationTestCase extends ApiTestCase {
 	@Override
 	public void runTest() throws Exception {
 		URI scriptUri = createScriptUri(getData().getName());
+		validateScript(scriptUri);
 
 		List<EObject> inObjects = new ArrayList<EObject>();
 		List<URI> inputs = getData().getIn(getProject());
@@ -89,6 +92,11 @@ public class ExecTransformationTestCase extends ApiTestCase {
 					.assertEquals(
 							"Diff execution result", loadResource.getContents().get(0), itrObj.next()); //$NON-NLS-1$
 		}
+	}
+
+	protected void validateScript(URI scriptUri) {
+		Diagnostic validateQvtoScript = QvtoTransformationValidator.validateQvtoScript(scriptUri, null, null);
+		assertTrue(validateQvtoScript.getSeverity() < Diagnostic.ERROR);
 	}
 
 	protected URI createScriptUri(String scriptName) {

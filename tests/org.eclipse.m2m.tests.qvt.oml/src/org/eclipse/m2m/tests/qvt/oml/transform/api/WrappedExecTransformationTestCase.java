@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.transform.api;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.tests.qvt.oml.transform.ModelTestData;
 
 /**
@@ -41,4 +42,7 @@ public class WrappedExecTransformationTestCase extends ExecDeployedTransformatio
     	assertTrue("Compilation errors should be reported", isFailed); //$NON-NLS-1$
     }
     
+    @Override
+    protected void validateScript(URI scriptUri) {
+    }
 }
