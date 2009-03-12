@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.compiler.BlackboxUnitResolver;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompositeUnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.ResolverUtils;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitContents;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
@@ -137,21 +138,12 @@ public class BundleUnitResolver implements UnitResolver {
 		return URI.createURI(url.toString());
 	}
 
-	public static UnitResolver createResolver(List<URL> bundleBaseURLs, boolean includeBlackboxUnits) {
+	public static UnitResolver createResolver(List<URL> bundleBaseURLs, boolean includeBlackboxUnits) {		
+		BundleUnitResolver bundleUnitResolver = new BundleUnitResolver(bundleBaseURLs);
+		if(includeBlackboxUnits) {
+			return new CompositeUnitResolver(bundleUnitResolver, BlackboxUnitResolver.DEFAULT);
+		}
 		
-		return new BundleUnitResolver(bundleBaseURLs) {
-			
-			BlackboxUnitResolver resolver = new BlackboxUnitResolver(URI.createURI("/")); //$NON-NLS-1$			
-			
-			@Override
-			public UnitProxy resolveUnit(String qualifiedName) {		
-				UnitProxy unit = super.resolveUnit(qualifiedName);
-				if(unit == null) {
-					unit = resolver.resolveUnit(qualifiedName);
-				}
-				
-				return unit;
-			}
-		};
+		return bundleUnitResolver;
 	}
 }
