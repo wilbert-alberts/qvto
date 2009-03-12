@@ -21,7 +21,8 @@ public final class ValidationMessages extends NLS {
 		// Do not instantiate
 	}
 
-    public static String BooleanTypeAssertConditionError;
+    public static String AmbiguousModuleReference;
+	public static String BooleanTypeAssertConditionError;
 	public static String DeprecatedElement;
 	public static String DeprecatedElementBy;
 	public static String DeprecatedImplicitSourceCall_contextualImplicitCall;
@@ -127,6 +128,7 @@ public final class ValidationMessages extends NLS {
 	public static String unresolvedNameError;
 	public static String inputParameterModificationError;
 	public static String UnknownClassifierType;
+	public static String UnresolvedModuleReference;
 	public static String invalidPropertyReferenceError;
 	public static String ConfigPropertyMustHaveType;
 	public static String ConfigPropertyTypeUnsupported;

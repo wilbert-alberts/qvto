@@ -31,10 +31,11 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.HiddenElementAdapter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictionaryType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListType;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictionaryType;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListType;
 import org.eclipse.ocl.TypeResolver;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
@@ -108,18 +109,36 @@ public class QvtTypeResolverImpl implements QVTOTypeResolver {
 			}
 		}
 		// continue in imported environments
-		for (QvtEnvironmentBase nextSiblingEnv : fOwner.getSiblings()) {
-			nextSiblingEnv.getQVTTypeResolver().collectAdditionalOperationsInTypeHierarchy(type, subTypesOnly, result);
-		}						
+		for (QvtEnvironmentBase nextImportEnv : fOwner.getImportsByExtends()) {
+			nextImportEnv.getQVTTypeResolver().collectAdditionalOperationsInTypeHierarchy(type, subTypesOnly, result);
+		}
+		
+		for (QvtEnvironmentBase nextImportEnv : fOwner.getImportsByAccess()) {
+			// FIXME - continue only one level in case of access imports
+			nextImportEnv.getQVTTypeResolver().collectAdditionalOperationsInTypeHierarchy(type, subTypesOnly, result);
+		}
 	}
 	
 	public List<EStructuralFeature> getAdditionalAttributes(EClassifier owner) {
 		List<EStructuralFeature> result = new ArrayList<EStructuralFeature>();
 		getLocalAdditionalAttributes(owner, result);
 		
-		for (QvtEnvironmentBase nextSiblingEnv : fOwner.getSiblings()) {
-			nextSiblingEnv.getQVTTypeResolver().getLocalAdditionalAttributes(owner, result);
+		for (QvtEnvironmentBase nextSiblingEnv : fOwner.getImportsByExtends()) {
+			if(fOwner.usesImplicitExtendsImport()) {
+				// the default behavior with using the legacy implicit import by extension
+				nextSiblingEnv.getQVTTypeResolver().getLocalAdditionalAttributes(owner, result);
+			} else {
+				// recurse up the extension hierarchy
+				nextSiblingEnv.getAdditionalAttributes(owner);				
+			}
 		}
+		
+		for (QvtEnvironmentBase nextSiblingEnv : fOwner.getImportsByAccess()) {
+			Module importedModule = nextSiblingEnv.getModuleContextType();
+			if(importedModule instanceof Library) {
+				nextSiblingEnv.getQVTTypeResolver().getLocalAdditionalAttributes(owner, result);				
+			}
+		}				
 		
 		return result;
 	}
@@ -133,12 +152,19 @@ public class QvtTypeResolverImpl implements QVTOTypeResolver {
 		List<EOperation> result = new ArrayList<EOperation>();
 		getLocalAdditionalOperations(owner, result);
 		
-		for (QvtEnvironmentBase nextSiblingEnv : fOwner.getSiblings()) {
+		for (QvtEnvironmentBase nextSiblingEnv : fOwner.getImportsByExtends()) {
 			List<EOperation> ops = nextSiblingEnv.getAdditionalOperations(owner);
 			if(ops !=null) {
 				result.addAll(ops);
 			}
 		}
+		
+		for (QvtEnvironmentBase nextSiblingEnv : fOwner.getImportsByAccess()) {
+			Module importedModule = nextSiblingEnv.getModuleContextType();
+			if(importedModule instanceof Library) {
+				nextSiblingEnv.getQVTTypeResolver().getLocalAdditionalOperations(owner, result);				
+			}
+		}		
 		
 		return result;
 	}

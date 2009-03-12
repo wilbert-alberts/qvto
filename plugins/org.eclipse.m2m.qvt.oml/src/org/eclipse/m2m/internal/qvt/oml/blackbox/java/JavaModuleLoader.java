@@ -65,7 +65,7 @@ abstract class JavaModuleLoader {
 			return fDiagnostics;
 		}
 		
-		Library module = QvtOperationalStdLibrary.createLibrary(javaClass.getSimpleName());		
+		Library module = QvtOperationalStdLibrary.createLibrary(moduleHandle.getSimpleName());		
 		fEnv = QvtOperationalEnvFactory.INSTANCE.createModuleEnvironment(module);
 		loadModule(fEnv, javaClass);
 		

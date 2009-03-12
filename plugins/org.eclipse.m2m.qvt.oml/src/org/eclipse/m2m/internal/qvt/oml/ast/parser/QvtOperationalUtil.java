@@ -11,6 +11,9 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
@@ -28,6 +31,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
+import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.cst.CSTNode;
@@ -105,10 +109,16 @@ public class QvtOperationalUtil {
 			return false;
 		}
 		
-		if(modelType == importedModelType) {
+		//return modelType.getMetamodel().containsAll(importedModelType.getMetamodel());
+		return isCompatibleModelType(modelType, importedModelType);
+	}
+	
+	public static boolean isCompatibleModelType(ModelType sourceType, ModelType targetType) {
+		if(sourceType == targetType) {
 			return true;
 		}
-		return modelType.getMetamodel().containsAll(importedModelType.getMetamodel());
+		
+		return sourceType.getMetamodel().containsAll(targetType.getMetamodel());		
 	}
 	
 	public static ModelType getModelType(ModelParameter modelParameter) {
@@ -211,5 +221,18 @@ public class QvtOperationalUtil {
 		if (problemHandler != null) {
 			problemHandler.analyzerProblem(Severity.WARNING, message, "unknown", startOffset, endOffset);
 		}		
+	}
+	
+	public static List<ModelType> collectValidModelParamaterTypes(OperationalTransformation transformation) {
+		List<ModelType> types = new ArrayList<ModelType>(transformation.getModelParameter().size());
+		
+		for (ModelParameter parameter : transformation.getModelParameter()) {			
+			EClassifier paramType = parameter.getType();
+			if(paramType instanceof ModelType) {
+				types.add((ModelType)paramType);
+			}
+		}
+		
+		return types;
 	}
 }

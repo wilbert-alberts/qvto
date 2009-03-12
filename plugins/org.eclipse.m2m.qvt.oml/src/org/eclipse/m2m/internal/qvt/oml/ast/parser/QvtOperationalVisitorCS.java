@@ -24,7 +24,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
@@ -68,6 +70,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ExpressionStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
@@ -89,6 +92,8 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ModuleRefCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ModuleUsageCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MultiplicityDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS;
@@ -119,6 +124,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
@@ -1416,6 +1422,8 @@ public class QvtOperationalVisitorCS
         return objectExp;
         }
 		
+    
+    
 	public Module visitMappingModule(MappingModuleCS moduleCS, URI unitURI, QvtOperationalFileEnv env, ExternalUnitElementsProvider importResolver, ResourceSet resSet) throws SemanticException {        
         Module module = QvtOperationalParserUtil.createModule(moduleCS);        
 		module.setStartPosition(moduleCS.getStartOffset());
@@ -2005,12 +2013,18 @@ public class QvtOperationalVisitorCS
 	}
 	
 	private void importsCS(MappingModuleCS parsedModuleCS, Module module, QvtOperationalFileEnv env, ExternalUnitElementsProvider importResolver) {
+		
+		EList<ModuleUsageCS> moduleUsages = parsedModuleCS.getHeaderCS().getModuleUsages();		
+		boolean hasModuleUsage = !moduleUsages.isEmpty();
+	    EMap<String, List<QvtOperationalModuleEnv>> importMap = new BasicEMap<String, List<QvtOperationalModuleEnv>>(5);
+	    
 		for (ImportCS nextImportedCS : parsedModuleCS.getImports()) {			
 			if(nextImportedCS.getPathNameCS() == null) {
 				// nothing meaningful to represent in AST
 				continue;
 			}
-			
+
+			String unitQualifiedName = QvtOperationalParserUtil.getStringRepresentation(nextImportedCS.getPathNameCS(), "."); //$NON-NLS-1$			
 			EList<String> importedUnitQName = nextImportedCS.getPathNameCS().getSequenceOfNames();
 			List<QvtOperationalModuleEnv> moduleEnvironments = importResolver.getModules(importedUnitQName);
 			
@@ -2022,38 +2036,153 @@ public class QvtOperationalVisitorCS
 						continue;
 					}
 					
-					if(!env.getSiblings().contains(nextImportedEnv)) {
-						// we might have duplicates in imports, so avoid exceptions in environments
-						env.addSibling(nextImportedEnv);
-					}
-					
-					ModuleImport moduleImport = ExpressionsFactory.eINSTANCE.createModuleImport();					
-					moduleImport.setImportedModule(importedModule);
-					moduleImport.setStartPosition(nextImportedCS.getStartOffset());
-					moduleImport.setEndPosition(nextImportedCS.getEndOffset());
-					
-					module.getModuleImport().add(moduleImport);					
-					
-					if(module instanceof OperationalTransformation && importedModule  instanceof OperationalTransformation) {
-						// FIXME - should be only in case of the legacy import usage
-						validateImportedSignature(env, (OperationalTransformation) module, (OperationalTransformation) importedModule, moduleImport);
-					}					
-					
-					if(myCompilerOptions.isGenerateCompletionData()) {
-						ASTBindingHelper.createCST2ASTBinding(nextImportedCS, moduleImport);
+					// process imports here only in case of the legacy implicit import by extension, 
+					// otherwise pass the responsibility to module usage analysis						
+					if(!hasModuleUsage) {						
+						if(!env.getImportsByExtends().contains(nextImportedEnv)) {
+							// we might have duplicates in imports, so avoid exceptions in environments
+							env.addImplicitExtendsImport(nextImportedEnv);
+						}
+																					
+						ModuleImport moduleImport = ExpressionsFactory.eINSTANCE.createModuleImport();					
+						moduleImport.setImportedModule(importedModule);
+						moduleImport.setStartPosition(nextImportedCS.getStartOffset());
+						moduleImport.setEndPosition(nextImportedCS.getEndOffset());
+						
+						module.getModuleImport().add(moduleImport);
+						
+						if(module instanceof OperationalTransformation && importedModule  instanceof OperationalTransformation) {
+							validateImportedSignature(env, (OperationalTransformation) module, (OperationalTransformation) importedModule, moduleImport);
+						}					
+						
+						if(myCompilerOptions.isGenerateCompletionData()) {
+							ASTBindingHelper.createCST2ASTBinding(nextImportedCS, moduleImport);
+						}
 					}
 				}
 				
+				importMap.put(unitQualifiedName, moduleEnvironments);				
+				
 				// report legacy library import statements
 				if(nextImportedCS instanceof LibraryImportCS) {
-					String libId = QvtOperationalParserUtil.getStringRepresentation(nextImportedCS.getPathNameCS(), "."); //$NON-NLS-1$
 					// warn about specific library import deprecation
-					env.reportWarning(NLS.bind(ValidationMessages.DeprecatedLibraryImportStatement, new Object[] { libId }), nextImportedCS.getPathNameCS());
+					env.reportWarning(NLS.bind(ValidationMessages.DeprecatedLibraryImportStatement, new Object[] { unitQualifiedName }), nextImportedCS.getPathNameCS());
 				}
 			}
 		}
+		
+		for (ModuleUsageCS nextModuleUsage : moduleUsages) {
+	    	moduleUsageCS(nextModuleUsage, module, env, importMap);
+		}
 	}
 
+	private void moduleUsageCS(ModuleUsageCS moduleUsageCS, Module module, QvtOperationalModuleEnv env, EMap<String, List<QvtOperationalModuleEnv>> importMap) {
+    	EList<ModuleRefCS> moduleRefs = moduleUsageCS.getModuleRefs();
+    	for (ModuleRefCS moduleRefCS : moduleRefs) {
+    		List<QvtOperationalModuleEnv> resolvedModuleEnvs = new ArrayList<QvtOperationalModuleEnv>(2);
+    		
+    		PathNameCS modulePathNameCS = moduleRefCS.getPathNameCS();
+    		if(modulePathNameCS == null) {
+    			// should already have reported error CST parse error
+    			continue;
+    		}
+    		
+    		EList<String> qname = modulePathNameCS.getSequenceOfNames();    		
+    		if(qname.size() == 1) {
+    			String moduleName = qname.get(0);
+    			for (String unitQName : importMap.keySet()) {
+    				List<QvtOperationalModuleEnv> moduleEnvs = importMap.get(unitQName);
+    				
+    				for (QvtOperationalModuleEnv nextModuleEnv : moduleEnvs) {
+						Module nextImportedModule = nextModuleEnv.getModuleContextType();
+					
+						if(nextImportedModule != null && moduleName.equals(nextImportedModule.getName())) {
+							List<ModelType> refereceSignatureModelTypes = new ArrayList<ModelType>(5);							
+							EList<ParameterDeclarationCS> signatureParams = moduleRefCS.getParameters();
+							if(signatureParams.isEmpty()) {
+								// be tolerant, we are not specific about the model types, select only by name
+								resolvedModuleEnvs.add(nextModuleEnv);
+								continue;
+							}
+							
+							for (ParameterDeclarationCS nextParamCS : signatureParams) {
+								TypeSpecCS nextTypeCS = nextParamCS.getTypeSpecCS();
+								if(nextTypeCS != null && nextTypeCS.getTypeCS() instanceof PathNameCS) {
+									PathNameCS modelTypeCS = (PathNameCS) nextTypeCS.getTypeCS();
+ 									EClassifier modelType = env.getModelType(modelTypeCS.getSequenceOfNames());
+ 									if(modelType instanceof ModelType) {
+ 										refereceSignatureModelTypes.add((ModelType) modelType);
+ 									}
+								}
+							}
+
+							List<ModelType> importedSignatureTypes;
+							if(nextImportedModule instanceof OperationalTransformation) {
+								OperationalTransformation ot = (OperationalTransformation) nextImportedModule;
+								importedSignatureTypes = QvtOperationalUtil.collectValidModelParamaterTypes(ot);
+							} else {
+								// the only place where a library can declare its signature
+								importedSignatureTypes = nextImportedModule.getUsedModelType();								
+							}
+							
+							if(refereceSignatureModelTypes.size() == importedSignatureTypes.size()) {
+								boolean compatible = true;
+								for (int i = 0; i < refereceSignatureModelTypes.size(); i++) {
+									if(!QvtOperationalUtil.isCompatibleModelType(
+										refereceSignatureModelTypes.get(i), importedSignatureTypes.get(i))) {
+										compatible = false;
+										break;
+									}
+								}
+								
+								if(compatible) {
+									resolvedModuleEnvs.add(nextModuleEnv);
+								}
+							}
+						}
+					}
+				}
+    		}
+    		    		
+    		int matchCount = resolvedModuleEnvs.size();
+			switch(matchCount) {			
+			case 1:
+        		QvtOperationalModuleEnv importedModuleEnv = resolvedModuleEnvs.get(0);    			
+    			Module importedModule = importedModuleEnv.getModuleContextType();
+    			
+				ImportKindEnum importKindCS = moduleUsageCS.getImportKind();
+				ImportKind kind = importKindCS == ImportKindEnum.ACCESS ? ImportKind.ACCESS : ImportKind.EXTENSION;
+    			
+				env.addImport(kind, importedModuleEnv);
+								
+				ModuleImport moduleImport = ExpressionsFactory.eINSTANCE.createModuleImport();					
+				moduleImport.setImportedModule(importedModule);
+				moduleImport.setKind(kind);
+
+				moduleImport.setStartPosition(moduleUsageCS.getStartOffset());
+				moduleImport.setEndPosition(moduleUsageCS.getEndOffset());
+    			modulePathNameCS.setAst(importedModule);
+				
+				if(kind == ImportKind.EXTENSION) {
+					if(module instanceof OperationalTransformation && importedModule  instanceof OperationalTransformation) {
+						validateImportedSignature(env, (OperationalTransformation) module, (OperationalTransformation) importedModule, moduleImport);
+					}					
+				}
+				
+				module.getModuleImport().add(moduleImport);
+				break;
+			case 0:
+    			String message = NLS.bind(ValidationMessages.UnresolvedModuleReference, 
+    					QvtOperationalParserUtil.getStringRepresentation(modulePathNameCS)); //$NON-NLS-1$
+    			env.reportError(message, moduleRefCS);
+    			break;
+    		default:
+    			env.reportError(NLS.bind(ValidationMessages.AmbiguousModuleReference, 
+    					QvtOperationalParserUtil.getStringRepresentation(modulePathNameCS)), moduleRefCS);
+    		}
+		}		
+	}	
+	
 	private void createModuleProperties(Module module, MappingModuleCS moduleCS, QvtOperationalFileEnv env) throws SemanticException {
 		
 		for (ModulePropertyCS propCS : moduleCS.getProperties()) {
@@ -2157,10 +2286,11 @@ public class QvtOperationalVisitorCS
 					new Object[] { }), headerCS.getTransformationRefineCS());
 		}
 		if (!headerCS.getModuleUsages().isEmpty()) {
-			env.reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_transfUsagesNotSupported,
-					new Object[] { }), 
-					headerCS.getModuleUsages().get(0).getStartOffset(),
-					headerCS.getModuleUsages().get(headerCS.getModuleUsages().size()-1).getEndOffset());
+// supported now			
+//			env.reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_transfUsagesNotSupported,
+//					new Object[] { }), 
+//					headerCS.getModuleUsages().get(0).getStartOffset(),
+//					headerCS.getModuleUsages().get(headerCS.getModuleUsages().size()-1).getEndOffset());
 		}		
 	}
 
@@ -2237,7 +2367,7 @@ public class QvtOperationalVisitorCS
                 PathNameCS typePathNameCS = (PathNameCS) paramTypeCS;
                 if (typePathNameCS.getSequenceOfNames().size() == 1) {
                     modelType = env.getModelType(typePathNameCS.getSequenceOfNames());
-                    if (!usedModelTypes.add(modelType)) {
+                    if (modelType != null && !usedModelTypes.add(modelType)) {
                         env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_LibrarySignatureErrorDuplicateModelType, 
                                 new Object[] { typePathNameCS.getSequenceOfNames().get(0) }), paramCS);
                     }
@@ -2252,6 +2382,7 @@ public class QvtOperationalVisitorCS
             }
         }
     }
+    
     protected ModelType visitModelTypeCS(ModelTypeCS modelTypeCS, QvtOperationalFileEnv env,
 			Module module, ResourceSet resolutionRS) throws SemanticException {
 		if (modelTypeCS == null) {
@@ -2272,7 +2403,7 @@ public class QvtOperationalVisitorCS
 		
 		if (modelTypeCS.getComplianceKindCS() != null) {
 			String complianceKind = visitLiteralExpCS(modelTypeCS.getComplianceKindCS(), env);
-			if (complianceKind.length() > 0 && !QvtOperationalEnv.METAMODEL_COMPLIANCE_KIND_STRICT.equals(complianceKind)) {
+			if (complianceKind != null && complianceKind.length() > 0 && !QvtOperationalEnv.METAMODEL_COMPLIANCE_KIND_STRICT.equals(complianceKind)) {
 				env.reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_unsupportedMetamodelComplianceKind,
 						new Object[] { complianceKind }), modelTypeCS.getComplianceKindCS());
 			}

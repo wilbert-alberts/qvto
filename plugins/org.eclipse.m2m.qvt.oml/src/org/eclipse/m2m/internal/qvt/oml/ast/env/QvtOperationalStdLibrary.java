@@ -28,6 +28,7 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstanceFactory;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
@@ -157,7 +158,7 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements QVTOS
 	}
 
 	public void importTo(QvtOperationalEnv env) {
-		env.addSibling(fEnv);
+		env.addImport(ImportKind.EXTENSION, fEnv);
 	}
 	    
     public boolean isStdLibClassifier(EClassifier classifier) {

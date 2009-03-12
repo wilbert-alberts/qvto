@@ -21,6 +21,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.UniqueEList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
@@ -32,6 +33,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
@@ -52,7 +55,7 @@ import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
 
 
-abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVTOEnvironment {
+public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVTOEnvironment {
 	
 	public static class CollisionStatus {
 		public static final int ALREADY_DEFINED = 1;		
@@ -89,7 +92,9 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVTOEnviro
     private List<org.eclipse.ocl.ecore.Variable> myImplicitVars = new LinkedList<org.eclipse.ocl.ecore.Variable>();
 
     private QVTUMLReflection fQVUMLReflection;
-	private List<QvtEnvironmentBase> siblings;
+	private boolean fUsesLegacyImplicitImports = false;
+	private List<QvtEnvironmentBase> fByAccess;
+	private List<QvtEnvironmentBase> fByExtension;	
 	private Set<EOperation> fOperationsHolder;	
 
 	protected QvtEnvironmentBase(QvtEnvironmentBase parent) {
@@ -160,18 +165,30 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVTOEnviro
 				return this.getInternalParent().lookupImplicitSourceForOperation(name, args);
 			}
 			
-			for (QvtEnvironmentBase nextSiblingEnv : rootEnv.getSiblings()) {
+			for (QvtEnvironmentBase nextSiblingEnv : rootEnv.getImportsByExtends()) {
 				result = nextSiblingEnv.lookupImplicitSourceForOperation(name, args);
 				if(result != null) {
-					break;
+					return result;
 				}
 			}
+			
+			for (QvtEnvironmentBase nextSiblingEnv : rootEnv.getImportsByAccess()) {
+				Module importedModule = nextSiblingEnv.getModuleContextType();
+				if(importedModule instanceof Library) {
+					// there is a single default instance for libraries 
+					// this cannot be done transformations which has an explicit instance					
+					result = nextSiblingEnv.lookupImplicitSourceForOperation(name, args);
+					if(result != null) {
+						break;
+					}
+				}
+			}			
 		}
 		return result;
 	}
 	
     // implements the interface method
-    public Variable<EClassifier, EParameter> lookupImplicitSourceForPropertyInternal(String name) {
+    private Variable<EClassifier, EParameter> lookupImplicitSourceForPropertyInternal(String name) {
         Variable<EClassifier, EParameter> vdcl;
         
         for (int i = myImplicitVars.size() - 1; i >= 0; i--) {
@@ -230,12 +247,24 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVTOEnviro
 				return this.getInternalParent().lookupImplicitSourceForProperty(name);
 			}
 			
-			for (QvtEnvironmentBase nextSiblingEnv : rootEnv.getSiblings()) {
+			for (QvtEnvironmentBase nextSiblingEnv : rootEnv.getImportsByExtends()) {
 				result = nextSiblingEnv.lookupImplicitSourceForProperty(name);
 				if(result != null) {
-					break;
+					return result;
 				}
 			}
+			
+			for (QvtEnvironmentBase nextSiblingEnv : rootEnv.getImportsByAccess()) {
+				Module importedModule = nextSiblingEnv.getModuleContextType();
+				if(importedModule instanceof Library) {
+					// there is a single default instance for libraries 
+					// this cannot be done transformations which has an explicit instance
+					result = nextSiblingEnv.lookupImplicitSourceForProperty(name);
+					if(result != null) {
+						break;
+					}
+				}
+			}			
 		}
 		return result;
 		
@@ -263,9 +292,13 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVTOEnviro
 			getLocalAdditionalCollectionOperations(collectionType, result);
 			
 			// look for imported collection operations
-			for (QvtEnvironmentBase nextImportedEnv : getSiblings()) {
+			for (QvtEnvironmentBase nextImportedEnv : getImportsByExtends()) {
 				nextImportedEnv.getLocalAdditionalCollectionOperations(collectionType, result);
 			}
+			
+			for (QvtEnvironmentBase nextImportedEnv : getImportsByAccess()) {
+				nextImportedEnv.getLocalAdditionalCollectionOperations(collectionType, result);
+			}			
 			
 			return result;
 		}
@@ -331,42 +364,73 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVTOEnviro
 		return fQVUMLReflection;
 	}	
 	
-	public final void addSibling(QvtEnvironmentBase env) {
+	public final void addImport(ImportKind kind, QvtEnvironmentBase importedEnv) {
 		QvtEnvironmentBase rootEnv = getRootEnv();
 		if(rootEnv != this) {
 			// propagate to the top level parent
-			rootEnv.addSibling(env);
+			rootEnv.addImport(kind, importedEnv);
 			return;
 		}
 		
-		if(env == null || env == this || isOneOfParents(env)) {
-			throw new IllegalArgumentException("Illegal sibling environemnt"); //$NON-NLS-1$
+		if(importedEnv == null || importedEnv == this || isOneOfParents(importedEnv)) {
+			throw new IllegalArgumentException("Illegal import environemnt"); //$NON-NLS-1$
+		}
+		
+		List<QvtEnvironmentBase> container;
+		if(kind == ImportKind.ACCESS) {
+			if(fByAccess == null) {
+				fByAccess = new UniqueEList<QvtEnvironmentBase>();
+			}
+			container = fByAccess;
+		} else {
+			if(fByExtension == null) {
+				fByExtension = new UniqueEList<QvtEnvironmentBase>();
+			}
+			container = fByExtension;
 		}
 
-		if(siblings == null) {
-			siblings = new LinkedList<QvtEnvironmentBase>();
-		}
-		
-		assert !siblings.contains(env);
-		
-		siblings.add(env);
+		assert container != null;
+		container.add(importedEnv);
 	}
 	
-	public final List<QvtEnvironmentBase> getSiblings() {
+	public final boolean usesImplicitExtendsImport() {
+		return fUsesLegacyImplicitImports;
+	}
+	/**
+	 * Support for legacy import without module usage declarations
+	 *  
+	 * @param importedEnv the imported environemts
+	 */
+	public final void addImplicitExtendsImport(QvtEnvironmentBase importedEnv) {
 		QvtEnvironmentBase rootEnv = getRootEnv();
 		if(rootEnv != this) {
-			// propagate request to the top level parent, as being a leaf env, 
-			// I'm disallowed to own siblings
-			return rootEnv.getSiblings();
+			// propagate to the top level parent
+			rootEnv.addImplicitExtendsImport(importedEnv);
+			return;
 		}
-		
-		if(siblings == null) {
-			return Collections.emptyList();
-		}
-		
-		return Collections.unmodifiableList(siblings);
+
+		this.fUsesLegacyImplicitImports = true;
+		addImport(ImportKind.EXTENSION, importedEnv);
 	}
 
+	public final List<QvtEnvironmentBase> getImportsByAccess() {
+		QvtEnvironmentBase rootEnv = getRootEnv();
+		if(rootEnv != this) {
+			return rootEnv.getImportsByAccess();
+		}
+		
+		return fByAccess != null ? fByAccess : Collections.<QvtEnvironmentBase>emptyList();		
+	}
+	
+	public final List<QvtEnvironmentBase> getImportsByExtends() {
+		QvtEnvironmentBase rootEnv = getRootEnv();
+		if(rootEnv != this) {
+			return rootEnv.getImportsByExtends();
+		}
+		
+		return fByExtension != null ? fByExtension : Collections.<QvtEnvironmentBase>emptyList();	
+	}
+		
 	protected final CollisionStatus findCollidingOperation(EClassifier ownerType, EOperation operation) {
 		try {
 			return doFindCollidingOperation(ownerType, operation);
@@ -418,8 +482,11 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVTOEnviro
 						if(QvtOperationalUtil.isImperativeOperation(operation) && QvtOperationalUtil.isImperativeOperation(next)) {
 							VirtualTable sourceOperVtable = getVirtualTable(operation);
 							sourceOperVtable.addOperation(next);
-							VirtualTable targetOperVtable = getVirtualTable(next);
-							targetOperVtable.addOperation(operation);
+							// do not virtualize operation from the importing module in the imported module for import by access1
+							if(!isImportedByAccess(next)) {
+								VirtualTable targetOperVtable = getVirtualTable(next);
+								targetOperVtable.addOperation(operation);
+							}
 						}
 						///
 
@@ -434,6 +501,16 @@ abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVTOEnviro
 		}
 				
 		return null;
+	}
+	
+	private boolean isImportedByAccess(EOperation operation) {
+		EClass containingClass = operation.getEContainingClass();
+		for (QvtEnvironmentBase nextImport : getImportsByAccess()) {
+			if(containingClass == nextImport.getModuleContextType()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private VirtualTable getVirtualTable(EOperation operation) {

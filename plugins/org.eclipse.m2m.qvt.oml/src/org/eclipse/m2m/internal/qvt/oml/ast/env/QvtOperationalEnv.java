@@ -479,12 +479,19 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 				return moduleContextType;
 			}
 			
-			for (QvtEnvironmentBase nextImported : getRootEnv().getSiblings()) {
+			for (QvtEnvironmentBase nextImported : getRootEnv().getImportsByExtends()) {
 				Module importedModule = nextImported.getModuleContextType();
 				if(importedModule != null && firstName.equals(importedModule.getName())) {
 					return importedModule;
 				}				
 			}
+			
+			for (QvtEnvironmentBase nextImported : getRootEnv().getImportsByAccess()) {
+				Module importedModule = nextImported.getModuleContextType();
+				if(importedModule != null && firstName.equals(importedModule.getName())) {
+					return importedModule;
+				}				
+			}			
 			
 			if (myModelTypeRegistry.containsKey(firstName)) {
 				return myModelTypeRegistry.get(firstName);

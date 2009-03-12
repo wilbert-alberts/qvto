@@ -127,6 +127,11 @@ public class QvtOperationalParserUtil {
 		return getStringRepresentation(pathName.getSequenceOfNames(), pathSeparator);
 	}
 	
+	public static String getStringRepresentation(PathNameCS pathName) {
+		return getStringRepresentation(pathName.getSequenceOfNames(), "::"); //$NON-NLS-1$
+	}
+	
+	
 	public static String getStringRepresentation(List<String> pathName, String pathSeparator) {
 		StringBuffer buffer = null;
 		for (Iterator<String> it = pathName.iterator(); it.hasNext();) {
