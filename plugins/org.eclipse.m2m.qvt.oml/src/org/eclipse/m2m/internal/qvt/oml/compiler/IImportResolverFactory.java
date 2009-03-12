@@ -50,7 +50,7 @@ public interface IImportResolverFactory {
 						return nextFactory;
 					}
 				}
-				throw new IllegalStateException("No import resolver factory available for: " + source); //$NON-NLS-1$
+				return null;
 			}
 			
 			private List<IImportResolverFactory> readFactories() {

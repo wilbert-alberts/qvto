@@ -39,6 +39,9 @@ import org.eclipse.osgi.util.NLS;
 
 public class BlackboxUnitResolver implements UnitResolver {
 
+	// the global scope black-box resolver
+	public static final BlackboxUnitResolver DEFAULT = new BlackboxUnitResolver(URI.createURI("/")); //$NON-NLS-1$
+	
 	private ResolutionContext fContext;
 	
 	public BlackboxUnitResolver(URI context) {

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitContents.CSTContents;
 
@@ -91,13 +92,13 @@ public class ResolverUtils {
 				buf.append(UnitProxy.NAMESPACE_SEP);
 			}
 			
-			buf.append(nameSegments[0]);
+			buf.append(nameSegments[i]);
 		}
 		
 		return buf.toString();
 	}
 	
-    static String[] getNameSegments(String qualifiedName) {
+    public static String[] getNameSegments(String qualifiedName) {
 		return qualifiedName.split("\\."); //$NON-NLS-1$    	
     }	
 	
@@ -105,7 +106,7 @@ public class ResolverUtils {
 		String[] segments = getNameSegments(qualifiedName);
 		String namespace = null;
 		if(segments.length > 1) {
-			namespace = toQualifiedName(segments, 0, segments.length - 1);
+			namespace = toQualifiedName(segments, 0, segments.length - 2);
 		}
 		
 		String name = segments[segments.length - 1];
@@ -126,6 +127,11 @@ public class ResolverUtils {
 				return resolver;
 			}
 		};
+	}
+	
+	public static IPath toNamespaceRelativePath(String qualifiedName) {
+		String path = qualifiedName.replace('.', '/');
+		return new Path(path);
 	}
 	
 	public static CSTContents createCSTContents(final String input) {
