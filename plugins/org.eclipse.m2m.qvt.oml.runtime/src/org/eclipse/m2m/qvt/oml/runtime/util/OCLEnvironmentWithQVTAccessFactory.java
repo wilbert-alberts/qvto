@@ -37,6 +37,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.ocl.Environment;
@@ -262,6 +263,7 @@ public final class OCLEnvironmentWithQVTAccessFactory extends EcoreEnvironmentFa
 			return result;
 		}
 
+		@Override
 		protected void setFactory(EnvironmentFactory<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral,
 				EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> factory) {
 			super.setFactory(factory);
@@ -272,7 +274,7 @@ public final class OCLEnvironmentWithQVTAccessFactory extends EcoreEnvironmentFa
 			
 			QvtOperationalStdLibrary.INSTANCE.importTo(fQVTdelegate);			
 			for (Module nextImport : OCLEnvironmentWithQVTAccessFactory.this.fImportedModules) {
-				fQVTdelegate.addSibling((QvtOperationalEnv)ASTBindingHelper.resolveEnvironment(nextImport));
+				fQVTdelegate.addImport(ImportKind.ACCESS, (QvtOperationalEnv)ASTBindingHelper.resolveEnvironment(nextImport));
 			}
 		}
 	}
