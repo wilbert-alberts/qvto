@@ -125,13 +125,15 @@ public class EmfUtil {
 	}
     
 	public static EObject resolveSource(EObject in, EObject inputType) {
-		if (inputType == null) {
+		if (inputType == null || inputType.eResource() == null) {
 			return in;
 		}
-        if (EmfUtil.isDynamic(in) 
-        		&& inputType.eResource().getResourceSet() != in.eResource().getResourceSet()
-        		&& inputType.eResource().getResourceSet() != null) {
-       		return inputType.eResource().getResourceSet().getEObject(EcoreUtil.getURI(in), true);
+        if (EmfUtil.isDynamic(in)) {
+        	ResourceSet inRS = in.eResource() != null ? in.eResource().getResourceSet() : null;
+        	if (inputType.eResource().getResourceSet() != inRS
+        			&& inputType.eResource().getResourceSet() != null) {
+        		return inputType.eResource().getResourceSet().getEObject(EcoreUtil.getURI(in), true);
+        	}
         }
         return in;
     }
