@@ -29,7 +29,16 @@ public class EclipseImportResolverFactory implements IImportResolverFactory {
 	}
 	
 	public boolean isAccepted(Object source) {
-		return source instanceof IResource;
+		if(source instanceof IResource) {
+			return true;
+		}
+		
+		if(source instanceof URI) {
+			URI uri = (URI) source;
+			return uri.isPlatformPlugin();
+		}
+		
+		return false;
 	}
 
 	public UnitProxy findUnit(URI unitURI) {
@@ -38,6 +47,8 @@ public class EclipseImportResolverFactory implements IImportResolverFactory {
 			if(file != null) {
 				return WorkspaceUnitResolver.getUnit(file);
 			}
+		} else if(unitURI.isPlatformPlugin()) {
+			//return PlatformPluginUnitResolver.createUnit(unitURI);
 		}
 		
 		return null;

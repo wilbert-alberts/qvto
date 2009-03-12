@@ -17,7 +17,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.resources.IContainer;
@@ -33,6 +32,8 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.compiler.BlackboxUnitResolver;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompositeUnitResolver;
+import org.eclipse.m2m.internal.qvt.oml.compiler.DelegatingUnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.ResolverUtils;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitContents;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProvider;
@@ -42,10 +43,11 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.DeployedImportResolver;
 
-public class WorkspaceUnitResolver implements UnitResolver, UnitProvider {
+
+
+public class WorkspaceUnitResolver extends DelegatingUnitResolver implements UnitProvider {
 
 	private List<IContainer> fRoots;
-	private List<UnitResolver> fDelegates = new LinkedList<UnitResolver>();
 	
 	public static WorkspaceUnitResolver getResolver(IProject project) throws CoreException {
 		IContainer sourceContainer = QVTOBuilderConfig.getConfig(project).getSourceContainer();
@@ -108,12 +110,14 @@ public class WorkspaceUnitResolver implements UnitResolver, UnitProvider {
 		
 		fRoots = new ArrayList<IContainer>(sourceContainers);
 		if(project != null) {
-			fDelegates.add(new BlackboxUnitResolver(URIUtils.getResourceURI(project)));
-			fDelegates.add(DeployedImportResolver.INSTANCE);			
+			setParent(new CompositeUnitResolver(
+						new BlackboxUnitResolver(URIUtils.getResourceURI(project)),
+						DeployedImportResolver.INSTANCE));
 		}
 	}
 	
-	public UnitProxy resolveUnit(String qualifiedName) {
+	@Override
+	protected UnitProxy doResolveUnit(String qualifiedName) {
 		if(qualifiedName == null) {
 			throw new IllegalArgumentException("null qualified name"); //$NON-NLS-1$
 		}
@@ -126,13 +130,6 @@ public class WorkspaceUnitResolver implements UnitResolver, UnitProvider {
 			}
 		}
 
-		for (UnitResolver nextDelegate : fDelegates) {
-			UnitProxy resolvedUnit = nextDelegate.resolveUnit(qualifiedName);
-			if(resolvedUnit != null) {
-				return resolvedUnit;
-			}
-		}
-		
 		return null;
 	}
 	
