@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.64 2009/02/27 12:16:46 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.65 2009/03/12 15:03:51 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.64 2009/02/27 12:16:46 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.65 2009/03/12 15:03:51 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.64 2009/02/27 12:16:46 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.65 2009/03/12 15:03:51 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.64 2009/02/27 12:16:46 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.65 2009/03/12 15:03:51 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -84,6 +84,7 @@ import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.SimpleTypeEnum;
 import org.eclipse.ocl.cst.StateExpCS;
+import org.eclipse.ocl.cst.StringLiteralExpCS;
 import org.eclipse.ocl.cst.TypeCS;
 import org.eclipse.ocl.cst.VariableCS;
 import org.eclipse.ocl.util.OCLStandardLibraryUtil;
@@ -1203,8 +1204,10 @@ import org.eclipse.ocl.cst.LiteralExpCS;
 			//
 			case 130: {
 				
-				CSTNode result = createStringLiteralExpCS(unescape(getIToken((dtParser.getToken(1)))));
-				setOffsets(result, getIToken(dtParser.getToken(1)));
+				IToken literalToken = getIToken(dtParser.getToken(1));
+				StringLiteralExpCS result = createStringLiteralExpCS(literalToken.toString());
+				result.setUnescapedStringSymbol(unescape(literalToken));
+				setOffsets(result, literalToken);
 				dtParser.setSym1(result);
 	  		  break;
 			}
@@ -2850,15 +2853,17 @@ import org.eclipse.ocl.cst.LiteralExpCS;
 			//
 			case 324: {
 				
+				IToken literalToken = getIToken(dtParser.getToken(2));
 				StringLiteralExpCS result = (StringLiteralExpCS) dtParser.getSym(1);
-				result.setStringSymbol(result.getStringSymbol() +  unescape(getIToken((dtParser.getToken(2)))));
-				IToken token = getIToken(dtParser.getToken(2));
-				int tokenLine = token.getLine();
-				setOffsets(result, result, token);
-				IToken prevToken = getParseStream().getTokenAt(token.getTokenIndex() - 1);
+				result.setSymbol(result.getSymbol() +  literalToken.toString());
+				result.setStringSymbol(result.getStringSymbol() + literalToken.toString());
+				result.setUnescapedStringSymbol(result.getUnescapedStringSymbol() +  unescape(literalToken));
+				int tokenLine = literalToken.getLine();
+				setOffsets(result, result, literalToken);
+				IToken prevToken = getParseStream().getTokenAt(literalToken.getTokenIndex() - 1);
 				int prevTokenLine = prevToken.getLine();
 				if (prevTokenLine == tokenLine) {
-					reportError(lpg.lpgjavaruntime.ParseErrorCodes.INVALID_CODE, "", prevToken.getTokenIndex(), token.getTokenIndex(), "Multiline string literals must be located in different lines!"); //$NON-NLS-1$ //$NON-NLS-2$
+					reportError(lpg.lpgjavaruntime.ParseErrorCodes.INVALID_CODE, "", prevToken.getTokenIndex(), literalToken.getTokenIndex(), "Multiline string literals must be located in different lines!"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 				dtParser.setSym1(result);
 	  		  break;

@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.24 2009/02/27 12:16:45 aigdalov Exp $ 
+-- * $Id: miscellaneous.g,v 1.25 2009/03/12 15:03:52 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -279,7 +279,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.24 2009/02/27 12:16:45 aigdalov Exp $
+ * $Id: miscellaneous.g,v 1.25 2009/03/12 15:03:52 aigdalov Exp $
  */
 	./
 $End
@@ -998,15 +998,17 @@ $Rules
 
 	stringLiteralExpCS ::= stringLiteralExpCS STRING_LITERAL
 		/.$BeginJava
+					IToken literalToken = getIToken($getToken(2));
 					StringLiteralExpCS result = (StringLiteralExpCS) $getSym(1);
-					result.setStringSymbol(result.getStringSymbol() +  unescape(getIToken(($getToken(2)))));
-					IToken token = getIToken($getToken(2));
-					int tokenLine = token.getLine();
-					setOffsets(result, result, token);
-					IToken prevToken = getParseStream().getTokenAt(token.getTokenIndex() - 1);
+					result.setSymbol(result.getSymbol() +  literalToken.toString());
+					result.setStringSymbol(result.getStringSymbol() + literalToken.toString());
+					result.setUnescapedStringSymbol(result.getUnescapedStringSymbol() +  unescape(literalToken));
+					int tokenLine = literalToken.getLine();
+					setOffsets(result, result, literalToken);
+					IToken prevToken = getParseStream().getTokenAt(literalToken.getTokenIndex() - 1);
 					int prevTokenLine = prevToken.getLine();
 					if (prevTokenLine == tokenLine) {
-						reportError(lpg.lpgjavaruntime.ParseErrorCodes.INVALID_CODE, "", prevToken.getTokenIndex(), token.getTokenIndex(), "Multiline string literals must be located in different lines!"); //$NON-NLS-1$ //$NON-NLS-2$
+						reportError(lpg.lpgjavaruntime.ParseErrorCodes.INVALID_CODE, "", prevToken.getTokenIndex(), literalToken.getTokenIndex(), "Multiline string literals must be located in different lines!"); //$NON-NLS-1$ //$NON-NLS-2$
 					}
 					$setResult(result);
 		  $EndJava

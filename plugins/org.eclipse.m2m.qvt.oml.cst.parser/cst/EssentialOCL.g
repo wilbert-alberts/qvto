@@ -15,7 +15,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: EssentialOCL.g,v 1.2 2009/02/12 16:49:33 aigdalov Exp $
+-- * $Id: EssentialOCL.g,v 1.3 2009/03/12 15:03:52 aigdalov Exp $
 -- */
 --
 -- The EssentialOCL Parser
@@ -194,7 +194,7 @@ $Notice
 $copyright_contributions
  * </copyright>
  *
- * $Id: EssentialOCL.g,v 1.2 2009/02/12 16:49:33 aigdalov Exp $
+ * $Id: EssentialOCL.g,v 1.3 2009/03/12 15:03:52 aigdalov Exp $
  */
 	./
 $End
@@ -216,6 +216,7 @@ $Globals
 	import org.eclipse.ocl.cst.SimpleNameCS;
 	import org.eclipse.ocl.cst.SimpleTypeEnum;
 	import org.eclipse.ocl.cst.StateExpCS;
+	import org.eclipse.ocl.cst.StringLiteralExpCS;
 	import org.eclipse.ocl.cst.TypeCS;
 	import org.eclipse.ocl.cst.VariableCS;
 	import org.eclipse.ocl.util.OCLStandardLibraryUtil;
@@ -1237,8 +1238,10 @@ $Rules
 		./
 	stringLiteralExpCS ::= STRING_LITERAL
 		/.$BeginJava
-					CSTNode result = createStringLiteralExpCS(unescape(getIToken(($getToken(1)))));
-					setOffsets(result, getIToken($getToken(1)));
+					IToken literalToken = getIToken($getToken(1));
+					StringLiteralExpCS result = createStringLiteralExpCS(literalToken.toString());
+					result.setUnescapedStringSymbol(unescape(literalToken));
+					setOffsets(result, literalToken);
 					$setResult(result);
 		  $EndJava
 		./
