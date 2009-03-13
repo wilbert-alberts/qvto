@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtModule;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.Messages;
 import org.eclipse.osgi.util.NLS;
@@ -56,7 +57,9 @@ public class QvtOperationalResourceImpl extends XMIResourceImpl {
     		
             try {
             	URI normalizedUri = getURIConverter().normalize(getURI());
-            	CompiledUnit unit = TransformationUtil.getQvtModule(normalizedUri).getUnit();
+            	QvtModule qvtModule = TransformationUtil.getQvtModule(normalizedUri);
+            	qvtModule.getModule(false);
+            	CompiledUnit unit = qvtModule.getUnit();
 				fillCompilationDiagnostic(unit, normalizedUri);
 
 				if (unit.getModules().isEmpty()) {
@@ -86,7 +89,15 @@ public class QvtOperationalResourceImpl extends XMIResourceImpl {
 		for (QvtMessage msg : unit.getProblems()) {
 			getWarnings().add(new Diagnostic(msg.getMessage(), uri.toString(), msg.getLineNum()));
 		}
-	}
+
+    	warnings = getWarnings();
+		for (QvtMessage msg : unit.getWarnings()) {
+			warnings.add(new Diagnostic(msg.getMessage(), uri.toString(), msg.getLineNum()));
+		}
+		for (QvtMessage msg : unit.getErrors()) {
+			warnings.add(new QvtCompilationErrorException(msg, uri.toString(), msg.getLineNum()));
+		}
+    }
 
 	@Override
     public void doLoad(InputStream inputStream, Map<?, ?> options)
