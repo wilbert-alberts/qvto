@@ -28,13 +28,14 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.compiler.BlackboxUnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompositeUnitResolver;
+import org.eclipse.m2m.internal.qvt.oml.compiler.DelegatingUnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.ResolverUtils;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitContents;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
 
 
-public class BundleUnitResolver implements UnitResolver {
+public class BundleUnitResolver extends DelegatingUnitResolver {
 
 	private final class BundleUnit extends UnitProxy {
 
@@ -83,9 +84,9 @@ public class BundleUnitResolver implements UnitResolver {
 		
 		fBaseURLs = new ArrayList<URL>(baseURL);
 	}
-	
-	
-	public UnitProxy resolveUnit(String qualifiedName) {
+		
+	@Override
+	protected UnitProxy doResolveUnit(String qualifiedName) {
 		for (URL baseURL : fBaseURLs) {
 			UnitProxy unit = doResolveUnit(baseURL, qualifiedName);
 			if(unit != null) {
@@ -139,9 +140,9 @@ public class BundleUnitResolver implements UnitResolver {
 	}
 
 	public static UnitResolver createResolver(List<URL> bundleBaseURLs, boolean includeBlackboxUnits) {		
-		BundleUnitResolver bundleUnitResolver = new BundleUnitResolver(bundleBaseURLs);
+		BundleUnitResolver bundleUnitResolver = new BundleUnitResolver(bundleBaseURLs);		
 		if(includeBlackboxUnits) {
-			return new CompositeUnitResolver(bundleUnitResolver, BlackboxUnitResolver.DEFAULT);
+			bundleUnitResolver.setParent(BlackboxUnitResolver.DEFAULT);
 		}
 		
 		return bundleUnitResolver;
