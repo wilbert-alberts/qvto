@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.runtime.util;
+package org.eclipse.m2m.internal.qvt.oml.runtime.util;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
