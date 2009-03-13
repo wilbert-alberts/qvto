@@ -11,7 +11,9 @@
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.transform.api;
 
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.m2m.qvt.oml.runtime.util.QvtoTransformationValidator;
 import org.eclipse.m2m.tests.qvt.oml.transform.ModelTestData;
 
 /**
@@ -44,5 +46,7 @@ public class WrappedExecTransformationTestCase extends ExecDeployedTransformatio
     
     @Override
     protected void validateScript(URI scriptUri) {
+		Diagnostic validateQvtoScript = QvtoTransformationValidator.validateQvtoScript(scriptUri, null, null);
+		assertTrue(validateQvtoScript.getSeverity() == Diagnostic.ERROR);
     }
 }
