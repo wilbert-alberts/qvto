@@ -6,21 +6,21 @@ Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.eclipse.m2m.internal.qvt.oml.QvtPlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Export-Package: org.eclipse.m2m.internal.qvt.oml;x-friends:="org.eclipse.m2m.qvt.oml.editor.ui",
+Export-Package: org.eclipse.m2m.internal.qvt.oml;x-friends:="org.eclipse.m2m.qvt.oml.editor.ui,org.eclipse.m2m.tests.qvt.oml.ui",
  org.eclipse.m2m.internal.qvt.oml.ast.binding;x-internal:=true,
- org.eclipse.m2m.internal.qvt.oml.ast.env;x-internal:=true,
- org.eclipse.m2m.internal.qvt.oml.ast.parser;x-internal:=true,
+ org.eclipse.m2m.internal.qvt.oml.ast.env;x-friends:="org.eclipse.m2m.qvt.oml.editor.ui",
+ org.eclipse.m2m.internal.qvt.oml.ast.parser;x-friends:="org.eclipse.m2m.qvt.oml.editor.ui",
  org.eclipse.m2m.internal.qvt.oml.blackbox;x-friends:="org.eclipse.m2m.qvt.oml.ocl,org.eclipse.m2m.qvt.oml.editor.ui",
- org.eclipse.m2m.internal.qvt.oml.compiler;x-friends:="org.eclipse.m2m.qvt.oml.editor.ui",
+ org.eclipse.m2m.internal.qvt.oml.compiler;x-friends:="org.eclipse.m2m.qvt.oml.editor.ui,org.eclipse.m2m.tests.qvt.oml",
  org.eclipse.m2m.internal.qvt.oml.cst.adapters;x-internal:=true,
  org.eclipse.m2m.internal.qvt.oml.evaluator;x-internal:=true,
  org.eclipse.m2m.internal.qvt.oml.evaluator.iterators;x-internal:=true,
- org.eclipse.m2m.internal.qvt.oml.expressions;x-friends:="org.eclipse.m2m.qvt.oml.runtime",
+ org.eclipse.m2m.internal.qvt.oml.expressions;x-friends:="org.eclipse.m2m.qvt.oml.runtime,org.eclipse.m2m.qvt.oml.editor.ui",
  org.eclipse.m2m.internal.qvt.oml.expressions.impl;x-internal:=true,
  org.eclipse.m2m.internal.qvt.oml.expressions.util;x-friends:="org.eclipse.m2m.qvt.oml.runtime",
  org.eclipse.m2m.internal.qvt.oml.library;x-internal:=true,
  org.eclipse.m2m.internal.qvt.oml.stdlib;x-internal:=true,
- org.eclipse.m2m.internal.qvt.oml.trace;x-internal:=true,
+ org.eclipse.m2m.internal.qvt.oml.trace;x-friends:="org.eclipse.m2m.tests.qvt.oml",
  org.eclipse.m2m.internal.qvt.oml.trace.util;x-internal:=true,
  org.eclipse.m2m.qvt.oml.blackbox.java,
  org.eclipse.m2m.qvt.oml.util
