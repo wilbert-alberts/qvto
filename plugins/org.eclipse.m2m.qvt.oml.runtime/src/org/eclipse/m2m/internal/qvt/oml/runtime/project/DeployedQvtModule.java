@@ -14,8 +14,10 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.MetamodelRegistryProvider;
+import org.eclipse.m2m.internal.qvt.oml.compiler.BlackboxUnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerMessages;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompositeUnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
@@ -51,7 +53,9 @@ public class DeployedQvtModule extends QvtModule {
         		throw new MdaException(NLS.bind(CompilerMessages.importedModuleNotFound, moduleID));
         	}
         	
-            QVTOCompiler qvtCompiler = new QVTOCompiler(unitResolver, creatMetamodelRegistryProvider());
+            QVTOCompiler qvtCompiler = new QVTOCompiler(
+					new CompositeUnitResolver(new BlackboxUnitResolver(srcUnit.getURI()), unitResolver),
+					creatMetamodelRegistryProvider());
 
             QvtCompilerOptions options = getQvtCompilerOptions();
             if (options == null) {
