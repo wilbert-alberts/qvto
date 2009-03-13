@@ -20,6 +20,10 @@ public class BlackboxException extends Exception {
 
 	private Diagnostic fDiagnostic;
 	
+	public BlackboxException(String message) {
+		createDiagnostic(message, null);
+	}
+	
 	public BlackboxException(Diagnostic diagnostic) {
 		super(diagnostic.getMessage());
 		fDiagnostic = diagnostic;		
@@ -44,8 +48,9 @@ public class BlackboxException extends Exception {
 	}
 	
 	static Diagnostic createDiagnostic(String message, Throwable throwable) {
+		Object[] data = (throwable != null) ?  new Object[] { throwable } : null;
 		return new BasicDiagnostic(Diagnostic.ERROR,
 				"org.eclipse.m2m.qvt.oml.blackbox", 0, message, //$NON-NLS-1$
-				new Object[] { throwable });
+				data);
 	}
 }
