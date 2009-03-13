@@ -604,6 +604,10 @@ public class QVTOCompiler {
 			unit = legacyResolver.resolveUnit(importingUnit, unitQualifiedName);
     	}
     	
+		if(unit == null) {
+			unit = getImportResolver().resolveUnit(unitQualifiedName);
+		}
+		
     	return unit;
 	}
     
