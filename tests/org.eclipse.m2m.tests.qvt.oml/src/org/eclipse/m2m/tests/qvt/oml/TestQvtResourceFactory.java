@@ -14,6 +14,9 @@ package org.eclipse.m2m.tests.qvt.oml;
 
 import java.util.Collections;
 
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -27,28 +30,54 @@ import org.eclipse.m2m.tests.qvt.oml.transform.TestTransformation;
  *
  */
 public class TestQvtResourceFactory extends TestTransformation {
-	public TestQvtResourceFactory() {
-		super(new FileToFileData(TEST_MODEL_NAME));
+
+	public static Test suite() {
+        TestSuite suite = new TestSuite("QVTO EMF Resource"); //$NON-NLS-1$
+        
+        suite.addTest(new TestQvtResourceFactory("abstractresult") {  //$NON-NLS-1$
+
+        	@Override
+        	protected void runTest() throws Throwable {
+        		IFile testFile = getProject().getFile(
+        				"models/" + getName() + "/" + getName() + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT); //$NON-NLS-1$ //$NON-NLS-2$
+        		checkResourceByUri(URI.createFileURI(testFile.getFullPath().toOSString()));
+        	}
+        	
+        });
+        
+        suite.addTest(new TestQvtResourceFactory("abstractresult") {  //$NON-NLS-1$
+
+        	@Override
+        	protected void runTest() throws Throwable {
+        		String testFile = "org.eclipse.m2m.tests.qvt.oml/parserTestData/models/" + getName() + "/"  //$NON-NLS-1$ //$NON-NLS-2$
+        				+ getName() + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT; 
+        		checkResourceByUri(URI.createPlatformPluginURI(testFile, false));
+        	}
+        	
+        });
+        
+        suite.addTest(new TestQvtResourceFactory("errorinexpressionlist") {  //$NON-NLS-1$
+
+        	@Override
+        	protected void runTest() throws Throwable {
+        		IFile testFile = getProject().getFile(
+        				"models/" + getName() + "/" + getName() + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT); //$NON-NLS-1$ //$NON-NLS-2$
+        		checkResourceByUri(URI.createFileURI(testFile.getFullPath().toOSString()));
+        	}
+        	
+        });
+        
+        return suite;
+    }
+
+    public TestQvtResourceFactory(String dataName) {
+		super(new FileToFileData(dataName));
 	}
-	
-	public void testResourceLoad() throws Exception {
-		IFile testFile = getProject().getFile(
-				"models/" + TEST_MODEL_NAME + "/" + TEST_MODEL_NAME + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT); //$NON-NLS-1$ //$NON-NLS-2$
-		checkResourceByUri(URI.createFileURI(testFile.getFullPath().toOSString()));
-	}
-	
-	public void testBundleResourceLoad() throws Exception {
-		String testFile = "org.eclipse.m2m.tests.qvt.oml/parserTestData/models/" + TEST_MODEL_NAME + "/"  //$NON-NLS-1$ //$NON-NLS-2$
-				+ TEST_MODEL_NAME + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT; 
-		checkResourceByUri(URI.createPlatformPluginURI(testFile, false));
-	}
-	
-	private void checkResourceByUri(URI scriptUri) throws Exception {
+    
+	private static void checkResourceByUri(URI scriptUri) throws Exception {
 		Resource resource = Resource.Factory.Registry.INSTANCE.getFactory(scriptUri).createResource(scriptUri);
 		resource.load(Collections.emptyMap());
 		assertTrue(resource.getContents().get(0) instanceof Module);
 	}
 	
-	private static final String TEST_MODEL_NAME = "abstractresult"; //$NON-NLS-1$
-
 }

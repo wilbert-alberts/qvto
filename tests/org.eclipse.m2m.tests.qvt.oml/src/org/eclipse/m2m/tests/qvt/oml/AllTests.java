@@ -62,7 +62,7 @@ public class AllTests {
         suite.addTestSuite(TestGraphWalker.class);
         suite.addTestSuite(TestLaunchConfigs.class);
         suite.addTest(TraceTests.suite());
-        suite.addTestSuite(TestQvtResourceFactory.class);
+        suite.addTest(TestQvtResourceFactory.suite());
         
         suite.addTestSuite(TestOCLSemantics.class);
         suite.addTestSuite(TestOCLAnnotationSupport.class);     
