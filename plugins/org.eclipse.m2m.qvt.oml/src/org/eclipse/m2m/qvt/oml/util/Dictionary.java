@@ -18,6 +18,9 @@ import java.util.List;
  * A hash-map based dictionary representing the <code>Stdlib::DictionaryType</code>.
  * 
  * @author dvorak
+ * 
+ * @since 2.0
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface Dictionary<KeyT, T> extends Collection<T> {
 

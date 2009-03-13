@@ -95,7 +95,7 @@ public abstract class AbstractContextualOperations {
 		public EOperation define(EcoreEnvironment env) {
 			EOperation eOperation = EcoreFactory.eINSTANCE.createEOperation();
 			eOperation.setName(fName);
-			int pos = 0;
+			//int pos = 0;
 			for (EClassifier cls : fParamTypes) {
 				EParameter eParam = EcoreFactory.eINSTANCE.createEParameter();
 				String paramName = cls.getName();
@@ -165,7 +165,7 @@ public abstract class AbstractContextualOperations {
 		
 		public EOperation define(EcoreEnvironment env) {
 			List<Variable<EClassifier, EParameter>> argList = new ArrayList<Variable<EClassifier, EParameter>>();
-			int pos = 0;
+			//int pos = 0;
 			for (EClassifier cls : fParamTypes) {
 				Variable<EClassifier, EParameter> stringVariable = ExpressionsFactory.eINSTANCE.createVariable();
 				

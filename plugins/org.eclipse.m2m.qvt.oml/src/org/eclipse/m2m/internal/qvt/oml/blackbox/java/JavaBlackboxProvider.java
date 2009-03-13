@@ -29,14 +29,14 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.AbstractBlackboxProvider;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.AbstractCompilationUnitDescriptor;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.BlackboxException;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.CompilationUnit;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.LoadContext;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.ResolutionContext;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
-import org.eclipse.m2m.qvt.oml.blackbox.AbstractBlackboxProvider;
-import org.eclipse.m2m.qvt.oml.blackbox.AbstractCompilationUnitDescriptor;
-import org.eclipse.m2m.qvt.oml.blackbox.BlackboxException;
-import org.eclipse.m2m.qvt.oml.blackbox.CompilationUnit;
-import org.eclipse.m2m.qvt.oml.blackbox.LoadContext;
-import org.eclipse.m2m.qvt.oml.blackbox.ResolutionContext;
 import org.eclipse.osgi.util.NLS;
 
 

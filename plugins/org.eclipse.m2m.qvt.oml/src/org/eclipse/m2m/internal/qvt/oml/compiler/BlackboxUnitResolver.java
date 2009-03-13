@@ -26,15 +26,15 @@ import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.ValidationMessages;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.AbstractCompilationUnitDescriptor;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.BlackboxException;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.BlackboxRegistry;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.CompilationUnit;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.LoadContext;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.ResolutionContext;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.ResolutionContextImpl;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitContents.ModelContents;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
-import org.eclipse.m2m.qvt.oml.blackbox.AbstractCompilationUnitDescriptor;
-import org.eclipse.m2m.qvt.oml.blackbox.BlackboxException;
-import org.eclipse.m2m.qvt.oml.blackbox.BlackboxRegistry;
-import org.eclipse.m2m.qvt.oml.blackbox.CompilationUnit;
-import org.eclipse.m2m.qvt.oml.blackbox.LoadContext;
-import org.eclipse.m2m.qvt.oml.blackbox.ResolutionContext;
-import org.eclipse.m2m.qvt.oml.blackbox.ResolutionContextImpl;
 import org.eclipse.osgi.util.NLS;
 
 public class BlackboxUnitResolver implements UnitResolver {

@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.blackbox;
+package org.eclipse.m2m.internal.qvt.oml.blackbox;
 
 import java.util.ArrayList;
 import java.util.Collections;

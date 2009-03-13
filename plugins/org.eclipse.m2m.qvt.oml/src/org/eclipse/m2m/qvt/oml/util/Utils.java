@@ -11,31 +11,25 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.util;
 
-import java.io.StringWriter;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.DictionaryImpl;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.MutableListImpl;
 
 /**
- * A convenience implementation of a String content based log, mainly
- * suitable for testing and debugging purposes.
- * 
  * @author dvorak
  * @since 2.0
  */
-public class StringBufferLog extends WriterLog {
-
-	/**
-	 * Constructs a default log object.
-	 */
-	public StringBufferLog() {
-		this(1024);
+public final class Utils {
+	
+	private Utils() {
+		super();
 	}
-
-	/**
-	 * Constructs a log object of the given initialize size.
-	 * 
-	 * @param initialsize
-	 *            the initial size of the string buffer associated with this log
-	 */	
-	public StringBufferLog(int initialsize) {
-		super(new StringWriter(initialsize));
+	
+	public static <KeyT, T> Dictionary<KeyT, T> createDictionary() {
+		return new DictionaryImpl<KeyT, T>();
 	}
+	
+	public static <T> MutableList<T> createList() {
+		return new MutableListImpl<T>();
+	}
+	
 }

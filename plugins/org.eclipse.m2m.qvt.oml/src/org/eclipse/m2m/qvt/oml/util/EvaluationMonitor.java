@@ -11,6 +11,9 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.util;
 
+/**
+ * @since 2.0
+ */
 public interface EvaluationMonitor {
 	/**
 	 * The caller signals the request for cancel execution. 

@@ -22,6 +22,7 @@ import java.lang.annotation.Target;
  * <code>OperationalTransformation</code>).
  * 
  * @see Kind
+ * @since 2.0
  */
 @Retention(RetentionPolicy.RUNTIME)	
 @Target(ElementType.METHOD)

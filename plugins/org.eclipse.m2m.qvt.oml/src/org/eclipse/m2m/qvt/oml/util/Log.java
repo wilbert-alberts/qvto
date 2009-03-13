@@ -18,6 +18,7 @@ package org.eclipse.m2m.qvt.oml.util;
  * which is intended the main client to this interface.
  * 
  * @author dvorak
+ * @since 2.0
  */
 public interface Log {
 	/**

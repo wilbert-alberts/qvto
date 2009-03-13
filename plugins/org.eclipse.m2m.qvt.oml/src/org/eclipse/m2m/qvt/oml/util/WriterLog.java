@@ -21,6 +21,7 @@ import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
  * A basic logger backed-up with {@link Writer}. 
  * 
  * @author dvorak
+ * @since 2.0
  */
 public class WriterLog implements Log {
 	

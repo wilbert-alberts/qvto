@@ -60,7 +60,7 @@
                   The class representing a concrete QVT blackbox provider implementation
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.m2m.qvt.oml.blackbox.AbstractBlackboxProvider"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.m2m.internal.qvt.oml.blackbox.AbstractBlackboxProvider"/>
                </appinfo>
             </annotation>
          </attribute>

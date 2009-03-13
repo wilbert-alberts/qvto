@@ -9,21 +9,12 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml.blackbox;
+package org.eclipse.m2m.internal.qvt.oml.blackbox;
 
+import java.util.List;
 
-public interface ResolutionContext {
-	
-	/**
-	 * Obtains an adapter for the specified type.
-	 * Supported adapted types: {@link org.eclipse.core.resources.IProject}, {@link org.osgi.framework.Bundle}
-	 * 
-	 * @param <T> the requested adapter type
-	 * 
-	 * @param adapterType
-	 *            the requested adapter type
-	 * @return an instance of the requested type, or <code>null</code> if this
-	 *         context does not adapt to it
-	 */
-	<T> T getAdapter(Class<T> adapterType);
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
+
+public interface CompilationUnit {
+	List<QvtOperationalModuleEnv> getElements();
 }
