@@ -30,8 +30,8 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtAssertionFailed;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
-import org.eclipse.m2m.qvt.oml.runtime.util.HelperOperationCall;
-import org.eclipse.m2m.qvt.oml.runtime.util.NonTransformationExecutionContext;
+import org.eclipse.m2m.internal.qvt.oml.runtime.util.HelperOperationCall;
+import org.eclipse.m2m.internal.qvt.oml.runtime.util.NonTransformationExecutionContext;
 import org.eclipse.m2m.tests.qvt.oml.util.TestModuleResolver;
 
 
