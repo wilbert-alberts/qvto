@@ -86,10 +86,6 @@ public class QvtOperationalResourceImpl extends XMIResourceImpl {
     }
     
     private void fillCompilationDiagnostic(CompiledUnit unit, URI uri) {
-		for (QvtMessage msg : unit.getProblems()) {
-			getWarnings().add(new Diagnostic(msg.getMessage(), uri.toString(), msg.getLineNum()));
-		}
-
     	warnings = getWarnings();
 		for (QvtMessage msg : unit.getWarnings()) {
 			warnings.add(new Diagnostic(msg.getMessage(), uri.toString(), msg.getLineNum()));
