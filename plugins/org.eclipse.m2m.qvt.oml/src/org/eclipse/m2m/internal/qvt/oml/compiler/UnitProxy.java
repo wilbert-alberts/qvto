@@ -22,7 +22,7 @@ public abstract class UnitProxy {
 
 	public static final int TYPE_CST_STREAM = 0;
 		
-	public static final String NAMESPACE_SEP = "."; //$NON-NLS-1$ 
+	public static final char NAMESPACE_SEP = '.';  
 	
 	// instance fields
 	

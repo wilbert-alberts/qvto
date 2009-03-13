@@ -77,6 +77,10 @@ public class ResolverUtils {
 		return result;
 	}
 	
+	public static String toQualifiedName(IPath path) {
+		return path.toString().replace(IPath.SEPARATOR, UnitProxy.NAMESPACE_SEP);
+	}
+	
 	public static String toQualifiedName(String[] nameSegments, int startPos, int endPos) {
 		int len = nameSegments.length;
 		

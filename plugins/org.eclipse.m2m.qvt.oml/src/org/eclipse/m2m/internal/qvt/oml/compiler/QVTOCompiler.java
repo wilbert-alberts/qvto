@@ -43,11 +43,11 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.ExternalUnitElementsProvider;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParser;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalValidationVisitor;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalVisitorCS;
-import org.eclipse.m2m.internal.qvt.oml.ast.parser.ExternalUnitElementsProvider;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.WorkspaceMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitContents.ModelContents;
@@ -68,7 +68,7 @@ import org.eclipse.osgi.util.NLS;
 
 public class QVTOCompiler {
 
-	private static final String NAMESPACE_SEP = UnitProxy.NAMESPACE_SEP;
+	private static final String NAMESPACE_SEP = String.valueOf(UnitProxy.NAMESPACE_SEP);
 	
     private final Map<UnitProxy, CompiledUnit> fSource2Compiled = new HashMap<UnitProxy, CompiledUnit>();
     private final Stack<DependencyPathElement> fDependencyWalkPath = new Stack<DependencyPathElement>();    
