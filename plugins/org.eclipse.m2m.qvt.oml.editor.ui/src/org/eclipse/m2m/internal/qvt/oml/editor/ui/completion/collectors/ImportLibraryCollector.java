@@ -15,14 +15,14 @@ import java.util.Collection;
 import lpg.lpgjavaruntime.IToken;
 
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.AbstractCompilationUnitDescriptor;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.BlackboxRegistry;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.ResolutionContextImpl;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CategoryImageConstants;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionProposal;
-import org.eclipse.m2m.qvt.oml.blackbox.AbstractCompilationUnitDescriptor;
-import org.eclipse.m2m.qvt.oml.blackbox.BlackboxRegistry;
-import org.eclipse.m2m.qvt.oml.blackbox.ResolutionContextImpl;
 
 /**
  * @author aigdalov
