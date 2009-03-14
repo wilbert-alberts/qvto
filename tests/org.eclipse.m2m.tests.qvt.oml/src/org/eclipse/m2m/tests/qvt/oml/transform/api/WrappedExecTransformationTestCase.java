@@ -47,6 +47,6 @@ public class WrappedExecTransformationTestCase extends ExecDeployedTransformatio
     @Override
     protected void validateScript(URI scriptUri) {
 		Diagnostic validateQvtoScript = QvtoTransformationValidator.validateQvtoScript(scriptUri, null, null);
-		assertTrue(validateQvtoScript.getSeverity() == Diagnostic.ERROR);
+		assertTrue(validateQvtoScript.toString(), validateQvtoScript.getSeverity() == Diagnostic.ERROR);
     }
 }
