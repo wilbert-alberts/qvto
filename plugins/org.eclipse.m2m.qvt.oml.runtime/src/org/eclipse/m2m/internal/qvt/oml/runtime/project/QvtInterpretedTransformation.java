@@ -151,7 +151,7 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 
 		QvtOperationalEvaluationEnv evaluationEnv = factory.createEvaluationEnvironment(context, null);
 		// FIXME
-		setArguments(evaluationEnv, (OperationalTransformation) module, args);
+		setArguments(evaluationEnv, (OperationalTransformation) module, args, compiler.getResourceSet());
 		
 		CompiledUnit unit;
 		try {
@@ -178,7 +178,8 @@ public class QvtInterpretedTransformation implements QvtTransformation {
         		((QvtEvaluationResult) outObj).getOutParamValues(), traces);
 	}
 
-	private static void setArguments(QvtOperationalEvaluationEnv evalEnv, OperationalTransformation transformation, List<ModelContent> args) {
+	private static void setArguments(QvtOperationalEvaluationEnv evalEnv, OperationalTransformation transformation,
+			List<ModelContent> args, ResourceSet compilerRS) {
 		List<ModelParameterExtent> tranformArgs = new ArrayList<ModelParameterExtent>(); 
 		int argCount = 0;
 		for (ModelParameter modelParam : transformation.getModelParameter()) {
@@ -193,11 +194,11 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 				if(nextArg == null || nextArg.getContent().isEmpty()) {
 					throw new IllegalArgumentException("Non-empty model argument is required"); //$NON-NLS-1$
 		    	} else {
-		    		extent = new ModelParameterExtent(nextArg.getContent());
+		    		extent = new ModelParameterExtent(nextArg.getContent(), compilerRS);
 		    	}
 				
 			} else {
-				extent = new ModelParameterExtent();
+				extent = new ModelParameterExtent(compilerRS);
 			}
 			
 	    	tranformArgs.add(extent);			
