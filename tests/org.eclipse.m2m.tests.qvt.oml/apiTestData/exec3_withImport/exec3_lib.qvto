@@ -1,4 +1,4 @@
-import org.bar.Collections;
+import emf.tools;
 
 modeltype Ecore uses 'http://www.eclipse.org/emf/2002/Ecore';
 
@@ -9,6 +9,6 @@ query EClass::getName() : String {
 }
 
 mapping EClass::toEClass() : EClass {
-	name := self.name + '_copy';
+	name := self.name + '_copy' + this.currentTimeMillis().toString();
 }
 
