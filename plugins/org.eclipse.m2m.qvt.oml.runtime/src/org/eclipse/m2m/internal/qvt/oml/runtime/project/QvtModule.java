@@ -60,9 +60,18 @@ public abstract class QvtModule {
 
     public abstract CompiledUnit getUnit() throws MdaException;
     
+    /**
+     * Obtain QVTO Module instance with at most semantic warnings.
+     * <br>
+     * IO errors and syntax errors are wrapped with MdaException.  
+     * Semantic errors are thrown as MdaException (see MdaException.getStatus(), org.eclipse.core.runtime.MultiStatus),
+     * this can be turned off with QvtCompilerOptions.setModuleWithErrorAllowed()
+     * 
+     * @return org.eclipse.m2m.internal.qvt.oml.expressions.Module instance
+     * @throws MdaException
+     */
     public abstract Module getModule() throws MdaException;
-    public abstract Module getModule(boolean isCheckErrors) throws MdaException;
-
+    
     public abstract QVTOCompiler getCompiler() throws MdaException;
 
     public List<TransformationParameter> getParameters() throws MdaException {

@@ -16,6 +16,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtCompilerFacade.CompilationResult;
 
@@ -33,14 +34,19 @@ public class WorkspaceQvtModule extends QvtModule {
     }
     
     @Override
-	public Module getModule(boolean isCheckErrors) throws MdaException {
+    public Module getModule() throws MdaException {
         if(myModule == null) {
-        	CompilationResult result = QvtCompilerFacade.getCompiledModule(myTransformationFile, getQvtCompilerOptions(), null);
+            QvtCompilerOptions options = getQvtCompilerOptions();
+            if (options == null) {
+                options = new QvtCompilerOptions();
+            }
+            
+        	CompilationResult result = QvtCompilerFacade.getCompiledModule(myTransformationFile, options, null);
         	myUnit = result.getCompiledModule();
 //            QvtEngine engine = QvtEngine.getInstance(myTransformationFile);
 //            myUnit = engine.compileUnit(new EclipseFile(myTransformationFile), getQvtCompilerOptions(), null);
             
-            if (isCheckErrors) {
+            if (!options.isModuleWithErrorAllowed()) {
             	checkModuleErrors(myUnit);
             }
 
@@ -56,11 +62,6 @@ public class WorkspaceQvtModule extends QvtModule {
     public CompiledUnit getUnit() throws MdaException {
     	getModule();
     	return myUnit;
-    }
-    
-    @Override
-	public Module getModule() throws MdaException {
-    	return getModule(true);
     }
     
 	@Override

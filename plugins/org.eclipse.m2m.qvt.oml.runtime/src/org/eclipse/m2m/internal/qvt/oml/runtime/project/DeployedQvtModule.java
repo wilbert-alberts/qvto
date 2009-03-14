@@ -45,7 +45,7 @@ public class DeployedQvtModule extends QvtModule {
 	}
 	
     @Override
-	public Module getModule(boolean isCheckErrors) throws MdaException {
+	public Module getModule() throws MdaException {
         if (myModule == null) {           
             UnitResolver unitResolver = DeployedImportResolver.INSTANCE;
         	UnitProxy srcUnit = unitResolver.resolveUnit(moduleID);
@@ -65,7 +65,7 @@ public class DeployedQvtModule extends QvtModule {
            
             myUnit = qvtCompiler.compile(srcUnit, options, null);
             
-            if (isCheckErrors) {
+            if (!options.isModuleWithErrorAllowed()) {
             	checkModuleErrors(myUnit);
             }
             
@@ -75,11 +75,6 @@ public class DeployedQvtModule extends QvtModule {
         }
         
         return myModule;
-    }
-    
-    @Override
-	public Module getModule() throws MdaException {
-    	return getModule(true);
     }
     
 	@Override
