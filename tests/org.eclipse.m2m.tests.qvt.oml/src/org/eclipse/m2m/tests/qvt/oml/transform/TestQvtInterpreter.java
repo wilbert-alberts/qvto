@@ -98,7 +98,7 @@ public class TestQvtInterpreter extends TestTransformation {
             } else {
             	int i = 0;            	
             	for (Object object : output.getOutParamValues()) {
-            		ModelExtentContents outExtent = new ModelParameterExtent((EObject)object).getContents();            		
+            		ModelExtentContents outExtent = new ModelParameterExtent((EObject)object, null).getContents();            		
             		URI extentURI = saveModel("extent.param" + (++i), outExtent, new EclipseFile(transformation));            		
 					result.put(outExtent, extentURI);
             	}
