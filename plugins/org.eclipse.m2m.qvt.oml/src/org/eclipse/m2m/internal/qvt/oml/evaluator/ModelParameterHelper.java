@@ -161,7 +161,7 @@ public class ModelParameterHelper {
 				ModelInstance actualModel;
 				if(resolvedModel == null) {
 					// can't find any compatible model parameter, just create an empty extent
-					actualModel = createModel(modelParam, new ModelParameterExtent());	
+					actualModel = createModel(modelParam, new ModelParameterExtent(null));	
 				} else {
 					// take just the content as we have not found strictly compatible model parameter
 					// in the 1. pass, we have to create new model instance but reusing the extent

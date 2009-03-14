@@ -21,10 +21,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.UsageCrossReferencer;
 
@@ -34,21 +39,50 @@ import org.eclipse.emf.ecore.util.EcoreUtil.UsageCrossReferencer;
  */
 public class ModelParameterExtent {
 		
-	public ModelParameterExtent() {
-		this(Collections.<EObject>emptyList());
+	public ModelParameterExtent(ResourceSet rs) {
+		this(Collections.<EObject>emptyList(), rs);
 	}	
 
-	public ModelParameterExtent(List<EObject> initialEObjs) {
+	public ModelParameterExtent(EObject initialEObj, ResourceSet rs) {
+		this(Collections.singletonList(initialEObj), rs);
+	}
+			
+	public ModelParameterExtent(List<EObject> initialEObjs, ResourceSet rs) {
+		myResourceSet = rs;
 		myInitialEObjects = new ArrayList<EObject>();
 		myInitialEObjects.addAll(initialEObjs);
 		
 		myAdditionalEObjects = new ArrayList<EObject>(INITIAL_EXTENT_SIZE);
 	}
+
+	private Resource getInMemoryResource(boolean createOnDemand) {
+		if (myInMemoryResource == null) {
+			if (!createOnDemand) {
+				return null;
+			}
 			
-	public ModelParameterExtent(EObject initialEObj) {
-		this(Collections.singletonList(initialEObj));
+			myInMemoryResource = new ExtentResource();
+
+			if (myResourceSet == null) {
+				for (EObject obj : myInitialEObjects) {
+					if (obj.eResource() != null && obj.eResource().getResourceSet() != null) {
+						myResourceSet = obj.eResource().getResourceSet();
+						break;
+					}
+				}
+			}
+			if (myResourceSet != null) {
+				myResourceSet.getResources().add(myInMemoryResource);
+			}
+		}
+		
+		return myInMemoryResource;
 	}
 			
+	public ResourceSet getResourceSet() {
+		return myResourceSet;
+	}
+
 	public boolean isEmpty() {
 		return myInitialEObjects.isEmpty() && myAdditionalEObjects.isEmpty();
 	}
@@ -56,6 +90,7 @@ public class ModelParameterExtent {
 	public void addObject(EObject eObject) {
 		if (eObject != null) {
 			myAdditionalEObjects.add(eObject);
+			getInMemoryResource(true).getContents().add(eObject);
 			
 			if(++myCountAddedAfterPurge == PURGE_LIMIT_SIZE) {
 				purgeContents();
@@ -109,6 +144,23 @@ public class ModelParameterExtent {
 		List<EObject> initialObjects = new ArrayList<EObject>(myInitialEObjects);		
 		List<EObject> allRootObjects = new ArrayList<EObject>(myAdditionalEObjects);
 		allRootObjects.addAll(initialObjects);
+		
+		Resource inMemoryResource = getInMemoryResource(false);
+		if (inMemoryResource != null) {
+			for (EObject obj : inMemoryResource.getContents()) {
+				// don't forget about UML stereotype applications which are the root objects
+				if (obj.eContainer() == null && allRootObjects.contains(obj) == false) {
+					allRootObjects.add(obj);
+				}
+			}
+		}
+		
+		for (EObject obj : allRootObjects) {
+			if (((InternalEObject) obj).eDirectResource() instanceof ExtentResource) {
+				((InternalEObject) obj).eSetResource(null, null);
+			}
+		}
+		
 		return new ExtentContents(initialObjects, allRootObjects);
 	}
 		
@@ -129,11 +181,11 @@ public class ModelParameterExtent {
 	}
 	
 	private void purgeContents() {
-		purgeContents(myInitialEObjects);
-		purgeContents(myAdditionalEObjects);		
+		purgeContents(myInitialEObjects, false);
+		purgeContents(myAdditionalEObjects, true);		
 	}
 	
-	private void purgeContents(List<EObject> elements) {
+	private void purgeContents(List<EObject> elements, boolean isResetResource) {
 		ArrayList<EObject> result = null;		
 		for (Iterator<EObject> it = elements.iterator(); it.hasNext();) {
 			EObject nextElement = (EObject) it.next();
@@ -142,6 +194,13 @@ public class ModelParameterExtent {
 					result = new ArrayList<EObject>(elements.size());			
 				}
 				result.add(nextElement);
+			}
+			else {
+				if (isResetResource 
+						&& ((InternalEObject) nextElement).eDirectResource() instanceof ExtentResource) {
+					
+					((InternalEObject) nextElement).eSetResource(null, null);
+				}
 			}
 		}
 
@@ -219,48 +278,48 @@ public class ModelParameterExtent {
 		}
 	}	
 	
-/*	
-	private final Resource myInMemoryResource = new ExtentResource(); //$NON-NLS-1$	
+	private Resource myInMemoryResource;// = new ExtentResource();
+	private ResourceSet myResourceSet;
 		
-	**
-	 * Ensures consistency of associated model extents of the given element
-	 * and its container.
-	 * <p>
-	 * Remark: Intended to be used after assignment to containment reference which
-	 * may result in move of the element between extents
-	 * 
-	 * @param element the element to check for model extent consistency with its container
-	 * 
-	 * @return <code>true</code> if extent move occurred, <code>false</code> otherwise
-	 *
-	static boolean handlePossibleExtentSwitch(EObject element) {
-		EObject container = element.eContainer();
-		if(container == null) {
-			return false;
-		}
-		
-		if(element.eResource() != container.eResource()) {
-			InternalEObject internalEObject = (InternalEObject)element;
-			if(internalEObject.eDirectResource() != null) {
-				internalEObject.eSetResource(null, null);
-			} else {
-				
-			}
-			return true;
-		}
-		return false;
-	}
+//	/*
+//	 * Ensures consistency of associated model extents of the given element
+//	 * and its container.
+//	 * <p>
+//	 * Remark: Intended to be used after assignment to containment reference which
+//	 * may result in move of the element between extents
+//	 * 
+//	 * @param element the element to check for model extent consistency with its container
+//	 * 
+//	 * @return <code>true</code> if extent move occurred, <code>false</code> otherwise
+//	 */
+//	static boolean handlePossibleExtentSwitch(EObject element) {
+//		EObject container = element.eContainer();
+//		if(container == null) {
+//			return false;
+//		}
+//		
+//		if(element.eResource() != container.eResource()) {
+//			InternalEObject internalEObject = (InternalEObject)element;
+//			if(internalEObject.eDirectResource() != null) {
+//				internalEObject.eSetResource(null, null);
+//			} else {
+//				
+//			}
+//			return true;
+//		}
+//		return false;
+//	}
 	
 	
-	private void _purgeContents() {
-		for (Iterator<EObject> it = myAdditionalEObjects.iterator(); it.hasNext();) {
-			EObject nextElement = (EObject) it.next();
-			if(nextElement.eResource() != myInMemoryResource) {
-				// already unbound from this extent by assignment to a container from another extent
-				it.remove();
-			}
-		}
-	}
+//	private void _purgeContents() {
+//		for (Iterator<EObject> it = myAdditionalEObjects.iterator(); it.hasNext();) {
+//			EObject nextElement = (EObject) it.next();
+//			if(nextElement.eResource() != myInMemoryResource) {
+//				// already unbound from this extent by assignment to a container from another extent
+//				it.remove();
+//			}
+//		}
+//	}
 	
 	
 	private static class ExtentResource extends ResourceImpl {
@@ -268,7 +327,7 @@ public class ModelParameterExtent {
 		private static int ourExtentId = 0;
 		
 		ExtentResource() {
-			setURI(URI.createURI("extent:/" + (++ourExtentId)));
+			setURI(URI.createURI("extent:/" + (++ourExtentId))); //$NON-NLS-1$
 			setTrackingModification(false);
 		}
 		
@@ -297,5 +356,6 @@ public class ModelParameterExtent {
 			}
 		}
 	}
-*/	
+
+
 }

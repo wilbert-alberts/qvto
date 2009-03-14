@@ -877,7 +877,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         if (evalResult.getModelExtents().isEmpty()) {
             if (callResult.myResult instanceof EObject) {
                 // compatibility reason, make the main() operation return value available in an extent
-            	ModelParameterExtent modelParameter = new ModelParameterExtent((EObject) callResult.myResult);
+            	ModelParameterExtent modelParameter = new ModelParameterExtent((EObject) callResult.myResult, null);
                 evalResult.getModelExtents().add(modelParameter.getContents());
             } else {
                 return callResult.myResult;

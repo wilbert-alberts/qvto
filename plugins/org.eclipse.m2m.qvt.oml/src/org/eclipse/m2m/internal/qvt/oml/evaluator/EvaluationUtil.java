@@ -63,9 +63,10 @@ class EvaluationUtil {
 		OperationalTransformation transformation = transfInstance.getTransformation();
 		
 		for(ModelParameter modelParam : transformation.getModelParameter()) {
+			ModelInstance model = transfInstance.getModel(modelParam);
+			ModelExtentContents contents = model.getExtent().getContents();
 			if (modelParam.getKind() != DirectionKind.IN) {
-				ModelInstance model = transfInstance.getModel(modelParam);  
-	        	extents.add(model.getExtent().getContents());
+	        	extents.add(contents);
 			}			
 		}
 		

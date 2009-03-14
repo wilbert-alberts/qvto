@@ -732,7 +732,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	    @Override
 	    public ModelParameterExtent getUnboundExtent() {
 	    	if(myUnboundExtent == null) {
-	    		myUnboundExtent = new ModelParameterExtent();
+	    		myUnboundExtent = new ModelParameterExtent(null);
 	    	}
 	    	return myUnboundExtent;
 	    }

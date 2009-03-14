@@ -141,7 +141,7 @@ class TransformationInstanceImpl extends ModuleInstanceImpl implements Transform
 			if(ownedType instanceof ModelType) {
 				ModelType modelType = (ModelType) ownedType;			
 				if(IntermediateClassFactory.isIntermediateModelType(modelType)) {
-					fIntermediateData = new ModelInstanceImpl(modelType, new ModelParameterExtent());
+					fIntermediateData = new ModelInstanceImpl(modelType, new ModelParameterExtent(null));
 					return;
 				}
 			}

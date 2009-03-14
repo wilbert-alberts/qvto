@@ -82,7 +82,7 @@ public class ModuleInstanceFactory extends EFactoryImpl {
 
 			return result;
 		} else if(eClass instanceof ModelType) {
-			return new ModelInstanceImpl((ModelType) eClass, new ModelParameterExtent());
+			return new ModelInstanceImpl((ModelType) eClass, new ModelParameterExtent(null));
 		} else if(eClass instanceof TupleType) {
 			return TupleFactory.createTuple(eClass);
 		}

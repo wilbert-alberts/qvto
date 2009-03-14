@@ -45,7 +45,7 @@ class ModelInstanceImpl extends DynamicEObjectImpl  implements ModelInstance {
 	public ModelInstance copy() {
 		List<EObject> rootObjects = getExtent().getRootObjects();
 		List<EObject> copyAll = new ArrayList<EObject>(EcoreUtil.copyAll(rootObjects));
-		ModelParameterExtent extentCopy = new ModelParameterExtent(copyAll);
+		ModelParameterExtent extentCopy = new ModelParameterExtent(copyAll, getExtent().getResourceSet());
 		return new ModelInstanceImpl(getModelType(), extentCopy);
 	}
 
