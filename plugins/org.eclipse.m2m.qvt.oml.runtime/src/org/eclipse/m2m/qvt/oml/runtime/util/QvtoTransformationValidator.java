@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtModule;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.Messages;
@@ -38,8 +39,12 @@ public class QvtoTransformationValidator {
 	public static Diagnostic validateQvtoScript(URI uriTransf, IProgressMonitor monitor, Map<String, String> options) {
 		try {
             QvtModule qvtModule = TransformationUtil.getQvtModule(uriTransf);
-            qvtModule.getModule(false);
-            CompiledUnit compiledUnit = qvtModule.getUnit();
+
+        	QvtCompilerOptions qvtOptions = new QvtCompilerOptions();
+        	qvtOptions.setModuleWithErrorAllowed(true);
+        	qvtModule.setQvtCompilerOptions(qvtOptions);
+
+        	CompiledUnit compiledUnit = qvtModule.getUnit();
 
 	    	return fillCompilationDiagnostic(compiledUnit, uriTransf);
 		}

@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtModule;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.Messages;
@@ -58,7 +59,11 @@ public class QvtOperationalResourceImpl extends XMIResourceImpl {
             try {
             	URI normalizedUri = getURIConverter().normalize(getURI());
             	QvtModule qvtModule = TransformationUtil.getQvtModule(normalizedUri);
-            	qvtModule.getModule(false);
+
+            	QvtCompilerOptions qvtOptions = new QvtCompilerOptions();
+            	qvtOptions.setModuleWithErrorAllowed(true);
+            	qvtModule.setQvtCompilerOptions(qvtOptions);
+            	
             	CompiledUnit unit = qvtModule.getUnit();
 				fillCompilationDiagnostic(unit, normalizedUri);
 
