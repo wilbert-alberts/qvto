@@ -23,6 +23,7 @@ public class QvtCompilerOptions {
     private boolean isGenerateCompletionData = true;
     private boolean isEnableCSTModelToken = false;    
     private boolean isSourceLineNumbersEnabled = true;    
+    private boolean isModuleWithErrorAllowed = false;
 
     private ResourceSet myMetamodelResourceSet = null;
     
@@ -82,5 +83,13 @@ public class QvtCompilerOptions {
     
     public void enableCSTModelToken(boolean enable) {
 		this.isEnableCSTModelToken = enable;
+	}
+    
+    public boolean isModuleWithErrorAllowed() {
+		return isModuleWithErrorAllowed;
+	}
+    
+    public void setModuleWithErrorAllowed(boolean allowed) {
+		this.isModuleWithErrorAllowed = allowed;
 	}
 }
