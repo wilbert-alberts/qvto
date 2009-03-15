@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ConstructorBodyImpl.java,v 1.2 2009/01/28 22:22:44 sboyko Exp $
+ * $Id: ConstructorBodyImpl.java,v 1.3 2009/03/15 11:44:40 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -59,6 +59,7 @@ public class ConstructorBodyImpl extends OperationBodyImpl implements Constructo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
 		if(v instanceof org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor) {
 		  @SuppressWarnings("unchecked")    		

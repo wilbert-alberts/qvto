@@ -34,6 +34,9 @@ import org.eclipse.ocl.ecore.TupleType;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.util.CollectionUtil;
 
+/**
+ * @since 2.0
+ */
 public class ModuleInstanceFactory extends EFactoryImpl {
 
 	public interface PostCreateHandler {

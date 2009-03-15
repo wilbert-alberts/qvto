@@ -169,6 +169,7 @@ public class ASTBindingHelper {
         return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	static <AST> List<ASTAdapter<AST>> getASTBindings(EObject target) {
 		return getASTBindings(target, ASTAdapter.class);
 	}

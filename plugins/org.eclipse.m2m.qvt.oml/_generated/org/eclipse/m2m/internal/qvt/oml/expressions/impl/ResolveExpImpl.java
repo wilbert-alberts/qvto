@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ResolveExpImpl.java,v 1.7 2009/01/30 19:19:28 radvorak Exp $
+ * $Id: ResolveExpImpl.java,v 1.8 2009/03/15 11:44:40 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
@@ -356,7 +356,6 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {

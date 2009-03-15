@@ -9,15 +9,13 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ConstructorImpl.java,v 1.1 2009/01/28 22:22:44 sboyko Exp $
+ * $Id: ConstructorImpl.java,v 1.2 2009/03/15 11:44:40 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.expressions.impl;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.m2m.internal.qvt.oml.expressions.Constructor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
-
 import org.eclipse.ocl.utilities.Visitor;
 
 /**
@@ -61,6 +59,7 @@ public class ConstructorImpl extends ImperativeOperationImpl implements Construc
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
 		if(v instanceof org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor) {
 		  @SuppressWarnings("unchecked")    		

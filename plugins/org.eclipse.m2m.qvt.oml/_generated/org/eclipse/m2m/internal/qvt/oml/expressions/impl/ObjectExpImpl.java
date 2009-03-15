@@ -130,7 +130,6 @@ public class ObjectExpImpl extends InstantiationExpImpl implements ObjectExp {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	public Variable getReferredObject() {
 		if (referredObject != null && referredObject.eIsProxy()) {
 			InternalEObject oldReferredObject = (InternalEObject)referredObject;
@@ -215,7 +214,6 @@ public class ObjectExpImpl extends InstantiationExpImpl implements ObjectExp {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {

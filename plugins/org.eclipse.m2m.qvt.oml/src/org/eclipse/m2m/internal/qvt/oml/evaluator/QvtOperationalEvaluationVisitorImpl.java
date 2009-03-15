@@ -963,10 +963,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         return result;
     }
 
-	public Object visitClass(Class class_) {
-		return null;
-	}
-
     public Object visitVarParameter(VarParameter varParameter) {
         return null;
     }
