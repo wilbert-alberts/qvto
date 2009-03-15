@@ -17,7 +17,6 @@ import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.MetamodelRegistryProvi
 import org.eclipse.m2m.internal.qvt.oml.compiler.BlackboxUnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerMessages;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompositeUnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
@@ -46,16 +45,15 @@ public class DeployedQvtModule extends QvtModule {
 	
     @Override
 	public Module getModule() throws MdaException {
-        if (myModule == null) {           
-            UnitResolver unitResolver = DeployedImportResolver.INSTANCE;
+        if (myModule == null) {
+        	CustomDeployedImportResolver unitResolver = new CustomDeployedImportResolver();
         	UnitProxy srcUnit = unitResolver.resolveUnit(moduleID);
         	if (srcUnit == null) {
         		throw new MdaException(NLS.bind(CompilerMessages.importedModuleNotFound, moduleID));
         	}
+        	unitResolver.setParent(new BlackboxUnitResolver(srcUnit.getURI()));
         	
-            QVTOCompiler qvtCompiler = new QVTOCompiler(
-					new CompositeUnitResolver(new BlackboxUnitResolver(srcUnit.getURI()), unitResolver),
-					creatMetamodelRegistryProvider());
+            QVTOCompiler qvtCompiler = new QVTOCompiler(unitResolver, creatMetamodelRegistryProvider());
 
             QvtCompilerOptions options = getQvtCompilerOptions();
             if (options == null) {
@@ -92,5 +90,30 @@ public class DeployedQvtModule extends QvtModule {
     @Override
 	public String toString() {
         return "deployed:/" + moduleID; //$NON-NLS-1$
-    }	
+    }
+    
+    private static class CustomDeployedImportResolver extends DeployedImportResolver {
+
+		CustomDeployedImportResolver() {
+			super(DeployedImportResolver.INSTANCE.getBundleModules());
+		}
+		
+		@Override
+		public UnitProxy resolveUnit(String qualifiedName) {
+			UnitProxy unit = super.resolveUnit(qualifiedName);
+			if (unit == null) {
+				if (myParent != null) {
+					unit = myParent.resolveUnit(qualifiedName);
+				}
+			}
+			return unit;
+		}
+		
+		void setParent(UnitResolver parent) {
+			myParent = parent;
+		}
+    	
+		private UnitResolver myParent;
+    }
+
 }
