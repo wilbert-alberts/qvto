@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.m2m.qvt.oml.common.ui;singleton:=true
-Bundle-Version: 1.0.100.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.eclipse.m2m.internal.qvt.oml.common.ui.QvtCommonUIPlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -10,16 +10,16 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.ui.ide;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.debug.ui;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.edit.ui;bundle-version="[2.5.0,3.0.0)",
- org.eclipse.m2m.qvt.oml.common;bundle-version="[1.0.0,2.0.0)",
- org.eclipse.m2m.qvt.oml.emf.util;bundle-version="[1.0.0,2.0.0)",
- org.eclipse.m2m.qvt.oml.emf.util.ui;bundle-version="[1.0.0,2.0.0)",
+ org.eclipse.m2m.qvt.oml.common;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.m2m.qvt.oml.emf.util;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.m2m.qvt.oml.emf.util.ui;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.core.expressions;bundle-version="[3.4.0,4.0.0)"
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.m2m.internal.qvt.oml.common.ui,
- org.eclipse.m2m.internal.qvt.oml.common.ui.action,
- org.eclipse.m2m.internal.qvt.oml.common.ui.controls,
- org.eclipse.m2m.internal.qvt.oml.common.ui.launch,
- org.eclipse.m2m.internal.qvt.oml.common.ui.views,
- org.eclipse.m2m.internal.qvt.oml.common.ui.wizards,
- org.eclipse.m2m.internal.qvt.oml.common.ui.wizards.choosers
+Export-Package: org.eclipse.m2m.internal.qvt.oml.common.ui;x-friends:="org.eclipse.m2m.qvt.oml.runtime.ui,org.eclipse.m2m.qvt.oml.ui",
+ org.eclipse.m2m.internal.qvt.oml.common.ui.action;x-friends:="org.eclipse.m2m.qvt.oml.runtime.ui",
+ org.eclipse.m2m.internal.qvt.oml.common.ui.controls;x-friends:="org.eclipse.m2m.qvt.oml.runtime.ui",
+ org.eclipse.m2m.internal.qvt.oml.common.ui.launch;x-friends:="org.eclipse.m2m.qvt.oml.runtime.ui",
+ org.eclipse.m2m.internal.qvt.oml.common.ui.views;x-friends:="org.eclipse.m2m.qvt.oml.editor.ui",
+ org.eclipse.m2m.internal.qvt.oml.common.ui.wizards;x-friends:="org.eclipse.m2m.qvt.oml.runtime.ui",
+ org.eclipse.m2m.internal.qvt.oml.common.ui.wizards.choosers;x-internal:=true
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
