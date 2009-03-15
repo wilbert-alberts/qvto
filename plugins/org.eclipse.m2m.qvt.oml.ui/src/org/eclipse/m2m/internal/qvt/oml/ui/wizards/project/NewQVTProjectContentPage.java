@@ -15,6 +15,7 @@ import java.util.StringTokenizer;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jdt.core.JavaConventions;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
@@ -202,7 +203,7 @@ public class NewQVTProjectContentPage extends WizardPage {
                     buffer.append(ch);
 				}
                 else if (ch == '.'){
-                    status = JavaConventions.validatePackageName(buffer.toString());
+                    status = validatePackageName(buffer.toString());
                     if (status.getSeverity() == IStatus.ERROR) {
                         buffer.append(suffix.toLowerCase());
                     }
@@ -214,7 +215,7 @@ public class NewQVTProjectContentPage extends WizardPage {
 		while (tok.hasMoreTokens()) {
 			String token = tok.nextToken();
 			if (!tok.hasMoreTokens()){
-                status = JavaConventions.validatePackageName(buffer.toString());
+                status = validatePackageName(buffer.toString());
                 if (status.getSeverity() == IStatus.ERROR) {
                     buffer.append(suffix.toLowerCase());
                 }
@@ -268,7 +269,7 @@ public class NewQVTProjectContentPage extends WizardPage {
 			}	
 		}
 		if (errorMessage == null && myGenerateClass.isEnabled() && myGenerateClass.getSelection()) {
-			IStatus status = JavaConventions.validateJavaTypeName(myClassText.getText().trim());
+			IStatus status = validateJavaTypeName(myClassText.getText().trim());
 			if (status.getSeverity() == IStatus.ERROR) {
 				errorMessage = status.getMessage();
 			} else if (status.getSeverity() == IStatus.WARNING) {
@@ -375,4 +376,12 @@ public class NewQVTProjectContentPage extends WizardPage {
 		}
 		return true;
 	}
+	
+	private static IStatus validatePackageName(String name) {
+		return JavaConventions.validatePackageName(name, JavaCore.VERSION_1_3, JavaCore.VERSION_1_3);
+	}
+	
+	private static IStatus validateJavaTypeName(String name) {
+		return JavaConventions.validateJavaTypeName(name, JavaCore.VERSION_1_3, JavaCore.VERSION_1_3);
+	}	
 }
