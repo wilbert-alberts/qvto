@@ -66,12 +66,12 @@ public class EPackageNode extends EObjectNode {
     
     public static ChooserNode[] getChildNodes(EPackage pack, NodeMaker maker) {
         List<ChooserNode> nodes = new ArrayList<ChooserNode>();
-        for(Iterator it = pack.getESubpackages().iterator(); it.hasNext(); ) {
+        for(Iterator<?> it = pack.getESubpackages().iterator(); it.hasNext(); ) {
             EPackage subPack = (EPackage)it.next();
             nodes.add(maker.makePackageNode(subPack));
         }
             
-        for(Iterator it = pack.getEClassifiers().iterator(); it.hasNext(); ) {
+        for(Iterator<?> it = pack.getEClassifiers().iterator(); it.hasNext(); ) {
             EClassifier classifier = (EClassifier) it.next();
             if(classifier instanceof EClass) {
                 EClass cls = (EClass)classifier;

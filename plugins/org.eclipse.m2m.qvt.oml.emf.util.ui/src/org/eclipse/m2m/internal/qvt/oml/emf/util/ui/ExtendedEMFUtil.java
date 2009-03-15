@@ -30,7 +30,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory.Descriptor;
  */
 public class ExtendedEMFUtil {
 	
-	public static Collection<AdapterFactory> getAdapterFactories(EPackage ePackage, Class[] requiredClasses) {
+	public static Collection<AdapterFactory> getAdapterFactories(EPackage ePackage, Class<?>[] requiredClasses) {
 		Set<AdapterFactory> adapterFactories = new LinkedHashSet<AdapterFactory>();
 		for (int i = 0; i < requiredClasses.length; i++) {
 			List<Object> types = new ArrayList<Object>();

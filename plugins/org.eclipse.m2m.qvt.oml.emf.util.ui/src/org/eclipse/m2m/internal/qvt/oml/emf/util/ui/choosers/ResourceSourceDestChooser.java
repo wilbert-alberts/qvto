@@ -22,11 +22,13 @@ public class ResourceSourceDestChooser extends ResourceSourceChooser implements 
     	super(false, rs);
     }
     
-    protected String getDefaultFileName() {
+    @Override
+	protected String getDefaultFileName() {
 		return myFileName;
 	}
     
-    public void setInitialSelection(String uriString) {
+    @Override
+	public void setInitialSelection(String uriString) {
     	myFileName = myDefaultFileName;
     	
     	URI uri = URI.createURI(uriString);

@@ -97,5 +97,5 @@ public class EPackageSorter extends ViewerSorter {
         return -1;
     }
     
-    private final Class[] METAS = new Class[] { EPackage.class, EClass.class };
+    private final Class<?>[] METAS = new Class[] { EPackage.class, EClass.class };
 }

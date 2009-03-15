@@ -64,7 +64,8 @@ public class ShallowMarker implements IMarker {
         return ((Boolean)attr).booleanValue();
     }
 
-    public Map getAttributes() {
+    @SuppressWarnings("unchecked")
+	public Map getAttributes() {
         return myAttributes;
     }
 
@@ -125,7 +126,8 @@ public class ShallowMarker implements IMarker {
         myAttributes.putAll(attributes);
     }
 
-    public Object getAdapter(Class adapter) {
+    @SuppressWarnings("unchecked")
+	public Object getAdapter(Class adapter) {
         return null;
     }
     

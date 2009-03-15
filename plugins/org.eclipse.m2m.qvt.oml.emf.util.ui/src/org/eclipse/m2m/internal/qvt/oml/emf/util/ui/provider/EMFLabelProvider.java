@@ -96,7 +96,7 @@ public class EMFLabelProvider implements ILabelProvider {
 
 	public void dispose() {
 		Set<ILabelProvider> providers = new HashSet<ILabelProvider>(myLabelProvidersMap.values());
-		for (Iterator iter = providers.iterator(); iter.hasNext();) {
+		for (Iterator<?> iter = providers.iterator(); iter.hasNext();) {
 			ILabelProvider labelProvider = (ILabelProvider) iter.next();
 			labelProvider.dispose();
 		}
@@ -112,7 +112,7 @@ public class EMFLabelProvider implements ILabelProvider {
 	
 	private final Map<Object, ILabelProvider> myLabelProvidersMap = new HashMap<Object, ILabelProvider>();
 
-	private static final Class[] REQUIRED_CLASSES = { IItemLabelProvider.class };
+	private static final Class<?>[] REQUIRED_CLASSES = { IItemLabelProvider.class };
 	
 }
 
