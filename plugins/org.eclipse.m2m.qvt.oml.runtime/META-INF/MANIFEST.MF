@@ -2,17 +2,21 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.m2m.qvt.oml.runtime; singleton:=true
-Bundle-Version: 1.0.100.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Export-Package: org.eclipse.m2m.internal.qvt.oml.runtime,
- org.eclipse.m2m.internal.qvt.oml.runtime.ant,
- org.eclipse.m2m.internal.qvt.oml.runtime.generator,
- org.eclipse.m2m.internal.qvt.oml.runtime.launch,
- org.eclipse.m2m.internal.qvt.oml.runtime.project,
- org.eclipse.m2m.internal.qvt.oml.runtime.project.config,
- org.eclipse.m2m.internal.qvt.oml.runtime.util,
+Export-Package: org.eclipse.m2m.internal.qvt.oml.runtime;x-internal:=true,
+ org.eclipse.m2m.internal.qvt.oml.runtime.ant;x-internal:=true,
+ org.eclipse.m2m.internal.qvt.oml.runtime.generator;x-friends:="org.eclipse.m2m.tests.qvt.oml",
+ org.eclipse.m2m.internal.qvt.oml.runtime.launch;x-friends:="org.eclipse.m2m.qvt.oml.runtime.ui,org.eclipse.m2m.tests.qvt.oml",
+ org.eclipse.m2m.internal.qvt.oml.runtime.project;
+  x-friends:="org.eclipse.m2m.qvt.oml.runtime.ui,
+   org.eclipse.m2m.qvt.oml.editor.ui,
+   org.eclipse.m2m.qvt.oml.project,
+   org.eclipse.m2m.tests.qvt.oml",
+ org.eclipse.m2m.internal.qvt.oml.runtime.project.config;x-friends:="org.eclipse.m2m.qvt.oml.runtime.ui",
+ org.eclipse.m2m.internal.qvt.oml.runtime.util;x-friends:="org.eclipse.m2m.qvt.oml.runtime.ui,org.eclipse.m2m.tests.qvt.oml",
  org.eclipse.m2m.qvt.oml.runtime.util
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.variables;bundle-version="[3.0.0,4.0.0)",
@@ -21,7 +25,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecore.xmi;bundle-version="[2.5.0,3.0.0)",
  org.apache.ant;bundle-version="[1.7.1,2.0.0)",
  org.eclipse.m2m.qvt.oml;bundle-version="[2.0.0,3.0.0)",
- org.eclipse.m2m.qvt.oml.common;bundle-version="[1.0.0,2.0.0)",
- org.eclipse.m2m.qvt.oml.emf.util;bundle-version="[1.0.0,2.0.0)"
+ org.eclipse.m2m.qvt.oml.common;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.m2m.qvt.oml.emf.util;bundle-version="[2.0.0,3.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

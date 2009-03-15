@@ -14,7 +14,7 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.project.config;
 
 public class PrimitiveType extends QvtConfigurationPropertyType {
 
-    public PrimitiveType(Class cl) {
+    public PrimitiveType(Class<?> cl) {
         myClass = cl;
     }
     
@@ -54,5 +54,5 @@ public class PrimitiveType extends QvtConfigurationPropertyType {
         } else throw new IllegalArgumentException(org.eclipse.m2m.internal.qvt.oml.runtime.project.config.Messages.Non_primitive_type);
     }
     
-    private final Class myClass;
+    private final Class<?> myClass;
 }
