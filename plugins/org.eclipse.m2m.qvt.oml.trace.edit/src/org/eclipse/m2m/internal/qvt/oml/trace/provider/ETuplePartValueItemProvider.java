@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ETuplePartValueItemProvider.java,v 1.2 2008/12/18 15:18:17 radvorak Exp $
+ * $Id: ETuplePartValueItemProvider.java,v 1.3 2009/03/15 10:13:59 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
@@ -19,7 +19,6 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
