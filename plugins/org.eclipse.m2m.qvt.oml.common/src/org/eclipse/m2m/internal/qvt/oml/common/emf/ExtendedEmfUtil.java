@@ -41,7 +41,7 @@ public class ExtendedEmfUtil {
     }
     
     public static void saveModel(Resource extent, CFile file) throws MdaException {
-    	Map options = EmfUtil.DEFAULT_SAVE_OPTIONS;
+    	Map<?,?> options = EmfUtil.DEFAULT_SAVE_OPTIONS;
         try {
         	URI uri = URI.createURI(file.getFileStore().toURI().toString());
 			EmfUtil.saveModel(extent, uri, options);
@@ -63,7 +63,7 @@ public class ExtendedEmfUtil {
         saveModel(eObject, file, EmfUtil.DEFAULT_SAVE_OPTIONS);
     }
 
-    public static void saveModel(EObject eObject, CFile file, Map options) throws MdaException {
+    public static void saveModel(EObject eObject, CFile file, Map<?,?> options) throws MdaException {
         try {
         	URI uri = URI.createURI(file.getFileStore().toURI().toString());
 			EmfUtil.saveModel(eObject, uri, options);

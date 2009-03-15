@@ -15,10 +15,9 @@ import java.io.IOException;
 
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFolder;
 
 
-public class EclipseFolder extends EclipseContainer implements CFolder {
+public class EclipseFolder extends EclipseContainer {
 	EclipseFolder(IFolder folder) {
 		super(folder);
 	}

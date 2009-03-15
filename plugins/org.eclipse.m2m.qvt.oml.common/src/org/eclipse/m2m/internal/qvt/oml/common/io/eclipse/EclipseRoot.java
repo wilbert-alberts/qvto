@@ -14,10 +14,9 @@ package org.eclipse.m2m.internal.qvt.oml.common.io.eclipse;
 import java.io.IOException;
 
 import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFolder;
 
 
-public class EclipseRoot extends EclipseContainer implements CFolder {
+public class EclipseRoot extends EclipseContainer {
 	EclipseRoot(IWorkspaceRoot root) {
 		super(root);
 	}

@@ -14,10 +14,9 @@ package org.eclipse.m2m.internal.qvt.oml.common.io.eclipse;
 import java.io.IOException;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFolder;
 
 
-public class EclipseProject extends EclipseContainer implements CFolder {
+public class EclipseProject extends EclipseContainer {
 	EclipseProject(IProject project) {
 		super(project);
 	}
