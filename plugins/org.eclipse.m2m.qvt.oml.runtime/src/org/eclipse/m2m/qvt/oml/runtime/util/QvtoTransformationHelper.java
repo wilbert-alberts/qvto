@@ -51,6 +51,8 @@ import org.eclipse.osgi.util.NLS;
 
 /**
  * @author sboyko
+ * 
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public class QvtoTransformationHelper {
 
