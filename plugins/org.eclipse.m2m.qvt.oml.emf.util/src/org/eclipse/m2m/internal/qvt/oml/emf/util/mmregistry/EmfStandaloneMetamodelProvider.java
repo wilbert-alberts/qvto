@@ -56,7 +56,7 @@ public class EmfStandaloneMetamodelProvider implements IMetamodelProvider {
         return (IMetamodelDesc[])descs.toArray(new IMetamodelDesc[descs.size()]);
     }
     
-    private static final Map getUriToNamespaceMap() {
+    private static final Map<String, String> getUriToNamespaceMap() {
         Map<String, String> map = new HashMap<String, String>();
         
         IConfigurationElement[] configurationElements = Platform.getExtensionRegistry().getConfigurationElementsFor(EmfPluginRegistryMetamodelProvider.POINT);
