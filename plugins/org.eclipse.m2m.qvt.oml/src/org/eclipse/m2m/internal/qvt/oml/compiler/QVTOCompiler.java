@@ -604,14 +604,6 @@ public class QVTOCompiler {
 			unit = legacyResolver.resolveUnit(importingUnit, unitQualifiedName);
     	}
     	
-		if(unit == null) {
-			// FIXME - [268596] Deployed module should be able to resolve blackbox imports
-			// we should not do this, the loading resolver of the importing unit 
-			// should be used ensuring correct visibility of imports.
-			// The deployed unit resolver should delegate blackbox resolver
-			unit = getImportResolver().resolveUnit(unitQualifiedName);
-		}
-		
     	return unit;
 	}
     
