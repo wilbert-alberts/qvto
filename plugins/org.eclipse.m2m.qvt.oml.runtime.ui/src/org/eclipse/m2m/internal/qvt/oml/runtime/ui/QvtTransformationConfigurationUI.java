@@ -355,10 +355,10 @@ public class QvtTransformationConfigurationUI {
     }
 
     private CellEditor getEnumComboBox(EEnum eEnum) {
-        EList literals = eEnum.getELiterals();
+        EList<?> literals = eEnum.getELiterals();
         String[] items = new String[literals.size()];
         int  i = 0;
-        for (Iterator iter = literals.iterator(); iter.hasNext(); i++) {
+        for (Iterator<?> iter = literals.iterator(); iter.hasNext(); i++) {
             EEnumLiteral literal = (EEnumLiteral) iter.next();
             items[i] = literal.getLiteral();
         }
