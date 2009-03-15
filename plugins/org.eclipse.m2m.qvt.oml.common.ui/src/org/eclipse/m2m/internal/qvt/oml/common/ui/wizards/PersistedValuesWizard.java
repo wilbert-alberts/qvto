@@ -77,7 +77,7 @@ public abstract class PersistedValuesWizard extends Wizard {
      *         but some section just doesn't have some of key entries this section is returned (with
      *         lost entries added), if none found a new section is created and with key values set 
      */
-    public PreferenceSection loadValues(Map keys) {
+    public PreferenceSection loadValues(Map<String, ?> keys) {
         // The root section, corresponding to the wizard
         IDialogSettings section = myPlugin.getDialogSettings().getSection(getClass().getName());
         if (section == null) {
@@ -165,9 +165,9 @@ public abstract class PersistedValuesWizard extends Wizard {
     private static final int SECTIONS_DIFFERENT = -1;
     private static final int SECTIONS_EQUAL = 0;
     private static final int SECTIONS_EQUAL_WITH_IMPLIED = 1;
-    private int checkSectionEquals(IDialogSettings section, Map keys) {
+    private int checkSectionEquals(IDialogSettings section, Map<String,?> keys) {
         int result = SECTIONS_EQUAL;
-        for (Iterator i = keys.keySet().iterator(); i.hasNext();) {
+        for (Iterator<String> i = keys.keySet().iterator(); i.hasNext();) {
             String key = (String) i.next();
             String value = section.get(key);
             if (!keys.get(key).equals(value)) {
@@ -186,9 +186,9 @@ public abstract class PersistedValuesWizard extends Wizard {
      * Initializes newly loaded section: stores key valus and sets a time stamp
      * @param section
      */
-    private void initSection(PreferenceSection section, Map keys) {
+    private void initSection(PreferenceSection section, Map<String, ?> keys) {
         section.put(TIMESTAMP, new Date().getTime());
-        for (Iterator i = keys.keySet().iterator(); i.hasNext();) {
+        for (Iterator<String> i = keys.keySet().iterator(); i.hasNext();) {
             String key = (String) i.next();
             section.put(key, (String) keys.get(key));
         }        

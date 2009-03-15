@@ -94,7 +94,7 @@ public class ComplexClassifierProvider extends AbstractClassifierProvider implem
 		int offset = 0;
 		boolean firstPart = true;
 		
-		for (Iterator iter = parts.iterator(); iter.hasNext(); firstPart = false) {
+		for (Iterator<String> iter = parts.iterator(); iter.hasNext(); firstPart = false) {
 			String part = (String) iter.next();
 			boolean found = false;
 			
