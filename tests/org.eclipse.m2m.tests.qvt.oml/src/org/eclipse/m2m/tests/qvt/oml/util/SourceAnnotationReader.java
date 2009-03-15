@@ -318,10 +318,12 @@ public class SourceAnnotationReader {
 			this.length = length;
 		}
 
+		@Override
 		public int hashCode() {
 		 	return (offset << 24) | (length << 16);
 		 }
 
+		@Override
 		public boolean equals(Object other) {
 			if (other instanceof Position) {
 				Position rp= (Position) other;
@@ -330,6 +332,7 @@ public class SourceAnnotationReader {
 			return super.equals(other);
 		}
 
+		@Override
 		public String toString() {
 			String position= "offset: " + offset + ", length: " + length; //$NON-NLS-1$//$NON-NLS-2$
 			return position;
