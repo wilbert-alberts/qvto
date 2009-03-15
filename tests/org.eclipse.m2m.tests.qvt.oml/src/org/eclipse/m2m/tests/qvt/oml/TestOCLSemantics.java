@@ -42,6 +42,7 @@ import org.eclipse.ocl.expressions.IntegerLiteralExp;
  * This test class is to check for MDT OCL implementation dependant semantics, not covered in detail by
  * the OCL specification.   
  */
+@SuppressWarnings("unchecked")
 public class TestOCLSemantics extends TestCase {
 
 	private CheckPointVisitor checkPointVisitor;
