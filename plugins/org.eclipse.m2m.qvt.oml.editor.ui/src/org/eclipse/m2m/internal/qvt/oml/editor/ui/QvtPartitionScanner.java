@@ -35,6 +35,7 @@ public class QvtPartitionScanner extends RuleBasedPartitionScanner {
         IPredicateRule[] rules = new IPredicateRule[] {
             new MultiLineRule("/*", "*/", qvtComment, (char) 0, true), //$NON-NLS-1$ //$NON-NLS-2$
             new EndOfLineRule("--", qvtComment), //$NON-NLS-1$
+            new EndOfLineRule("//", qvtComment), //$NON-NLS-1$
             new MultiLineRule("'", "'", qvtString, ESCAPE_CHAR, true), //$NON-NLS-1$ //$NON-NLS-2$
             new MultiLineRule("\"", "\"", qvtString, ESCAPE_CHAR, true) //$NON-NLS-1$ //$NON-NLS-2$
         };
