@@ -35,14 +35,15 @@ import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.BundleFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.BundleModuleRegistry;
 import org.eclipse.m2m.internal.qvt.oml.common.project.IRegistryConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.project.TransformationRegistry;
-import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
+import org.eclipse.m2m.internal.qvt.oml.compiler.BlackboxUnitResolver;
+import org.eclipse.m2m.internal.qvt.oml.compiler.DelegatingUnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.LegacyResolverSupport;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitContents;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProvider;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
 
-public class DeployedImportResolver implements LegacyResolverSupport, IImportResolver {
+public class DeployedImportResolver extends DelegatingUnitResolver implements LegacyResolverSupport {
 		
 	/**
 	 * A single instance registry including all bundles with registered QVT
@@ -63,8 +64,9 @@ public class DeployedImportResolver implements LegacyResolverSupport, IImportRes
 			throw new IllegalArgumentException();
 		}
 		bundleModules = bundleRegistryList;
+		setParent(BlackboxUnitResolver.DEFAULT);
 	}
-	
+
 	protected List<BundleModuleRegistry> getBundleModules() {
 		return bundleModules;
 	}
@@ -189,7 +191,8 @@ public class DeployedImportResolver implements LegacyResolverSupport, IImportRes
 		throw new UnsupportedOperationException();		
 	}
 
-	public UnitProxy resolveUnit(String qualifiedName) {
+	@Override
+	protected UnitProxy doResolveUnit(String qualifiedName) {
 		CFile resolved = resolveImport(qualifiedName);
 		if(resolved == null) {
 			return null;
@@ -197,6 +200,10 @@ public class DeployedImportResolver implements LegacyResolverSupport, IImportRes
 		
 		BundleFile bundleFile = (BundleFile) resolved;
 		return createUnit(qualifiedName, createBundFileURI(bundleFile));
+	}
+	
+	public UnitProxy resolveDeployedUnitOnly(String qualifiedName) {
+		return doResolveUnit(qualifiedName);
 	}
 
 	/**

@@ -28,7 +28,6 @@ import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.project.CompiledTransformation;
-import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
@@ -76,7 +75,7 @@ public class QvtCompiledTransformation implements QvtTransformation, CompiledTra
     }
 
     public URI getUri() {
-        IImportResolver importResolver = DeployedImportResolver.INSTANCE;
+    	DeployedImportResolver importResolver = DeployedImportResolver.INSTANCE;
     	CFile srcFile = importResolver.resolveImport(myId);
     	if (srcFile != null) {
     		return EmfUtil.makeUri(srcFile.toString()); 

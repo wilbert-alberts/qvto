@@ -18,7 +18,7 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
-import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolverFactory;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
@@ -62,7 +62,7 @@ public class QvtCompilerFacade {
         }
 
         try {
-			IImportResolverFactory factory = IImportResolverFactory.Registry.INSTANCE.getFactory(ifile);
+			UnitResolverFactory factory = UnitResolverFactory.Registry.INSTANCE.getFactory(ifile);
 			UnitProxy sourceUnit = null;
 			
 			if(factory != null) {
