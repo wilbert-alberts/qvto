@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexersym.java,v 1.66 2009/03/16 17:41:11 aigdalov Exp $
+* $Id: QvtOpLexersym.java,v 1.67 2009/03/16 17:52:22 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexersym.java,v 1.66 2009/03/16 17:41:11 aigdalov Exp $
+* $Id: QvtOpLexersym.java,v 1.67 2009/03/16 17:52:22 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
