@@ -49,7 +49,6 @@ public class CompletionTestDataCreator extends CompletionTest {
 		}
 	}
 	
-	private static final String NL = System.getProperty("line.separator"); //$NON-NLS-1$
 	private final StringBuffer myProposalBuffer = new StringBuffer();
 
 }
