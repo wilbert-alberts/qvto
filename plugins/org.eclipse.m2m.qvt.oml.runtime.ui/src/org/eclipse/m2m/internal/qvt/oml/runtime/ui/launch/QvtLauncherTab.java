@@ -38,7 +38,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.MdaLaunchTab;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.OptionalFileGroup;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.TransformationControls;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
-import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolverFactory;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
@@ -195,7 +195,7 @@ public class QvtLauncherTab extends MdaLaunchTab {
         // FIXME - strange error condition processing
         try {
         	URI uri = URIUtils.getResourceURI(file);
-        	UnitProxy unit = IImportResolverFactory.Registry.INSTANCE.getFactory(file).findUnit(uri);
+        	UnitProxy unit = UnitResolverFactory.Registry.INSTANCE.getFactory(file).findUnit(uri);
         	if(unit == null) {
         		return;
         	}
