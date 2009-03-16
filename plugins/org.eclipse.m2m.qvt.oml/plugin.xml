@@ -2,7 +2,7 @@
 <?eclipse version="3.0"?>
 <plugin>
 
-   <extension-point id="importResolverFactory" name="importResolverFactory" schema="schema/importResolverFactory.exsd"/>
+   <extension-point id="unitResolverFactory" name="Unit Resolver Factory" schema="schema/unitResolverFactory.exsd"/>
    <extension-point id="blackboxProvider" name="Black box provider" schema="schema/blackboxProviders.exsd"/>
    <extension-point id="javaBlackboxUnits" name="Java blackbox compilation units" schema="schema/javaBlackboxUnits.exsd"/>
     

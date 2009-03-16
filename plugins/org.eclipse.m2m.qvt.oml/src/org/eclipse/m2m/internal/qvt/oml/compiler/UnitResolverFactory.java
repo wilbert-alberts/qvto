@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007 Borland Software Corporation
+ * Copyright (c) 2009 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -24,28 +24,27 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 
 
-public interface IImportResolverFactory {
+public interface UnitResolverFactory {
+
 	boolean isAccepted(Object source);
-	
-	IImportResolver createResolver(Object source);
 	
 	UnitResolver getResolver(URI uri);
 
 	UnitProxy findUnit(URI unitURI);
 	
 	interface Registry {
-		String POINT_ID = QvtPlugin.ID + ".importResolverFactory"; //$NON-NLS-1$
+		String POINT_ID = QvtPlugin.ID + ".unitResolverFactory"; //$NON-NLS-1$
 		String CLASS_ATTR = "class"; //$NON-NLS-1$
 		
-		IImportResolverFactory getFactory(Object source);
+		UnitResolverFactory getFactory(Object source);		
 		
-		
+		UnitProxy getUnit(URI uri);
 		
 		Registry INSTANCE = new Registry() {
-			private List<IImportResolverFactory> factories = readFactories();
+			private List<UnitResolverFactory> factories = readFactories();
 			
-			public IImportResolverFactory getFactory(Object source) {
-				for (IImportResolverFactory nextFactory : factories) {
+			public UnitResolverFactory getFactory(Object source) {
+				for (UnitResolverFactory nextFactory : factories) {
 					if(nextFactory.isAccepted(source)) {
 						return nextFactory;
 					}
@@ -53,8 +52,16 @@ public interface IImportResolverFactory {
 				return null;
 			}
 			
-			private List<IImportResolverFactory> readFactories() {
-				ArrayList<IImportResolverFactory> factoryEntries = new ArrayList<IImportResolverFactory>();
+			public UnitProxy getUnit(URI uri) {
+				UnitResolverFactory factory = getFactory(uri);
+				if(factory != null) {
+					return factory.findUnit(uri);
+				}
+				return null;
+			}		
+			
+			private List<UnitResolverFactory> readFactories() {
+				ArrayList<UnitResolverFactory> factoryEntries = new ArrayList<UnitResolverFactory>();
 				IExtensionRegistry pluginRegistry = Platform.getExtensionRegistry();
 				IExtensionPoint extensionPoint = pluginRegistry.getExtensionPoint(POINT_ID);
 				if(extensionPoint != null) {
@@ -64,8 +71,8 @@ public interface IImportResolverFactory {
 						Object factoryObj = null;
 						try {
 							factoryObj = elements[0].createExecutableExtension(CLASS_ATTR);
-							if(factoryObj instanceof IImportResolverFactory) {
-								factoryEntries.add((IImportResolverFactory)factoryObj);
+							if(factoryObj instanceof UnitResolverFactory) {
+								factoryEntries.add((UnitResolverFactory)factoryObj);
 							}
 						} catch (CoreException e) {
 							QvtPlugin.log(e);

@@ -14,6 +14,7 @@ package org.eclipse.m2m.internal.qvt.oml.compiler;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFolder;
 
+@Deprecated
 public interface IImportResolver {
 	CFile resolveImport(String importedUnitName);
 	CFile resolveImport(CFile parentFile, String importedUnitName);
