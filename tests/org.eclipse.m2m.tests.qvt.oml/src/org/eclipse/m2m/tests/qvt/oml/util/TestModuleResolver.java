@@ -70,8 +70,8 @@ public class TestModuleResolver implements UnitResolver {
 			UnitResolver fBlackboxResolver = new BlackboxUnitResolver(URI.createPlatformPluginURI(bundleSymbolicName, false));
 
 			@Override
-			public UnitProxy resolveUnit(String qualifiedName) {			
-				UnitProxy unit = super.resolveUnit(qualifiedName);
+			public UnitProxy doResolveUnit(String qualifiedName) {			
+				UnitProxy unit = super.doResolveUnit(qualifiedName);
 				if(unit == null) {
 					unit = fBlackboxResolver.resolveUnit(qualifiedName);
 				}

@@ -1,0 +1,5 @@
+library Lib1;
+
+helper testHelper1() : String {
+	return "";
+}
