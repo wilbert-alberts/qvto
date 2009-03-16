@@ -14,6 +14,8 @@ package org.eclipse.m2m.tests.qvt.oml;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,7 +26,6 @@ import java.util.Set;
 import junit.framework.TestCase;
 
 import org.eclipse.core.resources.IContainer;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
@@ -32,6 +33,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.URIUtil;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
@@ -216,7 +218,7 @@ public class TestQvtParser extends TestCase {
     
 	private CompiledUnit[] compile(File folder) throws Exception {
 		final String topName = folder.getName() + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT;
-		File topFile = getFile(folder, topName);
+		getFile(folder, topName);
 		WorkspaceUnitResolver resolver = new WorkspaceUnitResolver(Collections.singletonList(getIFolder(folder)));
 		QVTOCompiler compiler = new QVTOCompiler(resolver);
 		
@@ -233,21 +235,10 @@ public class TestQvtParser extends TestCase {
         return file;
 	}
     
-	private static IFile getIFile(File fileUnderWorkspace) {
-		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		IPath location = new Path(fileUnderWorkspace.getAbsolutePath());
-		IFile ifile = workspace.getRoot().getFileForLocation(location);
-		if(ifile == null) {
-			throw new RuntimeException("File not found: " + fileUnderWorkspace); //$NON-NLS-1$
-		}
-		
-		return ifile;
-	}
-	
-	private IContainer getIFolder(File folderUnderWorkspace) {
+	private IContainer getIFolder(File folderUnderWorkspace) throws MalformedURLException, URISyntaxException {
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IPath location = new Path(folderUnderWorkspace.getAbsolutePath());
-		IContainer[] containers = workspace.getRoot().findContainersForLocation(location);
+		IContainer[] containers = workspace.getRoot().findContainersForLocationURI(URIUtil.toURI(location.makeAbsolute().toFile().toURL()));
 		if(containers == null || containers.length != 1 || containers[0] instanceof IFolder == false) {
 			throw new RuntimeException("Folder not found: " + folderUnderWorkspace); //$NON-NLS-1$
 		}
