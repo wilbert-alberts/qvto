@@ -34,7 +34,6 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
-import org.eclipse.m2m.internal.qvt.oml.library.IConfiguration;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchConfigurationDelegateBase;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtCompilerFacade;
@@ -144,13 +143,6 @@ public class QvtoTransformationHelper {
             		transf.cleanup();
                 }
 
-				private IConfiguration getConfiguration(final Map<String, Object> inConfigProperties) {
-					return new IConfiguration() {
-						public String getProperty(String name) {
-							return inConfigProperties.get(name).toString();
-						}						
-					};
-				}
             };
             
             r = QvtLaunchConfigurationDelegateBase.getSafeRunnable(transf, r);
