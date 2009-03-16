@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLexer.g,v 1.6 2009/02/12 16:49:33 aigdalov Exp $
+-- * $Id: QvtOpLexer.g,v 1.7 2009/03/16 17:41:12 aigdalov Exp $
 -- */
 --
 -- The QVT Lexer
@@ -89,7 +89,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLexer.g,v 1.6 2009/02/12 16:49:33 aigdalov Exp $
+ * $Id: QvtOpLexer.g,v 1.7 2009/03/16 17:41:12 aigdalov Exp $
  */
 	./
 $End
@@ -189,4 +189,7 @@ $Rules
 
 	SLNotDQOpt -> $empty
 			| SLNotDQ
+
+	SLC -> '/' '/'
+
 $End

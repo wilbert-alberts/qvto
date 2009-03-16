@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexersym.java,v 1.65 2009/03/12 15:03:51 aigdalov Exp $
+* $Id: QvtOpLexersym.java,v 1.66 2009/03/16 17:41:11 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexersym.java,v 1.65 2009/03/12 15:03:51 aigdalov Exp $
+* $Id: QvtOpLexersym.java,v 1.66 2009/03/16 17:41:11 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -105,7 +105,7 @@ public interface QvtOpLexersym {
       Char_8 = 9,
       Char_9 = 10,
       Char_AfterASCIINotAcute = 67,
-      Char_Space = 72,
+      Char_Space = 73,
       Char_DoubleQuote = 78,
       Char_SingleQuote = 99,
       Char_Percent = 95,
@@ -116,10 +116,10 @@ public interface QvtOpLexersym {
       Char_Acute = 101,
       Char_Tilde = 83,
       Char_Sharp = 96,
-      Char_DollarSign = 73,
+      Char_DollarSign = 74,
       Char_Ampersand = 97,
-      Char_Caret = 74,
-      Char_Colon = 75,
+      Char_Caret = 75,
+      Char_Colon = 76,
       Char_SemiColon = 84,
       Char_BackSlash = 98,
       Char_LeftBrace = 85,
@@ -133,8 +133,8 @@ public interface QvtOpLexersym {
       Char_GreaterThan = 17,
       Char_Plus = 70,
       Char_Minus = 68,
-      Char_Slash = 76,
-      Char_Star = 71,
+      Char_Slash = 71,
+      Char_Star = 72,
       Char_LeftParen = 91,
       Char_RightParen = 92,
       Char_Equal = 11,
@@ -212,12 +212,12 @@ public interface QvtOpLexersym {
                  "Minus",
                  "LessThan",
                  "Plus",
+                 "Slash",
                  "Star",
                  "Space",
                  "DollarSign",
                  "Caret",
                  "Colon",
-                 "Slash",
                  "HT",
                  "DoubleQuote",
                  "VerticalBar",
