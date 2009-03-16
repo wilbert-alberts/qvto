@@ -28,7 +28,7 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
-import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolverFactory;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
@@ -294,7 +294,7 @@ public class QvtCompletionData {
     
     private QvtCompletionCompiler createQvtCompiler() {
         IProject project = myIFile.getProject();
-        IImportResolverFactory resolverFactory = IImportResolverFactory.Registry.INSTANCE.getFactory(project);        
+        UnitResolverFactory resolverFactory = UnitResolverFactory.Registry.INSTANCE.getFactory(project);        
         UnitResolver importResolver = resolverFactory.getResolver(URIUtils.getResourceURI(project));
         QvtCompletionCompiler qvtCompiler = new QvtCompletionCompiler(importResolver, this);
         return qvtCompiler;
