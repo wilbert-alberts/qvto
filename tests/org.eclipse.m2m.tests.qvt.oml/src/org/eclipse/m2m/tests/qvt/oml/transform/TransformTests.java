@@ -78,6 +78,7 @@ public class TransformTests {
     
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {
+        		new FileToFileData("slashSingleLineComments_266478"), //$NON-NLS-1$
         		new FileToFileData("nestedPropertiesAssignment_262757"), //$NON-NLS-1$
         		new FileToFileData("listLiteral_259754"), //$NON-NLS-1$
         		new FileToFileData("escape_sequences_250630"), //$NON-NLS-1$
