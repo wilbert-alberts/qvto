@@ -15,17 +15,18 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolver;
-import org.eclipse.m2m.internal.qvt.oml.compiler.IImportResolverFactory;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.DeployedImportResolver;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.PlatformPluginUnitResolver;
 
 
-public class EclipseImportResolverFactory implements IImportResolverFactory {
+public class EclipseUnitResolverFactory implements UnitResolverFactory {
 	
-	public EclipseImportResolverFactory() {	
+	public EclipseUnitResolverFactory() {	
 	}
 	
 	public boolean isAccepted(Object source) {
@@ -35,7 +36,7 @@ public class EclipseImportResolverFactory implements IImportResolverFactory {
 		
 		if(source instanceof URI) {
 			URI uri = (URI) source;
-			return uri.isPlatformPlugin();
+			return uri.isPlatform() || isWorkspacePath(uri) || isDeployedByID(uri);
 		}
 		
 		return false;
@@ -48,7 +49,17 @@ public class EclipseImportResolverFactory implements IImportResolverFactory {
 				return WorkspaceUnitResolver.getUnit(file);
 			}
 		} else if(unitURI.isPlatformPlugin()) {
-			//return PlatformPluginUnitResolver.createUnit(unitURI);
+			return PlatformPluginUnitResolver.getUnit(unitURI);
+		} else {
+			if(isWorkspacePath(unitURI)) {
+				URI platformResourceURI = URI.createPlatformResourceURI(unitURI.path(), false);
+				IFile file = URIUtils.getFile(platformResourceURI);
+				if(file != null) {
+					return WorkspaceUnitResolver.getUnit(file);
+				}
+			} else if(isDeployedByID(unitURI)) {
+				return DeployedImportResolver.INSTANCE.resolveDeployedUnitOnly(unitURI.path());
+			}
 		}
 		
 		return null;
@@ -67,11 +78,13 @@ public class EclipseImportResolverFactory implements IImportResolverFactory {
 		return null; 
 	}
 	
-	public IImportResolver createResolver(Object source) {
-		if(isAccepted(source)) {
-			IResource resource = (IResource) source;
-			return new EclipseImportResolver(resource.getProject());
-		}
-		throw new IllegalArgumentException("Invalid source object for import resolver:" + source); //$NON-NLS-1$
+	private static boolean isWorkspacePath(URI uri) {
+		return uri.scheme() == null && !uri.hasDevice() && !uri.hasAuthority() &&
+				!uri.hasEmptyPath() && !uri.hasQuery() && !uri.hasFragment() && uri.hasAbsolutePath();
 	}
+	
+	private static boolean isDeployedByID(URI uri) {
+		return uri.scheme() == null && !uri.hasDevice() && !uri.hasAuthority() &&
+				!uri.hasEmptyPath() && !uri.hasQuery() && !uri.hasFragment() && !uri.hasAbsolutePath();
+	}		
 }

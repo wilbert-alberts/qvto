@@ -35,6 +35,7 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.DeployedImportResolver;
 
 /**
  * @author pfeldman
+ * @deprecated
  */
 public class EclipseImportResolver implements IImportResolver {
 	/**
@@ -51,7 +52,7 @@ public class EclipseImportResolver implements IImportResolver {
 		IContainer[] getContainers();
 	}
 	
-	private IImportResolver deployedQvtFileResolver;
+	private DeployedImportResolver deployedQvtFileResolver;
 	
 	public EclipseImportResolver(SourceContainerProvider sourceContainerProvider) {
 		this.sourceProvider = sourceContainerProvider;

@@ -34,8 +34,8 @@
 	<persistent value="true"/>
  </extension>
 
- <extension point="org.eclipse.m2m.qvt.oml.importResolverFactory">
-	<factory class="org.eclipse.m2m.internal.qvt.oml.project.builder.EclipseImportResolverFactory"/>
+ <extension point="org.eclipse.m2m.qvt.oml.unitResolverFactory">
+	<factory class="org.eclipse.m2m.internal.qvt.oml.project.builder.EclipseUnitResolverFactory"/>
  </extension>
 
 </plugin>
