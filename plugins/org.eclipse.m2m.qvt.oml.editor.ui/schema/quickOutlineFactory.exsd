@@ -1,16 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="org.eclipse.m2m.qvt.oml.editor.ui">
+<schema targetNamespace="org.eclipse.m2m.qvt.oml.editor.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
          <meta.schema plugin="org.eclipse.m2m.qvt.oml.editor.ui" id="quickOutlineFactory" name="%quickOutlineFactory"/>
       </appInfo>
       <documentation>
-         This extension point allows a plug-in to register a factory responsible for quick outline support (Ctrl + O) in OML QVT editor.
+         This extension point allows a plug-in to register a factory responsible for quick outline support (Ctrl + O) in OML QVT editor. For internal use only.
       </documentation>
    </annotation>
 
    <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+      </annotation>
       <complexType>
          <sequence>
             <sequence>

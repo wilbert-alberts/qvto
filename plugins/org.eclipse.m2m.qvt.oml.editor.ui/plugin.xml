@@ -2,6 +2,7 @@
 <?eclipse version="3.2"?>
 <plugin>
  <extension-point id="codeCompletionCollectors" name="%codeCompletionCollectors" schema="schema/codeCompletionCollectors.exsd"/>
+ <!-- quickOutlineFactory extension point is for internal use only -->
  <extension-point id="quickOutlineFactory" name="%quickOutlineFactory" schema="schema/quickOutlineFactory.exsd"/>
  <extension point="org.eclipse.core.filebuffers.documentSetup">
     <participant
