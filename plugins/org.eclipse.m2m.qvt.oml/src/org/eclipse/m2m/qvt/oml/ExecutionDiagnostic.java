@@ -85,7 +85,7 @@ public final class ExecutionDiagnostic extends BasicDiagnostic {
 	 * specified print writer.
 	 * 
 	 * @param writer
-	 *            <code>PrintStream</code> to use for output
+	 *            <code>PrintWriter</code> to use for output
 	 */
 	public void printStackTrace(PrintWriter writer) {
 		if (fStackTrace != null) {
