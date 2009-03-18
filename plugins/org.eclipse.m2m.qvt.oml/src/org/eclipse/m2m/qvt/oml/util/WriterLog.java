@@ -22,6 +22,8 @@ import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
  * 
  * @author dvorak
  * @since 2.0
+ * 
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public class WriterLog implements Log {
 	
@@ -47,6 +49,10 @@ public class WriterLog implements Log {
 		fWriter = writer; 
 		fRecordSeparator = LINE_SEP;
 		fErrorLogged = false;
+	}
+	
+	protected final Writer getWriter() {
+		return fWriter;
 	}
 	
 	public void log(int level, String message, Object param) {

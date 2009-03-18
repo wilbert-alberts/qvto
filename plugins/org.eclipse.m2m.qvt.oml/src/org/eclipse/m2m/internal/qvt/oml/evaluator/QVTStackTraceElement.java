@@ -11,8 +11,10 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
+import org.eclipse.m2m.qvt.oml.ExecutionStackTraceElement;
 
-public final class QVTStackTraceElement  {
+
+public final class QVTStackTraceElement implements ExecutionStackTraceElement  {
 	
     private String fModuleName;
     private String fOperationName;
@@ -41,29 +43,30 @@ public final class QVTStackTraceElement  {
 		this.fLineNum = lineNumber > 0 ? lineNumber : -1;
     }
 
+    /* (non-Javadoc)
+	 * @see org.eclipse.m2m.internal.qvt.oml.evaluator.ExecutionStackTraceElement#getUnitName()
+	 */
     public String getUnitName() {
         return fUnitName;
     }
 
-    /**
-     * Returns the line number of the source line containing the execution
-     * point represented by this stack trace element.  Generally, this is
-     * derived from the <tt>LineNumberTable</tt> attribute of the relevant
-     * <tt>class</tt> file (as per <i>The Java Virtual Machine
-     * Specification</i>, Section 4.7.8).
-     *
-     * @return the line number of the source line containing the execution
-     *         point represented by this stack trace element, or a negative
-     *         number if this information is unavailable.
-     */
+    /* (non-Javadoc)
+	 * @see org.eclipse.m2m.internal.qvt.oml.evaluator.ExecutionStackTraceElement#getLineNumber()
+	 */
     public int getLineNumber() {
         return fLineNum;
     }
 
+    /* (non-Javadoc)
+	 * @see org.eclipse.m2m.internal.qvt.oml.evaluator.ExecutionStackTraceElement#getModuleName()
+	 */
     public String getModuleName() {
         return fModuleName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.eclipse.m2m.internal.qvt.oml.evaluator.ExecutionStackTraceElement#getOperationName()
+	 */
     public String getOperationName() {
         return fOperationName;
     }

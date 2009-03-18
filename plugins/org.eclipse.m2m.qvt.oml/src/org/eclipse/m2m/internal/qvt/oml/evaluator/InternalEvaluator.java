@@ -16,9 +16,11 @@ import java.util.List;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitorImpl.OperationCallResult;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 
-interface InternalEvaluator extends QvtOperationalEvaluationVisitor {
+public interface InternalEvaluator extends QvtOperationalEvaluationVisitor {
 	
 	ModuleInstance callTransformationImplicitConstructor(OperationalTransformation transformation, List<ModelInstance> args);
 	
 	OperationCallResult runMainEntry(OperationalTransformation transformation, List<Object> args);
+	
+    Object execute(OperationalTransformation transformation) throws QvtRuntimeException;
 }

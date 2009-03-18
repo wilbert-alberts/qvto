@@ -19,9 +19,12 @@ import java.io.StringWriter;
  * 
  * @author dvorak
  * @since 2.0
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public class StringBufferLog extends WriterLog {
 
+	private final StringWriter fStrWriter;
+	
 	/**
 	 * Constructs a default log object.
 	 */
@@ -37,5 +40,11 @@ public class StringBufferLog extends WriterLog {
 	 */	
 	public StringBufferLog(int initialsize) {
 		super(new StringWriter(initialsize));
+		
+		fStrWriter = (StringWriter) getWriter(); 
+	}
+	
+	public String getContents() {
+		return fStrWriter.getBuffer().toString();
 	}
 }

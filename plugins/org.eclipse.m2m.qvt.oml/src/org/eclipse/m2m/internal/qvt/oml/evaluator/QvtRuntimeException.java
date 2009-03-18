@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.m2m.qvt.oml.ExecutionStackTraceElement;
+
 /**
 * Represents a runtime (unchecked) exception possibly thrown during QVT code execution.
 */
@@ -49,10 +51,10 @@ public class QvtRuntimeException extends RuntimeException {
        }
     }
     
-    static void printQvtStackTrace(PrintWriter pw, List<QVTStackTraceElement> elements) {
+    public static void printQvtStackTrace(PrintWriter pw, List<? extends ExecutionStackTraceElement> elements) {
         synchronized (pw) {
              int counter = 0;
-             for(QVTStackTraceElement trace : elements) {
+             for(ExecutionStackTraceElement trace : elements) {
              	if(counter++ > 0) {
              		pw.println();
              	}

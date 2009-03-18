@@ -53,6 +53,7 @@ Export-Package: org.eclipse.m2m.internal.qvt.oml;
    org.eclipse.m2m.qvt.oml.runtime.ui,
    org.eclipse.m2m.qvt.oml.trace.edit",
  org.eclipse.m2m.internal.qvt.oml.trace.util;x-friends:="org.eclipse.m2m.qvt.oml.trace.edit",
+ org.eclipse.m2m.qvt.oml,
  org.eclipse.m2m.qvt.oml.blackbox.java,
  org.eclipse.m2m.qvt.oml.util
 Import-Package: com.ibm.icu.lang;version="[4.0.0,5.0.0)"

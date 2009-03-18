@@ -715,6 +715,10 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         				evalEnv, MappingCallResult.BODY_EXECUTED);
     }
 
+    public Object execute(OperationalTransformation transformation) throws QvtRuntimeException {
+    	return doVisitTransformation(transformation);
+    }
+    
     public Object visitModule(Module module) {
         if (module instanceof OperationalTransformation == false) {
             throw new IllegalArgumentException(NLS.bind(EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_ModuleNotExecutable, module.getName()));
@@ -730,7 +734,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			getContext().getLog().log(strWriter.getBuffer().toString());
 			throw e;
 		}
-    }
+    }        
     
     /**
 	 * Executes the given helper operation with actual arguments passed.
@@ -2037,6 +2041,10 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     		public InterruptVisitor() {
     			super(QvtOperationalEvaluationVisitorImpl.this);
 			}
+    		
+    		public Object execute(OperationalTransformation transformation) throws QvtRuntimeException {
+    			return QvtOperationalEvaluationVisitorImpl.this.execute(transformation);
+    		}
     		
     		public QvtOperationalEvaluationEnv getOperationalEvaluationEnv() {
     			return QvtOperationalEvaluationVisitorImpl.this.getOperationalEvaluationEnv();

@@ -13,8 +13,30 @@ package org.eclipse.m2m.internal.qvt.oml;
 
 import org.eclipse.osgi.util.NLS;
 
-class Messages extends NLS {
+/**
+ * @since 2.0
+ */
+public class Messages extends NLS {
+	
 	private static final String BUNDLE_NAME = "org.eclipse.m2m.internal.qvt.oml.messages"; //$NON-NLS-1$
+	
+	public static String CompilationErrorsFoundInUnit;
+
+	public static String FailedToCompileUnitError;
+
+	public static String InvalidModelParameterCountError;
+
+	public static String NoTransformationEntryPointError;
+
+	public static String NotTransformationInUnitError;
+
+	public static String QVTRuntimeExceptionCaught;
+
+	public static String ReadOnlyExtentModificationError;
+
+	public static String StackTraceOverFlowError;
+
+	public static String UnitNotFoundError;
 	
 	public static String QvtNamesChecker_blankIdentifierError;
 	public static String QvtNamesChecker_illegalCharInIdentifierError;
@@ -25,6 +47,7 @@ class Messages extends NLS {
 	public static String QvtNamesChecker_namespaceIndentifierKindName;
 
 	public static String QvtNamesChecker_reservedQVTWord;
+	
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
