@@ -88,12 +88,11 @@ public class ElementOperations extends AbstractContextualOperations {
 
 				ModelParameterExtent extent = evalEnv.getDefaultInstantiationExtent(eObject.eClass());
 				if(extent != null) {
-					TreeIterator<EObject> contentIter = EcoreUtil.getAllProperContents(result, false);				
-					while (contentIter.hasNext()) {
-						extent.addObject(contentIter.next());
-					}
+					//269245: Deep clone causes breaking containment hierarchy if used with resource bound extent
+					//https://bugs.eclipse.org/bugs/show_bug.cgi?id=269245
+					// add only the top level container object
+					extent.addObject(result);
 					
-					extent.addObject(result);					
 				}
 				
 				return result;
