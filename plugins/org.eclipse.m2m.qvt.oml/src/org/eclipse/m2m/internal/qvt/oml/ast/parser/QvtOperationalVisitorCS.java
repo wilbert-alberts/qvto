@@ -3593,7 +3593,7 @@ public class QvtOperationalVisitorCS
 		if (propCS.getTypeCS() != null) {
 			type = visitTypeCS(propCS.getTypeCS(), null, env);
 			if (type == null) {
-				return null;
+				return prop;
 			}
 		}		
 
@@ -3662,7 +3662,7 @@ public class QvtOperationalVisitorCS
 
         	if(result instanceof ASTNode) {
         		ASTBindingHelper.createCST2ASTBinding(propCS, (ASTNode)result, env);
-        	} else {
+        	} else if (result != null) {
         		ASTSyntheticNode astNode = ASTSyntheticNodeAccess.getASTNode(result); 
         		ASTSyntheticNodeAccess.setCST(astNode, propCS);
         	}
