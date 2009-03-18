@@ -21,6 +21,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.eclipse.m2m.tests.qvt.oml.ant.QvtAntScriptTests;
+import org.eclipse.m2m.tests.qvt.oml.callapi.AllCallAPITests;
 import org.eclipse.m2m.tests.qvt.oml.compile.AllCompileTests;
 import org.eclipse.m2m.tests.qvt.oml.emf.AllEmfTests;
 import org.eclipse.m2m.tests.qvt.oml.env.QVTOperationalEnvTest;
@@ -44,7 +45,8 @@ public class AllTests {
 		TestSuite suite = new TestSuite("Tests for org.eclipse.m2m.tests.qvt.oml"); //$NON-NLS-1$
 		//$JUnit-BEGIN$
 		suite.addTest(AllCompileTests.suite());
-		
+		suite.addTest(AllCallAPITests.suite());
+				
 		suite.addTestSuite(QVTOperationalEnvTest.class);
 		suite.addTestSuite(OCLEnvironmentWithQVTAccessTest.class);
 		suite.addTestSuite(ExtOCLEnvironmentWithQVTAccessTest.class);
