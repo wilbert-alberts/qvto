@@ -182,7 +182,7 @@ public class NewQVTProjectContentPage extends WizardPage {
 		while (tok.hasMoreTokens()) {
 			String token = tok.nextToken();
 			if (!tok.hasMoreTokens()) {
-				myNameText.setText(UCharacter.toUpperCase(token.charAt(0))
+				myNameText.setText(Character.toUpperCase(token.charAt(0))
 								+ ((token.length() > 1) ? token.substring(1) : "") //$NON-NLS-1$
 								+ " " + getNameFieldQualifier()); //$NON-NLS-1$
 			}
@@ -196,7 +196,7 @@ public class NewQVTProjectContentPage extends WizardPage {
 			char ch = id.charAt(i);
 			if (buffer.length() == 0) {
 				if (UCharacter.isJavaIdentifierStart(ch)) {
-					buffer.append(UCharacter.toLowerCase(ch));
+					buffer.append(Character.toLowerCase(ch));
 				}
 			} else {
 				if (UCharacter.isJavaIdentifierPart(ch)) {
