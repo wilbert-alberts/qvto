@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="org.eclipse.m2m.qvt.oml.econ2009.tutorial2"
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.eclipse.m2m.qvt.oml.econ2009.tutorial.category"
+            class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
+            id="org.eclipse.m2m.qvt.oml.econ2009.tutorial.wizard2"
+            icon="icons/pr-MDA.gif"            
+            name="QVT Operational EclipseCon2009 Tutorial (part 2)"
+            project="true">
+      </wizard>
+	      <category
+	            id="org.eclipse.m2m.qvt.oml.econ2009.tutorial.category"
+	            name="QVT Operational Tutorials"/>            
+      
+   </extension>
+   
+   <extension point="org.eclipse.emf.common.ui.examples">
+   
+      <example wizardID="org.eclipse.m2m.qvt.oml.econ2009.tutorial.wizard2"	
+      			pageImage="icons/pr-MDA_wizard.gif">
+
+         <projectDescriptor
+               contentURI="projects/qvto.Uml2Xhtml/"
+               description="%Uml2Xhtml_description"
+               name="qvto.Uml2Xhtml"/>
+         
+         <projectDescriptor
+               contentURI="projects/qvto.Uml2Xhtml.composite/"
+               description="%CompositeTransf_description"
+               name="qvto.Uml2Xhtml.composite"/>
+         
+      </example>
+      
+   </extension>
+
+</plugin>
