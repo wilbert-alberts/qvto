@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmi:id="_cCES0BcDEd6ms-tUvXO32Q" name="taipan">
+  <packagedElement xmi:type="uml:Class" xmi:id="_cCES0RcDEd6ms-tUvXO32Q" name="Aquatory">
+    <ownedAttribute xmi:id="_cCES0hcDEd6ms-tUvXO32Q" name="ports" visibility="public" type="_cCES3BcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true" aggregation="composite" association="_cCETOhcDEd6ms-tUvXO32Q">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_cCES0xcDEd6ms-tUvXO32Q" value="*"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCES1BcDEd6ms-tUvXO32Q"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_cCES1RcDEd6ms-tUvXO32Q" name="routes" visibility="public" type="_cCES7hcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true" aggregation="composite" association="_cCETMhcDEd6ms-tUvXO32Q">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_cCES1hcDEd6ms-tUvXO32Q" value="*"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCES1xcDEd6ms-tUvXO32Q"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_cCES2BcDEd6ms-tUvXO32Q" name="ships" visibility="public" type="_cCES_BcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true" aggregation="composite" association="_cCETPBcDEd6ms-tUvXO32Q">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_cCES2RcDEd6ms-tUvXO32Q" value="*"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCES2hcDEd6ms-tUvXO32Q"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Interface" xmi:id="_cCES2xcDEd6ms-tUvXO32Q" name="Destination"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_cCES3BcDEd6ms-tUvXO32Q" name="Port" clientDependency="_cCES5hcDEd6ms-tUvXO32Q">
+    <ownedAttribute xmi:id="_cCES3RcDEd6ms-tUvXO32Q" name="location" visibility="public" type="_cCETShcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true">
+      <upperValue xmi:type="uml:LiteralInteger" xmi:id="_cCES3hcDEd6ms-tUvXO32Q" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCES3xcDEd6ms-tUvXO32Q"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_cCES4BcDEd6ms-tUvXO32Q" name="buildings" visibility="public" type="_cCES5xcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true" aggregation="composite" association="_cCETRhcDEd6ms-tUvXO32Q">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_cCES4RcDEd6ms-tUvXO32Q" value="*"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCES4hcDEd6ms-tUvXO32Q"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_cCES4xcDEd6ms-tUvXO32Q" name="register" visibility="public" type="_cCES_BcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true" association="_cCETNhcDEd6ms-tUvXO32Q">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_cCES5BcDEd6ms-tUvXO32Q" value="*"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCES5RcDEd6ms-tUvXO32Q"/>
+    </ownedAttribute>
+    <interfaceRealization xmi:id="_cCES5hcDEd6ms-tUvXO32Q" supplier="_cCES2xcDEd6ms-tUvXO32Q" client="_cCES3BcDEd6ms-tUvXO32Q" contract="_cCES2xcDEd6ms-tUvXO32Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_cCES5xcDEd6ms-tUvXO32Q" name="Building">
+    <ownedAttribute xmi:id="_cCES6BcDEd6ms-tUvXO32Q" name="info" visibility="public" type="_cCETShcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true">
+      <upperValue xmi:type="uml:LiteralInteger" xmi:id="_cCES6RcDEd6ms-tUvXO32Q" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCES6hcDEd6ms-tUvXO32Q"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_cCES6xcDEd6ms-tUvXO32Q" name="street" visibility="public" type="_cCETShcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true">
+      <upperValue xmi:type="uml:LiteralInteger" xmi:id="_cCES7BcDEd6ms-tUvXO32Q" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCES7RcDEd6ms-tUvXO32Q"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_cCES7hcDEd6ms-tUvXO32Q" name="Route" clientDependency="_cCES-xcDEd6ms-tUvXO32Q">
+    <ownedAttribute xmi:id="_cCES7xcDEd6ms-tUvXO32Q" name="source" visibility="public" type="_cCES2xcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true" association="_cCETNBcDEd6ms-tUvXO32Q">
+      <upperValue xmi:type="uml:LiteralInteger" xmi:id="_cCES8BcDEd6ms-tUvXO32Q" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCES8RcDEd6ms-tUvXO32Q" value="1"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_cCES8hcDEd6ms-tUvXO32Q" name="destination" visibility="public" type="_cCES2xcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true" association="_cCETMBcDEd6ms-tUvXO32Q">
+      <upperValue xmi:type="uml:LiteralInteger" xmi:id="_cCES8xcDEd6ms-tUvXO32Q" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCES9BcDEd6ms-tUvXO32Q" value="1"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_cCES9RcDEd6ms-tUvXO32Q" name="description" visibility="public" type="_cCETShcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true">
+      <upperValue xmi:type="uml:LiteralInteger" xmi:id="_cCES9hcDEd6ms-tUvXO32Q" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCES9xcDEd6ms-tUvXO32Q"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_cCES-BcDEd6ms-tUvXO32Q" name="reliability" visibility="public" type="_cCETTBcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true">
+      <upperValue xmi:type="uml:LiteralInteger" xmi:id="_cCES-RcDEd6ms-tUvXO32Q" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCES-hcDEd6ms-tUvXO32Q"/>
+    </ownedAttribute>
+    <interfaceRealization xmi:id="_cCES-xcDEd6ms-tUvXO32Q" supplier="_cCES2xcDEd6ms-tUvXO32Q" client="_cCES7hcDEd6ms-tUvXO32Q" contract="_cCES2xcDEd6ms-tUvXO32Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_cCES_BcDEd6ms-tUvXO32Q" name="Ship">
+    <ownedAttribute xmi:id="_cCES_RcDEd6ms-tUvXO32Q" name="name" visibility="public" type="_cCETShcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true">
+      <upperValue xmi:type="uml:LiteralInteger" xmi:id="_cCES_hcDEd6ms-tUvXO32Q" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCES_xcDEd6ms-tUvXO32Q"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_cCETABcDEd6ms-tUvXO32Q" name="destination" visibility="public" type="_cCES3BcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true" association="_cCETLBcDEd6ms-tUvXO32Q">
+      <upperValue xmi:type="uml:LiteralInteger" xmi:id="_cCETARcDEd6ms-tUvXO32Q" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCETAhcDEd6ms-tUvXO32Q"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_cCETAxcDEd6ms-tUvXO32Q" name="route" visibility="public" type="_cCES7hcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true" association="_cCETOBcDEd6ms-tUvXO32Q">
+      <upperValue xmi:type="uml:LiteralInteger" xmi:id="_cCETBBcDEd6ms-tUvXO32Q" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCETBRcDEd6ms-tUvXO32Q"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_cCETBhcDEd6ms-tUvXO32Q" name="cargo" visibility="public" type="_cCETCRcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true" aggregation="composite" association="_cCETPhcDEd6ms-tUvXO32Q">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_cCETBxcDEd6ms-tUvXO32Q" value="*"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCETCBcDEd6ms-tUvXO32Q"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_cCETCRcDEd6ms-tUvXO32Q" name="Item" isAbstract="true">
+    <ownedAttribute xmi:id="_cCETChcDEd6ms-tUvXO32Q" name="article" visibility="public" type="_cCETShcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true">
+      <upperValue xmi:type="uml:LiteralInteger" xmi:id="_cCETCxcDEd6ms-tUvXO32Q" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCETDBcDEd6ms-tUvXO32Q"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_cCETDRcDEd6ms-tUvXO32Q" name="LargeItem">
+    <generalization xmi:id="_cCETDhcDEd6ms-tUvXO32Q" general="_cCETCRcDEd6ms-tUvXO32Q"/>
+    <ownedAttribute xmi:id="_cCETDxcDEd6ms-tUvXO32Q" name="weight" visibility="public" type="_cCETSxcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true">
+      <upperValue xmi:type="uml:LiteralInteger" xmi:id="_cCETEBcDEd6ms-tUvXO32Q" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCETERcDEd6ms-tUvXO32Q"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_cCETEhcDEd6ms-tUvXO32Q" name="SmallItems">
+    <generalization xmi:id="_cCETExcDEd6ms-tUvXO32Q" general="_cCETCRcDEd6ms-tUvXO32Q"/>
+    <ownedAttribute xmi:id="_cCETFBcDEd6ms-tUvXO32Q" name="quantity" visibility="public" type="_cCETSRcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true">
+      <upperValue xmi:type="uml:LiteralInteger" xmi:id="_cCETFRcDEd6ms-tUvXO32Q" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCETFhcDEd6ms-tUvXO32Q"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_cCETFxcDEd6ms-tUvXO32Q" name="EmptyBox">
+    <generalization xmi:id="_cCETGBcDEd6ms-tUvXO32Q" general="_cCETCRcDEd6ms-tUvXO32Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_cCETGRcDEd6ms-tUvXO32Q" name="Warship">
+    <generalization xmi:id="_cCETGhcDEd6ms-tUvXO32Q" general="_cCES_BcDEd6ms-tUvXO32Q"/>
+    <ownedAttribute xmi:id="_cCETGxcDEd6ms-tUvXO32Q" name="escortOrder" visibility="public" type="_cCETIhcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true" aggregation="composite" association="_cCETLhcDEd6ms-tUvXO32Q">
+      <upperValue xmi:type="uml:LiteralInteger" xmi:id="_cCETHBcDEd6ms-tUvXO32Q" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCETHRcDEd6ms-tUvXO32Q"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_cCETHhcDEd6ms-tUvXO32Q" name="attackOrders" visibility="public" type="_cCETJxcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true" aggregation="composite" association="_cCETQhcDEd6ms-tUvXO32Q">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_cCETHxcDEd6ms-tUvXO32Q" value="*"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCETIBcDEd6ms-tUvXO32Q"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Interface" xmi:id="_cCETIRcDEd6ms-tUvXO32Q" name="Order"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_cCETIhcDEd6ms-tUvXO32Q" name="EscortShipsOrder" clientDependency="_cCETJhcDEd6ms-tUvXO32Q">
+    <ownedAttribute xmi:id="_cCETIxcDEd6ms-tUvXO32Q" name="ships" visibility="public" type="_cCES_BcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true" association="_cCETQBcDEd6ms-tUvXO32Q">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_cCETJBcDEd6ms-tUvXO32Q" value="*"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCETJRcDEd6ms-tUvXO32Q" value="1"/>
+    </ownedAttribute>
+    <interfaceRealization xmi:id="_cCETJhcDEd6ms-tUvXO32Q" supplier="_cCETIRcDEd6ms-tUvXO32Q" client="_cCETIhcDEd6ms-tUvXO32Q" contract="_cCETIRcDEd6ms-tUvXO32Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_cCETJxcDEd6ms-tUvXO32Q" name="BesiegePortOrder" clientDependency="_cCETKxcDEd6ms-tUvXO32Q">
+    <ownedAttribute xmi:id="_cCETKBcDEd6ms-tUvXO32Q" name="port" visibility="public" type="_cCES3BcDEd6ms-tUvXO32Q" isOrdered="true" isReadOnly="true" association="_cCETRBcDEd6ms-tUvXO32Q">
+      <upperValue xmi:type="uml:LiteralInteger" xmi:id="_cCETKRcDEd6ms-tUvXO32Q" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cCETKhcDEd6ms-tUvXO32Q" value="1"/>
+    </ownedAttribute>
+    <interfaceRealization xmi:id="_cCETKxcDEd6ms-tUvXO32Q" supplier="_cCETIRcDEd6ms-tUvXO32Q" client="_cCETJxcDEd6ms-tUvXO32Q" contract="_cCETIRcDEd6ms-tUvXO32Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_cCETLBcDEd6ms-tUvXO32Q" memberEnd="_cCETLRcDEd6ms-tUvXO32Q _cCETABcDEd6ms-tUvXO32Q">
+    <ownedEnd xmi:id="_cCETLRcDEd6ms-tUvXO32Q" name="ship" type="_cCES_BcDEd6ms-tUvXO32Q" association="_cCETLBcDEd6ms-tUvXO32Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_cCETLhcDEd6ms-tUvXO32Q" memberEnd="_cCETLxcDEd6ms-tUvXO32Q _cCETGxcDEd6ms-tUvXO32Q">
+    <ownedEnd xmi:id="_cCETLxcDEd6ms-tUvXO32Q" name="warship" type="_cCETGRcDEd6ms-tUvXO32Q" association="_cCETLhcDEd6ms-tUvXO32Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_cCETMBcDEd6ms-tUvXO32Q" memberEnd="_cCETMRcDEd6ms-tUvXO32Q _cCES8hcDEd6ms-tUvXO32Q">
+    <ownedEnd xmi:id="_cCETMRcDEd6ms-tUvXO32Q" name="route" type="_cCES7hcDEd6ms-tUvXO32Q" association="_cCETMBcDEd6ms-tUvXO32Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_cCETMhcDEd6ms-tUvXO32Q" memberEnd="_cCETMxcDEd6ms-tUvXO32Q _cCES1RcDEd6ms-tUvXO32Q">
+    <ownedEnd xmi:id="_cCETMxcDEd6ms-tUvXO32Q" name="aquatory" type="_cCES0RcDEd6ms-tUvXO32Q" association="_cCETMhcDEd6ms-tUvXO32Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_cCETNBcDEd6ms-tUvXO32Q" memberEnd="_cCETNRcDEd6ms-tUvXO32Q _cCES7xcDEd6ms-tUvXO32Q">
+    <ownedEnd xmi:id="_cCETNRcDEd6ms-tUvXO32Q" name="route" type="_cCES7hcDEd6ms-tUvXO32Q" association="_cCETNBcDEd6ms-tUvXO32Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_cCETNhcDEd6ms-tUvXO32Q" memberEnd="_cCETNxcDEd6ms-tUvXO32Q _cCES4xcDEd6ms-tUvXO32Q">
+    <ownedEnd xmi:id="_cCETNxcDEd6ms-tUvXO32Q" name="port" type="_cCES3BcDEd6ms-tUvXO32Q" association="_cCETNhcDEd6ms-tUvXO32Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_cCETOBcDEd6ms-tUvXO32Q" memberEnd="_cCETORcDEd6ms-tUvXO32Q _cCETAxcDEd6ms-tUvXO32Q">
+    <ownedEnd xmi:id="_cCETORcDEd6ms-tUvXO32Q" name="ship" type="_cCES_BcDEd6ms-tUvXO32Q" association="_cCETOBcDEd6ms-tUvXO32Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_cCETOhcDEd6ms-tUvXO32Q" memberEnd="_cCETOxcDEd6ms-tUvXO32Q _cCES0hcDEd6ms-tUvXO32Q">
+    <ownedEnd xmi:id="_cCETOxcDEd6ms-tUvXO32Q" name="aquatory" type="_cCES0RcDEd6ms-tUvXO32Q" association="_cCETOhcDEd6ms-tUvXO32Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_cCETPBcDEd6ms-tUvXO32Q" memberEnd="_cCETPRcDEd6ms-tUvXO32Q _cCES2BcDEd6ms-tUvXO32Q">
+    <ownedEnd xmi:id="_cCETPRcDEd6ms-tUvXO32Q" name="aquatory" type="_cCES0RcDEd6ms-tUvXO32Q" association="_cCETPBcDEd6ms-tUvXO32Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_cCETPhcDEd6ms-tUvXO32Q" memberEnd="_cCETPxcDEd6ms-tUvXO32Q _cCETBhcDEd6ms-tUvXO32Q">
+    <ownedEnd xmi:id="_cCETPxcDEd6ms-tUvXO32Q" name="ship" type="_cCES_BcDEd6ms-tUvXO32Q" association="_cCETPhcDEd6ms-tUvXO32Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_cCETQBcDEd6ms-tUvXO32Q" memberEnd="_cCETQRcDEd6ms-tUvXO32Q _cCETIxcDEd6ms-tUvXO32Q">
+    <ownedEnd xmi:id="_cCETQRcDEd6ms-tUvXO32Q" name="escortshipsorder" type="_cCETIhcDEd6ms-tUvXO32Q" association="_cCETQBcDEd6ms-tUvXO32Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_cCETQhcDEd6ms-tUvXO32Q" memberEnd="_cCETQxcDEd6ms-tUvXO32Q _cCETHhcDEd6ms-tUvXO32Q">
+    <ownedEnd xmi:id="_cCETQxcDEd6ms-tUvXO32Q" name="warship" type="_cCETGRcDEd6ms-tUvXO32Q" association="_cCETQhcDEd6ms-tUvXO32Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_cCETRBcDEd6ms-tUvXO32Q" memberEnd="_cCETRRcDEd6ms-tUvXO32Q _cCETKBcDEd6ms-tUvXO32Q">
+    <ownedEnd xmi:id="_cCETRRcDEd6ms-tUvXO32Q" name="besiegeportorder" type="_cCETJxcDEd6ms-tUvXO32Q" association="_cCETRBcDEd6ms-tUvXO32Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_cCETRhcDEd6ms-tUvXO32Q" memberEnd="_cCETRxcDEd6ms-tUvXO32Q _cCES4BcDEd6ms-tUvXO32Q">
+    <ownedEnd xmi:id="_cCETRxcDEd6ms-tUvXO32Q" name="port" type="_cCES3BcDEd6ms-tUvXO32Q" association="_cCETRhcDEd6ms-tUvXO32Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_cCETSBcDEd6ms-tUvXO32Q" name="importedTypes">
+    <packagedElement xmi:type="uml:DataType" xmi:id="_cCETSRcDEd6ms-tUvXO32Q" name="EInt"/>
+    <packagedElement xmi:type="uml:DataType" xmi:id="_cCETShcDEd6ms-tUvXO32Q" name="EString"/>
+    <packagedElement xmi:type="uml:DataType" xmi:id="_cCETSxcDEd6ms-tUvXO32Q" name="EFloat"/>
+    <packagedElement xmi:type="uml:DataType" xmi:id="_cCETTBcDEd6ms-tUvXO32Q" name="EDouble"/>
+  </packagedElement>
+</uml:Model>
