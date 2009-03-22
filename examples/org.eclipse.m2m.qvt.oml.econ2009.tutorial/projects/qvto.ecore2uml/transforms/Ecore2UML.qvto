@@ -52,7 +52,7 @@ mapping EDataType::toDataType() : UML::DataType inherits ENamedElement::toNamedE
 
 mapping EStructuralFeature::toProperty() : UML::Property inherits ENamedElement::toNamedElement, ETypedElement::toMultiplicity {	
 	isDerived := self._derived;
-	isReadOnly := self.changeable;	
+	isReadOnly := not self.changeable;	
 	type := self.eType.map toType();	
 }
 
