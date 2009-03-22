@@ -32,25 +32,21 @@
                contentURI="projects/qvto.ecore2uml.invoke/"
                description="%JavaInvocation_Example_description"
                name="qvto.ecore2uml.invoke"/>
-         <projectDescriptor
-               contentURI="projects/qvto.uml2xhtml.xsd/"
-               description="%UML2XHtml_XSD_description"
-               name="qvto.uml2xhtml.xsd"/>
          
          <projectDescriptor
-               contentURI="projects/qvto.uml2xhtml.ecore.ext/"
-               description="%UML2XHtml_XSD_Ecore_description"
-               name="qvto.uml2xhtml.ecore.ext"/>
+               contentURI="projects/qvto.uml2xhtml.model/"
+               description="%UML2XHtml_XSD_model"
+               name="qvto.uml2xhtml.model"/>
          
          <projectDescriptor
-               contentURI="projects/qvto.uml2xhtml.deployed/"
-               description="%UML2XHtml_Source_description"
-               name="qvto.uml2xhtml.deployed"/>
-         <projectDescriptor
-               contentURI="projects/qvto.explained/"
-               description="%qvtoExplained_description"
-               name="qvto.explained"/>
+               contentURI="projects/qvto.Uml2Xhtml/"
+               description="%Uml2XHtml_description"
+               name="qvto.Uml2Xhtml"/>
          
+         <projectDescriptor
+               contentURI="projects/qvto.Uml2Xhtml.composite/"
+               description="%CompositeTransf_description"
+               name="qvto.Uml2Xhtml.composite"/>
          
       </example>
       
