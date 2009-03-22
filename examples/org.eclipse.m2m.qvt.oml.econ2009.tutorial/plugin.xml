@@ -47,6 +47,11 @@
                contentURI="projects/qvto.Uml2Xhtml.composite/"
                description="%CompositeTransf_description"
                name="qvto.Uml2Xhtml.composite"/>
+
+         <projectDescriptor
+               contentURI="projects/qvto.explained/"
+               description="%qvtoExplained_description"
+               name="qvto.explained"/>
          
       </example>
       
