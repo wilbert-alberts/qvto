@@ -78,11 +78,7 @@ abstract mapping ETypedElement::toMultiplicity() : MultiplicityElement {
 	isOrdered := self._ordered;
 	isUnique := self.unique;
 	lower := self.lowerBound;
-	upperValue := if(self.upperBound <> *) then 
-			object LiteralInteger { value := self.upperBound.oclAsType(Integer) } 
-		else
-			object LiteralUnlimitedNatural { value := -1 }    
-		endif; 
+	upper := self.upperBound.oclAsType(Integer);	
 }
 
 abstract mapping ENamedElement::toNamedElement() : NamedElement {	
