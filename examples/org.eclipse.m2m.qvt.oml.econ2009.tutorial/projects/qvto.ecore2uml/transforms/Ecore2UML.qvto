@@ -69,7 +69,6 @@ mapping EReference::toAssociation() : Association {
 	} 
 	ownedEnd += if (self.eOpposite = null) then   
 					object Property {
-						name := self.eContainingClass.name.toLower();
 						type := self.eContainingClass.map toClass();
 					} endif;
 	memberEnd += self.map toProperty();
