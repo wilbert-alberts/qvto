@@ -107,7 +107,7 @@ public class QvtoTransformationHelper {
 		this(URI.createPlatformResourceURI(qvtoFile.getFullPath().toString(), false));
 	}
 		
-	public TransfExecutionResult executeTransformation(final List<EObject> inObjects, final Map<String, Object> inConfigProperties, ResourceSet metamodelResourceSet) throws CoreException {
+	public TransfExecutionResult executeTransformation(final List<? extends EObject> inObjects, final Map<String, Object> inConfigProperties, ResourceSet metamodelResourceSet) throws CoreException {
         try {
             if (metamodelResourceSet == null) {
                 metamodelResourceSet = new ResourceSetImpl();
