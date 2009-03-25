@@ -82,7 +82,7 @@ public class WorskpaceMetamodelProvider implements IMetamodelProvider {
     	try {
 			ResourcesPlugin.getWorkspace().getRoot().accept(new IResourceProxyVisitor() {
 				public boolean visit(IResourceProxy proxy) throws CoreException {
-					if(proxy.getName().endsWith(".ecore")) { //$NON-NLS-1$
+					if(proxy.getType() == IResource.FILE && proxy.getName().endsWith(".ecore")) { //$NON-NLS-1$
 						result.add(proxy.requestResource());
 					}
 					return true;
