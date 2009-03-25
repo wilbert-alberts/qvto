@@ -81,7 +81,15 @@ class ResourceModelNode extends MetamodelContainerNode {
 	IMetamodelDesc descriptor() {
 		return contentNode.descriptor;
 	}
-							
+
+	@Override
+	public Object getAdapter(Class adapter) {
+		if (adapter == URI.class) {
+			return uri;
+		}
+		return super.getAdapter(adapter);
+	}
+
 	@Override
 	public boolean hasChildren(boolean includeInheritedFeatures) {		
 		return !descriptor().isLoaded() || super.hasChildren(includeInheritedFeatures);
