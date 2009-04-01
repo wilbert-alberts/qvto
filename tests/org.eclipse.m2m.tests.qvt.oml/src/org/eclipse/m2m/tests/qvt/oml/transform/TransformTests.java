@@ -77,7 +77,12 @@ public class TransformTests {
         
     
     public static ModelTestData[] createTestData() {
-        return new ModelTestData[] {
+        return new ModelTestData[] {        		
+        		new FileToFileData("import_access_extends"), //$NON-NLS-1$        		
+        		new FileToFileData("import_access_extends_cfgprop", new String[][] { //$NON-NLS-1$ 
+        				new String[] { "attrNum", "10" }, //$NON-NLS-1$ //$NON-NLS-2$
+        				new String[] { "outClassName", "ClassFromImportedTransf3_cfgprop" } //$NON-NLS-1$ //$NON-NLS-2$
+        		}),         		        		
         		new FileToFileData("slashSingleLineComments_266478"), //$NON-NLS-1$
         		new FileToFileData("nestedPropertiesAssignment_262757"), //$NON-NLS-1$
         		new FileToFileData("listLiteral_259754"), //$NON-NLS-1$
@@ -281,7 +286,9 @@ public class TransformTests {
     		"compositetransf", // FIXME - make this included as java-less    		 //$NON-NLS-1$
     		"blackboxlib_237781", //$NON-NLS-1$ // imports java lib oper requiring generated ecore metamodel
             "primtypesecore", // uses getDataTypeInstance() defined on ecore //$NON-NLS-1$
-            "importedvirtuals", "imports_transformations", "imports", "virt", "full", "fqntraces", // TODO import other files //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+            // tests using imports are excluded as the compiler never resolved imported unit
+            // to unitName.qvto.javaless (patched original sources)
+            "import_access_extends", "import_access_extends_cfgprop", "importedvirtuals", "imports_transformations", "imports", "virt", "full", "fqntraces", // TODO import other files //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
             "libraryWithModuleElements_257184", "libraryHeaderWithSignature_257575",// TODO import other files //$NON-NLS-1$ //$NON-NLS-2$
             "assigntonullowner", "resolveall", // reference not in required format: eSuperTypes = "#//NEW_Class1" insteand of "//@eClassifiers.0" //$NON-NLS-1$ //$NON-NLS-2$
             "egetcodegen", // java method can't be called//$NON-NLS-1$

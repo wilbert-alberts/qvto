@@ -65,7 +65,6 @@ public class AllTests {
         suite.addTestSuite(TestQvtBuilder.class);        
         suite.addTestSuite(TestSamples.class);
         suite.addTestSuite(TestGraphWalker.class);
-        suite.addTestSuite(TestLaunchConfigs.class);
         suite.addTest(TraceTests.suite());
         suite.addTest(TestQvtResourceFactory.suite());
         
