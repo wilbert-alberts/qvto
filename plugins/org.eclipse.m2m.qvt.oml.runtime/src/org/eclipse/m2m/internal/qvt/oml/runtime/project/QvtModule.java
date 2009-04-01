@@ -38,6 +38,7 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
@@ -227,7 +228,7 @@ public abstract class QvtModule {
         Set<Module> moduleSet = new HashSet<Module>();
 
         for (Module nextModule : unit.getModules()) {
-            collectImports(nextModule, moduleSet);			
+            collectImports(nextModule, ImportKind.EXTENSION, moduleSet);			
 		}
 
         Set<QvtConfigurationProperty> propSet = new LinkedHashSet<QvtConfigurationProperty>();
@@ -267,9 +268,10 @@ public abstract class QvtModule {
      * Collects all the imported modules (including ones imported implicitly), non-recursive,
      * cyclic-import compatible
      * @param module - root module
+     * @param kind - the kind of import to select or <code>null</code> is any kind is acceptable
      * @param moduleSet - resulting set
      */
-    private void collectImports(Module module, Set<Module> moduleSet) {
+    private void collectImports(Module module, ImportKind kind, Set<Module> moduleSet) {
     	assert module != null;
     	
         // WFS on imports graph
@@ -279,11 +281,13 @@ public abstract class QvtModule {
             Module m = queue.poll();
             moduleSet.add(m);
             for (ModuleImport imp : m.getModuleImport()) {
-                Module element = imp.getImportedModule();
-                if (!moduleSet.contains(element)) {
-                    moduleSet.add(element);
-                    queue.offer(element);                    
-                }
+            	if(kind == null || kind == imp.getKind()) {
+	                Module element = imp.getImportedModule();
+	                if (!moduleSet.contains(element)) {
+	                    moduleSet.add(element);
+	                    queue.offer(element);                    
+	                }
+            	}
             }
         }
     }
