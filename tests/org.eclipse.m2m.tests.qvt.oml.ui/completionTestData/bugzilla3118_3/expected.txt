@@ -1,6 +1,6 @@
 QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = self, displayString = self : EClass, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 4
-QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = dummy, displayString = dummy : ECORE, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 5
 QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = result, displayString = result : EAttribute, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 6
+QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = dummy, displayString = dummy : ECORE, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 5
 QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = dump(), displayString = dump(OclAny : OclAny) : OclVoid, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 5
 QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = dump(), displayString = dump(Collection(T2) : Collection(T2)) : OclVoid, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 5
 QvtCompletionProposal[org.eclipse.m2m.qvt.oml.editor.ui.completion.category.default]: replacementString = ECORE, displayString = ECORE, replacementOffsetDelta = 0, replacementLength = 0, cursorPosition = 5
