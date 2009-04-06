@@ -209,7 +209,7 @@ public class BracketInserter implements VerifyKeyListener, ILinkedModeListener {
 	}
 
 	private static boolean hasPeerClosingCharacter(char character) {
-		return character == '(' || character == '[' || character == '\'';
+		return character == '(' || character == '[' || character == '\'' || character == '\"';
 	}
 
 	private static char getPeerClosingCharacter(char character) {
@@ -220,6 +220,8 @@ public class BracketInserter implements VerifyKeyListener, ILinkedModeListener {
 			return ']';
 		case '\'':
 			return '\'';
+		case '\"':
+			return '\"';			
 		}
 		throw new IllegalArgumentException();
 	}
