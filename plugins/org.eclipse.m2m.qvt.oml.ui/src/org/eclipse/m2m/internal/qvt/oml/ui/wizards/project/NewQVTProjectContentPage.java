@@ -44,7 +44,7 @@ public class NewQVTProjectContentPage extends WizardPage {
 	protected int myChangedGroups = 0;
 	
 	private NewQVTProjectCreationPage myMainPage;
-	private QVTProjectFieldData myData;
+	private MDAProjectFieldDataImpl myData;
 	private Text myIdText;
 	private Text myVersionText;
 	private Text myNameText;
@@ -57,7 +57,7 @@ public class NewQVTProjectContentPage extends WizardPage {
 	private boolean myInitialized;
 
 	
-	public NewQVTProjectContentPage(String pageName, NewQVTProjectCreationPage page, QVTProjectFieldData data) {
+	public NewQVTProjectContentPage(String pageName, NewQVTProjectCreationPage page, MDAProjectFieldDataImpl data) {
 		super(pageName);
 		myMainPage = page;
 		myData = data;

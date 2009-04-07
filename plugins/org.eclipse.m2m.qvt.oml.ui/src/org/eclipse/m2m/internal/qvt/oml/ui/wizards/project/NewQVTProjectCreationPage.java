@@ -41,7 +41,7 @@ import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 
 public class NewQVTProjectCreationPage extends WizardNewProjectCreationPage {
 
-    private QVTProjectFieldData fCreationData;
+    private MDAProjectFieldDataImpl fCreationData;
     private Text fSourceText;
     private Text fOutputText;
     private Button fSimpleProject;
@@ -54,7 +54,7 @@ public class NewQVTProjectCreationPage extends WizardNewProjectCreationPage {
     private Label fQvtSourceContainerLabel;
     private Text fQvtSourceContainerText;    
 	
-	public NewQVTProjectCreationPage(String pageName, QVTProjectFieldData data){
+	public NewQVTProjectCreationPage(String pageName, MDAProjectFieldDataImpl data){
 		super(pageName);
 		fCreationData = data;
 	}

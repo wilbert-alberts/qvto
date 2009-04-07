@@ -47,7 +47,7 @@ import org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard;
 
 public class NewQVTProjectWizard extends Wizard implements INewWizard, IExecutableExtension {
 		
-	private QVTProjectFieldData fMDAProjectFieldData;
+	private MDAProjectFieldDataImpl fMDAProjectFieldData;
 	private NewQVTProjectCreationPage fMainPage;
 	private NewQVTProjectContentPage fContentPage;
 	private IConfigurationElement fConfig;
@@ -61,7 +61,7 @@ public class NewQVTProjectWizard extends Wizard implements INewWizard, IExecutab
 		setWindowTitle(Messages.NewTransformationProjectWizard_Title);
 	    setNeedsProgressMonitor(true);
 		
-	    fMDAProjectFieldData = QVTProjectFieldData.Factory.INSTANCE.create();
+	    fMDAProjectFieldData = new MDAProjectFieldDataImpl();
 		fIsFinishPerformed = false;
 	}
 	

@@ -12,44 +12,14 @@
 package org.eclipse.m2m.internal.qvt.oml.ui.wizards.project;
 
 import org.eclipse.pde.internal.core.TargetPlatformHelper;
-import org.eclipse.pde.ui.IPluginFieldData;
 
-public interface QVTProjectFieldData extends IPluginFieldData {
-	interface Factory {
-		Factory INSTANCE = new Factory() {
-			public QVTProjectFieldData create() {
-				return new MDAProjectFieldDataImpl();
-			}
-		};
-		
-		QVTProjectFieldData create();
-	}
-	
-	boolean isPlugin();
-	String getProjectName();
-	
-	void setProjectName(String projectName);	
-	void setPlugin(boolean plugin);	
-	void setVersion(String version);	
-	void setSourceFolderName(String name);
-	void setOutputFolderName(String name);
-	void setName(String name);
-	void setProvider(String provider);
-	void setDoGenerateClass(boolean doGenerate);
-	void setClassname(String classname);
-	void setLibraryName(String name);
-	void setId(String id);	
-	void setSimple(boolean simple);
-}
-
-
-class MDAProjectFieldDataImpl extends org.eclipse.pde.internal.ui.wizards.plugin.PluginFieldData implements QVTProjectFieldData {
+public class MDAProjectFieldDataImpl extends org.eclipse.pde.internal.ui.wizards.plugin.PluginFieldData {
 	private String myProjectName;
     private boolean myPlugin = true;
 
 
 	public MDAProjectFieldDataImpl() {
-		((QVTProjectFieldData)this).setDoGenerateClass(false);
+		setDoGenerateClass(false);
 		setTargetVersion(TargetPlatformHelper.getTargetVersionString());
 	}
 
