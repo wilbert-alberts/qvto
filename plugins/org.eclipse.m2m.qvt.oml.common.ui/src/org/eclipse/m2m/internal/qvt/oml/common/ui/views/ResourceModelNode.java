@@ -82,6 +82,7 @@ class ResourceModelNode extends MetamodelContainerNode {
 		return contentNode.descriptor;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Object getAdapter(Class adapter) {
 		if (adapter == URI.class) {
