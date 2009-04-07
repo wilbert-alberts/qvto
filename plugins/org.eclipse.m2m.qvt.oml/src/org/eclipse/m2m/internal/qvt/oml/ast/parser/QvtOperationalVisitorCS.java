@@ -225,6 +225,7 @@ import org.eclipse.ocl.util.OCLStandardLibraryUtil;
 import org.eclipse.ocl.util.OCLUtil;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.ASTNode;
+import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
 import org.eclipse.osgi.util.NLS;
 
@@ -234,6 +235,8 @@ public class QvtOperationalVisitorCS
 							CallOperationAction, SendSignalAction, Constraint, EClass, EObject> { 	// FIXME - changed in M3.4 migration
 
     private final QvtCompilerOptions myCompilerOptions;    
+    private Set<TypedElement<?>> myErrorNodes;
+    
 	/* TODO - 
 	 * Groups all late resolve expression encountered during CST analysis for later validation.
 	 * At the moment when resolve expression is visited it has not its container connect yet, which
@@ -587,7 +590,7 @@ public class QvtOperationalVisitorCS
 	        //QvtPlugin.log(ex);
 	    	QvtOperationalUtil.reportError(env, ValidationMessages.QvtOperationalVisitorCS_oclParseNPE, oclExpressionCS);
 	    }
-	    return null;
+	    return (org.eclipse.ocl.ecore.OCLExpression)createDummyInvalidLiteralExp(env, oclExpressionCS);
 	}
 	
     private org.eclipse.ocl.ecore.OCLExpression visitContinueExpCS(
@@ -1560,6 +1563,15 @@ public class QvtOperationalVisitorCS
 		validate(env);
 
 		return module;
+	}
+	
+	/**
+	 * Clears the state of this QVT analyzer.  
+	 */
+	public void clear() {
+		if(myErrorNodes != null) {
+			myErrorNodes.clear();
+		}
 	}
 
 	private void visitTagCS(QvtOperationalEnv env, TagCS ownedTagCS, Module module, EClassifier tagContextType) throws SemanticException {
@@ -4021,6 +4033,8 @@ public class QvtOperationalVisitorCS
         }
 		// ensure AST containment tree
         astNode.getIterator().addAll(iterators);
+        
+        initStartEndPositions(astNode, imperativeIterateExpCS);
         return astNode;
     }
     
@@ -4589,8 +4603,24 @@ public class QvtOperationalVisitorCS
 		dictLiteralPartCS.setAst(result);		
 		return result;
 	}
-	
 
+	@Override
+	protected boolean isErrorNode(TypedElement<EClassifier> expr) {
+		if(myErrorNodes == null) {
+			return false;
+		}
+
+		return myErrorNodes.contains(expr);
+	}
+
+	@Override
+	protected void markAsErrorNode(TypedElement<EClassifier> expr) {
+		if(myErrorNodes == null) {
+			myErrorNodes = new java.util.HashSet<TypedElement<?>>();			
+		}
+		myErrorNodes.add(expr);
+	}
+	
 	private static void createPropertyCallASTBinding(
 			CallExpCS propertyCallExpCS,
 			OCLExpression<EClassifier> result,
