@@ -19,6 +19,7 @@ import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
@@ -86,7 +87,7 @@ public class ResourceSaver implements IResultSaver{
         file.delete(true, true, null);
     }
     
-    public boolean select(EObject obj, IWorkbenchPage page) {
+    public boolean select(EObject obj, IWorkbenchPage page) throws CoreException {
         Resource resource = obj.eResource();
         if(resource == null) {
             return false;
@@ -118,7 +119,13 @@ public class ResourceSaver implements IResultSaver{
         }
         
         IGotoMarker gotoMarker = (IGotoMarker) part;
-        gotoMarker.gotoMarker(makeMarker(obj));
+        IMarker marker = makeMarker(obj, file);
+        
+        try {
+        	gotoMarker.gotoMarker(marker);
+        } finally {
+            marker.delete();
+        }
 
         return true;
     }
@@ -155,11 +162,12 @@ public class ResourceSaver implements IResultSaver{
         return org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils.getFile(uri);
     }
 
-    private IMarker makeMarker(EObject obj) {
-        ShallowMarker marker = new ShallowMarker(EValidator.MARKER);
+    private IMarker makeMarker(EObject obj, IFile file) throws CoreException {
         URI uri = EcoreUtil.getURI(obj);
         Map<String, String> attributes = new HashMap<String, String>();
         attributes.put(EValidator.URI_ATTRIBUTE, String.valueOf(uri));
+        
+        IMarker marker = file.createMarker(EValidator.MARKER);
         marker.setAttributes(attributes);
         
         return marker;
