@@ -62,7 +62,6 @@ import org.eclipse.ui.part.IShowInTargetList;
 import org.eclipse.ui.texteditor.ContentAssistAction;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
-import org.eclipse.ui.texteditor.TextOperationAction;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
@@ -333,11 +332,6 @@ public class QvtEditor extends TextEditor {
 		action = new OpenDeclarationAction(ActionMessages.getResourceBundle(), "OpenDeclaration.", this); //$NON-NLS-1$
  
 		setAction(action.getActionDefinitionId(), action);
-
-        action= new TextOperationAction(ActionMessages.getResourceBundle(),"ShowOutline.", this, QvtSourceViewer.SHOW_OUTLINE, true); //$NON-NLS-1$
-        action.setActionDefinitionId(QvtEditorConstants.SHOW_OUTLINE);
-        setAction(QvtEditorConstants.SHOW_OUTLINE, action);
-//        PlatformUI.getWorkbench().getHelpSystem().setHelp(action, IJavaHelpContextIds.SHOW_OUTLINE_ACTION);
     }
     
     
@@ -382,7 +376,7 @@ public class QvtEditor extends TextEditor {
     @Override
 	protected ISourceViewer createSourceViewer(final Composite parent,
             final IVerticalRuler ruler, final int styles) {
-        ProjectionViewer viewer = new QvtSourceViewer(parent, ruler, getOverviewRuler(), isOverviewRulerVisible(), styles);
+        ProjectionViewer viewer = new ProjectionViewer(parent, ruler, getOverviewRuler(), isOverviewRulerVisible(), styles);
         
         // ensure decoration support has been created and configured.
         getSourceViewerDecorationSupport(viewer);
@@ -413,7 +407,6 @@ public class QvtEditor extends TextEditor {
         }
     };
     
-    /* *** For testing purposes *** */
     public QvtConfiguration getQvtConfiguration() {
     	return (QvtConfiguration) getSourceViewerConfiguration();
     }

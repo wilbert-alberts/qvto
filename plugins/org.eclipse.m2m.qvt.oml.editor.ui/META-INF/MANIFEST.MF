@@ -30,7 +30,6 @@ Export-Package: org.eclipse.m2m.internal.qvt.oml.editor.ui;x-friends:="org.eclip
  org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;x-internal:=true,
  org.eclipse.m2m.internal.qvt.oml.editor.ui.hovers;x-internal:=true,
  org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks;x-friends:="org.eclipse.m2m.tests.qvt.oml.ui",
- org.eclipse.m2m.internal.qvt.oml.editor.ui.outline;x-internal:=true,
- org.eclipse.m2m.internal.qvt.oml.editor.ui.quickoutline;x-internal:=true
+ org.eclipse.m2m.internal.qvt.oml.editor.ui.outline;x-internal:=true
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
  

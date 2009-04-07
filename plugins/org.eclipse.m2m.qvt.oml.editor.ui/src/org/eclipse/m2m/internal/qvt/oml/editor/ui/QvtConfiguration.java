@@ -14,20 +14,14 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jface.text.AbstractInformationControlManager;
 import org.eclipse.jface.text.IAutoEditStrategy;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.IInformationControl;
-import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.ITextDoubleClickStrategy;
 import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.hyperlink.IHyperlinkDetector;
-import org.eclipse.jface.text.information.IInformationPresenter;
-import org.eclipse.jface.text.information.IInformationProvider;
-import org.eclipse.jface.text.information.InformationPresenter;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
 import org.eclipse.jface.text.reconciler.IReconciler;
@@ -39,9 +33,6 @@ import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionProcessor;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.hovers.QvtTextHover;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks.QvtHyperlinkDetector;
-import org.eclipse.m2m.internal.qvt.oml.editor.ui.quickoutline.QvtQuickOutlineFactoryRegistry;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Shell;
 
 
 public class QvtConfiguration extends SourceViewerConfiguration {
@@ -134,14 +125,6 @@ public class QvtConfiguration extends SourceViewerConfiguration {
         return reconciler;
     }
     
-//    public IInformationControlCreator getInformationControlCreator(ISourceViewer sourceViewer) {
-//        return new IInformationControlCreator() {
-//            public IInformationControl createInformationControl(Shell parent) {
-//                return new DefaultInformationControl(parent, SWT.NONE, new HTMLTextPresenter(true));
-//            }
-//        };
-//    }
-    
     @Override
     public IAutoEditStrategy[] getAutoEditStrategies(ISourceViewer sourceViewer, String contentType) {
     	return new IAutoEditStrategy[] { new QvtIndentAutoEditStrategy() };
@@ -162,26 +145,6 @@ public class QvtConfiguration extends SourceViewerConfiguration {
     	List<IHyperlinkDetector> detectors = new ArrayList<IHyperlinkDetector>();
     	detectors.add(new QvtHyperlinkDetector(myEditor));
     	return detectors.toArray(new IHyperlinkDetector[detectors.size()]);
-    }
-    
-    public IInformationPresenter getOutlinePresenter(ISourceViewer sourceViewer) {
-        InformationPresenter presenter = new InformationPresenter(getOutlinePresenterControlCreator(sourceViewer, QvtEditorConstants.SHOW_OUTLINE));
-        presenter.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
-        presenter.setAnchor(AbstractInformationControlManager.ANCHOR_GLOBAL);
-        IInformationProvider provider = QvtQuickOutlineFactoryRegistry.getQvtQuickOutlineFactory().newInformationProvider();
-        presenter.setInformationProvider(provider, IDocument.DEFAULT_CONTENT_TYPE);
-        presenter.setSizeConstraints(50, 20, true, false);
-        return presenter;
-    }
-
-    private IInformationControlCreator getOutlinePresenterControlCreator(final ISourceViewer sourceViewer, final String commandId) {
-        return new IInformationControlCreator() {
-            public IInformationControl createInformationControl(Shell parent) {
-                int shellStyle = SWT.RESIZE;
-                int treeStyle = SWT.V_SCROLL | SWT.H_SCROLL;
-                return QvtQuickOutlineFactoryRegistry.getQvtQuickOutlineFactory().newInformationControl(parent, shellStyle, treeStyle, commandId, myEditor, sourceViewer);
-            }
-        };
     }
     
     private QvtDoubleClickStrategy doubleClickStrategy;
