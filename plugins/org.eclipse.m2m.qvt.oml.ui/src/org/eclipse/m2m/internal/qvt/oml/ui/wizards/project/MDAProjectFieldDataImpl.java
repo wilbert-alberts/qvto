@@ -11,16 +11,15 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ui.wizards.project;
 
-import org.eclipse.pde.internal.core.TargetPlatformHelper;
 
-public class MDAProjectFieldDataImpl extends org.eclipse.pde.internal.ui.wizards.plugin.PluginFieldData {
+class MDAProjectFieldDataImpl extends org.eclipse.pde.internal.ui.wizards.plugin.PluginFieldData {
 	private String myProjectName;
     private boolean myPlugin = true;
 
 
 	public MDAProjectFieldDataImpl() {
 		setDoGenerateClass(false);
-		setTargetVersion(TargetPlatformHelper.getTargetVersionString());
+		//setTargetVersion(TargetPlatformHelper.getTargetVersionString());
 	}
 
 	@Override
