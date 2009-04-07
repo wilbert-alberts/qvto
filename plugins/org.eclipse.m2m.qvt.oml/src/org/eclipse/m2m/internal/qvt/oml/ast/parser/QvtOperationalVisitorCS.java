@@ -468,6 +468,7 @@ public class QvtOperationalVisitorCS
 	protected IfExp<EClassifier> ifExpCS(
 			IfExpCS ifExpCS,
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+		// FIXME -
 		IfExp<EClassifier> ifExp = super.ifExpCS(ifExpCS, env);
 		return ifExp;
 	}
@@ -2042,6 +2043,10 @@ public class QvtOperationalVisitorCS
 			
 			if(moduleEnvironments != null && !moduleEnvironments.isEmpty()) {
 				for (QvtOperationalModuleEnv nextImportedEnv : moduleEnvironments) {
+					URI sourceURI = getSourceURI(nextImportedEnv);
+					nextImportedCS.setAst(sourceURI);
+					nextImportedCS.getPathNameCS().setAst(sourceURI);
+					
 					Module importedModule = nextImportedEnv.getModuleContextType();
 					if(importedModule == null) {
 						// nothing to import in, no module was successfully parsed
@@ -2060,7 +2065,7 @@ public class QvtOperationalVisitorCS
 						moduleImport.setImportedModule(importedModule);
 						moduleImport.setStartPosition(nextImportedCS.getStartOffset());
 						moduleImport.setEndPosition(nextImportedCS.getEndOffset());
-						
+												
 						module.getModuleImport().add(moduleImport);
 						
 						if(module instanceof OperationalTransformation && importedModule  instanceof OperationalTransformation) {
@@ -4692,5 +4697,13 @@ public class QvtOperationalVisitorCS
 		annotation.getDetails().put(tagId, value);
 		annotation.getReferences().add(element);
 		return annotation;
+	}
+	
+	private static URI getSourceURI(QvtOperationalModuleEnv env) {
+		if(env instanceof QvtOperationalFileEnv) {
+			QvtOperationalFileEnv fileEnv = (QvtOperationalFileEnv) env;
+			return fileEnv.getFile();
+		}
+		return null;
 	}
 }
