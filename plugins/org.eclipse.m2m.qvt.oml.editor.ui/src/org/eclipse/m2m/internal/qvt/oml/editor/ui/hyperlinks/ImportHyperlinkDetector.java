@@ -16,9 +16,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
-import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.PathNameCS;
 
@@ -48,19 +46,9 @@ public class ImportHyperlinkDetector implements IHyperlinkDetectorHelper {
 	}
 	
 	public static URI findDefinition(CSTNode syntaxElement) {		
-		ImportCS ImportCS = getImport(syntaxElement);
-		
-		if ((syntaxElement instanceof ImportCS)) {
-			ImportCS = (ImportCS) syntaxElement;
-		} else if(syntaxElement instanceof PathNameCS && syntaxElement.eContainer() instanceof ImportCS) {
-			ImportCS = (ImportCS) syntaxElement.eContainer();
-		}
-
-		if(ImportCS != null) {
-			ModuleImport moduleImportAST = ASTBindingHelper.resolveASTNode(ImportCS, ModuleImport.class);
-			if(moduleImportAST != null && moduleImportAST.getImportedModule() != null) {
-				return ASTBindingHelper.resolveModuleFile(moduleImportAST.getImportedModule());
-			}
+		ImportCS importCS = getImport(syntaxElement);		
+		if(importCS != null && importCS.getAst() instanceof URI) {
+			return (URI) importCS.getAst();
 		}
 		
 		return null;
