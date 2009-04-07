@@ -26,7 +26,7 @@ mapping EPackage::mapping1() : EPackage {
 mapping EClass::m1(inout param : EPackage) { 
 	/*<error>*/self/*</error>*/ := null; 
 	/*<error>*/this/*</error>*/ := null; 
-	/*<error>*/a1/*</error>*/./*<error>*/b/*</error>*/./*<error>*/c/*</error>*/ := null; 
+	/*<error>*/a1/*</error>*/.b.c := null; // stops parsing the property call chain on the first error 
 	/*<error>*/a2/*</error>*/ := null;
 	var x : EClass := object EClass {}; 
 	x./*<error>*/a3/*</error>*/ := null;   
