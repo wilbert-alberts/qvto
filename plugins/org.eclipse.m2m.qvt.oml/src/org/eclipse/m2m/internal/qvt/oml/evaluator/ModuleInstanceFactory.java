@@ -26,6 +26,8 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.TupleFactory;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
@@ -99,11 +101,16 @@ public class ModuleInstanceFactory extends EFactoryImpl {
 			moduleInstance = basicCreateModuleInstance(module, instanceMap);
 			for (ModuleImport moduleImport : module.getModuleImport()) {
 				Module importedModule = moduleImport.getImportedModule();
-				createModuleInstance(importedModule, instanceMap);
+				if(moduleImport.getKind() == ImportKind.EXTENSION || importedModule instanceof Library) {
+					// create only instances of extended modules and implicit accessed library singletons 
+					createModuleInstance(importedModule, instanceMap);					
+				}
 			}
 		}
+
 		return moduleInstance;
 	}
+	
 
 	protected final ModuleInstanceImpl basicCreateModuleInstance(Module module, Map<Module, ModuleInstance> instanceMap) {
 		ModuleInstanceImpl moduleInstance;

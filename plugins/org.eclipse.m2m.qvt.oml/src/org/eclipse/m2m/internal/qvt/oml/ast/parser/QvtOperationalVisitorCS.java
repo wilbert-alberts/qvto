@@ -2063,6 +2063,7 @@ public class QvtOperationalVisitorCS
 																					
 						ModuleImport moduleImport = ExpressionsFactory.eINSTANCE.createModuleImport();					
 						moduleImport.setImportedModule(importedModule);
+						moduleImport.setKind(ImportKind.EXTENSION);
 						moduleImport.setStartPosition(nextImportedCS.getStartOffset());
 						moduleImport.setEndPosition(nextImportedCS.getEndOffset());
 												

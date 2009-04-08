@@ -65,6 +65,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
@@ -1423,11 +1424,12 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	    	for (ModuleImport moduleImport : type.getModuleImport()) {
 	    		Module importedModule = moduleImport.getImportedModule();	    		
 				ModuleInstance importedInstance = moduleInstance.getThisInstanceOf(importedModule);
-		    	
-				ModuleInstance.Internal importedInternal = importedInstance.getAdapter(ModuleInstance.Internal.class);
-				if(!importedInternal.isInitialized()) {
-					initModule(importedInstance, modelParameters);
-				}
+		    	if(importedInstance != null) { 
+					ModuleInstance.Internal importedInternal = importedInstance.getAdapter(ModuleInstance.Internal.class);
+					if(!importedInternal.isInitialized()) {
+						initModule(importedInstance, modelParameters);
+					}
+	    		}
 			}
 
 	    	doInitModule(moduleInstance, modelParameters);	    	

@@ -19,6 +19,8 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 
@@ -43,7 +45,8 @@ class ModuleInstanceImpl extends DynamicEObjectImpl implements ModuleInstance, M
 		
 		for (ModuleImport nextImport : moduleImports) {
 			Module importedModule = nextImport.getImportedModule();
-			if(importedModule != null) {
+			if(nextImport.getKind() == ImportKind.EXTENSION || importedModule instanceof Library) {
+				// create only instances of extended modules and implicit accessed library singletons 
 				if(result == null) {
 					result = new ArrayList<ModuleInstance>(moduleImports.size());
 				}
