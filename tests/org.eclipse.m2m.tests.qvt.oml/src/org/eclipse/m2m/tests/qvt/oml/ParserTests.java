@@ -83,7 +83,8 @@ public class ParserTests {
     	throw new IllegalArgumentException("No such testdata: " + name); //$NON-NLS-1$
     }
     
-    private static TestData[] ourData = new TestData[] {
+    private static TestData[] ourData = new TestData[] {    	
+    	TestData.createSourceChecked("importedInstances", 1, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("moduleElementErrorRecovery_265452", 7, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("unitElementErrorRecovery_264517_1", 1, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("unitElementErrorRecovery_264517_2", 3, 0), //$NON-NLS-1$    	
