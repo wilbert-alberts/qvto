@@ -38,6 +38,7 @@ public abstract class AbstractNewQVTElementWizard extends Wizard implements INew
 
 	protected AbstractNewQVTElementWizard() {
 		super();
+		setNeedsProgressMonitor(true);		
 	}
 
 	protected IStructuredSelection getSelection() {

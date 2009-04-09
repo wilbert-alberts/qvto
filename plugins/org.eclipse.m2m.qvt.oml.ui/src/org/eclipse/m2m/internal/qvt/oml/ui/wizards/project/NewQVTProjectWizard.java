@@ -24,7 +24,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExecutableExtension;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
@@ -47,7 +46,7 @@ import org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard;
 
 public class NewQVTProjectWizard extends Wizard implements INewWizard, IExecutableExtension {
 		
-	private MDAProjectFieldDataImpl fMDAProjectFieldData;
+	private NewProjectData fProjectData;
 	private NewQVTProjectCreationPage fMainPage;
 	private NewQVTProjectContentPage fContentPage;
 	private IConfigurationElement fConfig;
@@ -61,7 +60,7 @@ public class NewQVTProjectWizard extends Wizard implements INewWizard, IExecutab
 		setWindowTitle(Messages.NewTransformationProjectWizard_Title);
 	    setNeedsProgressMonitor(true);
 		
-	    fMDAProjectFieldData = new MDAProjectFieldDataImpl();
+	    fProjectData = new NewProjectData();
 		fIsFinishPerformed = false;
 	}
 	
@@ -74,12 +73,12 @@ public class NewQVTProjectWizard extends Wizard implements INewWizard, IExecutab
         
         super.addPages();
         
-		fMainPage = new NewQVTProjectCreationPage("main", fMDAProjectFieldData); //$NON-NLS-1$
+		fMainPage = new NewQVTProjectCreationPage("main", fProjectData); //$NON-NLS-1$
 		fMainPage.setTitle(Messages.NewTransformationProject_Title);
 		fMainPage.setDescription(Messages.NewTransformationProject_Description);
 		addPage(fMainPage);
 
-		fContentPage = new NewQVTProjectContentPage("page2", fMainPage, fMDAProjectFieldData); //$NON-NLS-1$
+		fContentPage = new NewQVTProjectContentPage("page2", fMainPage, fProjectData); //$NON-NLS-1$
 		fWizardSelectionPage = new QVTWizardListSelectionPage(getDestinationProvider());
 		addPage(fContentPage);
 		addPage(fWizardSelectionPage);
@@ -143,24 +142,11 @@ public class NewQVTProjectWizard extends Wizard implements INewWizard, IExecutab
     }
     
 	private WorkspaceModifyOperation createNewPluginProjectOperation() {
-		final org.eclipse.pde.internal.ui.wizards.IProjectProvider projectProvider = new org.eclipse.pde.internal.ui.wizards.IProjectProvider() {
-			public String getProjectName() {
-				return fMainPage.getProjectName();
+		return new NewProjectCreationOperation(fMainPage.getProjectHandle(), fProjectData) {
+			@Override
+			protected void createContents(IProgressMonitor monitor, IProject project) throws CoreException, InterruptedException {
+		        doPostCreateProjectAction(project, monitor);
 			}
-			public IProject getProject() {
-				return fMainPage.getProjectHandle();
-			}
-			public IPath getLocationPath() {
-				return fMainPage.getLocationPath();
-			}
-		};
-		
-		return new org.eclipse.pde.internal.ui.wizards.plugin.NewProjectCreationOperation(fMDAProjectFieldData, projectProvider, null) {
-		    @Override
-		    protected void execute(IProgressMonitor monitor) throws CoreException, InvocationTargetException, InterruptedException {
-		        super.execute(monitor);
-		        doPostCreateProjectAction(projectProvider.getProject(), monitor);
-		    }
 		};
 	}    
 
@@ -200,10 +186,10 @@ public class NewQVTProjectWizard extends Wizard implements INewWizard, IExecutab
 				BasicNewProjectResourceWizard.updatePerspective(fConfig);
 			}
 			
-			if(fMDAProjectFieldData.isSimple()) {
+			if(!fProjectData.isCreateJava()) {
 				// ensure no Activator class is requested to generate, in case 				
 				// it has been previously selected in the new content page
-				fMDAProjectFieldData.setDoGenerateClass(false);
+				fProjectData.setDoGenerateClass(false);
 			}
 			
             final WorkspaceModifyOperation operation;

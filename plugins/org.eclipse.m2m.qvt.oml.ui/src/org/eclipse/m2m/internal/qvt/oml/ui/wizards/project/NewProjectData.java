@@ -1,0 +1,129 @@
+/*******************************************************************************
+ * Copyright (c) 2009 Borland Software Corporation
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     Borland Software Corporation - initial API and implementation
+ *******************************************************************************/
+package org.eclipse.m2m.internal.qvt.oml.ui.wizards.project;
+
+class NewProjectData {	
+
+	private String fName;
+	
+	private String fClassName;
+	
+	private boolean fIsPlugin;
+	
+	private boolean fDoGenerateClass;
+	
+	private String fSourceFolderName;
+	
+	private String fQVTSourceFolderName;
+	
+	private String fOutFolderName;
+	
+	private boolean fCreateJava;
+	
+	private String fProviderName;
+	
+	private String fID;
+	
+	private String fVersion; 
+	
+	public NewProjectData() {
+		super();
+	}
+	
+	public String getName() {
+		return fName;
+	}
+
+	public void setName(String name) {
+		this.fName = name;
+	}
+
+	public String getClassName() {
+		return fClassName;
+	}
+
+	public void setClassName(String className) {
+		this.fClassName = className;
+	}
+
+	public boolean isPlugin() {
+		return fIsPlugin;
+	}
+
+	public void setPlugin(boolean isPlugin) {
+		this.fIsPlugin = isPlugin;
+	}
+
+	public boolean isDoGenerateClass() {
+		return fDoGenerateClass;
+	}
+
+	public void setDoGenerateClass(boolean doGenerateClass) {
+		this.fDoGenerateClass = doGenerateClass;
+	}
+
+	public String getSourceFolderName() {
+		return fSourceFolderName;
+	}
+
+	public void setSourceFolderName(String sourceFolderName) {
+		this.fSourceFolderName = sourceFolderName;
+	}
+
+	public String getOutFolderName() {
+		return fOutFolderName;
+	}
+
+	public void setOutFolderName(String outFolderName) {
+		this.fOutFolderName = outFolderName;
+	}
+
+	public boolean isCreateJava() {
+		return fCreateJava;
+	}
+
+	public void setCreateJava(boolean createJava) {
+		this.fCreateJava = createJava;
+	}
+	
+	public String getProviderName() {
+		return fProviderName;
+	}
+
+	public void setProviderName(String providerName) {
+		fProviderName = providerName;
+	}
+
+	public String getID() {
+		return fID;
+	}
+
+	public void setID(String fid) {
+		fID = fid;
+	}
+
+	public String getVersion() {
+		return fVersion;
+	}
+
+	public void setVersion(String version) {
+		fVersion = version;
+	}
+	
+	public String getQVTSourceFolderName() {
+		return fQVTSourceFolderName;
+	}
+
+	public void setQVTSourceFolderName(String sourceFolderName) {
+		fQVTSourceFolderName = sourceFolderName;
+	}
+}

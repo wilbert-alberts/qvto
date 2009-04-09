@@ -44,20 +44,18 @@ public class NewQVTProjectContentPage extends WizardPage {
 	protected int myChangedGroups = 0;
 	
 	private NewQVTProjectCreationPage myMainPage;
-	private MDAProjectFieldDataImpl myData;
+	private NewProjectData myData;
 	private Text myIdText;
 	private Text myVersionText;
 	private Text myNameText;
 	private Text myProviderText;
-	private Label myLibraryLabel;
-	private Text myLibraryText;
 	private Button myGenerateClass;
 	private Label myClassLabel;
 	private Text myClassText;
 	private boolean myInitialized;
 
 	
-	public NewQVTProjectContentPage(String pageName, NewQVTProjectCreationPage page, MDAProjectFieldDataImpl data) {
+	public NewQVTProjectContentPage(String pageName, NewQVTProjectCreationPage page, NewProjectData data) {
 		super(pageName);
 		myMainPage = page;
 		myData = data;
@@ -115,10 +113,6 @@ public class NewQVTProjectContentPage extends WizardPage {
 		label = new Label(propertiesGroup, SWT.NONE);
 		label.setText(Messages.ContentPage_pprovider); 
 		myProviderText = createText(propertiesGroup, propertiesListener);
-
-		myLibraryLabel = new Label(propertiesGroup, SWT.NONE);
-		myLibraryLabel.setText(Messages.ProjectStructurePage_library);
-		myLibraryText = createText(propertiesGroup, propertiesListener);
 	}
 
 	private void createPluginClassGroup(Composite container) {
@@ -139,7 +133,7 @@ public class NewQVTProjectContentPage extends WizardPage {
 
 		myGenerateClass = new Button(classGroup, SWT.CHECK);
 		myGenerateClass.setText(Messages.ContentPage_generate);
-		myGenerateClass.setSelection(myData.doGenerateClass());
+		myGenerateClass.setSelection(myData.isDoGenerateClass());
 		gd = new GridData();
 		gd.horizontalSpan = 2;
 		myGenerateClass.setLayoutData(gd);
@@ -165,16 +159,6 @@ public class NewQVTProjectContentPage extends WizardPage {
 	
 	protected String computeId() {
 		return myMainPage.getProjectName().replaceAll("[^a-zA-Z0-9\\._]", "_"); //$NON-NLS-1$ //$NON-NLS-2$
-	}
-
-	private void presetLibraryField(String id){
-		StringTokenizer tok = new StringTokenizer(id, "."); //$NON-NLS-1$
-		while (tok.hasMoreTokens()) {
-			String token = tok.nextToken();
-			if (!tok.hasMoreTokens()) {
-				myLibraryText.setText(token + ".jar"); //$NON-NLS-1$
-			}
-		}
 	}
 	
 	private void presetNameField(String id) {
@@ -244,30 +228,19 @@ public class NewQVTProjectContentPage extends WizardPage {
 	}
 	
 	public void updateData() {
-		myData.setId(myIdText.getText().trim());
+		myData.setID(myIdText.getText().trim());
 		myData.setVersion(myVersionText.getText().trim());
 		myData.setName(myNameText.getText().trim());
-		myData.setProvider(myProviderText.getText().trim());
-		String library = myLibraryText.getText().trim();
-		if (library.length() > 0) {			
-			if (!library.endsWith(".jar") &&!library.endsWith("/") && !library.equals(".")) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				library += "/"; //$NON-NLS-1$
-			myData.setLibraryName(library);
-		} else {
-			myData.setLibraryName(null);
-		}
-		myData.setClassname(myClassText.getText().trim());
+		myData.setProviderName(myProviderText.getText().trim());
+
+		myData.setClassName(myClassText.getText().trim());
 		myData.setDoGenerateClass(myGenerateClass.isEnabled() && myGenerateClass.getSelection());
 	}
 
 	protected void validatePage() {
 		setMessage(null);
 		String errorMessage = validateProperties();
-		if (errorMessage == null) {
-			if (myLibraryText.getText().trim().length() == 0) {
-				errorMessage = Messages.ContentPage_noLibrary;
-			}	
-		}
+
 		if (errorMessage == null && myGenerateClass.isEnabled() && myGenerateClass.getSelection()) {
 			IStatus status = validateJavaTypeName(myClassText.getText().trim());
 			if (status.getSeverity() == IStatus.ERROR) {
@@ -332,7 +305,6 @@ public class NewQVTProjectContentPage extends WizardPage {
 				myVersionText.setText("1.0.0"); //$NON-NLS-1$
 				presetNameField(id);
 				presetProviderField(id);
-				presetLibraryField(id);
 				myChangedGroups = oldChanged;
 			}
 			if ((myChangedGroups & CLASS_GROUP) == 0) {
@@ -348,7 +320,7 @@ public class NewQVTProjectContentPage extends WizardPage {
 				myInitialized = true;
 			}
 			
-			boolean isGenerateClassAllowed = !myData.isSimple();
+			boolean isGenerateClassAllowed = myData.isCreateJava();
 			if(!isGenerateClassAllowed) {
 				myGenerateClass.setSelection(false);
 			}

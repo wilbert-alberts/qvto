@@ -41,7 +41,7 @@ import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 
 public class NewQVTProjectCreationPage extends WizardNewProjectCreationPage {
 
-    private MDAProjectFieldDataImpl fCreationData;
+    private NewProjectData fCreationData;
     private Text fSourceText;
     private Text fOutputText;
     private Button fSimpleProject;
@@ -54,7 +54,7 @@ public class NewQVTProjectCreationPage extends WizardNewProjectCreationPage {
     private Label fQvtSourceContainerLabel;
     private Text fQvtSourceContainerText;    
 	
-	public NewQVTProjectCreationPage(String pageName, MDAProjectFieldDataImpl data){
+	public NewQVTProjectCreationPage(String pageName, NewProjectData data){
 		super(pageName);
 		fCreationData = data;
 	}
@@ -186,12 +186,13 @@ public class NewQVTProjectCreationPage extends WizardNewProjectCreationPage {
 		fSimpleProject = new Button(projectTypeGroup, SWT.RADIO);
 		fSimpleProject.setText(Messages.ProjectStructurePage_createSimpleProject);
 		fSimpleProject.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		// select simple project type by default
-		fSimpleProject.setSelection(true);		
 		
 		fSimplePlugin = new Button(projectTypeGroup, SWT.RADIO);
 		fSimplePlugin.setText(Messages.ProjectStructurePage_createSimplePluginProject);
 		fSimplePlugin.setLayoutData(gd);
+		
+		// select simple plugin type by default
+		fSimplePlugin.setSelection(true);		
 		
 		fJavaPlugin = new Button(projectTypeGroup, SWT.RADIO);		
         fJavaPlugin.setText(Messages.ProjectStructurePage_createJavaPluginProject);
@@ -225,7 +226,7 @@ public class NewQVTProjectCreationPage extends WizardNewProjectCreationPage {
 	
     private void updateControls() {
         fCreationData.setPlugin(fJavaPlugin.getSelection());
-        fCreationData.setSimple(!fJavaPlugin.getSelection());
+        fCreationData.setCreateJava(fJavaPlugin.getSelection());
         
         fJavaSettingsGroup.setEnabled(fJavaPlugin.getSelection());
         fSourceLabel.setEnabled(fJavaPlugin.getSelection());
@@ -267,15 +268,16 @@ public class NewQVTProjectCreationPage extends WizardNewProjectCreationPage {
 	
 	public void updateData() {
 		fCreationData.setPlugin(!fSimpleProject.getSelection());		
-		fCreationData.setProjectName(getProjectName());
-		fCreationData.setSimple(!fJavaPlugin.getSelection());		
+		fCreationData.setName(getProjectName());
+		fCreationData.setQVTSourceFolderName(getQVTSourceContainerValue());
+		fCreationData.setCreateJava(fJavaPlugin.getSelection());		
 
 		if(fJavaPlugin.getSelection()) {
 			fCreationData.setSourceFolderName(fSourceText.getText().trim());
-			fCreationData.setOutputFolderName(fOutputText.getText().trim());
+			fCreationData.setOutFolderName(fOutputText.getText().trim());
 		} else {
 			fCreationData.setSourceFolderName(null);
-			fCreationData.setOutputFolderName(null);			
+			fCreationData.setOutFolderName(null);			
 		}
 	}
     
