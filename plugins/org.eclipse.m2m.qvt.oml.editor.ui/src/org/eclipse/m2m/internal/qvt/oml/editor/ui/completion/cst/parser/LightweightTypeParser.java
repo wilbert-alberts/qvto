@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.55 2009/03/16 17:51:47 aigdalov Exp $
+* $Id: LightweightTypeParser.java,v 1.56 2009/04/10 12:34:46 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.55 2009/03/16 17:51:47 aigdalov Exp $
+* $Id: LightweightTypeParser.java,v 1.56 2009/04/10 12:34:46 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.55 2009/03/16 17:51:47 aigdalov Exp $
+* $Id: LightweightTypeParser.java,v 1.56 2009/04/10 12:34:46 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.55 2009/03/16 17:51:47 aigdalov Exp $
+* $Id: LightweightTypeParser.java,v 1.56 2009/04/10 12:34:46 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -2656,8 +2656,10 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 			//
 			case 293: {
 				
+				OCLExpressionCS invalidCondition = createInvalidLiteralExpCS(getTokenText(dtParser.getToken(2)));
+				setOffsets(invalidCondition, getIToken(dtParser.getToken(2)));
 				CSTNode result = createIfExpCS(
-						null,
+						invalidCondition,
 						null,
 						null
 					);
