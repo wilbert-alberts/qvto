@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.25 2009/03/12 15:03:52 aigdalov Exp $ 
+-- * $Id: miscellaneous.g,v 1.26 2009/04/10 12:34:33 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -279,7 +279,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.25 2009/03/12 15:03:52 aigdalov Exp $
+ * $Id: miscellaneous.g,v 1.26 2009/04/10 12:34:33 aigdalov Exp $
  */
 	./
 $End
@@ -816,8 +816,11 @@ $Rules
 
 	ifExpCS ::= if qvtErrorToken
 		/.$BeginJava
+					OCLExpressionCS invalidCondition = createInvalidLiteralExpCS(""); //$NON-NLS-1$
+					invalidCondition.setStartOffset(getIToken($getToken(1)).getEndOffset());
+					invalidCondition.setEndOffset(getIToken($getToken(1)).getEndOffset());
 					CSTNode result = createIfExpCS(
-							null,
+							invalidCondition,
 							null,
 							null
 						);

@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.67 2009/03/16 17:52:22 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.68 2009/04/10 12:34:32 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.67 2009/03/16 17:52:22 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.68 2009/04/10 12:34:32 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.67 2009/03/16 17:52:22 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.68 2009/04/10 12:34:32 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.67 2009/03/16 17:52:22 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.68 2009/04/10 12:34:32 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -2651,8 +2651,11 @@ import org.eclipse.ocl.cst.LiteralExpCS;
 			//
 			case 293: {
 				
+				OCLExpressionCS invalidCondition = createInvalidLiteralExpCS(""); //$NON-NLS-1$
+				invalidCondition.setStartOffset(getIToken(dtParser.getToken(1)).getEndOffset());
+				invalidCondition.setEndOffset(getIToken(dtParser.getToken(1)).getEndOffset());
 				CSTNode result = createIfExpCS(
-						null,
+						invalidCondition,
 						null,
 						null
 					);
