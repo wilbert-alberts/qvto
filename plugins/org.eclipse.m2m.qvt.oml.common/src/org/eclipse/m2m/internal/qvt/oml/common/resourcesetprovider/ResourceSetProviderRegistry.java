@@ -14,7 +14,6 @@ import java.util.TreeMap;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionDelta;
 import org.eclipse.core.runtime.IRegistryChangeEvent;
 import org.eclipse.core.runtime.IRegistryChangeListener;
@@ -22,11 +21,6 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.common.CommonPlugin;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
-import org.eclipse.ui.IPluginContribution;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.activities.ActivityManagerEvent;
-import org.eclipse.ui.activities.IActivityManagerListener;
-import org.eclipse.ui.activities.WorkbenchActivityHelper;
 
 /**
  * @author aigdalov
@@ -49,7 +43,12 @@ public class ResourceSetProviderRegistry {
             }
         }
     };
-    
+
+/*  
+ * Commented out by [271896]: Eliminate UI dependencies from 'org.eclipse.m2m.qvt.oml.common' plugin
+ * https://bugs.eclipse.org/bugs/show_bug.cgi?id=271896   
+ * 
+ * FIXME - needs a different solution anyway as this functionality should not be UI dependent
     private static IActivityManagerListener ourActivityChangeListener = new IActivityManagerListener() {
         public void activityManagerChanged(ActivityManagerEvent event) {
             if(event.haveEnabledActivityIdsChanged()) {
@@ -58,13 +57,26 @@ public class ResourceSetProviderRegistry {
         }
     };
     
-    
+    private static boolean isFiltered(IConfigurationElement configurationElement) {
+        final IExtension extension = configurationElement.getDeclaringExtension();
+        IPluginContribution contribution = new IPluginContribution() {
+            public String getLocalId() {                
+                return extension.getSimpleIdentifier();
+            }
+            public String getPluginId() {
+                return extension.getContributor().getName();
+            }
+        };
+        return WorkbenchActivityHelper.filterItem(contribution);
+    }    
+*/    
     static {
         refresh();
         Platform.getExtensionRegistry().addRegistryChangeListener(ourRegistryChangeListener, CommonPlugin.ID);
-        if(PlatformUI.isWorkbenchRunning()) {
+/*        if(PlatformUI.isWorkbenchRunning()) {
         	PlatformUI.getWorkbench().getActivitySupport().getActivityManager().addActivityManagerListener(ourActivityChangeListener);
         }
+*/        
     }
     
     public static final ResourceSetResourceSetProviderPair getResourceSetResourceSetProviderPair(CFile script) {
@@ -81,9 +93,10 @@ public class ResourceSetProviderRegistry {
         TreeMap<Integer, IResourceSetProvider> result = new TreeMap<Integer, IResourceSetProvider>();
         IConfigurationElement[] configurationElements = Platform.getExtensionRegistry().getConfigurationElementsFor(CommonPlugin.ID, EXT_POINT_ID);
         for (IConfigurationElement configurationElement : configurationElements) {
-            if(isFiltered(configurationElement)) {
+/*          if(isFiltered(configurationElement)) {
                 continue;
             }
+*/            
             if (ELEMENT_PROVIDER.equals(configurationElement.getName())) {
                 try {
                     IResourceSetProvider provider = (IResourceSetProvider) configurationElement.createExecutableExtension(ATTRIBUTE_CLASS);
@@ -100,20 +113,7 @@ public class ResourceSetProviderRegistry {
     public static final void refresh() {
         ourProviders = initProviders();
     }
-    
-    private static boolean isFiltered(IConfigurationElement configurationElement) {
-        final IExtension extension = configurationElement.getDeclaringExtension();
-        IPluginContribution contribution = new IPluginContribution() {
-            public String getLocalId() {                
-                return extension.getSimpleIdentifier();
-            }
-            public String getPluginId() {
-                return extension.getContributor().getName();
-            }
-        };
-        return WorkbenchActivityHelper.filterItem(contribution);
-    }
-    
+        
     public static class ResourceSetResourceSetProviderPair {
         private ResourceSet myResourceSet;
         private IResourceSetProvider myResourceSetProvider;
