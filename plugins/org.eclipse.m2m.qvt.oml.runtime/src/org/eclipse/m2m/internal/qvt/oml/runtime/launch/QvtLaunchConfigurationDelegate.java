@@ -121,7 +121,7 @@ public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelega
 						QvtPlugin.log(e);
 					}
             	}
-            }, "QVT Run");
+            }, "QVT Run"); //$NON-NLS-1$
             
             processThread.start();
 		}

@@ -272,7 +272,7 @@ public class QvtValidator {
 
 	    	if (inObj == null) {
 	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_IncompatibleInputTypes, 
-	            		"<null>",
+	            		"<null>", //$NON-NLS-1$
 	            		EmfUtil.getFullName(classifier)
 	            		));
 	    	}

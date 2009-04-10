@@ -71,7 +71,7 @@ public class HelperOperationCall {
 		
 		fOwningModule = QvtOperationalParserUtil.getOwningModule(operation);
 		if(fOwningModule == null) {
-			throw new IllegalArgumentException("Not a library query or helper"); 
+			throw new IllegalArgumentException("Not a library query or helper");  //$NON-NLS-1$
 		}
 		
 		fOperation = operation;		
@@ -81,7 +81,7 @@ public class HelperOperationCall {
 		for (EParameter eParam : fOperation.getEParameters()) {
 			EClassifier paramType = eParam.getEType();
 			if(paramType == null) {
-				throw new IllegalArgumentException("Parameter with no type");
+				throw new IllegalArgumentException("Parameter with no type"); //$NON-NLS-1$
 			}
 			
 			fArgumentTypes.add(paramType);			

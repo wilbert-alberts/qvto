@@ -15,7 +15,7 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 
 public interface QvtTransformationInterpreterFactory {
 	interface Descriptor {
-	    String FACTORY_POINT_ID = QvtRuntimePlugin.ID + ".qvtTransformationImplFactory";		
+	    String FACTORY_POINT_ID = QvtRuntimePlugin.ID + ".qvtTransformationImplFactory";		 //$NON-NLS-1$
 		String FACTORY_ELEM = "factory"; //$NON-NLS-1$
 		String CLASS_ATTR = "class"; //$NON-NLS-1$
 	}
