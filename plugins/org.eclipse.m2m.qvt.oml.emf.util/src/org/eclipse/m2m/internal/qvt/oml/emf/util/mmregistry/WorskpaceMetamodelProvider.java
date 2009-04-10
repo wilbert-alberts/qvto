@@ -133,7 +133,7 @@ public class WorskpaceMetamodelProvider implements IMetamodelProvider {
 					return (EPackage)eObject;
 				}
 			}			
-			throw new WrappedException(new RuntimeException(NLS.bind("''{0}'' does not refer to a metamodel resource", uri)));
+			throw new WrappedException(new RuntimeException(NLS.bind(Messages.WorskpaceMetamodelProvider_URINotReferringMetamodel, uri)));
 		}
 	}
 }

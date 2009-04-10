@@ -47,7 +47,7 @@ public class MetamodelRegistry {
 	private MetamodelRegistry() {
 		myMetamodelProviders = getMetamodelProviders();
 		if(myMetamodelProviders.isEmpty()) {
-    		Logger.getLogger().log(Logger.SEVERE, "No metamodel provider extensions, point=" + EmfUtilPlugin.ID + "." + MM_POINT_ID); //$NON-NLS-1$			
+    		Logger.getLogger().log(Logger.SEVERE, "No metamodel provider extensions, point=" + EmfUtilPlugin.ID + "." + MM_POINT_ID); //$NON-NLS-1$ //$NON-NLS-2$			
 		}
 		
 		myMetamodelDescs = getMetamodelDescs(myMetamodelProviders);
