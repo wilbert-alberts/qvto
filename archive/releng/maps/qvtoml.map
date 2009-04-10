@@ -28,7 +28,7 @@ feature@org.eclipse.m2m.qvt.oml.examples=v20090316-1930,:pserver:anonymous@dev.e
 plugin@org.eclipse.m2m.qvt.oml.samples=v20090407-1825,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.samples
 
 !*** QVTO tests ******************************************************************************
-feature@org.eclipse.m2m.qvt.oml.tests=v20090407-1825,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/features/org.eclipse.m2m.qvt.oml.tests-feature
+feature@org.eclipse.m2m.qvt.oml.tests=v20090410-1820,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/features/org.eclipse.m2m.qvt.oml.tests-feature
 plugin@org.eclipse.m2m.tests.qvt.oml=v20090410-1820,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/tests/org.eclipse.m2m.tests.qvt.oml
 plugin@org.eclipse.m2m.tests.qvt.oml.ui=v20090407-1825,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/tests/org.eclipse.m2m.tests.qvt.oml.ui
 
