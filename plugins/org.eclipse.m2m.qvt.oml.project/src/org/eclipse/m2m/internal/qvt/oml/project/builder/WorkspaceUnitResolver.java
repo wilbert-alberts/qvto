@@ -277,7 +277,7 @@ public class WorkspaceUnitResolver extends DelegatingUnitResolver implements Uni
 
 			final IFile sourceFile = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(wsRelativePath));
 			if(!sourceFile.exists()) {
-				throw new IOException("File does not exist, URI: " + sourceFile.getFullPath());
+				throw new IOException("File does not exist, URI: " + sourceFile.getFullPath()); //$NON-NLS-1$
 			}
 
 			return new UnitContents.CSTContents() {
