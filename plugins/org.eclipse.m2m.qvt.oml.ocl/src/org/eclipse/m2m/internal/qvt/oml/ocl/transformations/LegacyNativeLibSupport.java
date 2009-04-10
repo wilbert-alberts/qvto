@@ -56,7 +56,7 @@ public class LegacyNativeLibSupport {
         //libModule.setEFactoryInstance(new ExpressionsFactoryImpl());
 		
         QvtOperationalModuleEnv libEnv = initLibEnvironment(lib, libModule);
-		libModule.eResource().setURI(URI.createURI("qvto:/blackboxlib/" + lib.getId()));		
+		libModule.eResource().setURI(URI.createURI("qvto:/blackboxlib/" + lib.getId()));		 //$NON-NLS-1$
         		
 		for (LibraryOperation libOp : lib.getLibraryOperations()) {
 	        QvtLibraryOperation qvtLibOp = new QvtLibraryOperation(libEnv, libOp);

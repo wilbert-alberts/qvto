@@ -31,7 +31,7 @@ public class LegacyNativeLibraryProviderAdapter extends AbstractBlackboxProvider
 
 	@Override
 	protected String getProviderID() {
-		return "legacy";
+		return "legacy"; //$NON-NLS-1$
 	}	
 	
 	@Override
