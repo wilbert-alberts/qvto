@@ -28,7 +28,6 @@
       <import plugin="org.eclipse.m2m.qvt.oml" version="2.0.0" match="compatible"/>
       <import plugin="org.eclipse.m2m.qvt.oml.runtime" version="2.0.0" match="compatible"/>
       <import plugin="org.eclipse.core.variables" version="3.0.0" match="compatible"/>
-      <import plugin="org.eclipse.ui.externaltools" version="3.2.0" match="compatible"/>
       <import plugin="org.eclipse.debug.core" version="3.4.0" match="compatible"/>
       <import plugin="org.eclipse.emf.ecore.xmi" version="2.5.0" match="compatible"/>
       <import plugin="org.apache.ant" version="1.7.1" match="compatible"/>
