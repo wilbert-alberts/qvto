@@ -95,7 +95,7 @@ public class MetamodelBrowserView extends ViewPart implements IResourceChangeLis
     }
     
     private boolean isEcoreFile(IResource resource) {
-		return resource.getType() == IResource.FILE && "ecore".equals(resource.getFileExtension());		
+		return resource.getType() == IResource.FILE && "ecore".equals(resource.getFileExtension());		 //$NON-NLS-1$
     }
     
 	public EObject navigate(EModelElement eModelElement) {
