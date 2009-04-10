@@ -147,7 +147,7 @@ class SourceContainerConfigBlock {
 		
 		if(fSourceContainer == null) {
 			IFolder folderToCreate = fProject.getFolder(new Path(fSourceField.getText()));
-			CreateFolderOperation createFolderOperation = new CreateFolderOperation(folderToCreate, null, "Creating source container");
+			CreateFolderOperation createFolderOperation = new CreateFolderOperation(folderToCreate, null, Messages.SourceContainerConfigBlock_CreateSourceFolderOperation);
 			try {			
 				if(createFolderOperation.execute(null, null).isOK()) {
 					fSourceContainer = folderToCreate;

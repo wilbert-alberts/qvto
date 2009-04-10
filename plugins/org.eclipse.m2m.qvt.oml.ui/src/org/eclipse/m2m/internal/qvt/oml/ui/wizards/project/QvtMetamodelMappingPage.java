@@ -330,7 +330,7 @@ public class QvtMetamodelMappingPage extends PropertyPage {
     		for (URIMapping mapping : uriMap.getMapping()) {
     			if(upToIndex >= 0 && pos++ == upToIndex) break;
 				if(uri.equals(mapping.getSourceURI())) {
-					String message = "Source ''{0}'' URI already mapped";
+					String message = Messages.QvtMetamodelMappingPage_URIAlreadyMapped;
 					return new Status(IStatus.ERROR, QVTUIPlugin.PLUGIN_ID, NLS.bind(message, uri));
 				}
 			}

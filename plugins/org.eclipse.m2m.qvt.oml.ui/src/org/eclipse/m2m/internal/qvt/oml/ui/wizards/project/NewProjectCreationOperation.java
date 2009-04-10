@@ -48,7 +48,7 @@ import org.eclipse.ui.actions.WorkspaceModifyOperation;
 
 class NewProjectCreationOperation extends WorkspaceModifyOperation {
 
-	private static final String BUNDLE_EXEC_ENV = "J2SE-1.5";
+	private static final String BUNDLE_EXEC_ENV = "J2SE-1.5"; //$NON-NLS-1$
 
 	private static final String BUILD_FILENAME_DESCRIPTOR = "build.properties"; //$NON-NLS-1$
 	
@@ -169,7 +169,7 @@ class NewProjectCreationOperation extends WorkspaceModifyOperation {
 	 */
 	@Override
 	protected void execute(IProgressMonitor monitor) throws CoreException, InvocationTargetException, InterruptedException {
-		monitor.beginTask("Creating QVT project", getNumberOfWorkUnits());
+		monitor.beginTask(Messages.NewProjectCreationOperation_createQVTProjectTask, getNumberOfWorkUnits());
 
 		createProject(monitor);
 		monitor.worked(1);
@@ -205,7 +205,7 @@ class NewProjectCreationOperation extends WorkspaceModifyOperation {
 		IJavaProject javaProject = JavaCore.create(project);
 		javaProject.setOutputLocation(binContainer.getFullPath(), monitor);
 		
-		monitor.subTask("Setting the classpath...");
+		monitor.subTask(Messages.NewProjectCreationOperation_SetClassPathTask);
 		
 		IClasspathEntry[] entries = new IClasspathEntry[pde ? 3 : 1];
 		if (pde) {			

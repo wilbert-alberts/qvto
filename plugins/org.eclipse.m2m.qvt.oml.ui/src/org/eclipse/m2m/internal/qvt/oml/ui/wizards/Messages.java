@@ -16,6 +16,8 @@ import org.eclipse.osgi.util.NLS;
 class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.eclipse.m2m.internal.qvt.oml.ui.wizards.messages"; //$NON-NLS-1$
 
+	public static String AbstractNewQVTElementWizard_ProjectCreationFailed;
+
 	public static String NewQvtLibraryWizard_newLibraryNameProposal;
 
 	public static String NewQvtModuleCreationPage_browseButtonLabel;
@@ -55,6 +57,19 @@ class Messages extends NLS {
 	public static String Create_inplace_transformation;
 	
 	
+	public static String SourceDestinationChooser_ChooseCUNamespaceFolder;
+
+	public static String SourceDestinationChooser_ChooseSourceFolder;
+
+	public static String SourceDestinationChooser_NamespaceSelectionTitle;
+
+	public static String SourceDestinationChooser_NoNamespaceSelected;
+
+	public static String SourceDestinationChooser_NoSourceContainerSelected;
+
+	public static String SourceDestinationChooser_SourceContainerSelectionTitle;
+
+
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

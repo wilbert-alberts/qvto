@@ -48,7 +48,9 @@ public class Messages extends NLS {
 
 	public static String QvtMetamodelMappingPage_targetURILabel;
 	
-	public static String QvtMetamodelMappingPage_loadResourceMetamodelError;	
+	public static String QvtMetamodelMappingPage_loadResourceMetamodelError;
+
+	public static String QvtMetamodelMappingPage_URIAlreadyMapped;	
 
 	public static String QvtSettingsPropertyPage_NoBuilder;	
 	public static String QvtSettingsPropertyPage_SourceContainerLabel;
@@ -58,6 +60,8 @@ public class Messages extends NLS {
 	public static String QvtSettingsPropertyPage_SelectSourceContainerFolder;
 	public static String QvtSettingsPropertyPage_ContainerIsNotFolder;
 
+	public static String SourceContainerConfigBlock_CreateSourceFolderOperation;
+
 	public static String SourceContainerConfigBlock_loadBuilderConfigError;
 
 	public static String SourceContainerConfigBlock_MoveExistingSources;
@@ -65,6 +69,14 @@ public class Messages extends NLS {
 	public static String SourceContainerConfigBlock_saveBuilderConfigError;
 	
 	
+	public static String SourceContainerUpdater_InvalidSourceFolder;
+
+	public static String SourceContainerUpdater_NonBlankSourceFolderExpected;
+
+	public static String SourceContainerUpdater_ProjectAsSourceFolderNotRecommened;
+
+	public static String SourceContainerUpdater_RelativeSourceFolderExpected;
+
 	public static String ConvertToMDAProjectWizard_Title;
 	public static String ConvertionPage_Title;
 	public static String ConvertionPage_Description;
@@ -98,9 +110,21 @@ public class Messages extends NLS {
 	public static String ProjectStructurePage_JavaProjectSettings;
 	public static String ProjectStructurePage_source;
 	public static String ProjectStructurePage_output;
+	public static String NewProjectCreationOperation_createQVTProjectTask;
+
+	public static String NewProjectCreationOperation_SetClassPathTask;
+
 	public static String NewTransformationProjectWizard_Title;
 	public static String NewTransformationProject_Title;
 	public static String NewTransformationProject_Description;
+	public static String NewQVTProjectCreationPage_defaultSourceFolder;
+
+	public static String NewQVTProjectCreationPage_projectAlreadyExists;
+
+	public static String NewQVTProjectCreationPage_SourceContainerLabel;
+
+	public static String NewQVTProjectCreationPage_SourceContainerTooltip;
+
 	public static String NewQVTProjectWizard_Error;
 	public static String NewQVTProjectWizard_ErrorSeeLog;
 	

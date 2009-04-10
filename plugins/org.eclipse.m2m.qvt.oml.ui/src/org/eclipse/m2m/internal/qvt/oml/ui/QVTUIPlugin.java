@@ -22,7 +22,7 @@ import org.osgi.framework.BundleContext;
 public class QVTUIPlugin extends Plugin {
 
 	// The plug-in NATURE_ID
-	public static final String PLUGIN_ID = "org.eclipse.m2m.qvt.oml.ui";
+	public static final String PLUGIN_ID = "org.eclipse.m2m.qvt.oml.ui"; //$NON-NLS-1$
 
 	// The shared instance
 	private static QVTUIPlugin plugin;

@@ -82,7 +82,7 @@ public abstract class AbstractNewQVTElementWizard extends Wizard implements INew
 	public final boolean performFinish() {
 		if(fDestinationProvider != null) {
 			if(!fDestinationProvider.createDestination()) {
-				QVTUIPlugin.log(QVTUIPlugin.createStatus(IStatus.ERROR, "Creation of destination project failed"));
+				QVTUIPlugin.log(QVTUIPlugin.createStatus(IStatus.ERROR, Messages.AbstractNewQVTElementWizard_ProjectCreationFailed));
 				return false;
 			}
 		}

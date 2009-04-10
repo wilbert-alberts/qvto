@@ -74,7 +74,7 @@ public class NewQVTProjectCreationPage extends WizardNewProjectCreationPage {
 					} catch (IOException e) {
 						QVTUIPlugin.log(e);
 					}        			
-        			String errMessage = NLS.bind("Project ''{0}'' already exists in the workspace", projectFile.getName());
+        			String errMessage = NLS.bind(Messages.NewQVTProjectCreationPage_projectAlreadyExists, projectFile.getName());
         			setErrorMessage(errMessage);
         			return false;
         		}        		
@@ -157,12 +157,12 @@ public class NewQVTProjectCreationPage extends WizardNewProjectCreationPage {
 		composite.setLayoutData(gd);
 		
 		//source container
-		String tooltipText = "Enter a path of folder to contain QVT sources";
+		String tooltipText = Messages.NewQVTProjectCreationPage_SourceContainerTooltip;
 		fQvtSourceContainerLabel = new Label(composite, SWT.NONE);
-		fQvtSourceContainerLabel.setText("&QVT source container:");
+		fQvtSourceContainerLabel.setText(Messages.NewQVTProjectCreationPage_SourceContainerLabel);
 		fQvtSourceContainerLabel.setToolTipText(tooltipText);
 
-		fQvtSourceContainerText = createText(composite, "transforms");
+		fQvtSourceContainerText = createText(composite, Messages.NewQVTProjectCreationPage_defaultSourceFolder);
 		fQvtSourceContainerText.setToolTipText(tooltipText);
 	}
 	

@@ -64,17 +64,17 @@ class SourceContainerUpdater {
 		IStatus result = Status.OK_STATUS;
 		
     	if(srcContainerPath == null || srcContainerPath.length() == 0) {
-    		return QVTUIPlugin.createStatus(IStatus.INFO, "Project folder is not recommended as QVT source container");
+    		return QVTUIPlugin.createStatus(IStatus.INFO, Messages.SourceContainerUpdater_ProjectAsSourceFolderNotRecommened);
     	} else if(srcContainerPath.trim().length() == 0) {
-    		return QVTUIPlugin.createStatus(IStatus.ERROR, "Non-blank QVT source folder path is expected"); 
+    		return QVTUIPlugin.createStatus(IStatus.ERROR, Messages.SourceContainerUpdater_NonBlankSourceFolderExpected); 
     	} else {
 			IPath path = new Path(srcContainerPath);
 			if(!path.isValidPath(srcContainerPath)) {
-				return QVTUIPlugin.createStatus(IStatus.ERROR, "Invalid QVT source folder path");
+				return QVTUIPlugin.createStatus(IStatus.ERROR, Messages.SourceContainerUpdater_InvalidSourceFolder);
 			} else if(path.isAbsolute() || path.isUNC() || path.getDevice() != null ) {
-				return QVTUIPlugin.createStatus(IStatus.ERROR, "Relative source folder path expected");
+				return QVTUIPlugin.createStatus(IStatus.ERROR, Messages.SourceContainerUpdater_RelativeSourceFolderExpected);
 			} else {
-				result = ResourcesPlugin.getWorkspace().validatePath("/" + path.toString(), IResource.PROJECT | IResource.FOLDER | IResource.FILE);				
+				result = ResourcesPlugin.getWorkspace().validatePath("/" + path.toString(), IResource.PROJECT | IResource.FOLDER | IResource.FILE);				 //$NON-NLS-1$
 			}
     	}
     	
@@ -125,7 +125,7 @@ class SourceContainerUpdater {
 		IProgressMonitor safeMonitor = monitor != null ? monitor : new NullProgressMonitor();
 		
 		try {
-			CreateFolderOperation operation = new CreateFolderOperation(container, null, "Creating source container");			
+			CreateFolderOperation operation = new CreateFolderOperation(container, null, "Creating source container"); //$NON-NLS-1$
 			return operation.execute(safeMonitor, null);
 		} catch (ExecutionException e) {
 			return QVTUIPlugin.createStatus(IStatus.ERROR, e.getLocalizedMessage(), e);
@@ -135,7 +135,8 @@ class SourceContainerUpdater {
 	private IStatus validateMoveSource(IResource[] resourceToBeMoved, IPath destPath) {
 		for (int i = 0; i < resourceToBeMoved.length; i++) {
 			if(resourceToBeMoved[i].getFullPath().isPrefixOf(destPath)) {
-				return QVTUIPlugin.createStatus(IStatus.ERROR, "blebeebl", null);
+				// FIXME - 
+				//return QVTUIPlugin.createStatus(IStatus.ERROR, "Invalid destination source container", null);
 			}
 		}
 		

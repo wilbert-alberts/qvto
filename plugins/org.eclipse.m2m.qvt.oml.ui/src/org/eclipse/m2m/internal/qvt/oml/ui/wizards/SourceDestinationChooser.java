@@ -104,8 +104,8 @@ public class SourceDestinationChooser extends ElementTreeSelectionDialog {
 				new SourceContainer(initialSourceContainer) : initialSourceContainer;
 		
 		SourceDestinationChooser dialog = new SourceDestinationChooser(shell, initialSelection);
-		dialog.setTitle("Source container selection");
-		dialog.setMessage("Choose a source folder");
+		dialog.setTitle(Messages.SourceDestinationChooser_SourceContainerSelectionTitle);
+		dialog.setMessage(Messages.SourceDestinationChooser_ChooseSourceFolder);
 		
 		dialog.addFilter(new ViewerFilter() {
 			@Override
@@ -136,8 +136,8 @@ public class SourceDestinationChooser extends ElementTreeSelectionDialog {
 	public static IQvtNamespace chooseNamespaceFolder(Shell shell) {
 		final SourceDestinationChooser dialog = new SourceDestinationChooser(shell, null);
 		
-		dialog.setTitle("Namespace selection");
-		dialog.setMessage("Choose a compilation unit namespace folder");
+		dialog.setTitle(Messages.SourceDestinationChooser_NamespaceSelectionTitle);
+		dialog.setMessage(Messages.SourceDestinationChooser_ChooseCUNamespaceFolder);
 
 		dialog.setValidator(dialog.createNamespaceValidator());
 		
@@ -168,7 +168,7 @@ public class SourceDestinationChooser extends ElementTreeSelectionDialog {
 		return new ISelectionStatusValidator() {
 			public IStatus validate(Object[] selection) {
 				if(selection == null || selection.length == 0) {
-					return QVTUIPlugin.createStatus(IStatus.ERROR, "No namespace selected", null);
+					return QVTUIPlugin.createStatus(IStatus.ERROR, Messages.SourceDestinationChooser_NoNamespaceSelected, null);
 				}
 				
 				IQvtNamespace namespace = computeQvtNamespaceSelection();
@@ -196,7 +196,7 @@ public class SourceDestinationChooser extends ElementTreeSelectionDialog {
 		return new ISelectionStatusValidator() {
 			public IStatus validate(Object[] selection) {
 				if(selection == null || selection.length == 0) {
-					return QVTUIPlugin.createStatus(IStatus.ERROR, "No source container selected", null);
+					return QVTUIPlugin.createStatus(IStatus.ERROR, Messages.SourceDestinationChooser_NoSourceContainerSelected, null);
 				}
 				
 				IContainer container = getSelectedElement(IContainer.class);
