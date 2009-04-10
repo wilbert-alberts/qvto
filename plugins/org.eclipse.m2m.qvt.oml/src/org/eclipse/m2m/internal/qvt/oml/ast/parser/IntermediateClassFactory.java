@@ -76,7 +76,7 @@ public class IntermediateClassFactory extends EFactoryImpl {
 		myIntermediatePackage = new IntermediatePackage(this);
 		myIntermediatePackage.setName(INTERMEDIATE_MODELTYPE_NAME);
 		myIntermediatePackage.setNsPrefix(INTERMEDIATE_MODELTYPE_NAME.toLowerCase());
-		myIntermediatePackage.setNsURI(ExpressionsPackage.eNS_URI + "/" + INTERMEDIATE_MODELTYPE_NAME);
+		myIntermediatePackage.setNsURI(ExpressionsPackage.eNS_URI + "/" + INTERMEDIATE_MODELTYPE_NAME); //$NON-NLS-1$
 		module.getESubpackages().add(myIntermediatePackage);
 
 		/*
@@ -362,6 +362,6 @@ public class IntermediateClassFactory extends EFactoryImpl {
 	private int myIsInitInProgress = 0;
 	private final Set<EClass> myInstantiatedClasses = new HashSet<EClass>(2);
 
-	private static final String INTERMEDIATE_MODELTYPE_NAME = "_INTERMEDIATE";
+	private static final String INTERMEDIATE_MODELTYPE_NAME = "_INTERMEDIATE"; //$NON-NLS-1$
 
 }

@@ -203,7 +203,7 @@ public class QvtOperationalUtil {
 	public static void reportError(Environment<EPackage, EClassifier, EOperation, EStructuralFeature,
 			EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint,
 			EClass, EObject> env, String message, int startOffset, int endOffset) {
-		OCLUtil.getAdapter(env, BasicEnvironment.class).analyzerError(message, "unknown", startOffset, endOffset);
+		OCLUtil.getAdapter(env, BasicEnvironment.class).analyzerError(message, "unknown", startOffset, endOffset); //$NON-NLS-1$
 	}
 
 	public static void reportWarning(Environment<EPackage, EClassifier, EOperation, EStructuralFeature,
@@ -219,7 +219,7 @@ public class QvtOperationalUtil {
 		
 		ProblemHandler problemHandler = OCLUtil.getAdapter(env, ProblemHandler.class);
 		if (problemHandler != null) {
-			problemHandler.analyzerProblem(Severity.WARNING, message, "unknown", startOffset, endOffset);
+			problemHandler.analyzerProblem(Severity.WARNING, message, "unknown", startOffset, endOffset); //$NON-NLS-1$
 		}		
 	}
 	

@@ -329,6 +329,6 @@ public class QvtTypeResolverImpl implements QVTOTypeResolver {
 	
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + " : " + fOwner.toString();
+		return getClass().getSimpleName() + " : " + fOwner.toString(); //$NON-NLS-1$
 	}
 }

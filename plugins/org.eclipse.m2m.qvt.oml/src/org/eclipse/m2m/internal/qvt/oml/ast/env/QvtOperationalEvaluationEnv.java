@@ -305,7 +305,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		}
 
         if (myBindings.containsKey(name)) {
-        	String message = NLS.bind("The name: ({0})  already has a binding: ({1})", name, myBindings.get(name)); 
+        	String message = NLS.bind("The name: ({0})  already has a binding: ({1})", name, myBindings.get(name));  //$NON-NLS-1$
             throw new IllegalArgumentException(message);
         }
         myBindings.put(name, value);

@@ -198,7 +198,7 @@ public class QVTOCompiler {
 	public CompiledUnit compile(String qualifiedName, QvtCompilerOptions options, IProgressMonitor monitor) throws MdaException {
 		UnitProxy unit = getImportResolver().resolveUnit(qualifiedName);
 		if(unit == null) {
-			throw new MdaException("Unresolved unit: " + qualifiedName);
+			throw new MdaException("Unresolved unit: " + qualifiedName); //$NON-NLS-1$
 		}
 		
 		return compile(unit, options, monitor);

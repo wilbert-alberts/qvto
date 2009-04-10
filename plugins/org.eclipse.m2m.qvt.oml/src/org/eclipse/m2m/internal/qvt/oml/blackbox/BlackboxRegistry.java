@@ -26,11 +26,11 @@ import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
  */
 public class BlackboxRegistry {
 	
-	private static final String CLASS_ATTR = "class";
+	private static final String CLASS_ATTR = "class"; //$NON-NLS-1$
 
-	private static final String PROVIDER_ELEMENT = "provider";
+	private static final String PROVIDER_ELEMENT = "provider"; //$NON-NLS-1$
 
-	private static final String BLACKBOX_PROVIDER_EXTENSION = "blackboxProvider";
+	private static final String BLACKBOX_PROVIDER_EXTENSION = "blackboxProvider"; //$NON-NLS-1$
 
 	public static BlackboxRegistry INSTANCE = new BlackboxRegistry();
 

@@ -30,11 +30,11 @@ public final class QVTStackTraceElement implements ExecutionStackTraceElement  {
      */
     public QVTStackTraceElement(String moduleName, String operationName, String unitQName, int lineNumber) {
         if (moduleName == null) {
-            throw new NullPointerException("Module name is null");
+            throw new NullPointerException("Module name is null"); //$NON-NLS-1$
         }
         
         if (operationName == null) {
-            throw new NullPointerException("operation name is null");
+            throw new NullPointerException("operation name is null"); //$NON-NLS-1$
         }
  
 		this.fModuleName = moduleName;

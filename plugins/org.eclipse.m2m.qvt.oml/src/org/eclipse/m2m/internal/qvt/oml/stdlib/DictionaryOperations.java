@@ -119,7 +119,7 @@ public class DictionaryOperations extends AbstractContextualOperations {
 			new OperationProvider(VALUES, VALUES_NAME, getStdlib().getEnvironment().getTypeResolver()
 					.resolveListType(getStdlib().getOCLStdLib().getT())),
 			
-			new OperationProvider(DEFAULTGET, DEFAULTGET_NAME, new String[] { "key", "default" }, //$NON-NLS-1$
+			new OperationProvider(DEFAULTGET, DEFAULTGET_NAME, new String[] { "key", "default" }, //$NON-NLS-1$ //$NON-NLS-2$
 					oclStdlib.getT(), getStdlib().getKeyT(), oclStdlib.getT()),			
 		};
 	}

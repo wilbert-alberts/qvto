@@ -70,6 +70,6 @@ public abstract class AbstractCompilationUnitDescriptor {
 	
 	@Override
 	public String toString() {
-		return "Descriptor: " + fQualifiedName + " - " + getProvider().toString(); //$NON-NLS-1$ 
+		return "Descriptor: " + fQualifiedName + " - " + getProvider().toString(); //$NON-NLS-1$ //$NON-NLS-2$ 
 	}
 }

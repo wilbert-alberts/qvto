@@ -45,7 +45,7 @@ public class StringOperations extends AbstractContextualOperations {
 			new OperationProvider(FIND, FIND_NAME, new String[] { "match" }, oclStdLib.getInteger(), oclStdLib.getString()), //$NON-NLS-1$
 			new OperationProvider(FIRST_TO_UPPER, FIRST_TO_UPPER_NAME, oclStdLib.getString()),
 			
-			new OperationProvider(UNSUPPORTED_OPER, "format", new String[] { "value" }, oclStdLib.getString(), getStdlib().getObject()), //$NON-NLS-1$
+			new OperationProvider(UNSUPPORTED_OPER, "format", new String[] { "value" }, oclStdLib.getString(), getStdlib().getObject()), //$NON-NLS-1$ //$NON-NLS-2$
 			
 			createAdditionalStaticOperationProvider(GET_STR_COUNTER, GET_STR_COUNTER_NAME, new String[] { "s" }, oclStdLib.getInteger(), oclStdLib.getString()), //$NON-NLS-1$
 			createAdditionalStaticOperationProvider(INCR_STR_COUNTER, INCR_STR_COUNTER_NAME, new String[] { "s" }, oclStdLib.getInteger(), oclStdLib.getString()), //$NON-NLS-1$			
@@ -63,7 +63,7 @@ public class StringOperations extends AbstractContextualOperations {
 					oclStdLib.getString(), oclStdLib.getString(), oclStdLib.getString()),
 			createAdditionalStaticOperationProvider(RESTART_ALL_STR_COUNTER, RESTART_ALL_STR_COUNTER_NAME, null, oclStdLib.getOclVoid()),
 			new OperationProvider(RFIND, RFIND_NAME, new String[] { "match" }, oclStdLib.getInteger(), oclStdLib.getString()), //$NON-NLS-1$			
-			new OperationProvider(STARTS_WITH, STARTS_WITH_NAME, new String[] { "match" }, oclStdLib.getBoolean(), oclStdLib.getString()),			
+			new OperationProvider(STARTS_WITH, STARTS_WITH_NAME, new String[] { "match" }, oclStdLib.getBoolean(), oclStdLib.getString()),			 //$NON-NLS-1$
 			createAdditionalStaticOperationProvider(START_STR_COUNTER, START_STR_COUNTER_NAME, new String[] { "s" }, oclStdLib.getOclVoid(), oclStdLib.getString()), //$NON-NLS-1$
 			new OperationProvider(SUBSTRING_AFTER, SUBSTRING_AFTER_NAME, new String[] { "match" }, oclStdLib.getString(), oclStdLib.getString()), //$NON-NLS-1$			
 			new OperationProvider(SUBSTRING_BEFORE, SUBSTRING_BEFORE_NAME, new String[] { "match" }, oclStdLib.getString(), oclStdLib.getString()), //$NON-NLS-1$			

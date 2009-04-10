@@ -86,10 +86,10 @@ class EPackageRegistryBasedURIResourceMap extends HashMap<URI, Resource> {
 
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-			if ("EPackage".equals(localName) && "http://www.eclipse.org/emf/2002/Ecore".equals(uri)) {
-				nsURI = attributes.getValue("nsURI");
+			if ("EPackage".equals(localName) && "http://www.eclipse.org/emf/2002/Ecore".equals(uri)) { //$NON-NLS-1$ //$NON-NLS-2$
+				nsURI = attributes.getValue("nsURI"); //$NON-NLS-1$
 			}
-			throw new SAXException("Done");
+			throw new SAXException("Done"); //$NON-NLS-1$
 		}
 
 		public String getNsURI() {

@@ -72,7 +72,7 @@ public class QvtRuntimeException extends RuntimeException {
 	
 	public void setStackQvtTrace(List<QVTStackTraceElement> stackTrace) {
 		if(fQVTStackTrace != null) {
-			throw new IllegalStateException("Can't reassign stack elements");
+			throw new IllegalStateException("Can't reassign stack elements"); //$NON-NLS-1$
 		}
 		
 		fQVTStackTrace = null;

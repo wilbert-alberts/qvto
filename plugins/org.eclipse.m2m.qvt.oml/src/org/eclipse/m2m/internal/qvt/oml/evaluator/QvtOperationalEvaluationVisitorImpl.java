@@ -777,7 +777,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			for (OCLExpression<EClassifier> nextArg : formalArguments) {
 				Object argVal = nextArg.accept(getVisitor());
 				if(argVal instanceof ModelInstance == false) {
-					throwQVTException(new QvtRuntimeException("Undefined model passed to transformation"));
+					throwQVTException(new QvtRuntimeException(EvaluationMessages.QvtOperationalEvaluationVisitorImpl_UndefModelParamInTransf));
 				}
 				ModelInstance modelInstance = (ModelInstance) argVal;
 				actualArguments.add(modelInstance); 
@@ -832,7 +832,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 					// it's OK since default constructor is called
 				}
 				else {
-					throwQVTException(new QvtRuntimeException("Undefined constructor is called"));
+					throwQVTException(new QvtRuntimeException("Undefined constructor is called")); //$NON-NLS-1$
 				}
 			}
 			
@@ -1152,7 +1152,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		}
 		
 		if(messagePrefix != null) {
-			message = messagePrefix + " : " + message;
+			message = messagePrefix + " : " + message; //$NON-NLS-1$
 		}
 
 		Object element = null;

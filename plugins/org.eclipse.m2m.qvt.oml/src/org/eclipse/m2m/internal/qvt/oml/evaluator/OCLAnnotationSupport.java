@@ -64,9 +64,9 @@ public class OCLAnnotationSupport {
 		}
 	}
 	
-	private static final String OCL_SOURCE_URI = "http://www.eclipse.org/2007/OCL";	
-	private static final String BODY = "body";	
-	private static final String DERIVE = "derive";
+	private static final String OCL_SOURCE_URI = "http://www.eclipse.org/2007/OCL";	 //$NON-NLS-1$
+	private static final String BODY = "body";	 //$NON-NLS-1$
+	private static final String DERIVE = "derive"; //$NON-NLS-1$
 		
 	private OCL oclInstance;
 	private Map<EOperation, List<EOperationBinding>> operationMap;
