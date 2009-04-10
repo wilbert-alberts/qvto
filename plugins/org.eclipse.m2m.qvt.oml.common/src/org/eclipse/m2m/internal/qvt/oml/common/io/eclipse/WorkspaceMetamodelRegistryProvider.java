@@ -125,7 +125,7 @@ public class WorkspaceMetamodelRegistryProvider implements IMetamodelRegistryPro
 			if(uri != null && nextMapping.getSourceURI() != null) {
 				metamodelProvider.addMetamodel(nextMapping.getSourceURI(), uri, namespace);				
 			} else {
-				String message = NLS.bind("Invalid metamodel uri mapping. nsUri:''{0}'' modelUri:''{1}''", 
+				String message = NLS.bind("Invalid metamodel uri mapping. nsUri:''{0}'' modelUri:''{1}''",  //$NON-NLS-1$
 						nextMapping.getSourceURI(), nextMapping.getTargetURI());
 				
 				CommonPlugin.log(new Status(IStatus.ERROR, CommonPlugin.ID, message, error));
