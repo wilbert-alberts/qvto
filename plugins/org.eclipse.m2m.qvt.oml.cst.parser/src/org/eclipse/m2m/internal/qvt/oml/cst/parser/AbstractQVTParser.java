@@ -555,15 +555,41 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 	
-	protected final CSTNode createMappingCallExpCS(SimpleNameCS sym, EList<OCLExpressionCS> arguments,
+	protected final CSTNode createFeatureFQNOperationCallExpCS(SimpleNameCS moduleName, SimpleNameCS operationName, EList<OCLExpressionCS> arguments) {
+		String fullName = moduleName.getValue() + "::" + operationName.getValue(); //$NON-NLS-1$
+		SimpleNameCS resultNameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, fullName);
+		setOffsets(resultNameCS, moduleName, operationName);
+		return createOperationCallExpCS(resultNameCS, createIsMarkedPreCS(false), arguments);
+	}
+
+	protected final CSTNode createFeatureMappingCallExpCS(SimpleNameCS moduleNameCS, SimpleNameCS mappingNameCS, EList<OCLExpressionCS> arguments,
 			boolean b) {
-				MappingCallExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingCallExpCS();
-				result.setSimpleNameCS(sym);
-				result.getArguments().addAll(arguments);
-				result.setStrict(b);
-				result.setIsMarkedPreCS(CSTFactory.eINSTANCE.createIsMarkedPreCS());
-				return result;
+		MappingCallExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingCallExpCS();
+		SimpleNameCS nameCS = mappingNameCS;
+		if (moduleNameCS != null) {
+			String opRefString = moduleNameCS.getValue() + "::" + mappingNameCS.getValue(); //$NON-NLS-1$
+			nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, opRefString);
+			setOffsets(nameCS, moduleNameCS, mappingNameCS);
+		}
+		result.setSimpleNameCS(nameCS);
+		result.getArguments().addAll(arguments);
+		result.setStrict(b);
+		result.setIsMarkedPreCS(CSTFactory.eINSTANCE.createIsMarkedPreCS());
+		return result;
+	}
+
+	private static String getStringRepresentation(PathNameCS pathName) {
+		StringBuffer buffer = null;
+		for (String element : pathName.getSequenceOfNames()) {
+			if (buffer != null) {
+				buffer.append("::"); //$NON-NLS-1$
+			} else {
+				buffer = new StringBuffer();
 			}
+			buffer.append(element);
+		}
+		return (buffer == null) ? "" : buffer.toString(); //$NON-NLS-1$
+	}
 
 	protected final CSTNode createMappingCallExpCS(PathNameCS sym, EList<OCLExpressionCS> arguments,
 			boolean b) {

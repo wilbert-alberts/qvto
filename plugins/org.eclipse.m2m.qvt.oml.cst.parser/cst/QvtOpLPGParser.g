@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.47 2009/02/27 12:16:45 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.48 2009/04/13 08:47:41 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -151,7 +151,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.47 2009/02/27 12:16:45 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.48 2009/04/13 08:47:41 aigdalov Exp $
  */
 	./
 $End
@@ -1593,7 +1593,8 @@ $Rules
 		
 	featureMappingCallExpCS ::= map simpleNameCS '(' argumentsCSopt ')'
 		/.$BeginJava
-					CSTNode result = createMappingCallExpCS(
+					CSTNode result = createFeatureMappingCallExpCS(
+							null,
 							(SimpleNameCS)$getSym(2),
 							(EList)$getSym(4),
 							false
@@ -1604,12 +1605,38 @@ $Rules
 		./
 	featureMappingCallExpCS ::= xmap simpleNameCS '(' argumentsCSopt ')'
 		/.$BeginJava
-					CSTNode result = createMappingCallExpCS(
+					CSTNode result = createFeatureMappingCallExpCS(
+							null,
 							(SimpleNameCS)$getSym(2),
 							(EList)$getSym(4),
 							true
 						);
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	featureMappingCallExpCS ::= map simpleNameCS '::' simpleNameCS '(' argumentsCSopt ')'
+		/.$BeginJava
+					CSTNode result = createFeatureMappingCallExpCS(
+							(SimpleNameCS)$getSym(2),
+							(SimpleNameCS)$getSym(4),
+							(EList)$getSym(6),
+							false
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
+					$setResult(result);
+		  $EndJava
+		./
+	featureMappingCallExpCS ::= xmap simpleNameCS '::' simpleNameCS '(' argumentsCSopt ')'
+		/.$BeginJava
+					CSTNode result = createFeatureMappingCallExpCS(
+							(SimpleNameCS)$getSym(2),
+							(SimpleNameCS)$getSym(4),
+							(EList)$getSym(6),
+							true
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
 					$setResult(result);
 		  $EndJava
 		./
@@ -1633,6 +1660,18 @@ $Rules
 							true
 						);
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	featureCallExpCS ::= simpleNameCS '::' simpleNameCS '(' argumentsCSopt ')'
+		/.$BeginJava
+					CSTNode result = createFeatureFQNOperationCallExpCS(
+							(SimpleNameCS)$getSym(1),
+							(SimpleNameCS)$getSym(3),
+							(EList)$getSym(5)
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(6)));
 					$setResult(result);
 		  $EndJava
 		./
