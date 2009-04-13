@@ -78,6 +78,7 @@ public class TransformTests {
     
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {        		        		
+        		new FileToFileData("fqnOperationCalls_271789"), //$NON-NLS-1$        		
         		new FileToFileData("importedInstances"), //$NON-NLS-1$        		
         		new FileToFileData("import_access_extends"), //$NON-NLS-1$        		
         		new FileToFileData("import_access_extends_cfgprop", new String[][] { //$NON-NLS-1$ 
@@ -290,7 +291,7 @@ public class TransformTests {
             // tests using imports are excluded as the compiler never resolved imported unit
             // to unitName.qvto.javaless (patched original sources)
             "import_access_extends", "import_access_extends_cfgprop", "importedvirtuals", "imports_transformations", "imports", "virt", "full", "fqntraces", // TODO import other files //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
-            "importedInstances", //$NON-NLS-1$
+            "importedInstances", "fqnOperationCalls_271789", //$NON-NLS-1$ //$NON-NLS-2$
             
             "libraryWithModuleElements_257184", "libraryHeaderWithSignature_257575",// TODO import other files //$NON-NLS-1$ //$NON-NLS-2$
             "assigntonullowner", "resolveall", // reference not in required format: eSuperTypes = "#//NEW_Class1" insteand of "//@eClassifiers.0" //$NON-NLS-1$ //$NON-NLS-2$
