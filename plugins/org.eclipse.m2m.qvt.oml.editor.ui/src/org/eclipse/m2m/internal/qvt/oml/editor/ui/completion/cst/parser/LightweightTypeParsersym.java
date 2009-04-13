@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.53 2009/04/10 12:34:46 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.54 2009/04/13 08:48:01 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.53 2009/04/10 12:34:46 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.54 2009/04/13 08:48:01 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.53 2009/04/10 12:34:46 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.54 2009/04/13 08:48:01 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.53 2009/04/10 12:34:46 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.54 2009/04/13 08:48:01 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -87,18 +87,18 @@ public interface LightweightTypeParsersym {
       TK_LPAREN = 1,
       TK_RPAREN = 2,
       TK_LBRACE = 94,
-      TK_RBRACE = 95,
+      TK_RBRACE = 96,
       TK_LBRACKET = 100,
-      TK_RBRACKET = 103,
+      TK_RBRACKET = 104,
       TK_ARROW = 107,
-      TK_BAR = 96,
+      TK_BAR = 97,
       TK_COMMA = 93,
-      TK_COLON = 97,
-      TK_COLONCOLON = 98,
+      TK_COLON = 98,
+      TK_COLONCOLON = 95,
       TK_SEMICOLON = 99,
       TK_DOT = 108,
       TK_DOTDOT = 115,
-      TK_ATPRE = 104,
+      TK_ATPRE = 102,
       TK_CARET = 109,
       TK_CARETCARET = 110,
       TK_QUESTIONMARK = 105,
@@ -106,7 +106,7 @@ public interface LightweightTypeParsersym {
       TK_RESET_ASSIGN = 101,
       TK_AT_SIGN = 121,
       TK_EXCLAMATION_MARK = 106,
-      TK_NOT_EQUAL_EXEQ = 102,
+      TK_NOT_EQUAL_EXEQ = 103,
       TK_INTEGER_RANGE_START = 111,
       TK_class = 134,
       TK_composes = 135,
@@ -361,16 +361,16 @@ public interface LightweightTypeParsersym {
                  "invresolveoneIn",
                  "COMMA",
                  "LBRACE",
+                 "COLONCOLON",
                  "RBRACE",
                  "BAR",
                  "COLON",
-                 "COLONCOLON",
                  "SEMICOLON",
                  "LBRACKET",
                  "RESET_ASSIGN",
+                 "ATPRE",
                  "NOT_EQUAL_EXEQ",
                  "RBRACKET",
-                 "ATPRE",
                  "QUESTIONMARK",
                  "EXCLAMATION_MARK",
                  "ARROW",
