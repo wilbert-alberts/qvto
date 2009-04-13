@@ -210,7 +210,30 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		
 	@Override
 	public EOperation lookupOperation(EClassifier owner, String name, List<? extends TypedElement<EClassifier>> args) {
-
+		if (name != null) {
+			int indexOfFirstColon =  name.indexOf("::"); //$NON-NLS-1$ 
+			if (indexOfFirstColon > 0) {
+				String moduleName = name.substring(0, indexOfFirstColon);
+				QvtEnvironmentBase resolvedEnv = null;
+				Module thisModule = getModuleContextType();
+				if(thisModule != null && moduleName.equals(thisModule.getName())) {
+					resolvedEnv = this;
+				} else {
+					for (QvtEnvironmentBase nextImported : getImportsByExtends()) {
+						Module importedModule = nextImported.getModuleContextType();
+						if(importedModule != null && moduleName.equals(importedModule.getName())) {
+							resolvedEnv = nextImported;
+						}				
+					}
+				}
+				if (resolvedEnv == null) {
+					return null;
+				}
+				String operationName = name.substring(indexOfFirstColon + 2);
+				return resolvedEnv.lookupOperation(owner, operationName, args);
+			}
+		}
+		
 		// first try to lookup imperative operation with param's exact matching  
 		for (EOperation op : lookupMappingOperations(owner, name)) {
 	        List<EParameter> params = op.getEParameters();
