@@ -72,7 +72,7 @@ public class CompiledUnit {
 	}	
 	
 	public String getName() {
-		return fQname.get(0);
+		return fQname.get(fQname.size() - 1);
 	}
 	
 	public List<QvtOperationalModuleEnv> getModuleEnvironments() {
