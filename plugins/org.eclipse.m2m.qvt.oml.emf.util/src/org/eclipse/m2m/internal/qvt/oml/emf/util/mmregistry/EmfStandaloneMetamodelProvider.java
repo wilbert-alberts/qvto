@@ -26,20 +26,15 @@ public class EmfStandaloneMetamodelProvider implements IMetamodelProvider {
     public EmfStandaloneMetamodelProvider() {
     }
     
-    @SuppressWarnings("unchecked")
 	public IMetamodelDesc[] getMetamodels() {
         List<IMetamodelDesc> descs = new ArrayList<IMetamodelDesc>();
         List<String> uris = new ArrayList<String>(EPackage.Registry.INSTANCE.keySet());
         
-        Map uri2ns = getUriToNamespaceMap();
+        Map<String,String> uri2ns = getUriToNamespaceMap();
         
         for (String uri : uris) {
-            String namespace = (String)uri2ns.get(uri);
-            if(namespace == null) {
-                //Logger.getLogger().warning("No namespace for URI " + uri); //$NON-NLS-1$
-                continue;
-            }
-            
+            String namespace = uri2ns.get(uri);
+
             try {
                 Object pack = EPackage.Registry.INSTANCE.get(uri);
                 if (pack instanceof EPackage.Descriptor) {
@@ -53,7 +48,7 @@ public class EmfStandaloneMetamodelProvider implements IMetamodelProvider {
             }
         }
         
-        return (IMetamodelDesc[])descs.toArray(new IMetamodelDesc[descs.size()]);
+        return descs.toArray(new IMetamodelDesc[descs.size()]);
     }
     
     private static final Map<String, String> getUriToNamespaceMap() {
