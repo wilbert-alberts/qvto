@@ -103,6 +103,11 @@ public class QvtoAntTransformationTask extends Task {
 	        myUri = uri;
 	    }
 	    
+	    @Override
+	    public String toString() {
+	    	return "IN uri=" + myUri; //$NON-NLS-1$
+	    }
+	    
 	    private String myUri;
 	}
 	
@@ -133,6 +138,11 @@ public class QvtoAntTransformationTask extends Task {
 	    
 	    TargetUriData getTargetUriData(ProjectComponent project) {
 	        return new TargetUriData(getOutURI(project).toString());
+	    }
+	    
+	    @Override
+	    public String toString() {
+	    	return "INOUT uri=" + myUri; //$NON-NLS-1$
 	    }
 	    
 	    private String myUri;
@@ -167,6 +177,11 @@ public class QvtoAntTransformationTask extends Task {
 	        		feature,
 	        		myFeature != null ? Boolean.valueOf(myFeature.getClearContents()) : false
 	        		);
+	    }
+	    
+	    @Override
+	    public String toString() {
+	    	return "OUT uri=" + myUri; //$NON-NLS-1$
 	    }
 	    
 	    private String myUri;
@@ -329,8 +344,10 @@ public class QvtoAntTransformationTask extends Task {
 	private void loadTransformationParams(QvtTransformation transformation,
 			List<ModelContent> inObjects, List<TargetUriData> targetData) throws MdaException {
 		
+		Integer parameterIndex = 0;
 		Iterator<ModelParameter> itrModelParam = myModelParameters.iterator();
 		for (TransformationParameter transfParam : transformation.getParameters()) {
+			parameterIndex++;
 			if (!itrModelParam.hasNext()) {
 	            throw new BuildException(NLS.bind(Messages.AbstractApplyTransformationTask_Required_attribute_is_not_specified,
 	            		transfParam.getName()));
@@ -340,7 +357,7 @@ public class QvtoAntTransformationTask extends Task {
 			if (transfParam.getDirectionKind() == DirectionKind.IN) {
 				if (false == modelParam instanceof In) {
     	            throw new BuildException(NLS.bind(Messages.ModelParameterTypeMismatch,
-    	            		transfParam.getName(), DirectionKind.IN.name().toLowerCase()));
+    	            		new Object[] {parameterIndex, transfParam.getName(), DirectionKind.IN.name().toLowerCase()}));
 				}
 				In inParam = (In) modelParam;
 				
@@ -350,7 +367,7 @@ public class QvtoAntTransformationTask extends Task {
 			if (transfParam.getDirectionKind() == DirectionKind.INOUT) {
 				if (false == modelParam instanceof Inout) {
     	            throw new BuildException(NLS.bind(Messages.ModelParameterTypeMismatch,
-    	            		transfParam.getName(), DirectionKind.INOUT.name().toLowerCase()));
+    	            		new Object[] {parameterIndex, transfParam.getName(), DirectionKind.INOUT.name().toLowerCase()}));
 				}
 				Inout inoutParam = (Inout) modelParam;
 				
@@ -362,12 +379,22 @@ public class QvtoAntTransformationTask extends Task {
 			if (transfParam.getDirectionKind() == DirectionKind.OUT) {
 				if (false == modelParam instanceof Out) {
     	            throw new BuildException(NLS.bind(Messages.ModelParameterTypeMismatch,
-    	            		transfParam.getName(), DirectionKind.OUT.name().toLowerCase()));
+    	            		new Object[] {parameterIndex, transfParam.getName(), DirectionKind.OUT.name().toLowerCase()}));
 				}
 				Out outParam = (Out) modelParam;
 
 				targetData.add(outParam.getTargetUriData(this));
 			}
+		}
+
+		List<ModelParameter> extraParameters = new ArrayList<ModelParameter>(2); 
+		while (itrModelParam.hasNext()) {
+			ModelParameter modelParam = itrModelParam.next();
+			extraParameters.add(modelParam);
+		}
+		
+		if (!extraParameters.isEmpty()) {			
+            throw new BuildException(NLS.bind(Messages.ExtraModelParameter, extraParameters));
 		}
 	}
 

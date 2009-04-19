@@ -30,6 +30,7 @@ public class Messages extends NLS {
 	
 	public static String InvalidUriSpecified;
 	public static String ModelParameterTypeMismatch;
+	public static String ExtraModelParameter;
 	public static String TransformationExecuted;
 
 	private Messages() {
