@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.69 2009/04/13 08:47:40 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.70 2009/04/20 16:57:33 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.69 2009/04/13 08:47:40 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.70 2009/04/20 16:57:33 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.69 2009/04/13 08:47:40 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.70 2009/04/20 16:57:33 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.69 2009/04/13 08:47:40 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.70 2009/04/20 16:57:33 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -5903,7 +5903,7 @@ import org.eclipse.ocl.cst.LiteralExpCS;
 						(SimpleNameCS)dtParser.getSym(3),
 						(EList)dtParser.getSym(5)
 					);
-				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(6)));
+				setOffsets(result, (SimpleNameCS)dtParser.getSym(1), getIToken(dtParser.getToken(6)));
 				dtParser.setSym1(result);
 	  		  break;
 			}

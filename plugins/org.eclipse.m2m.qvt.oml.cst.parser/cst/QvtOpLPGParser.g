@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.48 2009/04/13 08:47:41 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.49 2009/04/20 16:57:34 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -151,7 +151,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.48 2009/04/13 08:47:41 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.49 2009/04/20 16:57:34 aigdalov Exp $
  */
 	./
 $End
@@ -1671,7 +1671,7 @@ $Rules
 							(SimpleNameCS)$getSym(3),
 							(EList)$getSym(5)
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(6)));
+					setOffsets(result, (SimpleNameCS)$getSym(1), getIToken($getToken(6)));
 					$setResult(result);
 		  $EndJava
 		./
