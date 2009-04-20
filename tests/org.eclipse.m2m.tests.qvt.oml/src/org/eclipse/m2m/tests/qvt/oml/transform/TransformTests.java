@@ -78,6 +78,7 @@ public class TransformTests {
     
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {        		        		
+        		new FileToFileData("fqnMainCalls_271987"), //$NON-NLS-1$        		
         		new FileToFileData("fqnOperationCalls_271789"), //$NON-NLS-1$        		
         		new FileToFileData("importedInstances"), //$NON-NLS-1$        		
         		new FileToFileData("import_access_extends"), //$NON-NLS-1$        		
@@ -280,7 +281,7 @@ public class TransformTests {
                 new FileToFileData("bug219075_1"), //$NON-NLS-1$        
         		new FilesToFilesData("continue_break", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
         		new FileToFileData("continue_perf"), //$NON-NLS-1$
-        		new FilesToFilesData("unspecified_multiplicity", Collections.<String>emptyList(), Collections.singletonList("expected.xmi")), //$NON-NLS-1$
+        		new FilesToFilesData("unspecified_multiplicity", Collections.<String>emptyList(), Collections.singletonList("expected.xmi")), //$NON-NLS-1$ //$NON-NLS-2$
         };
     }
 
@@ -290,11 +291,11 @@ public class TransformTests {
             "primtypesecore", // uses getDataTypeInstance() defined on ecore //$NON-NLS-1$
             // tests using imports are excluded as the compiler never resolved imported unit
             // to unitName.qvto.javaless (patched original sources)
-            "import_access_extends", "import_access_extends_cfgprop", "importedvirtuals", "imports_transformations", "imports", "virt", "full", "fqntraces", // TODO import other files //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
-            "importedInstances", "fqnOperationCalls_271789", //$NON-NLS-1$ //$NON-NLS-2$
+            "import_access_extends", "import_access_extends_cfgprop", "importedvirtuals", "imports_transformations", "imports", "virt", "full", "fqntraces", // TODO import other files //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
+            "importedInstances", "fqnOperationCalls_271789", "fqnMainCalls_271987", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             
             "libraryWithModuleElements_257184", "libraryHeaderWithSignature_257575",// TODO import other files //$NON-NLS-1$ //$NON-NLS-2$
-            "assigntonullowner", "resolveall", // reference not in required format: eSuperTypes = "#//NEW_Class1" insteand of "//@eClassifiers.0" //$NON-NLS-1$ //$NON-NLS-2$
+            "assigntonullowner", "resolveall", // reference not in required format: eSuperTypes = "#//NEW_Class1" instead of "//@eClassifiers.0" //$NON-NLS-1$ //$NON-NLS-2$
             "egetcodegen", // java method can't be called//$NON-NLS-1$
             "bug214718", // platform protocol URI metamodel reference //$NON-NLS-1$
             "intermediateprop_import", "_while", "oclAllInstances", "bug216317", "simplestXCollectShorthand", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
