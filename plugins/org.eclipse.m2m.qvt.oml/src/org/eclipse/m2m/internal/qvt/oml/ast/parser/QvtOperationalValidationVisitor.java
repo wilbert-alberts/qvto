@@ -88,11 +88,21 @@ import org.eclipse.ocl.ecore.IterateExp;
 import org.eclipse.ocl.ecore.IteratorExp;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.CollectionLiteralExp;
+import org.eclipse.ocl.expressions.FeatureCallExp;
+import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.OperationCallExp;
+import org.eclipse.ocl.expressions.PropertyCallExp;
 import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.lpg.BasicEnvironment;
 import org.eclipse.ocl.lpg.FormattingHelper;
+import org.eclipse.ocl.lpg.ProblemHandler;
+import org.eclipse.ocl.options.ProblemOption;
 import org.eclipse.ocl.parser.ValidationVisitor;
+import org.eclipse.ocl.types.TypeType;
+import org.eclipse.ocl.util.OCLStandardLibraryUtil;
+import org.eclipse.ocl.util.OCLUtil;
 import org.eclipse.ocl.util.TypeUtil;
+import org.eclipse.ocl.utilities.PredefinedType;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
 import org.eclipse.ocl.utilities.Visitable;
@@ -353,7 +363,7 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 			if(i++ > 0) {
 				buf.append(',').append(' ');
 			}
-			if(nextArg instanceof TypedElement) {
+			if(nextArg instanceof TypedElement<?>) {
 				@SuppressWarnings("unchecked")
 				TypedElement<EClassifier> typedElement = (TypedElement<EClassifier>) nextArg;
 				buf.append(helper.formatType(typedElement.getType()));
@@ -427,12 +437,12 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 				int rel = TypeUtil.getRelationship(fEnv, actualType, declaredType);
 				if((rel & UMLReflection.SUBTYPE) == 0) {
 					String typeName = QvtOperationalParserUtil.safeGetQualifiedName(fEnv, declaredType);
-					fEnv.reportError(NLS.bind(ValidationMessages.typeMismatchError, typeName),  //$NON-NLS-1$
+					fEnv.reportError(NLS.bind(ValidationMessages.typeMismatchError, typeName),
 							returnExp.getStartPosition(), returnExp.getEndPosition());
 				}
 				
 				if(returnExp.getValue() == null && !body.getOperation().getResult().isEmpty()) {
-					fEnv.reportError(ValidationMessages.missingReturnValueError, returnExp.getStartPosition(), returnExp.getEndPosition());					 //$NON-NLS-1$
+					fEnv.reportError(ValidationMessages.missingReturnValueError, returnExp.getStartPosition(), returnExp.getEndPosition());					 
 				}
 				
 			} else {
@@ -440,13 +450,13 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 					return Boolean.TRUE;
 				}
 				String typeName = QvtOperationalParserUtil.safeGetQualifiedName(fEnv, declaredType);
-				fEnv.reportError(NLS.bind(ValidationMessages.typeMismatchError, typeName),  //$NON-NLS-1$
+				fEnv.reportError(NLS.bind(ValidationMessages.typeMismatchError, typeName),
 						returnExp.getStartPosition(), returnExp.getEndPosition());
 			}
 						
 			if(body instanceof MappingBody) {
 				// do not support explicit return from mapping operation yet
-				fEnv.reportError(ValidationMessages.returnNotAllowedInMappingYet, returnExp.getStartPosition(), returnExp.getEndPosition()); //$NON-NLS-1$
+				fEnv.reportError(ValidationMessages.returnNotAllowedInMappingYet, returnExp.getStartPosition(), returnExp.getEndPosition());
 			}
 		} else {
 			fEnv.reportError(ValidationMessages.returnUsedOutsideOperationBody, returnExp.getStartPosition(), returnExp.getEndPosition());
@@ -540,7 +550,7 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 				(parentExp instanceof OperationBody)
 				|| (parentExp instanceof BlockExp)
 				|| (parentExp instanceof AssignExp)
-				|| ((parentExp instanceof Variable) 
+				|| ((parentExp instanceof Variable<?, ?>) 
 						&& (parentExp.eContainer() != null) 
 						&& (parentExp.eContainer() instanceof VariableInitExp))
 				)) {
@@ -638,9 +648,13 @@ final class CustomOclValidationVisitor extends
 								implements QVTOperationalVisitor<Boolean>{
 
 	private QvtOperationalValidationVisitor myDelegateVisitor = null;
+	private QvtOperationalEnv myEnv;
+	private UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> myUml;
 
 	protected CustomOclValidationVisitor(QvtOperationalEnv environment) {
 		super(environment);
+		myEnv = environment;
+		myUml = environment.getUMLReflection();
 	}
 	
 	void setVisitor(QvtOperationalValidationVisitor visitor) {
@@ -830,5 +844,194 @@ final class CustomOclValidationVisitor extends
 			return Boolean.TRUE;
 		}
 		return super.visitCollectionLiteralExp(cl);
+	}
+
+	private String getElementName(Object element) {
+		return (element == null)? null : myUml.getName(element);
+	}
+
+    private boolean isStatic(Object feature) {
+        return (myUml != null) && myUml.isStatic(feature);
+    }
+
+	private Boolean visitFeatureCallExp(FeatureCallExp<EClassifier> exp) {
+		if (exp.isMarkedPre()) {
+			// check for a postcondition constraint
+			if (!myEnv.isInPostcondition(exp)) {
+				String message = ValidationMessages.AtPreInPostcondition_ERROR_;
+				return validatorError(exp, message, "visitFeatureCallExp");//$NON-NLS-1$
+			}
+		}
+        
+        // check for static access to non-static features
+        if (exp.getSource() != null) {
+            OCLExpression<EClassifier> source = exp.getSource();
+            
+            if (source.getType() instanceof TypeType<?, ?>) {
+                @SuppressWarnings("unchecked")
+                TypeType<EClassifier, ?>  typeType = (TypeType<EClassifier, ?>) source.getType();
+                
+                Object feature = null;
+                
+                if (exp instanceof OperationCallExp<?, ?>) {
+                    feature = ((OperationCallExp<?, ?>) exp).getReferredOperation();
+                    
+                    // operation must either be defined by the TypeType
+                    //    (e.g., allInstances()) or be a static operation of
+                    //    the referred classifier
+                    if (!(typeType.oclOperations().contains(feature)
+                            || isStatic(feature))) {
+                        String message = ValidationMessages.bind(
+                            ValidationMessages.NonStaticOperation_ERROR_,
+                            getElementName(feature));
+                        return validatorError(exp, message, "visitFeatureCallExp");//$NON-NLS-1$
+                    }
+                } else if (exp instanceof PropertyCallExp<?, ?>) {
+                    feature = ((PropertyCallExp<?, ?>) exp).getReferredProperty();
+                    
+                    // property must be a static attribute of
+                    //    the referred classifier
+                    if (!isStatic(feature)) {
+                        String message = ValidationMessages.bind(
+                            ValidationMessages.NonStaticAttribute_ERROR_,
+                            getElementName(feature));
+                        return validatorError(exp, message, "visitFeatureCallExp");//$NON-NLS-1$
+                    }
+                }
+            }
+        }
+        return Boolean.FALSE;
+	}
+
+	// Overridden due to bug 271987. FQN operations validation in MDT OCL
+	// cannot be applied here. See comment below.
+	@Override
+	public Boolean visitOperationCallExp(
+			OperationCallExp<EClassifier, EOperation> oc) {
+		OCLExpression<EClassifier> source = oc.getSource();
+		EOperation oper = oc.getReferredOperation();
+		int opcode = oc.getOperationCode();
+		List<OCLExpression<EClassifier>> args = oc.getArgument();
+
+		if (oper == null) {
+			String message = ValidationMessages.bind(
+					ValidationMessages.NullOperation_ERROR_,
+					oc.toString());
+			return validatorError(oc, message, "visitOperationCallExp");//$NON-NLS-1$
+		}
+
+		if (source == null) {
+			String message = ValidationMessages.bind(
+					ValidationMessages.NullSourceOperation_ERROR_,
+					oc.toString());
+			return validatorError(oc, message, "visitOperationCallExp");//$NON-NLS-1$
+		}
+
+		EClassifier sourceType = source.getType();
+		String operName = getElementName(oper);
+
+		for (OCLExpression<EClassifier> expr : args) {
+			expr.accept(this);
+		}
+		
+		if (visitFeatureCallExp(oc)) {
+            return Boolean.TRUE;
+        }
+		
+		if (opcode == PredefinedType.OCL_IS_NEW) {
+			// oclIsNew() may only be used in postcondition constraints
+			if (!myEnv.isInPostcondition(oc)) {
+				return validatorError(oc, ValidationMessages.OCLIsNewInPostcondition_ERROR_, "visitOperationCallExp");//$NON-NLS-1$
+			}
+		}
+		
+		source.accept(this);
+
+		// NB: This check is incorrect for FQN operation calls
+//		// Check argument conformance.
+//		O oper1 = env.lookupOperation(sourceType,
+//			operName, args);
+//		if (oper1 != oper) {
+//			String message = ValidationMessages.bind(
+//					ValidationMessages.IllegalOperation_ERROR_,
+//					oc.toString());
+//			return validatorError(oc, message, "visitOperationCallExp");//$NON-NLS-1$
+//		}
+		
+		if (!myUml.isQuery(oper)) {
+			String message = ValidationMessages.bind(
+					ValidationMessages.NonQueryOperation_ERROR_,
+					getElementName(oper));
+			return validatorError(oc, message, "visitOperationCallExp");//$NON-NLS-1$
+		}
+		
+		EClassifier resultType;
+
+		if (TypeUtil.isStandardLibraryFeature(myEnv, sourceType, oper)) {
+			if (opcode != OCLStandardLibraryUtil.getOperationCode(operName)) {
+				String message = ValidationMessages.bind(
+						ValidationMessages.IllegalOpcode_ERROR_,
+						operName);
+				return validatorError(oc, message, "visitOperationCallExp");//$NON-NLS-1$
+			}
+			
+			resultType = TypeUtil
+				.getResultType(oc, myEnv, sourceType, oper, args);
+			
+			if (resultType == null) {
+				// maybe this operation was an "extra" contribution by a
+				//    custom environment implementation
+				resultType = getOCLType(oper);
+			}
+		} else if (TypeUtil.isOclAnyOperation(myEnv, oper)) {
+			// source is an EClass, an enumeration, or a user data type and
+			//   operation is defined by OclAny (not the source, itself)
+			if (opcode != OCLStandardLibraryUtil.getOclAnyOperationCode(operName)) {
+				String message = ValidationMessages.bind(
+						ValidationMessages.IllegalOpcode_ERROR_,
+						operName);
+				return validatorError(oc, message, "visitOperationCallExp");//$NON-NLS-1$
+			}
+			
+			resultType = TypeUtil
+				.getResultType(oc, myEnv, sourceType, oper, args);
+			
+			if (resultType == null) {
+				resultType = getOCLType(oper);
+			}
+		} else {
+			// user-defined operation
+			resultType = TypeUtil
+				.getResultType(oc, myEnv, sourceType, oper, args);
+		}
+		
+		if (!TypeUtil.exactTypeMatch(myEnv, resultType, oc.getType())) {
+			String message = ValidationMessages.bind(
+					ValidationMessages.TypeConformanceOperation_ERROR_,
+					oc.getType().toString());
+			return validatorError(oc, message, "visitOperationCallExp");//$NON-NLS-1$
+		}
+		
+		if ((opcode == PredefinedType.TO_LOWER) || (opcode == PredefinedType.TO_UPPER)) {
+			// check settings for using non-standard closure iterator
+			ProblemHandler.Severity sev = ProblemHandler.Severity.OK;
+			BasicEnvironment benv = OCLUtil.getAdapter(myEnv, BasicEnvironment.class);
+			
+			if (benv != null) {
+				sev = benv.getValue(ProblemOption.STRING_CASE_CONVERSION);
+			}
+			if ((sev != null) && (sev != ProblemHandler.Severity.OK)) {
+                benv.problem(
+                        sev,
+                        ProblemHandler.Phase.VALIDATOR,
+                        ValidationMessages.bind(
+                                ValidationMessages.NonStd_Operation_,
+                                (opcode == PredefinedType.TO_LOWER) ? "String::toLower()" //$NON-NLS-1$
+                                    : "String::toUpper()"), "operationCallExp", //$NON-NLS-1$ //$NON-NLS-2$
+                        oc);
+            }
+		}
+		
+		return Boolean.TRUE;
 	}
 }

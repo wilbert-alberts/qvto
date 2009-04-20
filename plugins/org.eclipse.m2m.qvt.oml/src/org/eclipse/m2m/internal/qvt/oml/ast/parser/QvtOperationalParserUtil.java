@@ -49,6 +49,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
@@ -269,15 +270,25 @@ public class QvtOperationalParserUtil {
 	}	
 
 	public static void collectAllImports(Module module, Set<Module> result) {
+		collectAllImportsByKind(module, result, null);
+	}
+
+	public static Set<Module> collectAllImportsByKind(Module module, Set<Module> result, ImportKind importKind) {
+		if (result == null) {
+			result = new HashSet<Module>();
+		}
 		for (ModuleImport imp : module.getModuleImport()) {
 			if (imp == null || imp.getImportedModule() == null) {
 				continue;
 			}
-			if (!result.contains(imp.getImportedModule())) {
-				collectAllImports(imp.getImportedModule(), result);
+			if ((importKind == null) || (imp.getKind() == importKind)) {
+				if (!result.contains(imp.getImportedModule())) {
+					collectAllImports(imp.getImportedModule(), result);
+				}
+				result.add(imp.getImportedModule());
 			}
-			result.add(imp.getImportedModule());
 		}
+		return result;
 	}
 
 	/**

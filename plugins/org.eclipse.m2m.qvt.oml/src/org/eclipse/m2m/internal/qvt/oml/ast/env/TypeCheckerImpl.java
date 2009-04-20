@@ -11,7 +11,12 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -21,6 +26,8 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.ValidationMessages;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictionaryType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListType;
@@ -410,7 +417,119 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 		}
 
 		return result;
-	}	
+	}
+	
+	@Override
+	public List<EOperation> getOperations(EClassifier owner) {
+		List<EOperation> operations = super.getOperations(owner);
+		if (owner instanceof Module) {
+			Set<EOperation> operationSet = new HashSet<EOperation>(operations);
+			Set<Module> importsByEntends = QvtOperationalParserUtil.collectAllImportsByKind((Module) owner, null, ImportKind.EXTENSION);
+			for (Module module : importsByEntends) {
+				operationSet.addAll(getOperations(module));
+			}
+			return new ArrayList<EOperation>(operationSet);
+		}
+		return operations;
+	}
+
+	public EOperation findOperationMatching(EClassifier owner, String moduleName, String name,
+			List<? extends TypedElement<EClassifier>> args) {
+		if (args == null) {
+			args = Collections.emptyList();
+		}
+
+		UMLReflection<?, EClassifier, EOperation, EStructuralFeature, ?, EParameter, ?, ?, ?, ?> uml = getEnvironment()
+			.getUMLReflection();
+		List<EOperation> operations = getOperations(owner);
+		List<EOperation> matches = null;
+
+		for (EOperation oper : operations) {
+			if (moduleName != null) {
+				Module owningModule = QvtOperationalParserUtil.getOwningModule(oper);
+				if ((owningModule == null) || !moduleName.equals(owningModule.getName())) {
+					continue;
+				}
+			}
+			if (name.equals(uml.getName(oper))
+				&& matchArgs(owner, uml.getParameters(oper), args)) {
+
+				if (uml.getOwningClassifier(oper) == owner) {
+					return oper; // obviously the most specific definition
+				}
+
+				if (matches == null) {
+					// assume a small number of redefinitions
+					matches = new java.util.ArrayList<EOperation>(3);
+				}
+
+				matches.add(oper);
+			}
+		}
+
+		if (matches != null) {
+			if (matches.size() == 1) {
+				return matches.get(0);
+			} else if (!matches.isEmpty()) {
+				return mostSpecificRedefinition(matches, uml);
+			}
+		}
+
+		// special handling for null and invalid values, whose types conform
+		// to all others
+		OCLStandardLibrary<EClassifier> lib = getEnvironment().getOCLStandardLibrary();
+		if ((owner == lib.getOclVoid()) || (owner == lib.getInvalid())) {
+			return findOperationForVoidOrInvalid(owner, moduleName, name, args);
+		}
+
+		return null;
+	}
+	
+	private <F> F mostSpecificRedefinition(List<? extends F> features,
+			UMLReflection<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, ?> uml) {
+
+		Map<EClassifier, F> redefinitions = new java.util.HashMap<EClassifier, F>();
+
+		for (F next : features) {
+			redefinitions.put(uml.getOwningClassifier(next), next);
+		}
+
+		List<EClassifier> classifiers = new java.util.ArrayList<EClassifier>(redefinitions.keySet());
+
+		// remove all classifiers that are ancestors of another classifier
+		// in the map
+		Set<EClassifier> superTypes = new HashSet<EClassifier>();
+		for (EClassifier next : classifiers) {
+			superTypes.addAll(uml.getAllSupertypes(next));
+			if (next instanceof Module) {
+				Set<Module> extendedModules = QvtOperationalParserUtil.collectAllImportsByKind((Module) next, null, ImportKind.EXTENSION);
+				superTypes.addAll(extendedModules);
+			}
+		}
+		
+		classifiers.removeAll(superTypes);
+
+		// there will at least be one remaining
+		return redefinitions.get(classifiers.get(0));
+	}
+	
+	private EOperation findOperationForVoidOrInvalid(EClassifier owner, String module, String name,
+			List<? extends TypedElement<EClassifier>> args) {
+
+		EOperation result = null;
+
+		if (args.size() == 1) {
+			EClassifier argType = args.get(0).getType();
+
+			if (argType != owner) {
+				// let us search the type of the argument to determine whether
+				// we can find this operation
+				result = findOperationMatching(argType, module, name, args);
+			}
+		}
+
+		return result;
+	}
 
 	private boolean isQVTOperation(EOperation operation) {
 		return QvtOperationalParserUtil.getOwningModule(operation) != null;

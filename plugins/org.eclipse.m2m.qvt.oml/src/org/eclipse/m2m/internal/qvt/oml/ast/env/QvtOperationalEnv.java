@@ -223,6 +223,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 						Module importedModule = nextImported.getModuleContextType();
 						if(importedModule != null && moduleName.equals(importedModule.getName())) {
 							resolvedEnv = nextImported;
+							break;
 						}				
 					}
 				}
@@ -230,7 +231,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 					return null;
 				}
 				String operationName = name.substring(indexOfFirstColon + 2);
-				return resolvedEnv.lookupOperation(owner, operationName, args);
+				return resolvedEnv.lookupOperation(owner, moduleName, operationName, args);
 			}
 		}
 		

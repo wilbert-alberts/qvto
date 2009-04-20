@@ -48,6 +48,7 @@ import org.eclipse.ocl.ecore.EcorePackage;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.options.ParsingOptions;
+import org.eclipse.ocl.parser.AbstractOCLAnalyzer;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.util.OCLStandardLibraryUtil;
 import org.eclipse.ocl.util.TypeUtil;
@@ -155,7 +156,31 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
         return Collections.unmodifiableCollection(myImplicitVars);
     }
 
-	@Override
+    public EOperation lookupOperation(EClassifier owner, String module, String name, List<? extends TypedElement<EClassifier>> args) {
+    	EOperation result = doLookupOperation(owner, module, name, args);
+        
+        if ((result == null) && AbstractOCLAnalyzer.isEscaped(name)) {
+            result = doLookupOperation(owner, module, AbstractOCLAnalyzer.unescape(name), args);
+        }
+        
+        return result;
+    }
+    
+	private EOperation doLookupOperation(EClassifier owner, String module, String name, List<? extends TypedElement<EClassifier>> args) {
+		if (owner == null) {
+			Variable<EClassifier, EParameter> vdcl = lookupImplicitSourceForOperation(name, args);
+			if (vdcl == null) {
+				return null;
+			}
+			
+			owner = vdcl.getType();
+		}
+		
+		TypeCheckerImpl typeChecker = (TypeCheckerImpl) getTypeChecker();
+		return typeChecker.findOperationMatching(owner, module, name, args);
+	}
+	
+    @Override
 	public Variable<EClassifier, EParameter> lookupImplicitSourceForOperation(String name, List<? extends TypedElement<EClassifier>> args) {
 		Variable<EClassifier, EParameter> result = super.lookupImplicitSourceForOperation(name, args);
 		

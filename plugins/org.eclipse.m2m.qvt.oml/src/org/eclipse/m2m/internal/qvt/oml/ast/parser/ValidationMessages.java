@@ -193,6 +193,17 @@ public final class ValidationMessages extends NLS {
     public static String TupleFieldNotFound;
     public static String TypeMismatchNoCommonType;
     
+	public static String AtPreInPostcondition_ERROR_;
+	public static String NonStaticOperation_ERROR_;
+	public static String NonStaticAttribute_ERROR_;
+	public static String NullOperation_ERROR_;
+	public static String NullSourceOperation_ERROR_;
+	public static String OCLIsNewInPostcondition_ERROR_;
+	public static String NonQueryOperation_ERROR_;
+	public static String IllegalOpcode_ERROR_;
+	public static String TypeConformanceOperation_ERROR_;
+	public static String NonStd_Operation_;
+    
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, ValidationMessages.class);
 	}
