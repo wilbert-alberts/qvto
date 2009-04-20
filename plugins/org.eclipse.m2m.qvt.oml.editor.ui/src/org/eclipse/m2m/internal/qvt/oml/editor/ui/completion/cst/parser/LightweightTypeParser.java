@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.57 2009/04/13 08:48:01 aigdalov Exp $
+* $Id: LightweightTypeParser.java,v 1.58 2009/04/20 16:56:09 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.57 2009/04/13 08:48:01 aigdalov Exp $
+* $Id: LightweightTypeParser.java,v 1.58 2009/04/20 16:56:09 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.57 2009/04/13 08:48:01 aigdalov Exp $
+* $Id: LightweightTypeParser.java,v 1.58 2009/04/20 16:56:09 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.57 2009/04/13 08:48:01 aigdalov Exp $
+* $Id: LightweightTypeParser.java,v 1.58 2009/04/20 16:56:09 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -5908,7 +5908,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 						(SimpleNameCS)dtParser.getSym(3),
 						(EList)dtParser.getSym(5)
 					);
-				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(6)));
+				setOffsets(result, (SimpleNameCS)dtParser.getSym(1), getIToken(dtParser.getToken(6)));
 				dtParser.setSym1(result);
 	  		  break;
 			}
