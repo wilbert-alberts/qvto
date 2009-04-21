@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactory.java,v 1.17 2009/02/19 11:25:54 radvorak Exp $
+ * $Id: CSTFactory.java,v 1.18 2009/04/21 13:39:42 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -310,6 +310,15 @@ public interface CSTFactory extends EFactory {
 	 * @generated
 	 */
 	MappingCallExpCS createMappingCallExpCS();
+
+	/**
+	 * Returns a new object of class '<em>Imperative Operation Call Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Imperative Operation Call Exp CS</em>'.
+	 * @generated
+	 */
+	ImperativeOperationCallExpCS createImperativeOperationCallExpCS();
 
 	/**
 	 * Returns a new object of class '<em>While Exp CS</em>'.

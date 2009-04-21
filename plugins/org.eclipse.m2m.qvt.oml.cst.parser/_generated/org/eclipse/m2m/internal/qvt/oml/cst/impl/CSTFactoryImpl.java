@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactoryImpl.java,v 1.19 2009/02/19 11:25:51 radvorak Exp $
+ * $Id: CSTFactoryImpl.java,v 1.20 2009/04/21 13:39:40 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.m2m.internal.qvt.oml.cst.*;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
@@ -179,6 +180,7 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 			case CSTPackage.MAPPING_BODY_CS: return createMappingBodyCS();
 			case CSTPackage.OBJECT_EXP_CS: return createObjectExpCS();
 			case CSTPackage.MAPPING_CALL_EXP_CS: return createMappingCallExpCS();
+			case CSTPackage.IMPERATIVE_OPERATION_CALL_EXP_CS: return createImperativeOperationCallExpCS();
 			case CSTPackage.DIRECTION_KIND_CS: return createDirectionKindCS();
 			case CSTPackage.RESOLVE_EXP_CS: return createResolveExpCS();
 			case CSTPackage.RESOLVE_IN_EXP_CS: return createResolveInExpCS();
@@ -551,6 +553,16 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	public MappingCallExpCS createMappingCallExpCS() {
 		MappingCallExpCSImpl mappingCallExpCS = new MappingCallExpCSImpl();
 		return mappingCallExpCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ImperativeOperationCallExpCS createImperativeOperationCallExpCS() {
+		ImperativeOperationCallExpCSImpl imperativeOperationCallExpCS = new ImperativeOperationCallExpCSImpl();
+		return imperativeOperationCallExpCS;
 	}
 
 	/**

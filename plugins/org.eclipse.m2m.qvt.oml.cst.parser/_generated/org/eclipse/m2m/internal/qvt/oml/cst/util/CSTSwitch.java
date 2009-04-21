@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTSwitch.java,v 1.20 2009/02/19 11:25:55 radvorak Exp $
+ * $Id: CSTSwitch.java,v 1.21 2009/04/21 13:39:42 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.m2m.internal.qvt.oml.cst.*;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
@@ -522,11 +523,23 @@ public class CSTSwitch<T> {
 			case CSTPackage.MAPPING_CALL_EXP_CS: {
 				MappingCallExpCS mappingCallExpCS = (MappingCallExpCS)theEObject;
 				T result = caseMappingCallExpCS(mappingCallExpCS);
+				if (result == null) result = caseImperativeOperationCallExpCS(mappingCallExpCS);
 				if (result == null) result = caseOperationCallExpCS(mappingCallExpCS);
 				if (result == null) result = caseFeatureCallExpCS(mappingCallExpCS);
 				if (result == null) result = caseCallExpCS(mappingCallExpCS);
 				if (result == null) result = caseOCLExpressionCS(mappingCallExpCS);
 				if (result == null) result = caseCSTNode(mappingCallExpCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.IMPERATIVE_OPERATION_CALL_EXP_CS: {
+				ImperativeOperationCallExpCS imperativeOperationCallExpCS = (ImperativeOperationCallExpCS)theEObject;
+				T result = caseImperativeOperationCallExpCS(imperativeOperationCallExpCS);
+				if (result == null) result = caseOperationCallExpCS(imperativeOperationCallExpCS);
+				if (result == null) result = caseFeatureCallExpCS(imperativeOperationCallExpCS);
+				if (result == null) result = caseCallExpCS(imperativeOperationCallExpCS);
+				if (result == null) result = caseOCLExpressionCS(imperativeOperationCallExpCS);
+				if (result == null) result = caseCSTNode(imperativeOperationCallExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -1232,6 +1245,21 @@ public class CSTSwitch<T> {
 	 * @generated
 	 */
 	public T caseMappingCallExpCS(MappingCallExpCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Imperative Operation Call Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Imperative Operation Call Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseImperativeOperationCallExpCS(ImperativeOperationCallExpCS object) {
 		return null;
 	}
 

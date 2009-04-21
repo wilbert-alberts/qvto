@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingCallExpCSImpl.java,v 1.3 2009/02/16 12:44:05 aigdalov Exp $
+ * $Id: MappingCallExpCSImpl.java,v 1.4 2009/04/21 13:39:40 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -35,7 +35,7 @@ import org.eclipse.ocl.cst.impl.OperationCallExpCSImpl;
  *
  * @generated
  */
-public class MappingCallExpCSImpl extends OperationCallExpCSImpl implements MappingCallExpCS {
+public class MappingCallExpCSImpl extends ImperativeOperationCallExpCSImpl implements MappingCallExpCS {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

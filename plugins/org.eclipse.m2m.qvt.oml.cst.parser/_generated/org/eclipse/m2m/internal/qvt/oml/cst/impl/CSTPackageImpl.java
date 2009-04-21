@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.31 2009/02/19 11:25:51 radvorak Exp $
+ * $Id: CSTPackageImpl.java,v 1.32 2009/04/21 13:39:40 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -45,6 +45,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ExpressionStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeLoopExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeOperationCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
@@ -348,6 +349,13 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * @generated
 	 */
 	private EClass mappingCallExpCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass imperativeOperationCallExpCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1643,6 +1651,24 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getImperativeOperationCallExpCS() {
+		return imperativeOperationCallExpCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getImperativeOperationCallExpCS_Module() {
+		return (EReference)imperativeOperationCallExpCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getWhileExpCS() {
 		return whileExpCSEClass;
 	}
@@ -2761,6 +2787,9 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		mappingCallExpCSEClass = createEClass(MAPPING_CALL_EXP_CS);
 		createEAttribute(mappingCallExpCSEClass, MAPPING_CALL_EXP_CS__STRICT);
 
+		imperativeOperationCallExpCSEClass = createEClass(IMPERATIVE_OPERATION_CALL_EXP_CS);
+		createEReference(imperativeOperationCallExpCSEClass, IMPERATIVE_OPERATION_CALL_EXP_CS__MODULE);
+
 		directionKindCSEClass = createEClass(DIRECTION_KIND_CS);
 		createEAttribute(directionKindCSEClass, DIRECTION_KIND_CS__DIRECTION_KIND);
 
@@ -2950,7 +2979,8 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		mappingBodyCSEClass.getESuperTypes().add(this.getMappingSectionCS());
 		objectExpCSEClass.getESuperTypes().add(this.getInstantiationExpCS());
 		objectExpCSEClass.getESuperTypes().add(this.getElementWithBody());
-		mappingCallExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOperationCallExpCS());
+		mappingCallExpCSEClass.getESuperTypes().add(this.getImperativeOperationCallExpCS());
+		imperativeOperationCallExpCSEClass.getESuperTypes().add(theCSTPackage_1.getOperationCallExpCS());
 		directionKindCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		resolveExpCSEClass.getESuperTypes().add(theCSTPackage_1.getCallExpCS());
 		resolveInExpCSEClass.getESuperTypes().add(this.getResolveExpCS());
@@ -3144,6 +3174,9 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
 		initEClass(mappingCallExpCSEClass, MappingCallExpCS.class, "MappingCallExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getMappingCallExpCS_Strict(), ecorePackage.getEBoolean(), "strict", null, 0, 1, MappingCallExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(imperativeOperationCallExpCSEClass, ImperativeOperationCallExpCS.class, "ImperativeOperationCallExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getImperativeOperationCallExpCS_Module(), theCSTPackage_1.getSimpleNameCS(), null, "module", null, 0, 1, ImperativeOperationCallExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(directionKindCSEClass, DirectionKindCS.class, "DirectionKindCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getDirectionKindCS_DirectionKind(), this.getDirectionKindEnum(), "directionKind", null, 0, 1, DirectionKindCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

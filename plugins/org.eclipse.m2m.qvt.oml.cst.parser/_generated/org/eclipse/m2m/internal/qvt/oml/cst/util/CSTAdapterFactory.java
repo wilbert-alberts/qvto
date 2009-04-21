@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTAdapterFactory.java,v 1.19 2009/02/19 11:25:55 radvorak Exp $
+ * $Id: CSTAdapterFactory.java,v 1.20 2009/04/21 13:39:43 aigdalov Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -19,6 +19,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.m2m.internal.qvt.oml.cst.*;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
@@ -325,6 +326,10 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseMappingCallExpCS(MappingCallExpCS object) {
 				return createMappingCallExpCSAdapter();
+			}
+			@Override
+			public Adapter caseImperativeOperationCallExpCS(ImperativeOperationCallExpCS object) {
+				return createImperativeOperationCallExpCSAdapter();
 			}
 			@Override
 			public Adapter caseDirectionKindCS(DirectionKindCS object) {
@@ -947,6 +952,20 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createMappingCallExpCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ImperativeOperationCallExpCS <em>Imperative Operation Call Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ImperativeOperationCallExpCS
+	 * @generated
+	 */
+	public Adapter createImperativeOperationCallExpCSAdapter() {
 		return null;
 	}
 

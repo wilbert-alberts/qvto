@@ -264,8 +264,12 @@
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImplicit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="MappingCallExpCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OperationCallExpCS">
+    <eClassifiers xsi:type="ecore:EClass" name="MappingCallExpCS" eSuperTypes="#//cst/ImperativeOperationCallExpCS">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="strict" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ImperativeOperationCallExpCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OperationCallExpCS">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="module" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
+          containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="DirectionKindCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="directionKind" eType="#//cst/DirectionKindEnum"/>
