@@ -46,6 +46,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNode;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNodeAccess;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOEnvironment;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtEnvironmentBase;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
@@ -69,6 +70,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.ExpressionStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeOperationCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
@@ -384,8 +386,54 @@ public class QvtOperationalVisitorCS
 		return type;
 	}
 	
+	@Override
+	protected EOperation lookupOperation(CSTNode cstNode,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
+			EClassifier owner, String name,
+			List<? extends TypedElement<EClassifier>> args) {
+		if ((cstNode instanceof SimpleNameCS)
+				&& (cstNode.eContainer() instanceof ImperativeOperationCallExpCS) 
+				&& (env instanceof QvtEnvironmentBase)) {
+			QvtEnvironmentBase qvtEnvironmentBase = (QvtEnvironmentBase) env;
+			
+			ImperativeOperationCallExpCS imperativeOperationCallExpCS = (ImperativeOperationCallExpCS) cstNode.eContainer();
+			String moduleName = (imperativeOperationCallExpCS.getModule() == null) ? null 
+					: imperativeOperationCallExpCS.getModule().getValue();
+			
+			QvtEnvironmentBase resolvedEnv = null;
+			if (moduleName == null) {
+				resolvedEnv = qvtEnvironmentBase;
+			} else {
+				resolvedEnv = findEnvironmentForModule(qvtEnvironmentBase, moduleName, new HashSet<QvtEnvironmentBase>());
+				if (resolvedEnv == null) {
+					return null;
+				}
+			}
+			
+			EOperation operation = resolvedEnv.lookupOperation(owner, moduleName, name, args);
+			cstNode.setAst(operation);
+			return operation;
+		}
+		return super.lookupOperation(cstNode, env, owner, name, args);
+	}
 
-	
+	private QvtEnvironmentBase findEnvironmentForModule(QvtEnvironmentBase env, String moduleName, Set<QvtEnvironmentBase> envs) {
+		Module module = env.getModuleContextType();
+		if(module != null && moduleName.equals(module.getName())) {
+			return env;
+		}
+		envs.add(env);
+		for (QvtEnvironmentBase nextImported : env.getImportsByExtends()) {
+			if (!envs.contains(nextImported)) {
+				QvtEnvironmentBase resolvedEnv = findEnvironmentForModule(nextImported, moduleName, envs);
+				if (resolvedEnv != null) {
+					return resolvedEnv;
+				}
+			}
+		}
+		return null;
+	}
+
 	@Override
 	protected Variable<EClassifier, EParameter> lookupImplicitSourceForOperation(
 			CSTNode cstNode,
