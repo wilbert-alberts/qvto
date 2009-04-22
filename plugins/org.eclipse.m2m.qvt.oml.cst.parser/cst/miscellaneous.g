@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.27 2009/04/22 09:54:49 aigdalov Exp $ 
+-- * $Id: miscellaneous.g,v 1.28 2009/04/22 10:02:41 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -279,7 +279,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.27 2009/04/22 09:54:49 aigdalov Exp $
+ * $Id: miscellaneous.g,v 1.28 2009/04/22 10:02:41 aigdalov Exp $
  */
 	./
 $End
@@ -1008,101 +1008,5 @@ $Rules
 		./
         
         ----- '!=' - a synonym of '<>' (end) -----
-	--=== Miscellaneous QVTO grammar rules (end) ===--
-
-	--=== Non-standard extensions and legacy support (start) ===--
-	_import ::= import library unit ';'
-		/.$BeginJava
-					CSTNode result = createLibraryImportCS(
-							(PathNameCS)$getSym(3)
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
-					$setResult(result);
-		  $EndJava
-		./
-
-	transformation_h ::= qualifierList transformation qualifiedNameCS
-		/.$BeginJava
-					EList qualifierList = (EList) $getSym(1);
-					CSTNode result = createTransformationHeaderCS(
-							qualifierList,
-							(PathNameCS)$getSym(3),
-							createSimpleSignatureCS($EMPTY_ELIST),
-							$EMPTY_ELIST,
-							null
-						);
-					if (qualifierList.isEmpty()) {
-						setOffsets(result, getIToken($getToken(2)), (PathNameCS)$getSym(3));
-					} else {
-						setOffsets(result, (CSTNode) qualifierList.get(0), (PathNameCS)$getSym(3));
-					}
-					$setResult(result);
-		  $EndJava
-		./
-
-	unit_element -> renaming
-	renaming ::= rename typeCS '.' qvtIdentifierCS '=' stringLiteralExpCS ';' 
-		/.$BeginJava
-					CSTNode result = createRenameCS(
-							(TypeCS)$getSym(2),
-							getIToken($getToken(4)),
-							(StringLiteralExpCS)$getSym(6)
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
-					$setResult(result);
-		  $EndJava
-		./
-	
-	switchAltExpCS ::= '(' oclExpressionCS ')' '?' oclExpressionCS ';'
-		/.$BeginJava
-					CSTNode result = createSwitchAltExpCSDeprecated(
-							(OCLExpressionCS) $getSym(2),
-							(OCLExpressionCS) $getSym(5)
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(6)));
-					$setResult(result);
-		  $EndJava
-		./
-	switchAltExpCS ::= '(' oclExpressionCS ')' qvtErrorToken
-		/.$BeginJava
-					CSTNode result = createSwitchAltExpCSDeprecated(
-							(OCLExpressionCS) $getSym(2),
-							null
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
-					$setResult(result);
-		  $EndJava
-		./
-	switchAltExpCS ::= '(' qvtErrorToken
-		/.$BeginJava
-					CSTNode result = createSwitchAltExpCSDeprecated(
-							null,
-							null
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
-					$setResult(result);
-		  $EndJava
-		./
-
-	switchElseExpCS ::= else '?' oclExpressionCS ';'
-		/.$BeginJava
-			    	int startOffset = getIToken($getToken(1)).getStartOffset();
-			    	int endOffset = getIToken($getToken(4)).getEndOffset();
-					reportWarning(org.eclipse.osgi.util.NLS.bind(org.eclipse.m2m.internal.qvt.oml.cst.parser.Messages.AbstractQVTParser_DeprecatedSwitchElseExp, null), startOffset, endOffset);
-					
-					$setResult((CSTNode)$getSym(3));
-		  $EndJava
-		./
-	switchElseExpCS ::= else '?' oclExpressionCS qvtErrorToken
-		/.$BeginJava
-			    	int startOffset = getIToken($getToken(1)).getStartOffset();
-			    	int endOffset = getIToken($getToken(3)).getEndOffset();
-					reportWarning(org.eclipse.osgi.util.NLS.bind(org.eclipse.m2m.internal.qvt.oml.cst.parser.Messages.AbstractQVTParser_DeprecatedSwitchElseExp, null), startOffset, endOffset);
-					
-					$setResult((CSTNode)$getSym(3));
-		  $EndJava
-		./
-
-	--=== Non-standard extensions and legacy support (end) ===--
-	
+	--=== Miscellaneous QVTO grammar rules (end) ===--	
 $End

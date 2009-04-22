@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.49 2009/04/20 16:57:34 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.50 2009/04/22 10:02:41 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -151,7 +151,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.49 2009/04/20 16:57:34 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.50 2009/04/22 10:02:41 aigdalov Exp $
  */
 	./
 $End
@@ -1890,4 +1890,49 @@ $Rules
        		  $EndJava
 		./
 	--=== // Expressions (end) ===--
+
+
+	--=== Non-standard extensions and legacy support (start) ===--
+	_import ::= import library unit ';'
+		/.$BeginJava
+					CSTNode result = createLibraryImportCS(
+							(PathNameCS)$getSym(3)
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
+					$setResult(result);
+		  $EndJava
+		./
+
+	transformation_h ::= qualifierList transformation qualifiedNameCS
+		/.$BeginJava
+					EList qualifierList = (EList) $getSym(1);
+					CSTNode result = createTransformationHeaderCS(
+							qualifierList,
+							(PathNameCS)$getSym(3),
+							createSimpleSignatureCS($EMPTY_ELIST),
+							$EMPTY_ELIST,
+							null
+						);
+					if (qualifierList.isEmpty()) {
+						setOffsets(result, getIToken($getToken(2)), (PathNameCS)$getSym(3));
+					} else {
+						setOffsets(result, (CSTNode) qualifierList.get(0), (PathNameCS)$getSym(3));
+					}
+					$setResult(result);
+		  $EndJava
+		./
+
+	unit_element -> renaming
+	renaming ::= rename typeCS '.' qvtIdentifierCS '=' stringLiteralExpCS ';' 
+		/.$BeginJava
+					CSTNode result = createRenameCS(
+							(TypeCS)$getSym(2),
+							getIToken($getToken(4)),
+							(StringLiteralExpCS)$getSym(6)
+						);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
+					$setResult(result);
+		  $EndJava
+		./
+	--=== Non-standard extensions and legacy support (end) ===--
 $End
