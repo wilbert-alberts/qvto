@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.28 2009/04/22 10:02:41 aigdalov Exp $ 
+-- * $Id: miscellaneous.g,v 1.29 2009/04/22 10:15:19 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -31,10 +31,6 @@ $DropRules
 	parametersCSopt -> parametersCS
 	parametersCS ::= variableCS
 	parametersCS ::= parametersCS ',' variableCS
-
-	-- 'if' extension in QVT
-	ifExpCSPrec -> ifExpCS
-	ifExpCS ::= if oclExpressionCS then oclExpressionCS else oclExpressionCS endif
 
 	-- error in OCLLPGParser.g in definition of type-argued calls
 	operationCallExpCS ::= oclAsType isMarkedPreCS '(' argumentsCSopt ')'
@@ -279,7 +275,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.28 2009/04/22 10:02:41 aigdalov Exp $
+ * $Id: miscellaneous.g,v 1.29 2009/04/22 10:15:19 aigdalov Exp $
  */
 	./
 $End
@@ -715,111 +711,6 @@ $Rules
 	oclExpressionCSOpt -> oclExpressionCS 
 	oclExpressionCSOpt ::= $empty
 		/.$NullAction./
-				
-	ifExpBodyCS -> oclExpressionCS
-	ifExpBodyCS -> expression_block
-
-	ifExpCS ::= if oclExpressionCS then ifExpBodyCS else ifExpBodyCS endif
-		/.$BeginJava
-					CSTNode result = createIfExpCS(
-							(OCLExpressionCS)$getSym(2),
-							(OCLExpressionCS)$getSym(4),
-							(OCLExpressionCS)$getSym(6)
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
-					$setResult(result);
-		  $EndJava
-		./
-
-	ifExpCS ::= if oclExpressionCS then ifExpBodyCS endif
-		/.$BeginJava
-					CSTNode result = createIfExpCS(
-							(OCLExpressionCS)$getSym(2),
-							(OCLExpressionCS)$getSym(4),
-							null
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
-					$setResult(result);
-		  $EndJava
-		./
-
-	ifExpCS ::= if oclExpressionCS then ifExpBodyCS else ifExpBodyCS qvtErrorToken
-		/.$BeginJava
-					CSTNode result = createIfExpCS(
-							(OCLExpressionCS)$getSym(2),
-							(OCLExpressionCS)$getSym(4),
-							(OCLExpressionCS)$getSym(6)
-						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(6));
-					$setResult(result);
-		  $EndJava
-		./
-
-	ifExpCS ::= if oclExpressionCS then ifExpBodyCS else qvtErrorToken
-		/.$BeginJava
-					CSTNode result = createIfExpCS(
-							(OCLExpressionCS)$getSym(2),
-							(OCLExpressionCS)$getSym(4),
-							null
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
-					$setResult(result);
-		  $EndJava
-		./
-
-	ifExpCS ::= if oclExpressionCS then ifExpBodyCS qvtErrorToken
-		/.$BeginJava
-					CSTNode result = createIfExpCS(
-							(OCLExpressionCS)$getSym(2),
-							(OCLExpressionCS)$getSym(4),
-							null
-						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(4));
-					$setResult(result);
-		  $EndJava
-		./
-
-	ifExpCS ::= if oclExpressionCS then qvtErrorToken
-		/.$BeginJava
-					CSTNode result = createIfExpCS(
-							(OCLExpressionCS)$getSym(2),
-							null,
-							null
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
-					$setResult(result);
-		  $EndJava
-		./
-
-	ifExpCS ::= if oclExpressionCS qvtErrorToken
-		/.$BeginJava
-					CSTNode result = createIfExpCS(
-							(OCLExpressionCS)$getSym(2),
-							null,
-							null
-						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(2));
-					$setResult(result);
-		  $EndJava
-		./
-
-
-	ifExpCS ::= if qvtErrorToken
-		/.$BeginJava
-					OCLExpressionCS invalidCondition = createInvalidLiteralExpCS(""); //$NON-NLS-1$
-					invalidCondition.setStartOffset(getIToken($getToken(1)).getEndOffset());
-					invalidCondition.setEndOffset(getIToken($getToken(1)).getEndOffset());
-					CSTNode result = createIfExpCS(
-							invalidCondition,
-							null,
-							null
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
-					$setResult(result);
-		  $EndJava
-		./
-
-	oclExpCS -> ifExpCS
 
 	-- 'let' extension in QVT
 	-- in OCL variable has to define type
