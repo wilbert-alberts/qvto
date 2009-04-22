@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.g,v 1.21 2009/02/27 12:16:45 aigdalov Exp $ 
+-- * $Id: ImperativeOCL.g,v 1.22 2009/04/22 09:54:49 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -91,7 +91,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: ImperativeOCL.g,v 1.21 2009/02/27 12:16:45 aigdalov Exp $
+ * $Id: ImperativeOCL.g,v 1.22 2009/04/22 09:54:49 aigdalov Exp $
  */
 	./
 $End
@@ -660,6 +660,15 @@ $Rules
 
 	----- switch -----
 
+	oclExpressionCS ::= primaryOCLExpressionCS 
+		/.$BeginJava
+					CSTNode result = createExpressionStatementCS(
+							(OCLExpressionCS)$getSym(1)
+						);
+					setOffsets(result, (CSTNode)$getSym(1));
+					$setResult(result);
+		  $EndJava
+		./
 
 	-- log expression call
 	primaryOCLExpressionCS -> logExpCS

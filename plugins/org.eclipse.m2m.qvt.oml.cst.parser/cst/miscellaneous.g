@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.26 2009/04/10 12:34:33 aigdalov Exp $ 
+-- * $Id: miscellaneous.g,v 1.27 2009/04/22 09:54:49 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -279,7 +279,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.26 2009/04/10 12:34:33 aigdalov Exp $
+ * $Id: miscellaneous.g,v 1.27 2009/04/22 09:54:49 aigdalov Exp $
  */
 	./
 $End
@@ -716,16 +716,6 @@ $Rules
 	oclExpressionCSOpt ::= $empty
 		/.$NullAction./
 				
-	oclExpressionCS ::= primaryOCLExpressionCS 
-		/.$BeginJava
-					CSTNode result = createExpressionStatementCS(
-							(OCLExpressionCS)$getSym(1)
-						);
-					setOffsets(result, (CSTNode)$getSym(1));
-					$setResult(result);
-		  $EndJava
-		./
-
 	ifExpBodyCS -> oclExpressionCS
 	ifExpBodyCS -> expression_block
 
