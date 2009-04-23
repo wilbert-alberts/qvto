@@ -110,7 +110,11 @@ class MetamodelResolutionHelper {
 	            }
 		    }
 
-			for(IMetamodelDesc nextDesc : desc) {				
+			for(IMetamodelDesc nextDesc : desc) {
+				if(nextDesc.getModel() == null) {
+					continue;
+				}
+				
 	        	EPackage model = nextDesc.getModel();
 	            // register metamodel for EClassifier lookup
 	        	if (model.getNsURI() == null) {
