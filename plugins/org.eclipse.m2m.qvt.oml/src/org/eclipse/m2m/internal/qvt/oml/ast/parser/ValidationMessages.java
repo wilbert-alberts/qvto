@@ -158,6 +158,7 @@ public final class ValidationMessages extends NLS {
 	public static String InvalidClassifierForExtend;
 	public static String CycleInIntermHierarchy;
 	public static String HidingProperty;
+	public static String HidingStdlibOperationDiscouraged;
 
     public static String LibOperationAnalyser_ParametersOsReturnTypeNotFound;
     public static String LibOperationAnalyser_OperationParsingError;
@@ -184,6 +185,7 @@ public final class ValidationMessages extends NLS {
     public static String IntermClassifier_incompatibleFeatureKeys;
     
     public static String OperationIsUndefined;
+	public static String OperationOverrideWithInvalidReturnType;
     
     public static String BreakContinue_InvalidExpressionOwner;
     public static String BreakContinue_InvalidExpressionUsage;

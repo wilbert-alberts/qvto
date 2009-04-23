@@ -19,14 +19,17 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 
 class ModuleInstanceImpl extends DynamicEObjectImpl implements ModuleInstance, ModuleInstance.Internal {
-		
+
+	
 	private Map<Module, ModuleInstance> fInstanceMap;
+    private Map<Module, OperationOverrideMap> fOverrideMap;	
 	private List<Object> fAdapters = Collections.emptyList();
 	private boolean fIsInitialized = false;	
 	
@@ -37,7 +40,7 @@ class ModuleInstanceImpl extends DynamicEObjectImpl implements ModuleInstance, M
 		
 		eSetClass(moduleType);
 	}
-	
+
 	public List<ModuleInstance> getImportedModules() {
 		Module thisModule = getModule();
 		EList<ModuleImport> moduleImports = thisModule.getModuleImport();
@@ -81,8 +84,30 @@ class ModuleInstanceImpl extends DynamicEObjectImpl implements ModuleInstance, M
 	}
 	
 	void setInstanceMap(Map<Module, ModuleInstance> instanceMap) {
+		if(instanceMap == null) {
+			throw new IllegalArgumentException();
+		}
 		fInstanceMap = instanceMap;
-	}	
+	}
+	
+	void setOverrideMap(Map<Module, OperationOverrideMap> overrideMap) {
+		if(overrideMap == null) {
+			throw new IllegalArgumentException();
+		}
+		fOverrideMap = overrideMap;
+	}
+	
+	public ImperativeOperation getOverridingOperation(ImperativeOperation overridden) {
+		if(fOverrideMap != null) {
+			Module callerModule = getModule();
+			OperationOverrideMap perModuleMap = fOverrideMap.get(callerModule);
+			if(perModuleMap != null) {
+				return perModuleMap.getOverridingOperation(overridden); 
+			}
+		}
+		
+		return null;
+	}
 	
 	public <T> T getAdapter(Class<T> adapterType) {
 		if(adapterType == ModuleInstance.Internal.class ||

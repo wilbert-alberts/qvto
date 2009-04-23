@@ -1,0 +1,71 @@
+import library Strings;
+
+modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
+modeltype QVT uses qvtoperational('http://www.eclipse.org/QVT/1.0.0/Operational');
+	
+
+transformation stdlibString(in m : ECORE, out x : ECORE);
+ 
+main() {
+	
+	var myInvalidStr : String := OclInvalid; // note this misplacement is a bug in OCL, to be fixed in MDT OCL 2.0
+	var myInvalid : OclVoid := null;	
+		
+	assert fatal ('12345'.substringBefore(myInvalidStr).oclIsInvalid());
+	assert fatal ('12345'.substringAfter(myInvalidStr).oclIsInvalid());
+	assert fatal (myInvalidStr.toUpper().oclIsInvalid());
+	assert fatal (myInvalidStr.toLower().oclIsInvalid());
+	assert fatal (myInvalidStr.firstToUpper().oclIsInvalid());
+	assert fatal (myInvalidStr.lastToUpper().oclIsInvalid());
+	assert fatal ('abc'.indexOf(myInvalidStr).oclIsInvalid());
+	
+	assert fatal ('abc'.endsWith(myInvalidStr).oclIsInvalid());	
+	assert fatal ('abc'.startsWith(myInvalidStr).oclIsInvalid());
+	
+
+
+	assert fatal ('ababa'.replace('ab', myInvalidStr).oclIsInvalid());
+	assert fatal ('ababa'.replace(myInvalidStr, 'ab').oclIsInvalid());
+		
+	assert fatal ('aaaab'.match(myInvalid) = false);
+	assert fatal ('aBc'.equalsIgnoreCase(myInvalid) = false);
+	assert fatal ('a1212c'.find(myInvalid) = -1);
+	assert fatal ('a1212c'.rfind(myInvalid) = -1);
+	
+	assert fatal ('aa1234aa'.isQuoted(myInvalidStr) = false);
+	assert fatal ('1234'.quotify(myInvalidStr).oclIsInvalid());
+	assert fatal ('aa1234aa'.unquotify(myInvalidStr).oclIsInvalid());	
+	
+	assert fatal ('true'.matchBoolean(myInvalid) = false);
+	assert fatal ('false'.matchBoolean(myInvalid) = false);
+	-- check case-insensitiveness 
+	assert fatal ('false'.matchBoolean(myInvalid) = false);
+	assert fatal ('False'.matchBoolean(myInvalid) = false);
+	assert fatal ('TRUE'.matchBoolean(myInvalid) = false);
+	assert fatal ('true'.matchBoolean(myInvalid) = false);
+
+	assert fatal ('12'.matchInteger(myInvalid) = false);	
+	assert fatal ('12.0'.matchFloat(myInvalid) = false);	
+
+	
+	-- assert fatal ();
+	assert fatal (String.getStrCounter(myInvalidStr).oclIsInvalid());
+	assert fatal (String.startStrCounter(myInvalidStr) = null);
+	assert fatal (String.getStrCounter(myInvalidStr).oclIsInvalid());
+	assert fatal (String.incrStrCounter(myInvalidStr).oclIsInvalid());
+	// check for repeatability
+	assert fatal (String.incrStrCounter(myInvalidStr).oclIsInvalid());
+	
+	
+	assert fatal (String.restartAllStrCounter() = null);
+	assert fatal (String.getStrCounter(myInvalidStr).oclIsInvalid());
+
+		
+	// Test the undefined source object in general
+	// Note: there should be no specifics
+	assert fatal (myInvalidStr.length().oclIsInvalid());
+	assert fatal (myInvalidStr.size().oclIsInvalid());
+	var nullString : String := null;
+	assert fatal (nullString.normalizeSpace().oclIsInvalid());
+
+}

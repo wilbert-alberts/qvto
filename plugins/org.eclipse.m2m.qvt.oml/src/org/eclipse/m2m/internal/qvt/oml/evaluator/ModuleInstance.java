@@ -14,6 +14,7 @@ package org.eclipse.m2m.internal.qvt.oml.evaluator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 
 public interface ModuleInstance extends EObject, ThisInstanceResolver {
@@ -38,12 +39,17 @@ public interface ModuleInstance extends EObject, ThisInstanceResolver {
 	List<ModuleInstance> getImportedModules();
 	
 	interface Internal {
+		
 		void addAdapter(Object adapter);
+		
 		void dispose();
+		
 		boolean isInitialized();
 		/**
 		 * @throws IllegalStateException in case this module instance has already been initialized
 		 */
-		void setInitialized();		
+		void setInitialized();
+		
+		ImperativeOperation getOverridingOperation(ImperativeOperation overridden);		
 	}
 }

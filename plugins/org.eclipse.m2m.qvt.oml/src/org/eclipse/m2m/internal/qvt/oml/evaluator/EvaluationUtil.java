@@ -202,6 +202,19 @@ class EvaluationUtil {
 	static QvtOperationalEvaluationEnv getAggregatingContext(QvtOperationalEvaluationEnv evalEnv) {
 		return evalEnv.getContext().getSessionData().getValue(AGGREGATING_ROOT_ENV); //$NON-NLS-1$
 	}
+
+	static ImperativeOperation getOverridingOperation(QvtOperationalEvaluationEnv evalEnv, ImperativeOperation operation) {
+        InternalEvaluationEnv internEvalEnv = evalEnv.getAdapter(InternalEvaluationEnv.class);
+        assert internEvalEnv != null : "must adapt to internal env"; //$NON-NLS-1$
+        
+        ModuleInstance currentInternModule = internEvalEnv.getCurrentModule();
+        // check if executed from transformation context (main() stack frame exists)
+        if(currentInternModule != null) {
+        	return currentInternModule.getAdapter(ModuleInstance.Internal.class).getOverridingOperation(operation);
+        }
+        
+        return null;
+	}
 	
     public static <E> Collection<E> createNewCollectionOfSameKind(Collection<E> c) {
     	Collection<E> result;

@@ -283,7 +283,7 @@ public class QvtOperationalParserUtil {
 			}
 			if ((importKind == null) || (imp.getKind() == importKind)) {
 				if (!result.contains(imp.getImportedModule())) {
-					collectAllImports(imp.getImportedModule(), result);
+					collectAllImportsByKind(imp.getImportedModule(), result, importKind);
 				}
 				result.add(imp.getImportedModule());
 			}

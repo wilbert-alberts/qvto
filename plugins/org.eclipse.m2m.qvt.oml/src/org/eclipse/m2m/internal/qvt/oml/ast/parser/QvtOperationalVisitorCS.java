@@ -125,6 +125,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeCallExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
@@ -397,41 +398,38 @@ public class QvtOperationalVisitorCS
 			QvtEnvironmentBase qvtEnvironmentBase = (QvtEnvironmentBase) env;
 			
 			ImperativeOperationCallExpCS imperativeOperationCallExpCS = (ImperativeOperationCallExpCS) cstNode.eContainer();
-			String moduleName = (imperativeOperationCallExpCS.getModule() == null) ? null 
-					: imperativeOperationCallExpCS.getModule().getValue();
+			SimpleNameCS moduleQualifier = imperativeOperationCallExpCS.getModule();
+			String targetModuleName = (moduleQualifier == null) ? null : moduleQualifier.getValue();
 			
-			QvtEnvironmentBase resolvedEnv = null;
-			if (moduleName == null) {
-				resolvedEnv = qvtEnvironmentBase;
-			} else {
-				resolvedEnv = findEnvironmentForModule(qvtEnvironmentBase, moduleName, new HashSet<QvtEnvironmentBase>());
-				if (resolvedEnv == null) {
-					return null;
+			if(targetModuleName != null) {
+				List<QvtEnvironmentBase> allExtendedEnvs = new ArrayList<QvtEnvironmentBase>(qvtEnvironmentBase.getAllExtendedModules());
+				Module currentModule = qvtEnvironmentBase.getModuleContextType();
+				if(currentModule != null && targetModuleName.equals(currentModule.getName())) {
+					allExtendedEnvs = new ArrayList<QvtEnvironmentBase>(allExtendedEnvs.size());
+					allExtendedEnvs.add(0, qvtEnvironmentBase);
 				}
+
+				EOperation resolvedOper = null;
+				for (QvtEnvironmentBase nextExtenedModuleEnv : allExtendedEnvs) { 
+					Module extendedModule = nextExtenedModuleEnv.getModuleContextType();
+					if(extendedModule != null && targetModuleName.equals(extendedModule.getName())) {
+						EClassifier actualOwner = (owner instanceof Module) ? extendedModule : owner;
+						EOperation operation = nextExtenedModuleEnv.lookupOperation(actualOwner, name, args);
+						if(operation != null) {
+							Module owningModule = QvtOperationalParserUtil.getOwningModule(operation);
+							if(extendedModule == owningModule) {
+								resolvedOper = operation;
+								break;
+							}
+						}
+					}
+				}
+
+				cstNode.setAst(resolvedOper);
+				return resolvedOper;
 			}
-			
-			EOperation operation = resolvedEnv.lookupOperation(owner, moduleName, name, args);
-			cstNode.setAst(operation);
-			return operation;
 		}
 		return super.lookupOperation(cstNode, env, owner, name, args);
-	}
-
-	private QvtEnvironmentBase findEnvironmentForModule(QvtEnvironmentBase env, String moduleName, Set<QvtEnvironmentBase> envs) {
-		Module module = env.getModuleContextType();
-		if(module != null && moduleName.equals(module.getName())) {
-			return env;
-		}
-		envs.add(env);
-		for (QvtEnvironmentBase nextImported : env.getImportsByExtends()) {
-			if (!envs.contains(nextImported)) {
-				QvtEnvironmentBase resolvedEnv = findEnvironmentForModule(nextImported, moduleName, envs);
-				if (resolvedEnv != null) {
-					return resolvedEnv;
-				}
-			}
-		}
-		return null;
 	}
 
 	@Override
@@ -920,13 +918,21 @@ public class QvtOperationalVisitorCS
 
 		OperationCallExp<EClassifier, EOperation> result;
 
-		result = oclFactory.createOperationCallExp();
-		initASTMapping(env, result, operationCallExpCS);
-		result.setSource(source);
-
 		// Performs method signature checking
 		EOperation oper = lookupOperation(operationCallExpCS.getSimpleNameCS(), env,
 				operationSourceType, operName, args);
+
+		if(oper instanceof MappingOperation) {
+			result = ExpressionsFactory.eINSTANCE.createMappingCallExp();
+		} else if(oper instanceof ImperativeOperation) {
+			result = ExpressionsFactory.eINSTANCE.createImperativeCallExp();	
+		} else {
+			result = oclFactory.createOperationCallExp();
+		}
+		
+		initASTMapping(env, result, operationCallExpCS);
+		result.setSource(source);
+		
 
 		// sometimes we use the resolved name in case the environment's look-up
 		// supports aliasing
@@ -997,6 +1003,18 @@ public class QvtOperationalVisitorCS
 			result.setType(resultType);
 		}
 
+		//
+		if(result instanceof ImperativeCallExp) {
+			ImperativeCallExp imperativeCall = (ImperativeCallExp) result;				
+			imperativeCall.setIsVirtual(true);			
+			if(operationCallExpCS instanceof ImperativeOperationCallExpCS) {
+				ImperativeOperationCallExpCS imperativeCallCS = (ImperativeOperationCallExpCS) operationCallExpCS;
+				if(imperativeCallCS.getModule() != null) {
+					imperativeCall.setIsVirtual(false);
+				}
+			}
+		}
+		
 		return result;
 	}
 
@@ -1124,6 +1142,9 @@ public class QvtOperationalVisitorCS
 		            return imperativeIterateExp;
 		        }
 		    }
+		    // FIXME why this?
+		    // should be processed more specifically, also unresolved operation error for a mapping call
+		    // is sufficient, so we do not need yet another complaint 
 		    QvtOperationalUtil.reportError(env, ValidationMessages.mappingOperationExpected, expressionCS);
 			return null;
 		}

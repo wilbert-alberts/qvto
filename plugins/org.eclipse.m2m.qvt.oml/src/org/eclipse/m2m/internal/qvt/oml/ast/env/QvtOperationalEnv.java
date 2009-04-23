@@ -619,17 +619,48 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			ownerType = getModuleContextType();
 		}
 		
+		boolean isError = false;
 		ImperativeOperation newOperation = operation;
-		
 		CollisionStatus collidingOperStatus = findCollidingOperation(ownerType, newOperation);
+		
 		if(collidingOperStatus != null) {
+			EOperation collidingOper = collidingOperStatus.getOperation();
+			
 			if(collidingOperStatus.getCollisionKind() == CollisionStatus.ALREADY_DEFINED) {
+				isError = true;
 				HiddenElementAdapter.markAsHidden(operation);
 				reportError(NLS.bind(ValidationMessages.SemanticUtil_0, new Object[] {
 								operation.getName(), ownerType.getName() }),
 								operation.getStartPosition(), operation.getEndPosition());
 			} 
+			else if(collidingOperStatus.getCollisionKind() == CollisionStatus.OVERRIDES) {
+				if(collidingOper instanceof ImperativeOperation) {
+					// only imperative operations can be overridden
+					EClassifier overriddenReturnType = collidingOper.getEType(); 
+					EClassifier newReturnType = newOperation.getEType();
+					if(newReturnType != null &&  overriddenReturnType != null) {
+						if(TypeUtil.compatibleTypeMatch(this, newReturnType, overriddenReturnType)) {
+							newOperation.setOverridden((ImperativeOperation)collidingOper);
+						} else {
+							isError = true;
+							reportError(NLS.bind(ValidationMessages.OperationOverrideWithInvalidReturnType, new Object[] {
+									getUMLReflection().getName(operation),
+									getUMLReflection().getName(collidingOper.getEContainingClass()) }),
+									operation.getStartPosition(), operation.getEndPosition());								
+						}
+					}
+				}
+				
+				if(!isError) {
+					Module owningModule = QvtOperationalParserUtil.getOwningModule(collidingOper);
+					if(owningModule == null || owningModule == getQVTStandardLibrary().getStdLibModule()) {
+						reportWarning(NLS.bind(ValidationMessages.HidingStdlibOperationDiscouraged, operation.getName()),
+								operation.getStartPosition(), operation.getEndPosition());
+					}
+				}
+			}
 			else if(collidingOperStatus.getCollisionKind() == CollisionStatus.VIRTUAL_METHOD_RETURNTYPE) {
+				isError = true;
 				HiddenElementAdapter.markAsHidden(operation);				
 				reportError(NLS.bind(ValidationMessages.ReturnTypeMismatch,  
 						operation.getName(), QvtOperationalTypesUtil.getTypeFullName(collidingOperStatus.getOperation().getEType())), 
@@ -637,10 +668,10 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			} else {
 				assert false;
 			}
-		} else {
-			if(isContextual) {
-				getTypeResolver().resolveAdditionalOperation(ownerType, newOperation);
-			}			
+		} 
+		
+		if(isContextual && !isError) {
+			getTypeResolver().resolveAdditionalOperation(ownerType, newOperation);
 		}
 		
 		getModuleContextType().getEOperations().add(newOperation);
@@ -807,7 +838,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	public void close() {
     	setParser(null);
     	setProblemHandler(null);
-    	setASTNodeToCSTNodeMap(Collections.<Object, CSTNode>emptyMap());    	
+    	setASTNodeToCSTNodeMap(null);    	
 	}
 	
 	private static int getLineNum(QvtOperationalEnv env, int startOffset) {

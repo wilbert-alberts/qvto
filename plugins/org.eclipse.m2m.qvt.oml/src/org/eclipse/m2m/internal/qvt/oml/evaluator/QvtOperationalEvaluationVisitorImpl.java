@@ -64,8 +64,8 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeCallExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
@@ -169,7 +169,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	
     private QvtOperationalEvaluationEnv myEvalEnv;
     // FIXME - move me to the root environment?
-    private OCLAnnotationSupport oclAnnotationSupport;	
+    private OCLAnnotationSupport oclAnnotationSupport;
 
     public QvtOperationalEvaluationVisitorImpl(QvtOperationalEnv env, QvtOperationalEvaluationEnv evalEnv) {
         super(env, evalEnv, evalEnv.createExtentMap(null));
@@ -621,7 +621,17 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     			method = (ImperativeOperation)referredOperation;
     		}
 
-            if(method != null) {
+            if(method != null) {          
+            	if(operationCallExp instanceof ImperativeCallExp) {
+            		ImperativeCallExp imperativeCall = (ImperativeCallExp) operationCallExp;
+            		if(imperativeCall.isIsVirtual()) {
+            			ImperativeOperation overridingOper = EvaluationUtil.getOverridingOperation(getOperationalEvaluationEnv(), method);
+            			if(overridingOper != null) {
+            				method = overridingOper;
+            			}
+            		}
+            	}
+
             	return executeImperativeOperation(method, source, args, false).myResult;
             }
         }
@@ -1533,13 +1543,11 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     	boolean isNoDisjunctSelected() { return (myStatus & NO_DISJUCT_SELECTED) != 0; };    	
     }
     
-    private OperationCallResult executeImperativeOperation(ImperativeOperation method, Object source, List<Object> args, boolean isReusingMappingCall) {
-    	if(method.isIsBlackbox()) {
-    		//getEvaluationEnvironment().callOperation(method, -1, source, args);
-    	}    	
-    	
-    	boolean isMapping = method instanceof MappingOperation;    	
+    private OperationCallResult executeImperativeOperation(ImperativeOperation method, Object source, List<Object> args, boolean isReusingMappingCall) {    	
+
         QvtOperationalEvaluationEnv oldEvalEnv = getOperationalEvaluationEnv();
+        
+    	boolean isMapping = method instanceof MappingOperation;    	
         // eventually cause STO exception
         EvaluationUtil.checkCurrentStackDepth(oldEvalEnv);
         
@@ -1678,7 +1686,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     		EObject eTarget = (EObject) target;
     		if(OCLAnnotationSupport.isDynamicInstance(eTarget)) {
     			if(operation.eClass() != eTarget.eClass()) {
-    				// check if not overriden for a sub-class 
+    				// check if not overridden for a sub-class 
 	    			EOperation actualOperation = getOCLAnnotationSupport().resolveDynamic(operation, eTarget);
 	    			if(actualOperation != null && actualOperation != operation) {
 	    				OCLExpression<EClassifier> actualOperBody = getOperationBody(actualOperation);
@@ -2085,6 +2093,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 
 	public OperationCallResult runMainEntry(OperationalTransformation transformation, List<Object> args) {
 		ImperativeOperation entryOperation = QvtOperationalParserUtil.getMainOperation(transformation);				
+		
 		OperationCallResult result = executeImperativeOperation(entryOperation, null, args, false);        	        					
 		processDeferredTasks();
 		return result;

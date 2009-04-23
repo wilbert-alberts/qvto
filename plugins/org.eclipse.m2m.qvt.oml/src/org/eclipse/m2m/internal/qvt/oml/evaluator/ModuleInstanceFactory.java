@@ -80,10 +80,12 @@ public class ModuleInstanceFactory extends EFactoryImpl {
 	protected EObject basicCreate(EClass eClass) {
 		if (eClass instanceof Module) {
 			Module module = (Module) eClass;
+			Map<Module, OperationOverrideMap> overrideMap = OperationOverrideMap.create(module);
 
 			HashMap<Module, ModuleInstance> instanceMap = new HashMap<Module, ModuleInstance>(3);
-			basicCreateModuleInstance(QvtOperationalStdLibrary.INSTANCE.getStdLibModule(), instanceMap);			
-			ModuleInstance result = createModuleInstance(module, instanceMap);			
+			basicCreateModuleInstance(QvtOperationalStdLibrary.INSTANCE.getStdLibModule(), instanceMap, overrideMap);
+			
+			ModuleInstance result = createModuleInstance(module, instanceMap, overrideMap);			
 
 			return result;
 		} else if(eClass instanceof ModelType) {
@@ -95,15 +97,15 @@ public class ModuleInstanceFactory extends EFactoryImpl {
 		return super.basicCreate(eClass);
 	}
 
-	protected final ModuleInstance createModuleInstance(Module module, Map<Module, ModuleInstance> instanceMap) {
+	protected final ModuleInstance createModuleInstance(Module module, Map<Module, ModuleInstance> instanceMap, Map<Module, OperationOverrideMap> overrideMap) {
 		ModuleInstance moduleInstance = instanceMap.get(module);
 		if (moduleInstance == null) {
-			moduleInstance = basicCreateModuleInstance(module, instanceMap);
+			moduleInstance = basicCreateModuleInstance(module, instanceMap, overrideMap);
 			for (ModuleImport moduleImport : module.getModuleImport()) {
 				Module importedModule = moduleImport.getImportedModule();
 				if(moduleImport.getKind() == ImportKind.EXTENSION || importedModule instanceof Library) {
 					// create only instances of extended modules and implicit accessed library singletons 
-					createModuleInstance(importedModule, instanceMap);					
+					createModuleInstance(importedModule, instanceMap, overrideMap);					
 				}
 			}
 		}
@@ -112,7 +114,7 @@ public class ModuleInstanceFactory extends EFactoryImpl {
 	}
 	
 
-	protected final ModuleInstanceImpl basicCreateModuleInstance(Module module, Map<Module, ModuleInstance> instanceMap) {
+	protected final ModuleInstanceImpl basicCreateModuleInstance(Module module, Map<Module, ModuleInstance> instanceMap, Map<Module, OperationOverrideMap> overrideMap) {
 		ModuleInstanceImpl moduleInstance;
 		if(module instanceof OperationalTransformation) {
 			moduleInstance = new TransformationInstanceImpl((OperationalTransformation) module);			
@@ -121,6 +123,10 @@ public class ModuleInstanceFactory extends EFactoryImpl {
 		}
 		moduleInstance.setInstanceMap(instanceMap);
 		instanceMap.put(module, moduleInstance);
+		
+		if(overrideMap != null) {
+			moduleInstance.setOverrideMap(overrideMap);
+		}
 		
 		initProperties(moduleInstance);
 

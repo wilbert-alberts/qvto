@@ -132,11 +132,11 @@ public class ImportToNonTransformCtxHelper {
 		
 		public ThisInstanceResolver createImportedInstanceResolver() {
 			if(fIncludeStdLib) {
-				basicCreateModuleInstance(QvtOperationalStdLibrary.INSTANCE.getStdLibModule(), fInstanceMap);
+				basicCreateModuleInstance(QvtOperationalStdLibrary.INSTANCE.getStdLibModule(), fInstanceMap, null);
 			}
 
 			for (Module module : fImportedModules) {
-				createModuleInstance(module, fInstanceMap);
+				createModuleInstance(module, fInstanceMap, null);
 			}
 			
 			return new ThisInstanceResolver() {					

@@ -21,6 +21,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.UniqueEList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -36,6 +37,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage;
@@ -48,7 +50,6 @@ import org.eclipse.ocl.ecore.EcorePackage;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.options.ParsingOptions;
-import org.eclipse.ocl.parser.AbstractOCLAnalyzer;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.util.OCLStandardLibraryUtil;
 import org.eclipse.ocl.util.TypeUtil;
@@ -61,12 +62,14 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 	public static class CollisionStatus {
 		public static final int ALREADY_DEFINED = 1;		
 		public static final int VIRTUAL_METHOD_RETURNTYPE = 2;
+		public static final int OVERRIDES = 3;		
 		
 		private int fKind;
 		private EOperation fOperation;		
 		
 		CollisionStatus(EOperation operation, int kind) {
-			if(kind != ALREADY_DEFINED && kind != VIRTUAL_METHOD_RETURNTYPE) {
+			if(kind != ALREADY_DEFINED && kind != VIRTUAL_METHOD_RETURNTYPE &&
+				kind != OVERRIDES) {
 				throw new IllegalArgumentException("illegal collision kind"); //$NON-NLS-1$
 			}
 			
@@ -95,7 +98,8 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
     private QVTUMLReflection fQVUMLReflection;
 	private boolean fUsesLegacyImplicitImports = false;
 	private List<QvtEnvironmentBase> fByAccess;
-	private List<QvtEnvironmentBase> fByExtension;	
+	private List<QvtEnvironmentBase> fByExtension;
+	private List<QvtEnvironmentBase> fAllExtendedModuleEnvs;	
 	private Set<EOperation> fOperationsHolder;	
 
 	protected QvtEnvironmentBase(QvtEnvironmentBase parent) {
@@ -155,31 +159,7 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
     public Collection<org.eclipse.ocl.ecore.Variable> getImplicitVariables() {
         return Collections.unmodifiableCollection(myImplicitVars);
     }
-
-    public EOperation lookupOperation(EClassifier owner, String module, String name, List<? extends TypedElement<EClassifier>> args) {
-    	EOperation result = doLookupOperation(owner, module, name, args);
-        
-        if ((result == null) && AbstractOCLAnalyzer.isEscaped(name)) {
-            result = doLookupOperation(owner, module, AbstractOCLAnalyzer.unescape(name), args);
-        }
-        
-        return result;
-    }
     
-	private EOperation doLookupOperation(EClassifier owner, String module, String name, List<? extends TypedElement<EClassifier>> args) {
-		if (owner == null) {
-			Variable<EClassifier, EParameter> vdcl = lookupImplicitSourceForOperation(name, args);
-			if (vdcl == null) {
-				return null;
-			}
-			
-			owner = vdcl.getType();
-		}
-		
-		TypeCheckerImpl typeChecker = (TypeCheckerImpl) getTypeChecker();
-		return typeChecker.findOperationMatching(owner, module, name, args);
-	}
-	
     @Override
 	public Variable<EClassifier, EParameter> lookupImplicitSourceForOperation(String name, List<? extends TypedElement<EClassifier>> args) {
 		Variable<EClassifier, EParameter> result = super.lookupImplicitSourceForOperation(name, args);
@@ -412,10 +392,12 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 				fByExtension = new UniqueEList<QvtEnvironmentBase>();
 			}
 			container = fByExtension;
+			fAllExtendedModuleEnvs = null;			
 		}
 
 		assert container != null;
 		container.add(importedEnv);
+		// reset cached all extended modules
 	}
 	
 	public final boolean usesImplicitExtendsImport() {
@@ -447,6 +429,28 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 		return fByAccess != null ? fByAccess : Collections.<QvtEnvironmentBase>emptyList();		
 	}
 	
+	public List<QvtEnvironmentBase> getAllExtendedModules() {
+		QvtEnvironmentBase rootEnv = getRootEnv();
+		if(rootEnv != this) {
+			return rootEnv.getAllExtendedModules();
+		}
+		
+		if(fAllExtendedModuleEnvs == null) {
+			Module contextModule = getModuleContextType();
+			if(contextModule != null) {
+				List<QvtEnvironmentBase> importsByExtends = getImportsByExtends();
+				LinkedHashSet<QvtEnvironmentBase> result = new LinkedHashSet<QvtEnvironmentBase>();
+				for (QvtEnvironmentBase nextImportedEnv : importsByExtends) {
+					result.add(nextImportedEnv);
+					result.addAll(nextImportedEnv.getAllExtendedModules());
+				}
+				fAllExtendedModuleEnvs = Collections.unmodifiableList(new ArrayList<QvtEnvironmentBase>(result)); 
+			}
+		}
+		
+		return fAllExtendedModuleEnvs;
+	}
+	
 	public final List<QvtEnvironmentBase> getImportsByExtends() {
 		QvtEnvironmentBase rootEnv = getRootEnv();
 		if(rootEnv != this) {
@@ -456,7 +460,7 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 		return fByExtension != null ? fByExtension : Collections.<QvtEnvironmentBase>emptyList();	
 	}
 		
-	protected final CollisionStatus findCollidingOperation(EClassifier ownerType, EOperation operation) {
+	protected final CollisionStatus findCollidingOperation(EClassifier ownerType, ImperativeOperation operation) {
 		try {
 			return doFindCollidingOperation(ownerType, operation);
 		} finally {
@@ -466,18 +470,55 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 		}
 	}
 	
-	private CollisionStatus doFindCollidingOperation(EClassifier ownerType, EOperation operation) {
+	private EOperation findMatchingFromExtended(Module extending, EOperation operation) {
+		Library stdLibModule = getQVTStandardLibrary().getStdLibModule();
+		
+		EOperation result = null;
+		for (ModuleImport nextImport : extending.getModuleImport()) {
+			Module nextImportedModule = nextImport.getImportedModule();
+			if(nextImportedModule == stdLibModule) {
+				// no imperative operation declaration in stdlib
+				continue;
+			}
+			
+			EList<EOperation> importedOpers = nextImportedModule.getEOperations();			
+			String name = operation.getName();
+			if(name != null) {
+				for (EOperation nextImportedOper : importedOpers) {				
+					if(name.equals(nextImportedOper.getName()) && 
+						matchParameters(nextImportedOper, operation)) {
+					
+						return nextImportedOper;
+					}
+				}
+			}
+			
+			result = findMatchingFromExtended(nextImportedModule, operation);
+			if(result != null) {
+				return result;
+			}
+		}
+		
+		return null;
+	}
+	
+	private CollisionStatus doFindCollidingOperation(EClassifier ownerType, ImperativeOperation operation) {
+		EClassifier definingModule = getModuleContextType();
         String operationName = getUMLReflection().getName(operation);
         List<EOperation> ownedOperations = TypeUtil.getOperations(this, ownerType);        
         
         Set<EOperation> operations = operationHolder(); 
         operations.addAll(ownedOperations);
         
-        if(ownerType instanceof Module) {
-        	// collect all imported (extended) modules fOperationsHolder to check for clashes with this fEnv's module
-        	//collectImportedModuleOwnedOperations(operations);
-        } else {
-        
+        boolean isContextual = !(ownerType == definingModule);
+        if(!isContextual) {
+        	if(!usesImplicitExtendsImport()) {
+        		EOperation overridden = findMatchingFromExtended(getModuleContextType(), operation);
+        		if(overridden != null) {
+        			operations.add(overridden);
+        		}
+        	}
+        } else {        
         // collect fOperationsHolder additional fOperationsHolder defined for sub-types of the checked owner type,
         // Note: those from super-types are included by MDT OCL TypeUtil.getOperations(...);
         // => union forms the whole scope for potentially virtually called fOperationsHolder;
@@ -487,12 +528,18 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
         
 		for (EOperation next : operations) {
 			if ((next != operation) && 
-					(getUMLReflection().getName(next).equals(operationName) && matchParameters(next, operation))) {
-				
+					(getUMLReflection().getName(next).equals(operationName) && 
+							matchParameters(next, operation))) {				
 				EClassifier nextOwner = getUMLReflection().getOwningClassifier(next);
-				if(nextOwner != null) {
+				if(nextOwner == null) {
+					// be tolerant to partially parsed operations 
+					continue;
+				}
+				
+				if(isContextual) {
 					int rel = TypeUtil.getRelationship(this, ownerType, nextOwner); 
-					if((rel != UMLReflection.SAME_TYPE) && (UMLReflection.RELATED_TYPE | rel) != 0) {
+					if((rel != UMLReflection.SAME_TYPE) && (UMLReflection.RELATED_TYPE & rel) != 0) {
+						// context types are different but part of a common type hierarchy
 						EClassifier ret1 = next.getEType(); 
 						EClassifier ret2 = operation.getEType();
 						if(ret1 != null && ret2 != null && TypeUtil.getRelationship(this, ret1, ret2) != SAME_TYPE) {
@@ -500,6 +547,7 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 								// clashes with main(..) are handled separately
 								return null;
 							}
+							// report ill-formed return type for virtual operations
 							return new CollisionStatus(next, CollisionStatus.VIRTUAL_METHOD_RETURNTYPE);
 						}
 
@@ -513,16 +561,22 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 								targetOperVtable.addOperation(operation);
 							}
 						}
-						///
 
-						continue;
 					}
-
-					if(ownerType == nextOwner) {
+				}
+				
+				if(ownerType == nextOwner || !isContextual) {
+					if(definingModule != next.getEContainingClass()) {
+						// FIXME - skip imported by access 
+						// we try to override operation from extended module
+						if(!usesImplicitExtendsImport()) {						
+							return new CollisionStatus(next, CollisionStatus.OVERRIDES);
+						}
+					} else {
 						return new CollisionStatus(next, CollisionStatus.ALREADY_DEFINED);
 					}
 				}
-			}
+			} // end of matching operation processing
 		}
 				
 		return null;
