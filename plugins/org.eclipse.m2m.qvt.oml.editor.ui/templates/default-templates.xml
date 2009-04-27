@@ -15,15 +15,7 @@
           name="%code_template_library"
           description="%code_template_library_desc">library ${name};
 </template>
-    <template
-          autoinsert="true"
-          context="org.eclipse.m2m.qvt.oml.templates"
-          id="org.eclipse.m2m.qvt.oml.template.mainMapping"
-          name="%code_template_mainMapping"
-          description="%code_template_mainMapping_desc">mapping main(in model : ${InputType}) : ${OutputType} {
-	${cursor}
-}</template>
-    <template
+<template
           autoinsert="true"
           context="org.eclipse.m2m.qvt.oml.templates"
           id="org.eclipse.m2m.qvt.oml.template.main"
@@ -75,6 +67,7 @@
           name="%code_template_query"
           description="%code_template_query_desc">query ${ContextType}::${name}() : ${ReturnType} {
 	${cursor}
+	return null;
 }</template>
     <template
           autoinsert="false"
@@ -83,6 +76,7 @@
           name="%code_template_helper"
           description="%code_template_helper_desc">helper ${ContextType}::${name}() : ${ReturnType} {
 	${cursor}
+	return null;
 }</template>
     <template
           autoinsert="true"
