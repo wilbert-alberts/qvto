@@ -57,6 +57,9 @@ import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
 
 
+/**
+ * @since 2.0
+ */
 public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVTOEnvironment {
 	
 	public static class CollisionStatus {
@@ -436,16 +439,13 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 		}
 		
 		if(fAllExtendedModuleEnvs == null) {
-			Module contextModule = getModuleContextType();
-			if(contextModule != null) {
-				List<QvtEnvironmentBase> importsByExtends = getImportsByExtends();
-				LinkedHashSet<QvtEnvironmentBase> result = new LinkedHashSet<QvtEnvironmentBase>();
-				for (QvtEnvironmentBase nextImportedEnv : importsByExtends) {
-					result.add(nextImportedEnv);
-					result.addAll(nextImportedEnv.getAllExtendedModules());
-				}
-				fAllExtendedModuleEnvs = Collections.unmodifiableList(new ArrayList<QvtEnvironmentBase>(result)); 
-			}
+			LinkedHashSet<QvtEnvironmentBase> result = new LinkedHashSet<QvtEnvironmentBase>();			
+			List<QvtEnvironmentBase> importsByExtends = getImportsByExtends();
+			for (QvtEnvironmentBase nextImportedEnv : importsByExtends) {
+				result.add(nextImportedEnv);
+				result.addAll(nextImportedEnv.getAllExtendedModules());
+			} 
+			fAllExtendedModuleEnvs = Collections.unmodifiableList(new ArrayList<QvtEnvironmentBase>(result));			
 		}
 		
 		return fAllExtendedModuleEnvs;

@@ -152,11 +152,8 @@ public class QvtTypeResolverImpl implements QVTOTypeResolver {
 		List<EOperation> result = new ArrayList<EOperation>();
 		getLocalAdditionalOperations(owner, result);
 		
-		for (QvtEnvironmentBase nextSiblingEnv : fOwner.getImportsByExtends()) {
-			List<EOperation> ops = nextSiblingEnv.getAdditionalOperations(owner);
-			if(ops !=null) {
-				result.addAll(ops);
-			}
+		for (QvtEnvironmentBase nextSiblingEnv : fOwner.getAllExtendedModules()) {
+			nextSiblingEnv.getQVTTypeResolver().getLocalAdditionalOperations(owner, result);
 		}
 		
 		for (QvtEnvironmentBase nextSiblingEnv : fOwner.getImportsByAccess()) {
