@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.74 2009/04/22 10:15:18 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.75 2009/04/28 09:16:43 uid8762 Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.74 2009/04/22 10:15:18 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.75 2009/04/28 09:16:43 uid8762 Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.74 2009/04/22 10:15:18 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.75 2009/04/28 09:16:43 uid8762 Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.74 2009/04/22 10:15:18 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.75 2009/04/28 09:16:43 uid8762 Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -5609,9 +5609,15 @@ import org.eclipse.ocl.cst.LiteralExpCS;
 						expressionList,
 						false
 					);
-				CSTNode startExp = expressionList.get(0);
-				CSTNode endExp = expressionList.get(expressionList.size() - 1);
-				setOffsets(result, startExp, endExp);
+				if (expressionList.isEmpty()) {
+					// offsets will be updated further in parent non-terminals
+					result.setStartOffset(-1); 
+					result.setEndOffset(-1);
+				} else {
+					CSTNode startExp = expressionList.get(0);
+					CSTNode endExp = expressionList.get(expressionList.size() - 1);
+					setOffsets(result, startExp, endExp);
+				}
 				dtParser.setSym1(result);
 	  		  break;
 			}

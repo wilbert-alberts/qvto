@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.50 2009/04/22 10:02:41 aigdalov Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.51 2009/04/28 09:16:44 uid8762 Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -151,7 +151,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.50 2009/04/22 10:02:41 aigdalov Exp $
+ * $Id: QvtOpLPGParser.g,v 1.51 2009/04/28 09:16:44 uid8762 Exp $
  */
 	./
 $End
@@ -1476,9 +1476,15 @@ $Rules
 							expressionList,
 							false
 						);
-					CSTNode startExp = expressionList.get(0);
-					CSTNode endExp = expressionList.get(expressionList.size() - 1);
-					setOffsets(result, startExp, endExp);
+					if (expressionList.isEmpty()) {
+						// offsets will be updated further in parent non-terminals
+						result.setStartOffset(-1); 
+						result.setEndOffset(-1);
+					} else {
+						CSTNode startExp = expressionList.get(0);
+						CSTNode endExp = expressionList.get(expressionList.size() - 1);
+						setOffsets(result, startExp, endExp);
+					}
 					$setResult(result);
 		  $EndJava
 		./
