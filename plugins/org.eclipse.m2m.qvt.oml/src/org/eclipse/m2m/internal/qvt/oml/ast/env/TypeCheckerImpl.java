@@ -11,7 +11,10 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -21,6 +24,8 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.ValidationMessages;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictionaryType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListType;
@@ -250,6 +255,20 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 		return super.getRelationship(type1, type2);
 	}
 	
+	@Override
+	public List<EOperation> getOperations(EClassifier owner) {
+		List<EOperation> operations = super.getOperations(owner);
+		if (owner instanceof Module) {
+			Set<EOperation> operationSet = new HashSet<EOperation>(operations);
+			Set<Module> importsByEntends = QvtOperationalParserUtil.collectAllImportsByKind((Module) owner, null, ImportKind.EXTENSION);
+			for (Module module : importsByEntends) {
+				operationSet.addAll(getOperations(module));
+			}
+			return new ArrayList<EOperation>(operationSet);
+		}
+		return operations;
+	}
+
 	/*
 	 * FIXME 
 	 * We need a custom implementation of commonSuperType due to https://bugs.eclipse.org/bugs/show_bug.cgi?id=260403
