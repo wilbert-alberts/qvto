@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.61 2009/04/22 10:15:05 aigdalov Exp $
+* $Id: LightweightTypeParser.java,v 1.62 2009/04/28 09:16:35 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.61 2009/04/22 10:15:05 aigdalov Exp $
+* $Id: LightweightTypeParser.java,v 1.62 2009/04/28 09:16:35 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.61 2009/04/22 10:15:05 aigdalov Exp $
+* $Id: LightweightTypeParser.java,v 1.62 2009/04/28 09:16:35 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.61 2009/04/22 10:15:05 aigdalov Exp $
+* $Id: LightweightTypeParser.java,v 1.62 2009/04/28 09:16:35 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -5614,9 +5614,15 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 						expressionList,
 						false
 					);
-				CSTNode startExp = expressionList.get(0);
-				CSTNode endExp = expressionList.get(expressionList.size() - 1);
-				setOffsets(result, startExp, endExp);
+				if (expressionList.isEmpty()) {
+					// offsets will be updated further in parent non-terminals
+					result.setStartOffset(-1); 
+					result.setEndOffset(-1);
+				} else {
+					CSTNode startExp = expressionList.get(0);
+					CSTNode endExp = expressionList.get(expressionList.size() - 1);
+					setOffsets(result, startExp, endExp);
+				}
 				dtParser.setSym1(result);
 	  		  break;
 			}
