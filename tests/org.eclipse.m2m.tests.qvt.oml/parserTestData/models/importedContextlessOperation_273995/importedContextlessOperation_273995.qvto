@@ -1,0 +1,12 @@
+import models.importedContextlessOperation_273995.imported;
+
+modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
+
+
+transformation importedContextlessOperation_273995 (
+	in inModel : ECORE, out outModel : ECORE)
+	extends imported;
+
+main() { 
+	this.map aaa().name := this.aa();
+}
