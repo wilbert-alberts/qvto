@@ -42,6 +42,7 @@ public final class ValidationMessages extends NLS {
 	public static String QvtOperationalValidationVisitor_incompatibleArgumentModelType;
 	public static String QvtOperationalValidationVisitor_invalidContextualType;
 	public static String QvtOperationalValidationVisitor_invalidInstantiatedType;
+	public static String QvtOperationalValidationVisitor_MainInLibraryError;
 	public static String QvtOperationalValidationVisitor_ParameterlessMainExpected;
 	public static String QvtOperationalValidationVisitor_parameterNamedRequired;
 	public static String QvtOperationalValidationVisitor_resultParamDirectionMustBeOut;

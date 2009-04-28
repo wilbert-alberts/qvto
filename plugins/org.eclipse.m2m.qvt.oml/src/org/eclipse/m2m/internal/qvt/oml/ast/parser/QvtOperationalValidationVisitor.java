@@ -468,7 +468,7 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 	@Override
 	public Object visitMappingOperation(MappingOperation operation) {
 		boolean result = MappingExtensionHelper.validate(operation, fEnv);
-				
+		
 		for (VarParameter resultParam : operation.getResult()) {
 			result &= validateOutParamType(resultParam);			
 		}
@@ -484,7 +484,16 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 
 		return Boolean.TRUE.equals(super.visitMappingOperation(operation)) && result;
 	}
-	
+
+	@Override
+	public Object visitEntryOperation(EntryOperation entry) {
+		EObject eContainer = entry.eContainer();
+		if (eContainer instanceof Library) {
+			fEnv.reportError(ValidationMessages.QvtOperationalValidationVisitor_MainInLibraryError, entry.getStartPosition(), entry.getEndPosition());
+		}
+		return super.visitEntryOperation(entry);
+	}
+
 	@Override
 	public Object visitImperativeOperation(ImperativeOperation imperativeOperation) {
 		boolean result = true;
