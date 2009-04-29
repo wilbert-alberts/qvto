@@ -402,17 +402,28 @@ public class QvtOperationalVisitorCS
 			String targetModuleName = (moduleQualifier == null) ? null : moduleQualifier.getValue();
 			
 			if(targetModuleName != null) {
-				List<QvtEnvironmentBase> allExtendedEnvs = new ArrayList<QvtEnvironmentBase>(qvtEnvironmentBase.getAllExtendedModules());
+				List<QvtEnvironmentBase> allExtendedEnvs;
+
 				Module currentModule = qvtEnvironmentBase.getModuleContextType();
 				if(currentModule != null && targetModuleName.equals(currentModule.getName())) {
-					allExtendedEnvs = new ArrayList<QvtEnvironmentBase>(allExtendedEnvs.size());
-					allExtendedEnvs.add(0, qvtEnvironmentBase);
+					// the call is qualified by the calling module					
+					allExtendedEnvs = Collections.singletonList(qvtEnvironmentBase);
+				} else {
+					// lookup in all modules within the extends hierarchy  
+					allExtendedEnvs = new ArrayList<QvtEnvironmentBase>(qvtEnvironmentBase.getAllExtendedModules());
+					
+					for (QvtEnvironmentBase accessedEnv: qvtEnvironmentBase.getImportsByAccess()) {
+						if(accessedEnv.getModuleContextType() instanceof Library) {
+							allExtendedEnvs.add(accessedEnv);
+						}
+					}
 				}
 
 				EOperation resolvedOper = null;
 				for (QvtEnvironmentBase nextExtenedModuleEnv : allExtendedEnvs) { 
 					Module extendedModule = nextExtenedModuleEnv.getModuleContextType();
 					if(extendedModule != null && targetModuleName.equals(extendedModule.getName())) {
+						// TODO - should handle multiple ambiguous resolutions
 						EClassifier actualOwner = (owner instanceof Module) ? extendedModule : owner;
 						EOperation operation = nextExtenedModuleEnv.lookupOperation(actualOwner, name, args);
 						if(operation != null) {
@@ -851,10 +862,69 @@ public class QvtOperationalVisitorCS
     	return result;
     }
     
+	private OperationCallExp<EClassifier, EOperation> genNonContextualQualifiedOperationCall(
+			OperationCallExpCS operationCallExpCS, PathNameCS sourceCS, QvtEnvironmentBase env) {
+
+		EClassifier sourceType = lookupClassifier(sourceCS, env, sourceCS.getSequenceOfNames());
+		sourceCS.setAst(sourceType);
+		
+		if (sourceType instanceof Module) {
+			Module sourceModule = (Module) sourceType;			
+			Variable<EClassifier, EParameter> sourceVar = QvtOperationalParserUtil.getThisVariable(sourceModule);
+			if(sourceVar == null) {
+				return null;
+			}
+
+			OCLExpression<EClassifier> sourceExpr = createVariableExp(env, sourceCS, sourceVar);
+			EList<OCLExpressionCS> argsCS = operationCallExpCS.getArguments();
+			List<OCLExpression<EClassifier>> args = new java.util.ArrayList<OCLExpression<EClassifier>>(argsCS.size());
+			for (OCLExpressionCS arg : argsCS) {
+				OCLExpression<EClassifier> argExpr = oclExpressionCS(arg, env);
+				if (argExpr == null) {
+					argExpr = createDummyInvalidLiteralExp(env, arg);
+					initASTMapping(env, argExpr, arg);
+				}
+				args.add(argExpr);	
+			}
+			
+			String rule = "genNonContextualQualifiedOperationCall"; //$NON-NLS-1$
+			String name = operationCallExpCS.getSimpleNameCS().getValue();
+			OperationCallExp<EClassifier, EOperation> result = genOperationCallExp(env, operationCallExpCS, rule, name, sourceExpr, sourceModule, args);
+			
+			if(result.getReferredOperation() != null) {
+				boolean isValidModule = sourceModule instanceof Library ||
+						env.getModuleContextType() == sourceModule ||
+						QvtOperationalParserUtil.isExtendingEnv(env, sourceModule);
+				if(!isValidModule) {
+					String errMessage = NLS.bind(ValidationMessages.NoImplicitSourceForQualifiedCall, name);
+					ERROR(operationCallExpCS.getSimpleNameCS(), rule, errMessage);
+				}
+			}
+			
+			if(result instanceof ImperativeCallExp) {
+				((ImperativeCallExp) result).setIsVirtual(false);
+			}
+			return result; //$NON-NLS-1$
+		}
+		
+		return null;
+	}
+	
     @Override
     protected OCLExpression<EClassifier> operationCallExpCS(
     		OperationCallExpCS operationCallExpCS,
     		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+    	
+		if (operationCallExpCS.getSource() instanceof PathNameCS) {
+			OCLExpressionCS sourceCS = operationCallExpCS.getSource();
+			if (sourceCS instanceof PathNameCS && env instanceof QvtEnvironmentBase) {
+				OperationCallExp<EClassifier, EOperation> result = genNonContextualQualifiedOperationCall(operationCallExpCS, (PathNameCS)sourceCS,(QvtEnvironmentBase) env);
+				 if(result != null) {
+					 return result;
+				 }
+			}
+		}    	
+    	
     	OCLExpression<EClassifier> result = super.operationCallExpCS(operationCallExpCS, env);
     	
     	if(result instanceof OperationCallExp) {
@@ -1003,15 +1073,19 @@ public class QvtOperationalVisitorCS
 			result.setType(resultType);
 		}
 
-		//
+		// setup the virtual call flag
 		if(result instanceof ImperativeCallExp) {
 			ImperativeCallExp imperativeCall = (ImperativeCallExp) result;				
-			imperativeCall.setIsVirtual(true);			
-			if(operationCallExpCS instanceof ImperativeOperationCallExpCS) {
+			imperativeCall.setIsVirtual(true);
+			// qualified call on a source object
+			if(operationCallExpCS instanceof ImperativeOperationCallExpCS ) {
 				ImperativeOperationCallExpCS imperativeCallCS = (ImperativeOperationCallExpCS) operationCallExpCS;
 				if(imperativeCallCS.getModule() != null) {
 					imperativeCall.setIsVirtual(false);
 				}
+			} else if(operationCallExpCS.getSource() instanceof PathNameCS) {
+				// qualified call on by a module type (aka static call)				
+				imperativeCall.setIsVirtual(false);
 			}
 		}
 		
@@ -1123,6 +1197,11 @@ public class QvtOperationalVisitorCS
     	org.eclipse.ocl.ecore.OCLExpression result = oclExpressionCS(expressionCS, env);
 		if (expressionCS instanceof MappingCallExpCS) {
 		    if (result instanceof OperationCallExp) {
+		    	// FIXME - review this, seems to be useless as we create callexp according to referred operation		    	
+		    	if(result instanceof MappingCallExp) {
+		    		// keep 'virtual' attribute value
+		    		return result;	
+		    	}
 		        MappingCallExp mappingCallExp = createMappingCallExp((MappingCallExpCS) expressionCS, result);
 		        if (mappingCallExp != null) {
 		            return mappingCallExp;
@@ -2710,6 +2789,8 @@ public class QvtOperationalVisitorCS
 
 	protected void visitMappingMethodCS(MappingMethodCS methodCS, QvtOperationalEnv env, ImperativeOperation declaredOperation)
 			throws SemanticException {
+		methodCS.setAst(declaredOperation);
+		
 		if (methodCS instanceof ConstructorCS) {
 			visitConstructorCS((ConstructorCS) methodCS, env, declaredOperation);
 		}

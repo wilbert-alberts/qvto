@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNode;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNodeAccess;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtEnvironmentBase;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
@@ -775,4 +776,27 @@ public class QvtOperationalParserUtil {
 	public static String wrappInSeeErrorLogMessage(String message) {
 		return NLS.bind(ValidationMessages.QvtOperationalVisitorCS_SeeErrorLogForDetails, message);
 	}
+	
+	public static Variable<EClassifier, EParameter> getThisVariable(Module module) {
+		for (Variable<EClassifier, EParameter> var : module.getOwnedVariable()) {
+			if(QvtOperationalEnv.THIS.equals(var.getName())) {
+				return var;
+			}
+		}
+		return null;
+	}
+
+    public static boolean isExtendingEnv(QvtEnvironmentBase env, Module extended) {
+    	if(extended == null) {
+    		throw new IllegalArgumentException();
+    	}
+    	
+    	for (QvtEnvironmentBase extEnv : env.getAllExtendedModules()) {
+			if(extended ==  extEnv.getModuleContextType()) {
+				return true; 
+			}
+		}
+    	
+    	return false;
+    }
 }

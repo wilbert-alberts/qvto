@@ -113,6 +113,7 @@ public final class ValidationMessages extends NLS {
 	public static String ContextParamMustBeIn;
 	public static String SameParamName;
 	public static String ReadOnlyProperty;
+	public static String NoImplicitSourceForQualifiedCall;
 	public static String NoLibrary;
 	public static String FailedToLoadUnit;
 	
