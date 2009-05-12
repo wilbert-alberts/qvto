@@ -1,0 +1,14 @@
+modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
+
+
+transformation t(
+	in inModel : ECORE, out outModel : ECORE);
+
+
+main() {
+	inModel.objects()[EPackage][name = 'a'] -> map ab();
+}     
+
+mapping EPackage::ab() : EPackage {
+	name := self.name + 'b';
+}

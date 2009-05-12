@@ -77,7 +77,9 @@ public class TransformTests {
         
     
     public static ModelTestData[] createTestData() {
-        return new ModelTestData[] {        		
+        return new ModelTestData[] {        		        		
+        		new FileToFileData("explicitIteratorInXSelectShorthand_274505"), //$NON-NLS-1$
+        		new FileToFileData("chainedImperativeIteratorShorthands_274105"), //$NON-NLS-1$
         		new FileToFileData("overload_205062"), //$NON-NLS-1$
         		new FileToFileData("overload_singleParam"), //$NON-NLS-1$   
         		new FileToFileData("overload_multipleParams"), //$NON-NLS-1$        		        		
