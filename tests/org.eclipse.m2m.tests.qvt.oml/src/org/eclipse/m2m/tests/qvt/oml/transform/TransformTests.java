@@ -77,7 +77,10 @@ public class TransformTests {
         
     
     public static ModelTestData[] createTestData() {
-        return new ModelTestData[] {        		        		
+        return new ModelTestData[] {        		
+        		new FileToFileData("overload_205062"), //$NON-NLS-1$
+        		new FileToFileData("overload_singleParam"), //$NON-NLS-1$   
+        		new FileToFileData("overload_multipleParams"), //$NON-NLS-1$        		        		
         		new FileToFileData("operation_override"), //$NON-NLS-1$
         		new FileToFileData("fqn_noncontextual"), //$NON-NLS-1$
         		new FileToFileData("fqnMainCalls_272937"), //$NON-NLS-1$        		

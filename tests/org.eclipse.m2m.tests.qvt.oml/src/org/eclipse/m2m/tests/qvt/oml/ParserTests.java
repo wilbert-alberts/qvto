@@ -84,8 +84,10 @@ public class ParserTests {
     }
     
     private static TestData[] ourData = new TestData[] {
-    	TestData.createSourceChecked("mainInLibrary", 1, 0), //$NON-NLS-1$    	
-    	TestData.createSourceChecked("dynamicpackage", 0, 0), //$NON-NLS-1$    	
+    	TestData.createSourceChecked("overload_multipleParams", 0, 19), //$NON-NLS-1$
+    	TestData.createSourceChecked("overload_singleParam", 0, 0), //$NON-NLS-1$
+    	TestData.createSourceChecked("mainInLibrary", 1, 0), //$NON-NLS-1$
+    	TestData.createSourceChecked("dynamicpackage", 0, 0), //$NON-NLS-1$
     	TestData.createSourceChecked("importedInstances", 1, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("moduleElementErrorRecovery_265452", 7, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("unitElementErrorRecovery_264517_1", 1, 0), //$NON-NLS-1$    	
