@@ -163,35 +163,52 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
         return Collections.unmodifiableCollection(myImplicitVars);
     }
     
-    @Override
+    protected Variable<EClassifier, EParameter> localLookupImplicitSourceForOperation(String name, List<? extends TypedElement<EClassifier>> args) {
+    	return super.lookupImplicitSourceForOperation(name, args);
+    }
+        
+	@Override
 	public Variable<EClassifier, EParameter> lookupImplicitSourceForOperation(String name, List<? extends TypedElement<EClassifier>> args) {
+    	try {
+    		return tryLookupImplicitSourceForOperation(name, args);
+    	} catch(LookupException e) {
+    		List<?> ambiguousMatches = e.getAmbiguousMatches();
+    		@SuppressWarnings("unchecked")
+			Variable<EClassifier, EParameter> result = ambiguousMatches.isEmpty() ? null : (Variable<EClassifier, EParameter>)ambiguousMatches.get(0);
+			return result;
+    	}
+	}
+    
+	public Variable<EClassifier, EParameter> tryLookupImplicitSourceForOperation(String name, List<? extends TypedElement<EClassifier>> args) throws LookupException {
 		Variable<EClassifier, EParameter> result = super.lookupImplicitSourceForOperation(name, args);
 		
 		if(result == null) {
 			QvtEnvironmentBase rootEnv = getRootEnv();
 			if(rootEnv != this) {
+				// TODO - why not to call the root directly, do we want others to override?
 				return this.getInternalParent().lookupImplicitSourceForOperation(name, args);
 			}
 			
-			for (QvtEnvironmentBase nextSiblingEnv : rootEnv.getImportsByExtends()) {
-				result = nextSiblingEnv.lookupImplicitSourceForOperation(name, args);
+			for (QvtEnvironmentBase nextExtendedEnv : rootEnv.getAllExtendedModules()) {
+				result = nextExtendedEnv.localLookupImplicitSourceForOperation(name, args);
 				if(result != null) {
 					return result;
 				}
 			}
 			
-			for (QvtEnvironmentBase nextSiblingEnv : rootEnv.getImportsByAccess()) {
-				Module importedModule = nextSiblingEnv.getModuleContextType();
+			for (QvtEnvironmentBase nextAccessedEnv : rootEnv.getImportsByAccess()) {
+				Module importedModule = nextAccessedEnv.getModuleContextType();
 				if(importedModule instanceof Library) {
 					// there is a single default instance for libraries 
 					// this cannot be done transformations which has an explicit instance					
-					result = nextSiblingEnv.lookupImplicitSourceForOperation(name, args);
+					result = nextAccessedEnv.localLookupImplicitSourceForOperation(name, args);
 					if(result != null) {
 						break;
 					}
 				}
 			}			
 		}
+		
 		return result;
 	}
 	

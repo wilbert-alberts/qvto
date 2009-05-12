@@ -48,6 +48,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.EnvironmentFactory;
+import org.eclipse.ocl.LookupException;
 import org.eclipse.ocl.TypeChecker;
 import org.eclipse.ocl.TypeResolver;
 import org.eclipse.ocl.cst.CSTNode;
@@ -62,6 +63,7 @@ import org.eclipse.ocl.lpg.AbstractProblemHandler;
 import org.eclipse.ocl.lpg.ProblemHandler;
 import org.eclipse.ocl.lpg.ProblemHandler.Phase;
 import org.eclipse.ocl.lpg.ProblemHandler.Severity;
+import org.eclipse.ocl.parser.AbstractOCLAnalyzer;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.TypedElement;
@@ -207,41 +209,34 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		
 		return null;
 	}	
-		
+			
 	@Override
-	public EOperation lookupOperation(EClassifier owner, String name, List<? extends TypedElement<EClassifier>> args) {
-		// first try to lookup imperative operation with param's exact matching  
-		for (EOperation op : lookupMappingOperations(owner, name)) {
-	        List<EParameter> params = op.getEParameters();
-	        if (params.size() != args.size()) {
-	            continue;
-	        }
-	        
-	        boolean isMatched = true;
-	        for (int i = 0, n = params.size(); i < n; ++i) {
-	        	TypedElement<EClassifier> argVal = args.get(i);
-	        	if(argVal == null) {
-	        		// may have not been parsed successfully
-	        		continue;
-	        	}
-	            
-				if (TypeUtil.getRelationship(
-								this,
-								getUMLReflection().getOCLType(argVal),
-								getUMLReflection().getOCLType(params.get(i)))
-							!= UMLReflection.SAME_TYPE) {
-					
-					isMatched = false;
-					break;
-				}
-	        }
-	        if (isMatched) {
-	        	return op;
-	        }
+	public EOperation tryLookupOperation(EClassifier owner, String name, List<? extends TypedElement<EClassifier>> args) throws LookupException {
+        EOperation result = doLookupOperation(owner, name, args);
+        
+        if ((result == null) && AbstractOCLAnalyzer.isEscaped(name)) {
+            result = doLookupOperation(owner, AbstractOCLAnalyzer.unescape(name), args);
+        }
+        
+        return result;
+	}
+	
+	private EOperation doLookupOperation(EClassifier owner, String name, List<? extends TypedElement<EClassifier>> args) throws LookupException {
+		if (owner == null) {
+			Variable<EClassifier, EParameter> vdcl = lookupImplicitSourceForOperation(name, args);
+			if (vdcl == null) {
+				return null;
+			}
+			
+			owner = vdcl.getType();
+		}
+
+		TypeChecker<EClassifier, EOperation, EStructuralFeature> typeChecker = getTypeChecker();
+		if(typeChecker instanceof TypeCheckerImpl) {
+			return ((TypeCheckerImpl)typeChecker).findMostSpecificOperationMatching(owner, name, args);
 		}
 		
-		// pass to super in case exact imperative operation wasn't found
-		return super.lookupOperation(owner, name, args);
+		return TypeUtil.findOperationMatching(this, owner, name, args);
 	}
 	
     public List<EOperation> lookupMappingOperations(EClassifier owner, String name) {

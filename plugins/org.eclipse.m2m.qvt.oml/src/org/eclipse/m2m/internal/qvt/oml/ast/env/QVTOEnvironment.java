@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
@@ -31,5 +32,7 @@ public interface QVTOEnvironment extends Environment<EPackage, EClassifier, EOpe
 	QVTOStandardLibrary getQVTStandardLibrary();
 	
 	EStructuralFeature lookupPropertyAlias(EClassifier owner, String aliasName);
+	
+	Module getModuleContextType();
 	
 }

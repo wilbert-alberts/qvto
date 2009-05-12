@@ -167,6 +167,7 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.SwitchExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.VariableInitExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.WhileExp;
 import org.eclipse.ocl.Environment;
+import org.eclipse.ocl.LookupException;
 import org.eclipse.ocl.SemanticException;
 import org.eclipse.ocl.Environment.Internal;
 import org.eclipse.ocl.cst.CSTFactory;
@@ -390,57 +391,130 @@ public class QvtOperationalVisitorCS
 	@Override
 	protected EOperation lookupOperation(CSTNode cstNode,
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
-			EClassifier owner, String name,
-			List<? extends TypedElement<EClassifier>> args) {
-		if ((cstNode instanceof SimpleNameCS)
-				&& (cstNode.eContainer() instanceof ImperativeOperationCallExpCS) 
-				&& (env instanceof QvtEnvironmentBase)) {
-			QvtEnvironmentBase qvtEnvironmentBase = (QvtEnvironmentBase) env;
-			
+			EClassifier owner, String name, List<? extends TypedElement<EClassifier>> args) {
+		
+		if ((cstNode instanceof SimpleNameCS) && (cstNode.eContainer() instanceof ImperativeOperationCallExpCS)) {
 			ImperativeOperationCallExpCS imperativeOperationCallExpCS = (ImperativeOperationCallExpCS) cstNode.eContainer();
-			SimpleNameCS moduleQualifier = imperativeOperationCallExpCS.getModule();
-			String targetModuleName = (moduleQualifier == null) ? null : moduleQualifier.getValue();
-			
-			if(targetModuleName != null) {
-				List<QvtEnvironmentBase> allExtendedEnvs;
+			if(imperativeOperationCallExpCS.getModule() != null && env instanceof QvtEnvironmentBase) {
+				return qualifiedOperationLookup(imperativeOperationCallExpCS, (QvtEnvironmentBase)env, owner, name, args);
+			}
+		}
+		
+		// overrides super implementation by handling ambiguities at WARN level
+		try {
+			Environment.Lookup<EPackage, EClassifier, EOperation, EStructuralFeature> lookup = OCLUtil.getAdapter(env, Environment.Lookup.class);
+			EOperation operation = lookup.tryLookupOperation(owner, name, args);
+			if (cstNode != null) {
+				cstNode.setAst(operation);
+			}
 
-				Module currentModule = qvtEnvironmentBase.getModuleContextType();
-				if(currentModule != null && targetModuleName.equals(currentModule.getName())) {
-					// the call is qualified by the calling module					
-					allExtendedEnvs = Collections.singletonList(qvtEnvironmentBase);
-				} else {
-					// lookup in all modules within the extends hierarchy  
-					allExtendedEnvs = new ArrayList<QvtEnvironmentBase>(qvtEnvironmentBase.getAllExtendedModules());
-					
-					for (QvtEnvironmentBase accessedEnv: qvtEnvironmentBase.getImportsByAccess()) {
-						if(accessedEnv.getModuleContextType() instanceof Library) {
-							allExtendedEnvs.add(accessedEnv);
-						}
+			return operation;
+		} catch (LookupException e) {
+			return (EOperation)handleOperationLookupException(env, cstNode, e.getAmbiguousMatches());
+		}
+	}
+
+	private EOperation qualifiedOperationLookup(ImperativeOperationCallExpCS imperativeOperationCallExpCS,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
+			EClassifier owner, String name, List<? extends TypedElement<EClassifier>> args) {		
+
+		SimpleNameCS moduleQualifier = imperativeOperationCallExpCS.getModule();
+		CSTNode cstNode = imperativeOperationCallExpCS.getSimpleNameCS();
+		
+		QvtEnvironmentBase qvtEnvironmentBase = (QvtEnvironmentBase) env;
+		EOperation resolvedOper = null;		
+		String targetModuleName = (moduleQualifier == null) ? null : moduleQualifier.getValue();
+
+		if(targetModuleName != null) {
+			List<QvtEnvironmentBase> allExtendedEnvs;
+	
+			Module currentModule = qvtEnvironmentBase.getModuleContextType();
+			if(currentModule != null && targetModuleName.equals(currentModule.getName())) {
+				// the call is qualified by the calling module					
+				allExtendedEnvs = Collections.singletonList(qvtEnvironmentBase);
+			} else {
+				// lookup in all modules within the extends hierarchy  
+				allExtendedEnvs = new ArrayList<QvtEnvironmentBase>(qvtEnvironmentBase.getAllExtendedModules());
+				
+				for (QvtEnvironmentBase accessedEnv: qvtEnvironmentBase.getImportsByAccess()) {
+					if(accessedEnv.getModuleContextType() instanceof Library) {
+						allExtendedEnvs.add(accessedEnv);
 					}
 				}
-
-				EOperation resolvedOper = null;
-				for (QvtEnvironmentBase nextExtenedModuleEnv : allExtendedEnvs) { 
-					Module extendedModule = nextExtenedModuleEnv.getModuleContextType();
-					if(extendedModule != null && targetModuleName.equals(extendedModule.getName())) {
-						// TODO - should handle multiple ambiguous resolutions
-						EClassifier actualOwner = (owner instanceof Module) ? extendedModule : owner;
-						EOperation operation = nextExtenedModuleEnv.lookupOperation(actualOwner, name, args);
+			}
+	
+			for (QvtEnvironmentBase nextExtenedModuleEnv : allExtendedEnvs) { 
+				Module extendedModule = nextExtenedModuleEnv.getModuleContextType();
+				if(extendedModule != null && targetModuleName.equals(extendedModule.getName())) {
+					EClassifier actualOwner = (owner instanceof Module) ? extendedModule : owner;
+					EOperation operation = null;
+					try { 
+						operation = nextExtenedModuleEnv.tryLookupOperation(actualOwner, name, args);
 						if(operation != null) {
 							Module owningModule = QvtOperationalParserUtil.getOwningModule(operation);
 							if(extendedModule == owningModule) {
 								resolvedOper = operation;
-								break;
 							}
 						}
+					} catch (LookupException e) { 							
+						for(Object nextMatch : e.getAmbiguousMatches()) {
+							EOperation operMatch = (EOperation) nextMatch;
+							// search for matches that are ambiguous only in the target module 
+							if(extendedModule == QvtOperationalParserUtil.getOwningModule(operMatch)) {
+								if(operation != null) {
+									// report ambiguous matches in the target module type									
+									ArrayList<EOperation> ambiguous = new ArrayList<EOperation>(2);
+									Collections.addAll(ambiguous, operation, operMatch);
+									resolvedOper = (EOperation)handleOperationLookupException(env, cstNode, ambiguous);
+									break;
+								}
+								
+								operation = operMatch;
+							}
+						}
+						
+						resolvedOper = operation;
+					}
+					
+					if(resolvedOper != null) {
+						// we have found what we needed
+						break;
 					}
 				}
-
-				cstNode.setAst(resolvedOper);
-				return resolvedOper;
 			}
 		}
-		return super.lookupOperation(cstNode, env, owner, name, args);
+
+		cstNode.setAst(resolvedOper);
+		return resolvedOper;
+	}
+	
+	private Object handleOperationLookupException(
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env, 
+			CSTNode problemNode, List<?> matches) {
+		
+		StringBuffer buf = new StringBuffer();		
+		try {
+			int i = 0;			
+			for (Object nextMatchObj : matches) {
+				if(i++ > 0) {
+					buf.append(", "); //$NON-NLS-1$
+				}
+				buf.append('\'');
+				if(nextMatchObj instanceof EOperation) {
+					buf.append(FormattingHelperImpl.INSTANCE.formatOperationSignature((EOperation) nextMatchObj, env.getUMLReflection()));
+				} else {
+					buf.append(FormattingHelperImpl.INSTANCE.formatQualifiedName(nextMatchObj));
+				}
+				buf.append('\'');			
+			}
+		} catch (RuntimeException e) {
+			// Remark : safety measure, added in 2.0 RC1
+			buf.append("<null>"); //$NON-NLS-1$
+		}
+		
+		String message = NLS.bind(ValidationMessages.AmbiguousOperationReference, buf.toString());
+		getEnvironment().analyzerWarning(message, "lookupOperation", problemNode); //$NON-NLS-1$" 
+		return (matches != null && !matches.isEmpty()) ? matches.get(0) : null;
 	}
 
 	@Override

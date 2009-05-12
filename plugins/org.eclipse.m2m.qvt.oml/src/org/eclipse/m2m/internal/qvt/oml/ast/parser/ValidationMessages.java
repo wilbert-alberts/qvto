@@ -22,6 +22,8 @@ public final class ValidationMessages extends NLS {
 	}
 
     public static String AmbiguousModuleReference;
+	public static String AmbiguousOperationLookup;
+	public static String AmbiguousOperationReference;
 	public static String BooleanTypeAssertConditionError;
 	public static String DeprecatedElement;
 	public static String DeprecatedElementBy;
