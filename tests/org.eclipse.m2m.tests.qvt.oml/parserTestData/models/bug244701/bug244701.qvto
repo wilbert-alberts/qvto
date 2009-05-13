@@ -17,6 +17,8 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 		var k : Sequence(Integer);
 		var l : Bag(String);
 		var m : EClass;
+		var list : List(String);
+		var dict : Dict(String, String);
 		result := object EPackage {};
 		if (a = '') and (b = 0)
 			and (c = 0.0) and (d = 0)
@@ -27,7 +29,7 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 			and (j <> null) and (j->isEmpty()) and (j->asOrderedSet()= j)
 			and (k <> null) and (k->isEmpty()) and (k->asSequence()= k)
 			and (l <> null) and (l->isEmpty()) and (l->asBag()= l)
-			and (m = null) then {
+			and (m = null) and (list->size() = 0) and (dict->size() = 0) then {
 				result.name := 'Success'
 			} endif; 
 	}
