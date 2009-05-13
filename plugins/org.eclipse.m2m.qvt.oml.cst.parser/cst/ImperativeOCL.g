@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.g,v 1.25 2009/05/12 22:30:58 aigdalov Exp $ 
+-- * $Id: ImperativeOCL.g,v 1.26 2009/05/13 13:48:57 aigdalov Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -25,12 +25,10 @@ $DropRules
 	-- 'if' extension in QVT
 	ifExpCSPrec -> ifExpCS
 	ifExpCS ::= if oclExpressionCS then oclExpressionCS else oclExpressionCS endif
-	dotArrowExpCS ::= dotArrowExpCS callExpCS -- to be redefined below
 $End
 
 $Globals
 	/.	
-	import org.eclipse.ocl.cst.FeatureCallExpCS;
 	import org.eclipse.ocl.cst.StringLiteralExpCS;
 	import org.eclipse.ocl.ParserException;		
 	import lpg.lpgjavaruntime.Token;
@@ -45,7 +43,6 @@ $Globals
 	import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;	
 	import org.eclipse.m2m.internal.qvt.oml.cst.LogExpCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;	
-	import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.ReturnExpCS;	
 	import org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
@@ -101,7 +98,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: ImperativeOCL.g,v 1.25 2009/05/12 22:30:58 aigdalov Exp $
+ * $Id: ImperativeOCL.g,v 1.26 2009/05/13 13:48:57 aigdalov Exp $
  */
 	./
 $End
@@ -999,63 +996,72 @@ $Rules
 	        /.$NullAction./
 	declarator_vsepOpt -> declarator_vsep
 
-	-- xselect shorthand
-	callExpCS ::= exclamationOpt '[' declarator_vsepOpt oclExpressionCS ']'
+	callExpCS ::= '->' featureCallExpCS exclamationOpt '[' declarator_vsepOpt oclExpressionCS ']'
 		/.$BeginJava
-					boolean isOne = isTokenOfType(getIToken($getToken(1)), $sym_type.TK_EXCLAMATION_MARK);
-				        String opCode = isOne ?  "selectOne" : "xselect"; //$NON-NLS-1$ //$NON-NLS-2$ 
+		        String opCode = isTokenOfType(getIToken($getToken(3)), $sym_type.TK_EXCLAMATION_MARK) ?  "collectselectOne" : "collectselect"; //$NON-NLS-1$ //$NON-NLS-2$ 
+			SimpleNameCS simpleNameCS = createSimpleNameCS(
+					SimpleTypeEnum.KEYWORD_LITERAL,
+					opCode
+					);
+			setOffsets(simpleNameCS, getIToken($getToken(4)), getIToken($getToken(7)));
+			VariableCS variableCS = (VariableCS) $getSym(5);
+			CSTNode result = createImperativeIterateExpCS(
+						simpleNameCS,
+						$EMPTY_ELIST,
+						variableCS,
+						(OCLExpressionCS) $getSym(2),
+						(OCLExpressionCS) $getSym(6)
+					);
+			setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
+			$setResult(result);
+		  $EndJava
+		./
+
+	-- xselect shorthand
+	oclExpCS ::= oclExpCS exclamationOpt '[' oclExpressionCS ']'
+		/.$BeginJava
+				        String opCode = isTokenOfType(getIToken($getToken(2)), $sym_type.TK_EXCLAMATION_MARK) ?  "selectOne" : "xselect"; //$NON-NLS-1$ //$NON-NLS-2$ 
 					SimpleNameCS simpleNameCS = createSimpleNameCS(
 								SimpleTypeEnum.KEYWORD_LITERAL,
 								opCode
 							);
-					setOffsets(simpleNameCS, getIToken($getToken(2)), getIToken($getToken(5)));
-                                        VariableCS variableCS = (VariableCS) $getSym(3);
-                                        EList<VariableCS> iterators = new BasicEList<VariableCS>();
-                                        iterators.add(variableCS);
-                                        CSTNode result = createImperativeIterateExpCS(
-						simpleNameCS,
-						iterators,
-						null,
-						null,
-						(OCLExpressionCS) $getSym(4)
-					);
-					setOffsets(result, getIToken($getToken(2)), getIToken($getToken(5)));
-					$setResult(new Object[] {result, isOne});
+					setOffsets(simpleNameCS, getIToken($getToken(3)), getIToken($getToken(5)));
+					CallExpCS result = createImperativeIterateExpCS(
+							simpleNameCS,
+							$EMPTY_ELIST,
+							null,
+							null,
+							(OCLExpressionCS) $getSym(4)
+						);
+					result.setSource((OCLExpressionCS)$getSym(1));
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
+					$setResult(result);
 		  $EndJava
 		./
 
-	dotArrowExpCS ::= dotArrowExpCS callExpCS
+	dotArrowExpCS ::= dotArrowExpCS '.' featureCallExpCS exclamationOpt '[' oclExpressionCS ']'
 		/.$BeginJava
+					CallExpCS callExpCS = (CallExpCS)$getSym(3);
+					callExpCS.setSource((OCLExpressionCS)$getSym(1));
+					callExpCS.setAccessor(DotOrArrowEnum.DOT_LITERAL);
+					setOffsets(callExpCS, (CSTNode)$getSym(1), callExpCS);
 
-					Object rawResult = $getSym(2);
-					CallExpCS result;
-					boolean isOne = false;
-					if (rawResult instanceof Object[]) {
-						Object[] wrappedResult = (Object[]) rawResult;
-						result = (CallExpCS) wrappedResult[0];
-						isOne = (Boolean) wrappedResult[1];
-					} else {
-						result = (CallExpCS) rawResult;
-					}
-					OCLExpressionCS source = (OCLExpressionCS)$getSym(1);
-					if (source instanceof FeatureCallExpCS) {
-						CallExpCS sourceCallExpCS = (CallExpCS) source;
-						if ((sourceCallExpCS.getAccessor() == DotOrArrowEnum.ARROW_LITERAL)
-							&& (result != rawResult)) { // xselect shorthand to be patched
-							ImperativeIterateExpCS resultImperativeIterateExpCS = (ImperativeIterateExpCS) result;
 
-							String opCode = isOne ? "collectselectOne" : "collectselect"; //$NON-NLS-1$ //$NON-NLS-2$ 
-							resultImperativeIterateExpCS.getSimpleNameCS().setValue(opCode);
-
-							resultImperativeIterateExpCS.setTarget(resultImperativeIterateExpCS.getVariable1());
-							
-							resultImperativeIterateExpCS.setBody(sourceCallExpCS);
-							sourceCallExpCS.setAccessor(DotOrArrowEnum.NONE_LITERAL);
-							source = sourceCallExpCS.getSource();
-						}
-					}
-					result.setSource(source);
-					setOffsets(result, (CSTNode)$getSym(1), result);
+				        String opCode = isTokenOfType(getIToken($getToken(4)), $sym_type.TK_EXCLAMATION_MARK) ?  "selectOne" : "xselect"; //$NON-NLS-1$ //$NON-NLS-2$ 
+					SimpleNameCS simpleNameCS = createSimpleNameCS(
+								SimpleTypeEnum.KEYWORD_LITERAL,
+								opCode
+							);
+					setOffsets(simpleNameCS, getIToken($getToken(5)), getIToken($getToken(7)));
+					CallExpCS result = createImperativeIterateExpCS(
+							simpleNameCS,
+							$EMPTY_ELIST,
+							null,
+							null,
+							(OCLExpressionCS) $getSym(6)
+						);
+					result.setSource(callExpCS);
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
 					$setResult(result);
 		  $EndJava
 		./
