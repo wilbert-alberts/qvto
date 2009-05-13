@@ -133,7 +133,10 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		if (CallHandler.Access.hasHandler(operation)) {
 			return true;
 		} 
-		return super.overrides(operation, opcode);
+		// Remark: Prone to cause SOE if running in a deep stack as 
+		// the super implementation calls recursively upto the root
+		// evaluation environment
+		return false;//super.overrides(operation, opcode);
 	}
 
 	@Override
