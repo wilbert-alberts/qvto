@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.60 2009/05/12 22:31:07 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.61 2009/05/13 13:49:07 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.60 2009/05/12 22:31:07 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.61 2009/05/13 13:49:07 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.60 2009/05/12 22:31:07 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.61 2009/05/13 13:49:07 aigdalov Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.60 2009/05/12 22:31:07 aigdalov Exp $
+* $Id: LightweightTypeParsersym.java,v 1.61 2009/05/13 13:49:07 aigdalov Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -88,26 +88,26 @@ public interface LightweightTypeParsersym {
       TK_RPAREN = 2,
       TK_LBRACE = 94,
       TK_RBRACE = 96,
-      TK_LBRACKET = 103,
-      TK_RBRACKET = 114,
-      TK_ARROW = 105,
+      TK_LBRACKET = 100,
+      TK_RBRACKET = 104,
+      TK_ARROW = 107,
       TK_BAR = 97,
       TK_COMMA = 93,
       TK_COLON = 98,
       TK_COLONCOLON = 95,
       TK_SEMICOLON = 99,
-      TK_DOT = 106,
+      TK_DOT = 108,
       TK_DOTDOT = 115,
-      TK_ATPRE = 101,
-      TK_CARET = 107,
-      TK_CARETCARET = 108,
-      TK_QUESTIONMARK = 104,
+      TK_ATPRE = 102,
+      TK_CARET = 109,
+      TK_CARETCARET = 110,
+      TK_QUESTIONMARK = 105,
       TK_ADD_ASSIGN = 116,
-      TK_RESET_ASSIGN = 100,
+      TK_RESET_ASSIGN = 101,
       TK_AT_SIGN = 121,
-      TK_EXCLAMATION_MARK = 109,
-      TK_NOT_EQUAL_EXEQ = 102,
-      TK_INTEGER_RANGE_START = 110,
+      TK_EXCLAMATION_MARK = 106,
+      TK_NOT_EQUAL_EXEQ = 103,
+      TK_INTEGER_RANGE_START = 111,
       TK_class = 134,
       TK_composes = 135,
       TK_constructor = 136,
@@ -144,15 +144,15 @@ public interface LightweightTypeParsersym {
       TK_def = 165,
       TK_if = 72,
       TK_then = 118,
-      TK_else = 111,
-      TK_endif = 112,
+      TK_else = 112,
+      TK_endif = 113,
       TK_and = 29,
       TK_or = 30,
       TK_xor = 31,
       TK_not = 57,
       TK_implies = 119,
       TK_let = 80,
-      TK_in = 113,
+      TK_in = 114,
       TK_true = 58,
       TK_false = 59,
       TK_body = 40,
@@ -366,21 +366,21 @@ public interface LightweightTypeParsersym {
                  "BAR",
                  "COLON",
                  "SEMICOLON",
+                 "LBRACKET",
                  "RESET_ASSIGN",
                  "ATPRE",
                  "NOT_EQUAL_EXEQ",
-                 "LBRACKET",
+                 "RBRACKET",
                  "QUESTIONMARK",
+                 "EXCLAMATION_MARK",
                  "ARROW",
                  "DOT",
                  "CARET",
                  "CARETCARET",
-                 "EXCLAMATION_MARK",
                  "INTEGER_RANGE_START",
                  "else",
                  "endif",
                  "in",
-                 "RBRACKET",
                  "DOTDOT",
                  "ADD_ASSIGN",
                  "COLONCOLONEQUAL",
