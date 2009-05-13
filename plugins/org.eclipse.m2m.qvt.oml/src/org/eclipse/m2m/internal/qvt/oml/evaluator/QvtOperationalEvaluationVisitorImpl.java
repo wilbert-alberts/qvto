@@ -103,6 +103,7 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ComputeExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ContinueExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralPart;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictionaryType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ForExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeIterateExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeLoopExp;
@@ -123,6 +124,7 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.WhileExp;
 import org.eclipse.m2m.qvt.oml.util.Dictionary;
 import org.eclipse.m2m.qvt.oml.util.EvaluationMonitor;
 import org.eclipse.m2m.qvt.oml.util.Log;
+import org.eclipse.m2m.qvt.oml.util.Utils;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.EnvironmentFactory;
 import org.eclipse.ocl.EvaluationEnvironment;
@@ -1000,6 +1002,18 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 				value = Integer.valueOf(0);
 			} else if(varDeclType == oclstdlib.getReal()) {
 				value = Double.valueOf(0);
+			} else if(varDeclType == oclstdlib.getUnlimitedNatural()) {
+				value = Integer.valueOf(0);
+			} else if(varDeclType instanceof ListType) {
+				value = Utils.createList();
+			} else if(varDeclType instanceof DictionaryType) {
+				value = Utils.createDictionary();
+			} else if(varDeclType instanceof CollectionType) {
+				CollectionType<EClassifier, EOperation> collectionType = (CollectionType<EClassifier, EOperation>) varDeclType;
+				CollectionKind kind = collectionType.getKind();
+				if(kind != null && kind != CollectionKind.COLLECTION_LITERAL) {
+					value = CollectionUtil.createNewCollection(kind);
+				}
 			}
 		}
 		

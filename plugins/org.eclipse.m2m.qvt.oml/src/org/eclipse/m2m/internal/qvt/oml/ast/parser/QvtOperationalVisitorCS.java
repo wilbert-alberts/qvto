@@ -196,23 +196,18 @@ import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.ecore.SendSignalAction;
-import org.eclipse.ocl.expressions.BooleanLiteralExp;
 import org.eclipse.ocl.expressions.CollectionKind;
 import org.eclipse.ocl.expressions.CollectionLiteralExp;
 import org.eclipse.ocl.expressions.CollectionLiteralPart;
 import org.eclipse.ocl.expressions.FeatureCallExp;
 import org.eclipse.ocl.expressions.IfExp;
-import org.eclipse.ocl.expressions.IntegerLiteralExp;
 import org.eclipse.ocl.expressions.InvalidLiteralExp;
 import org.eclipse.ocl.expressions.IteratorExp;
-import org.eclipse.ocl.expressions.NullLiteralExp;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.PropertyCallExp;
-import org.eclipse.ocl.expressions.RealLiteralExp;
 import org.eclipse.ocl.expressions.StringLiteralExp;
 import org.eclipse.ocl.expressions.TypeExp;
-import org.eclipse.ocl.expressions.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.expressions.VariableExp;
 import org.eclipse.ocl.parser.AbstractOCLAnalyzer;
@@ -3544,13 +3539,7 @@ public class QvtOperationalVisitorCS
 		
 		if (!hasExplicitInitExpression && declaredType != null) {
 			// FIXME - should not be initialized at AST level but at evaluation level			
-	    	org.eclipse.ocl.ecore.OCLExpression defaultInitializationValue = createDefaultInitializationValue(declaredType, env);
-	        if (defaultInitializationValue == null) {
-	            NullLiteralExp<EClassifier> nullLiteralExp = oclFactory.createNullLiteralExp();
-	            nullLiteralExp.setType(getOclVoid());
-	            defaultInitializationValue = (org.eclipse.ocl.ecore.NullLiteralExp)nullLiteralExp;
-	        }
-	        
+	    	org.eclipse.ocl.ecore.OCLExpression defaultInitializationValue = createDefaultInitializationValue(declaredType, env);	        
 	        referredVar.setInitExpression(defaultInitializationValue);
 		}
 				
@@ -4478,51 +4467,14 @@ public class QvtOperationalVisitorCS
         // zero for any numeric type, the empty string for a string and null for all other elements.
         // A. Igdalov: Spec says nothing about Booleans and OclInvalid. Abstract collections (Collection, opposed to Bags, OrderedSets, etc.) are also neglected.
         // Thus, this implementation assigns false to Booleans, Invalid to OclInvalids and nulls to abstract collections.
-	    if (type instanceof org.eclipse.ocl.ecore.CollectionType) {
-            org.eclipse.ocl.ecore.CollectionType collectionType = (org.eclipse.ocl.ecore.CollectionType) type;
-            CollectionKind kind = collectionType.getKind();
-            if (CollectionKind.COLLECTION_LITERAL == kind) {
-                return null;
-            }
-            CollectionLiteralExp<EClassifier> collectionLiteralExp = oclFactory.createCollectionLiteralExp();
-            collectionLiteralExp.setKind(kind);
-            EClassifier resultType = getCollectionType(env, kind, collectionType.getElementType());
-            collectionLiteralExp.setType(resultType);
-            return (org.eclipse.ocl.ecore.CollectionLiteralExp)collectionLiteralExp;
-        } else {
-            EClassifier resolvedType = env.getTypeResolver().resolve(type);
-            OCLStandardLibrary<EClassifier> oclStdLib = getStandardLibrary();
-            if (resolvedType == oclStdLib.getBoolean()) {
-                BooleanLiteralExp<EClassifier> booleanLiteralExp = oclFactory.createBooleanLiteralExp();
-                booleanLiteralExp.setBooleanSymbol(Boolean.FALSE);
-                booleanLiteralExp.setType(oclStdLib.getBoolean());
-                return (org.eclipse.ocl.ecore.BooleanLiteralExp)booleanLiteralExp;
-            } else if (resolvedType == oclStdLib.getInteger()) {
-                IntegerLiteralExp<EClassifier> integerLiteralExp = oclFactory.createIntegerLiteralExp();
-                integerLiteralExp.setIntegerSymbol(0);
-                integerLiteralExp.setType(oclStdLib.getInteger());
-                return (org.eclipse.ocl.ecore.IntegerLiteralExp)integerLiteralExp;
-            } else if (resolvedType == oclStdLib.getReal()) {
-                RealLiteralExp<EClassifier> realLiteralExp = oclFactory.createRealLiteralExp();
-                realLiteralExp.setRealSymbol(0.0);
-                realLiteralExp.setType(oclStdLib.getReal());
-                return (org.eclipse.ocl.ecore.RealLiteralExp) realLiteralExp;
-            } else if (resolvedType == oclStdLib.getUnlimitedNatural()) {
-                UnlimitedNaturalLiteralExp<EClassifier> unlimitedNaturalLiteralExp = oclFactory.createUnlimitedNaturalLiteralExp();
-                unlimitedNaturalLiteralExp.setIntegerSymbol(0);
-                unlimitedNaturalLiteralExp.setType(oclStdLib.getUnlimitedNatural());
-                return (org.eclipse.ocl.ecore.UnlimitedNaturalLiteralExp)unlimitedNaturalLiteralExp;
-            } else if (resolvedType == oclStdLib.getInvalid()) {
-                InvalidLiteralExp<EClassifier> invalidLiteralExp = oclFactory.createInvalidLiteralExp();
-                invalidLiteralExp.setType(oclStdLib.getInvalid());
-                return (org.eclipse.ocl.ecore.InvalidLiteralExp)invalidLiteralExp;
-            } else if (resolvedType == oclStdLib.getString()) {
-                org.eclipse.ocl.expressions.StringLiteralExp<EClassifier> stringLiteralExp = oclFactory.createStringLiteralExp();
-                stringLiteralExp.setStringSymbol(""); //$NON-NLS-1$
-                stringLiteralExp.setType(oclStdLib.getString());
-                return (org.eclipse.ocl.ecore.StringLiteralExp) stringLiteralExp;
-            }
-        }
+        EClassifier resolvedType = env.getTypeResolver().resolve(type);
+        OCLStandardLibrary<EClassifier> oclStdLib = getStandardLibrary();
+        if (resolvedType == oclStdLib.getInvalid()) {
+            InvalidLiteralExp<EClassifier> invalidLiteralExp = oclFactory.createInvalidLiteralExp();
+            invalidLiteralExp.setType(oclStdLib.getInvalid());
+            return (org.eclipse.ocl.ecore.InvalidLiteralExp)invalidLiteralExp;
+        } 
+
 	    return null;
 	}
 		
