@@ -420,7 +420,7 @@ public class CompletionProposalUtil {
         MappingModuleCS mappingModuleCS = (MappingModuleCS) mappingMethodCS.eContainer();
         CFileData cFileData = data.getQvtCompiler().getCFileData(mappingModuleCS);
         String lightweightScript = cFileData.getLightweightScript();
-        String displayString = lightweightScript.substring(mappingDeclarationCS.getStartOffset(), mappingDeclarationCS.getEndOffset() + 1);
+        String displayString = lightweightScript.substring(mappingDeclarationCS.getSimpleNameCS().getStartOffset(), mappingDeclarationCS.getEndOffset() + 1);
 
         Image image = null;
         if (mappingMethodCS instanceof MappingRuleCS) {
