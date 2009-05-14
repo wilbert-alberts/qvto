@@ -11,8 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.hovers;
 
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
@@ -22,7 +20,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
-import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.ecore.Variable;
 import org.eclipse.ocl.utilities.ASTNode;
 
 
@@ -44,11 +42,11 @@ public class VariableExpressionInfoProvider implements IElementInfoProvider {
 				EcoreEnvironment env = CSTHelper.getEnvironment(nameCS);
 				ASTNode varNode = ASTBindingHelper.resolveASTNode(nodeCS);
 				if(varNode instanceof Variable) {
-					Variable<EClassifier, EParameter> var = (Variable<EClassifier, EParameter>)varNode;
+					Variable var = (Variable)varNode;
 					return SignatureUtil.getVariableSignature(env, var);
 				} else if(varNode instanceof VarParameter) {
 					VarParameter varParameter = (VarParameter) varNode;
-					return SignatureUtil.getTypedElementSignature(env, varParameter);
+					return SignatureUtil.getTypedElementSignature(env.getUMLReflection(), varParameter);
 				}
 			}
 		}

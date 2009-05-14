@@ -42,6 +42,7 @@
          markerType="org.eclipse.m2m.qvt.oml.project.QVTOProblem"
          markerSeverity="1">
       </type>  
+      <type name="org.eclipse.m2m.qvt.oml.ui.overrideIndicator"/>      
     </extension>
     
     <extension point="org.eclipse.ui.actionSetPartAssociations">
@@ -198,5 +199,32 @@
             description="%context.qvtEditor.description"
 			parentId="org.eclipse.ui.textEditorScope"/>       
     </extension>
-        
+
+	<extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
+	  <specification
+            annotationType="org.eclipse.m2m.qvt.oml.ui.overrideIndicator"
+            label="OverrideIndicator"
+            icon="icons/over_co.gif"
+            textPreferenceKey="overrideIndicator"
+            textPreferenceValue="false"
+            highlightPreferenceKey="overrideIndicatorHighlighting"
+            highlightPreferenceValue="false"
+            contributesToHeader="false"
+            overviewRulerPreferenceKey="overrideIndicatorInOverviewRuler"
+            overviewRulerPreferenceValue="false"
+            verticalRulerPreferenceKey="overrideIndicatorInVerticalRuler"
+            verticalRulerPreferenceValue="true"
+            colorPreferenceKey="overrideIndicatorColor"
+            colorPreferenceValue="180,207,205"
+            presentationLayer="3"
+            showInNextPrevDropdownToolbarActionKey="showoverrideIndicatorInNextPrevDropdownToolbarAction"
+            showInNextPrevDropdownToolbarAction="false"
+            isGoToNextNavigationTargetKey="isOverrideIndicatorGoToNextNavigationTarget"
+	        isGoToNextNavigationTarget="false"
+            isGoToPreviousNavigationTargetKey="isOverrideIndicatorGoToPreviousNavigationTarget"
+	        isGoToPreviousNavigationTarget="false"
+            textStylePreferenceKey="overrideIndicatorTextStyle"
+            textStylePreferenceValue="SQUIGGLES">
+	  </specification>
+	</extension>        
 </plugin>

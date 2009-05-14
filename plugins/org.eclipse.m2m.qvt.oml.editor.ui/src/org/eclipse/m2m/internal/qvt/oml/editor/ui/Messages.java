@@ -26,7 +26,9 @@ public class Messages extends NLS {
 
     public static String QvtReconcilingStrategy_TooManyExceptions;
 
-	public static String OpenDeclarationAction_selectionDoesNotResolveToElement;	
+	public static String OpenDeclarationAction_selectionDoesNotResolveToElement;
+
+	public static String OverrideAnnotationText;	
 	
 	static {
 		// initialize resource bundle

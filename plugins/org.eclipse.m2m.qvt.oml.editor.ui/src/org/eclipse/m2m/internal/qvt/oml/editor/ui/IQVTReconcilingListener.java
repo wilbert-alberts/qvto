@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 
 public interface IQVTReconcilingListener {
@@ -23,6 +24,7 @@ public interface IQVTReconcilingListener {
 	 * Called after reconciling has been finished.
 	 * 
 	 * @param unit the compilation unit or <code>null</code> if the unit failed to be compiled
+	 * @param monitor the progress monitor or <code>null</code> if no monitor is available
 	 */
-	void reconciled(CompiledUnit unit);
+	void reconciled(CompiledUnit unit, IProgressMonitor monitor);
 }

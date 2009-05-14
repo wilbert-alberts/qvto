@@ -13,10 +13,8 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui.hovers;
 
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
-import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.ecore.PropertyCallExp;
-import org.eclipse.ocl.utilities.ASTNode;
 
 
 /**
@@ -28,8 +26,7 @@ public class PropertyCallInfoProvider implements IElementInfoProvider {
 		if (false == element instanceof SimpleNameCS) {
 			return null;
 		}
-		SimpleNameCS nameCS = (SimpleNameCS) element; 
-		ASTNode nodeAS = ASTBindingHelper.resolveASTNode(nameCS);
+
 		if (element instanceof PropertyCallExp) {
 			PropertyCallExp propertyCallExp = (PropertyCallExp) element;
 			String propertyName = propertyCallExp.getName(); //NameUtil.buildPropertyName(propertyCallExp.getReferredProperty(), null);

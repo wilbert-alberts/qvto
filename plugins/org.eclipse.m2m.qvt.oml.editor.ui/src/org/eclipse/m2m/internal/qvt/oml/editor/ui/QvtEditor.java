@@ -11,12 +11,13 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.action.IAction;
@@ -25,17 +26,14 @@ import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.text.ITextViewerExtension;
-import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.TextSelection;
-import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.IVerticalRuler;
-import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
-import org.eclipse.jface.text.source.projection.ProjectionAnnotationModel;
 import org.eclipse.jface.text.source.projection.ProjectionSupport;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.actions.OpenDeclarationAction;
@@ -46,6 +44,7 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.outline.QvtOutlineNodeSelector
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.outline.QvtOutlineSelectionListener;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilder;
+import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.project.builder.WorkspaceUnitResolver;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -60,18 +59,46 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.part.IShowInTargetList;
 import org.eclipse.ui.texteditor.ContentAssistAction;
+import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
-public class QvtEditor extends TextEditor {
-	private static final String QVT_EDITOR_UI_CONTEXT = "org.eclipse.m2m.qvt.oml.editor.ui.context"; //$NON-NLS-1$
+public class QvtEditor extends TextEditor implements IQVTReconcilingListener {
+	
 	public final static String ID = "org.eclipse.m2m.qvt.oml.editor.ui.QvtEditor"; //$NON-NLS-1$
     protected final static String MATCHING_BRACKETS = "matchingBrackets"; //$NON-NLS-1$
     protected final static String MATCHING_BRACKETS_COLOR = "matchingBracketsColor"; //$NON-NLS-1$
+    protected final static char[] BRACKETS= { '{', '}', '(', ')', '[', ']' };
+    
+	private static final String QVT_EDITOR_UI_CONTEXT = "org.eclipse.m2m.qvt.oml.editor.ui.context"; //$NON-NLS-1$
 
+	
+    private ProjectionSupport myProjectionSupport;    
+    private ContentOutlinePage myOutlinePage;
+    private TreeViewer myTreeViewer;
+    private ColorManager myColorManager;
+    private QvtPairMatcher myBracketMatcher = new QvtPairMatcher(BRACKETS);
+    private QvtEditorSelectionChangedListener mySelectionChangedListener;
+    private QvtOutlineSelectionListener myOutlineSelectionListener;
+    private QvtOutlineNodeSelector myOutlineSelector;
+    private BracketInserter myBracketInserter;
+
+    private ASTProvider fASTProvider; 
+    
+    private UnitProxy fUnitProxy;
+    
+    private Object fASTProviderLock = new Object();
+    
     private QvtReconciler fReconciler;
+    
+    private OverrideIndicatorManager fOverrideIndicatorManager;
+    
+    private FoldingStructureUpdater fFoldingUpdater;
+    
+    private List<IQVTReconcilingListener> fReconcileListeners = new LinkedList<IQVTReconcilingListener>();
+    
     
     public QvtEditor() {
         myColorManager = new ColorManager();
@@ -131,7 +158,57 @@ public class QvtEditor extends TextEditor {
     		IFileEditorInput fileInput = (IFileEditorInput) input; 
     		fUnitProxy = WorkspaceUnitResolver.getUnit(fileInput.getFile());
     	}
+
+    	if(isEditingInQVTSourceContainer(input)) {
+    		installProblemUpdater();
+    	}
+    	installOverrideIndicator();
     }
+    
+	protected void installProblemUpdater() {
+		IAnnotationModel annotationModel = getDocumentProvider().getAnnotationModel(getEditorInput());
+		if(annotationModel != null) {
+			addReconcilingListener(new ProblemUpdater(annotationModel));			
+		}
+	}
+    
+	protected void installOverrideIndicator() {
+		IAnnotationModel model = getDocumentProvider().getAnnotationModel(getEditorInput());
+		if(model != null) {
+			fOverrideIndicatorManager = new OverrideIndicatorManager(model);
+			addReconcilingListener(fOverrideIndicatorManager);
+		}
+	}
+		
+	public void aboutToBeReconciled() {
+		IQVTReconcilingListener[] listeners = null;
+		synchronized (fReconcileListeners) {
+			listeners = fReconcileListeners.toArray(new IQVTReconcilingListener[fReconcileListeners.size()]);
+		}
+		
+		for (IQVTReconcilingListener listener : listeners) {
+			listener.aboutToBeReconciled();
+		}
+	}
+	
+	public void reconciled(CompiledUnit unit, IProgressMonitor monitor) {
+		IQVTReconcilingListener[] listeners = null;
+		synchronized (fReconcileListeners) {
+			listeners = fReconcileListeners.toArray(new IQVTReconcilingListener[fReconcileListeners.size()]);
+		}
+		
+		for (IQVTReconcilingListener listener : listeners) {
+			if(monitor != null && monitor.isCanceled()) {
+				break;
+			}
+			listener.reconciled(unit, monitor);
+		}
+
+		// Update QVT Outline page selection
+		if (monitor != null && !monitor.isCanceled()) {
+			refresh();
+		}
+	}
     
     public UnitProxy getUnit() {
     	return fUnitProxy;
@@ -164,7 +241,7 @@ public class QvtEditor extends TextEditor {
 
                 public String[] getShowInTargetIds() {
                     return new String[] {
-                            IPageLayout.ID_RES_NAV,
+                            IPageLayout.ID_PROJECT_EXPLORER,
                             JavaUI.ID_PACKAGES
                     };
                 }
@@ -189,14 +266,8 @@ public class QvtEditor extends TextEditor {
     
     @Override
 	public void createPartControl(Composite parent) {
-    	/*
-        if(!LicenseClient.isViewAvailable(parent, Messages.QvtEditor_title)) { 
-            return;
-        }
-        */
-		setHelpContextId("org.eclipse.m2m.qvt.oml._editor"); //$NON-NLS-1$
+
         super.createPartControl(parent);
-        initASTProvider();
         
         getPreferenceStore().setValue(MATCHING_BRACKETS, true);
         getPreferenceStore().setValue(MATCHING_BRACKETS_COLOR, StringConverter.asString(new RGB(196, 196, 196)));
@@ -223,7 +294,7 @@ public class QvtEditor extends TextEditor {
 					}
 				
 				});
-                refresh();
+               // refresh();
             }                   
         };
         
@@ -249,52 +320,31 @@ public class QvtEditor extends TextEditor {
             }
             ((ITextViewerExtension) sourceViewer).prependVerifyKeyListener(myBracketInserter);
         }
+
+        initASTProvider();
+    	IDocumentProvider documentProvider = getDocumentProvider();
+    	if(documentProvider != null) {
+    		IDocument document = documentProvider.getDocument(this.getEditorInput());
+    		if(document != null) {    			
+    			ProjectionViewer projectionSourceViewer = getProjectionSourceViewer();
+    			if(projectionSourceViewer != null) {
+	    			fFoldingUpdater = new FoldingStructureUpdater(projectionSourceViewer);
+	    			addReconcilingListener(fFoldingUpdater);
+    			}
+    		}
+    	}        
     }
 
 	private void initASTProvider() {
 		synchronized (fASTProviderLock) {
         	fASTProvider = new ASTProvider();
+        	addReconcilingListener(fASTProvider);
+        	
         	// notify possible waiting clients
         	fASTProviderLock.notifyAll();
         }
 	}
-    
-    public void updateFoldingStructure(final List<Position> positions) {
-    	if (getProjectionSourceViewer() == null 
-    			|| getProjectionSourceViewer().getProjectionAnnotationModel() == null) {
-    		return;
-    	}
-    	
-        Annotation[] annotations = new Annotation[positions.size()];
-
-        ProjectionAnnotationModel model = getProjectionSourceViewer().getProjectionAnnotationModel();
         
-        ArrayList<Annotation> annotationsToRemove = new ArrayList<Annotation>(Arrays.asList(myOldAnnotations));
-        HashMap<Position, Annotation> oldPositions = new HashMap<Position, Annotation>();
-    	for (int i = 0; i < myOldAnnotations.length; i++) {
-			Annotation annotation = myOldAnnotations[i];
-			oldPositions.put(model.getPosition(annotation), annotation);
-		}
-        
-        HashMap<ProjectionAnnotation, Position> newAnnotations = new HashMap<ProjectionAnnotation, Position>();
-        for (int i = 0; i < positions.size(); i++) {
-        	Position position = positions.get(i);
-        	ProjectionAnnotation annotation = (ProjectionAnnotation) oldPositions.get(position);
-        	if (annotation == null) {
-        		annotation = new ProjectionAnnotation();
-        		newAnnotations.put(annotation, position);
-        	} else {
-        		annotationsToRemove.remove(annotation);
-        	}
-        	annotations[i] = annotation;
-        }
-        
-        model.replaceAnnotations((Annotation[]) annotationsToRemove.toArray(new Annotation[annotationsToRemove.size()]), 
-        		newAnnotations);
-
-        myOldAnnotations = annotations;
-    }
-    
     private ProjectionViewer getProjectionSourceViewer() {
     	return (ProjectionViewer) getSourceViewer();
     }
@@ -335,7 +385,7 @@ public class QvtEditor extends TextEditor {
     }
     
     
-    public void refresh() {
+    private void refresh() {
         IWorkbenchPartSite s = getSite();
         if (s == null) {
             return;
@@ -374,8 +424,7 @@ public class QvtEditor extends TextEditor {
     }
     
     @Override
-	protected ISourceViewer createSourceViewer(final Composite parent,
-            final IVerticalRuler ruler, final int styles) {
+	protected ISourceViewer createSourceViewer(final Composite parent, final IVerticalRuler ruler, final int styles) {
         ProjectionViewer viewer = new ProjectionViewer(parent, ruler, getOverviewRuler(), isOverviewRulerVisible(), styles);
         
         // ensure decoration support has been created and configured.
@@ -384,22 +433,6 @@ public class QvtEditor extends TextEditor {
         return viewer;
     }
     
-    private ProjectionSupport myProjectionSupport;
-    private Annotation[] myOldAnnotations = new Annotation[0];
-    
-    private ContentOutlinePage myOutlinePage;
-    private TreeViewer myTreeViewer;
-    private ColorManager myColorManager;
-    protected final static char[] BRACKETS= { '{', '}', '(', ')', '[', ']' };
-    private QvtPairMatcher myBracketMatcher = new QvtPairMatcher(BRACKETS);
-    private QvtEditorSelectionChangedListener mySelectionChangedListener;
-    private QvtOutlineSelectionListener myOutlineSelectionListener;
-    private QvtOutlineNodeSelector myOutlineSelector;
-    private BracketInserter myBracketInserter;
-    private ASTProvider fASTProvider; 
-    private UnitProxy fUnitProxy;
-    private Object fASTProviderLock = new Object();
-
      
     private QVTOBuilder.BuildListener myBuildListener = new QVTOBuilder.BuildListener() {
         public void buildPerformed() {
@@ -442,7 +475,32 @@ public class QvtEditor extends TextEditor {
     	return fASTProvider;
     }
  
-    
+	private void addReconcilingListener(IQVTReconcilingListener listener) {
+		synchronized (fReconcileListeners) {		
+			fReconcileListeners.add(listener);
+		}
+	}
+        
+	private static boolean isEditingInQVTSourceContainer(IEditorInput editorInput) {
+		if(editorInput instanceof IFileEditorInput == false) {
+			return false;
+		}
+		
+		IFile file = ((IFileEditorInput) editorInput).getFile();
+		if(file != null && file.exists()) {
+			try {
+				IContainer srcContainer = QVTOBuilderConfig.getConfig(file.getProject()).getSourceContainer();
+				if(srcContainer.exists()) {
+					IPath editedPath = file.getFullPath();
+					IPath srcPath = srcContainer.getFullPath();
+					return srcPath.isPrefixOf(editedPath);
+				}
+			} catch (CoreException e) {
+				QvtPlugin.log(e);
+			}
+		}
+		return false;
+	}    
     
     private class ASTProvider implements IQVTReconcilingListener {
     	private IDocumentListener fDocListener;
@@ -451,7 +509,7 @@ public class QvtEditor extends TextEditor {
         private long fStartReconcileTimeStamp = 0;
     	private Object fLock = new Object();
  
-    	public ASTProvider() {
+    	public ASTProvider() {    		
     		IDocument doc = getDoc();
 			if(doc == null) {
     			throw new IllegalStateException("Editor source viewer document must be available"); //$NON-NLS-1$
@@ -497,11 +555,12 @@ public class QvtEditor extends TextEditor {
 	    	}
 	    }
 	    
-	    public void reconciled(CompiledUnit unit) {
+	    public void reconciled(CompiledUnit unit, IProgressMonitor monitor) {
 	    	synchronized(fLock) {
 	        	if(fModifyTimeStamp == fStartReconcileTimeStamp) {
 	        		fNeedsReconciling = false;
 	        	}
+	        		        	
 	        	// wake-up clients waiting for AST
 	    		fLock.notifyAll();
 	    	}

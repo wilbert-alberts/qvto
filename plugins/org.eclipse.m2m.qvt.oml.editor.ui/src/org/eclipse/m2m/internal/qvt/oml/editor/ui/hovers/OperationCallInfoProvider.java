@@ -29,7 +29,7 @@ public class OperationCallInfoProvider implements IElementInfoProvider {
 			if(operation != null) {
 				EcoreEnvironment env = CSTHelper.getEnvironment(nameCS);
 				if(env != null) {
-					return SignatureUtil.getOperationSignature(env, operation);
+					return SignatureUtil.getOperationSignature(env.getUMLReflection(), operation);
 				}
 			}
 		}

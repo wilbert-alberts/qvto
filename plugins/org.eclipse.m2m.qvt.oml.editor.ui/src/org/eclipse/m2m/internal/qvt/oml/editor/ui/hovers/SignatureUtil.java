@@ -22,6 +22,8 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
@@ -45,17 +47,24 @@ public class SignatureUtil {
 		return ePackage.getName();
 	}
 	
-	public static String getOperationSignature(EcoreEnvironment env, EOperation operation) {
+	public static String getOperationSignature(
+		UMLReflection<?, EClassifier, EOperation, ?, ?, EParameter, ?, ?, ?, ?> uml, EOperation operation) {
 		StringBuilder result = new StringBuilder();
-				
-		result.append(env.getUMLReflection().getName(operation));
+		
+		EClassifier owner = uml.getOwningClassifier(operation);
+		if(owner != null && owner instanceof Module == false) {
+			result.append(uml.getQualifiedName(owner));
+			result.append("::"); //$NON-NLS-1$
+		}
+		
+		result.append(uml.getName(operation));
 		result.append('(');
 		
-		for (Iterator<EParameter> iter = env.getUMLReflection().getParameters(operation).iterator(); iter.hasNext();) {
+		for (Iterator<EParameter> iter = uml.getParameters(operation).iterator(); iter.hasNext();) {
 			EParameter next = iter.next();
 			
-			if (env.getUMLReflection().getOCLType(next) != null) {
-				result.append(getTypedElementSignature(env, next));
+			if (uml.getOCLType(next) != null) {
+				result.append(getTypedElementSignature(uml, next));
 			}
 			
 			if (iter.hasNext()) {
@@ -63,35 +72,44 @@ public class SignatureUtil {
 			}
 		}
 		
-		EClassifier returnType = env.getUMLReflection().getOCLType(operation); 
+		EClassifier returnType = uml.getOCLType(operation); 
 		if (returnType == null) {
 			result.append(')');
-		} else {
+		} else {			
 			result.append(") : "); //$NON-NLS-1$
-			result.append(env.getUMLReflection().getQualifiedName(returnType));
+			if(isStdLibType(returnType)) {
+				result.append(uml.getName(returnType));
+			} else {
+				result.append(uml.getQualifiedName(returnType));
+			}
 		}
 		
-		EClassifier owner = env.getUMLReflection().getOwningClassifier(operation);
-		if(owner != null) {
+		EPackage moduleOwner = QvtOperationalParserUtil.getOwningModule(operation);
+		if(moduleOwner == null && operation.getEContainingClass() != null) {
+			moduleOwner = operation.getEContainingClass().getEPackage();
+		}
+		
+		if(moduleOwner != null) {
 			result.append(" - "); //$NON-NLS-1$
-			result.append(env.getUMLReflection().getQualifiedName(owner));
+			result.append(uml.getQualifiedName(moduleOwner));
 		}
 		
 		return result.toString();
 	}	
 	
-	public static String getTypedElementSignature(EcoreEnvironment env, ETypedElement typedElement) {
-		StringBuilder result = new StringBuilder();
+	public static String getTypedElementSignature(
+			UMLReflection<?, EClassifier, EOperation, ?, ?, EParameter, ?, ?, ?, ?> uml, ETypedElement typedElement) {
 		
-		result.append(env.getUMLReflection().getName(typedElement));
+		StringBuilder result = new StringBuilder();		
+		result.append(uml.getName(typedElement));
 		result.append(" : "); //$NON-NLS-1$
 		
-		EClassifier eType = env.getUMLReflection().getOCLType(typedElement);
+		EClassifier eType = uml.getOCLType(typedElement);
 		if(eType != null) {
-			if(isStdLibType(env, eType)) {
-				result.append(env.getUMLReflection().getName(eType));
+			if(isStdLibType(eType)) {
+				result.append(uml.getName(eType));
 			} else {
-				result.append(env.getUMLReflection().getQualifiedName(eType));
+				result.append(uml.getQualifiedName(eType));
 			}
 		}
 		
@@ -106,7 +124,7 @@ public class SignatureUtil {
 		
 		EClassifier eType = env.getUMLReflection().getOCLType(typedElement.getType());
 		if(eType != null) {
-			if(isStdLibType(env, eType)) {
+			if(isStdLibType(eType)) {
 				result.append(env.getUMLReflection().getName(eType));
 			} else {
 				result.append(env.getUMLReflection().getQualifiedName(eType));
@@ -116,7 +134,7 @@ public class SignatureUtil {
 		return result.toString();
 	}
 	
-	public static boolean isStdLibType(EcoreEnvironment env, EClassifier type) {
+	public static boolean isStdLibType(EClassifier type) {
 		return type instanceof PredefinedType;
 	}
 

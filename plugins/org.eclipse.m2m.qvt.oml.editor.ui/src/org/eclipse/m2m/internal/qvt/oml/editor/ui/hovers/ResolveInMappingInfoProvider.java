@@ -30,7 +30,7 @@ public class ResolveInMappingInfoProvider implements IElementInfoProvider {
 			EcoreEnvironment env = CSTHelper.getEnvironment(syntaxElement);			
 			
 			if(mappingOperation != null && env != null) {
-				return SignatureUtil.getOperationSignature(env, mappingOperation);
+				return SignatureUtil.getOperationSignature(env.getUMLReflection(), mappingOperation);
 			}
 		}
 		
