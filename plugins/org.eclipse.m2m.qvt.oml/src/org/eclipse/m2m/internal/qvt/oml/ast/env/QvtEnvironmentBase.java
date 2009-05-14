@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
@@ -520,6 +521,7 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 	}
 	
 	private CollisionStatus doFindCollidingOperation(EClassifier ownerType, ImperativeOperation operation) {
+		CollisionStatus result = null;
 		EClassifier definingModule = getModuleContextType();
         String operationName = getUMLReflection().getName(operation);
         List<EOperation> ownedOperations = TypeUtil.getOperations(this, ownerType);        
@@ -587,7 +589,7 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 						// FIXME - skip imported by access 
 						// we try to override operation from extended module
 						if(!usesImplicitExtendsImport()) {						
-							return new CollisionStatus(next, CollisionStatus.OVERRIDES);
+							result = new CollisionStatus(next, CollisionStatus.OVERRIDES);
 						}
 					} else {
 						return new CollisionStatus(next, CollisionStatus.ALREADY_DEFINED);
@@ -596,13 +598,13 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 			} // end of matching operation processing
 		}
 				
-		return null;
+		return result;
 	}
 	
 	private boolean isImportedByAccess(EOperation operation) {
-		EClass containingClass = operation.getEContainingClass();
+		Module definingModule = QvtOperationalParserUtil.getOwningModule(operation);
 		for (QvtEnvironmentBase nextImport : getImportsByAccess()) {
-			if(containingClass == nextImport.getModuleContextType()) {
+			if(definingModule == nextImport.getModuleContextType()) {
 				return true;
 			}
 		}
