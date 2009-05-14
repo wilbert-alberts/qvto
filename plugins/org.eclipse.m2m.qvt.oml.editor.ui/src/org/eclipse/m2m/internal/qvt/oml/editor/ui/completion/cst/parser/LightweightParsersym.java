@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.61 2009/05/13 13:49:07 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.62 2009/05/14 09:15:30 sboyko Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.61 2009/05/13 13:49:07 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.62 2009/05/14 09:15:30 sboyko Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.61 2009/05/13 13:49:07 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.62 2009/05/14 09:15:30 sboyko Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.61 2009/05/13 13:49:07 aigdalov Exp $
+* $Id: LightweightParsersym.java,v 1.62 2009/05/14 09:15:30 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
