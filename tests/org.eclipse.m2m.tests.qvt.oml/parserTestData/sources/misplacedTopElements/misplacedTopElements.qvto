@@ -7,7 +7,7 @@ intermediate class /*<warn>*/FooClass/*</warn>*/ {
 	name : String;
 }
 
-helper /*<warn>*/foo() : String/*</warn>*/ {
+/*<warn>*/helper foo() : String/*</warn>*/ {
 	return '';
 }
 

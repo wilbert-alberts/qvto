@@ -2,7 +2,7 @@ transformation bug2732_wrongcondition(in dummy : ECORE, out ECORE);
 
 modeltype ECORE uses "http://www.eclipse.org/emf/2002/Ecore";
 	
-mapping main(in model : EPackage) : /*<warn>*/EPackage/*</warn>*/ {
+/*<warn>*/mapping main(in model : EPackage) : EPackage/*</warn>*/ {
 	init {
 		var d := Sequence {
     		    object EClass { name := 'a'},

@@ -2,7 +2,7 @@ modeltype ecore uses ecore('http://www.eclipse.org/emf/2002/Ecore');
 
 transformation computeExp_252269(in model : ecore, out ecore);
 
-main(in inModel : ecore::EPackage) {
+main(/*<warn>*/in inModel : ecore::EPackage/*</warn>*/) {
 	var a := null;
 	compute (s : String = 'a') {
 		s := s + 'b'; 

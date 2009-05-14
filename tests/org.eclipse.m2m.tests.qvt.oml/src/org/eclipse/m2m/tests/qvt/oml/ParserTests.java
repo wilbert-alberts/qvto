@@ -105,7 +105,7 @@ public class ParserTests {
     	TestData.createSourceChecked("listtype", 10, 0), //$NON-NLS-1$   	
     	TestData.createSourceChecked("listtype2", 9, 0), //$NON-NLS-1$   	
         //new TestData("orderedsetdoesnotconformtoset", 1), //$NON-NLS-1$
-        TestData.createSourceChecked("computeExp_252269", 3, 0), //$NON-NLS-1$       
+        TestData.createSourceChecked("computeExp_252269", 3, 1), //$NON-NLS-1$       
     	new TestData("implicitsource_ocl_234354", 6, 0), //$NON-NLS-1$
     	TestData.createSourceChecked("duplicateModelTypeDef", 1, 0),    	 //$NON-NLS-1$
     	TestData.createSourceChecked("blackboxlib_annotation_java", 1, 2), //$NON-NLS-1$
@@ -114,7 +114,7 @@ public class ParserTests {
     	TestData.createSourceChecked("testmodelparamtype", 3, 1),    	 //$NON-NLS-1$
     	TestData.createSourceChecked("resolvecond", 1, 0), //$NON-NLS-1$
     	TestData.createSourceChecked("intermPropClash", 9, 0),    	    	 //$NON-NLS-1$
-    	TestData.createSourceChecked("noClassInImplicitPopulate", 3, 0),    	 //$NON-NLS-1$
+    	TestData.createSourceChecked("noClassInImplicitPopulate", 3, 1),    	 //$NON-NLS-1$
     	TestData.createSourceChecked("parmnamesclash", 22, 0), //$NON-NLS-1$
     	TestData.createSourceChecked("stdlibElementAsOut", 7, 0),    	 //$NON-NLS-1$
         TestData.createSourceChecked("bug2732_wrongcondition", 1, 1), //$NON-NLS-1$      

@@ -1,5 +1,5 @@
 transformation sameparamname;
 
-mapping foo(in s: String, in /*<error>*/s: String/*</error>*/): /*<error>*/OclVoid/*</error>*/ {
+mapping foo(in s: String, /*<error>*/in s: String/*</error>*/): /*<error>*/OclVoid/*</error>*/ {
 
 }
