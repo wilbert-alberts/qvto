@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
@@ -310,6 +311,12 @@ public class QvtOperationalParserUtil {
 			// FIXME - we should not have any special handling of OCL types
 			// See related, https://bugs.eclipse.org/bugs/show_bug.cgi?id=260403		
 			if (initialiserType == env.getOCLStandardLibrary().getInteger()) {
+				return true;
+			}
+		}
+		
+		if (variableType instanceof EDataType && initialiserType instanceof EDataType) {
+			if (((EDataType) variableType).getInstanceClass() == ((EDataType) initialiserType).getInstanceClass()) {
 				return true;
 			}
 		}

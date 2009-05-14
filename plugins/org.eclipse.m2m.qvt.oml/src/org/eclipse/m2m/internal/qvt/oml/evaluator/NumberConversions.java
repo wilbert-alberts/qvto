@@ -52,25 +52,25 @@ public class NumberConversions {
 		if(targetClass == BigInteger.class) {
 			return new BigInteger(String.valueOf(numVal.longValue()));			
 		}
-		else if(targetClass == Long.class) {
+		else if(targetClass == Long.class || targetClass == long.class) {
 			return new Long(numVal.longValue()); 
 		} 
-		else if(targetClass == Integer.class) {
+		else if(targetClass == Integer.class || targetClass == int.class) {
 			return new Integer(numVal.intValue()); 
 		}
-		else if(targetClass == Short.class) {
+		else if(targetClass == Short.class || targetClass == short.class) {
 			return new Short(numVal.shortValue()); 
 		}
-		else if(targetClass == Byte.class) {
+		else if(targetClass == Byte.class || targetClass == byte.class) {
 			return new Byte(numVal.byteValue()); 
 		}
 		else if(targetClass == BigDecimal.class) {
 			return new BigDecimal(String.valueOf(numVal.doubleValue())); 
 		}
-		else if(targetClass == Double.class) {
+		else if(targetClass == Double.class || targetClass == double.class) {
 			return new Double(numVal.doubleValue()); 
 		}
-		else if(targetClass == Float.class) {
+		else if(targetClass == Float.class || targetClass == float.class) {
 			return new Float(numVal.floatValue()); 
 		}
 
