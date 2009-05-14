@@ -78,8 +78,16 @@ public class QvtOperationalUtil {
 	}
 
 	public static boolean isInstantiable(EClass cls) {
-		return !cls.isAbstract() && !cls.isInterface();
+		return cls != null && !cls.isAbstract() && !cls.isInterface();
 	}
+	
+	public static boolean isInstantiable(EClassifier classifier) {
+		if(classifier instanceof EClass) {
+			return isInstantiable((EClass) classifier);
+		}
+		
+		return false;
+	}	
 
     public static boolean isMappingOperation(EOperation operation) {
         return operation instanceof MappingOperation;

@@ -470,7 +470,11 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 		return result;
 	}
 
-	private EOperation getMostSpecificOperation(List<EOperation> matchingOpers, List<? extends TypedElement<EClassifier>> args) throws LookupException {
+	EOperation getMostSpecificOperation(List<EOperation> matchingOpers, List<? extends TypedElement<EClassifier>> args) throws LookupException {
+		if(matchingOpers == null || matchingOpers.isEmpty()) {
+			return null; 
+		}
+		
 		List<EOperation> ambiguous = null;		
 		EOperation mostSpecific = null;
 		int i = 0;

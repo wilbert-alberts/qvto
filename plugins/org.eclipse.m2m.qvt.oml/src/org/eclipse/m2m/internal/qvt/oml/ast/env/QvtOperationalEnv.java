@@ -259,9 +259,19 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
         return result;
     }
 
-    public EOperation lookupConstructorOperation(EClassifier owner, String name, List<? extends TypedElement<EClassifier>> args) {
-    	List<EOperation> operations = lookupConstructorOperations(owner, name, args.size());
+    public EOperation tryLookupConstructorOperation(EClassifier owner, String name, List<? extends TypedElement<EClassifier>> args) throws LookupException {
+    	List<EOperation> operations = lookupConstructorOperations(owner, name, args);
+    	if(operations == null || operations.isEmpty()) {
+    		return null;
+    	}
+
+    	TypeChecker<EClassifier, EOperation, EStructuralFeature> typeChecker = getTypeChecker();
+    	if(typeChecker instanceof TypeCheckerImpl) {
+			TypeCheckerImpl specificChecker = (TypeCheckerImpl) typeChecker;
+			return specificChecker.getMostSpecificOperation(operations, args);
+    	}
     	
+    	// fall back implementation in case some overrides #createTypeChecker() 
     	// first pass with strict matching (like in doFindCollidingOperation() and QvtOperationalEnv::lookupOperation() for mappings)
     	for (EOperation op : operations) {
 	        List<EParameter> params = op.getEParameters();
@@ -293,7 +303,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
     	return null;
     }
     
-    private List<EOperation> lookupConstructorOperations(EClassifier owner, String name, int paramSize) {
+    private List<EOperation> lookupConstructorOperations(EClassifier owner, String name, List<? extends TypedElement<EClassifier>> args) {
         if (owner == null) {
             owner = getModuleContextType();
             if(owner == null) {
@@ -302,13 +312,21 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
         }
 
         UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> uml = getUMLReflection();
-        List<EOperation> operations = TypeUtil.getOperations(this, owner);
+        TypeChecker<EClassifier, EOperation, EStructuralFeature> typeChecker = getTypeChecker();
+		
+        List<EOperation> operations = typeChecker.getOperations(owner);
         List<EOperation> result = new ArrayList<EOperation>(2);
-		for (EOperation operation : operations) {
-		    if (uml.getName(operation).equals(name) 
+
+        for (EOperation operation : operations) {
+		    if (uml.getName(operation).equals(name)		    		
 		    		&& QvtOperationalUtil.isConstructorOperation(operation)
-		    		&& operation.getEParameters().size() == paramSize) {
-		        result.add(operation);
+		    		&& typeChecker.matchArgs(owner, uml.getParameters(operation), args)) {
+		    	
+		    	EClassifier nextOwner = uml.getOwningClassifier(operation);
+		    	// for constructors consider only identical types  
+		    	if(owner == nextOwner) {
+		    		result.add(operation);
+		    	}
 		    }
 		}
 

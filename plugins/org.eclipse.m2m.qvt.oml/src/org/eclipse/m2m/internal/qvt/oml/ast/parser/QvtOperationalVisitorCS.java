@@ -284,9 +284,10 @@ public class QvtOperationalVisitorCS
 		}
 
 		boolean isTransformationInstantiation = false;
-		if (instantiationExp.getType() instanceof EClass) {			
-			instantiationExp.setInstantiatedClass((EClass) instantiationExp.getType());
-			instantiationExp.setName(instantiationExp.getType().getName());
+		EClassifier type = instantiationExp.getType();
+		if (type instanceof EClass) {			
+			instantiationExp.setInstantiatedClass((EClass) type);
+			instantiationExp.setName(type.getName());
 			isTransformationInstantiation = QvtOperationalStdLibrary.INSTANCE.getTransformationClass()
 					.isSuperTypeOf(instantiationExp.getInstantiatedClass());
 		}
@@ -298,10 +299,25 @@ public class QvtOperationalVisitorCS
 			}
 		}
 		
-		if (!isTransformationInstantiation && env instanceof QvtOperationalEnv) {
-			EOperation lookupOperation = ((QvtOperationalEnv) env).lookupConstructorOperation(instantiationExp.getType(), instantiationExp.getName(), instantiationExp.getArgument());
+		if (!isTransformationInstantiation && env instanceof QvtOperationalEnv && type != null) {
+			QvtOperationalEnv qvtEnv = (QvtOperationalEnv) env;
+			EOperation lookupOperation;
+			try {
+				lookupOperation = qvtEnv.tryLookupConstructorOperation(type, instantiationExp.getName(), instantiationExp.getArgument());
+			} catch (LookupException e) {
+				lookupOperation = (EOperation) handleOperationLookupException(env, newCallExp, e.getAmbiguousMatches());
+			}
+			
 			if (lookupOperation instanceof Constructor) {
 				instantiationExp.eAdapters().add(new ConstructorOperationAdapter((Constructor) lookupOperation));
+			} else if(lookupOperation == null && QvtOperationalUtil.isInstantiable(type)) {
+				if(newCallExp.getArguments().isEmpty()) {
+					// we try to call a default constructor defined explicitly
+					QvtOperationalUtil.reportWarning(env, ValidationMessages.DefaultConstructorNotDefinedImplicitUsed, newCallExp);
+				} else {
+					String errMessage = NLS.bind(ValidationMessages.UnresolvedConstructor, getFormatter().formatQualifiedName(type)); 
+					QvtOperationalUtil.reportError(env, errMessage, newCallExp);					
+				}
 			}
 		}
 		

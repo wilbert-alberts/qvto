@@ -25,6 +25,7 @@ public final class ValidationMessages extends NLS {
 	public static String AmbiguousOperationLookup;
 	public static String AmbiguousOperationReference;
 	public static String BooleanTypeAssertConditionError;
+	public static String DefaultConstructorNotDefinedImplicitUsed;
 	public static String DeprecatedElement;
 	public static String DeprecatedElementBy;
 	public static String DeprecatedImplicitSourceCall_contextualImplicitCall;
@@ -101,6 +102,7 @@ public final class ValidationMessages extends NLS {
 	public static String readOnlyPropertyModificationError;
 	public static String StringTypeMessageLogArgumentError;
 	public static String UknownSeverityKindError;
+	public static String UnresolvedConstructor;
 	public static String UnsupportedElement;
 	public static String UnsupportedLogExpArgumentError;
 	
