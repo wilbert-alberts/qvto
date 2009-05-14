@@ -78,6 +78,7 @@ public class TransformTests {
     
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {        		
+                new FileToFileData("numconversion", "in.xmi", "expected.pack"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         		new FileToFileData("overload_205062"), //$NON-NLS-1$
         		new FileToFileData("overload_singleParam"), //$NON-NLS-1$   
         		new FileToFileData("overload_multipleParams"), //$NON-NLS-1$        		        		
