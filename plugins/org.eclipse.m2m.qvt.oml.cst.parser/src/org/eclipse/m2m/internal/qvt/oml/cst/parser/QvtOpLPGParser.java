@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.77 2009/05/13 13:48:56 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.78 2009/05/14 09:15:14 sboyko Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.77 2009/05/13 13:48:56 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.78 2009/05/14 09:15:14 sboyko Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.77 2009/05/13 13:48:56 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.78 2009/05/14 09:15:14 sboyko Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.77 2009/05/13 13:48:56 aigdalov Exp $
+* $Id: QvtOpLPGParser.java,v 1.78 2009/05/14 09:15:14 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -2121,12 +2121,16 @@ import org.eclipse.ocl.cst.LiteralExpCS;
 			//
 			case 236: {
 				
+				DirectionKindCS paramDirectionCS = (DirectionKindCS) dtParser.getSym(1);
 				CSTNode result = createParameterDeclarationCS(
-						(DirectionKindCS)dtParser.getSym(1),
+						paramDirectionCS,
 						getIToken(dtParser.getToken(2)),
 						(TypeSpecCS)dtParser.getSym(4)
 					);
-				setOffsets(result, getIToken(dtParser.getToken(2)), (CSTNode)dtParser.getSym(4));
+				
+				result.setStartOffset(paramDirectionCS != null ? paramDirectionCS.getStartOffset() : getIToken(dtParser.getToken(2)).getStartOffset());
+				result.setEndOffset(((CSTNode)dtParser.getSym(4)).getEndOffset());
+				
 				dtParser.setSym1(result);
 	  		  break;
 			}
@@ -2136,12 +2140,17 @@ import org.eclipse.ocl.cst.LiteralExpCS;
 			//
 			case 237: {
 				
+				DirectionKindCS paramDirectionCS = (DirectionKindCS) dtParser.getSym(1);
+				TypeSpecCS paramTypeCS = (TypeSpecCS) dtParser.getSym(2);
 				CSTNode result = createParameterDeclarationCS(
-						(DirectionKindCS)dtParser.getSym(1),
+						paramDirectionCS,
 						null,
-						(TypeSpecCS)dtParser.getSym(2)
+						paramTypeCS
 					);
-				setOffsets(result, (CSTNode)dtParser.getSym(2));
+
+				result.setStartOffset(paramDirectionCS != null ? paramDirectionCS.getStartOffset() : paramTypeCS.getStartOffset());
+				result.setEndOffset(paramTypeCS.getEndOffset());
+				
 				dtParser.setSym1(result);
 	  		  break;
 			}
@@ -5032,6 +5041,7 @@ import org.eclipse.ocl.cst.LiteralExpCS;
 
 				IToken helperKind = (IToken) helperInfo[1];
 				mappingDeclarationCS.setIsQuery(helperKind.getKind() == QvtOpLPGParsersym.TK_query);
+				mappingDeclarationCS.setStartOffset(helperKind.getStartOffset());
 
 				dtParser.setSym1(mappingDeclarationCS);
 	  		  break;
@@ -5058,6 +5068,7 @@ import org.eclipse.ocl.cst.LiteralExpCS;
 
 				IToken helperKind = (IToken) helperInfo[1];
 				mappingDeclarationCS.setIsQuery(helperKind.getKind() == QvtOpLPGParsersym.TK_query);
+				mappingDeclarationCS.setStartOffset(helperKind.getStartOffset());
 
 				dtParser.setSym1(mappingDeclarationCS);
 	  		  break;
@@ -5079,6 +5090,7 @@ import org.eclipse.ocl.cst.LiteralExpCS;
 				
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS)dtParser.getSym(1);
 				MappingQueryCS result = createMappingQueryCS(
+						false,
 						mappingDecl,
 						ourEmptyEList
 					);
@@ -5095,6 +5107,7 @@ import org.eclipse.ocl.cst.LiteralExpCS;
 				
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS)dtParser.getSym(1);
 				MappingQueryCS result = createMappingQueryCS(
+						false,
 						mappingDecl,
 						ourEmptyEList
 					);
@@ -5114,6 +5127,7 @@ import org.eclipse.ocl.cst.LiteralExpCS;
 				EList<OCLExpressionCS> expressionList = new BasicEList();
 				expressionList.add(expression);
 				MappingQueryCS result = createMappingQueryCS(
+						false,
 						mappingDecl,
 						expressionList
 					);
@@ -5131,6 +5145,7 @@ import org.eclipse.ocl.cst.LiteralExpCS;
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS)dtParser.getSym(1);
 				BlockExpCS blockExpCS = (BlockExpCS)dtParser.getSym(2);
 				CSTNode result = createMappingQueryCS(
+						false,
 						mappingDecl,
 						blockExpCS.getBodyExpressions()
 					);
@@ -5220,7 +5235,7 @@ import org.eclipse.ocl.cst.LiteralExpCS;
 				nameCS.setStartOffset(nameToken.getStartOffset());
 				nameCS.setEndOffset(nameToken.getEndOffset());
 	
-	                        SimpleSignatureCS signature = (SimpleSignatureCS)dtParser.getSym(2);
+				SimpleSignatureCS signature = (SimpleSignatureCS)dtParser.getSym(2);
 				CSTNode result = createMappingDeclarationCS(
 						null,
 						nameCS,
@@ -5255,6 +5270,7 @@ import org.eclipse.ocl.cst.LiteralExpCS;
 				
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS)dtParser.getSym(1);
 				MappingQueryCS result = createMappingQueryCS(
+						true,
 						mappingDecl,
 						ourEmptyEList
 					);
@@ -5272,6 +5288,7 @@ import org.eclipse.ocl.cst.LiteralExpCS;
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS)dtParser.getSym(1);
 				BlockExpCS blockExpCS = (BlockExpCS)dtParser.getSym(2);
 				CSTNode result = createMappingQueryCS(
+						true,
 						mappingDecl,
 						blockExpCS.getBodyExpressions()
 					);
@@ -5397,8 +5414,8 @@ import org.eclipse.ocl.cst.LiteralExpCS;
 					completeSignature.getSimpleSignature().getParams(),
 					completeSignature.getResultParams()
 				);
-				mappingDeclarationCS.setStartOffset((directionKind == null ? (CSTNode)dtParser.getSym(4) : directionKind).getStartOffset());
-
+				
+				mappingDeclarationCS.setStartOffset(directionKind == null ? getIToken(dtParser.getToken(2)).getStartOffset() : directionKind.getStartOffset());
 				mappingDeclarationCS.setEndOffset(completeSignature.getEndOffset());
 
 				EList<SimpleNameCS> qualifiers = (EList<SimpleNameCS>)dtParser.getSym(1);
@@ -5424,8 +5441,8 @@ import org.eclipse.ocl.cst.LiteralExpCS;
 					ourEmptyEList,
 					ourEmptyEList
 				);
-				mappingDeclarationCS.setStartOffset((directionKind == null ? (CSTNode)dtParser.getSym(4) : directionKind).getStartOffset());
 
+				mappingDeclarationCS.setStartOffset(directionKind == null ? getIToken(dtParser.getToken(2)).getStartOffset() : directionKind.getStartOffset());
 				mappingDeclarationCS.setEndOffset(((CSTNode)dtParser.getSym(4)).getEndOffset());
 
 				EList<SimpleNameCS> qualifiers = (EList<SimpleNameCS>)dtParser.getSym(1);
@@ -5448,6 +5465,7 @@ import org.eclipse.ocl.cst.LiteralExpCS;
 					ourEmptyEList,
 					ourEmptyEList
 				);
+				
 				setOffsets(mappingDeclarationCS, getIToken(dtParser.getToken(2)), getIToken(dtParser.getToken(2)));
 
 				EList<SimpleNameCS> qualifiers = (EList<SimpleNameCS>)dtParser.getSym(1);

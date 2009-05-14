@@ -334,7 +334,11 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
         return moduleCS;
 	}
 
-	protected final MappingQueryCS createMappingQueryCS(MappingDeclarationCS sym, EList<OCLExpressionCS> sym2) {
+	protected final MappingQueryCS createMappingQueryCS(boolean isEntryOp, MappingDeclarationCS sym, EList<OCLExpressionCS> sym2) {
+		if (sym != null && sym.getSimpleNameCS() != null 
+				&& !isEntryOp && QvtOpLPGParsersym.orderedTerminalSymbols[QvtOpLPGParsersym.TK_main].equals(sym.getSimpleNameCS().getValue())) {
+			reportWarning(NLS.bind(Messages.EntryOp_DisallowedDeclAsHelper, null), sym.getStartOffset(), sym.getEndOffset());
+		}
 		MappingQueryCS query = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingQueryCS();
 		query.setMappingDeclarationCS(sym);
 		query.getExpressions().addAll(sym2);

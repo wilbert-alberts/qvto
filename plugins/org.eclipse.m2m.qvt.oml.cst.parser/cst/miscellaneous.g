@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.29 2009/04/22 10:15:19 aigdalov Exp $ 
+-- * $Id: miscellaneous.g,v 1.30 2009/05/14 09:15:14 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -275,7 +275,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.29 2009/04/22 10:15:19 aigdalov Exp $
+ * $Id: miscellaneous.g,v 1.30 2009/05/14 09:15:14 sboyko Exp $
  */
 	./
 $End
@@ -397,24 +397,33 @@ $Rules
 
 	param ::= param_directionOpt IDENTIFIER ':' typespec
 		/.$BeginJava
+					DirectionKindCS paramDirectionCS = (DirectionKindCS) $getSym(1);
 					CSTNode result = createParameterDeclarationCS(
-							(DirectionKindCS)$getSym(1),
+							paramDirectionCS,
 							getIToken($getToken(2)),
 							(TypeSpecCS)$getSym(4)
 						);
-					setOffsets(result, getIToken($getToken(2)), (CSTNode)$getSym(4));
+					
+					result.setStartOffset(paramDirectionCS != null ? paramDirectionCS.getStartOffset() : getIToken($getToken(2)).getStartOffset());
+					result.setEndOffset(((CSTNode)$getSym(4)).getEndOffset());
+					
 					$setResult(result);
 		  $EndJava
 		./
 		
 	param ::= param_directionOpt typespec
 		/.$BeginJava
+					DirectionKindCS paramDirectionCS = (DirectionKindCS) $getSym(1);
+					TypeSpecCS paramTypeCS = (TypeSpecCS) $getSym(2);
 					CSTNode result = createParameterDeclarationCS(
-							(DirectionKindCS)$getSym(1),
+							paramDirectionCS,
 							null,
-							(TypeSpecCS)$getSym(2)
+							paramTypeCS
 						);
-					setOffsets(result, (CSTNode)$getSym(2));
+
+					result.setStartOffset(paramDirectionCS != null ? paramDirectionCS.getStartOffset() : paramTypeCS.getStartOffset());
+					result.setEndOffset(paramTypeCS.getEndOffset());
+					
 					$setResult(result);
 		  $EndJava
 		./

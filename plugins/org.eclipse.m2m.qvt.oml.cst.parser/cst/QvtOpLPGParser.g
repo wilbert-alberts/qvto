@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.51 2009/04/28 09:16:44 uid8762 Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.52 2009/05/14 09:15:14 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -151,7 +151,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.51 2009/04/28 09:16:44 uid8762 Exp $
+ * $Id: QvtOpLPGParser.g,v 1.52 2009/05/14 09:15:14 sboyko Exp $
  */
 	./
 $End
@@ -978,6 +978,7 @@ $Rules
 
 					IToken helperKind = (IToken) helperInfo[1];
 					mappingDeclarationCS.setIsQuery(helperKind.getKind() == $sym_type.TK_query);
+					mappingDeclarationCS.setStartOffset(helperKind.getStartOffset());
 
 					$setResult(mappingDeclarationCS);
 		  $EndJava
@@ -1001,6 +1002,7 @@ $Rules
 	
 					IToken helperKind = (IToken) helperInfo[1];
 					mappingDeclarationCS.setIsQuery(helperKind.getKind() == $sym_type.TK_query);
+					mappingDeclarationCS.setStartOffset(helperKind.getStartOffset());
 	
 					$setResult(mappingDeclarationCS);
 		  $EndJava
@@ -1019,6 +1021,7 @@ $Rules
 		/.$BeginJava
 					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(1);
 					MappingQueryCS result = createMappingQueryCS(
+							false,
 							mappingDecl,
 							$EMPTY_ELIST
 						);
@@ -1032,6 +1035,7 @@ $Rules
 		/.$BeginJava
 					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(1);
 					MappingQueryCS result = createMappingQueryCS(
+							false,
 							mappingDecl,
 							$EMPTY_ELIST
 						);
@@ -1048,6 +1052,7 @@ $Rules
 					EList<OCLExpressionCS> expressionList = new BasicEList();
 					expressionList.add(expression);
 					MappingQueryCS result = createMappingQueryCS(
+							false,
 							mappingDecl,
 							expressionList
 						);
@@ -1062,6 +1067,7 @@ $Rules
 					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(1);
 					BlockExpCS blockExpCS = (BlockExpCS)$getSym(2);
 					CSTNode result = createMappingQueryCS(
+							false,
 							mappingDecl,
 							blockExpCS.getBodyExpressions()
 						);
@@ -1147,7 +1153,7 @@ $Rules
 					nameCS.setStartOffset(nameToken.getStartOffset());
 					nameCS.setEndOffset(nameToken.getEndOffset());
 		
-		                        SimpleSignatureCS signature = (SimpleSignatureCS)$getSym(2);
+					SimpleSignatureCS signature = (SimpleSignatureCS)$getSym(2);
 					CSTNode result = createMappingDeclarationCS(
 							null,
 							nameCS,
@@ -1176,6 +1182,7 @@ $Rules
 		/.$BeginJava
 					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(1);
 					MappingQueryCS result = createMappingQueryCS(
+							true,
 							mappingDecl,
 							$EMPTY_ELIST
 						);
@@ -1190,6 +1197,7 @@ $Rules
 					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(1);
 					BlockExpCS blockExpCS = (BlockExpCS)$getSym(2);
 					CSTNode result = createMappingQueryCS(
+							true,
 							mappingDecl,
 							blockExpCS.getBodyExpressions()
 						);
@@ -1300,8 +1308,8 @@ $Rules
 						completeSignature.getSimpleSignature().getParams(),
 						completeSignature.getResultParams()
 					);
-					mappingDeclarationCS.setStartOffset((directionKind == null ? (CSTNode)$getSym(4) : directionKind).getStartOffset());
-
+					
+					mappingDeclarationCS.setStartOffset(directionKind == null ? getIToken($getToken(2)).getStartOffset() : directionKind.getStartOffset());
 					mappingDeclarationCS.setEndOffset(completeSignature.getEndOffset());
 
 					EList<SimpleNameCS> qualifiers = (EList<SimpleNameCS>)$getSym(1);
@@ -1324,8 +1332,8 @@ $Rules
 						$EMPTY_ELIST,
 						$EMPTY_ELIST
 					);
-					mappingDeclarationCS.setStartOffset((directionKind == null ? (CSTNode)$getSym(4) : directionKind).getStartOffset());
 
+					mappingDeclarationCS.setStartOffset(directionKind == null ? getIToken($getToken(2)).getStartOffset() : directionKind.getStartOffset());
 					mappingDeclarationCS.setEndOffset(((CSTNode)$getSym(4)).getEndOffset());
 
 					EList<SimpleNameCS> qualifiers = (EList<SimpleNameCS>)$getSym(1);
@@ -1345,6 +1353,7 @@ $Rules
 						$EMPTY_ELIST,
 						$EMPTY_ELIST
 					);
+					
 					setOffsets(mappingDeclarationCS, getIToken($getToken(2)), getIToken($getToken(2)));
 
 					EList<SimpleNameCS> qualifiers = (EList<SimpleNameCS>)$getSym(1);
