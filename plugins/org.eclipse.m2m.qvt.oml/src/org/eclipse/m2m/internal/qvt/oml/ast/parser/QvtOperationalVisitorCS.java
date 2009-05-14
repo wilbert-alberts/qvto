@@ -1714,6 +1714,11 @@ public class QvtOperationalVisitorCS
 				operation = ExpressionsFactory.eINSTANCE.createConstructor();
 			}
 			else if (methodCS instanceof MappingRuleCS) {
+				if (QvtOperationalEnv.MAIN.equals(name)) {
+					env.reportWarning(NLS.bind(ValidationMessages.EntryOp_DisallowedDeclAsMapping, null), 
+							methodCS.getStartOffset(), 
+							methodCS.getMappingDeclarationCS() != null ? methodCS.getMappingDeclarationCS().getEndOffset() : methodCS.getEndOffset());
+				}
 				operation = ExpressionsFactory.eINSTANCE.createMappingOperation();
 			}
 			else if (QvtOperationalEnv.MAIN.equals(name)) {
@@ -3290,12 +3295,6 @@ public class QvtOperationalVisitorCS
 				}
 			}
 			operation.getResult().add(varResult);
-			
-			if (isEntryPoint) {
-				env.reportWarning(ValidationMessages.QvtOperationalVisitorCS_entryPointReturnDeprecated,
-						nextResultParamCS.getTypeSpecCS());
-			}
-	
 		}
 		
 		// set operation return type

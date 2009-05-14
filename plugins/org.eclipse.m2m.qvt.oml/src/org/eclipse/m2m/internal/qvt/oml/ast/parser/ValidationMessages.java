@@ -79,7 +79,6 @@ public final class ValidationMessages extends NLS {
     public static String QvtOperationalVisitorCS_extentDirectionMismatch;
     public static String QvtOperationalVisitorCS_extentFailToInfer;
     public static String QvtOperationalVisitorCS_oclParseNPE;
-    public static String QvtOperationalVisitorCS_entryPointReturnDeprecated;
     public static String QvtOperationalVisitorCS_entryPointShouldBeDeclOnce;
     public static String QvtOperationalVisitorCS_FeatureNotFoundForType;
     public static String QvtOperationalVisitorCS_ifExpWithoutElseAssignment;
@@ -193,6 +192,8 @@ public final class ValidationMessages extends NLS {
     
     public static String BreakContinue_InvalidExpressionOwner;
     public static String BreakContinue_InvalidExpressionUsage;
+    public static String EntryOp_DepricatedParamDecl;
+    public static String EntryOp_DisallowedDeclAsMapping;
     
     public static String TupleTypeMismatch;
     public static String TupleFieldNumMismatch;

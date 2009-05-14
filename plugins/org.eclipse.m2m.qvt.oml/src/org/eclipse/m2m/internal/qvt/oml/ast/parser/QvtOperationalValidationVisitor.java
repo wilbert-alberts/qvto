@@ -102,6 +102,7 @@ import org.eclipse.ocl.types.TypeType;
 import org.eclipse.ocl.util.OCLStandardLibraryUtil;
 import org.eclipse.ocl.util.OCLUtil;
 import org.eclipse.ocl.util.TypeUtil;
+import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.PredefinedType;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
@@ -490,6 +491,14 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 		EObject eContainer = entry.eContainer();
 		if (eContainer instanceof Library) {
 			fEnv.reportError(ValidationMessages.QvtOperationalValidationVisitor_MainInLibraryError, entry.getStartPosition(), entry.getEndPosition());
+		}
+		for (EParameter param : entry.getEParameters()) {
+			if (param instanceof ASTNode) {
+				QvtOperationalUtil.reportWarning(fEnv,
+						NLS.bind(ValidationMessages.EntryOp_DepricatedParamDecl, null), 
+						((ASTNode) param).getStartPosition(), 
+						((ASTNode) param).getEndPosition());
+			}
 		}
 		return super.visitEntryOperation(entry);
 	}
