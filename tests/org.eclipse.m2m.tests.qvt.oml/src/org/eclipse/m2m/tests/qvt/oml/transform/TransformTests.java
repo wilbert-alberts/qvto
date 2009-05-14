@@ -78,6 +78,7 @@ public class TransformTests {
     
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {        		
+        		new FileToFileData("virtual_contextVsOverride"), //$NON-NLS-1$
                 new FileToFileData("numconversion", "in.xmi", "expected.pack"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         		new FileToFileData("overload_205062"), //$NON-NLS-1$
         		new FileToFileData("overload_singleParam"), //$NON-NLS-1$   
@@ -298,7 +299,7 @@ public class TransformTests {
             "primtypesecore", // uses getDataTypeInstance() defined on ecore //$NON-NLS-1$
             // tests using imports are excluded as the compiler never resolved imported unit
             // to unitName.qvto.javaless (patched original sources)
-            "operation_override", "import_access_extends", "import_access_extends_cfgprop", "importedvirtuals", "imports_transformations", "imports", "virt", "full", "fqntraces", // TODO import other files //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
+            "virtual_contextVsOverride", "operation_override", "import_access_extends", "import_access_extends_cfgprop", "importedvirtuals", "imports_transformations", "imports", "virt", "full", "fqntraces", // TODO import other files //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
             "importedInstances", "fqn_noncontextual", "fqnOperationCalls_271789", "fqnMainCalls_271987", "fqnMainCalls_272937", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
             
             "libraryWithModuleElements_257184", "libraryHeaderWithSignature_257575",// TODO import other files //$NON-NLS-1$ //$NON-NLS-2$
