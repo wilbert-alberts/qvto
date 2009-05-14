@@ -315,6 +315,8 @@ public class QvtOperationalParserUtil {
 			}
 		}
 		
+		// FIXME - better be handled in OCL itself
+		// check was added due to https://bugs.eclipse.org/bugs/show_bug.cgi?id=275824
 		if (variableType instanceof EDataType && initialiserType instanceof EDataType) {
 			if (((EDataType) variableType).getInstanceClass() == ((EDataType) initialiserType).getInstanceClass()) {
 				return true;
