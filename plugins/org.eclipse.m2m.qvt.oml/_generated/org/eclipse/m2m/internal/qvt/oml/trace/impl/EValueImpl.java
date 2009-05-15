@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: EValueImpl.java,v 1.2 2008/12/18 15:18:11 radvorak Exp $
+ * $Id: EValueImpl.java,v 1.3 2009/05/15 12:07:10 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace.impl;
 
@@ -52,7 +52,7 @@ public class EValueImpl extends EObjectImpl implements EValue {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
+    public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
     /**
 	 * The default value of the '{@link #getPrimitiveValue() <em>Primitive Value</em>}' attribute.
@@ -456,11 +456,11 @@ public class EValueImpl extends EObjectImpl implements EValue {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (primitiveValue: ");
+		result.append(" (primitiveValue: "); //$NON-NLS-1$
 		result.append(primitiveValue);
-		result.append(", oclObject: ");
+		result.append(", oclObject: "); //$NON-NLS-1$
 		result.append(oclObject);
-		result.append(", collectionType: ");
+		result.append(", collectionType: "); //$NON-NLS-1$
 		result.append(collectionType);
 		result.append(')');
 		return result.toString();
