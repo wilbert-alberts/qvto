@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeOCLFactoryImpl.java,v 1.2 2009/01/25 23:10:43 radvorak Exp $
+ * $Id: ImperativeOCLFactoryImpl.java,v 1.3 2009/05/15 16:13:08 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.impl;
 
@@ -68,7 +68,7 @@ public class ImperativeOCLFactoryImpl extends EFactoryImpl implements Imperative
 	 */
 	public static ImperativeOCLFactory init() {
 		try {
-			ImperativeOCLFactory theImperativeOCLFactory = (ImperativeOCLFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/qvt/1.0/ImperativeOCL"); 
+			ImperativeOCLFactory theImperativeOCLFactory = (ImperativeOCLFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/qvt/1.0/ImperativeOCL");  //$NON-NLS-1$
 			if (theImperativeOCLFactory != null) {
 				return theImperativeOCLFactory;
 			}
@@ -127,7 +127,7 @@ public class ImperativeOCLFactoryImpl extends EFactoryImpl implements Imperative
 			case ImperativeOCLPackage.VARIABLE_INIT_EXP: return createVariableInitExp();
 			case ImperativeOCLPackage.WHILE_EXP: return createWhileExp();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
@@ -142,7 +142,7 @@ public class ImperativeOCLFactoryImpl extends EFactoryImpl implements Imperative
 			case ImperativeOCLPackage.SEVERITY_KIND:
 				return createSeverityKindFromString(eDataType, initialValue);
 			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
@@ -157,7 +157,7 @@ public class ImperativeOCLFactoryImpl extends EFactoryImpl implements Imperative
 			case ImperativeOCLPackage.SEVERITY_KIND:
 				return convertSeverityKindToString(eDataType, instanceValue);
 			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
@@ -458,7 +458,7 @@ public class ImperativeOCLFactoryImpl extends EFactoryImpl implements Imperative
 	 */
 	public SeverityKind createSeverityKindFromString(EDataType eDataType, String initialValue) {
 		SeverityKind result = SeverityKind.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		return result;
 	}
 

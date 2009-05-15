@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: AssertExpImpl.java,v 1.3 2009/02/06 15:47:30 radvorak Exp $
+ * $Id: AssertExpImpl.java,v 1.4 2009/05/15 16:13:08 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.impl;
 
@@ -314,7 +314,7 @@ public class AssertExpImpl extends ImperativeExpressionImpl implements AssertExp
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (severity: ");
+		result.append(" (severity: "); //$NON-NLS-1$
 		result.append(severity);
 		result.append(')');
 		return result.toString();

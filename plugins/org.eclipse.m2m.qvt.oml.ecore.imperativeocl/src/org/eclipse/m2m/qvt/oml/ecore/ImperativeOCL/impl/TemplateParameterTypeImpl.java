@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: TemplateParameterTypeImpl.java,v 1.2 2009/01/25 23:10:43 radvorak Exp $
+ * $Id: TemplateParameterTypeImpl.java,v 1.3 2009/05/15 16:13:08 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.impl;
 
@@ -163,7 +163,7 @@ public class TemplateParameterTypeImpl extends EClassifierImpl implements Templa
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (specification: ");
+		result.append(" (specification: "); //$NON-NLS-1$
 		result.append(specification);
 		result.append(')');
 		return result.toString();

@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: VariableInitExpImpl.java,v 1.4 2009/02/20 11:03:59 radvorak Exp $
+ * $Id: VariableInitExpImpl.java,v 1.5 2009/05/15 16:13:08 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.impl;
 
@@ -246,7 +246,7 @@ public class VariableInitExpImpl extends ImperativeExpressionImpl implements Var
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (withResult: ");
+		result.append(" (withResult: "); //$NON-NLS-1$
 		result.append(withResult);
 		result.append(')');
 		return result.toString();

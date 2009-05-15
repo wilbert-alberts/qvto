@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: AssignExpImpl.java,v 1.5 2009/02/20 11:03:59 radvorak Exp $
+ * $Id: AssignExpImpl.java,v 1.6 2009/05/15 16:13:08 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.impl;
 
@@ -388,8 +388,8 @@ public class AssignExpImpl extends ImperativeExpressionImpl implements AssignExp
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (isReset: ");
-		if (isResetESet) result.append(isReset); else result.append("<unset>");
+		result.append(" (isReset: "); //$NON-NLS-1$
+		if (isResetESet) result.append(isReset); else result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}
