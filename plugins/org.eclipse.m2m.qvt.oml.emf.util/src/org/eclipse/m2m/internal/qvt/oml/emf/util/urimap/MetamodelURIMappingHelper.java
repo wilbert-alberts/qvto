@@ -90,7 +90,7 @@ public class MetamodelURIMappingHelper {
 			resource.save(null);
 			
 		} catch (IOException e) {
-			return new Status(IStatus.ERROR, EmfUtilPlugin.ID, "Failed to save metamodel URI mappings", e);
+			return new Status(IStatus.ERROR, EmfUtilPlugin.ID, "Failed to save metamodel URI mappings", e); //$NON-NLS-1$
 		} finally {
 			try {
 				project.refreshLocal(IResource.DEPTH_INFINITE, null);

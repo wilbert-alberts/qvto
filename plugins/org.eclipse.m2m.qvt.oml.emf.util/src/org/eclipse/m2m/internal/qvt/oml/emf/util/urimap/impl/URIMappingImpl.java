@@ -212,9 +212,9 @@ public class URIMappingImpl extends EObjectImpl implements URIMapping {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (sourceURI: ");
+		result.append(" (sourceURI: "); //$NON-NLS-1$
 		result.append(sourceURI);
-		result.append(", targetURI: ");
+		result.append(", targetURI: "); //$NON-NLS-1$
 		result.append(targetURI);
 		result.append(')');
 		return result.toString();

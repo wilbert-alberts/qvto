@@ -38,7 +38,7 @@ public interface MModelURIMapPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "urimap";
+	String eNAME = "urimap"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -46,7 +46,7 @@ public interface MModelURIMapPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http:///www.eclipse.org/m2m/qvt/oml/MModelUriMap/1.0.0";
+	String eNS_URI = "http:///www.eclipse.org/m2m/qvt/oml/MModelUriMap/1.0.0"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -54,7 +54,7 @@ public interface MModelURIMapPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "uriMap";
+	String eNS_PREFIX = "uriMap"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

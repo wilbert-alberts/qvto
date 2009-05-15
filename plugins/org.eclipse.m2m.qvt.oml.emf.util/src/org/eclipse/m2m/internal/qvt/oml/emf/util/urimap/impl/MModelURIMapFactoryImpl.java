@@ -36,7 +36,7 @@ public class MModelURIMapFactoryImpl extends EFactoryImpl implements MModelURIMa
 	 */
 	public static MModelURIMapFactory init() {
 		try {
-			MModelURIMapFactory theMModelURIMapFactory = (MModelURIMapFactory)EPackage.Registry.INSTANCE.getEFactory("http:///www.eclipse.org/m2m/qvt/oml/MModelUriMap/1.0.0"); 
+			MModelURIMapFactory theMModelURIMapFactory = (MModelURIMapFactory)EPackage.Registry.INSTANCE.getEFactory("http:///www.eclipse.org/m2m/qvt/oml/MModelUriMap/1.0.0");  //$NON-NLS-1$
 			if (theMModelURIMapFactory != null) {
 				return theMModelURIMapFactory;
 			}
@@ -68,7 +68,7 @@ public class MModelURIMapFactoryImpl extends EFactoryImpl implements MModelURIMa
 			case MModelURIMapPackage.MAPPING_CONTAINER: return createMappingContainer();
 			case MModelURIMapPackage.URI_MAPPING: return createURIMapping();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
