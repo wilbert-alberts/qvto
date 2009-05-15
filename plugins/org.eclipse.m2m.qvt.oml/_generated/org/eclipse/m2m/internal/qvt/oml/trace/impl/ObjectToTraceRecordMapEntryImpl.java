@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ObjectToTraceRecordMapEntryImpl.java,v 1.2 2008/12/18 15:18:10 radvorak Exp $
+ * $Id: ObjectToTraceRecordMapEntryImpl.java,v 1.3 2009/05/15 12:04:23 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace.impl;
 
@@ -47,7 +47,7 @@ public class ObjectToTraceRecordMapEntryImpl extends EObjectImpl implements Basi
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
+    public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
     /**
 	 * The cached value of the '{@link #getTypedValue() <em>Value</em>}' reference list.
@@ -211,7 +211,7 @@ public class ObjectToTraceRecordMapEntryImpl extends EObjectImpl implements Basi
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (key: ");
+		result.append(" (key: "); //$NON-NLS-1$
 		result.append(key);
 		result.append(')');
 		return result.toString();
